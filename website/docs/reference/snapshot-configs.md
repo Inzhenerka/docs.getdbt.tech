@@ -57,7 +57,7 @@ snapshots:
     [+](/reference/resource-configs/plus-prefix)[strategy](/reference/resource-configs/strategy): timestamp | check
     [+](/reference/resource-configs/plus-prefix)[updated_at](/reference/resource-configs/updated_at): <column_name>
     [+](/reference/resource-configs/plus-prefix)[check_cols](/reference/resource-configs/check_cols): [<column_name>] | all
-
+    [+](/reference/resource-configs/plus-prefix)[invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
 ```
 
 </File>
@@ -79,7 +79,7 @@ snapshots:
     [+](/reference/resource-configs/plus-prefix)[updated_at](/reference/resource-configs/updated_at): <column_name>
     [+](/reference/resource-configs/plus-prefix)[check_cols](/reference/resource-configs/check_cols): [<column_name>] | all
     [+](/reference/resource-configs/plus-prefix)[snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names): {<dictionary>}
-
+    [+](/reference/resource-configs/plus-prefix)[invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
 ```
 
 </File>
@@ -113,7 +113,7 @@ snapshots:
       [updated_at](/reference/resource-configs/updated_at): <column_name>
       [check_cols](/reference/resource-configs/check_cols): [<column_name>] | all
       [snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names): {<dictionary>}
-
+      [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
 ```
 </File>
 
@@ -125,7 +125,7 @@ snapshots:
 
 <VersionBlock firstVersion="1.9">
 
-Configurations can be applied to snapshots using [YAML syntax](/docs/build/snapshots), available in Versionless and dbt v1.9 and higher, in the the `snapshot` directory file.
+Configurations can be applied to snapshots using the [YAML syntax](/docs/build/snapshots), available in Versionless and dbt v1.9 and higher, in the `snapshot` directory file.
 
 </VersionBlock>
 
@@ -140,7 +140,7 @@ Configurations can be applied to snapshots using [YAML syntax](/docs/build/snaps
     [strategy](/reference/resource-configs/strategy)="timestamp" | "check",
     [updated_at](/reference/resource-configs/updated_at)="<column_name>",
     [check_cols](/reference/resource-configs/check_cols)=["<column_name>"] | "all"
-    [snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names)={<dictionary>}
+    [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
 ) }}
 
 ```
@@ -168,6 +168,24 @@ Configurations can be applied to snapshots using [YAML syntax](/docs/build/snaps
 
 <File name='dbt_project.yml'>
 
+<VersionBlock firstVersion="1.9">
+
+```yaml
+snapshots:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
+    [+](/reference/resource-configs/plus-prefix)[tags](/reference/resource-configs/tags): <string> | [<string>]
+    [+](/reference/resource-configs/plus-prefix)[alias](/reference/resource-configs/alias): <string>
+    [+](/reference/resource-configs/plus-prefix)[pre-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+    [+](/reference/resource-configs/plus-prefix)[post-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+    [+](/reference/resource-configs/plus-prefix)[persist_docs](/reference/resource-configs/persist_docs): {<dict>}
+    [+](/reference/resource-configs/plus-prefix)[grants](/reference/resource-configs/grants): {<dict>}
+    [+](/reference/resource-configs/plus-prefix)[event_time](/reference/resource-configs/event-time): my_time_field
+```
+</VersionBlock>
+
+<VersionBlock lastVersion="1.8">
+
 ```yaml
 snapshots:
   [<resource-path>](/reference/resource-configs/resource-path):
@@ -179,6 +197,7 @@ snapshots:
     [+](/reference/resource-configs/plus-prefix)[persist_docs](/reference/resource-configs/persist_docs): {<dict>}
     [+](/reference/resource-configs/plus-prefix)[grants](/reference/resource-configs/grants): {<dict>}
 ```
+</VersionBlock>
 </File>
 
 </TabItem>
@@ -198,8 +217,8 @@ snapshots:
       [enabled](/reference/resource-configs/enabled): true | false
       [tags](/reference/resource-configs/tags): <string> | [<string>]
       [alias](/reference/resource-configs/alias): <string>
-      [pre-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [post-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+      [pre_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+      [post_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
       [persist_docs](/reference/resource-configs/persist_docs): {<dict>}
       [grants](/reference/resource-configs/grants): {<dictionary>}
 ```
@@ -221,10 +240,11 @@ snapshots:
       [enabled](/reference/resource-configs/enabled): true | false
       [tags](/reference/resource-configs/tags): <string> | [<string>]
       [alias](/reference/resource-configs/alias): <string>
-      [pre-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
-      [post-hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+      [pre_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
+      [post_hook](/reference/resource-configs/pre-hook-post-hook): <sql-statement> | [<sql-statement>]
       [persist_docs](/reference/resource-configs/persist_docs): {<dict>}
       [grants](/reference/resource-configs/grants): {<dictionary>}
+      [event_time](/reference/resource-configs/event-time): my_time_field
 ```
 
 </File>
@@ -236,7 +256,7 @@ snapshots:
 
 <VersionBlock firstVersion="1.9">
 
-Configurations can be applied to snapshots using [YAML syntax](/docs/build/snapshots), available in Versionless and dbt v1.9 and higher, in the the `snapshot` directory file.
+Configurations can be applied to snapshots using [YAML syntax](/docs/build/snapshots), available in Versionless and dbt v1.9 and higher, in the `snapshot` directory file.
 
 </VersionBlock>
 
@@ -292,7 +312,6 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
     <File name='dbt_project.yml'>
 
     ```yml
-
     snapshots:
       +unique_key: id
     ```
@@ -307,7 +326,6 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
     <File name='dbt_project.yml'>
 
     ```yml
-
     snapshots:
       jaffle_shop:
         +unique_key: id

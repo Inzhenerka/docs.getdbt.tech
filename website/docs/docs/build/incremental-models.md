@@ -94,7 +94,7 @@ Not specifying a `unique_key` will result in append-only behavior, which means d
 
 The optional `unique_key` parameter specifies a field (or combination of fields) that defines the grain of your model. That is, the field(s) identify a single unique row. You can define `unique_key` in a configuration block at the top of your model, and it can be a single column name or a list of column names.
 
-The `unique_key` should be supplied in your model definition as a string representing a single column or a list of single-quoted column names that can be used together, for example, `['col1', 'col2', …])`. Columns used in this way should not contain any nulls, or the incremental model run may fail. Either ensure that each column has no nulls (for example with `coalesce(COLUMN_NAME, 'VALUE_IF_NULL')`), or define a single-column [surrogate key](https://www.getdbt.com/blog/guide-to-surrogate-key) (for example with [`dbt_utils.generate_surrogate_key`](https://github.com/dbt-labs/dbt-utils#generate_surrogate_key-source)).
+The `unique_key` should be supplied in your model definition as a string representing a single column or a list of single-quoted column names that can be used together, for example, `['col1', 'col2', …])`. Columns used in this way should not contain any nulls, or the incremental model may fail to match rows and generate duplicate rows. Either ensure that each column has no nulls (for example with `coalesce(COLUMN_NAME, 'VALUE_IF_NULL')`) or define a single-column [surrogate key](https://www.getdbt.com/blog/guide-to-surrogate-key) (for example with [`dbt_utils.generate_surrogate_key`](https://github.com/dbt-labs/dbt-utils#generate_surrogate_key-source)).
 
 :::tip
 In cases where you need multiple columns in combination to uniquely identify each row, we recommend you pass these columns as a list (`unique_key = ['user_id', 'session_number']`), rather than a string expression (`unique_key = 'concat(user_id, session_number)'`).
@@ -212,11 +212,11 @@ Currently, `on_schema_change` only tracks top-level column changes. It does not 
 
 ### Default behavior
 
-This is the behavior if `on_schema_change: ignore`, which is set by default, and on older versions of dbt.
+This is the behavior of `on_schema_change: ignore`, which is set by default.
 
 If you add a column to your incremental model, and execute a `dbt run`, this column will _not_ appear in your target table.
 
-Similarly, if you remove a column from your incremental model, and execute a `dbt run`, this column will _not_ be removed from your target table.
+If you remove a column from your incremental model and execute a `dbt run`, `dbt run` will fail.
 
 Instead, whenever the logic of your incremental changes, execute a full-refresh run of both your incremental model and any downstream models.
 

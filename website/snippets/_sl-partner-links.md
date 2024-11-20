@@ -24,6 +24,20 @@ The following tools integrate with the dbt Semantic Layer:
 
   <div className="card-container">
     <Card
+      title="Dot"
+      link="https://docs.getdot.ai/dot/integrations/dbt-semantic-layer"
+      body="Enable everyone to analyze data with AI in Slack or Teams."
+      icon="dot-ai"/>
+      <a href="https://docs.getdot.ai/dot/integrations/dbt-semantic-layer"
+      className="external-link"
+      target="_blank"
+      rel="noopener noreferrer">
+      <Icon name='fa-external-link' />
+    </a>
+  </div>
+
+  <div className="card-container">
+    <Card
       title="Hex"
       link="https://learn.hex.tech/docs/connect-to-data/data-connections/dbt-integration#dbt-semantic-layer-integration"
       body="Check out how to connect, analyze metrics, collaborate, and discover more data possibilities."
@@ -54,9 +68,9 @@ The following tools integrate with the dbt Semantic Layer:
   <Card
     title="Lightdash"
     body="Check out how to connect, query, and consume reliable dbt metrics in real time "
-    link="https://docs.lightdash.com/guides/dbt-semantic-layer/"
+    link="https://docs.lightdash.com/references/dbt-semantic-layer"
     icon="lightdash"/>
-    <a href="https://docs.lightdash.com/guides/dbt-semantic-layer/"
+    <a href="https://docs.lightdash.com/references/dbt-semantic-layer"
     className="external-link"
       target="_blank"
       rel="noopener noreferrer">
@@ -68,9 +82,9 @@ The following tools integrate with the dbt Semantic Layer:
   <Card
     title="Mode"
     body="Discover how to connect, access, and get trustworthy metrics and insights."
-    link="https://mode.com/help/articles/supported-databases/#dbt-semantic-layer"
+    link="https://mode.com/help/articles/supported-databases#dbt-semantic-layer"
     icon="mode"/>
-    <a href="https://mode.com/help/articles/supported-databases/#dbt-semantic-layer"
+    <a href="https://mode.com/help/articles/supported-databases#dbt-semantic-layer"
     className="external-link"
       target="_blank"
       rel="noopener noreferrer">
@@ -82,9 +96,9 @@ The following tools integrate with the dbt Semantic Layer:
   <Card
     title="Push.ai"
     body="Explore how to connect and use metrics to power reports and insights that drive change."
-    link="https://docs.push.ai/semantic-layer-integrations/dbt-semantic-layer"
+    link="https://docs.push.ai/data-sources/semantic-layers/dbt"
     icon="push"/>
-    <a href="https://docs.push.ai/semantic-layer-integrations/dbt-semantic-layer?utm_source=dbt&utm_medium=referral&utm_campaign=available-sl-integrations"
+    <a href="https://docs.push.ai/data-sources/semantic-layers/dbt"
     className="external-link"
       target="_blank"
       rel="noopener noreferrer">

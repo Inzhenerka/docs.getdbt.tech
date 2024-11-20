@@ -8,9 +8,11 @@ id: "incremental-microbatch"
 
 :::info Microbatch
 
-The `microbatch` strategy is available in beta for [dbt Cloud Versionless](/docs/dbt-versions/upgrade-dbt-version-in-cloud#versionless) and dbt Core v1.9. We have been developing it behind a flag to prevent unintended interactions with existing custom incremental strategies. To enable this feature, set the environment variable `DBT_EXPERIMENTAL_MICROBATCH` to `True` in your dbt Cloud environments or wherever you're running dbt Core.
+The `microbatch` strategy is available in beta for [dbt Cloud Versionless](/docs/dbt-versions/upgrade-dbt-version-in-cloud#versionless) and dbt Core v1.9. We have been developing it behind a flag to prevent unintended interactions with existing custom incremental strategies. To enable this feature, [set the environment variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_EXPERIMENTAL_MICROBATCH` to `True` in your dbt Cloud environments or wherever you're running dbt Core.
 
 Read and participate in the discussion: [dbt-core#10672](https://github.com/dbt-labs/dbt-core/discussions/10672)
+
+Refer to [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter) for a list of supported adapters. 
 
 :::
 
@@ -18,7 +20,7 @@ Read and participate in the discussion: [dbt-core#10672](https://github.com/dbt-
 
 Incremental models in dbt are a [materialization](/docs/build/materializations) designed to efficiently update your data warehouse tables by only transforming and loading _new or changed data_ since the last run. Instead of reprocessing an entire dataset every time, incremental models process a smaller number of rows, and then append, update, or replace those rows in the existing table. This can significantly reduce the time and resources required for your data transformations.
 
-Microbatch incremental models make it possible to process transformations on very large time-series datasets with efficiency and resiliency. When dbt runs a microbatch model — whether for the first time, during incremental runs, or in specified backfills — it will split the processing into multiple queries (or "batches"), based on the `event_time` and `batch_size` you configure.
+Microbatch incremental models make it possible to process transformations on very large time-series datasets with efficiency and resiliency. When dbt runs a microbatch model — whether for the first time, during incremental runs, or in specified backfills — it will split the processing into multiple queries (or "batches"), based on the [`event_time`](/reference/resource-configs/event-time) and `batch_size` you configure.
 
 Each "batch" corresponds to a single bounded time period (by default, a single day of data). Where other incremental strategies operate only on "old" and "new" data, microbatch models treat every batch as an atomic unit that can be built or replaced on its own. Each batch is independent and <Term id="idempotent" />. This is a powerful abstraction that makes it possible for dbt to run batches separately — in the future, concurrently — and to retry them independently.
 
@@ -46,7 +48,7 @@ We run the `sessions` model on October 1, 2024, and then again on October 2. It 
 
 <TabItem value="Model definition">
 
-The `event_time` for the `sessions` model is set to `session_start`, which marks the beginning of a user’s session on the website. This setting allows dbt to combine multiple page views (each tracked by their own `page_view_start` timestamps) into a single session. This way, `session_start` differentiates the timing of individual page views from the broader timeframe of the entire user session.
+The [`event_time`](/reference/resource-configs/event-time) for the `sessions` model is set to `session_start`, which marks the beginning of a user’s session on the website. This setting allows dbt to combine multiple page views (each tracked by their own `page_view_start` timestamps) into a single session. This way, `session_start` differentiates the timing of individual page views from the broader timeframe of the entire user session.
   
 <File name="models/sessions.sql">
 
@@ -160,10 +162,10 @@ Several configurations are relevant to microbatch models, and some are required:
 
 | Config   | Type | Description   | Default |
 |----------|------|---------------|---------|
-| `event_time` | Column  (required)   | The column indicating "at what time did the row occur." Required for your microbatch model and any direct parents that should be filtered.          | N/A     |
+| [`event_time`](/reference/resource-configs/event-time) | Column  (required)   | The column indicating "at what time did the row occur." Required for your microbatch model and any direct parents that should be filtered.          | N/A     |
 | `begin`      | Date (required)   | The "beginning of time" for the microbatch model. This is the starting point for any initial or full-refresh builds. For example, a daily-grain microbatch model run on `2024-10-01` with `begin = '2023-10-01` will process 366 batches (it's a leap year!) plus the batch for "today."        | N/A     |
-| `batch_size` | String (required)  | The granularity of your batches. The default is `day` (and currently this is the only granularity supported).             | `day`   |
-| `lookback`   | Integer (optional) | Process X batches prior to the latest bookmark to capture late-arriving records.                                         | `0`     |
+| `batch_size` | String (required)  | The granularity of your batches. Supported values are `hour`, `day`, `month`, and `year`             | N/A     |
+| `lookback`   | Integer (optional) | Process X batches prior to the latest bookmark to capture late-arriving records.                                         | `1`     |
 
 <Lightbox src="/img/docs/building-a-dbt-project/microbatch/event_time.png" title="The event_time column configures the real-world time of this record"/>
 
@@ -190,11 +192,14 @@ During standard incremental runs, dbt will process batches according to the curr
 
 Whether to fix erroneous source data or retroactively apply a change in business logic, you may need to reprocess a large amount of historical data.
 
-Backfilling a microbatch model is as simple as selecting it to run or build, and specifying a "start" and "end" for `event_time`. As always, dbt will process the batches between the start and end as independent queries.
+Backfilling a microbatch model is as simple as selecting it to run or build, and specifying a "start" and "end" for `event_time`. Note that `--event-time-start` and `--event-time-end` are mutually necessary, meaning that if you specify one, you must specify the other. 
+
+As always, dbt will process the batches between the start and end as independent queries.
 
 ```bash
 dbt run --event-time-start "2024-09-01" --event-time-end "2024-09-04"
 ```
+
 
 <Lightbox src="/img/docs/building-a-dbt-project/microbatch/microbatch_backfill.png" title="Configure a lookback to reprocess additional batches during standard incremental runs"/>
 
