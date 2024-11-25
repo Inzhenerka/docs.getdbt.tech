@@ -44,13 +44,8 @@ Use the `resource_type` method to select nodes of a particular type (`model`, `t
 
   ```bash
 dbt build --select "resource_type:exposure"    # build all resources upstream of exposures
-dbt list --select "resource_type:test"    # list all tests in your project
-```
-
-Note: This method doesn't work for sources, so use the [`--resource-type`](/reference/commands/list) option of the list command instead:
-
-  ```bash
-dbt list --resource-type source
+dbt list --select "resource_type:test"         # list all tests in your project
+dbt list --select "resource_type:source"       # list all sources in your project
 ```
 
 ### The "path" method
@@ -315,10 +310,6 @@ dbt list --select "+semantic_model:orders"  # list your semantic model named "or
 ```
 
 ### The "saved_query" method
-<VersionBlock lastVersion="1.6">
-Supported in v1.7 or newer.
-</VersionBlock>
-<VersionBlock firstVersion="1.7">
 
 The `saved_query` method selects [saved queries](/docs/build/saved-queries).
 
@@ -326,8 +317,6 @@ The `saved_query` method selects [saved queries](/docs/build/saved-queries).
 dbt list --select "saved_query:*"                    # list all saved queries 
 dbt list --select "+saved_query:orders_saved_query"  # list your saved query named "orders_saved_query" and all upstream resources
 ```
-
-</VersionBlock>
 
 ### The "unit_test" method
 

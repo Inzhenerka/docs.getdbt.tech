@@ -2,7 +2,7 @@
 resource_types: [models]
 description: "When the contract configuration is enforced, dbt will ensure that your model's returned dataset exactly matches the attributes you have defined in yaml, such as name and data_type, as well as any additional constraints supported by the data platform."
 datatype: "{<dictionary>}"
-default_value: {contract: false}
+default_value: {enforced: false}
 id: "contract"
 ---
 
@@ -15,14 +15,6 @@ When the `contract` configuration is enforced, dbt will ensure that your model's
 This is to ensure that the people querying your model downstream—both inside and outside dbt—have a predictable and consistent set of columns to use in their analyses. Even a subtle change in data type, such as from `boolean` (`true`/`false`) to `integer` (`0`/`1`), could cause queries to fail in surprising ways.
 
 ## Data type aliasing
-
-<VersionBlock lastVersion="1.6">
-
-The `data_type` defined in your YAML file must match a data type your data platform recognizes. dbt does not do any type aliasing itself. If your data platform recognizes both `int` and `integer` as corresponding to the same type, then they will return a match.
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.7">
 
 dbt uses built-in type aliasing for the `data_type` defined in your YAML. For example, you can specify `string` in your contract, and on Postgres/Redshift, dbt will convert it to `text`. If dbt doesn't recognize the `data_type` name among its known aliases, it will pass it through as-is. This is enabled by default, but you can opt-out by setting `alias_types` to `false`.
 
@@ -42,7 +34,6 @@ models:
 ```
 
 </File>
-</VersionBlock>
 
 ## Size, precision, and scale
 

@@ -170,7 +170,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 
 5. After you have filled out the form and clicked **Complete Registration**, you will be logged into dbt Cloud automatically.
 
-6. From your **Account Settings** in dbt Cloud (using the gear menu in the upper right corner), choose the "Partner Connect Trial" project and select **snowflake** in the overview table. Select edit and update the fields **Database** and **Warehouse** to be `analytics` and `transforming`, respectively.
+6. Go to the left side menu and click your account name, then select **Account settings**, choose the "Partner Connect Trial" project, and select **snowflake** in the overview table. Select edit and update the fields **Database** and **Warehouse** to be `analytics` and `transforming`, respectively.
 
 <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt Cloud - Snowflake Project Overview" />
 
@@ -180,7 +180,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 <TabItem value="manual-connect" label="Connect manually">
 
 
-1. Create a new project in dbt Cloud. From **Account settings** (using the gear menu in the top right corner), click **+ New Project**.
+1. Create a new project in dbt Cloud. Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
 2. Enter a project name and click **Continue**.
 3. For the warehouse, click **Snowflake** then **Next** to set up your connection.
 
@@ -408,7 +408,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 #### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 ## Build models on top of sources

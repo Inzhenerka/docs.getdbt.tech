@@ -1,7 +1,7 @@
 ---
 resource_types: all
 datatype: markdown_string
-
+description: "This guide explains how to use the description key to add YAML descriptions to dbt resources (models, sources, seeds) using markdown and Jinja for better documentation."
 ---
 
 <Tabs
@@ -13,6 +13,7 @@ datatype: markdown_string
     { label: 'Snapshots', value: 'snapshots', },
     { label: 'Analyses', value: 'analyses', },
     { label: 'Macros', value: 'macros', },
+    { label: 'Data tests', value: 'data_tests', },
   ]
 }>
 <TabItem value="models">
@@ -145,6 +146,32 @@ macros:
 
 </TabItem>
 
+<TabItem value="data_tests">
+
+<VersionBlock firstVersion="1.9">
+
+<File name='tests/schema.yml'>
+
+```yml
+version: 2
+
+data_tests:
+  - name: data_test_name
+    description: markdown_string
+
+```
+
+</File>
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.8">
+
+The `description` property is available for generic and singular data tests beginning in dbt v1.9.
+
+</VersionBlock>
+
+</TabItem>
 
 </Tabs>
 

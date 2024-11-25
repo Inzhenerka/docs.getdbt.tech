@@ -52,21 +52,29 @@ Once you install the dbt Cloud CLI, you need to configure it to connect to a dbt
 
   The config file looks like this:
 
-    ```yaml
-    version: "1"
-    context:
-        active-project: "<project id from the list below>"
-        active-host: "<active host from the list>"
-        defer-env-id: "<optional defer environment id>"
-    projects:
-    - project-id: "<project-id>"
-        account-host: "<account-host>"
-        api-key: "<user-api-key>"
-
-    - project-id: "<project-id>"
-        account-host: "<account-host>"
-        api-key: "<user-api-key>"
-    ```
+  ```yaml
+  version: "1"
+  context:
+    active-project: "<project id from the list below>"
+    active-host: "<active host from the list>"
+    defer-env-id: "<optional defer environment id>"
+  projects:
+    - project-name: "<project-name>"
+      project-id: "<project-id>"
+      account-name: "<account-name>"
+      account-id: "<account-id>"
+      account-host: "<account-host>" # for example, "cloud.getdbt.com"
+      token-name: "<pat-or-service-token-name>"
+      token-value: "<pat-or-service-token-value>"
+  
+    - project-name: "<project-name>"
+      project-id: "<project-id>"
+      account-name: "<account-name>"
+      account-id: "<account-id>"
+      account-host: "<account-host>" # for example, "cloud.getdbt.com"
+      token-name: "<pat-or-service-token-name>"
+      token-value: "<pat-or-service-token-value>"  
+  ```
 
 3. After downloading the config file and creating your directory, navigate to a dbt project in your terminal:
 
@@ -96,11 +104,10 @@ With your repo recloned, you can add, edit, and sync files with your repo.
 
 To set environment variables in the dbt Cloud CLI for your dbt project:
 
-1. Select the gear icon on the upper right of the page.
-2. Then select **Profile Settings**, then **Credentials**.
-3. Click on your project and scroll to the **Environment Variables** section.
+1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+2. Under the **Your profile** section, select **Credentials**.
+3. Click on your project and scroll to the **Environment variables** section.
 4. Click **Edit** on the lower right and then set the user-level environment variables.  
-   - Note, when setting up the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), using [environment variables](/docs/build/environment-variables) like `{{env_var('DBT_WAREHOUSE')}}` is not supported. You should use the actual credentials instead.
 
 ## Use the dbt Cloud CLI
 

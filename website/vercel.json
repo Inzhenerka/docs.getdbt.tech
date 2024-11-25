@@ -3,6 +3,51 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/faqs/API/rotate-token",
+      "destination": "/docs/dbt-cloud-apis/service-tokens#service-token-update",
+      "permanent": true
+    },
+    {
+      "source": "/styles",
+      "destination": "https://github.com/dbt-labs/docs.getdbt.com/blob/current/contributing/adding-page-components.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/dbt-cloud-apis/sl-manifest",
+      "destination": "/reference/artifacts/sl-manifest",
+      "permanent": true
+    },
+    {
+      "source": "/docs/cloud/dbt-assist-data",
+      "destination": "/docs/cloud/dbt-copilot-data",
+      "permanent": true
+    },
+    {
+      "source": "/docs/cloud/use-dbt-assist",
+      "destination": "/docs/cloud/use-dbt-copilot",
+      "permanent": true
+    },
+    {
+      "source": "/docs/cloud/enable-dbt-assist",
+      "destination": "/docs/cloud/enable-dbt-copilot",
+      "permanent": true
+    },    
+    {
+      "source": "/docs/cloud/dbt-assist",
+      "destination": "/docs/cloud/dbt-copilot",
+      "permanent": true
+    },
+    {
+      "source": "/faqs/Troubleshooting/access_token_error",
+      "destination": "/faqs/Troubleshooting/auth-expired-error",
+      "permanent": true
+    },
+    {
+      "source": "/faqs/Models/unique-model-names",
+      "destination": "/faqs/Project/unique-resource-names",
+      "permanent": true
+    },
+    {
       "source":  "/docs/deploy/dashboard-status-tiles",
       "destination":  "/docs/collaborate/data-tile",
       "permanent": true
@@ -592,6 +637,11 @@
     {
       "source": "/reference/global-configs/command-line-flags",
       "destination": "/reference/global-configs/command-line-options",
+      "permanent": true
+    },
+    {
+      "source": "/reference/global-configs/legacy-behaviors",
+      "destination": "/reference/global-configs/behavior-changes",
       "permanent": true
     },
     {
@@ -2972,6 +3022,11 @@
       "permanent": true
     },
     {
+      "source": "/dbt-cloud/api-v2-legacy",
+      "destination": "/dbt-cloud/api-v2",
+      "permanent": true
+    },
+    {
       "source": "/dbt-cloud/api-v4",
       "destination": "/docs/dbt-cloud-apis/admin-cloud-api",
       "permanent": true
@@ -3514,6 +3569,66 @@
     {
       "source": "/best-practices/how-we-structure/5-semantic-layer-marts",
       "destination": "/best-practices/how-we-build-our-metrics/semantic-layer-7-semantic-structure",
+      "permanent": true
+    },
+    {
+      "source": "/terms/cte",
+      "destination": "https://www.getdbt.com/blog/guide-to-cte",
+      "permanent": true
+    },
+    {
+      "source": "/terms/dag",
+      "destination": "https://www.getdbt.com/blog/guide-to-dag",
+      "permanent": true
+    },
+    {
+      "source": "/terms/data-lineage",
+      "destination": "https://www.getdbt.com/blog/guide-to-data-lineage",
+      "permanent": true
+    },
+    {
+      "source": "/terms/ddl",
+      "destination": "https://www.getdbt.com/blog/guide-to-ddl",
+      "permanent": true
+    },
+    {
+      "source": "/terms/dimensional-modeling",
+      "destination": "https://www.getdbt.com/blog/guide-to-dimensional-modeling",
+      "permanent": true
+    },
+    {
+      "source": "/terms/dml",
+      "destination": "https://www.getdbt.com/blog/guide-to-dml",
+      "permanent": true
+    },
+    {
+      "source": "/terms/dry",
+      "destination": "https://www.getdbt.com/blog/guide-to-dry",
+      "permanent": true
+    },
+    {
+      "source": "/terms/grain",
+      "destination": "https://www.getdbt.com/blog/guide-to-data-grain",
+      "permanent": true
+    },
+    {
+      "source": "/terms/subquery",
+      "destination": "https://www.getdbt.com/blog/guide-to-subquery",
+      "permanent": true
+    },
+    {
+      "source": "/terms/surrogate-key",
+      "destination": "https://www.getdbt.com/blog/guide-to-surrogate-key",
+      "permanent": true
+    },
+    {
+      "source": "/glossary",
+      "destination": "https://www.getdbt.com/blog",
+      "permanent": true
+    },
+    {
+      "source": "/terms/:path((?!elt|etl|reverse-etl).*)",
+      "destination": "https://www.getdbt.com/blog",
       "permanent": true
     }
   ],

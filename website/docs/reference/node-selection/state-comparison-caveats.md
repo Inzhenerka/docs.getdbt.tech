@@ -2,6 +2,8 @@
 title: "Caveats to state comparison"
 ---
 
+import StateModified from '/snippets/_state-modified-compare.md';
+
 The [`state:` selection method](/reference/node-selection/methods#the-state-method) is a powerful feature, with a lot of underlying complexity. Below are a handful of considerations when setting up automated jobs that leverage state comparison.
 
 ### Seeds
@@ -44,12 +46,21 @@ dbt test -s "state:modified" --exclude "test_name:relationships"
 
 ### False positives
 
+<VersionBlock firstVersion="1.9">
+
+To reduce false positives during `state:modified` selection due to env-aware logic, you can set the `state_modified_compare_more_unrendered_values` [behavior flag](/reference/global-configs/behavior-changes#behavior-change-flags) to `True`.
+
+<StateModified features={'/snippets/_state-modified-compare.md'}/>
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.8">
 State comparison works by identifying discrepancies between two manifests.  Those discrepancies could be the result of:
 
 1. Changes made to a project in development
-2. Env-aware logic that causes different behavior based on the `target`, env vars, etc.
+2. Env-aware logic that causes different behavior based on the `target`, env vars, etc., which can be avoided if you upgrade to dbt Core 1.9 and set the `state_modified_compare_more_unrendered_values` [behavior flag](/reference/global-configs/behavior-changes#behavior-change-flags) to `True`.
 
-State comparison detects env-aware config in `dbt_project.yml`. This target-based config registers as a modification:
+State comparison detects env-aware config in `dbt_project.yml`. This target-based config won't register as a modification:
 
 <File name='dbt_project.yml'>
 
@@ -73,6 +84,7 @@ That means the following config—functionally identical to the snippet above—
     materialized = ('table' if target.name == 'prod' else 'view')
 ) }}
 ```
+</VersionBlock>
 
 ### Final note
 

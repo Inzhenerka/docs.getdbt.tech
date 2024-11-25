@@ -18,9 +18,10 @@ This year, dbt Labs is introducing an expanded notion of `dependencies` across m
 
 ## Prerequisites
 - Available in [dbt Cloud Enterprise](https://www.getdbt.com/pricing). If you have an Enterprise account, you can unlock these features by designating a [public model](/docs/collaborate/govern/model-access) and adding a [cross-project ref](#how-to-write-cross-project-ref). <Lifecycle status="enterprise"/>
-- Use a supported version of dbt (v1.6, v1.7, or go versionless with "[Versionless](/docs/dbt-versions/upgrade-dbt-version-in-cloud#versionless)") for both the upstream ("producer") project and the downstream ("consumer") project.
+- Use a supported version of dbt (v1.6 or newer or go versionless with "[Versionless](/docs/dbt-versions/upgrade-dbt-version-in-cloud#versionless)") for both the upstream ("producer") project and the downstream ("consumer") project.
 - Define models in an upstream ("producer") project that are configured with [`access: public`](/reference/resource-configs/access). You need at least one successful job run after defining their `access`.
 - Define a deployment environment in the upstream ("producer") project [that is set to be your Production environment](/docs/deploy/deploy-environments#set-as-production-environment), and ensure it has at least one successful job run in that environment.
+- If the upstream project has a Staging environment, run a job in that Staging environment to ensure the downstream cross-project ref resolves.
 - Each project `name` must be unique in your dbt Cloud account. For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, you should not create separate projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`. That isolation should instead be handled at the environment level.
   - We are adding support for environment-level permissions and data warehouse connections; please contact your dbt Labs account team for beta access.
 - The `dbt_project.yml` file is case-sensitive, which means the project name must exactly match the name in your `dependencies.yml`.  For example, if your project name is `jaffle_marketing`, you should use `jaffle_marketing` (not `JAFFLE_MARKETING`) in all related files.
@@ -29,9 +30,6 @@ This year, dbt Labs is introducing an expanded notion of `dependencies` across m
 import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 
 <UseCaseInfo/>
-
-Refer to the [FAQs](#faqs) for more info.
-
 
 ## Example
 
@@ -105,13 +103,18 @@ For more guidance on how to use dbt Mesh, refer to the dedicated [dbt Mesh guide
 
 ### Safeguarding production data with staging environments
 
-When working in a Development environment, cross-project `ref`s normally resolve to the Production environment of the project. However, to protect production data, set up a [Staging deployment environment](/docs/deploy/deploy-environments#staging-environment) within your projects. With a staging environment integrated into the project, any references from external projects during development workflows resolve to the Staging environment. This adds a layer of security between your Deployment and Production environments by limiting access to production data.
+When working in a Development environment, cross-project `ref`s normally resolve to the Production environment of the project. However, to protect production data, set up a [Staging deployment environment](/docs/deploy/deploy-environments#staging-environment) within your projects. 
+
+With a staging environment integrated into the project, dbt Mesh automatically fetches public model information from the producer’s staging environment if the consumer is also in staging. Similarly, dbt Mesh fetches from the producer’s production environment if the consumer is in production. This ensures consistency between environments and adds a layer of security by preventing access to production data during development workflows.
 
 Read [Why use a staging environment](/docs/deploy/deploy-environments#why-use-a-staging-environment) for more information about the benefits. 
 
 #### Staging with downstream dependencies
 
-dbt Cloud begins using the Staging environment to resolve cross-project references from downstream projects as soon as it exists in a project without "fail-over" to Production. To avoid causing downtime for downstream developers, you should define and trigger a job before marking the environment as Staging:
+dbt Cloud begins using the Staging environment to resolve cross-project references from downstream projects as soon as it exists in a project without "fail-over" to Production. This means that dbt Cloud will consistently use metadata from the Staging environment to resolve references in downstream projects, even if there haven't been any successful runs in the configured Staging environment. 
+
+To avoid causing downtime for downstream developers, you should define and trigger a job before marking the environment as Staging:
+
 1. Create a new environment, but do NOT mark it as **Staging**.
 2. Define a job in that environment.
 3. Trigger the job to run, and ensure it completes successfully.

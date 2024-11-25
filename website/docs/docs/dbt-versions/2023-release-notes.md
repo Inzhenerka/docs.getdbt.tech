@@ -110,7 +110,7 @@ Archived release notes for dbt Cloud from 2023
 
     Now available for dbt Cloud Enterprise plans is a new option to enable Git repository caching for your job runs. When enabled, dbt Cloud caches your dbt project's Git repository and uses the cached copy instead if there's an outage with the Git provider. This feature improves the reliability and stability of your job runs. 
 
-    To learn more, refer to [Repo caching](/docs/deploy/deploy-environments#git-repository-caching).
+    To learn more, refer to [Repo caching](/docs/cloud/account-settings#git-repository-caching).
 
     <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Repository caching option" />
 
@@ -691,7 +691,7 @@ Archived release notes for dbt Cloud from 2023
 
     **Beginning June 1, 2023,** developers on the dbt Cloud multi-tenant application will be able to self-serve access to their account’s run history through the dbt Cloud user interface (UI) and API for only 365 days, on a rolling basis. Older run history will be available for download by reaching out to Customer Support. We're seeking to minimize the amount of metadata we store while maximizing application performance. 
 
-    Specifically, all `GET` requests to the dbt Cloud [Runs endpoint](https://docs.getdbt.com/dbt-cloud/api-v2-legacy#tag/Runs) will return information on runs, artifacts, logs, and run steps only for the past 365 days.  Additionally, the run history displayed in the dbt Cloud UI will only show runs for the past 365 days.  
+    Specifically, all `GET` requests to the dbt Cloud [Runs endpoint](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/List%20Runs) will return information on runs, artifacts, logs, and run steps only for the past 365 days.  Additionally, the run history displayed in the dbt Cloud UI will only show runs for the past 365 days.  
 
     <Lightbox src="/img/docs/dbt-cloud/rn-run-history.jpg" width="100%" title="The dbt Cloud UI displaying a Run History"/>
 
@@ -808,7 +808,7 @@ Archived release notes for dbt Cloud from 2023
 
     :::
 
-    For more info, refer to our [documentation](/dbt-cloud/api-v2-legacy#tag/Runs/operation/listRunsForAccount).
+    For more info, refer to our [documentation](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/List%20Runs).
 
   </Expandable>
 
@@ -936,7 +936,7 @@ Archived release notes for dbt Cloud from 2023
 
     This maximum limit applies to [multi-tenant instances](/docs/cloud/about-cloud/access-regions-ip-addresses) only, and _does not_ apply to single tenant instances.
 
-    Refer to the [Pagination](https://docs.getdbt.com/dbt-cloud/api-v2-legacy#section/Pagination) section for more information on this change. 
+    Refer to the [Pagination](https://docs.getdbt.com/dbt-cloud/api-v2#/) section of the overview for more information on this change. 
 
     </Expandable>
 

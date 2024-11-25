@@ -7,14 +7,18 @@ pagination_next:  "docs/collaborate/data-tile"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
-# Auto-exposures <Lifecycle status='beta' />
+# Auto-exposures <Lifecycle status="preview,enterprise" />
 
 As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto-exposures integrates natively with Tableau (Power BI coming soon) and auto-generates downstream lineage in dbt Explorer for a richer experience.
-:::info Available in beta
-Auto-exposures are currently available in beta to a limited group of users and are gradually being rolled out. If you're interested in gaining access or learning more, stay tuned for updates!
-:::
 
 Auto-exposures helps users understand how their models are used in downstream analytics tools to inform investments and reduce incidents — ultimately building trust and confidence in data products. It imports and auto-generates exposures based on Tableau dashboards, with user-defined curation.
+
+## Supported plans
+Auto-exposures is available on [Versionless](/docs/dbt-versions/versionless-cloud) and for [dbt Cloud Enterprise](https://www.getdbt.com/pricing/) plans.
+
+:::info Tableau Server
+If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
+:::
 
 For more information on how to set up auto-exposures, prerequisites, and more &mdash; refer to [configure auto-exposures in Tableau and dbt Cloud](/docs/cloud-integrations/configure-auto-exposures).
 
