@@ -1,5 +1,5 @@
 ---
-title: "Upgrading to v1.9 (beta)"
+title: "Upgrading to v1.9"
 id: upgrading-to-v1.9
 description: New features and changes in dbt Core v1.9
 displayed_sidebar: "docs"
