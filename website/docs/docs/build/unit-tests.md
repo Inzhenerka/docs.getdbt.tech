@@ -26,7 +26,7 @@ Starting in dbt Core v1.8, we have introduced an additional type of test to dbt 
 - We currently _don't_ support unit testing models that use recursive SQL.
 - If your model has multiple versions, by default the unit test will run on *all* versions of your model. Read [unit testing versioned models](/reference/resource-properties/unit-testing-versions) for more information.
 - Unit tests must be defined in a YML file in your [`models/` directory](/reference/project-configs/model-paths).
-- Table names must be [aliased](/docs/build/custom-aliases) in order to unit test `join` logic.
+- Table names must be aliased in order to unit test `join` logic.
 - Include all [`ref`](/reference/dbt-jinja-functions/ref) or [`source`](/reference/dbt-jinja-functions/source) model references in the unit test configuration as `input`s to avoid "node not found" errors during compilation.
 
 #### Adapter-specific caveats

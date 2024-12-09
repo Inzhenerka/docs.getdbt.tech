@@ -184,11 +184,10 @@ Several configurations are relevant to microbatch models, and some are required:
 | Config   |  Description   | Default | Type | Required  |
 |----------|---------------|---------|------|---------|
 | [`event_time`](/reference/resource-configs/event-time)  | The column indicating "at what time did the row occur." Required for your microbatch model and any direct parents that should be filtered.   | N/A     |  Column  |  Required |
-| `begin`      |  The "beginning of time" for the microbatch model. This is the starting point for any initial or full-refresh builds. For example, a daily-grain microbatch model run on `2024-10-01` with `begin = '2023-10-01` will process 366 batches (it's a leap year!) plus the batch for "today."        | N/A     | Date   | Required |
-| `batch_size` |  The granularity of your batches. Supported values are `hour`, `day`, `month`, and `year`    | N/A     | String  | Required |
-| `lookback`   | Process X batches prior to the latest bookmark to capture late-arriving records.    | `1`     | Integer | Optional |
-| `concurrent_batches` | An override for whether batches run concurrently (at the same time) or sequentially (one after the other). | `None` | Boolean | Optional |
-
+| [`begin`](/reference/resource-configs/begin)      |  The "beginning of time" for the microbatch model. This is the starting point for any initial or full-refresh builds. For example, a daily-grain microbatch model run on `2024-10-01` with `begin = '2023-10-01` will process 366 batches (it's a leap year!) plus the batch for "today."        | N/A     | Date   | Required |
+| [`batch_size`](/reference/resource-configs/batch-size) |  The granularity of your batches. Supported values are `hour`, `day`, `month`, and `year`    | N/A     | String  | Required |
+| [`lookback`](/reference/resource-configs/lookback)   | Process X batches prior to the latest bookmark to capture late-arriving records.    | `1`     | Integer | Optional |
+| [`concurrent_batches`](/reference/resource-properties/concurrent_batches) | An override for whether batches run concurrently (at the same time) or sequentially (one after the other). | `None` | Boolean | Optional |
 
 <Lightbox src="/img/docs/building-a-dbt-project/microbatch/event_time.png" title="The event_time column configures the real-world time of this record"/>
 
@@ -290,7 +289,7 @@ The microbatch strategy offers the benefit of updating a model in smaller, more 
 
 Parallel batch execution means that multiple batches are processed at the same time, instead of one after the other (sequentially) for faster processing of your microbatch models.  
 
-dbt automatically detects whether a batch can be run in parallel in most cases, which means you don’t need to configure this setting. However, the `concurrent_batches` config is available as an override (not a gate), allowing you to specify whether batches should or shouldn’t be run in parallel in specific cases.
+dbt automatically detects whether a batch can be run in parallel in most cases, which means you don’t need to configure this setting. However, the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches) is available as an override (not a gate), allowing you to specify whether batches should or shouldn’t be run in parallel in specific cases.
 
 For example, if you have a microbatch model with 12 batches, you can execute those batches to run in parallel. Specifically they'll run in parallel limited by the number of [available threads](/docs/running-a-dbt-project/using-threads).
 
