@@ -38,7 +38,7 @@ absolute="/Users/username/project/seed"
     ```
 
 ## Examples
-### Use a subdirectory named `custom_seeds` instead of `seeds`
+### Use a directory named `custom_seeds` instead of `seeds`
 
 <File name='dbt_project.yml'>
 

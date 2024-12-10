@@ -909,3 +909,10 @@ By default, this is set to `True` to support the default `intermediate_format` o
 ### The `intermediate_format` parameter
 The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
 
+<VersionBlock firstVersion="1.8">
+
+## Unit test limitations
+
+You must specify all fields in a BigQuery `STRUCT` for [unit tests](/docs/build/unit-tests). You cannot use only a subset of fields in a `STRUCT`.
+
+</VersionBlock>

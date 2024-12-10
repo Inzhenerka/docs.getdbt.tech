@@ -3,8 +3,6 @@ title: "Model notifications"
 description: "While a job is running, receive email notifications in real time about any issues with your models and tests. "
 ---
 
-# Model notifications <Lifecycle status="beta" />
-
 Set up dbt to notify the appropriate model owners through email about issues as soon as they occur, while the job is still running. Model owners can specify which statuses to receive notifications about: 
 
 - `Success` and `Fails` for models
@@ -12,17 +10,12 @@ Set up dbt to notify the appropriate model owners through email about issues as 
 
 With model-level notifications, model owners can be the first ones to know about issues before anyone else (like the stakeholders). 
 
-:::info Beta feature
-
-This feature is currently available in [beta](/docs/dbt-versions/product-lifecycles#dbt-cloud) to a limited group of users and is gradually being rolled out. If you're in the beta, please contact the Support team at support@getdbt.com for assistance or questions.
-
-:::
-
 To be timely and keep the number of notifications to a reasonable amount when multiple models or tests trigger them, dbt observes the following guidelines when notifying the owners:  
 
 - Send a notification to each unique owner/email during a job run about any models (with status of failure/success) or tests (with status of warning/failure/success). Each owner receives only one notification, the initial one.
-- Don't send any notifications about subsequent models or tests while a dbt job is still running.
-- At the end of a job run, each owner receives a notification, for each of the statuses they specified to be notified about, with a list of models and tests that have that status. 
+- No notifications sent about subsequent models or tests while a dbt job is still running.
+- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.
+- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.
 
 Create configuration YAML files in your project for dbt to send notifications about the status of your models and tests.
 
@@ -30,10 +23,11 @@ Create configuration YAML files in your project for dbt to send notifications ab
 - Your dbt Cloud administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.
 - Your environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy dbt Core version.
 
-
 ## Configure groups
 
-Define your groups in any .yml file in your [models directory](/reference/project-configs/model-paths). For example: 
+Define your groups in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group must have a single email address specified &mdash; multiple email fields or lists aren't supported.
+
+The following example shows how to define groups in a `groups.yml` file.
 
 <File name='models/groups.yml'>
 
@@ -116,6 +110,6 @@ Provide dbt Cloud account members the ability to configure and receive alerts ab
 To use model-level notifications, your dbt Cloud account must have access to the feature. Ask your dbt Cloud administrator to enable this feature for account members by following these steps:
 
 1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). 
-1. From **Email notications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). 
+1. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). 
 
   <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Example of the setting Enable group/owner notifications on models" /> 
