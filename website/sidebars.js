@@ -222,6 +222,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/athena-setup",
                 "docs/core/connect-data-platform/glue-setup",
                 "docs/core/connect-data-platform/clickhouse-setup",
+                "docs/core/connect-data-platform/cratedb-setup",
                 "docs/core/connect-data-platform/databend-setup",
                 "docs/core/connect-data-platform/decodable-setup",
                 "docs/core/connect-data-platform/doris-setup",
