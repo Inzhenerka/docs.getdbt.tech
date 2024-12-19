@@ -1,10 +1,10 @@
 ---
-title: Advanced configuration usage
-sidebar_label: Advanced usage
+title: Использование расширенной конфигурации
+sidebar_label: Расширенное использование
 ---
-## Alternative config block syntax
+## Альтернативный синтаксис блока конфигурации
 
-Some configurations may contain characters (e.g. dashes) that cannot be parsed as a jinja argument. For example, the following would return an error:
+Некоторые конфигурации могут содержать символы (например, дефисы), которые не могут быть интерпретированы как аргументы jinja. Например, следующий код вызовет ошибку:
 
 ```sql
 {{ config(
@@ -15,10 +15,9 @@ Some configurations may contain characters (e.g. dashes) that cannot be parsed a
 select ...
 ```
 
-While dbt provides an alias for any core configurations (e.g. you should use `pre_hook` instead of `pre-hook` in a config block), your dbt project may contain custom configurations without aliases.
+Хотя dbt предоставляет псевдоним для любых основных конфигураций (например, вы должны использовать `pre_hook` вместо `pre-hook` в блоке конфигурации), ваш проект dbt может содержать пользовательские конфигурации без псевдонимов.
 
-If you want to specify these configurations inside of a model, use the alternative config block syntax:
-
+Если вы хотите указать эти конфигурации внутри модели, используйте альтернативный синтаксис блока конфигурации:
 
 <File name='models/events/base/base_events.sql'>
 
@@ -37,6 +36,6 @@ select ...
 </File>
 
 <!---
-## Hierarchies / overriding configs / precedence
-For Drew to do
+## Иерархии / переопределение конфигураций / приоритет
+Для выполнения Дрю
 --->

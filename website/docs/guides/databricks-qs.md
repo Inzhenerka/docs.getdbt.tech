@@ -1,150 +1,150 @@
 ---
-title: "Quickstart for dbt Cloud and Databricks"
+title: "Быстрый старт для dbt Cloud и Databricks"
 id: "databricks"
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'databricks'
 hide_table_of_contents: true
 recently_updated: true
-tags: ['dbt Cloud', 'Quickstart','Databricks']
+tags: ['dbt Cloud', 'Быстрый старт', 'Databricks']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with Databricks. It will show you how to: 
+В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с Databricks. Оно покажет вам, как:
 
-- Create a Databricks workspace.
-- Load sample data into your Databricks account.
-- Connect dbt Cloud to Databricks.
-- Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add tests to your models.
-- Document your models.
-- Schedule a job to run.
+- Создать рабочее пространство Databricks.
+- Загрузить образцы данных в вашу учетную запись Databricks.
+- Подключить dbt Cloud к Databricks.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
-:::tip Videos for you
-You can check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
+:::tip Видео для вас
+Если вам интересно обучение с видео, вы можете бесплатно ознакомиться с курсом [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
-### Prerequisites​
+### Предварительные требования
 
-- You have a [dbt Cloud account](https://www.getdbt.com/signup/). 
-- You have an account with a cloud service provider (such as AWS, GCP, and Azure) and have permissions to create an S3 bucket with this account. For demonstrative purposes, this guide uses AWS as the cloud service provider.
+- У вас есть [учетная запись dbt Cloud](https://www.getdbt.com/signup/).
+- У вас есть учетная запись у поставщика облачных услуг (таких как AWS, GCP и Azure) и разрешения на создание S3-бакета с этой учетной записью. В этом руководстве для демонстрационных целей используется AWS в качестве поставщика облачных услуг.
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
-- [CI jobs](/docs/deploy/continuous-integration)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
+- Узнайте больше с помощью курсов [dbt Learn](https://learn.getdbt.com)
+- [CI задания](/docs/deploy/continuous-integration)
+- [Развертывание заданий](/docs/deploy/deploy-jobs)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источников](/docs/deploy/source-freshness)
 
-## Create a Databricks workspace
+## Создание рабочего пространства Databricks
 
-1. Use your existing account or [sign up for a Databricks account](https://databricks.com/). Complete the form with your user information and click **Continue**.
+1. Используйте свою существующую учетную запись или [зарегистрируйтесь для получения учетной записи Databricks](https://databricks.com/). Заполните форму с вашей информацией и нажмите **Продолжить**.
     
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/signup_form.png" title="Sign up for Databricks" />
+    <Lightbox src="/img/databricks_tutorial/images/signup_form.png" title="Регистрация в Databricks" />
     </div>
 
-2. On the next screen, select your cloud provider. This tutorial uses AWS as the cloud provider, but if you use Azure or GCP internally, please select your platform. The setup process will be similar. Do not select the **Get started with Community Edition** option, as this will not provide the required compute for this guide. 
+2. На следующем экране выберите вашего облачного провайдера. В этом учебном пособии используется AWS в качестве облачного провайдера, но если вы используете Azure или GCP, пожалуйста, выберите вашу платформу. Процесс настройки будет аналогичным. Не выбирайте опцию **Начать с Community Edition**, так как это не обеспечит необходимую вычислительную мощность для этого руководства. 
 
-        <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/choose_provider.png" title="Choose cloud provider" />
+    <div style={{maxWidth: '400px'}}>
+    <Lightbox src="/img/databricks_tutorial/images/choose_provider.png" title="Выбор облачного провайдера" />
     </div>
 
-3. Check your email and complete the verification process.
+3. Проверьте свою электронную почту и завершите процесс проверки.
 
-4. After completing the verification processes, you will be brought to the first setup screen. Databricks defaults to the `Premium` plan and you can change the trial to `Enterprise` on this page.
+4. После завершения процесса проверки вы попадете на первый экран настройки. Databricks по умолчанию использует план `Premium`, и вы можете изменить пробный период на `Enterprise` на этой странице.
     
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/choose_plan.png" title="Choose Databricks Plan" />
+    <Lightbox src="/img/databricks_tutorial/images/choose_plan.png" title="Выбор плана Databricks" />
     </div>
 
-5. Now, it's time to create your first workspace. A Databricks workspace is an environment for accessing all of your Databricks assets. The workspace organizes objects like notebooks, SQL warehouses, clusters, and more so into one place.  Provide the name of your workspace, choose the appropriate AWS region, and click **Start Quickstart**. You might get the checkbox of **I have data in S3 that I want to query with Databricks**. You do not need to check this off for this tutorial. 
+5. Теперь пришло время создать ваше первое рабочее пространство. Рабочее пространство Databricks — это среда для доступа ко всем вашим активам Databricks. Рабочее пространство организует такие объекты, как блокноты, SQL-склады, кластеры и многое другое в одном месте. Укажите имя вашего рабочего пространства, выберите соответствующий регион AWS и нажмите **Начать быстрый старт**. Вы можете увидеть флажок **У меня есть данные в S3, которые я хочу запросить с помощью Databricks**. Вам не нужно отмечать его для этого учебного пособия. 
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/start_quickstart.png" title="Create AWS resources" />
+    <Lightbox src="/img/databricks_tutorial/images/start_quickstart.png" title="Создание ресурсов AWS" />
     </div>
 
-6. By clicking on `Start Quickstart`, you will be redirected to AWS and asked to log in if you haven’t already. After logging in, you should see a page similar to this. 
+6. Нажав на `Начать быстрый старт`, вы будете перенаправлены на AWS и попросят войти в систему, если вы еще не сделали этого. После входа в систему вы должны увидеть страницу, похожую на эту. 
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/quick_create_stack.png" title="Create AWS resources" />
+    <Lightbox src="/img/databricks_tutorial/images/quick_create_stack.png" title="Создание ресурсов AWS" />
     </div>
 
 :::tip
-If you get a session error and don’t get redirected to this page, you can go back to the Databricks UI and create a workspace from the interface. All you have to do is click **create workspaces**, choose the quickstart, fill out the form and click **Start Quickstart**.
+Если вы получили ошибку сессии и не были перенаправлены на эту страницу, вы можете вернуться в интерфейс Databricks и создать рабочее пространство из интерфейса. Все, что вам нужно сделать, это нажать **создать рабочие пространства**, выбрать быстрый старт, заполнить форму и нажать **Начать быстрый старт**.
 :::
 
-7. There is no need to change any of the pre-filled out fields in the Parameters. Just add in your Databricks password under **Databricks Account Credentials**.  Check off the Acknowledgement and click **Create stack**.   
+7. Нет необходимости изменять какие-либо предварительно заполненные поля в параметрах. Просто добавьте свой пароль Databricks в поле **Учетные данные учетной записи Databricks**. Убедитесь, что вы отметили подтверждение и нажмите **Создать стек**.   
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/parameters.png" title="Parameters" />
+    <Lightbox src="/img/databricks_tutorial/images/parameters.png" title="Параметры" />
     </div>    
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/create_stack.png" title="Capabilities" />
+    <Lightbox src="/img/databricks_tutorial/images/create_stack.png" title="Возможности" />
     </div>    
 
-8. Go back to the Databricks tab. You should see that your workspace is ready to use.
+8. Вернитесь на вкладку Databricks. Вы должны увидеть, что ваше рабочее пространство готово к использованию.
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/workspaces.png" title="A Databricks Workspace" />
+    <Lightbox src="/img/databricks_tutorial/images/workspaces.png" title="Рабочее пространство Databricks" />
     </div>
-9. Now let’s jump into the workspace. Click **Open** and log into the workspace using the same login as you used to log into the account. 
+9. Теперь давайте перейдем в рабочее пространство. Нажмите **Открыть** и войдите в рабочее пространство, используя ту же учетную запись, которую вы использовали для входа.
 
-## Load data
+## Загрузка данных
 
-1. Download these CSV files (the Jaffle Shop sample data) that you will need for this guide:
+1. Скачайте эти CSV-файлы (образцы данных Jaffle Shop), которые вам понадобятся для этого руководства:
     - [jaffle_shop_customers.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_customers.csv)
     - [jaffle_shop_orders.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_orders.csv)
     - [stripe_payments.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/stripe_payments.csv)
 
-2. First we need a SQL warehouse. Find the drop down menu and toggle into the SQL space.
+2. Сначала нам нужен SQL-склад. Найдите выпадающее меню и переключитесь в SQL-пространство.
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/go_to_sql.png" title="SQL space" />
+    <Lightbox src="/img/databricks_tutorial/images/go_to_sql.png" title="SQL пространство" />
     </div>
-3. We will be setting up a SQL warehouse now.  Select **SQL Warehouses** from the left hand side console.  You will see that a default SQL Warehouse exists.  
+3. Теперь мы настроим SQL-склад. Выберите **SQL Warehouses** в левой консоли. Вы увидите, что существует стандартный SQL-склад.  
 
-4. Click **Start** on the Starter Warehouse.  This will take a few minutes to get the necessary resources spun up.
+4. Нажмите **Начать** на Starter Warehouse. Это займет несколько минут, чтобы запустить необходимые ресурсы.
 
-5. Once the SQL Warehouse is up, click **New** and then **File upload** on the dropdown menu. 
+5. После того как SQL-склад будет запущен, нажмите **Новый** и затем **Загрузка файла** в выпадающем меню. 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/new_file_upload_using_databricks_SQL.png" title="New File Upload Using Databricks SQL" />
-    </div>
-
-6. Let's load the Jaffle Shop Customers data first. Drop in the `jaffle_shop_customers.csv` file into the UI.
-    <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/databricks_table_loader.png" title="Databricks Table Loader" />
+    <Lightbox src="/img/databricks_tutorial/images/new_file_upload_using_databricks_SQL.png" title="Новая загрузка файла с использованием Databricks SQL" />
     </div>
 
-7. Update the Table Attributes at the top:
+6. Давайте сначала загрузим данные клиентов Jaffle Shop. Перетащите файл `jaffle_shop_customers.csv` в интерфейс.
+    <div style={{maxWidth: '400px'}}>
+    <Lightbox src="/img/databricks_tutorial/images/databricks_table_loader.png" title="Загрузчик таблиц Databricks" />
+    </div>
+
+7. Обновите атрибуты таблицы вверху:
 
     - <b>data_catalog</b> = hive_metastore
     - <b>database</b> = default 
     - <b>table</b> = jaffle_shop_customers
-    - Make sure that the column data types are correct. The way you can do this is by hovering over the datatype icon next to the column name. 
+    - Убедитесь, что типы данных столбцов правильные. Вы можете сделать это, наведя курсор на значок типа данных рядом с именем столбца. 
         - <b>ID</b> = bigint
         - <b>FIRST_NAME</b> = string
         - <b>LAST_NAME</b> = string
 
     <div style={{maxWidth: '600px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/jaffle_shop_customers_upload.png" title="Load jaffle shop customers" />
+    <Lightbox src="/img/databricks_tutorial/images/jaffle_shop_customers_upload.png" title="Загрузка клиентов jaffle shop" />
     </div>
 
-8. Click **Create** on the bottom once you’re done. 
+8. Нажмите **Создать** внизу, когда закончите. 
 
-9. Now let’s do the same for `Jaffle Shop Orders` and `Stripe Payments`. 
+9. Теперь давайте сделаем то же самое для `Jaffle Shop Orders` и `Stripe Payments`. 
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/jaffle_shop_orders_upload.png" title="Load jaffle shop orders" />
+    <Lightbox src="/img/databricks_tutorial/images/jaffle_shop_orders_upload.png" title="Загрузка заказов jaffle shop" />
     </div>
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/stripe_payments_upload.png" title="Load stripe payments" />
+    <Lightbox src="/img/databricks_tutorial/images/stripe_payments_upload.png" title="Загрузка платежей Stripe" />
     </div>
     
-10. Once that's done, make sure you can query the training data.  Navigate to the `SQL Editor` through the left hand menu.  This will bring you to a query editor.
-11. Ensure that you can run a `select *` from each of the tables with the following code snippets. 
+10. После завершения убедитесь, что вы можете запросить обучающие данные. Перейдите в `SQL Editor` через левое меню. Это приведет вас к редактору запросов.
+11. Убедитесь, что вы можете выполнить `select *` из каждой из таблиц с помощью следующих кодов. 
 
     ```sql
     select * from default.jaffle_shop_customers
@@ -153,100 +153,100 @@ If you get a session error and don’t get redirected to this page, you can go b
     ```
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/databricks_tutorial/images/query_check.png" title="Query Check" />
+    <Lightbox src="/img/databricks_tutorial/images/query_check.png" title="Проверка запроса" />
     </div>
 
-12. To ensure any users who might be working on your dbt project has access to your object, run this command.
+12. Чтобы убедиться, что любые пользователи, которые могут работать над вашим проектом dbt, имеют доступ к вашему объекту, выполните эту команду.
 
     ```sql 
     grant all privileges on schema default to users;
     ```
 
-## Connect dbt Cloud to Databricks
+## Подключение dbt Cloud к Databricks
 
-There are two ways to connect dbt Cloud to Databricks. The first option is Partner Connect, which provides a streamlined setup to create your dbt Cloud account from within your new Databricks trial account. The second option is to create your dbt Cloud account separately and build the Databricks connection yourself (connect manually). If you want to get started quickly, dbt Labs recommends using Partner Connect. If you want to customize your setup from the very beginning and gain familiarity with the dbt Cloud setup flow, dbt Labs recommends connecting manually.
+Существует два способа подключения dbt Cloud к Databricks. Первый вариант — Partner Connect, который обеспечивает упрощенную настройку для создания вашей учетной записи dbt Cloud из вашей новой пробной учетной записи Databricks. Второй вариант — создать учетную запись dbt Cloud отдельно и самостоятельно настроить подключение к Databricks (подключение вручную). Если вы хотите быстро начать, dbt Labs рекомендует использовать Partner Connect. Если вы хотите настроить свою конфигурацию с самого начала и ознакомиться с процессом настройки dbt Cloud, dbt Labs рекомендует подключение вручную.
 
-## Set up the integration from Partner Connect
+## Настройка интеграции через Partner Connect
 
 :::note
- Partner Connect is intended for trial partner accounts. If your organization already has a dbt Cloud account, connect manually. Refer to [Connect to dbt Cloud manually](https://docs.databricks.com/partners/prep/dbt-cloud.html#connect-to-dbt-cloud-manually) in the Databricks docs for instructions.
+ Partner Connect предназначен для пробных партнерских учетных записей. Если у вашей организации уже есть учетная запись dbt Cloud, подключайтесь вручную. Смотрите [Подключение к dbt Cloud вручную](https://docs.databricks.com/partners/prep/dbt-cloud.html#connect-to-dbt-cloud-manually) в документации Databricks для получения инструкций.
 :::
 
-To connect dbt Cloud to Databricks using Partner Connect, do the following:
+Чтобы подключить dbt Cloud к Databricks с помощью Partner Connect, выполните следующие действия:
 
-1. In the sidebar of your Databricks account, click **Partner Connect**.
+1. В боковой панели вашей учетной записи Databricks нажмите **Partner Connect**.
 
-2. Click the **dbt tile**.
+2. Нажмите на **плитку dbt**.
 
-3. Select a catalog from the drop-down list, and then click **Next**. The drop-down list displays catalogs you have read and write access to. If your workspace isn't `<UC>-enabled`, the legacy Hive metastore (`hive_metastore`) is used.
+3. Выберите каталог из выпадающего списка, а затем нажмите **Далее**. Выпадающий список отображает каталоги, к которым у вас есть доступ на чтение и запись. Если ваше рабочее пространство не `<UC>-enabled`, используется устаревший метастор Hive (`hive_metastore`).
 
-5. If there are SQL warehouses in your workspace, select a SQL warehouse from the drop-down list. If your SQL warehouse is stopped, click **Start**.
+5. Если в вашем рабочем пространстве есть SQL-склады, выберите SQL-склад из выпадающего списка. Если ваш SQL-склад остановлен, нажмите **Начать**.
 
-6. If there are no SQL warehouses in your workspace:
+6. Если в вашем рабочем пространстве нет SQL-складов:
 
-   1. Click **Create warehouse**. A new tab opens in your browser that displays the **New SQL Warehouse** page in the Databricks SQL UI.
-   2. Follow the steps in [Create a SQL warehouse](https://docs.databricks.com/en/sql/admin/create-sql-warehouse.html#create-a-sql-warehouse) in the Databricks docs.
-   3. Return to the Partner Connect tab in your browser, and then close the **dbt tile**.
-   4. Re-open the **dbt tile**.
-   5. Select the SQL warehouse you just created from the drop-down list.
+   1. Нажмите **Создать склад**. В вашем браузере откроется новая вкладка, на которой будет отображаться страница **Новый SQL-склад** в интерфейсе Databricks SQL.
+   2. Следуйте шагам в [Создание SQL-склада](https://docs.databricks.com/en/sql/admin/create-sql-warehouse.html#create-a-sql-warehouse) в документации Databricks.
+   3. Вернитесь на вкладку Partner Connect в вашем браузере, затем закройте **плитку dbt**.
+   4. Снова откройте **плитку dbt**.
+   5. Выберите SQL-склад, который вы только что создали, из выпадающего списка.
 
-7. Select a schema from the drop-down list, and then click **Add**. The drop-down list displays schemas you have read and write access to. You can repeat this step to add multiple schemas.
+7. Выберите схему из выпадающего списка, а затем нажмите **Добавить**. Выпадающий список отображает схемы, к которым у вас есть доступ на чтение и запись. Вы можете повторить этот шаг, чтобы добавить несколько схем.
 
-   Partner Connect creates the following resources in your workspace:
+   Partner Connect создает следующие ресурсы в вашем рабочем пространстве:
 
-   - A Databricks service principal named **DBT_CLOUD_USER**.
-   - A Databricks personal access token that is associated with the **DBT_CLOUD_USER** service principal.
+   - Сервисный принципал Databricks с именем **DBT_CLOUD_USER**.
+   - Личный токен доступа Databricks, связанный с сервисным принципалом **DBT_CLOUD_USER**.
   
-   Partner Connect also grants the following privileges to the **DBT_CLOUD_USER** service principal:
+   Partner Connect также предоставляет следующие привилегии сервисному принципалу **DBT_CLOUD_USER**:
 
-   - (Unity Catalog) **USE CATALOG**: Required to interact with objects within the selected catalog.
-   - (Unity Catalog) **USE SCHEMA**: Required to interact with objects within the selected schema.
-   - (Unity Catalog) **CREATE SCHEMA**: Grants the ability to create schemas in the selected catalog.
-   - (Hive metastore) **USAGE**: Required to grant the **SELECT** and **READ_METADATA** privileges for the schemas you selected.
-   - **SELECT**: Grants the ability to read the schemas you selected.
-   - (Hive metastore) **READ_METADATA**: Grants the ability to read metadata for the schemas you selected.
-   - **CAN_USE**: Grants permissions to use the SQL warehouse you selected.
+   - (Unity Catalog) **USE CATALOG**: Необходим для взаимодействия с объектами в выбранном каталоге.
+   - (Unity Catalog) **USE SCHEMA**: Необходим для взаимодействия с объектами в выбранной схеме.
+   - (Unity Catalog) **CREATE SCHEMA**: Предоставляет возможность создавать схемы в выбранном каталоге.
+   - (Hive metastore) **USAGE**: Необходим для предоставления привилегий **SELECT** и **READ_METADATA** для выбранных вами схем.
+   - **SELECT**: Предоставляет возможность читать выбранные вами схемы.
+   - (Hive metastore) **READ_METADATA**: Предоставляет возможность читать метаданные для выбранных вами схем.
+   - **CAN_USE**: Предоставляет разрешения на использование выбранного вами SQL-склада.
 
-8. Click **Next**.
+8. Нажмите **Далее**.
 
-   The **Email** box displays the email address for your Databricks account. dbt Labs uses this email address to prompt you to create a trial dbt Cloud account.
+   В поле **Email** отображается адрес электронной почты для вашей учетной записи Databricks. dbt Labs использует этот адрес электронной почты, чтобы предложить вам создать пробную учетную запись dbt Cloud.
 
-9. Click **Connect to dbt Cloud**.
+9. Нажмите **Подключиться к dbt Cloud**.
 
-   A new tab opens in your web browser, which displays the getdbt.com website.
+   В вашем веб-браузере откроется новая вкладка, на которой будет отображаться сайт getdbt.com.
 
-10. Complete the on-screen instructions on the getdbt.com website to create your trial dbt Cloud account.
+10. Завершите инструкции на экране на сайте getdbt.com, чтобы создать свою пробную учетную запись dbt Cloud.
 
-## Set up a dbt Cloud managed repository
+## Настройка управляемого репозитория dbt Cloud
 
 <Snippet path="tutorial-managed-repo" />
 
-## Initialize your dbt project​ and start developing
+## Инициализация вашего проекта dbt и начало разработки
 
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать свой проект и начать разработку в dbt Cloud:
 
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize dbt project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit` and click **Commit**. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - Click **+ Create new file**, add this query to the new file, and click **Save as** to save the new file: 
+1. Нажмите **Начать разработку в IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как он устанавливает ваше соединение с git, клонирует ваш репозиторий и тестирует соединение со складом.
+2. Над деревом файлов слева нажмите **Инициализировать проект dbt**. Это создаст вашу структуру папок с примерами моделей.
+3. Сделайте свой первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit` и нажмите **Коммит**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которую вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего склада и выполнять `dbt run`. Вы можете попробовать это сейчас:
+    - Нажмите **+ Создать новый файл**, добавьте этот запрос в новый файл и нажмите **Сохранить как**, чтобы сохранить новый файл: 
         ```sql
         select * from default.jaffle_shop_customers
         ```
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Build your first model
+## Создание вашей первой модели
 
-You have two options for working with files in the dbt Cloud IDE:
+У вас есть два варианта работы с файлами в IDE dbt Cloud:
 
-- Create a new branch (recommended) &mdash; Create a new branch to edit and commit your changes. Navigate to **Version Control** on the left sidebar and click **Create branch**.
-- Edit in the protected primary branch &mdash; If you prefer to edit, format, or lint files and execute dbt commands directly in your primary git branch. The dbt Cloud IDE prevents commits to the protected branch, so you will be prompted to commit your changes to a new branch.
+- Создать новую ветку (рекомендуется) — создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Управление версиями** на левой боковой панели и нажмите **Создать ветку**.
+- Редактировать в защищенной основной ветке — если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. IDE dbt Cloud предотвращает коммиты в защищенную ветку, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
 
-Name the new branch `add-customers-model`.
+Назовите новую ветку `add-customers-model`.
 
-1. Click the **...** next to the `models` directory, then select **Create file**.  
-2. Name the file `customers.sql`, then click **Create**.
-3. Copy the following query into the file and click **Save**.
+1. Нажмите **...** рядом с директорией `models`, затем выберите **Создать файл**.  
+2. Назовите файл `customers.sql`, затем нажмите **Создать**.
+3. Скопируйте следующий запрос в файл и нажмите **Сохранить**.
 
 ```sql
 with customers as (
@@ -306,11 +306,11 @@ final as (
 select * from final
 ```
 
-4. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный запуск и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить свои инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -318,20 +318,20 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Change the way your model is materialized
+## Изменение способа материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удаление примерных моделей
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL-файл `models/stg_customers.sql` с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL-файл `models/stg_orders.sql` с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -360,7 +360,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Измените SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -414,16 +414,15 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt строит `customers` последним. Вам не нужно явно определять эти зависимости.
 
-
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект, когда я создаю больше моделей? Как мне называть свои модели?" />
 
 </div>
 

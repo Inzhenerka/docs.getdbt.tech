@@ -1,22 +1,19 @@
 ---
-title: Exposure properties
-description: "Read this guide to understand exposure properties in dbt."
+title: Свойства экспозиций
+description: "Прочитайте это руководство, чтобы понять свойства экспозиций в dbt."
 ---
 
-## Related documentation
-- [Using exposures](/docs/build/exposures)
-- [Declaring resource properties](/reference/configs-and-properties)
+## Связанная документация
+- [Использование экспозиций](/docs/build/exposures)
+- [Объявление свойств ресурсов](/reference/configs-and-properties)
 
-## Overview
+## Обзор
 
-import PropsCallout from '/snippets/_config-prop-callout.md';
+Экспозиции определяются в файлах `properties.yml`, вложенных под ключом `exposures:`. Вы можете определять `exposures` в YAML-файлах, которые также определяют `sources` или `models`. <PropsCallout title={frontMatter.title}/>  <br /> 
 
-Exposures are defined in `properties.yml` files nested under an `exposures:` key. You may define `exposures` in YAML files that also define `sources` or `models`. <PropsCallout title={frontMatter.title}/>  <br /> 
+Вы можете называть эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `models/`.
 
-
-You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `models/` directory.
-
-Exposure names must contain only letters, numbers, and underscores (no spaces or special characters). For a short human-friendly name with title casing, spaces, and special characters, use the `label` property.
+Имена экспозиций должны содержать только буквы, цифры и символы подчеркивания (без пробелов и специальных символов). Для короткого удобочитаемого имени с заглавными буквами, пробелами и специальными символами используйте свойство `label`.
 
 <File name='models/<filename>.yml'>
 
@@ -28,7 +25,7 @@ exposures:
     [description](/reference/resource-properties/description): <markdown_string>
     type: {dashboard, notebook, analysis, ml, application}
     url: <string>
-    maturity: {high, medium, low}  # Indicates level of confidence or stability in the exposure
+    maturity: {high, medium, low}  # Указывает уровень уверенности или стабильности в экспозиции
     [tags](/reference/resource-configs/tags): [<string>]
     [meta](/reference/resource-configs/meta): {<dictionary>}
     owner:
@@ -41,15 +38,15 @@ exposures:
       - source('name', 'table')
       - metric('metric_name')
       
-    label: "Human-Friendly Name for this Exposure!"
+    label: "Удобочитаемое имя для этой экспозиции!"
     [config](/reference/resource-properties/config):
       enabled: true | false
 
-  - name: ... # declare properties of additional exposures
+  - name: ... # объявите свойства дополнительных экспозиций
 ```
 </File>
 
-## Example
+## Пример
 
 <File name='models/jaffle/exposures.yml'>
 
@@ -59,14 +56,14 @@ version: 2
 exposures:
 
   - name: weekly_jaffle_metrics
-    label: Jaffles by the Week              # optional
-    type: dashboard                         # required
-    maturity: high                          # optional
-    url: https://bi.tool/dashboards/1       # optional
-    description: >                          # optional
-      Did someone say "exponential growth"?
+    label: Jaffles по неделям              # необязательно
+    type: dashboard                         # обязательно
+    maturity: high                          # необязательно
+    url: https://bi.tool/dashboards/1       # необязательно
+    description: >                          # необязательно
+      Кто-то сказал "экспоненциальный рост"?
 
-    depends_on:                             # expected
+    depends_on:                             # ожидается
       - ref('fct_orders')
       - ref('dim_customers')
       - source('gsheets', 'goals')
@@ -83,7 +80,7 @@ exposures:
     type: ml
     url: https://jupyter.org/mycoolalg
     description: >
-      Deep learning to power personalized "Discover Sandwiches Weekly"
+      Глубокое обучение для персонализированного "Открывайте сэндвичи каждую неделю"
     
     depends_on:
       - ref('fct_orders')
@@ -95,7 +92,7 @@ exposures:
       
   - name: jaffle_wrapped
     type: application
-    description: Tell users about their favorite jaffles of the year
+    description: Сообщите пользователям о их любимых яффлах года
     depends_on: [ ref('fct_orders') ]
     owner: { email: summer-intern@jaffleshop.com }
 ```

@@ -1,24 +1,24 @@
 ---
-title: "About dbt parse command"
+title: "О команде dbt parse"
 sidebar_label: "parse"
-description: "Read this guide on how dbt's parse command can be used to parse your dbt project and write detailed timing information."
+description: "Прочитайте это руководство о том, как команда dbt parse может быть использована для разбора вашего проекта dbt и записи подробной информации о времени выполнения."
 id: "parse"
 ---
 
-The `dbt parse` command parses and validates the contents of your dbt project. If your project contains Jinja or YAML syntax errors, the command will fail.
+Команда `dbt parse` разбирает и проверяет содержимое вашего проекта dbt. Если в вашем проекте есть ошибки синтаксиса Jinja или YAML, команда завершится с ошибкой.
 
-It will also produce an artifact with detailed timing information, which is useful to understand parsing times for large projects. Refer to [Project parsing](/reference/parsing) for more information.
+Она также создаст артефакт с подробной информацией о времени выполнения, что полезно для понимания времени разбора для больших проектов. Дополнительную информацию смотрите в разделе [Разбор проекта](/reference/parsing).
 
-Starting in v1.5, `dbt parse` will write or return a [manifest](/reference/artifacts/manifest-json), enabling you to introspect dbt's understanding of all the resources in your project.
+Начиная с версии 1.5, команда `dbt parse` будет записывать или возвращать [манифест](/reference/artifacts/manifest-json), что позволит вам исследовать понимание dbt всех ресурсов в вашем проекте.
 
-By default, the dbt Cloud IDE will attempt a "partial" parse, which means it'll only check changes since the last parse (new or updated parts of your project when you make changes). Since the dbt Cloud IDE automatically parses in the background whenever you save your work, manually running `dbt parse` yourself is likely to be fast because it's just looking at recent changes.
+По умолчанию IDE dbt Cloud будет пытаться выполнить "частичный" разбор, что означает, что она будет проверять только изменения с момента последнего разбора (новые или обновленные части вашего проекта при внесении изменений). Поскольку IDE dbt Cloud автоматически выполняет разбор в фоновом режиме каждый раз, когда вы сохраняете свою работу, ручной запуск `dbt parse` будет, скорее всего, быстрым, так как он просто проверяет недавние изменения.
 
-As an option, you can tell dbt to check the entire project from scratch by using the `--no-partial-parse` flag. This makes dbt perform a full re-parse of the project, not just the recent changes.
+В качестве опции вы можете указать dbt проверить весь проект с нуля, используя флаг `--no-partial-parse`. Это заставит dbt выполнить полный повторный разбор проекта, а не только недавние изменения.
 
 ```
 $ dbt parse
-13:02:52  Running with dbt=1.5.0
-13:02:53  Performance info: target/perf_info.json
+13:02:52  Запуск с dbt=1.5.0
+13:02:53  Информация о производительности: target/perf_info.json
 ```
 
 <File name='target/perf_info.json'>

@@ -1,14 +1,14 @@
 ---
-title: "About dbt snapshot command"
+title: "О команде dbt snapshot"
 sidebar_label: "snapshot"
 id: "snapshot"
 ---
 
-The `dbt snapshot` command executes the [Snapshots](/docs/build/snapshots) defined in your project.
+Команда `dbt snapshot` выполняет [Снимки](/docs/build/snapshots), определенные в вашем проекте.
 
-dbt will looks for Snapshots in the `snapshot-paths` paths defined in your `dbt_project.yml` file. By default, the `snapshot-paths` path is `snapshots/`.
+dbt будет искать Снимки в путях `snapshot-paths`, определенных в вашем файле `dbt_project.yml`. По умолчанию путь `snapshot-paths` — это `snapshots/`.
 
-**Usage:**
+**Использование:**
 ```
 $ dbt snapshot --help
 usage: dbt snapshot [-h] [--profiles-dir PROFILES_DIR]
@@ -20,7 +20,7 @@ usage: dbt snapshot [-h] [--profiles-dir PROFILES_DIR]
 
 optional arguments:
   --select SELECTOR [SELECTOR ...]
-                        Specify the snapshots to include in the run.
+                        Укажите снимки, которые следует включить в выполнение.
   --exclude EXCLUDE [EXCLUDE ...]
-                        Specify the snapshots to exclude in the run.
+                        Укажите снимки, которые следует исключить из выполнения.
 ```

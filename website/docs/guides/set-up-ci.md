@@ -1,90 +1,90 @@
 ---
-title: "Get started with Continuous Integration tests"
-description: Implement a CI environment for safe project validation.
-hoverSnippet: Learn how to implement a CI environment for safe project validation.
+title: "Начало работы с тестами непрерывной интеграции"
+description: Реализация среды CI для безопасной проверки проекта.
+hoverSnippet: Узнайте, как реализовать среду CI для безопасной проверки проекта.
 id: set-up-ci
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Orchestration', 'CI']
-level: 'Intermediate'
+tags: ['dbt Cloud', 'Оркестрация', 'CI']
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-By validating your code _before_ it goes into production, you don't need to spend your afternoon fielding messages from people whose reports are suddenly broken.
+Проверяя свой код _до_ его выхода в продукцию, вам не придется тратить время на ответы на сообщения от людей, чьи отчеты внезапно перестали работать.
 
-A solid CI setup is critical to preventing avoidable downtime and broken trust. dbt Cloud uses **sensible defaults** to get you up and running in a performant and cost-effective way in minimal time.
+Надежная настройка CI критически важна для предотвращения ненужного простоя и потери доверия. dbt Cloud использует **разумные настройки по умолчанию**, чтобы вы могли быстро и эффективно запустить проект с минимальными затратами времени.
 
-After that, there's time to get fancy, but let's walk before we run.
+После этого можно будет добавить дополнительные функции, но давайте сначала разберемся с основами.
 
-In this guide, we're going to add a **CI environment**, where proposed changes can be validated in the context of the entire project without impacting production systems. We will use a single set of deployment credentials (like the Prod environment), but models are built in a separate location to avoid impacting others (like the Dev environment).
+В этом руководстве мы добавим **CI-среду**, в которой предлагаемые изменения могут быть проверены в контексте всего проекта без влияния на производственные системы. Мы будем использовать один набор учетных данных для развертывания (как в Prod-среде), но модели будут строиться в отдельном месте, чтобы избежать влияния на другие (как в Dev-среде).
 
-Your git flow will look like this:
-<Lightbox src="/img/best-practices/environment-setup/one-branch-git.png" title="git flow diagram" />
+Ваш git-поток будет выглядеть следующим образом:
+<Lightbox src="/img/best-practices/environment-setup/one-branch-git.png" title="диаграмма git-потока" />
 
-### Prerequisites
+### Предварительные требования
 
-As part of your initial dbt Cloud setup, you should already have Development and Production environments configured. Let's recap what each does:
+В рамках вашей первоначальной настройки dbt Cloud у вас уже должны быть настроены среды разработки и производства. Давайте вспомним, что делает каждая из них:
 
-- Your **Development environment** powers the IDE. Each user has individual credentials, and builds into an individual dev schema. Nothing you do here impacts any of your colleagues.
-- Your **Production environment** brings the canonical version of your project to life for downstream consumers. There is a single set of deployment credentials, and everything is built into your production schema(s).
+- Ваша **среда разработки** управляет IDE. У каждого пользователя есть индивидуальные учетные данные, и сборки происходят в индивидуальной dev-схеме. Ничто из того, что вы делаете здесь, не влияет на ваших коллег.
+- Ваша **производственная среда** представляет каноническую версию вашего проекта для downstream-пользователей. Существует единый набор учетных данных для развертывания, и все строится в ваших производственных схемах.
 
-## Create a new CI environment
+## Создание новой CI-среды
 
-See [Create a new environment](/docs/dbt-cloud-environments#create-a-deployment-environment). The environment should be called **CI**. Just like your existing Production environment, it will be a Deployment-type environment.
+Смотрите [Создание новой среды](/docs/dbt-cloud-environments#create-a-deployment-environment). Среда должна называться **CI**. Как и ваша существующая производственная среда, это будет среда типа Deployment.
 
-When setting a Schema in the **Deployment Credentials** area, remember that dbt Cloud will automatically generate a custom schema name for each PR to ensure that they don't interfere with your deployed models. This means you can safely set the same Schema name as your Production job.
+При установке схемы в области **Учетные данные развертывания** помните, что dbt Cloud автоматически сгенерирует имя пользовательской схемы для каждого PR, чтобы они не мешали вашим развернутым моделям. Это означает, что вы можете безопасно установить то же имя схемы, что и в вашей производственной задаче.
 
-### 1. Double-check your Production environment is identified
+### 1. Дважды проверьте, что ваша производственная среда идентифицирована
 
-Go into your existing Production environment, and ensure that the **Set as Production environment** checkbox is set. It'll make things easier later.
+Перейдите в вашу существующую производственную среду и убедитесь, что установлен флажок **Установить как производственную среду**. Это упростит дальнейшую работу.
 
-### 2. Create a new job in the CI environment
+### 2. Создайте новую задачу в CI-среде
 
-Use the **Continuous Integration Job** template, and call the job **CI Check**.
+Используйте шаблон **Задача непрерывной интеграции** и назовите задачу **CI Check**.
 
-In the Execution Settings, your command will be preset to `dbt build --select state:modified+`. Let's break this down:
+В настройках выполнения ваша команда будет предустановлена на `dbt build --select state:modified+`. Давайте разберем это:
 
-- [`dbt build`](/reference/commands/build) runs all nodes (seeds, models, snapshots, tests) at once in DAG order. If something fails, nodes that depend on it will be skipped.
-- The [`state:modified+` selector](/reference/node-selection/methods#state) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
+- [`dbt build`](/reference/commands/build) запускает все узлы (семена, модели, снимки, тесты) одновременно в порядке DAG. Если что-то не удается, узлы, которые зависят от него, будут пропущены.
+- Селектор [`state:modified+`](/reference/node-selection/methods#state) означает, что будут запущены только измененные узлы и их дочерние узлы ("Slim CI"). В дополнение к [непотере времени](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) на сборку и тестирование узлов, которые не были изменены изначально, это значительно снижает вычислительные затраты.
 
-To be able to find modified nodes, dbt needs to have something to compare against. dbt Cloud uses the last successful run of any job in your Production environment as its [comparison state](/reference/node-selection/syntax#about-node-selection). As long as you identified your Production environment in Step 2, you won't need to touch this. If you didn't, pick the right environment from the dropdown.
+Чтобы dbt мог находить измененные узлы, ему нужно с чем-то сравнивать. dbt Cloud использует последний успешный запуск любой задачи в вашей производственной среде в качестве своего [состояния сравнения](/reference/node-selection/syntax#about-node-selection). Если вы идентифицировали свою производственную среду на Шаге 2, вам не нужно будет это менять. Если нет, выберите правильную среду из выпадающего списка.
 
-:::info Use CI to test your metrics
-If you've [built semantic nodes](/docs/build/build-metrics-intro) in your dbt project, you can [validate them in a CI job](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
+:::info Используйте CI для тестирования ваших метрик
+Если вы [создали семантические узлы](/docs/build/build-metrics-intro) в вашем проекте dbt, вы можете [проверить их в CI-задаче](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения кода, внесенные в модели dbt, не нарушают эти метрики.
 :::
 
-### 3. Test your process
+### 3. Протестируйте ваш процесс
 
-That's it! There are other steps you can take to be even more confident in your work, such as validating your structure follows best practices and linting your code. For more information, refer to [Get started with Continuous Integration tests](/guides/set-up-ci).
+Вот и все! Есть и другие шаги, которые вы можете предпринять, чтобы быть еще более уверенными в своей работе, такие как проверка структуры на соответствие лучшим практикам и линтинг вашего кода. Для получения дополнительной информации смотрите [Начало работы с тестами непрерывной интеграции](/guides/set-up-ci).
 
-To test your new flow, create a new branch in the dbt Cloud IDE then add a new file or modify an existing one. Commit it, then create a new Pull Request (not a draft). Within a few seconds, you’ll see a new check appear in your git provider.
+Чтобы протестировать ваш новый поток, создайте новую ветку в IDE dbt Cloud, затем добавьте новый файл или измените существующий. Зафиксируйте изменения, затем создайте новый Pull Request (не черновик). В течение нескольких секунд вы увидите, что в вашем git-провайдере появится новая проверка.
 
-### Things to keep in mind
+### Важные моменты
 
-- If you make a new commit while a CI run based on older code is in progress, it will be automatically canceled and replaced with the fresh code.
-- An unlimited number of CI jobs can run at once. If 10 developers all commit code to different PRs at the same time, each person will get their own schema containing their changes. Once each PR is merged, dbt Cloud will drop that schema.
-- CI jobs will never block a production run.
+- Если вы сделаете новый коммит, пока выполняется CI-запуск на основе старого кода, он будет автоматически отменен и заменен свежим кодом.
+- Неограниченное количество CI-задач может выполняться одновременно. Если 10 разработчиков одновременно зафиксируют код в разных PR, каждый получит свою собственную схему, содержащую их изменения. После слияния каждого PR dbt Cloud удалит эту схему.
+- CI-задачи никогда не блокируют производственный запуск.
 
-## Enforce best practices with dbt project evaluator
+## Принуждение к соблюдению лучших практик с помощью оценщика проектов dbt
 
-dbt Project Evaluator is a package designed to identify deviations from best practices common to many dbt projects, including modeling, testing, documentation, structure and performance problems. For an introduction to the package, read its [launch blog post](/blog/align-with-dbt-project-evaluator).
+Оценщик проектов dbt — это пакет, предназначенный для выявления отклонений от лучших практик, общих для многих проектов dbt, включая моделирование, тестирование, документацию, структуру и проблемы с производительностью. Для введения в пакет прочитайте его [блог о запуске](/blog/align-with-dbt-project-evaluator).
 
-### 1. Install the package
+### 1. Установите пакет
 
-As with all packages, add a reference to `dbt-labs/dbt_project_evaluator` to your `packages.yml` file. See the [dbt Package Hub](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) for full installation instructions.
+Как и со всеми пакетами, добавьте ссылку на `dbt-labs/dbt_project_evaluator` в ваш файл `packages.yml`. Смотрите [dbt Package Hub](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) для получения полных инструкций по установке.
 
-### 2. Define test severity with an environment variable
+### 2. Определите серьезность тестов с помощью переменной окружения
 
-As noted in the [documentation](https://dbt-labs.github.io/dbt-project-evaluator/latest/ci-check/), tests in the package are set to `warn` severity by default.
+Как указано в [документации](https://dbt-labs.github.io/dbt-project-evaluator/latest/ci-check/), тесты в пакете по умолчанию имеют уровень серьезности `warn`.
 
-To have these tests fail in CI, create a new environment called `DBT_PROJECT_EVALUATOR_SEVERITY`. Set the project-wide default to `warn`, and set it to `error` in the CI environment.
+Чтобы эти тесты завершались с ошибкой в CI, создайте новую переменную окружения с именем `DBT_PROJECT_EVALUATOR_SEVERITY`. Установите проектный уровень по умолчанию на `warn`, а в CI-среде — на `error`.
 
-In your `dbt_project.yml` file, override the severity configuration:
+В вашем файле `dbt_project.yml` переопределите конфигурацию серьезности:
 
 ```yaml
 tests:
@@ -92,36 +92,36 @@ dbt_project_evaluator:
     +severity: "{{ env_var('DBT_PROJECT_EVALUATOR_SEVERITY', 'warn') }}"
 ```
 
-### 3. Update your CI commands
+### 3. Обновите ваши CI-команды
 
-Because these tests should only run after the rest of your project has been built, your existing CI command will need to be updated to exclude the dbt_project_evaluator package. You will then add a second step which builds _only_ the package's models and tests.
+Поскольку эти тесты должны выполняться только после сборки остальной части вашего проекта, ваша существующая команда CI должна быть обновлена, чтобы исключить пакет dbt_project_evaluator. Затем вы добавите второй шаг, который будет собирать _только_ модели и тесты пакета.
 
-Update your steps to:
+Обновите ваши шаги до:
 
 ```bash
 dbt build --select state:modified+ --exclude package:dbt_project_evaluator
 dbt build --select package:dbt_project_evaluator
 ```
 
-### 4. Apply any customizations
+### 4. Примените любые настройки
 
-Depending on the state of your project when you roll out the evaluator, you may need to skip some tests or allow exceptions for some areas. To do this, refer to the documentation on:
+В зависимости от состояния вашего проекта, когда вы развернете оценщик, вам может потребоваться пропустить некоторые тесты или разрешить исключения для некоторых областей. Для этого обратитесь к документации по:
 
-- [disabling tests](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/customization/)
-- [excluding groups of models from a specific test](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/exceptions/)
-- [excluding packages or sources/models based on path](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/excluding-packages-and-paths/)
+- [отключению тестов](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/customization/)
+- [исключению групп моделей из конкретного теста](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/exceptions/)
+- [исключению пакетов или источников/моделей на основе пути](https://dbt-labs.github.io/dbt-project-evaluator/latest/customization/excluding-packages-and-paths/)
 
-If you create a seed to exclude groups of models from a specific test, remember to disable the default seed and include `dbt_project_evaluator_exceptions` in your second `dbt build` command above.
+Если вы создаете seed для исключения групп моделей из конкретного теста, не забудьте отключить seed по умолчанию и включить `dbt_project_evaluator_exceptions` в вашу вторую команду `dbt build` выше.
 
-## Run linting checks with SQLFluff
+## Запуск проверок линтинга с помощью SQLFluff
 
-By [linting](/docs/cloud/dbt-cloud-ide/lint-format#lint) your project during CI, you can ensure that code styling standards are consistently enforced, without spending human time nitpicking comma placement.
+Проводя [линтинг](/docs/cloud/dbt-cloud-ide/lint-format#lint) вашего проекта во время CI, вы можете гарантировать, что стандарты оформления кода последовательно соблюдаются, не тратя человеческое время на мелкие детали, такие как расстановка запятых.
 
-The steps below create an action/pipeline which uses [SQLFluff](https://docs.sqlfluff.com/en/stable/) to scan your code and look for linting errors. If you don't already have SQLFluff rules defined, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
+Ниже приведенные шаги создают действие/конвейер, который использует [SQLFluff](https://docs.sqlfluff.com/en/stable/) для сканирования вашего кода и поиска ошибок линтинга. Если у вас еще нет определенных правил SQLFluff, ознакомьтесь с [нашим рекомендуемым конфигурационным файлом](/best-practices/how-we-style/2-how-we-style-our-sql).
 
-### 1. Create a YAML file to define your pipeline
+### 1. Создайте файл YAML для определения вашего конвейера
 
-The YAML files defined below are what tell your code hosting platform the steps to run. In this setup, you’re telling the platform to run a SQLFluff lint job every time a commit is pushed.
+Файлы YAML, определенные ниже, указывают вашей платформе хостинга кода, какие шаги выполнять. В этой настройке вы говорите платформе запускать задачу линтинга SQLFluff каждый раз, когда выполняется коммит.
 
 <Tabs
   defaultValue="github"
@@ -133,7 +133,7 @@ The YAML files defined below are what tell your code hosting platform the steps 
 }>
 <TabItem value="github">
 
-GitHub Actions are defined in the `.github/workflows` directory. To define the job for your action, add a new file named `lint_on_push.yml` under the `workflows` folder. Your final folder structure will look like this:
+Действия GitHub определяются в каталоге `.github/workflows`. Чтобы определить задачу для вашего действия, добавьте новый файл с именем `lint_on_push.yml` в папку `workflows`. Ваша окончательная структура папок будет выглядеть так:
 
 ```sql
 my_awesome_project
@@ -142,17 +142,17 @@ my_awesome_project
 │   │   └── lint_on_push.yml
 ```
 
-**Key pieces:**
+**Ключевые моменты:**
 
-- `on:` defines when the pipeline is run. This workflow will run whenever code is pushed to any branch except `main`. For other trigger options, check out [GitHub’s docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
-- `runs-on: ubuntu-latest` - this defines the operating system we’re using to run the job
-- `uses:` - When the Ubuntu server is created, it is completely empty. [`checkout`](https://github.com/actions/checkout#checkout-v3) and [`setup-python`](https://github.com/actions/setup-python#setup-python-v3) are public GitHub Actions which enable the server to access the code in your repo, and set up Python correctly.
-- `run:` - these steps are run at the command line, as though you typed them at a prompt yourself. This will install sqlfluff and lint the project. Be sure to set the correct `--dialect` for your project.
+- `on:` определяет, когда конвейер запускается. Этот рабочий процесс будет запускаться каждый раз, когда код отправляется в любую ветку, кроме `main`. Для других вариантов триггеров ознакомьтесь с [документацией GitHub](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+- `runs-on: ubuntu-latest` - это определяет операционную систему, которую мы используем для выполнения задачи.
+- `uses:` - когда сервер Ubuntu создается, он полностью пуст. [`checkout`](https://github.com/actions/checkout#checkout-v3) и [`setup-python`](https://github.com/actions/setup-python#setup-python-v3) — это публичные действия GitHub, которые позволяют серверу получить доступ к коду в вашем репозитории и правильно настроить Python.
+- `run:` - эти шаги выполняются в командной строке, как если бы вы ввели их сами. Это установит sqlfluff и выполнит линтинг проекта. Обязательно установите правильный `--dialect` для вашего проекта.
 
-For a full breakdown of the properties in a workflow file, see [Understanding the workflow file](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#understanding-the-workflow-file) on GitHub's website.
+Для полного разбора свойств в файле рабочего процесса смотрите [Понимание файла рабочего процесса](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#understanding-the-workflow-file) на сайте GitHub.
 
 ```yaml
-name: lint dbt project on push
+name: линтинг проекта dbt при пуше
 
 on:
   push:
@@ -160,11 +160,11 @@ on:
       - 'main'
 
 jobs:
-  # this job runs SQLFluff with a specific set of rules
-  # note the dialect is set to Snowflake, so make that specific to your setup
-  # details on linter rules: https://docs.sqlfluff.com/en/stable/rules.html
+  # эта задача запускает SQLFluff с определенным набором правил
+  # обратите внимание, что диалект установлен на Snowflake, поэтому сделайте это специфичным для вашей настройки
+  # детали о правилах линтинга: https://docs.sqlfluff.com/en/stable/rules.html
   lint_project:
-    name: Run SQLFluff linter
+    name: Запуск линтера SQLFluff
     runs-on: ubuntu-latest
   
     steps:
@@ -172,9 +172,9 @@ jobs:
       - uses: "actions/setup-python@v4"
         with:
           python-version: "3.9"
-      - name: Install SQLFluff
+      - name: Установка SQLFluff
         run: "python -m pip install sqlfluff"
-      - name: Lint project
+      - name: Линтинг проекта
         run: "sqlfluff lint models --dialect snowflake"
 
 ```
@@ -182,7 +182,7 @@ jobs:
 </TabItem>
 <TabItem value="gitlab">
 
-Create a `.gitlab-ci.yml` file in your **root directory** to define the triggers for when to execute the script below. You’ll put the code below into this file.
+Создайте файл `.gitlab-ci.yml` в вашем **корневом каталоге**, чтобы определить триггеры для выполнения скрипта ниже. Вы поместите код ниже в этот файл.
 
 ```sql
 my_awesome_project
@@ -190,11 +190,11 @@ my_awesome_project
 ├── .gitlab-ci.yml
 ```
 
-**Key pieces:**
+**Ключевые моменты:**
 
-- `image: python:3.9` - this defines the virtual image we’re using to run the job
-- `rules:` - defines when the pipeline is run. This workflow will run whenever code is pushed to any branch except `main`. For other rules, refer to [GitLab’s documentation](https://docs.gitlab.com/ee/ci/yaml/#rules).
-- `script:` - this is how we’re telling the GitLab runner to execute the Python script we defined above.
+- `image: python:3.9` - это определяет виртуальный образ, который мы используем для выполнения задачи.
+- `rules:` - определяет, когда конвейер запускается. Этот рабочий процесс будет запускаться каждый раз, когда код отправляется в любую ветку, кроме `main`. Для других правил смотрите [документацию GitLab](https://docs.gitlab.com/ee/ci/yaml/#rules).
+- `script:` - это то, как мы говорим GitLab-раннеру выполнить определенный выше Python-скрипт.
 
 ```yaml
 image: python:3.9
@@ -202,9 +202,9 @@ image: python:3.9
 stages:
   - pre-build
 
-# this job runs SQLFluff with a specific set of rules
-# note the dialect is set to Snowflake, so make that specific to your setup
-# details on linter rules: https://docs.sqlfluff.com/en/stable/rules.html
+# эта задача запускает SQLFluff с определенным набором правил
+# обратите внимание, что диалект установлен на Snowflake, поэтому сделайте это специфичным для вашей настройки
+# детали о правилах линтинга: https://docs.sqlfluff.com/en/stable/rules.html
 lint-project:
   stage: pre-build
   rules:
@@ -217,7 +217,7 @@ lint-project:
 </TabItem>
 <TabItem value="bitbucket">
 
-Create a `bitbucket-pipelines.yml` file in your **root directory** to define the triggers for when to execute the script below. You’ll put the code below into this file.
+Создайте файл `bitbucket-pipelines.yml` в вашем **корневом каталоге**, чтобы определить триггеры для выполнения скрипта ниже. Вы поместите код ниже в этот файл.
 
 ```sql
 my_awesome_project
@@ -225,11 +225,11 @@ my_awesome_project
 ├── dbt_project.yml
 ```
 
-**Key pieces:**
+**Ключевые моменты:**
 
-- `image: python:3.11.1` - this defines the virtual image we’re using to run the job
-- `'**':` - this is used to filter when the pipeline runs. In this case we’re telling it to run on every push event, and you can see at line 12 we're creating a dummy pipeline for `main`. More information on filtering when a pipeline is run can be found in [Bitbucket's documentation](https://support.atlassian.com/bitbucket-cloud/docs/pipeline-triggers/)
-- `script:` - this is how we’re telling the Bitbucket runner to execute the Python script we defined above.
+- `image: python:3.11.1` - это определяет виртуальный образ, который мы используем для выполнения задачи.
+- `'**':` - это используется для фильтрации, когда конвейер запускается. В данном случае мы говорим ему запускаться на каждом событии пуша, и вы можете видеть на строке 12, что мы создаем фиктивный конвейер для `main`. Дополнительную информацию о фильтрации, когда запускается конвейер, можно найти в [документации Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/pipeline-triggers/).
+- `script:` - это то, как мы говорим Bitbucket-раннеру выполнить определенный выше Python-скрипт.
 
 ```yaml
 image: python:3.11.1
@@ -237,14 +237,14 @@ image: python:3.11.1
 
 pipelines:
   branches:
-    '**': # this sets a wildcard to run on every branch
+    '**': # это устанавливает подстановочный знак для запуска на каждой ветке
       - step:
-          name: Lint dbt project
+          name: Линтинг проекта dbt
           script:
             - python -m pip install sqlfluff==0.13.1
             - sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
 
-    'main': # override if your default branch doesn't run on a branch named "main"
+    'main': # переопределите, если ваша ветка по умолчанию не называется "main"
       - step:
           script:
             - python --version
@@ -253,9 +253,9 @@ pipelines:
 </TabItem>
 </Tabs>
 
-### 2. Commit and push your changes to make sure everything works
+### 2. Зафиксируйте и отправьте ваши изменения, чтобы убедиться, что все работает
 
-After you finish creating the YAML files, commit and push your code to trigger your pipeline for the first time. If everything goes well, you should see the pipeline in your code platform. When you click into the job you’ll get a log showing that SQLFluff was run. If your code failed linting you’ll get an error in the job with a description of what needs to be fixed. If everything passed the lint check, you’ll see a successful job run.
+После того как вы закончите создание файлов YAML, зафиксируйте и отправьте ваш код, чтобы запустить ваш конвейер в первый раз. Если все пройдет успешно, вы должны увидеть конвейер на вашей платформе кода. Когда вы нажмете на задачу, вы получите журнал, показывающий, что SQLFluff был запущен. Если ваш код не прошел линтинг, вы получите ошибку в задаче с описанием того, что нужно исправить. Если все прошло проверку линтинга, вы увидите успешный запуск задачи.
 
 <Tabs
   defaultValue="github"
@@ -267,97 +267,97 @@ After you finish creating the YAML files, commit and push your code to trigger y
 }>
 <TabItem value="github">
 
-In your repository, click the _Actions_ tab
+В вашем репозитории нажмите на вкладку _Actions_
 
-![Image showing the GitHub action for lint on push](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-github.png)
+![Изображение, показывающее действие GitHub для линтинга при пуше](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-github.png)
 
-Sample output from SQLFluff in the `Run SQLFluff linter` job:
+Пример вывода от SQLFluff в задаче `Запуск линтера SQLFluff`:
 
-![Image showing the logs in GitHub for the SQLFluff run](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-github.png)
+![Изображение, показывающее журналы в GitHub для выполнения SQLFluff](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-github.png)
 
 </TabItem>
 <TabItem value="gitlab">
 
-In the menu option go to *CI/CD > Pipelines*
+В меню перейдите в *CI/CD > Pipelines*
 
-![Image showing the GitLab action for lint on push](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-gitlab.png)
+![Изображение, показывающее действие GitLab для линтинга при пуше](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-gitlab.png)
 
-Sample output from SQLFluff in the `Run SQLFluff linter` job:
+Пример вывода от SQLFluff в задаче `Запуск линтера SQLFluff`:
 
-![Image showing the logs in GitLab for the SQLFluff run](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-gitlab.png)
+![Изображение, показывающее журналы в GitLab для выполнения SQLFluff](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-gitlab.png)
 
 </TabItem>
 <TabItem value="bitbucket">
 
-In the left menu pane, click on *Pipelines*
+В левом меню нажмите на *Pipelines*
 
-![Image showing the Bitbucket action for lint on push](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-bitbucket.png)
+![Изображение, показывающее действие Bitbucket для линтинга при пуше](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-bitbucket.png)
 
-Sample output from SQLFluff in the `Run SQLFluff linter` job:
+Пример вывода от SQLFluff в задаче `Запуск линтера SQLFluff`:
 
-![Image showing the logs in Bitbucket for the SQLFluff run](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-bitbucket.png)
+![Изображение, показывающее журналы в Bitbucket для выполнения SQLFluff](/img/guides/orchestration/custom-cicd-pipelines/lint-on-push-logs-bitbucket.png)
 
 </TabItem>
 </Tabs>
 
-## Advanced: Create a release train with additional environments
+## Расширенные возможности: Создание релизного поезда с дополнительными средами
 
-Large and complex enterprises sometimes require additional layers of validation before deployment. Learn how to add these checks with dbt Cloud.
+Крупные и сложные предприятия иногда требуют дополнительных уровней проверки перед развертыванием. Узнайте, как добавить эти проверки с помощью dbt Cloud.
 
-:::caution Are you sure you need this?
-This approach can increase release safety, but creates additional manual steps in the deployment process as well as a greater maintenance burden.
+:::caution Вы уверены, что это вам нужно?
+Этот подход может повысить безопасность релиза, но создает дополнительные ручные шаги в процессе развертывания, а также увеличивает нагрузку на обслуживание.
 
-As such, it may slow down the time it takes to get new features into production.
+Таким образом, это может замедлить время, необходимое для внедрения новых функций в продукцию.
 
-The team at Sunrun maintained a SOX-compliant deployment in dbt while reducing the number of environments. Check out [their Coalesce presentation](https://www.youtube.com/watch?v=vmBAO2XN-fM) to learn more.
+Команда Sunrun поддерживала соответствие SOX в развертывании в dbt, сокращая количество сред. Ознакомьтесь с [их презентацией на Coalesce](https://www.youtube.com/watch?v=vmBAO2XN-fM), чтобы узнать больше.
 :::
 
-In this section, we will add a new **QA** environment. New features will branch off from and be merged back into the associated `qa` branch, and a member of your team (the "Release Manager") will create a PR against `main` to be validated in the CI environment before going live.
+В этом разделе мы добавим новую **QA** среду. Новые функции будут ветвиться от связанной ветки `qa` и сливаться обратно в нее, а член вашей команды (менеджер по релизам) создаст PR против `main`, чтобы его проверили в CI-среде перед выходом в продукцию.
 
-The git flow will look like this:
-<Lightbox src="/img/best-practices/environment-setup/many-branch-git.png" title="git flow diagram with an intermediary branch" />
+Git-поток будет выглядеть следующим образом:
+<Lightbox src="/img/best-practices/environment-setup/many-branch-git.png" title="диаграмма git-потока с промежуточной веткой" />
 
-### Advanced prerequisites
+### Расширенные предварительные требования
 
-- You have the **Development**, **CI**, and **Production** environments, as described in [the Baseline setup](/guides/set-up-ci).
+- У вас есть **среды разработки**, **CI** и **производства**, как описано в [базовой настройке](/guides/set-up-ci).
 
-### 1. Create a `release` branch in your git repo
+### 1. Создайте ветку `release` в вашем git-репозитории
 
-As noted above, this branch will outlive any individual feature, and will be the base of all feature development for a period of time. Your team might choose to create a new branch for each sprint (`qa/sprint-01`, `qa/sprint-02`, etc), tie it to a version of your data product (`qa/1.0`, `qa/1.1`), or just have a single `qa` branch which remains active indefinitely.
+Как упоминалось выше, эта ветка будет существовать дольше любой отдельной функции и будет основой для всей разработки функций в течение определенного времени. Ваша команда может выбрать создание новой ветки для каждого спринта (`qa/sprint-01`, `qa/sprint-02` и т.д.), привязать ее к версии вашего продукта данных (`qa/1.0`, `qa/1.1`) или просто иметь одну активную ветку `qa`, которая будет оставаться активной неопределенно долго.
 
-### 2. Update your Development environment to use the `qa` branch
+### 2. Обновите вашу среду разработки, чтобы использовать ветку `qa`
 
-See [Custom branch behavior](/docs/dbt-cloud-environments#custom-branch-behavior). Setting `qa` as your custom branch ensures that the IDE creates new branches and PRs with the correct target, instead of using `main`.
+Смотрите [Пользовательское поведение ветки](/docs/dbt-cloud-environments#custom-branch-behavior). Установка `qa` в качестве вашей пользовательской ветки гарантирует, что IDE создаст новые ветки и PR с правильной целью, а не используя `main`.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dev-environment-custom-branch.png" title="A demonstration of configuring a custom branch for an environment" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dev-environment-custom-branch.png" title="Демонстрация настройки пользовательской ветки для среды" />
 
-### 3. Create a new QA environment
+### 3. Создайте новую среду QA
 
-See [Create a new environment](/docs/dbt-cloud-environments#create-a-deployment-environment). The environment should be called **QA**. Just like your existing Production and CI environments, it will be a Deployment-type environment.
+Смотрите [Создание новой среды](/docs/dbt-cloud-environments#create-a-deployment-environment). Среда должна называться **QA**. Как и ваши существующие производственные и CI-среды, это будет среда типа Deployment.
 
-Set its branch to `qa` as well.
+Также установите ее ветку на `qa`.
 
-### 4. Create a new job
+### 4. Создайте новую задачу
 
-Use the **Continuous Integration Job** template, and call the job **QA Check**.
+Используйте шаблон **Задача непрерывной интеграции** и назовите задачу **QA Check**.
 
-In the Execution Settings, your command will be preset to `dbt build --select state:modified+`. Let's break this down:
+В настройках выполнения ваша команда будет предустановлена на `dbt build --select state:modified+`. Давайте разберем это:
 
-- [`dbt build`](/reference/commands/build) runs all nodes (seeds, models, snapshots, tests) at once in DAG order. If something fails, nodes that depend on it will be skipped.
-- The [`state:modified+` selector](/reference/node-selection/methods#state) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
+- [`dbt build`](/reference/commands/build) запускает все узлы (семена, модели, снимки, тесты) одновременно в порядке DAG. Если что-то не удается, узлы, которые зависят от него, будут пропущены.
+- Селектор [`state:modified+`](/reference/node-selection/methods#state) означает, что будут запущены только измененные узлы и их дочерние узлы ("Slim CI"). В дополнение к [непотере времени](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) на сборку и тестирование узлов, которые не были изменены изначально, это значительно снижает вычислительные затраты.
 
-To be able to find modified nodes, dbt needs to have something to compare against. Normally, we use the Production environment as the source of truth, but in this case there will be new code merged into `qa` long before it hits the `main` branch and Production environment. Because of this, we'll want to defer the Release environment to itself.
+Чтобы dbt мог находить измененные узлы, ему нужно с чем-то сравнивать. Обычно мы используем производственную среду в качестве источника правды, но в этом случае новый код будет сливаться в `qa` задолго до того, как он попадет в ветку `main` и производственную среду. Поэтому мы захотим отложить среду Release на саму себя.
 
-### Optional: also add a compile-only job
+### Дополнительно: также добавьте задачу только для компиляции
 
-dbt Cloud uses the last successful run of any job in that environment as its [comparison state](/reference/node-selection/syntax#about-node-selection). If you have a lot of PRs in flight, the comparison state could switch around regularly.
+dbt Cloud использует последний успешный запуск любой задачи в этой среде в качестве своего [состояния сравнения](/reference/node-selection/syntax#about-node-selection). Если у вас много PR в работе, состояние сравнения может регулярно меняться.
 
-Adding a regularly-scheduled job inside of the QA environment whose only command is `dbt compile` can regenerate a more stable manifest for comparison purposes.
+Добавление регулярно запланированной задачи внутри среды QA, единственной командой которой будет `dbt compile`, может регенерировать более стабильный манифест для целей сравнения.
 
-### 5. Test your process
+### 5. Протестируйте ваш процесс
 
-When the Release Manager is ready to cut a new release, they will manually open a PR from `qa` into `main` from their git provider (e.g. GitHub, GitLab, Azure DevOps). dbt Cloud will detect the new PR, at which point the existing check in the CI environment will trigger and run. When using the [baseline configuration](/guides/set-up-ci), it's possible to kick off the PR creation from inside of the dbt Cloud IDE. Under this paradigm, that button will create PRs targeting your QA branch instead.
+Когда менеджер по релизам будет готов выпустить новую версию, он вручную откроет PR из `qa` в `main` в своем git-провайдере (например, GitHub, GitLab, Azure DevOps). dbt Cloud обнаружит новый PR, после чего существующая проверка в CI-среде сработает и выполнится. При использовании [базовой конфигурации](/guides/set-up-ci) возможно инициировать создание PR изнутри IDE dbt Cloud. В рамках этой парадигмы эта кнопка создаст PR, нацеленные на вашу ветку QA.
 
-To test your new flow, create a new branch in the dbt Cloud IDE then add a new file or modify an existing one. Commit it, then create a new Pull Request (not a draft) against your `qa` branch. You'll see the integration tests begin to run. Once they complete, manually create a PR against `main`, and within a few seconds you’ll see the tests run again but this time incorporating all changes from all code that hasn't been merged to main yet.
+Чтобы протестировать ваш новый поток, создайте новую ветку в IDE dbt Cloud, затем добавьте новый файл или измените существующий. Зафиксируйте изменения, затем создайте новый Pull Request (не черновик) против вашей ветки `qa`. Вы увидите, как начнут выполняться интеграционные тесты. После их завершения вручную создайте PR против `main`, и в течение нескольких секунд вы увидите, как тесты снова выполняются, но на этот раз с учетом всех изменений из всего кода, который еще не был слит в main.
 
 </div>

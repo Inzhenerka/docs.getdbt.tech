@@ -1,75 +1,71 @@
 ---
-title: "About dbt rpc command"
+title: "О команде dbt rpc"
 sidebar_label: "rpc"
 id: "rpc"
-description: "Remote Procedure Call (rpc) dbt server compiles and runs queries, and provides methods that enable you to list and terminate running processes. "
+description: "Удаленный вызов процедур (rpc) сервер dbt компилирует и выполняет запросы, а также предоставляет методы, которые позволяют вам перечислять и завершать выполняющиеся процессы."
 ---
 
-:::caution The dbt-rpc plugin is deprecated
+:::caution Плагин dbt-rpc устарел
 
+dbt Labs активно поддерживал `dbt-rpc` для совместимости с версиями dbt-core до v1.5. Начиная с версии dbt-core v1.6 (выпущенной в июле 2023 года), `dbt-rpc` больше не поддерживается для дальнейшей совместимости.
 
-dbt Labs actively maintained `dbt-rpc` for compatibility with dbt-core versions up to v1.5. Starting with dbt-core v1.6 (released in July 2023), `dbt-rpc` is no longer supported for ongoing compatibility. 
-
-In the meantime, dbt Labs will be performing critical maintenance only for `dbt-rpc`, until the last compatible version of dbt-core has reached the [end of official support](/docs/dbt-versions/core#latest-releases). At that point, dbt Labs will archive this repository to be read-only.
+В то же время dbt Labs будет выполнять критическое обслуживание только для `dbt-rpc`, пока последняя совместимая версия dbt-core не достигнет [конца официальной поддержки](/docs/dbt-versions/core#latest-releases). В этот момент dbt Labs архивирует этот репозиторий, чтобы он стал доступен только для чтения.
 
 :::
 
-### Overview
+### Обзор
 
-You can use the `dbt-rpc` plugin to run a Remote Procedure Call (rpc) dbt server. This server compiles and runs queries in the context of a dbt project. Additionally, the RPC server provides methods that enable you to list and terminate running processes. We recommend running an rpc server from a directory containing a dbt project. The server will compile the project into memory, then accept requests to operate against that project's dbt context.
+Вы можете использовать плагин `dbt-rpc` для запуска удаленного вызова процедур (rpc) сервера dbt. Этот сервер компилирует и выполняет запросы в контексте проекта dbt. Кроме того, RPC сервер предоставляет методы, которые позволяют вам перечислять и завершать выполняющиеся процессы. Мы рекомендуем запускать rpc сервер из директории, содержащей проект dbt. Сервер загрузит проект в память, а затем будет принимать запросы для работы с контекстом dbt этого проекта.
 
-:::caution Running on Windows
-We do not recommend running the rpc server on Windows because of reliability issues. A Docker container may provide a useful workaround, if required.
+:::caution Запуск на Windows
+Мы не рекомендуем запускать rpc сервер на Windows из-за проблем с надежностью. Контейнер Docker может стать полезным обходным решением, если это необходимо.
 :::
 
-For more details, see the [`dbt-rpc` repository](https://github.com/dbt-labs/dbt-rpc) source code.
+Для получения дополнительной информации смотрите исходный код [репозитория `dbt-rpc`](https://github.com/dbt-labs/dbt-rpc).
 
-**Running the server:**
+**Запуск сервера:**
 
 ```
-
 $ dbt-rpc serve
-Running with dbt=0.15.0
+Запуск с dbt=0.15.0
 
-16:34:31 | Concurrency: 8 threads (target='dev')
+16:34:31 | Параллелизм: 8 потоков (target='dev')
 16:34:31 |
-16:34:31 | Done.
-Serving RPC server at 0.0.0.0:8580
-Send requests to http://localhost:8580/jsonrpc
+16:34:31 | Готово.
+Обслуживание RPC сервера на 0.0.0.0:8580
+Отправляйте запросы на http://localhost:8580/jsonrpc
 ```
 
-**Configuring the server**
+**Настройка сервера**
 
-* `--host`: Specify the host to listen on (default=`0.0.0.0`)
-* `--port`: Specify the port to listen on (default=`8580`)
+* `--host`: Укажите хост для прослушивания (по умолчанию=`0.0.0.0`)
+* `--port`: Укажите порт для прослушивания (по умолчанию=`8580`)
 
-**Submitting queries to the server:**
-The rpc server expects requests in the following format:
+**Отправка запросов на сервер:**
+RPC сервер ожидает запросы в следующем формате:
 
 <File name='rpc-spec.json'>
 
 ```json
 {
     "jsonrpc": "2.0",
-    "method": "{ a valid rpc server command }",
-    "id": "{ a unique identifier for this query }",
+    "method": "{ допустимая команда rpc сервера }",
+    "id": "{ уникальный идентификатор для этого запроса }",
     "params": {
-        "timeout": { timeout for the query in seconds, optional },
+        "timeout": { таймаут для запроса в секундах, необязательный },
     }
 }
-
 ```
 
 </File>
 
-
-## Built-in Methods
+## Встроенные методы
 
 ### status
 
-The `status` method will return the status of the rpc server. This method response includes a high-level status, like `ready`, `compiling`, or `error`, as well as the set of logs accumulated during the initial compilation of the project. When the rpc server is in the `compiling` or `error` state, only built-in methods of the RPC server will be accepted.
+Метод `status` вернет статус rpc сервера. Ответ этого метода включает общий статус, такой как `ready`, `compiling` или `error`, а также набор логов, накопленных во время начальной компиляции проекта. Когда rpc сервер находится в состоянии `compiling` или `error`, будут приниматься только встроенные методы RPC сервера.
 
-**Example request**
+**Пример запроса**
 
 ```json
 {
@@ -79,7 +75,7 @@ The `status` method will return the status of the rpc server. This method respon
 }
 ```
 
-**Example response**
+**Пример ответа**
 
 ```json
 {
@@ -97,16 +93,15 @@ The `status` method will return the status of the rpc server. This method respon
 
 ### poll
 
-The `poll` endpoint will return the status, logs, and results (if available) for a running or completed  task. The `poll` method requires a `request_token` parameter which indicates the task to poll a response for. The `request_token` is returned in the response of dbt tasks like `compile`, `run` and `test`.
+Эндпоинт `poll` вернет статус, логи и результаты (если доступны) для выполняемой или завершенной задачи. Метод `poll` требует параметр `request_token`, который указывает задачу, для которой нужно получить ответ. `request_token` возвращается в ответах задач dbt, таких как `compile`, `run` и `test`.
 
-**Parameters**:
+**Параметры**:
 
-- `request_token`: The token to poll responses for
-- `logs`: A boolean flag indicating if logs should be returned in the response (default=false)
-- `logs_start`: The zero-indexed log line to fetch logs from (default=0)
+- `request_token`: Токен для получения ответов
+- `logs`: Булевый флаг, указывающий, должны ли логи быть возвращены в ответе (по умолчанию=false)
+- `logs_start`: Нулевой индекс строки лога, с которой нужно получить логи (по умолчанию=0)
 
-
-**Example request**
+**Пример запроса**
 
 ```json
 {
@@ -121,7 +116,7 @@ The `poll` endpoint will return the status, logs, and results (if available) for
 }
 ```
 
-**Example Response**
+**Пример ответа**
 
 ```json
 {
@@ -141,16 +136,15 @@ The `poll` endpoint will return the status, logs, and results (if available) for
 }
 ```
 
-
 ### ps
 
-The `ps` methods lists running and completed processes executed by the RPC server.
+Метод `ps` перечисляет выполняющиеся и завершенные процессы, выполненные RPC сервером.
 
-**Parameters**
+**Параметры**
 
-- `completed`: If true, also return completed tasks (default=false)
+- `completed`: Если true, также вернуть завершенные задачи (по умолчанию=false)
 
-**Example request:**
+**Пример запроса:**
 ```json
 {
     "jsonrpc": "2.0",
@@ -162,7 +156,7 @@ The `ps` methods lists running and completed processes executed by the RPC serve
 }
 ```
 
-**Example response:**
+**Пример ответа:**
 ```json
 {
     "result": {
@@ -191,39 +185,40 @@ The `ps` methods lists running and completed processes executed by the RPC serve
 
 ### kill
 
-The `kill` method will terminate a running task. You can find a `task_id` for a running task either in the original response which invoked that task, or in the results of the `ps` method.
+Метод `kill` завершит выполняющуюся задачу. Вы можете найти `task_id` для выполняющейся задачи либо в оригинальном ответе, который вызвал эту задачу, либо в результатах метода `ps`.
 
-**Example request**
+**Пример запроса**
 ```json
 {
     "jsonrpc": "2.0",
     "method": "kill",
     "id": "2db9a2fe-9a39-41ef-828c-25e04dd6b07d",
     "params": {
-        "task_id": "{ the task id to terminate }"
+        "task_id": "{ id задачи для завершения }"
     }
 }
 ```
-## Running dbt projects
 
-The following methods make it possible to run dbt projects via the RPC server.
+## Запуск проектов dbt
 
-### Common parameters
+Следующие методы позволяют запускать проекты dbt через RPC сервер.
 
-All RPC requests accept the following parameters in addition to the parameters listed:
-- `timeout`: The max amount of time to wait before cancelling the request.
-- `task_tags`: Arbitrary key/value pairs to attach to this task. These tags will be returned in the output of the `poll` and `ps` methods (optional).
+### Общие параметры
 
-### Running a task with CLI syntax
+Все RPC запросы принимают следующие параметры в дополнение к перечисленным параметрам:
+- `timeout`: Максимальное время ожидания перед отменой запроса.
+- `task_tags`: Произвольные пары ключ/значение, которые будут прикреплены к этой задаче. Эти теги будут возвращены в выводе методов `poll` и `ps` (необязательный).
 
-**Parameters:**
- - `cli`: A dbt command (eg. `run --select abc+ --exclude +def`) to run (required)
+### Запуск задачи с синтаксисом CLI
+
+**Параметры:**
+ - `cli`: Команда dbt (например, `run --select abc+ --exclude +def`), которую нужно выполнить (обязательно)
 
 ```json
 {
     "jsonrpc": "2.0",
     "method": "cli_args",
-    "id": "<request id>",
+    "id": "<идентификатор запроса>",
     "params": {
         "cli": "run --select abc+ --exclude +def",
         "task_tags": {
@@ -234,173 +229,173 @@ All RPC requests accept the following parameters in addition to the parameters l
 }
 ```
 
-Several of the following request types accept these additional parameters:
-- `threads`: The number of [threads](/docs/core/connect-data-platform/connection-profiles#understanding-threads) to use when compiling (optional)
-- `select`: The space-delimited set of resources to execute (optional). (`models` is also supported on some request types for backwards compatibility.)
-- `selector`: The name of a predefined [YAML selector](/reference/node-selection/yaml-selectors) that defines the set of resources to execute (optional)
-- `exclude`: The space-delimited set of resources to exclude from compiling, running, testing, seeding, or snapshotting (optional)
-- `state`: The filepath of artifacts to use when establishing [state](/reference/node-selection/syntax#about-node-selection) (optional)
+Несколько следующих типов запросов принимают эти дополнительные параметры:
+- `threads`: Количество [потоков](/docs/core/connect-data-platform/connection-profiles#understanding-threads), которые будут использоваться при компиляции (необязательный)
+- `select`: Набор ресурсов, которые нужно выполнить, разделенный пробелами (необязательный). (`models` также поддерживается для некоторых типов запросов для обратной совместимости.)
+- `selector`: Имя предопределенного [YAML селектора](/reference/node-selection/yaml-selectors), который определяет набор ресурсов для выполнения (необязательный)
+- `exclude`: Набор ресурсов, которые нужно исключить из компиляции, выполнения, тестирования, посева или создания снимков, разделенный пробелами (необязательный)
+- `state`: Путь к артефактам, которые будут использоваться при установлении [состояния](/reference/node-selection/syntax#about-node-selection) (необязательный)
 
-### Compile a project ([docs](/reference/commands/compile))
+### Компиляция проекта ([docs](/reference/commands/compile))
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "compile",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "state": "<str> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "state": "<str> (необязательный)"
         }
 }
 ```
 
-### Run models ([docs](/reference/commands/run))
+### Запуск моделей ([docs](/reference/commands/run))
 
-**Additional parameters:**
-- `defer`: Whether to defer references to upstream, unselected resources (optional, requires `state`)
+**Дополнительные параметры:**
+- `defer`: Указывает, следует ли отложить ссылки на вышестоящие, невыбранные ресурсы (необязательный, требует `state`)
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "run",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "state": "<str> (optional)",
-            "defer": "<bool> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "state": "<str> (необязательный)",
+            "defer": "<bool> (необязательный)"
         }
 }
 ```
 
-### Run tests ([docs](/reference/commands/test))
+### Запуск тестов ([docs](/reference/commands/test))
 
-**Additional parameters:**
- - `data`: If True, run data tests (optional, default=true)
- - `schema`: If True, run schema tests (optional, default=true)
+**Дополнительные параметры:**
+ - `data`: Если True, выполняются тесты данных (необязательный, по умолчанию=true)
+ - `schema`: Если True, выполняются тесты схемы (необязательный, по умолчанию=true)
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "test",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "state": "<str> (optional)",
-            "data": "<bool> (optional)",
-            "schema": "<bool> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "state": "<str> (необязательный)",
+            "data": "<bool> (необязательный)",
+            "schema": "<bool> (необязательный)"
         }
 }
 ```
 
-### Run seeds ([docs](/reference/commands/seed))
+### Запуск посевов ([docs](/reference/commands/seed))
 
-**Parameters:**
- - `show`: If True, show a sample of the seeded data in the response (optional, default=false)
+**Параметры:**
+ - `show`: Если True, показать образец посеянных данных в ответе (необязательный, по умолчанию=false)
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "seed",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "show": "<bool> (optional)",
-            "state": "<str> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "show": "<bool> (необязательный)",
+            "state": "<str> (необязательный)"
         }
 }
 ```
 
-### Run snapshots ([docs](/docs/build/snapshots))
+### Запуск снимков ([docs](/docs/build/snapshots))
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "snapshot",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "state": "<str> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "state": "<str> (необязательный)"
         }
 }
 ```
 
-### Build ([docs](/reference/commands/build))
+### Построение ([docs](/reference/commands/build))
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "build",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "threads": "<int> (optional)",
-            "select": "<str> (optional)",
-            "exclude": "<str> (optional)",
-            "selector": "<str> (optional)",
-            "state": "<str> (optional)",
-            "defer": "<str> (optional)"
+            "threads": "<int> (необязательный)",
+            "select": "<str> (необязательный)",
+            "exclude": "<str> (необязательный)",
+            "selector": "<str> (необязательный)",
+            "state": "<str> (необязательный)",
+            "defer": "<str> (необязательный)"
         }
 }
 ```
 
-### List project resources ([docs](cmd-docs#dbt-docs-generate))
+### Перечисление ресурсов проекта ([docs](cmd-docs#dbt-docs-generate))
 
-**Additional parameters:**
- - `resource_types`: Filter selected resources by type
- - `output_keys`: Specify which node properties to include in output
+**Дополнительные параметры:**
+ - `resource_types`: Фильтровать выбранные ресурсы по типу
+ - `output_keys`: Указать, какие свойства узлов включить в вывод
 
  ```json
  {
  	"jsonrpc": "2.0",
  	"method": "ls",
- 	"id": "<request id>",
+ 	"id": "<идентификатор запроса>",
  	"params": {
-         "select": "<str> (optional)",
-         "exclude": "<str> (optional)",
-         "selector": "<str> (optional)",
-         "resource_types": ["<list> (optional)"],
-         "output_keys": ["<list> (optional)"],
+         "select": "<str> (необязательный)",
+         "exclude": "<str> (необязательный)",
+         "selector": "<str> (необязательный)",
+         "resource_types": ["<list> (необязательный)"],
+         "output_keys": ["<list> (необязательный)"],
      }
  }
  ```
 
-### Generate docs ([docs](cmd-docs#dbt-docs-generate))
+### Генерация документации ([docs](cmd-docs#dbt-docs-generate))
 
-**Additional parameters:**
- - `compile`: If True, compile the project before generating a catalog (optional, default=false)
+**Дополнительные параметры:**
+ - `compile`: Если True, скомпилировать проект перед генерацией каталога (необязательный, по умолчанию=false)
 
 ```json
 {
 	"jsonrpc": "2.0",
 	"method": "docs.generate",
-	"id": "<request id>",
+	"id": "<идентификатор запроса>",
 	"params": {
-            "compile": "<bool> (optional)",
-            "state": "<str> (optional)"
+            "compile": "<bool> (необязательный)",
+            "state": "<str> (необязательный)"
         }
 }
 ```
 
-## Compiling and running SQL statements
+## Компиляция и выполнение SQL-запросов
 
-### Compiling a query
+### Компиляция запроса
 
-This query compiles the sql `select {{ 1 + 1 }} as id` (base64-encoded) against the rpc server:
+Этот запрос компилирует sql `select {{ 1 + 1 }} as id` (в кодировке base64) на rpc сервере:
 
 <File name='rpc-spec.json'>
 
@@ -419,11 +414,11 @@ This query compiles the sql `select {{ 1 + 1 }} as id` (base64-encoded) against 
 
 </File>
 
-The resulting response will include a key called `compiled_sql` with a value of `'select 2'`.
+В результате ответа будет включен ключ с названием `compiled_sql` и значением `'select 2'`.
 
-### Executing a query
+### Выполнение запроса
 
-This query executes the sql `select {{ 1 + 1 }} as id` (bas64-encoded) against the rpc server:
+Этот запрос выполняет sql `select {{ 1 + 1 }} as id` (в кодировке base64) на rpc сервере:
 
 <File name='rpc-run.json'>
 
@@ -442,25 +437,25 @@ This query executes the sql `select {{ 1 + 1 }} as id` (bas64-encoded) against t
 
 </File>
 
-The resulting response will include a key called `table` with a value of `{'column_names': ['?column?'], 'rows': [[2.0]]}`
+В результате ответа будет включен ключ с названием `table` и значением `{'column_names': ['?column?'], 'rows': [[2.0]]}`
 
-## Reloading the RPC Server
+## Перезагрузка RPC сервера
 
-When the dbt RPC Server starts, it will load the dbt project into memory using the files present on disk at startup. If the files in the dbt project should change (either during development or in a deployment),  the dbt RPC Server can be updated live without cycling the server process. To reload the files present on disk, send a "hangup" signal to the running server process using the Process ID (pid) of the running process.
+Когда сервер dbt RPC запускается, он загружает проект dbt в память, используя файлы, присутствующие на диске при запуске. Если файлы в проекте dbt должны измениться (либо во время разработки, либо в процессе развертывания), сервер dbt RPC может быть обновлен в реальном времени без перезапуска процесса сервера. Чтобы перезагрузить файлы, присутствующие на диске, отправьте сигнал "hangup" выполняющемуся процессу сервера, используя идентификатор процесса (pid) выполняющегося процесса.
 
-### Finding the server PID
+### Поиск PID сервера
 
-To find the server PID, either fetch the `.result.pid` value from the `status` method response on the server, or use `ps`:
+Чтобы найти PID сервера, либо получите значение `.result.pid` из ответа метода `status` на сервере, либо используйте `ps`:
 
 ```
-# Find the server PID using `ps`:
+# Найдите PID сервера, используя `ps`:
 ps aux | grep 'dbt-rpc serve' | grep -v grep
 ```
 
-After finding the PID for the process (eg. 12345), send a signal to the running server using the `kill` command:
+После нахождения PID процесса (например, 12345) отправьте сигнал выполняющемуся серверу с помощью команды `kill`:
 
 ```
 kill -HUP 12345
 ```
 
-When the server receives the HUP (hangup) signal, it will re-parse the files on disk and use the updated project code when handling subsequent requests.
+Когда сервер получает сигнал HUP (hangup), он повторно проанализирует файлы на диске и будет использовать обновленный код проекта при обработке последующих запросов.

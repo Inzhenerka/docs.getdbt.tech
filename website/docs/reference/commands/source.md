@@ -1,32 +1,32 @@
 ---
-title: "About dbt source command"
+title: "О команде dbt source"
 sidebar_label: "source"
 id: "source"
 ---
 
-The `dbt source` command provides subcommands that are useful when working with source data. This command provides one subcommand, `dbt source freshness`.
+Команда `dbt source` предоставляет подкоманды, которые полезны при работе с исходными данными. Эта команда предоставляет одну подкоманду, `dbt source freshness`.
 
 
 
 ### dbt source freshness
 
-If your dbt project is [configured with sources](/docs/build/sources), then the `dbt source freshness` command will query all of your defined source tables, determining the "freshness" of these tables. If the tables are stale (based on the `freshness` config specified for your sources) then dbt will report a warning or error accordingly. If a source <Term id="table" /> is in a stale state, then dbt will exit with a nonzero exit code.
+Если ваш проект dbt [сконфигурирован с источниками](/docs/build/sources), то команда `dbt source freshness` будет запрашивать все ваши определенные исходные таблицы, определяя "свежесть" этих таблиц. Если таблицы устарели (на основе конфигурации `freshness`, указанной для ваших источников), то dbt сообщит о предупреждении или ошибке соответственно. Если источник <Term id="table" /> находится в устаревшем состоянии, то dbt завершит работу с ненулевым кодом выхода.
 
-### Specifying sources to snapshot
+### Указание источников для снимка
 
-By default, `dbt source freshness` will calculate freshness information for all of the sources in your project. To snapshot freshness for a subset of these sources, use the `--select` flag.
+По умолчанию `dbt source freshness` будет вычислять информацию о свежести для всех источников в вашем проекте. Чтобы сделать снимок свежести для подмножества этих источников, используйте флаг `--select`.
 
 ```bash
-# Snapshot freshness for all Snowplow tables:
+# Снимок свежести для всех таблиц Snowplow:
 $ dbt source freshness --select "source:snowplow"
 
-# Snapshot freshness for a particular source table:
+# Снимок свежести для конкретной исходной таблицы:
 $ dbt source freshness --select "source:snowplow.event"
 ```
 
-### Configuring source freshness output
+### Настройка вывода свежести источников
 
-When `dbt source freshness` completes, a <Term id="json" /> file containing information about the freshness of your sources will be saved to `target/sources.json`. An example `sources.json` will look like:
+Когда `dbt source freshness` завершится, файл <Term id="json" /> с информацией о свежести ваших источников будет сохранен в `target/sources.json`. Пример `sources.json` будет выглядеть следующим образом:
 
 <File name='target/sources.json'>
 
@@ -60,19 +60,19 @@ When `dbt source freshness` completes, a <Term id="json" /> file containing info
 
 </File>
 
-To override the destination for this `sources.json` file, use the `-o` (or `--output`) flag:
+Чтобы переопределить место назначения для этого файла `sources.json`, используйте флаг `-o` (или `--output`):
 ```
-# Output source freshness info to a different path
+# Вывод информации о свежести источников в другое место
 $ dbt source freshness --output target/source_freshness.json
 ```
 
-### Using source freshness
+### Использование свежести источников
 
-Snapshots of source freshness can be used to understand:
+Снимки свежести источников могут быть использованы для понимания:
 
-1. If a specific data source is in a delayed state
-2. The trend of data source freshness over time
+1. Находится ли конкретный источник данных в состоянии задержки
+2. Тенденции свежести источников данных с течением времени
 
-This command can be run manually to determine the state of your source data freshness at any time. It is also recommended that you run this command on a schedule, storing the results of the freshness snapshot at regular intervals. These longitudinal snapshots will make it possible to be alerted when source data freshness SLAs are violated, as well as understand the trend of freshness over time.
+Эту команду можно запускать вручную, чтобы определить состояние свежести ваших исходных данных в любое время. Также рекомендуется запускать эту команду по расписанию, сохраняя результаты снимка свежести через регулярные интервалы. Эти продольные снимки позволят получать уведомления, когда SLA по свежести исходных данных нарушаются, а также понимать тенденцию свежести с течением времени.
 
-dbt Cloud makes it easy to snapshot source freshness on a schedule, and provides a dashboard out of the box indicating the state of freshness for all of the sources defined in your project. For more information on snapshotting freshness in dbt Cloud, check out the [docs](/docs/build/sources#source-data-freshness).
+dbt Cloud упрощает создание снимков свежести источников по расписанию и предоставляет панель управления, показывающую состояние свежести для всех источников, определенных в вашем проекте. Для получения дополнительной информации о создании снимков свежести в dbt Cloud, ознакомьтесь с [документацией](/docs/build/sources#source-data-freshness).

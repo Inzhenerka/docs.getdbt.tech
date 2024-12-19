@@ -1,20 +1,17 @@
 ---
-title: "Source properties"
-description: "Learn how to use source properties in dbt."
+title: "Свойства источников"
+description: "Узнайте, как использовать свойства источников в dbt."
 ---
 
-## Related documentation
-- [Using sources](/docs/build/sources)
-- [Declaring resource properties](/reference/configs-and-properties)
+## Связанная документация
+- [Использование источников](/docs/build/sources)
+- [Объявление свойств ресурсов](/reference/configs-and-properties)
 
-## Overview
+## Обзор
 
-import PropsCallout from '/snippets/_config-prop-callout.md';
+Свойства источников могут быть объявлены в любом файле `properties.yml` в вашем каталоге `models/` (как определено в конфигурации [`model-paths`](/reference/project-configs/model-paths)). <PropsCallout title={frontMatter.title}/>  <br /> 
 
-Source properties can be declared in any `properties.yml` file in your `models/` directory (as defined by the [`model-paths` config](/reference/project-configs/model-paths)). <PropsCallout title={frontMatter.title}/>  <br /> 
-
-
-You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `models/` directory:
+Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри каталога `models/`:
 
 <File name='models/<filename>.yml'>
 
@@ -22,7 +19,7 @@ You can name these files `whatever_you_want.yml`, and nest them arbitrarily deep
 version: 2
 
 sources:
-  - name: <string> # required
+  - name: <string> # обязательный
     [description](/reference/resource-properties/description): <markdown_string>
     [database](/reference/resource-properties/database): <database_name>
     [schema](/reference/resource-properties/schema): <schema_name>
@@ -31,7 +28,7 @@ sources:
     [meta](/reference/resource-configs/meta): {<dictionary>}
     [tags](/reference/resource-configs/tags): [<string>]
     
-    # requires v1.1+
+    # требуется v1.1+
     [config](/reference/resource-properties/config):
       [<source_config>](source-configs): <config_value>
 
@@ -40,10 +37,10 @@ sources:
     [freshness](/reference/resource-properties/freshness):
       warn_after:
         [count](/reference/resource-properties/freshness#count): <positive_integer>
-        [period](/reference/resource-properties/freshness#period): minute | hour | day
+        [period](/reference/resource-properties/freshness#period): минута | час | день
       error_after:
         [count](/reference/resource-properties/freshness#count): <positive_integer>
-        [period](/reference/resource-properties/freshness#period): minute | hour | day
+        [period](/reference/resource-properties/freshness#period): минута | час | день
       [filter](/reference/resource-properties/freshness#filter): <where-condition>
 
     [quoting](/reference/resource-properties/quoting):
@@ -52,22 +49,22 @@ sources:
       identifier: true | false
 
     tables:
-      - name: <string> #required
+      - name: <string> # обязательный
         [description](/reference/resource-properties/description): <markdown_string>
         [meta](/reference/resource-configs/meta): {<dictionary>}
         [identifier](/reference/resource-properties/identifier): <table_name>
         [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field): <column_name>
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional tests
+          - ... # объявите дополнительные тесты
         [tags](/reference/resource-configs/tags): [<string>]
         [freshness](/reference/resource-properties/freshness):
           warn_after:
             [count](/reference/resource-properties/freshness#count): <positive_integer>
-            [period](/reference/resource-properties/freshness#period): minute | hour | day
+            [period](/reference/resource-properties/freshness#period): минута | час | день
           error_after:
             [count](/reference/resource-properties/freshness#count): <positive_integer>
-            [period](/reference/resource-properties/freshness#period): minute | hour | day
+            [period](/reference/resource-properties/freshness#period): минута | час | день
           [filter](/reference/resource-properties/freshness#filter): <where-condition>
 
         [quoting](/reference/resource-properties/quoting):
@@ -76,26 +73,26 @@ sources:
           identifier: true | false
         [external](/reference/resource-properties/external): {<dictionary>}
         columns:
-          - name: <column_name> # required
+          - name: <column_name> # обязательный
             [description](/reference/resource-properties/description): <markdown_string>
             [meta](/reference/resource-configs/meta): {<dictionary>}
             [quote](/reference/resource-properties/quote): true | false
             [tests](/reference/resource-properties/data-tests):
               - <test>
-              - ... # declare additional tests
+              - ... # объявите дополнительные тесты
             [tags](/reference/resource-configs/tags): [<string>]
-          - name: ... # declare properties of additional columns
+          - name: ... # объявите свойства дополнительных столбцов
 
-      - name: ... # declare properties of additional source tables
+      - name: ... # объявите свойства дополнительных таблиц источников
 
-  - name: ... # declare properties of additional sources
+  - name: ... # объявите свойства дополнительных источников
 
 ```
 
 </File>
 
 
-## Example
+## Пример
 
 <File name='models/<filename>.yml'>
 
@@ -106,15 +103,15 @@ sources:
   - name: jaffle_shop
     database: raw
     schema: public
-    loader: emr # informational only (free text)
-    loaded_at_field: _loaded_at # configure for all sources
+    loader: emr # только для информации (свободный текст)
+    loaded_at_field: _loaded_at # настройка для всех источников
 
-    # meta fields are rendered in auto-generated documentation
+    # поля meta отображаются в автоматически сгенерированной документации
     meta:
       contains_pii: true
       owner: "@alice"
 
-    # Add tags to this source
+    # Добавьте теги к этому источнику
     tags:
       - ecom
       - pii
@@ -127,7 +124,7 @@ sources:
     tables:
       - name: orders
         identifier: Orders_
-        loaded_at_field: updated_at # override source defaults
+        loaded_at_field: updated_at # переопределение значений по умолчанию источника
         columns:
           - name: id
             tests:
@@ -139,7 +136,7 @@ sources:
 
       - name: customers
         quoting:
-          identifier: true # override source defaults
+          identifier: true # переопределение значений по умолчанию источника
         columns:
             tests:
               - unique

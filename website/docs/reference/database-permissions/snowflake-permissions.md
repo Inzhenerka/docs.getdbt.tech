@@ -1,20 +1,20 @@
 ---
-title: "Snowflake permissions"
+title: "Разрешения Snowflake"
 ---
 
-In Snowflake, permissions are used to control who can perform certain actions on different database objects. Use SQL statements to manage permissions in a Snowflake database.
+В Snowflake разрешения используются для контроля того, кто может выполнять определенные действия с различными объектами базы данных. Используйте SQL-запросы для управления разрешениями в базе данных Snowflake.
 
-## Set up Snowflake account
+## Настройка учетной записи Snowflake
 
-This section explains how to set up permissions and roles within Snowflake. In Snowflake, you would perform these actions using SQL commands and set up your data warehouse and access control within Snowflake's ecosystem. 
+В этом разделе объясняется, как настроить разрешения и роли в Snowflake. В Snowflake вы будете выполнять эти действия с помощью SQL-команд и настраивать свой хранилище данных и контроль доступа в экосистеме Snowflake.
 
-1. Set up databases
+1. Настройка баз данных
 ```
 use role sysadmin;
 create database raw;
 create database analytics;
 ```
-2. Set up warehouses
+2. Настройка складов данных
 ```
 create warehouse loading
     warehouse_size = xsmall
@@ -35,7 +35,7 @@ create warehouse reporting
     initially_suspended = true;
 ```
 
-3. Set up roles and warehouse permissions
+3. Настройка ролей и разрешений на склады данных
 ```
 use role securityadmin;
 
@@ -49,17 +49,17 @@ create role reporter;
 grant all on warehouse reporting to role reporter;
 ```
 
-4. Create users, assigning them to their roles
+4. Создание пользователей и назначение им ролей
 
-Every person and application gets a separate user and is assigned to the correct role.
+Каждому человеку и приложению назначается отдельный пользователь и соответствующая роль.
 
 ```
-create user stitch_user -- or fivetran_user
+create user stitch_user -- или fivetran_user
     password = '_generate_this_'
     default_warehouse = loading
     default_role = loader; 
 
-create user claire -- or amy, jeremy, etc.
+create user claire -- или amy, jeremy и т.д.
     password = '_generate_this_'
     default_warehouse = transforming
     default_role = transformer
@@ -70,76 +70,75 @@ create user dbt_cloud_user
     default_warehouse = transforming
     default_role = transformer;
 
-create user looker_user -- or mode_user etc.
+create user looker_user -- или mode_user и т.д.
     password = '_generate_this_'
     default_warehouse = reporting
     default_role = reporter;
 
--- then grant these roles to each user
-grant role loader to user stitch_user; -- or fivetran_user
+-- затем предоставьте эти роли каждому пользователю
+grant role loader to user stitch_user; -- или fivetran_user
 grant role transformer to user dbt_cloud_user;
-grant role transformer to user claire; -- or amy, jeremy
-grant role reporter to user looker_user; -- or mode_user, periscope_user
+grant role transformer to user claire; -- или amy, jeremy
+grant role reporter to user looker_user; -- или mode_user, periscope_user
 ```
 
-5. Let  loader load data
+5. Позвольте загрузчику загружать данные
 
-Give the role unilateral permission to operate on the raw database
+Предоставьте роли одностороннее разрешение на работу с базой данных raw
 ```
 use role sysadmin;
 grant all on database raw to role loader;
 ```
 
-6. Let transformer transform data
+6. Позвольте трансформатору преобразовывать данные
 
-The transformer role needs to be able to read raw data.
+Роль трансформатора должна иметь возможность читать необработанные данные.
 
-If you do this before you have any data loaded, you can run:
+Если вы сделаете это до загрузки каких-либо данных, вы можете выполнить:
 ```
 grant usage on database raw to role transformer;
 grant usage on future schemas in database raw to role transformer;
 grant select on future tables in database raw to role transformer;
 grant select on future views in database raw to role transformer;
 ```
-If you already have data loaded in the raw database, make sure also you run the following to update the permissions
+Если у вас уже есть загруженные данные в базе данных raw, убедитесь, что вы также выполните следующее для обновления разрешений
 ```
 grant usage on all schemas in database raw to role transformer;
 grant select on all tables in database raw to role transformer;
 grant select on all views in database raw to role transformer;
 ```
-transformer also needs to be able to create in the analytics database:
+Трансформатор также должен иметь возможность создавать в базе данных analytics:
 ```
 grant all on database analytics to role transformer;
 ```
-7. Let reporter read the transformed data
+7. Позвольте репортеру читать преобразованные данные
 
-A previous version of this article recommended this be implemented through hooks in dbt, but this way lets you get away with a one-off statement.
+Предыдущая версия этой статьи рекомендовала реализовать это через хуки в dbt, но этот способ позволяет обойтись одним запросом.
 ```
 grant usage on database analytics to role reporter;
 grant usage on future schemas in database analytics to role reporter;
 grant select on future tables in database analytics to role reporter;
 grant select on future views in database analytics to role reporter;
 ```
-Again, if you already have data in your analytics database, make sure you run:
+Снова, если у вас уже есть данные в вашей базе данных analytics, убедитесь, что вы выполните:
 ```
 grant usage on all schemas in database analytics to role reporter;
 grant select on all tables in database analytics to role reporter;
 grant select on all views in database analytics to role reporter;
 ```
-8. Maintain
+8. Поддержка
 
-When new users are added, make sure you add them to the right role! Everything else should be inherited automatically thanks to those `future` grants.
+Когда добавляются новые пользователи, убедитесь, что вы добавили их к правильной роли! Все остальное должно наследоваться автоматически благодаря этим `future` разрешениям.
 
-For more discussion and legacy information, refer to [this Discourse article](https://discourse.getdbt.com/t/setting-up-snowflake-the-exact-grant-statements-we-run/439).
+Для более подробного обсуждения и устаревшей информации обратитесь к [этой статье на Discourse](https://discourse.getdbt.com/t/setting-up-snowflake-the-exact-grant-statements-we-run/439).
 
-## Example Snowflake permissions
+## Пример разрешений Snowflake
 
-The following example provides you with the SQL statements you can use to manage permissions. 
+Следующий пример предоставляет вам SQL-запросы, которые вы можете использовать для управления разрешениями.
 
-**Note** that `warehouse_name`, `database_name`, and `role_name` are placeholders and you can replace them as needed for your organization's naming convention.
+**Примечание**: `warehouse_name`, `database_name` и `role_name` являются заполнителями, и вы можете заменить их в соответствии с соглашением о наименовании вашей организации.
 
 ```
-
 grant all on warehouse warehouse_name to role role_name;
 grant usage on database database_name to role role_name;
 grant create schema on database database_name to role role_name; 
@@ -155,4 +154,3 @@ grant monitor on all schemas in database database_name to role role_name;
 grant select on all tables in database database_name to role role_name;
 grant select on all views in database database_name to role role_name;
 ```
-

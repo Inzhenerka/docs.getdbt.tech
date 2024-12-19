@@ -1,56 +1,54 @@
 ---
-title: "About dbt clone command"
+title: "О команде dbt clone"
 sidebar_label: "clone"
 id: "clone"
 ---
 
-The `dbt clone` command clones selected nodes from the [specified state](/reference/node-selection/syntax#establishing-state) to the target schema(s). This command makes use of the `clone` materialization:
-- If your data platform supports zero-copy cloning of tables (Snowflake, Databricks, or BigQuery), and this model exists as a table in the source environment, dbt will create it in your target environment as a clone.
-- Otherwise, dbt will create a simple pointer view (`select * from` the source object)
-- By default, `dbt clone` will not recreate pre-existing relations in the current target. To override this, use the `--full-refresh` flag. 
-- You may want to specify a higher number of [threads](/docs/running-a-dbt-project/using-threads) to decrease execution time since individual clone statements are independent of one another.
+Команда `dbt clone` клонирует выбранные узлы из [указанного состояния](/reference/node-selection/syntax#establishing-state) в целевую схему(ы). Эта команда использует материализацию `clone`:
+- Если ваша платформа данных поддерживает клонирование таблиц без копирования (Snowflake, Databricks или BigQuery), и эта модель существует как таблица в исходной среде, dbt создаст ее в вашей целевой среде как клон.
+- В противном случае dbt создаст простое представление указателя (`select * from` исходного объекта).
+- По умолчанию `dbt clone` не будет воссоздавать уже существующие отношения в текущей цели. Чтобы переопределить это, используйте флаг `--full-refresh`.
+- Вы можете указать большее количество [потоков](/docs/running-a-dbt-project/using-threads), чтобы уменьшить время выполнения, так как отдельные операторы клонирования независимы друг от друга.
 
-The `clone` command is useful for:
-- blue/green continuous deployment (on data warehouses that support zero-copy cloning tables)
-- cloning current production state into development schema(s)
-- handling incremental models in dbt Cloud CI jobs (on data warehouses that support zero-copy cloning tables)
-- testing code changes on downstream dependencies in your BI tool
-
+Команда `clone` полезна для:
+- непрерывного развертывания blue/green (на хранилищах данных, которые поддерживают клонирование таблиц без копирования)
+- клонирования текущего состояния производства в схемы разработки
+- обработки инкрементальных моделей в CI-заданиях dbt Cloud (на хранилищах данных, которые поддерживают клонирование таблиц без копирования)
+- тестирования изменений кода на зависимостях downstream в вашем BI инструменте
 
 ```bash
-# clone all of my models from specified state to my target schema(s)
+# клонировать все мои модели из указанного состояния в мои целевые схемы
 dbt clone --state path/to/artifacts
 
-# clone one_specific_model of my models from specified state to my target schema(s)
+# клонировать одну_конкретную_модель из моих моделей из указанного состояния в мои целевые схемы
 dbt clone --select "one_specific_model" --state path/to/artifacts
 
-# clone all of my models from specified state to my target schema(s) and recreate all pre-existing relations in the current target
+# клонировать все мои модели из указанного состояния в мои целевые схемы и воссоздать все уже существующие отношения в текущей цели
 dbt clone --state path/to/artifacts --full-refresh
 
-# clone all of my models from specified state to my target schema(s), running up to 50 clone statements in parallel
+# клонировать все мои модели из указанного состояния в мои целевые схемы, выполняя до 50 операторов клонирования параллельно
 dbt clone --state path/to/artifacts --threads 50
 ```
 
-### When to use `dbt clone` instead of [deferral](/reference/node-selection/defer)?
+### Когда использовать `dbt clone` вместо [отложенного выполнения](/reference/node-selection/defer)?
 
-Unlike deferral, `dbt clone` requires some compute and creation of additional objects in your data warehouse. In many cases, deferral is a cheaper and simpler alternative to `dbt clone`. However, `dbt clone` covers additional use cases where deferral may not be possible.
+В отличие от отложенного выполнения, `dbt clone` требует вычислительных ресурсов и создания дополнительных объектов в вашем хранилище данных. Во многих случаях отложенное выполнение является более дешевым и простым вариантом по сравнению с `dbt clone`. Однако `dbt clone` охватывает дополнительные случаи использования, когда отложенное выполнение может быть невозможно.
 
-For example, by creating actual data warehouse objects, `dbt clone` allows you to test out your code changes on downstream dependencies _outside of dbt_ (such as a BI tool). 
+Например, создавая реальные объекты в хранилище данных, `dbt clone` позволяет вам тестировать изменения кода на зависимостях downstream _вне dbt_ (например, в BI инструменте).
 
-As another example, you could `clone` your modified incremental models as the first step of your dbt Cloud CI job to prevent costly `full-refresh` builds for warehouses that support zero-copy cloning.
+В качестве другого примера, вы можете `clone` ваши измененные инкрементальные модели в качестве первого шага вашего CI задания в dbt Cloud, чтобы избежать дорогостоящих сборок `full-refresh` для хранилищ, которые поддерживают клонирование без копирования.
 
-## Cloning in dbt Cloud
+## Клонирование в dbt Cloud
 
-You can clone nodes between states in dbt Cloud using the `dbt clone` command. This is available in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) and the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) and  relies on the [`--defer`](/reference/node-selection/defer) feature. For more details on defer in dbt Cloud, read [Using defer in dbt Cloud](/docs/cloud/about-cloud-develop-defer).
+Вы можете клонировать узлы между состояниями в dbt Cloud, используя команду `dbt clone`. Это доступно в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) и [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) и зависит от функции [`--defer`](/reference/node-selection/defer). Для получения дополнительной информации об отложенном выполнении в dbt Cloud, прочитайте [Использование отложенного выполнения в dbt Cloud](/docs/cloud/about-cloud-develop-defer).
 
-- **Using dbt Cloud CLI** &mdash; The `dbt clone` command in the dbt Cloud CLI automatically includes the `--defer` flag. This means you can use the `dbt clone` command without any additional setup.
+- **Использование dbt Cloud CLI** &mdash; Команда `dbt clone` в dbt Cloud CLI автоматически включает флаг `--defer`. Это означает, что вы можете использовать команду `dbt clone` без дополнительной настройки.
 
-- **Using dbt Cloud IDE** &mdash; To use the `dbt clone` command in the dbt Cloud IDE, follow these steps before running the `dbt clone` command:
+- **Использование dbt Cloud IDE** &mdash; Чтобы использовать команду `dbt clone` в dbt Cloud IDE, выполните следующие шаги перед запуском команды `dbt clone`:
 
-  - Set up your **Production environment** and have a successful job run.
-  - Enable **Defer to production** by toggling the switch in the lower-right corner of the command bar.
-    <Lightbox src="/img/docs/dbt-cloud/defer-toggle.jpg" width="80%" title="Select the 'Defer to production' toggle on the bottom right of the command bar to enable defer in the dbt Cloud IDE."/>
-  - Run the `dbt clone` command from the command bar.
+  - Настройте вашу **Производственную среду** и выполните успешный запуск задания.
+  - Включите **Отложенное выполнение в производство**, переключив тумблер в правом нижнем углу панели команд.
+    <Lightbox src="/img/docs/dbt-cloud/defer-toggle.jpg" width="80%" title="Выберите переключатель 'Отложенное выполнение в производство' в правом нижнем углу панели команд, чтобы включить отложенное выполнение в dbt Cloud IDE."/>
+  - Запустите команду `dbt clone` из панели команд.
   
-  
-Check out [this Developer blog post](https://docs.getdbt.com/blog/to-defer-or-to-clone) for more details on best practices when to use `dbt clone` vs. deferral.
+Посмотрите [этот пост в блоге разработчиков](https://docs.getdbt.com/blog/to-defer-or-to-clone) для получения дополнительной информации о лучших практиках, когда использовать `dbt clone` по сравнению с отложенным выполнением.

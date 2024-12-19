@@ -1,9 +1,9 @@
 ---
-title: Customize dbt models database, schema, and alias
+title: Настройка базы данных, схемы и псевдонима моделей dbt
 id: customize-schema-alias
-description: "Learn how to properly adjust your generate_schema_name() and generate_alias_name() macros."
-displayText: Learn how to adjust your generate schema name and generate alias name.
-hoverSnippet: Learn how to adjust your generate schema name and generate alias name.
+description: "Узнайте, как правильно настроить ваши макросы generate_schema_name() и generate_alias_name()."
+displayText: Узнайте, как настроить имя вашей схемы и псевдоним.
+hoverSnippet: Узнайте, как настроить имя вашей схемы и псевдоним.
 # time_to_complete: '30 minutes' commenting out until we test
 icon: 'guides'
 hide_table_of_contents: true
@@ -13,112 +13,97 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
-This guide explains how to customize the [schema](/docs/build/custom-schemas), [database](/docs/build/custom-databases), and [alias](/docs/build/custom-aliases) naming conventions in dbt to fit your data warehouse governance and design needs.
-When we develop dbt models and execute certain [commands](https://docs.getdbt.com/reference/dbt-commands) (such as `dbt run` or `dbt build`), objects (like tables and views) get created in the data warehouse based on these naming conventions.
+## Введение
+Этот гид объясняет, как настроить соглашения о наименовании [схемы](/docs/build/custom-schemas), [базы данных](/docs/build/custom-databases) и [псевдонима](/docs/build/custom-aliases) в dbt в соответствии с вашими требованиями к управлению данными и дизайну.
+Когда мы разрабатываем модели dbt и выполняем определенные [команды](https://docs.getdbt.com/reference/dbt-commands) (такие как `dbt run` или `dbt build`), объекты (такие как таблицы и представления) создаются в хранилище данных на основе этих соглашений о наименовании.
 
+:::info Слово о наименовании
 
-
-:::info A word on naming
-
-Different warehouses have different names for _logical databases_. The information in this document covers "databases" on Snowflake, Redshift, and Postgres; "projects" on BigQuery; and "catalogs" on Databricks Unity Catalog.
+Разные хранилища имеют разные названия для _логических баз данных_. Информация в этом документе охватывает "базы данных" в Snowflake, Redshift и Postgres; "проекты" в BigQuery; и "каталоги" в Databricks Unity Catalog.
 
 :::
 
+Следующее — это стандартное поведение dbt "из коробки":
 
-The following is dbt's out-of-the-box default behavior:
+- База данных, в которой создается объект, определяется базой данных, настроенной на [уровне окружения в dbt Cloud](/docs/dbt-cloud-environments) или в файле [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml) в dbt Core.
 
-- The database where the object is created is defined by the database configured at the [environment level in dbt Cloud](/docs/dbt-cloud-environments) or in the [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml) in dbt Core.
+- Схема зависит от того, определили ли вы [пользовательскую схему](/docs/build/custom-schemas) для модели:
+    - Если вы не определили пользовательскую схему, dbt создает объект в стандартной схеме. В dbt Cloud это обычно `dbt_username` для разработки и стандартная схема для окружений развертывания. В dbt Core используется схема, указанная в файле `profiles.yml`.
+    - Если вы определяете пользовательскую схему, dbt объединяет ранее упомянутую схему с пользовательской.
+    - Например, если настроенная схема — `dbt_myschema`, а пользовательская — `marketing`, объекты будут созданы в `dbt_myschema_marketing`.
+    - Обратите внимание, что для автоматизированных CI задач имя схемы происходит от номера задачи и номера PR: `dbt_cloud_pr_<job_id>_<pr_id>`.
 
-- The schema depends on whether you have defined a [custom schema](/docs/build/custom-schemas) for the model:
-    - If you haven't defined a custom schema, dbt creates the object in the default schema. In dbt Cloud this is typically `dbt_username` for development and the default schema for deployment environments. In dbt Core, it uses the schema specified in the `profiles.yml` file.
-    - If you define a custom schema, dbt concatenates the schema mentioned earlier with the custom one.
-    - For example, if the configured schema is `dbt_myschema` and the custom one is `marketing`, the objects will be created under `dbt_myschema_marketing`.
-    - Note that for automated CI jobs, the schema name derives from the job number and PR number: `dbt_cloud_pr_<job_id>_<pr_id>`.
+- Имя объекта зависит от того, был ли определен [псевдоним](/reference/resource-configs/alias) для модели:
+    - Если псевдоним не определен, объект будет создан с тем же именем, что и модель, без `.sql` или `.py` в конце.
+        - Например, предположим, что у нас есть модель, файл sql которой называется `fct_orders_complete.sql`, пользовательская схема — `marketing`, и не настроен пользовательский псевдоним. Результирующая модель будет создана в `dbt_myschema_marketing.fct_orders_complete` в среде разработки.
+    - Если псевдоним определен, объект будет создан с настроенным псевдонимом.
+    - Например, предположим, что у нас есть модель, файл sql которой называется `fct_orders_complete.sql`, пользовательская схема — `marketing`, а псевдоним настроен как `fct_orders`. Результирующая модель будет создана в `dbt_myschema_marketing.fct_orders`.
 
+Эти стандартные правила являются отличной отправной точкой, и многие организации предпочитают придерживаться их без каких-либо настроек.
 
-- The object name depends on whether an [alias](/reference/resource-configs/alias) has been defined on the model:
-    - If no alias is defined, the object will be created with the same name as the model, without the `.sql` or `.py` at the end.
-        - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and no custom alias is configured. The resulting model will be created in `dbt_myschema_marketing.fct_orders_complete` in the dev environment. 
-    - If an alias is defined, the object will be created with the configured alias.
-    - For example, suppose that we have a model where the sql file is titled `fct_orders_complete.sql`, the custom schema is `marketing`, and the alias is configured to be `fct_orders`. The resulting model will be created in `dbt_myschema_marketing.fct_orders`
+Стандартные настройки позволяют разработчикам работать в своих изолированных схемах (песочницах) без перезаписи работы друг друга — даже если они работают с одними и теми же таблицами.
 
-These default rules are a great starting point, and many organizations choose to stick with those without any customization required.
+## Как настроить это поведение
 
-The defaults allow developers to work in their isolated schemas (sandboxes) without overwriting each other's work &mdash; even if they're working on the same tables.
+Хотя стандартное поведение подходит для большинства организаций, бывают случаи, когда этот подход не сработает.
 
+Например, dbt ожидает, что у него есть разрешение на создание схем по мере необходимости (и мы рекомендуем, чтобы пользователи, запускающие dbt, имели эту возможность), но это может быть запрещено в вашей компании.
 
-## How to customize this behavior
+Или, в зависимости от того, как вы спроектировали свое хранилище, вы можете захотеть минимизировать количество схем в вашей среде разработки (и избежать разрастания схем, не создавая комбинацию всех схем разработчиков и пользовательских схем).
 
-While the default behavior will fit the needs of most organizations, there are occasions where this approach won't work.
+Кроме того, вы можете даже захотеть, чтобы ваши схемы разработки назывались в честь веток функций, а не имен разработчиков.
 
-For example, dbt expects that it has permission to create schemas as needed (and we recommend that the users running dbt have this ability), but it might not be allowed at your company.
-
-Or, based on how you've designed your warehouse, you may wish to minimize the number of schemas in your dev environment (and avoid schema sprawl by not creating the combination of all developer schemas and custom schemas).
-
-Alternatively, you may even want your dev schemas to be named after feature branches instead of the developer name.
-
-For this reason, dbt offers three macros to customize what objects are created in the data warehouse:
+По этой причине dbt предлагает три макроса для настройки того, какие объекты создаются в хранилище данных:
 
 - [`generate_database_name()`](/docs/build/custom-databases#generate_database_name)
 - [`generate_schema_name()`](/docs/build/custom-schemas#how-does-dbt-generate-a-models-schema-name)
 - [`generate_alias_name()`](/docs/build/custom-aliases#generate_alias_name)
 
-By overwriting one or multiple of those macros, we can tailor where dbt objects are created in the data warehouse and align with any existing requirement.
+Перезаписывая один или несколько из этих макросов, мы можем настроить, где создаются объекты dbt в хранилище данных и соответствовать любым существующим требованиям.
 
+:::note Ключевая концепция
 
-:::note Key concept
+Модели, запущенные из двух разных контекстов, должны приводить к уникальным объектам в хранилище данных. Например, разработчик по имени Сюзи работает над улучшениями для `fct_player_stats`, но Даррен разрабатывает против точно такого же объекта.
 
-Models run from two different contexts must result in unique objects in the data warehouse. For example, a developer named Suzie is working on enhancements to `fct_player_stats`, but Darren is developing against the exact same object. 
+Чтобы предотвратить перезапись работы друг друга, как Сюзи, так и Даррен должны иметь свои уникальные версии `fct_player_stats` в среде разработки.
 
-In order to prevent overwriting each other's work, both Suzie and Darren should each have their unique versions of `fct_player_stats` in the development environment. 
-
-Further, the staging version of `fct_player_stats` should exist in a unique location apart from the development versions, and the production version.
+Кроме того, версия на этапе подготовки `fct_player_stats` должна существовать в уникальном месте, отдельно от версий разработки и производственной версии.
 
 :::
 
+Мы часто используем следующее при настройке этих макросов:
 
-We often leverage the following when customizing these macros:
-
-- In dbt Cloud, we recommend utilizing [environment variables](/docs/build/environment-variables) to define where the dbt invocation is occurring (dev/stg/prod).
-    - They can be set at the environment level and all jobs will automatically inherit the default values. We'll add jinja logic (`if/else/endif`) to identify whether the run happens in dev, prod, Ci, and more.
+- В dbt Cloud мы рекомендуем использовать [переменные окружения](/docs/build/environment-variables) для определения, где происходит вызов dbt (dev/stg/prod).
+    - Они могут быть установлены на уровне окружения, и все задачи автоматически унаследуют стандартные значения. Мы добавим логику jinja (`if/else/endif`), чтобы определить, происходит ли запуск в dev, prod, CI и т.д.
     
-- Or as an alternative to environment variables, you can use `target.name`. For more information, you can refer to [About target variables](/reference/dbt-jinja-functions/target). 
+- Или в качестве альтернативы переменным окружения вы можете использовать `target.name`. Для получения дополнительной информации вы можете обратиться к [О переменных целевого назначения](/reference/dbt-jinja-functions/target). 
 
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/custom-schema-env-var.png" title="Переменные окружения для пользовательской схемы." />
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/custom-schema-env-var.png" title="Custom schema environmental variables target name." />
+Чтобы позволить имени базы данных/схемы/объекта зависеть от текущей ветки, вы можете использовать встроенную переменную окружения `DBT_CLOUD_GIT_BRANCH` в dbt Cloud [специальные переменные окружения](/docs/build/environment-variables#special-environment-variables).
 
-To allow the database/schema/object name to depend on the current branch, you can use the out of the box `DBT_CLOUD_GIT_BRANCH` environment variable in dbt Cloud [special environment variables](/docs/build/environment-variables#special-environment-variables).
+## Примеры использования
 
-
-## Example use cases
-
-Here are some typical examples we've encountered with dbt users leveraging those 3 macros and different logic. 
-
+Вот некоторые типичные примеры, с которыми мы сталкивались с пользователями dbt, использующими эти 3 макроса и различную логику. 
 
 :::note
 
-Note that the following examples are not comprehensive and do not cover all the available options. These examples are meant to be templates for you to develop your own behaviors. 
+Обратите внимание, что следующие примеры не являются исчерпывающими и не охватывают все доступные варианты. Эти примеры предназначены для того, чтобы служить шаблонами для разработки ваших собственных поведений. 
 
 :::
 
+- [Использование пользовательской схемы без объединения целевой схемы в производственной среде](/guides/customize-schema-alias?step=3#1-custom-schemas-without-target-schema-concatenation-in-production)
+- [Добавление идентификаторов разработчиков к таблицам](/guides/customize-schema-alias?step=3#2-static-schemas-add-developer-identities-to-tables)
+- [Использование имени ветки в качестве префикса схемы](/guides/customize-schema-alias?step=3#3-use-branch-name-as-schema-prefix)
+- [Использование статической схемы для CI](/guides/customize-schema-alias?step=3#4-use-a-static-schema-for-ci)
 
-- [Use custom schema without concatenating target schema in production](/guides/customize-schema-alias?step=3#1-custom-schemas-without-target-schema-concatenation-in-production)
-- [Add developer identities to tables](/guides/customize-schema-alias?step=3#2-static-schemas-add-developer-identities-to-tables)
-- [Use branch name as schema prefix](/guides/customize-schema-alias?step=3#3-use-branch-name-as-schema-prefix)
-- [Use a static schema for CI](/guides/customize-schema-alias?step=3#4-use-a-static-schema-for-ci)
+### 1. Пользовательские схемы без объединения целевой схемы в производственной среде
 
+Наиболее распространенный случай использования — это использование пользовательской схемы без объединения ее с именем стандартной схемы в производственной среде.
 
-### 1. Custom schemas without target schema concatenation in production
-
-
-The most common use case is using the custom schema without concatenating it with the default schema name when in production.
-
-To do so, you can create a new file called `generate_schema_name.sql` under your macros folder with the following code:
-
+Для этого вы можете создать новый файл с именем `generate_schema_name.sql` в вашей папке макросов со следующим кодом:
 
 <File name='macros/generate_schema_name.sql'>
-
 
 ```jinja
 {% macro generate_schema_name(custom_schema_name, node) -%}
@@ -139,47 +124,40 @@ To do so, you can create a new file called `generate_schema_name.sql` under your
     {%- endif -%}
 
 {%- endmacro %}
-
-
 ```
 </File>
 
+Это создаст следующие результаты для модели с именем `my_model` с пользовательской схемой `marketing`, предотвращая любое пересечение объектов между запусками dbt из разных контекстов.
 
-This will generate the following outputs for a model called `my_model` with a custom schema of `marketing`, preventing any overlap of objects between dbt runs from different contexts.
-
-
-| Context     |Target database| Target schema | Resulting object               |
-|-------------|:-------------:|:-------------:|:------------------------------:|
-| Developer 1 | dev           | dbt_dev1      |dev.dbt_dev1_marketing.my_model  |
-| Developer 2 | dev           | dbt_dev2      |dev.dbt_dev2_marketing.my_model  |
-| CI PR 123   | ci            | dbt_pr_123    |ci.dbt_pr_123_marketing.my_model|
-| CI PR 234   | ci            | dbt_pr_234    |ci.dbt_pr_234_marketing.my_model|
-| Production  | prod          | analytics     |prod.marketing.my_model         |
-
+| Контекст     | Целевая база данных | Целевая схема | Результирующий объект               |
+|--------------|:------------------:|:-------------:|:-----------------------------------:|
+| Разработчик 1| dev                | dbt_dev1     | dev.dbt_dev1_marketing.my_model     |
+| Разработчик 2| dev                | dbt_dev2     | dev.dbt_dev2_marketing.my_model     |
+| CI PR 123    | ci                 | dbt_pr_123   | ci.dbt_pr_123_marketing.my_model    |
+| CI PR 234    | ci                 | dbt_pr_234   | ci.dbt_pr_234_marketing.my_model    |
+| Производство  | prod              | analytics     | prod.marketing.my_model             |
 
 :::note
 
-We added logic to check if the current dbt run is happening in production or not. This is important, and we explain why in the [What not to do](/guides/customize-schema-alias?step=3#what-not-to-do) section.
+Мы добавили логику для проверки, происходит ли текущий запуск dbt в производственной среде или нет. Это важно, и мы объясняем, почему в разделе [Что не следует делать](/guides/customize-schema-alias?step=3#what-not-to-do).
 
 :::
 
+### 2. Статические схемы: добавление идентификаторов разработчиков к таблицам
 
-### 2. Static schemas: Add developer identities to tables
+Иногда мы сталкиваемся с ситуациями, когда политика безопасности организации не позволяет разработчикам создавать схемы, и всем разработчикам необходимо разрабатывать в одной схеме.
 
-Occasionally, we run into instances where the security posture of the organization prevents developers from creating schemas and all developers have to develop in a single schema.
+В этом случае мы можем: 
 
-In this case, we can: 
+- Создать новый файл с именем `generate_schema_name.sql` в вашей папке макросов со следующим кодом:
 
-- Create a new file called generate_schema_name.sql under your macros folder with the following code:
-
-- Change `generate_schema_name()` to use a single schema for all developers, even if a custom schema is set.
-- Update `generate_alias_name()` to append the developer alias and the custom schema to the front of the table name in the dev environment.
-    - This method is not ideal, as it can cause long table names, but it will let developers see in which schema the model will be created in production.
+- Изменить `generate_schema_name()`, чтобы использовать одну схему для всех разработчиков, даже если установлена пользовательская схема.
+- Обновить `generate_alias_name()`, чтобы добавить псевдоним разработчика и пользовательскую схему в начало имени таблицы в среде разработки.
+    - Этот метод не идеален, так как может привести к длинным именам таблиц, но он позволит разработчикам видеть, в какой схеме модель будет создана в производственной среде.
 
 <File name='macros/generate_schema_name.sql'>
 
 ```jinja
-
 {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}
@@ -198,15 +176,12 @@ In this case, we can:
     {%- endif -%}
 
 {%- endmacro %}
-
 ```
 </File>
-
 
 <File name='macros/generate_alias_name.sql'>
 
 ```jinja
-
 {% macro generate_alias_name(custom_alias_name=none, node=none) -%}
 
     {%- if  env_var('DBT_ENV_TYPE','DEV') == 'DEV' -%}
@@ -244,50 +219,42 @@ In this case, we can:
     {%- endif -%}
 
 {%- endmacro %}
-
 ```
 </File>
 
+Это создаст следующие результаты для модели с именем `my_model` с пользовательской схемой `marketing`, предотвращая любое пересечение объектов между запусками dbt из разных контекстов.
 
-This will generate the following outputs for a model called `my_model` with a custom schema of `marketing`, preventing any overlap of objects between dbt runs from different contexts.
+| Контекст     | Целевая база данных | Целевая схема | Результирующий объект               |
+|--------------|:------------------:|:-------------:|:-----------------------------------:|
+| Разработчик 1| dev                | dbt_dev1     | dev.marketing.dbt_dev1_my_model     |
+| Разработчик 2| dev                | dbt_dev2     | dev.marketing.dbt_dev2_my_model     |
+| CI PR 123    | ci                 | dbt_pr_123   | ci.dbt_pr_123_marketing.my_model    |
+| CI PR 234    | ci                 | dbt_pr_234   | ci.dbt_pr_234_marketing.my_model    |
+| Производство  | prod              | analytics     | prod.marketing.my_model             |
 
+### 3. Использование имени ветки в качестве префикса схемы
 
-| Context     |Target database| Target schema | Resulting object               |
-|-------------|:-------------:|:-------------:|:------------------------------:|
-| Developer 1 | dev           | dbt_dev1      |dev.marketing.dbt_dev1_my_model |
-| Developer 2 | dev           | dbt_dev2      |dev.marketing.dbt_dev2_my_model  |
-| CI PR 123   | ci            | dbt_pr_123    |ci.dbt_pr_123_marketing.my_model|
-| CI PR 234   | ci            | dbt_pr_234    |ci.dbt_pr_234_marketing.my_model|
-| Production  | prod          | analytics     |prod.marketing.my_model         |
-
-
-### 3. Use branch name as schema prefix
-
-For teams who prefer to isolate work based on the feature branch, you may want to take advantage of the `DBT_CLOUD_GIT_BRANCH` special environment variable. Please note that developers will write to the exact same schema when they are on the same feature branch.
-
+Для команд, которые предпочитают изолировать работу на основе ветки функции, вы можете воспользоваться специальной переменной окружения `DBT_CLOUD_GIT_BRANCH`. Обратите внимание, что разработчики будут записывать в одну и ту же схему, когда они находятся на одной и той же ветке функции.
 
 :::note
 
-The `DBT_CLOUD_GIT_BRANCH` variable is only available within the dbt Cloud IDE and not the Cloud CLI.
+Переменная `DBT_CLOUD_GIT_BRANCH` доступна только в IDE dbt Cloud, а не в Cloud CLI.
 
 :::
 
+Мы также видели, что некоторые организации предпочитают организовывать свои базы данных разработки по имени ветки. Это требует реализации аналогичной логики в `generate_database_name()` вместо макроса `generate_schema_name()`. По умолчанию dbt не будет автоматически создавать базы данных.
 
-We’ve also seen some organizations prefer to organize their dev databases by branch name. This requires implementing similar logic in `generate_database_name()` instead of the `generate_schema_name()` macro. By default, dbt will not automatically create the databases. 
-
-Refer to the [Tips and tricks](https://docs.getdbt.com/guides/customize-schema-alias?step=5) section to learn more.    
-
+Обратитесь к разделу [Советы и хитрости](https://docs.getdbt.com/guides/customize-schema-alias?step=5), чтобы узнать больше.    
 
 <File name='macros/generate_schema_name.sql'>
 
 ```jinja
-
 {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}
     {%- if  env_var('DBT_ENV_TYPE','DEV') == 'DEV' -%}
     
-        {#- we replace characters not allowed in the schema names by "_" -#}
+        {#- заменяем недопустимые в именах схем символы на "_" -#}
         {%- set re = modules.re -%}
         {%- set cleaned_branch = re.sub("\W", "_", env_var('DBT_CLOUD_GIT_BRANCH')) -%}
         
@@ -308,42 +275,36 @@ Refer to the [Tips and tricks](https://docs.getdbt.com/guides/customize-schema-a
     {%- endif -%}
 
 {%- endmacro %}
-
 ```
 </File>
 
-This will generate the following outputs for a model called `my_model` with a custom schema of `marketing`, preventing any overlap of objects between dbt runs from different contexts.
+Это создаст следующие результаты для модели с именем `my_model` с пользовательской схемой `marketing`, предотвращая любое пересечение объектов между запусками dbt из разных контекстов.
 
+| Контекст     | Ветка        | Целевая база данных | Целевая схема | Результирующий объект                  |
+|--------------|:------------:|:------------------:|:-------------:|:---------------------------------------:|
+| Разработчик 1| `featureABC` | dev                | dbt_dev1     | dev.featureABC_marketing.my_model       |
+| Разработчик 2| `featureABC` | dev                | dbt_dev2     | dev.featureABC_marketing.my_model       |
+| Разработчик 1| `feature123` | dev                | dbt_dev1     | dev.feature123_marketing.my_model       |
+| CI PR 123    |              | ci                 | dbt_pr_123   | ci.dbt_pr_123_marketing.my_model        |
+| CI PR 234    |              | ci                 | dbt_pr_234   | ci.dbt_pr_234_marketing.my_model        |
+| Производство  |              | prod               | analytics     | prod.marketing.my_model                 |
 
-| Context     |Branch      |Target database| Target schema | Resulting object                  |
-|-------------|:----------:|:-------------:|:-------------:|:---------------------------------:|
-| Developer 1 |`featureABC`|dev            | dbt_dev1      |dev.featureABC_marketing.my_model  |
-| Developer 2 |`featureABC`|dev            | dbt_dev2      |dev.featureABC_marketing.my_model  |
-| Developer 1 |`feature123`|dev            | dbt_dev1      |dev.feature123_marketing.my_model  |
-| CI PR 123   |            |ci             | dbt_pr_123    |ci.dbt_pr_123_marketing.my_model   |
-| CI PR 234   |            |ci             | dbt_pr_234    |ci.dbt_pr_234_marketing.my_model   |
-| Production  |            |prod           | analytics     |prod.marketing.my_model           |
+Когда разработчик 1 и разработчик 2 находятся на одной и той же ветке, они создадут один и тот же объект в хранилище данных. Это не должно быть проблемой, так как находясь на одной ветке, код модели будет одинаковым для обоих разработчиков.
 
+### 4. Использование статической схемы для CI 
 
-When developer 1 and developer 2 are checked out on the same branch, they will generate the same object in the data warehouse. This shouldn't be a problem as being on the same branch means the model's code will be the same for both developers.
+Некоторые организации предпочитают записывать свои CI задачи в одну схему с идентификатором PR, добавленным в начало имени таблицы. Важно отметить, что это приведет к длинным именам таблиц. 
 
-
-### 4. Use a static schema for CI 
-
-Some organizations prefer to write their CI jobs to a single schema with the PR identifier prefixed to the front of the table name. It's important to note that this will result in long table names. 
-
-To do so, you can create a new file called `generate_schema_name.sql` under your macros folder with the following code:
-
+Для этого вы можете создать новый файл с именем `generate_schema_name.sql` в вашей папке макросов со следующим кодом:
 
 <File name='macros/generate_schema_name.sql'>
 
 ```jinja
-
 {% macro generate_schema_name(custom_schema_name=none, node=none) -%}
 
     {%- set default_schema = target.schema -%}
     
-    {# If the CI Job does not exist in its own environment, use the target.name variable inside the job instead #}
+    {# Если задача CI не существует в своем окружении, используйте переменную target.name внутри задачи #}
     {# {%- if target.name == 'CI' -%} #} 
     
     {%- if env_var('DBT_ENV_TYPE','DEV') == 'CI' -%}
@@ -361,18 +322,15 @@ To do so, you can create a new file called `generate_schema_name.sql` under your
     {%- endif -%}    
 
 {%- endmacro %}
-
 ```
 </File>
-
 
 <File name='macros/generate_alias_name.sql'>
 
 ```jinja
-
 {% macro generate_alias_name(custom_alias_name=none, node=none) -%}
 
-    {# If the CI Job does not exist in its own environment, use the target.name variable inside the job instead #}
+    {# Если задача CI не существует в своем окружении, используйте переменную target.name внутри задачи #}
     {# {%- if target.name == 'CI' -%} #}   
     {%- if  env_var('DBT_ENV_TYPE','DEV') == 'CI' -%}
 
@@ -409,42 +367,34 @@ To do so, you can create a new file called `generate_schema_name.sql` under your
     {%- endif -%}
 
 {%- endmacro %}
-
 ```
 </File>
 
+Это создаст следующие результаты для модели с именем `my_model` с пользовательской схемой `marketing`, предотвращая любое пересечение объектов между запусками dbt из разных контекстов.
 
-This will generate the following outputs for a model called `my_model` with a custom schema of `marketing`, preventing any overlap of objects between dbt runs from different contexts.
+| Контекст     | Целевая база данных | Целевая схема | Результирующий объект                          |
+|--------------|:------------------:|:-------------:|:----------------------------------------------: |
+| Разработчик 1| dev                | dbt_dev1     | dev.dbt_dev1_marketing.my_model                |
+| Разработчик 2| dev                | dbt_dev2     | dev.dbt_dev2_marketing.my_model                |
+| CI PR 123    | ci                 | dbt_pr_123   | ci.ci_schema.dbt_pr_123_marketing_my_model     |
+| CI PR 234    | ci                 | dbt_pr_234   | ci.ci_schema.dbt_pr_234_marketing_my_model     |
+| Производство  | prod              | analytics     | prod.marketing.my_model                        |
 
+## Что не следует делать
 
-| Context     |Target database| Target schema | Resulting object                          |
-|-------------|:-------------:|:-------------:|:----------------------------------------: |
-| Developer 1 | dev           | dbt_dev1      |dev.dbt_dev1_marketing.my_model            |
-| Developer 2 | dev           | dbt_dev2      |dev.dbt_dev2_marketing.my_model            |
-| CI PR 123   | ci            | dbt_pr_123    |ci.ci_schema.dbt_pr_123_marketing_my_model |
-| CI PR 234   | ci            | dbt_pr_234    |ci.ci_schema.dbt_pr_234_marketing_my_model |
-| Production  | prod          | analytics     |prod.marketing.my_model                    |
+Этот раздел предоставит обзор того, чего пользователи должны избегать при настройке своей схемы и псевдонима из-за возможных проблем.
 
+### Обновление generate_schema_name() для постоянного использования пользовательской схемы
 
-## What not to do
+Некоторые люди предпочитают использовать только пользовательскую схему, когда она установлена, вместо того чтобы объединять стандартную схему с пользовательской, как это происходит в стандартном поведении.
 
-This section will provide an outline of what users should avoid doing when customizing their schema and alias due to the issues that may arise.
+### Проблема
 
-
-### Update generate_schema_name() to always use the custom schema
-
-
-Some people prefer to only use the custom schema when it is set instead of concatenating the default schema with the custom one, as it happens in the out of the box behavior.
-
-
-### Problem
-
-When modifying the default macro for `generate_schema_name()`, this might result in creating this new version.
+При изменении стандартного макроса для `generate_schema_name()` это может привести к созданию новой версии.
 
 <File name='macros/generate_schema_name.sql'>
 
 ```jinja
-
 {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}
@@ -453,89 +403,72 @@ When modifying the default macro for `generate_schema_name()`, this might result
         {{ default_schema }}
 
     {%- else -%}
-    # The following is incorrect as it omits {{ default_schema }} before {{ custom_schema_name | trim }}. 
+    # Следующее неверно, так как пропускает {{ default_schema }} перед {{ custom_schema_name | trim }}. 
         {{ custom_schema_name | trim }} 
 
     {%- endif -%}
 
 {%- endmacro %}
-
 ```
 </File>
 
+Хотя это может дать ожидаемый результат для производственной среды, где используется выделенная база данных, это приведет к конфликтам везде, где люди делят базу данных. 
 
-While it may provide the expected output for production, where a dedicated database is used, it will generate conflicts anywhere people share a database. 
+Давайте рассмотрим пример модели с именем `my_model` с пользовательской схемой `marketing`.
 
+| Контекст     | Целевая база данных | Целевая схема | Результирующий объект               |
+|--------------|:------------------:|:-------------:|:-----------------------------------:|
+| Производство  | prod              | analytics     | prod.marketing.my_model             |
+| Разработчик 1| dev                | dbt_dev1     | dev.marketing.my_model              |
+| Разработчик 2| dev                | dbt_dev2     | dev.marketing.my_model              |
+| CI PR 123    | ci                 | dbt_pr_123   | ci.marketing.my_model               |
+| CI PR 234    | ci                 | dbt_pr_234   | ci.marketing.my_model               |
 
-Let’s look at the example of a model called `my_model` with a custom schema of `marketing`.
+Мы видим, что как разработчик 1, так и разработчик 2 получают один и тот же объект для `my_model`. Это означает, что если они оба работают над этой моделью одновременно, будет невозможно узнать, является ли версия, находящаяся в хранилище данных, версией разработчика 1 или разработчика 2.
 
+Аналогично, разные PR приведут к созданию одного и того же объекта в хранилище данных. Если разные PR открыты одновременно и изменяют одни и те же модели, это очень вероятно приведет к проблемам, замедляющим весь процесс разработки и продвижения кода.
 
-| Context     |Target database| Target schema | Resulting object               |
-|-------------|:-------------:|:-------------:|:------------------------------:|
-| Production  | prod          | analytics     |prod.marketing.my_model         |
-| Developer 1 | dev           | dbt_dev1      |dev.marketing.my_model          |
-| Developer 2 | dev           | dbt_dev2      |dev.marketing.my_model          |
-| CI PR 123   | ci            | dbt_pr_123    |ci.marketing.my_model           |
-| CI PR 234   | ci            | dbt_pr_234    |ci.marketing.my_model           |
+### Решение
 
+Как описано в предыдущем примере, обновите макрос, чтобы проверить, работает ли dbt в производственной среде. Только в производственной среде мы должны удалить объединение и использовать только пользовательскую схему.
 
+## Советы и хитрости
 
-We can see that both developer 1 and developer 2 get the same object for `my_model`. This means that if they both work on this model at the same time, it will be impossible to know if the version currently in the data warehouse is the one from developer 1 and developer 2.
+Этот раздел предоставит несколько полезных советов о том, как правильно настроить ваши макросы `generate_database_name()` и `generate_alias_name()`. 
 
-Similarly, different PRs will result in the exact same object in the data warehouse. If different PRs are open at the same time and modifying the same models, it is very likely that we will get issues, slowing down the whole development and code promotion.
+### Создание несуществующих баз данных из dbt
 
+dbt автоматически попытается создать схему, если она не существует и если объект должен быть создан в ней, но он не будет автоматически пытаться создать базу данных, которая не существует.
 
-### Solution
+Таким образом, если ваша конфигурация `generate_database_name()` указывает на разные базы данных, которые могут не существовать, dbt завершит работу с ошибкой, если вы выполните простую команду `dbt build`. 
 
-As described in the previous example, update the macro to check if dbt is running in production. Only in production should we remove the concatenation and use the custom schema alone.
+Тем не менее, это все еще возможно сделать в dbt, создав несколько макросов, которые будут проверять, существует ли база данных, и если нет, dbt создаст ее. Затем вы можете вызывать эти макросы либо в [шаге `dbt run-operation ...`](/reference/commands/run-operation) в ваших задачах, либо как [`on-run-start` хук](/reference/project-configs/on-run-start-on-run-end).
 
+### Предположение контекста с использованием переменных окружения вместо `target.name`
 
-## Tips and tricks
+Мы предпочитаем использовать [переменные окружения](/docs/build/environment-variables) вместо `target.name`. Для дальнейшего чтения ознакомьтесь с ([О переменных целевого назначения](/reference/dbt-jinja-functions/target)), чтобы расшифровать контекст вызова dbt. 
 
-This section will provide some useful tips on how to properly adjust your `generate_database_name()` and `generate_alias_name()` macros. 
+- `target.name` не может быть установлен на уровне окружения. Поэтому каждая задача в окружении должна явно указывать переопределение `target.name`. Если задача не имеет установленного соответствующего значения `target.name`, база данных/схема/псевдоним могут не разрешиться должным образом. В качестве альтернативы значения переменных окружения унаследуются задачами в соответствующих окружениях. Значения переменных окружения также могут быть переопределены в задачах, если это необходимо.
 
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/custom-schema-env-var-targetname.png" title="Настройка переменной окружения для схемы."/>
 
-### Creating non existing databases from dbt
+- `target.name` требует, чтобы каждый разработчик ввел одно и то же значение (часто 'dev') в разделе имени целевого назначения своих учетных данных для разработки проекта. Если разработчик не установил соответствующее значение имени целевого назначения, их база данных/схема/псевдоним могут не разрешиться должным образом. 
 
-dbt will automatically try to create a schema if it doesn’t exist and if an object needs to be created in it, but it won’t automatically try to create a database that doesn’t exist.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/development-credentials.png" title="Учетные данные для разработки." width="60%" />
 
-So, if your `generate_database_name()` configuration points to different databases, which might not exist, dbt will fail if you do a simple `dbt build`. 
+### Всегда обеспечивайте пользовательские схемы
 
-It is still possible to get it working in dbt by creating some macros that will check if a database exists and if not, dbt will create it. You can then call those macros either in [a `dbt run-operation ...` step](/reference/commands/run-operation) in your jobs or as a [`on-run-start` hook](/reference/project-configs/on-run-start-on-run-end).
-
-
-### Assuming context using environment variables rather than `target.name`
-
-
-We prefer to use [environment variables](/docs/build/environment-variables) over `target.name` For a further read, have a look at ([About target variables](/reference/dbt-jinja-functions/target)) to decipher the context of the dbt invocation. 
-
-- `target.name` cannot be set at the environment-level. Therefore, every job within the environment must explicitly specify the `target.name` override. If the job does not have the appropriate `target.name` value set, the database/schema/alias may not resolve properly. Alternatively, environment variable values are inherited by the jobs within their corresponding environment. The environment variable values can also be overwritten within the jobs if needed.
-
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/custom-schema-env-var-targetname.png" title="Customize schema alias env var."/>
-
-
-- `target.name` requires every developer to input the same value (often ‘dev’) into the target name section of their project development credentials. If a developer doesn’t have the appropriate target name value set, their database/schema/alias may not resolve properly. 
-
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/development-credentials.png" title="Development credentials." width="60%" />
-
-
-### Always enforce custom schemas
-
-Some users prefer to enforce custom schemas on all objects within their projects. This avoids writing to unintended “default” locations. You can add this logic to your `generate_schema_name()` macro to [raise a compilation error](/reference/dbt-jinja-functions/exceptions) if a custom schema is not defined for an object.
-
+Некоторые пользователи предпочитают обеспечивать пользовательские схемы для всех объектов в своих проектах. Это позволяет избежать записи в непреднамеренные "стандартные" места. Вы можете добавить эту логику в свой макрос `generate_schema_name()`, чтобы [вызывать ошибку компиляции](/reference/dbt-jinja-functions/exceptions), если для объекта не определена пользовательская схема.
 
 <File name='macros/generate_schema_name.sql'>
 
 ```jinja
-
  {% macro generate_schema_name(custom_schema_name, node) -%}
 
     {%- set default_schema = target.schema -%}
     {%- if custom_schema_name is none and node.resource_type == 'model' -%}
         
-        {{ exceptions.raise_compiler_error("Error: No Custom Schema Defined for the model " ~ node.name ) }}
+        {{ exceptions.raise_compiler_error("Ошибка: Не определена пользовательская схема для модели " ~ node.name ) }}
     
     {%- endif -%}
 

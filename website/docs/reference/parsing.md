@@ -1,70 +1,70 @@
 ---
-title: "Project Parsing"
-description: "Read this guide to understand the project parsing configuration in dbt."
+title: "Парсинг проекта"
+description: "Прочитайте это руководство, чтобы понять конфигурацию парсинга проекта в dbt."
 ---
 
-## Related documentation
-- The `dbt parse` [command](/reference/commands/parse)
-- Partial parsing [profile config](/docs/core/connect-data-platform/profiles.yml#partial_parse) and [CLI flags](/reference/global-configs/parsing)
-- Parsing [CLI flags](/reference/global-configs/parsing)
+## Связанная документация
+- Команда `dbt parse` [command](/reference/commands/parse)
+- Конфигурация профиля для частичного парсинга [profile config](/docs/core/connect-data-platform/profiles.yml#partial_parse) и [флаги CLI](/reference/global-configs/parsing)
+- Флаги парсинга [CLI flags](/reference/global-configs/parsing)
 
-## What is parsing?
+## Что такое парсинг?
 
-At the start of every dbt invocation, dbt reads all the files in your project, extracts information, and constructs a manifest containing every object (model, source, macro, etc). Among other things, dbt uses the `ref()`, `source()`, and `config()` macro calls within models to set properties, infer dependencies, and construct your project's DAG.
+В начале каждого вызова dbt он читает все файлы в вашем проекте, извлекает информацию и создает манифест, содержащий каждый объект (модель, источник, макрос и т.д.). Среди прочего, dbt использует вызовы макросов `ref()`, `source()` и `config()` внутри моделей для установки свойств, вывода зависимостей и построения DAG вашего проекта.
 
-Parsing projects can be slow, especially as projects get bigger—hundreds of models, thousands of files—which is frustrating in development. There are a handful of ways to optimize dbt performance today:
-- LibYAML bindings for PyYAML
-- Partial parsing, which avoids re-parsing unchanged files between invocations
-- A static parser, which extracts information from simple models much more quickly
-- [RPC server](/reference/commands/rpc), which keeps a manifest in memory, and re-parses the project at server startup/hangup
+Парсинг проектов может быть медленным, особенно по мере увеличения размера проектов — сотни моделей, тысячи файлов — что вызывает разочарование в процессе разработки. Существует несколько способов оптимизации производительности dbt:
+- Привязки LibYAML для PyYAML
+- Частичный парсинг, который избегает повторного парсинга неизмененных файлов между вызовами
+- Статический парсер, который извлекает информацию из простых моделей гораздо быстрее
+- [RPC сервер](/reference/commands/rpc), который хранит манифест в памяти и повторно парсит проект при запуске/завершении сервера
 
-These optimizations can be used in combination to reduce parse time from minutes to seconds. At the same time, each has some known limitations, so they are disabled by default.
+Эти оптимизации могут использоваться в комбинации, чтобы сократить время парсинга с минут до секунд. В то же время у каждой из них есть известные ограничения, поэтому они отключены по умолчанию.
 
 ## PyYAML + LibYAML
 
-dbt uses [PyYAML](https://pyyaml.org/wiki/PyYAML) to read and validate YAML files in your project. PyYAML is written in pure Python, but it can leverage [LibYAML](https://pyyaml.org/wiki/LibYAML) (written in C, much faster) if it's available in your system. Whenever it parses your project, dbt will always check first to see if LibYAML is available.
+dbt использует [PyYAML](https://pyyaml.org/wiki/PyYAML) для чтения и проверки YAML файлов в вашем проекте. PyYAML написан на чистом Python, но может использовать [LibYAML](https://pyyaml.org/wiki/LibYAML) (написан на C, гораздо быстрее), если он доступен в вашей системе. Каждый раз, когда он парсит ваш проект, dbt всегда сначала проверяет, доступен ли LibYAML.
 
-You can test to see if LibYAML is installed by running this command in the environment where you've installed dbt:
+Вы можете проверить, установлен ли LibYAML, выполнив эту команду в среде, где вы установили dbt:
 ```
 python -c "from yaml import CLoader"
 ```
 
-## Partial parsing
+## Частичный парсинг
 
-After parsing your project, dbt stores an internal project manifest in a file called `partial_parse.msgpack`. When partial parsing is enabled, dbt will use that internal manifest to determine which files have been changed (if any) since it last parsed the project. Then, it will _only_ parse the changed files, or files related to those changes.
+После парсинга вашего проекта dbt сохраняет внутренний манифест проекта в файле с именем `partial_parse.msgpack`. Когда частичный парсинг включен, dbt будет использовать этот внутренний манифест, чтобы определить, какие файлы были изменены (если такие имеются) с момента последнего парсинга проекта. Затем он будет _только_ парсить измененные файлы или файлы, связанные с этими изменениями.
 
-Starting in v1.0, partial parsing is **on** by default. In development, partial parsing can significantly reduce the time spent waiting at the start of a run, which translates to faster dev cycles and iteration.
+Начиная с версии 1.0, частичный парсинг включен по умолчанию. В процессе разработки частичный парсинг может значительно сократить время ожидания в начале выполнения, что приводит к более быстрым циклам разработки и итерациям.
 
-The [`PARTIAL_PARSE` global config](/reference/global-configs/parsing) can be enabled or disabled via `profiles.yml`, environment variable, or CLI flag.
+Глобальную конфигурацию [`PARTIAL_PARSE`](/reference/global-configs/parsing) можно включить или отключить через `profiles.yml`, переменную окружения или флаг CLI.
 
-### Known limitations
+### Известные ограничения
 
-Parse-time attributes (dependencies, configs, and resource properties) are resolved using the parse-time context. When partial parsing is enabled, and certain context variables change, those attributes will _not_ be re-resolved, and are likely to become stale.
+Атрибуты времени парсинга (зависимости, конфигурации и свойства ресурсов) разрешаются с использованием контекста времени парсинга. Когда частичный парсинг включен и определенные переменные контекста изменяются, эти атрибуты _не_ будут повторно разрешены и, вероятно, станут устаревшими.
 
-In particular, you may see incorrect results if these attributes depend on "volatile" context variables, such as [`run_started_at`](/reference/dbt-jinja-functions/run_started_at), [`invocation_id`](/reference/dbt-jinja-functions/invocation_id), or [flags](/reference/dbt-jinja-functions/flags). These variables are likely (or even guaranteed!) to change in each invocation. dbt Labs _strongly discourages_ you from using these variables to set parse-time attributes (dependencies, configs, and resource properties).
+В частности, вы можете увидеть некорректные результаты, если эти атрибуты зависят от "волатильных" переменных контекста, таких как [`run_started_at`](/reference/dbt-jinja-functions/run_started_at), [`invocation_id`](/reference/dbt-jinja-functions/invocation_id) или [флаги](/reference/dbt-jinja-functions/flags). Эти переменные, вероятно (или даже гарантированно!), изменятся при каждом вызове. dbt Labs _категорически не рекомендует_ использовать эти переменные для установки атрибутов времени парсинга (зависимости, конфигурации и свойства ресурсов).
 
-Starting in v1.0, dbt _will_ detect changes in environment variables. It will selectively re-parse only the files that depend on that [`env_var`](/reference/dbt-jinja-functions/env_var) value. (If the env var is used in `profiles.yml` or `dbt_project.yml`, a full re-parse is needed.) However, dbt will _not_ re-render **descriptions** that include env vars. If your descriptions include frequently changing env vars (this is highly uncommon), we recommend that you fully re-parse when generating documentation: `dbt --no-partial-parse docs generate`.
+Начиная с версии 1.0, dbt _будет_ обнаруживать изменения в переменных окружения. Он будет выборочно повторно парсить только те файлы, которые зависят от этого значения [`env_var`](/reference/dbt-jinja-functions/env_var). (Если переменная окружения используется в `profiles.yml` или `dbt_project.yml`, потребуется полный повторный парсинг.) Однако dbt _не_ будет повторно рендерить **описания**, которые включают переменные окружения. Если ваши описания содержат часто изменяющиеся переменные окружения (что крайне редко), мы рекомендуем вам полностью повторно парсить при генерации документации: `dbt --no-partial-parse docs generate`.
 
-If certain inputs change between runs, dbt will trigger a full re-parse. The results will be correct, but the full re-parse may be quite slow. Today those inputs are:
+Если определенные входные данные изменяются между запусками, dbt инициирует полный повторный парсинг. Результаты будут корректными, но полный повторный парсинг может быть довольно медленным. В настоящее время эти входные данные:
 - `--vars`
-- `profiles.yml` content (or `env_var` values used within)
-- `dbt_project.yml` content (or `env_var` values used within)
-- installed packages
-- dbt version
-- certain widely-used macros (for example, [builtins](/reference/dbt-jinja-functions/builtins), overrides, or `generate_x_name` for `database`/`schema`/`alias`)
+- Содержимое `profiles.yml` (или значения `env_var`, используемые в нем)
+- Содержимое `dbt_project.yml` (или значения `env_var`, используемые в нем)
+- Установленные пакеты
+- Версия dbt
+- Некоторые широко используемые макросы (например, [builtins](/reference/dbt-jinja-functions/builtins), переопределения или `generate_x_name` для `database`/`schema`/`alias`)
 
-If you're triggering [CI](/docs/deploy/continuous-integration) job runs, the benefits of partial parsing are not applicable to new pull requests (PR) or new branches. However, they are applied on subsequent commits to the new PR or branch. 
+Если вы запускаете [CI](/docs/deploy/continuous-integration) задания, преимущества частичного парсинга не применимы к новым запросам на слияние (PR) или новым веткам. Однако они применяются к последующим коммитам в новый PR или ветку.
 
-If you ever get into a bad state, you can disable partial parsing and trigger a full re-parse by setting the `PARTIAL_PARSE` global config to false, or by deleting `target/partial_parse.msgpack` (e.g. by running `dbt clean`).
+Если вы когда-либо окажетесь в плохом состоянии, вы можете отключить частичный парсинг и инициировать полный повторный парсинг, установив глобальную конфигурацию `PARTIAL_PARSE` в false или удалив `target/partial_parse.msgpack` (например, выполнив `dbt clean`).
 
-## Static parser
+## Статический парсер
 
-At parse time, dbt needs to extract the contents of `ref()`, `source()`, and `config()` from all models in the project. Traditionally, dbt has extracted those values by rendering the Jinja in every model file, which can be slow. In v0.20, we introduced a new way to statically analyze model files, leveraging [`tree-sitter`](https://github.com/tree-sitter/tree-sitter). You can see the code for an initial Jinja2 grammar [here](https://github.com/dbt-labs/tree-sitter-jinja2).
+Во время парсинга dbt необходимо извлечь содержимое `ref()`, `source()` и `config()` из всех моделей в проекте. Традиционно dbt извлекал эти значения, рендеря Jinja в каждом файле модели, что может быть медленным. В версии 0.20 мы представили новый способ статического анализа файлов моделей, используя [`tree-sitter`](https://github.com/tree-sitter/tree-sitter). Вы можете увидеть код для начальной грамматики Jinja2 [здесь](https://github.com/dbt-labs/tree-sitter-jinja2).
 
-Starting in v1.0, the static parser is **on** by default. We believe it can offer *some* speedup to 95% of projects. You may optionally turn it off using the [`STATIC_PARSER` global config](/reference/global-configs/parsing).
+Начиная с версии 1.0, статический парсер включен по умолчанию. Мы считаем, что он может предложить *некоторое* ускорение для 95% проектов. Вы можете отключить его, используя глобальную конфигурацию [`STATIC_PARSER`](/reference/global-configs/parsing).
 
-For now, the static parser only works with models, and models whose Jinja is limited to those three special macros (`ref`, `source`, `config`). The static parser is at least 3x faster than a full Jinja render. Based on testing with data from dbt Cloud, we believe the current grammar can statically parse 60% of models in the wild. So for the average project, we'd hope to see a 40% speedup in the model parser.
+На данный момент статический парсер работает только с моделями и моделями, чей Jinja ограничен этими тремя специальными макросами (`ref`, `source`, `config`). Статический парсер как минимум в 3 раза быстрее, чем полный рендер Jinja. На основе тестирования с данными из dbt Cloud мы считаем, что текущая грамматика может статически парсить 60% моделей в дикой природе. Таким образом, для среднего проекта мы надеемся увидеть 40% ускорение в парсере моделей.
 
-## Experimental parser
+## Экспериментальный парсер
 
-Not currently in use.
+В настоящее время не используется.

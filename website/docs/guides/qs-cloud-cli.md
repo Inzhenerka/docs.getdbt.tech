@@ -1,166 +1,166 @@
 ---
-title: "Coalesce: Quickstart for dbt Cloud CLI"
+title: "Coalesce: Быстрый старт для dbt Cloud CLI"
 id: "dbt-cloud-cli"
 # time_to_complete: '30 minutes' commenting out until we test
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Cloud CLI', 'dbt Cloud','Quickstart']
+tags: ['Cloud CLI', 'dbt Cloud','Быстрый старт']
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to configure and use dbt Cloud CLI as part of the Coalesce 24 Workshop. 
+В этом руководстве по быстрому старту вы узнаете, как настроить и использовать dbt Cloud CLI в рамках семинара Coalesce 24.
 
-It will show you how to: 
+Вы научитесь:
 
-- Set up a dbt Cloud sandbox.
-- Install the dbt Cloud CLI and connect to dbt Cloud.
-- Run commands locally using the dbt Cloud CLI.
-- Defer to different production environments.
-- Leverage cross-project ref.
-- Install dbt Power User.
-- Use dbt Power User to supercharge development.
+- Настраивать песочницу dbt Cloud.
+- Устанавливать dbt Cloud CLI и подключаться к dbt Cloud.
+- Запускать команды локально с помощью dbt Cloud CLI.
+- Откладывать выполнение в разные производственные среды.
+- Использовать кросс-проектные ссылки.
+- Устанавливать dbt Power User.
+- Использовать dbt Power User для ускорения разработки.
 
-### Prerequisites​
+### Предварительные требования
 
-- Familiarity with dbt projects and common commands (for example, `dbt build`)
-- Git is installed
-- An editor, such as Visual Studio Code (preferred), is installed
+- Знание проектов dbt и общих команд (например, `dbt build`)
+- Установлен Git
+- Установлен редактор, такой как Visual Studio Code (предпочтительно)
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
+- Узнайте больше на [курсах dbt Learn](https://learn.getdbt.com)
 
-## Install Git and Visual Studio Code (Prerequisites)
+## Установка Git и Visual Studio Code (предварительные требования)
 
-You will need to have Git installed locally and a code editor (preferably Visual Studio Code).
+Вам необходимо установить Git локально и редактор кода (предпочтительно Visual Studio Code).
 
-### Check your installation status
+### Проверьте статус установки
 
-Run `git --version` in your terminal to check if it's installed. For example:
-
-<div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/terminal-git-check.png" title="Example of verifying installation of Git" />
-</div>
-
-Check your installed applications for Visual Studio Code (vscode) or another editor. For example:
+Запустите `git --version` в вашем терминале, чтобы проверить, установлен ли он. Например:
 
 <div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/finder-vscode-check.png" title="Example of verifying installation of Visual Studio Code on macOS" />
+<Lightbox src="/img/cloud-cli-guide/terminal-git-check.png" title="Пример проверки установки Git" />
 </div>
 
-### Install Git and Visual Studio Code
+Проверьте установленные приложения для Visual Studio Code (vscode) или другого редактора. Например:
 
-Navigate to the following Git installation page and install it for your operating system:
+<div style={{maxWidth: '400px'}}>
+<Lightbox src="/img/cloud-cli-guide/finder-vscode-check.png" title="Пример проверки установки Visual Studio Code на macOS" />
+</div>
+
+### Установка Git и Visual Studio Code
+
+Перейдите на следующую страницу установки Git и установите его для вашей операционной системы:
 
 https://git-scm.com/downloads
 
-Navigate to the following Visual Studio Code installation page and install it for your operating system.
+Перейдите на следующую страницу установки Visual Studio Code и установите его для вашей операционной системы.
 
 https://code.visualstudio.com/download
 
-## Set up dbt Cloud (Coalesce Workshop Only)
+## Настройка dbt Cloud (только для семинара Coalesce)
 
-Let's get set up with a dbt Cloud sandbox that's already connected to a Snowflake account for the workshop.
+Давайте настроим песочницу dbt Cloud, которая уже подключена к аккаунту Snowflake для семинара.
 
-1. Go to [bit.ly/coalesce-24-sandboxes](https://bit.ly/coalesce-24-sandboxes) to create an account. Make sure you log out of any other dbt Cloud accounts.
+1. Перейдите по ссылке [bit.ly/coalesce-24-sandboxes](https://bit.ly/coalesce-24-sandboxes), чтобы создать аккаунт. Убедитесь, что вы вышли из других аккаунтов dbt Cloud.
     
-    a. Enter your **First Name** and **Last Name**
+    a. Введите ваше **Имя** и **Фамилию**
     
-    b. For **Workshop**, choose **Test driving dbt Cloud CLI and dbt power user** from the dropdown
+    b. Для **Семинара** выберите **Тестирование dbt Cloud CLI и dbt Power User** из выпадающего списка
     
-    c. The **Passcode** will be provided by your facilitators
+    c. **Пароль** будет предоставлен вашими организаторами
     
-    d. Accept the terms and click **Complete Registration**
+    d. Примите условия и нажмите **Завершить регистрацию**
 
-1. Navigate to the platform project by selecting **Project** form the left sidebar and choosing **Platform Analytics**.
+1. Перейдите к проекту платформы, выбрав **Проект** в левой боковой панели и выбрав **Platform Analytics**.
 
-1. Select **Deploy >> Runs** to find the created jobs. For each job, click on the job and click **run**.
+1. Выберите **Развертывание >> Запуски**, чтобы найти созданные задания. Для каждого задания нажмите на задание и нажмите **запустить**.
 
-1. Now repeat for the **Analytics project**. Toggle into the Analytics project.
+1. Теперь повторите для **Аналитического проекта**. Переключитесь на Аналитический проект.
 
-1. Select **Deploy >> Runs** to find the created jobs. For the one job, click on the job and click **run**.
+1. Выберите **Развертывание >> Запуски**, чтобы найти созданные задания. Для одного задания нажмите на задание и нажмите **запустить**.
 
-1. Select **Explore** from the navigation and choose XX. Now you can visualize your dbt Mesh. Click into each project to see project level lineage.
+1. Выберите **Исследовать** в навигации и выберите XX. Теперь вы можете визуализировать вашу dbt Mesh. Нажмите на каждый проект, чтобы увидеть уровень родства проекта.
 
-You've now successfully run your project in deployment environments so you can use cross project ref and deferral later in the workshop. 
+Теперь вы успешно запустили ваш проект в развертываемых средах, чтобы позже использовать кросс-проектные ссылки и откладывание.
 
-## Configure dbt Cloud CLI
+## Настройка dbt Cloud CLI
 
-Now we'll clone the project repository and configure dbt Cloud CLI to connect to your sandbox.
+Теперь мы клонируем репозиторий проекта и настраиваем dbt Cloud CLI для подключения к вашей песочнице.
 
-### Clone the repo
+### Клонирование репозитория
 
-1. Navigate to a folder on your computer to clone the repository.
+1. Перейдите в папку на вашем компьютере, чтобы клонировать репозиторий.
 
-1. In your terminal, run the following command to clone the downstream (analytics) project:
+1. В вашем терминале выполните следующую команду, чтобы клонировать проект downstream (аналитический):
 
     ```shell
     git clone https://github.com/dbt-labs/c24-workshops-analytics.git
     ```
 
-### Install Cloud CLI
+### Установка Cloud CLI
 
-1. In dbt Cloud, select Platform Analytics and choose **Develop >> Configure Cloud CLI**.
+1. В dbt Cloud выберите Platform Analytics и выберите **Разработка >> Настроить Cloud CLI**.
 
-1. Based on your current local setup, use the following guidance to determine your installation approach:
+1. В зависимости от вашей текущей локальной настройки, используйте следующие рекомендации, чтобы определить подход к установке:
 
-    a. Check if you have dbt in your PATH by running `dbt --version`
+    a. Проверьте, есть ли dbt в вашем PATH, запустив `dbt --version`
 
-    b. If you don't have dbt in your PATH, we recommend the macOS or Windows installation method.
+    b. Если у вас нет dbt в вашем PATH, мы рекомендуем метод установки для macOS или Windows.
 
-    c. If you do have dbt in your PATH (global environment), we recommend:
-        1. Uninstalling dbt globally
-        2. Installing dbt Cloud CLI with a Python virtual environment
+    c. Если у вас есть dbt в вашем PATH (глобальная среда), мы рекомендуем:
+        1. Удалить dbt глобально
+        2. Установить dbt Cloud CLI с помощью виртуальной среды Python
 
-    d. If you have dbt in a virtual environment, install dbt Cloud CLI with a separate Python virtual environment. Be sure to activate it with `source <path to env>/bin/activate`.
+    d. Если у вас есть dbt в виртуальной среде, установите dbt Cloud CLI с помощью отдельной виртуальной среды Python. Обязательно активируйте ее с помощью `source <path to env>/bin/activate`.
 
-1. Download the CLI configuration file from the dbt Cloud UI. Save it in your `.dbt` folder.
+1. Скачайте файл конфигурации CLI из интерфейса dbt Cloud. Сохраните его в вашей папке `.dbt`.
 
-1. Navigate to the dbt project folder that you cloned earlier and open the `dbt_project.yml` file with your `project_id`.
+1. Перейдите в папку проекта dbt, которую вы клонировали ранее, и откройте файл `dbt_project.yml` с вашим `project_id`.
 
-### Confirm the installation
+### Подтверждение установки
 
-Run `dbt compile` to verify your installation.
+Запустите `dbt compile`, чтобы проверить вашу установку.
 
-There you go! You've installed the dbt Cloud CLI! Let's dive in!
+Вот и все! Вы установили dbt Cloud CLI! Давайте углубимся!
 
-### Additional resources
-Consult the following docs if you run into problems when trying to install the dbt Cloud CLI:
-- [Install dbt Cloud CLI](https://docs.getdbt.com/docs/cloud/cloud-cli-installation)
-- [Configure and use dbt Cloud CLI](https://docs.getdbt.com/docs/cloud/configure-cloud-cli)
+### Дополнительные ресурсы
+Обратитесь к следующим документам, если у вас возникнут проблемы при установке dbt Cloud CLI:
+- [Установка dbt Cloud CLI](https://docs.getdbt.com/docs/cloud/cloud-cli-installation)
+- [Настройка и использование dbt Cloud CLI](https://docs.getdbt.com/docs/cloud/configure-cloud-cli)
 
-## Leverage dbt Cloud CLI
+## Использование dbt Cloud CLI
 
-Let's run a few commands together to get comfortable with the dbt Cloud CLI:
-* `dbt debug` &mdash; Displays your connection details and information
-* `dbt compile --select stg_campaigns` &mdash; Compiles your dbt project
-* `dbt run --select stg_campaigns` &mdash; Materialized your dbt models
-* `dbt run --select stg_campaigns` &mdash; Preview the results of a model
-* `dbt test --select stg_campaigns` &mdash; Execute tests against your materialized models
+Давайте запустим несколько команд вместе, чтобы привыкнуть к dbt Cloud CLI:
+* `dbt debug` &mdash; Отображает ваши данные подключения и информацию
+* `dbt compile --select stg_campaigns` &mdash; Компилирует ваш проект dbt
+* `dbt run --select stg_campaigns` &mdash; Материализует ваши модели dbt
+* `dbt run --select stg_campaigns` &mdash; Предварительный просмотр результатов модели
+* `dbt test --select stg_campaigns` &mdash; Выполняет тесты на ваших материализованных моделях
 
-Now let's dive into some more advanced components of dbt Cloud CLI.
+Теперь давайте углубимся в некоторые более сложные компоненты dbt Cloud CLI.
 
-### Deferral
+### Откладывание
 
-Deferral is a powerful functionality, allowing you to leverage upstream assets that exist outside of your personal development environment. As a result, you can speed up your development workflows and save on warehouse compute costs. Let's run a few commands using deferral:
+Откладывание — это мощная функция, позволяющая использовать активы, находящиеся вне вашей личной среды разработки. В результате вы можете ускорить свои рабочие процессы разработки и сэкономить на вычислительных затратах в хранилище. Давайте запустим несколько команд, используя откладывание:
 
-1. Run `dbt compile -s stg_campaigns`. Notice how we're able to resolve dependencies in the compiled SQL without seeding `campaigns.csv`.
-1. Now let's modify the `stg_campaigns` model by adding a timestamp:
+1. Запустите `dbt compile -s stg_campaigns`. Обратите внимание, как мы можем разрешить зависимости в скомпилированном SQL без загрузки `campaigns.csv`.
+1. Теперь давайте изменим модель `stg_campaigns`, добавив временную метку:
     ```sql
     current_timestamp() as updated_at
     ```
 
-    Let's build that model with the next command.
-1. Run `dbt build --select stg_campaigns`. We're utilizing deferral and the concept of "statefulness" to check with objects that have been modified and resolve dependencies of upstream assets if they exist.
+    Давайте соберем эту модель с помощью следующей команды.
+1. Запустите `dbt build --select stg_campaigns`. Мы используем откладывание и концепцию "состояния", чтобы проверить объекты, которые были изменены, и разрешить зависимости upstream-активов, если они существуют.
 
-    By default, the dbt Cloud CLI defers to a [Staging](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) environment if one exists. If not, dbt uses the assets from the Production environment.
+    По умолчанию dbt Cloud CLI откладывает выполнение в [Staging](https://docs.getdbt.com/docs/deploy/deploy-environments#staging-environment) среду, если она существует. Если нет, dbt использует активы из производственной среды.
 
-    To override which environment the dbt Cloud CLI defers to, you can set a `defer-env-id` key in either your `dbt_project.yml` or `dbt_cloud.yml` file. For example:
+    Чтобы переопределить, в какую среду откладывает выполнение dbt Cloud CLI, вы можете установить ключ `defer-env-id` в вашем файле `dbt_project.yml` или `dbt_cloud.yml`. Например:
 
     ```yml
     dbt-cloud:
@@ -169,18 +169,18 @@ Deferral is a powerful functionality, allowing you to leverage upstream assets t
 
 ### dbt Mesh
 
-You have access to cross-project ref's that's powered by the metadata of dbt Cloud.
+У вас есть доступ к кросс-проектным ссылкам, которые работают на основе метаданных dbt Cloud.
 
-1. Open the `agg_campaign_customer_contacts` model.
-1. Find the reference called `{{ ref('platform', 'dim_customers', v=1) }}`.
-1. Run the command:
+1. Откройте модель `agg_campaign_customer_contacts`.
+1. Найдите ссылку под названием `{{ ref('platform', 'dim_customers', v=1) }}`.
+1. Выполните команду:
 
     ```shell
     dbt run --select agg_campaign_customer_contacts
     ```
 
-1. Navigate to dbt Cloud Explorer and find a public model. Let's use the `fct_order_items` model.
-1. Create a new model called `agg_orders` in your project with the following code:
+1. Перейдите в dbt Cloud Explorer и найдите публичную модель. Давайте используем модель `fct_order_items`.
+1. Создайте новую модель под названием `agg_orders` в вашем проекте с следующим кодом:
 
     ```sql
     with orders as (
@@ -206,28 +206,28 @@ You have access to cross-project ref's that's powered by the metadata of dbt Clo
     select * from final
     ```
 
-### Linting and fixing SQL files
+### Линтинг и исправление SQL файлов
 
-With SQLFluff built in, you can check your code against a style guide and automatically make fixes.
+С помощью встроенного SQLFluff вы можете проверить свой код на соответствие стилевому руководству и автоматически внести исправления.
 
-1. Run the SQLFluff command `lint`:
+1. Запустите команду SQLFluff `lint`:
 
     ```shell
     dbt sqlfluff lint models/staging/campaigns/stg_campaigns.sql --dialect snowflake
     ```
 
-    This identifies tweaks to make in the `stg_campaigns` model.
-2. Run the SQLFluff command `fix`:
+    Это выявляет изменения, которые необходимо внести в модель `stg_campaigns`.
+2. Запустите команду SQLFluff `fix`:
 
     ```shell
     dbt sqlfluff fix models/staging/campaigns/stg_campaigns.sql --dialect snowflake
     ```
 
-    This attempts to directly make fixes in the `stg_campaigns` model.
+    Это пытается напрямую внести исправления в модель `stg_campaigns`.
 
-### Change branches
+### Смена веток
 
-You can quickly change branches without fully pushing to your Git provider (such as GitHub):
+Вы можете быстро сменить ветки, не полностью отправляя изменения в ваш Git-провайдер (например, GitHub):
 
 ```shell
 git checkout -b my-new-branch
@@ -235,79 +235,77 @@ git checkout -b my-new-branch
 git checkout main
 ```
 
-Now you've taken a tour of what you can do with dbt Cloud CLI. Let's dive into dbt Power User next.
+Теперь вы ознакомились с тем, что можно сделать с dbt Cloud CLI. Давайте перейдем к dbt Power User.
 
-## Install dbt Power User
+## Установка dbt Power User
 
-Let's get dbt Power User installed to supercharge our workflow.
+Давайте установим dbt Power User, чтобы ускорить наш рабочий процесс.
 
-1. From Visual Studio Code, click on extensions and search for "Power User for dbt".
+1. В Visual Studio Code нажмите на расширения и найдите "Power User for dbt".
 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-01.png" title="Find the VS Code Extension for dbt Power User" />
+    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-01.png" title="Найдите расширение VS Code для dbt Power User" />
     </div>
-1. Click on install.
-1. Click **Switch to dbt Cloud**. You might need to refresh.
+1. Нажмите на установку.
+1. Нажмите **Переключиться на dbt Cloud**. Возможно, вам потребуется обновить страницу.
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-02.png" title="Switch to dbt Cloud" />
+    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-02.png" title="Переключиться на dbt Cloud" />
     </div>
-1. Complete the setup steps. (click on welcome in VSCode and choose dbt Poweruser)
+1. Завершите шаги настройки. (нажмите на приветствие в VSCode и выберите dbt Poweruser)
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-03.png" title="Complete the setup flow" />
+    <Lightbox src="/img/cloud-cli-guide/setup-poweruser-03.png" title="Завершите процесс настройки" />
     </div>
-1. Make an account to sign up and get an API Key: https://app.myaltimate.com/register
+1. Создайте аккаунт, чтобы зарегистрироваться и получить API-ключ: https://app.myaltimate.com/register
 
-1. Copy your API key and enter this into the dbt Power User extension settings.
+1. Скопируйте ваш API-ключ и введите его в настройках расширения dbt Power User.
 
-Now let's dive in!
+Теперь давайте углубимся!
 
-## Leverage dbt Power User
+## Использование dbt Power User
 
-There is a ton you can do to supercharge your workflow with dbt Cloud. Let's cover some highlights.
+С помощью dbt Cloud вы можете сделать много для ускорения вашего рабочего процесса. Давайте рассмотрим некоторые ключевые моменты.
 
-### Preview your upstream/downstream changes
+### Предварительный просмотр ваших изменений upstream/downstream
 
-Open the Power User extension on the left-hand side. You can see the upstream and downstream projects.
-
-<div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/using-poweruser-01.png" title="See upstream and downstream dependencies" />
-</div>
-
-### Preview results
-
-Press Command-Enter (or Control-Enter for Windows) and instantly see the results of your model below.
+Откройте расширение Power User на левой стороне. Вы можете увидеть upstream и downstream проекты.
 
 <div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/using-poweruser-02.png" title="Preview results" />
+<Lightbox src="/img/cloud-cli-guide/using-poweruser-01.png" title="Смотрите зависимости upstream и downstream" />
 </div>
 
-### SQL visualization
+### Предварительный просмотр результатов
 
-While looking at a model file, click the Altimate logo in the top right and click **Visualize SQL** to see a breakdown of your SQL model.
+Нажмите Command-Enter (или Control-Enter для Windows), и мгновенно увидите результаты вашей модели ниже.
 
 <div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/using-poweruser-03.png" title="Visualize SQL processing" />
+<Lightbox src="/img/cloud-cli-guide/using-poweruser-02.png" title="Предварительный просмотр результатов" />
 </div>
 
-### Generate test and documentation YML with user-friendly UX and AI
+### Визуализация SQL
 
-At the top of your model file, click on generate documentation for a UI to rapidly create documentation and tests with AI
+При просмотре файла модели нажмите на логотип Altimate в правом верхнем углу и выберите **Визуализировать SQL**, чтобы увидеть разбивку вашей SQL модели.
 
 <div style={{maxWidth: '400px'}}>
-<Lightbox src="/img/cloud-cli-guide/using-poweruser-04.png" title="Generate tests and documentation" />
+<Lightbox src="/img/cloud-cli-guide/using-poweruser-03.png" title="Визуализация обработки SQL" />
 </div>
 
-There is a whole lot more too! Check out the dbt Power User docs here: https://docs.myaltimate.com/
+### Генерация тестов и документации YML с удобным интерфейсом и ИИ
 
-## Conclusion
+В верхней части вашего файла модели нажмите на генерацию документации для интерфейса, чтобы быстро создать документацию и тесты с помощью ИИ.
 
-You've successfully installed dbt Cloud CLI and dbt Power User! Now you can get the benefits of local development _and_ dbt Cloud working together.
-
-Be on the look out for the following enhancements to dbt Cloud CLI:
-- Deeper integration with dbt Explorer for visual interaction
-- Support for invoking production jobs directly from the CLI
-- Continued optimization for performance and scalability improvements
-
+<div style={{maxWidth: '400px'}}>
+<Lightbox src="/img/cloud-cli-guide/using-poweruser-04.png" title="Генерация тестов и документации" />
 </div>
 
+Есть еще много всего! Ознакомьтесь с документацией dbt Power User здесь: https://docs.myaltimate.com/
 
+## Заключение
+
+Вы успешно установили dbt Cloud CLI и dbt Power User! Теперь вы можете получить преимущества локальной разработки _и_ dbt Cloud, работающих вместе.
+
+Следите за следующими улучшениями dbt Cloud CLI:
+- Более глубокая интеграция с dbt Explorer для визуального взаимодействия
+- Поддержка запуска производственных заданий непосредственно из CLI
+- Продолжительная оптимизация для повышения производительности и масштабируемости
+
+</div>

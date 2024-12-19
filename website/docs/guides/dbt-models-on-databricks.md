@@ -1,80 +1,80 @@
 ---
-title: Optimize and troubleshoot dbt models on Databricks
+title: Оптимизация и устранение неполадок моделей dbt на Databricks
 id: optimize-dbt-models-on-databricks
-description: "Learn more about optimizing and troubleshooting your dbt models on Databricks"
-displayText: Optimizing and troubleshooting your dbt models on Databricks
-hoverSnippet: Learn how to optimize and troubleshoot your dbt models on Databricks.
-# time_to_complete: '30 minutes' commenting out until we test
+description: "Узнайте больше об оптимизации и устранении неполадок ваших моделей dbt на Databricks"
+displayText: Оптимизация и устранение неполадок ваших моделей dbt на Databricks
+hoverSnippet: Узнайте, как оптимизировать и устранять неполадки ваших моделей dbt на Databricks.
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'databricks'
 hide_table_of_contents: true
 tags: ['Databricks', 'dbt Core','dbt Cloud']
-level: 'Intermediate'
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-Building on the [Set up your dbt project with Databricks](/guides/set-up-your-databricks-dbt-project) guide, we'd like to discuss performance optimization. In this follow-up post, we outline simple strategies to optimize for cost, performance, and simplicity when you architect data pipelines. We’ve encapsulated these strategies in this acronym-framework:
+Основываясь на руководстве [Настройка вашего проекта dbt с Databricks](/guides/set-up-your-databricks-dbt-project), мы хотели бы обсудить оптимизацию производительности. В этом последующем посте мы описываем простые стратегии для оптимизации затрат, производительности и простоты при проектировании конвейеров данных. Мы обобщили эти стратегии в акрониме:
 
-- Platform Components
-- Patterns & Best Practices
-- Performance Troubleshooting
+- Компоненты платформы
+- Шаблоны и лучшие практики
+- Устранение неполадок производительности
 
-## Platform Components
+## Компоненты платформы
 
-As you start to develop your dbt projects, one of the first decisions you will make is what kind of backend infrastructure to run your models against. Databricks offers SQL warehouses, All-Purpose Compute, and Jobs Compute, each optimized to workloads they are catered to. Our recommendation is to use Databricks SQL warehouses for all your SQL workloads. SQL warehouses are optimized for SQL workloads when compared to other compute options, additionally, they can scale both vertically to support larger workloads and horizontally to support concurrency. Also, SQL warehouses are easier to manage and provide out-of-the-box features such as query history to help audit and optimize your SQL workloads. Between Serverless, Pro, and Classic SQL Warehouse types that Databricks offers, our standard recommendation for you is to leverage Databricks serverless warehouses. You can explore features of these warehouse types in the [Compare features section](https://www.databricks.com/product/pricing/databricks-sql?_gl=1*2rsmlo*_ga*ZmExYzgzZDAtMWU0Ny00N2YyLWFhYzEtM2RhZTQzNTAyZjZi*_ga_PQSEQ3RZQC*MTY3OTYwMDg0Ni4zNTAuMS4xNjc5NjAyMDMzLjUzLjAuMA..&_ga=2.104593536.1471430337.1679342371-fa1c83d0-1e47-47f2-aac1-3dae43502f6b) on the Databricks pricing page.
+Когда вы начинаете разрабатывать свои проекты dbt, одно из первых решений, которое вам нужно будет принять, — это то, какую инфраструктуру заднего плана использовать для выполнения ваших моделей. Databricks предлагает SQL-склады, универсальные вычисления и вычисления для заданий, каждый из которых оптимизирован для соответствующих рабочих нагрузок. Наша рекомендация — использовать SQL-склады Databricks для всех ваших SQL-рабочих нагрузок. SQL-склады оптимизированы для SQL-рабочих нагрузок по сравнению с другими вариантами вычислений, кроме того, они могут масштабироваться как вертикально для поддержки больших рабочих нагрузок, так и горизонтально для поддержки параллелизма. Также SQL-склады легче управлять и они предоставляют готовые функции, такие как история запросов, чтобы помочь в аудите и оптимизации ваших SQL-рабочих нагрузок. Среди типов SQL-складов, предлагаемых Databricks (Serverless, Pro и Classic), наша стандартная рекомендация — использовать безсерверные склады Databricks. Вы можете изучить функции этих типов складов в разделе [Сравнить функции](https://www.databricks.com/product/pricing/databricks-sql?_gl=1*2rsmlo*_ga*ZmExYzgzZDAtMWU0Ny00N2YyLWFhYzEtM2RhZTQzNTAyZjZi*_ga_PQSEQ3RZQC*MTY3OTYwMDg0Ni4zNTAuMS4xNjc5NjAyMDMzLjUzLjAuMA..&_ga=2.104593536.1471430337.1679342371-fa1c83d0-1e47-47f2-aac1-3dae43502f6b) на странице цен Databricks.
 
-With serverless warehouses, you greatly decrease spin-up time waiting for the cluster to warm up and scale time when your cluster needs to horizontally scale. This mitigates the need to keep clusters idle as serverless warehouses will spin up quickly when the workload begins and then spin down when the workload is complete. Plus, serverless warehouses leverage our Photon engine out of the box for optimal performance in both ELT and serving workloads.
+С безсерверными складами вы значительно сокращаете время развертывания, ожидая, пока кластер разогреется, и время масштабирования, когда вашему кластеру необходимо горизонтально масштабироваться. Это уменьшает необходимость держать кластеры в режиме ожидания, так как безсерверные склады быстро запускаются, когда начинается рабочая нагрузка, и затем останавливаются, когда работа завершена. Кроме того, безсерверные склады используют наш движок Photon из коробки для оптимальной производительности как в ELT, так и в рабочих нагрузках обслуживания.
 
-The next step would be to decide how big to make your serverless SQL warehouse. This is not an exact science but these subsections provide you with some quick tips that will drive huge improvements in performance.
+Следующий шаг — решить, какого размера должен быть ваш безсерверный SQL-склад. Это не точная наука, но эти подразделы предоставляют вам несколько быстрых советов, которые приведут к значительным улучшениям в производительности.
 
-### Sizing your SQL warehouses
+### Определение размера ваших SQL-складов
 
-To select the appropriate size of your SQL warehouse, consider the use case and workload you are running and its corresponding latency requirements. You can select a T-shirt size based on the amount of data and auto-scaling based on concurrency needs. A good rule of thumb to follow is to start with a Medium warehouse and work from there. For large and complex workloads, bigger warehouses are the way to go and that won’t necessarily mean higher costs. This is because larger warehouses take a shorter time to complete a unit of work. For example, if a Small warehouse takes an hour to complete a pipeline, it will only take half an hour with a Medium. This linear trend continues as long as there’s enough work for the warehouse to perform.
+Чтобы выбрать подходящий размер вашего SQL-склада, учитывайте случай использования и рабочую нагрузку, которую вы запускаете, а также соответствующие требования к задержке. Вы можете выбрать размер футболки в зависимости от объема данных и автоматического масштабирования в зависимости от потребностей в параллелизме. Хорошее правило — начать с среднего склада и работать оттуда. Для больших и сложных рабочих нагрузок лучше использовать более крупные склады, и это не обязательно будет означать более высокие затраты. Это связано с тем, что более крупные склады требуют меньше времени для завершения единицы работы. Например, если маленькому складу требуется час для завершения конвейера, то среднему потребуется только полчаса. Эта линейная тенденция продолжается, пока есть достаточно работы для выполнения склада.
 
-### Provision warehouses by workload
+### Обеспечение складов по рабочей нагрузке
 
-Another technique worth implementing is to provision separate SQL warehouses for building dbt pipelines instead of ad hoc, interactive SQL analysis. This is because the query design patterns and compute usage are different for these two types of workloads. Choose T-shirt sizes based on data volumes and SLAs (scale-up principle), and choose auto-scaling based on concurrency requirements (scale-out principle). For larger deployments, this approach could be expanded to map different workload sizes to multiple “pipeline” warehouses, if needed. On the dbt side, take into account the [number of threads you have](/docs/core/connect-data-platform/connection-profiles#understanding-threads), meaning how many dbt models you can run in parallel. The higher the thread count, the more compute you will require.
+Еще одна техника, которую стоит реализовать, — это выделение отдельных SQL-складов для построения конвейеров dbt вместо произвольного, интерактивного SQL-анализа. Это связано с тем, что шаблоны проектирования запросов и использование вычислений различаются для этих двух типов рабочих нагрузок. Выбирайте размеры футболок в зависимости от объемов данных и SLA (принцип масштабирования вверх) и выбирайте автоматическое масштабирование в зависимости от требований к параллелизму (принцип масштабирования вширь). Для более крупных развертываний этот подход можно расширить, чтобы сопоставить разные размеры рабочих нагрузок с несколькими "конвейерными" складами, если это необходимо. Со стороны dbt учитывайте [количество потоков, которые у вас есть](/docs/core/connect-data-platform/connection-profiles#understanding-threads), что означает, сколько моделей dbt вы можете запускать параллельно. Чем выше количество потоков, тем больше вычислений вам потребуется.
 
-### Configure auto-stop
+### Настройка автоматической остановки
 
-Because of the ability of serverless warehouses to spin up in a matter of seconds, setting your auto-stop configuration to a lower threshold will not impact SLAs and end-user experience. From the SQL Workspace UI, the default value is 10 minutes and  you can set it to 5 minutes for a lower threshold with the UI. If you would like more custom settings, you can set the threshold to as low as 1 minute with the [API](https://docs.databricks.com/sql/api/sql-endpoints.html#).
+Из-за способности безсерверных складов запускаться за считанные секунды, установка конфигурации автоматической остановки на более низкий порог не повлияет на SLA и опыт конечного пользователя. В пользовательском интерфейсе SQL Workspace значение по умолчанию составляет 10 минут, и вы можете установить его на 5 минут для более низкого порога с помощью интерфейса. Если вам нужны более индивидуальные настройки, вы можете установить порог до 1 минуты с помощью [API](https://docs.databricks.com/sql/api/sql-endpoints.html#).
 
-## Patterns & Best Practices
+## Шаблоны и лучшие практики
 
-Now that we have a solid sense of the infrastructure components, we can shift our focus to best practices and design patterns on pipeline development.  We recommend the staging/intermediate/mart approach which is analogous to the medallion architecture bronze/silver/gold approach that’s recommended by Databricks. Let’s dissect each stage further.
+Теперь, когда у нас есть четкое представление о компонентах инфраструктуры, мы можем сосредоточиться на лучших практиках и шаблонах разработки конвейеров. Мы рекомендуем подход с промежуточным/средним/золотым уровнями, который аналогичен архитектуре медальонов бронзового/серебряного/золотого уровней, рекомендованной Databricks. Давайте подробнее разберем каждый этап.
 
-dbt has guidelines on how you can [structure your dbt project](/best-practices/how-we-structure/1-guide-overview) which you can learn more about.
+dbt имеет рекомендации о том, как вы можете [структурировать ваш проект dbt](/best-practices/how-we-structure/1-guide-overview), с которыми вы можете ознакомиться.
 
-### Bronze / Staging Layer:
+### Бронзовый / Промежуточный уровень:
 
-There are a few different options for materializing bronze delta tables on Databricks. In the recommended dbt workflow, you should load your flat files into a table first before using dbt to transform on it. To do so, you can use an EL tool to handle this ingestion.
+Существует несколько различных вариантов материализации бронзовых дельта-таблиц на Databricks. В рекомендованном рабочем процессе dbt вы должны сначала загрузить свои плоские файлы в таблицу, прежде чем использовать dbt для их преобразования. Для этого вы можете использовать инструмент EL для обработки этой загрузки.
 
-However, we know this isn't always possible so for data sets in cloud storage, we recommend that you either leverage our `COPY INTO` functionality or stage the external table. In terms of the `COPY INTO` approach, you would have a few different options. The first option would be to run the `COPY INTO` logic as a pre-hook before building your silver/intermediate models. The second option would be to invoke the databricks `COPY INTO` macro with `dbt run-operation` and then subsequently execute your model runs. You can see an example implementation of the [COPY INTO macro](https://github.com/databricks/dbt-databricks/blob/main/docs/databricks-copy-into-macro-aws.md) in the dbt-databricks docs.
+Тем не менее, мы понимаем, что это не всегда возможно, поэтому для наборов данных в облачном хранилище мы рекомендуем либо использовать нашу функциональность `COPY INTO`, либо создать промежуточную таблицу. В отношении подхода `COPY INTO` у вас будет несколько различных вариантов. Первый вариант — запустить логику `COPY INTO` в качестве предшествующего действия перед созданием ваших серебряных/промежуточных моделей. Второй вариант — вызвать макрос `COPY INTO` Databricks с помощью `dbt run-operation`, а затем выполнить ваши запуски моделей. Вы можете увидеть пример реализации [макроса COPY INTO](https://github.com/databricks/dbt-databricks/blob/main/docs/databricks-copy-into-macro-aws.md) в документации dbt-databricks.
 
-The main benefit of leveraging `COPY INTO` is that it's an incremental operation and it ensures that data is written in Delta format (when we refer to Delta, we are simply referring to the open Parquet tables with a transaction log). If you instead opt to stage an external table, the bronze table retains its raw structure (whether it is CSV, Parquet, JSON, etc.). This would prevent the ability to leverage the performance, reliability, and governance advantages inherent in Delta. Further, external Parquet tables require additional manual work such as running repair operations to ensure new partition metadata is accounted for. Nevertheless, staging external tables could be a feasible option if you are migrating to Databricks from another cloud warehouse system, where you heavily leveraged this functionality.
+Основное преимущество использования `COPY INTO` заключается в том, что это инкрементальная операция, и она гарантирует, что данные записываются в формате Delta (когда мы говорим о Delta, мы просто имеем в виду открытые таблицы Parquet с журналом транзакций). Если вы вместо этого решите создать промежуточную таблицу, бронзовая таблица сохранит свою исходную структуру (независимо от того, является ли она CSV, Parquet, JSON и т. д.). Это предотвратит возможность использования преимуществ производительности, надежности и управления, присущих Delta. Кроме того, внешние таблицы Parquet требуют дополнительных ручных действий, таких как выполнение операций восстановления, чтобы гарантировать, что новая метадата разделов учтена. Тем не менее, создание промежуточных таблиц может быть целесообразным вариантом, если вы переходите на Databricks из другой облачной системы складирования, где вы активно использовали эту функциональность.
 
-### Silver / Intermediate Layer
+### Серебряный / Промежуточный уровень
 
-Now that we have our bronze table taken care of, we can proceed with the silver layer.
+Теперь, когда мы позаботились о нашей бронзовой таблице, мы можем перейти к серебряному уровню.
 
-For cost and performance reasons, many customers opt to implement an incremental pipeline approach. The main benefit with this approach is that you process a lot less data when you insert new records into the silver layer, rather than re-create the table each time with all the data from the bronze layer. However it should be noted that by default, [dbt recommends using views and tables](/best-practices/materializations/1-guide-overview) to start out with and then moving to incremental as you require more performance optimization.
+По причинам затрат и производительности многие клиенты выбирают реализацию инкрементального подхода к конвейерам. Основное преимущество этого подхода заключается в том, что вы обрабатываете гораздо меньше данных, когда вставляете новые записи в серебряный уровень, а не пересоздаете таблицу каждый раз со всеми данными из бронзового уровня. Однако следует отметить, что по умолчанию [dbt рекомендует использовать представления и таблицы](/best-practices/materializations/1-guide-overview) для начала, а затем переходить к инкрементальным, когда вам потребуется больше оптимизации производительности.
 
-dbt has an [incremental model materialization](/reference/resource-configs/spark-configs#the-merge-strategy) to facilitate this framework. How this works at a high level is that Databricks will create a temp view with a snapshot of data and then merge that snapshot into the silver table. You can customize the time range of the snapshot to suit your specific use case by configuring the `where` conditional in your `is_incremental` logic. The most straightforward implementation is to merge data using a timestamp that’s later than the current max timestamp in the silver table, but there are certainly valid use cases for increasing the temporal range of the source snapshot.
+dbt имеет [материализацию инкрементальной модели](/reference/resource-configs/spark-configs#the-merge-strategy) для упрощения этой структуры. Как это работает на высоком уровне: Databricks создаст временное представление с моментом данных, а затем объединит этот момент в серебряную таблицу. Вы можете настроить временной диапазон момента, чтобы соответствовать вашему конкретному случаю использования, настроив условие `where` в вашей логике `is_incremental`. Самая простая реализация — объединить данные, используя временную метку, которая позже текущей максимальной временной метки в серебряной таблице, но, безусловно, существуют действительные случаи использования для увеличения временного диапазона исходного момента.
 
-While merge should be fairly performant out of the box but if you have particularly tight SLAs, there are some more advanced tuning techniques that you can incorporate into your logic. Let us discuss several examples in further detail.
+Хотя объединение должно быть довольно производительным из коробки, если у вас особенно строгие SLA, вы можете внедрить некоторые более продвинутые техники настройки в вашу логику. Давайте обсудим несколько примеров более подробно.
 
-### File Compaction 
+### Компакция файлов 
 
-Most compute engines work best when file sizes are between 32 MB and 256 MB. In Databricks, we take care of optimal file sizing under the hood with our [auto optimize](https://docs.databricks.com/optimizations/auto-optimize.html) features. Auto optimize consists of two distinct features: auto compaction and optimized writes. In Databricks SQL warehouses, optimized writes are enabled by default. We recommend that you [opt in to auto compaction](https://docs.databricks.com/optimizations/auto-optimize.html#when-to-opt-in-to-auto-compaction).
+Большинство вычислительных движков работают лучше всего, когда размеры файлов находятся в диапазоне от 32 МБ до 256 МБ. В Databricks мы заботимся об оптимальном размере файлов на уровне системы с помощью наших функций [автооптимизации](https://docs.databricks.com/optimizations/auto-optimize.html). Автооптимизация состоит из двух отдельных функций: автоматической компакции и оптимизированных записей. В SQL-складах Databricks оптимизированные записи включены по умолчанию. Мы рекомендуем вам [подключиться к автоматической компакции](https://docs.databricks.com/optimizations/auto-optimize.html#when-to-opt-in-to-auto-compaction).
 
-### Data skipping
+### Пропуск данных
 
-Under the hood, Databricks will naturally [cluster data based on when it was ingested](https://www.databricks.com/blog/2022/11/18/introducing-ingestion-time-clustering-dbr-112.html). Since many queries include timestamps in `where` conditionals, this will naturally lead to a large amount of file skipping for enhanced performance. Nevertheless, if you have other high cardinality columns (basically columns with a large amount of distinct values such as id columns) that are frequently used in `join` keys or `where` conditionals, performance can typically be augmented further by leveraging Z-order.
+На уровне системы Databricks естественным образом [кластеризует данные на основе времени их загрузки](https://www.databricks.com/blog/2022/11/18/introducing-ingestion-time-clustering-dbr-112.html). Поскольку многие запросы включают временные метки в условиях `where`, это естественным образом приведет к большому количеству пропусков файлов для повышения производительности. Тем не менее, если у вас есть другие столбцы с высокой кардинальностью (в основном столбцы с большим количеством уникальных значений, такие как столбцы id), которые часто используются в ключах `join` или условиях `where`, производительность обычно можно дополнительно улучшить, используя Z-упорядочение.
 
-The SQL syntax for the Z-Order command is `OPTIMIZE table_name ZORDER BY (col1,col2,col3,etc)`. One caveat to be aware of is that you will rarely want to Z-Order by more than three columns. You will likely want to either run Z-order on run end after your model builds or run Z-Order as a separate scheduled job on a consistent cadence, whether it is daily, weekly, or monthly.
+Синтаксис SQL для команды Z-Order: `OPTIMIZE table_name ZORDER BY (col1,col2,col3 и т.д.)`. Одно предостережение, о котором следует помнить, заключается в том, что вы редко захотите Z-упорядочить более чем по трем столбцам. Вы, вероятно, захотите либо запустить Z-упорядочение в конце выполнения вашей модели, либо запустить Z-упорядочение как отдельную запланированную задачу с постоянной периодичностью, будь то ежедневно, еженедельно или ежемесячно.
 
 ```sql
 config(
@@ -86,9 +86,9 @@ zorder="column_A" | ["column_A", "column_B"]
 )
 ```
 
-### Analyze Table
+### Анализ таблицы
 
-The `ANALYZE TABLE` command ensures that our system has the most up-to-date statistics to select the optimal join plan. You will likely want to either run analyze table posthook after your model builds or run analyze table as a separate scheduled dbt job on a consistent cadence, whether it is daily, weekly, or monthly.  The SQL syntax for this is:
+Команда `ANALYZE TABLE` гарантирует, что наша система имеет самые актуальные статистические данные для выбора оптимального плана соединения. Вы, вероятно, захотите либо запустить анализ таблицы в качестве постхука после построения вашей модели, либо запустить анализ таблицы как отдельную запланированную задачу dbt с постоянной периодичностью, будь то ежедневно, еженедельно или ежемесячно. Синтаксис SQL для этого:
 
 ```sql 
 ANALYZE TABLE mytable COMPUTE STATISTICS FOR
@@ -96,21 +96,21 @@ ANALYZE TABLE mytable COMPUTE STATISTICS FOR
 COLUMNS col1, col2, col3
 ```
 
-An important item to clarify is that you will want to prioritize statistics for columns that are frequently used in joins.
+Важно уточнить, что вы захотите приоритизировать статистику для столбцов, которые часто используются в соединениях.
 
-### Vacuum
+### Вакуум
 
-When you delete a record from a Delta table, it is a soft delete. What this means is that the record is deleted from the transaction log and is not included in subsequent queries, but the underlying file still remains in cloud storage. If you want to delete the underlying files as well (whether for reducing storage cost or augmenting performance on merges), you can run a vacuum command. The factor you will want to be very cognizant of is restoring older versions of the table. Let’s say  you vacuum a table to delete all unused files that’s older than 7 days. You won’t be  able to restore versions of the table from over 7 days ago that rely on those deleted  files, so use with caution. If/when you choose to leverage vacuum, you will likely want to run vacuum using the dbt functionality [on-run-end](/reference/project-configs/on-run-start-on-run-end) after your model builds or run vacuum as a separate scheduled dbt job on a consistent cadence (whether it is daily, weekly, or monthly) using the dbt [run-operation](/reference/commands/run-operation) command (with the vaccum statement in a macro).
+Когда вы удаляете запись из таблицы Delta, это мягкое удаление. Это означает, что запись удаляется из журнала транзакций и не включается в последующие запросы, но исходный файл все еще остается в облачном хранилище. Если вы хотите удалить исходные файлы (либо для снижения затрат на хранение, либо для повышения производительности при объединениях), вы можете выполнить команду вакуума. Фактор, о котором вам следует быть очень внимательным, — это восстановление более ранних версий таблицы. Допустим, вы выполняете вакуумирование таблицы, чтобы удалить все неиспользуемые файлы старше 7 дней. Вы не сможете восстановить версии таблицы, которые были созданы более 7 дней назад и зависят от этих удаленных файлов, поэтому используйте с осторожностью. Если/когда вы решите использовать вакуум, вы, вероятно, захотите запустить вакуум с помощью функциональности dbt [on-run-end](/reference/project-configs/on-run-start-on-run-end) после построения вашей модели или запустить вакуум как отдельную запланированную задачу dbt с постоянной периодичностью (будь то ежедневно, еженедельно или ежемесячно) с использованием команды dbt [run-operation](/reference/commands/run-operation) (с оператором вакуума в макросе).
 
-### Gold / Marts Layer
+### Золотой / Уровень Мартов
 
-Now onto the most final layer &mdash; the gold marts that business stakeholders typically interact with from their preferred BI tool. The considerations here will be fairly similar to the silver layer except that these marts are more likely to handling aggregations. Further, you will likely want to be even more intentional about Z-Ordering these tables as SLAs tend to be lower with these direct stakeholder facing tables.
+Теперь переходим к самому последнему уровню — золотым мартам, с которыми обычно взаимодействуют бизнес-стейкхолдеры через свои предпочтительные инструменты BI. Условия здесь будут довольно похожи на серебряный уровень, за исключением того, что эти марты, как правило, обрабатывают агрегации. Кроме того, вы, вероятно, захотите быть еще более целенаправленным в Z-упорядочении этих таблиц, поскольку SLA, как правило, ниже для этих таблиц, ориентированных на прямых заинтересованных сторон.
 
-In addition, these tables are well suited for defining [metrics](/docs/build/build-metrics-intro) on to ensure simplicity and consistency across your key business KPIs! Using the [MetricFlow](https://github.com/dbt-labs/metricflow), you can query the metrics inside of your own dbt project even. With the upcoming Semantic Layer Integration, you can also then query the metrics in any of the partner integrated tools.
+Кроме того, эти таблицы хорошо подходят для определения [метрик](/docs/build/build-metrics-intro), чтобы обеспечить простоту и согласованность по вашим ключевым бизнес-KPI! Используя [MetricFlow](https://github.com/dbt-labs/metricflow), вы можете запрашивать метрики внутри вашего собственного проекта dbt. С предстоящей интеграцией семантического уровня вы также сможете запрашивать метрики в любых интегрированных инструментах-партнерах.
 
-### Filter rows in target and/or source
+### Фильтрация строк в целевом и/или исходном источнике
 
-It can be done using `incremental_predicates` like in this example: 
+Это можно сделать с помощью `incremental_predicates`, как в этом примере: 
 
 ```sql
 {{
@@ -132,55 +132,55 @@ incremental_predicates = [
 }}
 ```
 
-## Performance Troubleshooting
+## Устранение неполадок производительности
 
-Performance troubleshooting refers to the process of identifying and resolving issues that impact the performance of your dbt models and overall data pipelines. By improving the speed and performance of your Lakehouse platform, you will be able to process data faster, process large and complex queries more effectively, and provide faster time to market.  Let’s go into detail the three effective strategies that you can implement.
+Устранение неполадок производительности относится к процессу выявления и решения проблем, которые влияют на производительность ваших моделей dbt и общих конвейеров данных. Улучшив скорость и производительность вашей платформы Lakehouse, вы сможете быстрее обрабатывать данные, более эффективно обрабатывать большие и сложные запросы и обеспечивать более быстрое время выхода на рынок. Давайте подробнее рассмотрим три эффективные стратегии, которые вы можете реализовать.
 
-### SQL warehouse query profile
+### Профиль запроса SQL-склада
 
-The SQL warehouse query profile is an effective tool found inside the Databricks SQL workspace. It’s used to troubleshoot slow-running queries, optimize query execution plans, and analyze granular metrics to see where compute resources are being spent. The query profile includes these high level capability areas:
+Профиль запроса SQL-склада — это эффективный инструмент, который находится внутри рабочей области Databricks SQL. Он используется для устранения неполадок медленно выполняющихся запросов, оптимизации планов выполнения запросов и анализа детализированных метрик, чтобы увидеть, где расходуются вычислительные ресурсы. Профиль запроса включает в себя следующие высокоуровневые области возможностей:
 
-- Detailed information about the three main components of query execution, which are time spent in tasks, number of rows processed, and memory consumption.
-- Two types of graphical representations. A tree view to easily spot slow operations at a glance, and a graph view that breaks down how data is transformed across tasks.
-- Ability to understand mistakes and performance bottlenecks in queries.
+- Подробная информация о трех основных компонентах выполнения запроса, а именно времени, затраченном на задачи, количестве обработанных строк и потреблении памяти.
+- Два типа графических представлений. Деревовидный вид для быстрого обнаружения медленных операций и графический вид, который разбивает, как данные преобразуются по задачам.
+- Возможность понять ошибки и узкие места производительности в запросах.
 
-The three common examples of performance bottlenecks that can be surfaced by the query profile are:
+Три распространенных примера узких мест производительности, которые могут быть выявлены с помощью профиля запроса:
 
-### Inefficient file pruning
+### Неэффективная обрезка файлов
 
-By default, Databricks Delta tables collect statistics on the _first 32 columns_ defined in your table schema. When transforming data from the Bronze/staging layer to the Silver/intermediate layer, it is advised to reorder your columns to account for these file-level stats and improve overall performance. Move numerical keys and high cardinality query predicates to the left of the 32nd ordinal position, and move strings and complex data types after the 32nd ordinal position of the table. It is worth mentioning that while you can change the default table property to collect statistics on more columns, it will add more overhead as you write files. You may change this default value by using the [table property](https://docs.databricks.com/delta/table-properties.html), `delta.dataSkippingNumIndexedCols`.
+По умолчанию таблицы Delta в Databricks собирают статистику по _первым 32 столбцам_ в вашей схеме таблицы. При преобразовании данных из бронзового/промежуточного уровня в серебряный/промежуточный уровень рекомендуется изменить порядок ваших столбцов, чтобы учесть эти статистические данные на уровне файлов и улучшить общую производительность. Переместите числовые ключи и предикаты запросов с высокой кардинальностью влево от 32-й порядковой позиции, а строки и сложные типы данных переместите после 32-й порядковой позиции таблицы. Стоит отметить, что хотя вы можете изменить свойство таблицы по умолчанию, чтобы собирать статистику по большему количеству столбцов, это добавит больше накладных расходов при записи файлов. Вы можете изменить это значение по умолчанию, используя [свойство таблицы](https://docs.databricks.com/delta/table-properties.html), `delta.dataSkippingNumIndexedCols`.
 
-### Full Table Scans
+### Полные сканирования таблиц
 
-The Query Profile provides metrics that allow you to identify the presence of full table scans. Full table scans is a query operation that involves scanning the entire table to retrieve records. It can be a performance issue especially for large tables with billions or trillions of rows. This is because scanning an entire table can be time-consuming and resource-intensive, leading to high memory and CPU usage and slower response times. Table layout techniques such as file compaction and Z-Ordering described in the earlier section of this article will help alleviate this problem.
+Профиль запроса предоставляет метрики, которые позволяют вам выявить наличие полных сканирований таблиц. Полное сканирование таблиц — это операция запроса, которая включает в себя сканирование всей таблицы для извлечения записей. Это может быть проблемой производительности, особенно для больших таблиц с миллиардами или триллионами строк. Это связано с тем, что сканирование всей таблицы может занять много времени и потребовать много ресурсов, что приводит к высокому использованию памяти и ЦП и более медленным временам отклика. Техники компоновки таблиц, такие как компакция файлов и Z-упорядочение, описанные в предыдущем разделе этой статьи, помогут облегчить эту проблему.
 
-### Exploding Joins
+### Взрывные соединения
 
-The concept of _exploding joins_ refers to a `join` operation that produces a much larger table result set than either of the input tables used, resulting in a Cartesian product. This performance issue can be determined by enabling the verbose mode setting in the Query Profile, by looking at the number of records produced by a join operator. There are several steps you can take to prevent exploding joins. As a first step, make the join conditions more specific to reduce the number of rows that are being matched. Another step is to utilize data preprocessing techniques such as aggregating, filtering, and performing data sampling before the join operation. These techniques can reduce the size of the input tables and help prevent exploding joins.
+Концепция _взрывных соединений_ относится к операции `join`, которая производит гораздо больший набор результатов таблицы, чем любая из входных таблиц, что приводит к декартовому произведению. Эта проблема производительности может быть определена путем включения настройки подробного режима в профиле запроса, путем просмотра количества записей, произведенных оператором соединения. Существует несколько шагов, которые вы можете предпринять, чтобы предотвратить взрывные соединения. В качестве первого шага сделайте условия соединения более специфичными, чтобы уменьшить количество строк, которые сопоставляются. Другой шаг — использовать техники предварительной обработки данных, такие как агрегация, фильтрация и выборка данных перед операцией соединения. Эти техники могут уменьшить размер входных таблиц и помочь предотвратить взрывные соединения.
 
-### Materialization Best Practices  
+### Лучшие практики материализации  
 
-Remember that data is stored as files, so the unit of I/O work is a file, not a row. That’s a lot of work if we’re dealing with TBs of data. Therefore we recommend relying on merge strategy as the recommended strategy for the majority of incremental models.
+Помните, что данные хранятся в виде файлов, поэтому единицей работы ввода-вывода является файл, а не строка. Это много работы, если мы имеем дело с ТБ данных. Поэтому мы рекомендуем полагаться на стратегию объединения как рекомендуемую стратегию для большинства инкрементальных моделей.
 
-Databricks is committed to continuously improving its performance. For example, in Delta and DBSQL, we’ve greatly improved performance of MERGE operations recently with [low-shuffle merge and Photon](https://www.databricks.com/blog/2022/10/17/faster-merge-performance-low-shuffle-merge-and-photon.html). With many future implementations in the pipeline such as deletion vectors for efficient deletes & upserts.Here’s the basic strategies to speed it up:
+Databricks стремится постоянно улучшать свою производительность. Например, в Delta и DBSQL мы значительно улучшили производительность операций MERGE в последнее время с помощью [низко-шуфлирующего объединения и Photon](https://www.databricks.com/blog/2022/10/17/faster-merge-performance-low-shuffle-merge-and-photon.html). С множеством будущих реализаций в разработке, таких как векторы удаления для эффективных удалений и обновлений. Вот основные стратегии для ускорения:
 
-1. Only read partitions that are important by pushing down filters to scan source and target using filters in *model* and *incremental_predicates*
-2. Only update important rows
-3. Improve key lookup by defining only *one* materialized key
-4. Only update important columns
+1. Читайте только важные разделы, применяя фильтры для сканирования источника и цели с использованием фильтров в *модели* и *incremental_predicates*.
+2. Обновляйте только важные строки.
+3. Улучшите поиск ключей, определив только *один* материализованный ключ.
+4. Обновляйте только важные столбцы.
 
-### dbt Cloud Discovery API
+### API открытия dbt Cloud
 
-Now you might be wondering, how do you identify opportunities for performance improvement inside of dbt? Well, with each job run, dbt Cloud generates metadata on the timing, configuration, and freshness of models in your dbt project. The [dbt Discovery API](/docs/dbt-cloud-apis/discovery-api) is a GraphQL service that supports queries on this metadata, using  the [graphical explorer](https://metadata.cloud.getdbt.com/graphiql) or the endpoint itself. Teams can pipe this data into their data warehouse and analyze it like any other data source in a business intelligence platform. dbt Cloud users can also use the data from the [Model Timing tab](/docs/deploy/run-visibility#model-timing) to visually identify models that take the most time and may require refactoring.
+Теперь вы, возможно, задаетесь вопросом, как вы можете выявить возможности для улучшения производительности внутри dbt? Каждый раз, когда выполняется задача, dbt Cloud генерирует метаданные о времени, конфигурации и свежести моделей в вашем проекте dbt. [API открытия dbt](/docs/dbt-cloud-apis/discovery-api) — это служба GraphQL, которая поддерживает запросы к этим метаданным, используя [графический исследователь](https://metadata.cloud.getdbt.com/graphiql) или сам конечный пункт. Команды могут передавать эти данные в свое облачное хранилище и анализировать их как любой другой источник данных в платформе бизнес-аналитики. Пользователи dbt Cloud также могут использовать данные из вкладки [Время модели](/docs/deploy/run-visibility#model-timing), чтобы визуально определить модели, которые занимают больше всего времени и могут потребовать рефакторинга.
 
-### dbt Cloud Admin API
+### API администратора dbt Cloud
 
-With the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api), you can  pull the dbt artifacts from your dbt Cloud run,  put the generated `manifest.json` into an S3 bucket, stage it, and model the data using the [dbt artifacts package](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/). That package can help you identify inefficiencies in your dbt models and pinpoint where opportunities for improvement are.
+С помощью [API администратора dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api) вы можете извлекать артефакты dbt из вашего запуска dbt Cloud, помещать сгенерированный `manifest.json` в ведро S3, создавать его и моделировать данные с помощью [пакета артефактов dbt](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/). Этот пакет может помочь вам выявить неэффективности в ваших моделях dbt и определить, где есть возможности для улучшения.
 
-### Conclusion
+### Заключение
 
-This builds on the content in [Set up your dbt project with Databricks](/guides/set-up-your-databricks-dbt-project).
+Это продолжает содержание в [Настройка вашего проекта dbt с Databricks](/guides/set-up-your-databricks-dbt-project).
 
-We welcome you to try these strategies on our example open source TPC-H implementation and to provide us with thoughts/feedback as you start to incorporate these features into production. Looking forward to your feedback on [#db-databricks-and-spark](https://getdbt.slack.com/archives/CNGCW8HKL) Slack channel!
+Мы приглашаем вас попробовать эти стратегии на нашем примере реализации TPC-H с открытым исходным кодом и поделиться с нами своими мыслями/отзывами, когда вы начнете внедрять эти функции в производство. С нетерпением ждем ваших отзывов в Slack-канале [#db-databricks-and-spark](https://getdbt.slack.com/archives/CNGCW8HKL)!
 
 </div>

@@ -1,12 +1,12 @@
 ---
-title: "About dbt retry command"
+title: "О команде dbt retry"
 sidebar_label: "retry"
 id: "retry"
 ---
 
-`dbt retry` re-executes the last `dbt` command from the node point of failure. If the previously executed `dbt` command was successful, `retry` will finish as `no operation`. 
+`dbt retry` повторно выполняет последнюю команду `dbt` с точки сбоя. Если ранее выполненная команда `dbt` была успешной, `retry` завершится как `no operation`.
 
-Retry works with the following commands:
+Retry работает с следующими командами:
 
 - [`build`](/reference/commands/build)
 - [`compile`](/reference/commands/compile)
@@ -18,12 +18,11 @@ Retry works with the following commands:
 - [`run`](/reference/commands/run)
 - [`run-operation`](/reference/commands/run-operation)
 
-`dbt retry` references [run_results.json](/reference/artifacts/run-results-json) to determine where to start. Executing `dbt retry` without correcting the previous failures will garner <Term id="idempotent" /> results.
+`dbt retry` ссылается на [run_results.json](/reference/artifacts/run-results-json), чтобы определить, с чего начинать. Выполнение `dbt retry` без исправления предыдущих ошибок приведет к <Term id="idempotent" /> результатам.
 
-`dbt retry` reuses the [selectors](/reference/node-selection/yaml-selectors) from the previously executed command.
+`dbt retry` повторно использует [selectors](/reference/node-selection/yaml-selectors) из ранее выполненной команды.
 
-
-Example results of executing `dbt retry` after a successful `dbt run`:
+Пример результатов выполнения `dbt retry` после успешного `dbt run`:
 
 ```shell
 Running with dbt=1.6.1
@@ -33,7 +32,7 @@ Found 5 models, 3 seeds, 20 tests, 0 sources, 0 exposures, 0 metrics, 348 macros
 Nothing to do. Try checking your model configs and model specification args
 ```
 
-Example of when `dbt run` encounters a syntax error in a model: 
+Пример, когда `dbt run` сталкивается с синтаксической ошибкой в модели:
 
 ```shell
 Running with dbt=1.6.1
@@ -63,8 +62,7 @@ Runtime Error in model customers (models/customers.sql)
 Done. PASS=4 WARN=0 ERROR=1 SKIP=0 TOTAL=5
 ```
 
-
-Example of a subsequent failed `dbt retry` run without fixing the error(s):
+Пример последующего неудачного выполнения `dbt retry` без исправления ошибок:
 
 ```shell
 Running with dbt=1.6.1
@@ -79,7 +77,7 @@ Concurrency: 24 threads (target='dev')
 Done. PASS=4 WARN=0 ERROR=1 SKIP=0 TOTAL=5
 ```
 
-Example of a successful `dbt retry` run after fixing error(s):
+Пример успешного выполнения `dbt retry` после исправления ошибок:
 
 ```shell
 Running with dbt=1.6.1
@@ -98,4 +96,4 @@ Completed successfully
 Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-In each scenario `dbt retry` picks up from the error rather than running all of the upstream dependencies again. 
+В каждом сценарии `dbt retry` продолжает с места ошибки, а не выполняет все зависимости выше по цепочке снова.

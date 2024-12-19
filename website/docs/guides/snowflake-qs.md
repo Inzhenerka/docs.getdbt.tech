@@ -1,59 +1,59 @@
 ---
-title: "Quickstart for dbt Cloud and Snowflake"
+title: "Быстрый старт для dbt Cloud и Snowflake"
 id: "snowflake"
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'snowflake'
-tags: ['dbt Cloud','Quickstart','Snowflake']
+tags: ['dbt Cloud','Быстрый старт','Snowflake']
 hide_table_of_contents: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with Snowflake. It will show you how to: 
+В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с Snowflake. Оно покажет вам, как: 
 
-- Create a new Snowflake worksheet.
-- Load sample data into your Snowflake account.
-- Connect dbt Cloud to Snowflake.
-- Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add sources to your dbt project. Sources allow you to name and describe the raw data already loaded into Snowflake.
-- Add tests to your models.
-- Document your models.
-- Schedule a job to run.
+- Создать новый рабочий лист Snowflake.
+- Загрузить образцы данных в вашу учетную запись Snowflake.
+- Подключить dbt Cloud к Snowflake.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить источники в ваш проект dbt. Источники позволяют вам называть и описывать необработанные данные, уже загруженные в Snowflake.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
-Snowflake also provides a quickstart for you to learn how to use dbt Cloud. It makes use of a different public dataset (Knoema Economy Data Atlas) than what's shown in this guide. For more information, refer to [Accelerating Data Teams with dbt Cloud & Snowflake](https://quickstarts.snowflake.com/guide/accelerating_data_teams_with_snowflake_and_dbt_cloud_hands_on_lab/) in the Snowflake docs.
+Snowflake также предоставляет быстрый старт, чтобы вы могли узнать, как использовать dbt Cloud. Он использует другой публичный набор данных (Knoema Economy Data Atlas), чем тот, что показан в этом руководстве. Для получения дополнительной информации обратитесь к [Ускорению команд данных с помощью dbt Cloud и Snowflake](https://quickstarts.snowflake.com/guide/accelerating_data_teams_with_snowflake_and_dbt_cloud_hands_on_lab/) в документации Snowflake.
 
-:::tip Videos for you
-You can check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
+:::tip Видео для вас
+Если вам интересно обучение с помощью видео, вы можете бесплатно ознакомиться с [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 
-You can also watch the [YouTube video on dbt and Snowflake](https://www.youtube.com/watch?v=kbCkwhySV_I&list=PL0QYlrC86xQm7CoOH6RS7hcgLnd3OQioG).
+Вы также можете посмотреть [видео на YouTube о dbt и Snowflake](https://www.youtube.com/watch?v=kbCkwhySV_I&list=PL0QYlrC86xQm7CoOH6RS7hcgLnd3OQioG).
 :::
  
-### Prerequisites​
+### Предварительные требования
 
-- You have a [dbt Cloud account](https://www.getdbt.com/signup/). 
-- You have a [trial Snowflake account](https://signup.snowflake.com/). During trial account creation, make sure to choose the **Enterprise** Snowflake edition so you have `ACCOUNTADMIN` access. For a full implementation, you should consider organizational questions when choosing a cloud provider. For more information, see [Introduction to Cloud Platforms](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms.html) in the Snowflake docs. For the purposes of this setup, all cloud providers and regions will work so choose whichever you’d like.
+- У вас есть [учетная запись dbt Cloud](https://www.getdbt.com/signup/). 
+- У вас есть [пробная учетная запись Snowflake](https://signup.snowflake.com/). При создании пробной учетной записи убедитесь, что выбрали издание Snowflake **Enterprise**, чтобы получить доступ `ACCOUNTADMIN`. Для полноценной реализации вам следует учитывать организационные вопросы при выборе облачного провайдера. Для получения дополнительной информации смотрите [Введение в облачные платформы](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms.html) в документации Snowflake. Для целей этой настройки подойдут все облачные провайдеры и регионы, поэтому выбирайте любой, который вам нравится.
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
-- [How we configure Snowflake](https://blog.getdbt.com/how-we-configure-snowflake/)
-- [CI jobs](/docs/deploy/continuous-integration)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
+- Узнайте больше с помощью [курсов dbt Learn](https://learn.getdbt.com)
+- [Как мы настраиваем Snowflake](https://blog.getdbt.com/how-we-configure-snowflake/)
+- [CI задания](/docs/deploy/continuous-integration)
+- [Задания на развертывание](/docs/deploy/deploy-jobs)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источников](/docs/deploy/source-freshness)
 
-## Create a new Snowflake worksheet 
-1. Log in to your trial Snowflake account. 
-2. In the Snowflake UI, click **+ Worksheet** in the upper right corner to create a new worksheet.
+## Создание нового рабочего листа Snowflake 
+1. Войдите в свою пробную учетную запись Snowflake. 
+2. В интерфейсе Snowflake нажмите **+ Worksheet** в правом верхнем углу, чтобы создать новый рабочий лист.
 
-## Load data 
-The data used here is stored as CSV files in a public S3 bucket and the following steps will guide you through how to prepare your Snowflake account for that data and upload it.
+## Загрузка данных 
+Данные, используемые здесь, хранятся в виде CSV файлов в публичном S3 бакете, и следующие шаги помогут вам подготовить вашу учетную запись Snowflake для этих данных и загрузить их.
 
-1. Create a new virtual warehouse, two new databases (one for raw data, the other for future dbt development), and two new schemas (one for `jaffle_shop` data, the other for `stripe` data). 
+1. Создайте новый виртуальный склад, две новые базы данных (одну для необработанных данных, другую для будущей разработки dbt) и две новые схемы (одну для данных `jaffle_shop`, другую для данных `stripe`). 
 
-    To do this, run these SQL commands by typing them into the Editor of your new Snowflake worksheet and clicking **Run** in the upper right corner of the UI:
+    Для этого выполните следующие SQL команды, введя их в редакторе вашего нового рабочего листа Snowflake и нажав **Run** в правом верхнем углу интерфейса:
     ```sql
     create warehouse transforming;
     create database raw;
@@ -62,9 +62,9 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
     create schema raw.stripe;
     ```
 
-2. In the `raw` database and `jaffle_shop` and `stripe` schemas, create three tables and load relevant data into them: 
+2. В базе данных `raw` и схемах `jaffle_shop` и `stripe` создайте три таблицы и загрузите в них соответствующие данные: 
 
-    - First, delete all contents (empty) in the Editor of the Snowflake worksheet. Then, run this SQL command to create the `customer` table:
+    - Сначала удалите все содержимое (очистите) в редакторе рабочего листа Snowflake. Затем выполните эту SQL команду для создания таблицы `customer`:
 
         ```sql 
         create table raw.jaffle_shop.customers 
@@ -74,7 +74,7 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
         );
         ```
 
-    - Delete all contents in the Editor, then run this command to load data into the `customer` table: 
+    - Удалите все содержимое в редакторе, затем выполните эту команду для загрузки данных в таблицу `customer`: 
 
         ```sql 
         copy into raw.jaffle_shop.customers (id, first_name, last_name)
@@ -85,7 +85,7 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
             skip_header = 1
             ); 
         ```
-    - Delete all contents in the Editor (empty), then run this command to create the `orders` table:
+    - Удалите все содержимое в редакторе (очистите), затем выполните эту команду для создания таблицы `orders`:
         ```sql
         create table raw.jaffle_shop.orders
         ( id integer,
@@ -96,7 +96,7 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
         );
         ```
 
-    - Delete all contents in the Editor, then run this command to load data into the `orders` table:
+    - Удалите все содержимое в редакторе, затем выполните эту команду для загрузки данных в таблицу `orders`:
         ```sql
         copy into raw.jaffle_shop.orders (id, user_id, order_date, status)
         from 's3://dbt-tutorial-public/jaffle_shop_orders.csv'
@@ -106,7 +106,7 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
             skip_header = 1
             );
         ```
-    - Delete all contents in the Editor (empty), then run this command to create the `payment` table:
+    - Удалите все содержимое в редакторе (очистите), затем выполните эту команду для создания таблицы `payment`:
         ```sql
         create table raw.stripe.payment 
         ( id integer,
@@ -118,7 +118,7 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
           _batched_at timestamp default current_timestamp
         );
         ```
-    - Delete all contents in the Editor, then run this command to load data into the `payment` table:
+    - Удалите все содержимое в редакторе, затем выполните эту команду для загрузки данных в таблицу `payment`:
         ```sql
         copy into raw.stripe.payment (id, orderid, paymentmethod, status, amount, created)
         from 's3://dbt-tutorial-public/stripe_payments.csv'
@@ -128,114 +128,114 @@ The data used here is stored as CSV files in a public S3 bucket and the followin
             skip_header = 1
             );
         ```
-3. Verify that the data is loaded by running these SQL queries. Confirm that you can see output for each one. 
+3. Убедитесь, что данные загружены, выполнив эти SQL запросы. Подтвердите, что вы видите вывод для каждого из них. 
     ```sql
     select * from raw.jaffle_shop.customers;
     select * from raw.jaffle_shop.orders;
     select * from raw.stripe.payment;   
     ```
 
-## Connect dbt Cloud to Snowflake
+## Подключение dbt Cloud к Snowflake
 
-There are two ways to connect dbt Cloud to Snowflake. The first option is Partner Connect, which provides a streamlined setup to create your dbt Cloud account from within your new Snowflake trial account. The second option is to create your dbt Cloud account separately and build the Snowflake connection yourself (connect manually). If you want to get started quickly, dbt Labs recommends using Partner Connect. If you want to customize your setup from the very beginning and gain familiarity with the dbt Cloud setup flow, dbt Labs recommends connecting manually.
+Существует два способа подключения dbt Cloud к Snowflake. Первый вариант — Partner Connect, который предоставляет упрощенную настройку для создания вашей учетной записи dbt Cloud из вашей новой пробной учетной записи Snowflake. Второй вариант — создать учетную запись dbt Cloud отдельно и самостоятельно настроить подключение к Snowflake (подключение вручную). Если вы хотите быстро начать, dbt Labs рекомендует использовать Partner Connect. Если вы хотите настроить свою конфигурацию с самого начала и ознакомиться с процессом настройки dbt Cloud, dbt Labs рекомендует подключение вручную.
 
 <Tabs>
-<TabItem value="partner-connect" label="Use Partner Connect" default>
+<TabItem value="partner-connect" label="Использовать Partner Connect" default>
 
-Using Partner Connect allows you to create a complete dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [a managed repository](/docs/collaborate/git/managed-repository), [environments](/docs/build/custom-schemas#managing-environments), and credentials.
+Использование Partner Connect позволяет вам создать полноценную учетную запись dbt с вашим [подключением Snowflake](/docs/cloud/connect-data-platform/connect-snowflake), [управляемым репозиторием](/docs/collaborate/git/managed-repository), [окружениями](/docs/build/custom-schemas#managing-environments) и учетными данными.
 
-1. In the Snowflake UI, click on the home icon in the upper left corner. In the left sidebar, select **Data Products**. Then, select **Partner Connect**. Find the dbt tile by scrolling or by searching for dbt in the search bar. Click the tile to connect to dbt.
+1. В интерфейсе Snowflake нажмите на значок дома в верхнем левом углу. В левой боковой панели выберите **Data Products**. Затем выберите **Partner Connect**. Найдите плитку dbt, прокручивая или используя строку поиска. Нажмите на плитку, чтобы подключиться к dbt.
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_partner_connect_box.png" title="Snowflake Partner Connect Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_partner_connect_box.png" title="Плитка Partner Connect Snowflake" />
 
-    If you’re using the classic version of the Snowflake UI, you can click the **Partner Connect** button in the top bar of your account. From there, click on the dbt tile to open up the connect box. 
+    Если вы используете классическую версию интерфейса Snowflake, вы можете нажать кнопку **Partner Connect** в верхней панели вашей учетной записи. Оттуда нажмите на плитку dbt, чтобы открыть окно подключения. 
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_partner_connect.png" title="Snowflake Classic UI - Partner Connect" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_partner_connect.png" title="Классический интерфейс Snowflake - Partner Connect" />
 
-2. In the **Connect to dbt** popup, find the **Optional Grant** option and select the **RAW** and **ANALYTICS** databases. This will grant access for your new dbt user role to each database. Then, click **Connect**.
+2. В всплывающем окне **Подключиться к dbt** найдите опцию **Дополнительные права** и выберите базы данных **RAW** и **ANALYTICS**. Это предоставит доступ вашей новой роли пользователя dbt к каждой базе данных. Затем нажмите **Connect**.
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_connection_box.png" title="Snowflake Classic UI - Connection Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_connection_box.png" title="Классический интерфейс Snowflake - Окно подключения" />
 
-    <Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_connection_box.png" title="Snowflake New UI - Connection Box" />
+    <Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_connection_box.png" title="Новый интерфейс Snowflake - Окно подключения" />
 
-3. Click **Activate** when a popup appears: 
+3. Нажмите **Activate**, когда появится всплывающее окно: 
 
-<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_activation_window.png" title="Snowflake Classic UI - Actviation Window" />
+<Lightbox src="/img/snowflake_tutorial/snowflake_classic_ui_activation_window.png" title="Классический интерфейс Snowflake - Окно активации" />
 
-<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_activation_window.png" title="Snowflake New UI - Activation Window" />
+<Lightbox src="/img/snowflake_tutorial/snowflake_new_ui_activation_window.png" title="Новый интерфейс Snowflake - Окно активации" />
 
-4. After the new tab loads, you will see a form. If you already created a dbt Cloud account, you will be asked to provide an account name. If you haven't created account, you will be asked to provide an account name and password.
+4. После загрузки новой вкладки вы увидите форму. Если вы уже создали учетную запись dbt Cloud, вам будет предложено ввести имя учетной записи. Если вы еще не создали учетную запись, вам будет предложено ввести имя учетной записи и пароль.
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_account_info.png" title="dbt Cloud - Account Info" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_account_info.png" title="dbt Cloud - Информация об учетной записи" />
 
-5. After you have filled out the form and clicked **Complete Registration**, you will be logged into dbt Cloud automatically.
+5. После заполнения формы и нажатия **Complete Registration** вы автоматически войдете в dbt Cloud.
 
-6. Go to the left side menu and click your account name, then select **Account settings**, choose the "Partner Connect Trial" project, and select **snowflake** in the overview table. Select edit and update the fields **Database** and **Warehouse** to be `analytics` and `transforming`, respectively.
+6. Перейдите в меню слева и нажмите на имя вашей учетной записи, затем выберите **Account settings**, выберите проект "Partner Connect Trial" и выберите **snowflake** в таблице обзора. Выберите редактирование и обновите поля **Database** и **Warehouse** на `analytics` и `transforming`, соответственно.
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt Cloud - Snowflake Project Overview" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt Cloud - Обзор проекта Snowflake" />
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt Cloud - Update Database and Warehouse" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt Cloud - Обновление базы данных и склада" />
 
 </TabItem>
-<TabItem value="manual-connect" label="Connect manually">
+<TabItem value="manual-connect" label="Подключить вручную">
 
 
-1. Create a new project in dbt Cloud. Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
-2. Enter a project name and click **Continue**.
-3. For the warehouse, click **Snowflake** then **Next** to set up your connection.
+1. Создайте новый проект в dbt Cloud. Перейдите в **Account settings** (нажав на имя вашей учетной записи в левой боковой панели) и нажмите **+ New Project**.
+2. Введите имя проекта и нажмите **Continue**.
+3. Для склада нажмите **Snowflake**, затем **Next**, чтобы настроить ваше подключение.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt Cloud - Choose Snowflake Connection" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_setup_snowflake_connection_start.png" title="dbt Cloud - Выбор подключения Snowflake" />
 
-4. Enter your **Settings** for Snowflake with: 
-    * **Account** &mdash; Find your account by using the Snowflake trial account URL and removing `snowflakecomputing.com`. The order of your account information will vary by Snowflake version. For example, Snowflake's Classic console URL might look like: `oq65696.west-us-2.azure.snowflakecomputing.com`. The AppUI or Snowsight URL might look more like: `snowflakecomputing.com/west-us-2.azure/oq65696`. In both examples, your account will be: `oq65696.west-us-2.azure`. For more information, see [Account Identifiers](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html) in the Snowflake docs.  
+4. Введите ваши **Настройки** для Snowflake: 
+    * **Account** &mdash; Найдите вашу учетную запись, используя URL пробной учетной записи Snowflake и удалив `snowflakecomputing.com`. Порядок информации о вашей учетной записи может варьироваться в зависимости от версии Snowflake. Например, URL классической консоли Snowflake может выглядеть так: `oq65696.west-us-2.azure.snowflakecomputing.com`. URL AppUI или Snowsight может выглядеть более так: `snowflakecomputing.com/west-us-2.azure/oq65696`. В обоих примерах ваша учетная запись будет: `oq65696.west-us-2.azure`. Для получения дополнительной информации смотрите [Идентификаторы учетной записи](https://docs.snowflake.com/en/user-guide/admin-account-identifier.html) в документации Snowflake.  
 
         <Snippet path="snowflake-acct-name" />
     
-    * **Role** &mdash; Leave blank for now. You can update this to a default Snowflake role later.
-    * **Database** &mdash; `analytics`.  This tells dbt to create new models in the analytics database.
-    * **Warehouse** &mdash; `transforming`. This tells dbt to use the transforming warehouse that was created earlier.
+    * **Role** &mdash; Оставьте пустым на данный момент. Вы можете обновить это до роли по умолчанию Snowflake позже.
+    * **Database** &mdash; `analytics`. Это указывает dbt создавать новые модели в базе данных аналитики.
+    * **Warehouse** &mdash; `transforming`. Это указывает dbt использовать склад transforming, который был создан ранее.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt Cloud - Snowflake Account Settings" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_account_settings.png" title="dbt Cloud - Настройки учетной записи Snowflake" />
 
-5. Enter your **Development Credentials** for Snowflake with: 
-    * **Username** &mdash; The username you created for Snowflake. The username is not your email address and is usually your first and last name together in one word. 
-    * **Password** &mdash; The password you set when creating your Snowflake account.
-    * **Schema** &mdash; You’ll notice that the schema name has been auto created for you. By convention, this is `dbt_<first-initial><last-name>`. This is the schema connected directly to your development environment, and it's where your models will be built when running dbt within the Cloud IDE.
-    * **Target name** &mdash; Leave as the default.
-    * **Threads** &mdash; Leave as 4. This is the number of simultaneous connects that dbt Cloud will make to build models concurrently.
+5. Введите ваши **Учетные данные для разработки** для Snowflake: 
+    * **Username** &mdash; Имя пользователя, которое вы создали для Snowflake. Имя пользователя не является вашим адресом электронной почты и обычно состоит из вашего имени и фамилии, объединенных в одно слово. 
+    * **Password** &mdash; Пароль, который вы установили при создании учетной записи Snowflake.
+    * **Schema** &mdash; Вы заметите, что имя схемы было автоматически создано для вас. По умолчанию это `dbt_<первая_буква_имени><фамилия>`. Это схема, подключенная непосредственно к вашей среде разработки, и именно здесь будут создаваться ваши модели при выполнении dbt в Cloud IDE.
+    * **Target name** &mdash; Оставьте по умолчанию.
+    * **Threads** &mdash; Оставьте 4. Это количество одновременных подключений, которые dbt Cloud будет делать для одновременного создания моделей.
 
-    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt Cloud - Snowflake Development Credentials" />
+    <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_development_credentials.png" title="dbt Cloud - Учетные данные разработки Snowflake" />
 
-6. Click **Test Connection**. This verifies that dbt Cloud can access your Snowflake account.
-7. If the connection test succeeds, click **Next**. If it fails, you may need to check your Snowflake settings and credentials.
+6. Нажмите **Test Connection**. Это проверяет, что dbt Cloud может получить доступ к вашей учетной записи Snowflake.
+7. Если тест подключения прошел успешно, нажмите **Next**. Если он не удался, вам может потребоваться проверить настройки и учетные данные Snowflake.
 
 </TabItem>
 </Tabs>
 
-## Set up a dbt Cloud managed repository 
-If you used Partner Connect, you can skip to [initializing your dbt project](#initialize-your-dbt-project-and-start-developing) as the Partner Connect provides you with a managed repository. Otherwise, you will need to create your repository connection. 
+## Настройка управляемого репозитория dbt Cloud 
+Если вы использовали Partner Connect, вы можете перейти к [инициализации вашего проекта dbt](#initialize-your-dbt-project-and-start-developing), так как Partner Connect предоставляет вам управляемый репозиторий. В противном случае вам нужно будет создать подключение к вашему репозиторию. 
 
 <Snippet path="tutorial-managed-repo" />
 
-## Initialize your dbt project​ and start developing
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
+## Инициализация вашего проекта dbt и начало разработки
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
 
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize your project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit`. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - Click **+ Create new file**, add this query to the new file, and click **Save as** to save the new file: 
+1. Нажмите **Start developing in the IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как устанавливается ваше git-соединение, клонируется ваш репозиторий и проверяется соединение со складом.
+2. Над деревом файлов слева нажмите **Initialize your project**. Это создаст вашу структуру папок с примерами моделей.
+3. Сделайте ваш первый коммит, нажав **Commit and sync**. Используйте сообщение коммита `initial commit`. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которой вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего склада и выполнять `dbt run`. Попробуйте это сейчас:
+    - Нажмите **+ Create new file**, добавьте этот запрос в новый файл и нажмите **Save as**, чтобы сохранить новый файл: 
         ```sql
         select * from raw.jaffle_shop.customers
         ```
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
 :::info
-If you receive an insufficient privileges error on Snowflake at this point, it may be because your Snowflake role doesn't have permission to access the raw source data, to build target tables and views, or both. 
+Если вы получите ошибку недостаточных привилегий в Snowflake на этом этапе, это может быть связано с тем, что ваша роль Snowflake не имеет разрешения на доступ к необработанным исходным данным, для создания целевых таблиц и представлений, или к обоим.
 
-To troubleshoot, use a role with sufficient privileges (like `ACCOUNTADMIN`) and run the following commands in Snowflake. 
+Чтобы устранить неполадки, используйте роль с достаточными привилегиями (например, `ACCOUNTADMIN`) и выполните следующие команды в Snowflake. 
 
-**Note**: Replace `snowflake_role_name` with the role you intend to use. If you launched dbt Cloud with Snowflake Partner Connect, use `pc_dbt_role` as the role.
+**Примечание**: Замените `snowflake_role_name` на роль, которую вы собираетесь использовать. Если вы запустили dbt Cloud с помощью Snowflake Partner Connect, используйте `pc_dbt_role` в качестве роли.
 
 ```
 grant all on database raw to role snowflake_role_name;
@@ -250,18 +250,18 @@ grant all on future tables in database raw to role snowflake_role_name;
 
 :::
 
-## Build your first model
+## Создание вашей первой модели
 
-You have two options for working with files in the dbt Cloud IDE:
+У вас есть два варианта работы с файлами в dbt Cloud IDE:
 
-- Create a new branch (recommended) &mdash; Create a new branch to edit and commit your changes. Navigate to **Version Control** on the left sidebar and click **Create branch**.
-- Edit in the protected primary branch &mdash; If you prefer to edit, format, or lint files and execute dbt commands directly in your primary git branch. The dbt Cloud IDE prevents commits to the protected branch, so you will be prompted to commit your changes to a new branch.
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Version Control** в левой боковой панели и нажмите **Create branch**.
+- Редактировать в защищенной основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной git-ветке. dbt Cloud IDE предотвращает коммиты в защищенной ветке, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
 
-Name the new branch `add-customers-model`.
+Назовите новую ветку `add-customers-model`.
 
-1. Click the **...** next to the `models` directory, then select **Create file**.  
-2. Name the file `customers.sql`, then click **Create**.
-3. Copy the following query into the file and click **Save**.
+1. Нажмите **...** рядом с директорией `models`, затем выберите **Create file**.  
+2. Назовите файл `customers.sql`, затем нажмите **Create**.
+3. Скопируйте следующий запрос в файл и нажмите **Save**.
 
 ```sql
 with customers as (
@@ -321,24 +321,24 @@ final as (
 select * from final
 ```
 
-4. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный запуск и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить свои инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не необработанные данные в вашем инструменте BI.
 
-## Change the way your model is materialized
+## Изменение способа материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удаление примерных моделей
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL файл, `models/stg_customers.sql`, с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL файл, `models/stg_orders.sql`, с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -367,7 +367,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Отредактируйте SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -421,25 +421,25 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt создает `customers` последним. Вам не нужно явно определять эти зависимости.
 
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект, когда я создаю больше моделей? Как мне называть свои модели?" />
 
-## Build models on top of sources
+## Создание моделей на основе источников
 
-Sources make it possible to name and describe the data loaded into your warehouse by your extract and load tools. By declaring these tables as sources in dbt, you can:
-- select from source tables in your models using the `{{ source() }}` function, helping define the lineage of your data
-- test your assumptions about your source data
-- calculate the freshness of your source data
+Источники позволяют называть и описывать данные, загруженные в ваш склад вашими инструментами извлечения и загрузки. Объявляя эти таблицы как источники в dbt, вы можете:
+- выбирать из таблиц источников в ваших моделях, используя функцию `{{ source() }}`, что помогает определить происхождение ваших данных
+- тестировать ваши предположения о ваших исходных данных
+- вычислять свежесть ваших исходных данных
 
-1. Create a new YML file `models/sources.yml`.
-2. Declare the sources by copying the following into the file and clicking **Save**.
+1. Создайте новый YML файл `models/sources.yml`.
+2. Объявите источники, скопировав следующее в файл и нажав **Save**.
 
     <File name='models/sources.yml'>
 
@@ -448,19 +448,19 @@ Sources make it possible to name and describe the data loaded into your warehous
 
     sources:
         - name: jaffle_shop
-          description: This is a replica of the Postgres database used by our app
+          description: Это реплика базы данных Postgres, используемой нашим приложением
           database: raw
           schema: jaffle_shop
           tables:
               - name: customers
-                description: One record per customer.
+                description: Одна запись на каждого клиента.
               - name: orders
-                description: One record per order. Includes cancelled and deleted orders.
+                description: Одна запись на каждый заказ. Включает отмененные и удаленные заказы.
     ```
 
     </File>
 
-3. Edit the `models/stg_customers.sql` file to select from the `customers` table in the `jaffle_shop` source.
+3. Отредактируйте файл `models/stg_customers.sql`, чтобы выбрать из таблицы `customers` в источнике `jaffle_shop`.
 
     <File name='models/stg_customers.sql'>
 
@@ -475,7 +475,7 @@ Sources make it possible to name and describe the data loaded into your warehous
 
     </File>
 
-4. Edit the `models/stg_orders.sql` file to select from the `orders` table in the `jaffle_shop` source.
+4. Отредактируйте файл `models/stg_orders.sql`, чтобы выбрать из таблицы `orders` в источнике `jaffle_shop`.
 
     <File name='models/stg_orders.sql'>
 
@@ -491,11 +491,9 @@ Sources make it possible to name and describe the data loaded into your warehous
 
     </File>
 
-5. Execute `dbt run`. 
+5. Выполните `dbt run`. 
 
-    The results of your `dbt run` will be exactly the same as the previous step. Your `stg_customers` and `stg_orders`
-    models will still query from the same raw data source in Snowflake. By using `source`, you can
-    test and document your raw data and also understand the lineage of your sources. 
+    Результаты вашего `dbt run` будут точно такими же, как на предыдущем шаге. Ваши модели `stg_customers` и `stg_orders` по-прежнему будут запрашивать одни и те же необработанные данные в Snowflake. Используя `source`, вы можете тестировать и документировать ваши необработанные данные, а также понимать происхождение ваших источников. 
 
 </div> 
 

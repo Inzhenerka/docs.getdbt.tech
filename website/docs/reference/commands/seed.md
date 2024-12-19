@@ -1,15 +1,15 @@
 ---
-title: "About dbt seed command"
+title: "О команде dbt seed"
 sidebar_label: "seed"
 id: "seed"
 ---
 
-The `dbt seed` command will load `csv` files located in the `seed-paths` directory of your dbt project into your <Term id="data-warehouse" />.
+Команда `dbt seed` загружает файлы `csv`, расположенные в директории `seed-paths` вашего проекта dbt, в ваш <Term id="data-warehouse" />.
 
 
-### Selecting seeds to run
+### Выбор семян для выполнения
 
-Specific seeds can be run using the `--select` flag to `dbt seed`. Example:
+Конкретные семена можно запустить, используя флаг `--select` для `dbt seed`. Пример:
 
 ```
 $ dbt seed --select "country_codes"

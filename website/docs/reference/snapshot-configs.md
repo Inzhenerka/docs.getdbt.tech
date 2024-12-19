@@ -1,20 +1,19 @@
 ---
-title: Snapshot configurations
-description: "Read this guide to learn about using snapshot configurations in dbt."
+title: Конфигурации снимков
+description: "Прочитайте это руководство, чтобы узнать о использовании конфигураций снимков в dbt."
 meta:
-  resource_type: Snapshots
+  resource_type: Снимки
 ---
 
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
-## Related documentation
-* [Snapshots](/docs/build/snapshots)
-* The `dbt snapshot` [command](/reference/commands/snapshot)
+## Связанная документация
+* [Снимки](/docs/build/snapshots)
+* Команда `dbt snapshot` [command](/reference/commands/snapshot)
 
-
-## Available configurations
-### Snapshot-specific configurations
+## Доступные конфигурации
+### Конфигурации, специфичные для снимков
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -22,9 +21,9 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'YAML file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config-resource', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'YAML файл', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config-resource', },
   ]
 }>
 
@@ -79,13 +78,13 @@ snapshots:
 
 <VersionBlock lastVersion="1.8">
 
-**Note:** Required snapshot properties _will not_ work when only defined in `config` YAML blocks. We recommend that you define these in `dbt_project.yml` or a `config()` block within the snapshot `.sql` file or upgrade to v1.9.
+**Примечание:** Обязательные свойства снимка _не будут_ работать, если они определены только в блоках YAML конфигурации. Мы рекомендуем определять их в `dbt_project.yml` или в блоке `config()` внутри файла снимка `.sql`, или обновить до версии 1.9.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
   
-Refer to [configuring snapshots](/docs/build/snapshots#configuring-snapshots) for the available configurations.
+Смотрите [конфигурирование снимков](/docs/build/snapshots#configuring-snapshots) для доступных конфигураций.
 
 <File name='snapshots/schema.yml'>
 
@@ -136,32 +135,31 @@ import LegacySnapshotConfig from '/snippets/_legacy-snapshot-config.md';
 
 </Tabs>
 
-### Snapshot configuration migration
+### Миграция конфигураций снимков
 
-The latest snapshot configurations introduced in dbt Core v1.9 (such as [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current), and `hard_deletes`) are best suited for new snapshots. For existing snapshots, we recommend the following to avoid any inconsistencies in your snapshots:
+Последние конфигурации снимков, введенные в dbt Core v1.9 (такие как [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names), [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) и `hard_deletes`), лучше всего подходят для новых снимков. Для существующих снимков мы рекомендуем следующее, чтобы избежать любых несоответствий в ваших снимках:
 
-#### For existing snapshots
-- Migrate tables &mdash; Migrate the previous snapshot to the new table schema and values:
-  - Create a backup copy of your snapshots.
-  - Use `alter` statements as needed (or a script to apply `alter` statements) to ensure table consistency.
-- New configurations &mdash; Convert the configs one at a time, testing as you go. 
+#### Для существующих снимков
+- Миграция таблиц — Мигрируйте предыдущий снимок в новую схему таблицы и значения:
+  - Создайте резервную копию ваших снимков.
+  - Используйте операторы `alter` по мере необходимости (или скрипт для применения операторов `alter`), чтобы обеспечить согласованность таблицы.
+- Новые конфигурации — Конвертируйте конфигурации по одной, тестируя по ходу.
 
 :::warning
-If you use one of the latest configs, such as `dbt_valid_to_current`, without migrating your data, you may have mixed old and new data, leading to an incorrect downstream result.
+Если вы используете одну из последних конфигураций, таких как `dbt_valid_to_current`, не мигрируя ваши данные, вы можете получить смешанные старые и новые данные, что приведет к неправильному результату на downstream.
 :::
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
-
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'YAML file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'YAML файл', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -169,7 +167,6 @@ If you use one of the latest configs, such as `dbt_valid_to_current`, without mi
 <File name='dbt_project.yml'>
 
 <VersionBlock firstVersion="1.9">
-
 
 ```yaml
 snapshots:
@@ -279,37 +276,37 @@ snapshots:
 
 </Tabs>
 
-## Configuring snapshots
-Snapshots can be configured in multiple ways:
+## Конфигурирование снимков
+Снимки можно конфигурировать несколькими способами:
 
 <VersionBlock firstVersion="1.9">
 
-1. Defined in YAML files using a `config` [resource property](/reference/model-properties), typically in your [snapshots directory](/reference/project-configs/snapshot-paths) (available in [the dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 and higher).
-2. From the `dbt_project.yml` file, under the `snapshots:` key. To apply a configuration to a snapshot, or directory of snapshots, define the resource path as nested dictionary keys.
+1. Определены в YAML файлах с использованием свойства `config` [ресурса](/reference/model-properties), обычно в вашем [каталоге снимков](/reference/project-configs/snapshot-paths) (доступно в [релизной ветке dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt v1.9 и выше).
+2. Из файла `dbt_project.yml`, под ключом `snapshots:`. Чтобы применить конфигурацию к снимку или каталогу снимков, определите путь к ресурсу в виде вложенных ключей словаря.
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-1. Defined in a YAML file using a `config` [resource property](/reference/model-properties), typically in your [snapshots directory](/reference/project-configs/snapshot-paths) (available in  [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 and higher). The latest snapshot YAML syntax provides faster and more efficient management.
-2. Using a `config` block within a snapshot defined in Jinja SQL.
-3. From the `dbt_project.yml` file, under the `snapshots:` key. To apply a configuration to a snapshot, or directory of snapshots, define the resource path as nested dictionary keys.
+1. Определены в YAML файле с использованием свойства `config` [ресурса](/reference/model-properties), обычно в вашем [каталоге снимков](/reference/project-configs/snapshot-paths) (доступно в  [релизной ветке dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) и dbt v1.9 и выше). Последний синтаксис YAML для снимков обеспечивает более быструю и эффективную работу.
+2. С использованием блока `config` внутри снимка, определенного в Jinja SQL.
+3. Из файла `dbt_project.yml`, под ключом `snapshots:`. Чтобы применить конфигурацию к снимку или каталогу снимков, определите путь к ресурсу в виде вложенных ключей словаря.
 
 </VersionBlock>
 
-Snapshot configurations are applied hierarchically in the order above with higher taking precedence.
+Конфигурации снимков применяются иерархически в указанном выше порядке, при этом более высокие имеют приоритет.
 
-### Examples
+### Примеры
 
 <VersionBlock firstVersion="1.9">
-The following examples demonstrate how to configure snapshots using the `dbt_project.yml` file and a `.yml` file.
+Следующие примеры демонстрируют, как конфигурировать снимки с использованием файла `dbt_project.yml` и файла `.yml`.
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
-The following examples demonstrate how to configure snapshots using the `dbt_project.yml` file, a `config` block within a snapshot (legacy method), and a `.yml` file.
+Следующие примеры демонстрируют, как конфигурировать снимки с использованием файла `dbt_project.yml`, блока `config` внутри снимка (устаревший метод) и файла `.yml`.
 </VersionBlock>
 
-- #### Apply configurations to all snapshots
-  To apply a configuration to all snapshots, including those in any installed [packages](/docs/build/packages), nest the configuration directly under the `snapshots` key:
+- #### Применение конфигураций ко всем снимкам
+  Чтобы применить конфигурацию ко всем снимкам, включая те, которые находятся в любых установленных [пакетах](/docs/build/packages), вложите конфигурацию непосредственно под ключом `snapshots`:
 
     <File name='dbt_project.yml'>
 
@@ -320,10 +317,10 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
 
     </File>
 
-- #### Apply configurations to all snapshots in your project
-  To apply a configuration to all snapshots in your project only (for example, _excluding_ any snapshots in installed packages), provide your project name as part of the resource path.
+- #### Применение конфигураций ко всем снимкам в вашем проекте
+  Чтобы применить конфигурацию только ко всем снимкам в вашем проекте (например, _исключая_ любые снимки в установленных пакетах), укажите имя вашего проекта как часть пути к ресурсу.
 
-  For a project named `jaffle_shop`:
+  Для проекта с именем `jaffle_shop`:
 
     <File name='dbt_project.yml'>
 
@@ -335,12 +332,12 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
 
     </File>
 
-  Similarly, you can use the name of an installed package to configure snapshots in that package.
+  Аналогично, вы можете использовать имя установленного пакета для конфигурирования снимков в этом пакете.
 
-- #### Apply configurations to one snapshot only
+- #### Применение конфигураций только к одному снимку
   
   <VersionBlock lastVersion="1.8">
-  Use `config` blocks if you need to apply a configuration to one snapshot only. 
+  Используйте блоки `config`, если вам нужно применить конфигурацию только к одному снимку. 
 
     <File name='snapshots/postgres_app/orders_snapshot.sql'>
 
@@ -354,7 +351,7 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
               updated_at='updated_at'
             )
         }}
-        -- Pro-Tip: Use sources in snapshots!
+        -- Советы от профессионалов: используйте источники в снимках!
         select * from {{ source('jaffle_shop', 'orders') }}
     {% endsnapshot %}
     ```
@@ -378,12 +375,12 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
            columns: true
     ```
     </File>
-   Pro-tip: Use sources in snapshots: `select * from {{ source('jaffle_shop', 'orders') }}`
+   Советы от профессионалов: используйте источники в снимках: `select * from {{ source('jaffle_shop', 'orders') }}`
     </VersionBlock>
 
-  You can also use the full resource path (including the project name, and subdirectories) to configure an individual snapshot from your `dbt_project.yml` file.
+  Вы также можете использовать полный путь к ресурсу (включая имя проекта и подкаталоги), чтобы настроить отдельный снимок из вашего файла `dbt_project.yml`.
 
-  For a project named `jaffle_shop`, with a snapshot file within the `snapshots/postgres_app/` directory, where the snapshot is named `orders_snapshot` (as above), this would look like:
+  Для проекта с именем `jaffle_shop`, с файлом снимка в каталоге `snapshots/postgres_app/`, где снимок называется `orders_snapshot` (как выше), это будет выглядеть так:
 
     <File name='dbt_project.yml'>
 
@@ -399,7 +396,7 @@ The following examples demonstrate how to configure snapshots using the `dbt_pro
 
     </File>
 
-  You can also define some common configs in a snapshot's `config` block. However, we don't recommend this for a snapshot's required configuration.
+  Вы также можете определить некоторые общие конфигурации в блоке `config` снимка. Однако мы не рекомендуем это для обязательной конфигурации снимка.
 
     <File name='dbt_project.yml'>
 

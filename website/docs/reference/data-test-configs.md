@@ -1,29 +1,29 @@
 ---
-title: Data test configurations
-description: "Read this guide to learn about using data test configurations in dbt."
+title: Конфигурации тестов данных
+description: "Прочитайте это руководство, чтобы узнать о использовании конфигураций тестов данных в dbt."
 meta:
-  resource_type: Data tests
+  resource_type: Тесты данных
 ---
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
 
-## Related documentation
+## Связанная документация
 
-* [Data tests](/docs/build/data-tests)
+* [Тесты данных](/docs/build/data-tests)
 
-Data tests can be configured in a few different ways:
-1. Properties within `.yml` definition (generic tests only, see [test properties](/reference/resource-properties/data-tests) for full syntax)
-2. A `config()` block within the test's SQL definition
-3. In `dbt_project.yml`
+Тесты данных можно настраивать несколькими способами:
+1. Свойства в определении `.yml` (только для общих тестов, см. [свойства тестов](/reference/resource-properties/data-tests) для полного синтаксиса)
+2. Блок `config()` в SQL-определении теста
+3. В `dbt_project.yml`
 
-Data test configs are applied hierarchically, in the order of specificity outlined above. In the case of a singular test, the `config()` block within the SQL definition takes precedence over configs in the project file. In the case of a specific instance of a generic test, the test's `.yml` properties would take precedence over any values set in its generic SQL definition's `config()`, which in turn would take precedence over values set in `dbt_project.yml`.
+Конфигурации тестов данных применяются иерархически, в порядке специфичности, указанной выше. В случае единственного теста блок `config()` в SQL-определении имеет приоритет над конфигурациями в файле проекта. В случае конкретного экземпляра общего теста свойства `.yml` теста имеют приоритет над любыми значениями, установленными в `config()` его общего SQL-определения, которые, в свою очередь, имеют приоритет над значениями, установленными в `dbt_project.yml`.
 
-## Available configurations
+## Доступные конфигурации
 
-Click the link on each configuration option to read more about what it can do.
+Нажмите на ссылку для каждой опции конфигурации, чтобы узнать больше о том, что она может делать.
 
-### Data test-specific configurations
+### Конфигурации, специфичные для тестов данных
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -31,9 +31,9 @@ Click the link on each configuration option to read more about what it can do.
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Config block', value: 'config', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
+    { label: 'Файл свойств', value: 'property-yaml', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -85,8 +85,8 @@ version: 2
 <resource_type>:
   - name: <resource_name>
     tests:
-      - <test_name>: # # Actual name of the test. For example, dbt_utils.equality
-          name: # Human friendly name for the test. For example, equality_fct_test_coverage
+      - <test_name>: # Фактическое имя теста. Например, dbt_utils.equality
+          name: # Человекопонятное имя для теста. Например, equality_fct_test_coverage
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [fail_calc](/reference/resource-configs/fail_calc): <string>
@@ -113,7 +113,7 @@ version: 2
                 [where](/reference/resource-configs/where): <string>
 ```
 
-This configuration mechanism is supported for specific instances of generic tests only. To configure a specific singular test, you should use the `config()` macro in its SQL definition.
+Этот механизм конфигурации поддерживается только для конкретных экземпляров общих тестов. Чтобы настроить конкретный единственный тест, вы должны использовать макрос `config()` в его SQL-определении.
 
 
 </TabItem>
@@ -121,7 +121,7 @@ This configuration mechanism is supported for specific instances of generic test
 </Tabs>
 
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
 
@@ -129,9 +129,9 @@ This configuration mechanism is supported for specific instances of generic test
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Config block', value: 'config', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
+    { label: 'Файл свойств', value: 'property-yaml', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -144,8 +144,8 @@ tests:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[enabled](/reference/resource-configs/enabled): true | false
     [+](/reference/resource-configs/plus-prefix)[tags](/reference/resource-configs/tags): <string> | [<string>]
-    [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta): {dictionary}
-    # relevant for [store_failures](/reference/resource-configs/store_failures) only
+    [+](/reference/resource-configs/plus-prefix)[meta](/reference/resource-configs/meta): {словарь}
+    # актуально только для [store_failures](/reference/resource-configs/store_failures)
     [+](/reference/resource-configs/plus-prefix)[database](/reference/resource-configs/database): <string>
     [+](/reference/resource-configs/plus-prefix)[schema](/reference/resource-properties/schema): <string>
     [+](/reference/resource-configs/plus-prefix)[alias](/reference/resource-configs/alias): <string>
@@ -162,7 +162,7 @@ tests:
 {{ config(
     [enabled](/reference/resource-configs/enabled)=true | false,
     [tags](/reference/resource-configs/tags)="<string>" | ["<string>"]
-    [meta](/reference/resource-configs/meta)={dictionary},
+    [meta](/reference/resource-configs/meta)={словарь},
     [database](/reference/resource-configs/database)="<string>",
     [schema](/reference/resource-properties/schema)="<string>",
     [alias](/reference/resource-configs/alias)="<string>",
@@ -180,14 +180,14 @@ version: 2
 <resource_type>:
   - name: <resource_name>
     tests:
-      - <test_name>: # Actual name of the test. For example, dbt_utils.equality
-          name: # Human friendly name for the test. For example, equality_fct_test_coverage
+      - <test_name>: # Фактическое имя теста. Например, dbt_utils.equality
+          name: # Человекопонятное имя для теста. Например, equality_fct_test_coverage
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [enabled](/reference/resource-configs/enabled): true | false
             [tags](/reference/resource-configs/tags): <string> | [<string>]
-            [meta](/reference/resource-configs/meta): {dictionary}
-            # relevant for [store_failures](/reference/resource-configs/store_failures) only
+            [meta](/reference/resource-configs/meta): {словарь}
+            # актуально только для [store_failures](/reference/resource-configs/store_failures)
             [database](/reference/resource-configs/database): <string>
             [schema](/reference/resource-properties/schema): <string>
             [alias](/reference/resource-configs/alias): <string>
@@ -201,14 +201,14 @@ version: 2
               [config](/reference/resource-properties/config):
                 [enabled](/reference/resource-configs/enabled): true | false
                 [tags](/reference/resource-configs/tags): <string> | [<string>]
-                [meta](/reference/resource-configs/meta): {dictionary}
-                # relevant for [store_failures](/reference/resource-configs/store_failures) only
+                [meta](/reference/resource-configs/meta): {словарь}
+                # актуально только для [store_failures](/reference/resource-configs/store_failures)
                 [database](/reference/resource-configs/database): <string>
                 [schema](/reference/resource-properties/schema): <string>
                 [alias](/reference/resource-configs/alias): <string>
 ```
 
-This configuration mechanism is supported for specific instances of generic data tests only. To configure a specific singular test, you should use the `config()` macro in its SQL definition.
+Этот механизм конфигурации поддерживается только для конкретных экземпляров общих тестов данных. Чтобы настроить конкретный единственный тест, вы должны использовать макрос `config()` в его SQL-определении.
 
 
 </TabItem>
@@ -216,11 +216,11 @@ This configuration mechanism is supported for specific instances of generic data
 
 </Tabs>
 
-### Examples
+### Примеры
 
-#### Add a tag to one test
+#### Добавление тега к одному тесту
 
-If a specific instance of a generic data test:
+Если это конкретный экземпляр общего теста данных:
 
 <File name='models/<filename>.yml'>
 
@@ -236,7 +236,7 @@ models:
 
 </File>
 
-If a singular data test:
+Если это единственный тест данных:
 
 <File name='tests/<filename>.sql'>
 
@@ -248,7 +248,7 @@ select ...
 
 </File>
 
-#### Set the default severity for all instances of a generic data test
+#### Установка значения по умолчанию для серьезности для всех экземпляров общего теста данных
 
 <File name='macros/<filename>.sql'>
 
@@ -264,7 +264,7 @@ select ...
 
 </File>
 
-#### Disable all data tests from a package
+#### Отключение всех тестов данных из пакета
 
 <File name='dbt_project.yml'>
 
@@ -276,9 +276,9 @@ tests:
 
 </File>
 
-#### Specify custom configurations for generic data tests
+#### Указание пользовательских конфигураций для общих тестов данных
 
-Beginning in dbt v1.9, you can use any custom config key to specify custom configurations for data tests. For example, the following specifies the `snowflake_warehouse` custom config that dbt should use when executing the `accepted_values` data test:
+Начиная с dbt v1.9, вы можете использовать любой пользовательский ключ конфигурации для указания пользовательских конфигураций для тестов данных. Например, следующее указывает пользовательскую конфигурацию `snowflake_warehouse`, которую dbt должен использовать при выполнении теста данных `accepted_values`:
 
 ```yml
 
@@ -295,4 +295,4 @@ models:
 
 ```
 
-Given the config, the data test runs on a different Snowflake virtual warehouse than the one in your default connection to enable better price-performance with a different warehouse size or more granular cost allocation and visibility.
+С учетом данной конфигурации тест данных выполняется на другом виртуальном складе Snowflake, чем тот, который используется в вашем подключении по умолчанию, чтобы обеспечить лучшую цену-качество с другим размером склада или более детальной аллокацией затрат и видимостью.

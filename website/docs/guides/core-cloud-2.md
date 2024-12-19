@@ -1,213 +1,212 @@
 ---
-title: 'Move from dbt Core to dbt Cloud: What you need to know'
+title: 'Переход с dbt Core на dbt Cloud: что вам нужно знать'
 id: core-cloud-2
-description: "Use this guide to understand the considerations and methods you need to move from dbt Core to dbt Cloud."
-hoverSnippet: "Use this guide to understand the considerations and methods you need to move from dbt Core to dbt Cloud."
+description: "Используйте это руководство, чтобы понять аспекты и методы, необходимые для перехода с dbt Core на dbt Cloud."
+hoverSnippet: "Используйте это руководство, чтобы понять аспекты и методы, необходимые для перехода с dbt Core на dbt Cloud."
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Migration','dbt Core','dbt Cloud']
-keywords: ['dbt Core','dbt Cloud','Migration', 'Move dbt', 'Migrate dbt']
-level: 'Intermediate'
+tags: ['Миграция','dbt Core','dbt Cloud']
+keywords: ['dbt Core','dbt Cloud','Миграция', 'Перемещение dbt', 'Миграция dbt']
+level: 'Средний'
 recently_updated: true
 ---
 
-## Introduction
-Moving from dbt Core to dbt Cloud streamlines analytics engineering workflows by allowing teams to develop, test, deploy, and explore data products using a single, fully managed software service.
+## Введение
+Переход с dbt Core на dbt Cloud упрощает рабочие процессы аналитического инжиниринга, позволяя командам разрабатывать, тестировать, развертывать и исследовать данные с помощью единого полностью управляемого программного сервиса.
 
-Explore our 3-part-guide series on moving from dbt Core to dbt Cloud. The series is ideal for users aiming for streamlined workflows and enhanced analytics:
+Изучите нашу серию из трех частей о переходе с dbt Core на dbt Cloud. Эта серия идеально подходит для пользователей, стремящихся к упрощению рабочих процессов и улучшению аналитики:
 
 import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-<Expandable alt_header="What is dbt Cloud and dbt Core?">
+<Expandable alt_header="Что такое dbt Cloud и dbt Core?">
 
-   - dbt Cloud is the fastest and most reliable way to deploy dbt. It enables you to develop, test, deploy, and explore data products using a single, fully managed service. It also supports:
-     - Development experiences tailored to multiple personas ([dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
-     - Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
-     - The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics
-     - Domain ownership of data with multi-project [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) setups
-     - [dbt Explorer](/docs/collaborate/explore-projects) for easier data discovery and understanding
+   - dbt Cloud — это самый быстрый и надежный способ развертывания dbt. Он позволяет вам разрабатывать, тестировать, развертывать и исследовать данные с помощью единого полностью управляемого сервиса. Он также поддерживает:
+     - Опыт разработки, адаптированный для различных пользователей ([dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
+     - Готовые [CI/CD рабочие процессы](/docs/deploy/ci-jobs)
+     - [Семантический уровень dbt](/docs/use-dbt-semantic-layer/dbt-sl) для согласованных метрик
+     - Владение доменом данных с многоуровневыми проектами [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro)
+     - [dbt Explorer](/docs/collaborate/explore-projects) для упрощения поиска и понимания данных
 
-   Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features).
-- dbt Core is an open-source tool that enables data teams to define and execute data transformations in a cloud data warehouse following analytics engineering best practices. While this can work well for ‘single players’ and small technical teams, all development happens on a command-line interface, and production deployments must be self-hosted and maintained. This requires significant, costly work that adds up over time to maintain and scale.
-
-</Expandable>
-
-## What you'll learn
-Today thousands of companies, with data teams ranging in size from 2 to 2,000, rely on dbt Cloud to accelerate data work, increase collaboration, and win the trust of the business. Understanding what you'll need to do in order to move between dbt Cloud and your current Core deployment will help you strategize and plan for your move.
-
-The guide outlines the following steps:
-
-- [Considerations](https://docs.getdbt.com/guides/core-cloud-2?step=3): Learn about the most important things you need to think about when moving from Core to Cloud.
-- [Plan your move](https://docs.getdbt.com/guides/core-cloud-2?step=4): Considerations you need to make, such as user roles and permissions, onboarding order, current workflows, and more.
-- [Move to dbt Cloud](https://docs.getdbt.com/guides/core-cloud-2?step=5): Review the steps to move your dbt Core project to dbt Cloud, including setting up your account, data platform, and Git repository.
-- [Test and validate](https://docs.getdbt.com/guides/core-cloud-2?step=6): Discover how to ensure model accuracy and performance post-move.
-- [Transition and training](https://docs.getdbt.com/guides/core-cloud-2?step=7): Learn how to fully transition to dbt Cloud and what training and support you may need. 
-- [Summary](https://docs.getdbt.com//guides/core-cloud-2?step=8): Summarizes key takeaways and what you've learned in this guide.
-- [What's next?](https://docs.getdbt.com/guides/core-cloud-2?step=9): Introduces what to expect in the following guides.
-
-## Considerations
-
-If your team is using dbt Core today, you could be reading this guide because:
-- You’ve realized the burden of maintaining that deployment.
-- The person who set it up has since left.
-- You’re interested in what dbt Cloud could do to better manage the complexity of your dbt deployment, democratize access to more contributors, or improve security and governance practices.
-
-This guide shares the technical adjustments and team collaboration strategies you’ll need to know to move your project from dbt Core to dbt Cloud.  Each "build your own" deployment of dbt Core will look a little different, but after seeing hundreds of teams make the migration, there are many things in common.
-
-The most important things you need to think about when moving from dbt Core to dbt Cloud:
-
-- How is your team structured? Are there natural divisions of domain?
-- Should you have one project or multiple? Which dbt resources do you want to standardize & keep central?
-- Who should have permission to view, develop, and administer?
-- How are you scheduling your dbt models to run in production?
-- How are you currently managing Continuous integration/Continuous deployment (CI/CD) of logical changes (if at all)?
-- How do your data developers prefer to work?
-- How do you manage different data environments and the different behaviors in those environments?
-
-dbt Cloud provides standard mechanisms for tackling these considerations, all of which deliver long-term benefits to your organization:
-- Cross-team collaboration
-- Access control
-- Orchestration
-- Isolated data environments
-
-If you have rolled out your own dbt Core deployment, you have probably come up with different answers.
-
-## Plan your move
-
-As you plan your move, consider your workflow and team layout to ensure a smooth transition. Here are some key considerations to keep in mind:
-
-<Expandable alt_header="Start small to minimize risk and maximize learning">
-
-You don’t need to move every team and every developer’s workflow all at once. Many customers with large dbt deployments start by moving one team and one project.
-
-Once the benefits of a consolidated platform are clear, move the rest of your teams and workflows. While long-term ‘hybrid’ deployments can be challenging, it may make sense as a temporary on-ramp.
-</Expandable>
-
-<Expandable alt_header="User roles and responsibilities"> 
-
-Assess the users or personas involved in the pre-move, during the move, and post-move.
-- **Administrators**: Plan for new [access controls](/docs/cloud/manage-access/about-user-access) in dbt Cloud, such as deciding what teams can manage themselves and what should be standardized. Determine who will be responsible for setting up and maintaining projects, data platform connections, and environments.
-- **Data developers** (data analysts, data engineers, analytics engineers, business analysts): Determine onboarding order, workflow adaptation in dbt Cloud, training on [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) or [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) usage, and role changes.
-- **Data consumers:** Discover data insights by using [dbt Explorer](/docs/collaborate/explore-projects) to view your project's resources (such as models, tests, and metrics) and their lineage to gain a better understanding of its latest production state. <Lifecycle status="team,enterprise" />
+   Узнайте больше о [возможностях dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features).
+- dbt Core — это инструмент с открытым исходным кодом, который позволяет командам данных определять и выполнять преобразования данных в облачном хранилище данных, следуя лучшим практикам аналитического инжиниринга. Хотя это может хорошо работать для «одиночек» и небольших технических команд, вся разработка происходит через интерфейс командной строки, а производственные развертывания должны быть самоуправляемыми и поддерживаемыми. Это требует значительных затрат времени и ресурсов, которые накапливаются со временем для поддержания и масштабирования.
 
 </Expandable>
 
-<Expandable alt_header="Onboarding order"> 
+## Что вы узнаете
+Сегодня тысячи компаний, с командами данных размером от 2 до 2000 человек, полагаются на dbt Cloud для ускорения работы с данными, увеличения сотрудничества и завоевания доверия бизнеса. Понимание того, что вам нужно сделать для перехода между dbt Cloud и вашим текущим развертыванием Core, поможет вам стратегически спланировать ваш переход.
 
-If you have multiple teams of dbt developers, think about how to start your onboarding sequence for dbt Cloud:
-- Start with downstream (like business-embedded teams) who may benefit from the dbt Cloud IDE as dev experience (less technical users) and sharing features (like auto-deferral and dbt Explorer) to share with their stakeholders, moving to more technical teams later.
-- Consider setting up a [CI job](/docs/deploy/ci-jobs) in dbt Cloud (even before development or production jobs) to streamline development workflows. This is especially beneficial if there's no existing CI process.
+Руководство описывает следующие шаги:
+
+- [Аспекты](https://docs.getdbt.com/guides/core-cloud-2?step=3): Узнайте о самых важных вещах, о которых вам нужно подумать при переходе с Core на Cloud.
+- [Планируйте свой переход](https://docs.getdbt.com/guides/core-cloud-2?step=4): Аспекты, которые вам нужно учесть, такие как роли пользователей и разрешения, порядок внедрения, текущие рабочие процессы и многое другое.
+- [Переход на dbt Cloud](https://docs.getdbt.com/guides/core-cloud-2?step=5): Ознакомьтесь с шагами по переносу вашего проекта dbt Core на dbt Cloud, включая настройку вашей учетной записи, платформы данных и репозитория Git.
+- [Тестирование и валидация](https://docs.getdbt.com/guides/core-cloud-2?step=6): Узнайте, как обеспечить точность и производительность моделей после перехода.
+- [Переход и обучение](https://docs.getdbt.com/guides/core-cloud-2?step=7): Узнайте, как полностью перейти на dbt Cloud и какое обучение и поддержка могут вам понадобиться. 
+- [Резюме](https://docs.getdbt.com//guides/core-cloud-2?step=8): Подводит итоги ключевых выводов и того, что вы узнали в этом руководстве.
+- [Что дальше?](https://docs.getdbt.com/guides/core-cloud-2?step=9): Знакомит с тем, чего ожидать в следующих руководствах.
+
+## Аспекты
+
+Если ваша команда сегодня использует dbt Core, вы могли читать это руководство, потому что:
+- Вы осознали бремя поддержки этого развертывания.
+- Человек, который его настроил, ушел.
+- Вам интересно, что dbt Cloud может сделать для лучшего управления сложностью вашего развертывания dbt, демократизации доступа для большего числа участников или улучшения практик безопасности и управления.
+
+Это руководство делится техническими корректировками и стратегиями командного сотрудничества, которые вам нужно знать для переноса вашего проекта с dbt Core на dbt Cloud. Каждое «собственное» развертывание dbt Core будет выглядеть немного иначе, но после того, как мы увидели, как сотни команд осуществляют миграцию, есть много общего.
+
+Самые важные вещи, о которых вам нужно подумать при переходе с dbt Core на dbt Cloud:
+
+- Как структурирована ваша команда? Есть ли естественные разделения по доменам?
+- Должен ли у вас быть один проект или несколько? Какие ресурсы dbt вы хотите стандартизировать и сохранить в центре?
+- Кто должен иметь разрешение на просмотр, разработку и администрирование?
+- Как вы планируете запускать ваши модели dbt в производственной среде?
+- Как вы в настоящее время управляете непрерывной интеграцией/непрерывным развертыванием (CI/CD) логических изменений (если вообще)?
+- Как ваши разработчики данных предпочитают работать?
+- Как вы управляете различными средами данных и различным поведением в этих средах?
+
+dbt Cloud предоставляет стандартные механизмы для решения этих вопросов, все из которых приносят долгосрочные преимущества вашей организации:
+- Сотрудничество между командами
+- Контроль доступа
+- Оркестрация
+- Изолированные среды данных
+
+Если вы развернули собственное решение dbt Core, вы, вероятно, пришли к другим ответам.
+
+## Планируйте свой переход
+
+При планировании вашего перехода учитывайте ваш рабочий процесс и структуру команды, чтобы обеспечить плавный переход. Вот несколько ключевых аспектов, которые следует учитывать:
+
+<Expandable alt_header="Начните с малого, чтобы минимизировать риски и максимизировать обучение">
+
+Вам не нужно перемещать все команды и рабочие процессы всех разработчиков сразу. Многие клиенты с большими развертываниями dbt начинают с перемещения одной команды и одного проекта.
+
+Как только преимущества консолидированной платформы станут очевидными, переместите остальные команды и рабочие процессы. Хотя долгосрочные «гибридные» развертывания могут быть сложными, это может иметь смысл как временный переход.
+</Expandable>
+
+<Expandable alt_header="Роли и обязанности пользователей"> 
+
+Оцените пользователей или персонажей, участвующих в процессе до, во время и после перехода.
+- **Администраторы**: Планируйте новые [контроли доступа](/docs/cloud/manage-access/about-user-access) в dbt Cloud, такие как определение, какие команды могут управлять собой, а что должно быть стандартизировано. Определите, кто будет отвечать за настройку и поддержку проектов, соединений с платформами данных и средами.
+- **Разработчики данных** (аналитики данных, инженеры данных, аналитические инженеры, бизнес-аналитики): Определите порядок внедрения, адаптацию рабочего процесса в dbt Cloud, обучение использованию [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), а также изменения ролей.
+- **Потребители данных:** Узнайте данные, используя [dbt Explorer](/docs/collaborate/explore-projects) для просмотра ресурсов вашего проекта (таких как модели, тесты и метрики) и их родословной, чтобы лучше понять его последнее состояние в производственной среде. <Lifecycle status="team,enterprise" />
 
 </Expandable>
 
-<Expandable alt_header="Analyze current workflows, review processes, and team structures">
+<Expandable alt_header="Порядок внедрения"> 
 
-Discover how dbt Cloud can help simplify development, orchestration, and testing:
-- **Development**: Develop dbt models, allowing you to build, test, run, and version control your dbt projects using the dbt Cloud CLI (command line interface or code editor) or dbt Cloud IDE (browser-based).
-- **Orchestration**: Create custom schedules to run your production jobs. Schedule jobs by day of the week, time of day, or a recurring interval.
-  - Set up [a CI job](/docs/deploy/ci-jobs) to ensure developer effectiveness, and CD jobs to deploy changes as soon as they’re merged.
-  - Link deploy jobs together by [triggering a job](/docs/deploy/deploy-jobs#trigger-on-job-completion) when another one is completed. 
-  - For the most flexibility, use the [dbt Cloud API](https://docs.getdbt.com/dbt-cloud/api-v2#/) to trigger jobs. This makes sense when you want to integrate dbt execution with other data workflows.
-- **Continuous integration (CI)**: Use [CI jobs](/docs/deploy/ci-jobs) to run your dbt projects in a temporary schema when new commits are pushed to open pull requests. This build-on-PR functionality is a great way to catch bugs before deploying to production.
-  - For many teams, dbt Cloud CI represents a major improvement compared to their previous development workflows.
-- **How are you defining tests today?**: While testing production data is important, it’s not the most efficient way to catch logical errors introduced by developers You can use [unit testing](/docs/build/unit-tests) to allow you to validate your SQL modeling logic on a small set of static inputs *before* you materialize your full model in production.
+Если у вас есть несколько команд разработчиков dbt, подумайте о том, как начать последовательность внедрения для dbt Cloud:
+- Начните с команд, работающих с данными (например, бизнес-команд), которые могут извлечь выгоду из dbt Cloud IDE как из опыта разработки (менее технические пользователи) и функций совместного использования (таких как автоматическое отклонение и dbt Explorer) для обмена с заинтересованными сторонами, переходя к более техническим командам позже.
+- Рассмотрите возможность настройки [CI задания](/docs/deploy/ci-jobs) в dbt Cloud (даже до разработки или производственных заданий), чтобы упростить рабочие процессы разработки. Это особенно полезно, если в настоящее время нет существующего процесса CI.
 
 </Expandable>
 
-<Expandable alt_header="Understand access control">
+<Expandable alt_header="Анализ текущих рабочих процессов, обзор процессов и структуры команды">
 
-Transition to dbt Cloud's [access control](/docs/cloud/manage-access/about-user-access) mechanisms to ensure security and proper access management. dbt Cloud administrators can use dbt Cloud's permission model to control user-level access in a dbt Cloud account:
-- **License-based access controls:** Users are configured with account-wide license types. These licenses control the things a user can do within the application: view project metadata, develop changes within those projects, or administer access to those projects.
-- **Role-based Access Control (RBAC):** Users are assigned to *groups* with specific permissions on specific projects or all projects in the account. A user may be a member of multiple groups, and those groups may have permissions on multiple projects. <Lifecycle status="enterprise" />
-
-</Expandable>
-
-<Expandable alt_header="Manage environments"> 
-
-If you require isolation between production and pre-production data environments due to sensitive data, dbt Cloud can support Development, Staging, and Production data [environments](/docs/dbt-cloud-environments).
-
-This provides developers with the benefits of an enhanced workflow while ensuring isolation between Staging and Production data, and locking down permissions on Prod.
+Узнайте, как dbt Cloud может помочь упростить разработку, оркестрацию и тестирование:
+- **Разработка**: Разрабатывайте модели dbt, позволяя вам создавать, тестировать, запускать и контролировать версии ваших проектов dbt с помощью dbt Cloud CLI (интерфейс командной строки или редактор кода) или dbt Cloud IDE (браузерный).
+- **Оркестрация**: Создавайте пользовательские расписания для запуска ваших производственных заданий. Запланируйте задания по дням недели, времени суток или по повторяющемуся интервалу.
+  - Настройте [CI задание](/docs/deploy/ci-jobs), чтобы обеспечить эффективность разработчиков, и CD задания для развертывания изменений, как только они будут объединены.
+  - Связывайте задания развертывания, [вызывая задание](/docs/deploy/deploy-jobs#trigger-on-job-completion) после завершения другого.
+  - Для максимальной гибкости используйте [dbt Cloud API](https://docs.getdbt.com/dbt-cloud/api-v2#/) для запуска заданий. Это имеет смысл, когда вы хотите интегрировать выполнение dbt с другими рабочими процессами данных.
+- **Непрерывная интеграция (CI)**: Используйте [CI задания](/docs/deploy/ci-jobs) для запуска ваших проектов dbt во временной схеме, когда новые коммиты отправляются в открытые запросы на изменение. Эта функция сборки на PR — отличный способ поймать ошибки до развертывания в производственной среде.
+  - Для многих команд CI dbt Cloud представляет собой значительное улучшение по сравнению с их предыдущими рабочими процессами разработки.
+- **Как вы определяете тесты сегодня?**: Хотя тестирование производственных данных важно, это не самый эффективный способ поймать логические ошибки, введенные разработчиками. Вы можете использовать [модульное тестирование](/docs/build/unit-tests), чтобы валидировать вашу SQL-логику моделирования на небольшом наборе статических входных данных *до* того, как вы материализуете вашу полную модель в производственной среде.
 
 </Expandable>
 
-## Move to dbt Cloud
+<Expandable alt_header="Понимание контроля доступа">
 
-This guide is your roadmap to help you think about migration strategies and what moving from dbt Core to dbt Cloud could look like.
+Переходите к механизмам [контроля доступа](/docs/cloud/manage-access/about-user-access) dbt Cloud, чтобы обеспечить безопасность и правильное управление доступом. Администраторы dbt Cloud могут использовать модель разрешений dbt Cloud для контроля доступа на уровне пользователя в учетной записи dbt Cloud:
+- **Контроль доступа на основе лицензий:** Пользователи настраиваются с типами лицензий, действующими на всю учетную запись. Эти лицензии контролируют действия, которые пользователь может выполнять в приложении: просматривать метаданные проекта, разрабатывать изменения в этих проектах или администрировать доступ к этим проектам.
+- **Контроль доступа на основе ролей (RBAC):** Пользователи назначаются в *группы* с определенными разрешениями на конкретные проекты или все проекты в учетной записи. Пользователь может быть членом нескольких групп, и эти группы могут иметь разрешения на нескольких проектах. <Lifecycle status="enterprise" />
 
-After reviewing the considerations and planning your move, you may want to start moving your dbt Core project to dbt Cloud:
-- Check out the detailed [Move to dbt Cloud: Get started](/guides/core-to-cloud-1?step=1) guide for useful tasks and insights for a smooth transition from dbt Core to dbt Cloud.
+</Expandable>
 
-For a more detailed comparison of dbt Core and dbt Cloud, check out [How dbt Cloud compares with dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud).
+<Expandable alt_header="Управление средами"> 
 
-## Test and validate
+Если вам требуется изоляция между производственными и пред-производственными средами данных из-за конфиденциальных данных, dbt Cloud может поддерживать среды данных разработки, тестирования и производства [environments](/docs/dbt-cloud-environments).
 
-After [setting the foundations of dbt Cloud](https://docs.getdbt.com/guides/core-to-cloud-1?step=1), it's important to validate your migration to ensure seamless functionality and data integrity:
+Это предоставляет разработчикам преимущества улучшенного рабочего процесса, обеспечивая при этом изоляцию между тестовой и производственной средами данных и ограничивая разрешения в производственной среде.
 
-- **Review your dbt project:** Ensure your project compiles correctly and that you can run commands. Make sure your models are accurate and monitor performance post-move.
-- **Start cutover:** You can start the cutover to dbt Cloud by creating a dbt Cloud job with commands that only run a small subset of the DAG. Validate the tables are being populated in the proper database/schemas as expected. Then continue to expand the scope of the job to include more sections of the DAG as you gain confidence in the results.
-- **Precision testing:** Use [unit testing](/docs/build/unit-tests) to allow you to validate your SQL modeling logic on a small set of static inputs *before* you materialize your full model in production.
-- **Access and permissions**: Review and adjust [access controls and permissions](/docs/cloud/manage-access/about-user-access) within dbt Cloud to maintain security protocols and safeguard your data.
+</Expandable>
 
-## Transition and training
+## Переход на dbt Cloud
 
-Once you’ve confirmed that dbt Cloud orchestration and CI/CD are working as expected, you should pause your current orchestration tool and stop or update your current CI/CD process. This is not relevant if you’re still using an external orchestrator (such as Airflow), and you’ve swapped out `dbt-core` execution for dbt Cloud execution (through the [API](/docs/dbt-cloud-apis/overview)).
+Это руководство является вашим дорожным картой, чтобы помочь вам подумать о стратегиях миграции и о том, как может выглядеть переход с dbt Core на dbt Cloud.
 
-Familiarize your team with dbt Cloud's [features](/docs/cloud/about-cloud/dbt-cloud-features) and optimize development and deployment processes. Some key features to consider include:
-- **Release tracks:** Choose a [release track](/docs/dbt-versions/cloud-release-tracks) for automatic dbt version upgrades, at the cadence appropriate for your team — removing the hassle of manual updates and the risk of version discrepancies. You can also get early access to new functionality, ahead of dbt Core.
-- **Development tools**: Use the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) or [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) to build, test, run, and version control your dbt projects.
-- **Documentation and Source freshness:**  Automate storage of [documentation](/docs/build/documentation) and track [source freshness](/docs/deploy/source-freshness) in dbt Cloud, which streamlines project maintenance.
-- **Notifications and logs:** Receive immediate [notifications](/docs/deploy/monitor-jobs) for job failures, with direct links to the job details. Access comprehensive logs for all job runs to help with troubleshooting.
-- **CI/CD:** Use dbt Cloud's [CI/CD](/docs/deploy/ci-jobs) feature to run your dbt projects in a temporary schema whenever new commits are pushed to open pull requests. This helps with catching bugs before deploying to production.
+После того как вы рассмотрели аспекты и спланировали свой переход, вы можете начать перенос вашего проекта dbt Core на dbt Cloud:
+- Ознакомьтесь с подробным [руководством по переходу на dbt Cloud: Начало работы](/guides/core-to-cloud-1?step=1) для полезных задач и идей для плавного перехода с dbt Core на dbt Cloud.
 
-### Beyond your move
+Для более детального сравнения dbt Core и dbt Cloud ознакомьтесь с [тем, как dbt Cloud сравнивается с dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud).
 
-Now that you’ve chosen dbt Cloud as your platform, you’ve unlocked the power of streamlining collaboration, enhancing workflow efficiency, and leveraging powerful [features](/docs/cloud/about-cloud/dbt-cloud-features) for analytics engineering teams. Here are some additional features you can use to unlock the full potential of dbt Cloud:
+## Тестирование и валидация
 
-- **Audit logs:** Use [audit logs](/docs/cloud/manage-access/audit-log) to review actions performed by people in your organization. Audit logs contain audited user and system events in real time. You can even [export](/docs/cloud/manage-access/audit-log#exporting-logs) *all* the activity (beyond the 90 days you can view in dbt Cloud). <Lifecycle status="enterprise"/>
-- **dbt Cloud APIs:** Use dbt Cloud's robust [APIs](/docs/dbt-cloud-apis/overview) to create, read, update, and delete (CRUD) projects/jobs/environments project. The [dbt Cloud Administrative API](/docs/dbt-cloud-apis/admin-cloud-api) and [Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job) facilitate programmatic access and configuration storage. While the [Discovery API](/docs/dbt-cloud-apis/discovery-api) offers extensive metadata querying capabilities, such as job data, model configurations, usage, and overall project health. <Lifecycle status="team,enterprise"/>
-- **dbt Explorer**: Use [dbt Explorer](/docs/collaborate/explore-projects) to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their [lineage](https://docs.getdbt.com/terms/data-lineage) to gain a better understanding of its latest production state. (Once you have a successful job in a Production environment). <Lifecycle status="team,enterprise"/>
-- **dbt Semantic Layer:** The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) allows you to define universal metrics on top of your models that can then be queried in your [business intelligence (BI) tool](/docs/cloud-integrations/avail-sl-integrations). This means no more inconsistent metrics — there’s now a centralized way to define these metrics and create visibility in every component of the data flow. <Lifecycle status="team,enterprise"/>
-- **dbt Mesh:** Use [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) to share data models across organizations, enabling data teams to collaborate on shared data models and leverage the work of other teams. <Lifecycle status="enterprise"/>
+После [установки основ dbt Cloud](https://docs.getdbt.com/guides/core-to-cloud-1?step=1) важно подтвердить вашу миграцию, чтобы обеспечить бесперебойную работу и целостность данных:
 
-### Additional help
+- **Просмотрите ваш проект dbt:** Убедитесь, что ваш проект компилируется правильно и что вы можете выполнять команды. Убедитесь, что ваши модели точны и следите за производительностью после перехода.
+- **Начните переход:** Вы можете начать переход на dbt Cloud, создав задание dbt Cloud с командами, которые выполняют только небольшую часть DAG. Убедитесь, что таблицы заполняются в правильных базах данных/схемах, как ожидалось. Затем продолжайте расширять объем задания, включая больше секций DAG, по мере того как вы будете уверены в результатах.
+- **Тестирование точности:** Используйте [модульное тестирование](/docs/build/unit-tests), чтобы валидировать вашу SQL-логику моделирования на небольшом наборе статических входных данных *до* того, как вы материализуете вашу полную модель в производственной среде.
+- **Доступ и разрешения**: Просмотрите и отрегулируйте [контроль доступа и разрешения](/docs/cloud/manage-access/about-user-access) в dbt Cloud, чтобы поддерживать протоколы безопасности и защищать ваши данные.
 
-- **dbt Learn courses**: Access our free [Learn dbt Cloud](https://learn.getdbt.com) video courses for on-demand training.
-- **dbt Community:** Join the [dbt Community](https://community.getdbt.com/) to connect with other dbt users, ask questions, and share best practices.
-- **dbt Support team:** Our [dbt Support team](/docs/dbt-support) is always available to help you troubleshoot your dbt Cloud issues. Create a support ticket in dbt Cloud and we’ll be happy to help!
-- **Account management** Enterprise accounts have an account management team available to help troubleshoot solutions and account management assistance. [Book a demo](https://www.getdbt.com/contact) to learn more. <Lifecycle status="enterprise"/>
+## Переход и обучение
 
-## Summary
+После того как вы подтвердили, что оркестрация dbt Cloud и CI/CD работают как ожидалось, вы должны приостановить ваш текущий инструмент оркестрации и остановить или обновить ваш текущий процесс CI/CD. Это не актуально, если вы все еще используете внешний оркестратор (например, Airflow), и вы заменили выполнение `dbt-core` на выполнение dbt Cloud (через [API](/docs/dbt-cloud-apis/overview)).
 
-This guide should now have given you some insight and equipped you with a framework for moving from dbt Core to dbt Cloud. This guide has covered the following key areas:
+Познакомьте вашу команду с [возможностями](/docs/cloud/about-cloud/dbt-cloud-features) dbt Cloud и оптимизируйте процессы разработки и развертывания. Некоторые ключевые функции, которые стоит рассмотреть, включают:
+- **Треки релизов:** Выберите [трек релиза](/docs/dbt-versions/cloud-release-tracks) для автоматических обновлений версии dbt, с частотой, подходящей для вашей команды — избавляя от необходимости ручных обновлений и риска несоответствия версий. Вы также можете получить ранний доступ к новым функциям, прежде чем они появятся в dbt Core.
+- **Инструменты разработки**: Используйте [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) для создания, тестирования, запуска и контроля версий ваших проектов dbt.
+- **Документация и свежесть источников:** Автоматизируйте хранение [документации](/docs/build/documentation) и отслеживайте [свежесть источников](/docs/deploy/source-freshness) в dbt Cloud, что упрощает обслуживание проекта.
+- **Уведомления и журналы:** Получайте немедленные [уведомления](/docs/deploy/monitor-jobs) о сбоях заданий с прямыми ссылками на детали задания. Получите доступ к полным журналам всех запусков заданий для помощи в устранении неполадок.
+- **CI/CD:** Используйте функцию [CI/CD](/docs/deploy/ci-jobs) dbt Cloud для запуска ваших проектов dbt во временной схеме всякий раз, когда новые коммиты отправляются в открытые запросы на изменение. Это помогает поймать ошибки до развертывания в производственной среде.
 
-- **Considerations:** Understanding the foundational steps required for a successful migration, including evaluating your current setup and identifying key considerations unique to your team's structure and workflow needs.
+### За пределами вашего перехода
 
-- **Plan you move**: Highlighting the importance of workflow redesign, role-specific responsibilities, and the adoption of new processes to harness dbt Cloud's collaborative and efficient environment.
+Теперь, когда вы выбрали dbt Cloud в качестве вашей платформы, вы разблокировали возможности упрощения сотрудничества, повышения эффективности рабочих процессов и использования мощных [функций](/docs/cloud/about-cloud/dbt-cloud-features) для команд аналитического инжиниринга. Вот некоторые дополнительные функции, которые вы можете использовать, чтобы раскрыть весь потенциал dbt Cloud:
 
-- **Move to dbt Cloud**: Linking to [the guide](https://docs.getdbt.com/guides/core-to-cloud-1?step=1) that outlines technical steps required to transition your dbt Core project to dbt Cloud, including setting up your account, data platform, and Git repository.
+- **Журналы аудита:** Используйте [журналы аудита](/docs/cloud/manage-access/audit-log) для просмотра действий, выполненных людьми в вашей организации. Журналы аудита содержат проверенные события пользователей и системы в реальном времени. Вы даже можете [экспортировать](/docs/cloud/manage-access/audit-log#exporting-logs) *все* действия (за пределами 90 дней, которые вы можете просмотреть в dbt Cloud). <Lifecycle status="enterprise"/>
+- **API dbt Cloud:** Используйте мощные [API dbt Cloud](/docs/dbt-cloud-apis/overview) для создания, чтения, обновления и удаления (CRUD) проектов/работ/сред. [Административный API dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api) и [поставщик Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job) упрощают программный доступ и хранение конфигураций. В то время как [Discovery API](/docs/dbt-cloud-apis/discovery-api) предлагает обширные возможности запросов метаданных, такие как данные о заданиях, конфигурации моделей, использование и общее состояние проекта. <Lifecycle status="team,enterprise"/>
+- **dbt Explorer**: Используйте [dbt Explorer](/docs/collaborate/explore-projects) для просмотра ресурсов вашего проекта [resources](/docs/build/projects) (таких как модели, тесты и метрики) и их [lineage](https://docs.getdbt.com/terms/data-lineage) для лучшего понимания его последнего состояния в производственной среде. (После того как у вас будет успешное задание в производственной среде). <Lifecycle status="team,enterprise"/>
+- **Семантический уровень dbt:** [Семантический уровень dbt](/docs/use-dbt-semantic-layer/dbt-sl) позволяет вам определять универсальные метрики на основе ваших моделей, которые затем могут быть запрошены в вашем [инструменте бизнес-аналитики (BI)](/docs/cloud-integrations/avail-sl-integrations). Это означает отсутствие несогласованных метрик — теперь есть централизованный способ определения этих метрик и создания видимости в каждом компоненте потока данных. <Lifecycle status="team,enterprise"/>
+- **dbt Mesh:** Используйте [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) для обмена моделями данных между организациями, позволяя командам данных сотрудничать над общими моделями данных и использовать работу других команд. <Lifecycle status="enterprise"/>
 
-- **Test and validate**: Emphasizing technical transitions, including testing and validating your dbt projects within the dbt Cloud ecosystem to ensure data integrity and performance.
+### Дополнительная помощь
 
-- **Transition and training**: Share useful transition, training, and onboarding information for your team. Fully leverage dbt Cloud's capabilities, from development tools (dbt Cloud CLI and dbt Cloud IDE) to advanced features such as dbt Explorer, the Semantic Layer, and dbt Mesh.
+- **Курсы dbt Learn**: Получите доступ к нашим бесплатным видео-курсам [Learn dbt Cloud](https://learn.getdbt.com) для обучения по запросу.
+- **Сообщество dbt:** Присоединяйтесь к [сообществу dbt](https://community.getdbt.com/), чтобы связаться с другими пользователями dbt, задать вопросы и поделиться лучшими практиками.
+- **Команда поддержки dbt:** Наша [команда поддержки dbt](/docs/dbt-support) всегда готова помочь вам решить проблемы с dbt Cloud. Создайте заявку на поддержку в dbt Cloud, и мы будем рады помочь!
+- **Управление учетной записью**: Учетные записи предприятий имеют команду управления учетными записями, доступную для помощи в решении проблем и помощи в управлении учетной записью. [Запланируйте демонстрацию](https://www.getdbt.com/contact), чтобы узнать больше. <Lifecycle status="enterprise"/>
 
-## What’s next?
+## Резюме
+
+Это руководство должно было дать вам представление и оснастить вас рамками для перехода с dbt Core на dbt Cloud. В этом руководстве были рассмотрены следующие ключевые области:
+
+- **Аспекты:** Понимание основных шагов, необходимых для успешной миграции, включая оценку вашей текущей настройки и определение ключевых аспектов, уникальных для структуры вашей команды и потребностей рабочего процесса.
+
+- **Планируйте свой переход**: Подчеркивание важности переработки рабочего процесса, ответственности по ролям и принятия новых процессов для использования совместной и эффективной среды dbt Cloud.
+
+- **Переход на dbt Cloud**: Ссылка на [руководство](https://docs.getdbt.com/guides/core-to-cloud-1?step=1), которое описывает технические шаги, необходимые для перехода вашего проекта dbt Core на dbt Cloud, включая настройку вашей учетной записи, платформы данных и репозитория Git.
+
+- **Тестирование и валидация**: Подчеркивание технических переходов, включая тестирование и валидацию ваших проектов dbt в экосистеме dbt Cloud для обеспечения целостности данных и производительности.
+
+- **Переход и обучение**: Поделитесь полезной информацией о переходе, обучении и внедрении для вашей команды. Полностью используйте возможности dbt Cloud, от инструментов разработки (dbt Cloud CLI и dbt Cloud IDE) до расширенных функций, таких как dbt Explorer, Семантический уровень и dbt Mesh.
+
+## Что дальше?
 
 <ConfettiTrigger>
 
+Поздравляем с завершением этого руководства, надеемся, оно дало вам представление о том, какие аспекты вам нужно учесть, чтобы лучше спланировать ваш переход на dbt Cloud.
 
-Congratulations on finishing this guide, we hope it's given you insight into the considerations you need to take to best plan your move to dbt Cloud.
-
-For the next steps, you can continue exploring our 3-part-guide series on moving from dbt Core to dbt Cloud:
+На следующих этапах вы можете продолжить изучение нашей серии из трех частей о переходе с dbt Core на dbt Cloud:
 
 <CoretoCloudTable/>
 
-### Related content
-- [Learn dbt Cloud](https://learn.getdbt.com) courses
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights
-- Work with the [dbt Labs’ Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and migration.
-- [How dbt Cloud compares with dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) for a detailed comparison of dbt Core and dbt Cloud.
-- Subscribe to the [dbt Cloud RSS alerts](https://status.getdbt.com/)
+### Связанный контент
+- Курсы [Learn dbt Cloud](https://learn.getdbt.com)
+- Запланируйте [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты
+- Работайте с командой [Профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы поддержать вашу организацию данных и миграцию.
+- [Как dbt Cloud сравнивается с dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) для детального сравнения dbt Core и dbt Cloud.
+- Подпишитесь на [RSS-уведомления dbt Cloud](https://status.getdbt.com/)
 
 </ConfettiTrigger>

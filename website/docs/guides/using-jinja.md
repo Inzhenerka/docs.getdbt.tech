@@ -1,9 +1,9 @@
 ---
-title: "Use Jinja to improve your SQL code"
+title: "Используйте Jinja для улучшения вашего SQL-кода"
 id: "using-jinja"
-description: "Learn how to improve your SQL code using Jinja."
-hoverSnippet: "Improve your SQL code with Jinja"
-# time_to_complete: '30 minutes' commenting out until we test
+description: "Узнайте, как улучшить ваш SQL-код с помощью Jinja."
+hoverSnippet: "Улучшите ваш SQL-код с Jinja"
+# time_to_complete: '30 minutes' комментируем до тестирования
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Jinja', 'dbt Core']
@@ -13,20 +13,20 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this guide, we're going to take a common pattern used in SQL, and then use Jinja to improve our code.
+В этом руководстве мы рассмотрим распространенный шаблон, используемый в SQL, и затем применим Jinja для улучшения нашего кода.
 
-If you'd like to work through this query, add [this CSV](https://github.com/dbt-labs/jaffle_shop/blob/core-v1.0.0/seeds/raw_payments.csv) to the `seeds/` folder of your dbt project, and then execute `dbt seed`.
+Если вы хотите поработать с этим запросом, добавьте [этот CSV](https://github.com/dbt-labs/jaffle_shop/blob/core-v1.0.0/seeds/raw_payments.csv) в папку `seeds/` вашего проекта dbt, а затем выполните `dbt seed`.
 
-While working through the steps of this model, we recommend that you have your compiled SQL open as well, to check what your Jinja compiles to. To do this:
-* **Using dbt Cloud:** Click the compile button to see the compiled SQL in the right hand pane
-* **Using dbt Core:** Run `dbt compile` from the command line. Then open the compiled SQL file in the `target/compiled/{project name}/` directory. Use a split screen in your code editor to keep both files open at once.
+Во время работы над шагами этой модели мы рекомендуем также открыть скомпилированный SQL, чтобы проверить, как ваш Jinja компилируется. Для этого:
+* **Используя dbt Cloud:** Нажмите кнопку компиляции, чтобы увидеть скомпилированный SQL в правой панели
+* **Используя dbt Core:** Запустите `dbt compile` из командной строки. Затем откройте скомпилированный SQL файл в директории `target/compiled/{имя проекта}/`. Используйте разделенный экран в вашем редакторе кода, чтобы держать оба файла открытыми одновременно.
 
-## Write the SQL without Jinja
-Consider a data model in which an `order` can have many `payments`. Each `payment` may have a `payment_method` of `bank_transfer`, `credit_card` or `gift_card`, and therefore each `order` can have multiple `payment_methods`
+## Напишите SQL без Jinja
+Рассмотрим модель данных, в которой `order` может иметь много `payments`. Каждый `payment` может иметь `payment_method` как `bank_transfer`, `credit_card` или `gift_card`, и, следовательно, каждый `order` может иметь несколько `payment_methods`.
 
-From an analytics perspective, it's important to know how much of each `order` was paid for with each `payment_method`. In your dbt project, you can create a model, named `order_payment_method_amounts`, with the following SQL:
+С аналитической точки зрения важно знать, сколько из каждого `order` было оплачено с помощью каждого `payment_method`. В вашем проекте dbt вы можете создать модель с именем `order_payment_method_amounts` со следующим SQL:
 
 <File name='models/order_payment_method_amounts.sql'>
 
@@ -43,15 +43,15 @@ group by 1
 
 </File>
 
-The SQL for each payment method amount is repetitive, which can be difficult to maintain for a number of reasons:
-* If the logic or field name were to change, the code would need to be updated in three places.
-* Often this code is created by copying and pasting, which may lead to mistakes.
-* Other analysts that review the code are less likely to notice errors as it's common to only scan through repeated code.
+SQL для каждого количества платежного метода повторяется, что может быть сложно поддерживать по нескольким причинам:
+* Если логика или имя поля изменятся, код нужно будет обновить в трех местах.
+* Часто этот код создается путем копирования и вставки, что может привести к ошибкам.
+* Другие аналитики, которые просматривают код, менее склонны замечать ошибки, так как обычно просто просматривают повторяющийся код.
 
-So we're going to use Jinja to help us clean it up, or to make our code more "DRY" ("Don't Repeat Yourself").
+Поэтому мы собираемся использовать Jinja, чтобы помочь нам упростить его или сделать наш код более "DRY" ("Не повторяйте себя").
 
-## Use a for loop in models for repeated SQL
-Here, the repeated code can be replaced with a `for` loop. The following will be compiled to the same query, but is significantly easier to maintain.
+## Используйте цикл for в моделях для повторяющегося SQL
+Здесь повторяющийся код можно заменить на цикл `for`. Следующий код будет скомпилирован в тот же запрос, но его значительно легче поддерживать.
 
 <File name='/models/order_payment_method_amounts.sql'>
 
@@ -68,8 +68,8 @@ group by 1
 
 </File>
 
-## Set variables at the top of a model
-We recommend setting variables at the top of a model, as it helps with readability, and enables you to reference the list in multiple places if required. This is a practice we've borrowed from many other programming languages.
+## Установите переменные в верхней части модели
+Мы рекомендуем устанавливать переменные в верхней части модели, так как это помогает с читаемостью и позволяет вам ссылаться на список в нескольких местах, если это необходимо. Это практика, заимствованная из многих других языков программирования.
 
 <File name='/models/order_payment_method_amounts.sql'>
 
@@ -88,10 +88,10 @@ group by 1
 
 </File>
 
-## Use loop.last to avoid trailing commas
-In the above query, our last column is outside of the `for` loop. However, this may not always be the case. If the last iteration of a loop is our final column, we need to ensure there isn't a trailing comma at the end.
+## Используйте loop.last, чтобы избежать висячих запятых
+В приведенном выше запросе наш последний столбец находится вне цикла `for`. Однако это может быть не всегда так. Если последняя итерация цикла является нашим финальным столбцом, нам нужно убедиться, что в конце нет висячей запятой.
 
-We often use an `if` statement, along with the Jinja variable `loop.last`, to ensure we don't add an extraneous comma:
+Мы часто используем оператор `if` вместе с переменной Jinja `loop.last`, чтобы убедиться, что мы не добавляем лишнюю запятую:
 
 <File name='/models/order_payment_method_amounts.sql'>
 
@@ -110,11 +110,10 @@ group by 1
 
 </File>
 
-An alternative way to write this is `{{ "," if not loop.last }}`.
+Альтернативный способ записи этого: `{{ "," if not loop.last }}`.
 
-## Use whitespace control to tidy up compiled code
-If you've been checking your code in the `target/compiled` folder, you might have noticed that this code results in a lot of white space:
-
+## Используйте управление пробелами для упорядочивания скомпилированного кода
+Если вы проверяли свой код в папке `target/compiled`, вы могли заметить, что этот код приводит к большому количеству пробелов:
 
 <File name='target/compiled/jaffle_shop/order_payment_method_amounts.sql'>
 
@@ -139,7 +138,7 @@ group by 1
 
 </File>
 
-We can use [whitespace control](https://jinja.palletsprojects.com/page/templates/#whitespace-control) to tidy up our code:
+Мы можем использовать [управление пробелами](https://jinja.palletsprojects.com/page/templates/#whitespace-control), чтобы упорядочить наш код:
 
 <File name='models/order_payment_method_amounts.sql'>
 
@@ -159,14 +158,14 @@ group by 1
 
 </File>
 
-Getting whitespace control right is often a lot of trial and error! We recommend that you prioritize the readability of your model code over the readability of the compiled code, and only do this as an extra polish.
+Правильное управление пробелами часто требует много проб и ошибок! Мы рекомендуем приоритизировать читаемость вашего модельного кода над читаемостью скомпилированного кода и делать это только как дополнительную полировку.
 
-## Use a macro to return payment methods
-Here, we've hardcoded the list of payment methods in our model. We may need to access this list from another model. A good solution here is to use a [variable](/docs/build/project-variables), but for the purpose of this tutorial, we're going to instead use a macro!
+## Используйте макрос для возврата методов оплаты
+Здесь мы жестко закодировали список методов оплаты в нашей модели. Возможно, нам нужно будет получить доступ к этому списку из другой модели. Хорошим решением здесь будет использовать [переменную](/docs/build/project-variables), но для целей этого руководства мы вместо этого будем использовать макрос!
 
-[Macros](/docs/build/jinja-macros#macros) in Jinja are pieces of code that can be called multiple times – they are analogous to a function in Python, and are extremely useful if you find yourself repeating code across multiple models.
+[Макросы](/docs/build/jinja-macros#macros) в Jinja — это фрагменты кода, которые можно вызывать несколько раз — они аналогичны функции в Python и чрезвычайно полезны, если вы обнаружите, что повторяете код в нескольких моделях.
 
-Our macro is simply going to return the list of payment methods:
+Наш макрос просто вернет список методов оплаты:
 
 <File name='/macros/get_payment_methods.sql'>
 
@@ -178,11 +177,11 @@ Our macro is simply going to return the list of payment methods:
 
 </File>
 
-There's a few things worth noting here:
-* Normally, macros take arguments -- we'll see this later on, but for now, we still need to setup our macro with empty parentheses where the arguments would normally go (i.e. `get_payment_methods()`)
-* We've used the [return](/reference/dbt-jinja-functions/return) function to return a list – without this function, the macro would return a string.
+Есть несколько моментов, на которые стоит обратить внимание:
+* Обычно макросы принимают аргументы — мы увидим это позже, но на данный момент нам все равно нужно настроить наш макрос с пустыми скобками, где обычно находятся аргументы (т.е. `get_payment_methods()`)
+* Мы использовали функцию [return](/reference/dbt-jinja-functions/return), чтобы вернуть список — без этой функции макрос вернул бы строку.
 
-Now that we have a macro for our payment methods, we can update our model as follows:
+Теперь, когда у нас есть макрос для наших методов оплаты, мы можем обновить нашу модель следующим образом:
 
 <File name='models/order_payment_method_amounts.sql'>
 
@@ -202,21 +201,21 @@ group by 1
 
 </File>
 
-Note that we didn't use curly braces when calling the macro – we're already within a Jinja statement, so there's no need to use the brackets again.
+Обратите внимание, что мы не использовали фигурные скобки при вызове макроса — мы уже находимся внутри оператора Jinja, поэтому нет необходимости использовать скобки снова.
 
-## Dynamically retrieve the list of payment methods
-So far, we've been hardcoding the list of possible payment methods. If a new `payment_method` was introduced, or one of the existing methods was renamed, the list would need to be updated.
+## Динамически извлекайте список методов оплаты
+До сих пор мы жестко закодировали список возможных методов оплаты. Если новый `payment_method` был введен или один из существующих методов был переименован, список нужно будет обновить.
 
-However, at any given time you could know what `payment_methods` are used to make a payment by running the following query:
+Тем не менее, в любой момент вы можете узнать, какие `payment_methods` используются для совершения платежа, выполнив следующий запрос:
 ```sql
 select distinct
 payment_method
 from {{ ref('raw_payments') }}
 order by 1
 ```
-[Statements](/reference/dbt-jinja-functions/statement-blocks) provide a way to run this query and return the results to your Jinja context. This means that the list of `payment_methods` can be set based on the data in your database rather than a hardcoded value.
+[Операторы](/reference/dbt-jinja-functions/statement-blocks) предоставляют способ выполнить этот запрос и вернуть результаты в ваш контекст Jinja. Это означает, что список `payment_methods` может быть установлен на основе данных в вашей базе данных, а не жестко закодированного значения.
 
-The easiest way to use a statement is through the [run_query](/reference/dbt-jinja-functions/run_query) macro. For the first version, let's check what we get back from the database, by logging the results to the command line using the [log](/reference/dbt-jinja-functions/log) function.
+Самый простой способ использовать оператор — это через макрос [run_query](/reference/dbt-jinja-functions/run_query). Для первой версии давайте проверим, что мы получаем от базы данных, записывая результаты в командной строке с помощью функции [log](/reference/dbt-jinja-functions/log).
 
 <File name='macros/get_payment_methods.sql'>
 
@@ -241,13 +240,13 @@ order by 1
 
 </File>
 
-The command line gives us back the following:
+Командная строка возвращает нам следующее:
 ```bash
 | column         | data_type |
 | -------------- | --------- |
 | payment_method | Text      |
 ```
-This is actually an [Agate table](https://agate.readthedocs.io/page/api/table.html). To get the payment methods back as a list, we need to do some further transformation.
+Это на самом деле [таблица Agate](https://agate.readthedocs.io/page/api/table.html). Чтобы получить методы оплаты в виде списка, нам нужно сделать некоторые дополнительные преобразования.
 
 ```sql
 {% macro get_payment_methods() %}
@@ -262,7 +261,7 @@ order by 1
 {% set results = run_query(payment_methods_query) %}
 
 {% if execute %}
-{# Return the first column #}
+{# Вернуть первый столбец #}
 {% set results_list = results.columns[0].values() %}
 {% else %}
 {% set results_list = [] %}
@@ -273,14 +272,14 @@ order by 1
 {% endmacro %}
 ```
 
-There's a few tricky pieces in here:
-* We used the [execute](/reference/dbt-jinja-functions/execute) variable to ensure that the code runs during the `parse` stage of dbt (otherwise an error would be thrown).
-* We used Agate methods to get the column back as a list
+Здесь есть несколько сложных моментов:
+* Мы использовали переменную [execute](/reference/dbt-jinja-functions/execute), чтобы убедиться, что код выполняется на этапе `parse` dbt (в противном случае возникла бы ошибка).
+* Мы использовали методы Agate, чтобы получить столбец в виде списка.
 
-Fortunately, our model code doesn't need to be updated, since we're already calling the macro to get the list of payment methods. And now, any new `payment_methods` added to the underlying data model will automatically be handled by the dbt model.
+К счастью, наш код модели не нужно обновлять, так как мы уже вызываем макрос, чтобы получить список методов оплаты. И теперь любые новые `payment_methods`, добавленные в основную модель данных, будут автоматически обрабатываться моделью dbt.
 
-## Write modular macros
-You may wish to use a similar pattern elsewhere in your dbt project. As a result, you decide to break up your logic into two separate macros -- one to generically return a column from a relation, and the other that calls this macro with the correct arguments to get back the list of payment methods.
+## Пишите модульные макросы
+Вы можете захотеть использовать аналогичный шаблон в другом месте вашего проекта dbt. В результате вы решаете разбить вашу логику на два отдельных макроса — один для общего возврата столбца из отношения, а другой, который вызывает этот макрос с правильными аргументами, чтобы получить список методов оплаты.
 
 <File name='macros/get_payment_methods.sql'>
 
@@ -297,7 +296,7 @@ order by 1
 {% set results = run_query(relation_query) %}
 
 {% if execute %}
-{# Return the first column #}
+{# Вернуть первый столбец #}
 {% set results_list = results.columns[0].values() %}
 {% else %}
 {% set results_list = [] %}
@@ -318,12 +317,12 @@ order by 1
 
 </File>
 
-## Use a macro from a package
-Macros let analysts bring software engineering principles to the SQL they write. One of the features of macros that makes them even more powerful is their ability to be shared across projects.
+## Используйте макрос из пакета
+Макросы позволяют аналитикам применять принципы программной инженерии к SQL, который они пишут. Одна из функций макросов, которая делает их еще более мощными, — это возможность делиться ими между проектами.
 
-A number of useful dbt macros have already been written in the [dbt-utils package](https://github.com/dbt-labs/dbt-utils). For example, the [get_column_values](https://github.com/dbt-labs/dbt-utils#get_column_values-source) macro from dbt-utils could be used instead of the `get_column_values` macro we wrote ourselves (saving us a lot of time, but at least we learnt something along the way!).
+Уже написано множество полезных макросов dbt в [пакете dbt-utils](https://github.com/dbt-labs/dbt-utils). Например, макрос [get_column_values](https://github.com/dbt-labs/dbt-utils#get_column_values-source) из dbt-utils можно использовать вместо макроса `get_column_values`, который мы написали сами (что сэкономит нам много времени, но, по крайней мере, мы чему-то научились на этом пути!).
 
-Install the [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) package in your project (docs [here](/docs/build/packages)), and then update your model to use the macro from the package instead:
+Установите пакет [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) в ваш проект (документация [здесь](/docs/build/packages)), а затем обновите вашу модель, чтобы использовать макрос из пакета:
 
 <File name='models/order_payment_method_amounts.sql'>
 
@@ -346,6 +345,6 @@ group by 1
 
 </File>
 
-You can then remove the macros that we built in previous steps. Whenever you're trying to solve a problem that you think others may have solved previously, it's worth checking the [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) package to see if someone has shared their code!
+Затем вы можете удалить макросы, которые мы создали на предыдущих этапах. Каждый раз, когда вы пытаетесь решить проблему, которую, как вы думаете, другие могли решить ранее, стоит проверить пакет [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), чтобы увидеть, поделился ли кто-то своим кодом!
 
 </div>

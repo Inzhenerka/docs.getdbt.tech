@@ -1,18 +1,16 @@
+Каждый [dbt проект](/docs/build/projects) требует наличия файла `dbt_project.yml` — именно так dbt определяет, что директория является проектом dbt. Этот файл также содержит важную информацию, которая сообщает dbt, как управлять вашим проектом.
 
-Every [dbt project](/docs/build/projects) needs a `dbt_project.yml` file — this is how dbt knows a directory is a dbt project. It also contains important information that tells dbt how to operate your project.
+- dbt использует [YAML](https://yaml.org/) в нескольких различных местах. Если вы новичок в YAML, стоит изучить, как представляются массивы, словари и строки.
 
-- dbt uses [YAML](https://yaml.org/) in a few different places. If you're new to YAML, it would be worth learning how arrays, dictionaries, and strings are represented.
+- По умолчанию dbt ищет файл `dbt_project.yml` в вашей текущей рабочей директории и её родительских директориях, но вы можете установить другую директорию, используя флаг `--project-dir` или переменную окружения `DBT_PROJECT_DIR`.
 
-- By default, dbt looks for the `dbt_project.yml` in your current working directory and its parents, but you can set a different directory using the `--project-dir` flag or the `DBT_PROJECT_DIR` environment variable.
+- Укажите идентификатор вашего проекта dbt Cloud в файле `dbt_project.yml`, используя `project-id` в конфигурации `dbt-cloud`. Найдите ваш идентификатор проекта в URL вашего проекта dbt Cloud: например, в `https://YOUR_ACCESS_URL/11/projects/123456` идентификатор проекта — это `123456`.
 
-- Specify your dbt Cloud project ID in the `dbt_project.yml` file using `project-id` under the `dbt-cloud` config. Find your project ID in your dbt Cloud project URL: For example, in `https://YOUR_ACCESS_URL/11/projects/123456`, the project ID is `123456`.
+- Обратите внимание, что вы не можете установить "свойство" в файле `dbt_project.yml`, если это не конфигурация (примером являются [макросы](/reference/macro-properties)). Это относится ко всем типам ресурсов. Обратитесь к [Конфигурациям и свойствам](/reference/configs-and-properties) для получения более подробной информации.
 
+## Пример
 
-- Note, you can't set up a "property" in the `dbt_project.yml` file if it's not a config (an example is [macros](/reference/macro-properties)). This applies to all types of resources. Refer to [Configs and properties](/reference/configs-and-properties) for more detail.
-
-## Example
-
-The following example is a list of all available configurations in the `dbt_project.yml` file:
+Следующий пример представляет собой список всех доступных конфигураций в файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -45,8 +43,8 @@ The following example is a list of all available configurations in the `dbt_proj
   [<global-configs>](/reference/global-configs/project-flags)
 
 [dbt-cloud](/docs/cloud/cloud-cli-installation):
-  [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli): project_id # Required
-  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli): environment_id # Optional
+  [project-id](/docs/cloud/configure-cloud-cli#configure-the-dbt-cloud-cli): project_id # Обязательно
+  [defer-env-id](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli): environment_id # Необязательно
 
 [quoting](/reference/project-configs/quoting):
   database: true | false
@@ -93,30 +91,30 @@ vars:
 
 </File>
 
-## Naming convention
+## Конвенция именования
 
-It's important to follow the correct YAML naming conventions for the configs in your `dbt_project.yml` file to ensure dbt can process them properly. This is especially true for resource types with more than one word.
+Важно следовать правильным конвенциям именования YAML для конфигураций в вашем файле `dbt_project.yml`, чтобы гарантировать, что dbt сможет их правильно обработать. Это особенно актуально для типов ресурсов, состоящих из более чем одного слова.
 
-- Use dashes (`-`) when configuring resource types with multiple words in your `dbt_project.yml` file. Here's an example for [saved queries](/docs/build/saved-queries#configure-saved-query):
+- Используйте дефисы (`-`), когда настраиваете типы ресурсов с несколькими словами в вашем файле `dbt_project.yml`. Вот пример для [сохранённых запросов](/docs/build/saved-queries#configure-saved-query):
 
     <File name="dbt_project.yml">
 
     ```yml
-    saved-queries:  # Use dashes for resource types in the dbt_project.yml file.
+    saved-queries:  # Используйте дефисы для типов ресурсов в файле dbt_project.yml.
       my_saved_query:
         +cache:
           enabled: true
     ```
     </File>
 
-- Use underscore (`_`) when configuring resource types with multiple words for YAML files other than the `dbt_project.yml` file. For example, here's the same saved queries resource in the `semantic_models.yml` file:
+- Используйте подчеркивание (`_`), когда настраиваете типы ресурсов с несколькими словами для YAML файлов, отличных от файла `dbt_project.yml`. Например, вот тот же ресурс сохранённых запросов в файле `semantic_models.yml`:
 
     <File name="models/semantic_models.yml">
 
     ```yml
-    saved_queries:  # Use underscores everywhere outside the dbt_project.yml file.
+    saved_queries:  # Используйте подчеркивания везде вне файла dbt_project.yml.
       - name: saved_query_name
-        ... # Rest of the saved queries configuration.
+        ... # Остальная часть конфигурации сохранённых запросов.
         config:
           cache:
             enabled: true

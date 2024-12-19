@@ -1,26 +1,26 @@
 ---
-title: Source configurations
-description: "Learn how to use source configurations in dbt."
+title: Конфигурации источников
+description: "Узнайте, как использовать конфигурации источников в dbt."
 id: source-configs
 ---
 
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
-## Available configurations
+## Доступные конфигурации
 
 <VersionBlock lastVersion="1.8">
 
-Sources supports [`enabled`](/reference/resource-configs/enabled) and [`meta`](/reference/resource-configs/meta).
+Источники поддерживают [`enabled`](/reference/resource-configs/enabled) и [`meta`](/reference/resource-configs/meta).
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-Sources configurations support [`enabled`](/reference/resource-configs/enabled), [`event_time`](/reference/resource-configs/event-time), and [`meta`](/reference/resource-configs/meta)
+Конфигурации источников поддерживают [`enabled`](/reference/resource-configs/enabled), [`event_time`](/reference/resource-configs/event-time) и [`meta`](/reference/resource-configs/meta)
 
 </VersionBlock>
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
 
@@ -28,8 +28,8 @@ Sources configurations support [`enabled`](/reference/resource-configs/enabled),
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
   ]
 }>
 
@@ -117,14 +117,14 @@ sources:
 
 </Tabs>
 
-## Configuring sources
+## Конфигурирование источников
 
-Sources can be configured via a `config:` block within their `.yml` definitions, or from the `dbt_project.yml` file under the `sources:` key. This configuration is most useful for configuring sources imported from [a package](/docs/build/packages). 
+Источники могут быть настроены через блок `config:` в их определениях `.yml`, или из файла `dbt_project.yml` под ключом `sources:`. Эта конфигурация наиболее полезна для настройки источников, импортированных из [пакета](/docs/build/packages).
 
-You can disable sources imported from a package to prevent them from rendering in the documentation, or to prevent [source freshness checks](/docs/build/sources#source-data-freshness) from running on source tables imported from packages. 
+Вы можете отключить источники, импортированные из пакета, чтобы предотвратить их отображение в документации или чтобы предотвратить выполнение [проверок свежести источников](/docs/build/sources#source-data-freshness) для таблиц источников, импортированных из пакетов.
 
-- **Note**: To disable a source table nested in a YAML file in a subfolder, you will need to supply the subfolder(s) within the path to that YAML file, as well as the source name and the table name in the `dbt_project.yml` file.<br /><br /> 
-  The following example shows how to disable a source table nested in a YAML file in a subfolder: 
+- **Примечание**: Чтобы отключить таблицу источника, вложенную в YAML-файл в подпапке, вам нужно будет указать подпапку(ы) в пути к этому YAML-файлу, а также имя источника и имя таблицы в файле `dbt_project.yml`.<br /><br />
+  Следующий пример показывает, как отключить таблицу источника, вложенную в YAML-файл в подпапке:
 
   <File name='dbt_project.yml'>
 
@@ -155,21 +155,20 @@ You can disable sources imported from a package to prevent them from rendering i
   </File>
 
 
-### Examples
+### Примеры
 
-The following examples show how to configure sources in your dbt project.
+Следующие примеры показывают, как настроить источники в вашем проекте dbt.
 
-&mdash; [Disable all sources imported from a package](#disable-all-sources-imported-from-a-package) <br />
-&mdash; [Conditionally enable a single source](#conditionally-enable-a-single-source) <br />
-&mdash; [Disable a single source from a package](#disable-a-single-source-from-a-package) <br />
-&mdash; [Configure a source with an `event_time`](#configure-a-source-with-an-event_time) <br />
-&mdash; [Configure meta to a source](#configure-meta-to-a-source) <br />
+&mdash; [Отключить все источники, импортированные из пакета](#disable-all-sources-imported-from-a-package) <br />
+&mdash; [Условно включить один источник](#conditionally-enable-a-single-source) <br />
+&mdash; [Отключить один источник из пакета](#disable-a-single-source-from-a-package) <br />
+&mdash; [Настроить источник с `event_time`](#configure-a-source-with-an-event_time) <br />
+&mdash; [Настроить метаданные для источника](#configure-meta-to-a-source) <br />
 
-#### Disable all sources imported from a package
-To apply a configuration to all sources included from a [package](/docs/build/packages),
-state your configuration under the [project name](/reference/project-configs/name.md) in the
-`sources:` config as a part of the resource path.
-
+#### Отключить все источники, импортированные из пакета
+Чтобы применить конфигурацию ко всем источникам, включенным из [пакета](/docs/build/packages),
+укажите вашу конфигурацию под [именем проекта](/reference/project-configs/name.md) в
+конфигурации `sources:` как часть пути ресурса.
 
 <File name='dbt_project.yml'>
 
@@ -182,9 +181,9 @@ sources:
 </File>
 
 
-#### Conditionally enable a single source
+#### Условно включить один источник
 
-When defining a source, you can disable the entire source, or specific source tables, using the inline `config` property:
+При определении источника вы можете отключить весь источник или конкретные таблицы источников, используя встроенное свойство `config`:
 
 <File name='models/sources.yml'>
 
@@ -196,16 +195,16 @@ sources:
     config:
       enabled: true
     tables:
-      - name: my_source_table  # enabled
-      - name: ignore_this_one  # not enabled
+      - name: my_source_table  # включен
+      - name: ignore_this_one  # не включен
         config:
           enabled: false
 ```
 
 </File>
 
-You can configure specific source tables, and use [variables](/reference/dbt-jinja-functions/var) as the input to that configuration:
- 
+Вы можете настроить конкретные таблицы источников и использовать [переменные](/reference/dbt-jinja-functions/var) в качестве входных данных для этой конфигурации:
+
 <File name='models/sources.yml'>
 
 ```yml
@@ -221,9 +220,9 @@ sources:
 
 </File>
 
-#### Disable a single source from a package
+#### Отключить один источник из пакета
 
-To disable a specific source from another package, qualify the resource path for your configuration with both a package name and a source name. In this case, we're disabling the `clickstream` source from the `events` package.
+Чтобы отключить конкретный источник из другого пакета, уточните путь ресурса для вашей конфигурации, указав как имя пакета, так и имя источника. В этом случае мы отключаем источник `clickstream` из пакета `events`.
 
 <File name='dbt_project.yml'>
 
@@ -236,7 +235,7 @@ sources:
 
 </File>
 
-Similarly, you can disable a specific table from a source by qualifying the resource path with a package name, source name, and table name:
+Аналогично, вы можете отключить конкретную таблицу из источника, уточнив путь ресурса с именем пакета, именем источника и именем таблицы:
 
 <File name='dbt_project.yml'>
 
@@ -251,19 +250,19 @@ sources:
 </File>
 
 
-#### Configure a source with an `event_time`
+#### Настроить источник с `event_time`
 
 <VersionBlock lastVersion="1.8">
 
-Configuring an [`event_time`](/reference/resource-configs/event-time) for a source is only available in [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) or dbt Core versions 1.9 and later.
+Настройка [`event_time`](/reference/resource-configs/event-time) для источника доступна только в [последнем релизе dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) или в версиях dbt Core 1.9 и выше.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-To configure a source with an `event_time`, specify the `event_time` field in the source configuration. This field is used to represent the actual timestamp of the event, rather than something like a loading date.
+Чтобы настроить источник с `event_time`, укажите поле `event_time` в конфигурации источника. Это поле используется для представления фактической метки времени события, а не, например, даты загрузки.
 
-For example, if you had a source table called `clickstream` in the `events` source, you can use the timestamp for each event in the `event_timestamp` column as follows:
+Например, если у вас есть таблица источника с названием `clickstream` в источнике `events`, вы можете использовать метку времени для каждого события в столбце `event_timestamp` следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -275,16 +274,16 @@ sources:
 ```
 </File>
 
-In this example, the `event_time` is set to `event_timestamp`, which has the exact time each clickstream event happened.
-Not only is this required for the [incremental microbatching strategy](/docs/build/incremental-microbatch), but when you compare data across [CI and production](/docs/deploy/advanced-ci#speeding-up-comparisons) environments, dbt will use `event_timestamp` to filter and match data by this event-based timeframe, ensuring that only overlapping timeframes are compared.
+В этом примере `event_time` установлен на `event_timestamp`, который содержит точное время, когда произошло каждое событие clickstream.
+Это не только требуется для [стратегии инкрементной микропартии](/docs/build/incremental-microbatch), но и при сравнении данных между [CI и производственными](/docs/deploy/advanced-ci#speeding-up-comparisons) окружениями dbt будет использовать `event_timestamp` для фильтрации и сопоставления данных по этому временным интервалам, основанным на событиях, что гарантирует, что сравниваются только перекрывающиеся временные интервалы.
 
 </VersionBlock>
 
-#### Configure meta to a source
+#### Настроить метаданные для источника
 
-Use the `meta` field to assign metadata information to sources. This is useful for tracking additional context, documentation, logging, and more. 
+Используйте поле `meta`, чтобы назначить метаданные источникам. Это полезно для отслеживания дополнительного контекста, документации, ведения журналов и многого другого.
 
-For example, you can add `meta` information to a `clickstream` source to include information about the data source system:
+Например, вы можете добавить информацию `meta` к источнику `clickstream`, чтобы включить информацию о системе источника данных:
 
 <File name='dbt_project.yml'>
 
@@ -298,11 +297,10 @@ sources:
 ```
 </File>
 
-## Example source configuration
-The following is a valid source configuration for a project with:
+## Пример конфигурации источника
+Следующая конфигурация источника является действительной для проекта с:
 * `name: jaffle_shop`
-* A package called `events` containing multiple source tables
-
+* Пакетом с названием `events`, содержащим несколько таблиц источников
 
 <File name='dbt_project.yml'>
 
@@ -311,14 +309,14 @@ name: jaffle_shop
 config-version: 2
 ...
 sources:
-  # project names
+  # имена проектов
   jaffle_shop:
     +enabled: true
 
   events:
-    # source names
+    # имена источников
     clickstream:
-      # table names
+      # имена таблиц
       pageviews:
         +enabled: false
       link_clicks:

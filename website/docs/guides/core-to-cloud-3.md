@@ -1,202 +1,202 @@
 ---
-title: 'Move from dbt Core to dbt Cloud: Optimization tips'
+title: 'Переход с dbt Core на dbt Cloud: советы по оптимизации'
 id: core-to-cloud-3
-description: "Use this guide to learn how to optimize your dbt Cloud experience and get answers to common questions."
-hoverSnippet: "Use this guide to learn how to optimize your dbt Cloud experience and get answers to common questions."
+description: "Используйте это руководство, чтобы узнать, как оптимизировать ваш опыт работы с dbt Cloud и получить ответы на распространенные вопросы."
+hoverSnippet: "Используйте это руководство, чтобы узнать, как оптимизировать ваш опыт работы с dbt Cloud и получить ответы на распространенные вопросы."
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Migration','dbt Core','dbt Cloud']
-keywords: ['dbt Core','dbt Cloud','Migration', 'Move dbt', 'Migrate dbt']
-level: 'Intermediate'
+tags: ['Миграция','dbt Core','dbt Cloud']
+keywords: ['dbt Core','dbt Cloud','Миграция', 'Перемещение dbt', 'Миграция dbt']
+level: 'Средний'
 recently_updated: true
 ---
 
-## Introduction
+## Введение
 
-Moving from dbt Core to dbt Cloud streamlines analytics engineering workflows by allowing teams to develop, test, deploy, and explore data products using a single, fully managed software service.
+Переход с dbt Core на dbt Cloud упрощает рабочие процессы аналитического инжиниринга, позволяя командам разрабатывать, тестировать, развертывать и исследовать данные с помощью единого полностью управляемого программного сервиса.
 
-Explore our 3-part-guide series on moving from dbt Core to dbt Cloud. The series is ideal for users aiming for streamlined workflows and enhanced analytics:
+Изучите нашу серию из трех частей о переходе с dbt Core на dbt Cloud. Эта серия идеально подходит для пользователей, стремящихся к упрощению рабочих процессов и улучшению аналитики:
 
 import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-## What you'll learn
-You may have already started your move to dbt Cloud and are looking for tips to help you optimize your dbt Cloud experience. This guide includes tips and caveats for the following areas:
+## Что вы узнаете
+Возможно, вы уже начали переход на dbt Cloud и ищете советы, которые помогут вам оптимизировать ваш опыт работы с dbt Cloud. Это руководство включает советы и предостережения по следующим областям:
 
-- [Adapters and connections](https://docs.getdbt.com/guides/core-to-cloud-3?step=3) 
-- [Development tools](https://docs.getdbt.com/guides/core-to-cloud-3?step=4) 
-- [Orchestration](https://docs.getdbt.com/guides/core-to-cloud-3?step=5)
+- [Адаптеры и подключения](https://docs.getdbt.com/guides/core-to-cloud-3?step=3) 
+- [Инструменты разработки](https://docs.getdbt.com/guides/core-to-cloud-3?step=4) 
+- [Оркестрация](https://docs.getdbt.com/guides/core-to-cloud-3?step=5)
 - [dbt Mesh](https://docs.getdbt.com/guides/core-to-cloud-3?step=6)
-- [dbt Semantic Layer](https://docs.getdbt.com/guides/core-to-cloud-3?step=7)
+- [Семантический слой dbt](https://docs.getdbt.com/guides/core-to-cloud-3?step=7)
 - [dbt Explorer](https://docs.getdbt.com/guides/core-to-cloud-3?step=8)
 
-## Adapters and connections
+## Адаптеры и подключения
 
-In dbt Cloud, you can natively connect to your data platform and test its [connection](/docs/connect-adapters) with a click of a button. This is especially useful for users who are new to dbt Cloud or are looking to streamline their connection setup. Here are some tips and caveats to consider:
+В dbt Cloud вы можете нативно подключаться к вашей платформе данных и тестировать ее [подключение](/docs/connect-adapters) одним нажатием кнопки. Это особенно полезно для пользователей, которые новички в dbt Cloud или стремятся упростить настройку подключения. Вот несколько советов и предостережений, которые стоит учитывать:
 
-### Tips
-- Manage [dbt versions](/docs/dbt-versions/upgrade-dbt-version-in-cloud) and ensure team collaboration with dbt Cloud's one-click feature, eliminating the need for manual updates and version discrepancies. Select a [release track](/docs/dbt-versions/cloud-release-tracks) for ongoing updates, to always stay up to date with fixes and (optionally) get early access to new functionality for your dbt project.
-- dbt Cloud supports a whole host of [cloud providers](/docs/cloud/connect-data-platform/about-connections), including Snowflake, Databricks, BigQuery, Fabric, and Redshift (to name a few).
-- Use [Extended Attributes](/docs/deploy/deploy-environments#extended-attributes) to set a flexible [profiles.yml](/docs/core/connect-data-platform/profiles.yml) snippet in your dbt Cloud environment settings. It gives you more control over environments (both deployment and development) and extends how dbt Cloud connects to the data platform within a given environment.
-  - For example, if you have a field in your `profiles.yml` that you’d like to add to the dbt Cloud adapter user interface, you can use Extended Attributes to set it.
+### Советы
+- Управляйте [версиями dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud) и обеспечивайте совместную работу команды с помощью функции одного клика в dbt Cloud, устраняя необходимость в ручных обновлениях и несоответствиях версий. Выберите [релизный трек](/docs/dbt-versions/cloud-release-tracks) для получения постоянных обновлений, чтобы всегда быть в курсе исправлений и (по желанию) получить ранний доступ к новым функциям для вашего проекта dbt.
+- dbt Cloud поддерживает множество [облачных провайдеров](/docs/cloud/connect-data-platform/about-connections), включая Snowflake, Databricks, BigQuery, Fabric и Redshift (и не только).
+- Используйте [Расширенные атрибуты](/docs/deploy/deploy-environments#extended-attributes) для настройки гибкого фрагмента [profiles.yml](/docs/core/connect-data-platform/profiles.yml) в настройках окружения dbt Cloud. Это дает вам больше контроля над окружениями (как развертывания, так и разработки) и расширяет способ, которым dbt Cloud подключается к платформе данных в рамках данного окружения.
+  - Например, если у вас есть поле в вашем `profiles.yml`, которое вы хотите добавить в интерфейс адаптера dbt Cloud, вы можете использовать Расширенные атрибуты для его настройки.
 
-### Caveats
-- Not all parameters are available for adapters.
-- A project can only use one warehouse type.
+### Предостережения
+- Не все параметры доступны для адаптеров.
+- Проект может использовать только один тип склада.
 
-## Development tools
+## Инструменты разработки
 
-dbt Cloud empowers data practitioners to develop in the tool of their choice. It ships with a [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (local) or [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (browser-based) to build, test, run, and version control your dbt projects.
+dbt Cloud предоставляет возможность разработчикам данных работать с инструментом по их выбору. Он поставляется с [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (локальный) или [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (веб-интерфейс) для создания, тестирования, выполнения и контроля версий ваших проектов dbt.
 
-Both development tools are tailored to suit different audiences and preferences within your team. To streamline your team’s workflow, it's important to know who will prefer the dbt Cloud IDE and who might lean towards the dbt Cloud CLI. This section aims to clarify these preferences.
+Оба инструмента разработки адаптированы для различных аудиторий и предпочтений в вашей команде. Чтобы упростить рабочий процесс вашей команды, важно знать, кто предпочтет dbt Cloud IDE, а кто может склониться к dbt Cloud CLI. Этот раздел направлен на разъяснение этих предпочтений.
 
 ### dbt Cloud IDE
-A web-based interface for building, testing, running, and version-controlling dbt projects. It compiles dbt code into SQL and executes it directly on your database. The dbt Cloud IDE makes developing fast and easy for new and seasoned data practitioners to build and test changes.
+Веб-интерфейс для создания, тестирования, выполнения и контроля версий проектов dbt. Он компилирует код dbt в SQL и выполняет его непосредственно в вашей базе данных. dbt Cloud IDE делает разработку быстрой и простой для новых и опытных специалистов по данным, позволяя им вносить и тестировать изменения.
 
-**Who might prefer the dbt Cloud IDE?**
+**Кто может предпочесть dbt Cloud IDE?**
 
-- New dbt users or those transitioning from other tools who appreciate a more guided experience through a browser-based interface.
-- Team members focused on speed and convenience for getting started with a new or existing project.
-- Individuals who prioritize direct feedback from the IDE, such as seeing unsaved changes.
+- Новые пользователи dbt или те, кто переходит с других инструментов и ценят более направленный опыт через веб-интерфейс.
+- Члены команды, сосредоточенные на скорости и удобстве при начале работы с новым или существующим проектом.
+- Люди, которые придают значение прямой обратной связи от IDE, например, видя несохраненные изменения.
 
-**Key features**
+**Ключевые функции**
 
-- The dbt Cloud IDE has simplified Git functionality:
-  - Create feature branches from the branch configured in the development environment.
-  - View saved but not-committed code changes directly in the IDE.
-- [Format or lint](/docs/cloud/dbt-cloud-ide/lint-format) your code with `sqlfluff` or `sqlfmt`. This includes support for adding your custom linting rules.
-- Allows users to natively [defer to production](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli) metadata directly in their development workflows, reducing the number of objects.
-- Support running multiple dbt commands at the same time through [safe parallel execution](/reference/dbt-commands#parallel-execution), a [feature](/docs/cloud/about-cloud/dbt-cloud-features) available in dbt Cloud's infrastructure. In contrast, `dbt-core` *doesn't support* safe parallel execution for multiple invocations in the same process.
+- dbt Cloud IDE имеет упрощенную функциональность Git:
+  - Создавайте ветки функций из ветки, настроенной в среде разработки.
+  - Просматривайте сохраненные, но не зафиксированные изменения кода непосредственно в IDE.
+- [Форматируйте или проверяйте](/docs/cloud/dbt-cloud-ide/lint-format) ваш код с помощью `sqlfluff` или `sqlfmt`. Это включает поддержку добавления ваших собственных правил проверки.
+- Позволяет пользователям нативно [откладывать в продакшн](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli) метаданные непосредственно в их рабочих процессах разработки, уменьшая количество объектов.
+- Поддерживает выполнение нескольких команд dbt одновременно через [безопасное параллельное выполнение](/reference/dbt-commands#parallel-execution), функция, доступная в инфраструктуре dbt Cloud. В отличие от этого, `dbt-core` *не поддерживает* безопасное параллельное выполнение для нескольких вызовов в одном процессе.
 
-The dbt Cloud IDE provides a simplified interface that's accessible to all users, regardless of their technical background. However, there are some capabilities that are intentionally not available in the dbt Cloud IDE due to its focus on simplicity and ease of use:
+dbt Cloud IDE предоставляет упрощенный интерфейс, доступный для всех пользователей, независимо от их технического фона. Однако есть некоторые возможности, которые намеренно недоступны в dbt Cloud IDE из-за его акцента на простоту и удобство использования:
 
-- Pre-commit for automated checks before *committing* code is not available (yet).
-- Mass-generating files / interacting with the file system are not available.
-- Combining/piping commands, such as `dbt run -s (bash command)`, is not available.
+- Предварительная проверка для автоматических проверок перед *коммитом* кода пока недоступна.
+- Массовая генерация файлов / взаимодействие с файловой системой недоступны.
+- Объединение/передача команд, таких как `dbt run -s (bash command)`, недоступно.
 
 ### dbt Cloud CLI
-The dbt Cloud CLI allows you to run dbt [commands](/reference/dbt-commands#available-commands) against your dbt Cloud development environment from your local command line. For users who seek full control over their development environment and ideal for those comfortable with the command line.
+dbt Cloud CLI позволяет вам выполнять команды dbt [команды](/reference/dbt-commands#available-commands) против вашей среды разработки dbt Cloud из командной строки локально. Это идеально подходит для пользователей, которые ищут полный контроль над своей средой разработки и комфортно работают с командной строкой.
 
-When moving from dbt Core to dbt Cloud, make sure you check the `.gitignore` file contains the [necessary folders](/docs/collaborate/git/version-control-basics#the-gitignore-file). dbt Core doesn't interact with git so dbt Cloud doesn't automatically add or verify entries in the `.gitignore` file. Additionally, if the repository already contains dbt code and doesn't require initialization, dbt Cloud won't add any missing entries to the `.gitignore file`.
+При переходе с dbt Core на dbt Cloud убедитесь, что файл `.gitignore` содержит [необходимые папки](/docs/collaborate/git/version-control-basics#the-gitignore-file). dbt Core не взаимодействует с git, поэтому dbt Cloud не добавляет и не проверяет записи в файле `.gitignore` автоматически. Кроме того, если репозиторий уже содержит код dbt и не требует инициализации, dbt Cloud не добавит отсутствующие записи в файл `.gitignore`.
 
-**Who might prefer the dbt Cloud CLI?**
+**Кто может предпочесть dbt Cloud CLI?**
 
-- Data practitioners accustomed to working with a specific set of development tooling.
-- Users looking for granular control over their Git workflows (such as pre-commits for automated checks before committing code).
-- Data practitioners who need to perform complex operations, like mass file generation or specific command combinations.
+- Специалисты по данным, привыкшие работать с определенным набором инструментов разработки.
+- Пользователи, ищущие детальный контроль над своими рабочими процессами Git (например, предварительные коммиты для автоматических проверок перед коммитом кода).
+- Специалисты по данным, которым необходимо выполнять сложные операции, такие как массовая генерация файлов или специфические комбинации команд.
 
-**Key features**
+**Ключевые функции**
 
-- Allows users to run dbt commands against their dbt Cloud development environment from their local command line with minimal configuration.
-- Allows users to natively [defer to production](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli) metadata directly in their development workflows, reducing the number of objects.
-- Support running multiple dbt commands at the same time through [safe parallel execution](/reference/dbt-commands#parallel-execution), a [feature](/docs/cloud/about-cloud/dbt-cloud-features) available in dbt Cloud's infrastructure. In contrast, `dbt-core` *doesn't support* safe parallel execution for multiple invocations in the same process.
-- Able to use Visual Studio (VS) Code extensions (such as [dbt-power-user](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) to enhance the development experience by adding extra functionalities.
+- Позволяет пользователям выполнять команды dbt против своей среды разработки dbt Cloud из командной строки с минимальной конфигурацией.
+- Позволяет пользователям нативно [откладывать в продакшн](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli) метаданные непосредственно в их рабочих процессах разработки, уменьшая количество объектов.
+- Поддерживает выполнение нескольких команд dbt одновременно через [безопасное параллельное выполнение](/reference/dbt-commands#parallel-execution), функция, доступная в инфраструктуре dbt Cloud. В отличие от этого, `dbt-core` *не поддерживает* безопасное параллельное выполнение для нескольких вызовов в одном процессе.
+- Возможность использовать расширения Visual Studio (VS) Code (такие как [dbt-power-user](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) для улучшения опыта разработки, добавляя дополнительные функции.
 
-## Orchestration
+## Оркестрация
 
-dbt Cloud provides robust orchestration that enables you to schedule, run, and monitor dbt jobs with ease. Here are some tips and caveats to consider when using dbt Cloud's orchestration features:
+dbt Cloud предоставляет надежную оркестрацию, которая позволяет вам планировать, запускать и контролировать задания dbt с легкостью. Вот несколько советов и предостережений, которые стоит учитывать при использовании функций оркестрации dbt Cloud:
 
-### Tips
+### Советы
 
-- Enable [partial parsing](/docs/cloud/account-settings#partial-parsing) between jobs in dbt Cloud to significantly speed up project parsing by only processing changed files, optimizing performance for large projects.
-- [Run multiple CI/CD](/docs/deploy/continuous-integration) jobs at the same time which will not block production runs. The Job scheduler automatically cancels stale runs  when a newer commit is pushed. This is because each PR will run in its own schema.
-- dbt Cloud automatically [cancels](/docs/deploy/job-scheduler#run-cancellation-for-over-scheduled-jobs) a scheduled run if the existing run is still executing. This prevents unnecessary, duplicative executions.
-- Protect you and your data freshness from third-party outages by enabling dbt Cloud’s [Git repository caching](/docs/cloud/account-settings#git-repository-caching), which keeps a cache of the project's Git repository. <Lifecycle status="enterprise"/>
-- [Link deploy jobs](/docs/deploy/deploy-jobs#trigger-on-job-completion) across dbt Cloud projects by configuring your job or using the [Create Job API](/dbt-cloud/api-v2#/operations/Create%20Job) to do this. <Lifecycle status="team,enterprise"/>
-- [Rerun your jobs](/docs/deploy/retry-jobs) from the start or the point of failure if your dbt job run completed with a status of **`Error.`**
+- Включите [частичное парсинг](/docs/cloud/account-settings#partial-parsing) между заданиями в dbt Cloud, чтобы значительно ускорить парсинг проекта, обрабатывая только измененные файлы, оптимизируя производительность для крупных проектов.
+- [Запускайте несколько CI/CD](/docs/deploy/continuous-integration) заданий одновременно, которые не будут блокировать производственные запуски. Планировщик заданий автоматически отменяет устаревшие запуски, когда новая коммита загружается. Это связано с тем, что каждый PR будет выполняться в своей схеме.
+- dbt Cloud автоматически [отменяет](/docs/deploy/job-scheduler#run-cancellation-for-over-scheduled-jobs) запланированный запуск, если существующий запуск все еще выполняется. Это предотвращает ненужные, дублирующие выполнения.
+- Защитите себя и свежесть ваших данных от сбоев третьих сторон, включив кэширование [Git-репозитория](/docs/cloud/account-settings#git-repository-caching) в dbt Cloud, которое сохраняет кэш репозитория Git проекта. <Lifecycle status="enterprise"/>
+- [Связывайте задания развертывания](/docs/deploy/deploy-jobs#trigger-on-job-completion) между проектами dbt Cloud, настроив ваше задание или используя [API создания задания](/dbt-cloud/api-v2#/operations/Create%20Job) для этого. <Lifecycle status="team,enterprise"/>
+- [Повторно запускайте ваши задания](/docs/deploy/retry-jobs) с самого начала или с точки сбоя, если выполнение вашего задания dbt завершилось со статусом **`Ошибка.`**
 
-### Caveats
-- To automate the setup and configuration of your dbt Cloud platform, you can store your job configurations as code within a repository:
-  - Check out our [Terraform provider.](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job)
-  - Alternatively, check out our [jobs-as-code](https://github.com/dbt-labs/dbt-jobs-as-code) repository, which is a tool built to handle dbt Cloud jobs as a well-defined YAML file.
-- dbt Cloud users and external emails can receive notifications if a job fails, succeeds, or is cancelled. To get notifications for warnings, you can create a [webhook subscription](/guides/zapier-slack) and post to Slack.
+### Предостережения
+- Чтобы автоматизировать настройку и конфигурацию вашей платформы dbt Cloud, вы можете хранить конфигурации ваших заданий как код в репозитории:
+  - Ознакомьтесь с нашим [поставщиком Terraform.](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job)
+  - В качестве альтернативы, ознакомьтесь с нашим репозиторием [jobs-as-code](https://github.com/dbt-labs/dbt-jobs-as-code), который является инструментом, созданным для обработки заданий dbt Cloud как хорошо определенного YAML файла.
+- Пользователи dbt Cloud и внешние электронные почты могут получать уведомления, если задание завершилось с ошибкой, успешно или было отменено. Чтобы получать уведомления о предупреждениях, вы можете создать [подписку на вебхуки](/guides/zapier-slack) и отправлять сообщения в Slack.
 
 ## dbt Mesh
 
-[dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) helps organizations with mature, complex transformation workflows in dbt increase the flexibility and performance of their dbt projects. It allows you to make use of multiple interconnected dbt projects instead of a single large, monolithic project.
+[dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) помогает организациям с зрелыми, сложными рабочими процессами трансформации в dbt увеличить гибкость и производительность своих проектов dbt. Он позволяет использовать несколько взаимосвязанных проектов dbt вместо одного большого, монолитного проекта.
 
-It enables you to interface and navigate between different projects and models with [cross-project dependencies](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), enhancing collaboration and data governance.
+Это позволяет вам взаимодействовать и перемещаться между различными проектами и моделями с помощью [кросс-проектных зависимостей](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), улучшая сотрудничество и управление данными.
 
-Here are some tips and caveats to consider when using dbt Mesh:
+Вот несколько советов и предостережений, которые стоит учитывать при использовании dbt Mesh:
 
-### Tips
-- To dynamically resolve [cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), all developers need to develop with dbt Cloud (either with the dbt Cloud CLI or dbt Cloud IDE). Cross-project references aren't natively supported in dbt Core, except by installing the source code from upstream projects [as packages](/docs/build/packages#how-do-i-add-a-package-to-my-project)
-- Link models across projects for a modular and scalable approach for your project and teams.
-- Manage access to your dbt models both within and across projects using:
-  - **[Groups](/docs/collaborate/govern/model-access#groups)** &mdash; Organize nodes in your dbt DAG that share a logical connection and assign an owner to the entire group.
-  - **[Model access](/docs/collaborate/govern/model-access#access-modifiers)** &mdash; Control which other models or projects can reference this model.
-  - **[Model versions](/docs/collaborate/govern/model-versions)** &mdash; Enable adoption and deprecation of models as they evolve.
-  - **[Model contracts](/docs/collaborate/govern/model-contracts)** &mdash; Set clear expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
-- Use [dbt-meshify](https://github.com/dbt-labs/dbt-meshify) to accelerate splitting apart your monolith into multiple projects.
+### Советы
+- Чтобы динамически разрешать [кросс-проектные ссылки](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref), всем разработчикам необходимо разрабатывать с dbt Cloud (либо с dbt Cloud CLI, либо с dbt Cloud IDE). Кросс-проектные ссылки не поддерживаются нативно в dbt Core, кроме как установкой исходного кода из upstream проектов [в качестве пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project)
+- Связывайте модели между проектами для модульного и масштабируемого подхода к вашему проекту и командам.
+- Управляйте доступом к вашим моделям dbt как внутри, так и между проектами, используя:
+  - **[Группы](/docs/collaborate/govern/model-access#groups)** &mdash; Организуйте узлы в вашем DAG dbt, которые имеют логическую связь, и назначьте владельца всей группе.
+  - **[Доступ к моделям](/docs/collaborate/govern/model-access#access-modifiers)** &mdash; Контролируйте, какие другие модели или проекты могут ссылаться на эту модель.
+  - **[Версии моделей](/docs/collaborate/govern/model-versions)** &mdash; Позволяйте принятие и устаревание моделей по мере их эволюции.
+  - **[Контракты моделей](/docs/collaborate/govern/model-contracts)** &mdash; Установите четкие ожидания относительно формы данных, чтобы гарантировать, что изменения данных выше по потоку dbt или в логике проекта не сломают продукты данных downstream.
+- Используйте [dbt-meshify](https://github.com/dbt-labs/dbt-meshify), чтобы ускорить разделение вашего монолита на несколько проектов.
 
-### Caveats
-- To use cross-project references in dbt, each dbt project must correspond to just one dbt Cloud project. We strongly discourage defining multiple projects for the same codebase, even if you're trying to manage access permissions, connect to different data warehouses, or separate production and non-production data.  While this was required historically, features like [Staging environments](/docs/dbt-cloud-environments#types-of-environments), Environment-level RBAC (_coming soon_), and [Extended attributes](/docs/dbt-cloud-environments#extended-attributes) will make it unnecessary.
-- Project dependencies are uni-directional, meaning they go in one direction. This means dbt checks for cycles across projects (circular dependencies) and raise errors if any are detected. However, we are considering support to allow projects to depend on each other in both directions in the future, with dbt still checking for node-level cycles while allowing cycles at the project level.
-- Everyone in the account can view public model metadata, which helps users find data products more easily. This is separate from who can access the actual data, which is controlled by permissions in the data warehouse. For use cases where even metadata about a reusable data asset is sensitive, we are [considering](https://github.com/dbt-labs/dbt-core/issues/9340) an optional extension of protected models.
+### Предостережения
+- Чтобы использовать кросс-проектные ссылки в dbt, каждый проект dbt должен соответствовать только одному проекту dbt Cloud. Мы настоятельно не рекомендуем определять несколько проектов для одной кодовой базы, даже если вы пытаетесь управлять разрешениями доступа, подключаться к различным хранилищам данных или разделять производственные и непроизводственные данные. Хотя это было необходимо исторически, такие функции, как [Стадии окружений](/docs/dbt-cloud-environments#types-of-environments), RBAC на уровне окружения (_скоро_), и [Расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) сделают это ненужным.
+- Зависимости проектов являются унинаправленными, что означает, что они идут в одном направлении. Это означает, что dbt проверяет циклы между проектами (круговые зависимости) и выдает ошибки, если они обнаружены. Однако мы рассматриваем возможность поддержки, позволяющей проектам зависеть друг от друга в обоих направлениях в будущем, при этом dbt все равно будет проверять циклы на уровне узлов, позволяя циклы на уровне проектов.
+- Каждый в аккаунте может просматривать общую метаданные моделей, что помогает пользователям легче находить продукты данных. Это отдельно от того, кто может получить доступ к фактическим данным, что контролируется разрешениями в хранилище данных. Для случаев, когда даже метаданные о повторно используемом активе данных являются конфиденциальными, мы [рассматриваем](https://github.com/dbt-labs/dbt-core/issues/9340) возможность расширения защищенных моделей.
 
-Refer to the [dbt Mesh FAQs](/best-practices/how-we-mesh/mesh-5-faqs) for more questions.
+Обратитесь к [Часто задаваемым вопросам по dbt Mesh](/best-practices/how-we-mesh/mesh-5-faqs) для получения дополнительных вопросов.
 
-## dbt Semantic Layer
+## Семантический слой dbt
 
-Leverage the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), powered by MetricFlow, to create a unified view of your business metrics, ensuring consistency across all analytics tools. Here are some tips and caveats to consider when using dbt Semantic Layer:
+Используйте [семантический слой dbt](/docs/use-dbt-semantic-layer/dbt-sl), работающий на базе MetricFlow, чтобы создать единый взгляд на ваши бизнес-метрики, обеспечивая согласованность во всех аналитических инструментах. Вот несколько советов и предостережений, которые стоит учитывать при использовании семантического слоя dbt:
 
-### Tips
-- Define semantic models and metrics once in dbt Cloud with the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) (powered by MetricFlow). Reuse them across various analytics platforms, reducing redundancy and errors.
-- Use the [dbt Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) to query metrics in downstream tools for consistent, reliable data metrics.
-- Connect to several data applications, from business intelligence tools to notebooks, spreadsheets, data catalogs, and more, to query your metrics. [Available integrations](/docs/cloud-integrations/avail-sl-integrations) include Tableau, Google Sheets, Hex, and more.
-- Use [exports](/docs/use-dbt-semantic-layer/exports) to write commonly used queries directly within your data platform, on a schedule.
+### Советы
+- Определяйте семантические модели и метрики один раз в dbt Cloud с помощью [семантического слоя dbt](/docs/use-dbt-semantic-layer/dbt-sl) (работающего на базе MetricFlow). Повторно используйте их в различных аналитических платформах, уменьшая избыточность и ошибки.
+- Используйте [API семантического слоя dbt](/docs/dbt-cloud-apis/sl-api-overview) для запроса метрик в downstream инструментах для получения согласованных, надежных данных.
+- Подключайтесь к нескольким приложениям данных, от инструментов бизнес-аналитики до блокнотов, таблиц, каталогов данных и многого другого, чтобы запрашивать ваши метрики. [Доступные интеграции](/docs/cloud-integrations/avail-sl-integrations) включают Tableau, Google Sheets, Hex и другие.
+- Используйте [экспорт](/docs/use-dbt-semantic-layer/exports), чтобы записывать часто используемые запросы непосредственно в вашей платформе данных по расписанию.
 
-### Caveats
-- dbt Semantic Layer currently supports the Deployment environment for querying. Development querying experience coming soon.
-- Run queries/semantic layer commands in the dbt Cloud CLI, however running queries/semantic layer commands in the dbt Cloud IDE isn’t supported *yet.*
-- dbt Semantic Layer doesn't yet support SSH tunneling for [Postgres or Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) connections. It also doesn't support using [Single sign-on (SSO)](/docs/cloud/manage-access/sso-overview) for Semantic Layer [production credentials](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), however, SSO is supported for development user accounts.
+### Предостережения
+- Семантический слой dbt в настоящее время поддерживает среду развертывания для выполнения запросов. Опыт выполнения запросов в разработке скоро появится.
+- Выполняйте запросы/команды семантического слоя в dbt Cloud CLI, однако выполнение запросов/команд семантического слоя в dbt Cloud IDE пока не поддерживается.
+- Семантический слой dbt пока не поддерживает SSH-туннелирование для [Postgres или Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) подключений. Он также не поддерживает использование [Единого входа (SSO)](/docs/cloud/manage-access/sso-overview) для [производственных учетных данных](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens) семантического слоя, однако SSO поддерживается для учетных записей пользователей разработки.
 
-Refer to the [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs) for more information.
+Обратитесь к [Часто задаваемым вопросам по семантическому слою dbt](/docs/use-dbt-semantic-layer/sl-faqs) для получения дополнительной информации.
 
 ## dbt Explorer
 
-[dbt Explorer](/docs/collaborate/explore-projects) enhances your ability to discover, understand, and troubleshoot your data assets through rich metadata and lineage visualization. Here are some tips and caveats to consider when using dbt Explorer:
+[dbt Explorer](/docs/collaborate/explore-projects) улучшает вашу способность открывать, понимать и устранять неполадки в ваших данных через богатую метаданные и визуализацию связей. Вот несколько советов и предостережений, которые стоит учитывать при использовании dbt Explorer:
 
-### Tips
-- Use the search and filter capabilities in dbt Explorer to quickly locate models, sources, and tests, streamlining your workflow.
-- View all the [different projects](/docs/collaborate/explore-multiple-projects) and public models in the account, where the public models are defined, and how they are used to gain a better understanding of your cross-project resources.
-- Use the [Lenses](/docs/collaborate/explore-projects#lenses) feature, which are map-like layers for your DAG, available from your project's lineage graph. Lenses help you further understand your project’s contextual metadata at scale, especially to distinguish a particular model or a subset of models.
-- Access column-level lineage (CLL) for the resources in your dbt project. <Lifecycle status="enterprise"/>
+### Советы
+- Используйте возможности поиска и фильтрации в dbt Explorer, чтобы быстро находить модели, источники и тесты, упрощая ваш рабочий процесс.
+- Просматривайте все [разные проекты](/docs/collaborate/explore-multiple-projects) и общие модели в аккаунте, где определены общие модели и как они используются, чтобы лучше понять ваши ресурсы между проектами.
+- Используйте функцию [Линзы](/docs/collaborate/explore-projects#lenses), которая представляет собой слои, подобные картам, для вашего DAG, доступные из графа связей вашего проекта. Линзы помогают вам лучше понять контекстные метаданные вашего проекта в масштабе, особенно для различения конкретной модели или подмножества моделей.
+- Получите доступ к связям на уровне столбцов (CLL) для ресурсов в вашем проекте dbt. <Lifecycle status="enterprise"/>
 
-### Caveats
-- There must be at least one successful job run in the production deployment environment for Explorer to populate information. 
+### Предостережения
+- Должен быть хотя бы один успешный запуск задания в среде развертывания, чтобы Explorer заполнил информацию.
 
-Familiarize yourself with dbt Explorer’s features to fully leverage its capabilities to avoid missed opportunities for efficiency gains.
+Ознакомьтесь с функциями dbt Explorer, чтобы полностью использовать его возможности и избежать упущенных возможностей для повышения эффективности.
 
-Refer to the [dbt Explorer FAQs](/docs/collaborate/dbt-explorer-faqs) for more information.
+Обратитесь к [Часто задаваемым вопросам по dbt Explorer](/docs/collaborate/dbt-explorer-faqs) для получения дополнительной информации.
 
-## What's next?
+## Что дальше?
 
 <ConfettiTrigger>
 
-Congratulations on making it through the guide 🎉!
+Поздравляем с завершением руководства 🎉!
 
-We hope you’re equipped with useful insights and tips to help you with your move. Something to note is that moving from dbt Core to dbt Cloud isn’t just about evolving your data projects, it's about exploring new levels of collaboration, governance, efficiency, and innovation within your team.
+Мы надеемся, что вы получили полезные идеи и советы, которые помогут вам в вашем переходе. Обратите внимание, что переход с dbt Core на dbt Cloud — это не только эволюция ваших данных проектов, но и исследование новых уровней сотрудничества, управления, эффективности и инноваций в вашей команде.
 
-For the next steps, continue exploring our 3-part-guide series on moving from dbt Core to dbt Cloud:
+На следующих этапах продолжайте изучать нашу серию из трех частей о переходе с dbt Core на dbt Cloud:
 
 <CoretoCloudTable/>
 
 </ConfettiTrigger>
 
-### Resources
+### Ресурсы
 
-If you need any additional help or have some questions, use the following resources:
+Если вам нужна дополнительная помощь или у вас есть вопросы, используйте следующие ресурсы:
 
-- [dbt Learn courses](https://learn.getdbt.com) for on-demand video learning.
-- Our [Support team](https://docs.getdbt.com/docs/dbt-support) is always available to help you troubleshoot your dbt Cloud issues.
-- Join the [dbt Community](https://community.getdbt.com/) to connect with other dbt users, ask questions, and share best practices.
-- Subscribe to the [dbt Cloud RSS alerts](https://status.getdbt.com/)
-- Enterprise accounts have an account management team available to help troubleshoot solutions and account management assistance. [Book a demo](https://www.getdbt.com/contact) to learn more.
-- [How dbt Cloud compares with dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) for a detailed comparison of dbt Core and dbt Cloud.
+- [Курсы dbt Learn](https://learn.getdbt.com) для обучения по запросу.
+- Наша [служба поддержки](https://docs.getdbt.com/docs/dbt-support) всегда готова помочь вам решить проблемы с dbt Cloud.
+- Присоединяйтесь к [сообществу dbt](https://community.getdbt.com/), чтобы связаться с другими пользователями dbt, задать вопросы и поделиться лучшими практиками.
+- Подпишитесь на [RSS-уведомления dbt Cloud](https://status.getdbt.com/)
+- Учетные записи для предприятий имеют команду управления аккаунтами, доступную для помощи в решении проблем и управлении аккаунтом. [Запланируйте демонстрацию](https://www.getdbt.com/contact), чтобы узнать больше.
+- [Как dbt Cloud сравнивается с dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) для подробного сравнения dbt Core и dbt Cloud.
 
-For tailored assistance, you can use the following resources:
+Для индивидуальной помощи вы можете использовать следующие ресурсы:
 
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights
-- Work with the [dbt Labs’ Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and move.
+- Запланируйте [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты
+- Работайте с командой [Профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы поддержать вашу организацию данных и переход.

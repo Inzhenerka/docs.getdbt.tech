@@ -1,102 +1,100 @@
 ---
-title: Configs, properties, what are they?
+title: Конфигурации, свойства, что это такое?
 ---
 
-Resources in your project—models, snapshots, seeds, tests, and the rest—can have a number of declared **properties**. Resources can also define **configurations**, which are a special kind of property that bring extra abilities. What's the distinction?
-- Properties are declared for resources one-by-one in  `properties.yml` files. Configs can be defined there, nested under a `config` property. They can also be set one-by-one via a `config()` macro (right within `.sql` files), and for many resources at once in `dbt_project.yml`.
-- Because configs can be set in multiple places, they are also applied hierarchically. An individual resource might _inherit_ or _override_ configs set elsewhere.
-- You can select resources based on their config values using the `config:` selection method, but not the values of non-config properties.
-- There are slightly different naming conventions for properties and configs depending on the file type. Refer to [naming convention](/reference/dbt_project.yml#naming-convention) for more details.
+Ресурсы в вашем проекте — модели, снимки, семена, тесты и другие — могут иметь ряд объявленных **свойств**. Ресурсы также могут определять **конфигурации**, которые являются особым видом свойств, предоставляющим дополнительные возможности. В чем разница?
+- Свойства объявляются для ресурсов по одному в файлах `properties.yml`. Конфигурации могут быть определены там, вложенные под свойством `config`. Их также можно задавать по одному с помощью макроса `config()` (прямо в `.sql` файлах) и для многих ресурсов сразу в `dbt_project.yml`.
+- Поскольку конфигурации могут задаваться в нескольких местах, они также применяются иерархически. Отдельный ресурс может _наследовать_ или _переопределять_ конфигурации, заданные в других местах.
+- Вы можете выбирать ресурсы на основе значений их конфигураций, используя метод выбора `config:`, но не значения несоответствующих свойств.
+- Существуют немного разные соглашения о наименовании для свойств и конфигураций в зависимости от типа файла. Смотрите [соглашение о наименовании](/reference/dbt_project.yml#naming-convention) для получения дополнительных сведений.
 
-A rule of thumb: properties declare things _about_ your project resources; configs go the extra step of telling dbt _how_ to build those resources in your warehouse. This is generally true, but not always, so it's always good to check!
+Правило: свойства объявляют вещи _о_ ваших ресурсах проекта; конфигурации делают дополнительный шаг, сообщая dbt _как_ строить эти ресурсы в вашем хранилище данных. Это обычно верно, но не всегда, поэтому всегда полезно проверять!
 
-For example, you can use resource **properties** to:
-* Describe models, snapshots, seed files, and their columns
-* Assert "truths" about a model, in the form of [data tests](/docs/build/data-tests), e.g. "this `id` column is unique"
-* Define pointers to existing tables that contain raw data, in the form of [sources](/docs/build/sources), and assert the expected "freshness" of this raw data
-* Define official downstream uses of your data models, in the form of [exposures](/docs/build/exposures)
+Например, вы можете использовать **свойства** ресурса для:
+* Описания моделей, снимков, файлов семян и их столбцов
+* Утверждения "истин" о модели в форме [тестов данных](/docs/build/data-tests), например, "этот столбец `id` уникален"
+* Определения указателей на существующие таблицы, содержащие сырые данные, в форме [источников](/docs/build/sources), и утверждения ожидаемой "свежести" этих сырых данных
+* Определения официальных downstream-использований ваших моделей данных в форме [экспозиций](/docs/build/exposures)
 
-Whereas you can use **configurations** to:
-* Change how a model will be materialized (<Term id="table" />, <Term id="view" />, incremental, etc)
-* Declare where a seed will be created in the database (`<database>.<schema>.<alias>`)
-* Declare whether a resource should persist its descriptions as comments in the database
-* Apply tags and "meta" properties
+В то время как вы можете использовать **конфигурации** для:
+* Изменения того, как модель будет материализована (<Term id="table" />, <Term id="view" />, инкрементально и т.д.)
+* Объявления, где семя будет создано в базе данных (`<database>.<schema>.<alias>`)
+* Объявления, должно ли ресурс сохранять свои описания в виде комментариев в базе данных
+* Применения тегов и "мета" свойств
 
-## Where can I define configs?
+## Где я могу определить конфигурации?
 
-Depending on the resource type, configurations can be defined in the dbt project and also in an installed package by:
+В зависимости от типа ресурса конфигурации могут быть определены в проекте dbt, а также в установленном пакете:
 
 <VersionBlock firstVersion="1.9">
 
-1. Using a [`config` property](/reference/resource-properties/config) in a `.yml` file in the `models/`, `snapshots/`, `seeds/`, `analyses`, or `tests/` directory
-2. From the [`dbt_project.yml` file](dbt_project.yml), under the corresponding resource key (`models:`, `snapshots:`, `tests:`, etc)
+1. Используя свойство [`config`](/reference/resource-properties/config) в файле `.yml` в директории `models/`, `snapshots/`, `seeds/`, `analyses` или `tests/`
+2. Из файла [`dbt_project.yml`](dbt_project.yml), под соответствующим ключом ресурса (`models:`, `snapshots:`, `tests:`, и т.д.)
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-1. Using a [`config()` Jinja macro](/reference/dbt-jinja-functions/config) within a `model`, `snapshot`, or `test` SQL file
-2. Using a [`config` property](/reference/resource-properties/config) in a `.yml` file in the `models/`, `snapshots/`, `seeds/`, `analyses/`, or `tests/` directory.
-3. From the [`dbt_project.yml` file](dbt_project.yml), under the corresponding resource key (`models:`, `snapshots:`, `tests:`, etc)
+1. Используя макрос [`config()`](/reference/dbt-jinja-functions/config) Jinja в SQL файле `model`, `snapshot` или `test`
+2. Используя свойство [`config`](/reference/resource-properties/config) в файле `.yml` в директории `models/`, `snapshots/`, `seeds/`, `analyses` или `tests/`.
+3. Из файла [`dbt_project.yml`](dbt_project.yml), под соответствующим ключом ресурса (`models:`, `snapshots:`, `tests:`, и т.д.)
 </VersionBlock>
 
-### Config inheritance
+### Наследование конфигураций
 
-The most specific config always takes precedence. This generally follows the order above: an in-file `config()` block --> properties defined in a `.yml` file --> config defined in the project file. 
+Наиболее специфическая конфигурация всегда имеет приоритет. Это обычно следует порядку, указанному выше: блок `config()` в файле --> свойства, определенные в файле `.yml` --> конфигурация, определенная в проектном файле.
 
-Note - Generic data tests work a little differently when it comes to specificity. See [test configs](/reference/data-test-configs).
+Примечание - Общие тесты данных работают немного иначе, когда дело касается специфичности. Смотрите [конфигурации тестов](/reference/data-test-configs).
 
-Within the project file, configurations are also applied hierarchically. The most specific config always takes precedence. In the project file, for example, configurations applied to a `marketing` subdirectory will take precedence over configurations applied to the entire `jaffle_shop` project. To apply a configuration to a model or directory of models, define the [resource path](/reference/resource-configs/resource-path) as nested dictionary keys.
+Внутри проектного файла конфигурации также применяются иерархически. Наиболее специфическая конфигурация всегда имеет приоритет. Например, в проектном файле конфигурации, примененные к подкаталогу `marketing`, будут иметь приоритет над конфигурациями, примененными ко всему проекту `jaffle_shop`. Чтобы применить конфигурацию к модели или каталогу моделей, определите [путь к ресурсу](/reference/resource-configs/resource-path) в виде вложенных ключей словаря.
 
-Configurations in your root dbt project have _higher_ precedence than configurations in installed packages. This enables you to override the configurations of installed packages, providing more control over your dbt runs. 
+Конфигурации в вашем корневом проекте dbt имеют _больший_ приоритет, чем конфигурации в установленных пакетах. Это позволяет вам переопределять конфигурации установленных пакетов, предоставляя больше контроля над вашими запусками dbt.
 
+### Сочетание конфигураций
 
-### Combining configs
+Большинство конфигураций "перекрываются" при иерархическом применении. Каждый раз, когда доступно более специфичное значение, оно полностью заменяет менее специфичное значение. Обратите внимание, что несколько конфигураций имеют другое поведение при слиянии:
+- [`tags`](/tags) являются аддитивными. Если у модели есть некоторые теги, настроенные в `dbt_project.yml`, и больше тегов, примененных в ее `.sql` файле, окончательный набор тегов будет включать все из них.
+- Словари [`meta`](/reference/resource-configs/meta) объединяются (более специфическая пара ключ-значение заменяет менее специфичное значение с тем же ключом)
+- [`pre-hook` и `post-hook`](/reference/resource-configs/pre-hook-post-hook) также являются аддитивными.
 
-Most configurations are "clobbered" when applied hierarchically. Whenever a more specific value is available, it will completely replace the less specific value. Note that a few configs have different merge behavior:
-- [`tags`](/tags) are additive. If a model has some tags configured in `dbt_project.yml`, and more tags applied in its `.sql` file, the final set of tags will include all of them.
-- [`meta`](/reference/resource-configs/meta) dictionaries are merged (a more specific key-value pair replaces a less specific value with the same key)
-- [`pre-hook` and `post-hook`](/reference/resource-configs/pre-hook-post-hook) are also additive.
+## Где я могу определить свойства?
 
-## Where can I define properties?
+В dbt вы можете использовать файлы `properties.yml` для определения свойств ресурсов. Вы можете объявлять свойства в файлах `.yml`, в той же директории, что и ваши ресурсы. Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их произвольно в подпапки в каждой директории.
 
-In dbt, you can use `properties.yml` files to define properties for resources. You can declare properties in `.yml` files, in the same directory as your resources. You can name these files `whatever_you_want.yml` and nest them arbitrarily in sub-folders within each directory. 
-
-We highly recommend that you define properties in dedicated paths alongside the resources they're describing.
+Мы настоятельно рекомендуем определять свойства в выделенных путях рядом с ресурсами, которые они описывают.
 
 :::info
 
-#### schema.yml files
+#### файлы schema.yml
 
-Previous versions of the docs referred to these as `schema.yml` files — we've moved away from that terminology since the word `schema` is used to mean other things when talking about databases, and people often thought that you _had_ to name these files `schema.yml`.
+Предыдущие версии документации называли их файлами `schema.yml` — мы отошли от этой терминологии, поскольку слово `schema` используется для обозначения других вещей, когда речь идет о базах данных, и люди часто думали, что вы _должны_ называть эти файлы `schema.yml`.
 
-Instead, we now refer to these files as `properties.yml` files. (Of course, you're still free to name your files `schema.yml`)
+Вместо этого мы теперь называем эти файлы `properties.yml`. (Конечно, вы все еще можете называть свои файлы `schema.yml`)
 
 :::
 
-### Which properties are _not_ also configs?
+### Какие свойства _не_ являются также конфигурациями?
 
-In dbt, you can define node configs in `properties.yml` files, in addition to `config()` blocks and `dbt_project.yml`. However, some special properties can only be defined in the `.yml` file and you cannot configure them using `config()` blocks or the `dbt_project.yml` file:
+В dbt вы можете определять конфигурации узлов в файлах `properties.yml`, помимо блоков `config()` и `dbt_project.yml`. Однако некоторые специальные свойства могут быть определены только в файле `.yml`, и вы не можете настраивать их с помощью блоков `config()` или файла `dbt_project.yml`:
 
-Certain properties are special, because:
+Некоторые свойства являются специальными, потому что:
 
-- They have a unique Jinja rendering context
-- They create new project resources
-- They don't make sense as hierarchical configuration
-- They're older properties that haven't yet been redefined as configs
+- У них есть уникальный контекст рендеринга Jinja
+- Они создают новые ресурсы проекта
+- Они не имеют смысла как иерархическая конфигурация
+- Это более старые свойства, которые еще не были переопределены как конфигурации
 
-These properties are:
-
+Эти свойства:
 - [`description`](/reference/resource-properties/description)
 - [`tests`](/reference/resource-properties/data-tests)
 - [`docs`](/reference/resource-configs/docs)
 - [`columns`](/reference/resource-properties/columns)
 - [`quote`](/reference/resource-properties/quote)
-- [`source` properties](/reference/source-properties) (e.g. `loaded_at_field`, `freshness`)
-- [`exposure` properties](/reference/exposure-properties) (e.g. `type`, `maturity`)
-- [`macro` properties](/reference/macro-properties) (e.g. `arguments`)
+- [`source` свойства](/reference/source-properties) (например, `loaded_at_field`, `freshness`)
+- [`exposure` свойства](/reference/exposure-properties) (например, `type`, `maturity`)
+- [`macro` свойства](/reference/macro-properties) (например, `arguments`)
 
-## Example
-Here's an example that defines both `sources` and `models` for a project:
+## Пример
+Вот пример, который определяет как `sources`, так и `models` для проекта:
 
 <File name='models/jaffle_shop.yml'>
 
@@ -105,12 +103,12 @@ version: 2
 
 sources:
   - name: raw_jaffle_shop
-    description: A replica of the postgres database used to power the jaffle_shop app.
+    description: Реплика базы данных Postgres, используемой для работы приложения jaffle_shop.
     tables:
       - name: customers
         columns:
           - name: id
-            description: Primary key of the table
+            description: Первичный ключ таблицы
             tests:
               - unique
               - not_null
@@ -118,13 +116,13 @@ sources:
       - name: orders
         columns:
           - name: id
-            description: Primary key of the table
+            description: Первичный ключ таблицы
             tests:
               - unique
               - not_null
 
           - name: user_id
-            description: Foreign key to customers
+            description: Внешний ключ к customers
 
           - name: status
             tests:
@@ -163,17 +161,17 @@ models:
 </File>
 
 
-## Related documentation
-You can find an exhaustive list of each supported property and config, broken down by resource type:
-* Model [properties](/reference/model-properties) and [configs](/reference/model-configs)
-* Source [properties](/reference/source-properties) and [configs](source-configs)
-* Seed [properties](/reference/seed-properties) and [configs](/reference/seed-configs)
-* Snapshot [properties](snapshot-properties)
-* Analysis [properties](analysis-properties)
-* Macro [properties](/reference/macro-properties)
-* Exposure [properties](/reference/exposure-properties)
+## Связанная документация
+Вы можете найти исчерпывающий список каждого поддерживаемого свойства и конфигурации, разбитый по типу ресурса:
+* Свойства [моделей](/reference/model-properties) и [конфигурации](/reference/model-configs)
+* Свойства [источников](/reference/source-properties) и [конфигурации](source-configs)
+* Свойства [семян](/reference/seed-properties) и [конфигурации](/reference/seed-configs)
+* Свойства [снимков](snapshot-properties)
+* Свойства [анализов](analysis-properties)
+* Свойства [макросов](/reference/macro-properties)
+* Свойства [экспозиций](/reference/exposure-properties)
 
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Project/schema-yml-name" />
 <FAQ path="Project/resource-yml-name" />
 <FAQ path="Project/multiple-resource-yml-files" />
@@ -181,38 +179,37 @@ You can find an exhaustive list of each supported property and config, broken do
 <FAQ path="Project/why-version-2" />
 <FAQ path="Project/yaml-file-extension" />
 
-## Troubleshooting common errors
+## Устранение распространенных ошибок
 
-### Invalid test config given in [model name]
+### Неверная конфигурация теста, указанная в [имени модели]
 
-This error occurs when your `.yml` file does not conform to the structure expected by dbt. A full error message might look like:
+Эта ошибка возникает, когда ваш файл `.yml` не соответствует структуре, ожидаемой dbt. Полное сообщение об ошибке может выглядеть так:
 ```
-* Invalid test config given in models/schema.yml near {'namee': 'event', ...}
-  Invalid arguments passed to "UnparsedNodeUpdate" instance: 'name' is a required property, Additional properties are not allowed ('namee' was unexpected)
+* Неверная конфигурация теста, указанная в models/schema.yml рядом с {'namee': 'event', ...}
+  Неверные аргументы, переданные экземпляру "UnparsedNodeUpdate": 'name' является обязательным свойством, Дополнительные свойства не допускаются ('namee' было неожиданным)
 ```
 
-While verbose, an error like this should help you track down the issue. Here, the `name` field was provided as `namee` by accident. To fix this error, ensure that your `.yml` conforms to the expected structure described in this guide.
+Хотя сообщение длинное, такая ошибка должна помочь вам найти проблему. Здесь поле `name` было случайно указано как `namee`. Чтобы исправить эту ошибку, убедитесь, что ваш файл `.yml` соответствует ожидаемой структуре, описанной в этом руководстве.
 
-### Invalid syntax in your schema.yml file
+### Неверный синтаксис в вашем файле schema.yml
 
-If your `.yml` file is not valid yaml, then dbt will show you an error like this:
+Если ваш файл `.yml` не является допустимым yaml, то dbt покажет вам ошибку, подобную этой:
 
 ```
 Runtime Error
-  Syntax error near line 6
+  Ошибка синтаксиса рядом с строкой 6
   ------------------------------
   5  |   - name: events
-  6  |     description; "A table containing clickstream events from the marketing website"
+  6  |     description; "Таблица, содержащая события кликов с маркетингового сайта"
   7  |
 
-  Raw Error:
+  Сырой Ошибка:
   ------------------------------
-  while scanning a simple key
-    in "<unicode string>", line 6, column 5:
-          description; "A table containing clickstream events from the marketing website"
+  во время сканирования простого ключа
+    в "<unicode string>", строка 6, столбец 5:
+          description; "Таблица, содержащая события кликов с маркетингового сайта"
           ^
 
 ```
 
-This error occurred because a semicolon (`;`) was accidentally used instead of a colon (`:`) after the `description` field. To resolve issues like this, find the `.yml` file referenced in the error message and fix any syntax errors present in the file. There are online YAML validators that can be helpful here, but please be mindful of submitting sensitive information to third-party applications!
-
+Эта ошибка произошла, потому что вместо двоеточия (`:`) после поля `description` случайно был использован знак точки с запятой (`;`). Чтобы решить подобные проблемы, найдите файл `.yml`, упомянутый в сообщении об ошибке, и исправьте любые синтаксические ошибки, присутствующие в файле. Существуют онлайн-валидаторы YAML, которые могут быть полезны в этом, но, пожалуйста, будьте осторожны с отправкой конфиденциальной информации третьим лицам!

@@ -1,32 +1,22 @@
 ---
-title: "About dbt run command"
+title: "О команде dbt run"
 sidebar_label: "run"
-description: "Read this guide on how dbt's run command can be used to execute compiled SQL model files against a target database."
+description: "Прочитайте это руководство о том, как команда dbt run может быть использована для выполнения скомпилированных SQL файлов моделей против целевой базы данных."
 id: "run"
 ---
 
-## Overview
+## Обзор
 
-`dbt run` executes compiled sql model files against the current `target`
-database. dbt connects to the target database and runs the relevant SQL required
-to materialize all data models using the specified <Term id="materialization" /> strategies.
-Models are run in the order defined by the dependency graph generated during
-compilation. Intelligent multi-threading is used to minimize execution time
-without violating dependencies.
+`dbt run` выполняет скомпилированные SQL файлы моделей против текущей `target` базы данных. dbt подключается к целевой базе данных и выполняет соответствующий SQL, необходимый для материализации всех моделей данных с использованием указанных <Term id="materialization" /> стратегий. Модели выполняются в порядке, определенном графом зависимостей, сгенерированным во время компиляции. Используется интеллектуальная многопоточность для минимизации времени выполнения без нарушения зависимостей.
 
-Deploying new models frequently involves destroying prior versions of these
-models. In these cases, `dbt run` minimizes the amount of time in which a model
-is unavailable by first building each model with a temporary name, then dropping
-the existing model, then renaming the model to its correct name. The drop and
-rename happen within a single database transaction for database adapters that
-support transactions.
+Частое развертывание новых моделей включает в себя уничтожение предыдущих версий этих моделей. В таких случаях `dbt run` минимизирует время, в течение которого модель недоступна, сначала создавая каждую модель с временным именем, затем удаляя существующую модель, а затем переименовывая модель в ее правильное имя. Удаление и переименование происходят в рамках одной транзакции базы данных для адаптеров баз данных, которые поддерживают транзакции.
 
-## Refresh incremental models
+## Обновление инкрементальных моделей
 
-If you provide the `--full-refresh` flag to `dbt run`, dbt will treat incremental models as <Term id="table" /> models. This is useful when
+Если вы укажете флаг `--full-refresh` для `dbt run`, dbt будет рассматривать инкрементальные модели как <Term id="table" /> модели. Это полезно, когда
 
-1. The schema of an incremental model changes and you need to recreate it.
-2. You want to reprocess the entirety of the incremental model because of new logic in the model code.
+1. Схема инкрементальной модели изменяется, и вам нужно ее воссоздать.
+2. Вы хотите повторно обработать всю инкрементальную модель из-за новой логики в коде модели.
 
 <File name='bash'>
 
@@ -36,18 +26,18 @@ dbt run --full-refresh
 
 </File>
 
-You can also supply the flag by its short name: `dbt run -f`.
+Вы также можете указать флаг с помощью его короткого имени: `dbt run -f`.
 
-In the dbt compilation context, this flag will be available as [flags.FULL_REFRESH](/reference/dbt-jinja-functions/flags). Further, the `is_incremental()` macro will return `false` for *all* models in response when the `--full-refresh` flag is specified.
+В контексте компиляции dbt этот флаг будет доступен как [flags.FULL_REFRESH](/reference/dbt-jinja-functions/flags). Кроме того, макрос `is_incremental()` вернет `false` для *всех* моделей в ответ на указание флага `--full-refresh`.
 
 <File name='models/example.sql'>
 
 ```sql
 select * from all_events
 
--- if the table already exists and `--full-refresh` is
--- not set, then only add new records. otherwise, select
--- all records.
+-- если таблица уже существует и `--full-refresh` не
+-- установлен, то добавляются только новые записи. в противном
+-- случае выбираются все записи.
 {% if is_incremental() %}
    where collector_tstamp > (
      select coalesce(max(max_tstamp), '0001-01-01') from {{ this }}
@@ -57,37 +47,37 @@ select * from all_events
 
 </File>
 
-## Running specific models
+## Запуск конкретных моделей
 
-dbt will also allow you select which specific models you'd like to materialize. This can be useful during special scenarios where you may prefer running a different set of models at various intervals. This can also be helpful when you may want to limit the tables materialized while you develop and test new models.
+dbt также позволяет вам выбрать, какие конкретные модели вы хотите материализовать. Это может быть полезно в особых сценариях, когда вы предпочитаете запускать разные наборы моделей в различные интервалы времени. Это также может быть полезно, когда вы хотите ограничить количество материализованных таблиц, пока разрабатываете и тестируете новые модели.
 
-For more information, see the [Model Selection Syntax Documentation](/reference/node-selection/syntax).
+Для получения дополнительной информации смотрите [Документацию по синтаксису выбора моделей](/reference/node-selection/syntax).
 
-For more information on running parents or children of specific models, see the [Graph Operators Documentation](/reference/node-selection/graph-operators).
+Для получения дополнительной информации о запуске родительских или дочерних моделей конкретных моделей смотрите [Документацию по графовым операторам](/reference/node-selection/graph-operators).
 
-## Treat warnings as errors
+## Рассматривать предупреждения как ошибки
 
-See [global configs](/reference/global-configs/warnings)
+Смотрите [глобальные настройки](/reference/global-configs/warnings)
 
-## Failing fast
+## Быстрое завершение при ошибках
 
-See [global configs](/reference/global-configs/failing-fast)
+Смотрите [глобальные настройки](/reference/global-configs/failing-fast)
 
-## Enable or Disable Colorized Logs
+## Включение или отключение цветных логов
 
-See [global configs](/reference/global-configs/print-output#print-color)
+Смотрите [глобальные настройки](/reference/global-configs/print-output#print-color)
 
 <VersionBlock firstVersion="1.8">
 
-## The `--empty` flag
+## Флаг `--empty`
 
-The `run` command supports the `--empty` flag for building schema-only dry runs. The `--empty` flag limits the refs and sources to zero rows. dbt will still execute the model SQL against the target data warehouse but will avoid expensive reads of input data. This validates dependencies and ensures your models will build properly.
+Команда `run` поддерживает флаг `--empty` для создания схемных только "сухих" запусков. Флаг `--empty` ограничивает количество ссылок и источников до нуля строк. dbt все равно выполнит SQL модели против целевого хранилища данных, но избегает дорогостоящих чтений входных данных. Это проверяет зависимости и гарантирует, что ваши модели будут правильно построены.
 
 </VersionBlock>
 
-## Status codes
+## Коды состояния
 
-When calling the [list_runs api](/dbt-cloud/api-v2#/operations/List%20Runs), you will get a status code for each run returned. The available run status codes are as follows:
+При вызове [api list_runs](/dbt-cloud/api-v2#/operations/List%20Runs) вы получите код состояния для каждого возвращенного запуска. Доступные коды состояния запуска следующие:
 
 - Starting = 1
 - Running = 3

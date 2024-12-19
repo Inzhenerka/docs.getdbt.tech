@@ -1,9 +1,9 @@
 ---
-title: "Post to Slack with error context when a job fails"
+title: "Отправка сообщений в Slack с контекстом ошибки при сбое задания"
 id: zapier-slack
-description: Use a webhook or Slack message to trigger Zapier and post error context in Slack when a job fails.
-hoverSnippet: Learn how to use a webhook or Slack message to trigger Zapier to post error context in Slack when a job fails.
-# time_to_complete: '30 minutes' commenting out until we test
+description: Используйте вебхук или сообщение Slack для запуска Zapier и отправки контекста ошибки в Slack при сбое задания.
+hoverSnippet: Узнайте, как использовать вебхук или сообщение Slack для запуска Zapier и отправки контекста ошибки в Slack при сбое задания.
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
@@ -13,60 +13,59 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-This guide will show you how to set up an integration between dbt Cloud jobs and Slack using [dbt Cloud webhooks](/docs/deploy/webhooks) and Zapier. It builds on the native [native Slack integration](/docs/deploy/job-notifications#slack-notifications) by attaching error message details of models and tests in a thread. 
+Этот гид покажет вам, как настроить интеграцию между заданиями dbt Cloud и Slack с использованием [вебхуков dbt Cloud](/docs/deploy/webhooks) и Zapier. Он основывается на встроенной [интеграции Slack](/docs/deploy/job-notifications#slack-notifications), добавляя детали сообщений об ошибках моделей и тестов в поток.
 
-Note: Because there is not a webhook for Run Cancelled, you may want to keep the standard Slack integration installed to receive those notifications. You could also use the [alternative integration](#alternate-approach) that augments the native integration without replacing it.
+Примечание: Поскольку для события "Запуск отменен" нет вебхука, вы можете оставить стандартную интеграцию Slack, чтобы получать эти уведомления. Вы также можете использовать [альтернативную интеграцию](#alternate-approach), которая дополняет встроенную интеграцию, не заменяя ее.
 
-When a dbt Cloud job finishes running, the integration will:
+Когда задание dbt Cloud завершает выполнение, интеграция будет:
 
- - Receive a webhook notification in Zapier
- - Extract the results from the dbt Cloud admin API
- - Post a brief summary of the run to a Slack channel
- - Create a threaded message attached to that post which contains any reasons that the job failed
+ - Получать уведомление вебхука в Zapier
+ - Извлекать результаты из API администратора dbt Cloud
+ - Отправлять краткое резюме выполнения в канал Slack
+ - Создавать сообщение в потоке, прикрепленное к этому посту, которое содержит любые причины, по которым задание завершилось с ошибкой
 
-![Screenshot of a message in Slack showing a summary of a dbt Cloud run which failed](/img/guides/orchestration/webhooks/zapier-slack/slack-thread-example.png)
+![Скриншот сообщения в Slack, показывающего резюме выполнения dbt Cloud, которое завершилось с ошибкой](/img/guides/orchestration/webhooks/zapier-slack/slack-thread-example.png)
 
-### Prerequisites
+### Предварительные требования
 
-In order to set up the integration, you should have familiarity with:
-- [dbt Cloud webhooks](/docs/deploy/webhooks)
+Для настройки интеграции вам следует быть знакомым с:
+- [вебхуками dbt Cloud](/docs/deploy/webhooks)
 - Zapier
 
-## Create a new Zap in Zapier
-1. Use **Webhooks by Zapier** as the Trigger, and **Catch Raw Hook** as the Event. If you don't intend to [validate the authenticity of your webhook](/docs/deploy/webhooks#validate-a-webhook) (not recommended!) then you can choose **Catch Hook** instead. 
-2. Click **Continue**, then copy the webhook URL. 
+## Создание нового Zap в Zapier
+1. Используйте **Webhooks by Zapier** в качестве триггера и **Catch Raw Hook** в качестве события. Если вы не собираетесь [проверять подлинность вашего вебхука](/docs/deploy/webhooks#validate-a-webhook) (что не рекомендуется!), вы можете выбрать **Catch Hook** вместо этого.
+2. Нажмите **Continue**, затем скопируйте URL вебхука.
 
-![Screenshot of the Zapier UI, showing the webhook URL ready to be copied](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
+![Скриншот интерфейса Zapier, показывающий URL вебхука, готовый к копированию](/img/guides/orchestration/webhooks/zapier-common/catch-raw-hook.png)
 
-## Configure a new webhook in dbt Cloud
-See [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription) for full instructions. Choose **Run completed** as the Event. You can alternatively choose **Run errored**, but you will need to account for the fact that the necessary metadata [might not be available immediately](/docs/deploy/webhooks#completed-errored-event-difference). 
+## Настройка нового вебхука в dbt Cloud
+Смотрите [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Выберите **Run completed** в качестве события. Вы также можете выбрать **Run errored**, но вам нужно будет учитывать, что необходимые метаданные [могут быть недоступны немедленно](/docs/deploy/webhooks#completed-errored-event-difference).
 
-Remember the Webhook Secret Key for later.
+Запомните секретный ключ вебхука для дальнейшего использования.
 
-Once you've tested the endpoint in dbt Cloud, go back to Zapier and click **Test Trigger**. This creates a sample webhook body based on the test event dbt Cloud sent.
+После того как вы протестируете конечную точку в dbt Cloud, вернитесь в Zapier и нажмите **Test Trigger**. Это создаст пример тела вебхука на основе тестового события, отправленного dbt Cloud.
 
-The sample body's values are hardcoded and not reflective of your project, but they give Zapier a correctly-shaped object during development. 
+Значения в примере тела закодированы и не отражают ваш проект, но они предоставляют Zapier правильно сформированный объект во время разработки.
 
-## Store secrets 
-In the next step, you will need the Webhook Secret Key from the prior step, and a dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens). 
+## Хранение секретов
+На следующем шаге вам понадобятся секретный ключ вебхука из предыдущего шага и [персональный токен доступа dbt Cloud](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) или [токен сервисной учетной записи](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens).
 
-Zapier allows you to [store secrets](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). This prevents your keys from being displayed as plaintext in the Zap code. You can access them with the [StoreClient utility](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
-
+Zapier позволяет вам [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получить к ним доступ с помощью [утилиты StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
 <Snippet path="webhook_guide_zapier_secret_store" />
 
-## Add a code action
-Select **Code by Zapier** as the App, and **Run Python** as the Event. 
+## Добавление действия кода
+Выберите **Code by Zapier** в качестве приложения и **Run Python** в качестве события.
 
-In the **Set up action** section, add two items to **Input Data**: `raw_body` and `auth_header`. Map those to the `1. Raw Body` and `1. Headers Http Authorization` fields from the previous **Catch Raw Hook** step.
+В разделе **Настроить действие** добавьте два элемента в **Input Data**: `raw_body` и `auth_header`. Свяжите их с полями `1. Raw Body` и `1. Headers Http Authorization` из предыдущего шага **Catch Raw Hook**.
 
-![Screenshot of the Zapier UI, showing the mappings of raw_body and auth_header](/img/guides/orchestration/webhooks/zapier-common/run-python.png)
+![Скриншот интерфейса Zapier, показывающий сопоставления raw_body и auth_header](/img/guides/orchestration/webhooks/zapier-common/run-python.png)
 
-In the **Code** field, paste the following code, replacing `YOUR_SECRET_HERE` with the secret you created when setting up the Storage by Zapier integration. Remember that this is not your dbt Cloud secret.
+В поле **Code** вставьте следующий код, заменив `YOUR_SECRET_HERE` на секрет, который вы создали при настройке интеграции Storage by Zapier. Помните, что это не ваш секрет dbt Cloud.
 
-This example code validates the authenticity of the request, extracts the run logs for the completed job from the Admin API, and then builds two messages: a summary message containing the outcome of each step and its duration, and a message for inclusion in a thread displaying any error messages extracted from the end-of-invocation logs created by dbt Core.
+Этот пример кода проверяет подлинность запроса, извлекает журналы выполнения завершенного задания из API администратора и затем создает два сообщения: сообщение-резюме, содержащее результат каждого шага и его продолжительность, и сообщение для включения в поток, отображающее любые сообщения об ошибках, извлеченные из журналов завершения вызова, созданных dbt Core.
 
 ```python
 import hashlib
@@ -78,65 +77,65 @@ import re
 auth_header = input_data['auth_header']
 raw_body = input_data['raw_body']
 
-# Access secret credentials
+# Доступ к секретным учетным данным
 secret_store = StoreClient('YOUR_SECRET_HERE')
 hook_secret = secret_store.get('DBT_WEBHOOK_KEY')
 api_token = secret_store.get('DBT_CLOUD_SERVICE_TOKEN')
 
-# Validate the webhook came from dbt Cloud
+# Проверка, что вебхук пришел из dbt Cloud
 signature = hmac.new(hook_secret.encode('utf-8'), raw_body.encode('utf-8'), hashlib.sha256).hexdigest()
 
 if signature != auth_header:
-  raise Exception("Calculated signature doesn't match contents of the Authorization header. This webhook may not have been sent from dbt Cloud.")
+  raise Exception("Вычисленная подпись не совпадает с содержимым заголовка Authorization. Этот вебхук, возможно, не был отправлен из dbt Cloud.")
 
 full_body = json.loads(raw_body)
 hook_data = full_body['data'] 
 
-# Steps derived from these commands won't have their error details shown inline, as they're messy
+# Шаги, полученные из этих команд, не будут иметь свои детали ошибок, так как они неаккуратные
 commands_to_skip_logs = ['dbt source', 'dbt docs']
 
-# When testing, you will want to hardcode run_id and account_id to IDs that exist; the sample webhook won't work. 
+# При тестировании вам нужно будет жестко закодировать run_id и account_id на существующие ID; пример вебхука не сработает. 
 run_id = hook_data['runId']
 account_id = full_body['accountId']
 
-# Fetch run info from the dbt Cloud Admin API
+# Получение информации о запуске из API администратора dbt Cloud
 url = f'https://YOUR_ACCESS_URL/api/v2/accounts/{account_id}/runs/{run_id}/?include_related=["run_steps"]'
 headers = {'Authorization': f'Token {api_token}'}
 run_data_response = requests.get(url, headers=headers)
 run_data_response.raise_for_status()
 run_data_results = run_data_response.json()['data']
 
-# Overall run summary
+# Общее резюме выполнения
 step_summary_post = f"""
-*<{run_data_results['href']}|{hook_data['runStatus']} for Run #{run_id} on Job \"{hook_data['jobName']}\">*
+*<{run_data_results['href']}|{hook_data['runStatus']} для Запуска #{run_id} по Заданию \"{hook_data['jobName']}\">*
 
-*Environment:* {hook_data['environmentName']} | *Trigger:* {hook_data['runReason']} | *Duration:* {run_data_results['duration_humanized']}
+*Среда:* {hook_data['environmentName']} | *Триггер:* {hook_data['runReason']} | *Продолжительность:* {run_data_results['duration_humanized']}
 
 """
 
 threaded_errors_post = ""
 
-# Step-specific summaries
+# Резюме по шагам
 for step in run_data_results['run_steps']:
   if step['status_humanized'] == 'Success':
     step_summary_post += f"""
-✅ {step['name']} ({step['status_humanized']} in {step['duration_humanized']})
+✅ {step['name']} ({step['status_humanized']} за {step['duration_humanized']})
 """
   else:
     step_summary_post += f"""
-❌ {step['name']} ({step['status_humanized']} in {step['duration_humanized']})
+❌ {step['name']} ({step['status_humanized']} за {step['duration_humanized']})
 """
 
-    # Don't try to extract info from steps that don't have well-formed logs
+    # Не пытайтесь извлекать информацию из шагов, которые не имеют хорошо оформленных журналов
     show_logs = not any(cmd in step['name'] for cmd in commands_to_skip_logs)
     if show_logs:
       full_log = step['logs']
-      # Remove timestamp and any colour tags
+      # Удалить временные метки и любые цветовые теги
       full_log = re.sub('\x1b?\[[0-9]+m[0-9:]*', '', full_log)
     
-      summary_start = re.search('(?:Completed with \d+ error.* and \d+ warnings?:|Database Error|Compilation Error|Runtime Error)', full_log)
+      summary_start = re.search('(?:Завершено с \d+ ошибками.* и \d+ предупреждениями?:|Ошибка базы данных|Ошибка компиляции|Ошибка выполнения)', full_log)
     
-      line_items = re.findall('(^.*(?:Failure|Error) in .*\n.*\n.*)', full_log, re.MULTILINE)
+      line_items = re.findall('(^.*(?:Неудача|Ошибка) в .*\n.*\n.*)', full_log, re.MULTILINE)
 
       if not summary_start:
         continue
@@ -144,8 +143,8 @@ for step in run_data_results['run_steps']:
       threaded_errors_post += f"""
 *{step['name']}*
 """    
-      # If there are no line items, the failure wasn't related to dbt nodes, and we want the whole rest of the message. 
-      # If there are, then we just want the summary line and then to log out each individual node's error.
+      # Если нет элементов строки, значит, сбой не был связан с узлами dbt, и мы хотим всю остальную часть сообщения. 
+      # Если есть, то мы просто хотим строку резюме и затем вывести ошибку каждого отдельного узла.
       if len(line_items) == 0:
         relevant_log = f'```{full_log[summary_start.start():]}```'
       else:
@@ -158,105 +157,104 @@ for step in run_data_results['run_steps']:
 
 send_error_thread = len(threaded_errors_post) > 0
 
-# Zapier looks for the `output` dictionary for use in subsequent steps
+# Zapier ищет словарь `output` для использования в последующих шагах
 output = {'step_summary_post': step_summary_post, 'send_error_thread': send_error_thread, 'threaded_errors_post': threaded_errors_post}
 ```
 
-## Add Slack actions in Zapier
-Select **Slack** as the App, and **Send Channel Message** as the Action.
+## Добавление действий Slack в Zapier
+Выберите **Slack** в качестве приложения и **Send Channel Message** в качестве действия.
 
-In the **Action** section, choose which **Channel** to post to. Set the **Message Text** field to **2. Step Summary Post** from the Run Python in Code by Zapier output.
+В разделе **Действие** выберите, в какой **Канал** отправить сообщение. Установите поле **Текст сообщения** на **2. Step Summary Post** из вывода Run Python в Code by Zapier.
 
-Configure the other options as you prefer (for example, **Bot Name** and **Bot Icon**). 
+Настройте другие параметры по своему усмотрению (например, **Имя бота** и **Иконка бота**).
 
-![Screenshot of the Zapier UI, showing the mappings of prior steps to a Slack message](/img/guides/orchestration/webhooks/zapier-slack/parent-slack-config.png)
+![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов к сообщению Slack](/img/guides/orchestration/webhooks/zapier-slack/parent-slack-config.png)
 
-Add another step, **Filter**. In the **Filter setup and testing** section, set the **Field** to **2. Send Error Thread** and the **condition** to **(Boolean) Is true**. This prevents the Zap from failing if the job succeeded and you try to send an empty Slack message in the next step. 
+Добавьте еще один шаг, **Filter**. В разделе **Настройка и тестирование фильтра** установите **Поле** на **2. Send Error Thread** и **условие** на **(Boolean) Is true**. Это предотвращает сбой Zap, если задание завершилось успешно, и вы пытаетесь отправить пустое сообщение в Slack на следующем шаге.
 
-![Screenshot of the Zapier UI, showing the correctly configured Filter step](/img/guides/orchestration/webhooks/zapier-slack/filter-config.png)
+![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг фильтра](/img/guides/orchestration/webhooks/zapier-slack/filter-config.png)
 
-Add another **Send Channel Message in Slack** action. In the **Action** section, choose the same channel as last time, but set the **Message Text** to **2. Threaded Errors Post** from the same Run Python step. Set the **Thread** value to **3. Message Ts**, which is the timestamp of the post created by the first Slack action. This tells Zapier to add this post as a threaded reply to the main message, which prevents the full (potentially long) output from cluttering your channel. 
+Добавьте еще одно действие **Send Channel Message in Slack**. В разделе **Действие** выберите тот же канал, что и в прошлый раз, но установите **Текст сообщения** на **2. Threaded Errors Post** из того же шага Run Python. Установите значение **Thread** на **3. Message Ts**, которое является временной меткой сообщения, созданного первым действием Slack. Это говорит Zapier добавить этот пост как ответ в потоке к основному сообщению, что предотвращает загромождение вашего канала полным (возможно, длинным) выводом.
 
-![Screenshot of the Zapier UI, showing the mappings of prior steps to a Slack message](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config.png)
+![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов к сообщению Slack](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config.png)
 
-## Test and deploy
+## Тестирование и развертывание
 
-When you're done testing your Zap, make sure that your `run_id` and `account_id` are no longer hardcoded in the Code step, then publish your Zap.
+Когда вы закончите тестировать свой Zap, убедитесь, что ваши `run_id` и `account_id` больше не закодированы в шаге кода, затем опубликуйте свой Zap.
 
-## Alternately, use a dbt Cloud app Slack message to trigger Zapier
+## Альтернативный способ: используйте сообщение приложения dbt Cloud в Slack для запуска Zapier
 
-Instead of using a webhook as your trigger, you can keep the existing dbt Cloud app installed in your Slack workspace and use its messages being posted to your channel as the trigger. In this case, you can skip validating the webhook and only need to load the context from the thread. 
+Вместо использования вебхука в качестве триггера вы можете оставить существующее приложение dbt Cloud, установленное в вашем рабочем пространстве Slack, и использовать его сообщения, публикуемые в вашем канале, в качестве триггера. В этом случае вы можете пропустить проверку вебхука и только загрузить контекст из потока.
 
-### 1. Create a new Zap in Zapier
-Use **Slack** as the initiating app, and **New Message Posted to Channel** as the Trigger. In the **Trigger** section, select the channel where your Slack alerts are being posted, and set **Trigger for Bot Messages?** to **Yes**.
+### 1. Создайте новый Zap в Zapier
+Используйте **Slack** в качестве инициирующего приложения и **New Message Posted to Channel** в качестве триггера. В разделе **Триггер** выберите канал, в который отправляются ваши уведомления Slack, и установите **Триггер для сообщений бота?** на **Да**.
 
-![Screenshot of the Zapier UI, showing the correctly configured Message trigger step](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-config.png)
+![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг триггера сообщения](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-config.png)
 
-Test your Zap to find an example record. You might need to load additional samples until you get one that relates to a failed job, depending on whether you post all job events to Slack or not. 
+Протестируйте свой Zap, чтобы найти пример записи. Возможно, вам придется загрузить дополнительные образцы, пока вы не получите один, относящийся к сбойному заданию, в зависимости от того, отправляете ли вы все события заданий в Slack или нет.
 
-### 2. Add a Filter step
-Add a **Filter** step with the following conditions: 
-- **1. Text contains failed on Job**
+### 2. Добавьте шаг фильтра
+Добавьте шаг **Filter** с следующими условиями: 
+- **1. Text содержит failed on Job**
 - **1. User Is Bot Is true**
 - **1. User Name Exactly matches dbt Cloud**
 
-![Screenshot of the Zapier UI, showing the correctly configured Filter step](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-filter.png)
+![Скриншот интерфейса Zapier, показывающий правильно настроенный шаг фильтра](/img/guides/orchestration/webhooks/zapier-slack/message-trigger-filter.png)
 
-### 3. Extract the run ID 
-Add a **Format** step with the **Event** of **Text**, and the Action **Extract Number**. For the **Input**, select **1. Text**. 
+### 3. Извлеките идентификатор запуска 
+Добавьте шаг **Format** с **Событием** **Text** и действием **Extract Number**. Для **Входных данных** выберите **1. Text**. 
 
-![Screenshot of the Zapier UI, showing the Transform step configured to extract a number from the Slack message's Text property](/img/guides/orchestration/webhooks/zapier-slack/extract-number.png)
+![Скриншот интерфейса Zapier, показывающий шаг преобразования, настроенный для извлечения числа из свойства текста сообщения Slack](/img/guides/orchestration/webhooks/zapier-slack/extract-number.png)
 
-Test your step and validate that the run ID has been correctly extracted.
+Протестируйте свой шаг и убедитесь, что идентификатор запуска был правильно извлечен.
 
-### 4. Add a Delay
-Sometimes dbt Cloud posts the message about the run failing before the run's artifacts are available through the API. For this reason, it's recommended to add a brief delay to increase the likelihood that the data is available. On certain plans, Zapier will automatically retry a job that fails from to a 404 error, but its standdown period is longer than is normally necessary so the context will be missing from your thread for longer. 
+### 4. Добавьте задержку
+Иногда dbt Cloud публикует сообщение о сбое выполнения до того, как артефакты выполнения станут доступными через API. По этой причине рекомендуется добавить небольшую задержку, чтобы увеличить вероятность того, что данные будут доступны. На некоторых тарифных планах Zapier автоматически повторит задание, которое завершилось с ошибкой 404, но его период ожидания длиннее, чем обычно необходимо, поэтому контекст будет отсутствовать в вашем потоке дольше.
 
-A one-minute delay is generally sufficient. 
+Задержка в одну минуту обычно достаточна.
 
-### 5. Store secrets
-In the next step, you will need either a dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens). 
+### 5. Хранение секретов
+На следующем шаге вам понадобится либо [персональный токен доступа dbt Cloud](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens), либо [токен сервисной учетной записи](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens).
 
-Zapier allows you to [store secrets](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). This prevents your keys from being displayed as plaintext in the Zap code. You can access them with the [StoreClient utility](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
+Zapier позволяет вам [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получить к ним доступ с помощью [утилиты StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
-This guide assumes the name for the secret key is `DBT_CLOUD_SERVICE_TOKEN`. If you're using a different name, make sure you update all references to it in the sample code.
+Этот гид предполагает, что имя секретного ключа — `DBT_CLOUD_SERVICE_TOKEN`. Если вы используете другое имя, убедитесь, что вы обновили все ссылки на него в примере кода.
 
-This guide uses a short-lived code action to store the secrets, but you can also use a tool like Postman to interact with the [REST API](https://store.zapier.com/) or create a separate Zap and call the [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
+Этот гид использует краткосрочное действие кода для хранения секретов, но вы также можете использовать инструмент, такой как Postman, для взаимодействия с [REST API](https://store.zapier.com/) или создать отдельный Zap и вызвать [действие Set Value](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
-#### a. Create a Storage by Zapier connection
-If you haven't already got one, go to [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) and create a new connection.  Remember the UUID secret you generate for later.
+#### a. Создайте соединение Storage by Zapier
+Если у вас его еще нет, перейдите по адресу [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) и создайте новое соединение. Запомните сгенерированный вами UUID секрет для дальнейшего использования.
 
-#### b. Add a temporary code step
-Choose **Run Python** as the Event. Run the following code: 
+#### b. Добавьте временный шаг кода
+Выберите **Run Python** в качестве события. Запустите следующий код: 
 ```python 
-store = StoreClient('abc123') #replace with your UUID secret
-store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123') #replace with your dbt Cloud API token
+store = StoreClient('abc123') #замените на ваш UUID секрет
+store.set('DBT_CLOUD_SERVICE_TOKEN', 'abc123') #замените на ваш токен API dbt Cloud
 ```
-Test the step. You can delete this Action when the test succeeds. The key will remain stored as long as it is accessed at least once every three months.
+Протестируйте шаг. Вы можете удалить это действие, когда тест пройдет успешно. Ключ останется сохраненным, пока он не будет доступен хотя бы раз каждые три месяца.
 
-### 6. Add a Code action
+### 6. Добавьте действие кода
 
-Select **Code by Zapier** as the App, and **Run Python** as the Event. 
+Выберите **Code by Zapier** в качестве приложения и **Run Python** в качестве события. 
 
-This step is very similar to the one described in the main example, but you can skip a lot of the initial validation work. 
+Этот шаг очень похож на описанный в основном примере, но вы можете пропустить большую часть начальной проверки.
 
-In the **Action** section, add two items to **Input Data**: `run_id` and `account_id`. Map those to the `3. Output` property and your hardcoded dbt Cloud Account ID, respectively.
+В разделе **Действие** добавьте два элемента в **Input Data**: `run_id` и `account_id`. Свяжите их с свойством `3. Output` и вашим жестко закодированным идентификатором учетной записи dbt Cloud соответственно.
 
-![Screenshot of the Zapier UI, showing the mappings of raw_body and auth_header](/img/guides/orchestration/webhooks/zapier-slack/code-example-alternate.png)
+![Скриншот интерфейса Zapier, показывающий сопоставления raw_body и auth_header](/img/guides/orchestration/webhooks/zapier-slack/code-example-alternate.png)
 
+В поле **Code** вставьте следующий код, заменив `YOUR_SECRET_HERE` на секрет, который вы создали при настройке интеграции Storage by Zapier. Помните, что это не ваш секрет dbt Cloud.
 
-In the **Code** field, paste the following code, replacing `YOUR_SECRET_HERE` with the secret you created when setting up the Storage by Zapier integration. Remember that this is not your dbt Cloud secret.
-
-This example code extracts the run logs for the completed job from the Admin API, and then builds a message displaying any error messages extracted from the end-of-invocation logs created by dbt Core (which will be posted in a thread).
+Этот пример кода извлекает журналы выполнения завершенного задания из API администратора и затем создает сообщение, отображающее любые сообщения об ошибках, извлеченные из журналов завершения вызова, созданных dbt Core (которые будут опубликованы в потоке).
 
 ```python
 import re
 
-# Access secret credentials
+# Доступ к секретным учетным данным
 secret_store = StoreClient('YOUR_SECRET_HERE')
 api_token = secret_store.get('DBT_CLOUD_SERVICE_TOKEN')
 
-# Steps derived from these commands won't have their error details shown inline, as they're messy
+# Шаги, полученные из этих команд, не будут иметь свои детали ошибок, так как они неаккуратные
 commands_to_skip_logs = ['dbt source', 'dbt docs']
 run_id = input_data['run_id']
 account_id = input_data['account_id']
@@ -274,20 +272,20 @@ for step in results['run_steps']:
     continue
   if step['status_humanized'] != 'Success':
     full_log = step['logs']
-    # Remove timestamp and any colour tags
+    # Удалить временные метки и любые цветовые теги
     full_log = re.sub('\x1b?\[[0-9]+m[0-9:]*', '', full_log)
     
-    summary_start = re.search('(?:Completed with \d+ error.* and \d+ warnings?:|Database Error|Compilation Error|Runtime Error)', full_log)
+    summary_start = re.search('(?:Завершено с \d+ ошибками.* и \d+ предупреждениями?:|Ошибка базы данных|Ошибка компиляции|Ошибка выполнения)', full_log)
     
-    line_items = re.findall('(^.*(?:Failure|Error) in .*\n.*\n.*)', full_log, re.MULTILINE)
+    line_items = re.findall('(^.*(?:Неудача|Ошибка) в .*\n.*\n.*)', full_log, re.MULTILINE)
     if not summary_start:
       continue
       
     threaded_errors_post += f"""
 *{step['name']}*
 """    
-    # If there are no line items, the failure wasn't related to dbt nodes, and we want the whole rest of the message. 
-    # If there are, then we just want the summary line and then to log out each individual node's error.
+    # Если нет элементов строки, значит, сбой не был связан с узлами dbt, и мы хотим всю остальную часть сообщения. 
+    # Если есть, то мы просто хотим строку резюме и затем вывести ошибку каждого отдельного узла.
     if len(line_items) == 0:
       relevant_log = f'```{full_log[summary_start.start():]}```'
     else:
@@ -300,16 +298,16 @@ for step in results['run_steps']:
 
 output = {'threaded_errors_post': threaded_errors_post}
 ```
-### 7. Add Slack action in Zapier
+### 7. Добавьте действие Slack в Zapier
 
-Add a **Send Channel Message in Slack** action. In the **Action** section, set the channel to **1. Channel Id**, which is the channel that the triggering message was posted in. 
+Добавьте действие **Send Channel Message in Slack**. В разделе **Действие** установите канал на **1. Channel Id**, который является каналом, в котором было опубликовано триггерное сообщение. 
 
-Set the **Message Text** to **5. Threaded Errors Post** from the Run Python step. Set the **Thread** value to **1. Ts**, which is the timestamp of the triggering Slack post. This tells Zapier to add this post as a threaded reply to the main message, which prevents the full (potentially long) output from cluttering your channel. 
+Установите **Текст сообщения** на **5. Threaded Errors Post** из шага Run Python. Установите значение **Thread** на **1. Ts**, которое является временной меткой триггерного сообщения Slack. Это говорит Zapier добавить этот пост как ответ в потоке к основному сообщению, что предотвращает загромождение вашего канала полным (возможно, длинным) выводом.
 
-![Screenshot of the Zapier UI, showing the mappings of prior steps to a Slack message](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config-alternate.png)
+![Скриншот интерфейса Zapier, показывающий сопоставления предыдущих шагов к сообщению Slack](/img/guides/orchestration/webhooks/zapier-slack/thread-slack-config-alternate.png)
 
-### 8. Test and deploy
+### 8. Тестирование и развертывание
 
-When you're done testing your Zap, publish it.
+Когда вы закончите тестировать свой Zap, опубликуйте его.
 
 </div>

@@ -1,10 +1,10 @@
 ---
-title: Model properties
+title: Свойства моделей
 ---
 
-Models properties can be declared in `.yml` files in your `models/` directory (as defined by the [`model-paths` config](/reference/project-configs/model-paths)).
+Свойства моделей могут быть объявлены в `.yml` файлах в директории `models/` (как определено в [конфигурации `model-paths`](/reference/project-configs/model-paths)).
 
-You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `models/` directory.
+Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `models/`.
 
 <File name='models/<filename>.yml'>
 
@@ -16,7 +16,7 @@ models:
     [description](/reference/resource-properties/description): <markdown_string>
     [docs](/reference/resource-configs/docs):
       show: true | false
-      node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [latest_version](/reference/resource-properties/latest_version): <version_identifier>
     [deprecation_date](/reference/resource-properties/deprecation_date): <YAML_DateTime>
     [access](/reference/resource-configs/access): private | protected | public
@@ -26,9 +26,9 @@ models:
       - <constraint>
     [tests](/reference/resource-properties/data-tests):
       - <test>
-      - ... # declare additional data tests
+      - ... # объявите дополнительные тесты данных
     [columns](/reference/resource-properties/columns):
-      - name: <column_name> # required
+      - name: <column_name> # обязательно
         [description](/reference/resource-properties/description): <markdown_string>
         [meta](/reference/resource-configs/meta): {<dictionary>}
         [quote](/reference/resource-properties/quote): true | false
@@ -36,19 +36,19 @@ models:
           - <constraint>
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional data tests
+          - ... # объявите дополнительные тесты данных
         [tags](/reference/resource-configs/tags): [<string>]
         
-        # only required in conjunction with time_spine key
-        granularity: <[any supported time granularity](/docs/build/dimensions?dimension=time_gran)> 
+        # требуется только в сочетании с ключом time_spine
+        granularity: <[любая поддерживаемая временная гранулярность](/docs/build/dimensions?dimension=time_gran)> 
 
-      - name: ... # declare properties of additional columns
+      - name: ... # объявите свойства дополнительных столбцов
 
     [time_spine](/docs/build/metricflow-time-spine):
       standard_granularity_column: <column_name>
 
     [versions](/reference/resource-properties/versions):
-      - [v](/reference/resource-properties/versions#v): <version_identifier> # required
+      - [v](/reference/resource-properties/versions#v): <version_identifier> # обязательно
         [defined_in](/reference/resource-properties/versions#defined-in): <definition_file_name>
         [description](/reference/resource-properties/description): <markdown_string>
         [docs](/reference/resource-configs/docs):
@@ -60,23 +60,22 @@ models:
           [<model_config>](/reference/model-configs): <config_value>
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional data tests
+          - ... # объявите дополнительные тесты данных
         columns:
-          # include/exclude columns from the top-level model properties
+          # включить/исключить столбцы из свойств модели верхнего уровня
           - [include](/reference/resource-properties/include-exclude): <include_value>
             [exclude](/reference/resource-properties/include-exclude): <exclude_list>
-          # specify additional columns
-          - name: <column_name> # required
+          # укажите дополнительные столбцы
+          - name: <column_name> # обязательно
             [quote](/reference/resource-properties/quote): true | false
             [constraints](/reference/resource-properties/constraints):
               - <constraint>
             [tests](/reference/resource-properties/data-tests):
               - <test>
-              - ... # declare additional data tests
+              - ... # объявите дополнительные тесты данных
             [tags](/reference/resource-configs/tags): [<string>]
-        - v: ... # declare additional versions
+        - v: ... # объявите дополнительные версии
 
 ```
 
 </File>
-

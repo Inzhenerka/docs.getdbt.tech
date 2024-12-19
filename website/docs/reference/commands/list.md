@@ -1,13 +1,13 @@
 ---
-title: "About dbt ls (list) command"
-sidebar_label: "ls (list)"
-description: "Read this guide on how dbt's ls (list) command can be used to list resources in your dbt project."
+title: "О команде dbt ls (список)"
+sidebar_label: "ls (список)"
+description: "Прочитайте это руководство о том, как команда dbt ls (список) может быть использована для перечисления ресурсов в вашем проекте dbt."
 id: "list"
 ---
 
-The `dbt ls` command lists resources in your dbt project. It accepts selector arguments that are similar to those provided in [dbt run](/reference/commands/run). `dbt list` is an alias for `dbt ls`. While `dbt ls` will read your [connection profile](/docs/core/connect-data-platform/connection-profiles) to resolve [`target`](/reference/dbt-jinja-functions/target)-specific logic, this command will not connect to your database or run any queries.
+Команда `dbt ls` перечисляет ресурсы в вашем проекте dbt. Она принимает аргументы селектора, которые аналогичны тем, что предоставляются в [dbt run](/reference/commands/run). `dbt list` является псевдонимом для `dbt ls`. Хотя `dbt ls` будет читать ваш [профиль подключения](/docs/core/connect-data-platform/connection-profiles) для разрешения логики, специфичной для [`target`](/reference/dbt-jinja-functions/target), эта команда не будет подключаться к вашей базе данных или выполнять какие-либо запросы.
 
-### Usage
+### Использование
 
 ```
 dbt ls
@@ -20,22 +20,22 @@ dbt ls
      [--output-keys KEY_NAME [KEY_NAME]]
 ```
 
-See [resource selection syntax](/reference/node-selection/syntax) for more information on how to select resources in dbt
+Смотрите [синтаксис выбора ресурсов](/reference/node-selection/syntax) для получения дополнительной информации о том, как выбирать ресурсы в dbt.
 
-**Arguments**:
-- `--resource-type`: This flag restricts the "resource types" returned by dbt in the `dbt ls` command. By default, all resource types are included in the results of `dbt ls` except for the analysis type.
-- `--select`: This flag specifies one or more selection-type arguments used to filter the nodes returned by the `dbt ls` command
-- `--models`: Like the `--select` flag, this flag is used to select nodes. It implies `--resource-type=model`, and will only return models in the results of the `dbt ls` command. Supported for backwards compatibility only.
-- `--exclude`: Specify selectors that should be _excluded_ from the list of returned nodes.
-- `--selector`: This flag specifies one named selector, defined in a `selectors.yml` file.
-- `--output`: This flag controls the format of output from the `dbt ls` command.
-- `--output-keys`: If `--output json`, this flag controls which node properties are included in the output.
+**Аргументы**:
+- `--resource-type`: Этот флаг ограничивает "типы ресурсов", возвращаемых dbt в команде `dbt ls`. По умолчанию все типы ресурсов включены в результаты `dbt ls`, за исключением типа анализа.
+- `--select`: Этот флаг указывает один или несколько аргументов типа выбора, используемых для фильтрации узлов, возвращаемых командой `dbt ls`.
+- `--models`: Как и флаг `--select`, этот флаг используется для выбора узлов. Он подразумевает `--resource-type=model` и будет возвращать только модели в результатах команды `dbt ls`. Поддерживается только для обратной совместимости.
+- `--exclude`: Укажите селекторы, которые должны быть _исключены_ из списка возвращаемых узлов.
+- `--selector`: Этот флаг указывает один именованный селектор, определенный в файле `selectors.yml`.
+- `--output`: Этот флаг управляет форматом вывода команды `dbt ls`.
+- `--output-keys`: Если `--output json`, этот флаг управляет тем, какие свойства узлов включены в вывод.
 
-Note that the `dbt ls` command does not include models which are disabled or schema tests which depend on models which are disabled. All returned resources will have a `config.enabled` value of `true`.
+Обратите внимание, что команда `dbt ls` не включает модели, которые отключены, или схемные тесты, которые зависят от моделей, которые отключены. Все возвращаемые ресурсы будут иметь значение `config.enabled` равным `true`.
 
-### Example usage
+### Примеры использования
 
-**Listing models by package**
+**Перечисление моделей по пакету**
 ```
 $ dbt ls --select snowplow.*
 snowplow.snowplow_base_events
@@ -46,7 +46,7 @@ snowplow.snowplow_sessions
 ...
 ```
 
-**Listing tests by tag name**
+**Перечисление тестов по имени тега**
 ```
 $ dbt ls --select tag:nightly --resource-type test
 my_project.schema_test.not_null_orders_order_id
@@ -56,14 +56,14 @@ my_project.schema_test.unique_products_product_id
 ...
 ```
 
-**Listing schema tests of incremental models**
+**Перечисление схемных тестов инкрементальных моделей**
 ```
 $ dbt ls --select config.materialized:incremental,test_type:schema
 model.my_project.logs_parsed
 model.my_project.events_categorized
 ```
 
-**Listing JSON output**
+**Перечисление JSON-вывода**
 ```
 $ dbt ls --select snowplow.* --output json
 {"name": "snowplow_events", "resource_type": "model", "package_name": "snowplow",  ...}
@@ -71,23 +71,23 @@ $ dbt ls --select snowplow.* --output json
 ...
 ```
 
-**Listing JSON output with custom keys**
+**Перечисление JSON-вывода с пользовательскими ключами**
 
 ```
 $ dbt ls --select snowplow.* --output json --output-keys "name resource_type description"
-{"name": "snowplow_events", "description": "This is a pretty cool model",  ...}
-{"name": "snowplow_page_views", "description": "This model is even cooler",  ...}
+{"name": "snowplow_events", "description": "Это довольно крутая модель",  ...}
+{"name": "snowplow_page_views", "description": "Эта модель еще круче",  ...}
 ...
 ```
 
-**Listing Semantic models**
+**Перечисление семантических моделей**
 
-List all resources upstream of your orders semantic model:
+Перечислите все ресурсы, находящиеся выше вашей семантической модели заказов:
 ```
 dbt ls -s +semantic_model:orders
 ```
 
-**Listing file paths**
+**Перечисление путей к файлам**
 ```
 dbt ls --select snowplow.* --output path
 models/base/snowplow_base_events.sql

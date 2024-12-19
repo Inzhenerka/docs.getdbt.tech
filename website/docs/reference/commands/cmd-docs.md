@@ -1,46 +1,46 @@
 ---
-title: "About dbt docs commands"
+title: "О командах dbt docs"
 sidebar_label: "docs"
 id: "cmd-docs"
 ---
 
-`dbt docs` has two supported subcommands: `generate` and `serve`.
+`dbt docs` имеет две поддерживаемые подкоманды: `generate` и `serve`.
 
 ### dbt docs generate
 
-The command is responsible for generating your project's documentation website by
+Эта команда отвечает за генерацию веб-сайта документации вашего проекта, выполняя следующие действия:
 
-1. Copying the website `index.html` file into the `target/` directory.
-2. Compiling the resources in your project, so that their `compiled_code` will be included in [`manifest.json`](/reference/artifacts/manifest-json).
-3. Running queries against database metadata to produce the [`catalog.json`](/reference/artifacts/catalog-json) file, which contains metadata about the tables and <Term id="view">views</Term> produced by the models in your project.
+1. Копирует файл `index.html` веб-сайта в директорию `target/`.
+2. Компилирует ресурсы в вашем проекте, чтобы их `compiled_code` был включен в [`manifest.json`](/reference/artifacts/manifest-json).
+3. Выполняет запросы к метаданным базы данных для создания файла [`catalog.json`](/reference/artifacts/catalog-json), который содержит метаданные о таблицах и <Term id="view">представлениях</Term>, созданных моделями в вашем проекте.
 
-**Example**:
+**Пример**:
 
 ```
 dbt docs generate
 ```
 
-Use the `--select` argument to limit the nodes included within `catalog.json`. When this flag is provided, step (3) will be restricted to the selected nodes. All other nodes will be excluded. Step (2) is unaffected.
+Используйте аргумент `--select`, чтобы ограничить узлы, включенные в `catalog.json`. Когда этот флаг установлен, шаг (3) будет ограничен выбранными узлами. Все остальные узлы будут исключены. Шаг (2) не затрагивается.
 
-**Example**:
+**Пример**:
 
 ```shell
 dbt docs generate --select +orders
 ```
 
-Use the `--no-compile` argument to skip re-compilation. When this flag is provided, `dbt docs generate` will skip step (2) described above.
+Используйте аргумент `--no-compile`, чтобы пропустить повторную компиляцию. Когда этот флаг установлен, `dbt docs generate` пропустит шаг (2), описанный выше.
 
-**Example**:
+**Пример**:
 
 ```
 dbt docs generate --no-compile
 ```
 
-Use the `--empty-catalog` argument to skip running the database queries to populate `catalog.json`. When this flag is provided, `dbt docs generate` will skip step (3) described above.
+Используйте аргумент `--empty-catalog`, чтобы пропустить выполнение запросов к базе данных для заполнения `catalog.json`. Когда этот флаг установлен, `dbt docs generate` пропустит шаг (3), описанный выше.
 
-This is not recommended for production environments, as it means that your documentation will be missing information gleaned from database metadata (the full set of columns in each table, and statistics about those tables). It can speed up `docs generate` in development, when you just want to visualize lineage and other information defined within your project. To learn how to build your documentation in dbt Cloud, refer to [build your docs in dbt Cloud](/docs/collaborate/build-and-view-your-docs).
+Это не рекомендуется для производственных сред, так как это означает, что ваша документация будет лишена информации, полученной из метаданных базы данных (полный набор столбцов в каждой таблице и статистика о этих таблицах). Это может ускорить `docs generate` в процессе разработки, когда вы просто хотите визуализировать происхождение и другую информацию, определенную в вашем проекте. Чтобы узнать, как создать вашу документацию в dbt Cloud, обратитесь к [созданию документации в dbt Cloud](/docs/collaborate/build-and-view-your-docs).
 
-**Example**:
+**Пример**:
 
 ```
 dbt docs generate --empty-catalog
@@ -48,11 +48,11 @@ dbt docs generate --empty-catalog
 
 ### dbt docs serve
 
-This command starts a webserver on port 8080 to serve your documentation locally and opens the documentation site in your default browser. The webserver is rooted in your `target/` directory. Be sure to run `dbt docs generate` before `dbt docs serve` because the `generate` command produces a [catalog metadata artifact](/reference/artifacts/catalog-json) that the `serve` command depends upon. You will see an error message if the catalog is missing.
+Эта команда запускает веб-сервер на порту 8080 для локального обслуживания вашей документации и открывает сайт документации в вашем браузере по умолчанию. Веб-сервер основан в вашей директории `target/`. Обязательно выполните `dbt docs generate` перед `dbt docs serve`, так как команда `generate` создает [артефакт метаданных каталога](/reference/artifacts/catalog-json), от которого зависит команда `serve`. Вы увидите сообщение об ошибке, если каталог отсутствует.
 
-Use the `dbt docs serve` command if you're developing locally with the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) or [dbt Core](/docs/core/installation-overview). The [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) doesn't support this command.
+Используйте команду `dbt docs serve`, если вы разрабатываете локально с помощью [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [dbt Core](/docs/core/installation-overview). [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) не поддерживает эту команду.
 
-**Usage:**
+**Использование:**
 
 <VersionBlock lastVersion="1.8.1">
 ```
@@ -72,9 +72,9 @@ dbt docs serve [--profiles-dir PROFILES_DIR]
 ```
 </VersionBlock>
 
-You may specify a different port using the `--port` flag.
+Вы можете указать другой порт, используя флаг `--port`.
 
-**Example**:
+**Пример**:
 
 ```
 dbt docs serve --port 8001
@@ -82,13 +82,13 @@ dbt docs serve --port 8001
 
 <VersionBlock firstVersion="1.8.2">
 
-You may specify a different host using the `--host` flag.
+Вы можете указать другой хост, используя флаг `--host`.
 
-**Example**:
+**Пример**:
 
 ```shell
 dbt docs serve --host ""
 ```
 
-As of 1.8.1, the default host is `127.0.0.1`. For versions 1.8.0 and prior, the default host was `""`.
+Начиная с версии 1.8.1, хост по умолчанию — `127.0.0.1`. Для версий 1.8.0 и ранее хост по умолчанию был `""`.
 </VersionBlock>

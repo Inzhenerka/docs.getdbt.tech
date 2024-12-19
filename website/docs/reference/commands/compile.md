@@ -1,48 +1,48 @@
 ---
-title: "About dbt compile command"
+title: "О команде dbt compile"
 sidebar_label: "compile"
 id: "compile"
 ---
 
-`dbt compile` generates executable SQL from source `model`, `test`, and `analysis` files. You can find these compiled SQL files in the `target/` directory of your dbt project.
+`dbt compile` генерирует исполняемый SQL из исходных файлов `model`, `test` и `analysis`. Вы можете найти эти скомпилированные SQL файлы в директории `target/` вашего проекта dbt.
 
-The `compile` command is useful for:
+Команда `compile` полезна для:
 
-1. Visually inspecting the compiled output of model files. This is useful for validating complex jinja logic or macro usage.
-2. Manually running compiled SQL. While debugging a model or schema test, it's often useful to execute the underlying `select` statement to find the source of the bug.
-3. Compiling `analysis` files. Read more about analysis files [here](/docs/build/analyses).
+1. Визуальной проверки скомпилированного вывода файлов модели. Это полезно для проверки сложной логики jinja или использования макросов.
+2. Ручного выполнения скомпилированного SQL. При отладке модели или теста схемы часто полезно выполнить основное выражение `select`, чтобы найти источник ошибки.
+3. Компиляции файлов `analysis`. Узнайте больше о файлах анализа [здесь](/docs/build/analyses).
 
-Some common misconceptions:
-- `dbt compile` is _not_ a pre-requisite of `dbt run`, or other building commands. Those commands will handle compilation themselves.
-- If you just want dbt to read and validate your project code, without connecting to the data warehouse, use `dbt parse` instead.
+Некоторые распространенные заблуждения:
+- `dbt compile` _не является_ предварительным требованием для `dbt run` или других команд сборки. Эти команды сами обрабатывают компиляцию.
+- Если вы просто хотите, чтобы dbt прочитал и проверил ваш код проекта, не подключаясь к хранилищу данных, используйте вместо этого `dbt parse`.
 
-### Interactive compile
+### Интерактивная компиляция
 
-Starting in dbt v1.5, `compile` can be "interactive" in the CLI, by displaying the compiled code of a node or arbitrary dbt-SQL query:
-- `--select` a specific node _by name_
-- `--inline` an arbitrary dbt-SQL query
+Начиная с dbt v1.5, `compile` может быть "интерактивным" в CLI, отображая скомпилированный код узла или произвольного dbt-SQL запроса:
+- `--select` конкретный узел _по имени_
+- `--inline` произвольный dbt-SQL запрос
 
-This will log the compiled SQL to the terminal, in addition to writing to the `target/` directory.
+Это будет записывать скомпилированный SQL в терминал, помимо записи в директорию `target/`.
 
-For example:
+Например:
 
 ```bash
 dbt compile --select "stg_orders"                           
 dbt compile --inline "select * from {{ ref('raw_orders') }}"
 ```
 
-returns the following:
+возвращает следующее:
 
 ```bash
 dbt compile --select "stg_orders"                           
 
-21:17:09  Running with dbt=1.7.5
-21:17:09  Registered adapter: postgres=1.7.5
-21:17:09  Found 5 models, 3 seeds, 20 tests, 0 sources, 0 exposures, 0 metrics, 401 macros, 0 groups, 0 semantic models
+21:17:09  Запуск с dbt=1.7.5
+21:17:09  Зарегистрированный адаптер: postgres=1.7.5
+21:17:09  Найдено 5 моделей, 3 семени, 20 тестов, 0 источников, 0 экспозиций, 0 метрик, 401 макросов, 0 групп, 0 семантических моделей
 21:17:09  
-21:17:09 Concurrency: 24 threads (target='dev')
+21:17:09 Параллелизм: 24 потока (target='dev')
 21:17:09  
-21:17:09  Compiled node 'stg_orders' is:
+21:17:09  Скомпилированный узел 'stg_orders' является:
 with source as (
     select * from "jaffle_shop"."main"."raw_orders"
 
@@ -66,20 +66,19 @@ select * from renamed
 ```bash
 dbt compile --inline "select * from {{ ref('raw_orders') }}"
 
-18:15:49  Running with dbt=1.7.5
-18:15:50  Registered adapter: postgres=1.7.5
-18:15:50  Found 5 models, 3 seeds, 20 tests, 0 sources, 0 exposures, 0 metrics, 401 macros, 0 groups, 0 semantic models
+18:15:49  Запуск с dbt=1.7.5
+18:15:50  Зарегистрированный адаптер: postgres=1.7.5
+18:15:50  Найдено 5 моделей, 3 семени, 20 тестов, 0 источников, 0 экспозиций, 0 метрик, 401 макросов, 0 групп, 0 семантических моделей
 18:15:50  
-18:15:50  Concurrency: 5 threads (target='postgres')
+18:15:50  Параллелизм: 5 потоков (target='postgres')
 18:15:50  
-18:15:50  Compiled inline node is:
+18:15:50  Скомпилированный встроенный узел является:
 select * from "jaffle_shop"."main"."raw_orders"
 ```
 
-The command accesses the data platform to cache-related metadata, and to run introspective queries. Use the flags:
-- `--no-populate-cache` to disable the initial cache population. If metadata is needed, it will be a cache miss, requiring dbt to run the metadata query. This is a `dbt` flag, which means you need to add `dbt` as a prefix. For example: `dbt --no-populate-cache`.
-- `--no-introspect` to disable [introspective queries](/faqs/Warehouse/db-connection-dbt-compile#introspective-queries). dbt will raise an error if a model's definition requires running one. This is a `dbt compile` flag, which means you need to add `dbt compile` as a prefix. For example:`dbt compile --no-introspect`.
+Команда обращается к платформе данных для кэширования связанных метаданных и выполнения интроспективных запросов. Используйте флаги:
+- `--no-populate-cache`, чтобы отключить начальное заполнение кэша. Если метаданные нужны, это будет промах кэша, что потребует от dbt выполнения запроса на получение метаданных. Это флаг `dbt`, что означает, что вам нужно добавить `dbt` в качестве префикса. Например: `dbt --no-populate-cache`.
+- `--no-introspect`, чтобы отключить [интроспективные запросы](/faqs/Warehouse/db-connection-dbt-compile#introspective-queries). dbt выдаст ошибку, если определение модели требует выполнения одного из них. Это флаг `dbt compile`, что означает, что вам нужно добавить `dbt compile` в качестве префикса. Например: `dbt compile --no-introspect`.
 
-
-### FAQs
+### Часто задаваемые вопросы
 <FAQ path="Warehouse/db-connection-dbt-compile" />

@@ -1,39 +1,37 @@
 ---
-title: "About dbt init command"
+title: "О команде dbt init"
 sidebar_label: "init"
 id: "init"
 ---
 
-`dbt init` helps get you started using dbt Core!
+`dbt init` помогает вам начать работу с dbt Core!
 
-## New project
+## Новый проект
 
-If this is your first time ever using the tool, it will:
-- ask you to name your project
-- ask you which database adapter you're using (or to [Supported Data Platforms](/docs/supported-data-platforms))
-- prompt you for each piece of information that dbt needs to connect to that database: things like `account`, `user`, `password`, etc
+Если вы впервые используете этот инструмент, он:
+- попросит вас назвать ваш проект
+- спросит, какой адаптер базы данных вы используете (или [Поддерживаемые платформы данных](/docs/supported-data-platforms))
+- запросит у вас каждую информацию, необходимую для подключения dbt к этой базе данных: такие вещи, как `account`, `user`, `password` и т.д.
 
-Then, it will:
-- Create a new folder with your project name and sample files, enough to get you started with dbt
-- Create a connection profile on your local machine. The default location is `~/.dbt/profiles.yml`. Read more in [configuring your profile](/docs/core/connect-data-platform/connection-profiles).
+Затем он:
+- Создаст новую папку с именем вашего проекта и образцы файлов, достаточные для начала работы с dbt
+- Создаст профиль подключения на вашем локальном компьютере. Местоположение по умолчанию — `~/.dbt/profiles.yml`. Узнайте больше в разделе [настройка вашего профиля](/docs/core/connect-data-platform/connection-profiles).
 
-When using `dbt init` to initialize your project, include the `--profile` flag to specify an existing `profiles.yml` as the `profile:` key to use instead of creating a new one. For example, `dbt init --profile profile_name`.
+При использовании `dbt init` для инициализации вашего проекта добавьте флаг `--profile`, чтобы указать существующий `profiles.yml` в качестве ключа `profile:`, который следует использовать вместо создания нового. Например, `dbt init --profile profile_name`.
 
-If the profile does not exist in `profiles.yml` or the command is run inside an existing project, the command raises an error.
+Если профиль не существует в `profiles.yml` или команда выполняется внутри существующего проекта, команда вызовет ошибку.
 
+## Существующий проект
 
-## Existing project
-
-If you've just cloned or downloaded an existing dbt project, `dbt init` can still help you set up your connection profile so that you can start working quickly. It will prompt you for connection information, as above, and add a profile (using the `profile` name from the project) to your local `profiles.yml`, or create the file if it doesn't already exist.
-
+Если вы только что клонировали или загрузили существующий проект dbt, `dbt init` все равно может помочь вам настроить ваш профиль подключения, чтобы вы могли быстро начать работу. Он запросит у вас информацию для подключения, как указано выше, и добавит профиль (используя имя `profile` из проекта) в ваш локальный `profiles.yml`, или создаст файл, если он еще не существует.
 
 ## profile_template.yml
 
-`dbt init` knows how to prompt for connection information by looking for a file named `profile_template.yml`. It will look for this file in two places:
+`dbt init` знает, как запрашивать информацию для подключения, ища файл с именем `profile_template.yml`. Он будет искать этот файл в двух местах:
 
-- **Adapter plugin:** What's the bare minumum Postgres profile? What's the type of each field, what are its defaults? This information is stored in a file called [`dbt/include/postgres/profile_template.yml`](https://github.com/dbt-labs/dbt-postgres/blob/main/dbt/include/postgres/profile_template.yml). If you're the maintainer of an adapter plugin, we highly recommend that you add a `profile_template.yml` to your plugin, too. Refer to the [Build, test, document, and promote adapters](/guides/adapter-creation) guide for more information.
+- **Плагин адаптера:** Каков минимальный профиль для Postgres? Каков тип каждого поля, каковы его значения по умолчанию? Эта информация хранится в файле [`dbt/include/postgres/profile_template.yml`](https://github.com/dbt-labs/dbt-postgres/blob/main/dbt/include/postgres/profile_template.yml). Если вы являетесь поддерживающим плагин адаптера, мы настоятельно рекомендуем вам добавить `profile_template.yml` в ваш плагин. Обратитесь к руководству [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation) для получения дополнительной информации.
 
-- **Existing project:** If you're the maintainer of an existing project, and you want to help new users get connected to your database quickly and easily, you can include your own custom `profile_template.yml` in the root of your project, alongside `dbt_project.yml`. For common connection attributes, set the values in `fixed`; leave user-specific attributes in `prompts`, but with custom hints and defaults as you'd like.
+- **Существующий проект:** Если вы являетесь поддерживающим существующий проект и хотите помочь новым пользователям быстро и легко подключиться к вашей базе данных, вы можете включить свой собственный пользовательский `profile_template.yml` в корень вашего проекта, рядом с `dbt_project.yml`. Для общих атрибутов подключения установите значения в `fixed`; оставьте атрибуты, специфичные для пользователя, в `prompts`, но с пользовательскими подсказками и значениями по умолчанию, как вам нравится.
 
 <File name='profile_template.yml'>
 
@@ -48,28 +46,27 @@ fixed:
 prompts:
   target:
     type: string
-    hint: your desired target name
+    hint: ваше желаемое имя цели
   user:
     type: string
     hint: yourname@jaffleshop.com
   schema:
     type: string
-    hint: usually dbt_<yourname>
+    hint: обычно dbt_<ваше_имя>
   threads:
-    hint: "your favorite number, 1-10"
+    hint: "ваше любимое число, 1-10"
     type: int
     default: 8
 ```
 
 </File>
 
-
 ```
 $ dbt init
-Running with dbt=1.0.0
-Setting up your profile.
+Запуск с dbt=1.0.0
+Настройка вашего профиля.
 user (yourname@jaffleshop.com): summerintern@jaffleshop.com
-schema (usually dbt_<yourname>): dbt_summerintern
-threads (your favorite number, 1-10) [8]: 6
-Profile internal-snowflake written to /Users/intern/.dbt/profiles.yml using project's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+schema (обычно dbt_<ваше_имя>): dbt_summerintern
+threads (ваше любимое число, 1-10) [8]: 6
+Профиль internal-snowflake записан в /Users/intern/.dbt/profiles.yml с использованием profile_template.yml проекта и ваших предоставленных значений. Запустите 'dbt debug', чтобы проверить подключение.
 ```

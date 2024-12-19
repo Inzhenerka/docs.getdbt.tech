@@ -1,77 +1,77 @@
 ---
-title: Quickstart for dbt Core using GitHub Codespaces
+title: Быстрый старт для dbt Core с использованием GitHub Codespaces
 id: codespace
 platform: 'dbt-core'
 icon: 'fa-github'
-level: 'Beginner'
+level: 'Начинающий'
 hide_table_of_contents: true
-tags: ['dbt Core','Quickstart']
+tags: ['dbt Core','Быстрый старт']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you’ll learn how to create a codespace and be able to execute the `dbt build` command from it in _less than 5 minutes_. 
+В этом руководстве по быстрому старту вы узнаете, как создать кодовое пространство и выполнить команду `dbt build` менее чем за 5 минут.
 
-dbt Labs provides a [GitHub Codespace](https://docs.github.com/en/codespaces/overview) template that you (and anyone else) can reuse to create a complete dbt environment with a working and runnable project. When you create the codespace, the [dev container](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers) creates a fully functioning dbt environment, connects to a DuckDB database, and loads a year of data from our fictional Jaffle Shop café, which sells food and beverages in several US cities. The [README](https://github.com/dbt-labs/jaffle-shop-template#readme) for the Jaffle Shop template also provides instructions on how to do this, along with animated GIFs. 
+dbt Labs предоставляет шаблон [GitHub Codespace](https://docs.github.com/en/codespaces/overview), который вы (и любой другой) можете использовать для создания полноценной среды dbt с работающим и исполняемым проектом. Когда вы создаете кодовое пространство, [dev container](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers) создает полностью функционирующую среду dbt, подключается к базе данных DuckDB и загружает год данных из нашего вымышленного кафе Jaffle Shop, которое продает еду и напитки в нескольких городах США. [README](https://github.com/dbt-labs/jaffle-shop-template#readme) для шаблона Jaffle Shop также предоставляет инструкции по этому процессу, а также анимированные GIF.
 
-### Prerequisites
+### Предварительные требования
 
-- To use the dbt command-line interface (CLI), it's important that you know some basics of the terminal. In particular, you should understand `cd`, `ls` , and `pwd` to navigate through the directory structure of your computer easily.
-- You have a [GitHub account](https://github.com/join).
+- Чтобы использовать интерфейс командной строки (CLI) dbt, важно знать некоторые основы работы с терминалом. В частности, вы должны понимать команды `cd`, `ls` и `pwd`, чтобы легко перемещаться по структуре каталогов вашего компьютера.
+- У вас есть [учетная запись GitHub](https://github.com/join).
 
-## Related content
+## Связанный контент
 
-- [Create a GitHub repository](/guides/manual-install?step=2)
-- [Build your first models](/guides/manual-install?step=3)
-- [Test and document your project](/guides/manual-install?step=4)
-- [Schedule a job](/guides/manual-install?step=5)
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
+- [Создайте репозиторий на GitHub](/guides/manual-install?step=2)
+- [Создайте свои первые модели](/guides/manual-install?step=3)
+- [Тестируйте и документируйте свой проект](/guides/manual-install?step=4)
+- [Запланируйте задачу](/guides/manual-install?step=5)
+- Узнайте больше с помощью [курсов dbt Learn](https://learn.getdbt.com)
 
-## Create a codespace
+## Создание кодового пространства
 
-1. Go to the `jaffle-shop-template` [repository](https://github.com/dbt-labs/jaffle-shop-template) after you log in to your GitHub account. 
-1. Click **Use this template** at the top of the page and choose **Create new repository**.
-1. Click **Create repository from template** when you’re done setting the options for your new repository.
-1. Click **Code** (at the top of the new repository’s page). Under the **Codespaces** tab,  choose **Create codespace on main**. Depending on how you've configured your computer's settings, this either opens a new browser tab with the Codespace development environment with VSCode running in it or opens a new VSCode window with the codespace in it. 
-1. Wait for the codespace to finish building by waiting for the `postCreateCommand` command to complete; this can take several minutes:
+1. Перейдите в репозиторий `jaffle-shop-template` [репозитория](https://github.com/dbt-labs/jaffle-shop-template) после входа в свою учетную запись GitHub.
+1. Нажмите **Использовать этот шаблон** в верхней части страницы и выберите **Создать новый репозиторий**.
+1. Нажмите **Создать репозиторий из шаблона**, когда закончите настраивать параметры для вашего нового репозитория.
+1. Нажмите **Код** (в верхней части страницы нового репозитория). На вкладке **Codespaces** выберите **Создать кодовое пространство на main**. В зависимости от того, как вы настроили параметры вашего компьютера, это либо откроет новую вкладку браузера с средой разработки Codespace, в которой работает VSCode, либо откроет новое окно VSCode с кодовым пространством.
+1. Подождите, пока кодовое пространство завершит сборку, дождавшись завершения команды `postCreateCommand`; это может занять несколько минут:
 
-    <Lightbox src="/img/codespace-quickstart/postCreateCommand.png" title="Wait for postCreateCommand to complete" />
+    <Lightbox src="/img/codespace-quickstart/postCreateCommand.png" title="Подождите, пока завершится postCreateCommand" />
 
-    When this command completes, you can start using the codespace development environment. The terminal the command ran in will close and you will get a prompt in a brand new terminal. 
+    Когда эта команда завершится, вы сможете начать использовать среду разработки кодового пространства. Терминал, в котором выполнялась команда, закроется, и вы получите приглашение в совершенно новом терминале.
 
-1. At the terminal's prompt, you can execute any dbt command you want. For example:
+1. В приглашении терминала вы можете выполнить любую команду dbt, которую хотите. Например:
 
     ```shell
     /workspaces/test (main) $ dbt build
     ```
 
-    You can also use the [duckcli](https://github.com/dbcli/duckcli) to write SQL against the warehouse from the command line or build reports in the [Evidence](https://evidence.dev/) project provided in the `reports` directory.
+    Вы также можете использовать [duckcli](https://github.com/dbcli/duckcli) для написания SQL-запросов к хранилищу данных из командной строки или создания отчетов в проекте [Evidence](https://evidence.dev/), предоставленном в каталоге `reports`.
     
-    For complete information, refer to the [dbt command reference](https://docs.getdbt.com/reference/dbt-commands). Common commands are:
-    
-    - [dbt compile](https://docs.getdbt.com/reference/commands/compile) — generates executable SQL from your project source files
-    - [dbt run](https://docs.getdbt.com/reference/commands/run) — compiles and runs your project
-    - [dbt test](https://docs.getdbt.com/reference/commands/test) — compiles and tests your project
-    - [dbt build](https://docs.getdbt.com/reference/commands/build) — compiles, runs, and tests your project
+    Для получения полной информации обратитесь к [справочнику команд dbt](https://docs.getdbt.com/reference/dbt-commands). Общие команды:
 
-## Generate a larger data set
+    - [dbt compile](https://docs.getdbt.com/reference/commands/compile) — генерирует исполняемый SQL из файлов исходного кода вашего проекта
+    - [dbt run](https://docs.getdbt.com/reference/commands/run) — компилирует и выполняет ваш проект
+    - [dbt test](https://docs.getdbt.com/reference/commands/test) — компилирует и тестирует ваш проект
+    - [dbt build](https://docs.getdbt.com/reference/commands/build) — компилирует, выполняет и тестирует ваш проект
 
-If you'd like to work with a larger selection of Jaffle Shop data, you can generate an arbitrary number of years of fictitious data from within your codespace. 
+## Генерация более крупного набора данных
 
-1. Install the Python package called [jafgen](https://pypi.org/project/jafgen/). At the terminal's prompt, run:
+Если вы хотите работать с более крупным набором данных Jaffle Shop, вы можете сгенерировать произвольное количество лет вымышленных данных из вашего кодового пространства.
+
+1. Установите пакет Python под названием [jafgen](https://pypi.org/project/jafgen/). В приглашении терминала выполните:
 
     ```shell
     /workspaces/test (main) $ python -m pip install jafgen
     ```
 
-1. When installation is done, run:
+1. Когда установка завершится, выполните:
     ```shell
     /workspaces/test (main) $ jafgen --years NUMBER_OF_YEARS
     ``` 
-    Replace `NUMBER_OF_YEARS` with the number of years you want to simulate. This command builds the CSV files and stores them in the `jaffle-data` folder, and is automatically sourced based on the `sources.yml` file and the [dbt-duckdb](/docs/core/connect-data-platform/duckdb-setup) adapter.
+    Замените `NUMBER_OF_YEARS` на количество лет, которые вы хотите смоделировать. Эта команда создает CSV-файлы и сохраняет их в папке `jaffle-data`, и они автоматически используются на основе файла `sources.yml` и адаптера [dbt-duckdb](/docs/core/connect-data-platform/duckdb-setup).
 
-As you increase the number of years, it takes exponentially more time to generate the data because the Jaffle Shop stores grow in size and number. For a good balance of data size and time to build, dbt Labs suggests a maximum of 6 years.
+По мере увеличения количества лет требуется экспоненциально больше времени для генерации данных, поскольку хранилища Jaffle Shop увеличиваются в размере и количестве. Для хорошего баланса между размером данных и временем сборки dbt Labs рекомендует максимальное количество лет в 6.
 
 </div>

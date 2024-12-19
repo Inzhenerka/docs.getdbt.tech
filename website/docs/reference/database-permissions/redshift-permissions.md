@@ -1,15 +1,14 @@
 ---
-title: "Redshift permissions"
+title: "Разрешения Redshift"
 ---
 
-In Redshift, permissions are used to control who can perform certain actions on different database objects. Use SQL statements to manage permissions in a Redshift database.
+В Redshift разрешения используются для контроля того, кто может выполнять определенные действия с различными объектами базы данных. Используйте SQL-запросы для управления разрешениями в базе данных Redshift.
 
-## Example Redshift permissions
+## Пример разрешений Redshift
 
-The following example provides you with the SQL statements you can use to manage permissions. 
+Следующий пример предоставляет вам SQL-запросы, которые вы можете использовать для управления разрешениями.
 
-**Note** that `database_name`, `database.schema_name`, and `user_name` are placeholders and you can replace them as needed for your organization's naming convention.
-
+**Примечание**: `database_name`, `database.schema_name` и `user_name` являются заполнительными значениями, и вы можете заменить их в соответствии с соглашениями о наименовании вашей организации.
 
 ```
 grant usage on database database_name to user_name;
@@ -22,4 +21,4 @@ grant select on all tables in database database_name to user_name;
 grant select on all views in database database_name to user_name;
 ```
 
-Check out the [official documentation](https://docs.aws.amazon.com/redshift/latest/dg/r_GRANT.html) for more information.
+Посмотрите [официальную документацию](https://docs.aws.amazon.com/redshift/latest/dg/r_GRANT.html) для получения дополнительной информации.

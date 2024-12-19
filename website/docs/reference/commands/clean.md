@@ -1,9 +1,9 @@
 ---
-title: "About dbt clean command"
+title: "О команде dbt clean"
 sidebar_label: "clean"
 id: "clean"
 ---
 
-`dbt clean` is a utility function that deletes all folders specified in the [`clean-targets`](/reference/project-configs/clean-targets) list specified in `dbt_project.yml`. You can use this to delete the `dbt_packages` and `target` directories.
+`dbt clean` — это утилита, которая удаляет все папки, указанные в списке [`clean-targets`](/reference/project-configs/clean-targets), заданном в `dbt_project.yml`. Вы можете использовать эту команду для удаления директорий `dbt_packages` и `target`.
 
-To avoid complex permissions issues and potentially deleting crucial aspects of the remote file system without access to fix them, this command does not work when interfacing with the RPC server that powers the dbt Cloud IDE. Instead, when working in dbt Cloud, the `dbt deps` command cleans before it installs packages automatically. The `target` folder can be manually deleted from the sidebar file tree if needed.
+Чтобы избежать сложных проблем с правами доступа и потенциального удаления важных элементов удаленной файловой системы без возможности их восстановления, эта команда не работает при взаимодействии с RPC-сервером, который управляет dbt Cloud IDE. Вместо этого, работая в dbt Cloud, команда `dbt deps` очищает перед автоматической установкой пакетов. Папку `target` можно вручную удалить из бокового дерева файлов, если это необходимо.

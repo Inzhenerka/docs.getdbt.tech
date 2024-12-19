@@ -1,50 +1,50 @@
 ---
-title: "Manifest JSON file"
-sidebar_label: "Manifest"
+title: "Файл манифеста JSON"
+sidebar_label: "Манифест"
 ---
 
 import ManifestVersions from '/snippets/_manifest-versions.md';
 
 <ManifestVersions />
 
-**Produced by:** Any command that parses your project. This includes all commands **except** [`deps`](/reference/commands/deps), [`clean`](/reference/commands/clean), [`debug`](/reference/commands/debug), [`init`](/reference/commands/init)
+**Создано с помощью:** Любой команды, которая анализирует ваш проект. Это включает все команды **кроме** [`deps`](/reference/commands/deps), [`clean`](/reference/commands/clean), [`debug`](/reference/commands/debug), [`init`](/reference/commands/init)
 
-This single file contains a full representation of your dbt project's resources (models, tests, macros, etc), including all node configurations and resource properties. Even if you're only running some models or tests, all resources will appear in the manifest (unless they are disabled) with most of their properties. (A few node properties, such as `compiled_sql`, only appear for executed nodes.)
+Этот единственный файл содержит полное представление ресурсов вашего проекта dbt (модели, тесты, макросы и т.д.), включая все конфигурации узлов и свойства ресурсов. Даже если вы запускаете только некоторые модели или тесты, все ресурсы будут отображаться в манифесте (если они не отключены) с большинством своих свойств. (Некоторые свойства узлов, такие как `compiled_sql`, появляются только для выполненных узлов.)
 
-Today, dbt uses this file to populate the [docs site](/docs/collaborate/build-and-view-your-docs), and to perform [state comparison](/reference/node-selection/syntax#about-node-selection). Members of the community have used this file to run checks on how many models have descriptions and tests.
+На сегодняшний день dbt использует этот файл для заполнения [документационного сайта](/docs/collaborate/build-and-view-your-docs) и для выполнения [сравнения состояния](/reference/node-selection/syntax#about-node-selection). Члены сообщества использовали этот файл для проверки того, сколько моделей имеют описания и тесты.
 
-### Top-level keys
+### Ключи верхнего уровня
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
-- `nodes`: Dictionary of all analyses, models, seeds, snapshots, and tests.
-- `sources`: Dictionary of sources.
-- `metrics`: Dictionary of metrics.
-- `exposures`: Dictionary of exposures.
-- `groups`: Dictionary of groups. (**Note:** Added in v1.5)
-- `macros`: Dictionary of macros.
-- `docs`: Dictionary of `docs` blocks.
-- `parent_map`: Dictionary that contains the first-order parents of each resource.
-- `child_map`: Dictionary that contains the first-order children of each resource.
-- `group_map`: Dictionary that maps group names to their resource nodes.
-- `selectors`: Expanded dictionary representation of [YAML `selectors`](/reference/node-selection/yaml-selectors).
-- `disabled`: Array of resources with `enabled: false`.
+- `nodes`: Словарь всех анализов, моделей, семян, снимков и тестов.
+- `sources`: Словарь источников.
+- `metrics`: Словарь метрик.
+- `exposures`: Словарь экспозиций.
+- `groups`: Словарь групп. (**Примечание:** Добавлено в v1.5)
+- `macros`: Словарь макросов.
+- `docs`: Словарь блоков `docs`.
+- `parent_map`: Словарь, содержащий родителей первого порядка для каждого ресурса.
+- `child_map`: Словарь, содержащий детей первого порядка для каждого ресурса.
+- `group_map`: Словарь, который сопоставляет имена групп с их узлами ресурсов.
+- `selectors`: Расширенное словарное представление [YAML `selectors`](/reference/node-selection/yaml-selectors).
+- `disabled`: Массив ресурсов с `enabled: false`.
 
-### Resource details
+### Подробности о ресурсах
 
-All resources nested within `nodes`, `sources`, `metrics`, `exposures`, `macros`, and `docs` have the following base properties:
+Все ресурсы, вложенные в `nodes`, `sources`, `metrics`, `exposures`, `macros` и `docs`, имеют следующие базовые свойства:
 
-- `name`: Resource name.
-- `unique_id`: `<resource_type>.<package>.<resource_name>`, same as dictionary key
-- `package_name`: Name of package that defines this resource.
-- `root_path`: Absolute file path of this resource's package. (**Note:** This was removed for most node types in dbt Core v1.4 / manifest v8 to reduce duplicative information across nodes, but it is still present for seeds.)
-- `path`: Relative file path of this resource's definition within its "resource path" (`model-paths`, `seed-paths`, etc.).
-- `original_file_path`: Relative file path of this resource's definition, including its resource path.
+- `name`: Имя ресурса.
+- `unique_id`: `<resource_type>.<package>.<resource_name>`, то же самое, что и ключ словаря.
+- `package_name`: Имя пакета, который определяет этот ресурс.
+- `root_path`: Абсолютный путь к файлу пакета этого ресурса. (**Примечание:** Это было удалено для большинства типов узлов в dbt Core v1.4 / manifest v8, чтобы уменьшить дублирование информации между узлами, но все еще присутствует для семян.)
+- `path`: Относительный путь к файлу определения этого ресурса в его "путях ресурсов" (`model-paths`, `seed-paths` и т.д.).
+- `original_file_path`: Относительный путь к файлу определения этого ресурса, включая его путь ресурса.
 
-Each has several additional properties related to its resource type.
+Каждый из них имеет несколько дополнительных свойств, связанных с его типом ресурса.
 
-### dbt JSON Schema
-You can refer to [dbt JSON Schema](https://schemas.getdbt.com/) for info on describing and consuming dbt generated artifacts. 
+### Схема JSON dbt
+Вы можете обратиться к [схеме JSON dbt](https://schemas.getdbt.com/) для получения информации о описании и использовании артефактов, сгенерированных dbt.
 
-**Note**: The `manifest.json` version number is related to (but not _equal_ to) your dbt version, so you _must_ use the correct `manifest.json` version for your dbt version. To find the correct `manifest.json` version, select the dbt version on the top navigation (such as `v1.5`). 
+**Примечание**: Номер версии `manifest.json` связан с (но не _равен_ ) вашей версии dbt, поэтому вы _должны_ использовать правильную версию `manifest.json` для вашей версии dbt. Чтобы найти правильную версию `manifest.json`, выберите версию dbt в верхней навигации (например, `v1.5`).
 
-Refer to the table at the beginning of [this page](/reference/artifacts/manifest-json) to understand how the Manifest version matches the dbt version.
+Обратитесь к таблице в начале [этой страницы](/reference/artifacts/manifest-json), чтобы понять, как версия манифеста соответствует версии dbt.

@@ -1,98 +1,98 @@
 ---
-title: "Migrate from dbt-spark to dbt-databricks"
+title: "Миграция с dbt-spark на dbt-databricks"
 id: "migrate-from-spark-to-databricks"
-description: Learn how to migrate from dbt-spark to dbt-databricks.
-displayText: Migrate from Spark to Databricks
-hoverSnippet: Learn how to migrate from dbt-spark to dbt-databricks.
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте, как мигрировать с dbt-spark на dbt-databricks.
+displayText: Миграция с Spark на Databricks
+hoverSnippet: Узнайте, как мигрировать с dbt-spark на dbt-databricks.
+# time_to_complete: '30 минут' временно отключено до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Migration', 'dbt Core','dbt Cloud']
-level: 'Intermediate'
+tags: ['Миграция', 'dbt Core','dbt Cloud']
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-You can migrate your projects from using the `dbt-spark` adapter to using the [dbt-databricks adapter](https://github.com/databricks/dbt-databricks). In collaboration with dbt Labs, Databricks built this adapter using dbt-spark as the foundation and added some critical improvements. With it, you get an easier set up &mdash; requiring only three inputs for authentication &mdash; and more features such as support for [Unity Catalog](https://www.databricks.com/product/unity-catalog).
+Вы можете мигрировать свои проекты с адаптера `dbt-spark` на адаптер [dbt-databricks](https://github.com/databricks/dbt-databricks). В сотрудничестве с dbt Labs, Databricks создал этот адаптер, используя dbt-spark в качестве основы, и добавил несколько критически важных улучшений. С его помощью вы получаете более простую настройку — требуется всего три параметра для аутентификации — и больше возможностей, таких как поддержка [Unity Catalog](https://www.databricks.com/product/unity-catalog).
 
-### Prerequisites
+### Предварительные требования
 
-- Your project must be compatible with dbt 1.0 or greater. Refer to [Upgrading to v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) for details. For the latest version of dbt, refer to [Upgrading to v1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7).
-- For dbt Cloud, you need administrative (admin) privileges to migrate dbt projects.
+- Ваш проект должен быть совместим с dbt 1.0 или выше. Смотрите [Обновление до v1.0](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0) для получения подробной информации. Для последней версии dbt смотрите [Обновление до v1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7).
+- Для dbt Cloud вам нужны административные (admin) права для миграции проектов dbt.
 
-### Simpler authentication
+### Упрощенная аутентификация
 
-Previously, you had to provide a `cluster` or `endpoint` ID which was hard to parse from the `http_path` that you were given. Now, it doesn't matter if you're using a cluster or an SQL endpoint because the [dbt-databricks setup](/docs/core/connect-data-platform/databricks-setup) requires the _same_ inputs for both. All you need to provide is:
-- hostname of the Databricks workspace
-- HTTP path of the Databricks SQL warehouse or cluster
-- appropriate credentials
+Ранее вам нужно было предоставить ID `cluster` или `endpoint`, который было сложно извлечь из `http_path`, который вам предоставляли. Теперь не имеет значения, используете ли вы кластер или SQL-эндпоинт, потому что настройка [dbt-databricks](/docs/core/connect-data-platform/databricks-setup) требует _одинаковых_ параметров для обоих. Все, что вам нужно предоставить:
+- имя хоста рабочего пространства Databricks
+- HTTP путь SQL-склада или кластера Databricks
+- соответствующие учетные данные
 
-### Better defaults
+### Лучшие значения по умолчанию
 
-The `dbt-databricks` adapter provides better defaults than `dbt-spark` does. The defaults help optimize your workflow so you can get the fast performance and cost-effectiveness of Databricks. They are:
+Адаптер `dbt-databricks` предоставляет лучшие значения по умолчанию, чем `dbt-spark`. Эти значения помогают оптимизировать ваш рабочий процесс, чтобы вы могли получить быструю производительность и экономичность Databricks. Они следующие:
 
-- The dbt models use the [Delta](https://docs.databricks.com/delta/index.html) table format. You can remove any declared configurations of `file_format = 'delta'` since they're now redundant.
-- Accelerate your expensive queries with the [Photon engine](https://docs.databricks.com/runtime/photon.html).
-- The `incremental_strategy` config is set to `merge`.
+- Модели dbt используют формат таблиц [Delta](https://docs.databricks.com/delta/index.html). Вы можете удалить любые объявленные конфигурации `file_format = 'delta'`, так как они теперь избыточны.
+- Ускорьте свои дорогие запросы с помощью [Photon engine](https://docs.databricks.com/runtime/photon.html).
+- Конфигурация `incremental_strategy` установлена на `merge`.
 
-With dbt-spark, however, the default for `incremental_strategy` is `append`. If you want to continue using `incremental_strategy=append`, you must set this config specifically on your incremental models. If you already specified `incremental_strategy=merge` on your incremental models, you don't need to change anything when moving to dbt-databricks; but, you can keep your models clean (tidy) by removing the config since it's redundant. Read [About incremental_strategy](/docs/build/incremental-strategy) to learn more.
+Однако в dbt-spark значение по умолчанию для `incremental_strategy` — `append`. Если вы хотите продолжать использовать `incremental_strategy=append`, вам нужно будет установить эту конфигурацию специально для ваших инкрементальных моделей. Если вы уже указали `incremental_strategy=merge` для своих инкрементальных моделей, вам не нужно ничего менять при переходе на dbt-databricks; но вы можете поддерживать свои модели в чистоте, удалив конфигурацию, так как она избыточна. Читайте [О конфигурации incremental_strategy](/docs/build/incremental-strategy), чтобы узнать больше.
 
-For more information on defaults, see [Caveats](/docs/core/connect-data-platform/databricks-setup#caveats).
+Для получения дополнительной информации о значениях по умолчанию смотрите [Предостережения](/docs/core/connect-data-platform/databricks-setup#caveats).
 
-### Pure Python
+### Чистый Python
 
-If you use dbt Core, you no longer have to download an independent driver to interact with Databricks. The connection information is all embedded in a pure-Python library called `databricks-sql-connector`.
+Если вы используете dbt Core, вам больше не нужно загружать независимый драйвер для взаимодействия с Databricks. Информация о подключении полностью встроена в библиотеку на чистом Python под названием `databricks-sql-connector`.
 
 
-## Migrate your dbt projects in dbt Cloud
+## Миграция ваших проектов dbt в dbt Cloud
 
-You can migrate your projects to the Databricks-specific adapter from the generic Apache Spark adapter. If you're using dbt Core, then skip to Step 4.
+Вы можете мигрировать свои проекты на адаптер, специфичный для Databricks, с общего адаптера Apache Spark. Если вы используете dbt Core, переходите к Шагу 4.
 
-The migration to the `dbt-databricks` adapter from `dbt-spark` shouldn't cause any downtime for production jobs. dbt Labs recommends that you schedule the connection change when usage of the IDE is light to avoid disrupting your team.
+Миграция на адаптер `dbt-databricks` с `dbt-spark` не должна вызывать простоя для производственных заданий. dbt Labs рекомендует планировать изменение подключения, когда использование IDE невелико, чтобы избежать нарушения работы вашей команды.
 
-To update your Databricks connection in dbt Cloud:
+Чтобы обновить ваше подключение Databricks в dbt Cloud:
 
-1. Select **Account Settings** in the main navigation bar.
-2. On the **Projects** tab, find the project you want to migrate to the dbt-databricks adapter.
-3. Click the hyperlinked Connection for the project.
-4. Click **Edit** in the top right corner.
-5. Select **Databricks** for the warehouse
-6. Enter the:
+1. Выберите **Настройки аккаунта** в главной навигационной панели.
+2. На вкладке **Проекты** найдите проект, который вы хотите мигрировать на адаптер dbt-databricks.
+3. Нажмите на гиперссылку Подключение для проекта.
+4. Нажмите **Редактировать** в правом верхнем углу.
+5. Выберите **Databricks** для склада.
+6. Введите:
     1. `hostname`
     2. `http_path`
-    3. (optional) catalog name
-7. Click **Save**.
+    3. (по желанию) имя каталога
+7. Нажмите **Сохранить**.
 
-Everyone in your organization who uses dbt Cloud must refresh the IDE before starting work again. It should refresh in less than a minute.
+Каждому в вашей организации, кто использует dbt Cloud, необходимо обновить IDE перед началом работы снова. Это должно произойти менее чем за минуту.
 
-## Configure your credentials
+## Настройка ваших учетных данных
 
-When you update the Databricks connection in dbt Cloud, your team will not lose their credentials. This makes migrating easier since it only requires you to delete the Databricks connection and re-add the cluster or endpoint information.
+Когда вы обновляете подключение Databricks в dbt Cloud, ваша команда не потеряет свои учетные данные. Это упрощает миграцию, так как вам нужно только удалить подключение Databricks и заново добавить информацию о кластере или эндпоинте.
 
-These credentials will not get lost when there's a successful connection to Databricks using the `dbt-spark` ODBC method:
+Эти учетные данные не будут потеряны, когда будет установлено успешное соединение с Databricks с использованием метода ODBC `dbt-spark`:
 
-- The credentials you supplied to dbt Cloud to connect to your Databricks workspace.
-- The personal access tokens your team added in their dbt Cloud profile so they can develop in the IDE for a given project.
-- The access token you added for each deployment environment so dbt Cloud can connect to Databricks during production jobs.
+- Учетные данные, которые вы предоставили dbt Cloud для подключения к вашему рабочему пространству Databricks.
+- Личные токены доступа, которые ваша команда добавила в свой профиль dbt Cloud, чтобы они могли разрабатывать в IDE для данного проекта.
+- Токен доступа, который вы добавили для каждой среды развертывания, чтобы dbt Cloud мог подключаться к Databricks во время производственных заданий.
 
-## Migrate dbt projects in dbt Core
+## Миграция проектов dbt в dbt Core
 
-To migrate your dbt Core projects to the `dbt-databricks` adapter from `dbt-spark`, you:
-1. Install the [dbt-databricks adapter](https://github.com/databricks/dbt-databricks) in your environment
-1. Update your Databricks connection by modifying your `target` in your `~/.dbt/profiles.yml` file
+Чтобы мигрировать ваши проекты dbt Core на адаптер `dbt-databricks` с `dbt-spark`, вам нужно:
+1. Установить [адаптер dbt-databricks](https://github.com/databricks/dbt-databricks) в вашей среде.
+1. Обновить ваше подключение Databricks, изменив ваш `target` в файле `~/.dbt/profiles.yml`.
 
-Anyone who's using your project must also make these changes in their environment.
-
-
-## Try these examples
-
-You can use the following examples of the `profiles.yml` file to see the authentication setup with `dbt-spark` compared to the simpler setup with `dbt-databricks` when connecting to an SQL endpoint. A cluster example would look similar.
+Каждый, кто использует ваш проект, также должен внести эти изменения в своей среде.
 
 
-An example of what authentication looks like with `dbt-spark`:
+## Попробуйте эти примеры
+
+Вы можете использовать следующие примеры файла `profiles.yml`, чтобы увидеть настройку аутентификации с `dbt-spark` по сравнению с более простой настройкой с `dbt-databricks` при подключении к SQL-эндпоинту. Пример с кластером будет выглядеть аналогично.
+
+
+Пример того, как выглядит аутентификация с `dbt-spark`:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -113,7 +113,7 @@ your_profile_name:
 
 </File>
 
-An example of how much simpler authentication is with `dbt-databricks`:
+Пример того, насколько проще аутентификация с `dbt-databricks`:
 
 <File name='~/.dbt/profiles.yml'>
 

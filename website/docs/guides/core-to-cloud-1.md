@@ -1,91 +1,91 @@
 ---
-title: 'Move from dbt Core to dbt Cloud: Get started'
+title: 'Переход с dbt Core на dbt Cloud: Начало работы'
 id: core-to-cloud-1
-description: "Learn how to move from dbt Core to dbt Cloud and what you need to get started."
-hoverSnippet: "Learn how to move from dbt Core to dbt Cloud."
+description: "Узнайте, как перейти с dbt Core на dbt Cloud и что вам нужно для начала."
+hoverSnippet: "Узнайте, как перейти с dbt Core на dbt Cloud."
 icon: 'guides'
-time_to_complete: 'Total estimated time: 3-4 hours'
+time_to_complete: 'Общее время: 3-4 часа'
 hide_table_of_contents: true
-tags: ['Migration','dbt Core','dbt Cloud']
-keywords: ['dbt Core','dbt Cloud','Migration', 'Move dbt', 'Migrate dbt']
-level: 'Intermediate'
+tags: ['Миграция','dbt Core','dbt Cloud']
+keywords: ['dbt Core','dbt Cloud','Миграция', 'Перемещение dbt', 'Миграция dbt']
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-Moving from dbt Core to dbt Cloud streamlines analytics engineering workflows by allowing teams to develop, test, deploy, and explore data products using a single, fully managed software service.
+Переход с dbt Core на dbt Cloud упрощает рабочие процессы аналитического инжиниринга, позволяя командам разрабатывать, тестировать, развертывать и исследовать данные с помощью единого полностью управляемого программного сервиса.
 
-Explore our 3-part-guide series on moving from dbt Core to dbt Cloud. This series is ideal for users aiming for streamlined workflows and enhanced analytics:
+Изучите нашу трёхчастную серию руководств по переходу с dbt Core на dbt Cloud. Эта серия идеально подходит для пользователей, стремящихся к упрощению рабочих процессов и улучшению аналитики:
 
 import CoretoCloudTable from '/snippets/_core-to-cloud-guide-table.md';
 
 <CoretoCloudTable/>
 
-<Expandable alt_header="What is dbt Cloud and dbt Core?">
+<Expandable alt_header="Что такое dbt Cloud и dbt Core?">
 
-   - dbt Cloud is the fastest and most reliable way to deploy dbt. It enables you to develop, test, deploy, and explore data products using a single, fully managed service. It also supports:
-     - Development experiences tailored to multiple personas ([dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
-     - Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
-     - The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics
-     - Domain ownership of data with multi-project [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) setups
-     - [dbt Explorer](/docs/collaborate/explore-projects) for easier data discovery and understanding
+   - dbt Cloud — это самый быстрый и надежный способ развертывания dbt. Он позволяет вам разрабатывать, тестировать, развертывать и исследовать данные с помощью единого полностью управляемого сервиса. Он также поддерживает:
+     - Опыт разработки, адаптированный для различных пользователей ([dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
+     - Готовые к использованию [CI/CD рабочие процессы](/docs/deploy/ci-jobs)
+     - [Семантический уровень dbt](/docs/use-dbt-semantic-layer/dbt-sl) для согласованных метрик
+     - Владение доменом данных с многоуровневыми проектами [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro)
+     - [dbt Explorer](/docs/collaborate/explore-projects) для упрощения поиска и понимания данных
 
-   Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features).
-- dbt Core is an open-source tool that enables data teams to define and execute data transformations in a cloud data warehouse following analytics engineering best practices. While this can work well for ‘single players’ and small technical teams, all development happens on a command-line interface, and production deployments must be self-hosted and maintained. This requires significant, costly work that adds up over time to maintain and scale.
+   Узнайте больше о [возможностях dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features).
+- dbt Core — это инструмент с открытым исходным кодом, который позволяет командам данных определять и выполнять преобразования данных в облачном хранилище данных, следуя лучшим практикам аналитического инжиниринга. Хотя это может хорошо работать для «одиночек» и небольших технических команд, вся разработка происходит через интерфейс командной строки, а производственные развертывания должны быть самохостингом и поддерживаться. Это требует значительных затрат времени и ресурсов, которые накапливаются со временем для поддержания и масштабирования.
 
 </Expandable>
 
-## What you'll learn
+## Чему вы научитесь
 
-This guide outlines the steps you need to take to move from dbt Core to dbt Cloud and highlights the necessary technical changes:
+Это руководство описывает шаги, которые необходимо предпринять для перехода с dbt Core на dbt Cloud, и подчеркивает необходимые технические изменения:
 
-- [Account setup](https://docs.getdbt.com/guides/core-to-cloud-1?step=4): Learn how to create a dbt Cloud account, invite team members, and configure it for your team.
-- [Data platform setup](https://docs.getdbt.com/guides/core-to-cloud-1?step=5): Find out about connecting your data platform to dbt Cloud.
-- [Git setup](https://docs.getdbt.com/guides/core-to-cloud-1?step=6): Learn to link your dbt project's Git repository with dbt Cloud.
-- [Developer setup:](https://docs.getdbt.com/guides/core-to-cloud-1?step=7) Understand the setup needed for developing in dbt Cloud.
-- [Environment variables](https://docs.getdbt.com/guides/core-to-cloud-1?step=8): Discover how to manage environment variables in dbt Cloud, including their priority.
-- [Orchestration setup](https://docs.getdbt.com/guides/core-to-cloud-1?step=9): Learn how to prepare your dbt Cloud environment and jobs for orchestration.
-- [Models configuration](https://docs.getdbt.com/guides/core-to-cloud-1?step=10): Get insights on validating and running your models in dbt Cloud, using either the dbt Cloud IDE or dbt Cloud CLI.
-- [What's next?](https://docs.getdbt.com/guides/core-to-cloud-1?step=11): Summarizes key takeaways and introduces what to expect in the following guides.
+- [Настройка аккаунта](https://docs.getdbt.com/guides/core-to-cloud-1?step=4): Узнайте, как создать аккаунт dbt Cloud, пригласить членов команды и настроить его для вашей команды.
+- [Настройка платформы данных](https://docs.getdbt.com/guides/core-to-cloud-1?step=5): Узнайте о подключении вашей платформы данных к dbt Cloud.
+- [Настройка Git](https://docs.getdbt.com/guides/core-to-cloud-1?step=6): Узнайте, как связать репозиторий Git вашего проекта dbt с dbt Cloud.
+- [Настройка разработчика:](https://docs.getdbt.com/guides/core-to-cloud-1?step=7) Поймите, какая настройка необходима для разработки в dbt Cloud.
+- [Переменные окружения](https://docs.getdbt.com/guides/core-to-cloud-1?step=8): Узнайте, как управлять переменными окружения в dbt Cloud, включая их приоритет.
+- [Настройка оркестрации](https://docs.getdbt.com/guides/core-to-cloud-1?step=9): Узнайте, как подготовить вашу среду dbt Cloud и задания для оркестрации.
+- [Конфигурация моделей](https://docs.getdbt.com/guides/core-to-cloud-1?step=10): Получите информацию о валидации и запуске ваших моделей в dbt Cloud, используя либо dbt Cloud IDE, либо dbt Cloud CLI.
+- [Что дальше?](https://docs.getdbt.com/guides/core-to-cloud-1?step=11): Подводит итоги ключевым выводам и вводит в курс дела о том, чего ожидать в следующих руководствах.
 
-### Related docs
-- [Learn dbt Cloud](https://learn.getdbt.com) on-demand video learning.
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights
-- Work with the [dbt Labs’ Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and migration.
+### Связанные документы
+- [Изучите dbt Cloud](https://learn.getdbt.com) с помощью видео-курсов по запросу.
+- Запланируйте [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты.
+- Работайте с командой [Профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services) для поддержки вашей организации данных и миграции.
 
-## Prerequisites
+## Предварительные требования
 
-- You have an existing dbt Core project connected to a Git repository and data platform supported in [dbt Cloud](/docs/cloud/connect-data-platform/about-connections). 
-- You have a dbt Cloud account. **[Don't have one? Start your free trial today](https://www.getdbt.com/signup)**!
+- У вас есть существующий проект dbt Core, подключенный к репозиторию Git и платформе данных, поддерживаемой в [dbt Cloud](/docs/cloud/connect-data-platform/about-connections). 
+- У вас есть аккаунт dbt Cloud. **[Нет аккаунта? Начните бесплатную пробную версию сегодня](https://www.getdbt.com/signup)**!
 
-## Account setup
+## Настройка аккаунта
 
-This section outlines the steps to set up your dbt Cloud account and configure it for your team.
+В этом разделе описаны шаги по настройке вашего аккаунта dbt Cloud и его конфигурации для вашей команды.
 
-1. [Create your dbt Cloud account](https://www.getdbt.com/signup).
+1. [Создайте свой аккаунт dbt Cloud](https://www.getdbt.com/signup).
 
-2. Provide user [access](/docs/cloud/manage-access/about-user-access) and [invite users](/docs/cloud/manage-access/about-user-access) to your dbt Cloud account and project.
+2. Предоставьте [доступ](/docs/cloud/manage-access/about-user-access) пользователям и [пригласите пользователей](/docs/cloud/manage-access/about-user-access) в ваш аккаунт и проект dbt Cloud.
 
-3. Configure [Single Sign-On (SSO)](/docs/cloud/manage-access/sso-overview) or [Role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) for easy and secure access. <Lifecycle status='enterprise' />
-   - This removes the need to save passwords and secret environment variables locally.
+3. Настройте [Единый вход (SSO)](/docs/cloud/manage-access/sso-overview) или [Контроль доступа на основе ролей (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) для простого и безопасного доступа. <Lifecycle status='enterprise' />
+   - Это устраняет необходимость сохранять пароли и секретные переменные окружения локально.
 
-### Additional configuration
-Explore these additional configurations for performance and reliability improvements:
+### Дополнительная конфигурация
+Изучите эти дополнительные настройки для повышения производительности и надежности:
 
-1. In **Account settings**, enable [partial parsing](/docs/cloud/account-settings#partial-parsing) to only reparse changed files, saving time.
+1. В **Настройках аккаунта** включите [частичный парсинг](/docs/cloud/account-settings#partial-parsing), чтобы повторно парсить только измененные файлы, экономя время.
 
-2. In **Account settings**, enable [Git repo caching](/docs/cloud/account-settings#git-repository-caching) for job reliability & third-party outage protection. <Lifecycle status='enterprise' />
+2. В **Настройках аккаунта** включите [кэширование репозитория Git](/docs/cloud/account-settings#git-repository-caching) для надежности заданий и защиты от сбоев третьих сторон. <Lifecycle status='enterprise' />
 
-## Data platform setup
+## Настройка платформы данных
 
-This section outlines the considerations and methods to connect your data platform to dbt Cloud.
+В этом разделе описаны соображения и методы подключения вашей платформы данных к dbt Cloud.
 
-1. In dbt Cloud, set up your [data platform connections](/docs/cloud/connect-data-platform/about-connections) and [environment variables](/docs/build/environment-variables). dbt Cloud can connect with a variety of data platform providers including:
+1. В dbt Cloud настройте ваши [подключения к платформе данных](/docs/cloud/connect-data-platform/about-connections) и [переменные окружения](/docs/build/environment-variables). dbt Cloud может подключаться к различным поставщикам платформы данных, включая:
    - [AlloyDB](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) 
-   - [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) (beta)
+   - [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) (бета)
    - [Amazon Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) 
    - [Apache Spark](/docs/cloud/connect-data-platform/connect-apache-spark) 
    - [Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics)
@@ -94,189 +94,189 @@ This section outlines the considerations and methods to connect your data platfo
    - [Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric)
    - [PostgreSQL](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb)
    - [Snowflake](/docs/cloud/connect-data-platform/connect-snowflake)
-   - [Starburst or Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
+   - [Starburst или Trino](/docs/cloud/connect-data-platform/connect-starburst-trino)
 
-2. You can verify your data platform connections by clicking the **Test connection** button in your deployment and development credentials settings.
+2. Вы можете проверить ваши подключения к платформе данных, нажав кнопку **Проверить подключение** в настройках ваших учетных данных развертывания и разработки.
 
-### Additional configuration
+### Дополнительная конфигурация
 
-Explore these additional configurations to optimize your data platform setup further:
+Изучите эти дополнительные настройки для дальнейшей оптимизации вашей платформы данных:
 
-1. Use [OAuth connections](/docs/cloud/manage-access/set-up-snowflake-oauth), which enables secure authentication using your data platform’s SSO.  <Lifecycle status='enterprise' />
+1. Используйте [OAuth-подключения](/docs/cloud/manage-access/set-up-snowflake-oauth), которые обеспечивают безопасную аутентификацию с использованием SSO вашей платформы данных.  <Lifecycle status='enterprise' />
 
-## Git setup
+## Настройка Git
 
-Your existing dbt project source code should live in a Git repository. In this section, you will connect your existing dbt project source code from Git to dbt Cloud.
+Исходный код вашего существующего проекта dbt должен находиться в репозитории Git. В этом разделе вы свяжете исходный код вашего существующего проекта dbt из Git с dbt Cloud.
 
-1. Ensure your dbt project is in a Git repository.
+1. Убедитесь, что ваш проект dbt находится в репозитории Git.
 
-2. In **Account settings**, select **Integrations** to [connect your Git repository](/docs/cloud/git/git-configuration-in-dbt-cloud) to dbt Cloud:
-   - (**Recommended**) Connect with one of the [native integrations](/docs/cloud/git/git-configuration-in-dbt-cloud) in dbt Cloud (such as GitHub, GitLab, and Azure DevOps).
+2. В **Настройках аккаунта** выберите **Интеграции**, чтобы [подключить ваш репозиторий Git](/docs/cloud/git/git-configuration-in-dbt-cloud) к dbt Cloud:
+   - (**Рекомендуется**) Подключитесь с помощью одной из [родных интеграций](/docs/cloud/git/git-configuration-in-dbt-cloud) в dbt Cloud (таких как GitHub, GitLab и Azure DevOps).
 
-     This method is preferred for its simplicity, security features (including secure OAuth logins and automated workflows like CI builds on pull requests), and overall ease of use.
-   - [Import a Git repository](/docs/cloud/git/import-a-project-by-git-url) from any valid Git URL that points to a dbt project.
+     Этот метод предпочтителен благодаря своей простоте, функциям безопасности (включая безопасные OAuth-входы и автоматизированные рабочие процессы, такие как CI-сборки по запросам на слияние) и общей удобству использования.
+   - [Импортируйте репозиторий Git](/docs/cloud/git/import-a-project-by-git-url) из любого действительного URL-адреса Git, который указывает на проект dbt.
 
-### Additional configuration
-Explore these additional configurations to optimize your Git setup further:
+### Дополнительная конфигурация
+Изучите эти дополнительные настройки для дальнейшей оптимизации вашей настройки Git:
 
-1. Log into dbt Cloud using [OAuth connections](/docs/cloud/git/connect-github) to integrate with your source code platform. It automatically links to the repository using one of the native integrations set at the account level. <Lifecycle status='enterprise' />
+1. Войдите в dbt Cloud, используя [OAuth-подключения](/docs/cloud/git/connect-github) для интеграции с вашей платформой исходного кода. Это автоматически связывает с репозиторием, используя одну из родных интеграций, настроенных на уровне аккаунта. <Lifecycle status='enterprise' />
   
-  Set up groups for dbt project access with those configured for repository access to streamline permissions.
+  Настройте группы для доступа к проекту dbt с теми, кто настроен для доступа к репозиторию, чтобы упростить управление разрешениями.
 
-## Developer setup
+## Настройка разработчика
 
-This section highlights the development configurations you’ll need for your dbt Cloud project. The following categories are covered in this section:
+В этом разделе подчеркиваются конфигурации разработки, которые вам понадобятся для вашего проекта dbt Cloud. В этом разделе рассматриваются следующие категории:
 
-- [dbt Cloud environments](/guides/core-to-cloud-1?step=7#dbt-cloud-environments)
-- [Initial setup steps](/guides/core-to-cloud-1?step=7#initial-setup-steps)
-- [Additional configuration](/guides/core-to-cloud-1?step=7#additional-configuration-2)
-- [dbt Cloud commands](/guides/core-to-cloud-1?step=7#dbt-cloud-commands)
+- [Среды dbt Cloud](/guides/core-to-cloud-1?step=7#dbt-cloud-environments)
+- [Начальные шаги настройки](/guides/core-to-cloud-1?step=7#initial-setup-steps)
+- [Дополнительная конфигурация](/guides/core-to-cloud-1?step=7#additional-configuration-2)
+- [Команды dbt Cloud](/guides/core-to-cloud-1?step=7#dbt-cloud-commands)
 
-### dbt Cloud environments
+### Среды dbt Cloud
 
-The most common data environments are production, staging, and development. The way dbt Core manages [environments](/docs/environments-in-dbt) is through `target`, which are different sets of connection details. 
+Наиболее распространенные среды данных — это производственная, тестовая и разработческая. То, как dbt Core управляет [средами](/docs/environments-in-dbt), осуществляется через `target`, которые представляют собой разные наборы деталей подключения. 
 
-[dbt Cloud environments](/docs/dbt-cloud-environments) go further by:
-- Integrating with features such as job scheduling or version control, making it easier to manage the full lifecycle of your dbt projects within a single platform.
-- Streamlining the process of switching between development, staging, and production contexts.
-- Making it easy to configure environments through the dbt Cloud UI instead of manually editing the `profiles.yml` file. You can also [set up](/reference/dbt-jinja-functions/target) or [customize](/docs/build/custom-target-names) target names in dbt Cloud.
-- Adding `profiles.yml` attributes to dbt Cloud environment settings with [Extended Attributes](/docs/dbt-cloud-environments#extended-attributes).
-- Using [Git repo caching](/docs/cloud/account-settings#git-repository-caching) to protect you from third-party outages, Git auth failures, and more. <Lifecycle status="enterprise"/>
+[Среды dbt Cloud](/docs/dbt-cloud-environments) идут дальше, позволяя:
+- Интегрироваться с такими функциями, как планирование заданий или контроль версий, что упрощает управление полным жизненным циклом ваших проектов dbt в рамках одной платформы.
+- Упрощать процесс переключения между контекстами разработки, тестирования и производства.
+- Легко настраивать среды через интерфейс dbt Cloud вместо ручного редактирования файла `profiles.yml`. Вы также можете [настроить](/reference/dbt-jinja-functions/target) или [кастомизировать](/docs/build/custom-target-names) имена целей в dbt Cloud.
+- Добавлять атрибуты `profiles.yml` в настройки среды dbt Cloud с помощью [Расширенных атрибутов](/docs/dbt-cloud-environments#extended-attributes).
+- Использовать [кэширование репозитория Git](/docs/cloud/account-settings#git-repository-caching) для защиты от сбоев третьих сторон, ошибок аутентификации Git и многого другого. <Lifecycle status="enterprise"/>
 
-### Initial setup steps
-1. **Set up development environment** &mdash; Set up your [development](/docs/dbt-cloud-environments#create-a-development-environment) environment and [development credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#access-the-cloud-ide). You’ll need this to access your dbt project and start developing.
+### Начальные шаги настройки
+1. **Настройка среды разработки** &mdash; Настройте вашу [разработческую](/docs/dbt-cloud-environments#create-a-development-environment) среду и [учетные данные разработки](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#access-the-cloud-ide). Вам это нужно, чтобы получить доступ к вашему проекту dbt и начать разработку.
 
-2. **dbt Core version** &mdash; In your dbt Cloud environment, select a [release track](/docs/dbt-versions/cloud-release-tracks) for ongoing dbt version upgrades. If your team plans to use both dbt Core and dbt Cloud for developing or deploying your dbt project,   You can run `dbt --version` in the command line to find out which version of dbt Core you’re using.
-   - When using dbt Core, you need to think about which version you’re using and manage your own upgrades. When using dbt Cloud, leverage [release tracks](/docs/dbt-versions/cloud-release-tracks) so you don’t have to.
+2. **Версия dbt Core** &mdash; В вашей среде dbt Cloud выберите [релизный трек](/docs/dbt-versions/cloud-release-tracks) для постоянных обновлений версии dbt. Если ваша команда планирует использовать как dbt Core, так и dbt Cloud для разработки или развертывания вашего проекта dbt, вы можете выполнить команду `dbt --version` в командной строке, чтобы узнать, какую версию dbt Core вы используете.
+   - При использовании dbt Core вам нужно учитывать, какую версию вы используете, и управлять своими обновлениями. При использовании dbt Cloud используйте [релизные треки](/docs/dbt-versions/cloud-release-tracks), чтобы вам не пришлось об этом беспокоиться.
 
-3. **Connect to your data platform** &mdash; When using dbt Cloud, you can [connect to your data platform](/docs/cloud/connect-data-platform/about-connections) directly in the UI.
-   - Each environment is roughly equivalent to an entry in your `profiles.yml` file. This means you don't need a `profiles.yml` file in your project.
+3. **Подключение к вашей платформе данных** &mdash; При использовании dbt Cloud вы можете [подключиться к вашей платформе данных](/docs/cloud/connect-data-platform/about-connections) непосредственно в интерфейсе.
+   - Каждая среда примерно соответствует записи в вашем файле `profiles.yml`. Это означает, что вам не нужен файл `profiles.yml` в вашем проекте.
 
-4. **Development tools** &mdash; Set up your development workspace with the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (command line interface or code editor) or [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (browser-based) to build, test, run, and version control your dbt code in your tool of choice.
-   - If you've previously installed dbt Core, the [dbt Cloud CLI installation doc](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli) has more information on how to install the dbt Cloud CLI, create aliases, or uninstall dbt Core for a smooth transition.
+4. **Инструменты разработки** &mdash; Настройте ваше рабочее пространство для разработки с помощью [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (интерфейс командной строки или редактор кода) или [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (браузерный) для создания, тестирования, запуска и контроля версий вашего кода dbt в вашем инструменте по выбору.
+   - Если вы ранее устанавливали dbt Core, в [документации по установке dbt Cloud CLI](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli) содержится дополнительная информация о том, как установить dbt Cloud CLI, создать псевдонимы или удалить dbt Core для плавного перехода.
 
-### Additional configuration
-Explore these additional configurations to optimize your developer setup further:
+### Дополнительная конфигурация
+Изучите эти дополнительные настройки для дальнейшей оптимизации вашей настройки разработчика:
 
-1. **Custom target names** &mdash; Using [`custom target.names`](/docs/build/custom-target-names) in your dbt projects helps identify different environments (like development, staging, and production). While you can specify the `custom target.name` values in your developer credentials or orchestration setup, we recommend using [environment variables](/docs/build/environment-variables) as the preferred method. They offer a clearer way to handle different environments and are better supported by dbt's partial parsing feature, unlike using [`{{ target }}` logic](/reference/dbt-jinja-functions/target) which is meant for defining the data warehouse connection.
+1. **Кастомные имена целей** &mdash; Использование [`custom target.names`](/docs/build/custom-target-names) в ваших проектах dbt помогает идентифицировать разные среды (такие как разработка, тестирование и производство). Хотя вы можете указать значения `custom target.name` в ваших учетных данных разработчика или настройках оркестрации, мы рекомендуем использовать [переменные окружения](/docs/build/environment-variables) как предпочтительный метод. Они предлагают более ясный способ обработки различных сред и лучше поддерживаются функцией частичного парсинга dbt, в отличие от использования [`{{ target }}` логики](/reference/dbt-jinja-functions/target), которая предназначена для определения подключения к хранилищу данных.
 
-### dbt Cloud commands
-1. Review the [dbt commands](/reference/dbt-commands) supported for dbt Cloud development. For example, `dbt init` isn’t needed in dbt Cloud as you can create a new project directly in dbt Cloud.
+### Команды dbt Cloud
+1. Ознакомьтесь с [командами dbt](/reference/dbt-commands), поддерживаемыми для разработки dbt Cloud. Например, команда `dbt init` не нужна в dbt Cloud, так как вы можете создать новый проект непосредственно в dbt Cloud.
 
-## Environment variables
-This section will help you understand how to set up and manage dbt Cloud environment variables for your project. The following categories are covered:
-- [Environment variables in dbt Cloud](/guides/core-to-cloud-1?step=7#environment-variables-in-dbt-cloud)
-- [dbt Cloud environment variables order of precedence](/guides/core-to-cloud-1?step=7#dbt-cloud-environment-variables-order-of-precedence)
-- [Set environment variables in dbt Cloud](/guides/core-to-cloud-1?step=7#set-environment-variables-in-dbt-cloud)
+## Переменные окружения
+Этот раздел поможет вам понять, как настроить и управлять переменными окружения dbt Cloud для вашего проекта. В этом разделе рассматриваются следующие категории:
+- [Переменные окружения в dbt Cloud](/guides/core-to-cloud-1?step=7#environment-variables-in-dbt-cloud)
+- [Порядок приоритета переменных окружения dbt Cloud](/guides/core-to-cloud-1?step=7#dbt-cloud-environment-variables-order-of-precedence)
+- [Настройка переменных окружения в dbt Cloud](/guides/core-to-cloud-1?step=7#set-environment-variables-in-dbt-cloud)
 
-In dbt Cloud, you can set [environment variables](/docs/build/environment-variables) in the dbt Cloud user interface (UI). Read [Set up environment variables](#set-environment-variables-in-dbt-cloud) for more info.
+В dbt Cloud вы можете установить [переменные окружения](/docs/build/environment-variables) в пользовательском интерфейсе (UI) dbt Cloud. Читайте [Настройка переменных окружения](#set-environment-variables-in-dbt-cloud) для получения дополнительной информации.
 
-In dbt Core, environment variables, or the [`env_var` function](/reference/dbt-jinja-functions/env_var), are defined manually by the developer or within the external application running dbt.
+В dbt Core переменные окружения или функция [`env_var`](/reference/dbt-jinja-functions/env_var) определяются вручную разработчиком или в рамках внешнего приложения, выполняющего dbt.
 
-### Environment variables in dbt Cloud
-  - dbt Cloud environment variables must be prefixed with `DBT_` (including `DBT_ENV_CUSTOM_ENV_` or `DBT_ENV_SECRET`).
-  - If your dbt Core environment variables don’t follow this naming convention, perform a [“find and replace”](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#dbt-cloud-ide-features) in your project to make sure all references to these environment variables contain the proper naming conventions.
-- dbt Cloud secures environment variables that enable more flexible configuration of data warehouse connections or git provider integrations, offering additional measures for sensitive values, such as prefixing keys with `DBT_ENV_SECRET`to obscure them in logs and the UI.
+### Переменные окружения в dbt Cloud
+  - Переменные окружения dbt Cloud должны начинаться с префикса `DBT_` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`).
+  - Если ваши переменные окружения dbt Core не соответствуют этому наименованию, выполните [«поиск и замену»](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#dbt-cloud-ide-features) в вашем проекте, чтобы убедиться, что все ссылки на эти переменные окружения содержат правильные наименования.
+- dbt Cloud защищает переменные окружения, что позволяет более гибко настраивать подключения к хранилищу данных или интеграции с поставщиками git, предлагая дополнительные меры для чувствительных значений, такие как префиксирование ключей с `DBT_ENV_SECRET`, чтобы скрыть их в логах и пользовательском интерфейсе.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/project-environment-view.png" title="Setting project level and environment level values"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/project-environment-view.png" title="Настройка значений на уровне проекта и среды"/>
 
-### dbt Cloud environment variables order of precedence
-Environment variables in dbt Cloud are managed with a clear [order of precedence](/docs/build/environment-variables#setting-and-overriding-environment-variables), allowing users to define values at four levels (highest to lowest order of precedence):
-   - The job level (job override) or in the IDE for an individual developer (personal override). _Highest precedence_
-   - The environment level, which can be overridden by the job level or personal override.
-   - A project-wide default value, which can be overridden by the environment level, job level, or personal override.
-   - The optional default argument supplied to the `env_var` Jinja function in the code. _Lowest precedence_
+### Порядок приоритета переменных окружения dbt Cloud
+Переменные окружения в dbt Cloud управляются с четким [порядком приоритета](/docs/build/environment-variables#setting-and-overriding-environment-variables), позволяя пользователям определять значения на четырех уровнях (от самого высокого к самому низкому порядку приоритета):
+   - Уровень задания (переопределение задания) или в IDE для отдельного разработчика (личное переопределение). _Самый высокий приоритет_
+   - Уровень среды, который может быть переопределен уровнем задания или личным переопределением.
+   - Значение по умолчанию для всего проекта, которое может быть переопределено уровнем среды, уровнем задания или личным переопределением.
+   - Необязательный аргумент по умолчанию, переданный функции `env_var` Jinja в коде. _Самый низкий приоритет_
   
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/env-var-precdence.png" title="Environment variables order of precedence"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/env-var-precdence.png" title="Порядок приоритета переменных окружения"/>
 
-### Set environment variables in dbt Cloud
+### Настройка переменных окружения в dbt Cloud
 
-- To set these variables for an entire project or specific environments, navigate to **Deploy** > **Environments** > **Environment variables** tab.
-- To set these variables at the job level, navigate to **Deploy** > **Jobs** > **Select your job** > **Settings** > **Advanced settings**.
-- To set these variables at the personal override level, navigate to **Profile Settings** > **Credentials** > **Select your project** > **Environment variables**.
+- Чтобы установить эти переменные для всего проекта или конкретных сред, перейдите в **Развертывание** > **Среды** > вкладка **Переменные окружения**.
+- Чтобы установить эти переменные на уровне задания, перейдите в **Развертывание** > **Задания** > **Выберите ваше задание** > **Настройки** > **Дополнительные настройки**.
+- Чтобы установить эти переменные на уровне личного переопределения, перейдите в **Настройки профиля** > **Учетные данные** > **Выберите ваш проект** > **Переменные окружения**.
 
-## Orchestration setup
+## Настройка оркестрации
 
-This section outlines the considerations and methods to set up your dbt Cloud environments and jobs for orchestration. The following categories are covered in this section:
+В этом разделе описаны соображения и методы настройки ваших сред dbt Cloud и заданий для оркестрации. В этом разделе рассматриваются следующие категории:
 
-- [dbt Cloud environments](/guides/core-to-cloud-1?step=8#dbt-cloud-environments-1)
-- [Initial setup steps](/guides/core-to-cloud-1?step=8#initial-setup-steps-1)
-- [Additional configuration](/guides/core-to-cloud-1?step=8#additional-configuration-3)
-- [CI/CD setup](/guides/core-to-cloud-1?step=8#cicd-setup)
+- [Среды dbt Cloud](/guides/core-to-cloud-1?step=8#dbt-cloud-environments-1)
+- [Начальные шаги настройки](/guides/core-to-cloud-1?step=8#initial-setup-steps-1)
+- [Дополнительная конфигурация](/guides/core-to-cloud-1?step=8#additional-configuration-3)
+- [Настройка CI/CD](/guides/core-to-cloud-1?step=8#cicd-setup)
 
-### dbt Cloud environments
-To use the [dbt Cloud's job scheduler](/docs/deploy/job-scheduler), set up one environment as the production environment. This is the [deployment](/docs/deploy/deploy-environments) environment. You can set up multiple environments for different stages of your deployment pipeline, such as development, staging/QA, and production.
+### Среды dbt Cloud
+Чтобы использовать [планировщик заданий dbt Cloud](/docs/deploy/job-scheduler), настройте одну среду как производственную. Это [развертываемая](/docs/deploy/deploy-environments) среда. Вы можете настроить несколько сред для различных этапов вашего развертывания, таких как разработка, тестирование/QA и производство.
 
-### Initial setup steps
-1. **dbt Core version** &mdash; In your environment settings, configure dbt Cloud with the same dbt Core version.
-   - Once your full migration is complete, we recommend upgrading your environments to [release tracks](/docs/dbt-versions/cloud-release-tracks) to always get the latest features and more. You only need to do this once.
+### Начальные шаги настройки
+1. **Версия dbt Core** &mdash; В настройках вашей среды настройте dbt Cloud с той же версией dbt Core.
+   - После завершения полной миграции мы рекомендуем обновить ваши среды до [релизных треков](/docs/dbt-versions/cloud-release-tracks), чтобы всегда получать последние функции и улучшения. Вам нужно сделать это только один раз.
 
-2. **Configure your jobs** &mdash; [Create jobs](/docs/deploy/deploy-jobs#create-and-schedule-jobs) for scheduled or event-driven dbt jobs. You can use cron execution, manual, pull requests, or trigger on the completion of another job.
-   - Note that alongside [jobs in dbt Cloud](/docs/deploy/jobs), discover other ways to schedule and run your dbt jobs with the help of other tools. Refer to [Integrate with other tools](/docs/deploy/deployment-tools) for more information.
+2. **Настройка ваших заданий** &mdash; [Создайте задания](/docs/deploy/deploy-jobs#create-and-schedule-jobs) для запланированных или событийных dbt заданий. Вы можете использовать выполнение по расписанию, вручную, по запросам на слияние или запускать по завершении другого задания.
+   - Обратите внимание, что наряду с [заданиями в dbt Cloud](/docs/deploy/jobs) вы можете узнать о других способах планирования и запуска ваших dbt заданий с помощью других инструментов. Обратитесь к [Интеграция с другими инструментами](/docs/deploy/deployment-tools) для получения дополнительной информации.
 
-### Additional configuration
-Explore these additional configurations to optimize your dbt Cloud orchestration setup further:
+### Дополнительная конфигурация
+Изучите эти дополнительные настройки для дальнейшей оптимизации вашей настройки оркестрации dbt Cloud:
 
-1. **Custom target names** &mdash; Use environment variables to set a `custom target.name` for every [corresponding dbt Cloud job](/docs/build/custom-target-names) at the environment level.
+1. **Кастомные имена целей** &mdash; Используйте переменные окружения, чтобы установить `custom target.name` для каждого [соответствующего задания dbt Cloud](/docs/build/custom-target-names) на уровне среды.
 
-2. **dbt commands** &mdash; Add any relevant [dbt commands](/docs/deploy/job-commands) to execute your dbt Cloud jobs runs.
+2. **Команды dbt** &mdash; Добавьте любые соответствующие [команды dbt](/docs/deploy/job-commands) для выполнения ваших заданий dbt Cloud.
 
-3. **Notifications** &mdash; Set up [notifications](/docs/deploy/job-notifications) by configuring email and Slack alerts to monitor your jobs.
+3. **Уведомления** &mdash; Настройте [уведомления](/docs/deploy/job-notifications), настроив электронные и Slack-уведомления для мониторинга ваших заданий.
 
-4. **Monitoring tools** &mdash; Use [monitoring tools](/docs/deploy/monitor-jobs) like run history, job retries, job chaining, dashboard status tiles, and more for a seamless orchestration experience.
+4. **Инструменты мониторинга** &mdash; Используйте [инструменты мониторинга](/docs/deploy/monitor-jobs), такие как история запусков, повторные попытки заданий, цепочки заданий, статусные плитки на панели и многое другое для бесшовного опыта оркестрации.
 
-5. **API access** &mdash; Create [API auth tokens](/docs/dbt-cloud-apis/authentication) and access to [dbt Cloud APIs](/docs/dbt-cloud-apis/overview) as needed.  <Lifecycle status="team,enterprise" />
+5. **Доступ к API** &mdash; Создайте [токены аутентификации API](/docs/dbt-cloud-apis/authentication) и доступ к [API dbt Cloud](/docs/dbt-cloud-apis/overview) по мере необходимости.  <Lifecycle status="team,enterprise" />
 
-6. **dbt Explorer** &mdash; If you use [dbt Explorer](/docs/collaborate/explore-projects) and run production jobs with an external orchestrator, ensure your production jobs run `dbt run` or `dbt build` to update and view models and their [metadata](/docs/collaborate/explore-projects#generate-metadata) in dbt Explorer. Running `dbt compile`  alone will not update model metadata. In addition, features like column-level lineage also requires catalog metadata produced through running `dbt docs generate`. <Lifecycle status="team,enterprise" />
+6. **dbt Explorer** &mdash; Если вы используете [dbt Explorer](/docs/collaborate/explore-projects) и запускаете производственные задания с внешним оркестратором, убедитесь, что ваши производственные задания выполняют `dbt run` или `dbt build`, чтобы обновить и просмотреть модели и их [метаданные](/docs/collaborate/explore-projects#generate-metadata) в dbt Explorer. Запуск только `dbt compile` не обновит метаданные модели. Кроме того, такие функции, как линейка на уровне столбцов, также требуют метаданных каталога, созданных при запуске `dbt docs generate`. <Lifecycle status="team,enterprise" />
 
-### CI/CD setup
+### Настройка CI/CD
 
-Building a custom solution to efficiently check code upon pull requests is complicated. With dbt Cloud, you can enable [continuous integration / continuous deployment (CI/CD)](/docs/deploy/continuous-integration) and configure dbt Cloud to run your dbt projects in a temporary schema when new commits are pushed to open pull requests.
+Создание пользовательского решения для эффективной проверки кода при запросах на слияние — это сложная задача. С помощью dbt Cloud вы можете включить [непрерывную интеграцию / непрерывное развертывание (CI/CD)](/docs/deploy/continuous-integration) и настроить dbt Cloud для запуска ваших проектов dbt во временной схеме, когда новые коммиты отправляются в открытые запросы на слияние.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/ci-workflow.png" width="90%" title="Workflow of continuous integration in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/ci-workflow.png" width="90%" title="Рабочий процесс непрерывной интеграции в dbt Cloud"/>
 
-This build-on-PR functionality is a great way to catch bugs before deploying to production, and an essential tool for data practitioners.
+Эта функция сборки по запросу — отличный способ поймать ошибки до развертывания в производственной среде и важный инструмент для специалистов по данным.
 
-1. Set up an integration with a native Git application (such as Azure DevOps, GitHub, GitLab) and a CI environment in dbt Cloud.
-2. Create [a CI/CD job](/docs/deploy/ci-jobs) to automate quality checks before code is deployed to production.
-3. Run your jobs in a production environment to fully implement CI/CD. Future pull requests will also leverage the last production runs to compare against.
+1. Настройте интеграцию с родным приложением Git (таким как Azure DevOps, GitHub, GitLab) и CI-средой в dbt Cloud.
+2. Создайте [задание CI/CD](/docs/deploy/ci-jobs), чтобы автоматизировать проверки качества перед развертыванием кода в производственной среде.
+3. Запускайте ваши задания в производственной среде для полной реализации CI/CD. Будущие запросы на слияние также будут использовать последние производственные запуски для сравнения.
 
-## Model development and discovery
+## Разработка и открытие моделей
 
-In this section, you’ll be able to validate whether your models run or compile correctly in your development tool of choice: The [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [dbt Cloud CLI](/docs/cloud/cloud-cli-installation).
+В этом разделе вы сможете проверить, правильно ли выполняются или компилируются ваши модели в вашем инструменте разработки по выбору: [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или [dbt Cloud CLI](/docs/cloud/cloud-cli-installation).
 
-You’ll want to make sure you set up your [development environment and credentials](/docs/dbt-cloud-environments#set-developer-credentials).
+Убедитесь, что вы настроили свои [разработческие среды и учетные данные](/docs/dbt-cloud-environments#set-developer-credentials).
 
-1. In your [development tool](/docs/cloud/about-develop-dbt) of choice, you can review your dbt project, ensure it's set up correctly, and run some [dbt commands](/reference/dbt-commands):
-   - Run `dbt compile` to make sure your project compiles correctly.
-   - Run a few models in the dbt Cloud IDE or dbt Cloud CLI to ensure you’re experiencing accurate results in development.
+1. В вашем [инструменте разработки](/docs/cloud/about-develop-dbt) по выбору вы можете просмотреть ваш проект dbt, убедиться, что он настроен правильно, и выполнить несколько [команд dbt](/reference/dbt-commands):
+   - Выполните `dbt compile`, чтобы убедиться, что ваш проект компилируется правильно.
+   - Запустите несколько моделей в dbt Cloud IDE или dbt Cloud CLI, чтобы убедиться, что вы получаете точные результаты в разработке.
 
-2. Once your first job has successfully run in your production environment, use [dbt Explorer](/docs/collaborate/explore-projects) to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their <Term id="data-lineage" />  to gain a better understanding of its latest production state. <Lifecycle status="team,enterprise" />
+2. Как только ваше первое задание успешно выполнится в производственной среде, используйте [dbt Explorer](/docs/collaborate/explore-projects), чтобы просмотреть ресурсы вашего проекта [resources](/docs/build/projects) (такие как модели, тесты и метрики) и их <Term id="data-lineage" />  для лучшего понимания его последнего состояния в производственной среде. <Lifecycle status="team,enterprise" />
 
-## What’s next?
+## Что дальше?
 
 <ConfettiTrigger>
 
-Congratulations on completing the first part of your move to dbt Cloud 🎉!
+Поздравляем с завершением первой части вашего перехода на dbt Cloud 🎉!
 
-You have learned:
-- How to set up your dbt Cloud account
-- How to connect your data platform and Git repository
-- How to configure your development, orchestration, and CI/CD environments
-- How to set up environment variables and validate your models
+Вы узнали:
+- Как настроить ваш аккаунт dbt Cloud
+- Как подключить вашу платформу данных и репозиторий Git
+- Как настроить ваши среды разработки, оркестрации и CI/CD
+- Как настроить переменные окружения и проверить ваши модели
 
 
-For the next steps, you can continue exploring our 3-part-guide series on moving from dbt Core to dbt Cloud:
+Для следующих шагов вы можете продолжить изучение нашей трёхчастной серии руководств по переходу с dbt Core на dbt Cloud:
 
 
 <CoretoCloudTable/>
 
-### Related docs
-- [Learn dbt Cloud](https://learn.getdbt.com) video courses for on-demand learning.
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights.
-- Work with the [dbt Labs’ Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and migration.
-- [How dbt Cloud compares with dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) for a detailed comparison of dbt Core and dbt Cloud.
-- Subscribe to the [dbt Cloud RSS alerts](https://status.getdbt.com/)
+### Связанные документы
+- [Изучите dbt Cloud](https://learn.getdbt.com) видео-курсы для обучения по запросу.
+- Запланируйте [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты.
+- Работайте с командой [Профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services) для поддержки вашей организации данных и миграции.
+- [Как dbt Cloud сравнивается с dbt Core](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) для подробного сравнения dbt Core и dbt Cloud.
+- Подпишитесь на [RSS-уведомления dbt Cloud](https://status.getdbt.com/)
 
 </ConfettiTrigger>
 

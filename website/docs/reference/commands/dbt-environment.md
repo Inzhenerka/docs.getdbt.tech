@@ -1,19 +1,19 @@
 ---
-title: "About dbt environment command"
+title: "О команде dbt environment"
 sidebar_label: "environment"
 id: dbt-environment
 ---
 
-The `dbt environment` command enables you to interact with your dbt Cloud environment. Use the command for:
+Команда `dbt environment` позволяет вам взаимодействовать с вашей средой dbt Cloud. Используйте эту команду для:
 
-- Viewing your local configuration details (account ID, active project ID, deployment environment, and more).
-- Viewing your dbt Cloud configuration details (environment ID, environment name, connection type, and more).
+- Просмотра деталей вашей локальной конфигурации (идентификатор учетной записи, идентификатор активного проекта, среда развертывания и многое другое).
+- Просмотра деталей конфигурации вашей среды dbt Cloud (идентификатор среды, имя среды, тип подключения и многое другое).
 
-This guide lists all the commands and options you can use with `dbt environment` in the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). To use them, add a command or option like this: `dbt environment [command]` or use the shorthand  `dbt env [command]`.
+Этот гид перечисляет все команды и параметры, которые вы можете использовать с `dbt environment` в [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). Чтобы использовать их, добавьте команду или параметр следующим образом: `dbt environment [command]` или используйте сокращение `dbt env [command]`.
 
 ### dbt environment show
 
-`show` command &mdash; To view your local and dbt Cloud configuration details. To run the command with the dbt Cloud CLI, type one of the following commands, including the shorthand:
+Команда `show` &mdash; Для просмотра деталей вашей локальной конфигурации и конфигурации dbt Cloud. Чтобы выполнить команду с помощью dbt Cloud CLI, введите одну из следующих команд, включая сокращение:
 
 ```shell
 dbt environment show
@@ -22,7 +22,7 @@ dbt environment show
 dbt env show
 ```
 
-The command returns the following information:
+Команда возвращает следующую информацию:
 
 ```bash
 ❯ dbt env show
@@ -56,41 +56,41 @@ Snowflake Connection Details:
   Client session keep alive      false 
 ```
 
-Note, that dbt Cloud won't return anything that is a secret key and will return an 'NA' for any field that isn't configured.
+Обратите внимание, что dbt Cloud не вернет ничего, что является секретным ключом, и вернет 'NA' для любого поля, которое не настроено.
 
-### dbt environment flags
+### Флаги dbt environment
 
-Use the following flags (or options) with the `dbt environment` command:
+Используйте следующие флаги (или параметры) с командой `dbt environment`:
 
-- `-h`, `--help` &mdash; To view the help documentation for a specific command in your command line interface.
+- `-h`, `--help` &mdash; Для просмотра документации справки по конкретной команде в вашем интерфейсе командной строки.
 
   ```shell 
   dbt environment [command] --help
   dbt environment [command] -h
   ```
 
-  The `--help` flag returns the following information:
+  Флаг `--help` возвращает следующую информацию:
 
   ```bash
     ❯ dbt help environment
-    Interact with dbt environments
+    Взаимодействие с окружениями dbt
 
-  Usage:
+  Использование:
     dbt environment [command]
 
-  Aliases:
+  Псевдонимы:
     environment, env
 
-  Available Commands:
-    show        Show the working environment
+  Доступные команды:
+    show        Показать рабочую среду
 
-  Flags:
-    -h, --help   help for environment
+  Флаги:
+    -h, --help   справка по environment
 
-  Use "dbt environment [command] --help" for more information about a command.
+  Используйте "dbt environment [command] --help" для получения дополнительной информации о команде.
   ```
 
-  For example, to view the help documentation for the `show` command, type one of the following commands, including the shorthand:
+  Например, чтобы просмотреть документацию справки для команды `show`, введите одну из следующих команд, включая сокращение:
 
   ```shell
   dbt environment show --help

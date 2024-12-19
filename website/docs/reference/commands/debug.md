@@ -1,27 +1,26 @@
 ---
-title: "About dbt debug command"
+title: "О команде dbt debug"
 sidebar_label: "debug"
 id: "debug"
 ---
 
+`dbt debug` — это утилита для проверки соединения с базой данных и отображения информации для целей отладки, такой как корректность вашего проектного файла, [версия dbt](/reference/dbt-jinja-functions/dbt_version) и установка всех необходимых зависимостей (например, `git`, когда вы выполняете `dbt deps`).
 
-`dbt debug` is a utility function to test the database connection and display information for debugging purposes, such as the validity of your project file, the [dbt version](/reference/dbt-jinja-functions/dbt_version), and your installation of any requisite dependencies (like `git` when you run `dbt deps`).
+*Примечание: Не путать с [логированием уровня отладки](/reference/global-configs/logs#debug-level-logging) через опцию `--debug`, которая увеличивает подробность вывода.
 
-*Note: Not to be confused with [debug-level logging](/reference/global-configs/logs#debug-level-logging) via the `--debug` option which increases verbosity.
+## Пример использования
 
-## Example usage
-
-Only test the connection to the data platform and skip the other checks `dbt debug` looks for:
+Только проверьте соединение с платформой данных и пропустите другие проверки, которые выполняет `dbt debug`:
 
 ```shell
 $ dbt debug --connection
 ```
 
-Show the configured location for the `profiles.yml` file and exit:
+Показать настроенное местоположение файла `profiles.yml` и выйти:
 
 ```text
 $ dbt debug --config-dir
-To view your profiles.yml file, run:
+Чтобы просмотреть ваш файл profiles.yml, выполните:
 
 open /Users/alice/.dbt
 ```

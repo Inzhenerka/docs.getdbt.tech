@@ -1,25 +1,25 @@
 ---
-title: Snapshot properties
-description: "Read this guide to learn about using source properties in dbt."
+title: Свойства снимков
+description: "Прочитайте это руководство, чтобы узнать о использовании свойств источников в dbt."
 ---
 
 <VersionBlock firstVersion="1.9">
 
-In dbt v1.9 and later, snapshots are defined and configured in YAML files within your `snapshots/` directory (as defined by the [`snapshot-paths` config](/reference/project-configs/snapshot-paths)). Snapshot properties are declared within these YAML files, allowing you to define both the snapshot configurations and properties in one place.
+В dbt версии 1.9 и позже снимки определяются и настраиваются в YAML файлах в директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Свойства снимков объявляются в этих YAML файлах, что позволяет вам определять как конфигурации снимков, так и их свойства в одном месте.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-Snapshots properties can be declared in `.yml` files in:
-- your `snapshots/` directory (as defined by the [`snapshot-paths` config](/reference/project-configs/snapshot-paths)).
-- your `models/` directory (as defined by the [`model-paths` config](/reference/project-configs/model-paths))
+Свойства снимков могут быть объявлены в `.yml` файлах в:
+- вашей директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)).
+- вашей директории `models/` (как определено в конфигурации [`model-paths`](/reference/project-configs/model-paths))
 
-Note, in dbt v1.9 and later, snapshots are defined in an updated syntax using a YAML file within your `snapshots/` directory (as defined by the [`snapshot-paths` config](/reference/project-configs/snapshot-paths)). For faster and more efficient management, consider the updated snapshot YAML syntax, available now in [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and soon in [dbt Core v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Обратите внимание, что в dbt версии 1.9 и позже снимки определяются в обновленном синтаксисе с использованием YAML файла в директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Для более быстрого и эффективного управления рассмотрите обновленный синтаксис YAML для снимков, доступный сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и скоро в [dbt Core v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
 </VersionBlock>
 
-We recommend that you put them in the `snapshots/` directory. You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `snapshots/` or `models/` directory.
+Мы рекомендуем помещать их в директорию `snapshots/`. Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `snapshots/` или `models/`.
 
 <VersionBlock firstVersion="1.9">
 
@@ -34,7 +34,7 @@ snapshots:
     [meta](/reference/resource-configs/meta): {<dictionary>}
     [docs](/reference/resource-configs/docs):
       show: true | false
-      node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [config](/reference/resource-properties/config):
       [<snapshot_config>](/reference/snapshot-configs): <config_value>
     [tests](/reference/resource-properties/data-tests):
@@ -48,10 +48,10 @@ snapshots:
         [tags](/reference/resource-configs/tags): [<string>]
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional tests
-      - ... # declare properties of additional columns
+          - ... # объявите дополнительные тесты
+      - ... # объявите свойства дополнительных столбцов
 
-    - name: ... # declare properties of additional snapshots
+    - name: ... # объявите свойства дополнительных снимков
 
 ```
 </File>
@@ -70,7 +70,7 @@ snapshots:
     [meta](/reference/resource-configs/meta): {<dictionary>}
     [docs](/reference/resource-configs/docs):
       show: true | false
-      node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [config](/reference/resource-properties/config):
       [<snapshot_config>](/reference/snapshot-configs): <config_value>
     [tests](/reference/resource-properties/data-tests):
@@ -84,10 +84,10 @@ snapshots:
         [tags](/reference/resource-configs/tags): [<string>]
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional tests
-      - ... # declare properties of additional columns
+          - ... # объявите дополнительные тесты
+      - ... # объявите свойства дополнительных столбцов
 
-    - name: ... # declare properties of additional snapshots
+    - name: ... # объявите свойства дополнительных снимков
 
 ```
 </File>

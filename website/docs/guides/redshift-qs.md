@@ -1,111 +1,111 @@
 ---
-title: "Quickstart for dbt Cloud and Redshift"
+title: "Быстрый старт для dbt Cloud и Redshift"
 id: redshift
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'redshift'
 hide_table_of_contents: true
-tags: ['Redshift', 'dbt Cloud','Quickstart']
+tags: ['Redshift', 'dbt Cloud','Быстрый старт']
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with Redshift. It will show you how to: 
+В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с Redshift. Оно покажет вам, как: 
 
-- Set up a Redshift cluster.
-- Load sample data into your Redshift account.
-- Connect dbt Cloud to Redshift.
-- Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add tests to your models
-- Document your models
-- Schedule a job to run
+- Настроить кластер Redshift.
+- Загрузить образцы данных в вашу учетную запись Redshift.
+- Подключить dbt Cloud к Redshift.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
-:::tips Videos for you
-Check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
+:::tips Видео для вас
+Посмотрите [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) бесплатно, если вас интересует обучение с помощью видео.
 :::
 
-### Prerequisites 
+### Предварительные требования 
 
-- You have a  [dbt Cloud account](https://www.getdbt.com/signup/). 
-- You have an AWS account with permissions to execute a CloudFormation template to create appropriate roles and a Redshift cluster.
+- У вас есть [учетная запись dbt Cloud](https://www.getdbt.com/signup/). 
+- У вас есть учетная запись AWS с правами на выполнение шаблона CloudFormation для создания соответствующих ролей и кластера Redshift.
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
-- [CI jobs](/docs/deploy/continuous-integration)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
+- Узнайте больше с помощью [курсов dbt Learn](https://learn.getdbt.com)
+- [CI задания](/docs/deploy/continuous-integration)
+- [Задания на развертывание](/docs/deploy/deploy-jobs)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источников](/docs/deploy/source-freshness)
 
 
-## Create a Redshift cluster
-1. Sign in to your [AWS account](https://signin.aws.amazon.com/console) as a root user or an IAM user depending on your level of access.
-2. Use a CloudFormation template to quickly set up a Redshift cluster. A CloudFormation template is a configuration file that automatically spins up the necessary resources in AWS. [Start a CloudFormation stack](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=dbt-workshop&templateURL=https://tpch-sample-data.s3.amazonaws.com/create-dbtworkshop-infr) and you can refer to the [create-dbtworkshop-infr JSON file](https://github.com/aws-samples/aws-modernization-with-dbtlabs/blob/main/resources/cloudformation/create-dbtworkshop-infr) for more template details.
+## Создание кластера Redshift
+1. Войдите в свою [учетную запись AWS](https://signin.aws.amazon.com/console) как корневой пользователь или пользователь IAM в зависимости от вашего уровня доступа.
+2. Используйте шаблон CloudFormation для быстрой настройки кластера Redshift. Шаблон CloudFormation — это файл конфигурации, который автоматически создает необходимые ресурсы в AWS. [Запустите стек CloudFormation](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=dbt-workshop&templateURL=https://tpch-sample-data.s3.amazonaws.com/create-dbtworkshop-infr) и вы можете обратиться к [файлу JSON create-dbtworkshop-infr](https://github.com/aws-samples/aws-modernization-with-dbtlabs/blob/main/resources/cloudformation/create-dbtworkshop-infr) для получения дополнительных деталей о шаблоне.
 
 :::tip
-To avoid connectivity issues with dbt Cloud, make sure to allow inbound traffic on port 5439 from [dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) in your Redshift security groups and Network Access Control Lists (NACLs) settings.
+Чтобы избежать проблем с подключением к dbt Cloud, убедитесь, что разрешен входящий трафик на порту 5439 от [IP-адресов dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) в ваших группах безопасности Redshift и настройках списков управления доступом к сети (NACL).
 :::
 
-3. Click **Next** for each page until you reach the **Select acknowledgement** checkbox. Select **I acknowledge that AWS CloudFormation might create IAM resources with custom names** and click **Create Stack**.  You should land on the stack page with a CREATE_IN_PROGRESS status.
+3. Нажмите **Далее** на каждой странице, пока не дойдете до флажка **Подтверждение выбора**. Выберите **Я подтверждаю, что AWS CloudFormation может создать IAM-ресурсы с пользовательскими именами** и нажмите **Создать стек**. Вы должны оказаться на странице стека со статусом CREATE_IN_PROGRESS.
 
-    <Lightbox src="/img/redshift_tutorial/images/cloud_formation_in_progress.png" title="Cloud Formation in Progress" />
+    <Lightbox src="/img/redshift_tutorial/images/cloud_formation_in_progress.png" title="Создание Cloud Formation" />
 
-4. When the stack status changes to CREATE_COMPLETE, click the **Outputs** tab on the top to view information that you will use throughout the rest of this guide. Save those credentials for later by keeping this open in a tab.
+4. Когда статус стека изменится на CREATE_COMPLETE, нажмите на вкладку **Выходные данные** вверху, чтобы просмотреть информацию, которую вы будете использовать в остальной части этого руководства. Сохраните эти учетные данные для дальнейшего использования, оставив эту вкладку открытой.
 
-5. Type `Redshift` in the search bar at the top and click **Amazon Redshift**.
+5. Введите `Redshift` в строке поиска вверху и нажмите **Amazon Redshift**.
 
-    <Lightbox src="/img/redshift_tutorial/images/go_to_redshift.png" title="Click on Redshift" />
+    <Lightbox src="/img/redshift_tutorial/images/go_to_redshift.png" title="Нажмите на Redshift" />
 
-6. Confirm that your new Redshift cluster is listed in **Cluster overview**. Select your new cluster. The cluster name should begin with `dbtredshiftcluster-`.  Then, click **Query Data**. You can choose the classic query editor or v2. We will be using the v2 version for the purpose of this guide.
+6. Убедитесь, что ваш новый кластер Redshift отображается в **Обзор кластера**. Выберите ваш новый кластер. Имя кластера должно начинаться с `dbtredshiftcluster-`. Затем нажмите **Запрос данных**. Вы можете выбрать классический редактор запросов или v2. Мы будем использовать версию v2 для целей этого руководства.
 
-<Lightbox src="/img/redshift_tutorial/images/cluster_overview.png" title="Available Redshift Cluster" />
+<Lightbox src="/img/redshift_tutorial/images/cluster_overview.png" title="Доступный кластер Redshift" />
 
-7. You might be asked to Configure account. For this sandbox environment, we recommend selecting “Configure account”.
+7. Возможно, вам будет предложено настроить учетную запись. Для этой песочницы мы рекомендуем выбрать "Настроить учетную запись".
 
-8. Select your cluster from the list. In the **Connect to** popup, fill out the credentials from the output of the stack:
-    - **Authentication** &mdash; Use the default which is **Database user name and password** (NOTE: IAM authentication is not supported in dbt Cloud).
-    - **Database** &mdash; `dbtworkshop`
-    - **User name** &mdash; `dbtadmin`
-    - **Password** &mdash; Use the autogenerated `RSadminpassword` from the output of the stack and save it for later.
+8. Выберите ваш кластер из списка. В всплывающем окне **Подключиться к** заполните учетные данные из выходных данных стека:
+    - **Аутентификация** — Используйте значение по умолчанию, которое является **Имя пользователя базы данных и пароль** (ПРИМЕЧАНИЕ: Аутентификация IAM не поддерживается в dbt Cloud).
+    - **База данных** — `dbtworkshop`
+    - **Имя пользователя** — `dbtadmin`
+    - **Пароль** — Используйте сгенерированный `RSadminpassword` из выходных данных стека и сохраните его для дальнейшего использования.
 
-<Lightbox src="/img/redshift_tutorial/images/redshift_query_editor.png" title="Redshift Query Editor v2" />
+<Lightbox src="/img/redshift_tutorial/images/redshift_query_editor.png" title="Редактор запросов Redshift v2" />
 
-<Lightbox src="/img/redshift_tutorial/images/connect_to_redshift_cluster.png" title="Connect to Redshift Cluster" />
+<Lightbox src="/img/redshift_tutorial/images/connect_to_redshift_cluster.png" title="Подключение к кластеру Redshift" />
 
-9. Click **Create connection**.
+9. Нажмите **Создать соединение**.
 
-## Load data 
+## Загрузка данных 
 
-Now we are going to load our sample data into the S3 bucket that our Cloudformation template created. S3 buckets are simple and inexpensive way to store data outside of Redshift.
+Теперь мы загрузим наши образцы данных в S3-ведро, которое создал наш шаблон CloudFormation. Ведра S3 — это простой и недорогой способ хранения данных вне Redshift.
 
-1. The data used in this course is stored as CSVs in a public S3 bucket. You can use the following URLs to download these files. Download these to your computer to use in the following steps.
+1. Данные, используемые в этом курсе, хранятся в виде CSV в публичном ведре S3. Вы можете использовать следующие URL-адреса для загрузки этих файлов. Скачайте их на свой компьютер для использования в следующих шагах.
     - [jaffle_shop_customers.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_customers.csv)
     - [jaffle_shop_orders.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_orders.csv)
     - [stripe_payments.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/stripe_payments.csv)
 
-2. Now we are going to use the S3 bucket that you created with CloudFormation and upload the files. Go to the search bar at the top and type in `S3` and click on S3. There will be sample data in the bucket already, feel free to ignore it or use it for other modeling exploration. The bucket will be prefixed with `dbt-data-lake`.
+2. Теперь мы будем использовать ведро S3, которое вы создали с помощью CloudFormation, и загрузим файлы. Перейдите в строку поиска вверху и введите `S3`, затем нажмите на S3. В ведре уже будут образцы данных, не стесняйтесь игнорировать их или использовать для других исследований моделирования. Ведро будет иметь префикс `dbt-data-lake`.
 
-<Lightbox src="/img/redshift_tutorial/images/go_to_S3.png" title="Go to S3" />
+<Lightbox src="/img/redshift_tutorial/images/go_to_S3.png" title="Перейдите в S3" />
 
-3. Click on the `name of the bucket` S3 bucket.  If you have multiple S3 buckets, this will be the bucket that was listed under “Workshopbucket” on the Outputs page. 
+3. Нажмите на `имя ведра` S3. Если у вас несколько ведер S3, это будет ведро, которое было указано под "Workshopbucket" на странице выходных данных. 
 
-<Lightbox src="/img/redshift_tutorial/images/s3_bucket.png" title="Go to your S3 Bucket" />
+<Lightbox src="/img/redshift_tutorial/images/s3_bucket.png" title="Перейдите в ваше ведро S3" />
 
-4. Click **Upload**. Drag the three files into the UI and click the **Upload** button.
+4. Нажмите **Загрузить**. Перетащите три файла в интерфейс и нажмите кнопку **Загрузить**.
 
-<Lightbox src="/img/redshift_tutorial/images/upload_csv.png" title="Upload your CSVs" />
+<Lightbox src="/img/redshift_tutorial/images/upload_csv.png" title="Загрузите ваши CSV" />
 
-5. Remember the name of the S3 bucket for later. It should look like this: `s3://dbt-data-lake-xxxx`. You will need it for the next section.
-6. Now let’s go back to the Redshift query editor. Search for Redshift in the search bar, choose your cluster, and select Query data.
-7. In your query editor, execute this query below to create the schemas that we will be placing your raw data into. You can highlight the statement and then click on Run to run them individually. If you are on the Classic Query Editor, you might need to input them separately into the UI.  You should see these schemas listed under `dbtworkshop`.
+5. Запомните имя ведра S3 для дальнейшего использования. Оно должно выглядеть так: `s3://dbt-data-lake-xxxx`. Вам понадобится это для следующего раздела.
+6. Теперь давайте вернемся к редактору запросов Redshift. Найдите Redshift в строке поиска, выберите ваш кластер и выберите Запрос данных.
+7. В вашем редакторе запросов выполните следующий запрос, чтобы создать схемы, в которые мы будем помещать ваши необработанные данные. Вы можете выделить оператор и затем нажать на Запустить, чтобы выполнить их по отдельности. Если вы находитесь в классическом редакторе запросов, вам, возможно, придется вводить их по отдельности в интерфейсе. Вы должны увидеть эти схемы в разделе `dbtworkshop`.
 
     ```sql
     create schema if not exists jaffle_shop;
     create schema if not exists stripe;
     ```
 
-8. Now create the tables in your schema with these queries using the statements below.  These will be populated as tables in the respective schemas.
+8. Теперь создайте таблицы в вашей схеме с помощью этих запросов, используя приведенные ниже операторы. Эти таблицы будут заполнены в соответствующих схемах.
 
     ```sql
     create table jaffle_shop.customers(
@@ -131,7 +131,7 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
     );
     ```
 
-9. Now we need to copy the data from S3. This enables you to run queries in this guide for demonstrative purposes; it's not an example of how you would do this for a real project. Make sure to update the S3 location, iam role, and region. You can find the S3 and iam role in your outputs from the CloudFormation stack. Find the stack by searching for `CloudFormation` in the search bar, then clicking **Stacks** in the CloudFormation tile. 
+9. Теперь нам нужно скопировать данные из S3. Это позволяет вам выполнять запросы в этом руководстве в демонстрационных целях; это не пример того, как вы бы сделали это для реального проекта. Убедитесь, что вы обновили местоположение S3, роль iam и регион. Вы можете найти S3 и роль iam в ваших выходных данных из стека CloudFormation. Найдите стек, выполнив поиск по `CloudFormation` в строке поиска, затем нажмите **Stacks** в плитке CloudFormation. 
 
     ```sql
     copy jaffle_shop.customers( id, first_name, last_name)
@@ -159,7 +159,7 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
     Acceptinvchars;
     ```
 
-    Ensure that you can run a `select *` from each of the tables with the following code snippets.
+    Убедитесь, что вы можете выполнить `select *` из каждой из таблиц с помощью следующих кодов.
 
     ```sql 
     select * from jaffle_shop.customers;
@@ -167,59 +167,59 @@ Now we are going to load our sample data into the S3 bucket that our Cloudformat
     select * from stripe.payment;
     ```
 
-## Connect dbt Cloud to Redshift 
-1. Create a new project in [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses). Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
-2. Enter a project name and click **Continue**.
-3. For the warehouse, click **Redshift** then **Next** to set up your connection.
-4. Enter your Redshift settings. Reference your credentials you saved from the CloudFormation template.
-    - **Hostname** &mdash; Your entire hostname.
-    - **Port** &mdash; `5439`
-    - **Database** &mdash; `dbtworkshop`.
+## Подключение dbt Cloud к Redshift 
+1. Создайте новый проект в [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Настройки учетной записи** (нажав на имя вашей учетной записи в левом меню) и нажмите **+ Новый проект**.
+2. Введите имя проекта и нажмите **Продолжить**.
+3. Для склада нажмите **Redshift**, затем **Далее**, чтобы настроить ваше соединение.
+4. Введите настройки Redshift. Ссылайтесь на учетные данные, которые вы сохранили из шаблона CloudFormation.
+    - **Имя хоста** — Ваше полное имя хоста.
+    - **Порт** — `5439`
+    - **База данных** — `dbtworkshop`.
 
-    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_account_settings.png" width="90%" title="dbt Cloud - Redshift Cluster Settings" />
+    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_account_settings.png" width="90%" title="dbt Cloud - Настройки кластера Redshift" />
 
     :::tip
-    To avoid connectivity issues with dbt Cloud, make sure to allow inbound traffic on port 5439 from [dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) in your Redshift security groups and Network Access Control Lists (NACLs) settings.
+    Чтобы избежать проблем с подключением к dbt Cloud, убедитесь, что разрешен входящий трафик на порту 5439 от [IP-адресов dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) в ваших группах безопасности Redshift и настройках списков управления доступом к сети (NACL).
     :::
 
-5. Set your development credentials. These credentials will be used by dbt Cloud to connect to Redshift. Those credentials (as provided in your CloudFormation output) will be:
-    - **Username** &mdash; `dbtadmin`
-    - **Password** &mdash; This is the autogenerated password that you used earlier in the guide
-    - **Schema** &mdash; dbt Cloud automatically generates a schema name for you. By convention, this is `dbt_<first-initial><last-name>`. This is the schema connected directly to your development environment, and it's where your models will be built when running dbt within the Cloud IDE.
+5. Установите свои учетные данные для разработки. Эти учетные данные будут использоваться dbt Cloud для подключения к Redshift. Эти учетные данные (как указано в ваших выходных данных CloudFormation) будут:
+    - **Имя пользователя** — `dbtadmin`
+    - **Пароль** — Это сгенерированный пароль, который вы использовали ранее в руководстве.
+    - **Схема** — dbt Cloud автоматически генерирует имя схемы для вас. По умолчанию это `dbt_<первая_буква_имени><фамилия>`. Это схема, которая напрямую связана с вашей средой разработки, и именно здесь будут создаваться ваши модели при выполнении dbt в Cloud IDE.
 
-    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_development_credentials.png" title="dbt Cloud - Redshift Development Credentials" />
+    <Lightbox src="/img/redshift_tutorial/images/dbt_cloud_redshift_development_credentials.png" title="dbt Cloud - Учетные данные разработки Redshift" />
 
-6. Click **Test Connection**. This verifies that dbt Cloud can access your Redshift cluster.
-7. Click **Next** if the test succeeded. If it failed, you might need to check your Redshift settings and credentials.
+6. Нажмите **Проверить соединение**. Это проверяет, может ли dbt Cloud получить доступ к вашему кластеру Redshift.
+7. Нажмите **Далее**, если тест прошел успешно. Если он не удался, вам, возможно, придется проверить настройки и учетные данные Redshift.
 
-## Set up a dbt Cloud managed repository 
+## Настройка управляемого репозитория dbt Cloud 
 <Snippet path="tutorial-managed-repo" />
 
-## Initialize your dbt project​ and start developing
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
+## Инициализация вашего проекта dbt и начало разработки
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать свой проект и начать разработку в dbt Cloud:
 
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize dbt project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit` and click **Commit**. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - Click **+ Create new file**, add this query to the new file, and click **Save as** to save the new file: 
+1. Нажмите **Начать разработку в IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как он устанавливает ваше соединение с git, клонирует ваш репозиторий и тестирует соединение со складом.
+2. Над деревом файлов слева нажмите **Инициализировать проект dbt**. Это создаст вашу структуру папок с примерами моделей.
+3. Сделайте свой первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit` и нажмите **Коммит**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которой вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего склада и выполнять `dbt run`. Вы можете попробовать это сейчас:
+    - Нажмите **+ Создать новый файл**, добавьте этот запрос в новый файл и нажмите **Сохранить как**, чтобы сохранить новый файл: 
         ```sql
         select * from jaffle_shop.customers
         ```
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Build your first model
+## Создание вашей первой модели
 
-You have two options for working with files in the dbt Cloud IDE:
+У вас есть два варианта работы с файлами в dbt Cloud IDE:
 
-- Create a new branch (recommended) &mdash; Create a new branch to edit and commit your changes. Navigate to **Version Control** on the left sidebar and click **Create branch**.
-- Edit in the protected primary branch &mdash; If you prefer to edit, format, or lint files and execute dbt commands directly in your primary git branch. The dbt Cloud IDE prevents commits to the protected branch, so you will be prompted to commit your changes to a new branch.
+- Создать новую ветку (рекомендуется) — Создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Контроль версий** на левой боковой панели и нажмите **Создать ветку**.
+- Редактировать в защищенной основной ветке — Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. dbt Cloud IDE предотвращает коммиты в защищенной ветке, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
 
-Name the new branch `add-customers-model`.
+Назовите новую ветку `add-customers-model`.
 
-1. Click the **...** next to the `models` directory, then select **Create file**.  
-2. Name the file `customers.sql`, then click **Create**.
-3. Copy the following query into the file and click **Save**.
+1. Нажмите **...** рядом с директорией `models`, затем выберите **Создать файл**.  
+2. Назовите файл `customers.sql`, затем нажмите **Создать**.
+3. Скопируйте следующий запрос в файл и нажмите **Сохранить**.
 
 ```sql
 with customers as (
@@ -279,11 +279,11 @@ final as (
 select * from final
 ```
 
-4. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный запуск и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить свои инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не необработанные данные в вашем инструменте BI.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -291,20 +291,20 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Change the way your model is materialized
+## Изменение способа материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удаление примерных моделей
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL файл, `models/stg_customers.sql`, с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL файл, `models/stg_orders.sql`, с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -333,7 +333,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Отредактируйте SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -387,16 +387,16 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt создает `customers` последним. Вам не нужно явно определять эти зависимости.
 
 
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект, когда я создаю больше моделей? Как мне называть свои модели?" />
 
 </div>
 

@@ -1,178 +1,175 @@
 ---
-title: "Integrate with dbt Semantic Layer using best practices" 
+title: "Интеграция с семантическим слоем dbt с использованием лучших практик" 
 id: "sl-partner-integration-guide"
-description: Learn about partner integration guidelines, roadmap, and connectivity. 
-hoverSnippet: Learn how to integrate with the Semantic Layer using best practices
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте о рекомендациях по интеграции с партнерами, дорожной карте и подключении. 
+hoverSnippet: Узнайте, как интегрироваться с семантическим слоем, используя лучшие практики
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Semantic Layer','Best practices']
-level: 'Advanced'
+tags: ['Семантический слой','Лучшие практики']
+level: 'Продвинутый'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-To fit your tool within the world of the Semantic Layer, dbt Labs offers some best practice recommendations for how to expose metrics and allow users to interact with them seamlessly.
+Чтобы интегрировать ваш инструмент в мир семантического слоя, dbt Labs предлагает некоторые рекомендации по лучшим практикам для того, как представлять метрики и позволять пользователям взаимодействовать с ними без проблем.
 
-This is an evolving guide that is meant to provide recommendations based on our experience. If you have any feedback, we'd love to hear it!
+Это развивающееся руководство, которое предназначено для предоставления рекомендаций на основе нашего опыта. Если у вас есть какие-либо отзывы, мы будем рады их услышать!
 
 import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-### Prerequisites
+### Предварительные требования
 
-To build a dbt Semantic Layer integration: 
+Для создания интеграции с семантическим слоем dbt: 
 
-- We offer a [JDBC](/docs/dbt-cloud-apis/sl-jdbc) API and [GraphQL API](/docs/dbt-cloud-apis/sl-graphql). Refer to the dedicated [dbt Semantic Layer API](/docs/dbt-cloud-apis/sl-api-overview) for more technical integration details.
+- Мы предлагаем [JDBC](/docs/dbt-cloud-apis/sl-jdbc) API и [GraphQL API](/docs/dbt-cloud-apis/sl-graphql). Обратитесь к специализированному [API семантического слоя dbt](/docs/dbt-cloud-apis/sl-api-overview) для получения более подробной информации о технической интеграции.
 
-- Familiarize yourself with the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) and [MetricFlow](/docs/build/about-metricflow)'s key concepts. There are two main objects: 
+- Ознакомьтесь с ключевыми концепциями [семантического слоя dbt](/docs/use-dbt-semantic-layer/dbt-sl) и [MetricFlow](/docs/build/about-metricflow). Существует два основных объекта: 
 
-  - [Semantic models](/docs/build/semantic-models) &mdash; Nodes in your semantic graph, connected via entities as edges. MetricFlow takes semantic models defined in YAML configuration files as inputs and creates a semantic graph that you can use to query metrics. 
-  - [Metrics](/docs/build/metrics-overview) &mdash; Can be defined in the same YAML files as your semantic models, or split into separate YAML files into any other subdirectories (provided that these subdirectories are also within the same dbt project repo).
+  - [Семантические модели](/docs/build/semantic-models) &mdash; Узлы в вашей семантической графе, соединенные через сущности в качестве рёбер. MetricFlow принимает семантические модели, определенные в YAML конфигурационных файлах, в качестве входных данных и создает семантическую графу, которую вы можете использовать для запроса метрик. 
+  - [Метрики](/docs/build/metrics-overview) &mdash; Могут быть определены в тех же YAML файлах, что и ваши семантические модели, или разделены на отдельные YAML файлы в любых других подкаталогах (при условии, что эти подкаталоги также находятся в одном репозитории проекта dbt).
 
-### Connection parameters
+### Параметры подключения
 
-The dbt Semantic Layer APIs authenticate with `environmentId`, `SERVICE_TOKEN`, and `host`.
+API семантического слоя dbt аутентифицируются с помощью `environmentId`, `SERVICE_TOKEN` и `host`.
 
-We recommend you provide users with separate input fields with these components for authentication (dbt Cloud will surface these parameters for the user). 
+Мы рекомендуем предоставить пользователям отдельные поля ввода для этих компонентов для аутентификации (dbt Cloud предоставит эти параметры пользователю). 
 
-### Exposing metadata to dbt Labs 
+### Экспонирование метаданных для dbt Labs 
 
-When building an integration, we recommend you expose certain metadata in the request for analytics and troubleshooting purpose.
+При создании интеграции мы рекомендуем вам экспонировать определенные метаданные в запросе для аналитики и устранения неполадок.
 
-Please send us the following header with every query:
+Пожалуйста, отправляйте нам следующий заголовок с каждым запросом:
 
-`'X-dbt-partner-source': 'Your-Application-Name'`
+`'X-dbt-partner-source': 'Ваше-Имя-Приложения'`
 
-Additionally, it would be helpful if you also included the email and username of the person generating the query from your application.
+Кроме того, будет полезно, если вы также включите адрес электронной почты и имя пользователя человека, генерирующего запрос из вашего приложения.
 
-## Use best practices when exposing metrics
+## Используйте лучшие практики при экспонировании метрик
 
-Best practices for exposing metrics are summarized into five themes:
+Лучшие практики для экспонирования метрик можно обобщить в пять тем:
 
-- [Governance](#governance-and-traceability) &mdash; Recommendations on how to establish guardrails for governed data work.
-- [Discoverability](#discoverability) &mdash; Recommendations on how to make user-friendly data interactions.
-- [Organization](#organization) &mdash; Organize metrics and dimensions for all audiences, use [saved queries](/docs/build/saved-queries).
-- [Query flexibility](#query-flexibility) &mdash; Allow users to query either one metric alone without dimensions or multiple metrics with dimensions.
-- [Context and interpretation](#context-and-interpretation) &mdash; Contextualize metrics for better analysis; expose definitions, metadata, lineage, and freshness.
+- [Управление](#governance-and-traceability) &mdash; Рекомендации по установлению рамок для управляемой работы с данными.
+- [Обнаружимость](#discoverability) &mdash; Рекомендации по созданию удобных для пользователя взаимодействий с данными.
+- [Организация](#organization) &mdash; Организуйте метрики и измерения для всех аудиторий, используйте [сохраненные запросы](/docs/build/saved-queries).
+- [Гибкость запросов](#query-flexibility) &mdash; Позвольте пользователям запрашивать либо одну метрику без измерений, либо несколько метрик с измерениями.
+- [Контекст и интерпретация](#context-and-interpretation) &mdash; Контекстуализируйте метрики для лучшего анализа; экспонируйте определения, метаданные, происхождение и свежесть.
 
-### Governance and traceability
+### Управление и отслеживаемость
 
-When working with more governed data, it's essential to establish clear guardrails. Here are some recommendations:
+При работе с более управляемыми данными важно установить четкие рамки. Вот некоторые рекомендации:
 
-- **Aggregations control** &mdash; Users shouldn't generally be allowed to modify aggregations unless they perform post-processing calculations on Semantic Layer data (such as year-over-year analysis).
+- **Контроль агрегаций** &mdash; Пользователям не следует в общем случае разрешать изменять агрегации, если они не выполняют постобработку расчетов на данных семантического слоя (например, анализ год к году).
 
-- **Time series alignment and using metric_time** &mdash; Make sure users view metrics across the correct time series. When displaying metric graphs, using a non-default time aggregation dimension might lead to misleading interpretations. While users can still group by other time dimensions, they should be careful not to create trend lines with incorrect time axes.<br /><br />When looking at one or multiple metrics, users should use `metric_time` as the main time dimension to guarantee they are looking at the right time series for the metric(s). <br /><br /> As such, when building an application, we recommend exposing `metric_time` as a separate, "special" time dimension on its own. This dimension is always going to align with all metrics and be common across them. Other time dimensions can still be looked at and grouped by, but having a clear delineation between the `metric_time` dimension and the other time dimensions is clarifying so that people do not confuse how metrics should be plotted. <br /><br /> Also, when a user requests a time granularity change for the main time series, the query that your application runs should use `metric_time` as this will always give you the correct slice. Related to this, we also strongly recommend that you have a way to expose what dimension `metric_time` actually maps to for users who may not be familiar. Our APIs allow you to fetch the actual underlying time dimensions that makeup metric_time (such as `transaction_date`) so you can expose them to your users.
+- **Согласование временных рядов и использование metric_time** &mdash; Убедитесь, что пользователи просматривают метрики по правильным временным рядам. При отображении графиков метрик использование не стандартного временного измерения агрегации может привести к вводящим в заблуждение интерпретациям. Хотя пользователи все еще могут группировать по другим временным измерениям, им следует быть осторожными, чтобы не создавать трендовые линии с неправильными временными осями.<br /><br />При просмотре одной или нескольких метрик пользователи должны использовать `metric_time` в качестве основного временного измерения, чтобы гарантировать, что они смотрят на правильный временной ряд для метрик. <br /><br />Таким образом, при создании приложения мы рекомендуем экспонировать `metric_time` как отдельное, "специальное" временное измерение. Это измерение всегда будет согласовываться со всеми метриками и будет общим для них. Другие временные измерения все еще могут быть рассмотрены и сгруппированы, но четкое разделение между измерением `metric_time` и другими временными измерениями проясняет ситуацию, чтобы люди не путали, как метрики должны быть построены. <br /><br />Также, когда пользователь запрашивает изменение временной гранулярности для основного временного ряда, запрос, который выполняет ваше приложение, должен использовать `metric_time`, так как это всегда даст вам правильный срез. В связи с этим мы также настоятельно рекомендуем вам иметь способ экспонировать, к какому измерению на самом деле соответствует `metric_time` для пользователей, которые могут быть не знакомы. Наши API позволяют вам получать фактические подлежащие временные измерения, которые составляют metric_time (такие как `transaction_date`), чтобы вы могли предоставить их своим пользователям.
 
-- **Units consistency** &mdash; If units are supported, it's vital to avoid plotting data incorrectly with different units. Ensuring consistency in unit representation will prevent confusion and misinterpretation of the data.
+- **Согласованность единиц** &mdash; Если поддерживаются единицы, важно избегать неправильного отображения данных с различными единицами. Обеспечение согласованности в представлении единиц предотвратит путаницу и неверную интерпретацию данных.
 
-- **Traceability of metric and dimension changes** &mdash; When users change names of metrics and dimensions for reports, it's crucial to have a traceability mechanism in place to link back to the original source metric name.
+- **Отслеживаемость изменений метрик и измерений** &mdash; Когда пользователи изменяют названия метрик и измерений для отчетов, важно иметь механизм отслеживаемости, чтобы связать их с оригинальным именем метрики.
 
+### Обнаружимость 
 
-### Discoverability 
+- Рассмотрите возможность обращения с [метриками](/docs/build/metrics-overview) как с объектами первого класса, а не как с мерами. Метрики предлагают более высокий уровень и более контекстуальный способ взаимодействия с данными, снижая нагрузку на конечных пользователей по ручной агрегации данных.
 
-- Consider treating [metrics](/docs/build/metrics-overview) as first-class objects rather than measures. Metrics offer a higher-level and more contextual way to interact with data, reducing the burden on end-users to manually aggregate data.
+- **Удобные взаимодействия с метриками** &mdash; Предоставьте пользователям интуитивный подход к:
+    * Поиску метрик &mdash; Пользователи должны иметь возможность легко искать и находить соответствующие метрики. Метрики могут служить отправной точкой для того, чтобы привести пользователей к исследованию измерений.
+    * Поиску измерений &mdash; Пользователи должны иметь возможность запрашивать метрики с сопутствующими измерениями, что позволяет им глубже понять данные.
+    * Фильтрации по значениям измерений &mdash; Экспонируйте и позволяйте пользователям фильтровать метрики на основе значений измерений, что способствует анализу и исследованию данных.
+    * Фильтрации по дополнительным метаданным &mdash; Позвольте пользователям фильтровать метрики на основе других доступных метаданных, таких как тип метрики и стандартная временная гранулярность.
 
-- **Easy metric interactions** &mdash; Provide users with an intuitive approach to:
-    * Search for Metrics &mdash; Users should be able to easily search and find relevant metrics. Metrics can serve as the starting point to lead users into exploring dimensions.
-    * Search for Dimensions &mdash; Users should be able to query metrics with associated dimensions, allowing them to gain deeper insights into the data.
-    * Filter by Dimension Values &mdash; Expose and enable users to filter metrics based on dimension values, encouraging data analysis and exploration.
-    * Filter additional metadata &mdash; Allow users to filter metrics based on other available metadata, such as metric type and default time granularity.
+- **Предложенные метрики** &mdash; В идеале система должна интеллектуально предлагать пользователям соответствующие метрики на основе активности их команды. Этот подход способствует вовлечению пользователей, облегчает обучение и поддерживает сотрудничество между членами команды.
 
-- **Suggested metrics** &mdash; Ideally, the system should intelligently suggest relevant metrics to users based on their team's activities. This approach encourages user exposure, facilitates learning, and supports collaboration among team members.
+Реализуя эти рекомендации, процесс взаимодействия с данными становится более удобным для пользователя, позволяя пользователям получать ценные инсайты без необходимости в обширной манипуляции данными.
 
-By implementing these recommendations, the data interaction process becomes more user-friendly, empowering users to gain valuable insights without the need for extensive data manipulation.
+### Организация 
 
-### Organization 
+Мы рекомендуем организовать метрики и измерения таким образом, чтобы не технический пользователь мог понять модель данных, не нуждаясь в большом контексте:
 
-We recommend organizing metrics and dimensions in ways that a non-technical user can understand the data model, without needing much context:
+- **Организация измерений** &mdash; Чтобы помочь не техническим пользователям лучше понять модель данных, мы рекомендуем организовать измерения на основе сущности, от которой они произошли. Например, рассмотрите измерения, такие как `user__country` и `product__category`.<br /><br />Вы можете создать группы, извлекая `user` и `product`, а затем вложить соответствующие измерения под каждую группу. Таким образом, измерения будут согласовываться с сущностью или семантической моделью, к которой они принадлежат, и сделают их более удобными и доступными для пользователей. Кроме того, мы рекомендуем добавить параметр `label` к измерениям, чтобы определить значение, отображаемое в инструментах на нижнем уровне.
 
-- **Organizing dimensions** &mdash; To help non-technical users understand the data model better, we recommend organizing dimensions based on the entity they originated from. For example, consider dimensions like `user__country` and `product__category`.<br /><br />  You can create groups by extracting `user` and `product` and then nest the respective dimensions under each group. This way, dimensions align with the entity or semantic model they belong to and make them more user-friendly and accessible. Additionally, we recommending adding a `label` parameter to dimensions in order to define the value displayed in downstream tools.
+- **Организация метрик** &mdash; Цель состоит в том, чтобы организовать метрики в иерархию в наших конфигурациях, а не представлять их в длинном списке.<br /><br />Эта иерархия помогает организовать метрики на основе определенных критериев, таких как бизнес-единица или команда. Предоставляя такую структурированную организацию, пользователи могут находить и навигировать по метрикам более эффективно, улучшая их общий опыт анализа данных.
 
-- **Organizing metrics** &mdash; The goal is to organize metrics into a hierarchy in our configurations, instead of presenting them in a long list.<br /><br /> This hierarchy helps you organize metrics based on specific criteria, such as business unit or team. By providing this structured organization, users can find and navigate metrics more efficiently, enhancing their overall data analysis experience.
+- **Использование сохраненных запросов** &mdash; Семантический слой dbt имеет концепцию [сохраненных запросов](/docs/build/saved-queries), которая позволяет пользователям заранее создавать срезы метрик, измерений и фильтров для легкого доступа. Вы должны представить их как объекты первого класса в вашей интеграции. Обратитесь к [JDBC](/docs/dbt-cloud-apis/sl-jdbc) и [GraphQL](/docs/dbt-cloud-apis/sl-graphql) API для синтаксиса.
 
-- **Using saved queries** &mdash; The dbt Semantic Layer has a concept of [saved queries](/docs/build/saved-queries) which allows users to pre-build slices of metrics, dimensions, filters to be easily accessed. You should surface these as first class objects in your integration. Refer to the [JDBC](/docs/dbt-cloud-apis/sl-jdbc) and [GraphQL](/docs/dbt-cloud-apis/sl-graphql) APIs for syntax.
+### Гибкость запросов
 
-### Query flexibility
+Позвольте пользователям запрашивать либо одну метрику без измерений, либо несколько метрик с измерениями.
 
-Allow users to query either one metric alone without dimensions or multiple metrics with dimensions.
+- Позвольте переключаться между метриками/измерениями без проблем.
 
-- Allow toggling between metrics/dimensions seamlessly.
+- Будьте ясны в том, какие измерения можно запрашивать с какими метриками, и скрывайте то, что не применимо. (Наши API предоставляют вызовы, чтобы получить соответствующие измерения для метрик и наоборот).
 
-- Be clear on exposing what dimensions are queryable with what metrics and hide things that don’t apply. (Our APIs provide calls for you to get relevant dimensions for metrics, and vice versa).
+- Экспонируйте только те временные гранулярности (ежемесячно, ежедневно, ежегодно), которые соответствуют доступным метрикам. 
+  * Например, если модель dbt и ее результирующая семантическая модель имеют ежемесячную гранулярность, убедитесь, что запрос данных с 'ежедневной' гранулярностью недоступен для пользователя. Наши API имеют функциональность, которая поможет вам представить правильные гранулярности.
 
-- Only expose time granularities (monthly, daily, yearly) that match the available metrics. 
-  * For example, if a dbt model and its resulting semantic model have a monthly granularity, make sure querying data with a 'daily' granularity isn't available to the user. Our APIs have functionality that will help you surface the correct granularities
-
-- We recommend that time granularity is treated as a general time dimension-specific concept and that it can be applied to more than just the primary aggregation (or `metric_time`). 
+- Мы рекомендуем рассматривать временную гранулярность как общее понятие, специфичное для временного измерения, и что оно может применяться не только к основной агрегации (или `metric_time`). 
   
-  Consider a situation where a user wants to look at `sales` over time by `customer signup month`; in this situation, having the ability to apply granularities to both time dimensions is crucial. Our APIs include information to fetch the granularities for the primary (metric_time) dimensions, as well as all time dimensions. 
+  Рассмотрите ситуацию, когда пользователь хочет посмотреть `sales` с течением времени по `customer signup month`; в этой ситуации возможность применения гранулярностей к обоим временным измерениям имеет решающее значение. Наши API включают информацию для получения гранулярностей для основных (metric_time) измерений, а также для всех временных измерений. 
   
-  You can treat each time dimension and granularity selection independently in your application. Note: Initially, as a starting point, it makes sense to only support `metric_time` or the primary time dimension, but we recommend expanding that as your solution evolves. 
+  Вы можете рассматривать каждое временное измерение и выбор гранулярности независимо в вашем приложении. Примечание: Изначально, в качестве отправной точки, имеет смысл поддерживать только `metric_time` или основное временное измерение, но мы рекомендуем расширить это по мере развития вашего решения. 
 
-- You should allow users to filter on date ranges and expose a calendar and nice presets for filtering these. 
-  * For example, last 30 days, last week, and so on.
+- Вы должны позволить пользователям фильтровать по диапазонам дат и предоставить календарь и удобные предустановки для фильтрации. 
+  * Например, последние 30 дней, последняя неделя и так далее.
 
-### Context and interpretation
+### Контекст и интерпретация
 
-For better analysis, it's best to have the context of the metrics close to where the analysis is happening. We recommend the following:
+Для лучшего анализа лучше всего иметь контекст метрик рядом с тем местом, где происходит анализ. Мы рекомендуем следующее:
 
-- Expose business definitions of the metrics as well as logical definitions.
+- Экспонируйте бизнес-определения метрик, а также логические определения.
 
-- Expose additional metadata from the Semantic layer (measures, type parameters).
+- Экспонируйте дополнительные метаданные из семантического слоя (меры, параметры типов).
 
-- Use the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to enhance the metric and build confidence in its accuracy:
-  * Check if the metric is fresh and when it was last updated.
-  * Include lineage information to understand the metric's origin.
+- Используйте [Discovery API](/docs/dbt-cloud-apis/discovery-api) для улучшения метрики и повышения уверенности в ее точности:
+  * Проверьте, свежа ли метрика и когда она была в последний раз обновлена.
+  * Включите информацию о происхождении, чтобы понять источник метрики.
 
-- Allow for creating other metadata that’s useful for the metric. We can provide some of this information in our configuration (Display name, Default Granularity for View, Default Time range), but there may be other metadata that your tool wants to provide to make the metric richer.
+- Позвольте создавать другие метаданные, которые полезны для метрики. Мы можем предоставить часть этой информации в нашей конфигурации (отображаемое имя, стандартная гранулярность для просмотра, стандартный временной диапазон), но могут быть и другие метаданные, которые ваш инструмент хочет предоставить, чтобы сделать метрику более насыщенной.
 
-### Transparency and using compile
+### Прозрачность и использование compile
 
-For transparency and additional context, we recommend you have an easy way for the user to obtain the SQL that MetricFlow generates. Depending on what API you are using, you can do this by using our `compile` parameter. This is incredibly powerful and emphasizes transparency and openness, particularly for technically inclined users.
+Для прозрачности и дополнительного контекста мы рекомендуем иметь простой способ для пользователя получить SQL, который генерирует MetricFlow. В зависимости от того, какой API вы используете, вы можете сделать это, используя наш параметр `compile`. Это невероятно мощно и подчеркивает прозрачность и открытость, особенно для технически подкованных пользователей.
 
+### Фильтры и оптимизация
 
-### Where filters and optimization
+В случаях, когда наши API поддерживают либо строку, либо список фильтров для условия `where`, мы всегда рекомендуем вашему приложению использовать список фильтров, чтобы получить максимальные преимущества от оптимизации. Строка `where` может быть более интуитивной для пользователей, пишущих запросы во время тестирования, но она не будет иметь преимуществ по производительности по сравнению со списком фильтров в производственной среде.
 
-In the cases where our APIs support either a string or a filter list for the `where` clause, we always recommend that your application utilizes the filter list in order to gain maximum pushdown benefits. The `where` string may be more intuitive for users writing queries during testing, but it will not have the performance benefits of the filter list in a production environment.
+## Понимание этапов интеграции
 
-## Understand stages of an integration
+Это рекомендации о том, как развивать интеграцию семантического слоя, а не строгая инструкция.
 
-These are recommendations on how to evolve a Semantic Layer integration and not a strict runbook.
+**Этап 1 - Основы**
+* Поддержка и использование [JDBC](/docs/dbt-cloud-apis/sl-jdbc) или [GraphQL](/docs/dbt-cloud-apis/sl-graphql) является первым шагом. Обратитесь к [API семантического слоя dbt](/docs/dbt-cloud-apis/sl-api-overview) для получения более подробной информации.
 
-**Stage 1 - The basic**
-* Supporting and using [JDBC](/docs/dbt-cloud-apis/sl-jdbc) or [GraphQL](/docs/dbt-cloud-apis/sl-graphql) is the first step. Refer to the [dbt Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) for more technical details. 
+**Этап 2 - Больше обнаружимости и базовые запросы**
+* Поддержка перечисления метрик, определенных в проекте
+* Перечисление доступных измерений на основе одной или нескольких метрик
+* Запрос определенных значений метрик самостоятельно или группировка по доступным измерениям
+* Отображение метаданных из [Discovery API](/docs/dbt-cloud-apis/discovery-api) и другого контекста
+* Экспонирование [сохраненных запросов](/docs/build/saved-queries), которые являются заранее созданными метриками, измерениями и фильтрами, которые разработчики семантического слоя создают для упрощения анализа. Вы можете экспонировать их в своем приложении. Обратитесь к [JDBC](/docs/dbt-cloud-apis/sl-jdbc) и [GraphQL](/docs/dbt-cloud-apis/sl-graphql) API для синтаксиса.
 
-**Stage 2 - More discoverability and basic querying**
-* Support listing metrics defined in the project
-* Listing available dimensions based on one or many metrics
-* Querying defined metric values on their own or grouping by available dimensions
-* Display metadata from [Discovery API](/docs/dbt-cloud-apis/discovery-api) and other context
-* Expose [saved queries](/docs/build/saved-queries), which are pre-built metrics, dimensions, and filters that Semantic Layer developers create for easier analysis. You can expose them in your application. Refer to the [JDBC](/docs/dbt-cloud-apis/sl-jdbc) and [GraphQL](/docs/dbt-cloud-apis/sl-graphql) APIs for syntax.
+**Этап 3 - Больше гибкости запросов и лучшего пользовательского опыта (UX)**
+* Более продвинутая фильтрация
+  * Временные фильтры с хорошими предустановками/UX календаря
+  * Фильтрация метрик по заранее заполненному набору значений измерений
+* Сделайте значения измерений более удобными для пользователя, эффективно их организуя
+* Интеллектуальная фильтрация метрик на основе доступных измерений и наоборот
 
-**Stage 3 - More querying flexibility and better user experience (UX)**
-* More advanced filtering
-  * Time filters with good presets/calendar UX
-  * Filtering metrics on a pre-populated set of dimension values
-* Make dimension values more user-friendly by organizing them effectively
-* Intelligent filtering of metrics based on available dimensions and vice versa
+**Этап 4 - Более кастомизированный пользовательский интерфейс (UI) / Сотрудничество**
+* Место, где пользователи могут видеть всю соответствующую информацию о данной метрике
+* Организация метрик по иерархии и более продвинутые функции поиска (такие как фильтрация по типу метрики или другим метаданным)
+* Использование и экспонирование большего количества метаданных 
+* Запрос измерений без метрик и другие более продвинутые функции запросов
+* Предложение метрик пользователям на основе команд/идентичности и так далее.
 
-**Stage 4 - More custom user interface (UI) / Collaboration**
-* A place where users can see all the relevant information about a given metric
-* Organize metrics by hierarchy and more advanced search features (such as filter on the type of metric or other metadata)
-* Use and expose more metadata 
-* Querying dimensions without metrics and other more advanced querying functionality
-* Suggest metrics to users based on teams/identity, and so on.
-
-### Related docs
-- [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs)
-- [Use the dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) to learn about the product.
-- [Build your metrics](/docs/build/build-metrics-intro) for more info about MetricFlow and its components. 
-- [dbt Semantic Layer integrations page](https://www.getdbt.com/product/semantic-layer-integrations) for information about the available partner integrations.
-
+### Связанные документы
+- [Часто задаваемые вопросы о семантическом слое dbt](/docs/use-dbt-semantic-layer/sl-faqs)
+- [Используйте семантический слой dbt](/docs/use-dbt-semantic-layer/dbt-sl), чтобы узнать о продукте.
+- [Создайте свои метрики](/docs/build/build-metrics-intro) для получения дополнительной информации о MetricFlow и его компонентах. 
+- [Страница интеграций семантического слоя dbt](https://www.getdbt.com/product/semantic-layer-integrations) для получения информации о доступных интеграциях с партнерами.
 
 </div>

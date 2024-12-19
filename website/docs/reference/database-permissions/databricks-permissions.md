@@ -1,20 +1,19 @@
 ---
-title: "Databricks permissions"
+title: "Разрешения Databricks"
 ---
 
-In Databricks, permissions are used to control who can perform certain actions on different database objects. Use SQL statements to manage permissions in a Databricks database.
+В Databricks разрешения используются для контроля того, кто может выполнять определенные действия с различными объектами базы данных. Используйте SQL-запросы для управления разрешениями в базе данных Databricks.
 
-## Example Databricks permissions
+## Пример разрешений Databricks
 
-The following example provides you with the SQL statements you can use to manage permissions. 
+Следующий пример предоставляет вам SQL-запросы, которые вы можете использовать для управления разрешениями.
 
-**Note** that you can grant permissions on `securable_objects` to `principals` (This can be user, service principal, or group). For example, `grant privilege_type` on `securable_object` to `principal`.
+**Примечание**: вы можете предоставить разрешения на `securable_objects` для `principals` (это может быть пользователь, сервисный принципал или группа). Например, `grant privilege_type` на `securable_object` для `principal`.
 
 ```
-
 grant all privileges on schema schema_name to principal;
 grant create table on schema schema_name to principal;
 grant create view on schema schema_name to principal;
 ```
 
-Check out the [official documentation](https://docs.databricks.com/en/data-governance/unity-catalog/manage-privileges/privileges.html#privilege-types-by-securable-object-in-unity-catalog) for more information.
+Посмотрите [официальную документацию](https://docs.databricks.com/en/data-governance/unity-catalog/manage-privileges/privileges.html#privilege-types-by-securable-object-in-unity-catalog) для получения дополнительной информации.

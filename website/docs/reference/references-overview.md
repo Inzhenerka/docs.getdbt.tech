@@ -1,76 +1,76 @@
 ---
-title: "About References"
+title: "О ссылках"
 id: "references-overview"
-sidebar_label: "About References"
-description: "Connect dbt to any data platform in dbt Cloud or dbt Core, using a dedicated adapter plugin"
+sidebar_label: "О ссылках"
+description: "Подключите dbt к любой платформе данных в dbt Cloud или dbt Core, используя специальный адаптерный плагин"
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
-The References section contains reference materials for developing with dbt, which includes dbt Cloud and dbt Core.
+Раздел "Ссылки" содержит справочные материалы для разработки с использованием dbt, включая dbt Cloud и dbt Core.
 
-Learn how to add more configurations to your dbt project or adapter, use properties for extra ability, refer to dbt commands, use powerful Jinja functions to streamline your dbt project, and understand how to use dbt artifacts.  <br />
+Узнайте, как добавить дополнительные настройки в ваш проект dbt или адаптер, используйте свойства для расширенных возможностей, ознакомьтесь с командами dbt, применяйте мощные функции Jinja для оптимизации вашего проекта dbt и поймите, как использовать артефакты dbt. <br />
 
 <div className="grid--3-col">
 
 <Card
-    title="Project configurations"
-    body="Customize and configure your dbt project to optimize performance."
+    title="Настройки проекта"
+    body="Настройте и сконфигурируйте ваш проект dbt для оптимизации производительности."
     link="/reference/dbt_project.yml"
     icon="computer"/>
 
 <Card
-    title="Platform-specific configurations"
-    body="Learn how to optimize performance with data platform-specific configurations in dbt Cloud and dbt Core."
+    title="Настройки, специфичные для платформы"
+    body="Узнайте, как оптимизировать производительность с помощью настроек, специфичных для платформы данных, в dbt Cloud и dbt Core."
     link="/reference/resource-configs/postgres-configs"
     icon="computer"/>
 
 <Card
-    title="Resource configurations and properties"
-    body="Properties and configurations that provide extra abilities to your projects resources."
+    title="Настройки ресурсов и свойства"
+    body="Свойства и настройки, которые предоставляют дополнительные возможности для ресурсов вашего проекта."
     link="/reference/configs-and-properties"
     icon="computer"/>
 
 <Card
-    title="dbt Commands"
-    body="Outlines the commands supported by dbt and their relevant flags."
+    title="Команды dbt"
+    body="Описывает команды, поддерживаемые dbt, и их соответствующие флаги."
     link="/reference/dbt-commands"
     icon="computer"/>
 
 <Card
-    title="dbt Jinja functions"
-    body="Additional functions and variables to the Jinja context that are useful when working with a dbt project."
+    title="Функции Jinja в dbt"
+    body="Дополнительные функции и переменные для контекста Jinja, которые полезны при работе с проектом dbt."
     link="/reference/dbt-jinja-functions"
     icon="computer"/>
 
 <Card
-    title="dbt Artifacts"
-    body="Information on dbt-generated Artifacts and how you can use them."
+    title="Артефакты dbt"
+    body="Информация о артефактах, сгенерированных dbt, и о том, как вы можете их использовать."
     link="/reference/artifacts/dbt-artifacts"
     icon="computer"/>
 
 <Card
-    title="Snowflake permissions artifacts"
-    body="Provides an example Snowflake database role permissions."
+    title="Артефакты разрешений Snowflake"
+    body="Предоставляет пример разрешений ролей базы данных Snowflake."
     link="/reference/database-permissions/snowflake-permissions"
     icon="computer"/>
 
 <Card
-    title="Databricks permissions artifacts"
-    body="Provides an example Databricks database role permissions."
+    title="Артефакты разрешений Databricks"
+    body="Предоставляет пример разрешений ролей базы данных Databricks."
     link="/reference/database-permissions/databricks-permissions"
     icon="computer"/>
 
 <Card
-    title="Redshift permissions artifacts"
-    body="Provides an example Redshift database role permissions."
+    title="Артефакты разрешений Redshift"
+    body="Предоставляет пример разрешений ролей базы данных Redshift."
     link="/reference/database-permissions/redshift-permissions"
     icon="computer"/>
 
 <Card
-    title="Postgres permissions artifacts"
-    body="Provides an example Postgres database role permissions."
+    title="Артефакты разрешений Postgres"
+    body="Предоставляет пример разрешений ролей базы данных Postgres."
     link="/reference/database-permissions/postgres-permissions"
     icon="computer"/>
 

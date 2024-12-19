@@ -1,6 +1,6 @@
 ---
-title: Seed configurations
-description: "Read this guide to learn about using seed configurations in dbt."
+title: Конфигурации seed
+description: "Прочитайте это руководство, чтобы узнать о использовании конфигураций seed в dbt."
 meta:
   resource_type: Seeds
 ---
@@ -8,9 +8,8 @@ meta:
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
-
-## Available configurations
-### Seed-specific configurations
+## Доступные конфигурации
+### Конфигурации, специфичные для seed
 
 <ConfigResource meta={frontMatter.meta} />
 
@@ -18,8 +17,8 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -38,7 +37,6 @@ seeds:
 </File>
 
 </TabItem>
-
 
 <TabItem value="property-yaml">
 
@@ -62,7 +60,7 @@ seeds:
 
 </Tabs>
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
 
@@ -70,8 +68,8 @@ seeds:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
   ]
 }>
 
@@ -122,7 +120,6 @@ seeds:
 </File>
 
 </TabItem>
-
 
 <TabItem value="property-yaml">
 
@@ -179,14 +176,14 @@ seeds:
 </TabItem>
 </Tabs>
 
-## Configuring seeds
-Seeds can only be configured from YAML files, either in `dbt_project.yml` or within an individual seed's YAML properties. It is not possible to configure a seed from within its CSV file.
+## Конфигурирование seed
+Seed можно настраивать только из YAML файлов, либо в `dbt_project.yml`, либо в YAML свойствах отдельного seed. Невозможно настроить seed из его CSV файла.
 
-Seed configurations, like model configurations, are applied hierarchically — configurations applied to a `marketing` subdirectory will take precedence over configurations applied to the entire `jaffle_shop` project, and configurations defined in a specific seed's properties will override configurations defined in `dbt_project.yml`.
+Конфигурации seed, как и конфигурации моделей, применяются иерархически — конфигурации, примененные к подкаталогу `marketing`, будут иметь приоритет над конфигурациями, примененными ко всему проекту `jaffle_shop`, а конфигурации, определенные в свойствах конкретного seed, переопределят конфигурации, определенные в `dbt_project.yml`.
 
-### Examples
-#### Apply the `schema` configuration to all seeds
-To apply a configuration to all seeds, including those in any installed [packages](/docs/build/packages), nest the configuration directly under the `seeds` key:
+### Примеры
+#### Применение конфигурации `schema` ко всем seed
+Чтобы применить конфигурацию ко всем seed, включая те, что находятся в любых установленных [пакетах](/docs/build/packages), вложите конфигурацию непосредственно под ключом `seeds`:
 
 <File name='dbt_project.yml'>
 
@@ -198,11 +195,10 @@ seeds:
 
 </File>
 
+#### Применение конфигурации `schema` ко всем seed в вашем проекте
+Чтобы применить конфигурацию ко всем seed только в вашем проекте (т.е. _исключая_ любые seed в установленных пакетах), укажите ваше [имя проекта](/reference/project-configs/name.md) как часть пути ресурса.
 
-#### Apply the `schema` configuration to all seeds in your project
-To apply a configuration to all seeds in your project only (i.e. _excluding_ any seeds in installed packages), provide your [project name](/reference/project-configs/name.md) as part of the resource path.
-
-For a project named `jaffle_shop`:
+Для проекта с именем `jaffle_shop`:
 
 <File name='dbt_project.yml'>
 
@@ -215,10 +211,10 @@ seeds:
 
 </File>
 
-Similarly, you can use the name of an installed package to configure seeds in that package.
+Аналогично, вы можете использовать имя установленного пакета для настройки seed в этом пакете.
 
-#### Apply the `schema` configuration to one seed only
-To apply a configuration to one seed only, provide the full resource path (including the project name, and subdirectories).
+#### Применение конфигурации `schema` только к одному seed
+Чтобы применить конфигурацию только к одному seed, укажите полный путь ресурса (включая имя проекта и подкаталоги).
 
 <File name='seeds/marketing/properties.yml'>
 
@@ -233,7 +229,7 @@ seeds:
 
 </File>
 
-In older versions of dbt, you must define configurations in `dbt_project.yml` and include the full resource path (including the project name, and subdirectories). For a project named `jaffle_shop`, with a seed file at `seeds/marketing/utm_parameters.csv`, this would look like:
+В более ранних версиях dbt вам необходимо было определять конфигурации в `dbt_project.yml` и включать полный путь ресурса (включая имя проекта и подкаталоги). Для проекта с именем `jaffle_shop`, с файлом seed по адресу `seeds/marketing/utm_parameters.csv`, это выглядело бы так:
 
 <File name='dbt_project.yml'>
 
@@ -247,13 +243,11 @@ seeds:
 
 </File>
 
-
-## Example seed configuration
-The following is a valid seed configuration for a project with:
+## Пример конфигурации seed
+Следующая конфигурация seed является действительной для проекта с:
 * `name: jaffle_shop`
-* A seed file at `seeds/country_codes.csv`, and
-* A seed file at `seeds/marketing/utm_parameters.csv`
-
+* Файлом seed по адресу `seeds/country_codes.csv`, и
+* Файлом seed по адресу `seeds/marketing/utm_parameters.csv`
 
 <File name='dbt_project.yml'>
 
@@ -264,14 +258,14 @@ seeds:
   jaffle_shop:
     +enabled: true
     +schema: seed_data
-    # This configures seeds/country_codes.csv
+    # Это настраивает seeds/country_codes.csv
     country_codes:
-      # Override column types
+      # Переопределить типы столбцов
       +column_types:
         country_code: varchar(2)
         country_name: varchar(32)
     marketing:
-      +schema: marketing # this will take precedence
+      +schema: marketing # это будет иметь приоритет
 ```
 
 </File>

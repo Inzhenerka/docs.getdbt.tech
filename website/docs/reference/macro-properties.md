@@ -1,13 +1,11 @@
 ---
-title: Macro properties
+title: Свойства макросов
 id: macro-properties
 ---
 
-import PropsCallout from '/snippets/_config-prop-callout.md';
+Свойства макросов могут быть объявлены в любом файле `properties.yml`. <PropsCallout title={frontMatter.title}/> 
 
-Macro properties can be declared in any `properties.yml` file. <PropsCallout title={frontMatter.title}/> 
-
-You can name these files `whatever_you_want.yml` and nest them arbitrarily deep in sub-folders.
+Вы можете назвать эти файлы `что_угодно.yml` и вложить их на произвольную глубину в подпапки.
 
 <File name='macros/<filename>.yml'>
 
@@ -24,9 +22,9 @@ macros:
       - name: <arg name>
         [type](/reference/resource-properties/argument-type): <string>
         [description](/reference/resource-properties/description): <markdown_string>
-      - ... # declare properties of additional arguments
+      - ... # объявите свойства дополнительных аргументов
 
-  - name: ... # declare properties of additional macros
+  - name: ... # объявите свойства дополнительных макросов
 
 ```
 

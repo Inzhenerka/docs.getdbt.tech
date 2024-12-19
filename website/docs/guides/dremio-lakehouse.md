@@ -1,40 +1,40 @@
 ---
-title: Build a data lakehouse with dbt Core and Dremio Cloud
+title: Построение дата-лейкхауса с помощью dbt Core и Dremio Cloud
 id: build-dremio-lakehouse
-description:  Learn how to build a data lakehouse with dbt Core and Dremio Cloud.
-displayText: Build a data lakehouse with dbt Core and Dremio Cloud
-hoverSnippet: Learn how to build a data lakehouse with dbt Core and Dremio Cloud
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте, как построить дата-лейкхаус с помощью dbt Core и Dremio Cloud.
+displayText: Построение дата-лейкхауса с помощью dbt Core и Dremio Cloud
+hoverSnippet: Узнайте, как построить дата-лейкхаус с помощью dbt Core и Dremio Cloud
+# time_to_complete: '30 минут' закомментировано до тестирования
 platform: 'dbt-core'
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Dremio', 'dbt Core']
-level: 'Intermediate'
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-This guide will demonstrate how to build a data lakehouse with dbt Core 1.5 or newer and Dremio Cloud. You can simplify and optimize your data infrastructure with dbt's robust transformation framework and Dremio’s open and easy data lakehouse. The integrated solution empowers companies to establish a strong data and analytics foundation, fostering self-service analytics and enhancing business insights while simplifying operations by eliminating the necessity to write complex Extract, Transform, and Load (ETL) pipelines. 
+Этот гид продемонстрирует, как построить дата-лейкхаус с помощью dbt Core 1.5 или новее и Dremio Cloud. Вы можете упростить и оптимизировать свою инфраструктуру данных с помощью мощной трансформационной платформы dbt и открытого, простого в использовании дата-лейкхауса Dremio. Интегрированное решение позволяет компаниям создать надежную основу для данных и аналитики, способствуя аналитике самообслуживания и улучшая бизнес-инсайты, одновременно упрощая операции за счет устранения необходимости в написании сложных процессов извлечения, трансформации и загрузки (ETL).
 
-### Prerequisites
+### Предварительные требования
 
-* You must have a [Dremio Cloud](https://docs.dremio.com/cloud/) account.
-* You must have Python 3 installed.
-* You must have dbt Core v1.5 or newer [installed](//docs/core/installation-overview). 
-* You must have the Dremio adapter 1.5.0 or newer [installed and configured](/docs/core/connect-data-platform/dremio-setup) for Dremio Cloud.
-* You must have basic working knowledge of Git and the command line interface (CLI).
+* У вас должна быть учетная запись [Dremio Cloud](https://docs.dremio.com/cloud/).
+* У вас должен быть установлен Python 3.
+* У вас должна быть установлена версия dbt Core v1.5 или новее [установленная](//docs/core/installation-overview).
+* У вас должен быть установлен и настроен адаптер Dremio 1.5.0 или новее [для Dremio Cloud](/docs/core/connect-data-platform/dremio-setup).
+* У вас должны быть базовые знания Git и интерфейса командной строки (CLI).
 
-## Validate your environment 
+## Проверка вашей среды
 
-Validate your environment by running the following commands in your CLI and verifying the results:
+Проверьте вашу среду, выполнив следующие команды в вашем CLI и проверив результаты:
 
 ```shell
 
 $ python3 --version
-Python 3.11.4 # Must be Python 3
+Python 3.11.4 # Должен быть Python 3
 
 ```
 
@@ -42,26 +42,26 @@ Python 3.11.4 # Must be Python 3
 
 $ dbt --version
 Core:
-  - installed: 1.5.0 # Must be 1.5 or newer
-  - latest:    1.6.3 - Update available!
+  - installed: 1.5.0 # Должен быть 1.5 или новее
+  - latest:    1.6.3 - Доступно обновление!
 
-  Your version of dbt-core is out of date!
-  You can find instructions for upgrading here:
+  Ваша версия dbt-core устарела!
+  Инструкции по обновлению можно найти здесь:
   https://docs.getdbt.com/docs/installation
 
 Plugins:
-  - dremio: 1.5.0 - Up to date! # Must be 1.5 or newer
+  - dremio: 1.5.0 - Актуально! # Должен быть 1.5 или новее
 
 ```
 
-## Getting started
+## Начало работы
 
-1. Clone the Dremio dbt Core sample project from the [GitHub repo](https://github.com/dremio-brock/DremioDBTSample/tree/master/dremioSamples).
+1. Клонируйте пример проекта Dremio dbt Core из [репозитория GitHub](https://github.com/dremio-brock/DremioDBTSample/tree/master/dremioSamples).
 
-2. In your integrated development environment (IDE), open the relation.py file in the Dremio adapter directory:
+2. В вашей интегрированной среде разработки (IDE) откройте файл relation.py в директории адаптера Dremio:
   `$HOME/Library/Python/3.9/lib/python/site-packages/dbt/adapters/dremio/relation.py`
 
-3. Find and update lines 51 and 52 to match the following syntax:
+3. Найдите и обновите строки 51 и 52, чтобы они соответствовали следующему синтаксису:
 
 ```python
 
@@ -70,7 +70,7 @@ return ".".join(PATTERN.split(identifier)[1::2])
 
 ```
 
-The complete selection should look like this:
+Полный выбор должен выглядеть так:
 
 ```python
 def quoted_by_component(self, identifier, componentName):
@@ -82,11 +82,11 @@ def quoted_by_component(self, identifier, componentName):
 
 ```
 
-You need to update this pattern because the plugin doesn’t support schema names in Dremio containing dots and spaces.
+Вам нужно обновить этот шаблон, потому что плагин не поддерживает имена схем в Dremio, содержащие точки и пробелы.
 
-## Build your pipeline
+## Построение вашего пайплайна
 
-1. Create a `profiles.yml` file in the `$HOME/.dbt/profiles.yml` path and add the following configs:
+1. Создайте файл `profiles.yml` по пути `$HOME/.dbt/profiles.yml` и добавьте следующие конфигурации:
 
 ```yaml
 
@@ -106,84 +106,84 @@ dremioSamples:
       user: <your_username>
   target: dev
 
-  ```
+```
 
-  2. Execute the transformation pipeline: 
-
-  ```shell
-
-  $ dbt run -t cloud_dev
-
-  ```
-
-  If the above configurations have been implemented, the output will look something like this:
+2. Выполните трансформационный пайплайн:
 
 ```shell
 
-17:24:16  Running with dbt=1.5.0
-17:24:17  Found 5 models, 0 tests, 0 snapshots, 0 analyses, 348 macros, 0 operations, 0 seed files, 2 sources, 0 exposures, 0 metrics, 0 groups
-17:24:17
-17:24:29  Concurrency: 1 threads (target='cloud_dev')
-17:24:29
-17:24:29  1 of 5 START sql view model Preparation.trips .................................. [RUN]
-17:24:31  1 of 5 OK created sql view model Preparation. trips ............................. [OK in 2.61s]
-17:24:31  2 of 5 START sql view model Preparation.weather ................................ [RUN]
-17:24:34  2 of 5 OK created sql view model Preparation.weather ........................... [OK in 2.15s]
-17:24:34  3 of 5 START sql view model Business.Transportation.nyc_trips .................. [RUN]
-17:24:36  3 of 5 OK created sql view model Business.Transportation.nyc_trips ............. [OK in 2.18s]
-17:24:36  4 of 5 START sql view model Business.Weather.nyc_weather ....................... [RUN]
-17:24:38  4 of 5 OK created sql view model Business.Weather.nyc_weather .................. [OK in 2.09s]
-17:24:38  5 of 5 START sql view model Application.nyc_trips_with_weather ................. [RUN]
-17:24:41  5 of 5 OK created sql view model Application.nyc_trips_with_weather ............ [OK in 2.74s]
-17:24:41
-17:24:41  Finished running 5 view models in 0 hours 0 minutes and 24.03 seconds (24.03s).
-17:24:41
-17:24:41  Completed successfully
-17:24:41
-17:24:41  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5
+$ dbt run -t cloud_dev
 
 ```
 
-Now that you have a running environment and a completed job, you can view the data in Dremio and expand your code. This is a snapshot of the project structure in an IDE:
+Если вышеуказанные конфигурации были реализованы, вывод будет выглядеть примерно так:
 
-<Lightbox src="/img/guides/dremio/dremio-cloned-repo.png" title="Cloned repo in an IDE"/>
+```shell
 
-## About the schema.yml
+17:24:16  Запуск с dbt=1.5.0
+17:24:17  Найдено 5 моделей, 0 тестов, 0 снимков, 0 анализов, 348 макросов, 0 операций, 0 seed файлов, 2 источника, 0 экспозиций, 0 метрик, 0 групп
+17:24:17
+17:24:29  Параллелизм: 1 поток (target='cloud_dev')
+17:24:29
+17:24:29  1 из 5 НАЧАЛО sql view model Preparation.trips .................................. [RUN]
+17:24:31  1 из 5 ОК создан sql view model Preparation.trips ............................. [OK за 2.61с]
+17:24:31  2 из 5 НАЧАЛО sql view model Preparation.weather ................................ [RUN]
+17:24:34  2 из 5 ОК создан sql view model Preparation.weather ........................... [OK за 2.15с]
+17:24:34  3 из 5 НАЧАЛО sql view model Business.Transportation.nyc_trips .................. [RUN]
+17:24:36  3 из 5 ОК создан sql view model Business.Transportation.nyc_trips ............. [OK за 2.18с]
+17:24:36  4 из 5 НАЧАЛО sql view model Business.Weather.nyc_weather ....................... [RUN]
+17:24:38  4 из 5 ОК создан sql view model Business.Weather.nyc_weather .................. [OK за 2.09с]
+17:24:38  5 из 5 НАЧАЛО sql view model Application.nyc_trips_with_weather ................. [RUN]
+17:24:41  5 из 5 ОК создан sql view model Application.nyc_trips_with_weather ............ [OK за 2.74с]
+17:24:41
+17:24:41  Завершено выполнение 5 view моделей за 0 часов 0 минут и 24.03 секунды (24.03с).
+17:24:41
+17:24:41  Завершено успешно
+17:24:41
+17:24:41  Готово. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5
 
-The `schema.yml` file defines Dremio sources and models to be used and what data models are in scope. In this guides sample project, there are two data sources: 
+```
 
-1. The `NYC-weather.csv` stored in the **Samples** database and 
-2. The `sample_data` from the **Samples database**.
+Теперь, когда у вас есть рабочая среда и завершенная задача, вы можете просмотреть данные в Dremio и расширить свой код. Это снимок структуры проекта в IDE:
 
-The models correspond to both weather and trip data respectively and will be joined for analysis. 
+<Lightbox src="/img/guides/dremio/dremio-cloned-repo.png" title="Клонированный репозиторий в IDE"/>
 
-The sources can be found by navigating to the **Object Storage** section of the Dremio Cloud UI.
+## О файле schema.yml
 
-<Lightbox src="/img/guides/dremio/dremio-nyc-weather.png" title="NYC-weather.csv location in Dremio Cloud"/>
+Файл `schema.yml` определяет источники и модели Dremio, которые будут использоваться, и какие модели данных находятся в области действия. В примере проекта в этом руководстве есть два источника данных:
 
-## About the models
+1. `NYC-weather.csv`, хранящийся в базе данных **Samples**, и
+2. `sample_data` из **Samples database**.
 
-**Preparation** &mdash; `preparation_trips.sql` and `preparation_weather.sql` are building views on top of the trips and weather data.
+Модели соответствуют данным о погоде и поездках соответственно и будут объединены для анализа.
 
-**Business** &mdash; `business_transportation_nyc_trips.sql` applies some level of transformation on `preparation_trips.sql` view. `Business_weather_nyc.sql` has no transformation on the `preparation_weather.sql` view. 
+Источники можно найти, перейдя в раздел **Object Storage** интерфейса Dremio Cloud.
 
-**Application** &mdash; `application_nyc_trips_with_weather.sql` joins the output from the Business model. This is what your business users will consume.
+<Lightbox src="/img/guides/dremio/dremio-nyc-weather.png" title="Расположение NYC-weather.csv в Dremio Cloud"/>
 
-## The Job output
+## О моделях
 
-When you run the dbt job, it will create a **dev** space folder that has all the data assets created. This is what you will see in Dremio Cloud UI. Spaces in Dremio is a way to organize data assets which map to business units or data products.
+**Preparation** &mdash; `preparation_trips.sql` и `preparation_weather.sql` создают представления на основе данных о поездках и погоде.
 
-<Lightbox src="/img/guides/dremio/dremio-dev-space.png" title="Dremio Cloud dev space"/>
+**Business** &mdash; `business_transportation_nyc_trips.sql` применяет некоторый уровень трансформации к представлению `preparation_trips.sql`. `Business_weather_nyc.sql` не имеет трансформации на представлении `preparation_weather.sql`.
 
-Open the **Application folder** and you will see the output of the simple transformation we did using dbt.
+**Application** &mdash; `application_nyc_trips_with_weather.sql` объединяет вывод из бизнес-модели. Это то, что будут использовать ваши бизнес-пользователи.
 
-<Lightbox src="/img/guides/dremio/dremio-dev-application.png" title="Application folder transformation output"/>
+## Вывод работы
 
-## Query the data
+Когда вы запускаете задачу dbt, она создаст папку **dev**, в которой будут находиться все созданные активы данных. Это то, что вы увидите в интерфейсе Dremio Cloud. Пространства в Dremio — это способ организации активов данных, которые соответствуют бизнес-единицам или продуктам данных.
 
-Now that you have run the job and completed the transformation, it's time to query your data. Click on the `nyc_trips_with_weather` view. That will take you to the SQL Runner page. Click **Show SQL Pane** on the upper right corner of the page. 
+<Lightbox src="/img/guides/dremio/dremio-dev-space.png" title="Dev пространство Dremio Cloud"/>
 
-Run the following query:
+Откройте папку **Application**, и вы увидите вывод простой трансформации, которую мы сделали с помощью dbt.
+
+<Lightbox src="/img/guides/dremio/dremio-dev-application.png" title="Вывод трансформации в папке Application"/>
+
+## Запрос данных
+
+Теперь, когда вы запустили задачу и завершили трансформацию, пришло время запросить ваши данные. Нажмите на представление `nyc_trips_with_weather`. Это перенесет вас на страницу SQL Runner. Нажмите **Показать SQL панель** в правом верхнем углу страницы.
+
+Выполните следующий запрос:
 
 ```sql
 
@@ -194,8 +194,8 @@ GROUP BY vendor_id
 
 ```
 
-<Lightbox src="/img/guides/dremio/dremio-test-results.png" width="70%"  title="Sample output from SQL query"/>
+<Lightbox src="/img/guides/dremio/dremio-test-results.png" width="70%"  title="Пример вывода из SQL запроса"/>
 
-This completes the integration setup and data is ready for business consumption.
+Это завершает настройку интеграции, и данные готовы к использованию в бизнесе.
 
 </div>

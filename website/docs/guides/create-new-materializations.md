@@ -1,123 +1,122 @@
 ---
-title: "Create new materializations"
+title: "Создание новых материализаций"
 id: create-new-materializations
-description: Learn how to create your own materializations.
-displayText: Creating new materializations
-hoverSnippet: Learn how to create your own materializations.
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте, как создать свои собственные материализации.
+displayText: Создание новых материализаций
+hoverSnippet: Узнайте, как создать свои собственные материализации.
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-level: 'Advanced'
+level: 'Продвинутый'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-The model <Term id="materialization">materializations</Term> you're familiar with, `table`, `view`, and `incremental` are implemented as macros in a package that's distributed along with dbt. You can check out the [source code for these materializations](https://github.com/dbt-labs/dbt-adapters/tree/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations). If you need to create your own materializations, reading these files is a good place to start. Continue reading below for a deep-dive into dbt materializations.
+Модели <Term id="materialization">материализаций</Term>, с которыми вы знакомы, такие как `table`, `view` и `incremental`, реализованы как макросы в пакете, который распространяется вместе с dbt. Вы можете ознакомиться с [исходным кодом этих материализаций](https://github.com/dbt-labs/dbt-adapters/tree/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations). Если вам нужно создать свои собственные материализации, чтение этих файлов будет хорошим началом. Продолжайте читать ниже для глубокого погружения в материализации dbt.
 
 :::caution 
 
-This is an advanced feature of dbt. Let us know if you need a hand! We're always happy to  [chat](http://community.getdbt.com/).
+Это продвинутая функция dbt. Дайте нам знать, если вам нужна помощь! Мы всегда рады [пообщаться](http://community.getdbt.com/).
 
 :::
 
-## Creating a materialization
+## Создание материализации
 
-Materialization blocks make it possible for dbt to load custom materializations from packages. The materialization blocks work very much like `macro` blocks, with a couple of key exceptions. Materializations are defined as follows:
+Блоки материализации позволяют dbt загружать пользовательские материализации из пакетов. Блоки материализации работают очень похоже на блоки `macro`, с несколькими ключевыми исключениями. Материализации определяются следующим образом:
 
 ```sql
-{% materialization [materialization name], ["specified adapter" | default] %}
+{% materialization [имя материализации], ["указанный адаптер" | default] %}
 ...
 {% endmaterialization %}
 ```
 
-Materializations can be given a name, and they can be tied to a specific adapter. dbt will pick the materialization tied to the currently-in-use adapter if one exists, or it will fall back to the `default` adapter. In practice, this looks like:
+Материализациям можно дать имя, и они могут быть связаны с конкретным адаптером. dbt выберет материализацию, связанную с используемым в данный момент адаптером, если такая существует, или вернется к адаптеру `default`. На практике это выглядит так:
 
 <File name='macros/my_materialization.sql'>
 
 ```sql
 {% materialization my_materialization_name, default %}
- -- cross-adapter materialization... assume Redshift is not supported
+ -- кросс-адаптерная материализация... предположим, что Redshift не поддерживается
 {% endmaterialization %}
 
 
 {% materialization my_materialization_name, adapter='redshift' %}
--- override the materialization for Redshift
+-- переопределение материализации для Redshift
 {% endmaterialization %}
 ```
 
 </File>
 
-
-
 :::info 
 
-dbt's ability to dynamically pick the correct materialization based on the active database target is called [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch). This feature unlocks a whole world of cross-database compatibility features -- if you're interested in this, please let us know on Slack!
+Способность dbt динамически выбирать правильную материализацию на основе активной базы данных называется [многофункциональным диспетчеризацией](https://en.wikipedia.org/wiki/Multiple_dispatch). Эта функция открывает целый мир возможностей совместимости между базами данных — если вас это интересует, дайте нам знать в Slack!
 
 :::
 
-### Anatomy of a materialization
+### Анатомия материализации
 
-Materializations are responsible for taking a dbt model sql statement and turning it into a transformed dataset in a database. As such, materializations generally take the following shape:
+Материализации отвечают за преобразование SQL-запроса модели dbt в преобразованный набор данных в базе данных. Таким образом, материализации обычно имеют следующую структуру:
 
-1. Prepare the database for the new model
-2. Run pre-hooks
-3. Execute any sql required to implement the desired materialization
-4. Run post-model hooks
-5. Clean up the database as required
-6. Update the Relation cache
+1. Подготовка базы данных для новой модели
+2. Выполнение предварительных хуков
+3. Выполнение любого SQL, необходимого для реализации желаемой материализации
+4. Выполнение пост-модельных хуков
+5. Очистка базы данных по мере необходимости
+6. Обновление кэша Relation
 
-Each of these tasks are explained in sections below.
+Каждая из этих задач объясняется в следующих разделах.
 
-### Prepare the database
+### Подготовка базы данных
 
-Materializations are responsible for creating new tables or <Term id="view">views</Term> in the database, or inserting/updating/deleting data from existing tables. As such, materializations need to know about the state of the database to determine exactly what sql they should run. Here is some pseudocode for the "setup" phase of the **<Term id="table" />** materialization:
+Материализации отвечают за создание новых таблиц или <Term id="view">представлений</Term> в базе данных, или за вставку/обновление/удаление данных из существующих таблиц. Таким образом, материализации должны знать о состоянии базы данных, чтобы определить, какой именно SQL им следует выполнять. Вот некоторый псевдокод для фазы "настройки" материализации **<Term id="table" />**:
 
 ```sql
--- Refer to the table materialization (linked above) for an example of real syntax
--- This code will not work and is only intended for demonstration purposes
+-- Обратитесь к материализации таблицы (ссылка выше) для примера реального синтаксиса
+-- Этот код не будет работать и предназначен только для демонстрационных целей
 {% set existing = adapter.get_relation(this) %}
 {% if existing and existing.is_view  %}
   {% do adapter.drop_relation(existing) %}
 {% endif %}
 ```
 
-In this example, the `get_relation` method is used to fetch the state of the currently-executing model from the database. If the model exists as a view, then the view is dropped to make room for the table that will be built later in the materialization.
+В этом примере метод `get_relation` используется для получения состояния текущей модели, выполняемой в базе данных. Если модель существует как представление, то это представление удаляется, чтобы освободить место для таблицы, которая будет создана позже в материализации.
 
-This is a simplified example, and the setup phase for a materialization can become quite complicated indeed! When building a materialization, be sure to consider the state of the database and any supplied [flags](/reference/dbt-jinja-functions/flags) (ie. `--full-refresh`) to ensure that the materialization code behaves correctly in different scenarios.
+Это упрощенный пример, и фаза настройки для материализации может стать довольно сложной! При создании материализации обязательно учитывайте состояние базы данных и любые предоставленные [флаги](/reference/dbt-jinja-functions/flags) (например, `--full-refresh`), чтобы убедиться, что код материализации работает правильно в различных сценариях.
 
-### Run pre-hooks
+### Выполнение предварительных хуков
 
-Pre- and post-hooks can be specified for any model -- be sure that your materialization plays nicely with these settings. Two variables, `pre_hooks` and `post_hooks` are automatically injected into the materialization context. Invoke these hooks at the appropriate time with:
+Предварительные и пост-хуки могут быть указаны для любой модели — убедитесь, что ваша материализация хорошо работает с этими настройками. Две переменные, `pre_hooks` и `post_hooks`, автоматически внедряются в контекст материализации. Вызывайте эти хуки в соответствующее время с помощью:
 
 ```sql
 ...
 {{ run_hooks(pre_hooks) }}
 ....
 ```
-### Executing SQL
 
-Construct your materialization <Term id="dml" /> to account for the different permutations of <Term id="table" /> existence, materialization flags, etc. There are a number of [adapter functions](/reference/dbt-jinja-functions/adapter) and context variables that can help you here. Be sure to consult the Reference section of this site for a full list of variables and functions at your disposal.
+### Выполнение SQL
 
-### Run post-hooks
+Постройте свою материализацию <Term id="dml" /> с учетом различных вариантов существования <Term id="table" />, флагов материализации и т.д. Существует множество [функций адаптера](/reference/dbt-jinja-functions/adapter) и контекстных переменных, которые могут помочь вам в этом. Обязательно ознакомьтесь с разделом Справка на этом сайте для получения полного списка переменных и функций, доступных вам.
 
-See the section above on pre-hooks for more information on running post-hooks.
+### Выполнение пост-хуков
 
-### Clean up
+Смотрите раздел выше о предварительных хуках для получения дополнительной информации о выполнении пост-хуков.
 
-The "cleanup" phase of the materialization typically renames or drops relations and commits the transaction opened in "preparation" step above. The `table` materialization, for instance, executes the following cleanup code:
+### Очистка
+
+Фаза "очистки" материализации обычно переименовывает или удаляет отношения и фиксирует транзакцию, открытую на этапе "подготовки" выше. Например, материализация `table` выполняет следующий код очистки:
 
 ```
 {{ drop_relation_if_exists(backup_relation) }}
 ```
 
-Be sure to `commit` the transaction in the `cleanup` phase of the materialization with `{{ adapter.commit() }}`. If you do not commit this transaction, it will be rolled back by dbt and the transformations applied in your materialization will be discarded.
+Обязательно выполните `commit` транзакцию в фазе очистки материализации с помощью `{{ adapter.commit() }}`. Если вы не зафиксируете эту транзакцию, она будет отменена dbt, и преобразования, примененные в вашей материализации, будут утеряны.
 
-### Update the Relation cache
+### Обновление кэша Relation
 
-Materializations should [return](/reference/dbt-jinja-functions/return) the list of Relations that they have created at the end of execution. dbt will use this list of Relations to update the relation cache in order to reduce the number of queries executed against the database's `information_schema`. If a list of Relations is not returned, then dbt will raise a Deprecation Warning and infer the created relation from the model's configured database, schema, and alias.
+Материализации должны [возвращать](/reference/dbt-jinja-functions/return) список отношений, которые они создали в конце выполнения. dbt будет использовать этот список отношений для обновления кэша отношений, чтобы уменьшить количество запросов, выполняемых против `information_schema` базы данных. Если список отношений не возвращается, dbt выдаст предупреждение о устаревании и выведет созданное отношение из настроенной базы данных, схемы и псевдонима модели.
 
 <File name='macros/my_view_materialization.sql'>
 
@@ -128,63 +127,62 @@ Materializations should [return](/reference/dbt-jinja-functions/return) the list
         identifier=this.identifier, schema=this.schema, database=this.database,
         type='view') -%}
 
-  -- ... setup database ...
-  -- ... run pre-hooks...
+  -- ... настройка базы данных ...
+  -- ... выполнение предварительных хуков...
 
-  -- build model
+  -- создание модели
   {% call statement('main') -%}
     {{ create_view_as(target_relation, sql) }}
   {%- endcall %}
   
-  -- ... run post-hooks ...
-  -- ... clean up the database...
+  -- ... выполнение пост-хуков ...
+  -- ... очистка базы данных...
 
-  -- Return the relations created in this materialization
+  -- Возврат отношений, созданных в этой материализации
   {{ return({'relations': [target_relation]}) }}
 
 {%- endmaterialization -%}
-
 
 ```
 
 </File>
 
-If a materialization solely creates a single relation, then returning that relation at the end of the materialization is sufficient to synchronize the dbt Relation cache. If the materialization *renames* or *drops* Relations other than the relation returned by the materialization, then additional work is required to keep the cache in sync with the database.
+Если материализация создает только одно отношение, то возвращение этого отношения в конце материализации достаточно для синхронизации кэша Relation dbt. Если материализация *переименовывает* или *удаляет* отношения, отличные от отношения, возвращаемого материализацией, то потребуется дополнительная работа для поддержания синхронизации кэша с базой данных.
 
-To explicitly remove a relation from the cache, use [adapter.drop_relation](/reference/dbt-jinja-functions/adapter). To explicitly rename a relation in the cache, use [adapter.rename_relation](/reference/dbt-jinja-functions/adapter). Calling these methods is preferable to executing the corresponding SQL directly, as they will mutate the cache as required. If you do need to execute the SQL to drop or rename relations directly, use the `adapter.cache_dropped` and `adapter.cache_renamed` methods to synchronize the cache.
+Чтобы явно удалить отношение из кэша, используйте [adapter.drop_relation](/reference/dbt-jinja-functions/adapter). Чтобы явно переименовать отношение в кэше, используйте [adapter.rename_relation](/reference/dbt-jinja-functions/adapter). Вызов этих методов предпочтительнее, чем выполнение соответствующего SQL напрямую, так как они изменят кэш по мере необходимости. Если вам действительно нужно выполнить SQL для удаления или переименования отношений напрямую, используйте методы `adapter.cache_dropped` и `adapter.cache_renamed`, чтобы синхронизировать кэш.
 
-## Materialization Configuration
+## Конфигурация материализации
 
-Materializations support custom configuration. You might be familiar with some of these configs from materializations like `unique_key` in [incremental models](/docs/build/incremental-models)  or `strategy` in [snapshots](/docs/build/snapshots) .
+Материализации поддерживают пользовательскую конфигурацию. Вы, возможно, знакомы с некоторыми из этих конфигураций из материализаций, таких как `unique_key` в [инкрементальных моделях](/docs/build/incremental-models) или `strategy` в [снимках](/docs/build/snapshots).
 
-### Specifying configuration options
+### Указание параметров конфигурации
 
-Materialization configurations can either be "optional" or "required". If a user fails to provide required configurations, then dbt will raise a compilation error. You can define these configuration options with the `config.get` and `config.require` functions.
+Конфигурации материализации могут быть "необязательными" или "обязательными". Если пользователь не предоставляет обязательные конфигурации, dbt выдаст ошибку компиляции. Вы можете определить эти параметры конфигурации с помощью функций `config.get` и `config.require`.
 
 ```
-# optional
-config.get('optional_config_name', default="the default") 
-# required
+# необязательный
+config.get('optional_config_name', default="значение по умолчанию") 
+# обязательный
 config.require('required_config_name')
 ```
 
-For more information on the `config` dbt Jinja function, see the [config](/reference/dbt-jinja-functions/config) reference.
+Для получения дополнительной информации о функции `config` в dbt Jinja, смотрите справочник по [config](/reference/dbt-jinja-functions/config).
 
-## Materialization precedence
+## Приоритет материализации
 
-dbt will pick the materialization macro in the following order (lower takes priority):
+dbt выберет макрос материализации в следующем порядке (меньший имеет приоритет):
 
-1. global project - default
-2. global project - plugin specific
-3. imported package - default
-4. imported package - plugin specific
-5. local project - default
-6. local project - plugin specific
+1. глобальный проект - по умолчанию
+2. глобальный проект - специфичный для плагина
+3. импортированный пакет - по умолчанию
+4. импортированный пакет - специфичный для плагина
+5. локальный проект - по умолчанию
+6. локальный проект - специфичный для плагина
 
-In each of the stated search spaces, a materialization can only be defined once. Two different imported packages may not supply the same materialization - an error will be raised.
+В каждом из указанных пространств поиска материализация может быть определена только один раз. Два разных импортированных пакета не могут предоставлять одну и ту же материализацию - будет выдана ошибка.
 
-Specific materializations can be selected by using the dot-notation when selecting a materialization from the context.
+Конкретные материализации можно выбрать, используя нотацию с точками при выборе материализации из контекста.
 
-We recommend _not_ overriding materialization names directly, and instead using a prefix or suffix to denote that the materialization changes the behavior of the default implementation (eg. my_project_incremental).
+Мы рекомендуем _не_ переопределять имена материализаций напрямую, а вместо этого использовать префикс или суффикс, чтобы обозначить, что материализация изменяет поведение реализации по умолчанию (например, my_project_incremental).
 
 </div>

@@ -1,95 +1,93 @@
 ---
-title: Customizing CI/CD with custom pipelines
+title: Настройка CI/CD с помощью пользовательских пайплайнов
 id: custom-cicd-pipelines
-description: "Learn the benefits of version-controlled analytics code and custom pipelines in dbt for enhanced code testing and workflow automation during the development process."
-displayText: Learn version-controlled code, custom pipelines, and enhanced code testing.
-hoverSnippet: Learn version-controlled code, custom pipelines, and enhanced code testing.
-# time_to_complete: '30 minutes' commenting out until we test
+description: "Узнайте о преимуществах кода аналитики под контролем версий и пользовательских пайплайнов в dbt для улучшенного тестирования кода и автоматизации рабочих процессов в процессе разработки."
+displayText: Узнайте о коде под контролем версий, пользовательских пайплайнах и улучшенном тестировании кода.
+hoverSnippet: Узнайте о коде под контролем версий, пользовательских пайплайнах и улучшенном тестировании кода.
+# time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Orchestration', 'CI']
-level: 'Intermediate'
+tags: ['dbt Cloud', 'Оркестрация', 'CI']
+level: 'Средний'
 recently_updated: true
 search_weight: "heavy"
 keywords:
-  - bitbucket pipeline, custom pipelines, github, gitlab, azure devops, ci/cd custom pipeline
+  - bitbucket pipeline, пользовательские пайплайны, github, gitlab, azure devops, ci/cd пользовательский пайплайн
 ---
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-One of the core tenets of dbt is that analytic code should be version controlled. This provides a ton of benefit to your organization in terms of collaboration, code consistency, stability, and the ability to roll back to a prior version. There’s an additional benefit that is provided with your code hosting platform that is often overlooked or underutilized. Some of you may have experience using dbt Cloud’s [webhook functionality](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) to run a job when a PR is created. This is a fantastic capability, and meets most use cases for testing your code before merging to production. However, there are circumstances when an organization needs additional functionality, like running workflows on every commit (linting), or running workflows after a merge is complete. In this article, we will show you how to setup custom pipelines to lint your project and trigger a dbt Cloud job via the API.
+Одним из основных принципов dbt является то, что аналитический код должен находиться под контролем версий. Это приносит вашей организации множество преимуществ в плане сотрудничества, согласованности кода, стабильности и возможности отката к предыдущей версии. Существует дополнительное преимущество, которое предоставляет ваша платформа хостинга кода, и которое часто упускается из виду или используется недостаточно. Некоторые из вас могут иметь опыт использования функции [вебхуков dbt Cloud](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) для запуска задания при создании PR. Это фантастическая возможность, которая удовлетворяет большинство случаев использования для тестирования вашего кода перед слиянием с производственной версией. Однако бывают обстоятельства, когда организации требуется дополнительная функциональность, такая как выполнение рабочих процессов при каждом коммите (линтинг) или выполнение рабочих процессов после завершения слияния. В этой статье мы покажем вам, как настроить пользовательские пайплайны для линтинга вашего проекта и запуска задания dbt Cloud через API.
 
-A note on parlance in this article since each code hosting platform uses different terms for similar concepts. The terms `pull request` (PR) and `merge request` (MR) are used interchangeably to mean the process of merging one branch into another branch.
+Обратите внимание на терминологию в этой статье, так как каждая платформа хостинга кода использует разные термины для схожих понятий. Термины `pull request` (PR) и `merge request` (MR) используются взаимозаменяемо для обозначения процесса слияния одной ветки в другую.
 
-### What are pipelines?
+### Что такое пайплайны?
 
-Pipelines (which are known by many names, such as workflows, actions, or build steps) are a series of pre-defined jobs that are triggered by specific events in your repository (PR created, commit pushed, branch merged, etc). Those jobs can do pretty much anything your heart desires assuming you have the proper security access and coding chops.
+Пайплайны (которые известны под множеством названий, таких как рабочие процессы, действия или шаги сборки) представляют собой серию предопределенных заданий, которые запускаются при определенных событиях в вашем репозитории (создание PR, отправка коммита, слияние ветки и т.д.). Эти задания могут выполнять практически все, что вы хотите, при условии, что у вас есть соответствующий доступ и навыки программирования.
 
-Jobs are executed on [runners](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#runners), which are virtual servers. The runners come pre-configured with Ubuntu Linux, macOS, or Windows. That means the commands you execute are determined by the operating system of your runner. You’ll see how this comes into play later in the setup, but for now just remember that your code is executed on virtual servers that are, typically, hosted by the code hosting platform.
+Задания выполняются на [runner'ах](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#runners), которые являются виртуальными серверами. Runner'ы поставляются с предустановленной операционной системой Ubuntu Linux, macOS или Windows. Это означает, что команды, которые вы выполняете, определяются операционной системой вашего runner'а. Вы увидите, как это будет иметь значение позже в настройке, но пока просто помните, что ваш код выполняется на виртуальных серверах, которые, как правило, хостятся платформой хостинга кода.
 
-![Diagram of how pipelines work](/img/guides/orchestration/custom-cicd-pipelines/pipeline-diagram.png)
+![Схема работы пайплайнов](/img/guides/orchestration/custom-cicd-pipelines/pipeline-diagram.png)
 
-Please note, runners hosted by your code hosting platform provide a certain amount of free time. After that, billing charges may apply depending on how your account is setup. You also have the ability to host your own runners. That is beyond the scope of this article, but checkout the links below for more information if you’re interested in setting that up:
+Обратите внимание, что runner'ы, хостящиеся на вашей платформе хостинга кода, предоставляют определенное количество бесплатного времени. После этого могут применяться сборы в зависимости от того, как настроен ваш аккаунт. У вас также есть возможность хостить свои собственные runner'ы. Это выходит за рамки данной статьи, но ознакомьтесь с приведенными ниже ссылками для получения дополнительной информации, если вы заинтересованы в настройке:
 
-- Repo-hosted runner billing information:
+- Информация о выставлении счетов для runner'ов, размещенных в репозитории:
   - [GitHub](https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions)
   - [GitLab](https://docs.gitlab.com/ee/ci/pipelines/cicd_minutes.html)
   - [Bitbucket](https://bitbucket.org/product/features/pipelines#)
-- Self-hosted runner information:
+- Информация о самохостинге runner'ов:
   - [GitHub](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
   - [GitLab](https://docs.gitlab.com/runner/)
   - [Bitbucket](https://support.atlassian.com/bitbucket-cloud/docs/runners/)
 
-Additionally, if you’re using the free tier of GitLab you can still follow this guide, but it may ask you to provide a credit card to verify your account. You’ll see something like this the first time you try to run a pipeline:
+Кроме того, если вы используете бесплатный тариф GitLab, вы все равно можете следовать этому руководству, но вам может потребоваться предоставить кредитную карту для подтверждения вашего аккаунта. Вы увидите что-то подобное в первый раз, когда попытаетесь запустить пайплайн:
 
-![Warning from GitLab showing payment information is required](/img/guides/orchestration/custom-cicd-pipelines/gitlab-cicd-payment-warning.png)
+![Предупреждение от GitLab о необходимости предоставить платежную информацию](/img/guides/orchestration/custom-cicd-pipelines/gitlab-cicd-payment-warning.png)
 
+### Как настроить пайплайны
 
-### How to setup pipelines
+Это руководство предоставляет детали для нескольких платформ хостинга кода. Где шаги уникальны, они представлены без выбора. Если код специфичен для платформы (т.е. GitHub, GitLab, Bitbucket), вы увидите вариант выбора для каждой.
 
-This guide provides details for multiple code hosting platforms. Where steps are unique, they are presented without a selection option. If code is specific to a platform (i.e. GitHub, GitLab, Bitbucket) you will see a selection option for each.
+Пайплайны могут быть запущены различными событиями. Процесс [вебхука dbt Cloud](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) уже запускает выполнение, если вы хотите запустить свои задания при запросе на слияние, поэтому это руководство сосредоточено на запуске пайплайнов для каждого пуша и когда PR сливаются. Поскольку пуши происходят часто в проекте, мы сделаем это задание очень простым и быстрым, используя линтинг с SQLFluff. Пайплайн, который запускается при запросах на слияние, будет запускаться реже и может использоваться для вызова API dbt Cloud для запуска конкретного задания. Это может быть полезно, если у вас есть специфические требования, которые необходимо выполнить, когда код обновляется в производственной среде, например, выполнение `--full-refresh` для всех затронутых инкрементальных моделей.
 
-Pipelines can be triggered by various events. The [dbt Cloud webhook](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) process already triggers a run if you want to run your jobs on a merge request, so this guide focuses on running pipelines for every push and when PRs are merged. Since pushes happen frequently in a project, we’ll keep this job super simple and fast by linting with SQLFluff. The pipeline that runs on merge requests will run less frequently, and can be used to call the dbt Cloud API to trigger a specific job. This can be helpful if you have specific requirements that need to happen when code is updated in production, like running a `--full-refresh` on all impacted incremental models.
+Вот краткий обзор того, что этот пайплайн будет выполнять:
 
-Here’s a quick look at what this pipeline will accomplish:
+![Схема, показывающая создаваемые пайплайны и вовлеченные программы](/img/guides/orchestration/custom-cicd-pipelines/pipeline-programs-diagram.png)
 
-![Diagram showing the pipelines to be created and the programs involved](/img/guides/orchestration/custom-cicd-pipelines/pipeline-programs-diagram.png)
+## Запуск задания dbt Cloud при слиянии
 
-## Run a dbt Cloud job on merge
+Это задание потребует немного больше времени на настройку, но является хорошим примером того, как вызвать API dbt Cloud из пайплайна CI/CD. Представленные здесь концепции могут быть обобщены и использованы любым способом, который лучше всего подходит для вашего случая использования.
 
-This job will take a bit more to setup, but is a good example of how to call the dbt Cloud API from a CI/CD pipeline. The concepts presented here can be generalized and used in whatever way best suits your use case.
+:::tip Запуск при слиянии
 
-:::tip Run on merge
-
-If your Git provider has a native integration with dbt Cloud, you can take advantage of setting up [Merge jobs](/docs/deploy/merge-jobs) in the UI.
+Если ваш поставщик Git имеет встроенную интеграцию с dbt Cloud, вы можете воспользоваться возможностью настройки [Merge jobs](/docs/deploy/merge-jobs) в интерфейсе.
 
 :::
 
-The setup below shows how to call the dbt Cloud API to run a job every time there's a push to your main branch (The branch where pull requests are typically merged. Commonly referred to as the main, primary, or master branch, but can be named differently).
+Настройка ниже показывает, как вызвать API dbt Cloud для запуска задания каждый раз, когда происходит пуш в вашу основную ветку (ветка, в которую обычно сливаются запросы на слияние. Обычно называется основной, первичной или мастер-веткой, но может называться иначе).
 
-### 1. Get your dbt Cloud API key
+### 1. Получите свой API-ключ dbt Cloud
 
-When running a CI/CD pipeline you’ll want to use a service token instead of any individual’s API key. There are [detailed docs](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) available on this, but below is a quick rundown (this must be performed by an Account Admin):
+При запуске пайплайна CI/CD вы захотите использовать токен сервиса вместо любого индивидуального API-ключа. Существуют [подробные документы](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) по этому вопросу, но ниже приведен краткий обзор (это должно выполняться администратором аккаунта):
 
-- Login to your dbt Cloud account
-- In the upper left, click the menu button, then *Account Settings*
-- Click *Service Tokens* on the left
-- Click *New Token* to create a new token specifically for CI/CD API calls
-- Name your token something like “CICD Token”
-- Click the *+Add* button under *Access,* and grant this token the *Job Admin* permission
-- Click *Save* and you’ll see a grey box appear with your token. Copy that and save it somewhere safe (this is a password, and should be treated as such).
+- Войдите в свой аккаунт dbt Cloud
+- В верхнем левом углу нажмите кнопку меню, затем *Настройки аккаунта*
+- Нажмите *Токены сервиса* слева
+- Нажмите *Новый токен*, чтобы создать новый токен специально для вызовов API CI/CD
+- Назовите свой токен, например, “CICD Token”
+- Нажмите кнопку *+Добавить* под *Доступом* и предоставьте этому токену разрешение *Job Admin*
+- Нажмите *Сохранить*, и вы увидите серый блок с вашим токеном. Скопируйте его и сохраните в безопасном месте (это пароль, и с ним следует обращаться соответственно).
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-service-token-page.png" title="View of the dbt Cloud page where service tokens are created" width="85%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-service-token-page.png" title="Просмотр страницы dbt Cloud, где создаются токены сервиса" width="85%" />
 
-Here’s a video showing the steps as well:
+Вот видео, показывающее шаги:
 
 <WistiaVideo id="iub17te9ir" />
 
+### 2. Поместите свой API-ключ dbt Cloud в свой репозиторий
 
-### 2. Put your dbt Cloud API key into your repo
-
-This next part will happen in you code hosting platform. We need to save your API key from above into a repository secret so the job we create can access it. It is **not** recommended to ever save passwords or API keys in your code, so this step ensures that your key stays secure, but is still usable for your pipelines.
+Эта следующая часть будет происходить на вашей платформе хостинга кода. Нам нужно сохранить ваш API-ключ из предыдущего шага в секретах репозитория, чтобы задание, которое мы создаем, могло к нему получить доступ. **Не рекомендуется** когда-либо сохранять пароли или API-ключи в вашем коде, поэтому этот шаг гарантирует, что ваш ключ останется в безопасности, но все еще будет доступен для ваших пайплайнов.
 
 <Tabs
   defaultValue="github"
@@ -102,19 +100,19 @@ This next part will happen in you code hosting platform. We need to save your AP
 }>
 <TabItem value="github">
 
-- Open up your repository where you want to run the pipeline (the same one that houses your dbt project)
-- Click *Settings* to open up the repository options
-- On the left click the *Secrets and variables* dropdown in the *Security* section
-- From that list, click on *Actions*
-- Towards the middle of the screen, click the *New repository secret* button
-- It will ask you for a name, so let’s call ours `DBT_API_KEY`
-  - **It’s very important that you copy/paste this name exactly because it’s used in the scripts below.**
-- In the *Secret* section, paste in the key you copied from dbt Cloud
-- Click *Add secret* and you’re all set!
+- Откройте свой репозиторий, в котором вы хотите запустить пайплайн (тот же, который содержит ваш проект dbt)
+- Нажмите *Настройки*, чтобы открыть параметры репозитория
+- Слева нажмите выпадающее меню *Секреты и переменные* в разделе *Безопасность*
+- Из этого списка нажмите *Actions*
+- Ближе к середине экрана нажмите кнопку *Новый секрет репозитория*
+- Вам будет предложено ввести имя, давайте назовем его `DBT_API_KEY`
+  - **Очень важно, чтобы вы скопировали/вставили это имя точно, так как оно используется в скриптах ниже.**
+- В разделе *Секрет* вставьте ключ, который вы скопировали из dbt Cloud
+- Нажмите *Добавить секрет*, и вы готовы!
 
-** A quick note on security: while using a repository secret is the most straightforward way to setup this secret, there are other options available to you in GitHub. They’re beyond the scope of this guide, but could be helpful if you need to create a more secure environment for running actions. Checkout GitHub’s documentation on secrets [here](https://docs.github.com/en/actions/security-guides/encrypted-secrets).*
+** Быстрая заметка о безопасности: хотя использование секрета репозитория является самым простым способом настройки этого секрета, у вас есть и другие варианты в GitHub. Они выходят за рамки этого руководства, но могут быть полезны, если вам нужно создать более безопасную среду для выполнения действий. Ознакомьтесь с документацией GitHub по секретам [здесь](https://docs.github.com/en/actions/security-guides/encrypted-secrets).*
 
-Here’s a video showing these steps:
+Вот видео, показывающее эти шаги:
 
 <WistiaVideo id="u7mo30puql" />
 
@@ -122,58 +120,58 @@ Here’s a video showing these steps:
 
 <TabItem value="gitlab">
 
-- Open up your repository where you want to run the pipeline (the same one that houses your dbt project)
-- Click *Settings* > *CI/CD*
-- Under the *Variables* section, click *Expand,* then click *Add variable*
-- It will ask you for a name, so let’s call ours `DBT_API_KEY`
-  - **It’s very important that you copy/paste this name exactly because it’s used in the scripts below.**
-- In the *Value* section, paste in the key you copied from dbt Cloud
-- Make sure the check box next to *Protect variable* is unchecked, and the box next to *Mask variable* is selected (see below)
-  - “Protected” means that the variable is only available in pipelines that run on protected branches or protected tags - that won’t work for us because we want to run this pipeline on multiple branches. “Masked” means that it will be available to your pipeline runner, but will be masked in the logs.
+- Откройте свой репозиторий, в котором вы хотите запустить пайплайн (тот же, который содержит ваш проект dbt)
+- Нажмите *Настройки* > *CI/CD*
+- В разделе *Переменные* нажмите *Развернуть*, затем нажмите *Добавить переменную*
+- Вам будет предложено ввести имя, давайте назовем его `DBT_API_KEY`
+  - **Очень важно, чтобы вы скопировали/вставили это имя точно, так как оно используется в скриптах ниже.**
+- В разделе *Значение* вставьте ключ, который вы скопировали из dbt Cloud
+- Убедитесь, что флажок рядом с *Защитить переменную* не установлен, а флажок рядом с *Скрыть переменную* установлен (см. ниже)
+  - “Защищенная” означает, что переменная доступна только в пайплайнах, которые выполняются на защищенных ветках или защищенных тегах - это не сработает для нас, потому что мы хотим запускать этот пайплайн на нескольких ветках. “Скрытая” означает, что она будет доступна вашему runner'у пайплайна, но будет скрыта в логах.
 
-  <Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-gitlab.png" title="[View of the GitLab window for entering DBT_API_KEY" width="80%" />
+  <Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-gitlab.png" title="[Просмотр окна GitLab для ввода DBT_API_KEY" width="80%" />
 
-    Here’s a video showing these steps:
+    Вот видео, показывающее эти шаги:
     <WistiaVideo id="rgqs14f816" />
 
 
 </TabItem>
 <TabItem value="ado">
 
-In Azure:
+В Azure:
 
-- Open up your Azure DevOps project where you want to run the pipeline (the same one that houses your dbt project)
-- Click on *Pipelines* and then *Create Pipeline*
-- Select where your git code is located. It should be *Azure Repos Git*
-  - Select your git repository from the list
-- Select *Starter pipeline* (this will be updated later in Step 4)
-- Click on *Variables* and then *New variable*
-- In the *Name* field, enter the `DBT_API_KEY`
-  - **It’s very important that you copy/paste this name exactly because it’s used in the scripts below.**
-- In the *Value* section, paste in the key you copied from dbt Cloud
-- Make sure the check box next to *Keep this value secret* is checked. This will mask the value in logs, and you won't be able to see the value for the variable in the UI.
-- Click *OK* and then *Save* to save the variable
-- Save your new Azure pipeline
+- Откройте свой проект Azure DevOps, в котором вы хотите запустить пайплайн (тот же, который содержит ваш проект dbt)
+- Нажмите на *Пайплайны*, а затем *Создать пайплайн*
+- Выберите, где находится ваш git-код. Это должно быть *Azure Repos Git*
+  - Выберите свой git-репозиторий из списка
+- Выберите *Стартовый пайплайн* (это будет обновлено позже на Шаге 4)
+- Нажмите на *Переменные*, а затем *Новая переменная*
+- В поле *Имя* введите `DBT_API_KEY`
+  - **Очень важно, чтобы вы скопировали/вставили это имя точно, так как оно используется в скриптах ниже.**
+- В разделе *Значение* вставьте ключ, который вы скопировали из dbt Cloud
+- Убедитесь, что флажок рядом с *Сохранить это значение в секрете* установлен. Это скроет значение в логах, и вы не сможете увидеть значение переменной в интерфейсе.
+- Нажмите *ОК*, а затем *Сохранить*, чтобы сохранить переменную
+- Сохраните свой новый пайплайн Azure
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-azure.png" title="View of the Azure pipelines window for entering DBT_API_KEY"/>
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-azure.png" title="Просмотр окна пайплайнов Azure для ввода DBT_API_KEY"/>
 
 </TabItem>
 <TabItem value="bitbucket">
 
-In Bitbucket:
+В Bitbucket:
 
-- Open up your repository where you want to run the pipeline (the same one that houses your dbt project)
-- In the left menu, click *Repository Settings*
-- Scroll to the bottom of the left menu, and select *Repository variables*
-- In the *Name* field, input `DBT_API_KEY`
-  - **It’s very important that you copy/paste this name exactly because it’s used in the scripts below.**
-- In the *Value* section, paste in the key you copied from dbt Cloud
-- Make sure the check box next to *Secured* is checked. This will mask the value in logs, and you won't be able to see the value for the variable in the UI.
-- Click *Add* to save the variable
+- Откройте свой репозиторий, в котором вы хотите запустить пайплайн (тот же, который содержит ваш проект dbt)
+- В левом меню нажмите *Настройки репозитория*
+- Прокрутите вниз до конца левого меню и выберите *Переменные репозитория*
+- В поле *Имя* введите `DBT_API_KEY`
+  - **Очень важно, чтобы вы скопировали/вставили это имя точно, так как оно используется в скриптах ниже.**
+- В разделе *Значение* вставьте ключ, который вы скопировали из dbt Cloud
+- Убедитесь, что флажок рядом с *Защищено* установлен. Это скроет значение в логах, и вы не сможете увидеть значение переменной в интерфейсе.
+- Нажмите *Добавить*, чтобы сохранить переменную
 
-    ![View of the Bitbucket window for entering DBT_API_KEY](/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-bitbucket.png)
+    ![Просмотр окна Bitbucket для ввода DBT_API_KEY](/img/guides/orchestration/custom-cicd-pipelines/dbt-api-key-bitbucket.png)
 
-    Here’s a video showing these steps:
+    Вот видео, показывающее эти шаги:
     <WistiaVideo id="1fddpsqpfv" />
 
   
@@ -181,9 +179,9 @@ In Bitbucket:
 </TabItem>
 </Tabs>
 
-### 3. Create script to trigger dbt Cloud job via an API call
+### 3. Создайте скрипт для запуска задания dbt Cloud через вызов API
 
-In your dbt Cloud project, create a new folder at the root level named `python`. In that folder, create a file named `run_and_monitor_dbt_job.py`. You’ll copy/paste the contents from this [gist](https://gist.github.com/b-per/f4942acb8584638e3be363cb87769b48) into that file.
+В вашем проекте dbt Cloud создайте новую папку на корневом уровне с именем `python`. В этой папке создайте файл с именем `run_and_monitor_dbt_job.py`. Вы скопируете содержимое из этого [gist](https://gist.github.com/b-per/f4942acb8584638e3be363cb87769b48) в этот файл.
 
 ```yaml
 my_awesome_project
@@ -191,33 +189,33 @@ my_awesome_project
 │   └── run_and_monitor_dbt_job.py
 ```
 
-This Python file has everything you need to call the dbt Cloud API, but requires a few inputs (see snip below). Those inputs are fed to this script through environment variables that will be defined in the next step.
+Этот файл Python содержит все, что вам нужно для вызова API dbt Cloud, но требует нескольких входных данных (см. сниппет ниже). Эти входные данные передаются в этот скрипт через переменные окружения, которые будут определены на следующем шаге.
 
 ```python
 #------------------------------------------------------------------------------
-# get environment variables
+# получение переменных окружения
 #------------------------------------------------------------------------------
-api_base        = os.getenv('DBT_URL', 'https://cloud.getdbt.com/') # default to multitenant url
-job_cause       = os.getenv('DBT_JOB_CAUSE', 'API-triggered job') # default to generic message
-git_branch      = os.getenv('DBT_JOB_BRANCH', None) # default to None
-schema_override = os.getenv('DBT_JOB_SCHEMA_OVERRIDE', None) # default to None
-api_key         = os.environ['DBT_API_KEY']  # no default here, just throw an error here if key not provided
-account_id      = os.environ['DBT_ACCOUNT_ID'] # no default here, just throw an error here if id not provided
-project_id      = os.environ['DBT_PROJECT_ID'] # no default here, just throw an error here if id not provided
-job_id          = os.environ['DBT_PR_JOB_ID'] # no default here, just throw an error here if id not provided
+api_base        = os.getenv('DBT_URL', 'https://cloud.getdbt.com/') # по умолчанию многоарендный URL
+job_cause       = os.getenv('DBT_JOB_CAUSE', 'API-triggered job') # по умолчанию общее сообщение
+git_branch      = os.getenv('DBT_JOB_BRANCH', None) # по умолчанию None
+schema_override = os.getenv('DBT_JOB_SCHEMA_OVERRIDE', None) # по умолчанию None
+api_key         = os.environ['DBT_API_KEY']  # без значения по умолчанию, просто выдаст ошибку, если ключ не предоставлен
+account_id      = os.environ['DBT_ACCOUNT_ID'] # без значения по умолчанию, просто выдаст ошибку, если id не предоставлен
+project_id      = os.environ['DBT_PROJECT_ID'] # без значения по умолчанию, просто выдаст ошибку, если id не предоставлен
+job_id          = os.environ['DBT_PR_JOB_ID'] # без значения по умолчанию, просто выдаст ошибку, если id не предоставлен
 ```
 
-**Required input:**
+**Обязательные входные данные:**
 
-In order to call the dbt Cloud API, there are a few pieces of info the script needs. The easiest way to get these values is to open up the job you want to run in dbt Cloud. The URL when you’re inside the job has all the values you need:
+Чтобы вызвать API dbt Cloud, скрипту нужно несколько данных. Самый простой способ получить эти значения - открыть задание, которое вы хотите запустить в dbt Cloud. URL, когда вы находитесь внутри задания, содержит все необходимые вам значения:
 
-- `DBT_ACCOUNT_ID` - this is the number just after `accounts/` in the URL
-- `DBT_PROJECT_ID` - this is the number just after `projects/` in the URL
-- `DBT_PR_JOB_ID` - this is the number just after `jobs/` in the URL
+- `DBT_ACCOUNT_ID` - это число сразу после `accounts/` в URL
+- `DBT_PROJECT_ID` - это число сразу после `projects/` в URL
+- `DBT_PR_JOB_ID` - это число сразу после `jobs/` в URL
 
-![Image of a dbt Cloud job URL with the pieces for account, project, and job highlighted](/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-url.png)
+![Изображение URL задания dbt Cloud с выделенными частями для аккаунта, проекта и задания](/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-url.png)
 
-### 4. Update your project to include the new API call
+### 4. Обновите свой проект, чтобы включить новый вызов API
 
 <Tabs
   defaultValue="github"
@@ -230,7 +228,7 @@ In order to call the dbt Cloud API, there are a few pieces of info the script ne
 }>
 <TabItem value="github">
 
-For this new job, we’ll add a file for the dbt Cloud API call named `dbt_run_on_merge.yml`.
+Для этого нового задания мы добавим файл для вызова API dbt Cloud с именем `dbt_run_on_merge.yml`.
 
 ```yaml
 my_awesome_project
@@ -242,16 +240,16 @@ my_awesome_project
 │   │   └── lint_on_push.yml
 ```
 
-The YAML file will look pretty similar to our earlier job, but there is a new section called `env` that we’ll use to pass in the required variables. Update the variables below to match your setup based on the comments in the file.
+YAML-файл будет выглядеть довольно похоже на наше предыдущее задание, но есть новый раздел под названием `env`, который мы будем использовать для передачи необходимых переменных. Обновите переменные ниже, чтобы они соответствовали вашей настройке на основе комментариев в файле.
 
-It’s worth noting that we changed the `on:` section to now run **only** when there are pushes to a branch named `main` (i.e. a PR is merged). Have a look through [GitHub’s docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows) on these filters for additional use cases.
+Стоит отметить, что мы изменили раздел `on:`, чтобы теперь он выполнялся **только** при пушах в ветку с именем `main` (т.е. когда PR сливается). Ознакомьтесь с [документацией GitHub](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows) по этим фильтрам для получения дополнительных случаев использования.
 
 ```yaml
-name: run dbt Cloud job on push
+name: запуск задания dbt Cloud при пуше
 
-# This filter says only run this job when there is a push to the main branch
-# This works off the assumption that you've restricted this branch to only all PRs to push to the default branch
-# Update the name to match the name of your default branch
+# Этот фильтр говорит, что это задание должно выполняться только при пуше в основную ветку
+# Это работает на предположении, что вы ограничили эту ветку только для всех PR, чтобы пушить в основную ветку
+# Обновите имя, чтобы оно соответствовало имени вашей основной ветки
 on:
   push:
     branches:
@@ -259,16 +257,16 @@ on:
 
 jobs:
 
-  # the job calls the dbt Cloud API to run a job
+  # задание вызывает API dbt Cloud для запуска задания
   run_dbt_cloud_job:
-    name: Run dbt Cloud Job
+    name: Запуск задания dbt Cloud
     runs-on: ubuntu-latest
 
-  # Set the environment variables needed for the run
+  # Установите переменные окружения, необходимые для выполнения
     env:
-      DBT_ACCOUNT_ID: 00000 # enter your account id
-      DBT_PROJECT_ID: 00000 # enter your project id
-      DBT_PR_JOB_ID:  00000 # enter your job id
+      DBT_ACCOUNT_ID: 00000 # введите свой идентификатор аккаунта
+      DBT_PROJECT_ID: 00000 # введите свой идентификатор проекта
+      DBT_PR_JOB_ID:  00000 # введите свой идентификатор задания
       DBT_API_KEY: ${{ secrets.DBT_API_KEY }}
       DBT_JOB_CAUSE: 'GitHub Pipeline CI Job' 
       DBT_JOB_BRANCH: ${{ github.ref_name }}
@@ -278,22 +276,22 @@ jobs:
       - uses: "actions/setup-python@v5"
         with:
           python-version: "3.9"
-      - name: Run dbt Cloud job
+      - name: Запуск задания dbt Cloud
         run: "python python/run_and_monitor_dbt_job.py"
 ```
 
 </TabItem>
 <TabItem value="gitlab">
 
-For this job, we'll set it up using the `gitlab-ci.yml` file as in the prior step (see Step 1 of the linting setup for more info). The YAML file will look pretty similar to our earlier job, but there is a new section called `variables` that we’ll use to pass in the required variables to the Python script. Update this section to match your setup based on the comments in the file.
+Для этого задания мы настроим его с помощью файла `gitlab-ci.yml`, как в предыдущем шаге (см. Шаг 1 настройки линтинга для получения дополнительной информации). YAML-файл будет выглядеть довольно похоже на наше предыдущее задание, но есть новый раздел под названием `variables`, который мы будем использовать для передачи необходимых переменных в Python-скрипт. Обновите этот раздел, чтобы он соответствовал вашей настройке на основе комментариев в файле.
 
-Please note that the `rules:` section now says to run **only** when there are pushes to a branch named `main`, such as a PR being merged. Have a look through [GitLab’s docs](https://docs.gitlab.com/ee/ci/yaml/#rules) on these filters for additional use cases.
+Обратите внимание, что раздел `rules:` теперь говорит, чтобы выполнять **только** при пушах в ветку с именем `main`, например, когда PR сливается. Ознакомьтесь с [документацией GitLab](https://docs.gitlab.com/ee/ci/yaml/#rules) по этим фильтрам для получения дополнительных случаев использования.
 
 <Tabs
   defaultValue="single-job"
   values={[
-    { label: 'Only dbt Cloud job', value: 'single-job', },
-    {label: 'Lint and dbt Cloud job', value: 'multi-job', },
+    { label: 'Только задание dbt Cloud', value: 'single-job', },
+    {label: 'Линтинг и задание dbt Cloud', value: 'multi-job', },
   ]
 }>
 <TabItem value="single-job">
@@ -302,10 +300,10 @@ Please note that the `rules:` section now says to run **only** when there are pu
 image: python:3.9
 
 variables:
-  DBT_ACCOUNT_ID: 00000 # enter your account id
-  DBT_PROJECT_ID: 00000 # enter your project id
-  DBT_PR_JOB_ID:  00000 # enter your job id
-  DBT_API_KEY: $DBT_API_KEY # secret variable in gitlab account
+  DBT_ACCOUNT_ID: 00000 # введите свой идентификатор аккаунта
+  DBT_PROJECT_ID: 00000 # введите свой идентификатор проекта
+  DBT_PR_JOB_ID:  00000 # введите свой идентификатор задания
+  DBT_API_KEY: $DBT_API_KEY # секретная переменная в аккаунте gitlab
   DBT_URL: https://cloud.getdbt.com 
   DBT_JOB_CAUSE: 'GitLab Pipeline CI Job' 
   DBT_JOB_BRANCH: $CI_COMMIT_BRANCH
@@ -313,7 +311,7 @@ variables:
 stages:
   - build
 
-# this job calls the dbt Cloud API to run a job
+# это задание вызывает API dbt Cloud для запуска задания
 run-dbt-cloud-job:
   stage: build
   rules:
@@ -329,10 +327,10 @@ run-dbt-cloud-job:
 image: python:3.9
 
 variables:
-  DBT_ACCOUNT_ID: 00000 # enter your account id
-  DBT_PROJECT_ID: 00000 # enter your project id
-  DBT_PR_JOB_ID:  00000 # enter your job id
-  DBT_API_KEY: $DBT_API_KEY # secret variable in gitlab account
+  DBT_ACCOUNT_ID: 00000 # введите свой идентификатор аккаунта
+  DBT_PROJECT_ID: 00000 # введите свой идентификатор проекта
+  DBT_PR_JOB_ID:  00000 # введите свой идентификатор задания
+  DBT_API_KEY: $DBT_API_KEY # секретная переменная в аккаунте gitlab
   DBT_URL: https://cloud.getdbt.com 
   DBT_JOB_CAUSE: 'GitLab Pipeline CI Job' 
   DBT_JOB_BRANCH: $CI_COMMIT_BRANCH
@@ -341,9 +339,9 @@ stages:
   - pre-build
   - build
 
-# this job runs SQLFluff with a specific set of rules
-# note the dialect is set to Snowflake, so make that specific to your setup
-# details on linter rules: https://docs.sqlfluff.com/en/stable/rules.html
+# это задание запускает SQLFluff с определенным набором правил
+# обратите внимание, что диалект установлен на Snowflake, поэтому настройте его в соответствии с вашей конфигурацией
+# детали о правилах линтера: https://docs.sqlfluff.com/en/stable/rules.html
 lint-project:
   stage: pre-build
   rules:
@@ -352,7 +350,7 @@ lint-project:
     - python -m pip install sqlfluff==0.13.1
     - sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
 
-# this job calls the dbt Cloud API to run a job
+# это задание вызывает API dbt Cloud для запуска задания
 run-dbt-cloud-job:
   stage: build
   rules:
@@ -367,51 +365,51 @@ run-dbt-cloud-job:
 </TabItem>
 <TabItem value="ado">
 
-For this new job, open the existing Azure pipeline you created above and select the *Edit* button. We'll want to edit the corresponding Azure pipeline YAML file with the appropriate configuration, instead of the starter code, along with including a `variables` section to pass in the required variables.
+Для этого нового задания откройте существующий пайплайн Azure, который вы создали выше, и выберите кнопку *Редактировать*. Мы хотим отредактировать соответствующий YAML-файл пайплайна Azure с соответствующей конфигурацией, вместо стартового кода, а также включить раздел `variables`, чтобы передать необходимые переменные.
 
-Copy the below YAML file into your Azure pipeline and update the variables below to match your setup based on the comments in the file. It's worth noting that we changed the `trigger` section so that it will run **only** when there are pushes to a branch named `main` (like a PR merged to your main branch).
+Скопируйте приведенный ниже YAML-файл в свой пайплайн Azure и обновите переменные ниже, чтобы они соответствовали вашей настройке на основе комментариев в файле. Стоит отметить, что мы изменили раздел `trigger`, чтобы он выполнялся **только** при пушах в ветку с именем `main` (например, когда PR сливается в вашу основную ветку).
 
-Read through [Azure's docs](https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops) on these filters for additional use cases.
+Ознакомьтесь с [документацией Azure](https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops) по этим фильтрам для получения дополнительных случаев использования.
 
 ```yaml
-name: Run dbt Cloud Job
+name: Запуск задания dbt Cloud
 
-trigger: [ main ] # runs on pushes to main
+trigger: [ main ] # выполняется при пушах в основную ветку
 
 variables:
-  DBT_URL:                 https://cloud.getdbt.com # no trailing backslash, adjust this accordingly for single-tenant deployments
-  DBT_JOB_CAUSE:           'Azure Pipeline CI Job' # provide a descriptive job cause here for easier debugging down the road
-  DBT_ACCOUNT_ID:          00000 # enter your account id
-  DBT_PROJECT_ID:          00000 # enter your project id
-  DBT_PR_JOB_ID:           00000 # enter your job id
+  DBT_URL:                 https://cloud.getdbt.com # без завершающего обратного слэша, настройте это соответственно для развертываний с одним арендатором
+  DBT_JOB_CAUSE:           'Azure Pipeline CI Job' # предоставьте описательное сообщение о причине задания для упрощения отладки в будущем
+  DBT_ACCOUNT_ID:          00000 # введите свой идентификатор аккаунта
+  DBT_PROJECT_ID:          00000 # введите свой идентификатор проекта
+  DBT_PR_JOB_ID:           00000 # введите свой идентификатор задания
 
 steps:
   - task: UsePythonVersion@0
     inputs:
       versionSpec: '3.7'
-    displayName: 'Use Python 3.7'
+    displayName: 'Использовать Python 3.7'
 
   - script: |
       python -m pip install requests
-    displayName: 'Install python dependencies'
+    displayName: 'Установить зависимости python'
 
   - script: |
       python -u ./python/run_and_monitor_dbt_job.py
-    displayName: 'Run dbt job '
+    displayName: 'Запустить задание dbt '
     env:
-      DBT_API_KEY: $(DBT_API_KEY) # Set these values as secrets in the Azure pipelines Web UI
+      DBT_API_KEY: $(DBT_API_KEY) # Установите эти значения как секреты в веб-интерфейсе пайплайнов Azure
 ```
 
 </TabItem>
 <TabItem value="bitbucket">
 
-For this job, we'll set it up using the `bitbucket-pipelines.yml` file as in the prior step (see Step 1 of the linting setup for more info). The YAML file will look pretty similar to our earlier job, but we’ll pass in the required variables to the Python script using `export` statements. Update this section to match your setup based on the comments in the file.
+Для этого задания мы настроим его с помощью файла `bitbucket-pipelines.yml`, как в предыдущем шаге (см. Шаг 1 настройки линтинга для получения дополнительной информации). YAML-файл будет выглядеть довольно похоже на наше предыдущее задание, но мы будем передавать необходимые переменные в Python-скрипт с помощью операторов `export`. Обновите этот раздел, чтобы он соответствовал вашей настройке на основе комментариев в файле.
 
 <Tabs
   defaultValue="single-job"
   values={[
-    { label: 'Only dbt Cloud job', value: 'single-job', },
-    {label: 'Lint and dbt Cloud job', value: 'multi-job', },
+    { label: 'Только задание dbt Cloud', value: 'single-job', },
+    {label: 'Линтинг и задание dbt Cloud', value: 'multi-job', },
   ]
 }>
 <TabItem value="single-job">
@@ -422,15 +420,15 @@ image: python:3.11.1
 
 pipelines:
   branches:
-    'main': # override if your default branch doesn't run on a branch named "main"
+    'main': # переопределите, если ваша основная ветка не называется "main"
       - step:
-          name: 'Run dbt Cloud Job'
+          name: 'Запуск задания dbt Cloud'
           script:
-            - export DBT_URL="https://cloud.getdbt.com" # if you have a single-tenant deployment, adjust this accordingly
+            - export DBT_URL="https://cloud.getdbt.com" # если у вас развертывание с одним арендатором, настройте это соответственно
             - export DBT_JOB_CAUSE="Bitbucket Pipeline CI Job"
-            - export DBT_ACCOUNT_ID=00000 # enter your account id here
-            - export DBT_PROJECT_ID=00000 # enter your project id here
-            - export DBT_PR_JOB_ID=00000 # enter your job id here
+            - export DBT_ACCOUNT_ID=00000 # введите свой идентификатор аккаунта здесь
+            - export DBT_PROJECT_ID=00000 # введите свой идентификатор проекта здесь
+            - export DBT_PR_JOB_ID=00000 # введите свой идентификатор задания здесь
             - python python/run_and_monitor_dbt_job.py
 ```
 
@@ -443,22 +441,22 @@ image: python:3.11.1
 
 pipelines:
   branches:
-    '**': # this sets a wildcard to run on every branch unless specified by name below
+    '**': # это устанавливает подстановочный знак для запуска на каждой ветке, если не указано иное ниже
       - step:
-          name: Lint dbt project
+          name: Линтинг проекта dbt
           script:
             - python -m pip install sqlfluff==0.13.1
             - sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
 
-    'main': # override if your default branch doesn't run on a branch named "main"
+    'main': # переопределите, если ваша основная ветка не называется "main"
       - step:
-          name: 'Run dbt Cloud Job'
+          name: 'Запуск задания dbt Cloud'
           script:
-            - export DBT_URL="https://cloud.getdbt.com" # if you have a single-tenant deployment, adjust this accordingly
+            - export DBT_URL="https://cloud.getdbt.com" # если у вас развертывание с одним арендатором, настройте это соответственно
             - export DBT_JOB_CAUSE="Bitbucket Pipeline CI Job"
-            - export DBT_ACCOUNT_ID=00000 # enter your account id here
-            - export DBT_PROJECT_ID=00000 # enter your project id here
-            - export DBT_PR_JOB_ID=00000 # enter your job id here
+            - export DBT_ACCOUNT_ID=00000 # введите свой идентификатор аккаунта здесь
+            - export DBT_PROJECT_ID=00000 # введите свой идентификатор проекта здесь
+            - export DBT_PR_JOB_ID=00000 # введите свой идентификатор задания здесь
             - python python/run_and_monitor_dbt_job.py
 ```
 
@@ -468,11 +466,11 @@ pipelines:
 </TabItem>
 </Tabs>
 
-### 5. Test your new action
+### 5. Протестируйте ваше новое действие
 
-Now that you have a shiny new action, it’s time to test it out! Since this change is setup to only run on merges to your default branch, you’ll need to create and merge this change into your main branch. Once you do that, you’ll see a new pipeline job has been triggered to run the dbt Cloud job you assigned in the variables section.
+Теперь, когда у вас есть новое действие, пришло время протестировать его! Поскольку это изменение настроено на выполнение только при слиянии в вашу основную ветку, вам нужно будет создать и слить это изменение в вашу основную ветку. Как только вы это сделаете, вы увидите, что новое задание пайплайна было запущено для выполнения задания dbt Cloud, которое вы назначили в разделе переменных.
 
-Additionally, you’ll see the job in the run history of dbt Cloud. It should be fairly easy to spot because it will say it was triggered by the API, and the *INFO* section will have the branch you used for this guide.
+Кроме того, вы увидите задание в истории выполнения dbt Cloud. Его должно быть довольно легко заметить, потому что будет указано, что оно было запущено через API, а в разделе *INFO* будет указана ветка, которую вы использовали для этого руководства.
 
 <Tabs
   defaultValue="github"
@@ -485,48 +483,48 @@ Additionally, you’ll see the job in the run history of dbt Cloud. It should be
 }>
 <TabItem value="github">
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-github.png" title="dbt run on merge job in GitHub" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-github.png" title="Задание dbt run on merge в GitHub" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-github-triggered.png" title="dbt Cloud job showing it was triggered by GitHub" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-github-triggered.png" title="Задание dbt Cloud, показывающее, что оно было запущено GitHub" width="80%" />
 
 </TabItem>
 <TabItem value="gitlab">
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-gitlab.png" title="dbt run on merge job in GitLab" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-gitlab.png" title="Задание dbt run on merge в GitLab" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-gitlab-triggered.png" title="dbt Cloud job showing it was triggered by GitLab" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-gitlab-triggered.png" title="Задание dbt Cloud, показывающее, что оно было запущено GitLab" width="80%" />
 
 </TabItem>
 <TabItem value="ado">
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-azure.png" width="85%" title="dbt run on merge job in ADO"/>
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-azure.png" width="85%" title="Задание dbt run on merge в ADO"/>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-azure-triggered.png" width="80" title="ADO-triggered job in dbt Cloud"/>
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-azure-triggered.png" width="80" title="Задание, запущенное в dbt Cloud через ADO"/>
 
 </TabItem>
 <TabItem value="bitbucket">
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-bitbucket.png" title="dbt run on merge job in Bitbucket" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-bitbucket.png" title="Задание dbt run on merge в Bitbucket" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-bitbucket-triggered.png" title="dbt Cloud job showing it was triggered by Bitbucket" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-bitbucket-triggered.png" title="Задание dbt Cloud, показывающее, что оно было запущено Bitbucket" width="80%" />
 
 </TabItem>
 </Tabs>
 
-## Run a dbt Cloud job on pull request
+## Запуск задания dbt Cloud при запросе на слияние
 
-If your git provider is not one with a native integration with dbt Cloud, but you still want to take advantage of CI builds, you've come to the right spot! With just a bit of work it's possible to setup a job that will run a dbt Cloud job when a pull request (PR) is created.
+Если ваш поставщик git не имеет встроенной интеграции с dbt Cloud, но вы все равно хотите воспользоваться преимуществами CI-сборок, вы пришли в нужное место! С небольшими усилиями можно настроить задание, которое будет запускать задание dbt Cloud, когда создается запрос на слияние (PR).
 
-:::tip Run on PR
+:::tip Запуск при PR
 
-If your git provider has a native integration with dbt Cloud, you can take advantage of the setup instructions [here](/docs/deploy/ci-jobs).
-This section is only for those projects that connect to their git repository using an SSH key.
+Если ваш поставщик git имеет встроенную интеграцию с dbt Cloud, вы можете воспользоваться инструкциями по настройке [здесь](/docs/deploy/ci-jobs).
+Этот раздел предназначен только для тех проектов, которые подключаются к своему репозиторию git с помощью SSH-ключа.
 
 :::
 
-The setup for this pipeline will use the same steps as the prior page. Before moving on, follow steps 1-5 from the [prior page](https://docs.getdbt.com/guides/custom-cicd-pipelines?step=2).
+Настройка этого пайплайна будет использовать те же шаги, что и на предыдущей странице. Прежде чем продолжить, выполните шаги 1-5 из [предыдущей страницы](https://docs.getdbt.com/guides/custom-cicd-pipelines?step=2).
 
-### 1. Create a pipeline job that runs when PRs are created
+### 1. Создайте задание пайплайна, которое запускается при создании PR
 
 <Tabs
   defaultValue="bitbucket"
@@ -536,48 +534,48 @@ The setup for this pipeline will use the same steps as the prior page. Before mo
 }>
 <TabItem value="bitbucket">
 
-For this job, we'll set it up using the `bitbucket-pipelines.yml` file as in the prior step. The YAML file will look pretty similar to our earlier job, but we’ll pass in the required variables to the Python script using `export` statements. Update this section to match your setup based on the comments in the file.
+Для этого задания мы настроим его с помощью файла `bitbucket-pipelines.yml`, как в предыдущем шаге. YAML-файл будет выглядеть довольно похоже на наше предыдущее задание, но мы будем передавать необходимые переменные в Python-скрипт с помощью операторов `export`. Обновите этот раздел, чтобы он соответствовал вашей настройке на основе комментариев в файле.
 
-**What is this pipeline going to do?**  
-The setup below will trigger a dbt Cloud job to run every time a PR is opened in this repository. It will also run a fresh version of the pipeline for every commit that is made on the PR until it is merged.
-For example: If you open a PR, it will run the pipeline. If you then decide additional changes are needed, and commit/push to the PR branch, a new pipeline will run with the updated code.  
+**Что будет делать этот пайплайн?**  
+Настройка ниже будет запускать задание dbt Cloud каждый раз, когда в этом репозитории открывается PR. Он также будет запускать свежую версию пайплайна для каждого коммита, сделанного в ветке PR, до тех пор, пока он не будет слит.
+Например: если вы откроете PR, он запустит пайплайн. Если затем вы решите, что нужны дополнительные изменения, и сделаете коммит/пуш в ветку PR, новый пайплайн запустится с обновленным кодом.  
 
-The following varibles control this job:
+Следующие переменные контролируют это задание:
 
-- `DBT_JOB_BRANCH`: Tells the dbt Cloud job to run the code in the branch that created this PR
-- `DBT_JOB_SCHEMA_OVERRIDE`: Tells the dbt Cloud job to run this into a custom target schema
-  - The format of this will look like: `DBT_CLOUD_PR_{REPO_KEY}_{PR_NUMBER}`
+- `DBT_JOB_BRANCH`: Указывает заданию dbt Cloud запустить код в ветке, которая создала этот PR
+- `DBT_JOB_SCHEMA_OVERRIDE`: Указывает заданию dbt Cloud запустить это в пользовательскую целевую схему
+  - Формат будет выглядеть так: `DBT_CLOUD_PR_{REPO_KEY}_{PR_NUMBER}`
 
 ```yaml
 image: python:3.11.1
 
 
 pipelines:
-  # This job will run when pull requests are created in the repository
+  # Это задание будет выполняться, когда создаются запросы на слияние в репозитории
   pull-requests:
     '**':
       - step:
-          name: 'Run dbt Cloud PR Job'
+          name: 'Запуск задания dbt Cloud PR'
           script:
-            # Check to only build if PR destination is master (or other branch). 
-            # Comment or remove line below if you want to run on all PR's regardless of destination branch.
-            - if [ "${BITBUCKET_PR_DESTINATION_BRANCH}" != "main" ]; then printf 'PR Destination is not master, exiting.'; exit; fi
+            # Проверка, чтобы строить только в том случае, если целевая ветка PR - master (или другая ветка). 
+            # Закомментируйте или удалите строку ниже, если хотите запускать на всех PR, независимо от целевой ветки.
+            - if [ "${BITBUCKET_PR_DESTINATION_BRANCH}" != "main" ]; then printf 'Целевая ветка PR не master, выход.'; exit; fi
             - export DBT_URL="https://cloud.getdbt.com"
             - export DBT_JOB_CAUSE="Bitbucket Pipeline CI Job"
             - export DBT_JOB_BRANCH=$BITBUCKET_BRANCH
             - export DBT_JOB_SCHEMA_OVERRIDE="DBT_CLOUD_PR_"$BITBUCKET_PROJECT_KEY"_"$BITBUCKET_PR_ID
-            - export DBT_ACCOUNT_ID=00000 # enter your account id here
-            - export DBT_PROJECT_ID=00000 # enter your project id here
-            - export DBT_PR_JOB_ID=00000 # enter your job id here
+            - export DBT_ACCOUNT_ID=00000 # введите свой идентификатор аккаунта здесь
+            - export DBT_PROJECT_ID=00000 # введите свой идентификатор проекта здесь
+            - export DBT_PR_JOB_ID=00000 # введите свой идентификатор задания здесь
             - python python/run_and_monitor_dbt_job.py
 ```
 
 </TabItem>
 </Tabs>
 
-### 2. Confirm the pipeline runs
+### 2. Подтвердите, что пайплайн запускается
 
-Now that you have a new pipeline, it's time to run it and make sure it works. Since this only triggers when a PR is created, you'll need to create a new PR on a branch that contains the code above. Once you do that, you should see a pipeline that looks like this:
+Теперь, когда у вас есть новый пайплайн, пришло время запустить его и убедиться, что он работает. Поскольку это срабатывает только при создании PR, вам нужно будет создать новый PR в ветке, содержащей приведенный выше код. Как только вы это сделаете, вы должны увидеть пайплайн, который выглядит так:
 
 <Tabs
   defaultValue="bitbucket"
@@ -587,29 +585,29 @@ Now that you have a new pipeline, it's time to run it and make sure it works. Si
 }>
 <TabItem value="bitbucket">
 
-Bitbucket pipeline:
-![dbt run on PR job in Bitbucket](/img/guides/orchestration/custom-cicd-pipelines/bitbucket-run-on-pr.png)
+Пайплайн Bitbucket:
+![Задание dbt run on PR в Bitbucket](/img/guides/orchestration/custom-cicd-pipelines/bitbucket-run-on-pr.png)
 
-dbt Cloud job:
-![dbt Cloud job showing it was triggered by Bitbucket](/img/guides/orchestration/custom-cicd-pipelines/bitbucket-dbt-cloud-pr.png)
+Задание dbt Cloud:
+![Задание dbt Cloud, показывающее, что оно было запущено Bitbucket](/img/guides/orchestration/custom-cicd-pipelines/bitbucket-dbt-cloud-pr.png)
 
 </TabItem>
 </Tabs>
 
-### 3. Handle those extra schemas in your database
+### 3. Обработайте дополнительные схемы в вашей базе данных
 
-As noted above, when the PR job runs it will create a new schema based on the PR. To avoid having your database overwhelmed with PR schemas, consider adding a "cleanup" job to your dbt Cloud account. This job can run on a scheduled basis to cleanup any PR schemas that haven't been updated/used recently.
+Как упоминалось выше, когда задание PR запускается, оно создаст новую схему на основе PR. Чтобы избежать перегрузки вашей базы данных схемами PR, рассмотрите возможность добавления задания "очистки" в ваш аккаунт dbt Cloud. Это задание может выполняться по расписанию для очистки любых схем PR, которые не были обновлены/использованы недавно.
 
-Add this as a macro to your project. It takes 2 arguments that lets you control which schema get dropped:
+Добавьте это как макрос в ваш проект. Он принимает 2 аргумента, которые позволяют вам контролировать, какие схемы будут удалены:
 
-- `age_in_days`: The number of days since the schema was last altered before it should be dropped (default 10 days)
-- `database_to_clean`: The name of the database to remove schemas from
+- `age_in_days`: Количество дней с момента последнего изменения схемы, после которого она должна быть удалена (по умолчанию 10 дней)
+- `database_to_clean`: Имя базы данных, из которой нужно удалить схемы
   
 ```sql
 {# 
-    This macro finds PR schemas older than a set date and drops them 
-    The macro defaults to 10 days old, but can be configured with the input argument age_in_days
-    Sample usage with different date:
+    Этот макрос находит схемы PR старше установленной даты и удаляет их 
+    Макрос по умолчанию 10 дней, но может быть настроен с помощью входного аргумента age_in_days
+    Пример использования с другой датой:
         dbt run-operation pr_schema_cleanup --args "{'database_to_clean': 'analytics','age_in_days':'15'}"
 #}
 {% macro pr_schema_cleanup(database_to_clean, age_in_days=10) %}
@@ -626,7 +624,7 @@ Add this as a macro to your project. It takes 2 arguments that lets you control 
 
     {% if execute %}
 
-        {{ log('Schema drop statements:' ,True) }}
+        {{ log('Команды удаления схем:' ,True) }}
 
         {% set schema_drop_list = run_query(find_old_schemas).columns[0].values() %}
 
@@ -640,14 +638,14 @@ Add this as a macro to your project. It takes 2 arguments that lets you control 
 {% endmacro %}
 ```
 
-This macro goes into a dbt Cloud job that is run on a schedule. The command will look like this (text below for copy/paste):
-![dbt Cloud job showing the run operation command for the cleanup macro](/img/guides/orchestration/custom-cicd-pipelines/dbt-macro-cleanup-pr.png)
+Этот макрос помещается в задание dbt Cloud, которое выполняется по расписанию. Команда будет выглядеть так (текст ниже для копирования/вставки):
+![Задание dbt Cloud, показывающее команду выполнения операции для макроса очистки](/img/guides/orchestration/custom-cicd-pipelines/dbt-macro-cleanup-pr.png)
 `dbt run-operation pr_schema_cleanup --args "{ 'database_to_clean': 'development','age_in_days':15}"`
 
-## Consider risk of conflicts when using multiple orchestration tools
+## Учитывайте риск конфликтов при использовании нескольких инструментов оркестрации
 
-Running dbt Cloud jobs through a CI/CD pipeline is a form of job orchestration. If you also run jobs using dbt Cloud’s built in scheduler, you now have 2 orchestration tools running jobs. The risk with this is that you could run into conflicts - you can imagine a case where you are triggering a pipeline on certain actions and running scheduled jobs in dbt Cloud, you would probably run into job clashes. The more tools you have, the more you have to make sure everything talks to each other.
+Запуск заданий dbt Cloud через пайплайн CI/CD является формой оркестрации заданий. Если вы также запускаете задания с помощью встроенного планировщика dbt Cloud, у вас теперь есть 2 инструмента оркестрации, запускающих задания. Риск в этом заключается в том, что вы можете столкнуться с конфликтами - вы можете представить случай, когда вы запускаете пайплайн при определенных действиях и запускаете запланированные задания в dbt Cloud, вы, вероятно, столкнетесь с конфликтами заданий. Чем больше инструментов у вас есть, тем больше вам нужно убедиться, что все они взаимодействуют друг с другом.
 
-That being said, if **the only reason you want to use pipelines is for adding a lint check or run on merge**, you might decide the pros outweigh the cons, and as such you want to go with a hybrid approach. Just keep in mind that if two processes try and run the same job at the same time, dbt Cloud will queue the jobs and run one after the other. It’s a balancing act but can be accomplished with diligence to ensure you’re orchestrating jobs in a manner that does not conflict.
+Тем не менее, если **единственная причина, по которой вы хотите использовать пайплайны, это добавление проверки линтинга или запуск при слиянии**, вы можете решить, что плюсы перевешивают минусы, и, таким образом, вы хотите использовать гибридный подход. Просто имейте в виду, что если два процесса попытаются запустить одно и то же задание одновременно, dbt Cloud поставит задания в очередь и выполнит их одно за другим. Это балансировка, но ее можно достичь с усердием, чтобы гарантировать, что вы оркестрируете задания таким образом, чтобы они не конфликтовали.
 
 </div>

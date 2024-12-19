@@ -1,22 +1,22 @@
 ---
-title: "About adapter object"
-sidebar_label: "adapter"
+title: "Об объекте адаптера"
+sidebar_label: "адаптер"
 id: "adapter"
-description: "Wrap the internal database adapter with the Jinja object `adapter`."
+description: "Оборачивает внутренний объект адаптера базы данных с помощью объекта Jinja `adapter`."
 ---
 
-Your database communicates with dbt using an internal database adapter object. For example, BaseAdapter and SnowflakeAdapter. The Jinja object `adapter` is a wrapper around this internal database adapter object.
+Ваша база данных взаимодействует с dbt с помощью внутреннего объекта адаптера базы данных. Например, BaseAdapter и SnowflakeAdapter. Объект Jinja `adapter` является оберткой вокруг этого внутреннего объекта адаптера базы данных.
 
-`adapter` grants the ability to invoke adapter methods of that internal class via:
-* `{% do adapter.<method name> %}` -- invoke internal adapter method 
-* `{{ adapter.<method name> }}` -- invoke internal adapter method and capture its return value for use in materialization or other macros
+`adapter` предоставляет возможность вызывать методы адаптера этого внутреннего класса через:
+* `{% do adapter.<имя метода> %}` -- вызвать внутренний метод адаптера 
+* `{{ adapter.<имя метода> }}` -- вызвать внутренний метод адаптера и захватить его возвращаемое значение для использования в материализации или других макросах
 
-For example, the adapter methods below will be translated into specific SQL statements depending on the type of adapter your project is using:
+Например, методы адаптера ниже будут преобразованы в конкретные SQL-запросы в зависимости от типа адаптера, который использует ваш проект:
 
 - [adapter.dispatch](/reference/dbt-jinja-functions/dispatch)
 - [adapter.get_missing_columns](#get_missing_columns)
 - [adapter.expand_target_column_types](#expand_target_column_types)
-- [adapter.get_relation](#get_relation) or [load_relation](#load_relation)
+- [adapter.get_relation](#get_relation) или [load_relation](#load_relation)
 - [adapter.get_columns_in_relation](#get_columns_in_relation)
 - [adapter.create_schema](#create_schema)
 - [adapter.drop_schema](#drop_schema)
@@ -24,28 +24,27 @@ For example, the adapter methods below will be translated into specific SQL stat
 - [adapter.rename_relation](#rename_relation)
 - [adapter.quote](#quote)
 
-### Deprecated adapter functions
+### Устаревшие функции адаптера
 
-The following adapter functions are deprecated, and will be removed in a future release.
-- [adapter.get_columns_in_table](#get_columns_in_table) **(deprecated)**
-- [adapter.already_exists](#already_exists) **(deprecated)**
-- [adapter_macro](#adapter_macro) **(deprecated)**
+Следующие функции адаптера устарели и будут удалены в будущих релизах.
+- [adapter.get_columns_in_table](#get_columns_in_table) **(устарело)**
+- [adapter.already_exists](#already_exists) **(устарело)**
+- [adapter_macro](#adapter_macro) **(устарело)**
 
 ## dispatch
 
-Moved to separate page: [dispatch](/reference/dbt-jinja-functions/dispatch)
+Перемещено на отдельную страницу: [dispatch](/reference/dbt-jinja-functions/dispatch)
 
 ## get_missing_columns
-__Args__:
+__Аргументы__:
 
- * `from_relation`: The source [Relation](/reference/dbt-classes#relation)
- * `to_relation`: The target [Relation](/reference/dbt-classes#relation)
+ * `from_relation`: Исходная [Relation](/reference/dbt-classes#relation)
+ * `to_relation`: Целевая [Relation](/reference/dbt-classes#relation)
 
-Returns a list of [Columns](/reference/dbt-classes#column) that is the difference of the columns in the `from_table`
-and the columns in the `to_table`, i.e. (`set(from_relation.columns) - set(to_table.columns)`).
-Useful for detecting new columns in a source <Term id="table" />.
+Возвращает список [Columns](/reference/dbt-classes#column), который представляет собой разницу между столбцами в `from_table` и столбцами в `to_table`, т.е. (`set(from_relation.columns) - set(to_table.columns)`).
+Полезно для обнаружения новых столбцов в источнике <Term id="table" />.
 
-**Usage**:
+**Использование**:
 
 <File name='models/example.sql'>
 
@@ -64,14 +63,14 @@ Useful for detecting new columns in a source <Term id="table" />.
 </File>
 
 ## expand_target_column_types
-__Args__:
+__Аргументы__:
 
- * `from_relation`: The source [Relation](/reference/dbt-classes#relation) to use as a template
- * `to_relation`: The [Relation](/reference/dbt-classes#relation) to mutate
+ * `from_relation`: Исходная [Relation](/reference/dbt-classes#relation), используемая в качестве шаблона
+ * `to_relation`: [Relation](/reference/dbt-classes#relation), которую нужно изменить
 
-Expand the `to_relation` <Term id="table" />'s column types to match the schema of `from_relation`. Column expansion is constrained to string and numeric types on supported databases. Typical usage involves expanding column types (from eg. `varchar(16)` to `varchar(32)`) to support insert statements.
+Расширяет типы столбцов в `to_relation` <Term id="table" /> для соответствия схеме `from_relation`. Расширение столбцов ограничено строковыми и числовыми типами в поддерживаемых базах данных. Типичное использование включает расширение типов столбцов (например, с `varchar(16)` до `varchar(32)`) для поддержки операторов вставки.
 
-**Usage**:
+**Использование**:
 
 <File name='example.sql'>
 
@@ -84,17 +83,16 @@ Expand the `to_relation` <Term id="table" />'s column types to match the schema 
 
 </File>
 
-
 ## get_relation
-__Args__:
+__Аргументы__:
 
- * `database`: The database of the relation to fetch
- * `schema`: The schema of the relation to fetch
- * `identifier`: The identifier of the relation to fetch
+ * `database`: База данных отношения, которое нужно получить
+ * `schema`: Схема отношения, которое нужно получить
+ * `identifier`: Идентификатор отношения, которое нужно получить
 
-Returns a cached [Relation](/reference/dbt-classes#relation) object identified by the `database.schema.identifier` provided to the method, or `None` if the relation does not exist.
+Возвращает кэшированный объект [Relation](/reference/dbt-classes#relation), идентифицированный по `database.schema.identifier`, предоставленному методу, или `None`, если отношение не существует.
 
-**Usage**:
+**Использование**:
 
 <File name='example.sql'>
 
@@ -112,13 +110,13 @@ Returns a cached [Relation](/reference/dbt-classes#relation) object identified b
 </File>
 
 ## load_relation
-__Args__:
+__Аргументы__:
 
- * `relation`: The [Relation](/reference/dbt-classes#relation) to try to load
+ * `relation`: [Relation](/reference/dbt-classes#relation), которую нужно загрузить
 
-A convenience wrapper for [get_relation](#get_relation). Returns the cached version of the [Relation](/reference/dbt-classes#relation) object, or `None` if the relation does not exist.
+Удобная обертка для [get_relation](#get_relation). Возвращает кэшированную версию объекта [Relation](/reference/dbt-classes#relation) или `None`, если отношение не существует.
 
-**Usage**:
+**Использование**:
 
 <File name='example.sql'>
 
@@ -126,24 +124,23 @@ A convenience wrapper for [get_relation](#get_relation). Returns the cached vers
 
 {% set relation_exists = load_relation(ref('my_model')) is not none %}
 {% if relation_exists %}
-      {{ log("my_model has already been built", info=true) }}
+      {{ log("my_model уже был построен", info=true) }}
 {% else %}
-      {{ log("my_model doesn't exist in the warehouse. Maybe it was dropped?", info=true) }}
+      {{ log("my_model не существует в хранилище. Возможно, он был удален?", info=true) }}
 {% endif %}
 
 ```
 
 </File>
 
-
 ## get_columns_in_relation
-__Args__:
+__Аргументы__:
 
- * `relation`: The [Relation](/reference/dbt-classes#relation) to find the columns for
+ * `relation`: [Relation](/reference/dbt-classes#relation), для которой нужно найти столбцы
 
-Returns a list of [Columns](/reference/dbt-classes#column) in a <Term id="table" />.
+Возвращает список [Columns](/reference/dbt-classes#column) в <Term id="table" />.
 
-**Usage**:
+**Использование**:
 
 <File name='example.sql'>
 
@@ -160,13 +157,13 @@ Returns a list of [Columns](/reference/dbt-classes#column) in a <Term id="table"
 </File>
 
 ## create_schema
-__Args__:
+__Аргументы__:
 
- * `relation`: A relation object with the database and schema to create. Any identifier on the relation will be ignored.
+ * `relation`: Объект отношения с базой данных и схемой для создания. Любой идентификатор в отношении будет проигнорирован.
 
-Creates a schema (or equivalent) in the target database. If the target schema already exists, then this method is a no-op.
+Создает схему (или эквивалент) в целевой базе данных. Если целевая схема уже существует, то этот метод не выполняет никаких действий.
 
-**Usage:**
+**Использование:**
 
 <File name='example.sql'>
 
@@ -178,13 +175,13 @@ Creates a schema (or equivalent) in the target database. If the target schema al
 </File>
 
 ## drop_schema
-__Args__:
+__Аргументы__:
 
- * `relation`: A relation object with the database and schema to drop. Any identifier on the relation will be ignored.
+ * `relation`: Объект отношения с базой данных и схемой для удаления. Любой идентификатор в отношении будет проигнорирован.
 
-Drops a schema (or equivalent) in the target database. If the target schema does not exist, then this method is a no-op. The specific implementation is adapter-dependent, but adapters should implement a cascading drop, such that objects in the schema are also dropped. **Note**: this adapter method is destructive, so please use it with care!
+Удаляет схему (или эквивалент) в целевой базе данных. Если целевая схема не существует, то этот метод не выполняет никаких действий. Конкретная реализация зависит от адаптера, но адаптеры должны реализовать каскадное удаление, так что объекты в схеме также будут удалены. **Примечание**: этот метод адаптера является разрушительным, поэтому используйте его с осторожностью!
 
-**Usage:**
+**Использование:**
 
 <File name='example.sql'>
 
@@ -196,15 +193,15 @@ Drops a schema (or equivalent) in the target database. If the target schema does
 </File>
 
 ## drop_relation
-__Args__:
+__Аргументы__:
 
- * `relation`: The Relation to drop
+ * `relation`: Отношение для удаления
 
-Drops a Relation in the database. If the target relation does not exist, then this method is a no-op. The specific implementation is adapter-dependent, but adapters should implement a cascading drop, such that bound <Term id="view">views</Term> downstream of the dropped relation are also dropped. **Note**: this adapter method is destructive, so please use it with care!
+Удаляет отношение в базе данных. Если целевое отношение не существует, то этот метод не выполняет никаких действий. Конкретная реализация зависит от адаптера, но адаптеры должны реализовать каскадное удаление, так что связанные <Term id="view">представления</Term>, находящиеся ниже удаленного отношения, также будут удалены. **Примечание**: этот метод адаптера является разрушительным, поэтому используйте его с осторожностью!
 
-The `drop_relation` method will remove the specified relation from dbt's relation cache.
+Метод `drop_relation` удалит указанное отношение из кэша отношений dbt.
 
-**Usage:**
+**Использование:**
 
 <File name='example.sql'>
 
@@ -216,14 +213,14 @@ The `drop_relation` method will remove the specified relation from dbt's relatio
 </File>
 
 ## rename_relation
-__Args__:
+__Аргументы__:
 
- * `from_relation`: The Relation to rename
- * `to_relation`: The destination Relation to rename `from_relation` to
+ * `from_relation`: Отношение для переименования
+ * `to_relation`: Целевое отношение, в которое нужно переименовать `from_relation`
 
-Renames a Relation the database.  The `rename_relation` method will rename the specified relation in dbt's relation cache.
+Переименовывает отношение в базе данных. Метод `rename_relation` переименует указанное отношение в кэше отношений dbt.
 
-**Usage:**
+**Использование:**
 
 <File name='example.sql'>
 
@@ -244,15 +241,14 @@ Renames a Relation the database.  The `rename_relation` method will rename the s
 
 </File>
 
-
 ## quote
-__Args__:
+__Аргументы__:
 
- * `identifier`: A string to quote
+ * `identifier`: Строка для экранирования
 
-Encloses `identifier` in the correct quotes for the adapter when escaping reserved column names etc.
+Заключает `identifier` в правильные кавычки для адаптера при экранировании зарезервированных имен столбцов и т.д.
 
-**Usage:**
+**Использование:**
 
 <File name='example.sql'>
 
@@ -266,18 +262,18 @@ select
 
 ## get_columns_in_table
 
-:::danger Deprecated
+:::danger Устарело
 
-This method is deprecated and will be removed in a future release. Please use [get_columns_in_relation](#get_columns_in_relation) instead.
+Этот метод устарел и будет удален в будущем релизе. Пожалуйста, используйте [get_columns_in_relation](#get_columns_in_relation) вместо этого.
 
 :::
 
-__Args__:
+__Аргументы__:
 
- * `schema_name`: The schema to test
- * `table_name`: The <Term id="table" /> (or view) from which to select columns
+ * `schema_name`: Схема для проверки
+ * `table_name`: <Term id="table" /> (или представление), из которого нужно выбрать столбцы
 
-Returns a list of [Columns](/reference/dbt-classes#column) in a <Term id="table" />.
+Возвращает список [Columns](/reference/dbt-classes#column) в <Term id="table" />.
 
 <File name='models/example.sql'>
 
@@ -295,18 +291,18 @@ insert into {{ this }} ({{ dest_cols_csv }}) (
 
 ## already_exists
 
-:::danger Deprecated
+:::danger Устарело
 
-This method is deprecated and will be removed in a future release. Please use [get_relation](#get_relation) instead.
+Этот метод устарел и будет удален в будущем релизе. Пожалуйста, используйте [get_relation](#get_relation) вместо этого.
 
 :::
 
-__Args__:
+__Аргументы__:
 
- * `schema`: The schema to test
- * `table`: The relation to look for
+ * `schema`: Схема для проверки
+ * `table`: Отношение, которое нужно найти
 
-Returns true if a relation named like `table` exists in schema `schema`, false otherwise.
+Возвращает true, если отношение с именем `table` существует в схеме `schema`, и false в противном случае.
 
 <File name='models/example.sql'>
 
@@ -322,26 +318,23 @@ select * from {{ref('raw_table')}}
 
 ## adapter_macro
 
-:::danger Deprecated
+:::danger Устарело
 
-This method is deprecated and will be removed in a future release. Please use [adapter.dispatch](#dispatch) instead.
+Этот метод устарел и будет удален в будущем релизе. Пожалуйста, используйте [adapter.dispatch](#dispatch) вместо этого.
 
 :::
 
-Prior to v0.18.0, dbt supported a limited version of `dispatch` functionality via
-a macro named `adapter_macro`.
+До версии v0.18.0 dbt поддерживал ограниченную версию функциональности `dispatch` через макрос с именем `adapter_macro`.
 
-__Args__:
+__Аргументы__:
 
-  * `name`: name of macro to implement
+  * `name`: имя макроса для реализации
   * `*args`
   * `**kwargs`
   
-Finds an adapter-appropriate version of a named macro and implements it with the
-positional and/or keyword arguments provided. This is most relevant for macros
-in open-source packages with cross-database support.
+Находит подходящую для адаптера версию именованного макроса и реализует его с предоставленными позиционными и/или ключевыми аргументами. Это наиболее актуально для макросов в открытых пакетах с поддержкой нескольких баз данных.
 
-**Usage:**
+**Использование:**
 
 <File name='macros/concat.sql'>
 

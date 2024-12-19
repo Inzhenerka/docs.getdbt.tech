@@ -1,32 +1,31 @@
 ---
-title: "Sources JSON file"
-sidebar_label: "Sources"
+title: "Файл JSON источников"
+sidebar_label: "Источники"
 ---
 
-**Current schema:** [`v3`](https://schemas.getdbt.com/dbt/sources/v3/index.html)
+**Текущая схема:** [`v3`](https://schemas.getdbt.com/dbt/sources/v3/index.html)
 
-**Produced by:** [`source freshness`](/reference/commands/source)
+**Сгенерировано с помощью:** [`source freshness`](/reference/commands/source)
 
-This file contains information about [sources with freshness checks](/docs/build/sources#checking-source-freshness). Today, dbt Cloud uses this file to power its [Source Freshness visualization](/docs/build/sources#source-data-freshness).
+Этот файл содержит информацию о [источниках с проверками свежести](/docs/build/sources#checking-source-freshness). В настоящее время dbt Cloud использует этот файл для отображения [визуализации свежести источников](/docs/build/sources#source-data-freshness).
 
-### Top-level keys
+### Ключи верхнего уровня
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
-- `elapsed_time`: Total invocation time in seconds.
-- `results`: Array of freshness-check execution details.
+- `elapsed_time`: Общее время выполнения в секундах.
+- `results`: Массив деталей выполнения проверок свежести.
 
-Each entry in `results` is a dictionary with the following keys:
+Каждая запись в `results` представляет собой словарь с следующими ключами:
 
-- `unique_id`: Unique source node identifier, which map results to `sources` in the [manifest](/reference/artifacts/manifest-json)
-- `max_loaded_at`: Max value of `loaded_at_field` timestamp in the source <Term id="table" /> when queried.
-- `snapshotted_at`: Current timestamp when querying.
-- `max_loaded_at_time_ago_in_s`: Interval between `max_loaded_at` and `snapshotted_at`, calculated in python to handle timezone complexity.
-- `criteria`: The freshness threshold(s) for this source, defined in the project.
-- `status`: The freshness status of this source, based on `max_loaded_at_time_ago_in_s` + `criteria`, reported on the CLI. One of `pass`, `warn`, or `error` if the query succeeds, `runtime error` if the query fails.
-- `execution_time`: Total time spent checking freshness for this source
-- `timing`: Array that breaks down execution time into steps (`compile` + `execute`)
+- `unique_id`: Уникальный идентификатор узла источника, который связывает результаты с `sources` в [манифесте](/reference/artifacts/manifest-json)
+- `max_loaded_at`: Максимальное значение временной метки `loaded_at_field` в источнике <Term id="table" /> на момент запроса.
+- `snapshotted_at`: Текущая временная метка на момент запроса.
+- `max_loaded_at_time_ago_in_s`: Интервал между `max_loaded_at` и `snapshotted_at`, рассчитанный на Python для учета сложности часовых поясов.
+- `criteria`: Порог(и) свежести для этого источника, определенные в проекте.
+- `status`: Статус свежести этого источника, основанный на `max_loaded_at_time_ago_in_s` + `criteria`, сообщаемый в CLI. Один из `pass`, `warn` или `error`, если запрос выполнен успешно, `runtime error`, если запрос завершился неудачей.
+- `execution_time`: Общее время, затраченное на проверку свежести для этого источника.
+- `timing`: Массив, который разбивает время выполнения на этапы (`compile` + `execute`)
 
 import RowsAffected from '/snippets/_run-result.md'; 
 
 <RowsAffected/>
-

@@ -1,10 +1,10 @@
 ---
-title: Seed properties
+title: Свойства Seed
 ---
 
-Seed properties can be declared in `.yml` files under a `seed` key.
+Свойства Seed могут быть объявлены в `.yml` файлах под ключом `seed`.
 
-We recommend that you put them in the `seeds/` directory. You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within that directory.
+Рекомендуем помещать их в директорию `seeds/`. Вы можете называть эти файлы `whatever_you_want.yml` и размещать их на произвольной глубине в подпапках внутри этой директории.
 
 <File name='seeds/<filename>.yml'>
 
@@ -16,12 +16,12 @@ seeds:
     [description](/reference/resource-properties/description): <markdown_string>
     [docs](/reference/resource-configs/docs):
       show: true | false
-      node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     [config](/reference/resource-properties/config):
       [<seed_config>](/reference/seed-configs): <config_value>
     [tests](/reference/resource-properties/data-tests):
       - <test>
-      - ... # declare additional tests
+      - ... # объявите дополнительные тесты
     columns:
       - name: <column name>
         [description](/reference/resource-properties/description): <markdown_string>
@@ -30,10 +30,10 @@ seeds:
         [tags](/reference/resource-configs/tags): [<string>]
         [tests](/reference/resource-properties/data-tests):
           - <test>
-          - ... # declare additional tests
+          - ... # объявите дополнительные тесты
 
-      - name: ... # declare properties of additional columns
+      - name: ... # объявите свойства дополнительных столбцов
 
-  - name: ... # declare properties of additional seeds
+  - name: ... # объявите свойства дополнительных seed
 ```
 </File>

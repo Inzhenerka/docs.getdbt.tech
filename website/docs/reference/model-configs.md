@@ -1,19 +1,19 @@
 ---
-title: Model configurations
-description: "Read this guide to understand model configurations in dbt."
+title: Конфигурации моделей
+description: "Прочитайте это руководство, чтобы понять конфигурации моделей в dbt."
 meta:
-  resource_type: Models
+  resource_type: Модели
 ---
 
 import ConfigResource from '/snippets/_config-description-resource.md';
 import ConfigGeneral from '/snippets/_config-description-general.md';
 
-## Related documentation
-* [Models](/docs/build/models)
-* [`run` command](/reference/commands/run)
+## Связанная документация
+* [Модели](/docs/build/models)
+* [`run` команда](/reference/commands/run)
 
-## Available configurations
-### Model-specific configurations
+## Доступные конфигурации
+### Конфигурации, специфичные для модели
 
 <ConfigResource meta={frontMatter.meta}/>
 
@@ -21,9 +21,9 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -35,11 +35,10 @@ models:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
-    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #только для материализованных представлений на поддерживаемых адаптерах
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
 
 ```
-
 
 </File>
 
@@ -58,7 +57,7 @@ models:
     config:
       [materialized](/reference/resource-configs/materialized): <materialization_name>
       [sql_header](/reference/resource-configs/sql_header): <string>
-      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #только для материализованных представлений на поддерживаемых адаптерах
       [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
 
 ```
@@ -77,7 +76,7 @@ models:
 {{ config(
     [materialized](/reference/resource-configs/materialized)="<materialization_name>",
     [sql_header](/reference/resource-configs/sql_header)="<string>"
-    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views for supported adapters
+    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #только для материализованных представлений для поддерживаемых адаптеров
     [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
 ) }}
 
@@ -90,7 +89,7 @@ models:
 </Tabs>
 
 
-### General configurations
+### Общие конфигурации
 
 <ConfigGeneral />
 
@@ -98,9 +97,9 @@ models:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -264,30 +263,30 @@ models:
 
 </Tabs>
 
-### Warehouse-specific configurations
-* [BigQuery configurations](/reference/resource-configs/bigquery-configs)
-* [Redshift configurations](/reference/resource-configs/redshift-configs)
-* [Snowflake configurations](/reference/resource-configs/snowflake-configs)
-* [Databricks configurations](/reference/resource-configs/databricks-configs)
-* [Spark configurations](/reference/resource-configs/spark-configs)
+### Конфигурации, специфичные для склада
+* [Конфигурации BigQuery](/reference/resource-configs/bigquery-configs)
+* [Конфигурации Redshift](/reference/resource-configs/redshift-configs)
+* [Конфигурации Snowflake](/reference/resource-configs/snowflake-configs)
+* [Конфигурации Databricks](/reference/resource-configs/databricks-configs)
+* [Конфигурации Spark](/reference/resource-configs/spark-configs)
 
-## Configuring models 
+## Конфигурирование моделей 
 
-Model configurations are applied hierarchically. You can configure models from within an installed package and also from within your dbt project in the following ways, listed in order of precedence: 
+Конфигурации моделей применяются иерархически. Вы можете настраивать модели как из установленного пакета, так и из вашего проекта dbt следующими способами, перечисленными в порядке приоритета: 
 
-1. Using a `config()` Jinja macro within a model.
-2. Using a `config` [resource property](/reference/model-properties) in a `.yml` file.
-3. From the `dbt_project.yml` project file, under the `models:` key. In this case, the model that's nested the deepest will have the highest priority. 
+1. Используя макрос `config()` Jinja внутри модели.
+2. Используя свойство [resource property](/reference/model-properties) в файле `.yml`.
+3. Из файла проекта `dbt_project.yml`, под ключом `models:`. В этом случае модель, которая вложена глубже всего, будет иметь наивысший приоритет. 
 
-The most specific configuration always takes precedence. In the project file, for example, configurations applied to a `marketing` subdirectory will take precedence over configurations applied to the entire `jaffle_shop` project. To apply a configuration to a model or directory of models, define the [resource path](/reference/resource-configs/resource-path) as nested dictionary keys.
+Наиболее специфическая конфигурация всегда имеет приоритет. Например, в файле проекта конфигурации, примененные к подкаталогу `marketing`, будут иметь приоритет над конфигурациями, примененными ко всему проекту `jaffle_shop`. Чтобы применить конфигурацию к модели или каталогу моделей, определите [resource path](/reference/resource-configs/resource-path) в виде вложенных ключей словаря.
 
-Model configurations in your root dbt project have _higher_ precedence than configurations in installed packages. This enables you to override the configurations of installed packages, providing more control over your dbt runs. 
+Конфигурации моделей в вашем корневом проекте dbt имеют _высший_ приоритет по сравнению с конфигурациями в установленных пакетах. Это позволяет вам переопределять конфигурации установленных пакетов, предоставляя больше контроля над вашими запусками dbt. 
 
-## Example
+## Пример
 
-### Configuring directories of models in `dbt_project.yml`
+### Конфигурирование каталогов моделей в `dbt_project.yml`
 
-To configure models in your `dbt_project.yml` file, use the `models:` configuration option. Be sure to namespace your configurations to your project (shown below):
+Чтобы настроить модели в вашем файле `dbt_project.yml`, используйте опцию конфигурации `models:`. Обязательно указывайте пространство имен для ваших конфигураций (показано ниже):
 
 <File name='dbt_project.yml'>
 
@@ -297,16 +296,16 @@ To configure models in your `dbt_project.yml` file, use the `models:` configurat
 name: dbt_labs
 
 models:
-  # Be sure to namespace your model configs to your project name
+  # Обязательно указывайте пространство имен для конфигураций моделей в соответствии с именем вашего проекта
   dbt_labs:
 
-    # This configures models found in models/events/
+    # Это настраивает модели, найденные в models/events/
     events:
       +enabled: true
       +materialized: view
 
-      # This configures models found in models/events/base
-      # These models will be ephemeral, as the config above is overridden
+      # Это настраивает модели, найденные в models/events/base
+      # Эти модели будут эфемерными, так как конфигурация выше переопределяется
       base:
         +materialized: ephemeral
 
@@ -317,9 +316,9 @@ models:
 
 </File>
 
-### Apply configurations to one model only
+### Применение конфигураций только к одной модели
 
-Some types of configurations are specific to a particular model. In these cases, placing configurations in the `dbt_project.yml` file can be unwieldy. Instead, you can specify these configurations at the top of a model `.sql` file, or in its individual YAML properties.
+Некоторые типы конфигураций специфичны для определенной модели. В таких случаях размещение конфигураций в файле `dbt_project.yml` может быть неудобным. Вместо этого вы можете указать эти конфигурации в начале файла модели `.sql` или в его индивидуальных свойствах YAML.
 
 <File name='models/events/base/base_events.sql'>
 

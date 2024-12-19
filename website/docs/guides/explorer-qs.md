@@ -1,157 +1,157 @@
 ---
-title: "Quickstart for the dbt Explorer workshop"
+title: "Быстрый старт для мастерской dbt Explorer"
 id: "explorer-quickstart"
-description: "Use this guide to build and define metrics, set up the dbt Cloud Semantic Layer, and query them using Google Sheets."
-sidebar_label: "Quickstart dbt Explorer"
+description: "Используйте это руководство для создания и определения метрик, настройки семантического слоя dbt Cloud и выполнения запросов с помощью Google Sheets."
+sidebar_label: "Быстрый старт dbt Explorer"
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Explorer', 'Snowflake', 'dbt Cloud','Quickstart']
-keywords: ['dbt Explorer','Mesh','dbt Cloud', 'Snowflake', 'Multi-Project']
-level: 'Beginner'
+tags: ['Explorer', 'Snowflake', 'dbt Cloud','Быстрый старт']
+keywords: ['dbt Explorer','Mesh','dbt Cloud', 'Snowflake', 'Мульти-проект']
+level: 'Начинающий'
 recently_updated: true
 ---
 
-## Introduction
+## Введение
 
-Unlock the power of [dbt Explorer](/docs/collaborate/explore-projects) in this hands-on workshop designed for analytics engineers, data analysts, stakeholders, and data leaders.
+Откройте для себя возможности [dbt Explorer](/docs/collaborate/explore-projects) в этой практической мастерской, предназначенной для аналитических инженеров, аналитиков данных, заинтересованных сторон и руководителей данных.
 
-This quickstart guide accompanies the Explorer hands-on workshop and helps you dive into a production-level dbt Mesh implementation and discover how to explore your data workflows.⁠ Whether you're looking to streamline your data operations, improve data quality, or self-serve information about your data platform, this workshop will equip you with the tools and knowledge to take your dbt projects to the next level.
+Это руководство быстрого старта сопровождает практическую мастерскую Explorer и помогает вам погрузиться в реализацию dbt Mesh на уровне производства и узнать, как исследовать ваши рабочие процессы данных.⁠ Независимо от того, хотите ли вы оптимизировать свои операции с данными, улучшить качество данных или самостоятельно получать информацию о вашей платформе данных, эта мастерская обеспечит вас инструментами и знаниями, необходимыми для того, чтобы поднять ваши проекты dbt на новый уровень.
 
-By the end of the guide and workshop, you'll understand how to leverage dbt Explorer and have the confidence to navigate multiple dbt projects, trace dependencies, and identify opportunities to improve performance and data quality.
+К концу руководства и мастерской вы поймете, как использовать dbt Explorer, и будете уверенно ориентироваться в нескольких проектах dbt, отслеживать зависимости и выявлять возможности для улучшения производительности и качества данных.
 
-### What you'll learn
-In this guide, you will learn how to:
-- Navigate multiple dbt projects using dbt Explorer
-- Self-serve on data documentation
-- Trace dependencies at the model and column level
-- Identify opportunities to improve performance and data quality
+### Что вы узнаете
+В этом руководстве вы научитесь:
+- Ориентироваться в нескольких проектах dbt с помощью dbt Explorer
+- Самостоятельно работать с документацией по данным
+- Отслеживать зависимости на уровне модели и столбца
+- Выявлять возможности для улучшения производительности и качества данных
 
-### Prerequisites
-- Familiarity with data platforms
+### Предварительные требования
+- Знание платформ данных
 
-## Setup
-Now we’ll be creating your dbt Cloud account and connecting it to a data warehouse. 
-1. Go to this URL (sign out if you're already logged in):  https://cloud.getdbt.com/coalesce-workshop-signup
-2. Enter your first name and last name.
-3. Select the **Exploring a dbt Mesh implementation with dbt Explorer** option.
-4. Use the passcode provided by the workshop facilitator.
-5. Agree to the terms of service and click the **Complete Registration** button.
-6. Wait about 30 seconds, you’ll be in the dbt Cloud account for this workshop and already connected to a data warehouse.
-7. Toggle into the **Platform project**. Go to the **Deploy** tab and select **Jobs** from the dropdown menu. 
-8. Run each job you see by clicking on the job and then selecting **Run**. This will run the *upstream* project job in both a production and staging environment.
-9. Toggle into the **Analytics project**. Go to the **Deploy** tab and select **Jobs** from the dropdown menu. 
-10. Run each job you see by clicking on the job and then selecting **Run**. This will run the *downstream* project job in both a production and staging environment.
- <Lightbox src="/img/quickstarts/dbt-cloud/go_to_jobs.png" width="80%" title="Click on the Jobs tab" />
- <Lightbox src="/img/quickstarts/dbt-cloud/run_job.png" width="80%" title="Run the jobs" />
+## Настройка
+Теперь мы создадим вашу учетную запись dbt Cloud и подключим ее к хранилищу данных. 
+1. Перейдите по этой ссылке (выйдите из системы, если вы уже вошли):  https://cloud.getdbt.com/coalesce-workshop-signup
+2. Введите ваше имя и фамилию.
+3. Выберите опцию **Изучение реализации dbt Mesh с помощью dbt Explorer**.
+4. Используйте код доступа, предоставленный организатором мастерской.
+5. Примите условия обслуживания и нажмите кнопку **Завершить регистрацию**.
+6. Подождите около 30 секунд, вы окажетесь в учетной записи dbt Cloud для этой мастерской и уже будете подключены к хранилищу данных.
+7. Перейдите в **Проект платформы**. Перейдите на вкладку **Развертывание** и выберите **Задания** из выпадающего меню. 
+8. Запустите каждое задание, которое вы видите, нажав на задание, а затем выбрав **Запустить**. Это запустит *восходящее* задание проекта как в производственной, так и в тестовой среде.
+9. Перейдите в **Аналитический проект**. Перейдите на вкладку **Развертывание** и выберите **Задания** из выпадающего меню. 
+10. Запустите каждое задание, которое вы видите, нажав на задание, а затем выбрав **Запустить**. Это запустит *нисходящее* задание проекта как в производственной, так и в тестовой среде.
+ <Lightbox src="/img/quickstarts/dbt-cloud/go_to_jobs.png" width="80%" title="Нажмите на вкладку Задания" />
+ <Lightbox src="/img/quickstarts/dbt-cloud/run_job.png" width="80%" title="Запустите задания" />
    
 
-## Performance
-<Lightbox src="/img/quickstarts/dbt-cloud/explorer_performance_tab.png" width="100%" title="dbt Explorer's Performance tab" />
-dbt Explorer will show you your project's most executed models, longest model executions, most failed models and tests, and most consumed models all in one place: The performance tab.
+## Производительность
+<Lightbox src="/img/quickstarts/dbt-cloud/explorer_performance_tab.png" width="100%" title="Вкладка Производительность dbt Explorer" />
+dbt Explorer покажет вам наиболее часто выполняемые модели вашего проекта, самые длительные выполнения моделей, модели и тесты с наибольшим количеством ошибок, а также наиболее потребляемые модели — все в одном месте: на вкладке производительности.
 
-### Hands-On
-- Trigger the Daily Prod job to run again
-- Explore the **Performance** tab on the **Project details** page
-  - Which model took the longest over the last two weeks? Over the last month? 
-  - Which model failed the most tests? 
-  - Click on the model that took the longest to run in the _Longest model executions_ graph
-    - What is the average duration time over the last two weeks? Over the last month?
-    - How often is the model being built? What is the Model Test Failure Rate?
+### Практическое задание
+- Запустите задание Daily Prod снова
+- Исследуйте вкладку **Производительность** на странице **Детали проекта**
+  - Какая модель заняла больше всего времени за последние две недели? За последний месяц? 
+  - Какая модель провалила наибольшее количество тестов? 
+  - Нажмите на модель, которая заняла больше всего времени для выполнения в графике _Самые длительные выполнения моделей_
+    - Каково среднее время выполнения за последние две недели? За последний месяц?
+    - Как часто модель строится? Каков уровень отказов тестов модели?
 
-## Resources
+## Ресурсы
 
-With dbt Explorer, you can view your project's resources (such as models, tests, and metrics), their lineage, and model consumption to gain a better understanding of its latest production state. 
+С помощью dbt Explorer вы можете просматривать ресурсы вашего проекта (такие как модели, тесты и метрики), их родословную и потребление моделей, чтобы лучше понять их текущее состояние в производстве. 
 
-Navigate and manage your projects within dbt Cloud to help you and other data developers, analysts, and consumers discover and leverage your dbt resources.
+Ориентируйтесь и управляйте своими проектами в dbt Cloud, чтобы помочь вам и другим разработчикам данных, аналитикам и потребителям открывать и использовать ваши ресурсы dbt.
 
-<Lightbox src="/img/quickstarts/dbt-cloud/explorer_performance_tab.png" width="100%" title="dbt Explorer's Models tab" />
+<Lightbox src="/img/quickstarts/dbt-cloud/explorer_performance_tab.png" width="100%" title="Вкладка Модели dbt Explorer" />
 
-### Hands-On
-- Explore the **Model** tab 
-  - Pick a model. What’s its row count?
-  - Use the test results drop down to see if  this model’s tests passed. What other models does it depend on?
-- Explore the **Tests** tab
-  - What tests do we see? Which tests have warnings? Failures?
-- Explore the **Sources** tab
-  - What sources can we see? Which sources have stale data? Which sources have fresh data?
-- Explore **Exposures**
-  - Use the lineage graph to find an exposure. Which  models and metrics does the Exposure reference?
+### Практическое задание
+- Исследуйте вкладку **Модель** 
+  - Выберите модель. Каково количество строк?
+  - Используйте выпадающее меню результатов тестов, чтобы увидеть, прошли ли тесты этой модели. На какие другие модели она зависит?
+- Исследуйте вкладку **Тесты**
+  - Какие тесты мы видим? Какие тесты имеют предупреждения? Ошибки?
+- Исследуйте вкладку **Источники**
+  - Какие источники мы видим? Какие источники имеют устаревшие данные? Какие источники имеют свежие данные?
+- Исследуйте **Экспозиции**
+  - Используйте граф родословной, чтобы найти экспозицию. На какие модели и метрики ссылается Экспозиция?
  
-## Lineage
+## Родословная
 
-dbt Explorer provides a visualization of your project’s <Term id="dag"/> that you can interact with. The nodes in the lineage graph represent the project’s resources and the edges represent the relationships between the nodes. Nodes are color-coded and include iconography according to their resource type.
+dbt Explorer предоставляет визуализацию <Term id="dag"/> вашего проекта, с которой вы можете взаимодействовать. Узлы в графе родословной представляют ресурсы проекта, а ребра представляют отношения между узлами. Узлы имеют цветовую кодировку и включают иконографию в зависимости от типа ресурса.
 
-- Use the search bar and [node selectors](/reference/node-selection/syntax) to filter your DAG.
-- [Lenses](/docs/collaborate/explore-projects#lenses) make it easier to understand your project’s contextual metadata at scales, especially to distinguish a particular model or a subset of models.
-  - Applying a lens adds tags to the nodes, showing metadata like layer values, with color coding to help you distinguish them.
+- Используйте строку поиска и [селекторы узлов](/reference/node-selection/syntax) для фильтрации вашего DAG.
+- [Линзы](/docs/collaborate/explore-projects#lenses) упрощают понимание контекстной метаданных вашего проекта на разных масштабах, особенно для различения конкретной модели или подмножества моделей.
+  - Применение линзы добавляет теги к узлам, показывая метаданные, такие как значения слоев, с цветовой кодировкой, чтобы помочь вам их различать.
 
- <Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_dag.png" width="100%" title="dbt Explorer's lineage graph" />
+ <Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_dag.png" width="100%" title="Граф родословной dbt Explorer" />
   
-- Use the [advanced search](/docs/collaborate/explore-projects#search-resources) feature to locate resources in your project. 
-  - Perform hard searches and keyword searches. 
-  - All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will appear in the center of the page. 
-  - Apply filters to fully refine your search.
-- When searching for a column name, the results show all relational nodes containing that column in their schemas. 
+- Используйте функцию [расширенного поиска](/docs/collaborate/explore-projects#search-resources), чтобы находить ресурсы в вашем проекте. 
+  - Выполняйте жесткие и ключевые поиски. 
+  - Все имена ресурсов, имена столбцов, описания ресурсов, отношения к хранилищу и код, соответствующий вашим критериям поиска, появятся в центре страницы. 
+  - Применяйте фильтры для полной доработки вашего поиска.
+- При поиске имени столбца результаты показывают все реляционные узлы, содержащие этот столбец в своих схемах. 
 
- <Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_advanced_search.png" width="100%" title="dbt Explorer's advanced search feature" />
+ <Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_advanced_search.png" width="100%" title="Функция расширенного поиска dbt Explorer" />
 
-### Hands-On
-- Explore **Project-Level lineage**
-  - Pick a model and review its upstream and downstream dependencies
-  - Which sources does this model depend on? Which models depend on this model?
-- Explore **Lenses**
-  - Apply the Test Status Lenses. Which models passed tests? Which had warnings?
-  - Explore different lenses (Model Layer, Materialization Type, Resource). What information do you see?
-- Explore **Column-Level Lineage**
-  - Navigate to the model’s **Model resource** page and explore the primary key column’s **Column-Level Lineage**
+### Практическое задание
+- Исследуйте **Родословную на уровне проекта**
+  - Выберите модель и просмотрите ее восходящие и нисходящие зависимости
+  - На какие источники зависит эта модель? Какие модели зависят от этой модели?
+- Исследуйте **Линзы**
+  - Примените линзы статуса теста. Какие модели прошли тесты? Какие имели предупреждения?
+  - Исследуйте различные линзы (Уровень модели, Тип материализации, Ресурс). Какую информацию вы видите?
+- Исследуйте **Родословную на уровне столбца**
+  - Перейдите на страницу **Ресурс модели** модели и исследуйте **Родословную на уровне столбца** для первичного ключевого столбца.
 
-## Multi-project
-Use dbt Explorer to gain a deeper understanding of *all* your dbt Cloud projects with its [multi-project capabilities](/docs/collaborate/explore-multiple-projects).
-- See the number of public, protected, and private models, as well as metrics for each project.
-- View cross-project lineage and navigate between individual projects’ lineage graphs.
-- Explore column-level lineage across projects.
+## Мульти-проект
+Используйте dbt Explorer, чтобы глубже понять *все* ваши проекты dbt Cloud с его [возможностями мульти-проекта](/docs/collaborate/explore-multiple-projects).
+- Посмотрите количество публичных, защищенных и частных моделей, а также метрики для каждого проекта.
+- Просматривайте родословную между проектами и перемещайтесь между графами родословной отдельных проектов.
+- Исследуйте родословную на уровне столбца между проектами.
 
-### Hands-On
-- In the lineage graph, filter the Platform Project’s Project-Level Lineage for Public models using the `access:public` filter
-  - Make a note of which models are referenced by the analytics project.
-- Explore the Analytics Project’s lineage
-  - Choose a model in the Platform project referenced by the Analytics project.
-  - Look at the multi-project column-level lineage of its primary key column.
-  - Open the Analytics project’s lineage graph. Which models does it reference? 
+### Практическое задание
+- В графе родословной отфильтруйте родословную на уровне проекта проекта Платформы для публичных моделей, используя фильтр `access:public`
+  - Обратите внимание на модели, на которые ссылается аналитический проект.
+- Исследуйте родословную Аналитического проекта
+  - Выберите модель в проекте Платформы, на которую ссылается Аналитический проект.
+  - Посмотрите на родословную на уровне столбца ее первичного ключевого столбца.
+  - Откройте граф родословной Аналитического проекта. На какие модели он ссылается? 
 
 
-## Project recommendations
+## Рекомендации по проекту
 
-These recommendations are designed to build trust in your project and reduce confusion.
+Эти рекомендации предназначены для создания доверия к вашему проекту и уменьшения путаницы.
 
-To learn more about the specific suggestions and the reasons behind them, check out [our docs](/docs/collaborate/project-recommendations).
+Чтобы узнать больше о конкретных предложениях и причинах их появления, ознакомьтесь с [нашими документами](/docs/collaborate/project-recommendations).
 
-<Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_project_recs.png" width="80%" title="dbt Explorer's project recommendation tab" />
+<Lightbox src="/img/quickstarts/dbt-cloud/dbt_explorer_project_recs.png" width="80%" title="Вкладка рекомендаций по проекту dbt Explorer" />
 
-### Hands-On
-- Review your project recommendations.
-- Find the project recommendation for the model `agg_daily_returned_orders`.
-- Add documentation to this model in the `aggregates.yml` file.
+### Практическое задание
+- Просмотрите рекомендации по вашему проекту.
+- Найдите рекомендацию по проекту для модели `agg_daily_returned_orders`.
+- Добавьте документацию к этой модели в файл `aggregates.yml`.
 
-## What's next
+## Что дальше
 
 <ConfettiTrigger>
 
-Congratulations! You've completed the dbt Explorer workshop. You now have the tools and knowledge to navigate multiple dbt projects, trace dependencies, and identify opportunities to improve performance and data quality.
+Поздравляем! Вы завершили мастерскую dbt Explorer. Теперь у вас есть инструменты и знания для навигации по нескольким проектам dbt, отслеживания зависимостей и выявления возможностей для улучшения производительности и качества данных.
 
-You've learned how to:
-- Use dbt Explorer to visualize your project’s lineage and interact with the DAG
-- Search for resources in your project and apply filters to refine your search
-- Explore lenses and find table materializations in your current project
-- Navigate multiple dbt projects using dbt Explorer
-- Trace dependencies at the model and column level
-- Review project recommendations and implement improvements
+Вы узнали, как:
+- Использовать dbt Explorer для визуализации родословной вашего проекта и взаимодействия с DAG
+- Искать ресурсы в вашем проекте и применять фильтры для уточнения поиска
+- Исследовать линзы и находить материализации таблиц в вашем текущем проекте
+- Ориентироваться в нескольких проектах dbt с помощью dbt Explorer
+- Отслеживать зависимости на уровне модели и столбца
+- Просматривать рекомендации по проекту и внедрять улучшения
 
-For the next steps, you can check out the [dbt Explorer documentation](/docs/collaborate/explore-projects) and [FAQs](/docs/collaborate/dbt-explorer-faqs) to learn more about how to use dbt Explorer.
+Для следующих шагов вы можете ознакомиться с [документацией dbt Explorer](/docs/collaborate/explore-projects) и [Часто задаваемыми вопросами](/docs/collaborate/dbt-explorer-faqs), чтобы узнать больше о том, как использовать dbt Explorer.
 
-Keep an eye out for new features coming out soon, like:
-- More [auto-exposure](/docs/collaborate/auto-exposures) integrations (like PowerBI and Tableau).
-- [Model query history](/docs/collaborate/model-query-history) for additional warehouses (like Redshift and Databricks)
-- Improvements to [data health tiles](/docs/collaborate/data-tile)
+Следите за новыми функциями, которые скоро появятся, такими как:
+- Больше интеграций [авто-экспозиций](/docs/collaborate/auto-exposures) (например, PowerBI и Tableau).
+- [История запросов моделей](/docs/collaborate/model-query-history) для дополнительных хранилищ (например, Redshift и Databricks)
+- Улучшения [плиток состояния данных](/docs/collaborate/data-tile)
 
 </ConfettiTrigger>

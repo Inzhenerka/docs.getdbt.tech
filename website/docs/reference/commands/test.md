@@ -1,76 +1,73 @@
 ---
-title: "About dbt test command"
+title: "О команде dbt test"
 sidebar_label: "test"
 id: "test"
 ---
 <VersionBlock lastVersion="1.7">
 
-`dbt test` runs tests defined on models, sources, snapshots, and seeds. It expects that you have already created those resources through the appropriate commands.
+`dbt test` выполняет тесты, определенные для моделей, источников, снимков и семян. Ожидается, что вы уже создали эти ресурсы с помощью соответствующих команд.
 
-The tests to run can be selected using the `--select` flag discussed [here](/reference/node-selection/syntax).
+Тесты, которые нужно выполнить, можно выбрать с помощью флага `--select`, о котором говорится [здесь](/reference/node-selection/syntax).
 
 ```bash
-# run tests for one_specific_model
+# запустить тесты для one_specific_model
 dbt test --select "one_specific_model"
 
-# run tests for all models in package
+# запустить тесты для всех моделей в пакете
 dbt test --select "some_package.*"
 
-# run only tests defined singularly
+# запустить только тесты, определенные в единственном числе
 dbt test --select "test_type:singular"
 
-# run only tests defined generically
+# запустить только тесты, определенные в общем виде
 dbt test --select "test_type:generic"
 
-# run singular tests limited to one_specific_model
+# запустить тесты в единственном числе, ограниченные one_specific_model
 dbt test --select "one_specific_model,test_type:singular"
 
-# run generic tests limited to one_specific_model
+# запустить общие тесты, ограниченные one_specific_model
 dbt test --select "one_specific_model,test_type:generic"
 ```
 
-For more information on writing tests, see the [Testing Documentation](/docs/build/data-tests).
+Для получения дополнительной информации о написании тестов смотрите [документацию по тестированию](/docs/build/data-tests).
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.8">
 
-`dbt test` runs data tests defined on models, sources, snapshots, and seeds and unit tests defined on SQL models. It expects that you have already created those resources through the appropriate commands.
+`dbt test` выполняет тесты данных, определенные для моделей, источников, снимков и семян, а также модульные тесты, определенные для SQL моделей. Ожидается, что вы уже создали эти ресурсы с помощью соответствующих команд.
 
-The tests to run can be selected using the `--select` flag discussed [here](/reference/node-selection/syntax).
+Тесты, которые нужно выполнить, можно выбрать с помощью флага `--select`, о котором говорится [здесь](/reference/node-selection/syntax).
 
 ```bash
-# run data and unit tests
+# запустить тесты данных и модульные тесты
 dbt test
 
-# run only data tests
+# запустить только тесты данных
 dbt test --select test_type:data
 
-# run only unit tests
+# запустить только модульные тесты
 dbt test --select test_type:unit
 
-# run tests for one_specific_model
+# запустить тесты для one_specific_model
 dbt test --select "one_specific_model"
 
-# run tests for all models in package
+# запустить тесты для всех моделей в пакете
 dbt test --select "some_package.*"
 
-# run only data tests defined singularly
+# запустить только тесты данных, определенные в единственном числе
 dbt test --select "test_type:singular"
 
-# run only data tests defined generically
+# запустить только тесты данных, определенные в общем виде
 dbt test --select "test_type:generic"
 
-# run data tests limited to one_specific_model
+# запустить тесты данных, ограниченные one_specific_model
 dbt test --select "one_specific_model,test_type:data"
 
-# run unit tests limited to one_specific_model
+# запустить модульные тесты, ограниченные one_specific_model
 dbt test --select "one_specific_model,test_type:unit"
 ```
 
-For more information on writing tests, read the [data testing](/docs/build/data-tests) and [unit testing](/docs/build/unit-tests) documentation.
+Для получения дополнительной информации о написании тестов читайте документацию по [тестированию данных](/docs/build/data-tests) и [модульному тестированию](/docs/build/unit-tests).
 
 </VersionBlock>
-
-
-

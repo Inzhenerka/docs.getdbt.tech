@@ -1,33 +1,32 @@
 ---
-title: Debug schema names
+title: Отладка имен схем
 id: debug-schema-names
-description: Learn how to debug schema names when models build under unexpected schemas.
-displayText: Debug schema names
-hoverSnippet: Learn how to debug schema names in dbt.
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте, как отлаживать имена схем, когда модели создаются в неожиданных схемах.
+displayText: Отладка имен схем
+hoverSnippet: Узнайте, как отлаживать имена схем в dbt.
+# time_to_complete: '30 minutes' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Core','Troubleshooting']
-level: 'Advanced'
+tags: ['dbt Core','Устранение неполадок']
+level: 'Продвинутый'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-If a model uses the [`schema` config](/reference/resource-properties/schema) but builds under an unexpected schema, here are some steps for debugging the issue. The full explanation of custom schemas can be found [here](/docs/build/custom-schemas).
+Если модель использует [`schema` config](/reference/resource-properties/schema), но создается в неожиданной схеме, вот несколько шагов для отладки проблемы. Полное объяснение пользовательских схем можно найти [здесь](/docs/build/custom-schemas).
 
-
-You can also follow along via this video:
+Вы также можете следить за процессом через это видео:
 
 <LoomVideo id="1c6e33b504da432dbd07c4cb7f35478e" />
 
-## Search for a macro named `generate_schema_name`
-Do a file search to check if you have a macro named `generate_schema_name` in the `macros` directory of your project.
+## Поиск макроса с именем `generate_schema_name`
+Проведите поиск по файлам, чтобы проверить, есть ли у вас макрос с именем `generate_schema_name` в директории `macros` вашего проекта.
 
-### You do not have a macro named `generate_schema_name` in your project
-This means that you are using dbt's default implementation of the macro, as defined [here](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/get_custom_name/get_custom_schema.sql)
+### У вас нет макроса с именем `generate_schema_name` в вашем проекте
+Это означает, что вы используете стандартную реализацию макроса dbt, как определено [здесь](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/get_custom_name/get_custom_schema.sql).
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) -%}
@@ -46,16 +45,16 @@ This means that you are using dbt's default implementation of the macro, as defi
 {%- endmacro %}
 ```
 
-Note that this logic is designed so that two dbt users won't accidentally overwrite each other's work by writing to the same schema.
+Обратите внимание, что эта логика разработана так, чтобы два пользователя dbt случайно не перезаписывали работу друг друга, записывая в одну и ту же схему.
 
-### You have a `generate_schema_name` macro in a project that calls another macro
-If your `generate_schema_name` macro looks like so:
+### У вас есть макрос `generate_schema_name` в проекте, который вызывает другой макрос
+Если ваш макрос `generate_schema_name` выглядит следующим образом:
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) -%}
     {{ generate_schema_name_for_env(custom_schema_name, node) }}
 {%- endmacro %}
 ```
-Your project is switching out the `generate_schema_name` macro for another macro, `generate_schema_name_for_env`. Similar to the above example, this is a macro which is defined in dbt's global project, [here](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/get_custom_name/get_custom_schema.sql).
+Ваш проект заменяет макрос `generate_schema_name` на другой макрос, `generate_schema_name_for_env`. Подобно приведенному выше примеру, это макрос, который определен в глобальном проекте dbt, [здесь](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/get_custom_name/get_custom_schema.sql).
 ```sql
 {% macro generate_schema_name_for_env(custom_schema_name, node) -%}
 
@@ -72,35 +71,35 @@ Your project is switching out the `generate_schema_name` macro for another macro
 
 {%- endmacro %}
 ```
-### You have a `generate_schema_name` macro with custom logic
+### У вас есть макрос `generate_schema_name` с пользовательской логикой
 
-If this is the case — it might be a great idea to reach out to the person who added this macro to your project, as they will have context here — you can use [GitHub's blame feature](https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/tracking-changes-in-a-file) to do this.
+Если это так — возможно, стоит обратиться к человеку, который добавил этот макрос в ваш проект, так как у него будет контекст по этому вопросу — вы можете использовать [функцию blame на GitHub](https://docs.github.com/en/free-pro-team@latest/github/managing-files-in-a-repository/tracking-changes-in-a-file), чтобы сделать это.
 
-In all cases take a moment to read through the Jinja to see if you can follow the logic.
-
-
-## Confirm your `schema` config
-Check if you are using the [`schema` config](/reference/resource-properties/schema) in your model, either via a `{{ config() }}` block, or from `dbt_project.yml`. In both cases, dbt passes this value as the `custom_schema_name` parameter of the `generate_schema_name` macro.
+Во всех случаях уделите время, чтобы прочитать Jinja и попытаться понять логику.
 
 
-## Confirm your target values
-Most `generate_schema_name` macros incorporate logic from the [`target` variable](/reference/dbt-jinja-functions/target), in particular `target.schema` and `target.name`. Use the docs [here](/reference/dbt-jinja-functions/target) to help you find the values of each key in this dictionary.
+## Подтвердите вашу конфигурацию `schema`
+Проверьте, используете ли вы [`schema` config](/reference/resource-properties/schema) в вашей модели, либо через блок `{{ config() }}`, либо из `dbt_project.yml`. В обоих случаях dbt передает это значение как параметр `custom_schema_name` макроса `generate_schema_name`.
 
 
-## Put the two together
+## Подтвердите ваши целевые значения
+Большинство макросов `generate_schema_name` включают логику из переменной [`target` variable](/reference/dbt-jinja-functions/target), в частности `target.schema` и `target.name`. Используйте документацию [здесь](/reference/dbt-jinja-functions/target), чтобы помочь вам найти значения каждого ключа в этом словаре.
 
-Now, re-read through the logic of your `generate_schema_name` macro, and mentally plug in your `customer_schema_name` and `target` values.
 
-You should find that the schema dbt is constructing for your model matches the output of your `generate_schema_name` macro.
+## Соедините два элемента
 
-Be careful. Snapshots do not follow this behavior if target_schema is set. To have environment-aware snapshots in v1.9+ or dbt Cloud, remove the [target_schema config](/reference/resource-configs/target_schema) from your snapshots. If you still want a custom schema for your snapshots, use the [`schema`](/reference/resource-configs/schema) config instead.
+Теперь еще раз прочитайте логику вашего макроса `generate_schema_name` и мысленно подставьте ваши значения `custom_schema_name` и `target`.
 
-## Adjust as necessary
+Вы должны обнаружить, что схема, которую dbt создает для вашей модели, соответствует результату вашего макроса `generate_schema_name`.
 
-Now that you understand how a model's schema is being generated, you can adjust as necessary:
-- You can adjust the logic in your `generate_schema_name` macro (or add this macro to your project if you don't yet have one and adjust from there)
-- You can also adjust your `target` details (for example, changing the name of a target)
+Будьте осторожны. Снимки не следуют этому поведению, если установлен target_schema. Чтобы иметь осведомленные о среде снимки в v1.9+ или dbt Cloud, удалите [target_schema config](/reference/resource-configs/target_schema) из ваших снимков. Если вы все еще хотите иметь пользовательскую схему для ваших снимков, используйте вместо этого [`schema`](/reference/resource-configs/schema) config.
 
-If you change the logic in `generate_schema_name`, it's important that you consider whether two users will end up writing to the same schema when developing dbt models. This consideration is the reason why the default implementation of the macro concatenates your target schema and custom schema together — we promise we were trying to be helpful by implementing this behavior, but acknowledge that the resulting schema name is unintuitive.
+## Настройте по мере необходимости
+
+Теперь, когда вы понимаете, как генерируется схема модели, вы можете настроить по мере необходимости:
+- Вы можете изменить логику в вашем макросе `generate_schema_name` (или добавить этот макрос в ваш проект, если у вас его еще нет, и настроить его оттуда)
+- Вы также можете изменить детали вашего `target` (например, изменить имя целевого объекта)
+
+Если вы измените логику в `generate_schema_name`, важно учитывать, будут ли два пользователя в конечном итоге записывать в одну и ту же схему при разработке моделей dbt. Это соображение является причиной, по которой стандартная реализация макроса объединяет вашу целевую схему и пользовательскую схему — мы обещаем, что старались быть полезными, реализуя это поведение, но признаем, что полученное имя схемы неинтуитивно.
 
 </div>

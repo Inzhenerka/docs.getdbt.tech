@@ -1,49 +1,49 @@
 ---
-title: "Debug errors"
+title: "Отладка ошибок"
 id: "debug-errors"
-description: Learn about errors and the art of debugging them.
-displayText: Debugging errors
-hoverSnippet: Learn about errors and the art of debugging those errors.
+description: Узнайте об ошибках и искусстве их отладки.
+displayText: Отладка ошибок
+hoverSnippet: Узнайте об ошибках и искусстве их отладки.
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Troubleshooting', 'dbt Core', 'dbt Cloud']
-level: 'Beginner'
+tags: ['Устранение неполадок', 'dbt Core', 'dbt Cloud']
+level: 'Начинающий'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## General process of debugging
+## Общий процесс отладки
 
-Learning how to debug is a skill, and one that will make you great at your role!
-1. Read the error message — when writing the code behind dbt, we try our best to make error messages as useful as we can. The error message dbt produces will normally contain the type of error (more on these error types below), and the file where the error occurred.
-2. Inspect the file that was known to cause the issue, and see if there's an immediate fix.
-3. Isolate the problem — for example, by running one model a time, or by undoing the code that broke things.
-4. Get comfortable with compiled files and the logs.
-    - The `target/compiled` directory contains `select` statements that you can run in any query editor.
-    - The `target/run` directory contains the SQL dbt executes to build your models.
-    - The `logs/dbt.log` file contains all the queries that dbt runs, and additional logging. Recent errors will be at the bottom of the file.
-    - **dbt Cloud users**: Use the above, or the `Details` tab in the command output.
-    - **dbt Core users**: Note that your code editor _may_ be hiding these files from the tree <Term id="view" /> [VSCode help](https://stackoverflow.com/questions/42891463/how-can-i-show-ignored-files-in-visual-studio-code)).
-5. If you are really stuck, try [asking for help](/community/resources/getting-help). Before doing so, take the time to write your question well so that others can diagnose the problem quickly.
+Научиться отлаживать — это навык, который сделает вас отличным специалистом в вашей роли!
+1. Прочитайте сообщение об ошибке — при написании кода для dbt мы стараемся сделать сообщения об ошибках максимально полезными. Сообщение об ошибке, которое выдает dbt, обычно содержит тип ошибки (подробнее о типах ошибок ниже) и файл, в котором произошла ошибка.
+2. Проверьте файл, который, как известно, вызвал проблему, и посмотрите, есть ли немедленное решение.
+3. Изолируйте проблему — например, запуская одну модель за раз или отменяя код, который вызвал сбой.
+4. Привыкайте к скомпилированным файлам и журналам.
+    - Директория `target/compiled` содержит `select`-запросы, которые вы можете выполнять в любом редакторе запросов.
+    - Директория `target/run` содержит SQL, который dbt выполняет для построения ваших моделей.
+    - Файл `logs/dbt.log` содержит все запросы, которые выполняет dbt, и дополнительную информацию. Недавние ошибки будут внизу файла.
+    - **Пользователи dbt Cloud**: Используйте вышеуказанные файлы или вкладку `Details` в выводе команды.
+    - **Пользователи dbt Core**: Обратите внимание, что ваш редактор кода _может_ скрывать эти файлы в дереве <Term id="view" /> [помощь по VSCode](https://stackoverflow.com/questions/42891463/how-can-i-show-ignored-files-in-visual-studio-code)).
+5. Если вы действительно застряли, попробуйте [попросить о помощи](/community/resources/getting-help). Прежде чем это сделать, уделите время, чтобы хорошо сформулировать свой вопрос, чтобы другие могли быстро диагностировать проблему.
 
 
-## Types of errors
-Below, we've listed some of common errors. It's useful to understand what dbt is doing behind the scenes when you execute a command like `dbt run`.
+## Типы ошибок
+Ниже мы перечислили некоторые распространенные ошибки. Полезно понимать, что dbt делает за кулисами, когда вы выполняете команду, такую как `dbt run`.
 
-| Step | Description | Error type |
+| Этап | Описание | Тип ошибки |
 |:-----|:------------|:-----------|
-| Initialize | Check that this a dbt project, and that dbt can connect to the warehouse | `Runtime Error` |
-| Parsing | Check that the Jinja snippets in `.sql` files valid, and that `.yml` files valid. | `Compilation Error` |
-| Graph validation | Compile the dependencies into a graph. Check that it's acyclic. | `Dependency Error` |
-| SQL execution | Run the models | `Database Error` |
+| Инициализация | Проверьте, что это проект dbt и что dbt может подключиться к хранилищу данных | `Runtime Error` |
+| Парсинг | Проверьте, что фрагменты Jinja в `.sql` файлах действительны, и что `.yml` файлы действительны. | `Compilation Error` |
+| Проверка графа | Скомпилируйте зависимости в граф. Проверьте, что он ацикличен. | `Dependency Error` |
+| Выполнение SQL | Запустите модели | `Database Error` |
 
-Let's dive into some of these errors and how to debug 👇. Note: not all errors are covered here!
+Давайте подробнее рассмотрим некоторые из этих ошибок и способы их отладки 👇. Примечание: не все ошибки охвачены здесь!
 
-## Runtime Errors
-_Note: If you're using the dbt Cloud IDE to work on your project, you're unlikely to encounter these errors._
+## Ошибки времени выполнения
+_Примечание: если вы используете dbt Cloud IDE для работы над своим проектом, вы вряд ли столкнетесь с этими ошибками._
 
-### Not a dbt project
+### Не проект dbt
 
 ```
 Running with dbt=0.17.1
@@ -52,15 +52,15 @@ Runtime Error
   fatal: Not a dbt project (or any of the parent directories). Missing dbt_project.yml file
 ```
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-- Use `pwd` to check that you're in the right directory. If not, `cd` your way there!
-- Check that you have a file named `dbt_project.yml` in the root directory of your project. You can use `ls` to list files in the directory, or also open the directory in a code editor and see files in the "tree view".
+- Используйте `pwd`, чтобы проверить, что вы находитесь в правильной директории. Если нет, используйте `cd`, чтобы перейти туда!
+- Проверьте, что у вас есть файл с именем `dbt_project.yml` в корневой директории вашего проекта. Вы можете использовать `ls`, чтобы перечислить файлы в директории, или открыть директорию в редакторе кода и увидеть файлы в "дереве".
 
 </details>
 
 
-### Could not find profile
+### Не удалось найти профиль
 
 ```
 Running with dbt=0.17.1
@@ -71,36 +71,36 @@ Runtime Error
   Could not find profile named 'jaffle_shops'
 ```
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-- Check the `profile:` key in your `dbt_project.yml`. For example, this project uses the `jaffle_shops` (note plural) profile:
+- Проверьте ключ `profile:` в вашем `dbt_project.yml`. Например, этот проект использует профиль `jaffle_shops` (обратите внимание на множественное число):
 
 <File name='dbt_project.yml'>
 
 ```yml
-profile: jaffle_shops # note the plural
+profile: jaffle_shops # обратите внимание на множественное число
 ```
 </File>
 
-- Check the profiles you have in your `profiles.yml` file. For example, this profile is named `jaffle_shop` (note singular).
+- Проверьте профили, которые у вас есть в файле `profiles.yml`. Например, этот профиль называется `jaffle_shop` (обратите внимание на единственное число).
 
 <File name='profiles.yml'>
 
 ```yaml
-jaffle_shop: # this does not match the profile: key
+jaffle_shop: # это не соответствует ключу profile:
   target: dev
 
   outputs:
     dev:
       type: postgres
       schema: dbt_alice
-      ... # other connection details
+      ... # другие детали подключения
 ```
 
 </File>
 
-- Update these so that they match.
-- If you can't find your `profiles.yml` file, run `dbt debug --config-dir` for help:
+- Обновите их так, чтобы они соответствовали.
+- Если вы не можете найти свой файл `profiles.yml`, выполните команду `dbt debug --config-dir` для получения помощи:
 ```
 $ dbt debug --config-dir
 Running with dbt=0.17.1
@@ -109,12 +109,11 @@ To view your profiles.yml file, run:
 open /Users/alice/.dbt
 ```
 
-  - Then execute `open /Users/alice/.dbt` (adjusting accordingly), and check that you have a `profiles.yml` file. If you do not have one, set one up using [these docs](/docs/core/connect-data-platform/profiles.yml)
-
+  - Затем выполните `open /Users/alice/.dbt` (с соответствующими изменениями) и проверьте, есть ли у вас файл `profiles.yml`. Если его нет, создайте его, используя [эти документы](/docs/core/connect-data-platform/profiles.yml)
 
 </details>
 
-### Failed to connect
+### Не удалось подключиться
 
 ```
 Encountered an error:
@@ -125,12 +124,11 @@ Runtime Error
 ```
 
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-
-- Open your `profiles.yml` file (if you're unsure where this is, run `dbt debug --config-dir`)
-- Confirm that your credentials are correct — you may need to work with a DBA to confirm this.
-- After updating the credentials, run `dbt debug` to check you can connect
+- Откройте файл `profiles.yml` (если вы не уверены, где он находится, выполните `dbt debug --config-dir`)
+- Подтвердите, что ваши учетные данные правильные — вам может понадобиться поработать с администратором базы данных, чтобы это подтвердить.
+- После обновления учетных данных выполните `dbt debug`, чтобы проверить, можете ли вы подключиться
 
 ```
 $ dbt debug
@@ -152,7 +150,7 @@ Connection:
 
 </details>
 
-### Invalid `dbt_project.yml` file
+### Неверный файл `dbt_project.yml`
 
 ```
 Encountered an error while reading the project:
@@ -166,35 +164,31 @@ Runtime Error
 ```
 
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-
-- Open your `dbt_project.yml` file.
-- Find the offending key (e.g. `hello`, as per "'hello' was unexpected")
+- Откройте файл `dbt_project.yml`.
+- Найдите проблемный ключ (например, `hello`, согласно "'hello' was unexpected")
 
 <File name='dbt_project.yml'>
 
 ```yml
 name: jaffle_shop
-hello: world # this is not allowed
+hello: world # это не разрешено
 
 ```
 
 </File>
 
-- Use the reference section for [`dbt_project.yml` files](/reference/dbt_project.yml.md) to correct this issue.
-- If you're using a key that is valid according to the documentation, check that you're using the latest version of dbt with `dbt --version`.
-
-
+- Используйте раздел справки для [`dbt_project.yml` файлов](/reference/dbt_project.yml.md), чтобы исправить эту проблему.
+- Если вы используете ключ, который действителен согласно документации, проверьте, что вы используете последнюю версию dbt с помощью `dbt --version`.
 
 </details>
 
-## Compilation Errors
+## Ошибки компиляции
 
-_Note: if you're using the dbt Cloud IDE to work on your dbt project, this error often shows as a red bar in your command prompt as you work on your dbt project. For dbt Core users, these won't get picked up until you run `dbt run` or `dbt compile`._
+_Примечание: если вы используете dbt Cloud IDE для работы над своим проектом, эта ошибка часто отображается как красная полоса в вашем командном окне, пока вы работаете над своим проектом. Для пользователей dbt Core эти ошибки не будут обнаружены, пока вы не выполните `dbt run` или `dbt compile`._
 
-
-### Invalid `ref` function
+### Неверная функция `ref`
 ```
 $ dbt run -s customers
 Running with dbt=0.17.1
@@ -204,16 +198,15 @@ Compilation Error in model customers (models/customers.sql)
   Model 'model.jaffle_shop.customers' (models/customers.sql) depends on a node named 'stg_customer' which was not found
 ```
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-
-- Open the `models/customers.sql` file.
-- `cmd + f` (or equivalent) for `stg_customer`. There must be a file named `stg_customer.sql` for this to work.
-- Replace this reference with a reference to another model (i.e. the filename for another model), in this case `stg_customers`. OR rename your model to `stg_customer`
+- Откройте файл `models/customers.sql`.
+- Используйте `cmd + f` (или эквивалент) для поиска `stg_customer`. Должен быть файл с именем `stg_customer.sql`, чтобы это работало.
+- Замените эту ссылку на ссылку на другую модель (т.е. имя файла для другой модели), в данном случае `stg_customers`. ИЛИ переименуйте вашу модель в `stg_customer`
 
 </details>
 
-### Invalid Jinja
+### Неверный Jinja
 
 ```
 $ dbt run
@@ -222,25 +215,25 @@ Compilation Error in macro (macros/cents_to_dollars.sql)
   Reached EOF without finding a close tag for macro (searched from line 1)
 ```
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-Here, we rely on the Jinja library to pass back an error, and then just pass it on to you.
+Здесь мы полагаемся на библиотеку Jinja, чтобы вернуть ошибку, а затем просто передаем ее вам.
 
-This particular example is for a forgotten `{% endmacro %}` tag, but you can also get errors like this for:
-- Forgetting a closing `}`
-- Closing a `for` loop before closing an `if` statement
+Этот конкретный пример касается забытого тега `{% endmacro %}`, но вы также можете получить такие ошибки, как:
+- Забыв закрывающую `}`
+- Закрывая цикл `for` до закрытия оператора `if`
 
-To fix this:
-- Navigate to the offending file (e.g. `macros/cents_to_dollars.sql`) as listed in the error message
-- Use the error message to find your mistake
+Чтобы исправить это:
+- Перейдите к проблемному файлу (например, `macros/cents_to_dollars.sql`), как указано в сообщении об ошибке
+- Используйте сообщение об ошибке, чтобы найти свою ошибку
 
-To prevent this:
-- _(dbt Core users only)_ Use snippets to auto-complete pieces of Jinja ([atom-dbt package](https://github.com/dbt-labs/atom-dbt), [vscode-dbt extestion](https://marketplace.visualstudio.com/items?itemName=bastienboutonnet.vscode-dbt))
+Чтобы предотвратить это:
+- _(только для пользователей dbt Core)_ Используйте фрагменты для автозавершения частей Jinja ([пакет atom-dbt](https://github.com/dbt-labs/atom-dbt), [расширение vscode-dbt](https://marketplace.visualstudio.com/items?itemName=bastienboutonnet.vscode-dbt))
 
 </details>
 
-### Invalid YAML
-dbt wasn't able to turn your YAML into a valid dictionary.
+### Неверный YAML
+dbt не смог преобразовать ваш YAML в действительный словарь.
 
 ```
 $ dbt run
@@ -266,35 +259,35 @@ Compilation Error
 ```
 <details>
 
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-Usually, it's to do with indentation — here's the offending YAML that caused this error:
+Обычно это связано с отступами — вот проблемный YAML, который вызвал эту ошибку:
 ```yaml
 version: 2
 
 models:
   - name: customers
-      columns: # this is indented too far!
+      columns: # это слишком сильно отступлено!
       - name: customer_id
         tests:
           - unique
           - not_null
 ```
 
-To fix this:
-- Open the offending file (e.g. `schema.yml`)
-- Check the line in the error message (e.g. `line 5`)
-- Find the mistake and fix it
+Чтобы исправить это:
+- Откройте проблемный файл (например, `schema.yml`)
+- Проверьте строку в сообщении об ошибке (например, `строка 5`)
+- Найдите ошибку и исправьте ее
 
-To prevent this:
-- (dbt Core users) Turn on indentation guides in your code editor to help you inspect your files
-- Use a YAML validator ([example](http://www.yamllint.com/)) to debug any issues
+Чтобы предотвратить это:
+- (пользователи dbt Core) Включите направляющие отступов в вашем редакторе кода, чтобы помочь вам проверять ваши файлы
+- Используйте валидатор YAML ([пример](http://www.yamllint.com/)) для отладки любых проблем
 
 </details>
 
 
-### Incorrect YAML spec
-Slightly different error — the YAML structure is right (i.e. the YAML parser can turn this into a python dictionary), _but_ there's a key that dbt doesn't recognize.
+### Неверная спецификация YAML
+Немного другая ошибка — структура YAML правильная (т.е. парсер YAML может преобразовать это в словарь Python), _но_ есть ключ, который dbt не распознает.
 
 ```
 $ dbt run
@@ -306,16 +299,16 @@ Compilation Error
 ```
 
 <details>
-<summary>Debugging</summary>
+<summary>Отладка</summary>
 
-- Open the file (e.g. `models/schema.yml`) as per the error message
-- Search for the offending key (e.g. `hello`, as per "**'hello'** was unexpected")
-- Fix it. Use the [model properties](/reference/model-properties) docs to find valid keys
-- If you are using a valid key, check that you're using the latest version of dbt with `dbt --version`
+- Откройте файл (например, `models/schema.yml`) согласно сообщению об ошибке
+- Найдите проблемный ключ (например, `hello`, согласно "**'hello'** was unexpected")
+- Исправьте это. Используйте документацию по [свойствам модели](/reference/model-properties), чтобы найти допустимые ключи
+- Если вы используете допустимый ключ, проверьте, что вы используете последнюю версию dbt с помощью `dbt --version`
 
 </details>
 
-## Dependency Errors
+## Ошибки зависимости
 ```
 $ dbt run
 Running with dbt=0.17.1-rc
@@ -325,14 +318,13 @@ Found a cycle: model.jaffle_shop.customers --> model.jaffle_shop.stg_customers -
 
 ```
 
+Ваш DAG dbt не ацикличен и требует исправления!
+- Обновите функции `ref`, чтобы разорвать цикл.
+- Если вам нужно сослаться на текущую модель, используйте [`{{ this }}` переменную](/reference/dbt-jinja-functions/this) вместо этого.
 
-Your dbt DAG is not acyclic, and needs to be fixed!
-- Update the `ref` functions to break the cycle.
-- If you need to reference the current model, use the [`{{ this }}` variable](/reference/dbt-jinja-functions/this) instead.
+## Ошибки базы данных
 
-## Database Errors
-
-The thorniest errors of all! These errors come from your <Term id="data-warehouse" />, and dbt passes the message on. You may need to use your warehouse docs (i.e. the Snowflake docs, or BigQuery docs) to debug these.
+Самые сложные ошибки! Эти ошибки происходят в вашем <Term id="data-warehouse" />, и dbt передает сообщение. Вам может понадобиться использовать документацию вашего хранилища данных (т.е. документацию Snowflake или BigQuery), чтобы отладить их.
 
 ```
 $ dbt run
@@ -345,54 +337,54 @@ Database Error in model customers (models/customers.sql)
   compiled SQL at target/run/jaffle_shop/models/customers.sql
 ```
 
-90% of the time, there's a mistake in the SQL of your model. To fix this:
-1. Open the offending file:
-    - **dbt Cloud:** Open the model (in this case `models/customers.sql` as per the error message)
-    - **dbt Core:** Open the model as above. Also open the compiled SQL (in this case `target/run/jaffle_shop/models/customers.sql` as per the error message) — it can be useful to show these side-by-side in your code editor.
-2. Try to re-execute the SQL to isolate the error:
-    - **dbt Cloud:** Use the `Preview` button from the model file
-    - **dbt Core:** Copy and paste the compiled query into a query runner (e.g. the Snowflake UI, or a desktop app like DataGrip / TablePlus) and execute it
-3. Fix the mistake.
-4. Rerun the failed model.
+90% времени ошибка заключается в SQL вашей модели. Чтобы исправить это:
+1. Откройте проблемный файл:
+    - **dbt Cloud:** Откройте модель (в данном случае `models/customers.sql`, как указано в сообщении об ошибке)
+    - **dbt Core:** Откройте модель, как указано выше. Также откройте скомпилированный SQL (в данном случае `target/run/jaffle_shop/models/customers.sql`, как указано в сообщении об ошибке) — это может быть полезно показать их рядом в вашем редакторе кода.
+2. Попробуйте повторно выполнить SQL, чтобы изолировать ошибку:
+    - **dbt Cloud:** Используйте кнопку `Preview` из файла модели
+    - **dbt Core:** Скопируйте и вставьте скомпилированный запрос в исполнителе запросов (например, интерфейс Snowflake или настольное приложение, такое как DataGrip / TablePlus) и выполните его
+3. Исправьте ошибку.
+4. Повторно выполните неудавшуюся модель.
 
-In some cases, these errors might occur as a result of queries that dbt runs "behind-the-scenes". These include:
-- Introspective queries to list objects in your database
-- Queries to `create` schemas
-- `pre-hooks`s, `post-hooks`, `on-run-end` hooks and `on-run-start` hooks
-- For incremental models, and snapshots: merge, update and insert statements
+В некоторых случаях эти ошибки могут возникать в результате запросов, которые dbt выполняет "за кулисами". К ним относятся:
+- Интроспективные запросы для перечисления объектов в вашей базе данных
+- Запросы для `create` схем
+- `pre-hooks`, `post-hooks`, `on-run-end` хуки и `on-run-start` хуки
+- Для инкрементальных моделей и снимков: операторы слияния, обновления и вставки
 
-In these cases, you should check out the logs — this contains _all_ the queries dbt has run.
-- **dbt Cloud**: Use the `Details` in the command output to see logs, or check the `logs/dbt.log` file
-- **dbt Core**: Open the `logs/dbt.log` file.
+В этих случаях вам следует проверить журналы — они содержат _все_ запросы, которые выполнил dbt.
+- **dbt Cloud**: Используйте `Details` в выводе команды, чтобы увидеть журналы, или проверьте файл `logs/dbt.log`
+- **dbt Core**: Откройте файл `logs/dbt.log`.
 
-:::tip Isolating errors in the logs
-If you're hitting a strange `Database Error`, it can be a good idea to clean out your logs by opening the file, and deleting the contents. Then, re-execute `dbt run` for _just_ the problematic model. The logs will _just_ have the output you're looking for.
+:::tip Изоляция ошибок в журналах
+Если вы сталкиваетесь с странной `Database Error`, может быть хорошей идеей очистить ваши журналы, открыв файл и удалив его содержимое. Затем повторно выполните `dbt run` только для проблемной модели. Журналы будут содержать только вывод, который вам нужен.
 :::
 
 
-## Common pitfalls
+## Общие ошибки
 
-### `Preview` vs. `dbt run`
-_(dbt Cloud IDE users only)_
+### `Preview` против `dbt run`
+_(только для пользователей dbt Cloud IDE)_
 
-There's two interfaces that look similar:
-- The `Preview` button executes whatever SQL statement is in the active tab. It is the equivalent of grabbing the compiled `select` statement from the `target/compiled` directory and running it in a query editor to see the results.
-- The `dbt run` command builds relations in your database
+Существует два интерфейса, которые выглядят похоже:
+- Кнопка `Preview` выполняет любой SQL-запрос, который находится в активной вкладке. Это эквивалентно получению скомпилированного `select`-запроса из директории `target/compiled` и его выполнению в редакторе запросов, чтобы увидеть результаты.
+- Команда `dbt run` создает отношения в вашей базе данных
 
-Using the `Preview` button is useful when developing models and you want to visually inspect the results of a query. However, you'll need to make sure you have executed `dbt run` for any upstream models — otherwise dbt will try to select `from` tables and views that haven't been built.
+Использование кнопки `Preview` полезно при разработке моделей, когда вы хотите визуально проверить результаты запроса. Однако вам нужно убедиться, что вы выполнили `dbt run` для любых вышестоящих моделей — в противном случае dbt попытается выбрать `from` таблицы и представления, которые еще не были созданы.
 
 
-### Forgetting to save files before running
-We’ve all been there. dbt uses the last-saved version of a file when you execute a command. In most code editors, and in the dbt Cloud IDE, a dot next to a filename indicates that a file has unsaved changes. Make sure you hit `cmd + s` (or equivalent) before running any dbt commands — over time it becomes muscle memory.
+### Забывание сохранить файлы перед выполнением
+Мы все там были. dbt использует последнюю сохраненную версию файла, когда вы выполняете команду. В большинстве редакторов кода и в dbt Cloud IDE точка рядом с именем файла указывает на то, что файл имеет несохраненные изменения. Убедитесь, что вы нажали `cmd + s` (или эквивалент) перед выполнением любых команд dbt — со временем это становится рефлексом.
 
-### Editing compiled files
-_(More likely for dbt Core users)_
+### Редактирование скомпилированных файлов
+_(Более вероятно для пользователей dbt Core)_
 
-If you just opened a SQL file in the `target/` directory to help debug an issue, it's not uncommon to accidentally edit that file! To avoid this, try changing your code editor settings to grey out any files in the `target/` directory — the visual cue will help avoid the issue.
+Если вы только что открыли SQL-файл в директории `target/`, чтобы помочь отладить проблему, не редактируйте этот файл! Чтобы избежать этого, попробуйте изменить настройки вашего редактора кода, чтобы затемнить любые файлы в директории `target/` — визуальный сигнал поможет избежать проблемы.
 
-## FAQs
+## Часто задаваемые вопросы
 
-Here are some useful FAQs to help you debug your dbt project:
+Вот несколько полезных часто задаваемых вопросов, которые помогут вам отладить ваш проект dbt:
 
 - <FAQ path="Troubleshooting/generate-har-file" />
 - <FAQ path="Troubleshooting/auth-expired-error" />  

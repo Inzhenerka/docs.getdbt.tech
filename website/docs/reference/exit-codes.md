@@ -1,14 +1,14 @@
 ---
-title: "Exit codes"
+title: "Коды завершения"
 id: "exit-codes"
 ---
 
-When dbt exits, it will return an exit code of either 0, 1, or 2.
+Когда dbt завершает работу, он возвращает код завершения, равный 0, 1 или 2.
 
-| Exit Code | Condition |
-| --------- | --------- |
-| 0 | The dbt invocation completed without error. |
-| 1 | The dbt invocation completed with at least one handled error (eg. model syntax error, bad permissions, etc). The run was completed, but some models may have been skipped. |
-| 2 | The dbt invocation completed with an unhandled error (eg. ctrl-c, network interruption, etc). |
+| Код завершения | Условие |
+| -------------- | ------- |
+| 0 | Вызов dbt завершился без ошибок. |
+| 1 | Вызов dbt завершился с по крайней мере одной обработанной ошибкой (например, ошибка синтаксиса модели, неправильные права доступа и т.д.). Запуск был завершен, но некоторые модели могли быть пропущены. |
+| 2 | Вызов dbt завершился с необработанной ошибкой (например, ctrl-c, прерывание сети и т.д.). |
 
-While these exit codes may change in the future, a zero exit code will always imply success whereas a nonzero exit code will always imply failure.
+Хотя эти коды завершения могут измениться в будущем, код завершения 0 всегда будет означать успех, в то время как ненулевой код завершения всегда будет означать неудачу.

@@ -1,12 +1,10 @@
 ---
-title: Analysis properties
+title: Свойства анализа
 ---
 
-import PropsCallout from '/snippets/_config-prop-callout.md';
+Мы рекомендуем определять свойства анализа в директории `analyses/`, что иллюстрируется в конфигурации [`analysis-paths`](/reference/project-configs/analysis-paths). <PropsCallout title={frontMatter.title}/>  <br /> 
 
-We recommend you define analysis properties in your `analyses/` directory, which is illustrated in the [`analysis-paths`](/reference/project-configs/analysis-paths) configuration. <PropsCallout title={frontMatter.title}/>  <br /> 
-
-You can name these files `whatever_you_want.yml`, and nest them arbitrarily deeply in subfolders within the `analyses/` or `models/` directory.
+Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `analyses/` или `models/`.
 
 <File name='analyses/<filename>.yml'>
 
@@ -14,19 +12,19 @@ You can name these files `whatever_you_want.yml`, and nest them arbitrarily deep
 version: 2
 
 analyses:
-  - name: <analysis_name> # required
+  - name: <analysis_name> # обязательно
     [description](/reference/resource-properties/description): <markdown_string>
     [docs](/reference/resource-configs/docs):
       show: true | false
-      node_color: <color_id> # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: <color_id> # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
     config:
       [tags](/reference/resource-configs/tags): <string> | [<string>]
     columns:
       - name: <column_name>
         [description](/reference/resource-properties/description): <markdown_string>
-      - name: ... # declare properties of additional columns
+      - name: ... # объявите свойства дополнительных столбцов
 
-  - name: ... # declare properties of additional analyses
+  - name: ... # объявите свойства дополнительных анализов
 
 ```
 

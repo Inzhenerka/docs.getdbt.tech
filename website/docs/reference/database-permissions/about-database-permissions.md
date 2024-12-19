@@ -1,34 +1,33 @@
 ---
-title: "Database permissions"
+title: "Права доступа к базе данных"
 id: about-database-permissions
-description: "Database permissions are access rights and privileges granted to users or roles within a database management system."
-sidebar_label: "About database permissions"
+description: "Права доступа к базе данных — это права и привилегии, предоставляемые пользователям или ролям в системе управления базами данных."
+sidebar_label: "О правах доступа к базе данных"
 pagination_next: "reference/database-permissions/databricks-permissions"
 pagination_prev: null
 ---
 
-Database permissions are access rights and privileges granted to users or roles within a database or data platform. They help you specify what actions users or roles can perform on various database objects, like tables, views, schemas, or even the entire database.
+Права доступа к базе данных — это права и привилегии, предоставляемые пользователям или ролям в базе данных или на платформе данных. Они помогают определить, какие действия пользователи или роли могут выполнять с различными объектами базы данных, такими как таблицы, представления, схемы или даже вся база данных.
 
+### Почему они полезны
 
-### Why are they useful
+- Права доступа к базе данных необходимы для обеспечения безопасности и контроля доступа к данным.
+- Они гарантируют, что только авторизованные пользователи могут выполнять определенные действия.
+- Они помогают поддерживать целостность данных, предотвращать несанкционированные изменения и ограничивать доступ к конфиденциальным данным.
+- Права также способствуют соблюдению норм конфиденциальности данных и аудиту.
 
-- Database permissions are essential for security and data access control.
-- They ensure that only authorized users can perform specific actions.
-- They help maintain data integrity, prevent unauthorized changes, and limit exposure to sensitive data.
-- Permissions also support compliance with data privacy regulations and auditing.
+### Как их использовать
 
-### How to use them
+- Пользователи и администраторы могут предоставлять и управлять правами доступа на различных уровнях (таких как таблица, схема и т. д.) с помощью SQL-запросов или через интерфейс системы управления базами данных.
+- Назначайте права доступа отдельным пользователям или ролям (группам пользователей) в зависимости от их обязанностей.
+  - Типичные права включают "SELECT" (чтение), "INSERT" (добавление данных), "UPDATE" (изменение данных), "DELETE" (удаление данных) и административные права, такие как "CREATE" и "DROP."
+- Пользователям следует назначать права доступа, которые обеспечивают необходимый доступ для выполнения их задач без чрезмерного расширения привилегий.
 
-- Users and administrators can grant and manage permissions at various levels (such as table, schema, and so on) using SQL statements or through the database system's interface.
-- Assign permissions to individual users or roles (groups of users) based on their responsibilities.
-  - Typical permissions include "SELECT" (read), "INSERT" (add data), "UPDATE" (modify data), "DELETE" (remove data), and administrative rights like "CREATE" and "DROP."
-- Users should be assigned permissions that ensure they have the necessary access to perform their tasks without overextending privileges.
+Стоит отметить, что у каждого поставщика платформы данных могут быть разные подходы и названия для привилегий. Обратитесь к их документации для получения более подробной информации.
 
-Something to note is that each data platform provider might have different approaches and names for privileges. Refer to their documentation for more details.
+### Примеры
 
-### Examples
-
-Refer to the following database permission pages for more info on examples and how to set up database permissions:
+Обратитесь к следующим страницам о правах доступа к базе данных для получения дополнительной информации о примерах и настройке прав доступа к базе данных:
 
 - [Databricks](/reference/database-permissions/databricks-permissions)
 - [Postgres](/reference/database-permissions/postgres-permissions)

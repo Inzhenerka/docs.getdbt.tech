@@ -1,64 +1,63 @@
 ---
-title: "Run results JSON file"
-sidebar_label: "Run results"
+title: "Файл JSON с результатами выполнения"
+sidebar_label: "Результаты выполнения"
 ---
 
-**Current schema**: [`v5`](https://schemas.getdbt.com/dbt/run-results/v5/index.html)
+**Текущая схема**: [`v5`](https://schemas.getdbt.com/dbt/run-results/v5/index.html)
 
- **Produced by:**
- [`build`](/reference/commands/build)
- [`compile`](/reference/commands/compile)
- [`docs generate`](/reference/commands/cmd-docs)
- [`run`](/reference/commands/run)
- [`seed`](/reference/commands/seed)
- [`snapshot`](/reference/commands/snapshot)
- [`test`](/reference/commands/test) 
- [`run-operation`](/reference/commands/run-operation)
- 
+**Сгенерировано с помощью:**
+[`build`](/reference/commands/build)  
+[`compile`](/reference/commands/compile)  
+[`docs generate`](/reference/commands/cmd-docs)  
+[`run`](/reference/commands/run)  
+[`seed`](/reference/commands/seed)  
+[`snapshot`](/reference/commands/snapshot)  
+[`test`](/reference/commands/test)  
+[`run-operation`](/reference/commands/run-operation)  
 
-This file contains information about a completed invocation of dbt, including timing and status info for each node (model, test, etc) that was executed. In aggregate, many `run_results.json` can be combined to calculate average model runtime, test failure rates, the number of record changes captured by snapshots, etc.
+Этот файл содержит информацию о завершенном вызове dbt, включая информацию о времени и статусе для каждого узла (модель, тест и т.д.), который был выполнен. В совокупности несколько `run_results.json` могут быть объединены для расчета среднего времени выполнения модели, коэффициента неудач тестов, количества изменений записей, зафиксированных снимками и т.д.
 
-Note that only executed nodes appear in the run results. If you have multiple run or test steps with different critiera, each will produce different run results.
+Обратите внимание, что в результатах выполнения отображаются только выполненные узлы. Если у вас есть несколько шагов выполнения или тестирования с различными критериями, каждый из них будет генерировать разные результаты выполнения.
 
-Note: `dbt source freshness` produces a different artifact, [`sources.json`](/reference/artifacts/sources-json), with similar attributes.
+Примечание: `dbt source freshness` создает другой артефакт, [`sources.json`](/reference/artifacts/sources-json), с аналогичными атрибутами.
 
-### Top-level keys
+### Ключи верхнего уровня
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
-- `args`: Dictionary of arguments passed to the CLI command or RPC method that produced this artifact. Most useful is `which` (command) or `rpc_method`. This dict excludes null values, and includes default values if they are not null. Equivalent to [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) in the dbt-Jinja context.
-- `elapsed_time`: Total invocation time in seconds.
-- `results`: Array of node execution details.
+- `args`: Словарь аргументов, переданных в команду CLI или метод RPC, который создал этот артефакт. Наиболее полезным является `which` (команда) или `rpc_method`. Этот словарь исключает нулевые значения и включает значения по умолчанию, если они не равны нулю. Эквивалентно [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) в контексте dbt-Jinja.
+- `elapsed_time`: Общее время вызова в секундах.
+- `results`: Массив деталей выполнения узлов.
 
-Each entry in `results` is a [`Result` object](/reference/dbt-classes#result-objects), with one difference: Instead of including the entire `node` object, only the `unique_id` is included. (The full `node` object is recorded in [`manifest.json`](/reference/artifacts/manifest-json).)
+Каждая запись в `results` является [`объектом Result`](/reference/dbt-classes#result-objects) с одним отличием: вместо включения всего объекта `node` включен только `unique_id`. (Полный объект `node` записывается в [`manifest.json`](/reference/artifacts/manifest-json).)
 
-- `unique_id`: Unique node identifier, which maps results to `nodes` in the [manifest](/reference/artifacts/manifest-json)
-- `status`: dbt's interpretation of runtime success, failure, or error
-- `thread_id`: Which thread executed this node? E.g. `Thread-1`
-- `execution_time`: Total time spent executing this node
-- `timing`: Array that breaks down execution time into steps (often `compile` + `execute`)
-- `message`: How dbt will report this result on the CLI, based on information returned from the database
+- `unique_id`: Уникальный идентификатор узла, который сопоставляет результаты с `nodes` в [манифесте](/reference/artifacts/manifest-json)
+- `status`: Интерпретация dbt успеха, неудачи или ошибки выполнения
+- `thread_id`: Какой поток выполнил этот узел? Например, `Thread-1`
+- `execution_time`: Общее время, затраченное на выполнение этого узла
+- `timing`: Массив, который разбивает время выполнения на этапы (часто `compile` + `execute`)
+- `message`: Как dbt будет сообщать этот результат в CLI, основываясь на информации, возвращенной из базы данных
 
 import RowsAffected from '/snippets/_run-result.md';
 
 <RowsAffected/>
 
-<!-- this partial comes from https://github.com/dbt-labs/docs.getdbt.com/tree/current/website/snippets/_run-result-->
+<!-- этот фрагмент взят из https://github.com/dbt-labs/docs.getdbt.com/tree/current/website/snippets/_run-result-->
 
-The run_results.json includes three attributes related to the `applied` state that complement `unique_id`:
+Файл run_results.json включает три атрибута, относящихся к состоянию `applied`, которые дополняют `unique_id`:
 
-- `compiled`: Boolean entry of the node compilation status (`False` after parsing, but `True` after compiling).
-- `compiled_code`: Rendered string of the code that was compiled (empty after parsing, but full string after compiling).
-- `relation_name`: The fully-qualified name of the object that was (or will be) created/updated within the database.
+- `compiled`: Логическое значение статуса компиляции узла (`False` после разбора, но `True` после компиляции).
+- `compiled_code`: Сформированная строка кода, который был скомпилирован (пустая после разбора, но полная строка после компиляции).
+- `relation_name`: Полностью квалифицированное имя объекта, который был (или будет) создан/обновлен в базе данных.
 
-Continue to look up additional information about the `logical` state of nodes using the full node object in manifest.json via the `unique_id`.
+Продолжайте искать дополнительную информацию о `logical` состоянии узлов, используя полный объект узла в manifest.json через `unique_id`.
 
-## Examples
+## Примеры
 
-Here are a few examples and the resulting output to the `run_results.json` file.
+Вот несколько примеров и соответствующий вывод в файл `run_results.json`.
 
-### Compile model results
+### Результаты компиляции модели
 
-Let's say that you have a model that looks like this:
+Предположим, у вас есть модель, которая выглядит так:
 
 <File name='models/my_model.sql'>
 
@@ -68,13 +67,13 @@ select {{ dbt.current_timestamp() }} as created_at
 
 </File>
 
-Compile the model:
+Скомпилируйте модель:
 
 ```shell
 dbt compile -s my_model
 ```
 
-Here's a printed snippet from the `run_results.json`:
+Вот фрагмент из `run_results.json`:
 
 ```json
     {
@@ -103,9 +102,9 @@ Here's a printed snippet from the `run_results.json`:
     }
 ```
 
-### Run generic data tests
+### Запуск общих тестов данных
 
-Use the [`store_failures_as`](/reference/resource-configs/store_failures_as) config to store failures for only one data test in the database:
+Используйте конфигурацию [`store_failures_as`](/reference/resource-configs/store_failures_as), чтобы хранить неудачи только для одного теста данных в базе данных:
 
 <File name='models/_models.yml'>
 
@@ -125,13 +124,13 @@ models:
 
 </File>
 
-Run the built-in `unique` test and store the failures as a table:
+Запустите встроенный тест `unique` и сохраните неудачи в виде таблицы:
 
 ```shell
 dbt test -s my_model
 ```
 
-Here's a printed snippet from the `run_results.json`:
+Вот фрагмент из `run_results.json`:
 
 ```json
   "results": [
