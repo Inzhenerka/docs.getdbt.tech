@@ -1,0 +1,14 @@
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - cd website
+        - make install
+        - make build
+  artifacts:
+    baseDirectory: /website/build/
+    files:
+      - "**/*"
+  cache:
+    paths: []
