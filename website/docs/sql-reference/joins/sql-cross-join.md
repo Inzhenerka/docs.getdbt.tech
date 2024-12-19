@@ -1,21 +1,21 @@
 ---
 id: cross-join
 title: SQL CROSS JOIN
-description: A cross join typically takes two columns between two database objects and creates a table forming a combination of all rows across joined tables, called a cartesian product.
+description: Кросс-джойн обычно берет два столбца между двумя объектами базы данных и создает таблицу, формируя комбинацию всех строк объединенных таблиц, называемую декартовым произведением.
 slug: /sql-reference/cross-join
 ---
 
 <head>
-    <title>Working with cross joins in SQL</title>
+    <title>Работа с кросс-джойнами в SQL</title>
 </head>
 
-A truly rarely seen, but important join: the cross join. The majority of your analytics engineering work will require you to join tables together to create robust, wide tables that will eventually be exposed to end business users. These models will usually be created using mostly [left](/sql-reference/left-join) (and some [inner](/sql-reference/inner-join)) joins.
+Редко встречающийся, но важный тип соединения: кросс-джойн. Большинство вашей работы в области аналитического инжиниринга потребует от вас объединения таблиц для создания надежных, широких таблиц, которые в конечном итоге будут доступны конечным пользователям бизнеса. Эти модели обычно создаются в основном с использованием [левых](/sql-reference/left-join) (и некоторых [внутренних](/sql-reference/inner-join)) соединений.
 
-A cross join, on the other hand, typically takes two columns between two database objects and creates a table forming a combination of all rows across joined tables, called a cartesian product. Use this page to understand how to use cross joins and where you might leverage them in your dbt project.
+Кросс-джойн, с другой стороны, обычно берет два столбца между двумя объектами базы данных и создает таблицу, формируя комбинацию всех строк объединенных таблиц, называемую декартовым произведением. Используйте эту страницу, чтобы понять, как использовать кросс-джойны и где вы можете их применить в вашем проекте dbt.
 
-## How to create a cross join
+## Как создать кросс-джойн
 
-Unlike regular joins, cross joins don’t use keys to join database objects together:
+В отличие от обычных соединений, кросс-джойны не используют ключи для объединения объектов базы данных:
 
 ```
 select
@@ -24,11 +24,11 @@ from <table_1> as t1
 cross join <table_2> as t2
 ```
 
-Cross joins are one of those SQL concepts that is easier to understand with a tangible example, so let’s jump into it.
+Кросс-джойны — это одна из тех концепций SQL, которые легче понять на конкретном примере, поэтому давайте перейдем к нему.
 
-### SQL cross join example
+### Пример кросс-джойна в SQL
 
-Table A `date_spine`
+Таблица A `date_spine`
 
 | date |
 |:---:|
@@ -36,7 +36,7 @@ Table A `date_spine`
 | 2022-01-02 |
 | 2022-01-03 |
 
-Table B `users`
+Таблица B `users`
 
 | user_id |
 |:---:|
@@ -53,7 +53,7 @@ cross join {{ ref('date_spine') }} as date
 order by 1
 ```
 
-This simple query will return a cartesian cross of all users and dates, essentially creating a unique combination of user per date per row:
+Этот простой запрос вернет декартово произведение всех пользователей и дат, фактически создавая уникальную комбинацию пользователя на дату в каждой строке:
 
 | user_id | type |
 |:---:|:---:|
@@ -67,10 +67,10 @@ This simple query will return a cartesian cross of all users and dates, essentia
 | 3 | 2022-01-02 |
 | 3 | 2022-01-03 |
 
-:::tip Generate surrogate keys from cross joins
-In the generated table above, the unique key is a combination of the `user_id` and `date` per row. To add a <Term id="primary-key" /> to this table, you could generate a <Term id="surrogate-key" /> using an MD5 hash the `generate_surrogate_key` macro in dbt-utils (ex. `{{ dbt_utils.generate_surrogate_key(user_id, type) }}` that could eventually be joined onto other tables.
+:::tip Генерация суррогатных ключей из кросс-джойнов
+В сгенерированной таблице выше уникальный ключ представляет собой комбинацию `user_id` и `date` для каждой строки. Чтобы добавить <Term id="primary-key" /> в эту таблицу, вы можете сгенерировать <Term id="surrogate-key" /> с помощью MD5 хеша, используя макрос `generate_surrogate_key` из dbt-utils (например, `{{ dbt_utils.generate_surrogate_key(user_id, type) }}`), который в конечном итоге можно будет объединить с другими таблицами.
 :::
 
-## SQL cross join use case
+## Случай использования кросс-джойна в SQL
 
-When would the generated table above be useful? Cross joining unique dates and users can be an effective way to create a base table to join various event counts, such as key website, email, or product events, to. These report-type tables are useful to expose to end business users in BI tools to look at aggregate counts per day per user and other useful measures.
+Когда сгенерированная таблица выше может быть полезна? Кросс-джойн уникальных дат и пользователей может быть эффективным способом создания базовой таблицы для объединения различных количеств событий, таких как ключевые события на сайте, по электронной почте или продукту. Эти таблицы отчетов полезны для предоставления конечным пользователям бизнеса в инструментах BI для анализа агрегированных данных по дням на пользователя и другим полезным показателям.

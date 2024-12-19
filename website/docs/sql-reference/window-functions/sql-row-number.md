@@ -1,34 +1,34 @@
 ---
 id: row-number
 title: SQL ROW_NUMBER
-description: The ROW_NUMBER function returns the unique row number of a row in an ordered group or dataset.
+description: Функция ROW_NUMBER возвращает уникальный номер строки в упорядоченной группе или наборе данных.
 slug: /sql-reference/row-number
 ---
 
 <head>
-    <title>Working with the SQL ROW_NUMBER</title>
+    <title>Работа с SQL ROW_NUMBER</title>
 </head>
 
-In this page, let’s go deep into the ROW_NUMBER function and talk about what it is, how to use it, and why it’s important in analytics engineering work.
+На этой странице мы подробно рассмотрим функцию ROW_NUMBER, обсудим, что это такое, как ее использовать и почему она важна в аналитическом инжиниринге.
 
-The ROW_NUMBER window function is an effective way to create a ranked column or filter a query based on rankings. More specifically, the ROW_NUMBER function returns the *unique* row number of a row in an ordered group or dataset. 
+Функция ROW_NUMBER является эффективным способом создания ранжированного столбца или фильтрации запроса на основе рангов. Более конкретно, функция ROW_NUMBER возвращает *уникальный* номер строки в упорядоченной группе или наборе данных.
 
-Unlike the [RANK](/sql-reference/rank) and DENSE_RANK functions, ROW_NUMBER is non-deterministic, meaning that a *unique* number is assigned arbitrarily for rows with duplicate values.
+В отличие от функций [RANK](/sql-reference/rank) и DENSE_RANK, ROW_NUMBER является недетерминированной, что означает, что *уникальный* номер присваивается произвольно для строк с дублирующимися значениями.
 
-## How to use the ROW_NUMBER function
+## Как использовать функцию ROW_NUMBER
 
-The ROW_NUMBER function has a pretty simple syntax, with an optional partition field and support for ordering customization:
+Функция ROW_NUMBER имеет довольно простую синтаксис, с необязательным полем разделения и поддержкой настройки порядка:
 
 `row_number() over ([partition by <field(s)>] order by field(s) [asc | desc])`
 
-Some notes on this function’s syntax:
+Некоторые примечания по синтаксису этой функции:
 
-- The `partition by` field is optional; if you want to get the row numbers of your entire dataset (compared to grabbing row number within a group of rows in your dataset), you would simply omit the `partition by` from the function call (see the example below for this).
-- By default, the ordering of a ROW_NUMBER function is set to ascending. To explicitly make the resulting order descending, you’ll need to pass in `desc` to the `order by` part of the function.
+- Поле `partition by` является необязательным; если вы хотите получить номера строк для всего вашего набора данных (в отличие от получения номера строки в группе строк вашего набора данных), вы просто опустите `partition by` в вызове функции (см. пример ниже).
+- По умолчанию порядок функции ROW_NUMBER устанавливается по возрастанию. Чтобы явно задать порядок по убыванию, вам нужно передать `desc` в часть `order by` функции.
 
-Let’s take a look at a practical example using the ROW_NUMBER function below.
+Давайте рассмотрим практический пример использования функции ROW_NUMBER ниже.
 
-### ROW_NUMBER function example
+### Пример функции ROW_NUMBER
 
 ```sql
 select
@@ -40,7 +40,7 @@ from {{ ref('orders') }}
 order by 1
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return the unique row number per customer by their `order_date`:
+Этот простой запрос, использующий таблицу [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) `orders`, вернет уникальный номер строки для каждого клиента по их `order_date`:
 
 | customer_id | order_id | order_date | row_n |
 |:---:|:---:|:---:|:---:|
@@ -51,24 +51,24 @@ This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle
 | 3 | 24 | 2018-01-27 | 2 |
 | 3 | 69 | 2018-03-11 | 3 |
 
-Because ROW_NUMBER is non-deterministic, orders per customer that have the same `order_date` would have unique `row_n` values (unlike if you used the RANK or DENSE_RANK functions).
+Поскольку ROW_NUMBER является недетерминированной, заказы по каждому клиенту, имеющие одинаковую `order_date`, будут иметь уникальные значения `row_n` (в отличие от использования функций RANK или DENSE_RANK).
 
-## ROW_NUMBER syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис ROW_NUMBER в Snowflake, Databricks, BigQuery и Redshift
 
-Most, if not all, modern data warehouses support ROW_NUMBER and other similar ranking functions; the syntax is also the same across them. Use the table below to read more on the documentation for the ROW_NUMBER function in your data warehouse.
+Большинство, если не все, современные хранилища данных поддерживают ROW_NUMBER и другие подобные функции ранжирования; синтаксис также одинаков во всех них. Используйте таблицу ниже, чтобы узнать больше о документации по функции ROW_NUMBER в вашем хранилище данных.
 
-| Data warehouse | ROW_NUMBER support? |
+| Хранилище данных | Поддержка ROW_NUMBER? |
 |:---:|:---:|
 | [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/row_number.html) | ✅ |
 | [Databricks](https://docs.databricks.com/sql/language-manual/functions/row_number.html) | ✅ |
 | [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_WF_ROW_NUMBER.html) | ✅ |
 | [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/numbering_functions#row_number) | ✅ |
 
-## ROW_NUMBER function use cases
+## Сценарии использования функции ROW_NUMBER
 
-We most commonly see the ROW_NUMBER function used in data work to:
+Чаще всего мы видим, что функция ROW_NUMBER используется в работе с данными для:
 
-- In [SELECT statements](/sql-reference/select) to add explicit and unique row numbers in a group of data or across an entire table
-- Paired with QUALIFY statement, filter <Term id="cte">CTEs</Term>, queries, or models to capture one unique row per specified partition with the ROW_NUMBER function. This is particularly useful when you need to remove duplicate rows from a dataset (but use this wisely!).
+- В [SELECT выражениях](/sql-reference/select) для добавления явных и уникальных номеров строк в группе данных или по всей таблице
+- В паре с оператором QUALIFY, фильтрации <Term id="cte">CTE</Term>, запросов или моделей для захвата одной уникальной строки на указанную партию с помощью функции ROW_NUMBER. Это особенно полезно, когда вам нужно удалить дублирующиеся строки из набора данных (но используйте это с осторожностью!).
 
-This isn’t an extensive list of where your team may be using the ROW_NUMBER function throughout your dbt models, but contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать функцию ROW_NUMBER в ваших моделях dbt, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

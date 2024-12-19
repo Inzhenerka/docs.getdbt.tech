@@ -1,61 +1,59 @@
 ---
 id: comments
-title: SQL Comments
-description: Inline SQL comments will begin with two dashes (--) in front of them in a query or dbt model; any text following these dashes is therefore what you’d call “commented out.” For longer, multi-line comments, you’ll typically see this syntax `/* your multi-line comment here */` used.
+title: SQL Комментарии
+description: Встроенные SQL комментарии начинаются с двух дефисов (--) перед ними в запросе или модели dbt; любой текст, следующий за этими дефисами, считается "закомментированным". Для более длинных многострочных комментариев обычно используется следующий синтаксис `/* ваш многострочный комментарий здесь */`.
 slug: /sql-reference/comments
 ---
 
 <head>
-    <title>Working with the SQL Comments</title>
+    <title>Работа с SQL комментариями</title>
 </head>
 
-SQL comments…a two-folded thing: Are we talking about comments *inline* in SQL? Or comments on a table or view in the database?
+SQL комментарии… это двусторонняя вещь: говорим ли мы о комментариях *встроенных* в SQL? Или о комментариях к таблице или представлению в базе данных?
 
-Why not both!?
+Почему бы не о том и о другом!?
 
-In this page, we’ll unpack how to create both inline and database object-level comments, general best practices around SQL comments, and how dbt can help you improve (and version-control) your comments.
+На этой странице мы разберем, как создавать как встроенные, так и комментарии на уровне объектов базы данных, общие лучшие практики по SQL комментариям и как dbt может помочь вам улучшить (и контролировать версии) ваши комментарии.
 
-## How to create SQL comments
+## Как создать SQL комментарии
 
-Inline SQL comments will begin with two dashes (--) in front of them in a query or dbt model; any text following these dashes is therefore what you’d call “commented out.” For longer, multi-line comments, you’ll typically see this syntax `/* your multi-line comment here */` used.
+Встроенные SQL комментарии начинаются с двух дефисов (--) перед ними в запросе или модели dbt; любой текст, следующий за этими дефисами, считается "закомментированным". Для более длинных многострочных комментариев обычно используется следующий синтаксис `/* ваш многострочный комментарий здесь */`.
 
-### SQL comment example
+### Пример SQL комментария
 
 ```sql
-/* these lines form a multi-line SQL comment; if it’s uncommented, 
-it will make this query error out */
+/* эти строки формируют многострочный SQL комментарий; если он не закомментирован, 
+это приведет к ошибке в запросе */
 select
 	customer_id,
-	-- order_id, this row is commented out
+	-- order_id, эта строка закомментирована
 	order_date
 from {{ ref ('orders') }}
 ```
 
-In practice, you’ll likely see SQL comments at the beginning of complex code logic, to help future developers or even advanced business users understand what specific blocks of code are accomplishing. Other times, you’ll see comments like the code above, that are commenting out lines no longer needed (or in existence) for that query or model. We’ll dive more into best practices around inline comments later on this page.
+На практике вы, вероятно, увидите SQL комментарии в начале сложной логики кода, чтобы помочь будущим разработчикам или даже продвинутым бизнес-пользователям понять, что конкретные блоки кода делают. В других случаях вы увидите комментарии, подобные приведенному выше коду, которые закомментировали строки, больше не нужные (или не существующие) для этого запроса или модели. Мы подробнее рассмотрим лучшие практики по встроенным комментариям позже на этой странице.
 
-For comments *on* database objects, such as views and tables, there’s a different syntax to add these explicit comments:
+Для комментариев *к* объектам базы данных, таким как представления и таблицы, существует другой синтаксис для добавления этих явных комментариев:
 
 ```sql
-comment on [database object type] <database object name> is 'comment text here';
+comment on [тип объекта базы данных] <имя объекта базы данных> is 'текст комментария здесь';
 ```
 
-These database object-level comments are more useful for adding additional context or metadata to these objects versus inline comments being useful for explaining code functionality. Alternatively, these table and view-level comments can be easily abstracted out and version-controlled using [model descriptions in dbt](https://docs.getdbt.com/reference/resource-properties/description) and persisted in the objects using the [persist_docs config](/reference/resource-configs/persist_docs) in dbt.
+Эти комментарии на уровне объектов базы данных более полезны для добавления дополнительного контекста или метаданных к этим объектам, в отличие от встроенных комментариев, которые полезны для объяснения функциональности кода. В качестве альтернативы, эти комментарии на уровне таблиц и представлений могут быть легко абстрагированы и контролироваться версиями с помощью [описаний моделей в dbt](https://docs.getdbt.com/reference/resource-properties/description) и сохраняться в объектах с использованием [конфигурации persist_docs](/reference/resource-configs/persist_docs) в dbt.
 
-## SQL comments in Snowflake, Databricks, BigQuery, and Redshift
+## SQL комментарии в Snowflake, Databricks, BigQuery и Redshift
 
-Google BigQuery, Amazon Redshift, Snowflake, and Databricks all support the ability to add inline SQL comments. With the exception of BigQuery, these data warehouses also support native database object-level comments; BigQuery does, however, support native field-level descriptions.
+Google BigQuery, Amazon Redshift, Snowflake и Databricks все поддерживают возможность добавления встроенных SQL комментариев. За исключением BigQuery, эти хранилища данных также поддерживают нативные комментарии на уровне объектов базы данных; однако BigQuery поддерживает нативные описания на уровне полей.
 
-## SQL commenting best practices
+## Лучшие практики комментирования SQL
 
-In general, inline SQL comments should be used thoughtfully; another analytics engineer should be able to pair your comments with your code to clearly understand model functionality. 
+В общем, встроенные SQL комментарии следует использовать обдуманно; другой аналитический инженер должен быть в состоянии сопоставить ваши комментарии с вашим кодом, чтобы четко понять функциональность модели.
 
-We recommend leveraging inline comments in the following situations:
+Мы рекомендуем использовать встроенные комментарии в следующих ситуациях:
 
-- Explain complex code logic that if you had to scratch your head at, someone else will have to scratch their head at
-- Explain niche, unique-to-your-business logic
-- Separate out field types (ex. Ids, booleans, strings, dates, numerics, and timestamps) in [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging) to create more readable, organized, and formulaic models
-- Clearly label tech debt (`-- [TODO]: TECH DEBT`) in queries or models
+- Объяснить сложную логику кода, которая, если вам придется задуматься, кому-то другому тоже придется задуматься
+- Объяснить нишевую, уникальную для вашего бизнеса логику
+- Разделить типы полей (например, идентификаторы, булевы значения, строки, даты, числовые значения и временные метки) в [стадийных моделях](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), чтобы создать более читаемые, организованные и формализованные модели
+- Ясно обозначить технический долг (`-- [TODO]: TECH DEBT`) в запросах или моделях
 
-
-If you find your inline SQL comments are getting out of control, less scannable and readable, that’s a sign to lean more heavily on dbt Docs and markdown files in your dbt project. dbt supports [descriptions](https://docs.getdbt.com/reference/resource-properties/description), which allow you to add robust model (or macro, source, snapshot, seed, and source) and column descriptions that will populate in hosted dbt Docs. For models or columns that need more thorough or customizable documentation, leverage [doc blocks in markdown and YAML files](https://docs.getdbt.com/reference/resource-properties/description#use-a-docs-block-in-a-description) to create more detailed explanations and comments.
-
+Если вы заметили, что ваши встроенные SQL комментарии становятся неуправляемыми, менее удобочитаемыми и сканируемыми, это знак, что стоит больше полагаться на dbt Docs и markdown файлы в вашем проекте dbt. dbt поддерживает [описания](https://docs.getdbt.com/reference/resource-properties/description), которые позволяют добавлять подробные описания моделей (или макросов, источников, снимков, семян и источников) и столбцов, которые будут отображаться в размещенных dbt Docs. Для моделей или столбцов, которым требуется более тщательная или настраиваемая документация, используйте [блоки документации в markdown и YAML файлах](https://docs.getdbt.com/reference/resource-properties/description#use-a-docs-block-in-a-description), чтобы создать более детальные объяснения и комментарии.

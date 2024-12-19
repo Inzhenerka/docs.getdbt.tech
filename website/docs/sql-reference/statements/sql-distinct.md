@@ -1,21 +1,21 @@
 ---
 id: distinct
 title: SQL DISTINCT
-description: Using DISTINCT in a SELECT statement will force a query to only return non-duplicate rows. You may commonly see a DISTINCT clause in COUNT functions to get counts of distinct rows.
+description: Использование DISTINCT в операторе SELECT заставляет запрос возвращать только уникальные строки. Вы можете часто видеть оператор DISTINCT в функциях COUNT для получения количества уникальных строк.
 slug: /sql-reference/distinct
 ---
 
 <head>
-    <title>Working with the SQL DISTINCT</title>
+    <title>Работа с SQL DISTINCT</title>
 </head>
 
-Let’s just put it out there: at one point in your data work, you’ll encounter duplicates in your data. They may be introduced from a faulty data source or created during the joining and transforming of data. You may need a more sophisticated or refactored solution for the latter scenario, but it never hurts to know how to use DISTINCT in a query.
+Давайте сразу скажем: в какой-то момент вашей работы с данными вы столкнетесь с дубликатами. Они могут быть вызваны неисправным источником данных или возникнуть в процессе объединения и преобразования данных. Для последнего сценария может потребоваться более сложное или переработанное решение, но никогда не помешает знать, как использовать DISTINCT в запросе.
 
-Using DISTINCT in a SELECT statement will force a query to only return non-duplicate rows. You may commonly see a DISTINCT clause in COUNT functions to get counts of distinct rows.
+Использование DISTINCT в операторе SELECT заставляет запрос возвращать только уникальные строки. Вы можете часто видеть оператор DISTINCT в функциях COUNT для получения количества уникальных строк.
 
-## How to use SQL DISTINCT in a query
+## Как использовать SQL DISTINCT в запросе
 
-To remove duplicate rows from a query, you add DISTINCT immediately after SELECT followed by the rows you want to be selected:
+Чтобы удалить дублирующиеся строки из запроса, добавьте DISTINCT сразу после SELECT, за которым следуют строки, которые вы хотите выбрать:
 
 ```sql
 select
@@ -25,9 +25,9 @@ select
 from my_data_source
 ```
 
-Let’s take a look at a practical example using DISTINCT below.
+Давайте рассмотрим практический пример использования DISTINCT ниже.
 
-### SQL DISTINCT example
+### Пример SQL DISTINCT
 
 ```sql
 select
@@ -36,25 +36,24 @@ select
 from {{ ref('orders') }}
 ```
 
-This simple query is something you may do while doing initial exploration of your data; it will return the count of `customer_ids` and count of distinct `customer_ids` that appear in the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table:
+Этот простой запрос может быть выполнен во время начального изучения ваших данных; он вернет количество `customer_ids` и количество уникальных `customer_ids`, которые появляются в таблице `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop):
 
 | cnt_all_orders | cnt_distinct_customers |
 |:---:|:---:|
 | 99 | 62 |
 
-As you can see from the query results, there are 99 orders placed by customers, but only 62 distinct customers in the table.
+Как видно из результатов запроса, было сделано 99 заказов клиентами, но в таблице только 62 уникальных клиента.
 
-## DISTINCT syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис DISTINCT в Snowflake, Databricks, BigQuery и Redshift
 
-Since it’s a pillar of SQL, all modern data warehouses support the ability to use DISTINCT in a SELECT statement 😀
+Поскольку это основа SQL, все современные хранилища данных поддерживают возможность использования DISTINCT в операторе SELECT 😀
 
-## DISTINCT use cases
+## Сценарии использования DISTINCT
 
-You’ll most commonly see queries using a DISTINCT statement to:
+Вы чаще всего увидите запросы с оператором DISTINCT для:
 
-- Remove unnecessary duplicate rows from a data model; a word of caution on this: if you need to use DISTINCT in a downstream, non-source model that contains joins, there’s a chance that there could be faulty logic producing duplicates in the data, so always double-check that they are true duplicates.
+- Удаления ненужных дублирующихся строк из модели данных; стоит отметить, что если вам нужно использовать DISTINCT в модели, не относящейся к источнику, которая содержит объединения, существует вероятность, что может быть ошибочная логика, создающая дубликаты в данных, поэтому всегда перепроверяйте, что это действительно дубликаты.
 
-- Find the counts of distinct fields in a dataset, especially for primary or surrogate keys.
+- Поиска количества уникальных полей в наборе данных, особенно для первичных или суррогатных ключей.
 
-This isn’t an extensive list of where your team may be using DISTINCT throughout your development work, dbt models, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
-
+Это не исчерпывающий список того, где ваша команда может использовать DISTINCT в процессе разработки, моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

@@ -1,68 +1,68 @@
 ---
 id: datediff
 title: SQL DATEDIFF
-description: The DATEDIFF function will return the difference in specified units (ex. days, weeks, years) between a start date/time and an end date/time.
+description: Функция DATEDIFF возвращает разницу в указанных единицах (например, дни, недели, годы) между начальной и конечной датой/временем.
 slug: /sql-reference/datediff
 ---
 
 <head>
-    <title>What is the SQL DATEDIFF Function?</title>
+    <title>Что такое функция SQL DATEDIFF?</title>
 </head>
 
-*“How long has it been since this customer last ordered with us?”*<br />
-*“What is the average number of days to conversion?”*
+*“Сколько времени прошло с тех пор, как этот клиент в последний раз делал у нас заказ?”*<br />
+*“Каково среднее количество дней до конверсии?”*
 
-Business users will have these questions, data people will have to answer these questions, and the only way to solve them is by calculating the time between two different dates. Luckily, there’s a handy DATEDIFF function that can do that for you.
+Бизнес-пользователи будут задавать эти вопросы, а аналитики данных должны будут на них ответить, и единственный способ решить их — это вычислить время между двумя разными датами. К счастью, есть удобная функция DATEDIFF, которая может это сделать.
 
-The DATEDIFF function will return the difference in specified units (ex. days, weeks, years) between a start date/time and an end date/time. It’s a simple and widely used function that you’ll find yourself using more often than you expect.
+Функция DATEDIFF возвращает разницу в указанных единицах (например, дни, недели, годы) между начальной и конечной датой/временем. Это простая и широко используемая функция, которую вы будете использовать чаще, чем ожидаете.
 
-DATEDIFF is a little bit like your favorite pair of socks; you’ll usually find the first one easily and feel like the day is going to be great. But for some reason, the matching sock requires a little digging in the drawer. DATEDIFF is this pair of socks—you’ll inevitably find yourself Googling the syntax almost every time you use it, but you can’t go through your day without using it.
+DATEDIFF немного похожа на вашу любимую пару носок: первую вы обычно находите легко и чувствуете, что день будет отличным. Но по какой-то причине вторая носка требует немного покопаться в ящике. DATEDIFF — это такая пара носок: вы неизбежно будете гуглить синтаксис почти каждый раз, когда будете ее использовать, но не сможете обойтись без нее в течение дня.
 
-This page will go over how to use the DATEDIFF function across different data warehouses and how to write more standardized DATEDIFF functions using a dbt macro (or successfully find your socks as a pair in one go).
+На этой странице мы рассмотрим, как использовать функцию DATEDIFF в различных хранилищах данных и как писать более стандартизированные функции DATEDIFF с помощью макроса dbt (или успешно находить свои носки как пару с первого раза).
 
-## How to use the DATEDIFF function​
+## Как использовать функцию DATEDIFF
 
-For the DATEDIFF function, there are three elements, or arguments, passed in:
+Для функции DATEDIFF передаются три элемента или аргумента:
 
-- The date part: This is the days/months/weeks/years (unit) of the difference calculated
-- The first (start) date/time
-- The second (end) date/time
+- Часть даты: это дни/месяцы/недели/годы (единица) разницы, которая вычисляется
+- Первая (начальная) дата/время
+- Вторая (конечная) дата/время
 
-The DATEDIFF function can be used in [SELECT](/sql-reference/select) statements and WHERE clauses.
+Функцию DATEDIFF можно использовать в [SELECT](/sql-reference/select) выражениях и WHERE-клауза.
 
-Most, if not all, modern cloud data warehouses support some type of the DATEDIFF function. There may be some minor differences between the argument order and function name for DATEDIFF across data warehouses, but the functionality very much remains the same.
+Большинство, если не все, современные облачные хранилища данных поддерживают какой-либо тип функции DATEDIFF. Могут быть небольшие различия в порядке аргументов и названии функции DATEDIFF в разных хранилищах данных, но функциональность остается практически одинаковой.
 
-Below, we’ll outline some of the slight differences in the implementation between some data warehouses.
+Ниже мы опишем некоторые небольшие различия в реализации между различными хранилищами данных.
 
-## SQL DATEDIFF function syntax in Snowflake, Databricks, and Redshift
+## Синтаксис функции SQL DATEDIFF в Snowflake, Databricks и Redshift
 
-The syntax for using the DATEDIFF function in Snowflake and Amazon Redshift, and Databricks looks like the following:
+Синтаксис для использования функции DATEDIFF в Snowflake, Amazon Redshift и Databricks выглядит следующим образом:
 
 ```sql
 datediff(<date part>, <start date/time>, <end date/time>)
 ```
 
-A note on Databricks: Databricks additionally supports a separate [DATEDIFF function](https://docs.databricks.com/sql/language-manual/functions/datediff.html) that takes only two arguments: a start date and an end date. The function will always return the difference between two dates in days.
+Примечание по Databricks: Databricks дополнительно поддерживает отдельную [функцию DATEDIFF](https://docs.databricks.com/sql/language-manual/functions/datediff.html), которая принимает только два аргумента: начальную и конечную дату. Эта функция всегда возвращает разницу между двумя датами в днях.
 
-### DATEDIFF in Google BigQuery​
+### DATEDIFF в Google BigQuery
 
-The syntax for using the DATEDIFF function in [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff) looks like the following:
+Синтаксис для использования функции DATEDIFF в [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/datetime_functions#datetime_diff) выглядит следующим образом:
 
-- Unlike in Snowflake, Amazon Redshift, and Databricks where the `<date part>` is passed as the first argument, the `<date part>` is passed in as the last argument in Google BigQuery.
-- Google BigQuery also calls the function DATETIME_DIFF with an additional underscore separating the function name. This is on par with [Google BigQuery’s preference to have underscores in function names](https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions).
-- The DATETIME_DIFF arguments are datetimes, not dates; Snowflake, Redshift, and Databricks’ DATEDIFF functions support multiple [date types](/sql-reference/data-types#date-data-types) such as dates and timestamps. BigQuery also supports a separate [DATE_DIFF function](https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff) that will return the difference between two date types, unlike the DATETIME_DIFF that only supports the datetime type.
+- В отличие от Snowflake, Amazon Redshift и Databricks, где `<date part>` передается в качестве первого аргумента, в Google BigQuery `<date part>` передается в качестве последнего аргумента.
+- Google BigQuery также называет функцию DATETIME_DIFF с дополнительным подчеркиванием, разделяющим название функции. Это соответствует [предпочтению Google BigQuery использовать подчеркивания в названиях функций](https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions).
+- Аргументы DATETIME_DIFF — это даты и время, а не только даты; функции DATEDIFF в Snowflake, Redshift и Databricks поддерживают несколько [типов дат](/sql-reference/data-types#date-data-types), таких как даты и временные метки. BigQuery также поддерживает отдельную [функцию DATE_DIFF](https://cloud.google.com/bigquery/docs/reference/standard-sql/date_functions#date_diff), которая возвращает разницу между двумя типами дат, в отличие от DATETIME_DIFF, который поддерживает только тип даты и времени.
 
-## A hero in the shadows: The DATEDIFF dbt macro!​
+## Герой в тени: макрос DATEDIFF в dbt!
 
-You may be able to memorize the syntax for the DATEDIFF function for the primary data warehouse you use. What happens when you switch to a different one for a new job or a new data stack? Remembering if there’s an underscore in the function name or which argument the `<date part>` is passed in as is… no fun and leads to the inevitable, countless “datediff in bigquery” Google searches.
+Вы можете запомнить синтаксис функции DATEDIFF для основного хранилища данных, которое вы используете. Что произойдет, если вы переключитесь на другое для новой работы или нового стека данных? Запоминать, есть ли подчеркивание в названии функции или в каком аргументе передается `<date part>` — это не весело и приводит к бесконечным поискам в Google вроде “datediff in bigquery”.
 
-Luckily, [dbt-core](https://github.com/dbt-labs/dbt-core) has your back! dbt Core is the open source dbt product that helps data folks write their [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) following software engineering best practices.
+К счастью, [dbt-core](https://github.com/dbt-labs/dbt-core) поддерживает вас! dbt Core — это продукт с открытым исходным кодом, который помогает специалистам по данным писать свои [трансформации данных](https://www.getdbt.com/analytics-engineering/transformation/) в соответствии с лучшими практиками программной инженерии.
 
-[Adapters](https://docs.getdbt.com/docs/supported-data-platforms) support [cross-database macros](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros) to help you write certain functions, like DATE_TRUNC and DATEDIFF, without having to memorize sticky function syntax.
+[Адаптеры](https://docs.getdbt.com/docs/supported-data-platforms) поддерживают [кросс-базовые макросы](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros), чтобы помочь вам писать определенные функции, такие как DATE_TRUNC и DATEDIFF, не запоминая сложный синтаксис функций.
 
-Using the DATEDIFF macro, you can calculate the difference between two dates without having to worry about finicky syntax. Specifically, this means you could successfully run the same code across multiple databases without having to worry about the finicky differences in syntax.
+Используя макрос DATEDIFF, вы можете вычислить разницу между двумя датами, не беспокоясь о капризном синтаксисе. Это означает, что вы сможете успешно запускать один и тот же код в нескольких базах данных, не беспокоясь о мелких различиях в синтаксисе.
 
-Using the [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), a simple dataset and dbt project, we can calculate the difference between two dates using the dbt DATEDIFF macro:
+Используя [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql), простой набор данных и проект dbt, мы можем вычислить разницу между двумя датами, используя макрос DATEDIFF в dbt:
 
 ```sql
 select
@@ -71,6 +71,6 @@ select
 from {{ ref('orders') }}
 ```
 
-This would return all fields from the orders table and the difference in days between order dates and June 9, 2022.
+Это вернет все поля из таблицы заказов и разницу в днях между датами заказов и 9 июня 2022 года.
 
-Under the hood, this macro is taking your inputs and creating the appropriate SQL syntax for the DATEDIFF function *specific to your data warehouse*.
+Внутри макрос берет ваши входные данные и создает соответствующий SQL-синтаксис для функции DATEDIFF *специфично для вашего хранилища данных*.

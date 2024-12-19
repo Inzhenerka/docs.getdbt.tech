@@ -1,23 +1,23 @@
 ---
 id: concat
 title: SQL CONCAT
-description: The CONCAT function allows analytics engineers to join multiple string values in a query.
+description: Функция CONCAT позволяет аналитическим инженерам объединять несколько строковых значений в запросе.
 slug: /sql-reference/concat
 ---
 
 <head>
-    <title>Working with the SQL CONCAT</title>
+    <title>Работа с SQL CONCAT</title>
 </head>
 
-There is no better or simpler way to join multiple string values in a query than by using the CONCAT function. Full stop.
+Нет лучшего или более простого способа объединить несколько строковых значений в запросе, чем использование функции CONCAT. Точка.
 
-It’s a straightforward function with pretty straightforward use cases. Use this page to understand how to use the CONCAT function in your data warehouse and why analytics engineers use it throughout their dbt models.
+Это простая функция с довольно простыми случаями использования. Используйте эту страницу, чтобы понять, как использовать функцию CONCAT в вашем хранилище данных и почему аналитические инженеры используют ее в своих моделях dbt.
 
-## How to use the CONCAT function
+## Как использовать функцию CONCAT
 
-Using the CONCAT function is pretty straightforward: you’ll pass in the strings or binary values you want to join together in the correct order into the CONCAT function. You can pass in as many expressions into the CONCAT function as you would like.
+Использование функции CONCAT довольно просто: вы передаете строки или бинарные значения, которые хотите объединить в правильном порядке, в функцию CONCAT. Вы можете передать столько выражений в функцию CONCAT, сколько вам нужно.
 
-### CONCAT function example
+### Пример функции CONCAT
 
 ```sql
 select
@@ -29,7 +29,7 @@ from {{ ref('customers') }}
 limit 3
 ```
 
-This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `customers` table will return results like this with a new column of the combined `first_name` and `last_name` field with a space between them:
+Этот запрос, использующий таблицу `customers` из [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет результаты, подобные этим, с новым столбцом, содержащим объединенные значения `first_name` и `last_name` с пробелом между ними:
 
 | user_id | first_name | last_name | full_name |
 |:---:|:---:|:---:|:---:|
@@ -37,16 +37,16 @@ This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) 
 | 2 | Shawn | M. | Shawn M. |
 | 3 | Kathleen | P. | Kathleen P. |
 
-## CONCAT function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции CONCAT в Snowflake, Databricks, BigQuery и Redshift
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the CONCAT function with the syntax looking the same in each platform. You may additionally see the CONCAT function represented by the `||` operator (ex. `select first_name || last_name AS full_name from {{ ref('customers') }}`) which has the same functionality as the CONCAT function in these data platforms.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают функцию CONCAT, и синтаксис выглядит одинаково на каждой платформе. Вы также можете увидеть функцию CONCAT, представленную оператором `||` (например, `select first_name || last_name AS full_name from {{ ref('customers') }}`), который имеет такую же функциональность, как и функция CONCAT на этих платформах данных.
 
-## CONCAT use cases
+## Сценарии использования CONCAT
 
-We most commonly see concatenation in SQL for strings to:
+Чаще всего мы видим конкатенацию в SQL для строк, чтобы:
 
-- Join together address/geo columns into one field
-- Add hard-coded string values to columns to create clearer column values
-- Create <Term id="surrogate-key">surrogate keys</Term> using a hashing method and multiple column values (ex. `md5(column_1 || column_2) as unique_id`
+- Объединить адресные/географические столбцы в одно поле
+- Добавить жестко закодированные строковые значения к столбцам для создания более понятных значений столбцов
+- Создать <Term id="surrogate-key">суррогатные ключи</Term> с использованием метода хеширования и нескольких значений столбцов (например, `md5(column_1 || column_2) as unique_id`)
 
-This isn’t an extensive list of where your team may be using CONCAT throughout your data work, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать CONCAT в своей работе с данными, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной практике.

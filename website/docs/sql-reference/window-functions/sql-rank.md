@@ -1,32 +1,32 @@
 ---
 id: rank
 title: SQL RANK
-description: The RANK function returns the rank of a value (starting at 1) in an ordered group or dataset.
+description: Функция RANK возвращает ранг значения (начиная с 1) в упорядоченной группе или наборе данных.
 slug: /sql-reference/rank
 ---
 
 <head>
-    <title>Working with the SQL RANK</title>
+    <title>Работа с SQL RANK</title>
 </head>
 
-There are many different ranking window functions…[ROW_NUMBER](/sql-reference/row-number), DENSE_RANK, RANK. Let’s start off with the most basic (RANK) and talk about what it is, how to use it, and why it’s important in analytics engineering work.
+Существует множество различных оконных функций ранжирования… [ROW_NUMBER](/sql-reference/row-number), DENSE_RANK, RANK. Давайте начнем с самой базовой (RANK) и обсудим, что это такое, как ее использовать и почему она важна в аналитической инженерии.
 
-The RANK function is an effective way to create a ranked column or filter a query based on rankings. More specifically, the RANK function returns the rank of a value (starting at 1) in an ordered group or dataset. It's important to note that if multiple values executed by the rank function are the same, they’ll have the same rank.
+Функция RANK является эффективным способом создания ранжированного столбца или фильтрации запроса на основе рангов. Более конкретно, функция RANK возвращает ранг значения (начиная с 1) в упорядоченной группе или наборе данных. Важно отметить, что если несколько значений, обработанных функцией ранжирования, одинаковы, они будут иметь одинаковый ранг.
 
-## How to use the RANK function
+## Как использовать функцию RANK
 
-The RANK function has a pretty simple syntax, with an optional partition field and support for ordering customization:
+Функция RANK имеет довольно простую синтаксис, с необязательным полем разделения и поддержкой настройки порядка:
 
 `rank() over ([partition by <field(s)>] order by field(s) [asc | desc])`
 
-Some notes on this function’s syntax:
+Некоторые примечания к синтаксису этой функции:
 
-- The `partition by` field is optional; if you want to rank your entire dataset by certain fields (compared to partitioning *and ranking* within a dataset), you would simply omit the `partition by` from the function call (see the example below for this).
-- By default, the ordering of a ranking function is set to ascending. To explicitly make the ordering in a descending order, you’ll need to pass in `desc` to the `order by` part of the function.
+- Поле `partition by` является необязательным; если вы хотите ранжировать весь ваш набор данных по определенным полям (в отличие от разделения *и ранжирования* внутри набора данных), вы просто опустите `partition by` из вызова функции (см. пример ниже).
+- По умолчанию порядок функции ранжирования установлен на восходящий. Чтобы явно установить порядок в нисходящем порядке, вам нужно передать `desc` в часть `order by` функции.
 
-Let’s take a look at a practical example using the RANK function below.
+Давайте рассмотрим практический пример использования функции RANK ниже.
 
-### RANK function example
+### Пример функции RANK
 
 ```sql
 select
@@ -36,7 +36,7 @@ select
 from {{ ref('orders') }}
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return the rank of orders by their `order_date`:
+Этот простой запрос, использующий таблицу `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет ранг заказов по их `order_date`:
 
 | order_id | order_date | order_rank |
 |:---:|:---:|:---:|
@@ -47,31 +47,31 @@ This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle
 | 5 | 2018-01-05 | 4 |
 | 6 | 2018-01-07 | 6 |
 
-Some notes on these results:
+Некоторые примечания к этим результатам:
 
-- Orders that have the same `order_date`(ex. Orders 4 and 5) have the same `order_rank` (4). 
-- Order 6’s `order_rank` is 6 (if you wanted the rank to execute to 5, you would use the DENSE_RANK function).
+- Заказы, имеющие одинаковую `order_date` (например, заказы 4 и 5), имеют одинаковый `order_rank` (4).
+- `order_rank` заказа 6 равен 6 (если вы хотите, чтобы ранг был равен 5, вам следует использовать функцию DENSE_RANK).
 
-:::tip Ranking functions to know
-RANK is just one of the ranking functions that analytics engineering practitioners will use throughout their data models. There’s also DENSE_RANK and [ROW_NUMBER](/sql-reference/row-number) which rank rows differently than RANK.
+:::tip Функции ранжирования, которые стоит знать
+RANK — это всего лишь одна из функций ранжирования, которые практикующие аналитические инженеры будут использовать в своих моделях данных. Существуют также DENSE_RANK и [ROW_NUMBER](/sql-reference/row-number), которые ранжируют строки иначе, чем RANK.
 :::
 
-## RANK syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис RANK в Snowflake, Databricks, BigQuery и Redshift
 
-Most, if not all, modern data warehouses support RANK and other similar ranking functions; the syntax is also the same across them. Use the table below to read more on the documentation for the RANK function in your data warehouse.
+Большинство, если не все, современные хранилища данных поддерживают RANK и другие подобные функции ранжирования; синтаксис также одинаков во всех них. Используйте таблицу ниже, чтобы узнать больше о документации для функции RANK в вашем хранилище данных.
 
-| Data warehouse | RANK support? |
+| Хранилище данных | Поддержка RANK? |
 |:---:|:---:|
 | Snowflake | ✅ |
 | Databricks | ✅ |
 | Amazon Redshift | ✅ |
 | Google BigQuery | ✅ |
 
-## RANK function use cases
+## Сценарии использования функции RANK
 
-We most commonly see the RANK function used in data work to:
+Чаще всего мы видим, что функция RANK используется в работе с данными для:
 
-- In [SELECT statements](/sql-reference/select) to add explicit ranking to rows
-- In QUALIFY statements to filter a query on a ranking without having to add the rank to the query result
+- В [SELECT выражениях](/sql-reference/select) для добавления явного ранжирования к строкам
+- В выражениях QUALIFY для фильтрации запроса по рангу без необходимости добавлять ранг в результат запроса
 
-This isn’t an extensive list of where your team may be using the RANK function throughout your dbt models and BI tool logic, but contains some common scenarios analytics engineers face in a day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать функцию RANK в своих моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

@@ -1,32 +1,32 @@
 ---
 id: upper
 title: SQL UPPER
-description: Using the UPPER function on a string value will return the input as an all-uppercase string. It’s an effective way to create expected capitalization for certain string values across your data.
+description: Использование функции UPPER для строкового значения вернет входные данные в виде строки, состоящей только из заглавных букв. Это эффективный способ создать ожидаемую капитализацию для определенных строковых значений в ваших данных.
 slug: /sql-reference/upper
 ---
 
 <head>
-    <title>Working with the SQL UPPER function</title>
+    <title>Работа с функцией SQL UPPER</title>
 </head>
 
-UPPER is the counterpart to [LOWER](/sql-reference/lower) (who would have guessed?)—and they’re probably the most intuitive of SQL functions.
+UPPER является аналогом [LOWER](/sql-reference/lower) (кто бы мог подумать?) — и, вероятно, это самые интуитивно понятные функции SQL.
 
-Using the UPPER function on a string value will return the input as an all-uppercase string. It’s an effective way to create expected capitalization for certain string values across your data.
+Использование функции UPPER для строкового значения вернет входные данные в виде строки, состоящей только из заглавных букв. Это эффективный способ создать ожидаемую капитализацию для определенных строковых значений в ваших данных.
 
-## How to use the SQL UPPER function
+## Как использовать функцию SQL UPPER
 
- The syntax for using the UPPER function looks like the following:
+Синтаксис для использования функции UPPER выглядит следующим образом:
 
 ```sql
 upper(<string_column>)
 ```
-Executing this command in a SELECT statement will return the uppercase version of the input string value. You may additionally use the UPPER function in WHERE clauses and on join values.
+Выполнение этой команды в операторе SELECT вернет строку в верхнем регистре. Вы также можете использовать функцию UPPER в условиях WHERE и для значений соединения.
 
-Below, we’ll walk through a practical example using the UPPER function.
+Ниже мы рассмотрим практический пример использования функции UPPER.
 
-### SQL UPPER function example
+### Пример функции SQL UPPER
 
-You can uppercase the first name of the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `customers` model using the following code:
+Вы можете преобразовать имя клиента в верхний регистр в модели `customers` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) с помощью следующего кода:
 
 ```sql
 select 
@@ -36,7 +36,7 @@ select
 from {{ ref('customers') }}
 ```
 
-After running this query, the `customers` table will look a little something like this:
+После выполнения этого запроса таблица `customers` будет выглядеть примерно так:
 
 | customer_id | first_name | last_name |
 |---|---|---|
@@ -44,18 +44,18 @@ After running this query, the `customers` table will look a little something lik
 | 2 | SHAWN | M. |
 | 3 | KATHLEEN | P. |
 
-Now, all characters in the `first_name` are uppercase (and `last_name` are unchanged).
+Теперь все символы в `first_name` находятся в верхнем регистре (а `last_name` остались без изменений).
 
-> Changing string columns to uppercase to create uniformity across data sources typically happens in our [dbt project’s staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). There are a few reasons for that: data cleanup and standardization, such as aliasing, casting, and lower or upper casing, should ideally happen in staging models to create downstream uniformity and improve downstream performance.
+> Преобразование строковых столбцов в верхний регистр для создания единообразия между источниками данных обычно происходит в [стадийных моделях нашего проекта dbt](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). На это есть несколько причин: очистка и стандартизация данных, такие как создание псевдонимов, приведение типов и изменение регистра, должны происходить в стадийных моделях, чтобы создать единообразие на следующих этапах и улучшить производительность на следующих этапах.
 
-## SQL UPPER function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL UPPER в Snowflake, Databricks, BigQuery и Redshift
 
-Google BigQuery, Amazon Redshift, Snowflake, Postgres, and Databricks all support the UPPER function. In addition, the syntax to use the UPPER function is the same across all of them.
+Google BigQuery, Amazon Redshift, Snowflake, Postgres и Databricks все поддерживают функцию UPPER. Кроме того, синтаксис для использования функции UPPER одинаков для всех этих систем.
 
-## UPPER function use cases
+## Сценарии использования функции UPPER
 
-By creating a consistent capitalization format (upper or lowercase) for all string values in your data models, you therefore create some expectations for business users in your BI tool.
-- Uppercase country codes in data sources to meet user expectations
-- Create a consistent capitalization format for string values in your data models, also creating expectations for business users in your BI tool
+Создавая единообразный формат капитализации (верхний или нижний регистр) для всех строковых значений в ваших моделях данных, вы тем самым создаете определенные ожидания для бизнес-пользователей в вашем BI-инструменте.
+- Заглавные коды стран в источниках данных для соответствия ожиданиям пользователей
+- Создание единообразного формата капитализации для строковых значений в ваших моделях данных, что также создает ожидания для бизнес-пользователей в вашем BI-инструменте
 
-There will most likely never be 100% consistency in your data models, but doing all that you can to mitigate that chaos will make your life and the life of your business users hopefully a little easier. Use the UPPER function to create a consistent casing for all strings in your data sources.
+Скорее всего, никогда не будет 100% согласованности в ваших моделях данных, но все, что вы можете сделать, чтобы смягчить этот хаос, сделает вашу жизнь и жизнь ваших бизнес-пользователей, надеюсь, немного проще. Используйте функцию UPPER для создания единообразного регистра для всех строк в ваших источниках данных.

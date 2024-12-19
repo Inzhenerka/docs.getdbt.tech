@@ -3,14 +3,14 @@ const sidebarSettings = {
     "docs/introduction",
     {
       type: "category",
-      label: "Get started with dbt",
+      label: "Начало работы",
       collapsed: true,
       link: { type: "doc", id: "docs/get-started-dbt" },
       items: ["docs/get-started-dbt"],
     }, // Get started quickstarts directory
     {
       type: "category",
-      label: "Supported data platforms",
+      label: "Поддерживаемые платформы",
       collapsed: true,
       link: { type: "doc", id: "docs/supported-data-platforms" },
       items: [
@@ -23,7 +23,7 @@ const sidebarSettings = {
     }, // Supported data platforms directory
     {
       type: "category",
-      label: "About dbt Cloud",
+      label: "О dbt Cloud",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
       items: [
         "docs/cloud/about-cloud/dbt-cloud-features",
@@ -35,7 +35,7 @@ const sidebarSettings = {
     }, // About dbt Cloud directory
     {
       type: "category",
-      label: "Set up dbt",
+      label: "Настройка dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/about-setup" },
       items: [
@@ -262,7 +262,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Develop with dbt Cloud",
+      label: "Разработка в dbt Cloud",
       collapsed: true,
       link: { type: "doc", id: "docs/cloud/about-develop-dbt" },
       items: [
@@ -308,7 +308,7 @@ const sidebarSettings = {
       },
       {
       type: "category",
-      label: "Build dbt projects",
+      label: "Создание проектов",
       collapsed: true,
       link: { type: "doc", id: "docs/build/projects" },
       items: [
@@ -462,7 +462,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Deploy dbt",
+      label: "Развертывание dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/deploy/deployments" },
       items: [
@@ -513,7 +513,7 @@ const sidebarSettings = {
     }, // end of "Deploy dbt"
     {
       type: "category",
-      label: "Collaborate with others",
+      label: "Возможности коллаборации",
       link: { type: "doc", id: "docs/collaborate/collaborate-with-others" },
       items: [
         "docs/collaborate/collaborate-with-others",
@@ -739,7 +739,7 @@ const sidebarSettings = {
 
     {
       type: "category",
-      label: "dbt Cloud integrations",
+      label: "Интеграции dbt Cloud",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
@@ -775,7 +775,7 @@ const sidebarSettings = {
 
     {
       type: "category",
-      label: "Available dbt versions",
+      label: "Версии dbt",
       link: { type: "doc", id: "docs/dbt-versions/core" },
       items: [
         "docs/dbt-versions/core",
@@ -822,7 +822,7 @@ const sidebarSettings = {
     "docs/dbt-support",
     {
       type: "category",
-      label: "Frequently asked questions",
+      label: "Часто задаваемые вопросы",
       link: {
         type: "generated-index",
         title: "Frequently asked questions",

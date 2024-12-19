@@ -1,29 +1,29 @@
 ---
 id: trim
 title: SQL TRIM
-description: The SQL TRIM function removes the leading and trailing characters of a string. By default, it removes the blank space character from the beginning and end of a string.
+description: Функция SQL TRIM удаляет начальные и конечные символы строки. По умолчанию она удаляет пробелы в начале и конце строки.
 slug: /sql-reference/trim
 ---
 
 <head>
-    <title>Working with the SQL TRIM function</title>
+    <title>Работа с функцией SQL TRIM</title>
 </head>
 
-We’ve been there: pesky blank spaces, weird, inconsistent formats, or unaccountable asterisks hiding at the end of your column value—[strings](/sql-reference/strings) are one of the most variable data types in your datasets. They likely lack a uniform casing, vary in length, and will inevitably have characters you need to trim from them.
+Мы все с этим сталкивались: надоедливые пробелы, странные, непоследовательные форматы или незаслуженные звездочки, прячущиеся в конце значения вашего столбца — [строки](/sql-reference/strings) являются одним из самых изменчивых типов данных в ваших наборах данных. Они, вероятно, не имеют единого регистра, варьируются по длине и, безусловно, содержат символы, которые вам нужно удалить.
 
-Introducing: the SQL TRIM function, which removes the leading and trailing characters of a string. By default, it removes the blank space character from the beginning and end of a string.
+Представляем: функция SQL TRIM, которая удаляет начальные и конечные символы строки. По умолчанию она удаляет пробелы в начале и конце строки.
 
-## How to use the SQL TRIM function
+## Как использовать функцию SQL TRIM
 
-The syntax for using TRIM function looks like the following:
+Синтаксис для использования функции TRIM выглядит следующим образом:
 
 ```sql
 trim(<field_name> [, <characters_to_remove>])
 ```
 
-Like we said earlier, the default `<characters_to_remove>` is a blank space, such that if you were to `trim(' string with extra leading space')` it would return `'string with extra leading space'`. You can explicitly specify single characters or a pattern to trim from your strings.
+Как мы уже говорили, по умолчанию `<characters_to_remove>` — это пробел, так что если вы выполните `trim(' строка с лишним начальным пробелом')`, это вернет `'строка с лишним начальным пробелом'`. Вы можете явно указать отдельные символы или шаблон для удаления из ваших строк.
 
-### SQL TRIM function example
+### Пример функции SQL TRIM
 
 ```sql
 select
@@ -34,7 +34,7 @@ from {{ ref('customers') }}
 limit 3
 ```
 
-After running this query, the resulting `orders` table will look like this:
+После выполнения этого запроса результирующая таблица `orders` будет выглядеть следующим образом:
 
 | first_name | test_string | back_to_first_name |
 |---|---|---|
@@ -42,12 +42,12 @@ After running this query, the resulting `orders` table will look like this:
 | Max | *Max** | Max |
 | Laura | *Laura** | Laura |
 
-In this query, you’re adding superfluous asterisks to a string using the [CONCAT function](/sql-reference/concat) and recleaning it using the TRIM function. Even though I specified one asterisk in the TRIM function itself, it recognizes that as a pattern to remove from the beginning and end of a string, which is why the double asterisks (**) were removed from the end of the `test_string` column.
+В этом запросе вы добавляете избыточные звездочки к строке с помощью [функции CONCAT](/sql-reference/concat) и очищаете ее с помощью функции TRIM. Хотя я указал одну звездочку в самой функции TRIM, она распознает это как шаблон для удаления в начале и конце строки, поэтому двойные звездочки (**) были удалены из конца столбца `test_string`.
 
-## SQL TRIM function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL TRIM в Snowflake, Databricks, BigQuery и Redshift
 
-[Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_TRIM.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/trim.html), and [Databricks](https://docs.databricks.com/sql/language-manual/functions/trim.html) all support the ability to use the TRIM function. In addition, the syntax to trim strings is the same across all of them using the TRIM function. These data warehouses also support the RTRIM and LTRIM functions, which allow you to only trim characters from the right side and left side of a string, respectively.
+[Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/string_functions#trim), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_TRIM.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/trim.html) и [Databricks](https://docs.databricks.com/sql/language-manual/functions/trim.html) все поддерживают возможность использования функции TRIM. Кроме того, синтаксис для обрезки строк одинаков во всех этих системах с использованием функции TRIM. Эти хранилища данных также поддерживают функции RTRIM и LTRIM, которые позволяют удалять символы только с правой и левой стороны строки соответственно.
 
-## TRIM function use cases
+## Сценарии использования функции TRIM
 
-If string values in your raw data have extra white spaces or miscellaneous characters, you’ll leverage the TRIM (and subset RTRIM AND LTRIM) functions to help you quickly remove them. You’ll likely do this cleanup in [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), where you’re probably standardizing casing and doing other minor formatting changes to string values, so you can use a clean and consistent format across your downstream models.
+Если строковые значения в ваших сырых данных содержат лишние пробелы или различные символы, вы будете использовать функции TRIM (а также подмножества RTRIM и LTRIM), чтобы быстро их удалить. Вы, вероятно, будете выполнять эту очистку в [стадийных моделях](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), где вы, вероятно, стандартизируете регистр и вносите другие незначительные изменения в формат строковых значений, чтобы использовать чистый и последовательный формат в ваших последующих моделях.

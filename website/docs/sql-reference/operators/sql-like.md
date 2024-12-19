@@ -1,35 +1,35 @@
 ---
 id: like
 title: SQL LIKE
-description: The LIKE operator helps you easily match, find, and filter out case-sensitive string values of a specified pattern by using SQL wildcards.
+description: Оператор LIKE помогает легко сопоставлять, находить и фильтровать чувствительные к регистру строковые значения заданного шаблона с помощью подстановочных знаков SQL.
 slug: /sql-reference/like
 ---
 
 <head>
-    <title>Working with the SQL LIKE operator</title>
+    <title>Работа с оператором SQL LIKE</title>
 </head>
 
-The LIKE operator helps you easily match, find, and filter out string values of a specified pattern by using SQL wildcards. Important to note that the pattern passed into the LIKE operator is case-sensitive, unlike its case-insensitive cousin, [ILIKE](/sql-reference/ilike).
+Оператор LIKE помогает легко сопоставлять, находить и фильтровать строковые значения заданного шаблона с помощью подстановочных знаков SQL. Важно отметить, что шаблон, передаваемый в оператор LIKE, чувствителен к регистру, в отличие от его нечувствительного к регистру аналога, [ILIKE](/sql-reference/ilike).
 
-## How to use the SQL LIKE operator
+## Как использовать оператор SQL LIKE
 
-The LIKE operator has a simple syntax, with the ability to have it utilized in [WHERE clauses](/sql-reference/where) or case statements:
+Оператор LIKE имеет простую синтаксис, и его можно использовать в [WHERE-условиях](/sql-reference/where) или операторе case:
 
-`where <field_name> like '<pattern>'` or `case when <field_name> like '<pattern>'`
+`where <field_name> like '<pattern>'` или `case when <field_name> like '<pattern>'`
 
-Some notes on this operator’s syntax and functionality:
-- The `<pattern>` can use two SQL wildcards (`%` and ` _`); the underscore will match any *single character* and the % matches zero or more characters
-    - Ex. '%J' = any string that ends with a capital J
-    - Ex. 'J%' = any string that starts with a capital J
-    - Ex. 'J%L' = any string that starts with a capital J and ends with a capital L
-    - Ex. '_J%' = any string that has a capital J in the second position
-- Majority of use cases for the LIKE operator will likely involve the `%` wildcard
-- The LIKE operator is case-sensitive, meaning that the casing in the `<pattern>` you want to filter for should match the same-case in your column values; for columns with varied casing, leverage the case-insensitive ILIKE operator
-- The LIKE operator can be paired with the NOT operator, to filter on rows that are not like a specified pattern
+Некоторые примечания по синтаксису и функциональности этого оператора:
+- `<pattern>` может использовать два подстановочных знака SQL (`%` и `_`); символ подчеркивания соответствует *одному символу*, а % соответствует нулю или более символам
+    - Пример: '%J' = любая строка, заканчивающаяся на заглавную J
+    - Пример: 'J%' = любая строка, начинающаяся с заглавной J
+    - Пример: 'J%L' = любая строка, начинающаяся с заглавной J и заканчивающаяся на заглавную L
+    - Пример: '_J%' = любая строка, в которой заглавная J находится на второй позиции
+- Большинство случаев использования оператора LIKE, вероятно, будет связано с подстановочным знаком `%`
+- Оператор LIKE чувствителен к регистру, что означает, что регистр в `<pattern>`, который вы хотите отфильтровать, должен совпадать с регистром в значениях вашего столбца; для столбцов с различным регистром используйте нечувствительный к регистру оператор ILIKE
+- Оператор LIKE может быть использован в сочетании с оператором NOT, чтобы фильтровать строки, которые не соответствуют заданному шаблону
 
-Let’s dive into a practical example using the LIKE operator now.
+Давайте рассмотрим практический пример использования оператора LIKE.
 
-### SQL LIKE example
+### Пример SQL LIKE
 
 ```sql
 select
@@ -40,32 +40,32 @@ where first_name like 'J%'
 order by 1
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `customers` table  would return all of the customers whose first name starts with the *uppercase* letter J:
+Этот простой запрос, использующий таблицу `customers` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет всех клиентов, чье имя начинается с *заглавной* буквы J:
 
 | **customer_id** | **first_name** |
 |:---:|:---:|
 | 1 | Julia |
 | 4 | Jeremy |
 
-Because LIKE is case-sensitive, it would not return results in this query for customers with lowercase J-names. If you have a mix of uppercase and lowercase strings in your data, consider standardizing casing for strings using the [UPPER](/sql-reference/upper) and [LOWER](/sql-reference/lower) functions or use the more flexible [ILIKE operator](/sql-reference/ilike).
+Поскольку LIKE чувствителен к регистру, этот запрос не вернет результаты для клиентов с именами, начинающимися с маленькой буквы j. Если у вас есть смесь строк с заглавными и строчными буквами в ваших данных, рассмотрите возможность стандартизации регистра строк с помощью функций [UPPER](/sql-reference/upper) и [LOWER](/sql-reference/lower) или используйте более гибкий [оператор ILIKE](/sql-reference/ilike).
 
-## LIKE syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис LIKE в Snowflake, Databricks, BigQuery и Redshift
 
-Most, if not all, modern data warehouses support the LIKE operator and the syntax is also the same across them. Some data warehouses, such as Snowflake and Databricks, additionally support similar or more flexible operators such as ILIKE, the case-insensitive version of LIKE, or LIKE ANY, which allows you to pass in multiple pattern options to scan for.
+Большинство, если не все, современные хранилища данных поддерживают оператор LIKE, и синтаксис также одинаков во всех них. Некоторые хранилища данных, такие как Snowflake и Databricks, дополнительно поддерживают аналогичные или более гибкие операторы, такие как ILIKE, нечувствительная к регистру версия LIKE, или LIKE ANY, который позволяет передавать несколько вариантов шаблона для поиска.
 
-Use the table below to read more on the documentation for the LIKE operator in your data warehouse.
+Используйте таблицу ниже, чтобы узнать больше о документации для оператора LIKE в вашем хранилище данных.
 
-| **Data warehouse** | **LIKE support?** |
+| **Хранилище данных** | **Поддержка LIKE?** |
 |:---:|:---:|
 | Snowflake | ✅ |
 | Databricks | ✅ |
 | Amazon Redshift | ✅ |
 | Google BigQuery | ✅ |
 
-## LIKE operator example use cases
+## Примеры использования оператора LIKE
 
-You may see the LIKE operator used in analytics engineering work to:
-- Bucket column values together based on general requirements using case statements and the LIKE operator (ex. `case when page_path like '/product%' then 'product_page' else 'non_product_page'`)
-- Filter out employee email records based on a similar email address pattern (ex. `where email_address not like '%@dbtlabs.com'`)
+Вы можете увидеть, как оператор LIKE используется в аналитическом инжиниринге для:
+- Группировки значений столбца на основе общих требований с использованием операторов case и оператора LIKE (например, `case when page_path like '/product%' then 'product_page' else 'non_product_page'`)
+- Фильтрации записей электронной почты сотрудников на основе похожего шаблона адреса электронной почты (например, `where email_address not like '%@dbtlabs.com'`)
 
-This isn’t an extensive list of where your team may be using the LIKE operator throughout your dbt models, but contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать оператор LIKE в ваших моделях dbt, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

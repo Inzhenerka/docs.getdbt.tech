@@ -1,27 +1,27 @@
 ---
 id: datepart
 title: SQL DATE_PART
-description: The DATE_PART function allows you to extract a specified date part from a date/time. Like most other SQL functions, you need to pass in arguments; for the DATE_PART function, you’ll pass in a date/timestamp/date field that you want to extract a date part from and specify the part you want removed.
+description: Функция DATE_PART позволяет извлекать указанную часть даты из даты/времени. Как и большинство других SQL-функций, вам нужно передать аргументы; для функции DATE_PART вы передадите дату/метку времени/поле даты, из которого хотите извлечь часть даты, и укажете часть, которую хотите удалить.
 slug: /sql-reference/datepart
 ---
 
 <head>
-    <title>Working with SQL DATEPART</title>
+    <title>Работа с SQL DATEPART</title>
 </head>
 
-In this post, we’re going to give a deep dive into the DATE_PART function, how it works, and why we use it.
+В этом посте мы подробно рассмотрим функцию DATE_PART, как она работает и почему мы ее используем.
 
-The DATE_PART function allows you to extract a specified date part from a date/time. For example, if you were to extract the month from the date February 14, 2022, it would return 2 since February is the second month in the year.
+Функция DATE_PART позволяет извлекать указанную часть даты из даты/времени. Например, если вы хотите извлечь месяц из даты 14 февраля 2022 года, она вернет 2, так как февраль — это второй месяц в году.
 
-## How to use the DATE_PART function
+## Как использовать функцию DATE_PART
 
-Like most other SQL functions, you need to pass in arguments; for the DATE_PART function, you’ll pass in a date/timestamp/date field that you want to extract a date part from and specify the part you want removed. You can extract the numeric month, date, year, hour, seconds, etc. from a timestamp or date field) using the DATE_PART function using the following syntax:
+Как и большинство других SQL-функций, вам нужно передать аргументы; для функции DATE_PART вы передадите дату/метку времени/поле даты, из которого хотите извлечь часть даты, и укажете часть, которую хотите удалить. Вы можете извлечь числовой месяц, дату, год, час, секунды и т.д. из метки времени или поля даты, используя функцию DATE_PART с помощью следующего синтаксиса:
 
-`date_part(<date/time part>, <date field/date>)`
+`date_part(<часть даты/времени>, <поле даты/даты>)`
 
-Let’s take a look at a practical example below.
+Давайте рассмотрим практический пример ниже.
 
-### DATE_PART function example
+### Пример функции DATE_PART
 
 ```sql
 select
@@ -31,7 +31,7 @@ from {{ ref('orders') }}
 group by 1
 ```
 
-This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return the rounded order amount per each order month (represented as a numeric value):
+Этот запрос, использующий таблицу `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет округленную сумму заказов за каждый месяц заказа (представленную в виде числового значения):
 
 | order_month | avg_order_amount |
 |:---:|:---:|
@@ -40,25 +40,25 @@ This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) 
 | 3 | 18 |
 | 4 | 17 |
 
-Unlike the DATE_TRUNC function that actually truncates a date to its first instance of a given date part (so it maintains a date structure), the DATE_PART function returns a numeric value from a date field.
+В отличие от функции DATE_TRUNC, которая фактически обрезает дату до ее первого экземпляра данной части даты (так что она сохраняет структуру даты), функция DATE_PART возвращает числовое значение из поля даты.
 
-You may commonly see the DATE_PART function replaced with an EXTRACT function, which performs the same functionality.
+Вы можете часто видеть, что функцию DATE_PART заменяют на функцию EXTRACT, которая выполняет ту же функциональность.
 
-## DATE_PART function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции DATE_PART в Snowflake, Databricks, BigQuery и Redshift
 
-| Data warehouse | DATE_PART support? | Notes |
+| Хранилище данных | Поддержка DATE_PART? | Примечания |
 |:---:|:---:|:---:|
 | Snowflake | ✅ |  |
 | Databricks | ✅ |  |
 | Amazon Redshift | ✅ |  |
-| Google BigQuery | ❌ | BigQuery supports the EXTRACT function which performs the same functionality as the DATE_PART function |
-| Postgres | ✅ | This is overly pedantic and you’ll likely never encounter an issue with DATE_PART and EXTRACT evaluating to differences in values that truly matter, but it’s worth noting. Postgres’ DATE_PART and EXTRACT functions would previously evaluate to the same output. However, with Postgres 14, the EXTRACT function now returns a numeric type instead of an 8-byte float. |
+| Google BigQuery | ❌ | BigQuery поддерживает функцию EXTRACT, которая выполняет ту же функциональность, что и функция DATE_PART |
+| Postgres | ✅ | Это излишне педантично, и вы, вероятно, никогда не столкнетесь с проблемой, когда DATE_PART и EXTRACT будут давать разные значения, которые действительно имеют значение, но стоит отметить. Функции DATE_PART и EXTRACT в Postgres ранее давали одинаковый результат. Однако с Postgres 14 функция EXTRACT теперь возвращает числовой тип вместо 8-байтового числа с плавающей запятой. |
 
-## DATE_PART function use cases
+## Сценарии использования функции DATE_PART
 
-We most commonly see the DATE_PART or EXTRACT function used in data work to analyze:
+Чаще всего мы видим, что функции DATE_PART или EXTRACT используются в аналитической работе для анализа:
 
-- Fiscal calendars: If your business uses fiscal years, or calendars that differ from the normal 12-month cycle, DATE_PART functions can help create alignment between fiscal calendars and normal calendars
-- Ad hoc analysis: The DATE_PART function are useful in ad hoc analyses and queries when you need to look at values grouped by date periods or for period comparisons
+- Финансовых календарей: Если ваш бизнес использует финансовые годы или календари, отличающиеся от обычного 12-месячного цикла, функции DATE_PART могут помочь создать согласованность между финансовыми календарями и обычными календарями.
+- Экспресс-анализа: Функции DATE_PART полезны в экспресс-анализах и запросах, когда вам нужно рассмотреть значения, сгруппированные по периодам дат или для сравнений периодов.
 
-This isn’t an extensive list of where your team may be using the DATE_PART function throughout your dbt models and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать функцию DATE_PART в ваших моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

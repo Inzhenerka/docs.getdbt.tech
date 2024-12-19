@@ -1,40 +1,40 @@
 ---
 id: and
 title: SQL AND
-description: The AND operator returns results that meet all requirements passed into it. You’ll often see the AND operator used in a WHERE clause to filter query results. 
+description: Оператор AND возвращает результаты, которые соответствуют всем переданным требованиям. Вы часто увидите оператор AND, используемый в предложении WHERE для фильтрации результатов запроса.
 slug: /sql-reference/and
 ---
 
 <head>
-    <title>Working with the SQL AND operator</title>
+    <title>Работа с оператором SQL AND</title>
 </head>
 
-The AND operator returns results that meet all requirements passed into it; compared to the [OR operator](/sql-reference/or) that only needs to have one true requirement. You’ll often see the AND operator used in a [WHERE clause](/sql-reference/where) to filter query results or in a case statement to create multiple criteria for a result.
+Оператор AND возвращает результаты, которые соответствуют всем переданным требованиям; в отличие от [оператора OR](/sql-reference/or), который требует, чтобы было выполнено хотя бы одно условие. Вы часто увидите оператор AND, используемый в [предложении WHERE](/sql-reference/where) для фильтрации результатов запроса или в операторе case для создания нескольких критериев для результата.
 
-Use this page to understand how to use the AND operator and why it might be helpful  in analytics engineering work.
+Используйте эту страницу, чтобы понять, как использовать оператор AND и почему он может быть полезен в аналитической инженерии.
 
-## How to use the AND operator
+## Как использовать оператор AND
 
-It’s straightforward to use the AND operator, and you’ll typically see it appear in a WHERE clause to filter query results appropriately, in case statements, or joins that involve multiple fields.
+Использовать оператор AND довольно просто, и вы обычно увидите его в предложении WHERE для соответствующей фильтрации результатов запроса, в операторах case или в соединениях, которые включают несколько полей.
 
 ```sql
--- and in a where clause
+-- и в предложении where
 where <condition_1> and <condition_2> and… 
 
--- and in a case statement
+-- и в операторе case
 case when <condition_1> and <condition_2> then <result_1> … 
 
--- and in a join
+-- и в соединении
 from <table_a>
 join <table_b> on
 <a_id_1> = <b_id_1> and <a_id_2> = <b_id_2>
 ```
 
-:::tip Surrogate keys > joins with AND
-Using <Term id="surrogate-key">surrogate keys</Term>, hashed values of multiple columns, is a great way to avoid using AND operators in joins. Typically, having AND or [OR operators](/sql-reference/or) in a join can cause the query or model to be potentially inefficient, especially at considerable data volume, so creating surrogate keys earlier in your upstream tables ([using the surrogate key macro](https://docs.getdbt.com/blog/sql-surrogate-keys)) can potentially improve performance in downstream models.
+:::tip Суррогатные ключи > соединения с AND
+Использование <Term id="surrogate-key">суррогатных ключей</Term>, хэшированных значений нескольких столбцов, является отличным способом избежать использования операторов AND в соединениях. Обычно наличие операторов AND или [OR](/sql-reference/or) в соединении может сделать запрос или модель потенциально неэффективными, особенно при значительном объеме данных, поэтому создание суррогатных ключей на более ранних этапах в ваших исходных таблицах ([с использованием макроса суррогатного ключа](https://docs.getdbt.com/blog/sql-surrogate-keys)) может потенциально улучшить производительность в последующих моделях.
 :::
 
-### SQL AND operator example
+### Пример оператора SQL AND
 
 ```sql
 select
@@ -46,7 +46,7 @@ where status = 'shipped' and amount > 20
 limit 3
 ```
 
-This query using the sample dataset Jaffle Shop’s `orders` table will return results where the order status is shipped and the order amount is greater than $20:
+Этот запрос, использующий образец данных из таблицы `orders` магазина Jaffle Shop, вернет результаты, где статус заказа - "отправлен", а сумма заказа превышает 20 долларов:
 
 | **order_id** | **status** | **amount** |
 |:---:|:---:|:---:|
@@ -54,6 +54,6 @@ This query using the sample dataset Jaffle Shop’s `orders` table will return r
 | 88 | shipped | 29 |
 | 78 | shipped | 26 |
 
-## AND operator syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис оператора AND в Snowflake, Databricks, BigQuery и Redshift
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the AND operator with the same syntax for it across each platform.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают оператор AND с одинаковым синтаксисом на каждой платформе.

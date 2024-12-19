@@ -1,82 +1,80 @@
 ---
 id: dateadd
 title: SQL DATEADD
-description: The DATEADD function in SQL adds a time/date interval to a date and then returns the date. This allows you to add or subtract a certain period of time from a given start date.
+description: Функция DATEADD в SQL добавляет временной/дата интервал к дате и возвращает эту дату. Это позволяет добавлять или вычитать определенный период времени от заданной начальной даты.
 slug: /sql-reference/dateadd
 ---
 
 <head>
-    <title>What is the SQL DATEADD Function?</title>
+    <title>Что такое функция SQL DATEADD?</title>
 </head>
 
-If you’ve ever used the DATEADD SQL function across dialects (such as BigQuery, Postgres and Snowflake), you’ve probably had to google the syntax of the function every time. It's almost impossible to remember the argument order (or exact function name) of dateadd.
+Если вы когда-либо использовали функцию DATEADD в SQL в различных диалектах (таких как BigQuery, Postgres и Snowflake), вы, вероятно, каждый раз искали синтаксис этой функции. Почти невозможно запомнить порядок аргументов (или точное название функции) dateadd.
 
-This article will go over how the DATEADD function works, the nuances of using it across the major cloud warehouses, and how to standardize the syntax variances using dbt macro.
+В этой статье мы рассмотрим, как работает функция DATEADD, нюансы ее использования в основных облачных хранилищах и как стандартизировать различия в синтаксисе с помощью макроса dbt.
 
-## What is the DATEADD SQL function?
+## Что такое функция DATEADD в SQL?
 
-The DATEADD function in SQL adds a time/date interval to a date and then returns the date. This allows you to add or subtract a certain period of time from a given start date.
+Функция DATEADD в SQL добавляет временной/дата интервал к дате и возвращает эту дату. Это позволяет добавлять или вычитать определенный период времени от заданной начальной даты.
 
-Sounds simple enough, but this function lets you do some pretty useful things like calculating an estimated shipment date based on the ordered date.
+Звучит достаточно просто, но эта функция позволяет выполнять довольно полезные действия, такие как расчет предполагаемой даты отгрузки на основе даты заказа.
 
-## Differences in DATEADD syntax across data warehouse platforms 
+## Различия в синтаксисе DATEADD на различных платформах хранилищ данных
 
-All of them accept the same rough parameters, in slightly different syntax and order:
+Все они принимают примерно одни и те же параметры, но с немного различным синтаксисом и порядком:
 
-- Start / from date
-- Datepart (day, week, month, year)
-- Interval (integer to increment by)
+- Начальная / от дата
+- Datepart (день, неделя, месяц, год)
+- Интервал (целое число для увеличения)
 
-The *functions themselves* are named slightly differently, which is common across SQL dialects.
+*Сами функции* называются немного по-разному, что является обычным делом для SQL диалектов.
 
-### For example, the DATEADD function in Snowflake…
+### Например, функция DATEADD в Snowflake…
 
 ```
 dateadd( {{ datepart }}, {{ interval }}, {{ from_date }} )
 ```
 
-*Hour, minute and second are supported!*
+*Часы, минуты и секунды поддерживаются!*
 
-### The DATEADD function in Databricks
+### Функция DATEADD в Databricks
 
 ```sql
 date_add( {{ startDate }}, {{ numDays }} )
 ```
 
-### The DATEADD function in BigQuery…
+### Функция DATEADD в BigQuery…
 
 ```sql
 date_add( {{ from_date }}, INTERVAL {{ interval }} {{ datepart }} )
 ```
 
-*Dateparts of less than a day (hour / minute / second) are not supported.*
+*Dateparts менее чем за день (час / минута / секунда) не поддерживаются.*
 
-### The DATEADD function in Postgres…
+### Функция DATEADD в Postgres…
 
-
-Postgres doesn’t provide a dateadd function out of the box, so you’ve got to go it alone - but the syntax looks very similar to BigQuery’s function…
+Postgres не предоставляет функцию dateadd "из коробки", поэтому вам придется действовать самостоятельно - но синтаксис выглядит очень похоже на функцию BigQuery…
 
 ```sql
 {{ from_date }} + (interval '{{ interval }} {{ datepart }}')
 ```
 
-Switching back and forth between those SQL syntaxes usually requires a quick scan through the warehouse’s docs to get back on the horse.
+Постоянный переход между этими SQL синтаксисами обычно требует быстрого просмотра документации хранилища, чтобы вернуться в строй.
 
-## Standardizing your DATEADD SQL syntax with a dbt macro 
+## Стандартизация вашего синтаксиса SQL DATEADD с помощью макроса dbt
 
-But couldn’t we be doing something better with those keystrokes, like typing out and then deleting a tweet?
+Но разве мы не могли бы делать что-то более полезное с этими нажатиями клавиш, например, писать и затем удалять твит?
 
-dbt helps smooth out these wrinkles of writing [SQL across data warehouses](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros).
+dbt помогает сгладить эти шероховатости написания [SQL в различных хранилищах данных](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros).
 
-Instead of looking up the syntax each time you use it, you can just write it the same way each time, and the macro compiles it to run on your chosen warehouse:
+Вместо того чтобы каждый раз искать синтаксис, вы можете просто писать его одинаково каждый раз, а макрос компилирует его для выполнения в вашем выбранном хранилище:
 
 ```
 {{ dateadd(datepart, interval, from_date_or_timestamp) }}
 ```
 
-Adding 1 month to a specific date would look like…
+Добавление 1 месяца к конкретной дате будет выглядеть так…
 
 ```
 {{ dateadd(datepart="month", interval=1, from_date_or_timestamp="'2021-08-12'") }}
 ```
-

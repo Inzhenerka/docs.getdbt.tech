@@ -1,38 +1,38 @@
 ---
 id: from
 title: SQL FROM
-description: The SQL FROM statement allows you to identify  the database schema object (table/view) you want to select data from in a query.
+description: Оператор SQL FROM позволяет вам определить объект схемы базы данных (таблицу/представление), из которого вы хотите выбрать данные в запросе.
 slug: /sql-reference/from
 ---
 
 <head>
-    <title>Working with SQL FROM statements</title>
+    <title>Работа с операторами SQL FROM</title>
 </head>
 
-What makes the analytics world go ‘round? Queries and bad graphs. (Since we’re here to keep it brief, we won’t go into the latter here 😉)
+Что движет миром аналитики? Запросы и плохие графики. (Поскольку мы здесь, чтобы быть краткими, мы не будем углубляться во второе 😉)
 
-The first thing someone learns in SQL: how to build a query using [SELECT](/sql-reference/select) and FROM statements. The SQL FROM statement is the fundamental building block of any query: it allows you to identify  the database schema object (table/view) you want to select data from in a query. 
+Первое, что учит кто-то в SQL: как построить запрос, используя [SELECT](/sql-reference/select) и FROM. Оператор SQL FROM является основным строительным блоком любого запроса: он позволяет вам определить объект схемы базы данных (таблицу/представление), из которого вы хотите выбрать данные в запросе.
 
-In a dbt project, a SQL dbt model is technically a singular SELECT statement (often built leveraging <Term id="cte">CTEs</Term> or <Term id="subquery">subqueries</Term>) using a [reference](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) to an upstream data model or table in a FROM statement.
+В проекте dbt SQL-модель dbt технически представляет собой единственный оператор SELECT (часто построенный с использованием <Term id="cte">CTE</Term> или <Term id="subquery">подзапросов</Term>), используя [ссылку](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) на вышестоящую модель данных или таблицу в операторе FROM.
 
-## How to use SQL FROM statements
+## Как использовать операторы SQL FROM
 
-Any query begins with a simple SELECT statement and wrapped up with a FROM statement:
+Любой запрос начинается с простого оператора SELECT и завершается оператором FROM:
 
 ```sql
 select
-	order_id, --select your columns
+	order_id, --выберите ваши столбцы
 	customer_id,
 	order_date
-from {{ ref('orders') }} --the table/view/model you want to select from
+from {{ ref('orders') }} --таблица/представление/модель, из которой вы хотите выбрать
 limit 3
 ```
 
-Woah woah woah! That is not the typical FROM statement you’re probably used to seeing! 
+Стоп-стоп-стоп! Это не тот тип оператора FROM, к которому вы, вероятно, привыкли!
 
-Most FROM statements in the non-dbt world, such as when you’re running ad-hoc queries directly in your data warehouse, will follow the `FROM database.schema.table_name` syntax. In dbt projects, analytics engineers leverage [the ref statement](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) to refer to other data models and sources to automatically build a <Term id="dag">dependency graph</Term> and avoid having to hard-code schema names. This flexibility is valuable as analytics engineers develop in their own development environments (schemas) without having to rename tables in their FROM statements.
+Большинство операторов FROM в мире вне dbt, например, когда вы выполняете ad-hoc запросы непосредственно в вашем хранилище данных, будут следовать синтаксису `FROM database.schema.table_name`. В проектах dbt аналитические инженеры используют [оператор ref](https://docs.getdbt.com/reference/dbt-jinja-functions/ref), чтобы ссылаться на другие модели данных и источники, автоматически создавая <Term id="dag">граф зависимостей</Term> и избегая необходимости жестко кодировать имена схем. Эта гибкость ценна, поскольку аналитические инженеры разрабатывают в своих собственных средах разработки (схемах), не переименовывая таблицы в своих операторах FROM.
 
-This basic query is selecting three columns from the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql) `orders` table and returning three rows. If you execute this query in your data warehouse, it will return a result looking like this:
+Этот базовый запрос выбирает три столбца из таблицы [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql) `orders` и возвращает три строки. Если вы выполните этот запрос в вашем хранилище данных, он вернет результат, выглядящий следующим образом:
 
 | **order_id** | **customer_id** | **order_date** |
 |:---:|:---:|:---:|
@@ -40,10 +40,10 @@ This basic query is selecting three columns from the [Jaffle Shop’s](https://g
 | 2 | 3 | 2018-01-02 |
 | 3 | 95 | 2018-01-04 |
 
-In the query above, dbt automatically compiles the `from {{ ref('orders') }}` to `from analytics.jaffle_shop.orders` when the query is sent down to the data warehouse and run in the production environment.
+В приведенном выше запросе dbt автоматически компилирует `from {{ ref('orders') }}` в `from analytics.jaffle_shop.orders`, когда запрос отправляется в хранилище данных и выполняется в производственной среде.
 
-If you’re selecting from multiple tables or models, that’s where you’d rely on unions or joins to bring multiple tables together in a way that makes sense to your data.
+Если вы выбираете из нескольких таблиц или моделей, именно здесь вы будете полагаться на объединения или соединения, чтобы объединить несколько таблиц таким образом, который имеет смысл для ваших данных.
 
-## FROM statement syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис оператора FROM в Snowflake, Databricks, BigQuery и Redshift
 
-Just as the humble SELECT statement is a SQL fundamental that goes untampered by the data warehouses, FROM syntax does not vary within them. As a result, writing the actual `select…from` statement across Snowflake, Databricks, Google BigQuery, and Amazon Redshift would look the same.
+Так же, как скромный оператор SELECT является основой SQL, не подвергающейся изменениям со стороны хранилищ данных, синтаксис FROM не варьируется в них. В результате написание фактического оператора `select…from` в Snowflake, Databricks, Google BigQuery и Amazon Redshift будет выглядеть одинаково.

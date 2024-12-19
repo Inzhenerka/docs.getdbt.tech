@@ -1,67 +1,67 @@
 ---
 id: data-types
-title: SQL Data Types
-description: The different data types in SQL are numeric, string, date, booleans, and semi-structured. This content covers the differences between them and their subcategories.
+title: SQL Типы Данных
+description: Различные типы данных в SQL включают числовые, строковые, даты, булевы значения и полуструктурированные. В этом содержании рассматриваются различия между ними и их подкатегории.
 slug: /sql-reference/data-types
 ---
 
 <head>
-    <title>What are the SQL data types?</title>
+    <title>Что такое типы данных SQL?</title>
 </head>
 
-Below, we’ll unpack the different umbrellas of data types and the unique data types that fall under each category.
+Ниже мы рассмотрим различные категории типов данных и уникальные типы данных, которые относятся к каждой категории.
 
-## Numeric data types
+## Числовые типы данных
 
-There are many different numeric types in SQL and that makes sense because…we’re data people and numbers are important, bit length is important, decimal places are even more important, and numbers are ultimately what allow stakeholders to make certain decisions.
+В SQL существует множество различных числовых типов, и это имеет смысл, потому что… мы работаем с данными, и числа важны, длина бит важна, количество десятичных знаков еще важнее, и именно числа позволяют заинтересованным сторонам принимать определенные решения.
 
-There’s slight differentiation in which numeric data types are supported across each data warehouse, but fundamentally, it’s most important to understand the differences between integers, decimals, and floats.
+Существует небольшое различие в том, какие числовые типы данных поддерживаются в каждом хранилище данных, но в основном важно понимать различия между целыми числами, десятичными числами и числами с плавающей запятой.
 
-| **Type** | **Definition** | **Use cases** |
+| **Тип** | **Определение** | **Сценарии использования** |
 |:---:|:---:|:---:|
-| Integer | Integers are numbers without fractions. Think 1, 2, 72384191203—nice, clean numbers. | Though many column values may look like integers (and in theory, they are), they’re often reflected or cast as decimal/numeric types to offer future precision and scale if required.  |
-| Decimal | Decimal, also known as the NUMERIC type, is a numeric data type that has a default precision of 38 and a scale of 0. | Typical numeric columns in datasets, such as lifetime value or user ids. Most likely the most common form of numeric data in your tables. |
-| Float | Floats are used to provide approximate numeric values of fractions, with a precision of up to 64 bits. Floats offer a larger range of values compared to decimals.  | Columns that are percentages; longitude/latitude.  |
+| Integer | Целые числа — это числа без дробной части. Например, 1, 2, 72384191203 — простые, четкие числа. | Хотя многие значения столбцов могут выглядеть как целые числа (и теоретически они таковы), их часто отображают или приводят к десятичным/числовым типам для обеспечения будущей точности и масштаба, если это необходимо. |
+| Decimal | Десятичный тип, также известный как тип NUMERIC, — это числовой тип данных с заданной точностью 38 и масштабом 0. | Типичные числовые столбцы в наборах данных, такие как пожизненная ценность или идентификаторы пользователей. Скорее всего, это наиболее распространенная форма числовых данных в ваших таблицах. |
+| Float | Числа с плавающей запятой используются для предоставления приблизительных числовых значений дробей с точностью до 64 бит. Числа с плавающей запятой предлагают более широкий диапазон значений по сравнению с десятичными. | Столбцы, которые представляют проценты; долгота/широта. |
 
-## String data types
+## Строковые типы данных
 
-Strings are everywhere in data—they allow folks to have descriptive text field columns, use regex in their data work, and honestly, they just make the data world go ‘round. To formalize it, a string type is a word, or the combination of characters that you’ll typically see encased in single quotes (ex. 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
+Строки повсюду в данных — они позволяют людям иметь описательные текстовые поля, использовать регулярные выражения в своей работе с данными, и, честно говоря, они просто делают мир данных более живым. Формально, строковый тип — это слово или комбинация символов, которые вы обычно видите в одинарных кавычках (например, 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the string data type. They may have slightly varying sub-types for strings; some data warehouses such as Snowflake and Redshift support `text`, `char`, and `character` string types which typically differ in byte length in comparison to the generic string type.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают строковый тип данных. У них могут быть немного разные подтипы для строк; некоторые хранилища данных, такие как Snowflake и Redshift, поддерживают типы строк `text`, `char` и `character`, которые обычно отличаются по длине в байтах по сравнению с общим строковым типом.
 
-Again, since most string type columns are inherent in your data, you’ll likely be ok using generic varchar or strings for casting, but it never hurts to read up on the docs specific to your data warehouse string support!
+Снова, поскольку большинство столбцов строкового типа являются неотъемлемой частью ваших данных, вы, вероятно, сможете использовать общий varchar или строки для приведения типов, но никогда не помешает ознакомиться с документацией, специфичной для поддержки строк вашего хранилища данных!
 
-## Date data types
+## Дата-тип данных
 
-Dates, timestamps, timezones—all the fun (slightly painful) data things that make analytics engineers real data practitioners (people who occasionally want to yank their hair out).
+Даты, временные метки, часовые пояса — все эти интересные (немного болезненные) аспекты данных, которые делают аналитиков настоящими практиками данных (людьми, которые иногда хотят вырвать себе волосы).
 
-Below, we’ll unpack dates, datetimes, times, and timestamps, to help you better understand the core date data types.
+Ниже мы рассмотрим даты, даты и время, время и временные метки, чтобы помочь вам лучше понять основные типы данных даты.
 
-Working our way from simplest to most complex, dates, typically represented with the DATE type are what you typically associate with a calendar date (ex. 2022-12-16), and are limited to the range of 0001-01-01 to 9999-12-31.
+Двигаясь от простейшего к более сложному, даты, обычно представленные типом DATE, — это то, что вы обычно ассоциируете с календарной датой (например, 2022-12-16), и они ограничены диапазоном от 0001-01-01 до 9999-12-31.
 
-DATETIME values contain both calendar date and time (ex. 2022-12-16 02:33:24) and may additionally include the sub-seconds. TIME types are typically represented as the HH:MM:SS of a time and don’t contain a specified timezone.
+Значения DATETIME содержат как календарную дату, так и время (например, 2022-12-16 02:33:24) и могут дополнительно включать доли секунды. Типы TIME обычно представлены в формате HH:MM:SS и не содержат указанного часового пояса.
 
-TIMESTAMP data types allow for the greatest specification and precision of a point in time and can be specified with or without a timezone. Most event-driven data fields (ex. Order completed time, account created time, user churned time) will be represented as timestamps in your data sources. Some data warehouses, such as [Amazon Redshift](https://docs.amazonaws.cn/en_us/redshift/latest/dg/r_Datetime_types.html) and [Snowflake](https://docs.snowflake.com/en/sql-reference/data-types-datetime.html#date-time-data-types), support different timestamp options that allow for explicit specification of a timezone (or lack thereof).
+Типы данных TIMESTAMP позволяют наиболее точно и детально указывать момент времени и могут быть указаны с часовым поясом или без него. Большинство полей данных, основанных на событиях (например, время завершения заказа, время создания аккаунта, время оттока пользователя), будут представлены как временные метки в ваших источниках данных. Некоторые хранилища данных, такие как [Amazon Redshift](https://docs.amazonaws.cn/en_us/redshift/latest/dg/r_Datetime_types.html) и [Snowflake](https://docs.snowflake.com/en/sql-reference/data-types-datetime.html#date-time-data-types), поддерживают различные варианты временных меток, которые позволяют явно указывать часовой пояс (или его отсутствие).
 
-In general, the two best practices when it comes to dates and times are:
-1. Keep (or convert) timestamps to the same timezone.
-2. Keep date types in the most specific date-type as possible: you can always zoom out of a timestamp to get a date, but can’t get a timestamp from a date. 
+В общем, две лучшие практики, касающиеся дат и времени, таковы:
+1. Сохраняйте (или преобразуйте) временные метки в одном часовом поясе.
+2. Держите типы дат в наиболее специфичном формате: вы всегда можете уменьшить временную метку до даты, но не сможете получить временную метку из даты.
 
-You’ll ultimately leverage handy date functions to zoom in and out of dates, convert dates, or add times to dates.
+В конечном итоге вы будете использовать удобные функции работы с датами, чтобы увеличивать и уменьшать даты, преобразовывать даты или добавлять время к датам.
 
-## Booleans
+## Булевы значения
 
-A boolean is a column value that is either true, false, or null. In your datasets, you’ll use booleans to create `is_` or `has_` fields to create clear segments in your data; for example, you may use booleans to indicate whether a customer has churned (`has_churned`) or denote employee records (`is_employee`), or filter out records that have been removed from your source data (`is_deleted`). 
+Булевое значение — это значение столбца, которое может быть истинным, ложным или null. В ваших наборах данных вы будете использовать булевы значения для создания полей `is_` или `has_`, чтобы создать четкие сегменты в ваших данных; например, вы можете использовать булевы значения, чтобы указать, оттек ли клиент (`has_churned`) или обозначить записи сотрудников (`is_employee`), или отфильтровать записи, которые были удалены из ваших исходных данных (`is_deleted`).
 
-Typically, you’ll see `True` or `False` as the actual boolean values in a column, but may also choose to use numeric values, such as 1 and 0, to represent true and false values. The strings of `True` and `False`, however, tend to be a bit easier to read and interpret for end business users.
+Обычно вы увидите `True` или `False` как фактические булевы значения в столбце, но также можете выбрать использование числовых значений, таких как 1 и 0, для представления истинных и ложных значений. Однако строки `True` и `False` обычно легче читать и интерпретировать для конечных пользователей бизнеса.
 
-## Semi-structured data types
+## Полуструктурированные типы данных
 
-Semi-structured data types are a great way to combine or aggregate data across multiple fields; you may also find yourself in the inverse situation where you need to unpack semi-structured data, such as a <Term id="json">JSON</Term> object, and unnest it into its individual key-value pair. The two primary semi-structured data types you’ll see across data warehouses are JSON and arrays. 
+Полуструктурированные типы данных — это отличный способ объединить или агрегировать данные из нескольких полей; вы также можете оказаться в обратной ситуации, когда вам нужно распаковать полуструктурированные данные, такие как объект <Term id="json">JSON</Term>, и развернуть его в отдельные пары ключ-значение. Два основных полуструктурированных типа данных, которые вы увидите в хранилищах данных, — это JSON и массивы.
 
-Below, we’ll unpack what the difference is between the two and provide an example of each one.
+Ниже мы рассмотрим, в чем разница между ними, и приведем пример каждого из них.
 
-| **Type** | **Definition** | **Example** | **Use case** |
+| **Тип** | **Определение** | **Пример** | **Сценарий использования** |
 |:---:|:---:|:---:|:---:|
-| JSON | When looking at data formatted in JSON, we say that the data is stored in JSON objects. These are composed of key-value pairs. JSON objects are enclosed in curly brackets (\{ \}) and each key-value pair is separated by a comma. Read more about using JSON here. | \{"customer_id":2947, "order_id":4923, "order_items":"cheesecake"\} | One of the great things about JSON data is that it doesn't require schema definition—until you unnest it. Extract exactly what you need from your JSON object, and you can forget about the rest! JSON values will often come inherent in your data sources, so learn how to unnest them and your life will become easier. |
-| Array | Similar to arrays in other programming languages, an array contains multiple elements that are accessible via its position in that array. | ["cheesecake", "cupcake", "brownie"] | Arrays are a clear way to aggregate multiple values together to create a singular value. Many use cases here, but be cautious: using aggregate functions, such as `array_agg` , can become inefficient on large datasets. |
+| JSON | Когда мы смотрим на данные, отформатированные в JSON, мы говорим, что данные хранятся в JSON-объектах. Они состоят из пар ключ-значение. JSON-объекты заключены в фигурные скобки (\{ \}) и каждая пара ключ-значение разделена запятой. Узнайте больше о использовании JSON здесь. | \{"customer_id":2947, "order_id":4923, "order_items":"cheesecake"\} | Одно из замечательных свойств данных JSON заключается в том, что они не требуют определения схемы — до тех пор, пока вы их не развернете. Извлекайте именно то, что вам нужно из вашего JSON-объекта, и можете забыть о остальном! Значения JSON часто присутствуют в ваших источниках данных, поэтому научитесь их разворачивать, и ваша жизнь станет проще. |
+| Array | Подобно массивам в других языках программирования, массив содержит несколько элементов, доступных по их позиции в этом массиве. | ["cheesecake", "cupcake", "brownie"] | Массивы — это ясный способ агрегировать несколько значений вместе, чтобы создать единое значение. Здесь много сценариев использования, но будьте осторожны: использование агрегатных функций, таких как `array_agg`, может стать неэффективным на больших наборах данных. |

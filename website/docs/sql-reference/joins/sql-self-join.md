@@ -1,25 +1,25 @@
 ---
 id: self-join
-title: SQL SELF JOINS
-description: A self join allows you to join a dataset back onto itself. A common use cases to leverage a self join is when a table contains a foreign key to the primary key of that same table.
+title: SQL САМОСОЕДИНЕНИЯ
+description: Самосоединение позволяет соединить набор данных с самим собой. Обычный случай использования самосоединения — это когда таблица содержит внешний ключ к первичному ключу той же таблицы.
 slug: /sql-reference/self-join
 ---
 
 <head>
-    <title>Working with self joins in SQL</title>
+    <title>Работа с самосоединениями в SQL</title>
 </head>
 
-Simultaneously the easiest and most confusing of joins: the self join. Simply put, a self join allows you to join a dataset back onto itself.
+Самое простое и в то же время самое запутанное из соединений: самосоединение. Проще говоря, самосоединение позволяет соединить набор данных с самим собой.
 
-If you’re newer to data work or SQL, you may be asking yourself: why in the world would you want to do this? Shouldn’t joins happen between multiple *different* entities?
+Если вы новичок в работе с данными или SQL, вы можете задаться вопросом: зачем это нужно? Разве соединения не должны происходить между несколькими *разными* сущностями?
 
-The majority of joins you see in analytics work and dbt projects will probably be left and inner joins, but occasionally, depending on how the raw source table is built out, you’ll leverage a self join. One of the most common use cases to leverage a self join is when a table contains a foreign key to the <Term id="primary-key" /> of that same table.
+Большинство соединений, которые вы увидите в аналитической работе и проектах dbt, вероятно, будут левыми и внутренними соединениями, но время от времени, в зависимости от того, как построена исходная таблица, вам может понадобиться самосоединение. Один из самых распространенных случаев использования самосоединения — это когда таблица содержит внешний ключ к <Term id="primary-key" /> той же таблицы.
 
-It’s ok if none of that made sense—jump into this page to better understand how and where you might use a self join in your analytics engineering work.
+Не переживайте, если это ничего не прояснило — перейдите на эту страницу, чтобы лучше понять, как и где вы можете использовать самосоединение в своей аналитической инженерной работе.
 
-## How to create a self join
+## Как создать самосоединение
 
-No funny venn diagrams here—there’s actually even no special syntax for self joins. To create a self join, you’ll use a regular join syntax, the only differences is the join objects are *the same*:
+Здесь нет забавных диаграмм Венна — на самом деле, для самосоединений нет специального синтаксиса. Чтобы создать самосоединение, вы будете использовать обычный синтаксис соединения, единственное отличие в том, что объекты соединения *одинаковы*:
 
 ```
 select
@@ -29,11 +29,11 @@ from <table_1> as t1
 on t1.id = t2.id
 ```
 
-Since you can choose the dialect of join for a self join, you can specify if you want to do a [left](/sql-reference/left-join), [outer](/sql-reference/outer-join), [inner](/sql-reference/inner-join), [cross](/sql-reference/cross-join), or [right join](/sql-reference/right-join) in the join statement.
+Поскольку вы можете выбрать тип соединения для самосоединения, вы можете указать, хотите ли вы выполнить [левое](/sql-reference/left-join), [внешнее](/sql-reference/outer-join), [внутреннее](/sql-reference/inner-join), [перекрестное](/sql-reference/cross-join) или [правое соединение](/sql-reference/right-join) в операторе соединения.
 
-### SQL self join example
+### Пример SQL самосоединения
 
-Given a `products` table that looks likes this, where there exists both a primary key (`sku_id`) and foreign key (`parent_id`) to that primary key:
+Предположим, у нас есть таблица `products`, которая выглядит следующим образом, где существует как первичный ключ (`sku_id`), так и внешний ключ (`parent_id`) к этому первичному ключу:
 
 | **sku_id** | **sku_name** | **parent_id** |
 |:---:|:---:|:---:|
@@ -42,7 +42,7 @@ Given a `products` table that looks likes this, where there exists both a primar
 | 3 | Basic Desk | null |
 | 4 | Basic Bed | null |
 
-And this query utilizing a self join to join `parent_name` onto skus:
+И этот запрос, использующий самосоединение для присоединения `parent_name` к sku:
 
 ```sql
 select
@@ -55,17 +55,17 @@ left join {{ ref('products') }} as parents
 on products.parent_id = parents.sku_id
 ```
 
-This query utilizing a self join adds the `parent_name` of skus that have non-null `parent_ids`:
+Этот запрос, использующий самосоединение, добавляет `parent_name` к sku, у которых есть ненулевые `parent_ids`:
 
 | sku_id | sku_name | parent_id | parent_name |
 |:---:|:---:|:---:|:---:|
 | 1 | Lilieth Bed | 4 | Basic Bed |
-| 2 | Holloway Desk | 3 | Basic Desk |
+| 2 | Holloway Desk | 3 | Basic Bed |
 | 3 | Basic Desk | null | null |
 | 4 | Basic Bed | null | null |
 
-## SQL self join use cases
+## Случаи использования SQL самосоединений
 
-Again, self joins are probably rare in your dbt project and will most often be utilized in tables that contain a hierarchical structure, such as consisting of a column which is a foreign key to the primary key of the same table. If you do have use cases for self joins, such as in the example above, you’ll typically want to perform that self join early upstream in your <Term id="dag" />, such as in a [staging](/best-practices/how-we-structure/2-staging) or [intermediate](/best-practices/how-we-structure/3-intermediate) model; if your raw, unjoined table is going to need to be accessed further downstream sans self join, that self join should happen in a modular intermediate model.
+Опять же, самосоединения, вероятно, редки в вашем проекте dbt и чаще всего будут использоваться в таблицах, которые содержат иерархическую структуру, например, состоящих из столбца, который является внешним ключом к первичному ключу той же таблицы. Если у вас есть случаи использования самосоединений, такие как в приведенном выше примере, вы обычно захотите выполнить это самосоединение на ранних этапах в вашем <Term id="dag" />, например, в [стадии](/best-practices/how-we-structure/2-staging) или [промежуточной](/best-practices/how-we-structure/3-intermediate) модели; если ваша сырая, не соединенная таблица будет нуждаться в доступе дальше по потоку без самосоединения, это самосоединение должно происходить в модульной промежуточной модели.
 
-You can also use self joins to create a cartesian product (aka a cross join) of a table against itself. Again, slim use cases, but still there for you if you need it 😉
+Вы также можете использовать самосоединения для создания декартова произведения (также известного как перекрестное соединение) таблицы с самой собой. Опять же, это редкие случаи использования, но они все же доступны, если вам это нужно 😉

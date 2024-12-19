@@ -1,19 +1,19 @@
 ---
 id: inner-join
-title: SQL INNER JOINS
-description: An inner join between two database objects returns all rows that have matching join keys; any keys that don’t match are omitted from the query result.
+title: SQL ВНУТРЕННИЕ СОЕДИНЕНИЯ
+description: Внутреннее соединение между двумя объектами базы данных возвращает все строки, у которых совпадают ключи соединения; любые ключи, которые не совпадают, исключаются из результата запроса.
 slug: /sql-reference/inner-join
 ---
 
 <head>
-    <title>Working with inner joins in SQL</title>
+    <title>Работа с внутренними соединениями в SQL</title>
 </head>
 
-The cleanest and easiest of SQL joins: the humble inner join. Just as its name suggests, an inner join between two database objects returns all rows that have matching join keys; any keys that don’t match are omitted from the query result.
+Самое простое и удобное из SQL-соединений: скромное внутреннее соединение. Как и предполагает его название, внутреннее соединение между двумя объектами базы данных возвращает все строки, у которых совпадают ключи соединения; любые ключи, которые не совпадают, исключаются из результата запроса.
 
-## How to create an inner join
+## Как создать внутреннее соединение
 
-Like all joins, you need some database objects (ie <Term id="table">tables</Term>/<Term id="view">views</Term>), keys to join on, and a [select statement](/sql-reference/select) to perform an inner join:
+Как и для всех соединений, вам нужны некоторые объекты базы данных (то есть <Term id="table">таблицы</Term>/<Term id="view">представления</Term>), ключи для соединения и [оператор select](/sql-reference/select) для выполнения внутреннего соединения:
 
 ```
 select
@@ -23,13 +23,13 @@ inner join <table_2> as t2
 on t1.id = t2.id 
 ```
 
-In this example above, there’s only one field from each table being used to join the two together; if you’re joining between two database objects that require multiple fields, you can leverage AND/OR operators, and more preferably, <Term id="surrogate-key">surrogate keys</Term>. You may additionally add [WHERE](/sql-reference/where), [GROUP BY](/sql-reference/group-by), [ORDER BY](/sql-reference/order-by), [HAVING](/sql-reference/having), and other clauses after your joins to create filtering, ordering, and performing aggregations.
+В приведенном выше примере используется только одно поле из каждой таблицы для соединения их вместе; если вы соединяете два объекта базы данных, которые требуют нескольких полей, вы можете использовать операторы AND/OR, а еще лучше — <Term id="surrogate-key">суррогатные ключи</Term>. Вы также можете добавить [WHERE](/sql-reference/where), [GROUP BY](/sql-reference/group-by), [ORDER BY](/sql-reference/order-by), [HAVING](/sql-reference/having) и другие операторы после ваших соединений для создания фильтрации, сортировки и выполнения агрегирования.
 
-As with any query, you can perform as many joins as you want in a singular query. A general word of advice: try to keep data models <Term id="dry">modular</Term> by performing regular <Term id="dag" /> audits. If you join certain tables further upstream, are those individual tables needed again further downstream? If your query involves multiple joins and complex logic and is exposed to end business users, ensure that you leverage table or [incremental materializations](https://docs.getdbt.com/docs/build/incremental-models).
+Как и в любом запросе, вы можете выполнять столько соединений, сколько хотите, в одном запросе. Общий совет: старайтесь поддерживать модели данных <Term id="dry">модульными</Term>, регулярно проводя <Term id="dag" /> аудиты. Если вы соединяете определенные таблицы выше по потоку, нужны ли эти отдельные таблицы снова ниже по потоку? Если ваш запрос включает несколько соединений и сложную логику и предназначен для конечных пользователей бизнеса, убедитесь, что вы используете таблицы или [инкрементные материализации](https://docs.getdbt.com/docs/build/incremental-models).
 
-### SQL inner join example
+### Пример SQL внутреннего соединения
 
-Table A `car_type`
+Таблица A `car_type`
 
 | user_id | car_type |
 |:---:|:---:|
@@ -37,7 +37,7 @@ Table A `car_type`
 | 2 | sedan |
 | 3 | truck |
 
-Table B `car_color`
+Таблица B `car_color`
 
 | user_id | car_color |
 |:---:|:---:|
@@ -55,16 +55,15 @@ inner join {{ ref('car_color') }} as car_color
 on car_type.user_id = car_color.user_id
 ```
 
-This simple query will return all rows that have the same `user_id` in both Table A and Table B:
+Этот простой запрос вернет все строки, у которых одинаковый `user_id` в обеих таблицах A и B:
 
 | user_id | type | color |
 |:---:|:---:|:---:|
 | 1 | van | red |
 | 3 | truck | green |
 
-Because there’s no `user_id` = 4 in Table A and no `user_id` = 2 in Table B, rows with ids 2 and 4 (from either table) are omitted from the inner join query results.
+Поскольку в Таблице A нет `user_id` = 4 и в Таблице B нет `user_id` = 2, строки с id 2 и 4 (из любой таблицы) исключаются из результатов запроса внутреннего соединения.
 
-## SQL inner join use cases
+## Сценарии использования SQL внутреннего соединения
 
-There are probably countless scenarios where you’d want to inner join multiple tables together—perhaps you have some really nicely structured tables with the exact same <Term id="primary-key">primary keys</Term> that should really just be one larger, wider table or you’re joining two tables together don’t want any null or missing column values if you used a left or right join—it’s all pretty dependent on your source data and end use cases. Where you will not (and should not) see inner joins is in [staging models](/best-practices/how-we-structure/2-staging) that are used to clean and prep raw source data for analytics uses. Any joins in your dbt projects should happen further downstream in [intermediate](/best-practices/how-we-structure/3-intermediate) and [mart models](/best-practices/how-we-structure/4-marts) to improve modularity and DAG cleanliness.
-
+Существует, вероятно, бесчисленное множество сценариев, когда вам нужно будет выполнить внутреннее соединение нескольких таблиц — возможно, у вас есть хорошо структурированные таблицы с одинаковыми <Term id="primary-key">первичными ключами</Term>, которые на самом деле должны быть одной более крупной и широкой таблицей, или вы соединяете две таблицы и не хотите, чтобы в них были пустые или отсутствующие значения столбцов, если бы вы использовали левое или правое соединение — это все зависит от ваших исходных данных и конечных сценариев использования. В тех случаях, когда внутренние соединения не должны использоваться, это [модели промежуточной обработки](/best-practices/how-we-structure/2-staging), которые используются для очистки и подготовки сырых исходных данных для аналитических нужд. Любые соединения в ваших проектах dbt должны происходить ниже по потоку в [промежуточных](/best-practices/how-we-structure/3-intermediate) и [маркетинговых моделях](/best-practices/how-we-structure/4-marts), чтобы улучшить модульность и чистоту DAG.

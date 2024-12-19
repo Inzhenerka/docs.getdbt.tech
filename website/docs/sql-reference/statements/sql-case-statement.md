@@ -1,43 +1,43 @@
 ---
 id: case
 title: SQL CASE WHEN
-description: CASE statements allow you to cascade through multiple scenarios (or cases) in your data, evaluate them if they’re true, and output a corresponding value for each case.
+description: Операторы CASE позволяют вам проходить через несколько сценариев (или случаев) в ваших данных, оценивать их на истинность и выводить соответствующее значение для каждого случая.
 slug: /sql-reference/case
 ---
 
 <head>
-    <title>Working with the SQL CASE statements</title>
+    <title>Работа с операторами SQL CASE</title>
 </head>
 
-SQL case statements are the backbone of analytics engineers and dbt projects. They help add context to data, make fields more readable or usable, and allow you to create specified buckets with your data.
+Операторы SQL CASE являются основой для аналитических инженеров и проектов dbt. Они помогают добавить контекст к данным, делают поля более читаемыми или удобными для использования и позволяют создавать определенные группы с вашими данными.
 
-To informally formalize it, case statements are the SQL equivalent of an if-then statement in other programming languages. They allow you to cascade through multiple scenarios (or cases) in your data, evaluate them if they’re true, and output a corresponding value for each case.
+Неформально говоря, операторы CASE являются SQL-эквивалентом оператора if-then в других языках программирования. Они позволяют вам проходить через несколько сценариев (или случаев) в ваших данных, оценивать их на истинность и выводить соответствующее значение для каждого случая.
 
-In this page, we’ll break down how to use SQL case statements and demonstrate why they’re valuable to modern data teams.
+На этой странице мы разберем, как использовать операторы SQL CASE и продемонстрируем, почему они ценны для современных команд данных.
 
-## How to use the SQL case statements
+## Как использовать операторы SQL CASE
 
-Case when statements are created in [SELECT statements](/sql-reference/select) along with other fields you choose to select. The general syntax for SQL case when statements is as follows:
+Операторы CASE WHEN создаются в [операторах SELECT](/sql-reference/select) вместе с другими полями, которые вы выбираете для выбора. Общий синтаксис для операторов SQL CASE WHEN выглядит следующим образом:
 
 ```sql
-case when [scenario 1] then [result 1]
-     when [scenario 2] then [result 2]
-    -- …as many scenarios as you want
-     when [scenario n] then [result n]
-     else [fallback result] -- this else is optional
-end as <new_field_name>
+case when [сценарий 1] then [результат 1]
+     when [сценарий 2] then [результат 2]
+    -- …столько сценариев, сколько вам нужно
+     when [сценарий n] then [результат n]
+     else [резервный результат] -- этот else является необязательным
+end as <имя_нового_поля>
 ```
 
-Some notes on case statement functionality:
-- Scenarios in case statements are *evaluated in the order they’re listed*. What does this mean? It means that if multiple scenarios evaluate to true, the earliest listed true scenario is the one whose result is returned.
-- The results in each scenario need to be of the same data type; if scenario 1 results in a string, all other scenarios need to be [strings](/sql-reference/strings).
-- Oftentimes data teams will omit a final `else` scenario since the `else [fallback result]`is optional and defaulted to `else null`.
-- In general, case statement performance in select statements is relatively efficient (compared to other SQL functionality like aggregates or clunky joins involving ANDs and ORs); this isn’t to say it’s efficient (or smart) to be comparing a ton of scenarios, but it likely won’t be the bottleneck in your data models.
-- Case when statement results can also be passed into aggregate functions, such as [MAX](/sql-reference/max), [MIN](/sql-reference/min), and [COUNT](/sql-reference/count), or even date functions (ex. `date_trunc('month', <case when statement>`)
+Некоторые примечания о функциональности операторов CASE:
+- Сценарии в операторах CASE *оцениваются в порядке их перечисления*. Что это означает? Это означает, что если несколько сценариев оцениваются как истинные, результат возвращается для первого истинного сценария.
+- Результаты в каждом сценарии должны быть одного и того же типа данных; если результат сценария 1 — строка, все остальные сценарии также должны быть [строками](/sql-reference/strings).
+- Часто команды данных опускают последний сценарий `else`, так как `else [резервный результат]` является необязательным и по умолчанию равен `else null`.
+- В общем, производительность операторов CASE в операторах SELECT относительно эффективна (по сравнению с другой функциональностью SQL, такой как агрегаты или громоздкие соединения с использованием AND и OR); это не значит, что эффективно (или разумно) сравнивать множество сценариев, но это, вероятно, не станет узким местом в ваших моделях данных.
+- Результаты операторов CASE WHEN также могут быть переданы в агрегатные функции, такие как [MAX](/sql-reference/max), [MIN](/sql-reference/min) и [COUNT](/sql-reference/count), или даже в функции работы с датами (например, `date_trunc('month', <оператор CASE WHEN>`).
 
-Below, let’s take a look at a practical example using a case statement.
+Ниже мы рассмотрим практический пример использования оператора CASE.
 
-### SQL CASE WHEN example
+### Пример SQL CASE WHEN
 
 ```sql
 select
@@ -50,7 +50,7 @@ select
 from {{ ref('orders') }}
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return a new field that buckets order amount based on criteria:
+Этот простой запрос, использующий таблицу `orders` из [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет новое поле, которое группирует сумму заказа на основе критериев:
 
 | **order_id** | **amount** | **order_value_bucket** |
 |:---:|:---:|:---:|
@@ -60,16 +60,16 @@ This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle
 | 4 | 25 | high |
 | 5 | 17 | medium |
 
-## SQL CASE WHEN syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL CASE WHEN в Snowflake, Databricks, BigQuery и Redshift
 
-Since it’s a fundamental of SQL, most, if not all, modern data warehouses support the ability to add case when statements to their queries. Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support case statements and have the same syntax for them.
+Поскольку это основа SQL, большинство, если не все, современные хранилища данных поддерживают возможность добавления операторов CASE WHEN в свои запросы. Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают операторы CASE и имеют одинаковый синтаксис для них.
 
-## CASE WHEN use cases
+## Сценарии использования CASE WHEN
 
-The use cases for case statements in dbt models and ad hoc queries is almost endless; as a result, we won’t (be able to) create an exhaustive list of where you might see case statements in the wild.
+Сценарии использования операторов CASE в моделях dbt и ad hoc запросах практически безграничны; в результате мы не сможем создать исчерпывающий список того, где вы можете встретить операторы CASE в реальной жизни.
 
-Instead, it’s important to know *why* you’d want to use them in your data work and when you wouldn’t want to use them. Some example reasons you’d want to leverage case statements:
-- Create booleans from your existing data (ex. `case when cnt > 1 then true else false end as is_active`)
-- Establish mappings between raw data and more general buckets of data (see example earlier in the page); note that if you find yourself creating many case when scenarios for a mapping that doesn’t change over time, you’ll likely want to import that mapping either as its own dbt model or data source (a good use case for [seeds](https://docs.getdbt.com/docs/build/seeds))
-- If you find yourself creating the same case when statement throughout your models, consider abstracting that case when into its own model or into a <Term id="dry" /> [macro](https://docs.getdbt.com/docs/build/jinja-macros)
-- Generate more business-user friendly columns values that can be easily comprehended by business users
+Вместо этого важно знать, *почему* вы хотите использовать их в своей работе с данными и когда вы не хотите их использовать. Некоторые примеры причин, по которым вы можете захотеть использовать операторы CASE:
+- Создание булевых значений на основе ваших существующих данных (например, `case when cnt > 1 then true else false end as is_active`)
+- Установление соответствий между сырыми данными и более общими группами данных (см. пример выше на странице); обратите внимание, что если вы создаете много сценариев CASE для соответствия, которое не меняется со временем, вам, вероятно, стоит импортировать это соответствие либо как свою модель dbt, либо как источник данных (хороший случай для [seeds](https://docs.getdbt.com/docs/build/seeds))
+- Если вы часто создаете один и тот же оператор CASE в своих моделях, подумайте о том, чтобы абстрагировать этот оператор CASE в отдельную модель или в <Term id="dry" /> [макрос](https://docs.getdbt.com/docs/build/jinja-macros)
+- Генерация более удобных для бизнес-пользователей значений столбцов, которые могут быть легко поняты бизнес-пользователями

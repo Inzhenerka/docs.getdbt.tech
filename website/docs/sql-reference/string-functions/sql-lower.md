@@ -1,40 +1,40 @@
 ---
 id: lower
 title: SQL LOWER
-description: Using the LOWER function on a string value will return the input as an all-lowercase string. It’s an effective way to create consistent capitalization for string values across your data.
+description: Использование функции LOWER для строкового значения вернет ввод в виде строки, состоящей только из строчных букв. Это эффективный способ создать единообразное написание строковых значений в ваших данных.
 slug: /sql-reference/lower
 ---
 
 <head>
-    <title>Working with the SQL LOWER function</title>
+    <title>Работа с функцией SQL LOWER</title>
 </head>
 
-We’ve all been there:
-- In a user signup form, user A typed in their name as `Kira Furuichi`, user B typed it in as `john blust`, and user C wrote `DAvid KrevitT` (what’s up with that, David??)
-- Your backend application engineers are adamant customer emails are in all caps
-- All of your event tracking names are lowercase
+Мы все с этим сталкивались:
+- В форме регистрации пользователя пользователь A ввел свое имя как `Kira Furuichi`, пользователь B ввел его как `john blust`, а пользователь C написал `DAvid KrevitT` (что с тобой, Дэвид??)
+- Ваши инженеры приложений на стороне сервера настаивают на том, что адреса электронной почты клиентов написаны заглавными буквами
+- Все ваши названия отслеживания событий написаны строчными буквами
 
-In the real world of human imperfection, opinions, and error, string values are likely to take inconsistent capitalization across different data sources (or even within the same data source). There’s always a little lack of rhyme or reason for why some values are passed as upper or lowercase, and it’s not worth the headache to unpack that.
+В реальном мире человеческих несовершенств, мнений и ошибок строковые значения, вероятно, будут иметь несогласованное написание в разных источниках данных (или даже в одном и том же источнике данных). Всегда есть небольшая доля абсурда в том, почему некоторые значения передаются в верхнем или нижнем регистре, и не стоит тратить время на разбор этого.
 
-So how do you create uniformity for string values that you collect across all your data sources? The LOWER function!
+Итак, как создать единообразие для строковых значений, которые вы собираете из всех ваших источников данных? Функция LOWER!
 
-Using the LOWER function on a string value will return the input as an all-lowercase string. It’s an effective way to create consistent capitalization for string values across your data.
+Использование функции LOWER для строкового значения вернет ввод в виде строки, состоящей только из строчных букв. Это эффективный способ создать единообразное написание строковых значений в ваших данных.
 
-## How to use the SQL LOWER function
+## Как использовать функцию SQL LOWER
 
-The syntax for using the LOWER function looks like the following:
+Синтаксис для использования функции LOWER выглядит следующим образом:
 
 ```sql
 lower(<string_column>)
 ```
 
-Executing this command in a SELECT statement will return the lowercase version of the input string. You may additionally use the LOWER function in WHERE clauses and on join values.
+Выполнение этой команды в операторе SELECT вернет строку в нижнем регистре. Вы также можете использовать функцию LOWER в условиях WHERE и для значений соединения.
 
-Let’s take a look at a practical example using the LOWER function.
+Давайте рассмотрим практический пример использования функции LOWER.
 
-### SQL LOWER function example
+### Пример функции SQL LOWER
 
-You can lower the first name and last name of the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `customers` model using the following code:
+Вы можете привести к нижнему регистру имя и фамилию модели `customers` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) с помощью следующего кода:
 
 ```sql
 select 
@@ -44,7 +44,7 @@ select
 from {{ ref('customers') }}
 ```
 
-After running this query, the `customers` table will look a little something like this:
+После выполнения этого запроса таблица `customers` будет выглядеть примерно так:
 
 | customer_id | first_name | last_name |
 |---|---|---|
@@ -52,17 +52,16 @@ After running this query, the `customers` table will look a little something lik
 | 2 | shawn | m. |
 | 3 | kathleen | p. |
 
-Now, all characters in the `first_name` and `last_name` columns are lowercase.
+Теперь все символы в столбцах `first_name` и `last_name` написаны строчными буквами.
 
-> Changing all string columns to lowercase to create uniformity across data sources typically happens in our [dbt project’s staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). There are a few reasons for that: data cleanup and standardization, such as aliasing, casting, and lowercasing, should ideally happen in staging models to create downstream uniformity and improve downstream performance.
+> Приведение всех строковых столбцов к нижнему регистру для создания единообразия между источниками данных обычно происходит в [стадийных моделях нашего проекта dbt](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). На это есть несколько причин: очистка и стандартизация данных, такие как алиасинг, приведение типов и приведение к нижнему регистру, должны происходить в стадийных моделях, чтобы создать единообразие на следующих этапах и улучшить производительность на следующих этапах.
 
-## SQL LOWER function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL LOWER в Snowflake, Databricks, BigQuery и Redshift
 
-Google BigQuery, Amazon Redshift, Snowflake, Postgres, and Databricks all support the LOWER function. In addition, the syntax to use LOWER is the same across all of them.
+Google BigQuery, Amazon Redshift, Snowflake, Postgres и Databricks все поддерживают функцию LOWER. Кроме того, синтаксис использования LOWER одинаков для всех из них.
 
+## Сценарии использования функции LOWER
 
-## LOWER function use cases
+Вернемся к нашему хаотичному трио пользователей A, B и C, которые использовали разные регистры для ввода своих имен. Если вы не создадите единообразное написание строковых значений, как бизнес-пользователь сможет понять, что фильтровать в своем BI-инструменте? Бизнес-пользователь может отфильтровать поле имени по “John Blust”, так как именно так он ожидает его увидеть, и в итоге не получить никаких результатов. Создавая единообразный формат написания (верхний или нижний регистр) для всех строковых значений в ваших моделях данных, вы тем самым создаете определенные ожидания для бизнес-пользователей в вашем BI-инструменте.
 
-Let’s go back to our chaotic trio of users A, B, and C who all used different capitalizations to type in their names. If you don’t create consistent capitalization for string values, how would a business user know what to filter for in their BI tool? A business user could filter a name field on “John Blust” since that’s what they would expect it to look like, only to get zero results back. By creating a consistent capitalization format (upper or lowercase) for all string values in your data models, you therefore create some expectations for business users in your BI tool.
-
-There will most likely never be 100% consistency in your data models, but doing all that you can to mitigate that chaos will make your life and the life of your business users hopefully a little easier. Use the LOWER function to create a consistent casing for all strings in your data sources.
+Скорее всего, никогда не будет 100% согласованности в ваших моделях данных, но все, что вы можете сделать, чтобы смягчить этот хаос, сделает вашу жизнь и жизнь ваших бизнес-пользователей, надеюсь, немного проще. Используйте функцию LOWER, чтобы создать единообразный регистр для всех строк в ваших источниках данных.

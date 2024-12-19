@@ -184,7 +184,7 @@ var siteSettings = {
               to: "/community/events",
             },
             {
-              label: "Spotlight",
+              label: "В центре внимания",
               to: "/community/spotlight",
             },
           ],

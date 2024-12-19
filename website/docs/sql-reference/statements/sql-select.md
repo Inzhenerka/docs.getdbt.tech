@@ -1,34 +1,34 @@
 ---
 id: select
 title: SQL SELECT
-description: The SQL SELECT statement is the fundamental building block of any query that allows you to select specific columns from a database schema object.
+description: Оператор SQL SELECT является основным строительным блоком любого запроса, который позволяет выбирать конкретные столбцы из объекта схемы базы данных.
 slug: /sql-reference/select
 ---
 
 <head>
-    <title>Working with SQL SELECT statements</title>
+    <title>Работа с операторами SQL SELECT</title>
 </head>
 
-My goodness, would there even be modern data teams without SQL SELECT statements? Probably not.
+Боже мой, существуют ли современные команды по работе с данными без операторов SQL SELECT? Вероятно, нет.
 
-Luckily, we live in a world of tabular data, cloud data warehouses, and SQL prowess. Analysts and analytics engineers are writing queries, creating data models, and leveraging SQL to power their [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) and analysis. But what makes these queries possible? SELECT statements.
+К счастью, мы живем в мире табличных данных, облачных хранилищ данных и мастерства в SQL. Аналитики и инженеры по аналитике пишут запросы, создают модели данных и используют SQL для выполнения своих [преобразований данных](https://www.getdbt.com/analytics-engineering/transformation/) и анализа. Но что делает эти запросы возможными? Операторы SELECT.
 
-The SQL SELECT statement is the fundamental building block of any query: it allows you to select specific columns (data) from a database schema object (table/view). In a dbt project, a SQL dbt model is technically a singular SELECT statement (often built leveraging CTEs or subqueries).
+Оператор SQL SELECT является основным строительным блоком любого запроса: он позволяет выбирать конкретные столбцы (данные) из объекта схемы базы данных (таблицы/представления). В проекте dbt SQL-модель dbt технически представляет собой единственный оператор SELECT (часто построенный с использованием CTE или подзапросов).
 
-## How to use SELECT
+## Как использовать SELECT
 
-Any query begins with a simple SELECT statement:
+Любой запрос начинается с простого оператора SELECT:
 
 ```sql
 select
-	order_id, --your first column you want selected
-	customer_id, --your second column you want selected
-	order_date --your last column you want selected (and so on)
-from {{ ref('orders') }} --the table/view/model you want to select from
+	order_id, --ваш первый столбец, который вы хотите выбрать
+	customer_id, --ваш второй столбец, который вы хотите выбрать
+	order_date --ваш последний столбец, который вы хотите выбрать (и так далее)
+from {{ ref('orders') }} --таблица/представление/модель, из которой вы хотите выбрать
 limit 3
 ```
 
-This basic query is selecting three columns from the [jaffle shop’s](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql) `orders` table and returning three rows. If you execute this query in your data warehouse, it will return a result looking like this:
+Этот базовый запрос выбирает три столбца из таблицы [jaffle shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/orders.sql) `orders` и возвращает три строки. Если вы выполните этот запрос в своем хранилище данных, он вернет результат, выглядящий следующим образом:
 
 | order_id | customer_id | order_date |
 |:---:|:---:|:---:|
@@ -36,14 +36,14 @@ This basic query is selecting three columns from the [jaffle shop’s](https://g
 | 2 | 3 | 2018-01-02 |
 | 3 | 95 | 2018-01-04 |
 
-You may also commonly see queries that `select * from table_name`. The asterisk or star is telling the compiler to select all columns from a specified table or view.
+Вы также можете часто видеть запросы, которые выглядят как `select * from table_name`. Звездочка указывает компилятору выбрать все столбцы из указанной таблицы или представления.
 
-:::tip Goodbye carpal tunnel
-Leverage [dbt utils’ star macro](/blog/star-sql-love-letter) to be able to both easily select many and specifically exclude certain columns.
+:::tip Прощай, туннельный синдром
+Используйте [макрос звезды dbt utils](/blog/star-sql-love-letter), чтобы легко выбирать множество столбцов и при этом исключать определенные.
 :::
 
-In a dbt project, analytics engineers will typically write models that contain multiple CTEs that build to one greater query. For folks that are newer to analytics engineering or dbt, we recommend they check out the [“How we structure our dbt projects” guide](/best-practices/how-we-structure/1-guide-overview) to better understand why analytics folks like modular data modeling and CTEs.
+В проекте dbt инженеры по аналитике обычно пишут модели, которые содержат несколько CTE, которые объединяются в один более крупный запрос. Для тех, кто только начинает заниматься аналитической инженерией или dbt, мы рекомендуем ознакомиться с [руководством «Как мы структурируем наши проекты dbt»](/best-practices/how-we-structure/1-guide-overview), чтобы лучше понять, почему аналитики предпочитают модульное моделирование данных и CTE.
 
-## SELECT statement syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис оператора SELECT в Snowflake, Databricks, BigQuery и Redshift
 
-While we know the data warehouse players like to have their own slightly different flavors and syntax for SQL, they have conferred together that the SELECT statement is sacred and unchangeable. As a result, writing the actual `select…from` statement across Snowflake, Databricks, Google BigQuery, and Amazon Redshift would look the same. However, the actual SQL manipulation of data within the SELECT statement (ex. adding dates, casting columns) might look slightly different between each data warehouse.
+Хотя мы знаем, что игроки на рынке хранилищ данных любят иметь свои собственные немного отличающиеся варианты и синтаксис для SQL, они согласились, что оператор SELECT является священным и неизменным. В результате написание фактического оператора `select…from` в Snowflake, Databricks, Google BigQuery и Amazon Redshift будет выглядеть одинаково. Однако фактическая манипуляция данными в операторе SELECT (например, добавление дат, приведение типов столбцов) может выглядеть немного иначе в каждом хранилище данных.

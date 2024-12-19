@@ -1,35 +1,35 @@
 ---
 id: cast
 title: SQL CAST
-description: Executing the CAST function in a SELECT statement will return the column you specified as the newly specified data type.
+description: Выполнение функции CAST в операторе SELECT вернет указанный вами столбец в новом заданном типе данных.
 slug: /sql-reference/cast
 ---
 
 <head>
-    <title>Working with the SQL CAST function</title>
+    <title>Работа с функцией SQL CAST</title>
 </head>
 
-Let’s set the scene: You are knee-deep in a new data model and cannot figure out why the join between `user_id` in` table a` is not successfully joining with the `user_id` in `table b`. You dig a little deeper and discover that `user_id` in `table a` is an integer and `user_id` in `table b` is a string. 
+Представим ситуацию: вы погружены в новую модель данных и не можете понять, почему соединение между `user_id` в `table a` не удается соединить с `user_id` в `table b`. Вы копаете глубже и обнаруживаете, что `user_id` в `table a` — это целое число, а `user_id` в `table b` — строка.
 
-*Cue throwing hands in the air.*
+*Время бросить руки в воздух.*
 
-It *will* happen: You’ll find column types in your source data or upstream models that will likely need to be cast into different data types; perhaps to make joins easier, calculations more intuitive, or data more readable. Regardless of the reason, you’ll find yourself inevitably casting some data as an analytics engineer and using the SQL CAST function to help you out.
+Это *произойдет*: вы столкнетесь с типами столбцов в ваших исходных данных или в моделях выше по потоку, которые, вероятно, нужно будет преобразовать в другие типы данных; возможно, чтобы упростить соединения, сделать вычисления более интуитивными или данные более читаемыми. Независимо от причины, вы неизбежно будете преобразовывать некоторые данные в качестве аналитического инженера и использовать функцию SQL CAST, чтобы помочь себе.
 
-## How to use SQL CAST function
+## Как использовать функцию SQL CAST
 
-The syntax for using the CAST function looks like the following:
+Синтаксис для использования функции CAST выглядит следующим образом:
 
 ```sql
 cast(<column_name> as <new_data_type>)
 ```
 
-Executing this function in a SELECT statement will return the column you specified as the newly specified data type. Analytics engineers will typically be casting fields to more appropriate or useful numeric, strings, and date types. You may additionally use the CAST function in WHERE clauses and in joins.
+Выполнение этой функции в операторе SELECT вернет указанный вами столбец в новом заданном типе данных. Аналитические инженеры обычно преобразуют поля в более подходящие или полезные числовые, строковые и типы даты. Вы также можете использовать функцию CAST в условиях WHERE и в соединениях.
 
-Below, we’ll walk through a practical example using the CAST function.
+Ниже мы рассмотрим практический пример использования функции CAST.
 
-### SQL CAST function example
+### Пример функции SQL CAST
 
-You can cast the `order_id` and `customer_id` fields of the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` model from number types to strings using the following code:
+Вы можете преобразовать поля `order_id` и `customer_id` модели [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) `orders` из числовых типов в строки, используя следующий код:
 
 ```sql
 select 
@@ -40,7 +40,7 @@ select
 from {{ ref('orders') }}
 ```
 
-After running this query, the `orders` table will look a little something like this:
+После выполнения этого запроса таблица `orders` будет выглядеть примерно так:
 
 | order_id | customer_id | order_date | status |
 |---|---|---|---|
@@ -48,22 +48,22 @@ After running this query, the `orders` table will look a little something like t
 | 2 | 3 | 2018-01-02 | completed |
 | 3 | 94 | 2018-01-04 | completed |
 
-Let’s be clear: the resulting data from this query looks exactly the same as the upstream `orders` model. However, the `order_id` and `customer_id` fields are now strings, meaning you could easily concat different string variables to them.
+Давайте проясним: полученные данные из этого запроса выглядят точно так же, как и в модели `orders` выше по потоку. Однако поля `order_id` и `customer_id` теперь являются строками, что означает, что вы можете легко объединять их с другими строковыми переменными.
 
-> Casting columns to their appropriate types typically happens in our dbt project’s [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). A few reasons for that: data cleanup and standardization, such as aliasing, casting, and lower or upper casing, should ideally happen in staging models to create downstream uniformity and improve downstream performance.
+> Преобразование столбцов в их соответствующие типы обычно происходит в [стадийных моделях](https://docs.getdbt.com/best-practices/how-we-structure/2-staging) нашего проекта dbt. Несколько причин для этого: очистка и стандартизация данных, такие как присвоение псевдонимов, преобразование типов и приведение к нижнему или верхнему регистру, должны происходить в стадийных моделях, чтобы создать единообразие и улучшить производительность на следующих этапах.
 
-## SQL CAST function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL CAST в Snowflake, Databricks, BigQuery и Redshift
 
-Google BigQuery, Amazon Redshift, Snowflake, Postgres, and Databricks all support the ability to cast columns and data to different types. In addition, the syntax to cast is the same across all of them using the CAST function.
+Google BigQuery, Amazon Redshift, Snowflake, Postgres и Databricks все поддерживают возможность преобразования столбцов и данных в разные типы. Кроме того, синтаксис для преобразования одинаков во всех этих системах с использованием функции CAST.
 
-You may also see the CAST function replaced with a double colon (::), followed by the data type to convert to; `cast(order_id as string)` is the same thing as `order_id::string` in most data warehouses.
+Вы также можете увидеть, что функция CAST заменяется двойным двоеточием (::), за которым следует тип данных для преобразования; `cast(order_id as string)` — это то же самое, что и `order_id::string` в большинстве хранилищ данных.
 
-## CAST function use cases
+## Сценарии использования функции CAST
 
-You know at one point you’re going to need to cast a column to a different data type. But what are the scenarios folks run into that call for these conversions? At their core, these conversions need to happen because raw source data doesn’t match the analytics or business use case. This typically happens for a few reasons:
+Вы знаете, что в какой-то момент вам нужно будет преобразовать столбец в другой тип данных. Но какие сценарии возникают, которые требуют этих преобразований? В своей основе эти преобразования необходимы, потому что исходные данные не соответствуют аналитическим или бизнес-требованиям. Это обычно происходит по нескольким причинам:
 
-- Differences in needs or miscommunication from [backend developers](https://docs.getdbt.com/blog/when-backend-devs-spark-joy#signs-the-data-is-sparking-joy)
-- <Term id="etl" /> tools [defaulting to certain data types](https://airbytehq.github.io/integrations/sources/google-sheets/)
-- BI tools require certain fields to be specific data types
+- Различия в потребностях или недопонимание со стороны [бэкенд-разработчиков](https://docs.getdbt.com/blog/when-backend-devs-spark-joy#signs-the-data-is-sparking-joy)
+- <Term id="etl" /> инструменты [по умолчанию используют определенные типы данных](https://airbytehq.github.io/integrations/sources/google-sheets/)
+- BI инструменты требуют, чтобы определенные поля имели конкретные типы данных
 
-A key thing to remember when you’re casting data is the user experience in your end BI tool: are business users expecting `customer_id` to be filtered on 1 or '1'? What is more intuitive for them? If one `id` field is an integer, all `id` fields should be integers. Just like all data modeling, consistency and standardization is key when determining when and what to cast.
+Ключевое, что нужно помнить при преобразовании данных, — это пользовательский опыт в вашем конечном BI инструменте: ожидают ли бизнес-пользователи, что `customer_id` будет отфильтрован по 1 или '1'? Что для них более интуитивно? Если одно поле `id` является целым числом, все поля `id` должны быть целыми числами. Как и в случае с моделированием данных, последовательность и стандартизация являются ключевыми при определении, когда и что преобразовывать.

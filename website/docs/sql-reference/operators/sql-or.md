@@ -1,23 +1,23 @@
 ---
 id: or
 title: SQL OR
-description: Read this guide to learn about the SQL OR operator in dbt.
+description: Прочитайте это руководство, чтобы узнать о операторе SQL OR в dbt.
 slug: /sql-reference/or
 ---
 
 <head>
-    <title>Working with the SQL OR Operator</title>
+    <title>Работа с оператором SQL OR</title>
 </head>
 
-We tried to come up with something witty about using the OR operator in a query, but couldn’t think of any 🤷
+Мы пытались придумать что-то остроумное о использовании оператора OR в запросе, но не смогли 🤷
 
-Use the OR operator in a WHERE clause to filter on multiple field values or perform more advanced joins on multiple fields.
+Используйте оператор OR в предложении WHERE, чтобы фильтровать по нескольким значениям полей или выполнять более сложные соединения по нескольким полям.
 
-## How to use the OR operator
+## Как использовать оператор OR
 
-The OR operator is technically a boolean operator—meaning it returns results that execute to true. It’s straightforward to use, and you’ll typically see it appear in a WHERE clause to filter query results appropriately or joins that involve multiple possible fields.
+Оператор OR технически является булевым оператором, что означает, что он возвращает результаты, которые выполняются как истинные. Его легко использовать, и вы обычно увидите его в предложении WHERE для соответствующей фильтрации результатов запроса или в соединениях, которые включают несколько возможных полей.
 
-### OR operator example
+### Пример оператора OR
 
 ```sql
 select
@@ -31,22 +31,22 @@ where status = 'shipped' or status = 'completed'
 limit 3
 ```
 
-This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return results where the order status is shipped or completed:
+Этот запрос, использующий таблицу `orders` из [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет результаты, где статус заказа равен "отгружен" или "завершен":
 
 | order_id | customer_id | order_date | status | amount |
 |:---:|:---:|:---:|:---:|:---:|
-| 2 | 3 | 2018-01-02 | completed | 20.0000 |
-| 3 | 94 | 2018-01-04 | completed | 1.00000 |
-| 4 | 50 | 2018-01-05 | completed | 25.0000 |
+| 2 | 3 | 2018-01-02 | завершен | 20.0000 |
+| 3 | 94 | 2018-01-04 | завершен | 1.00000 |
+| 4 | 50 | 2018-01-05 | завершен | 25.0000 |
 
-## OR operator syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис оператора OR в Snowflake, Databricks, BigQuery и Redshift
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the OR operator with the syntax looking the same in each platform. You may see the OR operator substituted for a more appropriate IN operator.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают оператор OR, и синтаксис выглядит одинаково на каждой платформе. Вы можете увидеть, что оператор OR заменяется более подходящим оператором IN.
 
-## OR use cases
+## Сценарии использования оператора OR
 
-We most commonly see OR operators used in queries and dbt models to:
-- Return results for fields of varying values
-- Joining tables on multiple fields using an OR operator (fair warning: this can be a bit scary and inefficient, so use OR operators in joins very carefully and consider refactoring your work to avoid these scenarios)
+Чаще всего мы видим, что операторы OR используются в запросах и моделях dbt для:
+- Возврата результатов для полей с различными значениями
+- Соединения таблиц по нескольким полям с использованием оператора OR (предупреждение: это может быть немного страшно и неэффективно, поэтому используйте операторы OR в соединениях очень осторожно и подумайте о рефакторинге вашей работы, чтобы избежать таких сценариев)
 
-This isn’t an extensive list of where your team may be using OR throughout your data work, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать оператор OR в своей работе с данными, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной практике.

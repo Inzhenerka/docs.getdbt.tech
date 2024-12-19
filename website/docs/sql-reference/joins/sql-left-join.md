@@ -1,21 +1,21 @@
 ---
 id: left-join
 title: SQL LEFT JOIN
-description: The left join returns all rows in the FROM statement, regardless of match in the left join database object.
+description: Левое соединение возвращает все строки из оператора FROM, независимо от совпадений в объекте базы данных левого соединения.
 slug: /sql-reference/left-join
 ---
 
 <head>
-    <title>Working with left joins in SQL</title>
+    <title>Работа с левыми соединениями в SQL</title>
 </head>
 
-An analytics engineer favorite: the left join. Without a doubt, this is probably the most regularly used join in any dbt project (and for good reason).
+Любимое соединение аналитических инженеров: левое соединение. Без сомнения, это, вероятно, самое часто используемое соединение в любом проекте dbt (и на то есть веские причины).
 
-The left join returns all rows in the [FROM statement](/sql-reference/from), regardless of match in the left join database object. Compare this to an [inner join](/sql-reference/inner-join), where only rows are returned that have successful key matches between the database object in the FROM statement and in the inner join statement.
+Левое соединение возвращает все строки из [оператора FROM](/sql-reference/from), независимо от совпадений в объекте базы данных левого соединения. Сравните это с [внутренним соединением](/sql-reference/inner-join), где возвращаются только строки, которые имеют успешные совпадения ключей между объектом базы данных в операторе FROM и в операторе внутреннего соединения.
 
-## How to create a left join
+## Как создать левое соединение
 
-Like all joins, you need some database objects (ie tables/views), keys to join on, and a [select statement](/sql-reference/select) to perform a left join:
+Как и все соединения, вам нужны некоторые объекты базы данных (т.е. таблицы/представления), ключи для соединения и [оператор select](/sql-reference/select) для выполнения левого соединения:
 
 ```
 select
@@ -25,11 +25,11 @@ left join <table_2> as t2
 on t1.id = t2.id 
 ```
 
-In this example above, there’s only one field from each table being used to join the two together together; if you’re joining between two database objects that require multiple fields, you can leverage AND/OR operators, and more preferably, <Term id="surrogate-key">surrogate keys</Term>. You may additionally add [WHERE](/sql-reference/where), [GROUP BY](/sql-reference/group-by), [ORDER BY](/sql-reference/order-by), [HAVING](/sql-reference/having), and other clauses after your joins to create filtering, ordering, and performing aggregations. You may also left (or any join really) as many joins as you’d like in an individual query or <Term id="cte" />.
+В приведенном выше примере используется только одно поле из каждой таблицы для соединения их вместе; если вы соединяете два объекта базы данных, которые требуют нескольких полей, вы можете использовать операторы AND/OR, а еще лучше — <Term id="surrogate-key">суррогатные ключи</Term>. Вы также можете добавить [WHERE](/sql-reference/where), [GROUP BY](/sql-reference/group-by), [ORDER BY](/sql-reference/order-by), [HAVING](/sql-reference/having) и другие операторы после ваших соединений для создания фильтрации, сортировки и выполнения агрегирования. Вы также можете использовать левое (или любое другое) соединение столько раз, сколько хотите, в одном запросе или <Term id="cte" />.
 
-### SQL left join example
+### Пример SQL левого соединения
 
-Table A `car_type`
+Таблица A `car_type`
 
 | **user_id** | **car_type** |
 |:---:|:---:|
@@ -37,7 +37,7 @@ Table A `car_type`
 | 2 | sedan |
 | 3 | truck |
 
-Table B `car_color`
+Таблица B `car_color`
 
 | user_id | car_color |
 |:---:|:---:|
@@ -55,7 +55,7 @@ left join {{ ref('car_color') }} as car_color
 on car_type.user_id = car_color.user_id
 ```
 
-This simple query will return *all rows* from Table A and adds the `color` column to rows where there’s a successful match to Table B:
+Этот простой запрос вернет *все строки* из Таблицы A и добавит столбец `color` к строкам, где есть успешное совпадение с Таблицей B:
 
 | **user_id** | **type** | **color** |
 |:---:|:---:|:---:|
@@ -63,14 +63,14 @@ This simple query will return *all rows* from Table A and adds the `color` colum
 | 2 | sedan | null |
 | 3 | truck | green |
 
-Because there’s no `user_id` = 2 in Table B, there is no `color` available, thus a null result `color` column for `user_id` 2.
+Поскольку в Таблице B нет `user_id` = 2, для `user_id` 2 нет доступного `color`, поэтому результатом будет `null` в столбце `color`.
 
-## SQL left join use cases
+## Сценарии использования SQL левого соединения
 
-Left joins are a fundamental in data modeling and analytics engineering work—they allow you to easily join database objects onto each other while  maintaining an original table’s row count (in the from statement). Compared to right joins, that return all rows in a right join database object (and not the from statement), we find left joins a little more intuitive to understand and build off of.
+Левые соединения являются основополагающими в моделировании данных и аналитической инженерии — они позволяют легко соединять объекты базы данных друг с другом, сохраняя при этом количество строк оригинальной таблицы (в операторе from). По сравнению с правыми соединениями, которые возвращают все строки в объекте базы данных правого соединения (а не в операторе from), мы находим левые соединения немного более интуитивно понятными для понимания и построения.
 
-:::tip Ensure your joins are just ~~left~~ right
-Something to note if you use left joins: if there are multiple records for an individual key in the left join database object, be aware that duplicates can potentially be introduced in the final query result. This is where dbt tests, such as testing for <Term id="primary-key" /> uniqueness and [equal row count](https://github.com/dbt-labs/dbt-utils#equal_rowcount-source) across upstream source tables and downstream child models, can help you identify faulty data modeling logic and improve data quality.
+:::tip Убедитесь, что ваши соединения правильные
+Важно отметить, что если вы используете левые соединения: если для отдельного ключа в объекте базы данных левого соединения есть несколько записей, будьте осторожны, что дубликаты могут потенциально появиться в конечном результате запроса. Здесь тесты dbt, такие как тестирование на <Term id="primary-key" /> уникальность и [равенство количества строк](https://github.com/dbt-labs/dbt-utils#equal_rowcount-source) между исходными таблицами и дочерними моделями, могут помочь вам выявить ошибки в логике моделирования данных и улучшить качество данных.
 :::
 
-Where you will not (and should not) see left joins is in [staging models](/best-practices/how-we-structure/2-staging) that are used to clean and prep raw source data for analytics uses. Any joins in your dbt projects should happen further downstream in [intermediate](/best-practices/how-we-structure/3-intermediate) and [mart models](/best-practices/how-we-structure/4-marts) to improve modularity and <Term id="dag" /> cleanliness.
+Где вы не увидите (и не должны видеть) левых соединений, так это в [стадийных моделях](/best-practices/how-we-structure/2-staging), которые используются для очистки и подготовки сырых исходных данных для аналитических нужд. Все соединения в ваших проектах dbt должны происходить дальше по потоку в [промежуточных](/best-practices/how-we-structure/3-intermediate) и [маркетинговых моделях](/best-practices/how-we-structure/4-marts), чтобы улучшить модульность и чистоту <Term id="dag" />.

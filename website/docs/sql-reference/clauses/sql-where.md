@@ -1,21 +1,21 @@
 ---
 id: where
 title: SQL WHERE
-description: Read this guide to learn about the SQL WHERE clause in dbt.
+description: Прочитайте это руководство, чтобы узнать о SQL-клаузе WHERE в dbt.
 slug: /sql-reference/where
 ---
 
 <head>
-    <title>Working with the SQL WHERE clause</title>
+    <title>Работа с SQL-клаузой WHERE</title>
 </head>
 
-If the humble [SELECT statement](/sql-reference/select) is an analytics engineer kitchen knife, the WHERE clause is the corresponding knife sharpener: no (good) cooking (or data modeling) is happening without it.
+Если скромный [SELECT оператор](/sql-reference/select) является кухонным ножом аналитического инженера, то клаузу WHERE можно сравнить с соответствующим точильным камнем: без него не обойдется ни одно (хорошее) приготовление пищи (или моделирование данных).
 
-The WHERE clause is a fundamental SQL statement—it allows you to appropriately filter your data models and queries, so you can look at specific subsets of data based on your requirements.
+Клаузa WHERE является основным SQL-оператором — она позволяет вам правильно фильтровать ваши модели данных и запросы, чтобы вы могли рассматривать конкретные подмножества данных в зависимости от ваших требований.
 
-## How to use the SQL WHERE clause
+## Как использовать SQL-клаузу WHERE
 
-The syntax for using WHERE clause in a SELECT statement looks like the following:
+Синтаксис использования клаузa WHERE в операторе SELECT выглядит следующим образом:
 
 ```sql
 select
@@ -26,18 +26,18 @@ from {{ ref('orders') }}
 where status != 'returned'
 ```
 
-In this query, you’re filtering for any order from the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` model whose status is not `returned` by adding a WHERE clause after the FROM statement. You could additionally filter on string, numeric, date, or other data types to meet your query conditions.
+В этом запросе вы фильтруете заказы из модели `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), статус которых не равен `returned`, добавляя клаузу WHERE после оператора FROM. Вы также можете дополнительно фильтровать по строковым, числовым, датам или другим типам данных, чтобы соответствовать условиям вашего запроса.
 
-You will likely see WHERE clauses show up 99.99%  of the time in a typical query or dbt model. The other .01% is probably in a <Term id="dml" />  statement, such as DELETE or ALTER, to modify specific rows in tables.
+Скорее всего, вы увидите клаузу WHERE в 99.99% случаев в типичном запросе или модели dbt. Остальные 0.01% вероятно будут в <Term id="dml" /> операторе, таком как DELETE или ALTER, для изменения конкретных строк в таблицах.
 
-## SQL WHERE clause syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL-клаузa WHERE в Snowflake, Databricks, BigQuery и Redshift
 
-Since the WHERE clause is a SQL fundamental, Google BigQuery, Amazon Redshift, Snowflake, and Databricks all support the ability to filter queries and data models using it. In addition, the syntax to round is the same across all of them using the WHERE clause.
+Поскольку клаузa WHERE является основой SQL, Google BigQuery, Amazon Redshift, Snowflake и Databricks все поддерживают возможность фильтрации запросов и моделей данных с ее помощью. Кроме того, синтаксис округления одинаков для всех из них при использовании клаузa WHERE.
 
-## SQL WHERE clause use cases
+## Сценарии использования SQL-клаузa WHERE
 
-WHERE clauses are probably some of the most widely used SQL capabilities, right after SELECT and FROM statements. Below is a non-exhaustive list of where you’ll commonly see WHERE clauses throughout dbt projects and data work:
-- Removing source-deleted rows from staging models to increase accuracy and improve downstream model performance
-- Filtering out employee records from models
-- Performing ad-hoc analysis on specific rows or users, either in a dbt model, BI tool, or ad-hoc query
-- Paired with IN, LIKE, NOT IN clauses to create more generalized or a group of specific requirements to filter on
+Клаузa WHERE, вероятно, является одной из самых широко используемых возможностей SQL, сразу после операторов SELECT и FROM. Ниже приведен неполный список случаев, когда вы часто увидите клаузу WHERE в проектах dbt и в работе с данными:
+- Удаление строк, удаленных из источника, из промежуточных моделей для повышения точности и улучшения производительности последующих моделей
+- Фильтрация записей сотрудников из моделей
+- Проведение выборочного анализа конкретных строк или пользователей, как в модели dbt, так и в BI-инструментах или выборочных запросах
+- Использование в паре с IN, LIKE, NOT IN для создания более обобщенных или специфических требований для фильтрации

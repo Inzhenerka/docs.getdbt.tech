@@ -1,47 +1,47 @@
 ---
 id: order-by
 title: SQL ORDER BY
-description: Read this guide to learn about the SQL ORDER BY clause in dbt.
+description: Прочитайте это руководство, чтобы узнать о SQL операторе ORDER BY в dbt.
 slug: /sql-reference/order-by
 ---
 
 <head>
-    <title>Working with the SQL ORDER BY clause</title>
+    <title>Работа с оператором SQL ORDER BY</title>
 </head>
 
-The ORDER BY clause allows you to specify the resulting row order for a query. In practice, you use the ORDER BY clause to indicate which field(s) you want to order by and in what type of order you want (ascending or descending). It’s useful to leverage during ad hoc analyses and for creating appropriate column values for partitioned rows in window functions.
+Оператор ORDER BY позволяет вам указать порядок строк в результате запроса. На практике вы используете оператор ORDER BY, чтобы указать, по какому полю(ям) вы хотите отсортировать данные и в каком порядке (по возрастанию или убыванию). Это полезно при проведении разовых анализов и для создания соответствующих значений столбцов для разделенных строк в оконных функциях.
 
-## How to use the SQL ORDER BY clause
+## Как использовать оператор SQL ORDER BY
 
-ORDER BY clauses have multiple use cases in analytics work, but we see it most commonly utilized to:
-- Order a query or subquery result by a column or group of columns
-- Appropriately order a subset of rows in a window function
+Операторы ORDER BY имеют множество применений в аналитической работе, но чаще всего их используют для:
+- Сортировки результата запроса или подзапроса по столбцу или группе столбцов
+- Соответствующей сортировки подмножества строк в оконной функции
 
-To use the ORDER BY clause to a query or model, use the following syntax:
+Чтобы использовать оператор ORDER BY в запросе или модели, используйте следующий синтаксис:
 
 ```sql
 select
 	column_1,
 	column_2
 from source_table
-order by <field(s)> <asc/desc> --comes after FROM, WHERE, and GROUP BY statements
+order by <field(s)> <asc/desc> -- следует после операторов FROM, WHERE и GROUP BY
 ```
-You can order a query result by multiple columns, represented by their column name or by their column number in the select statement (ex. `order by column_2 == order by 2`). You can additionally specify the ordering type you want (ascending or descending) to return the desired row order.
+Вы можете отсортировать результат запроса по нескольким столбцам, указав их имена или номера в операторе select (например, `order by column_2 == order by 2`). Вы также можете указать тип сортировки (по возрастанию или убыванию), чтобы получить желаемый порядок строк.
 
-Let’s take a look at a practical example using ORDER BY.
+Давайте рассмотрим практический пример использования ORDER BY.
 
-### ORDER BY example
+### Пример ORDER BY
 
 ```sql
 select
-	date_trunc('month, order_date') as order_month,
+	date_trunc('month', order_date) as order_month,
 	round(avg(amount)) as avg_order_amount
 from {{ ref('orders') }}
 group by 1
 order by 1 desc
 ```
 
-This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return the rounded order amount per each order month in descending order:
+Этот запрос, использующий таблицу `orders` из [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет округленную сумму заказов за каждый месяц заказа в порядке убывания:
 
 | order_month | avg_order_amount |
 |:---:|:---:|
@@ -50,16 +50,16 @@ This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) 
 | 2018-02-01 | 15 |
 | 2018-01-01 | 17 |
 
-## SQL ORDER BY syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL ORDER BY в Snowflake, Databricks, BigQuery и Redshift
 
-Since the ORDER BY clause is a SQL fundamental, data warehouses, including Snowflake, Databricks, Google BigQuery, and Amazon Redshift, all support the ability to add ORDER BY clauses in queries and window functions.
+Поскольку оператор ORDER BY является основополагающим в SQL, все хранилища данных, включая Snowflake, Databricks, Google BigQuery и Amazon Redshift, поддерживают возможность добавления операторов ORDER BY в запросы и оконные функции.
 
-## ORDER BY use cases
+## Сценарии использования ORDER BY
 
-We most commonly see the ORDER BY clause used in data work to:
-- Analyze data for both initial exploration of raw data sources and ad hoc querying of [mart datasets](/best-practices/how-we-structure/4-marts)
-- Identify the top 5/10/50/100 of a dataset when used in pair with a [LIMIT](/sql-reference/limit)
-- (For Snowflake) Optimize the performance of large incremental models that use both a `cluster_by` [configuration](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#using-cluster_by) and ORDER BY statement
-- Control the ordering of window function partitions (ex. `row_number() over (partition by user_id order by updated_at)`)
+Чаще всего оператор ORDER BY используется в аналитической работе для:
+- Анализа данных как для первоначального изучения сырых источников данных, так и для разовых запросов к [набору данных mart](/best-practices/how-we-structure/4-marts)
+- Определения топ-5/10/50/100 наборов данных при использовании в паре с [LIMIT](/sql-reference/limit)
+- (Для Snowflake) Оптимизации производительности больших инкрементальных моделей, которые используют как `cluster_by` [конфигурацию](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#using-cluster_by), так и оператор ORDER BY
+- Контроля порядка разделов оконных функций (например, `row_number() over (partition by user_id order by updated_at)`)
 
-This isn’t an extensive list of where your team may be using the ORDER BY clause throughout your dbt models, ad hoc queries, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать оператор ORDER BY в ваших моделях dbt, разовых запросах и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

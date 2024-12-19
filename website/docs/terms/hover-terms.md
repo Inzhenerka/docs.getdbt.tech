@@ -1,125 +1,125 @@
----
+```yaml
 cte: 
   displayText: CTE
-  hoverSnippet: A Common Table Expression (CTE) is a temporary result set that can be used in a SQL query. You can use CTEs to break up complex queries into simpler blocks of code that can connect and build on each other.
+  hoverSnippet: Общая таблица выражений (CTE) — это временный набор результатов, который можно использовать в SQL-запросе. Вы можете использовать CTE для разбивки сложных запросов на более простые блоки кода, которые могут соединяться и строиться друг на друге.
 
 dag:
   displayText: DAG
-  hoverSnippet: A DAG is a Directed Acyclic Graph, a type of graph whose nodes are directionally related to each other and don’t form a directional closed loop.
+  hoverSnippet: DAG — это направленный ациклический граф, тип графа, в котором узлы направленно связаны друг с другом и не образуют направленного замкнутого цикла.
 
 data-extraction:
-  displayText: data extraction
-  hoverSnippet: Data extraction is the process by which data is retrieved from multiple sources, often varying in volume and structure.
+  displayText: извлечение данных
+  hoverSnippet: Извлечение данных — это процесс, с помощью которого данные извлекаются из нескольких источников, часто различающихся по объему и структуре.
 
 data-lake:
-  displayText: data lake
-  hoverSnippet: A data lake is a data management system used for storing large amounts of data in in its raw, native form as files. Data lakes can store any type of data—structured, semi-structured, unstructured—in one centralized place.
+  displayText: озеро данных
+  hoverSnippet: Озеро данных — это система управления данными, используемая для хранения больших объемов данных в их сыром, исходном виде в виде файлов. Озера данных могут хранить любые типы данных — структурированные, полуструктурированные, неструктурированные — в одном централизованном месте.
 
 data-lineage:
-  displayText: data lineage
-  hoverSnippet: Data lineage provides a holistic view of how data moves through an organization, where it’s transformed and consumed.
+  displayText: происхождение данных
+  hoverSnippet: Происхождение данных предоставляет целостный обзор того, как данные перемещаются по организации, где они преобразуются и используются.
 
 data-warehouse:
-  displayText: data warehouse
-  hoverSnippet: A data warehouse is a data management system used for data storage and computing that allows for analytics activities such as transforming and sharing data.
+  displayText: хранилище данных
+  hoverSnippet: Хранилище данных — это система управления данными, используемая для хранения и обработки данных, которая позволяет выполнять аналитические действия, такие как преобразование и обмен данными.
 
 data-catalog:
-  displayText: data catalog
-  hoverSnippet: A data catalog is an inventory of data assets from different parts of the data stack within an organization. This catalog can display metadata, lineage, and business definitions from your different data sources.
+  displayText: каталог данных
+  hoverSnippet: Каталог данных — это инвентаризация активов данных из различных частей стека данных в организации. Этот каталог может отображать метаданные, происхождение и бизнес-определения из ваших различных источников данных.
 
 data-wrangling: 
-  displayText: data wrangling
-  hoverSnippet: Data wrangling describes the different processes used to transform raw data into a consistent and easily usable format. The ultimate goal of data wrangling is to work in a way that allows you to dive right into analysis on a dataset or build upon that data.
+  displayText: обработка данных
+  hoverSnippet: Обработка данных описывает различные процессы, используемые для преобразования сырых данных в согласованный и легко используемый формат. Конечная цель обработки данных — работать таким образом, чтобы можно было сразу приступить к анализу набора данных или развивать эти данные.
 
 dataframe:
-  displayText: dataframe  
-  hoverSnippet: A DataFrame is a two-dimensional data structure (rows and columns). It's the most common way of representing and interacting with large datasets in Python.
+  displayText: датафрейм  
+  hoverSnippet: Датафрейм — это двумерная структура данных (строки и столбцы). Это наиболее распространенный способ представления и взаимодействия с большими наборами данных в Python.
 
 ddl:
   displayText: DDL  
-  hoverSnippet: Data Definition Language (DDL) is a group of SQL statements that you can execute to manage database objects, including tables, views, and more.
+  hoverSnippet: Язык определения данных (DDL) — это группа SQL-операторов, которые вы можете выполнять для управления объектами базы данных, включая таблицы, представления и другие.
 
 deploying: 
-  displayText: Deploying
-  hoverSnippet: Deploying dbt in production means setting up a system to run a dbt job on a schedule, rather than running dbt commands manually from the command line.
+  displayText: Развертывание
+  hoverSnippet: Развертывание dbt в производственной среде означает настройку системы для запуска задания dbt по расписанию, а не выполнения команд dbt вручную из командной строки.
 
 dimensional-modeling:
-  displayText: dimensional modeling
-  hoverSnippet: Dimensional modeling is a data modeling technique where you break data up into “facts” and “dimensions” to organize and describe entities within your data warehouse.
+  displayText: многомерное моделирование
+  hoverSnippet: Многомерное моделирование — это техника моделирования данных, при которой данные разбиваются на «факты» и «измерения» для организации и описания сущностей в вашем хранилище данных.
 
 dml:
   displayText: DML  
-  hoverSnippet: Data Manipulation Language (DML) is a class of SQL statements that are used to query, edit, add and delete row-level data from database tables or views. The main DML statements are SELECT, INSERT, DELETE, and UPDATE. 
+  hoverSnippet: Язык манипуляции данными (DML) — это класс SQL-операторов, которые используются для запроса, редактирования, добавления и удаления данных на уровне строк из таблиц или представлений базы данных. Основные операторы DML — это SELECT, INSERT, DELETE и UPDATE. 
 
 dry:
   displayText: DRY  
-  hoverSnippet: DRY is a software development principle that stands for “Don’t Repeat Yourself.” Living by this principle means that your aim is to reduce repetitive patterns and duplicate code and logic in favor of modular and referenceable code.
+  hoverSnippet: DRY — это принцип разработки программного обеспечения, который означает «Не повторяйся». Соблюдение этого принципа означает, что ваша цель — уменьшить повторяющиеся шаблоны и дублирующийся код и логику в пользу модульного и ссылочного кода.
 
 edw:
   displayText: EDW  
-  hoverSnippet: An Enterprise Data Warehouse (EDW), like any other data warehouse, is a collection of databases that centralize a business's information from multiple sources and applications.
+  hoverSnippet: Корпоративное хранилище данных (EDW), как и любое другое хранилище данных, представляет собой коллекцию баз данных, которые централизуют информацию бизнеса из нескольких источников и приложений.
 
 elt:
   displayText: ELT  
-  hoverSnippet: Extract, Load, Transform (ELT) is the process of first extracting data from different data sources, loading it into a target data warehouse, and finally transforming it.
+  hoverSnippet: Извлечение, загрузка, преобразование (ELT) — это процесс, при котором сначала извлекаются данные из различных источников данных, затем загружаются в целевое хранилище данных, и, наконец, преобразуются.
 
 etl:
   displayText: ETL
-  hoverSnippet: Extract, Transform, Load (ETL) is the process of first extracting data from a data source, transforming it, and then loading it into a target data warehouse.
+  hoverSnippet: Извлечение, преобразование, загрузка (ETL) — это процесс, при котором сначала извлекаются данные из источника данных, затем преобразуются, а затем загружаются в целевое хранилище данных.
 
 grain:
-  displayText: grain  
-  hoverSnippet: Your data's grain is the combination of columns at which records in a table are unique. Ideally, this is captured in a single column and a unique primary key.
+  displayText: зерно  
+  hoverSnippet: Зерно ваших данных — это комбинация столбцов, по которым записи в таблице уникальны. В идеале это фиксируется в одном столбце и уникальном первичном ключе.
 
 idempotent:
-  displayText: idempotent
-  hoverSnippet: Idempotent describes a process that gives you the same result no matter how many times you run it.
+  displayText: идемпотентный
+  hoverSnippet: Идемпотентный описывает процесс, который дает вам один и тот же результат, независимо от того, сколько раз вы его выполняете.
 
 json:
   displayText: JSON
-  hoverSnippet: JSON (JavaScript Object Notation) is a minimal format for semi-structured data used to capture relationships between fields and values.
+  hoverSnippet: JSON (JavaScript Object Notation) — это минимальный формат для полуструктурированных данных, используемый для захвата отношений между полями и значениями.
 
 materialization:
-  displayText: materialization 
-  hoverSnippet: The exact Data Definition Language (DDL) that dbt will use when creating the model’s equivalent in a data warehouse. 
+  displayText: материализация 
+  hoverSnippet: Точный язык определения данных (DDL), который dbt будет использовать при создании эквивалента модели в хранилище данных. 
 
 model: 
-  hoverSnippet: A model is an essential building block of the DAG
-  displayText: model
+  hoverSnippet: Модель — это основной строительный блок DAG
+  displayText: модель
 
 monotonically-increasing:
-  displayText: monotonically increasing 
-  hoverSnippet: A monotonically-increasing sequence is a sequence whose values are sorted in ascending order and do not decrease. For example, the sequences 1, 6, 7, 11, 131 or 2, 5, 5, 5, 6, 10.
+  displayText: монотонно возрастающий 
+  hoverSnippet: Монотонно возрастающая последовательность — это последовательность, значения которой отсортированы в порядке возрастания и не уменьшаются. Например, последовательности 1, 6, 7, 11, 131 или 2, 5, 5, 5, 6, 10.
 
 predicate-pushdown:
-  displayText: Predicate pushdown
-  hoverSnippet: A predicate pushdown is an expression used to determine what rows in a database apply to a particular query
+  displayText: Понижение предиката
+  hoverSnippet: Понижение предиката — это выражение, используемое для определения, какие строки в базе данных применимы к конкретному запросу.
 
 primary-key:
-  displayText: primary key  
-  hoverSnippet: A primary key is a non-null column in a database object that uniquely identifies each row.
+  displayText: первичный ключ  
+  hoverSnippet: Первичный ключ — это ненулевой столбец в объекте базы данных, который уникально идентифицирует каждую строку.
 
 relational-database:
-  displayText: relational database
-  hoverSnippet: A relational database provides a structured way to store data into tables consisting of rows and columns. Different tables in a relational database can be joined together using common columns from each table, forming relationships.
+  displayText: реляционная база данных
+  hoverSnippet: Реляционная база данных предоставляет структурированный способ хранения данных в таблицах, состоящих из строк и столбцов. Разные таблицы в реляционной базе данных могут быть объединены с использованием общих столбцов из каждой таблицы, формируя отношения.
 
 reverse-etl:
-  displayText: reverse ETL
-  hoverSnippet: Reverse ETL is the process of getting your transformed data stored in your data warehouse to end business platforms, such as sales CRMs and ad platforms. 
+  displayText: обратный ETL
+  hoverSnippet: Обратный ETL — это процесс передачи ваших преобразованных данных, хранящихся в вашем хранилище данных, в конечные бизнес-платформы, такие как CRM для продаж и рекламные платформы. 
 
 subquery:
-  displayText: subquery
-  hoverSnippet: A subquery is a query within another query. Subqueries are often used when you need to process data in multiple steps.
+  displayText: подзапрос
+  hoverSnippet: Подзапрос — это запрос внутри другого запроса. Подзапросы часто используются, когда вам нужно обработать данные в несколько этапов.
 
 surrogate-key:
-  displayText: surrogate key  
-  hoverSnippet: A surrogate key is a unique identifier derived from the data itself. It often takes the form of a hashed value of multiple columns that will create a uniqueness constraint for each row.
+  displayText: суррогатный ключ  
+  hoverSnippet: Суррогатный ключ — это уникальный идентификатор, полученный из самих данных. Он часто принимает форму хэшированного значения нескольких столбцов, которые создадут ограничение уникальности для каждой строки.
 
 table:
-  displayText:  table 
-  hoverSnippet: In simplest terms, a table is the direct storage of data in rows and columns.  Think excel sheet with raw values in each of the cells.  
+  displayText: таблица 
+  hoverSnippet: В самых простых терминах таблица — это прямое хранилище данных в строках и столбцах. Подумайте о таблице Excel с сырыми значениями в каждой из ячеек.  
 
 view:
-  displayText: view  
-  hoverSnippet: A view (as opposed to a table) is a defined passthrough SQL query that can be run against a database (or data warehouse).
----
+  displayText: представление  
+  hoverSnippet: Представление (в отличие от таблицы) — это определенный SQL-запрос, который можно выполнить против базы данных (или хранилища данных).
+```

@@ -1,29 +1,29 @@
 ---
 id: between
 title: SQL BETWEEN
-description: The SQL BETWEEN condition allows you to specify a range of numerical, date-type, or text values to filter rows on in a query.
+description: Условие SQL BETWEEN позволяет указать диапазон числовых, датированных или текстовых значений для фильтрации строк в запросе.
 slug: /sql-reference/between
 ---
 
 <head>
-    <title>Working with the SQL BETWEEN operator</title>
+    <title>Работа с оператором SQL BETWEEN</title>
 </head>
 
-The SQL BETWEEN condition allows you to specify a range of numerical, date-type, or text values to filter rows on in a query. It’s particularly useful during ad hoc analysis work to narrow query results on a specific data range.
+Условие SQL BETWEEN позволяет указать диапазон числовых, датированных или текстовых значений для фильтрации строк в запросе. Оно особенно полезно при проведении анализа для сужения результатов запроса по определенному диапазону данных.
 
-In this page, we’ll dive into how to use the SQL BETWEEN condition and elaborate on why it might be useful to you.
+На этой странице мы подробно рассмотрим, как использовать условие SQL BETWEEN, и объясним, почему оно может быть полезно для вас.
 
-## How to use the SQL BETWEEN condition
+## Как использовать условие SQL BETWEEN
 
-The BETWEEN condition has a simple syntax and should be passed in a WHERE clause:
+Условие BETWEEN имеет простую синтаксис и должно быть указано в предложении WHERE:
 
 `where <field_name> between <beginning_value> and <end_value>`
 
-It’s important to note that the BETWEEN condition is inclusive of `beginning_value` and `end_value`.
+Важно отметить, что условие BETWEEN включает в себя `beginning_value` и `end_value`.
 
-Let’s take a look at a practical example using the BETWEEN condition  below.
+Давайте рассмотрим практический пример использования условия BETWEEN ниже.
 
-### SQL BETWEEN example
+### Пример SQL BETWEEN
 
 ```sql
 select
@@ -34,7 +34,7 @@ from {{ ref('orders') }}
 where order_date between '2018-01-01' and '2018-01-31'
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table  will return all rows where the `order_date` falls during January 2018:
+Этот простой запрос, использующий таблицу [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders`, вернет все строки, где `order_date` попадает в январь 2018 года:
 
 | **customer_id** | **order_id** | **order_date** |
 |:---:|:---:|:---:|
@@ -45,28 +45,28 @@ This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle
 | 64 | 5 | 2018-01-05 |
 | 54 | 6 | 2018-01-07 |
 
-Alternatively, you could build this same query using >/= operators (`where order_date >= 2018-01-01' and order_date <= '2018-01-31'` or `where order_date >= '2018-01-01' and order_date < '2018-02-01'`).
+В качестве альтернативы вы можете построить этот же запрос, используя операторы >/= (`where order_date >= '2018-01-01' and order_date <= '2018-01-31'` или `where order_date >= '2018-01-01' and order_date < '2018-02-01'`).
 
-You may additionally see the NOT clause used in front of BETWEEN to exclude rows that fall between specified ranges.
+Вы также можете увидеть использование NOT перед BETWEEN для исключения строк, которые попадают в указанные диапазоны.
 
-## BETWEEN syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис BETWEEN в Snowflake, Databricks, BigQuery и Redshift
 
-Most, if not all, modern data warehouses support the BETWEEN condition; the syntax is also the same across them. If your data warehouse does not support the BETWEEN condition, consider using the >/= operators similar to the example outlined above.
+Большинство, если не все, современные хранилища данных поддерживают условие BETWEEN; синтаксис также одинаков во всех них. Если ваше хранилище данных не поддерживает условие BETWEEN, рассмотрите возможность использования операторов >/= аналогично приведенному выше примеру.
 
-Use the table below to read more on the documentation for the BETWEEN operator in your data warehouse.
+Используйте таблицу ниже, чтобы узнать больше о документации для оператора BETWEEN в вашем хранилище данных.
 
-| **Data warehouse** | **BETWEEN support?** |
+| **Хранилище данных** | **Поддержка BETWEEN?** |
 |:---:|:---:|
 | Snowflake | ✅ |
 | Databricks | ✅ |
 | Amazon Redshift | ✅ |
 | Google BigQuery | ✅ |
 
-## SQL BETWEEN condition use cases
+## Сценарии использования условия SQL BETWEEN
 
-You’ll most commonly see the BETWEEN condition used in data work to:
-- Filter query results to be in a specified date range
-- Create buckets for data using case statements, common for bucketing web session engagement or NPS score classification
+Чаще всего вы увидите условие BETWEEN, используемое в работе с данными для:
+- Фильтрации результатов запроса по заданному диапазону дат
+- Создания групп для данных с использованием операторов case, что часто используется для группировки вовлеченности веб-сессий или классификации NPS-оценок
 
 ```sql
 case when time_engaged between 0 and 9 then 'low_engagement'
@@ -74,4 +74,4 @@ case when time_engaged between 0 and 9 then 'low_engagement'
      else 'high_engagement' end as engagement
 ```
 
-This isn’t an extensive list of where your team may be using the BETWEEN condition throughout your dbt models or ad hoc analyses, but contains some common scenarios analytics engineers may encounter.
+Это не исчерпывающий список того, где ваша команда может использовать условие BETWEEN в ваших моделях dbt или в рамках ад hoc анализов, но он содержит некоторые распространенные сценарии, с которыми могут столкнуться аналитические инженеры.

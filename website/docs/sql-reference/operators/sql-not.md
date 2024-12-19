@@ -1,35 +1,35 @@
 ---
 id: not
 title: SQL NOT
-description: The SQL NOT operator allows you to return results from conditions that are not true. he NOT boolean is kind of similar to an adjective—it’s often put in front of another operator. 
+description: Оператор SQL NOT позволяет возвращать результаты из условий, которые не являются истинными. Логическое значение NOT похоже на прилагательное — его часто ставят перед другим оператором.
 slug: /sql-reference/not
 ---
 
 <head>
-    <title>Working with the SQL NOT operator</title>
+    <title>Работа с оператором SQL NOT</title>
 </head>
 
-This will be a not *not* useful page on a helpful SQL operator.
+Это будет не *не* полезная страница о полезном операторе SQL.
 
-Ok we had to get that out of the way. The SQL NOT operator allows you to return results from conditions that are not true. Pretty intuitive, right?
+Хорошо, с этим разобрались. Оператор SQL NOT позволяет возвращать результаты из условий, которые не являются истинными. Довольно интуитивно, не так ли?
 
-In this page, we’ll dive into how to use the NOT operator, demonstrate an example, and elaborate on potential use cases.
+На этой странице мы углубимся в то, как использовать оператор NOT, продемонстрируем пример и подробно рассмотрим потенциальные случаи использования.
 
-## How to use the SQL NOT operator
+## Как использовать оператор SQL NOT
 
-The NOT boolean is kind of similar to an adjective—it’s often put in front of another operator, such as [BETWEEN](/sql-reference/between), [LIKE](/sql-reference/like)/[ILIKE](/sql-reference/ilike), IS, and [IN](/sql-reference/in), to return rows that do not meet the specified criteria. Below is an example of how to use NOT in front of a LIKE operator:
+Логическое значение NOT похоже на прилагательное — его часто ставят перед другим оператором, таким как [BETWEEN](/sql-reference/between), [LIKE](/sql-reference/like)/[ILIKE](/sql-reference/ilike), IS и [IN](/sql-reference/in), чтобы вернуть строки, которые не соответствуют заданным критериям. Ниже приведен пример использования NOT перед оператором LIKE:
 
 `where <field_name> not like <value>`
 
-This syntax can be easily modified for other operators:
+Этот синтаксис можно легко модифицировать для других операторов:
 - `where not between <value_1> and <value_2>`
 - `where <field_name> is not null`
 - `where <field_name> is not in (array_of_options)`
-- …or placed altogether in a different place, such as a case statement (ex. `case when <field_name> is not null then 1 else 0 end`)
+- …или разместить все это в другом месте, например, в операторе case (например, `case when <field_name> is not null then 1 else 0 end`)
 
-Let’s dive into a practical example using the NOT operator.
+Давайте рассмотрим практический пример использования оператора NOT.
 
-### SQL NOT example
+### Пример SQL NOT
 
 ```sql
 select
@@ -40,7 +40,7 @@ from {{ ref('payments') }}
 where payment_method not like '%card' 
 ```
 
-This simple query using the sample dataset [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `payments` table is returning all rows whose `payment_method` is not a card-type (ex. gift card  or credit card):
+Этот простой запрос, использующий образец данных из таблицы `payments` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), возвращает все строки, у которых `payment_method` не является карточным типом (например, подарочная карта или кредитная карта):
 
 | **payment_id** | **order_id** | **payment_method** |
 |:---:|:---:|:---:|
@@ -49,10 +49,10 @@ This simple query using the sample dataset [Jaffle Shop’s](https://github.com/
 | 5 | 5 | bank_transfer |
 | 10 | 9 | bank_transfer |
 
-## SQL NOT syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL NOT в Snowflake, Databricks, BigQuery и Redshift
 
-[Snowflake](https://docs.snowflake.com/en/sql-reference/operators-logical.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/not.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators), and [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_logical_condition.html) all support the NOT operator, but may not all support secondary operators you would typically use the NOT operator in pair with. For example, `where <field_name> not ilike <pattern>` is valid in Snowflake, Databricks, and Redshift, but the ILIKE operator is not supported in BigQuery, so this example would not be valid across all data warehouses.
+[Snowflake](https://docs.snowflake.com/en/sql-reference/operators-logical.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/not.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/operators) и [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_logical_condition.html) все поддерживают оператор NOT, но не все могут поддерживать вторичные операторы, которые вы обычно используете в паре с оператором NOT. Например, `where <field_name> not ilike <pattern>` является допустимым в Snowflake, Databricks и Redshift, но оператор ILIKE не поддерживается в BigQuery, поэтому этот пример не будет действителен во всех хранилищах данных.
 
-## NOT operator example use cases
+## Примеры использования оператора NOT
 
-There are probably many scenarios where you’d want to use the NOT operators in your WHERE clauses or case statements, but we commonly see NOT operators used to remove nulls or boolean-identifed deleted rows in source data in [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). This removal of unnecessary rows can potentially help the performance of downstream [intermediate](https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate) and [mart models](https://docs.getdbt.com/best-practices/how-we-structure/4-marts).
+Существует множество сценариев, в которых вы можете захотеть использовать операторы NOT в ваших предложениях WHERE или операторах case, но мы часто видим, что операторы NOT используются для удаления null-значений или строк, помеченных как удаленные, в исходных данных в [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging). Удаление ненужных строк может потенциально помочь в производительности последующих [intermediate](https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate) и [mart models](https://docs.getdbt.com/best-practices/how-we-structure/4-marts).

@@ -1,94 +1,93 @@
 ---
 id: reverse-etl
-title: Reverse ETL
-description:  Reverse ETL is the process of getting your transformed data stored in your data warehouse to end business platforms, such as sales CRMs and ad platforms.
-displayText: reverse ETL
-hoverSnippet: Reverse ETL is the process of getting your transformed data stored in your data warehouse to end business platforms, such as sales CRMs and ad platforms. 
+title: Обратный ETL
+description: Обратный ETL — это процесс передачи ваших преобразованных данных, хранящихся в вашем хранилище данных, в конечные бизнес-платформы, такие как CRM для продаж и рекламные платформы.
+displayText: обратный ETL
+hoverSnippet: Обратный ETL — это процесс передачи ваших преобразованных данных, хранящихся в вашем хранилище данных, в конечные бизнес-платформы, такие как CRM для продаж и рекламные платформы. 
 ---
 
 <head>
-    <title>Reverse ETL, demystified: What it is in plain english</title>
+    <title>Обратный ETL, разъясненный: что это такое на простом языке</title>
 </head>
 
-Reverse ETL is the process of getting your transformed data stored in your data warehouse to end business platforms, such as sales CRMs and ad platforms. Once in an end platform, that data is often used to drive meaningful business actions, such as creating custom audiences in ad platforms, personalizing email campaigns, or supplementing data in a sales CRM. You may also hear about reverse ETL referred to as operational analytics or data activation.
+Обратный ETL — это процесс передачи ваших преобразованных данных, хранящихся в вашем хранилище данных, в конечные бизнес-платформы, такие как CRM для продаж и рекламные платформы. После попадания на конечную платформу эти данные часто используются для осуществления значимых бизнес-действий, таких как создание пользовательских аудиторий в рекламных платформах, персонализация email-кампаний или дополнение данных в CRM для продаж. Вы также можете слышать, что обратный ETL называют операционной аналитикой или активацией данных.
 
-Reverse ETL efforts typically happen after data teams have set up their [modern data stack](https://www.getdbt.com/blog/future-of-the-modern-data-stack/) and ultimately have a consistent and automated way to extract, load, and transform data. Data teams are also often responsible for setting up the pipelines to send down data to business platforms, and business users are typically responsible for *using the data* once it gets to their end platform.
+Обычно усилия по обратному ETL происходят после того, как команды данных настроили свой [современный стек данных](https://www.getdbt.com/blog/future-of-the-modern-data-stack/) и в конечном итоге имеют последовательный и автоматизированный способ извлечения, загрузки и преобразования данных. Команды данных также часто отвечают за настройку каналов для передачи данных в бизнес-платформы, а бизнес-пользователи, как правило, отвечают за *использование данных* после их поступления на конечную платформу.
 
-Ultimately, reverse ETL is a way to put data where the work is already happening, support self-service efforts, and help business users derive real action out of their data.
+В конечном итоге, обратный ETL — это способ разместить данные там, где уже происходит работа, поддерживать усилия по самообслуживанию и помогать бизнес-пользователям извлекать реальные действия из своих данных.
 
-## How reverse ETL works
+## Как работает обратный ETL
 
-In the reverse ETL process, transformed data is synced from a data warehouse to external tools in order to be leveraged by different business teams.
+В процессе обратного ETL преобразованные данные синхронизируются из хранилища данных с внешними инструментами, чтобы их могли использовать различные бизнес-команды.
 
-![A diagram depicting how the reverse ETL process works. It starts with data being extract from data sources like email CRMs, Facebook Ad platforms, backend databases, and NetSuite. The raw data is then loaded into a data warehouse. After loading, the data is transformed and modeled. The modeled data is then loaded directly back into the tools that created the data, like Email CRMs, Facebook Ad platforms, and others so the insights are more accessible to business users.](/img/docs/terms/reverse-etl/reverse-etl-diagram.png)
+![Диаграмма, изображающая, как работает процесс обратного ETL. Он начинается с извлечения данных из источников данных, таких как email-CRM, рекламные платформы Facebook, бэкенд-базы данных и NetSuite. Затем сырые данные загружаются в хранилище данных. После загрузки данные преобразуются и моделируются. Моделированные данные затем загружаются обратно в инструменты, которые создали данные, такие как email-CRM, рекламные платформы Facebook и другие, чтобы сделать инсайты более доступными для бизнес-пользователей.](/img/docs/terms/reverse-etl/reverse-etl-diagram.png)
 
-The power of reverse ETL comes from sending down *already transformed data* to business platforms. Raw data, while beautiful in its own way, typically lacks the structure, aggregations, and aliasing to be useful for end business users off the bat. After data teams transform data for business use in <Term id="elt" /> pipelines, typically to expose in an end business intelligence (BI) tool, they can also send this cleaned and meaningful data to other platforms where business users can derive value using [reverse ETL tools](#reverse-etl-tools).
+Сила обратного ETL заключается в передаче *уже преобразованных данных* в бизнес-платформы. Сырые данные, хотя и красивы по-своему, обычно не имеют структуры, агрегаций и псевдонимов, чтобы быть полезными для конечных бизнес-пользователей с самого начала. После того как команды данных преобразуют данные для бизнес-использования в <Term id="elt" /> каналах, обычно для отображения в конечном инструменте бизнес-аналитики (BI), они также могут отправить эти очищенные и значимые данные на другие платформы, где бизнес-пользователи могут извлекать ценность, используя [инструменты обратного ETL](#reverse-etl-tools).
 
-Data teams can choose to write additional transformations that may need to happen for end business tools in reverse ETL tools themselves or by creating [additional models in dbt](https://getdbt.com/open-source-data-culture/reverse-etl-playbook/).
+Команды данных могут выбрать написание дополнительных преобразований, которые могут потребоваться для конечных бизнес-инструментов, в самих инструментах обратного ETL или создав [дополнительные модели в dbt](https://getdbt.com/open-source-data-culture/reverse-etl-playbook/).
 
-## Why use reverse ETL?
+## Зачем использовать обратный ETL?
 
-There’s a few reasons why your team may want to consider using reverse ETL:
+Существует несколько причин, по которым вашей команде может быть интересно использовать обратный ETL:
 
-### Putting data where the work is happening
+### Размещение данных там, где происходит работа
 
-While most data teams would love it if business users spent a significant portion of their time in their BI tool, that’s neither practical nor necessarily the most efficient use of their time. In the real world, many business users will spend some time in a BI tool, identify the data that could be useful in a platform they spend a significant amount of time in, and work with the data team to get that data where they need it. Users feel comfortable and confident in the systems they use everyday—why not put the data in the places that allow them to thrive?
+Хотя большинство команд данных хотели бы, чтобы бизнес-пользователи проводили значительное время в своем инструменте BI, это не является ни практичным, ни, возможно, самым эффективным использованием их времени. В реальном мире многие бизнес-пользователи будут проводить некоторое время в инструменте BI, определять данные, которые могут быть полезны на платформе, где они проводят значительное количество времени, и работать с командой данных, чтобы получить эти данные там, где они нужны. Пользователи чувствуют себя комфортно и уверенно в системах, которые они используют каждый день — почему бы не разместить данные в местах, которые позволяют им процветать?
 
-### Manipulating data to fit end platform requirements
+### Манипулирование данными для соответствия требованиям конечной платформы
 
-Reverse ETL helps you to put data your business users need *in the format their end tool expects*. Oftentimes, end platforms expect data fields to be named or cast in a certain way. Instead of business users having to manually input those values in the correct format, you can transform your data using a product like dbt or directly in a reverse ETL tool itself, and sync down that data in an automated way.
+Обратный ETL помогает вам разместить данные, которые нужны вашим бизнес-пользователям, *в формате, который ожидает их конечный инструмент*. Часто конечные платформы ожидают, что поля данных будут названы или приведены к определенному типу. Вместо того чтобы бизнес-пользователям приходилось вручную вводить эти значения в правильном формате, вы можете преобразовать свои данные с помощью продукта, такого как dbt, или непосредственно в самом инструменте обратного ETL и синхронизировать эти данные автоматически.
 
-### Supporting self-service efforts
+### Поддержка усилий по самообслуживанию
 
-By sending down data-team approved data in reverse ETL pipelines, your business users have the flexibility to use that data however they see fit. Soon, your business users will be making audiences, testing personalization efforts, and running their end platform like a well-oiled, data-powered machine.
+Отправляя данные, одобренные командой данных, в каналах обратного ETL, ваши бизнес-пользователи получают гибкость использовать эти данные так, как они считают нужным. Вскоре ваши бизнес-пользователи будут создавать аудитории, тестировать усилия по персонализации и управлять своей конечной платформой как хорошо отлаженной, управляемой данными машиной.
 
+## Сценарии использования обратного ETL
 
-## Reverse ETL use cases
+Так же, как существует почти бесконечное количество возможностей с данными, существует множество потенциальных сценариев использования обратного ETL. Мы не будем углубляться в каждую возможную опцию, но рассмотрим некоторые общие сценарии использования, которые существуют для усилий по обратному ETL.
 
-Just as there are almost endless opportunities with data, there are many potential different use cases for reverse ETL. We won’t go into every possible option, but we’ll cover some of the common use cases that exist for reverse ETL efforts.
+### Персонализация
 
-### Personalization
+Обратный ETL позволяет бизнес-пользователям получать доступ к данным, к которым они обычно имели бы доступ только в инструменте BI, *в платформах, которые они используют каждый день*. В результате бизнес-пользователи теперь могут использовать эти данные для персонализации того, как они создают рекламу, отправляют электронные письма и общаются с клиентами.
 
-Reverse ETL allows business users to access data that they normally would only have access to in a BI tool *in the platforms they use every day*. As a result, business users can now use this data to personalize how they create ads, send emails, and communicate with customers.
+Персонализация была на пике популярности несколько лет назад, и теперь вы редко видите, чтобы электронное письмо приходило в ваш почтовый ящик без какой-либо персонализации. Команды данных, использующие обратный ETL, могут передавать важную информацию о клиентах, такую как местоположение, ценность клиента на протяжении жизни (CLV), стаж и другие поля, которые могут быть использованы для создания персонализированных электронных писем, установления соответствующего сообщения и сегментации потоков электронной почты. Все, что мы можем сказать: возможности для персонализации, поддерживаемой обратным ETL, безграничны.
 
-Personalization was all the hype a few years ago and now, you rarely ever see an email come into your inbox without some sort of personalization in-place. Data teams using reverse ETL are able to pass down important customer information, such as location, customer lifetime value (CLV), tenure, and other fields, that can be used to create personalized emails, establish appropriate messaging, and segment email flows. All we can say: the possibilities for personalization powered by reverse ETL are endless.
+### Сложные инициативы платной рекламы
 
-### Sophisticated paid marketing initiatives 
+В конечном итоге бизнесы хотят показывать правильные объявления правильным людям (и по правильной цене). Распространенный сценарий использования обратного ETL заключается в том, что команды используют свои данные о клиентах для создания аудиторий в рекламных платформах, чтобы либо обслуживать конкретные аудитории, либо создавать похожие. Хотя рекламные платформы стали все более сложными с их алгоритмами для определения высокоценных аудиторий, обычно не помешает попробовать дополнить эти аудитории своими данными для создания сложных аудиторий или похожих.
 
-At the end of the day, businesses want to serve the right ads to the right people (and at the right cost). A common use case for reverse ETL is for teams to use their customer data to create audiences in ad platforms to either serve specific audiences or create lookalikes. While ad platforms have gotten increasingly sophisticated with their algorithms to identify high-value audiences, it usually never hurts to try supplementing those audiences with your own data to create sophisticated audiences or lookalikes.
+### Культура аналитики самообслуживания
 
-### Self-service analytics culture
+Мы намекнули на это ранее, но усилия по обратному ETL могут быть эффективным способом продвижения культуры аналитики самообслуживания. Когда команды данных размещают данные там, где они нужны бизнес-пользователям, бизнес-пользователи могут уверенно получать к ним доступ самостоятельно, что приводит к еще более быстрым инсайтам и действиям. Вместо того чтобы запрашивать извлечение данных у члена команды данных, они могут находить необходимые данные непосредственно в платформе, которую они используют. Обратный ETL позволяет бизнес-пользователям действовать на основе метрик, которые уже были разработаны и проверены командами данных, без создания разовых запросов.
 
-We hinted at it earlier, but reverse ETL efforts can be an effective way to promote a self-service analytics culture. When data teams put the data where business users need it, business users can confidently access it on their own, driving even faster insights and action. Instead of requesting a data pull from a data team member, they can find the data they need directly within the platform that they use. Reverse ETL allows business users to act on metrics that have already been built out and validated by data teams without creating ad-hoc requests.
+### «Реальные» данные
 
-### “Real-time” data
+Было бы упущением не упомянуть обратный ETL и понятие «реальных» данных. Хотя вы можете обсудить значимость и истинную ценность реальных данных в другой раз, обратный ETL может быть механизмом для передачи данных в конечные бизнес-платформы более «реальным» образом.
 
-It would be amiss if we didn’t mention reverse ETL and the notion of “real-time” data. While you can have the debate over the meaningfulness and true value-add of real-time data another time, reverse ETL can be a mechanism to bring data to end business platforms in a more “real-time” way.
+Команды данных могут настраивать синхронизации в инструментах обратного ETL с более высокой частотой, позволяя бизнес-пользователям быстрее получать необходимые данные. Очевидно, существует некоторый анализ затрат и выгод относительно того, как часто вы хотите загружать данные через [инструменты ETL](https://www.getdbt.com/analytics-engineering/etl-tools-a-love-letter/) и обращаться к вашему хранилищу данных, но обратный ETL может помочь перемещать данные в внешние инструменты с более быстрой частотой, если это необходимо.
 
-Data teams can set up syncs in reverse ETL tools at higher cadences, allowing business users to have the data they need, faster. Obviously, there’s some cost-benefit analysis on how often you want to be loading data via [ETL tools](https://www.getdbt.com/analytics-engineering/etl-tools-a-love-letter/) and hitting your data warehouse, but reverse ETL can help move data into external tools at a quicker cadence if deemed necessary.
+Все это говорит о том, что нужно действовать осторожно в области «реального времени», понимать желания ваших заинтересованных сторон и процесс принятия решений относительно реальных данных и работать над решением, которое будет как практичным, так и эффективным.
 
-All this to say: move with caution in the realm of “real-time”, understand your stakeholders’ wants and decision-making process for real-time data, and work towards a solution that’s both practical and impactful.
+## Инструменты обратного ETL
 
-## Reverse ETL tools
+Инструменты обратного ETL обычно устанавливают соединение между вашим хранилищем данных и конечными бизнес-инструментами, предлагают интерфейс для создания дополнительных преобразований или аудиторий и поддерживают автоматизацию синхронизаций вниз по потоку. Ниже приведены некоторые примеры инструментов, которые поддерживают каналы обратного ETL.
 
-Reverse ETL tools typically establish the connection between your data warehouse and end business tools, offer an interface to create additional transformations or audiences, and support automation of downstream syncs. Below are some examples of tools that support reverse ETL pipelines.
-
-| Tool | Description | Open source option? |
+| Инструмент | Описание | Есть ли открытая версия? |
 |:---:|:---:|:---:|
-| Hightouch | A platform to sync data models and create custom audiences for downstream business platforms. | :x: |
-| Polytomic | A unified sync platform for syncing to and from data warehouses (ETL and Reverse ETL), databases, business apps, APIs, and spreadsheets. | :x: |
-| Census | Another reverse ETL tool that can sync data from your data warehouse to your go-to-market tools. | :x: |
-| Rudderstack | Also a CDP (customer data platform), Rudderstack additionally supports pushing down data and audience to external tools, such as ad platforms and email CRMs. | :white_check_mark: |
-| Grouparoo | Grouparoo, part of Airbyte, is an open source framework to move data from data warehouses to different cloud-based tools. | :white_check_mark: |
+| Hightouch | Платформа для синхронизации моделей данных и создания пользовательских аудиторий для бизнес-платформ. | :x: |
+| Polytomic | Унифицированная платформа синхронизации для синхронизации с хранилищами данных (ETL и обратный ETL), базами данных, бизнес-приложениями, API и электронными таблицами. | :x: |
+| Census | Еще один инструмент обратного ETL, который может синхронизировать данные из вашего хранилища данных в ваши инструменты выхода на рынок. | :x: |
+| Rudderstack | Также является CDP (платформой управления данными клиентов), Rudderstack дополнительно поддерживает передачу данных и аудиторий в внешние инструменты, такие как рекламные платформы и email-CRM. | :white_check_mark: |
+| Grouparoo | Grouparoo, часть Airbyte, является открытым фреймворком для перемещения данных из хранилищ данных в различные облачные инструменты. | :white_check_mark: |
 
-## Conclusion
+## Заключение
 
-Reverse ETL enables you to sync your transformed data stored in your data warehouse to external platforms often used by marketing, sales, and product teams. It allows you to leverage your data in a whole new way. Reverse ETL pipelines can support personalization efforts, sophisticated paid marketing initiatives, and ultimately offer new ways to leverage your data. In doing this, it creates a self-service analytics culture where stakeholders can receive the data they need in, in the places they need, in an automated way.
+Обратный ETL позволяет вам синхронизировать ваши преобразованные данные, хранящиеся в вашем хранилище данных, с внешними платформами, которые часто используются командами маркетинга, продаж и продуктов. Это позволяет вам использовать ваши данные совершенно новым способом. Каналы обратного ETL могут поддерживать усилия по персонализации, сложные инициативы платной рекламы и, в конечном итоге, предлагать новые способы использования ваших данных. Делая это, он создает культуру аналитики самообслуживания, где заинтересованные стороны могут получать необходимые данные в тех местах, где они нужны, автоматически.
 
-## Further reading
+## Дополнительное чтение
 
-If you’re interested learning more about reverse ETL and the impact it could have on your team, check out the following:
+Если вам интересно узнать больше об обратном ETL и его влиянии на вашу команду, ознакомьтесь с следующими материалами:
 
-- [How dbt Labs’s data team approaches reverse ETL](https://getdbt.com/open-source-data-culture/reverse-etl-playbook/)
-- [The operational data warehouse in action: Reverse ETL, CDPs, and the future of data activation](https://www.getdbt.com/coalesce-2021/operational-data-warehouse-reverse-etl-cdp-data-activation/)
-- [The analytics engineering guide: Operational analytics](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/)
+- [Как команда данных dbt Labs подходит к обратному ETL](https://getdbt.com/open-source-data-culture/reverse-etl-playbook/)
+- [Операционное хранилище данных в действии: обратный ETL, CDP и будущее активации данных](https://www.getdbt.com/coalesce-2021/operational-data-warehouse-reverse-etl-cdp-data-activation/)
+- [Руководство по аналитической инженерии: операционная аналитика](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/)

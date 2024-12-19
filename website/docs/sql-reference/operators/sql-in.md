@@ -1,50 +1,50 @@
 ---
 id: in
 title: SQL IN
-description: Read this guide to learn about the SQL IN operator in dbt.
+description: Прочитайте это руководство, чтобы узнать о операторе SQL IN в dbt.
 slug: /sql-reference/in
 ---
 
 <head>
-    <title>Working with the SQL IN Operator</title>
+    <title>Работа с оператором SQL IN</title>
 </head>
 
-It happens to the best of data people: The `orders` table always needs to filter out `status = employee_order` in order to get the accurate order counts. So you’re data model for the `orders` table looks a little something like this:
+Это случается даже с лучшими специалистами по данным: таблица `orders` всегда требует фильтрации `status = employee_order`, чтобы получить точное количество заказов. Таким образом, ваша модель данных для таблицы `orders` выглядит примерно так:
 
 ```sql
 select * from {{ source('backend_db', 'orders') }}
 where status != 'employee_order'
 ```
 
-What happens one day if there’s an additional `status` that needs to be filtered out? Well, that’s where the handy IN operator comes into play.
+Что произойдет, если однажды появится дополнительный `status`, который нужно будет отфильтровать? Вот тут-то и пригодится удобный оператор IN.
 
-The IN operator ultimately allows you to specify multiple values in a WHERE clause, so you can easily filter your query on multiple options. Using the IN operator is a more refined version of using multiple OR conditions in a WHERE clause.
+Оператор IN позволяет вам указывать несколько значений в условии WHERE, так что вы можете легко фильтровать ваш запрос по нескольким параметрам. Использование оператора IN является более изящным вариантом использования нескольких условий OR в условии WHERE.
 
-## How to use SQL IN operator
+## Как использовать оператор SQL IN
 
-In the scenario above if you now needed to filter on an additional new `status` value to remove certain rows, your use of the IN operator would look like this:
+В приведенном выше сценарии, если вам теперь нужно отфильтровать дополнительное новое значение `status`, чтобы удалить определенные строки, ваше использование оператора IN будет выглядеть так:
 
 ```sql
 select * from {{ source('backend_db', 'orders') }}
-where status not in ('employee_order', 'influencer_order') --list of order statuses to filter out
+where status not in ('employee_order', 'influencer_order') --список статусов заказов для фильтрации
 ```
 
-Woah woah woah, what is a `not in`? This is exactly what it sounds like: return all rows where the status is not `employee_order` or `influencer_order`. If you wanted to just use the IN operator, you can specify all other statuses that are appropriate (ex. `where status in ('regular_order', 'temp_order')`).
+Что такое `not in`? Это именно то, как это звучит: вернуть все строки, где статус не равен `employee_order` или `influencer_order`. Если вы хотите просто использовать оператор IN, вы можете указать все другие подходящие статусы (например, `where status in ('regular_order', 'temp_order')`).
 
-You can additionally use the IN/NOT IN operator for a subquery, to remove/include rows from a subquery’s result:
+Вы также можете использовать оператор IN/NOT IN для подзапроса, чтобы удалить/включить строки из результата подзапроса:
 
 ```sql
 where status in (select …)
 ```
 
-:::tip Compare columns against appropriate data types
-The only “gotcha” that really exists in using the IN operator is remembering that the values in your IN list **must** match the data type of the column they’re compared against. This is especially important for boolean columns that could be accidentally cast as strings.
+:::tip Сравнивайте столбцы с соответствующими типами данных
+Единственное "подводное камень", которое действительно существует при использовании оператора IN, это помнить, что значения в вашем списке IN **должны** соответствовать типу данных столбца, с которым они сравниваются. Это особенно важно для булевых столбцов, которые могут быть случайно приведены к строкам.
 :::
 
-## IN operator syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис оператора IN в Snowflake, Databricks, BigQuery и Redshift
 
-The IN operator, like most of the SQL operators, are not syntactically different across data warehouses. That means the syntax for using the IN/NOT IN operator is the same in Snowflake, Databricks, Google BigQuery, and Amazon Redshift.
+Оператор IN, как и большинство операторов SQL, не имеет синтаксических отличий между различными хранилищами данных. Это означает, что синтаксис для использования оператора IN/NOT IN одинаков в Snowflake, Databricks, Google BigQuery и Amazon Redshift.
 
-## IN operator use cases
+## Сценарии использования оператора IN
 
-Use the IN condition to filter out inappropriate or inaccurate rows from a query or database schema object based on parameters you define and understand. We guarantee there’s an IN somewhere in your dbt project 😀
+Используйте условие IN, чтобы отфильтровать неподходящие или неточные строки из запроса или объекта схемы базы данных на основе параметров, которые вы определяете и понимаете. Мы гарантируем, что оператор IN есть где-то в вашем проекте dbt 😀

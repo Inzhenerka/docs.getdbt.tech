@@ -1,39 +1,39 @@
 ---
 id: strings
-title: SQL Strings
-description: Strings in SQL are words or combination of characters that you’ll typically see encased in single quotes (ex. 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
+title: SQL Строки
+description: Строки в SQL — это слова или комбинации символов, которые обычно заключены в одинарные кавычки (например, 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
 slug: /sql-reference/strings
 ---
 
 <head>
-    <title>Working with the SQL Strings</title>
+    <title>Работа со строками SQL</title>
 </head>
 
-We can almost guarantee that there is not a single dbt model or table in your database that doesn’t have at least one column of a string type.
+Мы почти уверены, что в вашей базе данных нет ни одной модели или таблицы dbt, в которой не было бы хотя бы одного столбца строкового типа.
 
-Strings are everywhere in data—they allow folks to have descriptive text field columns, use regex in their data work, and honestly, they just make the data world go ‘round.
+Строки повсюду в данных — они позволяют пользователям иметь описательные текстовые поля, использовать регулярные выражения в своей работе с данными, и, честно говоря, они просто делают мир данных более понятным.
 
-Below, we’ll unpack the different string formats you might see in a modern cloud data warehouse and common use cases for strings.
+Ниже мы рассмотрим различные форматы строк, которые вы можете увидеть в современном облачном хранилище данных, и распространенные случаи использования строк.
 
-## Using SQL strings
+## Использование строк SQL
 
-Strings are inherent in your data—they’re the name fields that someone inputs when they sign up for an account, they represent the item someone bought from your ecommerce store, they describe the customer address, and so on.
+Строки являются неотъемлемой частью ваших данных — это именные поля, которые кто-то вводит при регистрации аккаунта, они представляют товар, который кто-то купил в вашем интернет-магазине, они описывают адрес клиента и так далее.
 
-To formalize it a bit, a string type is a word, or the combination of characters that you’ll typically see encased in single quotes (ex. 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
+Чтобы немного формализовать, строковый тип — это слово или комбинация символов, которые обычно заключены в одинарные кавычки (например, 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
 
-Most often, when you’re working with strings in a dbt model or query, you’re:
+Чаще всего, когда вы работаете со строками в модели dbt или запросе, вы:
 
-- Changing the casing (uppering/lowering) to create some standard for your string type columns in your data warehouse
-- Concatenating strings together to create more robust, uniform, or descriptive string values
-- Unnesting <Term id="json" /> or more complex structured data objects and converting those values to explicit strings
-- Casting a column of a different type to a string for better compatibility or usability in a BI tool
-- Filtering queries on certain string values
-- Creating a new string column type based off a CASE WHEN statement to bucket data by
-- Splitting a string into a substring
+- Изменяете регистр (верхний/нижний) для создания стандарта для ваших столбцов строкового типа в вашем хранилище данных
+- Конкатенируете строки, чтобы создать более надежные, унифицированные или описательные строковые значения
+- Разворачиваете <Term id="json" /> или более сложные структурированные объекты данных и преобразуете эти значения в явные строки
+- Приводите столбец другого типа к строковому для лучшей совместимости или удобства в инструменте BI
+- Фильтруете запросы по определенным строковым значениям
+- Создаете новый столбец строкового типа на основе оператора CASE WHEN для группировки данных
+- Разделяете строку на подстроку
 
-This is not an exhaustive list of string functionality or use cases, but contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список функциональности строк или случаев использования, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.
 
-### Strings in an example query
+### Строки в примере запроса
 
 ```sql
 select
@@ -44,7 +44,7 @@ where status not in ('returned', 'return_pending')
 group by 1
 ```
 
-This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return the order month as a string and rounded order amount for only orders with statuses not equal to `returned` or `pending` string values:
+Этот запрос, использующий таблицу [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) `orders`, вернет месяц заказа в виде строки и округленную сумму заказа только для заказов со статусами, не равными строковым значениям `returned` или `pending`:
 
 | order_month | avg_order_amount |
 |:---:|:---:|
@@ -53,8 +53,8 @@ This query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) 
 | 2018-03-01 | 18 |
 | 2018-04-01 | 17 |
 
-## String support in Snowflake, Databricks, BigQuery, and Redshift
+## Поддержка строк в Snowflake, Databricks, BigQuery и Redshift
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the string [data type](/sql-reference/data-types#string-data-types). They may have slightly varying sub-types for strings; some data warehouses such as Snowflake and Redshift support text, char, and character string types which typically differ in byte length in comparison to the generic string type.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают строковый [тип данных](/sql-reference/data-types#string-data-types). У них могут быть немного разные подтипы строк; некоторые хранилища данных, такие как Snowflake и Redshift, поддерживают текстовые, символьные и строковые типы, которые обычно отличаются по длине в байтах по сравнению с общим строковым типом.
 
-Again, since most string type columns are inherent in your data, you’ll likely be ok using generic varchar or strings for casting, but it never hurts to read up on the docs specific to your data warehouse string support!
+Снова, поскольку большинство столбцов строкового типа являются неотъемлемой частью ваших данных, вам, вероятно, будет удобно использовать общие varchar или строки для приведения типов, но никогда не помешает ознакомиться с документацией, касающейся поддержки строк в вашем хранилище данных!

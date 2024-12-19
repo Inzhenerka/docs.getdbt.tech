@@ -1,21 +1,21 @@
 ---
 id: limit
 title: SQL LIMIT
-description: Read this guide to learn about the SQL LIMIT clause in dbt.
+description: Прочитайте это руководство, чтобы узнать о SQL LIMIT в dbt.
 slug: /sql-reference/limit
 ---
 
 <head>
-    <title>Working with the SQL LIMIT clause</title>
+    <title>Работа с SQL LIMIT</title>
 </head>
 
-When you’re developing data models or drafting up a query, do you usually need to see all results from it? Not normally. Hence, we LIMIT.
+Когда вы разрабатываете модели данных или составляете запрос, вам обычно нужно видеть все результаты? Обычно нет. Поэтому мы используем LIMIT.
 
-Adding the LIMIT clause to a query will limit the number of rows returned. It’s useful for when you’re developing data models, ensuring SQL in a query is functioning as expected, and wanting to save some money during development periods.
+Добавление оператора LIMIT в запрос ограничит количество возвращаемых строк. Это полезно, когда вы разрабатываете модели данных, проверяете, работает ли SQL в запросе так, как ожидается, и хотите сэкономить деньги в период разработки.
 
-## How to use the LIMIT clause in a query
+## Как использовать оператор LIMIT в запросе
 
-To limit the number of rows returned from a query, you would pass the LIMIT in the last line of the query with the number of rows you want returned:
+Чтобы ограничить количество возвращаемых строк из запроса, вы должны указать LIMIT в последней строке запроса с количеством строк, которые вы хотите получить:
 
 ```sql
 select
@@ -24,9 +24,9 @@ from my_data_source
 limit <integer>
 ```
 
-Let’s take a look at a practical example using LIMIT below.
+Давайте рассмотрим практический пример использования LIMIT ниже.
 
-### LIMIT example
+### Пример LIMIT
 
 ```sql
 select
@@ -38,7 +38,7 @@ order by 2
 limit 5
 ```
 
-This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table will return these exact 5 rows:
+Этот простой запрос, использующий таблицу `orders` из [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет ровно эти 5 строк:
 
 | order_id | order_date | order_rnk |
 |:---:|:---:|:---:|
@@ -48,27 +48,27 @@ This simple query using the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle
 | 4 | 2018-01-05 | 4 |
 | 5 | 2018-01-05 | 4 |
 
-After ensuring that this is the result you want from this query, you can omit the LIMIT in your final data model.
+После того как вы убедитесь, что это именно тот результат, который вы хотите получить из этого запроса, вы можете опустить LIMIT в вашей окончательной модели данных.
 
-:::tip Save money and time by limiting data in development
-You could limit your data used for development by manually adding a LIMIT statement, a WHERE clause to your query, or by using a [dbt macro to automatically limit data based](/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) on your development environment to help reduce your warehouse usage during dev periods.
+:::tip Сэкономьте деньги и время, ограничивая данные в процессе разработки
+Вы можете ограничить данные, используемые для разработки, вручную добавив оператор LIMIT, условие WHERE в ваш запрос или используя [макрос dbt для автоматического ограничения данных](/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) в вашей среде разработки, чтобы помочь сократить использование вашего хранилища данных в период разработки.
 :::
 
-## LIMIT syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис LIMIT в Snowflake, Databricks, BigQuery и Redshift
 
-All modern data warehouses support the ability to LIMIT a query and the syntax is also the same across them. Use the table below to read more on the documentation for limiting query results in your data warehouse.
+Все современные хранилища данных поддерживают возможность LIMIT в запросе, и синтаксис также одинаков во всех них. Используйте таблицу ниже, чтобы узнать больше о документации по ограничению результатов запросов в вашем хранилище данных.
 
-| Data warehouse | LIMIT support? |
+| Хранилище данных | Поддержка LIMIT? |
 |:---:|:---:|
 | Snowflake | ✅ |
 | Databricks | ✅ |
 | Amazon Redshift | ✅ |
 | Google BigQuery | ✅ |
 
-## LIMIT use cases
+## Сценарии использования LIMIT
 
-We most commonly see queries limited in data work to:
-- Save some money in development work, especially for large datasets;  just make sure the model works across a subset of the data instead of all of the data 💸
-- Paired with an ORDER BY statement, grab the top 5, 10, 50, 100, etc. entries from a dataset
+Чаще всего мы видим, что запросы ограничиваются в работе с данными для:
+- Экономии средств в процессе разработки, особенно для больших наборов данных; просто убедитесь, что модель работает на подмножестве данных, а не на всех данных 💸
+- В паре с оператором ORDER BY, чтобы получить верхние 5, 10, 50, 100 и т.д. записей из набора данных
 
-This isn’t an extensive list of where your team may be using LIMIT throughout your development work, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать LIMIT в процессе разработки, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

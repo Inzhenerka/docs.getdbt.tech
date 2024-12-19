@@ -1,33 +1,33 @@
 ---
 id: sum
 title: SQL SUM 
-description: The SUM aggregate function allows you to calculate the sum of a numeric column or across a set of rows for a column.
+description: Функция агрегирования SUM позволяет вам вычислить сумму числового столбца или по набору строк для столбца.
 slug: /sql-reference/sum
 ---
 
 <head>
-    <title>Working with SQL SUM</title>
+    <title>Работа с SQL SUM</title>
 </head>
 
-The SQL SUM function is handy and ever-present in data work. Let’s unpack what it is, how to use it, and why it's valuable.
+Функция SQL SUM полезна и всегда присутствует в работе с данными. Давайте разберемся, что это такое, как ее использовать и почему она ценна.
 
-Jumping into it, the SUM aggregate function allows you to calculate the sum of a numeric column or across a set of rows for a column. Ultimately, the SUM function is incredibly useful for calculating meaningful business metrics, such as Lifetime Value (LTV), and creating key numeric fields in [`fct_` and `dim_` models](https://www.getdbt.com/blog/guide-to-dimensional-modeling).
+Начнем с того, что функция агрегирования SUM позволяет вам вычислить сумму числового столбца или по набору строк для столбца. В конечном итоге функция SUM невероятно полезна для расчета значимых бизнес-метрик, таких как Пожизненная ценность клиента (LTV), и создания ключевых числовых полей в [`fct_` и `dim_` моделях](https://www.getdbt.com/blog/guide-to-dimensional-modeling).
 
-## How to use the SUM function in a query
+## Как использовать функцию SUM в запросе
 
-Use the following syntax in a query to find the sum of a numeric field:
+Используйте следующий синтаксис в запросе, чтобы найти сумму числового поля:
 
 `sum(<field_name>)`
 
-Since SUM is an aggregate function, you’ll need a GROUP BY statement in your query if you’re looking at counts broken out by dimension(s). If you’re calculating the standalone sum of a numeric field without the need to break them down by another field, you don’t need a GROUP BY statement.
+Поскольку SUM является агрегирующей функцией, вам потребуется оператор GROUP BY в вашем запросе, если вы хотите получить количество, разбитое по измерениям. Если вы вычисляете отдельную сумму числового поля без необходимости разбивать ее по другому полю, оператор GROUP BY не нужен.
 
-SUM can also be used as a window function to operate across specified or partitioned rows. You can additionally pass a DISTINCT statement into a SUM function to only sum distinct values in a column.
+SUM также может использоваться как оконная функция для работы с указанными или разделенными строками. Вы также можете передать оператор DISTINCT в функцию SUM, чтобы суммировать только уникальные значения в столбце.
 
-Let’s take a look at a practical example using the SUM function below.
+Давайте рассмотрим практический пример использования функции SUM ниже.
 
-### SUM example
+### Пример SUM
 
-The following example is querying from a sample dataset created by dbt Labs called [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
+Следующий пример запрашивает данные из образца набора данных, созданного dbt Labs, под названием [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
 
 ```sql
 select
@@ -38,7 +38,7 @@ group by 1
 limit 3
 ```
 
-This simple query is returning the summed amount of all orders for a customer in the Jaffle Shop’s `orders` table:
+Этот простой запрос возвращает сумму всех заказов для клиента в таблице `orders` магазина Jaffle:
 
 | customer_id | all_orders_amount |
 |:---:|:---:|
@@ -46,17 +46,17 @@ This simple query is returning the summed amount of all orders for a customer in
 | 3 | 65 |
 | 94 | 24 |
 
-## SQL SUM function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL SUM в Snowflake, Databricks, BigQuery и Redshift
 
-All modern data warehouses support the ability to use the SUM function (and follow the same syntax).
+Все современные хранилища данных поддерживают возможность использования функции SUM (и следуют одному и тому же синтаксису).
 
-## SUM function use cases
+## Сценарии использования функции SUM
 
-We most commonly see queries using SUM to:
+Чаще всего мы видим запросы, использующие SUM для:
 
-- Calculate the cumulative sum of a metric across a customer/user id using a CASE WHEN statement (ex. `sum(case when order_array is not null then 1 else 0 end) as count_orders`)
-- Create [dbt metrics](/docs/build/build-metrics-intro) for key business values, such as LTV
-- Calculate the total of a field across a dimension (ex. total session time, total time spent per ticket) that you typically use in `fct_` or `dim_` models
-- Summing clicks, spend, impressions, and other key ad reporting metrics in tables from ad platforms
+- Вычисления накопленной суммы метрики по идентификатору клиента/пользователя с использованием оператора CASE WHEN (например, `sum(case when order_array is not null then 1 else 0 end) as count_orders`)
+- Создания [метрик dbt](/docs/build/build-metrics-intro) для ключевых бизнес-значений, таких как LTV
+- Вычисления общей суммы поля по измерению (например, общее время сессии, общее время, затраченное на билет), которое вы обычно используете в моделях `fct_` или `dim_`
+- Суммирования кликов, затрат, показов и других ключевых метрик отчетности по рекламе в таблицах из рекламных платформ
 
-This isn’t an extensive list of where your team may be using SUM throughout your development work, dbt models, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать SUM в процессе разработки, моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.
