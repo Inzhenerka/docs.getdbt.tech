@@ -1,253 +1,243 @@
 ---
-title: "Continuous integration jobs in dbt Cloud"
-sidebar_label: "CI jobs"
-description: "Learn how to create and set up CI checks to test code changes before deploying to production."
+title: "Работы по непрерывной интеграции в dbt Cloud"
+sidebar_label: "CI работы"
+description: "Узнайте, как создать и настроить проверки CI для тестирования изменений кода перед развертыванием в производственной среде."
 ---
 
-You can set up [continuous integration](/docs/deploy/continuous-integration) (CI) jobs to run when someone opens a new pull request (PR) in your dbt Git repository. By running and testing only _modified_ models, dbt Cloud ensures these jobs are as efficient and resource conscientious as possible on your data platform.
+Вы можете настроить [непрерывную интеграцию](/docs/deploy/continuous-integration) (CI) для запуска, когда кто-то открывает новый pull request (PR) в вашем репозитории dbt Git. Запуская и тестируя только _измененные_ модели, dbt Cloud обеспечивает максимальную эффективность и экономию ресурсов на вашей платформе данных.
 
-## Prerequisites
-- You have a dbt Cloud account. 
-- CI features:
-   - For both the [concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your dbt Cloud account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-   - [SQL linting](/docs/deploy/continuous-integration#sql-linting) is available on [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) and to dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing/) accounts. You should have [SQLFluff configured](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) in your project.
-- [Advanced CI](/docs/deploy/advanced-ci) features:
-   - For the [compare changes](/docs/deploy/advanced-ci#compare-changes) feature, your dbt Cloud account must be on the [Enterprise plan](https://www.getdbt.com/pricing/) and have enabled Advanced CI features. Please ask your [dbt Cloud administrator to enable](/docs/cloud/account-settings#account-access-to-advanced-ci-features) this feature for you. After enablement, the **dbt compare** option becomes available in the CI job settings.
-- Set up a [connection with your Git provider](/docs/cloud/git/git-configuration-in-dbt-cloud). This integration lets dbt Cloud run jobs on your behalf for job triggering.
-   - If you're using a native [GitLab](/docs/cloud/git/connect-gitlab) integration, you need a paid or self-hosted account that includes support for GitLab webhooks and [project access tokens](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html). If you're using GitLab Free, merge requests will trigger CI jobs but CI job status updates (success or failure of the job) will not be reported back to GitLab.
+## Предварительные требования
+- У вас есть аккаунт dbt Cloud.
+- Функции CI:
+   - Для функций [параллельных проверок CI](/docs/deploy/continuous-integration#concurrent-ci-checks) и [умной отмены устаревших сборок](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт dbt Cloud должен быть на [плане Team или Enterprise](https://www.getdbt.com/pricing/).
+   - [SQL линтинг](/docs/deploy/continuous-integration#sql-linting) доступен на [релизных треках dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и для аккаунтов dbt Cloud [Team или Enterprise](https://www.getdbt.com/pricing/). Вы должны иметь [настроенный SQLFluff](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) в вашем проекте.
+- Функции [Расширенного CI](/docs/deploy/advanced-ci):
+   - Для функции [сравнения изменений](/docs/deploy/advanced-ci#compare-changes) ваш аккаунт dbt Cloud должен быть на [плане Enterprise](https://www.getdbt.com/pricing/) и иметь включенные функции Расширенного CI. Пожалуйста, попросите вашего [администратора dbt Cloud включить](/docs/cloud/account-settings#account-access-to-advanced-ci-features) эту функцию для вас. После включения опция **dbt compare** станет доступной в настройках CI работы.
+- Настройте [соединение с вашим Git провайдером](/docs/cloud/git/git-configuration-in-dbt-cloud). Эта интеграция позволяет dbt Cloud запускать работы от вашего имени для триггера работ.
+   - Если вы используете нативную интеграцию с [GitLab](/docs/cloud/git/connect-gitlab), вам нужен платный или самохостингованный аккаунт, который включает поддержку вебхуков GitLab и [токенов доступа к проекту](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html). Если вы используете GitLab Free, запросы на слияние будут триггерить CI работы, но обновления статуса CI работ (успех или неудача работы) не будут возвращаться в GitLab.
 
-## Set up CI jobs {#set-up-ci-jobs}
+## Настройка CI работ {#set-up-ci-jobs}
 
-dbt Labs recommends that you create your CI job in a dedicated dbt Cloud [deployment environment](/docs/deploy/deploy-environments#create-a-deployment-environment) that's connected to a staging database. Having a separate environment dedicated for CI will provide better isolation between your temporary CI schema builds and your production data builds. Additionally, sometimes teams need their CI jobs to be triggered when a PR is made to a branch other than main. If your team maintains a staging branch as part of your release process, having a separate environment will allow you to set a [custom branch](/faqs/Environments/custom-branch-settings) and, accordingly, the CI job in that dedicated environment will be triggered only when PRs are made to the specified custom branch. To learn more, refer to [Get started with CI tests](/guides/set-up-ci).
+dbt Labs рекомендует создавать вашу CI работу в отдельной [среде развертывания](/docs/deploy/deploy-environments#create-a-deployment-environment) dbt Cloud, которая подключена к тестовой базе данных. Наличие отдельной среды, предназначенной для CI, обеспечит лучшую изоляцию между вашими временными схемами CI и сборками производственных данных. Кроме того, иногда командам необходимо, чтобы их CI работы запускались, когда PR создается для ветки, отличной от основной. Если ваша команда поддерживает тестовую ветку как часть процесса выпуска, наличие отдельной среды позволит вам установить [пользовательскую ветку](/faqs/Environments/custom-branch-settings), и, соответственно, работа CI в этой выделенной среде будет запускаться только при создании PR для указанной пользовательской ветки. Чтобы узнать больше, обратитесь к разделу [Начало работы с CI тестами](/guides/set-up-ci).
 
-To make CI job creation easier, many options on the **CI job** page are set to default values that dbt Labs recommends that you use. If you don't want to use the defaults, you can change them.
+Чтобы упростить создание CI работ, многие параметры на странице **CI работа** установлены на значения по умолчанию, которые рекомендует использовать dbt Labs. Если вы не хотите использовать значения по умолчанию, вы можете изменить их.
 
-1. On your deployment environment page, click **Create job** > **Continuous integration job** to create a new CI job. 
+1. На странице вашей среды развертывания нажмите **Создать работу** > **Работа по непрерывной интеграции**, чтобы создать новую CI работу.
 
-2. Options in the **Job settings** section:
-    - **Job name** &mdash; Specify the name for this CI job.
-    - **Description** &mdash; Provide a description about the CI job.
-    - **Environment** &mdash; By default, this will be set to the environment you created the CI job from. Use the dropdown to change the default setting. 
+2. Параметры в разделе **Настройки работы**:
+    - **Имя работы** &mdash; Укажите имя для этой CI работы.
+    - **Описание** &mdash; Укажите описание для CI работы.
+    - **Среда** &mdash; По умолчанию это будет установлено на среду, из которой вы создали CI работу. Используйте выпадающий список, чтобы изменить значение по умолчанию.
 
-3. Options in the **Git trigger** section:
-    - **Triggered by pull requests** &mdash; By default, it’s enabled. Every time a developer opens up a pull request or pushes a commit to an existing pull request, this job will get triggered to run.
-      - **Run on draft pull request** &mdash; Enable this option if you want to also trigger the job to run every time a developer opens up a draft pull request or pushes a commit to that draft pull request. 
+3. Параметры в разделе **Git триггер**:
+    - **Запуск по pull requests** &mdash; По умолчанию это включено. Каждый раз, когда разработчик открывает pull request или отправляет коммит в существующий pull request, эта работа будет запущена.
+      - **Запуск на черновом pull request** &mdash; Включите эту опцию, если вы хотите также запускать работу каждый раз, когда разработчик открывает черновой pull request или отправляет коммит в этот черновой pull request.
 
-4. Options in the **Execution settings** section:
-    - **Commands** &mdash; By default, this includes the `dbt build --select state:modified+` command. This informs dbt Cloud to build only new or changed models and their downstream dependents. Importantly, state comparison can only happen when there is a deferred environment selected to compare state to. Click **Add command** to add more [commands](/docs/deploy/job-commands)  that you want to be invoked when this job runs.
-    - **Linting** &mdash; Enable this option for dbt to [lint the SQL files](/docs/deploy/continuous-integration#sql-linting) in your project as the first step in `dbt run`. If this check runs into an error, dbt can either **Stop running on error** or **Continue running on error**. 
-    - **dbt compare**<Lifecycle status="enterprise" /> &mdash; Enable this option to compare the last applied state of the production environment (if one exists) with the latest changes from the pull request, and identify what those differences are. To enable record-level comparison and primary key analysis, you must add a [primary key constraint](/reference/resource-properties/constraints) or [uniqueness test](/reference/resource-properties/data-tests#unique). Otherwise, you'll receive a "Primary key missing" error message in dbt Cloud.
-    
-      To review the comparison report, navigate to the [Compare tab](/docs/deploy/run-visibility#compare-tab) in the job run's details. A summary of the report is also available from the pull request in your Git provider (see the [CI report example](#example-ci-report)). 
+4. Параметры в разделе **Настройки выполнения**:
+    - **Команды** &mdash; По умолчанию это включает команду `dbt build --select state:modified+`. Это информирует dbt Cloud о том, чтобы строить только новые или измененные модели и их зависимые объекты. Важно, что сравнение состояния может происходить только при выбранной отложенной среде для сравнения состояния. Нажмите **Добавить команду**, чтобы добавить больше [команд](/docs/deploy/job-commands), которые вы хотите вызвать при выполнении этой работы.
+    - **Линтинг** &mdash; Включите эту опцию, чтобы dbt [линтил SQL файлы](/docs/deploy/continuous-integration#sql-linting) в вашем проекте как первый шаг в `dbt run`. Если эта проверка вызывает ошибку, dbt может либо **Остановить выполнение при ошибке**, либо **Продолжить выполнение при ошибке**.
+    - **dbt compare**<Lifecycle status="enterprise" /> &mdash; Включите эту опцию, чтобы сравнить последнее примененное состояние производственной среды (если оно существует) с последними изменениями из pull request и определить, в чем заключаются эти различия. Чтобы включить сравнение на уровне записей и анализ первичного ключа, вы должны добавить [ограничение первичного ключа](/reference/resource-properties/constraints) или [тест уникальности](/reference/resource-properties/data-tests#unique). В противном случае вы получите сообщение об ошибке "Отсутствует первичный ключ" в dbt Cloud.
 
-      :::info Optimization tip 
-      When you enable the **dbt compare** checkbox, you can customize the comparison command to optimize your CI job. For example, if you have large models that take a long time to compare, you can exclude them to speed up the process using the [`--exclude` flag](/reference/node-selection/exclude). Refer to [compare changes custom commands](/docs/deploy/job-commands#compare-changes-custom-commands) for more details.
+      Чтобы просмотреть отчет о сравнении, перейдите на вкладку [Сравнить](/docs/deploy/run-visibility#compare-tab) в деталях выполнения работы. Резюме отчета также доступно из pull request в вашем Git провайдере (см. [пример отчета CI](#example-ci-report)).
 
-      Additionally, if you set [`event_time`](/reference/resource-configs/event-time) in your models/seeds/snapshots/sources, it allows you to compare matching date ranges between tables by filtering to overlapping date ranges. This is useful for faster CI workflow or custom sampling set ups.
+      :::info Советы по оптимизации
+      Когда вы включаете флажок **dbt compare**, вы можете настроить команду сравнения для оптимизации вашей CI работы. Например, если у вас есть большие модели, которые требуют много времени для сравнения, вы можете исключить их, чтобы ускорить процесс, используя [`--exclude` флаг](/reference/node-selection/exclude). Обратитесь к [пользовательским командам сравнения изменений](/docs/deploy/job-commands#compare-changes-custom-commands) для получения дополнительной информации.
+
+      Кроме того, если вы установите [`event_time`](/reference/resource-configs/event-time) в ваших моделях/семенах/снимках/источниках, это позволит вам сравнивать совпадающие диапазоны дат между таблицами, фильтруя по перекрывающимся диапазонам дат. Это полезно для более быстрого рабочего процесса CI или настройки пользовательской выборки.
       :::
 
-    - **Compare changes against an environment (Deferral)** &mdash; By default, it’s set to the **Production** environment if you created one. This option allows dbt Cloud to check the state of the code in the PR against the code running in the deferred environment, so as to only check the modified code, instead of building the full table or the entire DAG.
+    - **Сравнить изменения с окружением (Отложение)** &mdash; По умолчанию это установлено на **Производственную** среду, если вы ее создали. Эта опция позволяет dbt Cloud проверять состояние кода в PR по сравнению с кодом, работающим в отложенной среде, чтобы проверять только измененный код, а не строить полную таблицу или весь DAG.
 
       :::info
-      Older versions of dbt Cloud only allow you to defer to a specific job instead of an environment. Deferral to a job compares state against the project code that was run in the deferred job's last successful run. Deferral to an environment is more efficient as dbt Cloud will compare against the project representation (which is stored in the `manifest.json`) of the last successful deploy job run that executed in the deferred environment. By considering _all_ [deploy jobs](/docs/deploy/deploy-jobs) that run in the deferred environment, dbt Cloud will get a more accurate, latest project representation state.
+      Более старые версии dbt Cloud позволяют вам откладывать только на конкретную работу, а не на среду. Отложение на работу сравнивает состояние с кодом проекта, который был выполнен в последнем успешном запуске отложенной работы. Отложение на среду более эффективно, так как dbt Cloud будет сравнивать с представлением проекта (которое хранится в `manifest.json`) последнего успешного запуска работы развертывания, который выполнялся в отложенной среде. Учитывая _все_ [работы развертывания](/docs/deploy/deploy-jobs), которые выполняются в отложенной среде, dbt Cloud получит более точное, актуальное состояние представления проекта.
       :::
 
-    - **Run timeout** &mdash; Cancel the CI job if the run time exceeds the timeout value. You can use this option to help ensure that a CI check doesn't consume too much of your warehouse resources. If you enable the **dbt compare** option, the timeout value defaults to `3600` (one hour) to prevent long-running comparisons. 
+    - **Тайм-аут выполнения** &mdash; Отменить CI работу, если время выполнения превышает значение тайм-аута. Вы можете использовать эту опцию, чтобы помочь гарантировать, что проверка CI не потребляет слишком много ресурсов вашего хранилища. Если вы включите опцию **dbt compare**, значение тайм-аута по умолчанию устанавливается на `3600` (один час), чтобы предотвратить длительные сравнения.
 
+5. (по желанию) Параметры в разделе **Расширенные настройки**:
+    - **Переменные окружения** &mdash; Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение вашего проекта, когда выполняется эта CI работа. Вы можете указать, что CI работа выполняется в _Тестовой_ или _CI_ среде, установив переменную окружения и изменив код вашего проекта, чтобы он вел себя по-разному в зависимости от контекста. Команды часто обрабатывают только подмножество данных для CI запусков, используя переменные окружения для ветвления логики в коде своего проекта dbt.
+    - **Имя цели** &mdash; Определите [имя цели](/docs/build/custom-target-names). Аналогично **Переменным окружения**, эта опция позволяет вам настроить поведение проекта. Вы можете использовать эту опцию, чтобы указать, что CI работа выполняется в _Тестовой_ или _CI_ среде, установив имя цели и изменив код вашего проекта, чтобы он вел себя по-разному в зависимости от контекста.
+    - **Версия dbt** &mdash; По умолчанию это установлено на наследование [версии dbt](/docs/dbt-versions/core) из среды. dbt Labs настоятельно рекомендует не изменять значение по умолчанию. Эта опция для изменения версии на уровне работы полезна только при обновлении проекта до следующей версии dbt; в противном случае несоответствующие версии между средой и работой могут привести к путанице.
+    - **Потоки** &mdash; По умолчанию это установлено на 4 [потока](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Увеличьте количество потоков, чтобы увеличить параллелизм выполнения моделей.
+    - **Генерировать документацию при выполнении** &mdash; Включите это, если вы хотите [сгенерировать документацию проекта](/docs/collaborate/build-and-view-your-docs) при выполнении этой работы. Это отключено по умолчанию, так как тестирование генерации документации на каждой проверке CI не является рекомендуемой практикой.
+    - **Проверка свежести источников** &mdash; Включите эту опцию, чтобы вызвать команду `dbt source freshness` перед выполнением этой CI работы. Обратитесь к [Свежести источников](/docs/deploy/source-freshness) для получения дополнительной информации.
 
-5. (optional) Options in the **Advanced settings** section: 
-    - **Environment variables** &mdash; Define [environment variables](/docs/build/environment-variables) to customize the behavior of your project when this CI job runs. You can specify that a CI job is running in a _Staging_ or _CI_ environment by setting an environment variable and modifying your project code to behave differently, depending on the context. It's common for teams to process only a subset of data for CI runs, using environment variables to branch logic in their dbt project code.
-    - **Target name** &mdash; Define the [target name](/docs/build/custom-target-names). Similar to **Environment Variables**, this option lets you customize the behavior of the project. You can use this option to specify that a CI job is running in a _Staging_ or _CI_ environment by setting the target name and modifying your project code to behave differently, depending on the context. 
-    - **dbt version** &mdash; By default, it’s set to inherit the [dbt version](/docs/dbt-versions/core) from the environment. dbt Labs strongly recommends that you don't change the default setting. This option to change the version at the job level is useful only when you upgrade a project to the next dbt version; otherwise, mismatched versions between the environment and job can lead to confusing behavior.
-    - **Threads** &mdash; By default, it’s set to 4 [threads](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Increase the thread count to increase model execution concurrency.
-   - **Generate docs on run** &mdash; Enable this if you want to [generate project docs](/docs/collaborate/build-and-view-your-docs) when this job runs. This is disabled by default since testing doc generation on every CI check is not a recommended practice.
-    - **Run source freshness** &mdash; Enable this option to invoke the `dbt source freshness` command before running this CI job. Refer to [Source freshness](/docs/deploy/source-freshness) for more details.
+   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-ci-job.png" width="90%" title="Пример страницы CI работы в интерфейсе dbt Cloud"/>
 
-   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-ci-job.png" width="90%" title="Example of CI Job page in the dbt Cloud UI"/>
+### Пример проверки CI в pull request {#example-ci-check}
+Следующий пример представляет собой проверку CI в pull request GitHub. Зеленая галочка означает, что сборка и тесты dbt прошли успешно. Нажав на раздел dbt Cloud, вы перейдете к соответствующему запуску CI в dbt Cloud.
 
-### Example of CI check in pull request {#example-ci-check}
-The following is an example of a CI check in a GitHub pull request. The green checkmark means the dbt build and tests were successful. Clicking on the dbt Cloud section takes you to the relevant CI run in dbt Cloud.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-pr.png" width="60%" title="Пример проверки CI в pull request GitHub"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-pr.png" width="60%" title="Example of CI check in GitHub pull request"/>
+### Пример отчета CI в pull request <Lifecycle status="preview" /> {#example-ci-report}
+Следующий пример представляет собой отчет CI в pull request GitHub, который отображается, когда опция **dbt compare** включена для CI работы. Он отображает общее резюме моделей, которые изменились в результате pull request.
 
-### Example of CI report in pull request <Lifecycle status="preview" /> {#example-ci-report}
-The following is an example of a CI report in a GitHub pull request, which is shown when the **dbt compare** option is enabled for the CI job. It displays a high-level summary of the models that changed from the pull request.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-ci-report.png" width="75%" title="Пример комментария отчета CI в pull request GitHub"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-ci-report.png" width="75%" title="Example of CI report comment in GitHub pull request"/>
+## Запуск CI работы с помощью API
 
-## Trigger a CI job with the API
+Если вы не используете нативную интеграцию dbt Cloud с [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab) или [Azure DevOps](/docs/cloud/git/connect-azure-devops), вы можете использовать [Административный API](/docs/dbt-cloud-apis/admin-cloud-api), чтобы запустить CI работу. Однако dbt Cloud не будет автоматически удалять временную схему за вас. Это связано с тем, что автоматическое удаление зависит от входящих вебхуков от Git провайдеров, которые доступны только через нативные интеграции.
 
-If you're not using dbt Cloud’s native Git integration with [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab), or [Azure DevOps](/docs/cloud/git/connect-azure-devops), you can use the [Administrative API](/docs/dbt-cloud-apis/admin-cloud-api) to trigger a CI job to run. However, dbt Cloud will not automatically delete the temporary schema for you. This is because automatic deletion relies on incoming webhooks from Git providers, which is only available through the native integrations.
+### Предварительные требования
 
-### Prerequisites
+- У вас есть аккаунт dbt Cloud.
+- Для функций [Параллельных проверок CI](/docs/deploy/continuous-integration#concurrent-ci-checks) и [Умной отмены устаревших сборок](/docs/deploy/continuous-integration#smart-cancellation) ваш аккаунт dbt Cloud должен быть на [плане Team или Enterprise](https://www.getdbt.com/pricing/).
 
-- You have a dbt Cloud account.
-- For the [Concurrent CI checks](/docs/deploy/continuous-integration#concurrent-ci-checks) and [Smart cancellation of stale builds](/docs/deploy/continuous-integration#smart-cancellation) features, your dbt Cloud account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-
-
-1. Set up a CI job with the [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job) API endpoint using `"job_type": ci` or from the [dbt Cloud UI](#set-up-ci-jobs).
-1. Call the [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run) API endpoint to trigger the CI job. You must include both of these fields to the payload:
-   - Provide the pull request (PR) ID using one of these fields:
+1. Настройте CI работу с помощью [Create Job](/dbt-cloud/api-v2#/operations/Create%20Job) API конечной точки, используя `"job_type": ci` или из [интерфейса dbt Cloud](#set-up-ci-jobs).
+2. Вызовите [Trigger Job Run](/dbt-cloud/api-v2#/operations/Trigger%20Job%20Run) API конечную точку, чтобы запустить CI работу. Вы должны включить оба этих поля в полезную нагрузку:
+   - Укажите идентификатор pull request (PR), используя одно из этих полей:
 
       - `github_pull_request_id`
       - `gitlab_merge_request_id`
       - `azure_devops_pull_request_id`
-      - `non_native_pull_request_id` (for example, BitBucket)
-   - Provide the `git_sha` or `git_branch` to target the correct commit or branch to run the job against. 
+      - `non_native_pull_request_id` (например, BitBucket)
+   - Укажите `git_sha` или `git_branch`, чтобы нацелиться на правильный коммит или ветку для выполнения работы.
 
-## Semantic validations in CI  <Lifecycle status="team,enterprise" />
+## Семантические проверки в CI  <Lifecycle status="team,enterprise" />
 
-Automatically test your semantic nodes (metrics, semantic models, and saved queries) during code reviews by adding warehouse validation checks in your CI job, guaranteeing that any code changes made to dbt models don't break these metrics. 
+Автоматически тестируйте свои семантические узлы (метрики, семантические модели и сохраненные запросы) во время кодовых ревью, добавляя проверки в вашем CI задании, гарантируя, что любые изменения кода, внесенные в модели dbt, не нарушают эти метрики.
 
-To do this, add the command `dbt sl validate --select state:modified+` in the CI job. This ensures the validation of modified semantic nodes and their downstream dependencies.
+Для этого добавьте команду `dbt sl validate --select state:modified+` в CI работу. Это гарантирует проверку измененных семантических узлов и их зависимостей.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/sl-ci-job.png" width="90%" title="Semantic validations in CI workflow" />
+<Lightbox src="/img/docs/dbt-cloud/deployment/sl-ci-job.png" width="90%" title="Семантические проверки в рабочем процессе CI" />
 
-#### Benefits
-- Testing semantic nodes in a CI job supports deferral and selection of semantic nodes.
-- It allows you to catch issues early in the development process and deliver high-quality data to your end users.
-- Semantic validation executes an explain query in the data warehouse for semantic nodes to ensure the generated SQL will execute.
-- For semantic nodes and models that aren't downstream of modified models, dbt Cloud defers to the production models
+#### Преимущества
+- Тестирование семантических узлов в CI работе поддерживает отложение и выбор семантических узлов.
+- Это позволяет выявлять проблемы на ранних этапах разработки и предоставлять высококачественные данные вашим конечным пользователям.
+- Семантическая проверка выполняет объясняющий запрос в хранилище данных для семантических узлов, чтобы гарантировать, что сгенерированный SQL будет выполняться.
+- Для семантических узлов и моделей, которые не являются зависимыми от измененных моделей, dbt Cloud откладывает на производственные модели.
 
-### Set up semantic validations in your CI job
-To learn how to set this up, refer to the following steps:
+### Настройка семантических проверок в вашей CI работе
+Чтобы узнать, как это настроить, выполните следующие шаги:
 
-1. Navigate to the **Job setting** page and click **Edit**.
-2. Add the `dbt sl validate --select state:modified+` command under **Commands** in the **Execution settings** section. The command uses state selection and deferral to run validation on any semantic nodes downstream of model changes. To reduce job times, we recommend only running CI on modified semantic models.
-3. Click **Save** to save your changes.
+1. Перейдите на страницу **Настройки работы** и нажмите **Редактировать**.
+2. Добавьте команду `dbt sl validate --select state:modified+` в разделе **Команды** в разделе **Настройки выполнения**. Команда использует выбор состояния и отложение для выполнения проверки на любых семантических узлах, находящихся ниже изменений модели. Чтобы сократить время работы, мы рекомендуем запускать CI только на измененных семантических моделях.
+3. Нажмите **Сохранить**, чтобы сохранить изменения.
 
-There are additional commands and use cases described in the [next section](#use-cases), such as validating all semantic nodes, validating specific semantic nodes, and so on.
+В следующем разделе описаны дополнительные команды и случаи использования, такие как проверка всех семантических узлов, проверка конкретных семантических узлов и т.д.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Проверка семантических узлов, находящихся ниже изменений модели, в вашей CI работе." />
 
-### Use cases
+### Случаи использования
 
-Use or combine different selectors or commands to validate semantic nodes in your CI job. Semantic validations in CI supports the following use cases:
+Используйте или комбинируйте различные селекторы или команды для проверки семантических узлов в вашей CI работе. Семантические проверки в CI поддерживают следующие случаи использования:
 
-<Expandable alt_header="Semantic nodes downstream of model changes (recommended)" > 
+<Expandable alt_header="Семантические узлы, находящиеся ниже изменений модели (рекомендуется)"> 
 
-To validate semantic nodes that are downstream of a model change, add the two commands in your job **Execution settings** section:
+Чтобы проверить семантические узлы, которые находятся ниже изменения модели, добавьте две команды в разделе **Настройки выполнения** вашей работы:
 
 ```bash
 dbt build --select state:modified+
 dbt sl validate --select state:modified+
 ```
 
-- The first command builds the modified models.
-- The second command validates the semantic nodes downstream of the modified models.
+- Первая команда строит измененные модели.
+- Вторая команда проверяет семантические узлы, находящиеся ниже измененных моделей.
 
-Before running semantic validations, dbt Cloud must build the modified models. This process ensures that downstream semantic nodes are validated using the CI schema through the dbt Semantic Layer API. 
+Перед выполнением семантических проверок dbt Cloud должен построить измененные модели. Этот процесс гарантирует, что семантические узлы ниже будут проверены с использованием схемы CI через API семантического слоя dbt.
 
-For semantic nodes and models that aren't downstream of modified models, dbt Cloud defers to the production models.
+Для семантических узлов и моделей, которые не являются зависимыми от измененных моделей, dbt Cloud откладывает на производственные модели.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-downstream.jpg" width="90%" title="Проверка семантических узлов, находящихся ниже изменений модели, в вашей CI работе." />
 
 </Expandable>
 
-<Expandable alt_header="Semantic nodes that are modified or affected by downstream modified nodes.">
+<Expandable alt_header="Измененные семантические узлы или узлы, на которые влияют измененные узлы.">
 
-To only validate modified semantic nodes, use the following command (with [state selection](/reference/node-selection/syntax#state-selection)):
+Чтобы проверить только измененные семантические узлы, используйте следующую команду (с [выбором состояния](/reference/node-selection/syntax#state-selection)):
 
 ```bash
 dbt sl validate --select state:modified+
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-modified.jpg" width="90%" title="Используйте выбор состояния для проверки измененных моделей определения метрик в вашей CI работе." />
 
-This will only validate semantic nodes. It will use the defer state set configured in your orchestration job, deferring to your production models.
+Это будет проверять только семантические узлы. Он будет использовать состояние отложенного, установленное в вашей работе оркестрации, откладывая на ваши производственные модели.
 
 </Expandable>
 
-<Expandable alt_header="Select specific semantic nodes">
+<Expandable alt_header="Выбор конкретных семантических узлов">
 
-Use the selector syntax to select the _specific_ semantic node(s) you want to validate:
+Используйте синтаксис селектора, чтобы выбрать _конкретные_ семантические узлы, которые вы хотите проверить:
 
 ```bash
 dbt sl validate --select metric:revenue
 ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.jpg" width="90%" title="Use state selection to validate modified metric definition models in your CI job." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-select.jpg" width="90%" title="Используйте выбор состояния для проверки измененных моделей определения метрик в вашей CI работе." />
 
-In this example, the CI job will validate the selected `metric:revenue` semantic node. To select multiple semantic nodes, use the selector syntax: `dbt sl validate --select metric:revenue metric:customers`.
+В этом примере CI работа будет проверять выбранный семантический узел `metric:revenue`. Чтобы выбрать несколько семантических узлов, используйте синтаксис селектора: `dbt sl validate --select metric:revenue metric:customers`.
 
-If you don't specify a selector, dbt Cloud will validate all semantic nodes in your project.
+Если вы не укажете селектор, dbt Cloud проверит все семантические узлы в вашем проекте.
 
 </Expandable>
 
-<Expandable alt_header="Select all semantic nodes">
+<Expandable alt_header="Выбор всех семантических узлов">
 
-To validate _all_ semantic nodes in your project, add the following command to defer to your production schema when generating the warehouse validation queries:
+Чтобы проверить _все_ семантические узлы в вашем проекте, добавьте следующую команду, чтобы отложить на вашу производственную схему при генерации запросов проверки в хранилище:
 
    ```bash
    dbt sl validate
    ```
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.jpg" width="90%" title="Validate all semantic nodes in your CI job by adding the command: 'dbt sl validate' in your job execution settings." />
+<Lightbox src="/img/docs/dbt-cloud/deployment/ci-dbt-sl-validate-all.jpg" width="90%" title="Проверка всех семантических узлов в вашей CI работе, добавив команду: 'dbt sl validate' в настройки выполнения вашей работы." />
 
 </Expandable>
 
-## Troubleshooting
+## Устранение неполадок
 
 <FAQ path="Troubleshooting/gitlab-webhook"/>
 
-<DetailsToggle alt_header="Temporary schemas aren't dropping">
-If your temporary schemas aren't dropping after a PR merges or closes, this typically indicates one of these issues:
-- You have overridden the <code>generate_schema_name</code> macro and it isn't using <code>dbt_cloud_pr_</code> as the prefix.
+<DetailsToggle alt_header="Временные схемы не удаляются">
+Если ваши временные схемы не удаляются после слияния или закрытия PR, это обычно указывает на одну из следующих проблем:
+- Вы переопределили макрос <code>generate_schema_name</code>, и он не использует <code>dbt_cloud_pr_</code> в качестве префикса.
 
-To resolve this, change your macro so that the temporary PR schema name contains the required prefix. For example:
+Чтобы решить эту проблему, измените ваш макрос так, чтобы имя временной схемы PR содержало требуемый префикс. Например:
 
-- ✅ Temporary PR schema name contains the prefix <code>dbt_cloud_pr_</code> (like <code>dbt_cloud_pr_123_456_marketing</code>).
-- ❌ Temporary PR schema name doesn't contain the prefix <code>dbt_cloud_pr_</code> (like <code>marketing</code>).
+- ✅ Имя временной схемы PR содержит префикс <code>dbt_cloud_pr_</code> (например, <code>dbt_cloud_pr_123_456_marketing</code>).
+- ❌ Имя временной схемы PR не содержит префикс <code>dbt_cloud_pr_</code> (например, <code>marketing</code>).
 
-A macro is creating a schema but there are no dbt models writing to that schema. dbt Cloud doesn't drop temporary schemas that weren't written to as a result of running a dbt model.
-
-</DetailsToggle>
-
-
-<DetailsToggle alt_header="Error messages that refer to schemas from previous PRs">
-
-If you receive a schema-related error message referencing a <i>previous</i> PR, this is usually an indicator that you are not using a production job for your deferral and are instead using <i>self</i>.  If the prior PR has already been merged, the prior PR's schema may have been dropped by the time the CI job for the current PR is kicked off.
-
-To fix this issue, select a production job run to defer to instead of self.
+Макрос создает схему, но нет моделей dbt, записывающих в эту схему. dbt Cloud не удаляет временные схемы, в которые не было записано в результате выполнения модели dbt.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Production job runs failing at the 'Clone Git Repository step'">
+<DetailsToggle alt_header="Сообщения об ошибках, относящиеся к схемам из предыдущих PR">
 
-dbt Cloud can only check out commits that belong to the original repository. dbt Cloud <i>cannot</i> checkout commits that belong to a fork of that repository.
+Если вы получаете сообщение об ошибке, связанное со схемой, ссылающееся на <i>предыдущий</i> PR, это обычно указывает на то, что вы не используете производственную работу для вашего отложения и вместо этого используете <i>само</i>. Если предыдущий PR уже был слит, схема предыдущего PR могла быть удалена к моменту запуска CI работы для текущего PR.
 
-If you receive the following error message at the **Clone Git Repository** step of your job run:
+Чтобы исправить эту проблему, выберите успешный запуск производственной работы для отложения вместо самоотложения.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Неудачные запуски производственной работы на этапе 'Клонирование репозитория Git'">
+
+dbt Cloud может проверять только коммиты, которые принадлежат оригинальному репозиторию. dbt Cloud <i>не может</i> проверять коммиты, которые принадлежат форку этого репозитория.
+
+Если вы получаете следующее сообщение об ошибке на этапе **Клонирование репозитория Git** вашего запуска работы:
 
 ```
-Error message:
-Cloning into '/tmp/jobs/123456/target'...
-Successfully cloned repository.
-Checking out to e845be54e6dc72342d5a8f814c8b3316ee220312...>
-Failed to checkout to specified revision.
+Сообщение об ошибке:
+Клонирование в '/tmp/jobs/123456/target'...
+Репозиторий успешно клонирован.
+Проверка на e845be54e6dc72342d5a8f814c8b3316ee220312...>
+Не удалось проверить на указанной ревизии.
 git checkout e845be54e6dc72342d5a8f814c8b3316ee220312
-fatal: reference is not a tree: e845be54e6dc72342d5a8f814c8b3316ee220312
+fatal: ссылка не является деревом: e845be54e6dc72342d5a8f814c8b3316ee220312
 ```
 
-Double-check that your PR isn't trying to merge using a commit that belongs to a fork of the repository attached to your dbt project.
+Проверьте, что ваш PR не пытается слить с использованием коммита, который принадлежит форку репозитория, прикрепленного к вашему проекту dbt.
 </DetailsToggle>
 
-<DetailsToggle alt_header="CI job not triggering for Virtual Private dbt users"> 
+<DetailsToggle alt_header="Статус PR для CI работы остается в 'ожидании' в Azure DevOps после завершения работы">
 
-To trigger jobs on dbt Cloud using the [API](https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api), your Git provider needs to connect to your dbt Cloud account.
+Когда вы запускаете CI работу, статус pull request должен отображаться как `ожидание`, пока он ждет обновления от dbt. После завершения CI работы dbt отправляет статус в Azure DevOps (ADO), и статус изменится на `успешно` или `неудачно`.
 
-If you're on a Virtual Private dbt Enterprise plan using security features like ingress PrivateLink or IP Allowlisting, registering CI hooks may not be available and can cause the job to fail silently.
-</DetailsToggle>
+Если статус не обновляется после выполнения работы, проверьте, есть ли какие-либо политики веток git, блокирующие ADO от получения этих обновлений.
 
-<DetailsToggle alt_header="PR status for CI job stays in 'pending' in Azure DevOps after job run finishes">
-
-When you start a CI job, the pull request status should show as `pending` while it waits for an update from dbt. Once the CI job finishes, dbt sends the status to Azure DevOps (ADO), and the status will change to either `succeeded` or `failed`. 
-
-If the status doesn't get updated after the job runs, check if there are any git branch policies in place blocking ADO from receiving these updates. 
-
-One potential issue is the **Reset conditions** under **Status checks** in the ADO repository branch policy. If you enable the **Reset status whenever there are new changes** checkbox (under **Reset conditions**), it can prevent dbt from updating ADO about your CI job run status.
-You can find relevant information here:
-- [Azure DevOps Services Status checks](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#status-checks)
-- [Azure DevOps Services Pull Request Stuck Waiting on Status Update](https://support.hashicorp.com/hc/en-us/articles/18670331556627-Azure-DevOps-Services-Pull-Request-Stuck-Waiting-on-Status-Update-from-Terraform-Cloud-Enterprise-Run)
-- [Pull request status](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops#pull-request-status)
+Одной из потенциальных проблем являются **Условия сброса** в политике ветки репозитория ADO. Если вы включите флажок **Сбросить статус, когда есть новые изменения** (в разделе **Условия сброса**), это может предотвратить dbt от обновления ADO о статусе выполнения вашей CI работы.
+Вы можете найти соответствующую информацию здесь:
+- [Проверки статуса Azure DevOps Services](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#status-checks)
+- [Pull Request Azure DevOps Services застрял в ожидании обновления статуса](https://support.hashicorp.com/hc/en-us/articles/18670331556627-Azure-DevOps-Services-Pull-Request-Stuck-Waiting-on-Status-Update-from-Terraform-Cloud-Enterprise-Run)
+- [Статус pull request](https://learn.microsoft.com/en-us/azure/devops/repos/git/pull-request-status?view=azure-devops#pull-request-status)
 
 </DetailsToggle>

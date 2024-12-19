@@ -1,101 +1,100 @@
 ---
-title: "Job commands"
+title: "Команды заданий"
 id: "job-commands"
-description: "How to use dbt commands to set tasks for your dbt Cloud jobs."
+description: "Как использовать команды dbt для задания задач для ваших заданий в dbt Cloud."
 ---
 
-A dbt Cloud production job allows you to set up a system to run a dbt job and job commands on a schedule, rather than running dbt commands manually from the command line or [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). A job consists of commands that are "chained" together and executed as run steps. Each run step can succeed or fail, which may determine the job's run status (Success, Cancel, or Error). 
+Задание в dbt Cloud позволяет вам настроить систему для выполнения задания dbt и команд заданий по расписанию, вместо того чтобы запускать команды dbt вручную из командной строки или [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). Задание состоит из команд, которые "связываются" друг с другом и выполняются как шаги выполнения. Каждый шаг выполнения может завершиться успешно или с ошибкой, что может определить статус выполнения задания (Успех, Отмена или Ошибка).
 
-Each job allows you to:
+Каждое задание позволяет вам:
 
-- Configure job commands
-- View job run details, including timing, artifacts, and detailed run steps
-- Access logs to view or help debug issues and historical invocations of dbt
-- Set up notifications, and [more](/docs/deploy/deployments#dbt-cloud)
+- Настроить команды задания
+- Просмотреть детали выполнения задания, включая время, артефакты и подробные шаги выполнения
+- Получить доступ к журналам для просмотра или помощи в отладке проблем и исторических вызовов dbt
+- Настроить уведомления и [многое другое](/docs/deploy/deployments#dbt-cloud)
 
-## Job command types
+## Типы команд задания
 
-Job commands are specific tasks executed by the job, and you can configure them seamlessly by either adding [dbt commands](/reference/dbt-commands) or using the checkbox option in the **Commands** section. 
+Команды задания — это конкретные задачи, выполняемые заданием, и вы можете настраивать их без проблем, добавляя [команды dbt](/reference/dbt-commands) или используя опцию флажка в разделе **Команды**.
 
-During a job run, the commands are "chained" together and executed as run steps. When you add a dbt command in the **Commands** section, you can expect different outcomes compared to the checkbox option.
+Во время выполнения задания команды "связываются" друг с другом и выполняются как шаги выполнения. Когда вы добавляете команду dbt в разделе **Команды**, вы можете ожидать различных результатов по сравнению с опцией флажка.
 
-<Lightbox src ="/img/docs/dbt-cloud/using-dbt-cloud/job-commands.gif" width="85%" title="Configuring checkbox and commands list"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/job-commands.gif" width="85%" title="Настройка флажка и списка команд"/>
 
+### Встроенные команды
 
-### Built-in commands
+Каждое выполнение задания автоматически включает команду [`dbt deps`](/reference/commands/deps), что означает, что вам не нужно добавлять ее в список **Команд** в настройках вашего задания. Вы также заметите, что каждое задание будет включать шаг выполнения для повторного клонирования вашего репозитория и подключения к вашей платформе данных, что может повлиять на статус вашего задания, если эти шаги выполнения не будут успешными.
 
-Every job invocation automatically includes the [`dbt deps`](/reference/commands/deps) command, meaning you don't need to add it to the **Commands** list in your job settings.  You will also notice every job will include a run step to reclone your repository and connect to your data platform, which can affect your job status if these run steps aren't successful.
+**Результат задания** &mdash; Во время выполнения задания встроенные команды "связываются" друг с другом. Это означает, что если один из шагов выполнения в цепочке завершится с ошибкой, то последующие команды не будут выполнены, и все задание завершится с ошибкой со статусом "Ошибка".
 
-**Job outcome** &mdash; During a job run, the built-in commands are "chained" together.  This means if one of the run steps in the chain fails, then the next commands aren't executed, and the entire job fails with an "Error" job status.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/fail-dbtdeps.png" width="85%" title="Неудачное задание, которое завершилось с ошибкой во время шага выполнения dbt deps."/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/fail-dbtdeps.png" width="85%" title="A failed job that had an error during the dbt deps run step."/>
+### Команды с флажками
 
-### Checkbox commands
+Для каждого задания у вас есть возможность выбрать флажки [Генерировать документацию при выполнении](/docs/collaborate/build-and-view-your-docs) или [Проверить свежесть источника](/docs/deploy/source-freshness), что позволяет вам автоматически выполнять команды.
 
-For every job, you have the option to select the [Generate docs on run](/docs/collaborate/build-and-view-your-docs) or [Run source freshness](/docs/deploy/source-freshness) checkboxes, enabling you to run the commands automatically. 
+**Результат задания для флажка Генерировать документацию при выполнении** &mdash; dbt Cloud выполняет команду `dbt docs generate` _после_ перечисленных команд. Если этот конкретный шаг выполнения в вашем задании завершится с ошибкой, задание все равно может завершиться успешно, если все последующие шаги выполнения будут успешными. Читайте [Настройка задания документации](/docs/collaborate/build-and-view-your-docs) для получения дополнительной информации.
 
-**Job outcome Generate docs on run checkbox** &mdash; dbt Cloud executes the `dbt docs generate` command, _after_ the listed commands. If that particular run step in your job fails, the job can still succeed if all subsequent run steps are successful. Read [Set up documentation job](/docs/collaborate/build-and-view-your-docs) for more info.
+**Результат задания для флажка Проверить свежесть источника** &mdash; dbt Cloud выполняет команду `dbt source freshness` как первый шаг выполнения в вашем задании. Если этот конкретный шаг выполнения в вашем задании завершится с ошибкой, задание все равно может завершиться успешно, если все последующие шаги выполнения будут успешными. Читайте [Свежесть источника](/docs/deploy/source-freshness) для получения дополнительной информации.
 
-**Job outcome Source freshness checkbox** &mdash; dbt Cloud executes the `dbt source freshness` command as the first run step in your job. If that particular run step in your job fails, the job can still succeed if all subsequent run steps are successful. Read [Source freshness](/docs/deploy/source-freshness) for more info.
+### Список команд
 
-### Command list
+Вы можете добавлять или удалять столько команд dbt, сколько необходимо для каждого задания. Однако вам нужно иметь хотя бы одну команду dbt. Есть несколько команд, указанных как "dbt Cloud CLI" или "dbt Core" на странице [Справочник команд dbt](/reference/dbt-commands). Это означает, что они предназначены для использования в dbt Core или dbt Cloud CLI, а не в dbt Cloud IDE.
 
-You can add or remove as many dbt commands as necessary for every job. However, you need to have at least one dbt command. There are few commands listed as "dbt Cloud CLI" or "dbt Core" in the [dbt Command reference page](/reference/dbt-commands) page. This means they are meant for use in dbt Core or dbt Cloud CLI, and not in dbt Cloud IDE.
+:::tip Использование селекторов
 
-:::tip Using selectors
-
-Use [selectors](/reference/node-selection/syntax) as a powerful way to select and execute portions of your project in a job run. For example, to run tests for `one_specific_model`, use the selector: `dbt test --select one_specific_model`. The job will still run if a selector doesn't match any models. 
+Используйте [селекторы](/reference/node-selection/syntax) как мощный способ выбирать и выполнять части вашего проекта во время выполнения задания. Например, чтобы запустить тесты для `one_specific_model`, используйте селектор: `dbt test --select one_specific_model`. Задание все равно будет выполняться, если селектор не соответствует ни одной модели.
 
 :::
 
-#### Compare changes custom commands
-For users that have Advanced CI's [compare changes](/docs/deploy/advanced-ci#compare-changes) feature enabled and selected the **dbt compare** checkbox, you can add custom dbt commands to optimize running the comparison (for example, to exclude specific large models, or groups of models with tags). Running comparisons on large models can significantly increase the time it takes for CI jobs to complete. 
+#### Пользовательские команды для сравнения изменений
+Для пользователей, у которых включена функция Advanced CI [сравнение изменений](/docs/deploy/advanced-ci#compare-changes) и выбрана опция **dbt compare**, вы можете добавить пользовательские команды dbt для оптимизации выполнения сравнения (например, чтобы исключить конкретные большие модели или группы моделей с тегами). Выполнение сравнений на больших моделях может значительно увеличить время, необходимое для завершения CI заданий.
 
-<Lightbox src="/img/docs/deploy/dbt-compare.jpg" width="90%" title="Add custom dbt commands to when using dbt compare." />
+<Lightbox src="/img/docs/deploy/dbt-compare.jpg" width="90%" title="Добавьте пользовательские команды dbt при использовании dbt compare." />
 
-The following examples highlight how you can customize the dbt compare command box:
+Следующие примеры подчеркивают, как вы можете настроить поле команды dbt compare:
 
-- Exclude the large `fct_orders` model from the comparison to run a CI job on fewer or smaller models and reduce job time/resource consumption. Use the following command:
+- Исключите большую модель `fct_orders` из сравнения, чтобы запустить CI задание на меньшем количестве или меньших моделях и сократить время/потребление ресурсов задания. Используйте следующую команду:
   
   ```sql
   --select state:modified --exclude fct_orders
   ```
-- Exclude models based on tags for scenarios like when models share a common feature or function. Use the following command:
+- Исключите модели на основе тегов для сценариев, когда модели имеют общую функцию или характеристику. Используйте следующую команду:
 
    ```sql 
       --select state modified --exclude tag:tagname_a tag:tagname_b
    ```
-- Include models that were directly modified and also those one step downstream using the `modified+1` selector. Use the following command:
+- Включите модели, которые были непосредственно изменены, а также те, которые находятся на один шаг ниже, используя селектор `modified+1`. Используйте следующую команду:
   ```sql
   --select state:modified+1
   ```
 
-#### Job outcome
-During a job run, the commands are "chained" together and executed as run steps. If one of the run steps in the chain fails, then the subsequent steps aren't executed, and the job will fail.
+#### Результат задания
+Во время выполнения задания команды "связываются" друг с другом и выполняются как шаги выполнения. Если один из шагов выполнения в цепочке завершится с ошибкой, то последующие шаги не будут выполнены, и задание завершится с ошибкой.
 
-In the following example image, the first four run steps are successful. However, if the fifth run step (`dbt run --select state:modified+ --full-refresh --fail-fast`) fails, then the next run steps aren't executed, and the entire job fails. The failed job returns a non-zero [exit code](/reference/exit-codes) and "Error" job status:
+На следующем примере изображение первые четыре шага выполнения успешны. Однако, если пятый шаг выполнения (`dbt run --select state:modified+ --full-refresh --fail-fast`) завершится с ошибкой, то последующие шаги выполнения не будут выполнены, и все задание завершится с ошибкой. Неудачное задание возвращает ненулевой [код выхода](/reference/exit-codes) и статус "Ошибка":
 
-<Lightbox src ="/img/docs/dbt-cloud/using-dbt-cloud/skipped-jobs.jpg" width="85%" title="A failed job run that had an error during a run step"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/skipped-jobs.jpg" width="85%" title="Неудачное выполнение задания, которое завершилось с ошибкой во время шага выполнения"/>
 
-## Job command failures
+## Ошибки команд задания
 
-Job command failures can mean different things for different commands. Some common reasons why a job command may fail:
+Ошибки команд задания могут означать разные вещи для разных команд. Некоторые распространенные причины, по которым команда задания может завершиться с ошибкой:
 
-- **Failure at`dbt run`** &mdash; [`dbt run`](/reference/commands/run) executes compiled SQL model files against the current target database. It will fail if there is an error in any of the built models. Tests on upstream resources prevent downstream resources from running and a failed test will skip them.
+- **Ошибка на `dbt run`** &mdash; [`dbt run`](/reference/commands/run) выполняет скомпилированные SQL файлы моделей против текущей целевой базы данных. Он завершится с ошибкой, если в любой из построенных моделей есть ошибка. Тесты на вышестоящих ресурсах предотвращают выполнение нижестоящих ресурсов, и неудачный тест пропустит их.
 
-- **Failure at `dbt test`** &mdash;  [`dbt test`](/reference/commands/test) runs tests defined on models, sources, snapshots, and seeds. A test can pass, fail, or warn depending on its [severity](/reference/resource-configs/severity). Unless you set [warnings as errors](/reference/global-configs/warnings), only an error stops the next step. 
+- **Ошибка на `dbt test`** &mdash;  [`dbt test`](/reference/commands/test) выполняет тесты, определенные для моделей, источников, снимков и семян. Тест может пройти, завершиться с ошибкой или выдать предупреждение в зависимости от его [серьезности](/reference/resource-configs/severity). Если вы не установили [предупреждения как ошибки](/reference/global-configs/warnings), только ошибка остановит следующий шаг.
 
-- **Failure at `dbt build`** &mdash; [`dbt build`](/reference/commands/build) runs models, tests, snapshots, and seeds. This command executes resources in the DAG-specified order. If any upstream resource fails, all downstream resources are skipped, and the command exits with an error code of 1.
+- **Ошибка на `dbt build`** &mdash; [`dbt build`](/reference/commands/build) выполняет модели, тесты, снимки и семена. Эта команда выполняет ресурсы в порядке, указанном в DAG. Если любой вышестоящий ресурс завершится с ошибкой, все нижестоящие ресурсы будут пропущены, и команда завершится с кодом ошибки 1.
 
-- **Selector failures**
-   - If a [`select`](/reference/node-selection/set-operators) matches multiple nodes and one of the nodes fails, then the job will have an exit code `1` and the subsequent command will fail. If you specified the [`—fail-fast`](/reference/global-configs/failing-fast) flag, then the first failure will stop the entire connection for any models that are in progress. 
+- **Ошибки селекторов**
+   - Если [`select`](/reference/node-selection/set-operators) соответствует нескольким узлам, и один из узлов завершится с ошибкой, то задание получит код выхода `1`, и последующая команда завершится с ошибкой. Если вы указали флаг [`—fail-fast`](/reference/global-configs/failing-fast), то первая ошибка остановит все соединение для любых моделей, которые находятся в процессе.
 
-   - If a selector doesn't match any nodes, it's not considered a failure.
+   - Если селектор не соответствует ни одному узлу, это не считается ошибкой.
 
 
-## Related docs
-- [Job creation best practices](https://discourse.getdbt.com/t/job-creation-best-practices-in-dbt-cloud-feat-my-moms-lasagna/2980)
-- [dbt Command reference](/reference/dbt-commands)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
-- [Build and view your docs](/docs/collaborate/build-and-view-your-docs)
+## Связанные документы
+- [Лучшие практики создания заданий](https://discourse.getdbt.com/t/job-creation-best-practices-in-dbt-cloud-feat-my-moms-lasagna/2980)
+- [Справочник команд dbt](/reference/dbt-commands)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источника](/docs/deploy/source-freshness)
+- [Создание и просмотр вашей документации](/docs/collaborate/build-and-view-your-docs)

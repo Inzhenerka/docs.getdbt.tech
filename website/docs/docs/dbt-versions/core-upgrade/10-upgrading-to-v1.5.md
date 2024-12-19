@@ -1,68 +1,68 @@
 ---
-title: "Upgrading to v1.5"
-description: New features and changes in dbt Core v1.5
+title: "Обновление до v1.5"
+description: Новые функции и изменения в dbt Core v1.5
 id: "upgrading-to-v1.5"
 displayed_sidebar: "docs"
 ---
 
-dbt Core v1.5 is a feature release, with two significant additions:
-1. [**Model governance**](/docs/collaborate/govern/about-model-governance) — access, contracts, versions — the first phase of [multi-project deployments](https://github.com/dbt-labs/dbt-core/discussions/6725)
-2. A Python entry point for [**programmatic invocations**](/reference/programmatic-invocations), at parity with the CLI
+dbt Core v1.5 является релизом с новыми функциями, в который добавлены две значительные возможности:
+1. [**Управление моделями**](/docs/collaborate/govern/about-model-governance) — доступ, контракты, версии — первая фаза [многоуровневых развертываний](https://github.com/dbt-labs/dbt-core/discussions/6725)
+2. Точка входа на Python для [**программных вызовов**](/reference/programmatic-invocations), наравне с CLI
 
-## Resources
+## Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
-- [Release schedule](https://github.com/dbt-labs/dbt-core/issues/6715)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [График релизов](https://github.com/dbt-labs/dbt-core/issues/6715)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x, with the exception of any changes explicitly mentioned below. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением изменений, явно упомянутых ниже. Если вы столкнетесь с ошибкой при обновлении, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### Behavior changes
+### Изменения в поведении
 
-:::info Why changes to previous behavior?
+:::info Почему изменения в предыдущем поведении?
 
-This release includes significant new features, and rework to `dbt-core`'s CLI and initialization flow. As part of refactoring its internals from [`argparse`](https://docs.python.org/3/library/argparse.html) to [`click`](https://click.palletsprojects.com), we made a handful of changes to runtime configuration. The net result of these changes is more consistent and practical configuration options, and a more legible codebase.
+Этот релиз включает значительные новые функции и переработку CLI и процесса инициализации `dbt-core`. В рамках рефакторинга его внутренностей с [`argparse`](https://docs.python.org/3/library/argparse.html) на [`click`](https://click.palletsprojects.com) мы внесли несколько изменений в конфигурацию времени выполнения. Конечный результат этих изменений — более последовательные и практичные параметры конфигурации, а также более читаемая кодовая база.
 
-**_Wherever possible, we will provide backward compatibility and deprecation warnings for at least one minor version before actually removing the old functionality._** In those cases, we still reserve the right to fully remove backwards compatibility for deprecated functionality in a future v1.x minor version of `dbt-core`.
+**_Где это возможно, мы будем предоставлять обратную совместимость и предупреждения о снятии с поддержки как минимум за одну минорную версию до фактического удаления старой функциональности._** В таких случаях мы все же оставляем за собой право полностью удалить обратную совместимость для устаревшей функциональности в будущей минорной версии v1.x `dbt-core`.
 
 :::
 
-Setting `log-path` and `target-path` in `dbt_project.yml` has been deprecated for consistency with other invocation-specific runtime configs ([dbt-core#6882](https://github.com/dbt-labs/dbt-core/issues/6882)). We recommend setting via env var or CLI flag instead.
+Установка `log-path` и `target-path` в `dbt_project.yml` была снята с поддержки для согласованности с другими конфигурациями времени выполнения, специфичными для вызова ([dbt-core#6882](https://github.com/dbt-labs/dbt-core/issues/6882)). Мы рекомендуем устанавливать через переменные окружения или флаги CLI.
 
-The `dbt list` command will now include `INFO` level logs by default. Previously, the `list` command (and _only_ the `list` command) had `WARN`-level stdout logging, to support piping its results to [`jq`](https://jqlang.github.io/jq/manual/), a file, or another process. To achieve that goal, you can use either of the following parameters:
-- `dbt --log-level warn list` (recommended; equivalent to previous default)
-- `dbt --quiet list` (suppresses all logging less than ERROR level, except for "printed" messages and `list` output)
+Команда `dbt list` теперь по умолчанию будет включать логи уровня `INFO`. Ранее команда `list` (и _только_ команда `list`) имела вывод логов уровня `WARN`, чтобы поддерживать передачу своих результатов в [`jq`](https://jqlang.github.io/jq/manual/), файл или другой процесс. Для достижения этой цели вы можете использовать один из следующих параметров:
+- `dbt --log-level warn list` (рекомендуется; эквивалентно предыдущему значению по умолчанию)
+- `dbt --quiet list` (подавляет все логи ниже уровня ERROR, за исключением "выводимых" сообщений и вывода `list`)
 
-The following env vars have been renamed, for consistency with the convention followed by all other parameters:
+Следующие переменные окружения были переименованы для согласованности с конвенцией, используемой для всех других параметров:
 - `DBT_DEFER_TO_STATE` → `DBT_DEFER`
 - `DBT_FAVOR_STATE_MODE` → `DBT_FAVOR_STATE`
 - `DBT_NO_PRINT` → `DBT_PRINT`
 - `DBT_ARTIFACT_STATE_PATH` → `DBT_STATE`
 
-As described in [dbt-core#7169](https://github.com/dbt-labs/dbt-core/pull/7169), command-line parameters that could be silent before will no longer be silent. See [dbt-labs/dbt-core#7158](https://github.com/dbt-labs/dbt-core/issues/7158) and [dbt-labs/dbt-core#6800](https://github.com/dbt-labs/dbt-core/issues/6800) for more examples of the behavior we are fixing.
+Как описано в [dbt-core#7169](https://github.com/dbt-labs/dbt-core/pull/7169), параметры командной строки, которые могли быть тихими ранее, больше не будут тихими. См. [dbt-labs/dbt-core#7158](https://github.com/dbt-labs/dbt-core/issues/7158) и [dbt-labs/dbt-core#6800](https://github.com/dbt-labs/dbt-core/issues/6800) для получения дополнительных примеров поведения, которое мы исправляем.
 
-An empty `tests:` key in a yaml file will now raise a validation error, instead of being silently skipped. You can resolve this by removing the empty `tests:` key, or by setting it to an empty list explicitly:
+Пустой ключ `tests:` в yaml-файле теперь вызовет ошибку валидации, вместо того чтобы быть тихо пропущенным. Вы можете решить эту проблему, удалив пустой ключ `tests:`, или установив его в пустой список явно:
 ```yml
-#  ❌ this will raise an error
+#  ❌ это вызовет ошибку
 models:
   - name: my_model
     tests:
     config: ...
 
-# ✅ this is fine
+# ✅ это нормально
 models:
   - name: my_model
-    tests: [] # todo! add tests later
+    tests: [] # todo! добавить тесты позже
     config: ...
 ```
 
-Some options that could previously be specified _after_ a subcommand can now only be specified _before_. This includes the inverse of the option, `--write-json` and `--no-write-json`, for example. The list of affected options are:
+Некоторые параметры, которые ранее можно было указывать _после_ подкоманды, теперь можно указывать только _до_. Это включает в себя инверсный параметр, `--write-json` и `--no-write-json`, например. Список затронутых параметров:
 
 <details>
-<summary>List of affected options</summary>
+<summary>Список затронутых параметров</summary>
 
 ```bash
 --cache-selected-only | --no-cache-selected-only
@@ -100,56 +100,54 @@ Some options that could previously be specified _after_ a subcommand can now onl
 
 </details>
 
+Кроме того, некоторые параметры, которые ранее можно было указывать _до_ подкоманды, теперь можно указывать только _после_. Любой параметр, _не_ входящий в приведенный выше список, должен появляться _после_ подкоманды начиная с v1.5 и далее. Например, `--profiles-dir`.
 
-Additionally, some options that could be previously specified _before_ a subcommand can now only be specified _after_. Any option _not_ in the above list must appear _after_ the subcommand from v1.5 and later. For example, `--profiles-dir`.
-
-
-The built-in [collect_freshness](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/core/dbt/include/global_project/macros/adapters/freshness.sql) macro now returns the entire `response` object, instead of just the `table` result. If you're using a custom override for `collect_freshness`, make sure you're also returning the `response` object; otherwise, some of your dbt commands will never finish. For example:
+Встроенная [макрос-функция collect_freshness](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/core/dbt/include/global_project/macros/adapters/freshness.sql) теперь возвращает весь объект `response`, а не только результат `table`. Если вы используете пользовательский переопределение для `collect_freshness`, убедитесь, что вы также возвращаете объект `response`; в противном случае некоторые ваши команды dbt никогда не завершатся. Например:
 
 ```sql
 {{ return(load_result('collect_freshness')) }}
 ```
 
-Finally: The [built-in `generate_alias_name` macro](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/core/dbt/include/global_project/macros/get_custom_name/get_custom_alias.sql) now includes logic to handle versioned models. If your project has reimplemented the `generate_alias_name` macro with custom logic, and you want to start using [model versions](/docs/collaborate/govern/model-versions), you will need to update the logic in your macro. Note that, while this is **not** a prerequisite for upgrading to v1.5—only for using the new feature—we recommmend that you do this during your upgrade, whether you're planning to use model versions tomorrow or far in the future.
+Наконец: Встроенная [макрос-функция `generate_alias_name`](https://github.com/dbt-labs/dbt-core/blob/1.5.latest/core/dbt/include/global_project/macros/get_custom_name/get_custom_alias.sql) теперь включает логику для обработки версионированных моделей. Если ваш проект переопределил макрос `generate_alias_name` с пользовательской логикой и вы хотите начать использовать [версии моделей](/docs/collaborate/govern/model-versions), вам нужно будет обновить логику в вашем макросе. Обратите внимание, что это **не** является предварительным условием для обновления до v1.5 — только для использования новой функции — мы рекомендуем сделать это во время вашего обновления, независимо от того, планируете ли вы использовать версии моделей завтра или в далеком будущем.
 
-Likewise, if your project has reimplemented the `ref` macro with custom logic, you will need to update the logic in your macro as described [here](https://docs.getdbt.com/reference/dbt-jinja-functions/builtins).
+Аналогично, если ваш проект переопределил макрос `ref` с пользовательской логикой, вам нужно будет обновить логику в вашем макросе, как описано [здесь](https://docs.getdbt.com/reference/dbt-jinja-functions/builtins).
 
-### For consumers of dbt artifacts (metadata)
+### Для потребителей артефактов dbt (метаданных)
 
-The [manifest](/reference/artifacts/manifest-json) schema version will be updated to `v9`. Specific changes:
-- Addition of `groups` as a top-level key
-- Addition of `access`, `constraints`, `version`, `latest_version` as a top-level node attributes for models
-- Addition of `constraints` as a column-level attribute
-- Addition of `group` and `contract` as node configs
-- To support model versions, the type of `refs` has changed from `List[List[str]]` to `List[RefArgs]`, with nested keys `name: str`, `package: Optional[str] = None`, and `version: Union[str, float, NoneType] = None)`.
+Версия схемы [manifest](/reference/artifacts/manifest-json) будет обновлена до `v9`. Конкретные изменения:
+- Добавление `groups` в качестве ключа верхнего уровня
+- Добавление `access`, `constraints`, `version`, `latest_version` в качестве атрибутов узлов верхнего уровня для моделей
+- Добавление `constraints` в качестве атрибута уровня столбца
+- Добавление `group` и `contract` в качестве конфигураций узлов
+- Для поддержки версий моделей тип `refs` изменился с `List[List[str]]` на `List[RefArgs]`, с вложенными ключами `name: str`, `package: Optional[str] = None`, и `version: Union[str, float, NoneType] = None)`.
 
-### For maintainers of adapter plugins
+### Для поддерживающих плагины адаптеров
 
-For more detailed information and to ask questions, please read and comment on the GH discussion: [dbt-labs/dbt-core#7213](https://github.com/dbt-labs/dbt-core/discussions/7213).
+Для получения более подробной информации и для того, чтобы задать вопросы, пожалуйста, читайте и комментируйте обсуждение на GH: [dbt-labs/dbt-core#7213](https://github.com/dbt-labs/dbt-core/discussions/7213).
 
-## New and changed documentation
+## Новая и измененная документация
 
-### Model governance
+### Управление моделями
 
-The first phase of supporting dbt deployments at scale, across multiple projects with clearly defined ownership and interface boundaries. [Read about model governance](/docs/collaborate/govern/about-model-governance), all of which is new in v1.5.
+Первая фаза поддержки развертываний dbt в большом масштабе, через несколько проектов с четко определенной ответственностью и границами интерфейсов. [Читать о управлении моделями](/docs/collaborate/govern/about-model-governance), все это новое в v1.5.
 
-### Revamped CLI
+### Обновленный CLI
 
-Compile and preview dbt models and `--inline` dbt-SQL queries on the CLI using:
+Компилируйте и просматривайте модели dbt и `--inline` dbt-SQL запросы в CLI с помощью:
 - [`dbt compile`](/reference/commands/compile)
-- [`dbt show`](/reference/commands/show) (new!)
+- [`dbt show`](/reference/commands/show) (новинка!)
 
-[Node selection methods](/reference/node-selection/methods) can use Unix-style wildcards to glob nodes matching a pattern:
+[Методы выбора узлов](/reference/node-selection/methods) могут использовать подстановочные знаки в стиле Unix для выбора узлов, соответствующих шаблону:
 ```
 dbt ls --select "tag:team_*"
 ```
 
-And (!): a first-ever entry point for [programmatic invocations](/reference/programmatic-invocations), at parity with CLI commands.
+И (!): первая точка входа для [программных вызовов](/reference/programmatic-invocations), наравне с командами CLI.
 
-Run `dbt --help` to see new & improved help documentation :)
+Запустите `dbt --help`, чтобы увидеть новую и улучшенную документацию по помощи :)
 
-### Quick hits
-- The [`version: 2` top-level key](/reference/project-configs/version) is now **optional** in all YAML files. Also, the [`config-version: 2`](/reference/project-configs/config-version) and `version:` top-level keys are now optional in `dbt_project.yml` files.
-- [Events and logging](/reference/events-logging): Added `node_relation` (`database`, `schema`, `identifier`) to the `node_info` dictionary, available on node-specific events
-- Support setting `--project-dir` via environment variable: [`DBT_PROJECT_DIR`](/reference/dbt_project.yml)
-- More granular configurations for logging (to set [log format](/reference/global-configs/logs#log-formatting), [log levels](/reference/global-configs/logs#log-level), and [colorization](/reference/global-configs/logs#color)) and [cache population](/reference/global-configs/cache#cache-population)
+### Быстрые изменения
+- Ключ верхнего уровня [`version: 2`](/reference/project-configs/version) теперь **необязателен** во всех YAML файлах. Также ключи [`config-version: 2`](/reference/project-configs/config-version) и `version:` теперь необязательны в файлах `dbt_project.yml`.
+- [События и логирование](/reference/events-logging): Добавлен `node_relation` (`database`, `schema`, `identifier`) в словарь `node_info`, доступный для событий, специфичных для узлов.
+- Поддержка установки `--project-dir` через переменную окружения: [`DBT_PROJECT_DIR`](/reference/dbt_project.yml)
+- Более детальные настройки для логирования (для установки [формата логов](/reference/global-configs/logs#log-formatting), [уровней логов](/reference/global-configs/logs#log-level) и [цветности](/reference/global-configs/logs#color)) и [пополнения кеша](/reference/global-configs/cache#cache-population)

@@ -1,92 +1,92 @@
 ---
-title: "Upgrading to v1.7"
+title: "Обновление до v1.7"
 id: upgrading-to-v1.7
-description: New features and changes in dbt Core v1.7
+description: Новые функции и изменения в dbt Core v1.7
 displayed_sidebar: "docs"
 ---
 
-## Resources
+## Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.7.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
-- [Release schedule](https://github.com/dbt-labs/dbt-core/issues/8260)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.7.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [График релизов](https://github.com/dbt-labs/dbt-core/issues/8260)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x, with the exception of any changes explicitly mentioned below. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением изменений, явно упомянутых ниже. Если вы столкнулись с ошибкой при обновлении, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### Behavior changes
+### Изменения в поведении
 
-dbt Core v1.7 expands the amount of sources you can configure freshness for. Previously, freshness was limited to sources with a `loaded_at_field`; now, freshness can be generated from warehouse metadata tables when available. 
+dbt Core v1.7 расширяет количество источников, для которых вы можете настраивать свежесть. Ранее свежесть ограничивалась источниками с `loaded_at_field`; теперь свежесть может быть сгенерирована из метаданных таблиц хранилища, когда это возможно.
 
-As part of this change, the `loaded_at_field` is no longer required to generate source freshness. If a source has a `freshness:` block, dbt will attempt to calculate freshness for that source:
-- If a `loaded_at_field` is provided, dbt will calculate freshness via a select query (previous behavior).
-- If a `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible (new behavior).
+В рамках этого изменения `loaded_at_field` больше не требуется для генерации свежести источника. Если у источника есть блок `freshness:`, dbt попытается рассчитать свежесть для этого источника:
+- Если предоставлено `loaded_at_field`, dbt будет рассчитывать свежесть с помощью запроса select (предыдущее поведение).
+- Если `loaded_at_field` _не_ предоставлено, dbt будет рассчитывать свежесть с помощью метаданных таблиц хранилища, когда это возможно (новое поведение).
 
-This is a relatively small behavior change, but worth calling out in case you notice that dbt is calculating freshness for _more_ sources than before. To exclude a source from freshness calculations, you have two options:
-1. Don't add a `freshness:` block.
-2. Explicitly set `freshness: null`
+Это относительно небольшое изменение в поведении, но стоит отметить, если вы заметите, что dbt рассчитывает свежесть для _большего_ количества источников, чем раньше. Чтобы исключить источник из расчетов свежести, у вас есть два варианта:
+1. Не добавлять блок `freshness:`.
+2. Явно установить `freshness: null`.
 
-Beginning with v1.7, running [`dbt deps`](/reference/commands/deps) creates or updates the `package-lock.yml` file in the _project_root_ where `packages.yml` is recorded. The `package-lock.yml` file contains a record of all packages installed and, if subsequent `dbt deps` runs contain no updated packages in `dependencies.yml` or `packages.yml`, dbt-core installs from `package-lock.yml`.
+Начиная с v1.7, выполнение [`dbt deps`](/reference/commands/deps) создает или обновляет файл `package-lock.yml` в _project_root_, где записан `packages.yml`. Файл `package-lock.yml` содержит запись обо всех установленных пакетах, и если последующие запуски `dbt deps` не содержат обновленных пакетов в `dependencies.yml` или `packages.yml`, dbt-core устанавливает из `package-lock.yml`.
 
-To retain the behavior prior to v1.7, there are two main options:
-1. Use `dbt deps --upgrade` everywhere `dbt deps` was used previously.
-2. Add `package-lock.yml` to your `.gitignore` file.
+Чтобы сохранить поведение, предшествующее v1.7, есть два основных варианта:
+1. Используйте `dbt deps --upgrade` везде, где ранее использовался `dbt deps`.
+2. Добавьте `package-lock.yml` в ваш файл `.gitignore`.
 
-## New and changed features and functionality
+## Новые и измененные функции и функциональность
 
-- [`dbt docs generate`](/reference/commands/cmd-docs) now supports `--select` to generate [catalog metadata](/reference/artifacts/catalog-json) for a subset of your project. Currently available for Snowflake and Postgres only, but other adapters are coming soon. 
-- [Source freshness](/docs/deploy/source-freshness) can now be generated from warehouse metadata tables, currently Snowflake only, but other adapters that have metadata tables are coming soon. 
+- [`dbt docs generate`](/reference/commands/cmd-docs) теперь поддерживает `--select` для генерации [каталогов метаданных](/reference/artifacts/catalog-json) для подмножества вашего проекта. В настоящее время доступно только для Snowflake и Postgres, но другие адаптеры скоро появятся.
+- [Свежесть источников](/docs/deploy/source-freshness) теперь может быть сгенерирована из метаданных таблиц хранилища, в настоящее время только для Snowflake, но другие адаптеры с метаданными таблицами скоро появятся.
 
-### MetricFlow enhancements
+### Улучшения MetricFlow
 
-- Automatically create metrics on measures with [`create_metric: true`](/docs/build/semantic-models).
-- Optional [`label`](/docs/build/semantic-models) in semantic_models, measures, dimensions and entities.
-- New configurations for semantic models - [enable/disable](/reference/resource-configs/enabled), [group](/reference/resource-configs/group), and [meta](/reference/resource-configs/meta).
-- Support `fill_nulls_with` and `join_to_timespine` for metric nodes.
-- `saved_queries` extends governance beyond the semantic objects to their consumption.
+- Автоматическое создание метрик для мер с [`create_metric: true`](/docs/build/semantic-models).
+- Необязательный [`label`](/docs/build/semantic-models) в семантических моделях, мерах, измерениях и сущностях.
+- Новые конфигурации для семантических моделей - [включить/выключить](/reference/resource-configs/enabled), [группа](/reference/resource-configs/group) и [мета](/reference/resource-configs/meta).
+- Поддержка `fill_nulls_with` и `join_to_timespine` для узлов метрик.
+- `saved_queries` расширяет управление за пределы семантических объектов до их потребления.
 
-### For consumers of dbt artifacts (metadata)
+### Для потребителей артефактов dbt (метаданные)
 
-- The [manifest](/reference/artifacts/manifest-json) schema version has been updated to v11.
-- The [run_results](/reference/artifacts/run-results-json) schema version has been updated to v5.
-- There are a few specific changes to the [catalog.json](/reference/artifacts/catalog-json):
-    - Added [node attributes](/reference/artifacts/run-results-json) related to compilation (`compiled`, `compiled_code`, `relation_name`) to the `catalog.json`. 
-    - The nodes dictionary in the `catalog.json` can now be "partial" if `dbt docs generate` is run with a selector.
+- Версия схемы [manifest](/reference/artifacts/manifest-json) была обновлена до v11.
+- Версия схемы [run_results](/reference/artifacts/run-results-json) была обновлена до v5.
+- Есть несколько конкретных изменений в [catalog.json](/reference/artifacts/catalog-json):
+    - Добавлены [атрибуты узлов](/reference/artifacts/run-results-json), связанные с компиляцией (`compiled`, `compiled_code`, `relation_name`) в `catalog.json`.
+    - Словарь узлов в `catalog.json` теперь может быть "частичным", если `dbt docs generate` выполняется с селектором.
 
-### Model governance
+### Управление моделями
 
-dbt Core v1.5 introduced model governance which we're continuing to refine.  v1.7 includes these additional features and functionality:
+dbt Core v1.5 представил управление моделями, которое мы продолжаем уточнять. v1.7 включает в себя эти дополнительные функции и функциональность:
 
-- **[Breaking change detection](/reference/resource-properties/versions#detecting-breaking-changes) for models with contracts enforced:** When dbt detects a breaking change to a model with an enforced contract during state comparison, it will now raise an error for versioned models and a warning for models that are not versioned.
-- **[Set `access` as a config](/reference/resource-configs/access):** You can now set a model's `access` within config blocks in the model's file or in the `dbt_project.yml` for an entire subfolder at once.
-- **[Type aliasing for model contracts](/reference/resource-configs/contract):** dbt will use each adapter's built-in type aliasing for user-provided data types—meaning you can now write `string` always, and dbt will translate to `text` on Postgres/Redshift. This is "on" by default, but you can opt-out.
-- **[Raise warning for numeric types](/reference/resource-configs/contract):** Because of issues when putting `numeric` in model contracts without considering that default values such as `numeric(38,0)` might round decimals accordingly. dbt will now warn you if it finds a numeric type without specified precision/scale.
+- **[Обнаружение разрушающих изменений](/reference/resource-properties/versions#detecting-breaking-changes) для моделей с обязательными контрактами:** Когда dbt обнаруживает разрушающее изменение в модели с обязательным контрактом во время сравнения состояния, он теперь будет выдавать ошибку для версионированных моделей и предупреждение для моделей, которые не являются версионированными.
+- **[Установить `access` как конфигурацию](/reference/resource-configs/access):** Теперь вы можете установить `access` модели в блоках конфигурации в файле модели или в `dbt_project.yml` для всей подпапки сразу.
+- **[Типовое алиасирование для контрактов моделей](/reference/resource-configs/contract):** dbt будет использовать встроенное алиасирование типов каждого адаптера для пользовательских типов данных, что означает, что вы теперь можете всегда писать `string`, и dbt будет переводить это в `text` на Postgres/Redshift. Это включено по умолчанию, но вы можете отказаться от этого.
+- **[Выдавать предупреждение для числовых типов](/reference/resource-configs/contract):** Из-за проблем при использовании `numeric` в контрактах моделей без учета того, что значения по умолчанию, такие как `numeric(38,0)`, могут округлять десятичные значения соответственно. Теперь dbt будет предупреждать вас, если он найдет числовой тип без указанной точности/масштаба.
 
 ### dbt clean
 
-Starting in v1.7, `dbt clean` will only clean paths within the current working directory. The `--no-clean-project-files-only` flag will delete all paths specified in `clean-paths`, even if they're outside the dbt project.
+Начиная с v1.7, `dbt clean` будет очищать только пути в текущем рабочем каталоге. Флаг `--no-clean-project-files-only` удалит все пути, указанные в `clean-paths`, даже если они находятся за пределами проекта dbt.
 
-Supported flags:
--  `--clean-project-files-only` (default) 
+Поддерживаемые флаги:
+-  `--clean-project-files-only` (по умолчанию) 
 -  `--no-clean-project-files-only`
 
-### Additional attributes in run_results.json
+### Дополнительные атрибуты в run_results.json
 
-The run_results.json now includes three attributes related to the `applied` state that complement `unique_id`:
+Файл run_results.json теперь включает три атрибута, связанные с состоянием `applied`, которые дополняют `unique_id`:
 
-- `compiled`: Boolean entry of the node compilation status (`False` after parsing, but `True` after compiling).
-- `compiled_code`: Rendered string of the code that was compiled (empty after parsing, but full string after compiling).
-- `relation_name`: The fully-qualified name of the object that was (or will be) created/updated within the database.
+- `compiled`: Логическое значение статуса компиляции узла (`False` после разбора, но `True` после компиляции).
+- `compiled_code`: Отрендеренная строка кода, который был скомпилирован (пусто после разбора, но полная строка после компиляции).
+- `relation_name`: Полное имя объекта, который был (или будет) создан/обновлен в базе данных.
 
-### Deprecated functionality
+### Устаревшая функциональность
 
-The ability for installed packages to override built-in materializations without explicit opt-in from the user is being deprecated.
+Возможность для установленных пакетов переопределять встроенные материализации без явного согласия пользователя устаревает.
 
-- Overriding a built-in materialization from an installed package raises a deprecation warning.
-- Using a custom materialization from an installed package does not raise a deprecation warning.
-- Using a built-in materialization package override from the root project via a wrapping materialization is still supported. For example:
+- Переопределение встроенной материализации из установленного пакета вызывает предупреждение об устаревании.
+- Использование пользовательской материализации из установленного пакета не вызывает предупреждения об устаревании.
+- Использование переопределения встроенной материализации пакета из корневого проекта через обертывающую материализацию по-прежнему поддерживается. Например:
 
   ```
   {% materialization view, default %}
@@ -94,11 +94,10 @@ The ability for installed packages to override built-in materializations without
   {% endmaterialization %}
   ```
 
+### Быстрые обновления
 
-### Quick hits
-
-With these quick hits, you can now:
-- Configure a [`delimiter`](/reference/resource-configs/delimiter) for a seed file.
-- Use packages with the same git repo and unique subdirectory.
-- Access the `date_spine` macro directly from dbt-core (moved over from dbt-utils).
-- Syntax for `DBT_ENV_SECRET_` has changed to `DBT_ENV_SECRET` and no longer requires the closing underscore.
+С этими быстрыми обновлениями вы теперь можете:
+- Настроить [`delimiter`](/reference/resource-configs/delimiter) для seed файла.
+- Использовать пакеты с одним и тем же git репозиторием и уникальной подпапкой.
+- Получить доступ к макросу `date_spine` напрямую из dbt-core (перемещен из dbt-utils).
+- Синтаксис для `DBT_ENV_SECRET_` изменился на `DBT_ENV_SECRET` и больше не требует закрывающего подчеркивания.

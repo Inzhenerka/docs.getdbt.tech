@@ -1,61 +1,61 @@
 ---
-title: "Artifacts"
+title: "Артефакты"
 id: "artifacts"
-description: "Use artifacts to power your automated docs site and source freshness data." 
+description: "Используйте артефакты для автоматизации вашего сайта документации и данных о свежести источников." 
 ---
 
-When running dbt jobs, dbt Cloud generates and saves *artifacts*. You can use these artifacts, like `manifest.json`, `catalog.json`, and `sources.json` to power different aspects of dbt Cloud, namely: [dbt Explorer](/docs/collaborate/explore-projects), [dbt Docs](/docs/collaborate/build-and-view-your-docs#dbt-docs), and [source freshness reporting](/docs/build/sources#source-data-freshness).
+При выполнении задач dbt, dbt Cloud генерирует и сохраняет *артефакты*. Вы можете использовать эти артефакты, такие как `manifest.json`, `catalog.json` и `sources.json`, для различных аспектов dbt Cloud, а именно: [dbt Explorer](/docs/collaborate/explore-projects), [dbt Docs](/docs/collaborate/build-and-view-your-docs#dbt-docs) и [отчетности о свежести источников](/docs/build/sources#source-data-freshness).
 
-## Create dbt Cloud Artifacts
+## Создание артефактов dbt Cloud
 
-[dbt Explorer](/docs/collaborate/explore-projects#generate-metadata) uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). It uses metadata from your staging and production [deployment environments](/docs/deploy/deploy-environments) (development environment metadata is coming soon).
+[dbt Explorer](/docs/collaborate/explore-projects#generate-metadata) использует метаданные, предоставленные [Discovery API](/docs/dbt-cloud-apis/discovery-api), для отображения деталей о [состоянии вашего проекта](/docs/dbt-cloud-apis/project-state). Он использует метаданные из ваших промежуточных и производственных [окружений развертывания](/docs/deploy/deploy-environments) (метаданные окружения разработки скоро будут доступны).
 
-dbt Explorer automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project &mdash; meaning it's always automatically updated after each job run.
+dbt Explorer автоматически получает обновления метаданных после каждого выполнения задачи в производственном или промежуточном окружении развертывания, поэтому он всегда имеет последние результаты для вашего проекта — это означает, что он всегда автоматически обновляется после каждого выполнения задачи.
 
-To view a resource, its metadata, and what commands are needed, refer to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
+Чтобы просмотреть ресурс, его метаданные и необходимые команды, обратитесь к разделу [генерация метаданных](/docs/collaborate/explore-projects#generate-metadata) для получения дополнительной информации.
 
-<Expandable alt_header="For dbt Docs">
+<Expandable alt_header="Для dbt Docs">
 
-The following steps are for legacy dbt Docs only. For the current documentation experience, see [dbt Explorer](/docs/collaborate/explore-projects).
+Следующие шаги предназначены только для устаревшей версии dbt Docs. Для текущего опыта документации смотрите [dbt Explorer](/docs/collaborate/explore-projects).
 
-While running any job can produce artifacts, you should only associate one production job with a given project to produce the project's artifacts. You can designate this connection on the **Project details** page. To access this page:
+Хотя выполнение любой задачи может производить артефакты, вы должны ассоциировать только одну производственную задачу с данным проектом для создания артефактов проекта. Вы можете назначить это соединение на странице **Детали проекта**. Чтобы получить доступ к этой странице:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
-2. Select your project, and click **Edit** in the lower right. 
-3. Under **Artifacts**, select the jobs you want to produce documentation and source freshness artifacts for.
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
+2. Выберите ваш проект и нажмите **Редактировать** в правом нижнем углу. 
+3. В разделе **Артефакты** выберите задачи, для которых вы хотите создать документацию и артефакты свежести источников.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/project-level-artifact-updated.png" width="70%" title="Configuring Artifacts"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/project-level-artifact-updated.png" width="70%" title="Настройка артефактов"/>
 
-If you don't see your job listed, you might need to edit the job and select **Run source freshness** and **Generate docs on run**.
+Если вы не видите свою задачу в списке, вам может потребоваться отредактировать задачу и выбрать **Запустить проверку свежести источников** и **Генерировать документацию при выполнении**.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/edit-job-generate-artifacts.png" title="Editing the job to generate artifacts"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/edit-job-generate-artifacts.png" title="Редактирование задачи для генерации артефактов"/>
 
-When you add a production job to a project, dbt Cloud updates the content and provides links to the production documentation and source freshness artifacts it generated for that project. You can see these links by clicking **Deploy** in the upper left, selecting **Jobs**, and then selecting the production job. From the job page, you can select a specific run to see how artifacts were updated for that run only.
-
-</Expandable>
-
-### Documentation
-
-Navigate to [dbt Explorer](/docs/collaborate/explore-projects) through the **Explore** link to view your project's resources and lineage to gain a better understanding of its latest production state.
-
-To view a resource, its metadata, and what commands are needed, refer to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
-
-Both the job's commands and the docs generate step (triggered by the **Generate docs on run** checkbox) must succeed during the job invocation to update the documentation.
-
-<Expandable alt_header="For dbt Docs">
-
-When set up, dbt Cloud updates the Documentation link in the header tab so it links to documentation for this job. This link always directs you to the latest version of the documentation for your project.
+Когда вы добавляете производственную задачу в проект, dbt Cloud обновляет содержимое и предоставляет ссылки на производственную документацию и артефакты свежести источников, которые он сгенерировал для этого проекта. Вы можете увидеть эти ссылки, нажав **Развертывание** в верхнем левом углу, выбрав **Задачи**, а затем выбрав производственную задачу. На странице задачи вы можете выбрать конкретное выполнение, чтобы увидеть, как артефакты были обновлены только для этого выполнения.
 
 </Expandable>
 
-### Source Freshness
+### Документация
 
-To view the latest source freshness result, refer to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for more detail. Then navigate to dbt Explorer through the **Explore** link.
+Перейдите в [dbt Explorer](/docs/collaborate/explore-projects) через ссылку **Исследовать**, чтобы просмотреть ресурсы вашего проекта и его связь, чтобы лучше понять его последнее производственное состояние.
 
-<Expandable alt_header="For dbt Docs">
+Чтобы просмотреть ресурс, его метаданные и необходимые команды, обратитесь к разделу [генерация метаданных](/docs/collaborate/explore-projects#generate-metadata) для получения дополнительной информации.
 
-Configuring a job for the Source Freshness artifact setting also updates the data source link under **Deploy**. The new link points to the latest Source Freshness report for the selected job.
+Как команды задачи, так и этап генерации документации (инициируемый флажком **Генерировать документацию при выполнении**) должны успешно завершиться во время выполнения задачи, чтобы обновить документацию.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/data-sources.png" title="A link to the latest source freshness snapshot for the selected job"/>
+<Expandable alt_header="Для dbt Docs">
+
+Когда настройка завершена, dbt Cloud обновляет ссылку на документацию в заголовке, чтобы она указывала на документацию для этой задачи. Эта ссылка всегда направляет вас на последнюю версию документации для вашего проекта.
+
+</Expandable>
+
+### Свежесть источников
+
+Чтобы просмотреть последний результат свежести источников, обратитесь к разделу [генерация метаданных](/docs/collaborate/explore-projects#generate-metadata) для получения дополнительной информации. Затем перейдите в dbt Explorer через ссылку **Исследовать**.
+
+<Expandable alt_header="Для dbt Docs">
+
+Настройка задачи для параметра артефакта Свежесть источников также обновляет ссылку на источник данных в разделе **Развертывание**. Новая ссылка указывает на последний отчет о свежести источников для выбранной задачи.
+
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/data-sources.png" title="Ссылка на последний снимок свежести источников для выбранной задачи"/>
 
 </Expandable>

@@ -1,8 +1,8 @@
 ---
-title: Can I document things other than models, like sources, seeds, and snapshots?
-description: "Using the description key to document resources"
-sidebar_label: 'Document other resources'
+title: Могу ли я документировать что-то кроме моделей, например источники, семена и снимки?
+description: "Использование ключа description для документирования ресурсов"
+sidebar_label: 'Документирование других ресурсов'
 id: document-other-resources
 ---
 
-Yes! You can document almost everything in your project using the `description:` key. Check out the reference docs on [descriptions](/reference/resource-properties/description) for more info!
+Да! Вы можете документировать почти все в вашем проекте, используя ключ `description:`. Ознакомьтесь с документацией по [описаниям](/reference/resource-properties/description) для получения дополнительной информации!

@@ -1,27 +1,27 @@
 ---
-title: "Upgrading to 0.17.0"
+title: "Обновление до 0.17.0"
 id: "upgrading-to-0-17-0"
 displayed_sidebar: "docs"
 
 ---
 
-dbt v0.17.0 makes compilation more consistent, improves performance, and fixes a number of bugs.
+dbt v0.17.0 делает компиляцию более последовательной, улучшает производительность и исправляет ряд ошибок.
 
-## Articles:
+## Статьи:
 
- - [Changelog](https://github.com/dbt-labs/dbt-core/blob/dev/octavius-catto/CHANGELOG.md)
+ - [Список изменений](https://github.com/dbt-labs/dbt-core/blob/dev/octavius-catto/CHANGELOG.md)
 
-## Notable changes
+## Значительные изменения
 
-Please be aware of the following changes in 0.17.0 that may require a code update in your dbt project.
+Обратите внимание на следующие изменения в версии 0.17.0, которые могут потребовать обновления кода в вашем проекте dbt.
 
-### A new dbt_project.yml config version
+### Новая версия конфигурации dbt_project.yml
 
-dbt v0.17.0 introduces a new config version for the `dbt_project.yml` file. This new config version changes the semantics of how dbt interprets the `dbt_project.yml` file.
+dbt v0.17.0 вводит новую версию конфигурации для файла `dbt_project.yml`. Эта новая версия конфигурации изменяет семантику того, как dbt интерпретирует файл `dbt_project.yml`.
 
-#### Specifying a config version
+#### Указание версии конфигурации
 
-A config version can be declared using the `config-version` key in the `dbt_project.yml` file:
+Версию конфигурации можно объявить с помощью ключа `config-version` в файле `dbt_project.yml`:
 
 ```yml
 name: my_project
@@ -33,18 +33,18 @@ models:
   ...
 ```
 
-The accepted values for `config-version` are `1` and `2`. When the `config-version: 2` is used, some new functionality in dbt is unlocked.
+Допустимые значения для `config-version` — это `1` и `2`. При использовании `config-version: 2` открывается новая функциональность в dbt.
 
-#### Using config-version: 2
+#### Использование config-version: 2
 
-##### Better variable scoping semantics
+##### Улучшенные семантики области видимости переменных
 
-Previous releases of dbt allowed variables (`vars:`) to be scoped to a folder level in the `models:` hierarchy. This presents a few problems:
+Предыдущие версии dbt позволяли переменным (`vars:`) иметь область видимости на уровне папки в иерархии `models:`. Это создает несколько проблем:
 
-- The vars should only _really_ be applied to _models_ (as the variable declaration lives in the `models:` config), but variables are also often referenced in tests, `schema.yml` files, macros, snapshots, and so on.
-- There is an ambiguity in how variables are resolved in `schema.yml` files. Consider the case where a `schema.yml` file is scoped with one value for a variable, but the model it references is scoped with a different value for the same variable. The behavior of `var()` in this scenario is poorly defined, and often not what you would expect.
+- Переменные должны применяться только к _моделям_ (так как объявление переменной находится в конфигурации `models:`), но переменные также часто ссылаются в тестах, файлах `schema.yml`, макросах, снимках и так далее.
+- Существует неоднозначность в том, как переменные разрешаются в файлах `schema.yml`. Рассмотрим случай, когда файл `schema.yml` имеет одну область видимости для переменной, но модель, на которую он ссылается, имеет другую область видимости для той же переменной. Поведение `var()` в этом сценарии плохо определено и часто не соответствует вашим ожиданиям.
 
-In version 2 of the `dbt_project.yml` config, vars must now be defined in a top-level `vars:` dictionary, eg:
+В версии 2 конфигурации `dbt_project.yml` переменные теперь должны быть определены в верхнем уровне словаря `vars:`, например:
 
 <File name='dbt_project.yml'>
 
@@ -64,12 +64,11 @@ models:
 
 </File>
 
+Этот синтаксис делает область видимости переменных однозначной, так как все узлы в данном пакете будут получать одно и то же значение для данной переменной. Обратите внимание, что этот синтаксис _по-прежнему_ поддерживает область видимости переменных на уровне пакета. Дополнительную информацию можно найти в документации по синтаксису файла `dbt_project.yml`.
 
-This syntax makes variable scoping unambiguous, as all of the nodes in a given package will receive the same value for a given variable. Note that this syntax _does_ still support package-level variable scoping. See the docs on the `dbt_project.yml` file syntax for more information.
+##### Однозначные конфигурации ресурсов
 
-##### Unambiguous resource configurations
-
-Version 1 of the `dbt_project.yml` file spec allowed for ambiguous model configurations when dictionary configs were defined in a `models:` block. Consider:
+Версия 1 файла `dbt_project.yml` позволяла создавать неоднозначные конфигурации моделей, когда словарные конфигурации определялись в блоке `models:`. Рассмотрим:
 
 <File name='dbt_project.yml'>
 
@@ -85,12 +84,12 @@ models:
 
 </File>
 
-This example is intended to configure a `partition_by` setting for all of the BigQuery models in the `models/reporting/` folder. From the syntax in this file alone though, there are two possible interpretations:
+Этот пример предназначен для настройки параметра `partition_by` для всех моделей BigQuery в папке `models/reporting/`. Однако из синтаксиса этого файла можно сделать два возможных вывода:
 
-- Configure the `partition_by` value for models in the `models/reporting` folder
-- Configure the `field` and `data_type` values for models in the `models/reporting/partition_by` folder
+- Настроить значение `partition_by` для моделей в папке `models/reporting`
+- Настроить значения `field` и `data_type` для моделей в папке `models/reporting/partition_by`
 
-To resolve this ambiguity, configurations can now be supplied using the `+` syntax for config keys. For the example above, this would look like:
+Чтобы разрешить эту неоднозначность, теперь конфигурации можно предоставлять с помощью синтаксиса `+` для ключей конфигурации. Для приведенного выше примера это будет выглядеть так:
 
 <File name='dbt_project.yml'>
 
@@ -105,13 +104,12 @@ models:
 ```
 </File>
 
-
-This syntax unambiguously defines `partition_by` as a configuration with a dictionary value of `{field: date_day, data_type: timestamp}`. This `+` decorator can be used for _any_ configuration, and can be helpful if you have a folder name that collides with a known dbt project config key. Example:
+Этот синтаксис однозначно определяет `partition_by` как конфигурацию со словарным значением `{field: date_day, data_type: timestamp}`. Этот декоратор `+` можно использовать для _любой_ конфигурации и он может быть полезен, если у вас есть имя папки, которое совпадает с известным ключом конфигурации проекта dbt. Пример:
 
 <File name='dbt_project.yml'>
 
 ```yml
-# Your model lives in models/materialized/my_model.sql
+# Ваша модель находится в models/materialized/my_model.sql
 
 models:
   my_project:
@@ -121,37 +119,30 @@ models:
 ```
 </File>
 
+Эта конфигурация будет работать в dbt v0.17.0 при использовании `config-version: 2`, но не могла быть представлена в предыдущих версиях dbt.
 
-This configuration will work in dbt v0.17.0 when `config-version: 2` is used, but was not possible to represent in previous versions of dbt.
+##### Инструкции по обновлению
 
-##### Upgrading instructions
+- Добавьте `config-version: 2` в ваш файл `dbt_project.yml`
+- Убедитесь, что все объявления `vars:` в вашем файле `dbt_project.yml` были перемещены на верхний уровень файла
+- Убедитесь, что любые пакеты, на которые ссылается ваш проект, также объявлены с `config-version: 2`
 
-- Add `config-version: 2` to your `dbt_project.yml` file
-- Ensure that all `vars:` declarations in your `dbt_project.yml` file have been moved to the top-level of the file
-- Ensure that any packages that your project references are also declared with `config-version: 2`
+Поддержка версии 1 будет удалена в будущих релизах dbt.
 
-Support for version 1 will be removed in a future release of dbt.
+### Рендеринг полей YAML с использованием NativeEnvironment
 
-### NativeEnvironment rendering for YAML fields
+В dbt v0.17.0 dbt включил использование Native Environment Jinja для рендеринга значений в YML файлах. Этот Native Environment преобразует строковые значения в их примитивные типы Python (логические значения, целые числа, числа с плавающей запятой и кортежи). С этим изменением вы теперь можете предоставлять логические и целочисленные значения для конфигураций через строковые входные данные, такие как переменные окружения или переменные командной строки.
 
-In dbt v0.17.0, dbt enabled use of Jinja's Native Environment to render values in
-YML files. This Native Environment coerces string values to their
-primitive Python types (booleans, integers, floats, and tuples). With this
-change, you can now provide boolean and integer values to configurations via
-string-oriented inputs, like environment variables or command line variables.
+:::danger Внимание
 
-:::danger Heads up
+  В dbt v0.17.1 рендеринг по умолчанию не включен. Возможно, рендерить конкретные значения с использованием фильтров [`as_bool`](/reference/dbt-jinja-functions/as_bool),
+  [`as_number`](/reference/dbt-jinja-functions/as_number) и [`as_native`](/reference/dbt-jinja-functions/as_native).
 
-  In dbt v0.17.1, native rendering is not enabled by default. It is possible to
-  natively render specific values using the [`as_bool`](/reference/dbt-jinja-functions/as_bool),
-  [`as_number`](/reference/dbt-jinja-functions/as_number), and [`as_native`](/reference/dbt-jinja-functions/as_native) filters.
-
-  The examples below have been updated to reflect 0.17.1 functionality.
+  Примеры ниже были обновлены, чтобы отразить функциональность 0.17.1.
 
 :::
 
-This example specifies a port number as an integer from an environment variable.
-This was not possible in previous versions of dbt.
+Этот пример указывает номер порта как целое число из переменной окружения. Это было невозможно в предыдущих версиях dbt.
 
 ```yml
 
@@ -164,17 +155,14 @@ debug:
       password: "{{ env_var('DBT_PASS') }}"
       host: "{{ env_var('DBT_HOST') }}"
 
-      # The port number will be coerced from a string to an integer
+      # Номер порта будет преобразован из строки в целое число
       port: "{{ env_var('DBT_PORT') | as_number }}"
 
       dbname: analytics
       schema: analytics
 ```
 
-Finally, you can now enable or disable models conditionally based on the
-environment that dbt is running in. In this example, models in the `admin`
-package will be disabled in dev. This was not possible in previous versions of
-dbt.
+Наконец, вы теперь можете включать или отключать модели условно в зависимости от среды, в которой работает dbt. В этом примере модели в пакете `admin` будут отключены в dev. Это было невозможно в предыдущих версиях dbt.
 
 <File name='dbt_project.yml'>
 
@@ -194,19 +182,17 @@ models:
 
 </File>
 
+### Доступ к источникам в объекте `graph`
 
-### Accessing sources in the `graph` object
+В предыдущих версиях dbt источники в проекте dbt можно было получить в контексте компиляции, используя переменную контекста [graph.nodes](/reference/dbt-jinja-functions/graph). В dbt v0.17.0 эти источники были перемещены из словаря `graph.nodes` в новый словарь `graph.sources`. Это изменение также отражено в артефакте `manifest.json`, создаваемом dbt. Если вы получаете доступ к этим источникам программно, пожалуйста, обновите любые ссылки с `graph.nodes` на `graph.sources`.
 
-In previous versions of dbt, the `sources` in a dbt project could be accessed in the compilation context using the [graph.nodes](/reference/dbt-jinja-functions/graph) context variable. In dbt v0.17.0, these sources have been moved out of the `graph.nodes` dictionary and into a new `graph.sources` dictionary. This change is also reflected in the `manifest.json` artifact produced by dbt. If you are accessing these sources programmatically, please update any references from `graph.nodes` to `graph.sources` instead.
+### Поле `locations` BigQuery удалено из каталога
 
-### BigQuery `locations` removed from Catalog
+В качестве обходного пути для проблем с разрешениями, с которыми сталкивались многие пользователи dbt, поле `location` было удалено из каталога, создаваемого dbt. Соответственно, это поле больше не будет видно на автоматически сгенерированном веб-сайте документации dbt. Это поле может быть добавлено снова в будущих релизах dbt.
 
-As a workaround for permission issues encountered by many dbt users, the `location` field has been removed from the Catalog generated by dbt. Accordingly, this field will no longer be visible in the auto-generated dbt documentation website. This field may be re-added in a future release of dbt.
+### Макросы больше не видят переменные, определенные вне блоков макросов
 
-
-### Macros no longer see variables defined outside of macro blocks
-
-In previous versions of dbt, a variable could be declared outside of the macro scope, and referenced from any macros in the same file:
+В предыдущих версиях dbt переменная могла быть объявлена вне области видимости макроса и ссылаться на нее из любых макросов в том же файле:
 
 ```jinja
 {% set my_global = ['a', 'b', 'c'] %}
@@ -217,7 +203,7 @@ In previous versions of dbt, a variable could be declared outside of the macro s
 {% endmacro %}
 ```
 
-This is now an error, because `my_global` is not visible to the macro `use_my_global`. To provide a globally-available value, use a macro that returns a constant value:
+Теперь это ошибка, потому что `my_global` недоступна макросу `use_my_global`. Чтобы предоставить значение, доступное глобально, используйте макрос, который возвращает постоянное значение:
 
 ```jinja
 {% macro get_my_global() %}
@@ -230,30 +216,28 @@ This is now an error, because `my_global` is not visible to the macro `use_my_gl
 {% endmacro %}
 ```
 
-## Python requirements
+## Требования к Python
 
-If you are installing dbt in a Python environment alongside other Python
-modules, please be mindful of the following changes to dbt's Python
-dependencies:
+Если вы устанавливаете dbt в среде Python вместе с другими модулями Python, пожалуйста, обратите внимание на следующие изменения в зависимостях Python dbt:
 
 Core:
-- Pinned `Jinja2` depdendency to `2.11.2`
-- Pinned `hologram` to `0.0.7`
-- Require Python >= `3.6.3`
+- Зафиксированная зависимость `Jinja2` на `2.11.2`
+- Зафиксирован `hologram` на `0.0.7`
+- Требуется Python >= `3.6.3`
 
 BigQuery:
-- Require `protobuf>=3.6.0,<3.12`
+- Требуется `protobuf>=3.6.0,<3.12`
 
-## New and changed documentation
+## Новая и измененная документация
 
 **Core**
-- [`path:` selectors](/reference/node-selection/methods#path)
-- [`--fail-fast` command](/reference/commands/run#failing-fast)
-- `as_text` Jinja filter: removed this defunct filter
-- [accessing nodes in the `graph` object](/reference/dbt-jinja-functions/graph)
+- [`path:` селекторы](/reference/node-selection/methods#path)
+- [`--fail-fast` команда](/reference/commands/run#failing-fast)
+- Фильтр Jinja `as_text`: удален этот устаревший фильтр
+- [доступ к узлам в объекте `graph`](/reference/dbt-jinja-functions/graph)
 - [persist_docs](/reference/resource-configs/persist_docs)
-- [source properties](/reference/source-properties)
-- [source overrides](/reference/resource-properties/overrides)
+- [свойства источника](/reference/source-properties)
+- [переопределения источников](/reference/resource-properties/overrides)
 
 **BigQuery**
 - [maximum_bytes_billed](/docs/core/connect-data-platform/bigquery-setup#maximum-bytes-billed)

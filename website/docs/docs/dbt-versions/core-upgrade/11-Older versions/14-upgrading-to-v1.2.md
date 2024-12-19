@@ -1,40 +1,40 @@
 ---
-title: "Upgrading to v1.2"
-description: New features and changes in dbt Core v1.2
+title: "Обновление до v1.2"
+description: Новые функции и изменения в dbt Core v1.2
 id: "upgrading-to-v1.2"
 displayed_sidebar: "docs"
 ---
 
-### Resources
+### Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.2.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.2.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-There are no breaking changes for code in dbt projects and packages. We are committed to providing backwards compatibility for all versions 1.x. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+Нет никаких разрушающих изменений для кода в проектах и пакетах dbt. Мы стремимся обеспечить обратную совместимость для всех версий 1.x. Если вы столкнетесь с ошибкой после обновления, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### For consumers of dbt artifacts (metadata)
+### Для пользователей артефактов dbt (метаданные)
 
-The manifest schema version has been updated to `v6`. The relevant changes are:
-- Change to `config` default, which includes a new `grants` property with default value `{}`
-- Addition of a `metrics` property, to any node which could reference metrics using the `metric()` function
+Версия схемы манифеста была обновлена до `v6`. Соответствующие изменения:
+- Изменение значения по умолчанию для `config`, которое включает новое свойство `grants` со значением по умолчанию `{}`
+- Добавление свойства `metrics` к любому узлу, который может ссылаться на метрики с помощью функции `metric()`
 
-For users of [state-based selection](/reference/node-selection/syntax#about-node-selection): This release also includes new logic declaring forwards compatibility for older manifest versions. While running dbt Core v1.2, it should be possible to use `state:modified --state ...` selection against a manifest produced by dbt Core v1.0 or v1.1.
+Для пользователей [выбора на основе состояния](/reference/node-selection/syntax#about-node-selection): Это обновление также включает новую логику, объявляющую обратную совместимость для более старых версий манифеста. При запуске dbt Core v1.2 должно быть возможно использовать выбор `state:modified --state ...` по отношению к манифесту, созданному dbt Core v1.0 или v1.1.
 
-## For maintainers of adapter plugins
+## Для поддерживающих адаптеры плагинов
 
-See GitHub discussion [dbt-labs/dbt-core#5468](https://github.com/dbt-labs/dbt-core/discussions/5468) for detailed information
+Смотрите обсуждение на GitHub [dbt-labs/dbt-core#5468](https://github.com/dbt-labs/dbt-core/discussions/5468) для получения подробной информации.
 
-## New and changed functionality
+## Новая и измененная функциональность
 
-- **[Grants](/reference/resource-configs/grants)** are natively supported in `dbt-core` for the first time. That support extends to all standard materializations, and the most popular adapters. If you already use hooks to apply simple grants, we encourage you to use built-in `grants` to configure your models, seeds, and snapshots instead. This will enable you to [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) up your duplicated or boilerplate code.
-- **[Metrics](/docs/build/build-metrics-intro)** now support an `expression` type (metrics-on-metrics), as well as a `metric()` function to use when referencing metrics from within models, macros, or `expression`-type metrics. For more information on how to use expression metrics, check out the [**`dbt_metrics` package**](https://github.com/dbt-labs/dbt_metrics)
-- **[dbt-Jinja functions](/reference/dbt-jinja-functions)** now include the [`itertools` Python module](/reference/dbt-jinja-functions/modules#itertools), as well as the [set](/reference/dbt-jinja-functions/set) and [zip](/reference/dbt-jinja-functions/zip) functions.
-- **[Node selection](/reference/node-selection/syntax)** includes a [file selection method](/reference/node-selection/methods#file) (`-s model.sql`), and [yaml selector](/reference/node-selection/yaml-selectors) inheritance.
-- **[Global configs](/reference/global-configs/about-global-configs)** now include CLI flag and environment variable settings for [`target-path`](/reference/global-configs/json-artifacts) and [`log-path`](/reference/global-configs/logs), which can be used to override the values set in `dbt_project.yml`
+- **[Grants](/reference/resource-configs/grants)** впервые нативно поддерживаются в `dbt-core`. Эта поддержка распространяется на все стандартные материализации и самые популярные адаптеры. Если вы уже используете хуки для применения простых грантов, мы рекомендуем вам использовать встроенные `grants` для настройки ваших моделей, семян и снимков. Это позволит вам [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) ваш дублирующийся или шаблонный код.
+- **[Metrics](/docs/build/build-metrics-intro)** теперь поддерживают тип `expression` (метрики на метриках), а также функцию `metric()`, которую можно использовать при ссылке на метрики из моделей, макросов или метрик типа `expression`. Для получения дополнительной информации о том, как использовать метрики выражений, ознакомьтесь с [**пакетом `dbt_metrics`**](https://github.com/dbt-labs/dbt_metrics).
+- **[Функции dbt-Jinja](/reference/dbt-jinja-functions)** теперь включают [модуль Python `itertools`](/reference/dbt-jinja-functions/modules#itertools), а также функции [set](/reference/dbt-jinja-functions/set) и [zip](/reference/dbt-jinja-functions/zip).
+- **[Выбор узлов](/reference/node-selection/syntax)** включает [метод выбора файла](/reference/node-selection/methods#file) (`-s model.sql`) и наследование [yaml селекторов](/reference/node-selection/yaml-selectors).
+- **[Глобальные конфигурации](/reference/global-configs/about-global-configs)** теперь включают настройки флагов CLI и переменных окружения для [`target-path`](/reference/global-configs/json-artifacts) и [`log-path`](/reference/global-configs/logs), которые могут использоваться для переопределения значений, установленных в `dbt_project.yml`.
 
-### Specific adapters
+### Конкретные адаптеры
 
-- [Postgres](/docs/core/connect-data-platform/postgres-setup) and [Redshift](/docs/core/connect-data-platform/redshift-setup) profiles support a `retries` config, if dbt encounters an operational error or timeout when opening a connection. The default is 1 retry.
+Профили [Postgres](/docs/core/connect-data-platform/postgres-setup) и [Redshift](/docs/core/connect-data-platform/redshift-setup) поддерживают конфигурацию `retries`, если dbt сталкивается с операционной ошибкой или тайм-аутом при открытии соединения. Значение по умолчанию — 1 повторная попытка.

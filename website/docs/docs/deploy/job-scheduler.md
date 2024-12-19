@@ -1,115 +1,113 @@
 ---
-title: "Job scheduler"
+title: "Планировщик задач"
 id: "job-scheduler"
-sidebar_label: "Job scheduler"
-description: "The dbt Cloud job scheduler queues scheduled or API-triggered runs, before preparing the job to enter cloud data platform. Build observability into transformation workflows with the in-app scheduling, logging, and alerting." 
+sidebar_label: "Планировщик задач"
+description: "Планировщик задач dbt Cloud ставит в очередь запланированные или инициированные через API запуски, прежде чем подготовить задачу для входа в облачную платформу данных. Внедрите наблюдаемость в рабочие процессы трансформации с помощью встроенного планирования, ведения журналов и оповещений." 
 tags: [scheduler]
 ---
 
-The job scheduler is the backbone of running jobs in dbt Cloud, bringing power and simplicity to building data pipelines in both continuous integration and production contexts. The scheduler frees teams from having to build and maintain their own infrastructure, and ensures the timeliness and reliability of data transformations.
+Планировщик задач является основой выполнения задач в dbt Cloud, обеспечивая мощность и простоту в создании конвейеров данных как в контексте непрерывной интеграции, так и в производственной среде. Планировщик освобождает команды от необходимости строить и поддерживать собственную инфраструктуру и гарантирует своевременность и надежность трансформаций данных.
 
-The scheduler enables both cron-based and event-driven execution of dbt commands in the user’s data platform. Specifically, it handles:
+Планировщик позволяет как выполнение задач на основе cron, так и выполнение по событиям dbt команд в платформе данных пользователя. В частности, он обрабатывает:
 
-- Cron-based execution of dbt Cloud jobs that run on a predetermined cadence
-- Event-driven execution of dbt Cloud jobs that run based on the completion of another job ([trigger on job completion](/docs/deploy/deploy-jobs#trigger-on-job-completion))
-- Event-driven execution of dbt Cloud CI jobs triggered when a pull request is merged to the branch ([merge jobs](/docs/deploy/merge-jobs))
-- Event-driven execution of dbt Cloud jobs triggered by API
-- Event-driven execution of dbt Cloud jobs manually triggered by a user to **Run now**
+- Выполнение задач dbt Cloud на основе cron, которые запускаются с предопределенной периодичностью
+- Выполнение задач dbt Cloud по событиям, которые запускаются по завершении другой задачи ([триггер на завершение задачи](/docs/deploy/deploy-jobs#trigger-on-job-completion))
+- Выполнение задач dbt Cloud CI, инициируемых при слиянии запроса на изменение в ветку ([слияние задач](/docs/deploy/merge-jobs))
+- Выполнение задач dbt Cloud, инициируемых через API
+- Выполнение задач dbt Cloud, инициируемых вручную пользователем для **Запустить сейчас**
 
-The scheduler handles various tasks including queuing jobs, creating temporary environments to run the dbt commands required for those jobs, providing logs for debugging and remediation, and storing dbt artifacts for direct consumption/ingestion by the Discovery API. 
+Планировщик выполняет различные задачи, включая постановку задач в очередь, создание временных окружений для выполнения необходимых команд dbt, предоставление журналов для отладки и исправления, а также хранение артефактов dbt для прямого использования/ввода через API Discovery.
 
-The scheduler powers running dbt in staging and production environments, bringing ease and confidence to CI/CD workflows and enabling observability and governance in deploying dbt at scale. 
+Планировщик обеспечивает выполнение dbt в тестовых и производственных средах, упрощая и повышая уверенность в рабочих процессах CI/CD и позволяя внедрять наблюдаемость и управление при развертывании dbt в масштабах.
 
-## Scheduler terms
+## Условия планировщика
 
-Familiarize yourself with these useful terms to help you understand how the job scheduler works.
+Ознакомьтесь с этими полезными терминами, чтобы лучше понять, как работает планировщик задач.
 
-| Term | Definition |
+| Термин | Определение |
 | --- | --- |
-| Scheduler | The dbt Cloud engine that powers job execution. The scheduler queues scheduled or API-triggered job runs, prepares an environment to execute job commands in your cloud data platform, and stores and serves logs and artifacts that are byproducts of run execution. |
-| Job | A collection of run steps, settings, and a trigger to invoke dbt commands against a project in the user's cloud data platform. |
-| Job queue | The job queue acts as a waiting area for job runs when they are scheduled or triggered to run; runs remain in queue until execution begins. More specifically, the Scheduler checks the queue for runs that are due to execute, ensures the run is eligible to start, and then prepares an environment with appropriate settings, credentials, and commands to begin execution. Once execution begins, the run leaves the queue. |
-| Over-scheduled job | A situation when a cron-scheduled job's run duration becomes longer than the frequency of the job’s schedule, resulting in a job queue that will grow faster than the scheduler can process the job’s runs. |
-| Deactivated job | A situation where a job has reached 100 consecutive failing runs. |
-| Prep time | The time dbt Cloud takes to create a short-lived environment to execute the job commands in the user's cloud data platform. Prep time varies most significantly at the top of the hour when the dbt Cloud Scheduler experiences a lot of run traffic. |
-| Run | A single, unique execution of a dbt job. |
-| Run slot | Run slots control the number of jobs that can run concurrently. Developer plans have a fixed number of run slots, while Enterprise and Team plans have unlimited run slots. Each running job occupies a run slot for the duration of the run. <br /><br />Team and Developer plans are limited to one project each. For additional projects, consider upgrading to the [Enterprise plan](https://www.getdbt.com/pricing/).| 
-| Threads | When dbt builds a project's DAG, it tries to parallelize the execution by using threads. The [thread](/docs/running-a-dbt-project/using-threads) count is the maximum number of paths through the DAG that dbt can work on simultaneously. The default thread count in a job is 4. |
-| Wait time | Amount of time that dbt Cloud waits before running a job, either because there are no available slots or because a previous run of the same job is still in progress. |
+| Планировщик | Движок dbt Cloud, который управляет выполнением задач. Планировщик ставит в очередь запланированные или инициированные через API запуски задач, подготавливает окружение для выполнения команд задач в вашей облачной платформе данных и хранит и предоставляет журналы и артефакты, которые являются побочными продуктами выполнения. |
+| Задача | Набор шагов выполнения, настроек и триггер для вызова команд dbt в проекте на облачной платформе данных пользователя. |
+| Очередь задач | Очередь задач служит зоной ожидания для запусков задач, когда они запланированы или инициированы; запуски остаются в очереди до начала выполнения. Более конкретно, планировщик проверяет очередь на наличие запусков, которые должны быть выполнены, гарантирует, что запуск имеет право на начало, а затем подготавливает окружение с соответствующими настройками, учетными данными и командами для начала выполнения. Как только выполнение начинается, запуск покидает очередь. |
+| Переизбыточная задача | Ситуация, когда продолжительность выполнения задачи, запланированной по cron, становится больше, чем частота расписания задачи, что приводит к тому, что очередь задач будет расти быстрее, чем планировщик сможет обрабатывать запуски задачи. |
+| Деактивированная задача | Ситуация, когда задача достигла 100 последовательных неудачных запусков. |
+| Время подготовки | Время, которое требуется dbt Cloud для создания краткосрочного окружения для выполнения команд задач в облачной платформе данных пользователя. Время подготовки наиболее значительно варьируется в начале часа, когда планировщик dbt Cloud испытывает большой трафик запусков. |
+| Запуск | Одно уникальное выполнение задачи dbt. |
+| Слот запуска | Слоты запуска контролируют количество задач, которые могут выполняться одновременно. У планов разработчиков фиксированное количество слотов запуска, в то время как у корпоративных и командных планов слоты запуска неограничены. Каждая выполняемая задача занимает слот запуска на время выполнения. <br /><br />Командные и разработческие планы ограничены одним проектом каждый. Для дополнительных проектов рассмотрите возможность перехода на [корпоративный план](https://www.getdbt.com/pricing/).| 
+| Потоки | Когда dbt строит DAG проекта, он пытается параллелизовать выполнение, используя потоки. [Количество потоков](/docs/running-a-dbt-project/using-threads) — это максимальное количество путей через DAG, над которыми dbt может работать одновременно. По умолчанию количество потоков в задаче равно 4. |
+| Время ожидания | Количество времени, которое dbt Cloud ждет перед запуском задачи, либо потому, что нет доступных слотов, либо потому, что предыдущий запуск той же задачи все еще выполняется. |
 
+## Очередь планировщика
 
-## Scheduler queue
+Планировщик ставит в очередь задачу развертывания для обработки, когда она инициируется для выполнения по [установленному расписанию](/docs/deploy/deploy-jobs#schedule-days), [завершенной задаче](/docs/deploy/deploy-jobs#trigger-on-job-completion), вызову API или вручную.
 
-The scheduler queues a deployment job to be processed when it's triggered to run by a [set schedule](/docs/deploy/deploy-jobs#schedule-days), [a job completed](/docs/deploy/deploy-jobs#trigger-on-job-completion), an API call, or manual action. 
+Перед началом выполнения задачи планировщик проверяет эти условия, чтобы определить, может ли запуск начать выполнение:
 
-Before the job starts executing, the scheduler checks these conditions to determine if the run can start executing:
+- **Есть ли доступный слот запуска на аккаунте?** &mdash; Если все слоты запуска заняты, запланированный запуск будет ждать. Время ожидания отображается в dbt Cloud. Если время ожидания длительное, [переход на корпоративный план](https://www.getdbt.com/contact/) может предоставить больше слотов запуска и позволить увеличить параллельность задач.
 
-- **Is there a run slot that's available on the account for use?** &mdash; If all run slots are occupied, the queued run will wait. The wait time is displayed in dbt Cloud. If there are long wait times, [upgrading to Enterprise](https://www.getdbt.com/contact/) can provide more run slots and allow for higher job concurrency.
+- **Есть ли уже выполняющийся запуск этой же задачи?** &mdash; Планировщик выполняет различные запуски одной и той же задачи dbt Cloud последовательно, чтобы избежать конфликтов сборки моделей. Если задача уже выполняется, запланированная задача будет ждать, и время ожидания будет отображаться в dbt Cloud.
 
-- **Does this same job have a run already in progress?** &mdash; The scheduler executes distinct runs of the same dbt Cloud job serially to avoid model build collisions. If there's a job already running, the queued job will wait, and the wait time will be displayed in dbt Cloud.
+Если есть доступный слот запуска и нет активно выполняющегося экземпляра задачи, планировщик подготовит задачу для выполнения в вашей облачной платформе данных. Эта подготовка включает в себя подготовку пода Kubernetes с установленной правильной версией dbt, настройку переменных окружения, загрузку учетных данных платформы данных и авторизацию Git-поставщика, среди других задач по настройке окружения. Время, необходимое для подготовки задачи, отображается как **Время подготовки** в пользовательском интерфейсе.
 
-If there is an available run slot and there isn't an actively running instance of the job, the scheduler will prepare the job to run in your cloud data platform. This prep involves readying a Kubernetes pod with the right version of dbt installed, setting environment variables, loading data platform credentials, and Git provider authorization, amongst other environment-setting tasks. The time it takes to prepare the job is displayed as **Prep time** in the UI.
+<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="85%" title="Обзор выполнения задачи dbt Cloud"/>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="85%" title="An overview of a dbt Cloud job run"/>
+### Обработка CI задач
+По сравнению с задачами развертывания, планировщик ведет себя иначе при обработке [задач непрерывной интеграции (CI)](/docs/deploy/continuous-integration). Он ставит в очередь задачу CI для обработки, когда она инициируется для выполнения через запрос на изменение в Git, и условия, которые планировщик проверяет, чтобы определить, может ли запуск начать выполнение, также отличаются:
 
-### Treatment of CI jobs
-When compared to deployment jobs, the scheduler behaves differently when handling [continuous integration (CI) jobs](/docs/deploy/continuous-integration). It queues a CI job to be processed when it's triggered to run by a Git pull request, and the conditions the scheduler checks to determine if the run can start executing are also different: 
+- **Будет ли запуск CI занимать слот запуска?** &mdash; Запуски CI не занимают слоты запуска и никогда не блокируют производственные запуски.
+- **Есть ли уже выполняющийся запуск этой же задачи?** &mdash; Запуски CI могут выполняться одновременно (параллельно). Запуски CI строятся в уникальные временные схемы, и проверки CI выполняются параллельно, чтобы повысить продуктивность команды. Коллеги никогда не должны ждать, чтобы получить обзор проверки CI.
 
-- **Will the CI run consume a run slot?** &mdash; CI runs don't consume run slots and will never block production runs.
-- **Does this same job have a run already in progress?** &mdash; CI runs can execute concurrently (in parallel). CI runs build into unique temporary schemas, and CI checks execute in parallel to help increase team productivity. Teammates never have to wait to get a CI check review.
+### Обработка задач слияния
+Когда инициируется _слияние_ запроса на изменение в Git, планировщик ставит в очередь [задачу слияния](/docs/deploy/merge-jobs) для обработки.
 
-### Treatment of merge jobs
-When triggered by a _merged_ Git pull request, the scheduler queues a [merge job](/docs/deploy/merge-jobs) to be processed.
+- **Будет ли запуск задачи слияния занимать слот запуска?** &mdash; Да, задачи слияния занимают слоты запуска.
+- **Есть ли уже выполняющийся запуск этой же задачи?** &mdash; У задачи слияния может быть только один запуск в процессе выполнения в любой момент времени. Если есть несколько запланированных запусков, планировщик поставит в очередь самый последний запуск и отменит все остальные запуски. Если есть выполняющийся запуск, он будет ждать завершения, прежде чем поставить в очередь следующий запуск.
 
-- **Will the merge job run consume a run slot?** &mdash; Yes, merge jobs do consume run slots.
-- **Does this same job have a run already in progress?** &mdash; A merge job can only have one run in progress at a time. If there are multiple runs queued up, the scheduler will enqueue the most recent run and cancel all the other runs. If there is a run in progress, it will wait until the run completes before queuing the next run.
+## Память задач
 
-## Job memory
+В dbt Cloud настройка для выделения памяти, доступной для задачи, определяется на уровне аккаунта и применяется ко всем задачам, выполняемым в аккаунте; лимит памяти не может быть настроен для каждой задачи отдельно. Если выполняемая задача достигает своего лимита памяти, запуск завершается с сообщением об ошибке "лимит памяти".
 
-In dbt Cloud, the setting to provision memory available to a job is defined at the account-level and applies to each job running in the account; the memory limit cannot be customized per job. If a running job reaches its memory limit, the run is terminated with a "memory limit error" message.
+Задачи потребляют много памяти в следующих ситуациях:
+- Было указано высокое количество потоков
+- Пользовательские макросы dbt пытаются загрузить данные в память вместо того, чтобы передавать вычисления на облачную платформу данных
+- Наличие задачи, которая генерирует документацию проекта dbt для большого и сложного проекта dbt. 
+  * Чтобы предотвратить проблемы с исчерпанием памяти, мы рекомендуем генерировать документацию в отдельной задаче, выделенной для этой задачи, и удалить `dbt docs generate` из всех других задач. Это особенно важно для больших и сложных проектов.
 
-Jobs consume a lot of memory in the following situations:
-- A high thread count was specified
-- Custom dbt macros attempt to load data into memory instead of pushing compute down to the cloud data platform
-- Having a job that generates dbt project documentation for a large and complex dbt project. 
-  * To prevent problems with the job running out of memory, we recommend generating documentation in a separate job that is set aside for that task and removing `dbt docs generate` from all other jobs. This is especially important for large and complex projects.
+Смотрите [архитектуру dbt Cloud](/docs/cloud/about-cloud/architecture) для получения диаграммы архитектуры и информации о том, как данные перемещаются.
 
-Refer to [dbt Cloud architecture](/docs/cloud/about-cloud/architecture) for an architecture diagram and to learn how the data flows.
+## Отмена запусков для переизбыточных задач
 
-## Run cancellation for over-scheduled jobs
-
-:::info Scheduler won't cancel API-triggered jobs 
-The scheduler will not cancel over-scheduled jobs triggered by the [API](/docs/dbt-cloud-apis/overview).
+:::info Планировщик не отменит задачи, инициированные через API 
+Планировщик не отменит переизбыточные задачи, инициированные через [API](/docs/dbt-cloud-apis/overview).
 :::
 
-The dbt Cloud scheduler prevents too many job runs from clogging the queue by canceling unnecessary ones. If a job takes longer to run than its scheduled frequency, the queue will grow faster than the scheduler can process the runs, leading to an ever-expanding queue with runs that don’t need to be processed (called _over-scheduled jobs_). 
+Планировщик dbt Cloud предотвращает засорение очереди слишком большим количеством запусков задач, отменяя ненужные. Если задача выполняется дольше, чем ее запланированная частота, очередь будет расти быстрее, чем планировщик сможет обрабатывать запуски, что приведет к постоянно растущей очереди с запусками, которые не нужно обрабатывать (называемыми _переизбыточными задачами_).
 
-The scheduler prevents queue clog by canceling runs that aren't needed, ensuring there is only one run of the job in the queue at any given time. If a newer run is queued, the scheduler cancels any previously queued run for that job and displays an error message.
+Планировщик предотвращает засорение очереди, отменяя запуски, которые не нужны, гарантируя, что в очереди в любой момент времени будет только один запуск задачи. Если в очередь ставится новый запуск, планировщик отменяет любой ранее запланированный запуск для этой задачи и отображает сообщение об ошибке.
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/run-error-message.jpg" width="85%" title="The cancelled runs display an error message explaining why the run was cancelled and recommendations"/>
+<Lightbox src="/img/docs/dbt-cloud/deployment/run-error-message.jpg" width="85%" title="Отмененные запуски отображают сообщение об ошибке, объясняющее, почему запуск был отменен, и рекомендации"/>
 
-To prevent over-scheduling, users will need to take action by either refactoring the job so it runs faster or modifying its [schedule](/docs/deploy/deploy-jobs#schedule-days).
+Чтобы предотвратить переизбыточное планирование, пользователи должны предпринять действия, либо оптимизировав задачу, чтобы она выполнялась быстрее, либо изменив ее [расписание](/docs/deploy/deploy-jobs#schedule-days).
 
-## Deactivation of jobs <Lifecycle status='beta' />
+## Деактивация задач <Lifecycle status='beta' />
 
-To reduce unnecessary resource consumption and reduce contention for run slots in your account, dbt Cloud will deactivate a [deploy job](/docs/deploy/deploy-jobs) or a [CI job](/docs/deploy/ci-jobs) if it reaches 100 consecutive failing runs and indicate this through the use of banners. When this happens, scheduled and triggered-to-run jobs will no longer be enqueued. 
+Чтобы снизить ненужное потребление ресурсов и уменьшить конкуренцию за слоты запуска в вашем аккаунте, dbt Cloud деактивирует [задачу развертывания](/docs/deploy/deploy-jobs) или [CI задачу](/docs/deploy/ci-jobs), если она достигает 100 последовательных неудачных запусков, и указывает на это с помощью баннеров. Когда это происходит, запланированные и инициированные для выполнения задачи больше не будут ставиться в очередь.
 
-To reactivate a deactivated job, you can either:
-- Update the job's settings to fix the issue and save the job (recommended)
-- Perform a manual run by clicking **Run now** on the job's page
+Чтобы повторно активировать деактивированную задачу, вы можете:
+- Обновить настройки задачи, чтобы исправить проблему, и сохранить задачу (рекомендуется)
+- Выполнить ручной запуск, нажав **Запустить сейчас** на странице задачи
 
+Пример баннера деактивации на странице задачи: 
 
-Example of deactivation banner on job's page: 
+<Lightbox src="/img/docs/dbt-cloud/deployment/example-deactivated-deploy-job.png" title="Пример баннера деактивации на странице задачи"/>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/example-deactivated-deploy-job.png" title="Example of deactivation banner on job's page"/>
-
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Troubleshooting/job-memory-limits" />
 
-## Related docs
-- [dbt Cloud architecture](/docs/cloud/about-cloud/architecture#dbt-cloud-features-architecture)
-- [Job commands](/docs/deploy/job-commands)
-- [Job notifications](/docs/deploy/job-notifications)
+## Связанные документы
+- [Архитектура dbt Cloud](/docs/cloud/about-cloud/architecture#dbt-cloud-features-architecture)
+- [Команды задач](/docs/deploy/job-commands)
+- [Уведомления о задачах](/docs/deploy/job-notifications)
 - [Webhooks](/docs/deploy/webhooks)
-- [dbt Cloud continuous integration](/docs/deploy/continuous-integration)
+- [Непрерывная интеграция dbt Cloud](/docs/deploy/continuous-integration)

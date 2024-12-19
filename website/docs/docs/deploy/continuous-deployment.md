@@ -1,23 +1,23 @@
 ---
-title: "Continuous deployment in dbt Cloud"
-sidebar_label: "Continuous deployment"
-description: "Learn about continuous deployment (CD) workflows "
+title: "Непрерывное развертывание в dbt Cloud"
+sidebar_label: "Непрерывное развертывание"
+description: "Узнайте о рабочих процессах непрерывного развертывания (CD)"
 ---
 
-To help you improve data transformations and ship data products faster, you can run [merge jobs](/docs/deploy/merge-jobs) to implement a continuous deployment (CD) workflow in dbt Cloud. Merge jobs can automatically build modified models whenever a pull request (PR) merges, making sure the latest code changes are in production. You don't have to wait for the next scheduled job to run to get the latest updates. 
+Чтобы помочь вам улучшить преобразования данных и быстрее поставлять продукты данных, вы можете запускать [merge jobs](/docs/deploy/merge-jobs) для реализации рабочего процесса непрерывного развертывания (CD) в dbt Cloud. Merge jobs могут автоматически строить измененные модели каждый раз, когда сливается pull request (PR), что гарантирует, что последние изменения кода находятся в производственной среде. Вам не нужно ждать следующей запланированной задачи, чтобы получить последние обновления.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/cd-workflow.png" width="90%" title="Workflow of continuous deployment in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/cd-workflow.png" width="90%" title="Рабочий процесс непрерывного развертывания в dbt Cloud"/>
 
-You can also implement continuous integration (CI) in dbt Cloud, which can help further to reduce the time it takes to push changes to production and improve code quality. To learn more, refer to [Continuous integration in dbt Cloud](/docs/deploy/continuous-integration). 
+Вы также можете реализовать непрерывную интеграцию (CI) в dbt Cloud, что может дополнительно помочь сократить время, необходимое для внесения изменений в производственную среду, и улучшить качество кода. Чтобы узнать больше, обратитесь к разделу [Непрерывная интеграция в dbt Cloud](/docs/deploy/continuous-integration). 
 
 
-## How merge jobs work
+## Как работают merge jobs
 
-When you set up merge jobs, dbt Cloud listens for notifications from your [Git provider](/docs/cloud/git/git-configuration-in-dbt-cloud) indicating that a PR has been merged. When dbt Cloud receives one of these notifications, it enqueues a new run of the merge job.
+Когда вы настраиваете merge jobs, dbt Cloud отслеживает уведомления от вашего [Git-поставщика](/docs/cloud/git/git-configuration-in-dbt-cloud), указывающие на то, что PR был слит. Когда dbt Cloud получает одно из этих уведомлений, он ставит в очередь новый запуск merge job.
 
-You can set up merge jobs to perform one of the following when a PR merges:
+Вы можете настроить merge jobs для выполнения одной из следующих команд при слиянии PR:
 
-| <div style={{width:'350px'}}>Command to run</div> | Usage description |
+| <div style={{width:'350px'}}>Команда для выполнения</div> | Описание использования |
 | -------- | ----------------- | 
-| `dbt build --select state:modified+` | (Default) Build the modified data with every merge. <br /><br />dbt Cloud builds only the changed data models and anything downstream of it, similar to CI jobs. This helps reduce computing costs and ensures that the latest code changes are always pushed to production.  |
-| `dbt compile` | Refresh the applied state for performant (the slimmest) CI job runs. <br /><br />dbt Cloud generates the executable SQL (from the source model, test, and analysis files) but does not run it. This ensures the changes are reflected in the manifest for the next time a CI job is run and keeps track of only the relevant changes. | 
+| `dbt build --select state:modified+` | (По умолчанию) Строить измененные данные при каждом слиянии. <br /><br />dbt Cloud строит только измененные модели данных и все, что находится ниже по цепочке, аналогично CI jobs. Это помогает сократить вычислительные затраты и гарантирует, что последние изменения кода всегда попадают в производственную среду.  |
+| `dbt compile` | Обновить примененное состояние для производительных (самых легких) запусков CI jobs. <br /><br />dbt Cloud генерирует исполняемый SQL (из исходной модели, тестов и файлов анализа), но не выполняет его. Это гарантирует, что изменения отражаются в манифесте для следующего запуска CI job и отслеживает только соответствующие изменения. | 

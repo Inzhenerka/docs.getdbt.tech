@@ -1,18 +1,18 @@
 ---
-title: "Does my operating system have prerequisites?"
-description: "You can check whether your operating system has prerequisites for installing dbt Core."
-sidebar_label: 'dbt Core system prerequisites'
+title: "Есть ли у моей операционной системы предварительные требования?"
+description: "Вы можете проверить, есть ли у вашей операционной системы предварительные требования для установки dbt Core."
+sidebar_label: 'Системные требования dbt Core'
 id: install-pip-os-prereqs.md
 
 ---
 
-Your operating system may require pre-installation setup before installing dbt Core with pip. After downloading and installing any dependencies specific to your development environment, you can proceed with the [pip installation of dbt Core](/docs/core/pip-install).
+Ваша операционная система может требовать предварительной настройки перед установкой dbt Core с помощью pip. После загрузки и установки любых зависимостей, специфичных для вашей среды разработки, вы можете продолжить с [установкой dbt Core через pip](/docs/core/pip-install).
 
 ### CentOS
 
-CentOS requires Python and some other dependencies to successfully install and run dbt Core.
+CentOS требует Python и некоторые другие зависимости для успешной установки и работы dbt Core.
 
-To install Python and other dependencies:
+Чтобы установить Python и другие зависимости:
 
 ```shell
 
@@ -23,9 +23,9 @@ sudo yum install redhat-rpm-config gcc libffi-devel \
 
 ### MacOS
 
-The MacOS requires Python 3.8 or higher to successfully install and run dbt Core.
+MacOS требует Python 3.8 или выше для успешной установки и работы dbt Core.
 
-To check the Python version:
+Чтобы проверить версию Python:
 
 ```shell
 
@@ -33,14 +33,15 @@ python --version
 
 ```
 
-If you need a compatible version, you can download and install [Python version 3.9 or higher for MacOS](https://www.python.org/downloads/macos).
+Если вам нужна совместимая версия, вы можете загрузить и установить [Python версии 3.9 или выше для MacOS](https://www.python.org/downloads/macos).
 
-If your machine runs on an Apple M1 architecture, we recommend that you install dbt via [Rosetta](https://support.apple.com/en-us/HT211861). This is necessary for certain dependencies that are only supported on Intel processors.
+Если ваш компьютер работает на архитектуре Apple M1, мы рекомендуем установить dbt через [Rosetta](https://support.apple.com/en-us/HT211861). Это необходимо для некоторых зависимостей, которые поддерживаются только на процессорах Intel.
+
 ### Ubuntu/Debian
 
-Ubuntu requires Python and other dependencies to successfully install and run dbt Core.
+Ubuntu требует Python и другие зависимости для успешной установки и работы dbt Core.
 
-To install Python and other dependencies:
+Чтобы установить Python и другие зависимости:
 
 ```shell
 
@@ -53,8 +54,8 @@ pip install cryptography~=3.4
 
 ### Windows
 
-Windows requires Python and git to successfully install and run dbt Core.
+Windows требует Python и git для успешной установки и работы dbt Core.
 
-Install [Git for Windows](https://git-scm.com/downloads) and [Python version 3.9 or higher for Windows](https://www.python.org/downloads/windows/).
+Установите [Git для Windows](https://git-scm.com/downloads) и [Python версии 3.9 или выше для Windows](https://www.python.org/downloads/windows/).
 
-For further questions, please see the [Python compatibility FAQ](/faqs/Core/install-python-compatibility)
+Если у вас есть дополнительные вопросы, пожалуйста, ознакомьтесь с [FAQ по совместимости Python](/faqs/Core/install-python-compatibility).

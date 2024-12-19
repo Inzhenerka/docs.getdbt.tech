@@ -1,68 +1,65 @@
 ---
-title: "Upgrading to v1.8"
+title: "Обновление до v1.8"
 id: upgrading-to-v1.8
-description: New features and changes in dbt Core v1.8
+description: Новые функции и изменения в dbt Core v1.8
 displayed_sidebar: "docs"
 ---
- 
-## Resources
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.8.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+## Ресурсы
 
-## What to know before upgrading
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.8.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x, except for any changes explicitly mentioned on this page. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+## Что нужно знать перед обновлением
 
-## Release tracks 
+dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением изменений, явно упомянутых на этой странице. Если вы столкнетесь с ошибкой после обновления, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-Starting in 2024, dbt Cloud provides the functionality from new versions of dbt Core via [release tracks](/docs/dbt-versions/cloud-release-tracks) with automatic upgrades. Select a release track in your development, staging, and production [environments](/docs/deploy/deploy-environments) to access everything in dbt Core v1.8+ and more. To upgrade an environment in the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), set `dbt_version` to the string `latest`.
+## Треки релизов
 
-## New and changed features and functionality
+Начиная с 2024 года, dbt Cloud предоставляет функциональность новых версий dbt Core через [треки релизов](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Выберите трек релиза в ваших [окружениях](/docs/deploy/deploy-environments) разработки, тестирования и производства, чтобы получить доступ ко всему в dbt Core v1.8+ и не только. Чтобы обновить окружение в [API администратора dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api) или [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), установите `dbt_version` в строку `latest`.
 
-Features and functionality new in dbt v1.8.
+## Новые и измененные функции и функциональность
 
-### New dbt Core adapter installation procedure
+Функции и функциональность, новые в dbt v1.8.
 
-Before dbt Core v1.8, whenever you would `pip install` a data warehouse adapter for dbt, `pip` would automatically install `dbt-core` alongside it. The dbt adapter directly depended on components of `dbt-core`, and `dbt-core` depended on the adapter for execution. This bidirectional dependency made it difficult to develop adapters independent of `dbt-core`.
+### Новая процедура установки адаптера dbt Core
 
-Beginning in v1.8, [`dbt-core` and adapters are decoupled](https://github.com/dbt-labs/dbt-adapters/discussions/87). Going forward, your installations should explicitly include _both_ `dbt-core` _and_ the desired adapter. The new `pip` installation command should look like this:
+До dbt Core v1.8, когда вы выполняли `pip install` адаптер для хранилища данных для dbt, `pip` автоматически устанавливал `dbt-core` вместе с ним. Адаптер dbt напрямую зависел от компонентов `dbt-core`, а `dbt-core` зависел от адаптера для выполнения. Эта двусторонняя зависимость затрудняла разработку адаптеров независимо от `dbt-core`.
+
+Начиная с v1.8, [`dbt-core` и адаптеры отделены](https://github.com/dbt-labs/dbt-adapters/discussions/87). В дальнейшем ваши установки должны явно включать _как_ `dbt-core`, _так и_ желаемый адаптер. Новая команда установки `pip` должна выглядеть следующим образом:
 
 ```shell
 pip install dbt-core dbt-ADAPTER_NAME
 ```
 
-For example, you would use the following command if you use Snowflake:
+Например, вы бы использовали следующую команду, если используете Snowflake:
 ```shell
 pip install dbt-core dbt-snowflake
 ```
 
-For the time being, we have maintained install-time dependencies to avoid breaking existing scripts in surprising ways; `pip install dbt-snowflake` will continue to install the latest versions of both `dbt-core` and `dbt-snowflake`. Given that we may remove this implicit dependency in future versions, we strongly encourage you to update install scripts **now**.
+На данный момент мы сохранили зависимости во время установки, чтобы избежать неожиданного нарушения существующих скриптов; `pip install dbt-snowflake` продолжит устанавливать последние версии как `dbt-core`, так и `dbt-snowflake`. Учитывая, что мы можем удалить эту неявную зависимость в будущих версиях, мы настоятельно рекомендуем вам обновить скрипты установки **сейчас**.
 
-### Unit Tests
+### Модульные тесты
 
-Historically, dbt's test coverage was confined to [“data” tests](/docs/build/data-tests), assessing the quality of input data or resulting datasets' structure.
+Исторически, тестовое покрытие dbt ограничивалось [«данными» тестами](/docs/build/data-tests), оценивающими качество входных данных или структуру результирующих наборов данных.
 
-In v1.8, we're introducing native support for [unit testing](/docs/build/unit-tests). Unit tests validate your SQL modeling logic on a small set of static inputs __before__ you materialize your full model in production. They support a test-driven development approach, improving both the efficiency of developers and the reliability of code.
+В v1.8 мы вводим нативную поддержку [модульного тестирования](/docs/build/unit-tests). Модульные тесты проверяют вашу логику SQL моделирования на небольшом наборе статических входных данных __до__ того, как вы материализуете вашу полную модель в производстве. Они поддерживают подход разработки через тестирование, улучшая как эффективность разработчиков, так и надежность кода.
 
-Starting from v1.8, when you execute the `dbt test` command, it will run both unit and data tests. Use the [`test_type`](/reference/node-selection/methods#test_type) method to run only unit or data tests:
+Начиная с v1.8, когда вы выполняете команду `dbt test`, она будет запускать как модульные, так и данные тесты. Используйте метод [`test_type`](/reference/node-selection/methods#test_type), чтобы запустить только модульные или данные тесты:
 
 ```shell
-
-dbt test --select "test_type:unit"           # run all unit tests
-dbt test --select "test_type:data"           # run all data tests
-
+dbt test --select "test_type:unit"           # запустить все модульные тесты
+dbt test --select "test_type:data"           # запустить все данные тесты
 ```
 
-Unit tests are defined in YML files in your `models/` directory and are currently only supported on SQL models. To distinguish between the two, the `tests:` config has been renamed to `data_tests:`. Both are currently supported for backward compatibility.
+Модульные тесты определяются в YML файлах в вашем каталоге `models/` и в настоящее время поддерживаются только для SQL моделей. Чтобы различать их, конфигурация `tests:` была переименована в `data_tests:`. Оба варианта в настоящее время поддерживаются для обратной совместимости.
 
-#### New `data_tests:` syntax
+#### Новый синтаксис `data_tests:`
 
-The `tests:` syntax is changing to reflect the addition of unit tests. Start migrating your [data test](/docs/build/data-tests#new-data_tests-syntax) YML to use `data_tests:` after you upgrade to v1.8 to prevent issues in the future.
+Синтаксис `tests:` изменяется, чтобы отразить добавление модульных тестов. Начните миграцию ваших [данных тестов](/docs/build/data-tests#new-data_tests-syntax) YML, чтобы использовать `data_tests:`, после обновления до v1.8, чтобы избежать проблем в будущем.
 
 ```yml
-
 models:
   - name: orders
     columns:
@@ -70,21 +67,19 @@ models:
         data_tests:
           - unique
           - not_null
-
-
 ```
 
-#### The `--empty` flag
+#### Флаг `--empty`
 
-The [`run`](/reference/commands/run#the-`--empty`-flag) and [`build`](/reference/commands/build#the---empty-flag) commands now support the `--empty` flag for building schema-only dry runs. The `--empty` flag limits the refs and sources to zero rows. dbt will still execute the model SQL against the target data warehouse but will avoid expensive reads of input data. This validates dependencies and ensures your models will build properly.
+Команды [`run`](/reference/commands/run#the-`--empty`-flag) и [`build`](/reference/commands/build#the---empty-flag) теперь поддерживают флаг `--empty` для построения только схемы без выполнения. Флаг `--empty` ограничивает ссылки и источники до нуля строк. dbt все равно выполнит SQL модели против целевого хранилища данных, но избежит дорогих чтений входных данных. Это проверяет зависимости и гарантирует, что ваши модели будут правильно построены.
 
-### Deprecated functionality
+### Устаревшая функциональность
 
-The ability for installed packages to override built-in materializations without explicit opt-in from the user is being deprecated.
+Возможность для установленных пакетов переопределять встроенные материализации без явного согласия пользователя устаревает.
 
-- Overriding a built-in materialization from an installed package raises a deprecation warning.
-- Using a custom materialization from an installed package does not raise a deprecation warning.
-- Using a built-in materialization package override from the root project via a wrapping materialization is still supported. For example:
+- Переопределение встроенной материализации из установленного пакета вызывает предупреждение об устаревании.
+- Использование пользовательской материализации из установленного пакета не вызывает предупреждения об устаревании.
+- Использование переопределения встроенной материализации пакета из корневого проекта через обертывающую материализацию по-прежнему поддерживается. Например:
 
   ```sql
   {% materialization view, default %}
@@ -92,20 +87,19 @@ The ability for installed packages to override built-in materializations without
   {% endmaterialization %}
   ```
 
-### Managing changes to legacy behaviors
+### Управление изменениями в устаревших поведениях
 
-dbt Core v1.8 has introduced flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
+dbt Core v1.8 ввел флаги для [управления изменениями в устаревших поведениях](/reference/global-configs/behavior-changes). Вы можете включить недавно введенные изменения (по умолчанию отключены) или отключить устоявшиеся изменения (по умолчанию включены), установив значения `True` / `False` соответственно для `flags` в `dbt_project.yml`.
 
-You can read more about each of these behavior changes in the following links:
+Вы можете прочитать больше о каждом из этих изменений поведения по следующим ссылкам:
 
-- (Mature, enabled by default) [Require explicit package overrides for builtin materializations](/reference/global-configs/behavior-changes#require_explicit_package_overrides_for_builtin_materializations)
-- (Introduced, disabled by default) [Require resource names without spaces](/reference/global-configs/behavior-changes#require_resource_names_without_spaces)
-- (Introduced, disabled by default) [Run project hooks (`on-run-*`) in the `dbt source freshness` command](/reference/global-configs/behavior-changes#source_freshness_run_project_hooks)
+- (Устоявшееся, включено по умолчанию) [Требовать явные переопределения пакетов для встроенных материализаций](/reference/global-configs/behavior-changes#require_explicit_package_overrides_for_builtin_materializations)
+- (Введено, отключено по умолчанию) [Требовать имена ресурсов без пробелов](/reference/global-configs/behavior-changes#require_resource_names_without_spaces)
+- (Введено, отключено по умолчанию) [Запускать хуки проекта (`on-run-*`) в команде `dbt source freshness`](/reference/global-configs/behavior-changes#source_freshness_run_project_hooks)
 
-## Quick hits
+## Быстрые заметки
 
-- Custom defaults of [global config flags](/reference/global-configs/about-global-configs) should be set in the `flags` dictionary in [`dbt_project.yml`](/reference/dbt_project.yml), instead of in [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml). Support for `profiles.yml` has been deprecated.
-- New CLI flag [`--resource-type`/`--exclude-resource-type`](/reference/global-configs/resource-type) for including/excluding resources from dbt `build`, `run`, and `clone`. 
-- To improve performance, dbt now issues a single (batch) query when calculating `source freshness` through metadata, instead of executing a query per source.
-- Syntax for `DBT_ENV_SECRET_` has changed to `DBT_ENV_SECRET` and no longer requires the closing underscore.
-
+- Пользовательские значения [глобальных конфигурационных флагов](/reference/global-configs/about-global-configs) должны устанавливаться в словаре `flags` в [`dbt_project.yml`](/reference/dbt_project.yml), а не в [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml). Поддержка `profiles.yml` была устаревшей.
+- Новый флаг CLI [`--resource-type`/`--exclude-resource-type`](/reference/global-configs/resource-type) для включения/исключения ресурсов из dbt `build`, `run` и `clone`.
+- Для улучшения производительности dbt теперь выполняет один (пакетный) запрос при расчете `source freshness` через метаданные, вместо выполнения запроса для каждого источника.
+- Синтаксис для `DBT_ENV_SECRET_` изменился на `DBT_ENV_SECRET` и больше не требует закрывающего подчеркивания.

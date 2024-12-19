@@ -1,30 +1,30 @@
 ---
-title: How do I delete a user in dbt Cloud?
-description: "Deleting a user in dbt Cloud"
-sidebar_label: 'How to delete a user'
+title: Как удалить пользователя в dbt Cloud?
+description: "Удаление пользователя в dbt Cloud"
+sidebar_label: 'Как удалить пользователя'
 id: delete-users
 
 ---
 
-To delete a user in dbt Cloud, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
+Чтобы удалить пользователя в dbt Cloud, вы должны быть владельцем аккаунта или иметь административные привилегии. Если у пользователя тип лицензии `developer`, это освободит его место для другого пользователя или позволит администраторам уменьшить общее количество мест.
 
-1. From dbt Cloud, click on your account name in the left side menu and, select **Account settings**.
+1. В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Настройки аккаунта**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" title="Navigate to account settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" title="Перейти к настройкам аккаунта" />
 
-2. In **Account Settings**, select **Users** under **Teams**.
-3. Select the user you want to delete, then click **Edit**. 
-4. Click **Delete** in the bottom left. Click **Confirm Delete** to immediately delete the user without additional password prompts. This action cannot be undone. However, you can re-invite the user with the same information if the deletion was made in error. 
+2. В **Настройках аккаунта** выберите **Пользователи** в разделе **Команды**.
+3. Выберите пользователя, которого вы хотите удалить, затем нажмите **Редактировать**. 
+4. Нажмите **Удалить** в нижнем левом углу. Нажмите **Подтвердить удаление**, чтобы немедленно удалить пользователя без дополнительных запросов пароля. Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с той же информацией, если удаление было выполнено по ошибке.
 
-<Lightbox src="/img/docs/dbt-cloud/delete_user.png" width="85%" title="Deleting a user" />
+<Lightbox src="/img/docs/dbt-cloud/delete_user.png" width="85%" title="Удаление пользователя" />
 
-If you are on a **Teams** plan and you are deleting users to reduce the number of billable seats, you also need to take these steps to lower the license count:
-1. In **Account Settings**, select **Billing**. 
-2. Enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing Address** section. If you leave any field blank, you won't be able to save your changes.
-3. Click **Update Payment Information** to save your changes. 
+Если вы находитесь на плане **Команды** и удаляете пользователей, чтобы уменьшить количество оплачиваемых мест, вам также необходимо выполнить следующие шаги для снижения количества лицензий:
+1. В **Настройках аккаунта** выберите **Биллинг**. 
+2. Введите количество мест для разработчиков, которые вы хотите, и убедитесь, что вы заполнили все платежные данные, включая раздел **Платежный адрес**. Если вы оставите любое поле пустым, вы не сможете сохранить изменения.
+3. Нажмите **Обновить платежную информацию**, чтобы сохранить изменения. 
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="85%" title="Navigate to Account Settings -> Users to modify dbt Cloud users" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="85%" title="Перейти к Настройкам аккаунта -> Пользователи для изменения пользователей dbt Cloud" />
 
-## Related docs
+## Связанные документы
 
-- [dbt Cloud licenses](/docs/cloud/manage-access/seats-and-users#licenses)
+- [Лицензии dbt Cloud](/docs/cloud/manage-access/seats-and-users#licenses)

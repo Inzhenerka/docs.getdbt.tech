@@ -1,16 +1,16 @@
 ---
-title: "Set up the dbt Semantic Layer"
+title: "Настройка семантического слоя dbt"
 id: setup-sl
-description: "Seamlessly set up the dbt Semantic Layer in dbt Cloud using intuitive navigation."
-sidebar_label: "Set up the Semantic Layer"
-tags: [Semantic Layer]
+description: "Бесшовная настройка семантического слоя dbt в dbt Cloud с помощью интуитивно понятной навигации."
+sidebar_label: "Настройка семантического слоя"
+tags: [Семантический слой]
 pagination_next: "docs/use-dbt-semantic-layer/sl-architecture"
 pagination_prev: "guides/sl-snowflake-qs"
 ---
 
-With the dbt Semantic Layer, you can centrally define business metrics, reduce code duplication and inconsistency, create self-service in downstream tools, and more. 
+С помощью семантического слоя dbt вы можете централизованно определять бизнес-метрики, уменьшать дублирование кода и несоответствия, создавать самообслуживание в downstream-инструментах и многое другое.
 
-## Prerequisites
+## Предварительные условия
 
 import SetUp from '/snippets/_v2-sl-prerequisites.md';
 
@@ -20,37 +20,37 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Set up dbt Semantic Layer
+## Настройка семантического слоя dbt
 
 import SlSetUp from '/snippets/_new-sl-setup.md';  
 
 <SlSetUp/>
 
 <!--
-1. Create a new environment in dbt Cloud by selecting **Deploy** and then **Environments**.
-2. Select **dbt Version 1.6** (or the latest) and enter your deployment credentials.
-3. To configure the new Semantic Layer, you must have a successful run in your new environment. We recommend running `dbt ls` since `dbt build` won’t succeed until you’ve created and defined semantic models and metrics.
-4. To enable the dbt Semantic Layer, go to the **Account Settings** page and then select the specific project you want to enable the Semantic Layer for.
-5. In the **Project Details** page, select **Configure Semantic Layer.** This will prompt you to enter data platform connection credentials for the Semantic Layer and select the environment where you want to enable the Semantic Layer. We recommend using a less privileged set of credentials when setting up your connection. The semantic layer requires SELECT and CREATE TABLE permissions.
-6. After you’ve entered your credentials, you should see connection information that will allow you to connect to downstream tools. If the tool you are using can connect with JDBC, you can save the **JDBC URL** or each of the individual components provided (e.g., environment id, host). Alternatively, if the tool you connect to uses the Semantic Layer GraphQL API, save the GraphQL API host information.
-7. Next, go back to the **Project Details** page and select **Generate Service Token** to create a Semantic Layer service token. Save this token for later.
-8. You’re done 🎉! The semantic layer should is now enabled for your project. 
+1. Создайте новую среду в dbt Cloud, выбрав **Deploy**, а затем **Environments**.
+2. Выберите **dbt Version 1.6** (или последнюю версию) и введите свои учетные данные для развертывания.
+3. Чтобы настроить новый семантический слой, у вас должен быть успешный запуск в вашей новой среде. Мы рекомендуем запустить `dbt ls`, так как `dbt build` не будет успешным, пока вы не создадите и не определите семантические модели и метрики.
+4. Чтобы включить семантический слой dbt, перейдите на страницу **Account Settings**, а затем выберите конкретный проект, для которого вы хотите включить семантический слой.
+5. На странице **Project Details** выберите **Configure Semantic Layer.** Это предложит вам ввести учетные данные подключения к платформе данных для семантического слоя и выбрать среду, в которой вы хотите включить семантический слой. Мы рекомендуем использовать менее привилегированный набор учетных данных при настройке вашего подключения. Семантический слой требует разрешений SELECT и CREATE TABLE.
+6. После ввода ваших учетных данных вы должны увидеть информацию о подключении, которая позволит вам подключиться к downstream-инструментам. Если используемый вами инструмент может подключаться с помощью JDBC, вы можете сохранить **JDBC URL** или каждый из отдельных компонентов (например, идентификатор среды, хост). В качестве альтернативы, если инструмент, к которому вы подключаетесь, использует GraphQL API семантического слоя, сохраните информацию о хосте GraphQL API.
+7. Затем вернитесь на страницу **Project Details** и выберите **Generate Service Token**, чтобы создать токен службы семантического слоя. Сохраните этот токен для дальнейшего использования.
+8. Вы закончили 🎉! Семантический слой теперь включен для вашего проекта.
 -->
 
-## Next steps
+## Следующие шаги
 
-- Now that you've set up the dbt Semantic Layer, start querying your metrics with the [available integrations](/docs/cloud-integrations/avail-sl-integrations).
-- [Optimize querying performance](/docs/use-dbt-semantic-layer/sl-cache) using declarative caching.
-- [Validate semantic nodes in CI](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
-- If you haven't already, learn how to [build you metrics and semantic models](/docs/build/build-metrics-intro) in your development tool of choice.
-- Learn about commonly asked [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs).
+- Теперь, когда вы настроили семантический слой dbt, начните запрашивать свои метрики с помощью [доступных интеграций](/docs/cloud-integrations/avail-sl-integrations).
+- [Оптимизируйте производительность запросов](/docs/use-dbt-semantic-layer/sl-cache) с помощью декларативного кэширования.
+- [Проверяйте семантические узлы в CI](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения кода, внесенные в модели dbt, не нарушают эти метрики.
+- Если вы еще не сделали этого, узнайте, как [создавать свои метрики и семантические модели](/docs/build/build-metrics-intro) в вашем инструменте разработки по выбору.
+- Узнайте о часто задаваемых [вопросах по семантическому слою dbt](/docs/use-dbt-semantic-layer/sl-faqs).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="How does caching interact with access controls?">
+<DetailsToggle alt_header="Как кэширование взаимодействует с контролем доступа?">
 
-Cached data is stored separately from the underlying models. If metrics are pulled from the cache, we don’t have the security context applied to those tables at query time.
+Кэшированные данные хранятся отдельно от базовых моделей. Если метрики извлекаются из кэша, мы не применяем контекст безопасности к этим таблицам во время выполнения запроса.
 
-In the future, we plan to clone credentials, identify the minimum access level needed, and apply those permissions to cached tables.
+В будущем мы планируем клонировать учетные данные, определить минимальный необходимый уровень доступа и применить эти разрешения к кэшированным таблицам.
 
 </DetailsToggle>

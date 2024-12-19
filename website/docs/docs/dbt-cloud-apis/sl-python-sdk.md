@@ -1,53 +1,53 @@
 ---
 title: "Python SDK"
 id: sl-python
-description: "Learn how to use the dbt Semantic Layer Python SDK library to interact with the dbt Semantic Layer."
+description: "Узнайте, как использовать библиотеку dbt Semantic Layer Python SDK для взаимодействия с dbt Semantic Layer."
 tags: [Semantic Layer, APIs]
 keywords: [dbt Cloud, API, dbt Semantic Layer, python, sdk]
 sidebar_label: "Python SDK"
 ---
 
-The [`dbt-sl-sdk` Python software development kit](https://github.com/dbt-labs/semantic-layer-sdk-python) (SDK) is a Python library that provides you with easy access to the dbt Semantic Layer with Python. It allows developers to interact with the dbt Semantic Layer APIs and query metrics and dimensions in downstream tools. 
+[`dbt-sl-sdk` Python SDK](https://github.com/dbt-labs/semantic-layer-sdk-python) (SDK) — это библиотека на Python, которая предоставляет простой доступ к dbt Semantic Layer с помощью Python. Она позволяет разработчикам взаимодействовать с API dbt Semantic Layer и запрашивать метрики и измерения в downstream-инструментах.
 
-## Installation
+## Установка
 
-To install the Python SDK, you'll need to specify optional dependencies depending on whether you want to use it synchronously, backed by [requests](https://github.com/psf/requests/), or with asynchronous ([asyncio](https://docs.python.org/3/library/asyncio.html) backed by [aiohttp](https://github.com/aio-libs/aiohttp/)).
+Чтобы установить Python SDK, вам нужно указать дополнительные зависимости в зависимости от того, хотите ли вы использовать его синхронно, с поддержкой [requests](https://github.com/psf/requests/), или асинхронно ([asyncio](https://docs.python.org/3/library/asyncio.html) с поддержкой [aiohttp](https://github.com/aio-libs/aiohttp/)).
 
-The Python SDK supports the Long-Term Support (LTS) versions of Python, such as 3.9, 3.10, 3.11, and 3.12. When Python discontinues support for a version, the Python SDK will also discontinue support for that version. If you’re using a non-supported version, you may experience compatibility issues and won’t receive updates or security patches from the SDK.
+Python SDK поддерживает версии Python с долгосрочной поддержкой (LTS), такие как 3.9, 3.10, 3.11 и 3.12. Когда Python прекращает поддержку версии, Python SDK также прекращает поддержку этой версии. Если вы используете неподдерживаемую версию, вы можете столкнуться с проблемами совместимости и не получите обновления или исправления безопасности от SDK.
 
 <Tabs>
-<TabItem value="sync" label="Sync installation">
+<TabItem value="sync" label="Синхронная установка">
 
-Sync installation means your program waits for each task to finish before moving on to the next one. 
+Синхронная установка означает, что ваша программа ждет завершения каждой задачи, прежде чем перейти к следующей.
 
-It's simpler, easier to understand, and suitable for smaller tasks or when your program doesn't need to handle many tasks at the same time.
+Это проще, легче для понимания и подходит для небольших задач или когда вашей программе не нужно обрабатывать много задач одновременно.
 
 ```bash
 pip install "dbt-sl-sdk[sync]"
 ```
-If you're using async frameworks like [FastAPI](https://fastapi.tiangolo.com/) or [Strawberry](https://github.com/strawberry-graphql/strawberry), installing the sync version of the SDK will block your event loop and can significantly slow down your program. In this case, we strongly recommend using async installation.
+Если вы используете асинхронные фреймворки, такие как [FastAPI](https://fastapi.tiangolo.com/) или [Strawberry](https://github.com/strawberry-graphql/strawberry), установка синхронной версии SDK заблокирует ваш цикл событий и может значительно замедлить вашу программу. В этом случае мы настоятельно рекомендуем использовать асинхронную установку.
 
 </TabItem>
 
-<TabItem value="async" label="Async installation">
+<TabItem value="async" label="Асинхронная установка">
 
-Async installation means your program can start a task and then move on to other tasks while waiting for the first one to finish. This can handle many tasks at once without waiting, making it faster and more efficient for larger tasks or when you need to manage multiple tasks at the same time. 
+Асинхронная установка означает, что ваша программа может начать задачу и затем перейти к другим задачам, ожидая завершения первой. Это позволяет обрабатывать множество задач одновременно, не дожидаясь, что делает ее быстрее и эффективнее для более крупных задач или когда вам нужно управлять несколькими задачами одновременно.
 
-For more details, refer to [asyncio](https://docs.python.org/3/library/asyncio.html).
+Для получения дополнительных сведений смотрите [asyncio](https://docs.python.org/3/library/asyncio.html).
 
 ```bash
-pip install "dbt-sl-sdk[sync]"
+pip install "dbt-sl-sdk[async]"
 ```
 
-Since the [Python ADBC driver](https://github.com/apache/arrow-adbc/tree/main/python/adbc_driver_manager) doesn't yet support asyncio natively, `dbt-sl-sdk` uses a [`ThreadPoolExecutor`](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/5e52e1ca840d20a143b226ae33d194a4a9bc008f/dbtsl/api/adbc/client/asyncio.py#L62) to run `query` and `list dimension-values` (all operations that are done with ADBC).  This is why you might see multiple Python threads spawning.
+Поскольку [Python ADBC драйвер](https://github.com/apache/arrow-adbc/tree/main/python/adbc_driver_manager) пока не поддерживает asyncio нативно, `dbt-sl-sdk` использует [`ThreadPoolExecutor`](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/5e52e1ca840d20a143b226ae33d194a4a9bc008f/dbtsl/api/adbc/client/asyncio.py#L62) для выполнения `query` и `list dimension-values` (все операции, которые выполняются с ADBC). Поэтому вы можете увидеть, что запускается несколько потоков Python.
 
-If you're using async frameworks like [FastAPI](https://fastapi.tiangolo.com/) or [Strawberry](https://github.com/strawberry-graphql/strawberry), installing the sync version of the Python SDK will block your event loop and can significantly slow down your program. In this case, we strongly recommend using async installation.
+Если вы используете асинхронные фреймворки, такие как [FastAPI](https://fastapi.tiangolo.com/) или [Strawberry](https://github.com/strawberry-graphql/strawberry), установка синхронной версии Python SDK заблокирует ваш цикл событий и может значительно замедлить вашу программу. В этом случае мы настоятельно рекомендуем использовать асинхронную установку.
 
 </TabItem>
 </Tabs>
 
-## Usage
-To run operations against the Semantic Layer APIs, instantiate (create an instance of) a `SemanticLayerClient` with your specific [API connection parameters](/docs/dbt-cloud-apis/sl-api-overview):
+## Использование
+Чтобы выполнять операции с API Semantic Layer, создайте экземпляр `SemanticLayerClient` с вашими конкретными [параметрами подключения к API](/docs/dbt-cloud-apis/sl-api-overview):
 
 ```python
 from dbtsl import SemanticLayerClient
@@ -58,7 +58,7 @@ client = SemanticLayerClient(
     host="semantic-layer.cloud.getdbt.com",
 )
 
-# query the first metric by `metric_time`
+# запрос первой метрики по `metric_time`
 def main():
     with client.session():
         metrics = client.metrics()
@@ -71,12 +71,12 @@ def main():
 main()
 ```
 
-**Note**: All method calls that reach out to the APIs need to be within a `client.session()` context manager. This allows the client to establish a connection to the APIs only once and reuse the same connection between API calls. 
+**Примечание**: Все вызовы методов, которые обращаются к API, должны находиться внутри контекстного менеджера `client.session()`. Это позволяет клиенту установить соединение с API только один раз и повторно использовать одно и то же соединение между вызовами API.
 
-We recommend creating an application-wide session and reusing the same session throughout the application for optimal performance. Creating a session per request is discouraged and inefficient.
+Мы рекомендуем создавать сессию на уровне приложения и повторно использовать одну и ту же сессию на протяжении всего приложения для оптимальной производительности. Создание сессии на каждый запрос не рекомендуется и неэффективно.
 
-### asyncio usage
-If you're using asyncio, import `AsyncSemanticLayerClient` from `dbtsl.asyncio`. The `SemanticLayerClient` and `AsyncSemanticLayerClient` APIs are identical, but the async version has async methods that you need to `await`.
+### Использование asyncio
+Если вы используете asyncio, импортируйте `AsyncSemanticLayerClient` из `dbtsl.asyncio`. API `SemanticLayerClient` и `AsyncSemanticLayerClient` идентичны, но асинхронная версия имеет асинхронные методы, которые нужно `await`.
 
 ```python
 import asyncio
@@ -98,54 +98,52 @@ async def main():
         print(table)
 
 asyncio.run(main())
-
 ```
 
-## Integrate with dataframe libraries
+## Интеграция с библиотеками для работы с данными
 
-The Python SDK returns all query data as [pyarrow](https://arrow.apache.org/docs/python/index.html) tables. 
+Python SDK возвращает все данные запросов в виде таблиц [pyarrow](https://arrow.apache.org/docs/python/index.html).
 
-The Python SDK library doesn't come bundled with [Polars](https://pola.rs/) or [Pandas](https://pandas.pydata.org/). If you use these libraries, add them as dependencies in your project.
+Библиотека Python SDK не включает в себя [Polars](https://pola.rs/) или [Pandas](https://pandas.pydata.org/). Если вы используете эти библиотеки, добавьте их в качестве зависимостей в ваш проект.
 
-To use the data with libraries like Polars or Pandas, manually convert the data into the desired format. For example:
+Чтобы использовать данные с библиотеками, такими как Polars или Pandas, вручную преобразуйте данные в нужный формат. Например:
 
-#### If you're using pandas
+#### Если вы используете pandas
 
 ```python
-# ... initialize client
+# ... инициализация клиента
 
 arrow_table = client.query(...)
 pandas_df = arrow_table.to_pandas()
-
 ```
 
-#### If you're using polars
+#### Если вы используете polars
 
 ```python
 import polars as pl
 
-# ... initialize client
+# ... инициализация клиента
 
 arrow_table = client.query(...)
 polars_df = pl.from_arrow(arrow_table)
 ```
 
-## Usage examples
-For additional usage examples, check out the [usage examples](https://github.com/dbt-labs/semantic-layer-sdk-python/tree/main/examples), some of which include:
+## Примеры использования
+Для дополнительных примеров использования ознакомьтесь с [примерами использования](https://github.com/dbt-labs/semantic-layer-sdk-python/tree/main/examples), некоторые из которых включают:
 
-- [Fetching dimension values sync](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_dimension_values_sync.py)
-- Fetching metrics [async](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_async.py) and [sync](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_sync.py)
-- [List saved queries async](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/list_saved_queries_async.py)
+- [Получение значений измерений синхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_dimension_values_sync.py)
+- Получение метрик [асинхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_async.py) и [синхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/fetch_metric_sync.py)
+- [Список сохраненных запросов асинхронно](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/examples/list_saved_queries_async.py)
 
-## Disable telemetry
-By default, the Python SDK sends some [platform-related information](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/dbtsl/env.py) to dbt Labs. To opt-out, set the `PLATFORM.anonymous` attribute to `True`:
+## Отключение телеметрии
+По умолчанию Python SDK отправляет некоторую [информацию о платформе](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/dbtsl/env.py) в dbt Labs. Чтобы отказаться от этого, установите атрибут `PLATFORM.anonymous` в `True`:
 
 ```python
 from dbtsl.env import PLATFORM
 PLATFORM.anonymous = True
 
-# ... initialize client
+# ... инициализация клиента
 ```
 
-## Contribute
-To contribute to this project, check out our [contribution guidelines](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/CONTRIBUTING.md) and open a GitHub [issue](https://github.com/dbt-labs/semantic-layer-sdk-python/issues) or [pull request](https://github.com/dbt-labs/semantic-layer-sdk-python/pulls). 
+## Участие
+Чтобы внести свой вклад в этот проект, ознакомьтесь с нашими [руководящими принципами по вкладу](https://github.com/dbt-labs/semantic-layer-sdk-python/blob/main/CONTRIBUTING.md) и откройте [issue](https://github.com/dbt-labs/semantic-layer-sdk-python/issues) или [pull request](https://github.com/dbt-labs/semantic-layer-sdk-python/pulls) на GitHub.

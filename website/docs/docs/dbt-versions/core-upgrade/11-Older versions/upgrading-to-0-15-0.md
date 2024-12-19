@@ -1,42 +1,37 @@
 ---
-title: "Upgrading to 0.15.0"
+title: "Обновление до 0.15.0"
 id: "upgrading-to-0-15-0"
 displayed_sidebar: "docs"
 ---
 
-The dbt v0.15.0 release contains a handful of breaking code changes for users upgrading from v0.14.0.
+В выпуске dbt v0.15.0 содержится несколько критических изменений в коде для пользователей, обновляющихся с версии v0.14.0.
 
 
-## Breaking changes
+## Критические изменения
 
-### Stricter YML compilation
+### Более строгая компиляция YML
 
-Previous versions of dbt would raise warnings and ignore improperly formatted `.yml` files.
-Compilation errors in .yml files are now treated as errors instead of warnings.
+Предыдущие версии dbt выдавали предупреждения и игнорировали неправильно отформатированные файлы `.yml`. Ошибки компиляции в файлах .yml теперь рассматриваются как ошибки, а не как предупреждения.
 
-### Relation class
+### Класс Relation
 
-The `table_name` field has been removed from Relations. Macros that
-expect this field will now return errors. See the latest
-[class reference](/reference/dbt-classes#relation) for details.
+Поле `table_name` было удалено из Relations. Макросы, которые ожидают это поле, теперь будут возвращать ошибки. Для получения подробной информации смотрите последнюю [справку по классам](/reference/dbt-classes#relation).
 
-### Custom materializations
+### Пользовательские материализации
 
-All <Term id="materialization">materializations</Term> must now manage dbt's Relation cache. For more information, refer to  [Create new materializations](/guides/create-new-materializations).
+Все <Term id="materialization">материализации</Term> теперь должны управлять кэшем Relation в dbt. Для получения дополнительной информации обратитесь к разделу [Создание новых материализаций](/guides/create-new-materializations).
 
 ### dbt Server
 
-The existing `compile` and `execute` rpc tasks have been renamed to `compile_sql` and `execute_sql`.
-For more details, see the latest [rpc docs](/reference/commands/rpc).
+Существующие rpc задачи `compile` и `execute` были переименованы в `compile_sql` и `execute_sql`. Для получения более подробной информации смотрите последние [документы по rpc](/reference/commands/rpc).
 
-## Python requirements
+## Требования к Python
 
-dbt v0.15.0 removes support for for Python 2.x, [as it will no longer be supported on January 1, 2020](https://www.python.org/dev/peps/pep-0373/).
+dbt v0.15.0 убирает поддержку Python 2.x, [так как он больше не будет поддерживаться с 1 января 2020 года](https://www.python.org/dev/peps/pep-0373/).
 
-If you are installing dbt in a Python environment alongside other Python modules,
-please be mindful of the following changes to dbt's Python dependencies:
+Если вы устанавливаете dbt в среде Python вместе с другими модулями Python, пожалуйста, обратите внимание на следующие изменения в зависимостях dbt:
 
-- Dropped support for `networkx 1.x`
-- Upgraded `werkzeug` to `0.15.6`
-- Pinned `psycopg2` dependency to `2.8.x` to prevent segfaults
-- Set a strict upper bound for `jsonschema` dependency
+- Убрана поддержка `networkx 1.x`
+- Обновлен `werkzeug` до `0.15.6`
+- Зафиксирована зависимость `psycopg2` на `2.8.x`, чтобы предотвратить ошибки сегментации
+- Установлен строгий верхний предел для зависимости `jsonschema`

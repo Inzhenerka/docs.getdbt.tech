@@ -1,45 +1,45 @@
 ---
-title: "Upgrading to v0.20"
+title: "Обновление до v0.20"
 id: "upgrading-to-v0.20"
 displayed_sidebar: "docs"
 ---
 
-:::caution Unsupported version
-dbt Core v0.20 has reached the end of critical support. No new patch versions will be released, and it will stop running in dbt Cloud on June 30, 2022. Read ["About dbt Core versions"](/docs/dbt-versions/core) for more details.
+:::caution Не поддерживаемая версия
+dbt Core v0.20 достиг конца критической поддержки. Новые патч-версии не будут выпускаться, и он перестанет работать в dbt Cloud 30 июня 2022 года. Читайте ["О версиях dbt Core"](/docs/dbt-versions/core) для получения дополнительной информации.
 :::
 
-### Resources
+### Ресурсы
 
 - [Discourse](https://discourse.getdbt.com/t/2621)
-- [Release notes](https://github.com/dbt-labs/dbt-core/releases/tag/v0.20.0)
-- [Full changelog](https://github.com/dbt-labs/dbt-core/blob/0.20.latest/CHANGELOG.md)
+- [Примечания к выпуску](https://github.com/dbt-labs/dbt-core/releases/tag/v0.20.0)
+- [Полный журнал изменений](https://github.com/dbt-labs/dbt-core/blob/0.20.latest/CHANGELOG.md)
 
-## Breaking changes
+## Ломающие изменения
 
-- Schema test macros are now `test` blocks, which we're going to start calling "generic tests." There is backwards compatibility for schema test macros prefixed `test_`, and you can still use them without switching to test blocks (though we hope you will soon!). The biggest breaking change is that _all_ tests now return a set of failing rows, rather than a single numeric value. This resolved a longstanding inconsistency between schema tests and data tests.
-- **For package maintainers (and some users):** The syntax for `adapter.dispatch()` has changed; see linked documentation below.
-- **For adapter plugin maintainers:** Macro dispatch now includes "parent" adapter implementations before using the default implementation. If you maintain an adapter plugin that inherits from another adapter (e.g. `dbt-redshift` inherits from `dbt-postgres`), `adapter.dispatch()` will now look for prefixed macros in the following order: `redshift__`, `postgres__`, `default__`.
-- **For artifact users:** The [manifest](/reference/artifacts/manifest-json) and [run_results](/reference/artifacts/run-results-json) now use a v2 schema. What changed: there are a handful of new properties in the manifest; the number of failures for a test has been moved to a new property `failures`, so that `message` can be the human-readable failure message.
+- Макросы тестов схемы теперь являются блоками `test`, которые мы начнем называть "универсальными тестами". Существует обратная совместимость для макросов тестов схемы с префиксом `test_`, и вы все еще можете использовать их без перехода на блоки тестов (хотя мы надеемся, что вы сделаете это в ближайшее время!). Самое значительное ломающее изменение заключается в том, что _все_ тесты теперь возвращают набор неудачных строк, а не одно числовое значение. Это решило давнюю несоответствие между тестами схемы и тестами данных.
+- **Для поддерживающих пакеты (и некоторых пользователей):** Синтаксис для `adapter.dispatch()` изменился; смотрите связанную документацию ниже.
+- **Для поддерживающих плагины адаптеров:** Диспетчеризация макросов теперь включает реализации "родительского" адаптера перед использованием реализации по умолчанию. Если вы поддерживаете плагин адаптера, который наследуется от другого адаптера (например, `dbt-redshift` наследуется от `dbt-postgres`), `adapter.dispatch()` теперь будет искать префиксированные макросы в следующем порядке: `redshift__`, `postgres__`, `default__`.
+- **Для пользователей артефактов:** [манифест](/reference/artifacts/manifest-json) и [run_results](/reference/artifacts/run-results-json) теперь используют схему v2. Что изменилось: в манифесте появилось несколько новых свойств; количество неудач для теста было перемещено в новое свойство `failures`, чтобы `message` мог быть читаемым сообщением об ошибке.
 
-## New and changed documentation
+## Новая и измененная документация
 
-### Tests
+### Тесты
 
-- [Building a dbt Project: tests](/docs/build/data-tests)
-- [Test Configs](/reference/data-test-configs)
-- [Test properties](/reference/resource-properties/data-tests)
-- [Node Selection](/reference/node-selection/syntax) (with updated [test selection examples](/reference/node-selection/test-selection-examples))
-- [Writing custom generic tests](/best-practices/writing-custom-generic-tests)
+- [Создание проекта dbt: тесты](/docs/build/data-tests)
+- [Конфигурации тестов](/reference/data-test-configs)
+- [Свойства тестов](/reference/resource-properties/data-tests)
+- [Выбор узлов](/reference/node-selection/syntax) (с обновленными [примерами выбора тестов](/reference/node-selection/test-selection-examples))
+- [Написание пользовательских универсальных тестов](/best-practices/writing-custom-generic-tests)
 
-### Elsewhere in Core
-- [Parsing](/reference/parsing): rework of partial parsing, introduction of experimental parser
-- The [graph](/reference/dbt-jinja-functions/graph) Jinja context variable includes `exposures`
-- [Packages](/docs/build/packages) can now be installed from git with a specific commit hash as the revision, or via sparse checkout if the dbt project is located in a `subdirectory`.
-- [adapter.dispatch](/reference/dbt-jinja-functions/dispatch) supports new arguments, a new [project-level config](/reference/project-configs/dispatch-config), and includes parent adapters when searching for macro implementations.
-- [Exposures](/reference/exposure-properties) support `tags` and `meta` properties
+### В других частях Core
+- [Парсинг](/reference/parsing): переработка частичного парсинга, введение экспериментального парсера
+- Контекстная переменная [графа](/reference/dbt-jinja-functions/graph) Jinja включает `exposures`
+- [Пакеты](/docs/build/packages) теперь могут устанавливаться из git с конкретным хешем коммита в качестве ревизии или через разреженную выборку, если проект dbt находится в `подкаталоге`.
+- [adapter.dispatch](/reference/dbt-jinja-functions/dispatch) поддерживает новые аргументы, новую [конфигурацию на уровне проекта](/reference/project-configs/dispatch-config) и включает родительские адаптеры при поиске реализаций макросов.
+- [Exposures](/reference/exposure-properties) поддерживают свойства `tags` и `meta`
 
-### Plugins
-- New partition-related [BigQuery configs](/reference/resource-configs/bigquery-configs#additional-partition-configs): `require_partition_filter` and `partition_expiration_days`
-- On BigQuery, dbt can now add [query comment](/reference/project-configs/query-comment) items as job labels
-- Snowflake and BigQuery [incremental models](/docs/build/incremental-strategy#strategy-specific-configs) using the `merge` strategy accept a new optional config, `merge_update_columns`.
-- [Postgres configs](/reference/resource-configs/postgres-configs) now include first-class support for `indexes`
+### Плагины
+- Новые конфигурации, связанные с разделением [BigQuery](/reference/resource-configs/bigquery-configs#additional-partition-configs): `require_partition_filter` и `partition_expiration_days`
+- В BigQuery dbt теперь может добавлять [комментарии к запросам](/reference/project-configs/query-comment) в качестве меток задач
+- [Инкрементальные модели](/docs/build/incremental-strategy#strategy-specific-configs) Snowflake и BigQuery, использующие стратегию `merge`, принимают новую необязательную конфигурацию `merge_update_columns`.
+- [Конфигурации Postgres](/reference/resource-configs/postgres-configs) теперь включают первоклассную поддержку `indexes`

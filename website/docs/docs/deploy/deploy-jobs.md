@@ -1,135 +1,133 @@
 ---
-title: "Deploy jobs"
-description: "Learn how to create and schedule deploy jobs in dbt Cloud for the scheduler to run. When you run with dbt Cloud, you get built-in observability, logging, and alerting." 
+title: "Задания на развертывание"
+description: "Узнайте, как создавать и планировать задания на развертывание в dbt Cloud для запуска планировщиком. При работе с dbt Cloud вы получаете встроенные возможности наблюдения, ведения журналов и оповещения." 
 tags: [scheduler]
 ---
 
-You can use deploy jobs to build production data assets. Deploy jobs make it easy to run dbt commands against a project in your cloud data platform, triggered either by schedule or events. Each job run in dbt Cloud will have an entry in the job's run history and a detailed run overview, which provides you with:
+Вы можете использовать задания на развертывание для создания производственных данных. Задания на развертывание упрощают выполнение команд dbt в проекте на вашей облачной платформе данных, которые могут быть запущены по расписанию или по событиям. Каждое выполнение задания в dbt Cloud будет иметь запись в истории выполнения задания и подробный обзор выполнения, который предоставляет вам:
 
-- Job trigger type
-- Commit SHA
-- Environment name
-- Sources and documentation info, if applicable
-- Job run details, including run timing, [model timing data](/docs/deploy/run-visibility#model-timing), and [artifacts](/docs/deploy/artifacts)
-- Detailed run steps with logs and their run step statuses
+- Тип триггера задания
+- SHA коммита
+- Имя окружения
+- Информация о источниках и документации, если применимо
+- Подробности выполнения задания, включая время выполнения, [данные о времени модели](/docs/deploy/run-visibility#model-timing) и [артефакты](/docs/deploy/artifacts)
+- Подробные шаги выполнения с журналами и статусами шагов выполнения
 
-You can create a deploy job and configure it to run on [scheduled days and times](#schedule-days), enter a [custom cron schedule](#cron-schedule), or [trigger the job after another job completes](#trigger-on-job-completion).
+Вы можете создать задание на развертывание и настроить его для выполнения в [запланированные дни и время](#schedule-days), ввести [пользовательское расписание cron](#cron-schedule) или [запустить задание после завершения другого задания](#trigger-on-job-completion).
 
+## Предварительные условия
 
-## Prerequisites
+- У вас должен быть [аккаунт dbt Cloud](https://www.getdbt.com/signup/) и [лицензия на место разработчика](/docs/cloud/manage-access/seats-and-users).
+    - Для функции [Запуск при завершении задания](#trigger-on-job-completion) ваш аккаунт dbt Cloud должен находиться на [Командном или Корпоративном плане](https://www.getdbt.com/pricing/).
+- У вас должен быть проект dbt, подключенный к [платформе данных](/docs/cloud/connect-data-platform/about-connections).
+- У вас должны быть [права доступа](/docs/cloud/manage-access/about-user-access) для просмотра, создания, изменения или выполнения заданий.
+- Вы должны настроить [окружение развертывания](/docs/deploy/deploy-environments). 
 
-- You must have a [dbt Cloud account](https://www.getdbt.com/signup/) and [Developer seat license](/docs/cloud/manage-access/seats-and-users).
-    - For the [Trigger on job completion](#trigger-on-job-completion) feature, your dbt Cloud account must be on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-- You must have a dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections).
-- You must have [access permission](/docs/cloud/manage-access/about-user-access) to view, create, modify, or run jobs.
-- You must set up a [deployment environment](/docs/deploy/deploy-environments). 
+## Создание и планирование заданий {#create-and-schedule-jobs}
 
-## Create and schedule jobs {#create-and-schedule-jobs}
+1. На странице вашего окружения развертывания нажмите **Создать задание** > **Задание на развертывание**, чтобы создать новое задание на развертывание. 
+2. Опции в разделе **Настройки задания**:
+    - **Имя задания** &mdash; Укажите имя для задания на развертывание. Например, `Ежедневная сборка`.
+    - (Необязательно) **Описание** &mdash; Укажите описание того, что делает задание (например, что задание использует и что оно производит). 
+    - **Окружение** &mdash; По умолчанию установлено на окружение развертывания, из которого вы создали задание на развертывание.
+3. Опции в разделе **Настройки выполнения**:
+    - **Команды** &mdash; По умолчанию включает команду `dbt build`. Нажмите **Добавить команду**, чтобы добавить больше [команд](/docs/deploy/job-commands), которые вы хотите вызвать при выполнении задания.
+    - **Генерировать документацию при выполнении** &mdash; Включите эту опцию, если хотите [сгенерировать документацию проекта](/docs/collaborate/build-and-view-your-docs) при выполнении этого задания на развертывание.
+    - **Проверка свежести источников** &mdash; Включите эту опцию, чтобы вызвать команду `dbt source freshness` перед выполнением задания на развертывание. Смотрите [Свежесть источников](/docs/deploy/source-freshness) для получения дополнительных сведений.
+4. Опции в разделе **Триггеры**:
+    - **Запуск по расписанию** &mdash; Запуск задания на развертывание по установленному расписанию.
+        - **Время** &mdash; Укажите, следует ли [планировать](#schedule-days) задание на развертывание с использованием **Интервалов**, которые запускают задание через указанное количество часов, **Конкретных часов**, которые запускают задание в определенные часы дня, или **Расписания cron**, которое запускает задание по указанному [синтаксису cron](#cron-schedule).
+        - **Дни недели** &mdash; По умолчанию установлено на каждый день, когда выбраны **Интервалы** или **Конкретные часы** для **Времени**.
+    - **Запуск при завершении другого задания** &mdash; Запуск задания на развертывание, когда другое _вышестоящее_ задание [завершится](#trigger-on-job-completion).  
+        - **Проект** &mdash; Укажите родительский проект, в котором находится это вышестоящее задание. 
+        - **Задание** &mdash; Укажите вышестоящее задание. 
+        - **Завершено на** &mdash; Выберите статус(ы) выполнения задания, которые [поставят в очередь](/docs/deploy/job-scheduler#scheduler-queue) задание на развертывание.  
 
-1. On your deployment environment page, click **Create job** > **Deploy job** to create a new deploy job. 
-2. Options in the **Job settings** section:
-    - **Job name** &mdash; Specify the name for the deploy job. For example, `Daily build`.
-    - (Optional) **Description** &mdash; Provide a description of what the job does (for example, what the job consumes and what the job produces). 
-    - **Environment** &mdash;  By default, it’s set to the deployment environment you created the deploy job from.
-3. Options in the **Execution settings** section:
-    - **Commands** &mdash; By default, it includes the `dbt build` command. Click **Add command** to add more [commands](/docs/deploy/job-commands) that you want to be invoked when the job runs.
-    - **Generate docs on run** &mdash; Enable this option if you want to [generate project docs](/docs/collaborate/build-and-view-your-docs) when this deploy job runs.
-    - **Run source freshness** &mdash; Enable this option to invoke the `dbt source freshness` command before running the deploy job. Refer to [Source freshness](/docs/deploy/source-freshness) for more details.
-4. Options in the **Triggers** section:
-    - **Run on schedule** &mdash; Run the deploy job on a set schedule.
-        - **Timing** &mdash; Specify whether to [schedule](#schedule-days) the deploy job using **Intervals** that run the job every specified number of hours, **Specific hours** that run the job at specific times of day, or **Cron schedule** that run the job specified using [cron syntax](#cron-schedule).
-        - **Days of the week** &mdash; By default, it’s set to every day when **Intervals** or **Specific hours** is chosen for **Timing**.
-    - **Run when another job finishes** &mdash; Run the deploy job when another _upstream_ deploy [job completes](#trigger-on-job-completion).  
-        - **Project** &mdash; Specify the parent project that has that upstream deploy job. 
-        - **Job** &mdash; Specify the upstream deploy job. 
-        - **Completes on** &mdash; Select the job run status(es) that will [enqueue](/docs/deploy/job-scheduler#scheduler-queue) the deploy job.  
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Пример триггеров на странице задания на развертывание"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Example of Triggers on the Deploy Job page"/>
-
-5. (Optional) Options in the **Advanced settings** section: 
-    - **Environment variables** &mdash; Define [environment variables](/docs/build/environment-variables) to customize the behavior of your project when the deploy job runs.
-    - **Target name** &mdash; Define the [target name](/docs/build/custom-target-names) to customize the behavior of your project when the deploy job runs. Environment variables and target names are often used interchangeably. 
-    - **Run timeout** &mdash; Cancel the deploy job if the run time exceeds the timeout value. 
-    - **Compare changes against** &mdash; By default, it’s set to **No deferral**. Select either **Environment** or **This Job** to let dbt Cloud know what it should compare the changes against.  
+5. (Необязательно) Опции в разделе **Расширенные настройки**: 
+    - **Переменные окружения** &mdash; Определите [переменные окружения](/docs/build/environment-variables), чтобы настроить поведение вашего проекта при выполнении задания на развертывание.
+    - **Имя цели** &mdash; Определите [имя цели](/docs/build/custom-target-names), чтобы настроить поведение вашего проекта при выполнении задания на развертывание. Переменные окружения и имена целей часто используются взаимозаменяемо. 
+    - **Таймаут выполнения** &mdash; Отменить задание на развертывание, если время выполнения превышает значение таймаута. 
+    - **Сравнить изменения с** &mdash; По умолчанию установлено на **Без отсрочки**. Выберите либо **Окружение**, либо **Это задание**, чтобы сообщить dbt Cloud, с чем следует сравнить изменения.  
 
     :::info
-    Older versions of dbt Cloud only allow you to defer to a specific job instead of an environment. Deferral to a job compares state against the project code that was run in the deferred job's last successful run. While deferral to an environment is more efficient as dbt Cloud will compare against the project representation (which is stored in the `manifest.json`) of the last successful deploy job run that executed in the deferred environment. By considering _all_ deploy jobs that run in the deferred environment, dbt Cloud will get a more accurate, latest project representation state.
+    Более старые версии dbt Cloud позволяют откладывать только на конкретное задание, а не на окружение. Откладывание на задание сравнивает состояние с кодом проекта, который был выполнен в последнем успешном запуске откладываемого задания. В то время как откладывание на окружение более эффективно, так как dbt Cloud будет сравнивать с представлением проекта (которое хранится в `manifest.json`) последнего успешного выполнения задания на развертывание, которое было выполнено в откладываемом окружении. Учитывая _все_ задания на развертывание, которые выполняются в откладываемом окружении, dbt Cloud получит более точное, актуальное состояние представления проекта.
     :::
 
-    - **dbt version** &mdash; By default, it’s set to inherit the [dbt version](/docs/dbt-versions/core) from the environment. dbt Labs strongly recommends that you don't change the default setting. This option to change the version at the job level is useful only when you upgrade a project to the next dbt version; otherwise, mismatched versions between the environment and job can lead to confusing behavior. 
-    - **Threads** &mdash; By default, it’s set to 4 [threads](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Increase the thread count to increase model execution concurrency.
+    - **Версия dbt** &mdash; По умолчанию установлено на наследование [версии dbt](/docs/dbt-versions/core) из окружения. dbt Labs настоятельно рекомендует не изменять настройки по умолчанию. Эта опция изменения версии на уровне задания полезна только при обновлении проекта до следующей версии dbt; в противном случае несоответствующие версии между окружением и заданием могут привести к путанице. 
+    - **Потоки** &mdash; По умолчанию установлено на 4 [потока](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Увеличьте количество потоков, чтобы увеличить параллелизм выполнения моделей.
 
-    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/deploy-job-adv-settings.png" width="90%" title="Example of Advanced Settings on the Deploy Job page"/>
+    <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/deploy-job-adv-settings.png" width="90%" title="Пример расширенных настроек на странице задания на развертывание"/>
 
-### Schedule days
+### Запланированные дни
 
-To set your job's schedule, use the **Run on schedule** option to choose specific days of the week, and select customized hours or intervals.
+Чтобы установить расписание вашего задания, используйте опцию **Запуск по расписанию**, чтобы выбрать конкретные дни недели и выбрать настраиваемые часы или интервалы.
 
-Under **Timing**, you can either use regular intervals for jobs that need to run frequently throughout the day or customizable hours for jobs that need to run at specific times:
+В разделе **Время** вы можете использовать регулярные интервалы для заданий, которые необходимо выполнять часто в течение дня, или настраиваемые часы для заданий, которые необходимо выполнять в определенные часы:
 
-- **Intervals** &mdash; Use this option to set how often your job runs, in hours. For example, if you choose **Every 2 hours**, the job will run every 2 hours from midnight UTC. This doesn't mean that it will run at exactly midnight UTC. However, subsequent runs will always be run with the same amount of time between them. For example, if the previous scheduled pipeline ran at 00:04 UTC, the next run will be at 02:04 UTC. This option is useful if you need to run jobs multiple times per day at regular intervals.
+- **Интервалы** &mdash; Используйте эту опцию, чтобы установить, как часто ваше задание выполняется, в часах. Например, если вы выберете **Каждые 2 часа**, задание будет выполняться каждые 2 часа с полуночи по UTC. Это не означает, что оно будет выполняться ровно в полночь по UTC. Однако последующие запуски всегда будут выполняться с одинаковым интервалом времени между ними. Например, если предыдущий запланированный конвейер выполнялся в 00:04 UTC, следующий запуск будет в 02:04 UTC. Эта опция полезна, если вам нужно выполнять задания несколько раз в день с регулярными интервалами.
 
-- **Specific hours** &mdash; Use this option to set specific times when your job should run. You can enter a comma-separated list of hours (in UTC) when you want the job to run. For example, if you set it to `0,12,23,` the job will run at midnight, noon, and 11 PM UTC. Job runs will always be consistent between both hours and days, so if your job runs at 00:05, 12:05, and 23:05 UTC, it will run at these same hours each day. This option is useful if you want your jobs to run at specific times of day and don't need them to run more frequently than once a day.
-
+- **Конкретные часы** &mdash; Используйте эту опцию, чтобы установить конкретные часы, когда ваше задание должно выполняться. Вы можете ввести список часов, разделенных запятыми (в UTC), когда вы хотите, чтобы задание выполнялось. Например, если вы установите его на `0,12,23,` задание будет выполняться в полночь, в полдень и в 11 вечера по UTC. Запуски заданий всегда будут последовательными как по часам, так и по дням, поэтому, если ваше задание выполняется в 00:05, 12:05 и 23:05 UTC, оно будет выполняться в эти же часы каждый день. Эта опция полезна, если вы хотите, чтобы ваши задания выполнялись в определенные часы дня и не нужно, чтобы они выполнялись чаще одного раза в день.
 
 :::info
 
-dbt Cloud uses [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC) and does not account for translations to your specific timezone or take into consideration daylight savings time. For example:
+dbt Cloud использует [Универсальное координированное время](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC) и не учитывает переводы в вашу конкретную часовой пояс или не принимает во внимание переход на летнее/зимнее время. Например:
 
-- 0 means 12am (midnight) UTC
-- 12 means 12pm (afternoon) UTC
-- 23 means 11pm UTC
+- 0 означает 12 ночи (полночь) по UTC
+- 12 означает 12 дня (после полудня) по UTC
+- 23 означает 11 вечера по UTC
 
 :::
 
-### Cron schedule
+### Расписание cron
 
-To fully customize the scheduling of your job, choose the **Cron schedule** option and use cron syntax. With this syntax, you can specify the minute, hour, day of the month, month, and day of the week, allowing you to set up complex schedules like running a job on the first Monday of each month.
+Чтобы полностью настроить расписание вашего задания, выберите опцию **Расписание cron** и используйте синтаксис cron. С помощью этого синтаксиса вы можете указать минуту, час, день месяца, месяц и день недели, что позволяет вам настраивать сложные расписания, такие как выполнение задания в первый понедельник каждого месяца.
 
-**Cron frequency**
+**Частота cron**
 
-To enhance performance, job scheduling frequencies vary by dbt Cloud plan:
+Чтобы улучшить производительность, частоты планирования заданий различаются в зависимости от плана dbt Cloud:
 
-- Developer plans: dbt Cloud sets a minimum interval of every 10 minutes for scheduling jobs. This means scheduling jobs to run more frequently, or at less than 10 minute intervals, is not supported.
-- Team and Enterprise plans: No restrictions on job execution frequency.
+- Планы разработчиков: dbt Cloud устанавливает минимальный интервал в 10 минут для планирования заданий. Это означает, что планирование заданий на более частое выполнение или с интервалами менее 10 минут не поддерживается.
+- Командные и корпоративные планы: Нет ограничений на частоту выполнения заданий.
 
-**Examples**
+**Примеры**
 
-Use tools such as [crontab.guru](https://crontab.guru/) to generate the correct cron syntax. This tool allows you to input cron snippets and return their plain English translations. The dbt Cloud job scheduler supports using `L` to schedule jobs on the last day of the month.
+Используйте такие инструменты, как [crontab.guru](https://crontab.guru/), чтобы сгенерировать правильный синтаксис cron. Этот инструмент позволяет вам вводить фрагменты cron и возвращать их переводы на простой английский. Планировщик заданий dbt Cloud поддерживает использование `L` для планирования заданий на последний день месяца.
 
-Examples of cron job schedules:
+Примеры расписаний заданий cron:
 
-- `0 * * * *`: Every hour, at minute 0.
-- `*/5 * * * *`: Every 5 minutes. (Not available on Developer plans)
-- `5 4 * * *`: At exactly 4:05 AM UTC.
-- `30 */4 * * *`: At minute 30 past every 4th hour (such as 4:30 AM, 8:30 AM, 12:30 PM, and so on, all UTC).
-- `0 0 */2 * *`: At 12:00 AM (midnight) UTC every other day.
-- `0 0 * * 1`: At midnight UTC every Monday.
-- `0 0 L * *`: At 12:00 AM (midnight), on the last day of the month.
-- `0 0 L 1,2,3,4,5,6,8,9,10,11,12 *`: At 12:00 AM, on the last day of the month, only in January, February, March, April, May, June, August, September, October, November, and December.
-- `0 0 L 7 *`: At 12:00 AM, on the last day of the month, only in July.
-- `0 0 L * FRI,SAT`: At 12:00 AM, on the last day of the month, and on Friday and Saturday.
-- `0 12 L * *`: At 12:00 PM (afternoon), on the last day of the month.
-- `0 7 L * 5`: At 07:00 AM, on the last day of the month, and on Friday.
-- `30 14 L * *`: At 02:30 PM, on the last day of the month.
+- `0 * * * *`: Каждый час, в 0 минут.
+- `*/5 * * * *`: Каждые 5 минут. (Не доступно на планах разработчиков)
+- `5 4 * * *`: Точно в 4:05 AM по UTC.
+- `30 */4 * * *`: В 30-й минуте каждого 4-го часа (например, 4:30 AM, 8:30 AM, 12:30 PM и так далее, все по UTC).
+- `0 0 */2 * *`: В 12:00 AM (полночь) по UTC каждые два дня.
+- `0 0 * * 1`: В полночь по UTC каждую понедельник.
+- `0 0 L * *`: В 12:00 AM (полночь), в последний день месяца.
+- `0 0 L 1,2,3,4,5,6,8,9,10,11,12 *`: В 12:00 AM, в последний день месяца, только в январе, феврале, марте, апреле, мае, июне, августе, сентябре, октябре, ноябре и декабре.
+- `0 0 L 7 *`: В 12:00 AM, в последний день месяца, только в июле.
+- `0 0 L * FRI,SAT`: В 12:00 AM, в последний день месяца, и в пятницу и субботу.
+- `0 12 L * *`: В 12:00 PM (после полудня), в последний день месяца.
+- `0 7 L * 5`: В 07:00 AM, в последний день месяца, и в пятницу.
+- `30 14 L * *`: В 02:30 PM, в последний день месяца.
 
-### Trigger on job completion  <Lifecycle status="team,enterprise" />
+### Запуск при завершении задания  <Lifecycle status="team,enterprise" />
 
-To _chain_ deploy jobs together:
-1. In the **Triggers** section, enable the **Run when another job finishes** option.
-2. Select the project that has the deploy job you want to run after completion.
-3. Specify the upstream (parent) job that, when completed, will trigger your job.
-   - You can also use the [Create Job API](/dbt-cloud/api-v2#/operations/Create%20Job) to do this.
-4. In the **Completes on** option, select the job run status(es) that will [enqueue](/docs/deploy/job-scheduler#scheduler-queue) the deploy job.
+Чтобы _связать_ задания на развертывание:
+1. В разделе **Триггеры** включите опцию **Запуск при завершении другого задания**.
+2. Выберите проект, в котором находится задание на развертывание, которое вы хотите запустить после завершения.
+3. Укажите вышестоящее (родительское) задание, которое, по завершении, вызовет выполнение вашего задания.
+   - Вы также можете использовать [API создания задания](/dbt-cloud/api-v2#/operations/Create%20Job) для этого.
+4. В опции **Завершено на** выберите статус(ы) выполнения задания, которые [поставят в очередь](/docs/deploy/job-scheduler#scheduler-queue) задание на развертывание.
 
-<Lightbox src="/img/docs/deploy/deploy-job-completion.jpg" width="100%" title="Example of Trigger on job completion on the Deploy job page"/>
+<Lightbox src="/img/docs/deploy/deploy-job-completion.jpg" width="100%" title="Пример запуска при завершении задания на странице задания на развертывание"/>
 
-5. You can set up a configuration where an upstream job triggers multiple downstream (child) jobs and jobs in other projects. You must have proper [permissions](/docs/cloud/manage-access/enterprise-permissions#project-role-permissions) to the project and job to configure the trigger. 
+5. Вы можете настроить конфигурацию, при которой вышестоящее задание вызывает выполнение нескольких нижестоящих (дочерних) заданий и заданий в других проектах. У вас должны быть соответствующие [права доступа](/docs/cloud/manage-access/enterprise-permissions#project-role-permissions) к проекту и заданию, чтобы настроить триггер. 
 
-If another job triggers your job to run, you can find a link to the upstream job in the [run details section](/docs/deploy/run-visibility#job-run-details).
+Если другое задание вызывает выполнение вашего задания, вы можете найти ссылку на вышестоящее задание в [разделе деталей выполнения](/docs/deploy/run-visibility#job-run-details).
 
-## Related docs
+## Связанные документы
 
-- [Artifacts](/docs/deploy/artifacts)
-- [Continuous integration (CI) jobs](/docs/deploy/ci-jobs)
-- [Webhooks](/docs/deploy/webhooks)
+- [Артефакты](/docs/deploy/artifacts)
+- [Задания непрерывной интеграции (CI)](/docs/deploy/ci-jobs)
+- [Webhook'и](/docs/deploy/webhooks)

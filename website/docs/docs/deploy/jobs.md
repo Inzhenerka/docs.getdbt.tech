@@ -1,25 +1,25 @@
 ---
-title: "Jobs in dbt Cloud"
-sidebar_label: "About Jobs"
-description: "Learn about the different job types in dbt Cloud and what their differences are." 
+title: "Задачи в dbt Cloud"
+sidebar_label: "О задачах"
+description: "Узнайте о различных типах задач в dbt Cloud и их отличиях." 
 tags: [scheduler]
 pagination_next: "docs/deploy/deploy-jobs"
 hide_table_of_contents: true
 ---
 
-These are the available job types in dbt Cloud: 
-- [Deploy jobs](/docs/deploy/deploy-jobs) &mdash; Build production data assets. Runs on a schedule, by API, or after another job completes.
-- [Continuous integration (CI) jobs](/docs/deploy/continuous-integration) &mdash; Test and validate code changes before merging. Triggered by commit to a PR or by API.
-- [Merge jobs](/docs/deploy/merge-jobs) &mdash; Deploy merged changes into production. Runs after a successful PR merge or by API.
+Это доступные типы задач в dbt Cloud: 
+- [Задачи развертывания](/docs/deploy/deploy-jobs) &mdash; Создание производственных данных. Запускаются по расписанию, через API или после завершения другой задачи.
+- [Задачи непрерывной интеграции (CI)](/docs/deploy/continuous-integration) &mdash; Тестирование и валидация изменений кода перед слиянием. Запускаются при коммите в PR или через API.
+- [Задачи слияния](/docs/deploy/merge-jobs) &mdash; Развертывание объединенных изменений в производственной среде. Запускаются после успешного слияния PR или через API.
 
-The following comparison table describes the behaviors of the different job types:
+Следующая таблица сравнения описывает поведение различных типов задач:
 
-|  | **Deploy jobs** | **CI jobs** | **Merge jobs** |  
+|  | **Задачи развертывания** | **CI задачи** | **Задачи слияния** |  
 | --- | --- | --- | --- |
-| Purpose | Builds production data assets. | Builds and tests new code before merging changes into production. | Build merged changes into production or update state for deferral. |
-| Trigger types | Triggered by a schedule, API, or the successful completion of another job. | Triggered by a commit to a PR or by API. | Triggered by a successful merge into the environment's branch or by API.|
-| Destination | Builds into a production database and schema. | Builds into a staging database and ephemeral schema, lived for the lifetime of the PR. | Builds into a production database and schema. |
-| Execution mode | Runs execute sequentially, so as to not have collisions on the underlying DAG. | Runs execute in parallel to promote team velocity. | Runs execute sequentially, so as to not have collisions on the underlying DAG. |
-| Efficiency run savings | Detects over-scheduled jobs and cancels unnecessary runs to avoid queue clog. | Cancels existing runs when a newer commit is pushed to avoid redundant work. | N/A |
-| State comparison | Only sometimes needs to detect state. | Almost always needs to compare state against the production environment to build on modified code and its dependents. | Almost always needs to compare state against the production environment to build on modified code and its dependents. |
-| Job run duration | Limit is 24 hours. | Limit is 24 hours. | Limit is 24 hours. |
+| Цель | Создание производственных данных. | Создание и тестирование нового кода перед слиянием изменений в производственную среду. | Создание объединенных изменений в производственной среде или обновление состояния для отложенного выполнения. |
+| Типы триггеров | Запускаются по расписанию, через API или после успешного завершения другой задачи. | Запускаются при коммите в PR или через API. | Запускаются после успешного слияния в ветку окружения или через API.|
+| Назначение | Создание в производственной базе данных и схеме. | Создание в промежуточной базе данных и временной схеме, существующей на протяжении всего времени PR. | Создание в производственной базе данных и схеме. |
+| Режим выполнения | Выполняются последовательно, чтобы избежать конфликтов в подлежащем DAG. | Выполняются параллельно для повышения скорости работы команды. | Выполняются последовательно, чтобы избежать конфликтов в подлежащем DAG. |
+| Экономия времени выполнения | Обнаруживает избыточно запланированные задачи и отменяет ненужные запуски, чтобы избежать заторов в очереди. | Отменяет существующие запуски, когда новый коммит отправляется, чтобы избежать избыточной работы. | Н/Д |
+| Сравнение состояния | Иногда необходимо обнаружить состояние. | Почти всегда необходимо сравнивать состояние с производственной средой для создания на основе измененного кода и его зависимостей. | Почти всегда необходимо сравнивать состояние с производственной средой для создания на основе измененного кода и его зависимостей. |
+| Длительность выполнения задачи | Ограничение — 24 часа. | Ограничение — 24 часа. | Ограничение — 24 часа. |

@@ -1,104 +1,103 @@
 ---
-title: "Job notifications"
+title: "Уведомления о заданиях"
 id: "job-notifications"
-description: "Set up notifications in dbt Cloud to receive email or Slack alerts about job run status."
+description: "Настройте уведомления в dbt Cloud, чтобы получать оповещения по электронной почте или в Slack о статусе выполнения заданий."
 ---
 
+Настройте уведомления в dbt Cloud, чтобы получать оповещения по электронной почте или в Slack о статусе выполнения задания. Вы можете выбрать уведомления о одном или нескольких следующих статусах выполнения задания:
 
-Set up notifications in dbt Cloud to receive email or Slack alerts about the status of a job run. You can choose to be notified by one or more of the following job run statuses: 
+- **Succeeds** — Выполнение задания завершилось успешно.
+- **Warns** — Выполнение задания столкнулось с предупреждениями от [тестов](/docs/build/data-tests) или проверок [свежести источников](/docs/deploy/source-freshness) (если применимо).
+- **Fails** — Выполнение задания не удалось.
+- **Is canceled** — Выполнение задания было отменено.
 
-- **Succeeds** option &mdash; A job run completed successfully.
-- **Warns** option &mdash; A job run encountered warnings from [tests](/docs/build/data-tests) or [source freshness](/docs/deploy/source-freshness) checks (if applicable).
-- **Fails** option &mdash; A job run failed to complete. 
-- **Is canceled** option &mdash; A job run is canceled.
+## Уведомления по электронной почте
 
-## Email notifications
+Вы можете получать оповещения по электронной почте о заданиях, настроив параметры уведомлений по электронной почте в dbt Cloud.
 
-You can receive email alerts about jobs by configuring the dbt Cloud email notification settings.
+### Предварительные условия
+- Вы должны быть либо _разработчиком_, либо _администратором аккаунта_, чтобы настроить уведомления по электронной почте в dbt Cloud. Для получения более подробной информации обратитесь к разделу [Пользователи и лицензии](/docs/cloud/manage-access/seats-and-users).
+    - В качестве разработчика вы можете настроить уведомления по электронной почте для себя.
+    - В качестве администратора аккаунта вы можете настроить уведомления для себя и других членов команды.
 
-### Prerequisites 
-- You must be either a _developer user_ or an _account admin_ to configure email notifications in dbt Cloud. For more details, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users).
-    - As a developer user, you can set up email notifications for yourself. 
-    - As an account admin, you can set up notifications for yourself and other team members. 
+### Настройка уведомлений по электронной почте
 
-### Configure email notifications
+1. Выберите значок своего профиля, а затем нажмите **Настройки уведомлений**.
+1. По умолчанию dbt Cloud отправляет уведомления на адрес электронной почты, указанный на странице **Профиль пользователя**.
 
-1. Select your profile icon and then click **Notification settings**.
-1. By default, dbt Cloud sends notifications to the email address that's in your **User profile** page.
+    Если вы администратор аккаунта, вы можете выбрать другой адрес электронной почты для получения уведомлений. Выберите выпадающий список **Уведомление по электронной почте** и выберите другой адрес из списка. В списке указаны **Внутренние пользователи**, имеющие доступ к аккаунту, и **Внешние электронные адреса**, которые были добавлены.
+    - Чтобы добавить внешний адрес электронной почты, выберите выпадающий список **Уведомление по электронной почте** и выберите **Добавить внешний адрес электронной почты**. После добавления внешний адрес электронной почты станет доступен для выбора в выпадающем списке **Уведомление по электронной почте**. Внешние адреса могут быть адресами, которые находятся вне вашего аккаунта dbt Cloud, а также для интеграций с третьими сторонами, такими как [каналы в Microsoft Teams](https://support.microsoft.com/en-us/office/tip-send-email-to-a-channel-2c17dbae-acdf-4209-a761-b463bdaaa4ca) и [интеграция электронной почты PagerDuty](https://support.pagerduty.com/docs/email-integration-guide).
 
-    If you're an account admin, you can choose a different email address to receive notifications. Select the **Notification email** dropdown and choose another address from the list. The list includes **Internal Users** with access to the account and **External Emails** that have been added. 
-    - To add an external email address, select the **Notification email** dropdown and choose **Add external email**. After you add the external email, it becomes available for selection in the **Notification email** dropdown list. External emails can be addresses that are outside of your dbt Cloud account and also for third-party integrations like [channels in Microsoft Teams](https://support.microsoft.com/en-us/office/tip-send-email-to-a-channel-2c17dbae-acdf-4209-a761-b463bdaaa4ca) and [PagerDuty email integration](https://support.pagerduty.com/docs/email-integration-guide).
+    <Lightbox src="/img/docs/deploy/example-notification-external-email.png" width="50%" title="Пример выпадающего списка уведомлений по электронной почте"/>
 
-    <Lightbox src="/img/docs/deploy/example-notification-external-email.png" width="50%" title="Example of the Notification email dropdown"/>
+1. Выберите **Среду** для заданий, о которых вы хотите получать уведомления, из выпадающего списка.
 
-1. Select the **Environment** for the jobs you want to receive notifications about from the dropdown. 
+1. Нажмите **Изменить**, чтобы настроить параметры уведомлений по электронной почте. Выберите один или несколько статусов выполнения для каждого задания, о котором вы хотите получать уведомления.
 
-1. Click **Edit** to configure the email notification settings. Choose one or more of the run statuses for each job you want to receive notifications about.
+1. Когда вы закончите с настройками, нажмите **Сохранить**.
 
-1. When you're done with the settings, click **Save**.
-
-    As an account admin, you can add more email recipients by choosing another **Notification email** from the dropdown, **Edit** the job notification settings, and **Save** the changes.
+    В качестве администратора аккаунта вы можете добавить больше получателей электронной почты, выбрав другой **Уведомление по электронной почте** из выпадающего списка, **Изменить** параметры уведомлений о заданиях и **Сохранить** изменения.
     
-    To set up alerts on jobs from a different environment, select another **Environment** from the dropdown, **Edit** those job notification settings, and **Save** the changes. 
+    Чтобы настроить оповещения о заданиях из другой среды, выберите другую **Среду** из выпадающего списка, **Измените** параметры уведомлений о заданиях и **Сохраните** изменения.
 
-    <Lightbox src="/img/docs/deploy/example-email-notification-settings-page.png" width="100%" title="Example of the Email notifications page"/>
+    <Lightbox src="/img/docs/deploy/example-email-notification-settings-page.png" width="100%" title="Пример страницы уведомлений по электронной почте"/>
 
-### Unsubscribe from email notifications
-1. Select your profile icon and click on **Notification settings**.
-1. On the **Email notifications** page, click **Unsubscribe from all email notifications**. 
+### Отказ от уведомлений по электронной почте
+1. Выберите значок своего профиля и нажмите **Настройки уведомлений**.
+1. На странице **Уведомления по электронной почте** нажмите **Отказаться от всех уведомлений по электронной почте**.
 
-## Slack notifications
+## Уведомления в Slack
 
-You can receive Slack alerts about jobs by setting up the Slack integration and then configuring the dbt Cloud Slack notification settings. dbt Cloud integrates with Slack via OAuth to ensure secure authentication.
+Вы можете получать оповещения в Slack о заданиях, настроив интеграцию Slack, а затем конфигурируя параметры уведомлений в dbt Cloud. dbt Cloud интегрируется с Slack через OAuth для обеспечения безопасной аутентификации.
 
 :::note 
-Virtual Private Cloud (VPC) admins must [contact support](mailto:support@getdbt.com) to complete the Slack integration.
+Администраторы виртуальной частной сети (VPC) должны [связаться с поддержкой](mailto:support@getdbt.com), чтобы завершить интеграцию Slack.
 
-If there has been a change in user roles or Slack permissions where you no longer have access to edit a configured Slack channel, please [contact support](mailto:support@getdbt.com) for assistance. 
+Если произошли изменения в ролях пользователей или разрешениях Slack, и у вас больше нет доступа к редактированию настроенного канала Slack, пожалуйста, [свяжитесь с поддержкой](mailto:support@getdbt.com) для получения помощи. 
 :::
 
-### Prerequisites 
-- You must be a Slack Workspace Owner. 
-- You must be an account admin to configure Slack notifications in dbt Cloud. For more details, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users).
-- The integration only supports _public_ channels in the Slack workspace. 
+### Предварительные условия
+- Вы должны быть владельцем рабочего пространства Slack.
+- Вы должны быть администратором аккаунта, чтобы настроить уведомления Slack в dbt Cloud. Для получения более подробной информации обратитесь к разделу [Пользователи и лицензии](/docs/cloud/manage-access/seats-and-users).
+- Интеграция поддерживает только _публичные_ каналы в рабочем пространстве Slack.
 
-### Set up the Slack integration
+### Настройка интеграции Slack
 
-1. Select **Account settings** and then select **Integrations** from the left sidebar. 
-1. Locate the **OAuth** section with the Slack application and click **Link**.
-   <Lightbox src="/img/docs/dbt-cloud/Link-your-Slack-Profile.png" width="75%" title="Link for the Slack app"/>
+1. Выберите **Настройки аккаунта**, а затем выберите **Интеграции** в левом боковом меню.
+1. Найдите раздел **OAuth** с приложением Slack и нажмите **Связать**.
+   <Lightbox src="/img/docs/dbt-cloud/Link-your-Slack-Profile.png" width="75%" title="Ссылка для приложения Slack"/>
 
-#### Logged in to Slack
-If you're already logged in to Slack, the handshake only requires allowing the app access. If you're a member of multiple workspaces, you can select the appropriate workspace from the dropdown menu in the upper right corner.
-   <Lightbox src="/img/docs/dbt-cloud/Allow-dbt-to-access-slack.png" width="75%" title="Allow dbt access to Slack"/>
+#### Вход в Slack
+Если вы уже вошли в Slack, для завершения процесса потребуется только разрешить доступ приложению. Если вы являетесь участником нескольких рабочих пространств, вы можете выбрать соответствующее рабочее пространство из выпадающего меню в правом верхнем углу.
+   <Lightbox src="/img/docs/dbt-cloud/Allow-dbt-to-access-slack.png" width="75%" title="Разрешить доступ dbt к Slack"/>
 
-#### Logged out
+#### Выход из системы
 
-If you're logged out or the Slack app/website is closed, you must authenticate before completing the integration.
+Если вы вышли из системы или приложение/веб-сайт Slack закрыты, вам необходимо пройти аутентификацию перед завершением интеграции.
 
-1. Complete the field defining the Slack workspace you want to integrate with dbt Cloud.
-    <Lightbox src="/img/docs/dbt-cloud/define-workspace.png" width="60%" title="Define the workspace"/>
-2. Sign in with an existing identity or use the email address and password. 
-3. Once you have authenticated successfully, accept the permissions.
-    <Lightbox src="/img/docs/dbt-cloud/accept-permissions.png" width="65%" title="Allow dbt access to Slack"/>
+1. Заполните поле, определяющее рабочее пространство Slack, с которым вы хотите интегрировать dbt Cloud.
+    <Lightbox src="/img/docs/dbt-cloud/define-workspace.png" width="60%" title="Определите рабочее пространство"/>
+2. Войдите с помощью существующей учетной записи или используйте адрес электронной почты и пароль.
+3. После успешной аутентификации примите разрешения.
+    <Lightbox src="/img/docs/dbt-cloud/accept-permissions.png" width="65%" title="Разрешить доступ dbt к Slack"/>
 
-### Configure Slack notifications
+### Настройка уведомлений Slack
 
-1. Select your profile icon and then click on **Notification settings**. 
-1. Select **Slack notifications** in the left sidebar. 
-1. Select the **Notification channel** you want to receive the job run notifications from the dropdown. 
-    <Lightbox src="/img/docs/deploy/example-notification-slack-channels.png" width="100%" title="Example of the Notification channel dropdown"/>
-1. Select the **Environment** for the jobs you want to receive notifications about from the dropdown. 
-1. Click **Edit** to configure the Slack notification settings. Choose one or more of the run statuses for each job you want to receive notifications about.
-1. When you're done with the settings, click **Save**.
+1. Выберите значок своего профиля, а затем нажмите **Настройки уведомлений**.
+1. Выберите **Уведомления Slack** в левом боковом меню.
+1. Выберите **Канал уведомлений**, из которого вы хотите получать уведомления о выполнении задания, из выпадающего списка.
+    <Lightbox src="/img/docs/deploy/example-notification-slack-channels.png" width="100%" title="Пример выпадающего списка канала уведомлений"/>
+1. Выберите **Среду** для заданий, о которых вы хотите получать уведомления, из выпадающего списка.
+1. Нажмите **Изменить**, чтобы настроить параметры уведомлений Slack. Выберите один или несколько статусов выполнения для каждого задания, о котором вы хотите получать уведомления.
+1. Когда вы закончите с настройками, нажмите **Сохранить**.
     
-    To send alerts to another Slack channel, select another **Notification channel** from the dropdown, **Edit** those job notification settings, and **Save** the changes.
+    Чтобы отправить оповещения в другой канал Slack, выберите другой **Канал уведомлений** из выпадающего списка, **Измените** параметры уведомлений о заданиях и **Сохраните** изменения.
 
-    To set up alerts on jobs from a different environment, select another **Environment** from the dropdown, **Edit** those job notification settings, and **Save** the changes.
+    Чтобы настроить оповещения о заданиях из другой среды, выберите другую **Среду** из выпадающего списка, **Измените** параметры уведомлений о заданиях и **Сохраните** изменения.
 
-    <Lightbox src="/img/docs/deploy/example-slack-notification-settings-page.png" width="100%" title="Example of the Slack notifications page"/>
+    <Lightbox src="/img/docs/deploy/example-slack-notification-settings-page.png" width="100%" title="Пример страницы уведомлений Slack"/>
 
-### Disable the Slack integration
+### Отключение интеграции Slack
 
-1. Select **Account settings** and on the **Integrations** page, scroll to the **OAuth** section.
-1. Click the trash can icon (on the far right of the Slack integration) and click **Unlink**. Channels that you configured will no longer receive Slack notifications. _This is not an account-wide action._ Channels configured by other account admins will continue to receive Slack notifications if they still have active Slack integrations. To migrate ownership of a Slack channel notification configuration, have another account admin edit their configuration.
+1. Выберите **Настройки аккаунта**, а на странице **Интеграции** прокрутите до раздела **OAuth**.
+1. Нажмите на значок корзины (справа от интеграции Slack) и нажмите **Отменить связь**. Каналы, которые вы настроили, больше не будут получать уведомления в Slack. _Это действие не распространяется на весь аккаунт._ Каналы, настроенные другими администраторами аккаунта, продолжат получать уведомления в Slack, если у них все еще есть активные интеграции Slack. Чтобы передать право собственности на конфигурацию уведомлений канала Slack, другой администратор аккаунта должен отредактировать свою конфигурацию.

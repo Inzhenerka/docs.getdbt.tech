@@ -1,9 +1,9 @@
 ---
-title: Do I need to add a YAML entry for column for it to appear in the docs site?
-description: "All columns appear in your docs site"
-sidebar_label: 'Types of columns included in doc site'
+title: Нужно ли добавлять запись YAML для столбца, чтобы он появился на сайте документации?
+description: "Все столбцы появляются на вашем сайте документации"
+sidebar_label: 'Типы столбцов, включенных в сайт документации'
 id: document-all-columns
 ---
-Fortunately, no!
+К счастью, нет!
 
-dbt will introspect your warehouse to generate a list of columns in each relation, and match it with the list of columns in your `.yml` files. As such, any undocumented columns will still appear in your documentation!
+dbt будет анализировать ваш хранилище данных, чтобы сгенерировать список столбцов в каждом отношении и сопоставить его со списком столбцов в ваших `.yml` файлах. Таким образом, любые недокументированные столбцы все равно будут отображаться в вашей документации!

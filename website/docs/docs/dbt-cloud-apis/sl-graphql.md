@@ -1,68 +1,66 @@
 ---
 title: "GraphQL"
 id: sl-graphql
-description: "Integrate and use the GraphQL API to query your metrics."
+description: "Интеграция и использование GraphQL API для запроса ваших метрик."
 tags: [Semantic Layer, APIs]
 ---
 
-[GraphQL](https://graphql.org/) (GQL) is an open-source query language for APIs. It offers a more efficient and flexible approach compared to traditional RESTful APIs. 
+[GraphQL](https://graphql.org/) (GQL) — это язык запросов с открытым исходным кодом для API. Он предлагает более эффективный и гибкий подход по сравнению с традиционными RESTful API.
 
-With GraphQL, users can request specific data using a single query, reducing the need for many server round trips. This improves performance and minimizes network overhead.
+С помощью GraphQL пользователи могут запрашивать конкретные данные с помощью одного запроса, что снижает необходимость в множественных обращениях к серверу. Это улучшает производительность и минимизирует сетевые накладные расходы.
 
-GraphQL has several advantages, such as self-documenting, having a strong typing system, supporting versioning and evolution, enabling rapid development, and having a robust ecosystem. These features make GraphQL a powerful choice for APIs prioritizing flexibility, performance, and developer productivity.
+GraphQL имеет несколько преимуществ, таких как самодокументируемость, наличие строгой системы типизации, поддержка версионирования и эволюции, возможность быстрого развития и наличие мощной экосистемы. Эти функции делают GraphQL мощным выбором для API, которые ставят на первое место гибкость, производительность и продуктивность разработчиков.
 
 ## dbt Semantic Layer GraphQL API
 
-The dbt Semantic Layer GraphQL API allows you to explore and query metrics and dimensions. Due to its self-documenting nature, you can explore the calls conveniently through a schema explorer. 
+GraphQL API dbt Semantic Layer позволяет вам исследовать и запрашивать метрики и размеры. Благодаря своей самодокументируемой природе вы можете удобно исследовать вызовы через исследователь схемы.
 
-The schema explorer URLs vary depending on your [deployment region](/docs/cloud/about-cloud/access-regions-ip-addresses). Use the following table to find the right link for your region:
+URL-адреса исследователя схемы различаются в зависимости от вашего [региона развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses). Используйте следующую таблицу, чтобы найти правильную ссылку для вашего региона:
 
-| Deployment type |	Schema explorer URL |
-| --------------- | ------------------- |
-| North America multi-tenant	|	https://semantic-layer.cloud.getdbt.com/api/graphql |
-| EMEA multi-tenant	|	https://semantic-layer.emea.dbt.com/api/graphql |
-| APAC multi-tenant	|	https://semantic-layer.au.dbt.com/api/graphql |
-| Single tenant | `https://semantic-layer.YOUR_ACCESS_URL/api/graphql`<br /><br />  Replace `YOUR_ACCESS_URL` with your specific account prefix followed by the appropriate Access URL for your region and plan.|
-| Multi-cell	| `https://YOUR_ACCOUNT_PREFIX.semantic-layer.REGION.dbt.com/api/graphql`<br /><br />  Replace `YOUR_ACCOUNT_PREFIX` with your specific account identifier and `REGION` with your location, which could be `us1.dbt.com`. |<br />
+| Тип развертывания | URL-адрес исследователя схемы |
+| ----------------- | ------------------------------ |
+| Северная Америка, многопользовательский | https://semantic-layer.cloud.getdbt.com/api/graphql |
+| EMEA, многопользовательский | https://semantic-layer.emea.dbt.com/api/graphql |
+| APAC, многопользовательский | https://semantic-layer.au.dbt.com/api/graphql |
+| Один пользователь | `https://semantic-layer.YOUR_ACCESS_URL/api/graphql`<br /><br /> Замените `YOUR_ACCESS_URL` на ваш конкретный префикс учетной записи, за которым следует соответствующий URL-адрес доступа для вашего региона и плана. |
+| Многоячеечный | `https://YOUR_ACCOUNT_PREFIX.semantic-layer.REGION.dbt.com/api/graphql`<br /><br /> Замените `YOUR_ACCOUNT_PREFIX` на ваш конкретный идентификатор учетной записи и `REGION` на ваше местоположение, которое может быть `us1.dbt.com`. |<br />
 
-**Example**
-- If your Single tenant access URL is `ABC123.getdbt.com`, your schema explorer URL will be `https://semantic-layer.ABC123.getdbt.com/api/graphql`.
+**Пример**
+- Если ваш URL-адрес доступа для одного пользователя — `ABC123.getdbt.com`, ваш URL-адрес исследователя схемы будет `https://semantic-layer.ABC123.getdbt.com/api/graphql`.
 
-dbt Partners can use the Semantic Layer GraphQL API to build an integration with the dbt Semantic Layer.
+Партнеры dbt могут использовать GraphQL API Semantic Layer для создания интеграции с dbt Semantic Layer.
 
-Note that the dbt Semantic Layer API doesn't support `ref` to call dbt objects. Instead, use the complete qualified table name. If you're using dbt macros at query time to calculate your metrics, you should move those calculations into your Semantic Layer metric definitions as code.
+Обратите внимание, что API dbt Semantic Layer не поддерживает `ref` для вызова объектов dbt. Вместо этого используйте полное квалифицированное имя таблицы. Если вы используете макросы dbt во время запроса для расчета ваших метрик, вам следует переместить эти расчеты в определения метрик Semantic Layer в виде кода.
 
-## Requirements to use the GraphQL API
-- A dbt Cloud project on dbt v1.6 or higher
-- Metrics are defined and configured
-- A dbt Cloud [service token](/docs/dbt-cloud-apis/service-tokens) with "Semantic Layer Only” and "Metadata Only" permissions
-- Your dbt project is configured and connected to a data platform
+## Требования для использования GraphQL API
+- Проект dbt Cloud на версии dbt v1.6 или выше
+- Метрики определены и настроены
+- Токен [сервиса dbt Cloud](/docs/dbt-cloud-apis/service-tokens) с разрешениями "Только Semantic Layer" и "Только метаданные"
+- Ваш проект dbt настроен и подключен к платформе данных
 
+## Использование GraphQL API
 
-## Using the GraphQL API
+Если вы являетесь пользователем или партнером dbt с доступом к dbt Cloud и [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), вы можете [настроить](/docs/use-dbt-semantic-layer/setup-sl) и протестировать этот API с данными из вашей собственной инстанции, настроив Semantic Layer и получив правильные параметры подключения GQL, описанные в этом документе.
 
-If you're a dbt user or partner with access to dbt Cloud and the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), you can [setup](/docs/use-dbt-semantic-layer/setup-sl) and test this API with data from your own instance by configuring the Semantic Layer and obtaining the right GQL connection parameters described in this document. 
+Смотрите [Начало работы с dbt Semantic Layer](/guides/sl-snowflake-qs) для получения дополнительной информации.
 
-Refer to [Get started with the dbt Semantic Layer](/guides/sl-snowflake-qs) for more info.
+### Аутентификация
 
-
-### Authentication 
-
-Authentication uses a dbt Cloud [service account tokens](/docs/dbt-cloud-apis/service-tokens) passed through a header as follows. To explore the schema, you can enter this information in the "header" section.
+Аутентификация использует [токены сервисной учетной записи dbt Cloud](/docs/dbt-cloud-apis/service-tokens), передаваемые через заголовок следующим образом. Чтобы исследовать схему, вы можете ввести эту информацию в разделе "заголовок".
 
 ```
 {"Authorization": "Bearer <SERVICE TOKEN>"}
 ```
 
-Each GQL request also requires a dbt Cloud `environmentId`. The API uses both the service token in the header and `environmentId` for authentication.
+Каждый запрос GQL также требует `environmentId` dbt Cloud. API использует как токен сервиса в заголовке, так и `environmentId` для аутентификации.
 
-### Metadata calls
+### Вызовы метаданных
 
-**Fetch data platform dialect** 
+**Получить диалект платформы данных**
 
-In some cases in your application, it may be useful to know the dialect or data platform that's internally used for the dbt Semantic Layer connection (such as if you are building `where` filters from a user interface rather than user-inputted SQL). 
+В некоторых случаях в вашем приложении может быть полезно знать диалект или платформу данных, которая используется для подключения к dbt Semantic Layer (например, если вы создаете фильтры `where` из пользовательского интерфейса, а не из SQL, введенного пользователем).
 
-The GraphQL API has an easy way to fetch this with the following query: 
+GraphQL API имеет простой способ получить это с помощью следующего запроса:
 
 ```graphql
 {
@@ -72,13 +70,13 @@ The GraphQL API has an easy way to fetch this with the following query:
 }
 ```
 
-**Fetch available metrics**
+**Получить доступные метрики**
 
 ```graphql
 metrics(environmentId: BigInt!): [Metric!]!
 ```
 
-**Fetch available dimensions for metrics**
+**Получить доступные размеры для метрик**
 
 ```graphql
 dimensions(
@@ -87,9 +85,9 @@ dimensions(
 ): [Dimension!]!
 ```
 
-**Fetch available granularities given metrics**
+**Получить доступные гранулярности для заданных метрик**
 
-Note: This call for `queryableGranularities` returns only queryable granularities for metric time - the primary time dimension across all metrics selected.
+Примечание: Этот вызов для `queryableGranularities` возвращает только запрашиваемые гранулярности для временной метрики - основной временной размер по всем выбранным метрикам.
 
 ```graphql
 queryableGranularities(
@@ -98,7 +96,7 @@ queryableGranularities(
 ): [TimeGranularity!]!
 ```
 
-You can also get queryable granularities for all other dimensions using the `dimensions` call:
+Вы также можете получить запрашиваемые гранулярности для всех других размеров, используя вызов `dimensions`:
 
 ```graphql
 {
@@ -109,7 +107,7 @@ You can also get queryable granularities for all other dimensions using the `dim
 }
 ```
 
-You can also optionally access it from the metrics endpoint:
+Вы также можете дополнительно получить доступ к этому из конечной точки метрик:
 
 ```graphql
 {
@@ -123,7 +121,7 @@ You can also optionally access it from the metrics endpoint:
 }
 ```
 
-**Fetch measures**
+**Получить меры**
 
 ```graphql
 {
@@ -134,7 +132,7 @@ You can also optionally access it from the metrics endpoint:
 }
 ```
 
-`aggTimeDimension` tells you the name of the dimension that maps to `metric_time` for a given measure. You can also query `measures` from the `metrics` endpoint, which allows you to see what dimensions map to `metric_time` for a given metric:
+`aggTimeDimension` указывает имя размера, который соответствует `metric_time` для данной меры. Вы также можете запрашивать `measures` из конечной точки `metrics`, что позволяет вам увидеть, какие размеры соответствуют `metric_time` для данной метрики:
 
 ```graphql
 {
@@ -147,7 +145,7 @@ You can also optionally access it from the metrics endpoint:
 }
 ```
 
-**Fetch available metrics given a set of dimensions**
+**Получить доступные метрики для заданного набора размеров**
 
 ```graphql
 metricsForDimensions(
@@ -156,7 +154,7 @@ metricsForDimensions(
 ): [Metric!]!
 ```
 
-**Metric Types**
+**Типы метрик**
 
 ```graphql
 Metric {
@@ -174,7 +172,7 @@ Metric {
 MetricType = [SIMPLE, RATIO, CUMULATIVE, DERIVED]
 ```
 
-**Metric Type parameters**
+**Параметры типа метрики**
 
 ```graphql
 MetricTypeParams {
@@ -189,8 +187,7 @@ MetricTypeParams {
 }
 ```
 
-
-**Dimension Types**
+**Типы размеров**
 
 ```graphql
 Dimension {
@@ -208,10 +205,10 @@ Dimension {
 DimensionType = [CATEGORICAL, TIME]
 ```
 
-**List saved queries**
-  
-  ```graphql
-  {
+**Список сохраненных запросов**
+
+```graphql
+{
   savedQueries(environmentId: 200532) {
     name
     description
@@ -233,23 +230,21 @@ DimensionType = [CATEGORICAL, TIME]
 }
 ```
 
-### Querying
+### Запросы
 
-When querying for data, _either_ a `groupBy` _or_ a `metrics` selection is required. 
+При запросе данных требуется _либо_ выбор `groupBy`, _либо_ выбор `metrics`.
 
-**Create Dimension Values query**
+**Создать запрос значений размеров**
 
 ```graphql
-
 mutation createDimensionValuesQuery(
   environmentId: BigInt!
   metrics: [MetricInput!]
   groupBy: [GroupByInput!]!
 ): CreateDimensionValuesQueryResult!
-
 ```
 
-**Create Metric query**
+**Создать запрос метрики**
 
 ```graphql
 createQuery(
@@ -276,14 +271,14 @@ WhereInput {
   sql: String!
 }
 
-OrderByinput { # -- pass one and only one of metric or groupBy
+OrderByinput { # -- передайте один и только один из metric или groupBy
   metric: MetricInput = null
   groupBy: GroupByInput = null
   descending: Boolean! = false
 }
 ```
 
-**Fetch query result**
+**Получить результат запроса**
 
 ```graphql
 query(
@@ -292,9 +287,9 @@ query(
 ): QueryResult!
 ```
 
-The GraphQL API uses a polling process for querying since queries can be long-running in some cases. It works by first creating a query with a mutation, `createQuery, which returns a query ID. This ID is then used to continuously check (poll) for the results and status of your query. The typical flow would look as follows:
+GraphQL API использует процесс опроса для выполнения запросов, так как запросы могут занимать много времени в некоторых случаях. Он работает следующим образом: сначала создается запрос с помощью мутации `createQuery`, которая возвращает идентификатор запроса. Этот идентификатор затем используется для постоянной проверки (опроса) результатов и статуса вашего запроса. Типичный процесс будет выглядеть следующим образом:
 
-1. Kick off a query
+1. Запустите запрос
 ```graphql
 mutation {
   createQuery(
@@ -302,11 +297,11 @@ mutation {
     metrics: [{name: "order_total"}]
     groupBy: [{name: "metric_time"}]
   ) {
-    queryId  # => Returns 'QueryID_12345678'
+    queryId  # => Возвращает 'QueryID_12345678'
   }
 }
 ```
-2. Poll for results
+2. Опрос результатов
 ```graphql
 {
   query(environmentId: 123456, queryId: "QueryID_12345678") {
@@ -319,14 +314,13 @@ mutation {
   }
 }
 ```
-3. Keep querying 2. at an appropriate interval until status is `FAILED` or `SUCCESSFUL`
+3. Продолжайте опрашивать 2. с подходящим интервалом, пока статус не станет `FAILED` или `SUCCESSFUL`
 
-### Output format and pagination
+### Формат вывода и пагинация
 
-**Output format**
+**Формат вывода**
 
-By default, the output is in Arrow format. You can switch to JSON format using the following parameter. However, due to performance limitations, we recommend using the JSON parameter for testing and validation. The JSON received is a base64 encoded string. To access it, you can decode it using a base64 decoder. The JSON is created from pandas, which means you can change it back to a dataframe using `pandas.read_json(json, orient="table")`. Or you can work with the data directly using `json["data"]`, and find the table schema using `json["schema"]["fields"]`. Alternatively, you can pass `encoded:false` to the jsonResult field to get a raw JSON string directly.
-
+По умолчанию вывод осуществляется в формате Arrow. Вы можете переключиться на формат JSON, используя следующий параметр. Однако из-за ограничений производительности мы рекомендуем использовать параметр JSON для тестирования и валидации. Полученный JSON является строкой, закодированной в base64. Чтобы получить к нему доступ, вы можете декодировать его с помощью декодера base64. JSON создается из pandas, что означает, что вы можете вернуть его обратно в dataframe, используя `pandas.read_json(json, orient="table")`. Либо вы можете работать с данными напрямую, используя `json["data"]`, и найти схему таблицы, используя `json["schema"]["fields"]`. В качестве альтернативы вы можете передать `encoded:false` в поле jsonResult, чтобы получить необработанную строку JSON напрямую.
 
 ```graphql
 {
@@ -341,16 +335,15 @@ By default, the output is in Arrow format. You can switch to JSON format using t
 }
 ```
 
-The results default to the table but you can change it to any [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_json.html) supported value. 
+Результаты по умолчанию возвращаются в виде таблицы, но вы можете изменить это на любое значение, поддерживаемое [pandas](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_json.html).
 
-**Pagination**
+**Пагинация**
 
-By default, we return 1024 rows per page. If your result set exceeds this, you need to increase the page number using the `pageNum` option.
+По умолчанию мы возвращаем 1024 строки на страницу. Если ваш набор результатов превышает это, вам нужно увеличить номер страницы, используя параметр `pageNum`.
 
-### Run a Python query
+### Выполнение запроса на Python
 
-The `arrowResult` in the GraphQL query response is a byte dump, which isn't visually useful. You can convert this byte data into an Arrow table using any Arrow-supported language. Refer to the following Python example explaining how to query and decode the arrow result:
-
+`arrowResult` в ответе на запрос GraphQL является дампом байтов, который не имеет визуальной полезности. Вы можете преобразовать эти байтовые данные в таблицу Arrow, используя любой язык, поддерживающий Arrow. Смотрите следующий пример на Python, который объясняет, как выполнить запрос и декодировать результат arrow:
 
 ```python
 import base64
@@ -377,7 +370,7 @@ while True:
   )
   if gql_response.json()["data"]["status"] in ["FAILED", "SUCCESSFUL"]:
     break
-  # Set an appropriate interval between polling requests
+  # Установите подходящий интервал между запросами опроса
   time.sleep(1)
 
 """
@@ -395,14 +388,14 @@ gql_response.json() =>
 """
 
 def to_arrow_table(byte_string: str) -> pa.Table:
-  """Get a raw base64 string and convert to an Arrow Table."""
+  """Получить необработанную строку base64 и преобразовать в таблицу Arrow."""
   with pa.ipc.open_stream(base64.b64decode(byte_string)) as reader:
     return pa.Table.from_batches(reader, reader.schema)
 
 
 arrow_table = to_arrow_table(gql_response.json()["data"]["query"]["arrowResult"])
 
-# Perform whatever functionality is available, like convert to a pandas table.
+# Выполните любую доступную функциональность, например, преобразуйте в таблицу pandas.
 print(arrow_table.to_pandas())
 """
 order_total  ordered_at
@@ -413,11 +406,11 @@ order_total  ordered_at
 """
 ```
 
-### Additional Create Query examples 
+### Дополнительные примеры создания запросов
 
-The following section provides query examples for the GraphQL API, such as how to query metrics, dimensions, where filters, and more.
+Следующий раздел предоставляет примеры запросов для GraphQL API, такие как запрос метрик, размеров, фильтров where и многое другое.
 
-**Query two metrics grouped by time**
+**Запрос двух метрик, сгруппированных по времени**
 
 ```graphql
 mutation {
@@ -431,7 +424,7 @@ mutation {
 }
 ```
 
-**Query with a time grain** 
+**Запрос с временной гранулярностью**
 
 ```graphql
 mutation {
@@ -445,9 +438,9 @@ mutation {
 }
 ```
 
-Note that when using granularity in the query, the output of a time dimension with a time grain applied to it always takes the form of a dimension name appended with a double underscore and the granularity level - `{time_dimension_name}__{DAY|WEEK|MONTH|QUARTER|YEAR}`. Even if no granularity is specified, it will also always have a granularity appended to it and will default to the lowest available (usually daily for most data sources). It is encouraged to specify a granularity when using time dimensions so that there won't be any unexpected results with the output data.
+Обратите внимание, что при использовании гранулярности в запросе вывод временного размера с примененной временной гранулярностью всегда принимает форму имени временного размера, добавленного с двойным подчеркиванием и уровнем гранулярности - `{time_dimension_name}__{DAY|WEEK|MONTH|QUARTER|YEAR}`. Даже если гранулярность не указана, она также всегда будет добавлена и по умолчанию будет равна самой низкой доступной (обычно ежедневной для большинства источников данных). Рекомендуется указывать гранулярность при использовании временных размеров, чтобы избежать неожиданных результатов с выходными данными.
 
-**Query two metrics with a categorical dimension**
+**Запрос двух метрик с категориальным размером**
 
 ```graphql
 mutation {
@@ -461,7 +454,7 @@ mutation {
 }
 ```
 
-**Query a categorical dimension on its own**
+**Запрос категориального размера отдельно**
 
 ```graphql
 mutation {
@@ -474,15 +467,15 @@ mutation {
 }
 ```
 
-**Query with a where filter** 
+**Запрос с фильтром where**
 
-The `where` filter takes a list argument (or a string for a single input). Depending on the object you are filtering, there are a couple of parameters:
- 
- - `Dimension()` &mdash; Used for any categorical or time dimensions. For example, `Dimension('metric_time').grain('week')` or `Dimension('customer__country')`.
+Фильтр `where` принимает список аргументов (или строку для одного ввода). В зависимости от объекта, который вы фильтруете, есть несколько параметров:
+
+ - `Dimension()` &mdash; Используется для любых категориальных или временных размеров. Например, `Dimension('metric_time').grain('week')` или `Dimension('customer__country')`.
   
-- `Entity()` &mdash; Used for entities like primary and foreign keys, such as `Entity('order_id')`.
+- `Entity()` &mdash; Используется для сущностей, таких как первичные и внешние ключи, например, `Entity('order_id')`.
 
-Note: If you prefer a `where` clause with a more explicit path, you can optionally use `TimeDimension()` to separate categorical dimensions from time ones. The `TimeDimension` input takes the time dimension and optionally the granularity level. `TimeDimension('metric_time', 'month')`.
+Примечание: Если вы предпочитаете клаузу `where` с более явным путем, вы можете дополнительно использовать `TimeDimension()`, чтобы отделить категориальные размеры от временных. Вход `TimeDimension` принимает временной размер и, опционально, уровень гранулярности. `TimeDimension('metric_time', 'month')`.
 
 ```graphql
 mutation {
@@ -497,9 +490,9 @@ mutation {
 }
 ```
 
-For both `TimeDimension()`, the grain is only required in the WHERE filter if the aggregation time dimensions for the measures and metrics associated with the where filter have different grains. 
+Для обоих `TimeDimension()`, гранулярность требуется в фильтре WHERE только в том случае, если временные размеры агрегации для мер и метрик, связанных с фильтром where, имеют разные гранулярности.
 
-For example, consider this Semantic model and Metric configuration, which contains two metrics that are aggregated across different time grains. This example shows a single semantic model, but the same goes for metrics across more than one semantic model.
+Например, рассмотрим эту семантическую модель и конфигурацию метрик, которые содержат две метрики, агрегированные по различным временным гранулярностям. Этот пример показывает одну семантическую модель, но то же самое относится к метрикам более чем одной семантической модели.
 
 ```yaml
 semantic_model:
@@ -536,17 +529,17 @@ metrics:
       measure: measure_1
 ```
 
-Assuming the user is querying `metric_0` and `metric_1` together, a valid filter would be:
+Предположим, что пользователь запрашивает `metric_0` и `metric_1` вместе, допустимый фильтр будет:
 
   * `"{{ TimeDimension('metric_time', 'year') }} > '2020-01-01'"`
 
-Invalid filters would be:
- 
-  * ` "{{ TimeDimension('metric_time') }} > '2020-01-01'"` &mdash; metrics in the query are defined based on measures with different grains.
+Недопустимые фильтры будут:
 
-  * `"{{ TimeDimension('metric_time', 'month') }} > '2020-01-01'"` &mdash; `metric_1` is not available at a month grain.
+  * ` "{{ TimeDimension('metric_time') }} > '2020-01-01'"` &mdash; метрики в запросе определяются на основе мер с различными гранулярностями.
 
-**Query with Order**
+  * `"{{ TimeDimension('metric_time', 'month') }} > '2020-01-01'"` &mdash; `metric_1` недоступна на месячной гранулярности.
+
+**Запрос с порядком**
 
 ```graphql
 mutation {
@@ -561,8 +554,7 @@ mutation {
 }
 ```
 
-
-**Query with Limit**
+**Запрос с ограничением**
 
 ```graphql
 mutation {
@@ -577,9 +569,9 @@ mutation {
 }
 ```
 
-**Query with just compiling SQL** 
+**Запрос только для компиляции SQL**
 
-This takes the same inputs as the `createQuery` mutation.
+Этот запрос принимает те же входные данные, что и мутация `createQuery`.
 
 ```graphql
 mutation {
@@ -593,15 +585,15 @@ mutation {
 }
 ```
 
-**Querying compile SQL with saved queries** 
+**Запрос компиляции SQL с сохраненными запросами**
 
-This query includes the field `savedQuery` and generates the SQL based on a predefined [saved query](/docs/build/saved-queries),rather than dynamically building it from a list of metrics and groupings. You can use this for frequently used queries.
+Этот запрос включает поле `savedQuery` и генерирует SQL на основе предопределенного [сохраненного запроса](/docs/build/saved-queries), а не динамически строит его из списка метрик и группировок. Вы можете использовать это для часто используемых запросов.
 
 ```graphql
 mutation {
   compileSql(
     environmentId: 200532
-    savedQuery: "new_customer_orders" # new field
+    savedQuery: "new_customer_orders" # новое поле
   ) {
     queryId
     sql
@@ -609,34 +601,34 @@ mutation {
 }
 ```
 
-:::info A note on querying saved queries
-When querying [saved queries](/docs/build/saved-queries),you can use parameters such as `where`, `limit`, `order`, `compile`, and so on. However, keep in mind that you can't access `metric` or `group_by` parameters in this context. This is because they are predetermined and fixed parameters for saved queries, and you can't change them at query time. If you would like to query more metrics or dimensions, you can build the query using the standard format.
+:::info Примечание о запросах сохраненных запросов
+При запросе [сохраненных запросов](/docs/build/saved-queries) вы можете использовать параметры, такие как `where`, `limit`, `order`, `compile` и т. д. Однако имейте в виду, что вы не можете получить доступ к параметрам `metric` или `group_by` в этом контексте. Это связано с тем, что они являются предопределенными и фиксированными параметрами для сохраненных запросов, и вы не можете изменить их во время запроса. Если вы хотите запросить больше метрик или размеров, вы можете построить запрос, используя стандартный формат.
 :::
 
-**Create query with saved queries** 
+**Создать запрос с сохраненными запросами**
 
-This takes the same inputs as the `createQuery` mutation, but includes the field `savedQuery`. You can use this for frequently used queries.
+Этот запрос принимает те же входные данные, что и мутация `createQuery`, но включает поле `savedQuery`. Вы можете использовать это для часто используемых запросов.
 
 ```graphql
 mutation {
   createQuery(
     environmentId: 200532
-    savedQuery: "new_customer_orders"  # new field
+    savedQuery: "new_customer_orders"  # новое поле
   ) {
     queryId
   }
 }
 ```
 
-### Multi-hop joins
+### Многоступенчатые соединения
 
-In cases where you need to query across multiple related tables (multi-hop joins), use the `entity_path` argument to specify the path between related entities. The following are examples of how you can define these joins:
+В случаях, когда вам нужно выполнять запросы через несколько связанных таблиц (многоступенчатые соединения), используйте аргумент `entity_path`, чтобы указать путь между связанными сущностями. Вот примеры того, как вы можете определить эти соединения:
 
-- In this example, you're querying the `location_name` dimension but specifying that it should be joined using the `order_id` field.
+- В этом примере вы запрашиваете размер `location_name`, но указываете, что он должен быть соединен с использованием поля `order_id`.
 	```sql
 	{{Dimension('location__location_name', entity_path=['order_id'])}}
 	```
-- In this example, the `salesforce_account_owner` dimension is joined to the `region` field, with the path going through `salesforce_account`.
+- В этом примере размер `salesforce_account_owner` соединен с полем `region`, при этом путь проходит через `salesforce_account`.
 	```sql
 	{{ Dimension('salesforce_account_owner__region',['salesforce_account']) }}
 	```

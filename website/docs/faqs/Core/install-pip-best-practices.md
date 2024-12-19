@@ -1,32 +1,32 @@
 ---
-title: "What are the best practices for installing dbt Core with pip?"
-description: "Instructions on how to install dbt Core with pip"
-sidebar_label: 'Installing dbt Core with pip'
+title: "Каковы лучшие практики для установки dbt Core с помощью pip?"
+description: "Инструкции по установке dbt Core с помощью pip"
+sidebar_label: 'Установка dbt Core с помощью pip'
 id: install-pip-best-practices.md
 ---
 
-Managing Python local environments can be challenging! You can use these best practices to improve the dbt Core installation with pip. 
+Управление локальными окружениями Python может быть сложной задачей! Вы можете использовать эти лучшие практики для улучшения установки dbt Core с помощью pip.
 
-### Using virtual environments
+### Использование виртуальных окружений
 
-We recommend using [virtual environments](https://docs.python-guide.org/dev/virtualenvs/) to namespace `pip` modules. Here's an example setup:
+Мы рекомендуем использовать [виртуальные окружения](https://docs.python-guide.org/dev/virtualenvs/) для изоляции модулей `pip`. Вот пример настройки:
 
 ```shell
 
-python3 -m venv dbt-env				# create the environment
-source dbt-env/bin/activate			# activate the environment for Mac and Linux
-dbt-env\Scripts\activate			# activate the environment for Windows
+python3 -m venv dbt-env				# создать окружение
+source dbt-env/bin/activate			# активировать окружение для Mac и Linux
+dbt-env\Scripts\activate			# активировать окружение для Windows
 ```
 
-If you install `dbt` in a virtual environment, you need to reactivate that same virtual environment each time you create a shell window or session.
+Если вы устанавливаете `dbt` в виртуальном окружении, вам нужно повторно активировать это же виртуальное окружение каждый раз, когда вы создаете новое окно или сессию оболочки.
 
-*Tip:* You can create an alias for the `source` command in your `$HOME/.bashrc`, `$HOME/.zshrc`, or whichever rc file your shell draws from. For example, you can add a command like `alias env_dbt='source <PATH_TO_VIRTUAL_ENV_CONFIG>/bin/activate'`, replacing `<PATH_TO_VIRTUAL_ENV_CONFIG>` with the path to your virtual environment configuration.
+*Совет:* Вы можете создать псевдоним для команды `source` в вашем `$HOME/.bashrc`, `$HOME/.zshrc` или в любом другом rc-файле, который использует ваша оболочка. Например, вы можете добавить команду вроде `alias env_dbt='source <PATH_TO_VIRTUAL_ENV_CONFIG>/bin/activate'`, заменив `<PATH_TO_VIRTUAL_ENV_CONFIG>` на путь к вашей конфигурации виртуального окружения.
 
-### Using the latest versions
+### Использование последних версий
 
-dbt installations are tested using the latest versions of `pip` and `setuptools`. Newer versions have improved behavior around dependency resolution, as well as much faster install times by using precompiled "wheels" when available for your operating system.
+Установки dbt тестируются с использованием последних версий `pip` и `setuptools`. Более новые версии имеют улучшенное поведение в отношении разрешения зависимостей, а также значительно более быстрое время установки благодаря использованию предварительно скомпилированных "колес", когда они доступны для вашей операционной системы.
 
-Before installing dbt, make sure you have the latest versions:
+Перед установкой dbt убедитесь, что у вас установлены последние версии:
 
 ```shell
 

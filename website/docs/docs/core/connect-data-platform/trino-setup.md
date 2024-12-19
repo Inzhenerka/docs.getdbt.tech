@@ -1,6 +1,6 @@
 ---
-title: "Starburst/Trino setup"
-description: "Read this guide to learn about the Starburst/Trino warehouse setup in dbt."
+title: "Настройка Starburst/Trino"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Starburst/Trino в dbt."
 id: "trino-setup"
 meta:
   maintained_by: Starburst Data, Inc.
@@ -8,7 +8,7 @@ meta:
   github_repo: 'starburstdata/dbt-trino'
   pypi_package: 'dbt-trino'
   min_core_version: 'v0.20.0'
-  cloud_support: 'Supported'
+  cloud_support: 'Поддерживается'
   min_supported_version: 'n/a'
   slack_channel_name: '#db-starburst-and-trino'
   slack_channel_link: 'https://getdbt.slack.com/archives/CNNPBQ24R'
@@ -22,61 +22,60 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-## Connecting to Starburst/Trino
+## Подключение к Starburst/Trino
 
-To connect to a data platform with dbt Core, create appropriate _profile_ and _target_ YAML keys/values in the `profiles.yml` configuration file for your Starburst/Trino clusters. This dbt YAML file lives in the  `.dbt/` directory of your user/home directory. For more information, refer to [Connection profiles](/docs/core/connect-data-platform/connection-profiles) and [profiles.yml](/docs/core/connect-data-platform/profiles.yml). 
+Чтобы подключиться к платформе данных с помощью dbt Core, создайте соответствующие ключи/значения _profile_ и _target_ в файле конфигурации `profiles.yml` для ваших кластеров Starburst/Trino. Этот файл YAML dbt находится в директории `.dbt/` вашего пользовательского/домашнего каталога. Для получения дополнительной информации обратитесь к [Профилям подключения](/docs/core/connect-data-platform/connection-profiles) и [profiles.yml](/docs/core/connect-data-platform/profiles.yml).
 
-The parameters for setting up a connection are for Starburst Enterprise, Starburst Galaxy, and Trino clusters. Unless specified, "cluster" will mean any of these products' clusters.
+Параметры для настройки подключения относятся к кластерам Starburst Enterprise, Starburst Galaxy и Trino. Если не указано иное, "кластер" будет означать любой из кластеров этих продуктов.
 
-## Host parameters
+## Параметры хоста
 
-The following profile fields are always required except for `user`, which is also required unless you're using the `oauth`, `oauth_console`, `cert`, or `jwt` authentication methods.
+Следующие поля профиля всегда обязательны, за исключением `user`, который также обязателен, если вы не используете методы аутентификации `oauth`, `oauth_console`, `cert` или `jwt`.
 
-| Field     | Example | Description |
+| Поле     | Пример | Описание |
 | --------- | ------- | ----------- |
-|   `host`   | `mycluster.mydomain.com`<br/><br/>Format for Starburst Galaxy:<br/><ul><li>`mygalaxyaccountname-myclustername.trino.galaxy.starburst.io`</li></ul> | The hostname of your cluster.<br/><br/>Don't include the `http://` or `https://` prefix.  |
-| `database` | `my_postgres_catalog` | The name of a catalog in your cluster. |
-|  `schema`  | `my_schema`  | The name of a schema within your cluster's catalog. <br/><br/>It's _not recommended_ to use schema names that have upper case or mixed case letters.  |
-|   `port`   | `443`  | The port to connect to your cluster. By default, it's 443 for TLS enabled clusters. |
-|   `user`   | Format for Starburst Enterprise or Trino: <br/> <ul><li>`user.name`</li><li>`user.name@mydomain.com`</li></ul><br/>Format for Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> | The username (of the account) to log in to your cluster. When connecting to Starburst Galaxy clusters, you must include the role of the user as a suffix to the username. |
+|   `host`   | `mycluster.mydomain.com`<br/><br/>Формат для Starburst Galaxy:<br/><ul><li>`mygalaxyaccountname-myclustername.trino.galaxy.starburst.io`</li></ul> | Имя хоста вашего кластера.<br/><br/>Не включайте префикс `http://` или `https://`.  |
+| `database` | `my_postgres_catalog` | Имя каталога в вашем кластере. |
+|  `schema`  | `my_schema`  | Имя схемы в каталоге вашего кластера.<br/><br/>Не рекомендуется использовать имена схем, содержащие заглавные или смешанные буквы.  |
+|   `port`   | `443`  | Порт для подключения к вашему кластеру. По умолчанию это 443 для кластеров с включенным TLS. |
+|   `user`   | Формат для Starburst Enterprise или Trino: <br/> <ul><li>`user.name`</li><li>`user.name@mydomain.com`</li></ul><br/>Формат для Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> | Имя пользователя (учетной записи) для входа в ваш кластер. При подключении к кластерам Starburst Galaxy вы должны указать роль пользователя в качестве суффикса к имени пользователя. |
 
-### Roles in Starburst Enterprise
+### Роли в Starburst Enterprise
 <Snippet path="connect-starburst-trino/roles-starburst-enterprise" />
 
-### Schemas and databases
+### Схемы и базы данных
 <Snippet path="connect-starburst-trino/schema-db-fields" />
 
-## Additional parameters
+## Дополнительные параметры
 
-The following profile fields are optional to set up. They let you configure your cluster's session and dbt for your connection. 
+Следующие поля профиля являются необязательными для настройки. Они позволяют вам настроить сессию вашего кластера и dbt для вашего подключения.
 
-
-| Profile field                 | Example                          | Description                                                                                                 |
+| Поле профиля                 | Пример                          | Описание                                                                                                 |
 | ----------------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `threads`                     | `8`                              | How many threads dbt should use (default is `1`)                                                            |
-| `roles`                       | `system: analyst`                | Catalog roles can be set under the optional `roles` parameter using the following format: `catalog: role`.     |
-| `session_properties`          | `query_max_run_time: 4h`         | Sets Trino session properties used in the connection. Execute `SHOW SESSION` to see available options       |
-| `prepared_statements_enabled` | `true` or `false`                | Enable usage of Trino prepared statements (used in `dbt seed` commands) (default: `true`)                   |
-| `retries`                     | `10`                             | Configure how many times all database operation is retried when connection issues arise  (default: `3`)     |
-| `timezone`                    | `Europe/Brussels`                | The time zone for the Trino session (default: client-side local timezone)                                   |
-| `http_headers`                | `X-Trino-Client-Info: dbt-trino` | HTTP Headers to send alongside requests to Trino, specified as a YAML dictionary of (header, value) pairs.  |
-| `http_scheme`                 | `https` or `http`                | The HTTP scheme to use for requests to Trino   (default: `http`, or `https` if `kerberos`, `ldap` or `jwt`) |
+| `threads`                     | `8`                              | Количество потоков, которые должен использовать dbt (по умолчанию `1`)                                                            |
+| `roles`                       | `system: analyst`                | Роли каталога могут быть установлены под необязательным параметром `roles` в следующем формате: `catalog: role`.     |
+| `session_properties`          | `query_max_run_time: 4h`         | Устанавливает свойства сессии Trino, используемые в подключении. Выполните `SHOW SESSION`, чтобы увидеть доступные параметры       |
+| `prepared_statements_enabled` | `true` или `false`                | Включить использование подготовленных операторов Trino (используется в командах `dbt seed`) (по умолчанию: `true`)                   |
+| `retries`                     | `10`                             | Настройка количества попыток повторного выполнения всех операций с базой данных при возникновении проблем с подключением (по умолчанию: `3`)     |
+| `timezone`                    | `Europe/Brussels`                | Часовой пояс для сессии Trino (по умолчанию: локальный часовой пояс клиента)                                   |
+| `http_headers`                | `X-Trino-Client-Info: dbt-trino` | HTTP-заголовки, которые отправляются вместе с запросами к Trino, указанные в виде словаря YAML пар (заголовок, значение).  |
+| `http_scheme`                 | `https` или `http`                | HTTP-схема, используемая для запросов к Trino (по умолчанию: `http`, или `https`, если `kerberos`, `ldap` или `jwt`) |
 
-## Authentication parameters
+## Параметры аутентификации
 
-The authentication methods that dbt Core supports are: 
+Методы аутентификации, которые поддерживает dbt Core:
 
-- `ldap` &mdash; LDAP (username and password)  
+- `ldap` &mdash; LDAP (имя пользователя и пароль)  
 - `kerberos` &mdash; Kerberos
 - `jwt` &mdash; JSON Web Token (JWT)
-- `certificate` &mdash; Certificate-based authentication
-- `oauth` &mdash; Open Authentication (OAuth)
-- `oauth_console` &mdash; Open Authentication (OAuth) with authentication URL printed to the console 
-- `none` &mdash; None, no authentication
+- `certificate` &mdash; Аутентификация на основе сертификата
+- `oauth` &mdash; Открытая аутентификация (OAuth)
+- `oauth_console` &mdash; Открытая аутентификация (OAuth) с URL-адресом аутентификации, напечатанным в консоли 
+- `none` &mdash; Нет, без аутентификации
 
-Set the `method` field to the authentication method you intend to use for the connection. For a high-level introduction to authentication in Trino, see [Trino Security: Authentication types](https://trino.io/docs/current/security/authentication-types.html).
+Установите поле `method` на метод аутентификации, который вы собираетесь использовать для подключения. Для общего введения в аутентификацию в Trino смотрите [Trino Security: Authentication types](https://trino.io/docs/current/security/authentication-types.html).
 
-Click on one of these authentication methods for further details on how to configure your connection profile. Each tab also includes an example `profiles.yml` configuration file for you to review.
+Нажмите на один из этих методов аутентификации для получения дополнительной информации о том, как настроить ваш профиль подключения. Каждая вкладка также включает пример файла конфигурации `profiles.yml` для вашего ознакомления.
 
 <Tabs
   defaultValue="ldap"
@@ -93,19 +92,19 @@ Click on one of these authentication methods for further details on how to confi
 
 <TabItem value="ldap">
 
-The following table lists the authentication parameters to set for LDAP.
+Следующая таблица перечисляет параметры аутентификации, которые необходимо установить для LDAP.
 
-For more information, refer to [LDAP authentication](https://trino.io/docs/current/security/ldap.html) in the Trino docs. 
+Для получения дополнительной информации обратитесь к [LDAP аутентификации](https://trino.io/docs/current/security/ldap.html) в документации Trino. 
 
-| Profile field | Example | Description |
+| Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
-| `method` | `ldap`| Set LDAP as the authentication method. |
-| `user`   | Format for Starburst Enterprise or Trino: <br/> <ul><li>`user.name`</li><li>`user.name@mydomain.com`</li></ul><br/>Format for Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> | The username (of the account) to log in to your cluster. When connecting to Starburst Galaxy clusters, you must include the role of the user as a suffix to the username. |
-| `password`  | `abc123` | Password for authentication.  |
-| `impersonation_user` (optional) | `impersonated_tom` | Override the provided username. This lets you impersonate another user. |
+| `method` | `ldap`| Установите LDAP в качестве метода аутентификации. |
+| `user`   | Формат для Starburst Enterprise или Trino: <br/> <ul><li>`user.name`</li><li>`user.name@mydomain.com`</li></ul><br/>Формат для Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> | Имя пользователя (учетной записи) для входа в ваш кластер. При подключении к кластерам Starburst Galaxy вы должны указать роль пользователя в качестве суффикса к имени пользователя. |
+| `password`  | `abc123` | Пароль для аутентификации.  |
+| `impersonation_user` (необязательно) | `impersonated_tom` | Переопределите указанное имя пользователя. Это позволяет вам выдавать себя за другого пользователя. |
 <br/>
 
-#### Example profiles.yml for LDAP
+#### Пример profiles.yml для LDAP
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -131,27 +130,27 @@ trino:
 
 <TabItem value="kerberos">
 
-The following table lists the authentication parameters to set for Kerberos.
+Следующая таблица перечисляет параметры аутентификации, которые необходимо установить для Kerberos.
 
-For more information, refer to [Kerberos authentication](https://trino.io/docs/current/security/kerberos.html) in the Trino docs.
+Для получения дополнительной информации обратитесь к [Kerberos аутентификации](https://trino.io/docs/current/security/kerberos.html) в документации Trino.
 
-| Profile field                               | Example             | Description                                                      |
+| Поле профиля                               | Пример             | Описание                                                      |
 | ------------------------------------------- | ------------------- | ---------------------------------------------------------------- |
-| `method` | `kerberos`| Set Kerberos as the authentication method. |
-| `user`                                      | `commander`         | Username for authentication                                      |
-| `keytab`                                    | `/tmp/trino.keytab` | Path to keytab                                                   |
-| `krb5_config`                               | `/tmp/krb5.conf`    | Path to config                                                   |
-| `principal`                                 | `trino@EXAMPLE.COM` | Principal                                                        |
-| `service_name` (optional)                   | `abc123`            | Service name (default is `trino`)                               |
-| `hostname_override` (optional)              | `EXAMPLE.COM`       | Kerberos hostname for a host whose DNS name doesn't match        |
-| `mutual_authentication` (optional)          | `false`             | Boolean flag for mutual authentication                           |
-| `force_preemptive` (optional)               | `false`             | Boolean flag to preemptively initiate the Kerberos GSS exchange |
-| `sanitize_mutual_error_response` (optional) | `true`              | Boolean flag to strip content and headers from error responses   |
-| `delegate`  (optional)                      | `false`             | Boolean flag for credential delegation (`GSS_C_DELEG_FLAG`)       |
+| `method` | `kerberos`| Установите Kerberos в качестве метода аутентификации. |
+| `user`                                      | `commander`         | Имя пользователя для аутентификации                                      |
+| `keytab`                                    | `/tmp/trino.keytab` | Путь к keytab                                                   |
+| `krb5_config`                               | `/tmp/krb5.conf`    | Путь к конфигурации                                                   |
+| `principal`                                 | `trino@EXAMPLE.COM` | Принципал                                                        |
+| `service_name` (необязательно)                   | `abc123`            | Имя службы (по умолчанию `trino`)                               |
+| `hostname_override` (необязательно)              | `EXAMPLE.COM`       | Хост Kerberos для хоста, имя DNS которого не совпадает        |
+| `mutual_authentication` (необязательно)          | `false`             | Логический флаг для взаимной аутентификации                           |
+| `force_preemptive` (необязательно)               | `false`             | Логический флаг для предварительного инициирования обмена GSS Kerberos |
+| `sanitize_mutual_error_response` (необязательно) | `true`              | Логический флаг для удаления содержимого и заголовков из ответов об ошибках   |
+| `delegate`  (необязательно)                      | `false`             | Логический флаг для делегирования учетных данных (`GSS_C_DELEG_FLAG`)       |
 
 <br/>
 
-#### Example profiles.yml for Kerberos
+#### Пример profiles.yml для Kerberos
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -178,18 +177,18 @@ trino:
 
 <TabItem value="jwt">
 
-The following table lists the authentication parameters to set for JSON Web Token.
+Следующая таблица перечисляет параметры аутентификации, которые необходимо установить для JSON Web Token.
 
-For more information, refer to [JWT authentication](https://trino.io/docs/current/security/jwt.html) in the Trino docs.
+Для получения дополнительной информации обратитесь к [JWT аутентификации](https://trino.io/docs/current/security/jwt.html) в документации Trino.
 
-| Profile field        | Example        | Description                |
+| Поле профиля        | Пример        | Описание                |
 | -------------------- | -------------- | -------------------------- |
-| `method` | `jwt`| Set JWT as the authentication method. |
-| `jwt_token` | `aaaaa.bbbbb.ccccc` | The JWT string. |
+| `method` | `jwt`| Установите JWT в качестве метода аутентификации. |
+| `jwt_token` | `aaaaa.bbbbb.ccccc` | Строка JWT. |
 
 <br/>
 
-#### Example profiles.yml for JWT
+#### Пример profiles.yml для JWT
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -214,20 +213,20 @@ trino:
 
 <TabItem value="certificate">
 
-The following table lists the authentication parameters to set for certificates.
+Следующая таблица перечисляет параметры аутентификации, которые необходимо установить для сертификатов.
 
-For more information, refer to [Certificate authentication](https://trino.io/docs/current/security/certificate.html) in the Trino docs.
+Для получения дополнительной информации обратитесь к [Аутентификации на основе сертификатов](https://trino.io/docs/current/security/certificate.html) в документации Trino.
 
-| Profile field        | Example        | Description                         |
+| Поле профиля        | Пример        | Описание                         |
 | -------------------- | -------------- | ----------------------------------- |
-| `method` | `certificate`| Set certificate-based authentication as the method |
-| `client_certificate` | `/tmp/tls.crt` | Path to client certificate          |
-| `client_private_key` | `/tmp/tls.key` | Path to client private key          |
-| `cert`               |                | The full path to a certificate file |
+| `method` | `certificate`| Установите аутентификацию на основе сертификатов в качестве метода |
+| `client_certificate` | `/tmp/tls.crt` | Путь к клиентскому сертификату          |
+| `client_private_key` | `/tmp/tls.key` | Путь к закрытому ключу клиента          |
+| `cert`               |                | Полный путь к файлу сертификата |
 
 <br/>
 
-#### Example profiles.yml for certificate
+#### Пример profiles.yml для сертификата
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -253,13 +252,13 @@ trino:
 
 <TabItem value="oauth">
 
-The only authentication parameter to set for OAuth 2.0 is `method: oauth`. If you're using Starburst Enterprise or Starburst Galaxy, you must enable OAuth 2.0 in Starburst before you can use this authentication method.
+Единственный параметр аутентификации, который необходимо установить для OAuth 2.0, это `method: oauth`. Если вы используете Starburst Enterprise или Starburst Galaxy, вы должны включить OAuth 2.0 в Starburst, прежде чем сможете использовать этот метод аутентификации.
 
-For more information, refer to both [OAuth 2.0 authentication](https://trino.io/docs/current/security/oauth2.html) in the Trino docs and the [README](https://github.com/trinodb/trino-python-client#oauth2-authentication) for the Trino Python client.
+Для получения дополнительной информации обратитесь как к [OAuth 2.0 аутентификации](https://trino.io/docs/current/security/oauth2.html) в документации Trino, так и к [README](https://github.com/trinodb/trino-python-client#oauth2-authentication) для клиента Trino на Python.
 
-It's recommended that you install `keyring` to cache the OAuth 2.0 token over multiple dbt invocations by running `python -m pip install 'trino[external-authentication-token-cache]'`. The `keyring` package is not installed by default.
+Рекомендуется установить `keyring`, чтобы кэшировать токен OAuth 2.0 при нескольких вызовах dbt, выполнив команду `python -m pip install 'trino[external-authentication-token-cache]'`. Пакет `keyring` не устанавливается по умолчанию.
 
-#### Example profiles.yml for OAuth
+#### Пример profiles.yml для OAuth
 
 ```yaml
 sandbox-galaxy:
@@ -278,17 +277,17 @@ sandbox-galaxy:
 
 <TabItem value="oauth_console">
 
-The only authentication parameter to set for OAuth 2.0 is `method: oauth_console`. If you're using Starburst Enterprise or Starburst Galaxy, you must enable OAuth 2.0 in Starburst before you can use this authentication method.
+Единственный параметр аутентификации, который необходимо установить для OAuth 2.0, это `method: oauth_console`. Если вы используете Starburst Enterprise или Starburst Galaxy, вы должны включить OAuth 2.0 в Starburst, прежде чем сможете использовать этот метод аутентификации.
 
-For more information, refer to both [OAuth 2.0 authentication](https://trino.io/docs/current/security/oauth2.html) in the Trino docs and the [README](https://github.com/trinodb/trino-python-client#oauth2-authentication) for the Trino Python client.
+Для получения дополнительной информации обратитесь как к [OAuth 2.0 аутентификации](https://trino.io/docs/current/security/oauth2.html) в документации Trino, так и к [README](https://github.com/trinodb/trino-python-client#oauth2-authentication) для клиента Trino на Python.
 
-The only difference between `oauth_console` and `oauth` is:
-- `oauth` &mdash; An authentication URL automatically opens in a browser.
-- `oauth_console` &mdash; A URL is printed to the console.
+Единственное отличие между `oauth_console` и `oauth` заключается в следующем:
+- `oauth` &mdash; URL-адрес аутентификации автоматически открывается в браузере.
+- `oauth_console` &mdash; URL-адрес выводится в консоли.
 
-It's recommended that you install `keyring` to cache the OAuth 2.0 token over multiple dbt invocations by running `python -m pip install 'trino[external-authentication-token-cache]'`. The `keyring` package is not installed by default.
+Рекомендуется установить `keyring`, чтобы кэшировать токен OAuth 2.0 при нескольких вызовах dbt, выполнив команду `python -m pip install 'trino[external-authentication-token-cache]'`. Пакет `keyring` не устанавливается по умолчанию.
 
-#### Example profiles.yml for OAuth
+#### Пример profiles.yml для OAuth
 
 ```yaml
 sandbox-galaxy:
@@ -307,9 +306,9 @@ sandbox-galaxy:
 
 <TabItem value="none">
 
-You don't need to set up authentication (`method: none`), however, dbt Labs strongly discourages people from using it in any real application. Its use case is only for toy purposes (as in to play around with it), like local examples such as running Trino and dbt entirely within a single Docker container.
+Вам не нужно настраивать аутентификацию (`method: none`), однако dbt Labs настоятельно не рекомендует использовать ее в каких-либо реальных приложениях. Ее использование предназначено только для игрушечных целей (например, для экспериментов), таких как локальные примеры, например, запуск Trino и dbt полностью в одном контейнере Docker.
 
-#### Example profiles.yml for no authentication
+#### Пример profiles.yml для отсутствия аутентификации
 
 <File name='~/.dbt/profiles.yml'>
 

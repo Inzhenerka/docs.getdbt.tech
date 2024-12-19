@@ -1,37 +1,37 @@
 ---
-title: "Run your dbt projects"
+title: "Запуск ваших проектов dbt"
 id: "run-your-dbt-projects"
 pagination_prev: null
 ---
-You can run your dbt projects with [dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features) or [dbt Core](https://github.com/dbt-labs/dbt-core):
+Вы можете запускать свои проекты dbt с помощью [dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features) или [dbt Core](https://github.com/dbt-labs/dbt-core):
 
-- **dbt Cloud**: A hosted application where you can develop directly from a web browser using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). It also natively supports developing using a command line interface, [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). Among other features, dbt Cloud provides: 
+- **dbt Cloud**: Хостинговое приложение, в котором вы можете разрабатывать непосредственно из веб-браузера, используя [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). Оно также нативно поддерживает разработку с использованием интерфейса командной строки, [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). Среди прочих функций dbt Cloud предоставляет:
 
-  - Development environment to help you build, test, run, and [version control](/docs/collaborate/git-version-control) your project faster.
-  - Share your [dbt project's documentation](/docs/build/documentation) with your team.
-  - Integrates with the dbt Cloud IDE, allowing you to run development tasks and environment in the dbt Cloud UI for a seamless experience.
-  - The dbt Cloud CLI to develop and run dbt commands against your dbt Cloud development environment from your local command line.
-  - For more details, refer to [Develop dbt](/docs/cloud/about-develop-dbt).
+  - Среду разработки, которая помогает вам быстрее создавать, тестировать, запускать и [управлять версиями](/docs/collaborate/git-version-control) вашего проекта.
+  - Возможность делиться [документацией вашего проекта dbt](/docs/build/documentation) с вашей командой.
+  - Интеграция с dbt Cloud IDE, позволяющая вам выполнять задачи разработки и работать в среде dbt Cloud UI для бесшовного опыта.
+  - dbt Cloud CLI для разработки и выполнения команд dbt в вашей среде разработки dbt Cloud из командной строки на вашем компьютере.
+  - Для получения дополнительной информации смотрите [Разработка dbt](/docs/cloud/about-develop-dbt).
 
-- **dbt Core**: An open source project where you can develop from the [command line](/docs/core/installation-overview).
+- **dbt Core**: Открытый проект, в котором вы можете разрабатывать из [командной строки](/docs/core/installation-overview).
 
-The dbt Cloud CLI and dbt Core are both command line tools that enable you to run dbt commands. The key distinction is the dbt Cloud CLI is tailored for dbt Cloud's infrastructure and integrates with all its [features](/docs/cloud/about-cloud/dbt-cloud-features).
+dbt Cloud CLI и dbt Core — это оба инструмента командной строки, которые позволяют вам выполнять команды dbt. Ключевое отличие заключается в том, что dbt Cloud CLI адаптирован для инфраструктуры dbt Cloud и интегрируется со всеми его [функциями](/docs/cloud/about-cloud/dbt-cloud-features).
 
-The command line is available from your computer's terminal application such as Terminal and iTerm. With the command line, you can run commands and do other work from the current working directory on your computer. Before running the dbt project from the command line, make sure you are working in your dbt project directory. Learning terminal commands such as `cd` (change directory), `ls` (list directory contents), and `pwd` (present working directory) can help you navigate the directory structure on your system.
+Командная строка доступна из терминального приложения вашего компьютера, такого как Terminal и iTerm. С помощью командной строки вы можете выполнять команды и выполнять другие действия из текущего рабочего каталога на вашем компьютере. Перед запуском проекта dbt из командной строки убедитесь, что вы находитесь в каталоге вашего проекта dbt. Изучение команд терминала, таких как `cd` (смена каталога), `ls` (список содержимого каталога) и `pwd` (текущий рабочий каталог), может помочь вам ориентироваться в структуре каталогов вашей системы.
 
-In dbt Cloud or dbt Core, the commands you commonly use are:
+В dbt Cloud или dbt Core команды, которые вы обычно используете, это:
 
-- [dbt run](/reference/commands/run) &mdash; Runs the models you defined in your project
-- [dbt build](/reference/commands/build) &mdash; Builds and tests your selected resources such as models, seeds, snapshots, and tests
-- [dbt test](/reference/commands/test) &mdash; Executes the tests you defined for your project
+- [dbt run](/reference/commands/run) &mdash; Запускает модели, которые вы определили в своем проекте
+- [dbt build](/reference/commands/build) &mdash; Создает и тестирует выбранные вами ресурсы, такие как модели, семена, снимки и тесты
+- [dbt test](/reference/commands/test) &mdash; Выполняет тесты, которые вы определили для вашего проекта
 
-For information on all dbt commands and their arguments (flags), see the [dbt command reference](/reference/dbt-commands). If you want to list all dbt commands from the command line, run `dbt --help`. To list a dbt command’s specific arguments, run `dbt COMMAND_NAME --help` .
+Для получения информации обо всех командах dbt и их аргументах (флагах) смотрите [справочник команд dbt](/reference/dbt-commands). Если вы хотите перечислить все команды dbt из командной строки, выполните `dbt --help`. Чтобы перечислить конкретные аргументы команды dbt, выполните `dbt COMMAND_NAME --help`.
 
-## Related docs
+## Связанные документы
 
-- [How we set up our computers for working on dbt projects](https://discourse.getdbt.com/t/how-we-set-up-our-computers-for-working-on-dbt-projects/243)
-- [Model selection syntax](/reference/node-selection/syntax)
+- [Как мы настраиваем наши компьютеры для работы над проектами dbt](https://discourse.getdbt.com/t/how-we-set-up-our-computers-for-working-on-dbt-projects/243)
+- [Синтаксис выбора модели](/reference/node-selection/syntax)
 - [dbt Cloud CLI](/docs/cloud/cloud-cli-installation)
-- [Cloud IDE features](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#ide-features)
-- [Does dbt offer extract and load functionality?](/faqs/Project/transformation-tool)
-- [Why does dbt compile need a data platform connection](/faqs/Warehouse/db-connection-dbt-compile)
+- [Функции Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#ide-features)
+- [Предоставляет ли dbt функции извлечения и загрузки?](/faqs/Project/transformation-tool)
+- [Почему компиляция dbt требует подключения к платформе данных](/faqs/Warehouse/db-connection-dbt-compile)

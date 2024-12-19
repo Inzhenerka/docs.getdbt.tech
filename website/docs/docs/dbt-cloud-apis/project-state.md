@@ -1,28 +1,28 @@
 ---
-title: "Project state in dbt Cloud"
+title: "Состояние проекта в dbt Cloud"
 ---
 
-dbt Cloud provides a stateful way of deploying dbt. Artifacts are accessible programmatically via the [Discovery API](/docs/dbt-cloud-apis/discovery-querying) in the metadata platform.
+dbt Cloud предоставляет состояние для развертывания dbt. Артефакты доступны программно через [Discovery API](/docs/dbt-cloud-apis/discovery-querying) в платформе метаданных.
 
-With the implementation of the `environment` endpoint in the Discovery API, we've introduced the idea of multiple states. The Discovery API provides a single API endpoint that returns the latest state of models, sources, and other nodes in the DAG. 
+С внедрением конечной точки `environment` в Discovery API мы представили концепцию нескольких состояний. Discovery API предоставляет единую конечную точку API, которая возвращает последнее состояние моделей, источников и других узлов в DAG.
 
-A single [deployment environment](/docs/environments-in-dbt) should represent the production state of a given dbt Cloud project.
+Единственная [развертываемая среда](/docs/environments-in-dbt) должна представлять производственное состояние данного проекта dbt Cloud.
 
-There are two states that can be queried in dbt Cloud:
+В dbt Cloud можно запросить два состояния:
 
-- **Applied state** refers to what exists in the data warehouse after a successful `dbt run`. The model build succeeds and now exists as a table in the warehouse.
-    
-- **Definition state** depends on what exists in the project given the code defined in it (for example, manifest state), which hasn’t necessarily been executed in the data platform (maybe just the result of `dbt compile`).
+- **Примененное состояние** относится к тому, что существует в хранилище данных после успешного выполнения `dbt run`. Построение модели успешно завершено и теперь существует как таблица в хранилище.
 
-## Definition (logical) vs. applied state of dbt nodes
+- **Состояние определения** зависит от того, что существует в проекте с учетом кода, определенного в нем (например, состояние манифеста), который не обязательно был выполнен в платформе данных (возможно, это просто результат `dbt compile`).
 
-In a dbt project, the state of a node _definition_ represents the configuration, transformations, and dependencies defined in the SQL and YAML files. It captures how the node should be processed in relation to other nodes and tables in the data warehouse and may be produced by a `dbt build`, `run`, `parse`, or `compile`. It changes whenever the project code changes. 
+## Состояние определения (логическое) против примененного состояния узлов dbt
 
-A node’s _applied state_ refers to the node’s actual state after it has been successfully executed in the DAG; for example, models are executed; thus, their state is applied to the data warehouse via `dbt run` or `dbt build`. It changes whenever a node is executed. This state represents the result of the transformations and the actual data stored in the database, which for models can be a table or a view based on the defined logic.
+В проекте dbt состояние _определения_ узла представляет собой конфигурацию, преобразования и зависимости, определенные в SQL и YAML файлах. Оно фиксирует, как узел должен обрабатываться в отношении других узлов и таблиц в хранилище данных и может быть получено с помощью `dbt build`, `run`, `parse` или `compile`. Оно изменяется всякий раз, когда изменяется код проекта.
 
-The applied state includes execution info, which contains metadata about how the node arrived in the applied state: the most recent execution (successful or attempted), such as when it began, its status, and how long it took.
+_Примененное состояние_ узла относится к фактическому состоянию узла после его успешного выполнения в DAG; например, модели выполняются, и, следовательно, их состояние применяется к хранилищу данных через `dbt run` или `dbt build`. Оно изменяется всякий раз, когда узел выполняется. Это состояние представляет собой результат преобразований и фактические данные, хранящиеся в базе данных, которые для моделей могут быть таблицей или представлением на основе определенной логики.
 
-Here’s how you’d query and compare the definition  vs. applied state of a model using the Discovery API: 
+Примененное состояние включает информацию о выполнении, которая содержит метаданные о том, как узел достиг примененного состояния: последняя выполненная операция (успешная или попытка), например, когда она началась, ее статус и сколько времени это заняло.
+
+Вот как вы можете запросить и сравнить состояние определения и примененное состояние модели, используя Discovery API:
 
 ```graphql
 query Compare($environmentId: Int!, $first: Int!) {
@@ -52,40 +52,38 @@ query Compare($environmentId: Int!, $first: Int!) {
 		}
 	}
 }
-
 ```
 
-Most Discovery API use cases will favor the _applied state_ since it pertains to what has actually been run and can be analyzed.
- 
-## Affected states by node type
+Большинство случаев использования Discovery API будет предпочитать _примененное состояние_, поскольку оно относится к тому, что действительно было выполнено и может быть проанализировано.
 
-The following table shows the states of dbt nodes and how they are affected by the Discovery API. 
+## Затронутые состояния по типу узла
 
-| Node                                          | Executed in DAG  | Created by execution | Exists in database | Lineage               | States               |
-|-----------------------------------------------|------------------|----------------------|--------------------|-----------------------|----------------------|
-| [Analysis](/docs/build/analyses)   	        | No               | No                   | No                 | Upstream            | Definition 	      |
-| [Data test](/docs/build/data-tests)           | Yes              | Yes                  | No                 | Upstream              | Applied & definition |
-| [Exposure](/docs/build/exposures)             | No               | No                   | No                 | Upstream              | Definition           |
-| [Group](/docs/build/groups)                   | No               | No                   | No                 | Downstream            | Definition           |
-| [Macro](/docs/build/jinja-macros)             | Yes              | No                   | No                 | N/A                   | Definition           |
-| [Metric](/docs/build/metrics-overview)     	| No               | No                   | No                 | Upstream & downstream | Definition           |
-| [Model](/docs/build/models)                   | Yes              | Yes                  | Yes                | Upstream & downstream | Applied & definition |
-| [Saved queries](/docs/build/saved-queries) <br /> (not in API)  | N/A               | N/A                  |   N/A         | N/A | N/A           |
-| [Seed](/docs/build/seeds)                     | Yes              | Yes                  | Yes                | Downstream            | Applied & definition |
-| [Semantic model](/docs/build/semantic-models) | No               | No                   | No                 | Upstream & downstream | Definition           |
-| [Snapshot](/docs/build/snapshots)             | Yes              | Yes                  | Yes                | Upstream & downstream | Applied & definition |
-| [Source](/docs/build/sources)                 | Yes              | No                   | Yes                | Downstream            | Applied & definition |
-| [Unit tests](/docs/build/unit-tests)          | Yes              | Yes                  | No                 | Downstream   	       | Definition 	      |
+Следующая таблица показывает состояния узлов dbt и то, как они затрагиваются Discovery API.
 
+| Узел                                          | Выполнен в DAG  | Создан в результате выполнения | Существует в базе данных | Происхождение          | Состояния            |
+|-----------------------------------------------|------------------|-------------------------------|--------------------------|------------------------|----------------------|
+| [Анализ](/docs/build/analyses)              | Нет              | Нет                           | Нет                      | Вверх по потоку        | Определение          |
+| [Тест данных](/docs/build/data-tests)       | Да               | Да                            | Нет                      | Вверх по потоку        | Примененное и определение |
+| [Экспозиция](/docs/build/exposures)         | Нет              | Нет                           | Нет                      | Вверх по потоку        | Определение          |
+| [Группа](/docs/build/groups)                 | Нет              | Нет                           | Нет                      | Вниз по потоку         | Определение          |
+| [Макрос](/docs/build/jinja-macros)           | Да               | Нет                           | Нет                      | N/A                    | Определение          |
+| [Метрика](/docs/build/metrics-overview)      | Нет              | Нет                           | Нет                      | Вверх и вниз по потоку | Определение          |
+| [Модель](/docs/build/models)                 | Да               | Да                            | Да                       | Вверх и вниз по потоку | Примененное и определение |
+| [Сохраненные запросы](/docs/build/saved-queries) <br /> (не в API) | N/A               | N/A                           | N/A                      | N/A                    | N/A                  |
+| [Seed](/docs/build/seeds)                     | Да               | Да                            | Да                       | Вниз по потоку         | Примененное и определение |
+| [Семантическая модель](/docs/build/semantic-models) | Нет              | Нет                           | Нет                      | Вверх и вниз по потоку | Определение          |
+| [Снимок](/docs/build/snapshots)             | Да               | Да                            | Да                       | Вверх и вниз по потоку | Примененное и определение |
+| [Источник](/docs/build/sources)               | Да               | Нет                           | Да                       | Вниз по потоку         | Примененное и определение |
+| [Модульные тесты](/docs/build/unit-tests)    | Да               | Да                            | Нет                      | Вниз по потоку         | Определение          |
 
-## Caveats about state/metadata updates 
+## Ограничения обновлений состояния/метаданных
 
-Over time, Cloud Artifacts will provide information to maintain state for features/services in dbt Cloud and enable you to access state in dbt Cloud and its downstream ecosystem. Cloud Artifacts is currently focused on the latest production state, but this focus will evolve.
+Со временем Cloud Artifacts предоставит информацию для поддержания состояния для функций/услуг в dbt Cloud и позволит вам получить доступ к состоянию в dbt Cloud и его экосистеме. В настоящее время Cloud Artifacts сосредоточены на последнем производственном состоянии, но этот фокус будет развиваться.
 
-Here are some limitations of the state representation in the Discovery API:
+Вот некоторые ограничения представления состояния в Discovery API:
 
-- Users must access the default production environment to know the latest state of a project.
-- The API gets the definition from the latest manifest generated in a given deployment environment, but that often won’t reflect the latest project code state.
-- Compiled code results may be outdated depending on dbt Cloud run step order and failures.
-- Catalog info can be outdated, or incomplete (in the applied state), based on if/when `docs generate` was last run.
-- Source freshness checks can be out of date (in the applied state) depending on when the command was last run, and it’s not included in `build`. 
+- Пользователи должны получить доступ к стандартной производственной среде, чтобы узнать последнее состояние проекта.
+- API получает определение из последнего манифеста, сгенерированного в данной развертываемой среде, но это часто не отражает последнее состояние кода проекта.
+- Результаты скомпилированного кода могут быть устаревшими в зависимости от порядка выполнения шагов dbt Cloud и сбоев.
+- Информация каталога может быть устаревшей или неполной (в примененном состоянии), в зависимости от того, когда в последний раз выполнялась команда `docs generate`.
+- Проверки свежести источников могут быть устаревшими (в примененном состоянии) в зависимости от того, когда команда в последний раз выполнялась, и она не включена в `build`.

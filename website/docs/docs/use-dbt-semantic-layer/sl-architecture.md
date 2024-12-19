@@ -1,41 +1,39 @@
 ---
-title: "dbt Semantic Layer architecture"
+title: "Архитектура семантического слоя dbt"
 id: sl-architecture
-description: "dbt Semantic Layer product architecture and related questions."
-sidebar_label: "Semantic Layer architecture"
-tags: [Semantic Layer]
+description: "Архитектура продукта семантического слоя dbt и связанные вопросы."
+sidebar_label: "Архитектура семантического слоя"
+tags: [Семантический слой]
 ---
 
-The dbt Semantic Layer allows you to define metrics and use various interfaces to query them. The Semantic Layer does the heavy lifting to find where the queried data exists in your data platform and generates the SQL to make the request (including performing joins). 
+Семантический слой dbt позволяет вам определять метрики и использовать различные интерфейсы для их запроса. Семантический слой выполняет основную работу по поиску местоположения запрашиваемых данных в вашей платформе данных и генерирует SQL для выполнения запроса (включая выполнение соединений).
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-architecture.jpg" width="85%" title="The diagram displays how your data flows using the dbt Semantic Layer and the variety of integration tools it supports."/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-architecture.jpg" width="85%" title="Диаграмма показывает, как ваши данные перемещаются с использованием семантического слоя dbt и разнообразие интеграционных инструментов, которые он поддерживает."/>
 
-## Components
+## Компоненты
 
-The dbt Semantic Layer includes the following components:
+Семантический слой dbt включает в себя следующие компоненты:
 
-
-| Components | Information | dbt Core users | Developer plans |  Team plans | Enterprise plans | License |
+| Компоненты | Информация | Пользователи dbt Core | Планы для разработчиков | Командные планы | Корпоративные планы | Лицензия |
 | --- | --- | :---: | :---: | :---: | :---: | :---: |
-| **[MetricFlow](/docs/build/about-metricflow)** | MetricFlow in dbt allows users to centrally define their semantic models and metrics with YAML specifications. | ✅ | ✅ | ✅ |  ✅  | BSL package (code is source available) |
-| **dbt Semantic interfaces**| A configuration spec for defining metrics, dimensions, how they link to each other, and how to query them. The [dbt-semantic-interfaces](https://github.com/dbt-labs/dbt-semantic-interfaces) is available under Apache 2.0. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise)|
-| **Service layer** | Coordinates query requests and dispatching the relevant metric query to the target query engine. This is provided through dbt Cloud and is available to all users on dbt version 1.6 or later. The service layer includes a Gateway service for executing SQL against the data platform. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise) |
-| **[Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview)** | The interfaces allow users to submit metric queries using GraphQL and JDBC APIs. They also serve as the foundation for building first-class integrations with various tools. | ❌ | ❌ | ✅ | ✅ | Proprietary, Cloud (Team & Enterprise)|
+| **[MetricFlow](/docs/build/about-metricflow)** | MetricFlow в dbt позволяет пользователям централизованно определять свои семантические модели и метрики с помощью спецификаций YAML. | ✅ | ✅ | ✅ |  ✅  | Пакет BSL (код доступен в исходном виде) |
+| **Семантические интерфейсы dbt**| Спецификация конфигурации для определения метрик, измерений, их взаимосвязей и способов их запроса. [dbt-semantic-interfaces](https://github.com/dbt-labs/dbt-semantic-interfaces) доступен под лицензией Apache 2.0. | ❌ | ❌ | ✅ | ✅ | Собственническая, облачная (Команда и Корпорация) |
+| **Сервисный слой** | Координирует запросы на выборку и отправляет соответствующий запрос метрики в целевой движок запросов. Это предоставляется через dbt Cloud и доступно всем пользователям на версии dbt 1.6 или более поздней. Сервисный слой включает в себя сервис Gateway для выполнения SQL-запросов к платформе данных. | ❌ | ❌ | ✅ | ✅ | Собственническая, облачная (Команда и Корпорация) |
+| **[API семантического слоя](/docs/dbt-cloud-apis/sl-api-overview)** | Интерфейсы позволяют пользователям отправлять запросы метрик с использованием GraphQL и JDBC API. Они также служат основой для создания первоклассных интеграций с различными инструментами. | ❌ | ❌ | ✅ | ✅ | Собственническая, облачная (Команда и Корпорация) |
 
+## Сравнение функций
 
-## Feature comparison
+Следующая таблица сравнивает функции, доступные в dbt Cloud и исходный код, доступный в dbt Core:
 
-The following table compares the features available in dbt Cloud and source available in dbt Core:
-
-| Feature | MetricFlow Source available | dbt Semantic Layer with dbt Cloud |
+| Функция | Доступность исходного кода MetricFlow | Семантический слой dbt с dbt Cloud |
 | ----- | :------: | :------: |
-| Define metrics and semantic models in dbt using the MetricFlow spec | ✅ | ✅ |
-| Generate SQL from a set of config files | ✅ | ✅ |
-| Query metrics and dimensions through the command line interface (CLI) | ✅ | ✅ |
-| Query dimension, entity, and metric metadata  through the CLI | ✅ | ✅ |
-| Query metrics and dimensions through semantic APIs (ADBC, GQL)  | ❌ | ✅ |
-| Connect to downstream integrations (Tableau, Hex, Mode, Google Sheets, and so on.) | ❌ | ✅ |
-| Create and run Exports to save metrics queries as tables in your data platform. | ❌ | ✅ |
+| Определение метрик и семантических моделей в dbt с использованием спецификации MetricFlow | ✅ | ✅ |
+| Генерация SQL из набора конфигурационных файлов | ✅ | ✅ |
+| Запрос метрик и измерений через интерфейс командной строки (CLI) | ✅ | ✅ |
+| Запрос метаданных измерений, сущностей и метрик через CLI | ✅ | ✅ |
+| Запрос метрик и измерений через семантические API (ADBC, GQL) | ❌ | ✅ |
+| Подключение к интеграциям downstream (Tableau, Hex, Mode, Google Sheets и т.д.) | ❌ | ✅ |
+| Создание и выполнение экспорта для сохранения запросов метрик в виде таблиц в вашей платформе данных. | ❌ | ✅ |
 
-## Related docs
-- [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs)
+## Связанные документы
+- [Часто задаваемые вопросы о семантическом слое dbt](/docs/use-dbt-semantic-layer/sl-faqs)

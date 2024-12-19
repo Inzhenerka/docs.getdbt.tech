@@ -1,124 +1,123 @@
 ---
-title: "Upgrading to v1.9"
+title: "Обновление до v1.9"
 id: upgrading-to-v1.9
-description: New features and changes in dbt Core v1.9
+description: Новые функции и изменения в dbt Core v1.9
 displayed_sidebar: "docs"
 ---
- 
-## Resources 
 
-- [dbt Core 1.9 changelog](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
+## Ресурсы
 
-## What to know before upgrading
+- [Changelog dbt Core 1.9](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud#release-tracks)
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+## Что нужно знать перед обновлением
 
-Starting in 2024, dbt Cloud provides the functionality from new versions of dbt Core via [release tracks](/docs/dbt-versions/cloud-release-tracks) with automatic upgrades. If you have selected the "Latest" release track in dbt Cloud, you already have access to all the features, fixes, and other functionality that is included in dbt Core v1.9! If you have selected the "Compatible" release track, you will have access in the next monthly "Compatible" release after the dbt Core v1.9 final release.
+dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x. Любые изменения в поведении будут сопровождаться [флагом изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), чтобы предоставить окно миграции для существующих проектов. Если вы столкнетесь с ошибкой после обновления, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-For users of dbt Core, since v1.8, we recommend explicitly installing both `dbt-core` and `dbt-<youradapter>`. This may become required for a future version of dbt. For example:
+Начиная с 2024 года, dbt Cloud предоставляет функциональность новых версий dbt Core через [релизные треки](/docs/dbt-versions/cloud-release-tracks) с автоматическими обновлениями. Если вы выбрали "Последний" релизный трек в dbt Cloud, вы уже имеете доступ ко всем функциям, исправлениям и другой функциональности, включенной в dbt Core v1.9! Если вы выбрали "Совместимый" релизный трек, вы получите доступ в следующем ежемесячном "Совместимом" релизе после окончательного релиза dbt Core v1.9.
+
+Для пользователей dbt Core с версии v1.8 мы рекомендуем явно устанавливать как `dbt-core`, так и `dbt-<вашадаптер>`. Это может стать обязательным для будущей версии dbt. Например:
 
 ```sql
 python3 -m pip install dbt-core dbt-snowflake
 ```
 
-## New and changed features and functionality
+## Новые и измененные функции и функциональность
 
-Features and functionality new in dbt v1.9.
+Функции и функциональность, новые в dbt v1.9.
 
-### Microbatch `incremental_strategy`
+### Стратегия `incremental_strategy` для микропакетов
 
-:::info 
+:::info
 
-If you use a custom microbatch macro, set the [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy) behavior flag in your `dbt_project.yml` to enable batched execution. If you don't have a custom microbatch macro, you don't need to set this flag as dbt will handle microbatching automatically for any model using the microbatch strategy.
+Если вы используете пользовательский макрос микропакетов, установите флаг поведения [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy) в вашем `dbt_project.yml`, чтобы включить пакетное выполнение. Если у вас нет пользовательского макроса микропакетов, вам не нужно устанавливать этот флаг, так как dbt будет автоматически обрабатывать микропакетирование для любой модели, использующей стратегию микропакетов.
 :::
 
-Incremental models are, and have always been, a *performance optimization* — for datasets that are too large to be dropped and recreated from scratch every time you do a `dbt run`. Learn more about [incremental models](/docs/build/incremental-models-overview).
+Инкрементальные модели являются и всегда были *оптимизацией производительности* — для наборов данных, которые слишком велики, чтобы их можно было удалить и воссоздать с нуля каждый раз, когда вы выполняете `dbt run`. Узнайте больше о [инкрементальных моделях](/docs/build/incremental-models-overview).
 
-Historically, managing incremental models involved several manual steps and responsibilities, including:
+Исторически управление инкрементальными моделями включало несколько ручных шагов и обязанностей, включая:
 
-- Add a snippet of dbt code (in an `is_incremental()` block) that uses the already-existing table (`this`) as a rough bookmark, so that only new data gets processed.
-- Pick one of the strategies for smushing old and new data together (`append`, `delete+insert`, or `merge`).
-- If anything goes wrong, or your schema changes, you can always "full-refresh", by running the same simple query that rebuilds the whole table from scratch.
+- Добавление фрагмента кода dbt (в блоке `is_incremental()`), который использует уже существующую таблицу (`this`) в качестве грубого закладки, чтобы обрабатывались только новые данные.
+- Выбор одной из стратегий для объединения старых и новых данных (`append`, `delete+insert` или `merge`).
+- Если что-то пойдет не так или ваша схема изменится, вы всегда можете выполнить "полное обновление", запустив тот же простой запрос, который воссоздает всю таблицу с нуля.
 
-While this works for many use-cases, there’s a clear limitation with this approach: *Some datasets are just too big to fit into one query.*
+Хотя это работает для многих случаев, у этого подхода есть явное ограничение: *Некоторые наборы данных просто слишком велики, чтобы уместиться в один запрос.*
 
-Starting in Core 1.9, you can use the new [microbatch strategy](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) to optimize your largest datasets  -- **process your event data in discrete periods with their own SQL queries, rather than all at once.** The benefits include:
+Начиная с Core 1.9, вы можете использовать новую [стратегию микропакетов](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) для оптимизации ваших самых больших наборов данных — **обрабатывайте ваши данные событий в дискретные периоды с их собственными SQL-запросами, а не все сразу.** Преимущества включают:
 
-- Simplified query design: Write your model query for a single batch of data. dbt will use your `event_time`, `lookback`, and `batch_size` configurations to automatically generate the necessary filters for you, making the process more streamlined and reducing the need for you to manage these details.
-- Independent batch processing: dbt automatically breaks down the data to load into smaller batches based on the specified `batch_size` and processes each batch independently, improving efficiency and reducing the risk of query timeouts. If some of your batches fail, you can use `dbt retry` to load only the failed batches.
-- Targeted reprocessing: To load a *specific* batch or batches, you can use the CLI arguments `--event-time-start` and `--event-time-end`.
-- [Automatic parallel batch execution](/docs/build/incremental-microbatch#parallel-batch-execution): Process multiple batches at the same time, instead of one after the other (sequentially) for faster processing of your microbatch models. dbt intelligently auto-detects if your batches can run in parallel, while also allowing you to manually override parallel execution with the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches).
+- Упрощенный дизайн запроса: Напишите запрос вашей модели для одного пакета данных. dbt будет использовать ваши конфигурации `event_time`, `lookback` и `batch_size`, чтобы автоматически сгенерировать необходимые фильтры для вас, упрощая процесс и уменьшая необходимость управлять этими деталями.
+- Независимая обработка пакетов: dbt автоматически разбивает данные для загрузки на более мелкие пакеты на основе указанного `batch_size` и обрабатывает каждый пакет независимо, улучшая эффективность и снижая риск тайм-аутов запросов. Если некоторые из ваших пакетов не удастся загрузить, вы можете использовать `dbt retry`, чтобы загрузить только неудавшиеся пакеты.
+- Целевая переработка: Чтобы загрузить *определенный* пакет или пакеты, вы можете использовать аргументы CLI `--event-time-start` и `--event-time-end`.
+- [Автоматическое параллельное выполнение пакетов](/docs/build/incremental-microbatch#parallel-batch-execution): Обрабатывайте несколько пакетов одновременно, а не один за другим (последовательно) для более быстрой обработки ваших моделей микропакетов. dbt интеллектуально автоматически определяет, могут ли ваши пакеты выполняться параллельно, а также позволяет вам вручную переопределить параллельное выполнение с помощью конфигурации [`concurrent_batches`](/reference/resource-properties/concurrent_batches).
 
-
-Currently microbatch is supported on these adapters with more to come:
+В настоящее время поддержка микропакетов доступна для следующих адаптеров, и в будущем будет добавлена поддержка для других:
  * postgres
  * redshift
  * snowflake
  * bigquery
  * spark
  * databricks
-  
-### Snapshots improvements
 
-Beginning in dbt Core 1.9, we've streamlined snapshot configuration and added a handful of new configurations to make dbt **snapshots easier to configure, run, and customize.** These improvements include:
+### Улучшения снимков
 
-- New snapshot specification: Snapshots can now be configured in a YAML file, which provides a cleaner and more consistent set up.
-- New `snapshot_meta_column_names` config: Allows you to customize the names of meta fields (for example, `dbt_valid_from`, `dbt_valid_to`, etc.) that dbt automatically adds to snapshots. This increases flexibility to tailor metadata to your needs.
-- `target_schema` is now optional for snapshots: When omitted, snapshots will use the schema defined for the current environment.
-- Standard `schema` and `database` configs supported: Snapshots will now be consistent with other dbt resource types. You can specify where environment-aware snapshots should be stored.
-- Warning for incorrect `updated_at` data type: To ensure data integrity, you'll see a warning if the `updated_at` field specified in the snapshot configuration is not the proper data type or timestamp.
-- Set a custom current indicator for the value of `dbt_valid_to`: Use the [`dbt_valid_to_current` config](/reference/resource-configs/dbt_valid_to_current) to set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date). By default, this value is `NULL`. When configured, dbt will use the specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table. 
-- Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) configuration to get more control on how to handle deleted rows from the source. Supported methods are `ignore` (default), `invalidate` (replaces legacy `invalidate_hard_deletes=true`), and `new_record`. Setting  `hard_deletes='new_record'` allows you to track hard deletes by adding a new record when row becomes "deleted" in source. 
+Начиная с dbt Core 1.9, мы упростили конфигурацию снимков и добавили несколько новых конфигураций, чтобы сделать dbt **снимки проще в настройке, запуске и настройке.** Эти улучшения включают:
 
-Read more about [Snapshots meta fields](/docs/build/snapshots#snapshot-meta-fields).
+- Новая спецификация снимка: Снимки теперь можно настраивать в YAML-файле, что обеспечивает более чистую и последовательную настройку.
+- Новая конфигурация `snapshot_meta_column_names`: Позволяет вам настраивать названия метаполей (например, `dbt_valid_from`, `dbt_valid_to` и т.д.), которые dbt автоматически добавляет к снимкам. Это увеличивает гибкость в настройке метаданных под ваши нужды.
+- `target_schema` теперь является необязательным для снимков: При его отсутствии снимки будут использовать схему, определенную для текущей среды.
+- Поддержка стандартных конфигураций `schema` и `database`: Снимки теперь будут согласованы с другими типами ресурсов dbt. Вы можете указать, где должны храниться снимки, учитывающие среду.
+- Предупреждение о неправильном типе данных `updated_at`: Чтобы обеспечить целостность данных, вы увидите предупреждение, если поле `updated_at`, указанное в конфигурации снимка, не имеет правильного типа данных или временной метки.
+- Установите пользовательский индикатор текущего значения для `dbt_valid_to`: Используйте конфигурацию [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current), чтобы установить пользовательский индикатор для значения `dbt_valid_to` в текущих записях снимка (например, будущая дата). По умолчанию это значение `NULL`. При настройке dbt будет использовать указанное значение вместо `NULL` для `dbt_valid_to` для текущих записей в таблице снимков.
+- Используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes), чтобы получить больше контроля над тем, как обрабатывать удаленные строки из источника. Поддерживаемые методы: `ignore` (по умолчанию), `invalidate` (заменяет устаревший `invalidate_hard_deletes=true`) и `new_record`. Установка `hard_deletes='new_record'` позволяет вам отслеживать жесткие удаления, добавляя новую запись, когда строка становится "удаленной" в источнике.
 
-To learn how to safely migrate existing snapshots, refer to [Snapshot configuration migration](/reference/snapshot-configs#snapshot-configuration-migration) for more information. 
+Узнайте больше о [метаполях снимков](/docs/build/snapshots#snapshot-meta-fields).
 
-### `state:modified` improvements
+Чтобы узнать, как безопасно мигрировать существующие снимки, обратитесь к [миграции конфигурации снимков](/reference/snapshot-configs#snapshot-configuration-migration) для получения дополнительной информации.
 
-We’ve made improvements to `state:modified` behaviors to help reduce the risk of false positives and negatives. Read more about [the `state:modified` behavior flag](#managing-changes-to-legacy-behaviors) that unlocks this improvement:
+### Улучшения `state:modified`
 
-- Added environment-aware enhancements for environments where the logic purposefully differs (for example, materializing as a table in `prod` but a `view` in dev).
+Мы внесли улучшения в поведение `state:modified`, чтобы помочь снизить риск ложных срабатываний и пропусков. Узнайте больше о [флаге поведения `state:modified`](#managing-changes-to-legacy-behaviors), который открывает это улучшение:
 
-### Managing changes to legacy behaviors
+- Добавлены улучшения, учитывающие среду, для сред, где логика намеренно отличается (например, материализация как таблица в `prod`, но как `view` в dev).
 
-dbt Core v1.9 has a handful of new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `True` / `False` values, respectively, for `flags` in `dbt_project.yml`.
+### Управление изменениями в устаревшем поведении
 
-You can read more about each of these behavior changes in the following links:
+dbt Core v1.9 имеет несколько новых флагов для [управления изменениями в устаревшем поведении](/reference/global-configs/behavior-changes). Вы можете включить недавно введенные изменения (по умолчанию отключены) или отключить устоявшиеся изменения (по умолчанию включены), установив значения `True` / `False` соответственно для `flags` в `dbt_project.yml`.
 
-- (Introduced, disabled by default) [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-changes#behavior-change-flags). Set to `True` to start persisting `unrendered_database` and `unrendered_schema` configs during source parsing, and do comparison on unrendered values during `state:modified` checks to reduce false positives due to environment-aware logic when selecting `state:modified`.
-- (Introduced, disabled by default) [`skip_nodes_if_on_run_start_fails` project config flag](/reference/global-configs/behavior-changes#behavior-change-flags). If the flag is set and **any** `on-run-start` hook fails, mark all selected nodes as skipped.
-    - `on-run-start/end` hooks are **always** run, regardless of whether they passed or failed last time.
-- (Introduced, disabled by default) [[Redshift] `restrict_direct_pg_catalog_access`](/reference/global-configs/behavior-changes#redshift-restrict_direct_pg_catalog_access). If the flag is set the adapter will use the Redshift API (through the Python client) if available, or query Redshift's `information_schema` tables instead of using `pg_` tables.
-- (Introduced, disabled by default) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-changes#cumulative-metrics). If the flag is set to `True`, users will receive an error instead of a warning if they're not proprly formatting cumulative metrics using the new [`cumulative_type_params`](/docs/build/cumulative#parameters) nesting.
-- (Introduced, disabled by default) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy). Set to `True` if you use a custom microbatch macro to enable batched execution. If you don't have a custom microbatch macro, you don't need to set this flag as dbt will handle microbatching automatically for any model using the microbatch strategy.
+Вы можете узнать больше о каждом из этих изменений поведения по следующим ссылкам:
 
-## Adapter specific features and functionalities
+- (Введен, отключен по умолчанию) [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-changes#behavior-change-flags). Установите значение `True`, чтобы начать сохранять конфигурации `unrendered_database` и `unrendered_schema` во время парсинга источника и проводить сравнение по неотрендеренным значениям во время проверок `state:modified`, чтобы уменьшить ложные срабатывания из-за логики, учитывающей среду, при выборе `state:modified`.
+- (Введен, отключен по умолчанию) [`skip_nodes_if_on_run_start_fails` проектный флаг конфигурации](/reference/global-configs/behavior-changes#behavior-change-flags). Если флаг установлен и **любой** хук `on-run-start` завершился неудачно, все выбранные узлы будут помечены как пропущенные.
+    - Хуки `on-run-start/end` **всегда** выполняются, независимо от того, прошли они или провалились в прошлый раз.
+- (Введен, отключен по умолчанию) [[Redshift] `restrict_direct_pg_catalog_access`](/reference/global-configs/behavior-changes#redshift-restrict_direct_pg_catalog_access). Если флаг установлен, адаптер будет использовать API Redshift (через Python-клиент), если он доступен, или запрашивать таблицы `information_schema` Redshift вместо использования таблиц `pg_`.
+- (Введен, отключен по умолчанию) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-changes#cumulative-metrics). Если флаг установлен в `True`, пользователи получат ошибку вместо предупреждения, если они неправильно форматируют кумулятивные метрики, используя новые параметры [`cumulative_type_params`](/docs/build/cumulative#parameters).
+- (Введен, отключен по умолчанию) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy). Установите значение `True`, если вы используете пользовательский макрос микропакетов, чтобы включить пакетное выполнение. Если у вас нет пользовательского макроса микропакетов, вам не нужно устанавливать этот флаг, так как dbt будет автоматически обрабатывать микропакетирование для любой модели, использующей стратегию микропакетов.
+
+## Специфические функции и функциональность адаптеров
 
 ### Redshift
 
-- Support IAM Role auth
+- Поддержка аутентификации IAM Role
 
 ### Snowflake
 
-- Iceberg Table Format support will be available on three out-of-the-box materializations: table, incremental, dynamic tables. 
+- Поддержка формата таблиц Iceberg будет доступна для трех стандартных материализаций: таблица, инкрементальная, динамические таблицы.
 
 ### Bigquery
 
-- Can cancel running queries on keyboard interrupt
-- Auto-drop intermediate tables created by incremental models to save resources
+- Возможность отмены выполняющихся запросов при прерывании с клавиатуры
+- Автоудаление промежуточных таблиц, созданных инкрементальными моделями, для экономии ресурсов
 
 ### Spark
 
-- Support overriding the ODBC driver connection string which now enables you to provide custom connections
+- Поддержка переопределения строки подключения ODBC-драйвера, что теперь позволяет предоставлять пользовательские подключения
 
-## Quick hits
+## Быстрые улучшения
 
-We also made some quality-of-life improvements in Core 1.9, enabling you to:
+Мы также внесли некоторые улучшения качества жизни в Core 1.9, позволяя вам:
 
-- Maintain data quality now that dbt returns an error (versioned models) or warning (unversioned models) when someone [removes a contracted model by deleting, renaming, or disabling](/docs/collaborate/govern/model-contracts#how-are-breaking-changes-handled) it.
-- Document [data tests](/reference/resource-properties/description).
-- Use `ref` and `source` in [foreign key constraints](/reference/resource-properties/constraints).
-- Use `dbt test` with the `--resource-type` / `--exclude-resource-type` flag, making it possible to include or exclude data tests (`test`) or unit tests (`unit_test`).
+- Поддерживать качество данных, теперь dbt возвращает ошибку (версионированные модели) или предупреждение (неверсионированные модели), когда кто-то [удаляет контрактованную модель, удаляя, переименовывая или отключая](/docs/collaborate/govern/model-contracts#how-are-breaking-changes-handled) ее.
+- Документировать [тесты данных](/reference/resource-properties/description).
+- Использовать `ref` и `source` в [ограничениях внешних ключей](/reference/resource-properties/constraints).
+- Использовать `dbt test` с флагом `--resource-type` / `--exclude-resource-type`, что позволяет включать или исключать тесты данных (`test`) или модульные тесты (`unit_test`).

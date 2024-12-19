@@ -1,183 +1,183 @@
 ---
-title: "Upgrading to 0.14.0"
+title: "Обновление до 0.14.0"
 id: "upgrading-to-0-14-0"
 displayed_sidebar: "docs"
 ---
 
-This guide outlines migration instructions for:
+Этот гид содержит инструкции по миграции для:
 
-1. [Upgrading archives to snapshots](#upgrading-to-snapshot-blocks)
-2. [Taking advantage of updates to the `generate_schema_name` macro](#upgrading-the-generate_schema_name-signature)
-3. [The removal of the `--non-destructive` flag](#non-destructive-runs)
-4. [Changes to how incremental models are built on Snowflake](#snowflake-incremental-model-changes)
+1. [Обновления архивов до снимков](#upgrading-to-snapshot-blocks)
+2. [Использования обновлений макроса `generate_schema_name`](#upgrading-the-generate_schema_name-signature)
+3. [Удаления флага `--non-destructive`](#non-destructive-runs)
+4. [Изменений в том, как создаются инкрементальные модели в Snowflake](#snowflake-incremental-model-changes)
 
-## Upgrading to Snapshot Blocks
+## Обновление до Снимков
 
-In dbt v0.14.0, `archives` have been replaced by `snapshots`. Snapshots accomplish the same goal as archives, but are more powerful and more flexible. For the complete guide on using snapshots, consult the [snapshot documentation](/docs/build/snapshots).
+В dbt v0.14.0 `archives` были заменены на `snapshots`. Снимки достигают той же цели, что и архивы, но являются более мощными и гибкими. Для полного руководства по использованию снимков обратитесь к [документации по снимкам](/docs/build/snapshots).
 
-There are a handful of changes to be aware of as you migrate from archives to snapshots:
-- meta column names are now prefixed with `dbt_`
-- snapshots are specified in .sql files, whereas archives were specified in the `dbt_project.yml` file
+Существует несколько изменений, о которых следует знать при миграции с архивов на снимки:
+- Имена мета-колонок теперь начинаются с префикса `dbt_`
+- Снимки указываются в .sql файлах, в то время как архивы указывались в файле `dbt_project.yml`
 
-### Snapshot column name changes
-This <Term id="table" /> shows the differences between the column names produced by `dbt archive` and `dbt snapshot`. **Note:** These new snapshot meta-column names are _unquoted_. If you're using Snowflake, this means that your snapshot column names will be rendered in upper-case, rather than lower-case.
+### Изменения имен колонок снимков
+Эта <Term id="table" /> показывает различия между именами колонок, создаваемыми `dbt archive` и `dbt snapshot`. **Примечание:** Эти новые имена мета-колонок снимков _не заключены в кавычки_. Если вы используете Snowflake, это означает, что имена колонок ваших снимков будут отображаться в верхнем регистре, а не в нижнем.
 
-| Archive Column (quoted) | Snapshot Column (unquoted) |
-| ----------------------- | -------------------------- |
-| valid_from | dbt_valid_from |
-| valid_to | dbt_valid_to |
-| scd_id | dbt_scd_id |
+| Колонка Архива (в кавычках) | Колонка Снимка (без кавычек) |
+| ----------------------------- | ------------------------------ |
+| valid_from                   | dbt_valid_from                |
+| valid_to                     | dbt_valid_to                  |
+| scd_id                       | dbt_scd_id                    |
 
-### Migrating archives to snapshots
-Migrating archives to snapshots involves two different types of changes to your dbt project:
+### Миграция архивов в снимки
+Миграция архивов в снимки включает два различных типа изменений в вашем проекте dbt:
 
-1. renaming columns in your existing archive tables
-2. replacing your `archive:` section in `dbt_project.yml` file with `snapshot` blocks
+1. Переименование колонок в ваших существующих таблицах архивов
+2. Замена секции `archive:` в файле `dbt_project.yml` на блоки `snapshot`
 
-We have provided a migration script in dbt v0.14.0 which accomplishes both of these tasks. This script will:
+Мы предоставили скрипт миграции в dbt v0.14.0, который выполняет обе эти задачи. Этот скрипт:
 
-1. make a backup of your archive tables
-2. rename columns as specified in the table above
-3. generate snapshot blocks for your existing archives in new .sql files
+1. Создает резервную копию ваших таблиц архивов
+2. Переименовывает колонки в соответствии с таблицей выше
+3. Генерирует блоки снимков для ваших существующих архивов в новых .sql файлах
 
-The provided migration script should be run _once_ by a single dbt user. This database user must have sufficient permissions to operate on existing archive tables in the database.
+Предоставленный скрипт миграции должен быть выполнен _один раз_ одним пользователем dbt. Этот пользователь базы данных должен иметь достаточные права для работы с существующими таблицами архивов в базе данных.
 
-### Running the migration script
+### Запуск скрипта миграции
 
-:::caution Custom Materializations
+:::caution Пользовательские Материализации
 
-This guide assumes that you are using the built-in archive <Term id="materialization" />. If you are using a custom archive materialization, see the section on "Migrating archives manually" below.
+Этот гид предполагает, что вы используете встроенную архивную <Term id="materialization" />. Если вы используете пользовательскую архивную материализацию, смотрите раздел "Миграция архивов вручную" ниже.
 
 :::
 
-By default, the migration script will not make any changes to your project or database. Instead, it will report on the changes that _should_ be made to migrate your archives to snapshots. To run the migration script in dry-run mode, execute:
+По умолчанию скрипт миграции не внесет никаких изменений в ваш проект или базу данных. Вместо этого он сообщит о изменениях, которые _должны_ быть внесены для миграции ваших архивов в снимки. Чтобы запустить скрипт миграции в режиме предварительного просмотра, выполните:
 ```
 $ dbt snapshot-migrate --from-archive
 ```
 
-**Example output:**
+**Пример вывода:**
 ```
 $ dbt snapshot-migrate --from-archive
-Running with dbt=0.14.0
-Found 1 archive to migrate
+Запуск с dbt=0.14.0
+Найден 1 архив для миграции
 
-Archive 1 of 1: "analytics"."archived"."orders_archived"
-  - Skipping migration in dry-run mode
-  - Skipping new snapshot file in dry-run mode
+Архив 1 из 1: "analytics"."archived"."orders_archived"
+  - Пропуск миграции в режиме предварительного просмотра
+  - Пропуск нового файла снимка в режиме предварительного просмотра
 
-Re-run this script with `--apply` to apply these migrations
+Повторно запустите этот скрипт с `--apply`, чтобы применить эти миграции
 ```
 
-This command will output a list of archive tables that should be migrated. After verifying the list of archive tables, apply the migration using the `--apply` flag:
+Эта команда выведет список таблиц архивов, которые должны быть мигрированы. После проверки списка таблиц архивов примените миграцию, используя флаг `--apply`:
 
 ```
 $ dbt snapshot-migrate --from-archive --apply
 ```
 
-**Example output**:
+**Пример вывода**:
 ```
 $ dbt snapshot-migrate --from-archive --apply
-Running with dbt=0.14.0
-Found 1 archive to migrate
+Запуск с dbt=0.14.0
+Найден 1 архив для миграции
 
-Archive 1 of 1: "analytics"."archived"."orders_archived"
-  - Starting table migration
-  - Backing up table to "analytics"."archived"."orders_archived_dbt_archive_migration_backup"
-  - Finished table migration
-  - Wrote new snapshot file to snapshots/orders_archived.sql
+Архив 1 из 1: "analytics"."archived"."orders_archived"
+  - Начало миграции таблицы
+  - Создание резервной копии таблицы в "analytics"."archived"."orders_archived_dbt_archive_migration_backup"
+  - Завершение миграции таблицы
+  - Запись нового файла снимка в snapshots/orders_archived.sql
 
-The following backup tables were created:
+Были созданы следующие резервные таблицы:
   - "analytics"."archived"."orders_archived_dbt_archive_migration_backup"
 
-The following snapshot files were created:
+Были созданы следующие файлы снимков:
   - snapshots/orders_archived.sql
 
-After verifying the migrated tables in the database, please drop the backup
-tables and remove any archive configs from your dbt_project.yml file.
+После проверки мигрированных таблиц в базе данных, пожалуйста, удалите резервные
+таблицы и уберите любые конфигурации архивов из вашего файла dbt_project.yml.
 ```
 
-If this step succeeds, then congratulations! Your archives have been migrated to snapshots.
+Если этот шаг прошел успешно, то поздравляем! Ваши архивы были мигрированы в снимки.
 
-### Completing your migration
+### Завершение миграции
 
-After running the script above, it is important to validate the data in your new snapshot tables. Query the snapshot tables to ensure that they exist and feature meta-columns with `dbt_` prefixes.
+После выполнения скрипта выше важно проверить данные в ваших новых таблицах снимков. Запросите таблицы снимков, чтобы убедиться, что они существуют и содержат мета-колонки с префиксами `dbt_`.
 
-Next, inspect the new snapshots in your `snapshots/` directory. There should be one snapshot file per archive that exists in your project. If these snapshot files are present and valid, then you can delete the `archive:` section from your `dbt_project.yml` file.
+Затем проверьте новые снимки в вашей директории `snapshots/`. Должен быть один файл снимка на каждый архив, который существует в вашем проекте. Если эти файлы снимков присутствуют и действительны, вы можете удалить секцию `archive:` из вашего файла `dbt_project.yml`.
 
- When you are confident that the migration has completed successfully, you can manually delete the backup tables in your archived schema(s). These backup tables will be suffixed with `_dbt_archive_migration_backup`.
+Когда вы будете уверены, что миграция завершена успешно, вы можете вручную удалить резервные таблицы в ваших архивных схемах. Эти резервные таблицы будут иметь суффикс `_dbt_archive_migration_backup`.
 
-Snapshots participate in the dbt graph, so feel free to replace any `schema.table` references in your model code with `{{ ref('archive_name') }}`. You may also need to make changes to downstream models or reports to account for the changes to your snapshot meta-column names. Consult the [snapshot docs](/docs/build/snapshots) for full usage instructions.
+Снимки участвуют в графе dbt, поэтому не стесняйтесь заменять любые ссылки `schema.table` в вашем коде модели на `{{ ref('archive_name') }}`. Вам также может потребоваться внести изменения в модели или отчеты нижнего уровня, чтобы учесть изменения в именах мета-колонок ваших снимков. Обратитесь к [документации по снимкам](/docs/build/snapshots) для получения полных инструкций по использованию.
 
-### Migrating archives manually (not recommended)
+### Миграция архивов вручную (не рекомендуется)
 
-If you are unable to use the archive migration script, you can instead migrate your archives to snapshots manually. The exact steps required to migrate archives to snapshots vary by database, but broadly, you'll need to rename the archive meta-columns in accordance with the migration table above. Example migration queries (using postgres syntax):
+Если вы не можете использовать скрипт миграции архивов, вы можете вместо этого мигрировать ваши архивы в снимки вручную. Точные шаги, необходимые для миграции архивов в снимки, варьируются в зависимости от базы данных, но в общем вам нужно будет переименовать мета-колонки архивов в соответствии с таблицей миграции выше. Примеры запросов миграции (с использованием синтаксиса postgres):
 ```sql
 alter table archived.orders_archived rename "valid_from" to dbt_valid_from;
 alter table archived.orders_archived rename "valid_to" to dbt_valid_to;
 alter table archived.orders_archived rename "scd_id" to dbt_scd_id;
 ```
 
-## Upgrading the generate_schema_name signature
+## Обновление сигнатуры generate_schema_name
 
-In dbt v0.14.0, the `generate_schema_name` macro signature was changed to accept a second argument, `node`. For more information on the new `node` argument, consulting the documentation for [using custom schemas](/docs/build/custom-schemas).
+В dbt v0.14.0 сигнатура макроса `generate_schema_name` была изменена, чтобы принимать второй аргумент, `node`. Для получения дополнительной информации о новом аргументе `node` обратитесь к документации по [использованию пользовательских схем](/docs/build/custom-schemas).
 
-Existing one-argument implementations of `generate_schema_name` macros are still supported, but support for this form of the macro will be dropped in a future release. If you currently have a one-argument version of this macro, you will see a warning when you run your dbt project.
+Существующие реализации макросов `generate_schema_name` с одним аргументом по-прежнему поддерживаются, но поддержка этой формы макроса будет удалена в будущем релизе. Если у вас в настоящее время есть версия этого макроса с одним аргументом, вы увидите предупреждение при запуске вашего проекта dbt.
 
-### Example Warning
+### Пример предупреждения
 ```
-As of dbt v0.14.0, the `generate_schema_name` macro accepts a second "node"
-argument. The one-argument form of `generate_schema_name` is deprecated, and
-will become unsupported in a future release
+С версии dbt v0.14.0 макрос `generate_schema_name` принимает второй аргумент "node".
+Форма `generate_schema_name` с одним аргументом устарела и
+будет поддерживаться в будущем релизе
 ```
 
-### Upgrading
-To upgrade this macro (and suppress this warning), add a second argument, `node`, to your `generate_schema_name` macro.
+### Обновление
+Чтобы обновить этот макрос (и подавить это предупреждение), добавьте второй аргумент, `node`, в ваш макрос `generate_schema_name`.
 
 <File name='generate_schema_name.sql'>
 
 ```jinja2
 {% macro generate_schema_name(schema_name, node) -%}
-  ... your logic here ...
+  ... ваша логика здесь ...
 {%- endmacro %}
 ```
 
 </File>
 
 
-## Non-Destructive runs
+## Ненасильственные запуски
 
-The `--non-destructive` flag was removed from dbt in v0.14.0. This flag existed as a workaround for the lack of late-binding <Term id="view">views</Term> in Amazon Redshift. With the introduction of the [with no schema binding](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_VIEW.html) clause for Redshift views, non-destructive runs are no longer necessary.
+Флаг `--non-destructive` был удален из dbt в v0.14.0. Этот флаг существовал как обходной путь для отсутствия позднего связывания <Term id="view">представлений</Term> в Amazon Redshift. С введением [соглашения без связывания схемы](https://docs.aws.amazon.com/redshift/latest/dg/r_CREATE_VIEW.html) для представлений Redshift ненасильственные запуски больше не нужны.
 
-The `--non-destructive` flag was problematic for a few reasons:
+Флаг `--non-destructive` был проблемным по нескольким причинам:
 
-1. It used a `truncate` statement which committed the existing transaction. This means that non-destructive runs were not atomic, and errors in a model build could leave you with empty tables!
-2. It made the dbt's materializations incredibly complicated and hard to maintain
-3. It skipped building views entirely, which is rarely desirable
-4. It failed in tricky and pernicious ways when columns were added or removed from table models
+1. Он использовал оператор `truncate`, который фиксировал существующую транзакцию. Это означает, что ненасильственные запуски не были атомарными, и ошибки в построении модели могли оставить вас с пустыми таблицами!
+2. Это усложняло материализации dbt и делало их трудными для поддержки
+3. Это полностью пропускало создание представлений, что редко бывает желаемым
+4. Это давало сбои в сложных и коварных ситуациях, когда колонки добавлялись или удалялись из таблиц моделей
 
-Snowflake, BigQuery, SparkSQL, and Presto users should be unaffected by this change as there is limited merit to using the `--non-destructive` flag on these databases.
+Пользователи Snowflake, BigQuery, SparkSQL и Presto не должны испытывать проблем с этим изменением, так как использование флага `--non-destructive` в этих базах данных имеет ограниченные преимущества.
 
-Redshift users should consider using the [bind: false](/reference/resource-configs/redshift-configs#late-binding-views) config to instruct dbt to create unbound views.
+Пользователи Redshift должны рассмотреть возможность использования конфигурации [bind: false](/reference/resource-configs/redshift-configs#late-binding-views), чтобы указать dbt создавать несвязанные представления.
 
-Postgres users should ensure that they use table or incremental models for relations which are queried by end-users.
+Пользователи Postgres должны убедиться, что они используют таблицы или инкрементальные модели для отношений, которые запрашиваются конечными пользователями.
 
-## Snowflake Incremental Model Changes
+## Изменения инкрементальных моделей Snowflake
 
-In dbt v0.14.0, the implementation of `incremental` models on Snowflake has changed. By default, dbt will use a [merge](https://docs.snowflake.net/manuals/sql-reference/sql/merge.html) statement to atomically upsert records into a <Term id="table" /> incrementally. Previous versions of dbt used a two-step `delete+insert` approach to upsert data.
+В dbt v0.14.0 реализация инкрементальных моделей в Snowflake была изменена. По умолчанию dbt будет использовать оператор [merge](https://docs.snowflake.net/manuals/sql-reference/sql/merge.html) для атомарного обновления записей в <Term id="table" /> инкрементально. В предыдущих версиях dbt использовался двухэтапный подход `delete+insert` для обновления данных.
 
-The `merge` statement requires that records participating in the upsert are unique. If these records are not unique, then the statement will fail with a "nondeterministic merge" error. If you see this error after upgrading to 0.14.0, you can resolve it in one of two ways:
+Оператор `merge` требует, чтобы записи, участвующие в обновлении, были уникальными. Если эти записи не уникальны, оператор завершится с ошибкой "недетерминированное слияние". Если вы видите эту ошибку после обновления до 0.14.0, вы можете решить ее одним из двух способов:
 
-1. Modify your model query logic to ensure that the specified `unique_key` parameter is indeed unique
-2. Set the `incremental_strategy` config to `delete+insert` to continue using the previous two-step incremental approach
+1. Измените логику запроса вашей модели, чтобы убедиться, что указанный параметр `unique_key` действительно уникален
+2. Установите конфигурацию `incremental_strategy` в `delete+insert`, чтобы продолжить использовать предыдущий двухэтапный инкрементальный подход
 
-The `incremental_strategy` config can be set in your `dbt_project.yml` file (if you want to apply this config to all models), or it can be applied in specific models where required.
+Конфигурацию `incremental_strategy` можно установить в вашем файле `dbt_project.yml` (если вы хотите применить эту конфигурацию ко всем моделям) или ее можно применить в конкретных моделях, где это необходимо.
 
-**Configuring the `incremental_strategy` for all models:**
+**Настройка `incremental_strategy` для всех моделей:**
 
 <File name='dbt_project.yml'>
 
 ```yaml
-# Your dbt_project.yml file
+# Ваш файл dbt_project.yml
 
 models:
   incremental_strategy: "delete+insert"
@@ -185,7 +185,7 @@ models:
 
 </File>
 
-**Configuring the `incremental_strategy` for a single model:**
+**Настройка `incremental_strategy` для одной модели:**
 
 <File name='models/my_model.sql'>
 

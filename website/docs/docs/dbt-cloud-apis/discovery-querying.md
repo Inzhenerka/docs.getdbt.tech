@@ -1,40 +1,40 @@
 ---
-title: "Query the Discovery API"
+title: "Запрос к Discovery API"
 id: "discovery-querying"
-sidebar_label: "Query the Discovery API"
+sidebar_label: "Запрос к Discovery API"
 pagination_next: "docs/dbt-cloud-apis/discovery-schema-environment"
 ---
 
-The Discovery API supports ad-hoc queries and integrations. If you are new to the API, refer to [About the Discovery API](/docs/dbt-cloud-apis/discovery-api) for an introduction.
+Discovery API поддерживает произвольные запросы и интеграции. Если вы новичок в API, ознакомьтесь с разделом [О Discovery API](/docs/dbt-cloud-apis/discovery-api) для получения вводной информации.
 
-Use the Discovery API to evaluate data pipeline health and project state across runs or at a moment in time. dbt Labs provide a [GraphQL explorer](https://metadata.cloud.getdbt.com/graphql) for this API, enabling you to run queries and browse the schema.
+Используйте Discovery API для оценки состояния данных в пайплайне и состояния проекта на протяжении выполнения или в определенный момент времени. dbt Labs предоставляет [GraphQL-эксплорер](https://metadata.cloud.getdbt.com/graphql) для этого API, позволяя вам выполнять запросы и просматривать схему.
 
-Since GraphQL describes the data in the API, the schema displayed in the GraphQL explorer accurately represents the graph and fields available to query.
+Поскольку GraphQL описывает данные в API, схема, отображаемая в GraphQL-эксплорере, точно представляет граф и доступные для запроса поля.
 
 <Snippet path="metadata-api-prerequisites" />
 
-## Authorization
+## Авторизация
 
-Currently, authorization of requests takes place [using a service token](/docs/dbt-cloud-apis/service-tokens). dbt Cloud admin users can generate a Metadata Only service token that is authorized to execute a specific query against the Discovery API.
+В настоящее время авторизация запросов осуществляется [с помощью токена сервиса](/docs/dbt-cloud-apis/service-tokens). Администраторы dbt Cloud могут сгенерировать токен сервиса только для метаданных, который имеет право выполнять конкретный запрос к Discovery API.
 
-Once you've created a token, you can use it in the Authorization header of requests to the dbt Cloud Discovery API. Be sure to include the Token prefix in the Authorization header, or the request will fail with a `401 Unauthorized` error. Note that `Bearer` can be used instead of `Token` in the Authorization header. Both syntaxes are equivalent.
+После создания токена вы можете использовать его в заголовке Authorization запросов к Discovery API dbt Cloud. Обязательно включите префикс Token в заголовок Authorization, иначе запрос завершится с ошибкой `401 Unauthorized`. Обратите внимание, что вместо `Token` в заголовке Authorization можно использовать `Bearer`. Оба синтаксиса эквивалентны.
 
-## Access the Discovery API
+## Доступ к Discovery API
 
-1. Create a [service account token](/docs/dbt-cloud-apis/service-tokens) to authorize requests. dbt Cloud Admin users can generate a _Metadata Only_ service token, which can be used to execute a specific query against the Discovery API to authorize requests.
+1. Создайте [токен сервисной учетной записи](/docs/dbt-cloud-apis/service-tokens) для авторизации запросов. Администраторы dbt Cloud могут сгенерировать токен сервиса _Только для метаданных_, который можно использовать для выполнения конкретного запроса к Discovery API для авторизации запросов.
 
-2. Find the API URL to use from the [Discovery API endpoints](#discovery-api-endpoints) table.
+2. Найдите URL API, который нужно использовать, в таблице [конечных точек Discovery API](#discovery-api-endpoints).
 
-3. For specific query points, refer to the [schema documentation](/docs/dbt-cloud-apis/discovery-schema-job).
+3. Для конкретных точек запроса обратитесь к [документации по схеме](/docs/dbt-cloud-apis/discovery-schema-job).
 
-## Run queries using HTTP requests
+## Выполнение запросов с помощью HTTP-запросов
 
-You can run queries by sending a `POST` request to the Discovery API, making sure to replace:
-* `YOUR_API_URL` with the appropriate [Discovery API endpoint](#discovery-api-endpoints) for your region and plan.
-* `YOUR_TOKEN` in the Authorization header with your actual API token. Be sure to include the Token prefix.
-* `QUERY_BODY` with a GraphQL query, for example `{ "query": "<query text>", "variables": "<variables in json>" }`
-* `VARIABLES` with a dictionary of your GraphQL query variables, such as a job ID or a filter.
-* `ENDPOINT` with the endpoint you're querying, such as environment.
+Вы можете выполнять запросы, отправляя `POST` запрос к Discovery API, убедившись, что вы заменили:
+* `YOUR_API_URL` на соответствующую [конечную точку Discovery API](#discovery-api-endpoints) для вашего региона и плана.
+* `YOUR_TOKEN` в заголовке Authorization на ваш фактический токен API. Обязательно включите префикс Token.
+* `QUERY_BODY` на GraphQL-запрос, например `{ "query": "<текст запроса>", "variables": "<переменные в json>" }`
+* `VARIABLES` на словарь переменных вашего GraphQL-запроса, таких как ID задания или фильтр.
+* `ENDPOINT` на конечную точку, к которой вы обращаетесь, например, окружение.
 
   ```shell
   curl 'YOUR_API_URL' \
@@ -44,7 +44,7 @@ You can run queries by sending a `POST` request to the Discovery API, making sur
     --data QUERY_BODY
   ```
 
-Python example:
+Пример на Python:
 
 ```python
 response = requests.post(
@@ -56,63 +56,56 @@ response = requests.post(
 metadata = response.json()['data'][ENDPOINT]
 ```
 
-Every query will require an environment ID or job ID. You can get the ID from a dbt Cloud URL or using the Admin API.
+Каждый запрос потребует ID окружения или ID задания. Вы можете получить ID из URL dbt Cloud или с помощью Admin API.
 
-There are several illustrative example queries on this page. For more examples, refer to [Use cases and examples for the Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples).
+На этой странице есть несколько иллюстративных примеров запросов. Для получения дополнительных примеров обратитесь к разделу [Сценарии использования и примеры для Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples).
 
+## Конечные точки Discovery API
 
-## Discovery API endpoints
+Следующие конечные точки доступны для доступа к Discovery API. Используйте ту, которая подходит для вашего региона и плана.
 
-The following are the endpoints for accessing the Discovery API. Use the one that's appropriate for your region and plan.
+| Тип развертывания | URL Discovery API |
+| ----------------- | ----------------- |
+| Многоарендный для Северной Америки | https://metadata.cloud.getdbt.com/graphql |
+| Многоарендный для EMEA | https://metadata.emea.dbt.com/graphql |
+| Многоарендный для APAC | https://metadata.au.dbt.com/graphql |
+| Многоячеечный | `https://YOUR_ACCOUNT_PREFIX.metadata.REGION.dbt.com/graphql`<br /><br /> Замените `YOUR_ACCOUNT_PREFIX` на ваш конкретный идентификатор учетной записи и `REGION` на ваше местоположение, которое может быть `us1.dbt.com`. |<br />
+| Одноарендный | `https://metadata.YOUR_ACCESS_URL/graphql`<br /><br /> Замените `YOUR_ACCESS_URL` на ваш конкретный префикс учетной записи с соответствующим [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана.|
 
-| Deployment type |	Discovery API URL |
-| --------------- | ------------------- |
-| North America multi-tenant	|	https://metadata.cloud.getdbt.com/graphql |
-| EMEA multi-tenant	|	https://metadata.emea.dbt.com/graphql |
-| APAC multi-tenant	|	https://metadata.au.dbt.com/graphql |
-| Multi-cell	| `https://YOUR_ACCOUNT_PREFIX.metadata.REGION.dbt.com/graphql`<br /><br />  Replace `YOUR_ACCOUNT_PREFIX` with your specific account identifier and `REGION` with your location, which could be `us1.dbt.com`. |<br />
-| Single-tenant | `https://metadata.YOUR_ACCESS_URL/graphql`<br /><br />  Replace `YOUR_ACCESS_URL` with your specific account prefix with the appropriate [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.|
+## Разумное использование
 
-## Reasonable use
+Использование Discovery (GraphQL) API подлежит ограничениям по скорости запросов и размеру ответа для поддержания производительности и стабильности платформы метаданных и предотвращения злоупотреблений.
 
-Discovery (GraphQL) API usage is subject to request rate and response size limits to maintain the performance and stability of the metadata platform and prevent abuse.
+Конечные точки на уровне задания подлежат ограничениям по сложности запросов. Вложенные узлы (например, родительские), код (например, rawCode) и столбцы каталога считаются наиболее сложными. Слишком сложные запросы следует разбивать на отдельные запросы с включением только необходимых полей. dbt Labs рекомендует использовать конечную точку окружения для большинства сценариев использования, чтобы получить последние описательные и результативные метаданные для проекта dbt Cloud.
 
-Job-level endpoints are subject to query complexity limits. Nested nodes (like parents), code (like rawCode), and catalog columns are considered as most complex. Overly complex queries should be broken up into separate queries with only necessary fields included. dbt Labs recommends using the environment endpoint instead for most use cases to get the latest descriptive and result metadata for a dbt Cloud project.
+## Ограничения хранения
+Вы можете использовать Discovery API для запроса данных за последние три месяца. Например, если сегодня 1 апреля, вы можете запрашивать данные с 1 января.
 
-## Retention limits
-You can use the Discovery API to query data from the previous three months. For example, if today was April 1st, you could query data back to January 1st.
+## Выполнение запросов с помощью GraphQL-эксплорера
 
-## Run queries with the GraphQL explorer
+Вы можете выполнять произвольные запросы непосредственно в [GraphQL API explorer](https://metadata.cloud.getdbt.com/graphql) и использовать документ-эксплорер на левой стороне, чтобы увидеть все возможные узлы и поля.
 
-You can run ad-hoc queries directly in the [GraphQL API explorer](https://metadata.cloud.getdbt.com/graphql) and use the document explorer on the left-hand side to see all possible nodes and fields.
+Обратитесь к [документации по Apollo explorer](https://www.apollographql.com/docs/graphos/explorer/explorer) для получения информации о настройке и авторизации.
 
-Refer to the [Apollo explorer documentation](https://www.apollographql.com/docs/graphos/explorer/explorer) for setup and authorization info.
+1. Получите доступ к [GraphQL API explorer](https://metadata.cloud.getdbt.com/graphql) и выберите поля, которые вы хотите запросить.
 
-1. Access the [GraphQL API explorer](https://metadata.cloud.getdbt.com/graphql) and select fields you want to query.
+2. Выберите **Переменные** внизу эксплорера и замените любые поля `null` на ваши уникальные значения.
 
-2. Select **Variables** at the bottom of the explorer and replace any `null` fields with your unique values.
+3. [Аутентифицируйтесь](https://www.apollographql.com/docs/graphos/explorer/connecting-authenticating#authentication) с помощью Bearer auth с `YOUR_TOKEN`. Выберите **Заголовки** внизу эксплорера и выберите **+Новый заголовок**.
 
-3. [Authenticate](https://www.apollographql.com/docs/graphos/explorer/connecting-authenticating#authentication) using Bearer auth with `YOUR_TOKEN`. Select **Headers** at the bottom of the explorer and select **+New header**.
-
-4. Select **Authorization** in the **header key** dropdown list and enter your Bearer auth token in the **value** field. Remember to include the Token prefix. Your header key should be in this format: `{"Authorization": "Bearer <YOUR_TOKEN>}`.
-
-<!-- TODO: Screenshot needs to be replaced with new one. If we want to show model historical runs, show `environment { applied { modelHistoricalRuns } }` -->
-<!-- However we can choose to leave this be, since the important info from the screenshot is to show how the GraphQL API canbe used -- the content (request and response) doesn't matter too much` -->
+4. Выберите **Authorization** в выпадающем списке **ключ заголовка** и введите ваш токен Bearer auth в поле **значение**. Не забудьте включить префикс Token. Ваш ключ заголовка должен быть в следующем формате: `{"Authorization": "Bearer <YOUR_TOKEN>}`.
 
 <br />
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/graphql_header.jpg" width="85%" title="Enter the header key and Bearer auth token values"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/graphql_header.jpg" width="85%" title="Введите значения ключа заголовка и токена Bearer auth"/>
 
-1. Run your query by clicking the blue query button in the top right of the **Operation** editor (to the right of the query). You should see a successful query response on the right side of the explorer.
+1. Выполните ваш запрос, нажав на синюю кнопку запроса в правом верхнем углу редактора **Operation** (справа от запроса). Вы должны увидеть успешный ответ на запрос с правой стороны эксплорера.
 
-<!-- TODO: Screenshot needs to be replaced with new one. If we want to show model historical runs, show `environment { applied { modelHistoricalRuns } }` -->
-<!-- However we can choose to leave this be, since the important info from the screenshot is to show how the GraphQL API canbe used -- the content (request and response) doesn't matter too much` -->
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/graphql.jpg" width="85%" title="Выполнение запросов с использованием GraphQL-эксплорера Apollo"/>
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/graphql.jpg" width="85%" title="Run queries using the Apollo Server GraphQL explorer"/>
+### Фрагменты
 
-### Fragments
-
-Use the [`... on`](https://www.apollographql.com/docs/react/data/fragments/) notation to query across lineage and retrieve results from specific node types.
+Используйте нотацию [`... on`](https://www.apollographql.com/docs/react/data/fragments/) для выполнения запросов по наследованию и получения результатов от конкретных типов узлов.
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -162,29 +155,26 @@ query ($environmentId: BigInt!, $first: Int!) {
 }
 ```
 
-### Pagination
+### Пагинация
 
-Querying large datasets can impact performance on multiple functions in the API pipeline. Pagination eases the burden by returning smaller data sets one page at a time. This is useful for returning a particular portion of the dataset or the entire dataset piece-by-piece to enhance performance. dbt Cloud utilizes cursor-based pagination, which makes it easy to return pages of constantly changing data.
+Запрос больших наборов данных может повлиять на производительность нескольких функций в API-пайплайне. Пагинация облегчает нагрузку, возвращая меньшие наборы данных по одной странице за раз. Это полезно для возврата определенной части набора данных или всего набора данных по частям для повышения производительности. dbt Cloud использует пагинацию на основе курсоров, что упрощает возврат страниц постоянно изменяющихся данных.
 
-Use the `PageInfo` object to return information about the page. The available fields are:
+Используйте объект `PageInfo`, чтобы вернуть информацию о странице. Доступные поля:
 
-- `startCursor` string type &mdash; Corresponds to the first `node` in the `edge`.
-- `endCursor` string type &mdash; Corresponds to the last `node` in the `edge`.
-- `hasNextPage` boolean type &mdash; Whether or not there are more `nodes` after the returned results.
+- `startCursor` строковый тип &mdash; Соответствует первому `node` в `edge`.
+- `endCursor` строковый тип &mdash; Соответствует последнему `node` в `edge`.
+- `hasNextPage` булевый тип &mdash; Указывает, есть ли еще `nodes` после возвращенных результатов.
 
-There are connection variables available when making the query:
+При выполнении запроса доступны переменные соединения:
 
-- `first` integer type &mdash; Returns the first n `nodes` for each page, up to 500.
-- `after` string type &mdash; Sets the cursor to retrieve `nodes` after. It's best practice to set the `after` variable with the object ID defined in the `endCursor` of the previous page.
+- `first` целочисленный тип &mdash; Возвращает первые n `nodes` для каждой страницы, до 500.
+- `after` строковый тип &mdash; Устанавливает курсор для получения `nodes` после. Рекомендуется устанавливать переменную `after` с идентификатором объекта, определенным в `endCursor` предыдущей страницы.
 
-Below is an example that returns the `first` 500 models `after` the specified Object ID in the variables. The `PageInfo` object returns where the object ID where the cursor starts, where it ends, and whether there is a next page.
+Ниже приведен пример, который возвращает `first` 500 моделей `after` указанного идентификатора объекта в переменных. Объект `PageInfo` возвращает, где начинается идентификатор объекта, где он заканчивается и есть ли следующая страница.
 
-<!-- TODO: Update screenshot to use `$environmentId: BigInt!, or remove it` -->
-<!-- However we can choose to leave this be, since the important info from the screenshot is to show how the GraphQL API canbe used -- the content (request and response) doesn't matter too much` -->
+<Lightbox src="/img/Paginate.png" width="75%" title="Пример пагинации"/>
 
-<Lightbox src="/img/Paginate.png" width="75%" title="Example of pagination"/>
-
-Below is a code example of the `PageInfo` object:
+Ниже приведен пример объекта `PageInfo`:
 
 ```graphql
 pageInfo {
@@ -192,21 +182,18 @@ pageInfo {
   endCursor
   hasNextPage
 }
-totalCount # Total number of records across all pages
+totalCount # Общее количество записей на всех страницах
 ```
 
-### Filters
+### Фильтры
 
-Filtering helps to narrow down the results of an API query. If you want to query and return only models and tests that are failing or find models that are taking too long to run, you can fetch execution details such as [`executionTime`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields), [`runElapsedTime`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields), or [`status`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields). This helps data teams monitor the performance of their models, identify bottlenecks, and optimize the overall data pipeline.
+Фильтрация помогает сузить результаты API-запроса. Если вы хотите запросить и вернуть только модели и тесты, которые не прошли, или найти модели, которые требуют слишком много времени на выполнение, вы можете получить детали выполнения, такие как [`executionTime`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields), [`runElapsedTime`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields) или [`status`](/docs/dbt-cloud-apis/discovery-schema-job-models#fields). Это помогает командам данных отслеживать производительность своих моделей, выявлять узкие места и оптимизировать общий процесс обработки данных.
 
-Below is an example that filters for results of models that have succeeded on their `lastRunStatus`:
+Ниже приведен пример, который фильтрует результаты моделей, которые успешно завершили свой `lastRunStatus`:
 
-<Lightbox src="/img/Filtering.png" width="75%" title="Example of filtering"/>
+<Lightbox src="/img/Filtering.png" width="75%" title="Пример фильтрации"/>
 
-Below is an example that filters for models that have an error on their last run and tests that have failed:
-
-<!-- TODO: Update screenshot to use `$environmentId: BigInt!, or remove it` -->
-<!-- However we can choose to leave this be, since the important info from the screenshot is to show how the GraphQL API canbe used -- the content (request and response) doesn't matter too much` -->
+Ниже приведен пример, который фильтрует модели, которые имели ошибку в последнем запуске, и тесты, которые не прошли:
 
 ```graphql
 query ModelsAndTests($environmentId: BigInt!, $first: Int!) {
@@ -237,7 +224,7 @@ query ModelsAndTests($environmentId: BigInt!, $first: Int!) {
 }
 ```
 
-## Related content
+## Связанный контент
 
-- [Use cases and examples for the Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
-- [Schema](/docs/dbt-cloud-apis/discovery-schema-job)
+- [Сценарии использования и примеры для Discovery API](/docs/dbt-cloud-apis/discovery-use-cases-and-examples)
+- [Схема](/docs/dbt-cloud-apis/discovery-schema-job)

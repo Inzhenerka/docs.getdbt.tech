@@ -1,10 +1,10 @@
 ---
-title: Can I pay via invoice?
-description: "What payments types are accepted"
-sidebar_label: 'Can I pay invoice'
+title: Могу ли я оплатить по счету?
+description: "Какие способы оплаты принимаются"
+sidebar_label: 'Могу ли я оплатить по счету'
 id: payment-accepted
 ---
 
-Currently for Team plans, self-service dbt Cloud payments must be made with a credit card and by default, they will be billed monthly based on the number of [active developer seats and usage](/docs/cloud/billing).
+В настоящее время для командных планов оплата за dbt Cloud в режиме самообслуживания должна производиться с помощью кредитной карты, и по умолчанию она будет выставляться ежемесячно на основе количества [активных мест для разработчиков и использования](/docs/cloud/billing).
 
-We don't have any plans to do invoicing for self-service teams in the near future, but we *do* currently support invoices for companies on the **dbt Cloud Enterprise plan.** Feel free to [contact us](https://www.getdbt.com/contact) to build your Enterprise pricing.
+У нас нет планов по внедрению выставления счетов для команд в режиме самообслуживания в ближайшем будущем, но мы *в настоящее время* поддерживаем счета для компаний на **плане dbt Cloud Enterprise.** Не стесняйтесь [связаться с нами](https://www.getdbt.com/contact), чтобы обсудить ценообразование для вашего предприятия.

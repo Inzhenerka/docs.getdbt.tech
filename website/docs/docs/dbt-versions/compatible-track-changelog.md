@@ -1,61 +1,27 @@
 ---
-title: "dbt Cloud Compatible Track - Changelog"
-sidebar_label: "Compatible Track Changelog"
-description: "The Compatible release track updates once per month, and it includes up-to-date open source versions as of the monthly release."
+title: "Совместимая версия dbt Cloud - Журнал изменений"
+sidebar_label: "Журнал изменений совместимой версии"
+description: "Совместимая версия обновляется раз в месяц и включает актуальные версии с открытым исходным кодом на момент ежемесячного релиза."
 ---
 
-:::info Preview
+:::info Скоро
 
-The "Compatible" and "Extended" [release tracks](/docs/dbt-versions/cloud-release-tracks) are available in Preview. Access will be rolling out to dbt Cloud accounts on eligible plans during the week of December 16-20, 2024.
+Версии "Совместимая" и "Расширенная" будут доступны в режиме предварительного просмотра для соответствующих аккаунтов dbt Cloud в декабре 2024 года.
 
 :::
 
-Select the "Compatible" and "Extended" release tracks if you need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of dbt Core.
+Выберите версии "Совместимая" и "Расширенная", если вам нужен менее частый график релизов, возможность тестировать новые релизы dbt перед их запуском в производственной среде и/или постоянная совместимость с последними версиями с открытым исходным кодом dbt Core.
 
-Each monthly "Compatible" release includes functionality matching up-to-date open source versions of dbt Core and adapters at the time of release.
+Каждый ежемесячный релиз "Совместимая" включает функциональность, соответствующую актуальным версиям с открытым исходным кодом dbt Core и адаптеров на момент релиза.
 
-Starting in January 2025, each monthly "Extended" release will match the previous month's "Compatible" release.
+Начиная с января 2025 года, каждый ежемесячный релиз "Расширенная" будет соответствовать релизу "Совместимая" за предыдущий месяц.
 
-For more information, see [release tracks](/docs/dbt-versions/cloud-release-tracks).
+Для получения дополнительной информации смотрите [версии релизов](/docs/dbt-versions/cloud-release-tracks).
 
-## December 2024
+## Декабрь 2024
 
-Release date: December 12, 2024
+Запланированный релиз: 11-13 декабря
 
-This release includes functionality from the following versions of dbt Core OSS:
-```
-dbt-core==1.9.0
-
-# shared interfaces
-dbt-adapters==1.10.4
-dbt-common==1.14.0
-dbt-semantic-interfaces==0.7.4
-
-# adapters
-dbt-athena==1.9.0
-dbt-bigquery==1.9.0
-dbt-databricks==1.9.0
-dbt-fabric==1.8.8
-dbt-postgres==1.9.0
-dbt-redshift==1.9.0
-dbt-snowflake==1.9.0
-dbt-spark==1.9.0
-dbt-synapse==1.8.2
-dbt-teradata==1.8.2
-dbt-trino==1.8.5
-```
-
-Changelogs:
-- [dbt-core 1.9.0](https://github.com/dbt-labs/dbt-core/blob/1.9.latest/CHANGELOG.md#dbt-core-190---december-09-2024)
-- [dbt-adapters 1.10.4](https://github.com/dbt-labs/dbt-adapters/blob/main/CHANGELOG.md#dbt-adapters-1104---november-11-2024)
-- [dbt-common 1.14.0](https://github.com/dbt-labs/dbt-common/blob/main/CHANGELOG.md)
-- [dbt-bigquery 1.9.0](https://github.com/dbt-labs/dbt-bigquery/blob/1.9.latest/CHANGELOG.md#dbt-bigquery-190---december-09-2024)
-- [dbt-databricks 1.9.0](https://github.com/databricks/dbt-databricks/blob/main/CHANGELOG.md#dbt-databricks-190-december-9-2024)
-- [dbt-fabric 1.8.8](https://github.com/microsoft/dbt-fabric/blob/v1.8.latest/CHANGELOG.md)
-- [dbt-postgres 1.9.0](https://github.com/dbt-labs/dbt-postgres/blob/main/CHANGELOG.md#dbt-postgres-190---december-09-2024)
-- [dbt-redshift 1.9.0](https://github.com/dbt-labs/dbt-redshift/blob/1.9.latest/CHANGELOG.md#dbt-redshift-190---december-09-2024)
-- [dbt-snowflake 1.9.0](https://github.com/dbt-labs/dbt-snowflake/blob/1.9.latest/CHANGELOG.md#dbt-snowflake-190---december-09-2024)
-- [dbt-spark 1.9.0](https://github.com/dbt-labs/dbt-spark/blob/1.9.latest/CHANGELOG.md#dbt-spark-190---december-10-2024)
-- [dbt-synapse 1.8.2](https://github.com/microsoft/dbt-synapse/blob/v1.8.latest/CHANGELOG.md)
-- [dbt-teradata 1.8.2](https://github.com/Teradata/dbt-teradata/releases/tag/v1.8.2)
-- [dbt-trino 1.8.5](https://github.com/starburstdata/dbt-trino/blob/master/CHANGELOG.md#dbt-trino-185---december-11-2024)
+Этот релиз будет включать функциональность из `dbt-core==1.9.0` и самые последние версии всех адаптеров, поддерживаемых в dbt Cloud. После завершения релиза "Совместимая" мы обновим информацию о:
+- точных версиях пакетов dbt с открытым исходным кодом
+- заметках журнала изменений, касающихся функциональности, специфичной для dbt Cloud

@@ -1,68 +1,67 @@
 ---
-title: "Upgrading to v1.1"
-description: New features and changes in dbt Core v1.1
+title: "Обновление до v1.1"
+description: Новые функции и изменения в dbt Core v1.1
 id: "upgrading-to-v1.1"
 displayed_sidebar: "docs"
 ---
 
-### Resources
+### Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.1.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.1.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-There are no breaking changes for code in dbt projects and packages. We are committed to providing backwards compatibility for all versions 1.x. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+Нет никаких разрушающих изменений для кода в проектах и пакетах dbt. Мы стремимся обеспечить обратную совместимость для всех версий 1.x. Если вы столкнетесь с ошибкой при обновлении, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### For maintainers of adapter plugins
+### Для поддерживающих адаптеры
 
-We have reworked the testing suite for adapter plugin functionality. For details on the new testing suite, refer to the "Test your adapter" step in the [Build, test, document, and promote adapters](/guides/adapter-creation) guide.
+Мы переработали тестовый пакет для функциональности адаптеров. Для получения подробной информации о новом тестовом пакете обратитесь к шагу "Протестируйте ваш адаптер" в руководстве [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 
-The abstract methods `get_response` and `execute` now only return `connection.AdapterReponse` in type hints. Previously, they could return a string. We encourage you to update your methods to return an object of class `AdapterResponse`, or implement a subclass specific to your adapter. This also gives you the opportunity to add fields specific to your adapter's query execution, such as `rows_affected` or `bytes_processed`.
+Абстрактные методы `get_response` и `execute` теперь возвращают только `connection.AdapterReponse` в подсказках типов. Ранее они могли возвращать строку. Мы рекомендуем вам обновить ваши методы, чтобы они возвращали объект класса `AdapterResponse`, или реализовать подкласс, специфичный для вашего адаптера. Это также дает вам возможность добавить поля, специфичные для выполнения запросов вашего адаптера, такие как `rows_affected` или `bytes_processed`.
 
-### For consumers of dbt artifacts (metadata)
+### Для пользователей артефактов dbt (метаданные)
 
-The manifest schema version will be updated to v5. The only change is to the default value of `config` for parsed nodes.
+Версия схемы манифеста будет обновлена до v5. Единственное изменение касается значения по умолчанию для `config` для разобранных узлов.
 
-For users of [state-based functionality](/reference/node-selection/syntax#about-node-selection), such as the `state:modified` selector, recall that:
+Для пользователей [функциональности на основе состояния](/reference/node-selection/syntax#about-node-selection), такой как селектор `state:modified`, помните, что:
 
-> The `--state` artifacts must be of schema versions that are compatible with the currently running dbt version.
+> Артефакты `--state` должны быть совместимы с версиями схем, которые соответствуют текущей версии dbt.
 
-If you have two jobs, whereby one job compares or defers to artifacts produced by the other, you'll need to upgrade both at the same time. If there's a mismatch, dbt will alert you with this error message:
+Если у вас есть две задачи, одна из которых сравнивает или ссылается на артефакты, созданные другой, вам нужно будет обновить обе одновременно. Если произойдет несоответствие, dbt уведомит вас об этом сообщением об ошибке:
 
 ```
-Expected a schema version of "https://schemas.getdbt.com/dbt/manifest/v5.json" in <state-path>/manifest.json, but found "https://schemas.getdbt.com/dbt/manifest/v4.json". Are you running with a different version of dbt?
+Ожидалась версия схемы "https://schemas.getdbt.com/dbt/manifest/v5.json" в <state-path>/manifest.json, но найдена "https://schemas.getdbt.com/dbt/manifest/v4.json". Вы используете другую версию dbt?
 ```
 
-## New and changed documentation
+## Новая и измененная документация
 
-[**Incremental models**](/docs/build/incremental-models) can now accept a list of multiple columns as their `unique_key`, for models that need a combination of columns to uniquely identify each row. This is supported by the most common <Term id="data-warehouse">data warehouses</Term>, for incremental strategies that make use of the `unique_key` config (`merge` and `delete+insert`).
+[**Инкрементальные модели**](/docs/build/incremental-models) теперь могут принимать список нескольких столбцов в качестве `unique_key`, для моделей, которым необходимо сочетание столбцов для уникальной идентификации каждой строки. Это поддерживается большинством распространенных <Term id="data-warehouse">хранилищ данных</Term> для инкрементальных стратегий, использующих конфигурацию `unique_key` (`merge` и `delete+insert`).
 
-[**Generic tests**](/reference/resource-properties/data-tests) can define custom names. This is useful to "prettify" the synthetic name that dbt applies automatically. It's needed to disambiguate the case when the same generic test is defined multiple times with different configurations.
+[**Общие тесты**](/reference/resource-properties/data-tests) могут определять пользовательские имена. Это полезно для "украшения" синтетического имени, которое dbt применяет автоматически. Это необходимо для устранения неоднозначности в случае, если один и тот же общий тест определяется несколько раз с разными конфигурациями.
 
-[**Sources**](/reference/source-properties) can define configuration inline with other `.yml` properties, just like other resource types. The only supported config is `enabled`; you can use this to dynamically enable/disable sources based on environment or package variables.
+[**Источники**](/reference/source-properties) могут определять конфигурацию встраиваемым образом с другими свойствами `.yml`, так же как и другие типы ресурсов. Единственной поддерживаемой конфигурацией является `enabled`; вы можете использовать это для динамического включения/выключения источников в зависимости от переменных окружения или пакетов.
 
-### Advanced and experimental functionality
+### Расширенная и экспериментальная функциональность
 
-**Fresh Rebuilds.** There's a new _experimental_ selection method in town: [`source_status:fresher`](/reference/node-selection/methods#source_status). Much like the `state:` and `result` methods, the goal is to use dbt metadata to run your DAG more efficiently. If dbt has access to previous and current results of `dbt source freshness` (the `sources.json` artifact), dbt can compare them to determine which sources have loaded new data, and select only resources downstream of "fresher" sources. Read more in [Understanding State](/reference/node-selection/syntax#about-node-selection) and [CI/CD in dbt Cloud](/docs/deploy/continuous-integration).
+**Свежие перестройки.** Появился новый _экспериментальный_ метод выбора: [`source_status:fresher`](/reference/node-selection/methods#source_status). Подобно методам `state:` и `result`, цель состоит в том, чтобы использовать метаданные dbt для более эффективного выполнения вашего DAG. Если dbt имеет доступ к предыдущим и текущим результатам `dbt source freshness` (артефакт `sources.json`), dbt может сравнить их, чтобы определить, какие источники загрузили новые данные, и выбрать только ресурсы, находящиеся ниже по потоку от "свежих" источников. Узнайте больше в [Понимание состояния](/reference/node-selection/syntax#about-node-selection) и [CI/CD в dbt Cloud](/docs/deploy/continuous-integration).
 
+[**Функции dbt-Jinja**](/reference/dbt-jinja-functions) имеют новую целевую страницу и двух новых участников:
+- [`print`](/reference/dbt-jinja-functions/print) предоставляет функцию Python `print()`. Она может использоваться как альтернатива `log()`, и вместе с конфигурацией `QUIET` для сложных макро-ориентированных рабочих процессов.
+- [`selected_resources`](/reference/dbt-jinja-functions/selected_resources) предоставляет в режиме выполнения список узлов DAG, выбранных текущей задачей.
 
-[**dbt-Jinja functions**](/reference/dbt-jinja-functions) have a new landing page, and two new members:
-- [`print`](/reference/dbt-jinja-functions/print) exposes the Python `print()` function. It can be used as an alternative to `log()`, and together with the `QUIET` config, for advanced macro-driven workflows.
-- [`selected_resources`](/reference/dbt-jinja-functions/selected_resources) exposes, at runtime, the list of DAG nodes selected by the current task.
+[**Глобальные конфигурации**](/reference/global-configs/about-global-configs) включают несколько новых дополнений:
 
-[**Global configs**](/reference/global-configs/about-global-configs) include some new additions:
+- `QUIET` и `NO_PRINT`, для управления тем, какие сообщения журнала dbt выводит в терминал. Для использования в сложных макро-ориентированных рабочих процессах, таких как [codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/).
+- `CACHE_SELECTED_ONLY` — это _экспериментальная_ конфигурация, которая может значительно ускорить подготовку dbt к запуску, в случаях, когда вы запускаете только несколько моделей из большого проекта, который управляет многими схемами.
 
-- `QUIET` and `NO_PRINT`, to control which log messages dbt prints to terminal output. For use in advanced macro-driven workflows, such as [codegen](https://hub.getdbt.com/dbt-labs/codegen/latest/).
-- `CACHE_SELECTED_ONLY` is an _experimental_ config that can significantly speed up dbt's start-of-run preparations, in cases where you're running only a few models from a large project that manages many schemas.
+### Для пользователей конкретных адаптеров
 
-### For users of specific adapters
+**dbt-bigquery** добавил поддержку <Term id="grain">более детальной</Term> конфигурации времени ожидания запросов и повторных попыток при определении вашего [профиля подключения](/docs/core/connect-data-platform/bigquery-setup).
 
-**dbt-bigquery** added Support for <Term id="grain">finer-grained</Term> configuration of query timeout and retry when defining your [connection profile](/docs/core/connect-data-platform/bigquery-setup).
+**dbt-spark** добавил поддержку [`метода подключения session`](/docs/core/connect-data-platform/spark-setup#session) для использования с сессией pySpark, чтобы поддерживать быструю итерацию при разработке сложной или экспериментальной функциональности. Этот метод подключения не рекомендуется для новых пользователей и не поддерживается в dbt Cloud.
 
-**dbt-spark** added support for a [`session` connection method](/docs/core/connect-data-platform/spark-setup#session), for use with a pySpark session, to support rapid iteration when developing advanced or experimental functionality. This connection method is not recommended for new users, and it is not supported in dbt Cloud.
+### Зависимости
 
-### Dependencies
-
-[Python compatibility](/faqs/Core/install-python-compatibility): dbt Core officially supports Python 3.10
+[Совместимость с Python](/faqs/Core/install-python-compatibility): dbt Core официально поддерживает Python 3.10.

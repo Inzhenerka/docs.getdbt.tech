@@ -1,55 +1,53 @@
 ---
-title: "dbt Semantic Layer"
+title: "Семантический уровень dbt"
 id: dbt-sl
-description: "Learn how the dbt Semantic Layer enables data teams to centrally define and query metrics."
-sidebar_label: "About the dbt Semantic Layer"
-tags: [Semantic Layer]
+description: "Узнайте, как семантический уровень dbt позволяет командам данных централизованно определять и запрашивать метрики."
+sidebar_label: "О семантическом уровне dbt"
+tags: [Семантический уровень]
 hide_table_of_contents: false
 pagination_next: "guides/sl-snowflake-qs"
 pagination_prev: null
 ---
 
-The dbt Semantic Layer, powered by [MetricFlow](/docs/build/about-metricflow), simplifies the process of defining and using critical business metrics, like `revenue` in the modeling layer (your dbt project). By centralizing metric definitions, data teams can ensure consistent self-service access to these metrics in downstream data tools and applications. The dbt Semantic Layer eliminates duplicate coding by allowing data teams to define metrics on top of existing models and automatically handles data joins. 
+Семантический уровень dbt, работающий на основе [MetricFlow](/docs/build/about-metricflow), упрощает процесс определения и использования критически важных бизнес-метрик, таких как `revenue`, на уровне моделирования (ваш проект dbt). Централизуя определения метрик, команды данных могут обеспечить единообразный доступ к этим метрикам в инструментах и приложениях для работы с данными. Семантический уровень dbt устраняет дублирование кода, позволяя командам данных определять метрики на основе существующих моделей и автоматически обрабатывая соединения данных.
 
-Moving metric definitions out of the BI layer and into the modeling layer allows data teams to feel confident that different business units are working from the same metric definitions, regardless of their tool of choice. If a metric definition changes in dbt, it’s refreshed everywhere it’s invoked and creates consistency across all applications. To ensure secure access control, the dbt Semantic Layer implements robust [access permissions](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) mechanisms.
+Перемещение определений метрик из уровня BI на уровень моделирования позволяет командам данных быть уверенными в том, что разные бизнес-единицы работают с одними и теми же определениями метрик, независимо от выбранного инструмента. Если определение метрики изменяется в dbt, оно обновляется везде, где используется, создавая согласованность во всех приложениях. Для обеспечения безопасного контроля доступа семантический уровень dbt реализует надежные механизмы [управления доступом](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer).
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-concept.png" width="80%" title="This diagram shows how the dbt Semantic Layer works with your data stack." />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-concept.png" width="80%" title="Эта диаграмма показывает, как семантический уровень dbt работает с вашим стеком данных." />
 
-Refer to the [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs) or [Why we need a universal semantic layer](https://www.getdbt.com/blog/universal-semantic-layer/)  blog post to learn more.
+Обратитесь к [Часто задаваемым вопросам о семантическом уровне dbt](/docs/use-dbt-semantic-layer/sl-faqs) или к блогу [Почему нам нужен универсальный семантический уровень](https://www.getdbt.com/blog/universal-semantic-layer/), чтобы узнать больше.
 
-## Get started with the dbt Semantic Layer
+## Начало работы с семантическим уровнем dbt
 
-<!-- this partial lives here: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Use it on diff pages and to tailor the message depending which instance can access the SL and what product lifecycle we're in. -->
+<!-- этот фрагмент находится здесь: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Используйте его на разных страницах и адаптируйте сообщение в зависимости от того, какой экземпляр может получить доступ к SL и на каком этапе жизненного цикла продукта мы находимся. -->
 
 import Features from '/snippets/_sl-plan-info.md'
 
 <Features
-product="dbt Semantic Layer"
-plan="dbt Cloud Team or Enterprise"
+product="Семантический уровень dbt"
+plan="dbt Cloud Team или Enterprise"
 />
 
-This page points to various resources available to help you understand, configure, deploy, and integrate the dbt Semantic Layer. The following sections contain links to specific pages that explain each aspect in detail. Use these links to navigate directly to the information you need, whether you're setting up the Semantic Layer for the first time, deploying metrics, or integrating with downstream tools.
+Эта страница указывает на различные ресурсы, доступные для того, чтобы помочь вам понять, настроить, развернуть и интегрировать семантический уровень dbt. В следующих разделах содержатся ссылки на конкретные страницы, которые подробно объясняют каждый аспект. Используйте эти ссылки, чтобы перейти непосредственно к необходимой информации, будь то настройка семантического уровня в первый раз, развертывание метрик или интеграция с инструментами нижнего уровня.
 
+Обратитесь к следующим ресурсам, чтобы начать работу с семантическим уровнем dbt:
+- [Быстрый старт с семантическим уровнем dbt Cloud](/guides/sl-snowflake-qs) &mdash; Создайте и определите метрики, настройте семантический уровень dbt и запрашивайте их, используя наши первоклассные интеграции.
+- [Часто задаваемые вопросы о семантическом уровне dbt](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Узнайте ответы на часто задаваемые вопросы о семантическом уровне dbt, такие как доступность, интеграции и многое другое.
 
-Refer to the following resources to get started with the dbt Semantic Layer:
-- [Quickstart with the dbt Cloud Semantic Layer](/guides/sl-snowflake-qs) &mdash; Build and define metrics, set up the dbt Semantic Layer, and query them using our first-class integrations.
-- [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Discover answers to frequently asked questions about the dbt Semantic Layer, such as availability, integrations, and more.
+## Настройка семантического уровня dbt
 
-## Configure the dbt Semantic Layer
+Следующие ресурсы предоставляют информацию о том, как настроить семантический уровень dbt:
+- [Настройка семантического уровня dbt](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Узнайте, как настроить семантический уровень dbt в dbt Cloud с помощью интуитивно понятной навигации.
+- [Архитектура](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Изучите мощные компоненты, которые составляют семантический уровень dbt.
 
-The following resources provide information on how to configure the dbt Semantic Layer:
-- [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Learn how to set up the dbt Semantic Layer in dbt Cloud using intuitive navigation.
-- [Architecture](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Explore the powerful components that make up the dbt Semantic Layer.
+## Развертывание метрик
+Этот раздел предоставляет информацию о том, как развернуть семантический уровень dbt и материализовать ваши метрики:
+- [Разверните свой семантический уровень](/docs/use-dbt-semantic-layer/deploy-sl) &mdash; Запустите задачу dbt Cloud для развертывания семантического уровня dbt и материализации ваших метрик.
+- [Напишите запросы с помощью экспортов](/docs/use-dbt-semantic-layer/exports) &mdash; Используйте экспорты для написания часто используемых запросов непосредственно в вашей платформе данных по расписанию.
+- [Кэшируйте общие запросы](/docs/use-dbt-semantic-layer/sl-cache) &mdash; Используйте кэширование результатов и декларативное кэширование для общих запросов, чтобы ускорить производительность и снизить вычислительные затраты на запросы.
 
-## Deploy metrics
-This section provides information on how to deploy the dbt Semantic Layer and materialize your metrics:
-- [Deploy your Semantic Layer](/docs/use-dbt-semantic-layer/deploy-sl) &mdash; Run a dbt Cloud job to deploy the dbt Semantic Layer and materialize your metrics.
-- [Write queries with exports](/docs/use-dbt-semantic-layer/exports) &mdash; Use exports to write commonly used queries directly within your data platform, on a schedule.
-- [Cache common queries](/docs/use-dbt-semantic-layer/sl-cache) &mdash; Leverage result caching and declarative caching for common queries to speed up performance and reduce query computation.
-
-## Consume metrics and integrate
-Consume metrics and integrate the dbt Semantic Layer with downstream tools and applications:
-- [Consume metrics](/docs/use-dbt-semantic-layer/consume-metrics) &mdash; Query and consume metrics in downstream tools and applications using the dbt Semantic Layer.
-- [Available integrations](/docs/cloud-integrations/avail-sl-integrations) &mdash; Review a wide range of partners you can integrate and query with the dbt Semantic Layer.
-- [dbt Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) &mdash; Use the dbt Semantic Layer APIs to query metrics in downstream tools for consistent, reliable data metrics.
-
+## Потребление метрик и интеграция
+Потребляйте метрики и интегрируйте семантический уровень dbt с инструментами и приложениями нижнего уровня:
+- [Потребление метрик](/docs/use-dbt-semantic-layer/consume-metrics) &mdash; Запрашивайте и потребляйте метрики в инструментах и приложениях нижнего уровня, используя семантический уровень dbt.
+- [Доступные интеграции](/docs/cloud-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким спектром партнеров, с которыми вы можете интегрироваться и запрашивать данные с помощью семантического уровня dbt.
+- [API семантического уровня dbt](/docs/dbt-cloud-apis/sl-api-overview) &mdash; Используйте API семантического уровня dbt для запроса метрик в инструментах нижнего уровня для получения согласованных и надежных данных.

@@ -1,71 +1,71 @@
 ---
-title: "Advanced CI"
+title: "Расширенная CI"
 id: "advanced-ci"
-sidebar_label: "Advanced CI"
-description: "Advanced CI enables developers to compare changes by demonstrating the changes the code produces."
+sidebar_label: "Расширенная CI"
+description: "Расширенная CI позволяет разработчикам сравнивать изменения, демонстрируя изменения, которые вносит код."
 image: /img/docs/dbt-cloud/example-ci-compare-changes-tab.png
 ---
 
-# Advanced CI <Lifecycle status="enterprise"/>
+# Расширенная CI <Lifecycle status="enterprise"/>
 
-[Continuous integration workflows](/docs/deploy/continuous-integration) help increase the governance and improve the quality of the data. Additionally for these CI jobs, you can use Advanced CI features, such as [compare changes](#compare-changes), that provide details about the changes between what's currently in your production environment and the pull request's latest commit, giving you observability into how data changes are affected by your code changes. By analyzing the data changes that code changes produce, you can ensure you're always shipping trustworthy data products as you're developing. 
+[Рабочие процессы непрерывной интеграции](/docs/deploy/continuous-integration) помогают повысить управление и улучшить качество данных. Кроме того, для этих CI задач вы можете использовать функции Расширенной CI, такие как [сравнение изменений](#compare-changes), которые предоставляют информацию о различиях между тем, что в настоящее время находится в вашей производственной среде, и последним коммитом из запроса на слияние, предоставляя вам возможность наблюдать, как изменения в данных зависят от изменений в коде. Анализируя изменения в данных, которые вносят изменения в код, вы можете убедиться, что всегда поставляете надежные продукты данных в процессе разработки.
 
-:::info How to enable this feature
+:::info Как включить эту функцию
 
-You can opt into Advanced CI in dbt Cloud. Please refer to [Account access to Advance CI features](/docs/cloud/account-settings#account-access-to-advanced-ci-features) to learn how enable it in your dbt Cloud account.
-
-:::
-
-:::tip More features
-dbt Labs plans to provide additional Advanced CI features in the near future. More info coming soon.
+Вы можете активировать Расширенную CI в dbt Cloud. Пожалуйста, обратитесь к [Доступу к функциям Расширенной CI](/docs/cloud/account-settings#account-access-to-advanced-ci-features), чтобы узнать, как включить ее в вашей учетной записи dbt Cloud.
 
 :::
 
-## Prerequisites
-- You have a dbt Cloud Enterprise account.
-- You have [Advance CI features](/docs/cloud/account-settings#account-access-to-advanced-features) enabled.
-- You use a supported data platform: BigQuery, Databricks, Postgres, or Snowflake. Support for additional data platforms coming soon.
+:::tip Больше функций
+dbt Labs планирует предоставить дополнительные функции Расширенной CI в ближайшем будущем. Скоро появится больше информации.
 
-## Compare changes feature {#compare-changes}
+:::
 
-For [CI jobs](/docs/deploy/ci-jobs) that have the [**dbt compare** option enabled](/docs/deploy/ci-jobs#set-up-ci-jobs), dbt Cloud compares the changes between the last applied state of the production environment (defaulting to deferral for lower compute costs) and the latest changes from the pull request, whenever a pull request is opened or new commits are pushed.  
+## Предварительные требования
+- У вас есть учетная запись dbt Cloud Enterprise.
+- У вас включены [функции Расширенной CI](/docs/cloud/account-settings#account-access-to-advanced-features).
+- Вы используете поддерживаемую платформу данных: BigQuery, Databricks, Postgres или Snowflake. Поддержка дополнительных платформ данных будет добавлена в ближайшее время.
 
-dbt reports the comparison differences in:
+## Функция сравнения изменений {#compare-changes}
 
-- **dbt Cloud** &mdash; Shows the changes (if any) to the data's primary keys, rows, and columns in the [Compare tab](/docs/deploy/run-visibility#compare-tab) from the [Job run details](/docs/deploy/run-visibility#job-run-details) page. 
-- **The pull request from your Git provider** &mdash; Shows a summary of the changes as a Git comment.
+Для [CI задач](/docs/deploy/ci-jobs), у которых включена [опция **dbt compare**](/docs/deploy/ci-jobs#set-up-ci-jobs), dbt Cloud сравнивает изменения между последним примененным состоянием производственной среды (по умолчанию с отсрочкой для снижения вычислительных затрат) и последними изменениями из запроса на слияние, всякий раз, когда открывается запрос на слияние или добавляются новые коммиты.
 
-<Lightbox src="/img/docs/dbt-cloud/example-ci-compare-changes-tab.png" width="85%" title="Example of the Compare tab" />
+dbt сообщает о различиях в сравнении в:
 
-### Optimizing comparisons
+- **dbt Cloud** &mdash; Показывает изменения (если таковые имеются) в основных ключах данных, строках и столбцах на вкладке [Сравнение](/docs/deploy/run-visibility#compare-tab) на странице [Детали выполнения задания](/docs/deploy/run-visibility#job-run-details).
+- **Запросе на слияние от вашего Git-поставщика** &mdash; Показывает сводку изменений в виде комментария Git.
 
-When an [`event_time`](/reference/resource-configs/event-time) column is specified on your model, compare changes can optimize comparisons by using only the overlapping timeframe (meaning the timeframe exists in both the CI and production environment), helping you avoid incorrect row-count changes and return results faster.
+<Lightbox src="/img/docs/dbt-cloud/example-ci-compare-changes-tab.png" width="85%" title="Пример вкладки Сравнение" />
 
-This is useful in scenarios like:
-- **Subset of data in CI** &mdash; When CI builds only a [subset of data](/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) (like the most recent 7 days), compare changes would interpret the excluded data as "deleted rows." Configuring `event_time` allows you to avoid this issue by limiting comparisons to the overlapping timeframe, preventing false alerts about data deletions that are just filtered out in CI.
-- **Fresher data in CI than in production** &mdash; When your CI job includes fresher data than production (because it has run more recently), compare changes would flag the additional rows as "new" data, even though they’re just fresher data in CI. With `event_time` configured, the comparison only includes the shared timeframe and correctly reflects actual changes in the data.
+### Оптимизация сравнений
 
-<Lightbox src="/img/docs/deploy/apples_to_apples.png" width="90%" title="event_time ensures the same time-slice of data is accurately compared between your CI and production environments." />
+Когда в вашей модели указана колонка [`event_time`](/reference/resource-configs/event-time), сравнение изменений может оптимизировать сравнения, используя только перекрывающееся время (то есть время, которое существует как в CI, так и в производственной среде), что помогает избежать неправильных изменений количества строк и возвращать результаты быстрее.
 
-## About the cached data
+Это полезно в таких сценариях, как:
+- **Подмножество данных в CI** &mdash; Когда CI строит только [подмножество данных](/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) (например, за последние 7 дней), сравнение изменений будет интерпретировать исключенные данные как "удаленные строки". Настройка `event_time` позволяет избежать этой проблемы, ограничивая сравнения перекрывающимся временем, предотвращая ложные сигналы о удалении данных, которые просто отфильтрованы в CI.
+- **Свежие данные в CI, чем в производстве** &mdash; Когда ваша CI задача включает более свежие данные, чем в производственной среде (поскольку она выполнялась более недавно), сравнение изменений будет помечать дополнительные строки как "новые" данные, даже если это просто более свежие данные в CI. С настроенным `event_time` сравнение включает только общее время и правильно отражает фактические изменения в данных.
 
-After [comparing changes](#compare-changes), dbt Cloud stores a cache of no more than 100 records for each modified model for preview purposes. By caching this data, you can view the examples of changed data without rerunning the comparison against the data warehouse every time (optimizing for lower compute costs). To display the changes, dbt Cloud uses a cached version of a sample of the data records. These data records are queried from the database using the connection configuration (such as user, role, service account, and so on) that's set in the CI job's environment. 
+<Lightbox src="/img/docs/deploy/apples_to_apples.png" width="90%" title="event_time гарантирует, что один и тот же временной срез данных точно сравнивается между вашими CI и производственными средами." />
 
-You control what data to use. This may include synthetic data if pre-production or development data is heavily regulated or sensitive. 
+## О кэшированных данных
 
-- The selected data is cached on dbt Labs' systems for up to 30 days. No data is retained on dbt Labs' systems beyond this period.
-- The cache is encrypted and stored in an Amazon S3 or Azure blob storage in your account’s region. 
-- dbt Labs will not access cached data from Advanced CI for its benefit and the data is only used to provide services as directed by you. 
-- Third-party subcontractors, other than storage subcontractors, will not have access to the cached data.
+После [сравнения изменений](#compare-changes) dbt Cloud хранит кэш не более 100 записей для каждой измененной модели для предварительного просмотра. Кэшируя эти данные, вы можете просматривать примеры измененных данных без повторного выполнения сравнения с хранилищем данных каждый раз (оптимизируя для снижения вычислительных затрат). Для отображения изменений dbt Cloud использует кэшированную версию выборки записей данных. Эти записи данных запрашиваются из базы данных с использованием конфигурации подключения (такой как пользователь, роль, сервисный аккаунт и т. д.), которая установлена в среде CI задачи.
 
-If you access a CI job run that's more than 30 days old, you will not be able to see the comparison results. Instead, a message will appear indicating that the data has expired.
+Вы контролируете, какие данные использовать. Это может включать синтетические данные, если данные предшествующей версии или разработки сильно регулируются или являются конфиденциальными.
 
-<Lightbox src="/img/docs/deploy/compare-expired.png" width="60%" title="Example of message about expired data in the Compare tab" />
+- Выбранные данные кэшируются в системах dbt Labs на срок до 30 дней. Никакие данные не сохраняются в системах dbt Labs после этого периода.
+- Кэш зашифрован и хранится в Amazon S3 или Azure blob storage в регионе вашей учетной записи.
+- dbt Labs не будет получать доступ к кэшированным данным из Расширенной CI в своих интересах, и данные используются только для предоставления услуг по вашему указанию.
+- Третьи лица, кроме подрядчиков по хранению, не будут иметь доступа к кэшированным данным.
 
-## Connection permissions
+Если вы получите доступ к выполнению CI задачи, которое старше 30 дней, вы не сможете увидеть результаты сравнения. Вместо этого появится сообщение, указывающее на то, что данные истекли.
 
-The compare changes feature uses the same credentials as the CI job, as defined in the CI job’s environment. The dbt Cloud administrator must ensure that client CI credentials are appropriately restricted since all customer's account users will be able to view the comparison results and the cached data.
+<Lightbox src="/img/docs/deploy/compare-expired.png" width="60%" title="Пример сообщения о просроченных данных на вкладке Сравнение" />
 
-If using dynamic data masking in the data warehouse, the cached data will no longer be dynamically masked in the Advanced CI output, depending on the permissions of the users who view it. dbt Labs recommends limiting user access to unmasked data or considering using synthetic data for the Advanced CI testing functionality.
+## Разрешения подключения
 
-<Lightbox src="/img/docs/deploy/compare-credentials.png" width="60%" title="Example of credentials in the user settings" />
+Функция сравнения изменений использует те же учетные данные, что и CI задача, как определено в среде CI задачи. Администратор dbt Cloud должен убедиться, что учетные данные клиента CI должным образом ограничены, поскольку все пользователи учетной записи клиента смогут просматривать результаты сравнения и кэшированные данные.
+
+Если используется динамическое маскирование данных в хранилище данных, кэшированные данные больше не будут динамически замаскированы в выводе Расширенной CI, в зависимости от разрешений пользователей, которые их просматривают. dbt Labs рекомендует ограничить доступ пользователей к немаскированным данным или рассмотреть возможность использования синтетических данных для функциональности тестирования Расширенной CI.
+
+<Lightbox src="/img/docs/deploy/compare-credentials.png" width="60%" title="Пример учетных данных в настройках пользователя" />

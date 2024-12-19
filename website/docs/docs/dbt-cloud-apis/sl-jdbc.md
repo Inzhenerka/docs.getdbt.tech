@@ -1,64 +1,64 @@
 ---
 title: "JDBC"
 id: sl-jdbc
-description: "Integrate and use the JDBC API to query your metrics."
-tags: [Semantic Layer, API]
+description: "Интеграция и использование API JDBC для запроса ваших метрик."
+tags: [Семантический уровень, API]
 ---
 
-The dbt Semantic Layer Java Database Connectivity (JDBC) API enables users to query metrics and dimensions using the JDBC protocol, while also providing standard metadata functionality. 
+API Java Database Connectivity (JDBC) семантического уровня dbt позволяет пользователям запрашивать метрики и измерения с использованием протокола JDBC, а также предоставляет стандартные функции метаданных.
 
-A JDBC driver is a software component enabling a Java application to interact with a data platform. Here's some more information about our JDBC API:
+Драйвер JDBC — это программный компонент, позволяющий Java-приложению взаимодействовать с платформой данных. Вот дополнительная информация о нашем API JDBC:
 
-- The Semantic Layer JDBC API utilizes the open-source JDBC driver with ArrowFlight SQL protocol.
-- You can download the JDBC driver from [Maven](https://search.maven.org/remotecontent?filepath=org/apache/arrow/flight-sql-jdbc-driver/12.0.0/flight-sql-jdbc-driver-12.0.0.jar). 
-- The dbt Semantic Layer supports ArrowFlight SQL driver version 12.0.0 and higher. 
-- You can embed the driver into your application stack as needed, and you can use dbt Labs' [example project](https://github.com/dbt-labs/example-semantic-layer-clients) for reference.
-- If you’re a partner or user building a homegrown application, you’ll need to install an AWS root CA to the Java Trust [documentation](https://www.amazontrust.com/repository/) (specific to Java and JDBC call).
+- API JDBC семантического уровня использует драйвер JDBC с открытым исходным кодом с протоколом ArrowFlight SQL.
+- Вы можете скачать драйвер JDBC с [Maven](https://search.maven.org/remotecontent?filepath=org/apache/arrow/flight-sql-jdbc-driver/12.0.0/flight-sql-jdbc-driver-12.0.0.jar).
+- Семантический уровень dbt поддерживает драйвер ArrowFlight SQL версии 12.0.0 и выше.
+- Вы можете встроить драйвер в свой стек приложений по мере необходимости, и вы можете использовать [пример проекта](https://github.com/dbt-labs/example-semantic-layer-clients) от dbt Labs в качестве справки.
+- Если вы партнер или пользователь, создающий собственное приложение, вам нужно будет установить корневой сертификат AWS CA в документацию по Java Trust [документации](https://www.amazontrust.com/repository/) (специфично для Java и вызовов JDBC).
 
-dbt Labs partners can use the JDBC API to build integrations in their tools with the dbt Semantic Layer
+Партнеры dbt Labs могут использовать API JDBC для создания интеграций в своих инструментах с семантическим уровнем dbt.
 
-## Using the JDBC API
+## Использование API JDBC
 
-If you are a dbt user or partner with access to dbt Cloud and the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), you can [setup](/docs/use-dbt-semantic-layer/setup-sl) and test this API with data from your own instance by configuring the Semantic Layer and obtaining the right JDBC connection parameters described in this document.
+Если вы являетесь пользователем dbt или партнером с доступом к dbt Cloud и [семантическому уровню dbt](/docs/use-dbt-semantic-layer/dbt-sl), вы можете [настроить](/docs/use-dbt-semantic-layer/setup-sl) и протестировать этот API с данными из вашего собственного экземпляра, настроив семантический уровень и получив правильные параметры подключения JDBC, описанные в этом документе.
 
-You *may* be able to use our JDBC API with tools that do not have an official integration with the dbt Semantic Layer. If the tool you use allows you to write SQL and either supports a generic JDBC driver option (such as DataGrip) or supports Dremio and uses ArrowFlightSQL driver version 12.0.0 or higher, you can access the Semantic Layer API.
+Вы *можете* использовать наш API JDBC с инструментами, которые не имеют официальной интеграции с семантическим уровнем dbt. Если используемый вами инструмент позволяет писать SQL и поддерживает опцию общего драйвера JDBC (например, DataGrip) или поддерживает Dremio и использует драйвер ArrowFlightSQL версии 12.0.0 или выше, вы можете получить доступ к API семантического уровня.
 
-Refer to [Get started with the dbt Semantic Layer](/guides/sl-snowflake-qs) for more info.
+Смотрите [Начало работы с семантическим уровнем dbt](/guides/sl-snowflake-qs) для получения дополнительной информации.
 
-Note that the dbt Semantic Layer API doesn't support `ref` to call dbt objects. Instead, use the complete qualified table name. If you're using dbt macros at query time to calculate your metrics, you should move those calculations into your Semantic Layer metric definitions as code.
+Обратите внимание, что API семантического уровня dbt не поддерживает `ref` для вызова объектов dbt. Вместо этого используйте полное квалифицированное имя таблицы. Если вы используете макросы dbt во время запроса для расчета ваших метрик, вам следует переместить эти расчеты в определения метрик семантического уровня в виде кода.
 
-## Authentication
+## Аутентификация
 
-dbt Cloud authorizes requests to the dbt Semantic Layer API. You need to provide an environment ID, host, and [service account tokens](/docs/dbt-cloud-apis/service-tokens).
+dbt Cloud авторизует запросы к API семантического уровня dbt. Вам необходимо предоставить идентификатор окружения, хост и [токены сервисной учетной записи](/docs/dbt-cloud-apis/service-tokens).
 
-## Connection parameters
+## Параметры подключения
 
-The JDBC connection requires a few different connection parameters. 
+Подключение JDBC требует несколько различных параметров подключения.
 
-This is an example of a URL connection string and the individual components: 
+Вот пример строки подключения URL и отдельных компонентов:
 
 ```
 jdbc:arrow-flight-sql://semantic-layer.cloud.getdbt.com:443?&environmentId=202339&token=SERVICE_TOKEN
 ```
 
-| JDBC parameter | Description | Example |
+| Параметр JDBC | Описание | Пример |
 | -------------- | ----------- | ------- |
-| `jdbc:arrow-flight-sql://` | The protocol for the JDBC driver.  | `jdbc:arrow-flight-sql://` |
-| `semantic-layer.cloud.getdbt.com` | The [access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your account's dbt Cloud region. You must always add the `semantic-layer` prefix before the access URL.  | For dbt Cloud deployment hosted in North America, use `semantic-layer.cloud.getdbt.com`  |
-| `environmentId` | The unique identifier for the dbt production environment, you can retrieve this from the dbt Cloud URL <br /> when you navigate to **Environments** under **Deploy**. | If your URL ends with `.../environments/222222`, your `environmentId` is `222222`<br /><br />   |
-| `SERVICE_TOKEN` | dbt Cloud [service token](/docs/dbt-cloud-apis/service-tokens) with “Semantic Layer Only” and "Metadata Only" permissions. Create a new service token on the **Account Settings** page. | `token=SERVICE_TOKEN` |
+| `jdbc:arrow-flight-sql://` | Протокол для драйвера JDBC. | `jdbc:arrow-flight-sql://` |
+| `semantic-layer.cloud.getdbt.com` | [URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для региона dbt Cloud вашего аккаунта. Вы всегда должны добавлять префикс `semantic-layer` перед URL доступа. | Для развертывания dbt Cloud, размещенного в Северной Америке, используйте `semantic-layer.cloud.getdbt.com` |
+| `environmentId` | Уникальный идентификатор для производственной среды dbt, вы можете получить его из URL dbt Cloud <br /> когда вы переходите в **Environments** под **Deploy**. | Если ваш URL заканчивается на `.../environments/222222`, ваш `environmentId` равен `222222`<br /><br />   |
+| `SERVICE_TOKEN` | dbt Cloud [токен сервиса](/docs/dbt-cloud-apis/service-tokens) с разрешениями "Только семантический уровень" и "Только метаданные". Создайте новый токен сервиса на странице **Настройки аккаунта**. | `token=SERVICE_TOKEN` |
 
-*Note &mdash; If you're testing locally on a tool like DataGrip, you may also have to provide the following variable at the end or beginning of the JDBC URL `&disableCertificateVerification=true`.
+*Примечание &mdash; Если вы тестируете локально на инструменте, таком как DataGrip, вам также может потребоваться предоставить следующую переменную в конце или начале URL JDBC `&disableCertificateVerification=true`.
 
-## Querying the API for metric metadata
+## Запрос метаданных метрик через API
 
-The Semantic Layer JDBC API has built-in metadata calls which can provide a user with information about their metrics and dimensions.
+API JDBC семантического уровня имеет встроенные вызовы метаданных, которые могут предоставить пользователю информацию о его метриках и измерениях.
 
-Expand the following toggles for examples and metadata commands:
+Разверните следующие переключатели для примеров и команд метаданных:
 
-<Expandable alt_header="Fetch defined metrics">
+<Expandable alt_header="Получить определенные метрики">
 
-You can use this query to fetch all defined metrics in your dbt project:
+Вы можете использовать этот запрос, чтобы получить все определенные метрики в вашем проекте dbt:
 
 ```bash
 select * from {{ 
@@ -67,11 +67,11 @@ select * from {{
 ```
 </Expandable>
 
-<Expandable alt_header="Fetch dimension for a metric">
+<Expandable alt_header="Получить измерение для метрики">
 
-You can use this query to fetch all dimensions for a metric.
+Вы можете использовать этот запрос, чтобы получить все измерения для метрики.
 
-Note, metrics is a required argument that lists one or multiple metrics in it.
+Обратите внимание, что метрики являются обязательным аргументом, который перечисляет одну или несколько метрик.
 
 ```bash
 select * from {{ 
@@ -79,11 +79,11 @@ select * from {{
 ```
 </Expandable>
 
-<Expandable alt_header="Fetch dimension values">
+<Expandable alt_header="Получить значения измерений">
 
-You can use this query to fetch dimension values for one or multiple metrics and a single dimension.
+Вы можете использовать этот запрос, чтобы получить значения измерений для одной или нескольких метрик и одного измерения.
 
-Note, metrics is a required argument that lists one or multiple metrics, and a single dimension.
+Обратите внимание, что метрики являются обязательным аргументом, который перечисляет одну или несколько метрик, и одно измерение.
 
 ```bash
 select * from {{ 
@@ -91,13 +91,13 @@ semantic_layer.dimension_values(metrics=['food_order_amount'], group_by=['custom
 ```
 </Expandable>
 
-<Expandable alt_header="Fetch granularities for metrics">
+<Expandable alt_header="Получить гранулярности для метрик">
 
-You can use this query to fetch queryable granularities for a list of metrics. 
+Вы можете использовать этот запрос, чтобы получить запрашиваемые гранулярности для списка метрик.
 
-This API request allows you to only show the time granularities that make sense for the primary time dimension of the metrics (such as metric_time), but if you want queryable granularities for other time dimensions, you can use the dimensions() call, and find the column queryable_granularities.
+Этот запрос API позволяет показывать только временные гранулярности, которые имеют смысл для первичного временного измерения метрик (таких как metric_time), но если вы хотите запрашиваемые гранулярности для других временных измерений, вы можете использовать вызов dimensions() и найти столбец queryable_granularities.
 
-Note, metrics is a required argument that lists one or multiple metrics.
+Обратите внимание, что метрики являются обязательным аргументом, который перечисляет одну или несколько метрик.
 ```bash
 select * from {{
     semantic_layer.queryable_granularities(metrics=['food_order_amount', 'order_gross_profit'])}}
@@ -105,11 +105,11 @@ select * from {{
 
 </Expandable>
 
-<Expandable alt_header="Fetch available metrics given dimensions">
+<Expandable alt_header="Получить доступные метрики с учетом измерений">
 
-You can use this query to fetch available metrics given dimensions. This command is essentially the opposite of getting dimensions given a list of metrics.
+Вы можете использовать этот запрос, чтобы получить доступные метрики с учетом измерений. Эта команда по сути является противоположной получению измерений с учетом списка метрик.
 
-Note, group_by is a required argument that lists one or multiple dimensions.
+Обратите внимание, что group_by является обязательным аргументом, который перечисляет одно или несколько измерений.
 
 ```bash
 select * from {{
@@ -119,11 +119,11 @@ select * from {{
 
 </Expandable>
 
-<Expandable alt_header="Fetch granularities for all time dimensions">
+<Expandable alt_header="Получить гранулярности для всех временных измерений">
 
-You can use this example query to fetch available granularities for all time dimensions (the similar queryable granularities API call only returns granularities for the primary time dimensions for metrics).
+Вы можете использовать этот пример запроса, чтобы получить доступные гранулярности для всех временных измерений (аналогичный вызов API запрашиваемых гранулярностей возвращает только гранулярности для первичных временных измерений для метрик).
 
-The following call is a derivative of the dimensions() call and specifically selects the granularity field.
+Следующий вызов является производным от вызова dimensions() и специально выбирает поле гранулярности.
 
 ```bash
 select NAME, QUERYABLE_GRANULARITIES from {{
@@ -135,11 +135,11 @@ select NAME, QUERYABLE_GRANULARITIES from {{
 
 </Expandable>
 
-<Expandable alt_header="Fetch primary time dimension names">
+<Expandable alt_header="Получить имена первичных временных измерений">
 
-It may be useful in your application to expose the names of the time dimensions that represent metric_time or the common thread across all metrics.
+В вашем приложении может быть полезно раскрыть имена временных измерений, которые представляют metric_time или общую нить для всех метрик.
 
-You can first query the metrics() argument to fetch a list of measures, then use the measures() call which will return the name(s) of the time dimensions that make up metric time.
+Сначала вы можете запросить аргумент metrics() для получения списка мер, затем использовать вызов measures(), который вернет имя(имена) временных измерений, которые составляют временную метрику.
 
 ```bash
 select * from {{
@@ -149,52 +149,52 @@ select * from {{
 
 </Expandable>
 
-<Expandable alt_header="Fetch metrics by substring search">
+<Expandable alt_header="Получить метрики по подстроке">
 
-You can filter your metrics to include only those that contain a specific substring (sequence of characters contained within a larger string (text)). Use the `search` argument to specify the substring you want to match.
+Вы можете отфильтровать свои метрики, чтобы включить только те, которые содержат определенную подстроку (последовательность символов, содержащуюся в более длинной строке (тексте)). Используйте аргумент `search`, чтобы указать подстроку, которую вы хотите сопоставить.
 
 ```sql
 select * from {{ semantic_layer.metrics(search='order') }}
 ```
 
-If no substring is provided, the query returns all metrics.
+Если подстрока не указана, запрос вернет все метрики.
 
 </Expandable> 
 
-<Expandable alt_header="Paginate metadata calls">
+<Expandable alt_header="Пагинация вызовов метаданных">
 
-In the case when you don't want to return the full result set from a metadata call, you can paginate the results for both `semantic_layer.metrics()` and `semantic_layer.dimensions()` calls using the `page_size` and `page_number` parameters.
+В случае, если вы не хотите возвращать полный набор результатов из вызова метаданных, вы можете разбить результаты на страницы для вызовов `semantic_layer.metrics()` и `semantic_layer.dimensions()`, используя параметры `page_size` и `page_number`.
 
-- `page_size`: This is an optional variable which sets the number of records per page. If left as None, there is no page limit.
-- `page_number`: This is an optional variable which specifies the page number to retrieve. Defaults to `1` (first page) if not specified.
+- `page_size`: Это необязательная переменная, которая устанавливает количество записей на странице. Если оставить как None, ограничения по страницам нет.
+- `page_number`: Это необязательная переменная, которая указывает номер страницы для получения. По умолчанию равен `1` (первая страница), если не указано.
 
-Examples:
+Примеры:
 
 ```sql
--- Retrieves the 5th page with a page size of 10 metrics
+-- Получает 5-ю страницу с размером страницы 10 метрик
 select * from {{ semantic_layer.metrics(page_size=10, page_number=5) }}
 
--- Retrieves the 1st page with a page size of 10 metrics
+-- Получает 1-ю страницу с размером страницы 10 метрик
 select * from {{ semantic_layer.metrics(page_size=10) }}
 
--- Retrieves all metrics without pagination
+-- Получает все метрики без пагинации
 select * from {{ semantic_layer.metrics() }}
 ```
 
-You can use the same pagination parameters for `semantic_layer.dimensions(...)`.
+Вы можете использовать те же параметры пагинации для `semantic_layer.dimensions(...)`.
 </Expandable> 
 
-<Expandable alt_header="List saved queries">
+<Expandable alt_header="Список сохраненных запросов">
 
-You can use this example query to list all available saved queries in your dbt project.
+Вы можете использовать этот пример запроса, чтобы перечислить все доступные сохраненные запросы в вашем проекте dbt.
 
-**Command**
+**Команда**
 
 ```bash
 select * from semantic_layer.saved_queries()
 ```
 
-**Output**
+**Вывод**
 
 ```bash
 | NAME | DESCRIPTION | LABEL | METRICS | GROUP_BY | WHERE_FILTER |
@@ -202,146 +202,38 @@ select * from semantic_layer.saved_queries()
 
 </Expandable>
 
-<!--
-<Tabs>
+## Запрос значений метрик через API
 
-<TabItem value="allmetrics" label="Defined metrics">
+Чтобы запросить значения метрик, доступны следующие параметры. Ваш запрос должен содержать _либо_ параметр `metric`, **либо** параметр `group_by`, чтобы быть действительным.
 
-Use this query to fetch all defined metrics in your dbt project:
-
-```bash
-select * from {{ 
-	semantic_layer.metrics() 
-}}
-```
-</TabItem>
-
-<TabItem value="alldimensions" label="Dimensions for a metric">
-
-Use this query to fetch all dimensions for a metric. 
-
-Note, `metrics` is a required argument that lists one or multiple metrics in it.
-
-```bash
-select * from {{ 
-	semantic_layer.dimensions(metrics=['food_order_amount'])}}
-```
-
-</TabItem>
-
-<TabItem value="dimensionvalueformetrics" label="Dimension values">
-
-Use this query to fetch dimension values for one or multiple metrics and a single dimension. 
-
-Note, `metrics` is a required argument that lists one or multiple metrics, and a single dimension. 
-
-```bash
-select * from {{ 
-semantic_layer.dimension_values(metrics=['food_order_amount'], group_by=['customer__customer_name'])}}
-```
-
-</TabItem>
-
-<TabItem value="queryablegranularitiesformetrics" label="Granularities for metrics">
-
-You can use this query to fetch queryable granularities for a list of metrics. 
-
-This API request allows you to only show the time granularities that make sense for the primary time dimension of the metrics (such as `metric_time`), but if you want queryable granularities for other time dimensions, you can use the `dimensions()` call, and find the column queryable_granularities.
-
-Note, `metrics` is a required argument that lists one or multiple metrics.
-
-```bash
-select * from {{
-    semantic_layer.queryable_granularities(metrics=['food_order_amount', 'order_gross_profit'])}}
-```
-
-</TabItem>
-
-</Tabs>
-
-<Tabs>
-
-<TabItem value="metricsfordimensions" label="Available metrics given dimensions">
-
-Use this query to fetch available metrics given dimensions. This command is essentially the opposite of getting dimensions given a list of metrics.
-
-Note, `group_by` is a required argument that lists one or multiple dimensions.
-
-```bash
-select * from {{
-    semantic_layer.metrics_for_dimensions(group_by=['customer__customer_type'])
-
-}}
-```
-
-</TabItem>
-
-<TabItem value="queryablegranularitiesalltimedimensions" label="Granularities for all time dimensions">
-
-You can use this example query to fetch available granularities for all time dimensions (the similar queryable granularities API call only returns granularities for the primary time dimensions for metrics). 
-
-The following call is a derivative of the `dimensions()` call and specifically selects the granularity field.
-
-```bash
-select NAME, QUERYABLE_GRANULARITIES from {{
-    semantic_layer.dimensions(
-        metrics=["order_total"]
-    )
-}}
-
-```
-
-</TabItem>
-
-<TabItem value="fetchprimarytimedimensionnames" label="Primary time dimension names">
-
-It may be useful in your application to expose the names of the time dimensions that represent `metric_time` or the common thread across all metrics.
-
-You can first query the `metrics()` argument to fetch a list of measures, then use the `measures()` call which will return the name(s) of the time dimensions that make up metric time. 
-
-```bash
-select * from {{
-    semantic_layer.measures(metrics=['orders'])
-}}
-```
-</TabItem>
-</Tabs>
-
--->
-
-## Querying the API for metric values
-
-To query metric values, here are the following parameters that are available. Your query must have _either_ a `metric` **or** a `group_by` parameter to be valid. 
-
-| Parameter | <div style={{width:'400px'}}>Description</div>  | <div style={{width:'100px'}}>Example</div>  | 
+| Параметр | <div style={{width:'400px'}}>Описание</div>  | <div style={{width:'100px'}}>Пример</div>  | 
 | --------- | -----------| ------------ |
-| `metrics`   | The metric name as defined in your dbt metric configuration   | `metrics=['revenue']` | 
-| `group_by`  | Dimension names or entities to group by. We require a reference to the entity of the dimension (other than for the primary time dimension), which is pre-appended to the front of the dimension name with a double underscore. | `group_by=['user__country', 'metric_time']`    |
-| `grain`   | A parameter specific to any time dimension and changes the grain of the data from the default for the metric. | `group_by=[Dimension('metric_time')` <br/> `grain('week\|day\|month\|quarter\|year')]` | 
-| `where`     | A where clause that allows you to filter on dimensions and entities using parameters. This takes a filter list OR string. Inputs come with `Dimension`, and `Entity` objects. Granularity is required if the `Dimension` is a time dimension | `"{{ where=Dimension('customer__country') }} = 'US')"`   | 
-| `limit`   | Limit the data returned    | `limit=10` | 
-|`order`  | Order the data returned by a particular field     | `order_by=['order_gross_profit']`, use `-` for descending, or full object notation if the object is operated on: `order_by=[Metric('order_gross_profit').descending(True)`]   | 
-| `compile`   | If true, returns generated SQL for the data platform but does not execute | `compile=True`  |
-| `saved_query` | A saved query you can use for frequently used queries. | `select * from {{ semantic_layer.query(saved_query="new_customer_orders"` |
+| `metrics`   | Имя метрики, как определено в вашей конфигурации метрик dbt   | `metrics=['revenue']` | 
+| `group_by`  | Имена измерений или сущностей для группировки. Мы требуем ссылку на сущность измерения (кроме первичного временного измерения), которая предварительно добавляется к имени измерения с двойным подчеркиванием. | `group_by=['user__country', 'metric_time']`    |
+| `grain`   | Параметр, специфичный для любого временного измерения и изменяющий гранулярность данных по умолчанию для метрики. | `group_by=[Dimension('metric_time')` <br/> `grain('week\|day\|month\|quarter\|year')]` | 
+| `where`     | Условие where, которое позволяет вам фильтровать по измерениям и сущностям, используя параметры. Это принимает список фильтров ИЛИ строку. Входные данные поступают с объектами `Dimension` и `Entity`. Гранулярность обязательна, если `Dimension` является временным измерением | `"{{ where=Dimension('customer__country') }} = 'US')"`   | 
+| `limit`   | Ограничивает возвращаемые данные    | `limit=10` | 
+|`order`  | Упорядочивает возвращаемые данные по определенному полю     | `order_by=['order_gross_profit']`, используйте `-` для убывающего порядка или полную объектную нотацию, если объект обрабатывается: `order_by=[Metric('order_gross_profit').descending(True)`]   | 
+| `compile`   | Если true, возвращает сгенерированный SQL для платформы данных, но не выполняет | `compile=True`  |
+| `saved_query` | Сохраненный запрос, который вы можете использовать для часто используемых запросов. | `select * from {{ semantic_layer.query(saved_query="new_customer_orders"` |
 
-## Note on time dimensions and `metric_time`
+## Примечание о временных измерениях и `metric_time`
 
-You will notice that in the list of dimensions for all metrics, there is a dimension called `metric_time`. `Metric_time` is a reserved keyword for the measure-specific aggregation time dimensions. For any time-series metric, the `metric_time` keyword should always be available for use in queries. This is a common dimension across *all* metrics in a semantic graph. 
+Вы заметите, что в списке измерений для всех метрик есть измерение с именем `metric_time`. `Metric_time` — это зарезервированное ключевое слово для временных измерений, специфичных для агрегирования мер. Для любой временной метрики ключевое слово `metric_time` всегда должно быть доступно для использования в запросах. Это общее измерение для *всех* метрик в семантической графе.
 
-You can look at a single metric or hundreds of metrics, and if you group by `metric_time`, it will always give you the correct time series.
+Вы можете рассматривать одну метрику или сотни метрик, и если вы группируете по `metric_time`, это всегда даст вам правильный временной ряд.
 
-Additionally, when performing granularity calculations that are global (not specific to a particular time dimension), we recommend you always operate on `metric_time` and you will get the correct answer. 
+Кроме того, при выполнении расчетов гранулярности, которые являются глобальными (не специфичными для конкретного временного измерения), мы рекомендуем всегда работать с `metric_time`, и вы получите правильный ответ.
 
-Note that `metric_time` should be available in addition to any other time dimensions that are available for the metric(s). In the case where you are looking at one metric (or multiple metrics from the same data source), the values in the series for the primary time dimension and `metric_time` are equivalent.
+Обратите внимание, что `metric_time` должен быть доступен в дополнение к любым другим временным измерениям, которые доступны для метрик. В случае, если вы рассматриваете одну метрику (или несколько метрик из одного источника данных), значения в ряде для первичного временного измерения и `metric_time` эквивалентны.
 
+## Примеры
 
-## Examples
+Смотрите следующие примеры, чтобы помочь вам начать работу с API JDBC.
 
-Refer to the following examples to help you get started with the JDBC API.
+### Получить метаданные для метрик
 
-### Fetch metadata for metrics
-
-You can filter/add any SQL outside of the templating syntax. For example, you can use the following query to fetch the name and dimensions for a metric: 
+Вы можете фильтровать/добавлять любой SQL вне синтаксиса шаблонов. Например, вы можете использовать следующий запрос, чтобы получить имя и измерения для метрики:
 
 ```bash
 select name, dimensions from {{ 
@@ -350,9 +242,9 @@ select name, dimensions from {{
 	WHERE name='food_order_amount'
 ``` 
 
-### Query common dimensions
+### Запрос общих измерений
 
-You can select common dimensions for multiple metrics. Use the following query to fetch the name and dimensions for multiple metrics: 
+Вы можете выбрать общие измерения для нескольких метрик. Используйте следующий запрос, чтобы получить имя и измерения для нескольких метрик:
 
 ```bash
 select * from {{ 
@@ -360,9 +252,9 @@ select * from {{
 	}}
 ``` 
 
-### Query grouped by time
+### Запрос, сгруппированный по времени
 
-The following example query uses the [shorthand method](#faqs) to fetch revenue and new customers grouped by time:
+Следующий пример запроса использует [сокращенный метод](#faqs) для получения дохода и новых клиентов, сгруппированных по времени:
 
 ```bash
 select * from {{
@@ -371,9 +263,9 @@ select * from {{
 	}}
 ``` 
 
-### Query with a time grain
+### Запрос с временной гранулярностью
 
-Use the following example query to fetch multiple metrics with a change in time dimension granularities:
+Используйте следующий пример запроса, чтобы получить несколько метрик с изменением гранулярности временного измерения:
 
 ```bash
 select * from {{
@@ -382,9 +274,9 @@ select * from {{
 	}}
 ```
 
-### Group by categorical dimension
+### Группировка по категориальному измерению
 
-Use the following query to group by a categorical dimension:
+Используйте следующий запрос для группировки по категориальному измерению:
 
 ```bash
 select * from {{
@@ -393,9 +285,9 @@ select * from {{
 	}}
 ``` 
 
-### Query only a dimension
+### Запрос только одного измерения
 
-In this case, you'll get the full list of dimension values for the chosen dimension.
+В этом случае вы получите полный список значений измерений для выбранного измерения.
 
 ```bash
 select * from {{
@@ -403,22 +295,21 @@ select * from {{
                   }}
 ```
 
-### Query with where filters
+### Запрос с фильтрами where
 
-Where filters in API allow for a filter list or string. We recommend using the filter list for production applications as this format will realize all benefits from the <Term id="predicate-pushdown"  /> where possible. 
+Фильтры where в API позволяют использовать список фильтров или строку. Мы рекомендуем использовать список фильтров для производственных приложений, так как этот формат реализует все преимущества <Term id="predicate-pushdown"  /> где это возможно.
 
-Where Filters have a few objects that you can use:
+Фильтры where имеют несколько объектов, которые вы можете использовать:
 
-- `Dimension()` &mdash; Used for any categorical or time dimensions. `Dimension('metric_time').grain('week')` or `Dimension('customer__country')`.
+- `Dimension()` &mdash; Используется для любых категориальных или временных измерений. `Dimension('metric_time').grain('week')` или `Dimension('customer__country')`.
 
-- `TimeDimension()` &mdash;  Used as a more explicit definition for time dimensions, optionally takes in a granularity `TimeDimension('metric_time', 'month')`.
+- `TimeDimension()` &mdash; Используется как более явное определение для временных измерений, опционально принимает гранулярность `TimeDimension('metric_time', 'month')`.
 
-- `Entity()` &mdash;  Used for entities like primary and foreign keys - `Entity('order_id')`.
+- `Entity()` &mdash; Используется для сущностей, таких как первичные и внешние ключи - `Entity('order_id')`.
 
+Для `TimeDimension()` гранулярность требуется только в фильтре `WHERE`, если временные измерения для мер и метрик, связанных с фильтром where, имеют разные гранулярности.
 
-For `TimeDimension()`, the grain is only required in the `WHERE` filter if the aggregation time dimensions for the measures and metrics associated with the where filter have different grains. 
-
-For example, consider this Semantic model and Metric config, which contains two metrics that are aggregated across different time grains. This example shows a single semantic model, but the same goes for metrics across more than one semantic model.
+Например, рассмотрим эту семантическую модель и конфигурацию метрик, которые содержат две метрики, агрегируемые по различным временным гранулярностям. Этот пример показывает одну семантическую модель, но то же самое относится к метрикам из более чем одной семантической модели.
 
 ```yaml
 semantic_model:
@@ -444,30 +335,30 @@ defaults:
 
 metrics:
   - name: metric_0
-    description: A metric with a month grain.
+    description: Метрика с месячной гранулярностью.
     type: simple
     type_params:
       measure: measure_0
   - name: metric_1
-    description: A metric with a year grain.
+    description: Метрика с годовой гранулярностью.
     type: simple
     type_params:
       measure: measure_1
 
 ```
 
-Assuming the user is querying `metric_0` and `metric_1` together in a single request, a valid `WHERE` filter would be:
+Предположим, что пользователь запрашивает `metric_0` и `metric_1` вместе в одном запросе, действительным фильтром `WHERE` будет:
 
   * `"{{ TimeDimension('metric_time', 'year') }} > '2020-01-01'"`
 
-Invalid filters would be:
+Недействительные фильтры будут:
 
-  * `"{{ TimeDimension('metric_time') }} > '2020-01-01'"` &mdash; metrics in the query are defined based on measures with different grains.
+  * `"{{ TimeDimension('metric_time') }} > '2020-01-01'"` &mdash; метрики в запросе определены на основе мер с разными гранулярностями.
 
-  * `"{{ TimeDimension('metric_time', 'month') }} > '2020-01-01'"` &mdash; `metric_1` is not available at a month grain.
+  * `"{{ TimeDimension('metric_time', 'month') }} > '2020-01-01'"` &mdash; `metric_1` недоступна с месячной гранулярностью.
 
 
-- Use the following example to query using a `where` filter with the string format:
+- Используйте следующий пример для запроса с использованием фильтра `where` в строковом формате:
 
 ```bash
 select * from {{
@@ -477,7 +368,7 @@ where="{{ Dimension('metric_time').grain('month')  }} >= '2017-03-09' AND {{ Dim
 }}
 ```
 
-- (Recommended for better performance) Use the following example to query using a `where` filter with a filter list format:
+- (Рекомендуется для лучшей производительности) Используйте следующий пример для запроса с использованием фильтра `where` в формате списка фильтров:
 
 ```bash
 select * from {{
@@ -487,9 +378,9 @@ where=["{{ Dimension('metric_time').grain('month') }} >= '2017-03-09'", "{{ Dime
 }}
 ```
 
-### Query with a limit
+### Запрос с ограничением
 
-Use the following example to query using a `limit` or `order_by` clause:
+Используйте следующий пример для запроса с использованием условия `limit` или `order_by`:
 
 ```bash
 select * from {{
@@ -499,9 +390,9 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   }}
 ```
 
-### Query with Order By Examples 
+### Запрос с примерами Order By 
 
-Order By can take a basic string that's a Dimension, Metric, or Entity, and this will default to ascending order
+Order By может принимать базовую строку, которая является измерением, метрикой или сущностью, и это будет по умолчанию в порядке возрастания.
 
 ```bash
 select * from {{
@@ -512,7 +403,7 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   }}
 ``` 
 
-For descending order, you can add a `-` sign in front of the object. However, you can only use this short-hand notation if you aren't operating on the object or using the full object notation. 
+Для убывающего порядка вы можете добавить знак `-` перед объектом. Однако вы можете использовать эту сокращенную нотацию только в том случае, если вы не работаете с объектом или не используете полную объектную нотацию. 
 
 ```bash
 select * from {{
@@ -521,9 +412,9 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   limit=10,
   order_by=['-order_gross_profit'])
   }}
-```
+``` 
 
-If you are ordering by an object that's been operated on (for example, you changed the granularity of the time dimension), or you are using the full object notation, descending order must look like:
+Если вы упорядочиваете по объекту, с которым проводились операции (например, вы изменили гранулярность временного измерения), или вы используете полную объектную нотацию, убывающий порядок должен выглядеть так:
 
 ```bash
 select * from {{
@@ -534,7 +425,7 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   }}
 ``` 
 
-Similarly, this will yield ascending order: 
+Аналогично, это приведет к порядку возрастания: 
 
 ```bash
 select * from {{
@@ -546,9 +437,9 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
 ``` 
 
 
-### Query with compile keyword
+### Запрос с ключевым словом compile
 
-- Use the following example to query using a `compile` keyword:
+- Используйте следующий пример для запроса с использованием ключевого слова `compile`:
   ```sql
   select * from {{
   semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
@@ -557,63 +448,62 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
       }}
   ```
 
-- Use the following example to compile SQL with a [saved query](/docs/build/saved-queries). You can use this for frequently used queries.
+- Используйте следующий пример для компиляции SQL с [сохраненным запросом](/docs/build/saved-queries). Вы можете использовать это для часто используемых запросов.
 
   ```sql
   select * from {{ semantic_layer.query(saved_query="new_customer_orders", limit=5, compile=True}}
   ```
 
-:::info A note on querying saved queries
-When querying [saved queries](/docs/build/saved-queries),you can use parameters such as `where`, `limit`, `order`, `compile`, and so on. However, keep in mind that you can't access `metric` or `group_by` parameters in this context. This is because they are predetermined and fixed parameters for saved queries, and you can't change them at query time. If you would like to query more metrics or dimensions, you can build the query using the standard format.
+:::info Примечание о запросах сохраненных запросов
+При запросе [сохраненных запросов](/docs/build/saved-queries) вы можете использовать параметры, такие как `where`, `limit`, `order`, `compile` и т. д. Однако имейте в виду, что вы не можете получить доступ к параметрам `metric` или `group_by` в этом контексте. Это связано с тем, что они являются предопределенными и фиксированными параметрами для сохраненных запросов, и вы не можете изменять их во время запроса. Если вы хотите запросить больше метрик или измерений, вы можете построить запрос, используя стандартный формат.
 :::
 
-### Query a saved query
+### Запрос сохраненного запроса
 
-Use the following example to query a [saved query](/docs/build/saved-queries):
+Используйте следующий пример для запроса [сохраненного запроса](/docs/build/saved-queries):
 
 ```sql
 select * from {{ semantic_layer.query(saved_query="new_customer_orders", limit=5}}
 ```
 
-The JDBC API will use the saved query (`new_customer_orders`) as defined and apply a limit of 5 records.
+API JDBC будет использовать сохраненный запрос (`new_customer_orders`), как определено, и применит ограничение в 5 записей.
 
-### Multi-hop joins
+### Многоуровневые соединения
 
-In cases where you need to query across multiple related tables (multi-hop joins), use the `entity_path` argument to specify the path between related entities. The following are examples of how you can define these joins:
+В случаях, когда вам нужно запросить данные из нескольких связанных таблиц (многоуровневые соединения), используйте аргумент `entity_path`, чтобы указать путь между связанными сущностями. Вот примеры того, как вы можете определить эти соединения:
 
-- In this example, you're querying the `location_name` dimension but specifying that it should be joined using the `order_id` field.
+- В этом примере вы запрашиваете измерение `location_name`, но указываете, что оно должно быть соединено с использованием поля `order_id`.
 	```sql
 	{{Dimension('location__location_name', entity_path=['order_id'])}}
 	```
-- In this example, the `salesforce_account_owner` dimension is joined to the `region` field, with the path going through `salesforce_account`.
+- В этом примере измерение `salesforce_account_owner` соединяется с полем `region`, при этом путь проходит через `salesforce_account`.
 	```sql
 	{{ Dimension('salesforce_account_owner__region',['salesforce_account']) }}
 	```
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Troubleshooting/sl-alpn-error" />
 
-<DetailsToggle alt_header="Why do some dimensions use different syntax, like `metric_time` versus `Dimension('metric_time')`?">
-When you select a dimension on its own, such as `metric_time` you can use the shorthand method which doesn't need the “Dimension” syntax. 
+<DetailsToggle alt_header="Почему некоторые измерения используют разный синтаксис, например, `metric_time` против `Dimension('metric_time')`?">
+Когда вы выбираете измерение отдельно, например, `metric_time`, вы можете использовать сокращенный метод, который не требует синтаксиса “Dimension”.
 
-However, when you perform operations on the dimension, such as adding granularity, the object syntax `[Dimension('metric_time')` is required.
+Однако, когда вы выполняете операции с измерением, такие как добавление гранулярности, синтаксис объекта `[Dimension('metric_time')` требуется.
 </DetailsToggle>
 
-<DetailsToggle alt_header="What does the double underscore `'__'` syntax in dimensions mean?">
+<DetailsToggle alt_header="Что означает синтаксис с двойным подчеркиванием `'__'` в измерениях?">
 
-The double underscore `"__"` syntax indicates a mapping from an entity to a dimension, as well as where the dimension is located. For example, `user__country` means someone is looking at the `country` dimension from the `user` table.
+Синтаксис с двойным подчеркиванием `"__"` указывает на сопоставление от сущности к измерению, а также на то, где находится измерение. Например, `user__country` означает, что кто-то смотрит на измерение `country` из таблицы `user`.
 </DetailsToggle>
 
-<DetailsToggle alt_header="What is the default output when adding granularity?">
+<DetailsToggle alt_header="Какой вывод по умолчанию при добавлении гранулярности?">
 
-The default output follows the format `{{time_dimension_name}__{granularity_level}}`. 
+Вывод по умолчанию следует формату `{{time_dimension_name}__{granularity_level}}`. 
 
-So for example, if the `time_dimension_name` is `ds` and the granularity level is yearly, the output is `ds__year`.
+Таким образом, например, если `time_dimension_name` — это `ds`, а уровень гранулярности — годовой, вывод будет `ds__year`.
 
 </DetailsToggle>
 
-## Related docs
+## Связанные документы
 
-- [dbt Semantic Layer integration best practices](/guides/sl-partner-integration-guide)
-
+- [Лучшие практики интеграции семантического уровня dbt](/guides/sl-partner-integration-guide)

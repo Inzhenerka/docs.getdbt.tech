@@ -1,58 +1,57 @@
 ---
-title: "Upgrading to v1.3"
-description: New features and changes in dbt Core v1.3
+title: "Обновление до v1.3"
+description: Новые функции и изменения в dbt Core v1.3
 id: "upgrading-to-v1.3"
 displayed_sidebar: "docs"
 ---
 
-### Resources
+### Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.3.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.3.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-We are committed to providing backward compatibility for all versions 1.x. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+Мы стремимся обеспечить обратную совместимость для всех версий 1.x. Если вы столкнулись с ошибкой при обновлении, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-There are three changes in dbt Core v1.3 that may require action from some users:
-1. If you have a `profiles.yml` file located in the root directory where you run dbt, dbt will start preferring that profiles file over the default location on your machine. [You can read more details here](/docs/core/connect-data-platform/connection-profiles#advanced-customizing-a-profile-directory).
-2. If you already have `.py` files defined in the `model-paths` of your dbt project, dbt will start trying to read them as Python models. You can use [the new `.dbtignore` file](/reference/dbtignore) to tell dbt to ignore those files.
-3. If you have custom code accessing the `raw_sql` property of models (with the [model](/reference/dbt-jinja-functions/model) or [graph](/reference/dbt-jinja-functions/graph) objects), it has been renamed to `raw_code`. This is a change to the manifest contract, described in more detail below.
+В dbt Core v1.3 есть три изменения, которые могут потребовать действий от некоторых пользователей:
+1. Если у вас есть файл `profiles.yml`, расположенный в корневом каталоге, где вы запускаете dbt, dbt начнет предпочитать этот файл профилей вместо стандартного местоположения на вашем компьютере. [Вы можете прочитать больше деталей здесь](/docs/core/connect-data-platform/connection-profiles#advanced-customizing-a-profile-directory).
+2. Если у вас уже есть файлы `.py`, определенные в `model-paths` вашего проекта dbt, dbt начнет пытаться читать их как модели Python. Вы можете использовать [новый файл `.dbtignore`](/reference/dbtignore), чтобы указать dbt игнорировать эти файлы.
+3. Если у вас есть пользовательский код, обращающийся к свойству `raw_sql` моделей (с объектами [model](/reference/dbt-jinja-functions/model) или [graph](/reference/dbt-jinja-functions/graph)), оно было переименовано в `raw_code`. Это изменение в контракте манифеста, описанное более подробно ниже.
 
-### For users of dbt Metrics
+### Для пользователей dbt Metrics
 
-The names of metric properties have changed, with backward compatibility. Those changes are:
-- Renamed `type` to `calculation_method`
-- Renamed `sql` to `expression`
-- Renamed `expression` calculation method metrics to `derived` calculation method metrics
+Названия свойств метрик изменились, при этом обеспечена обратная совместимость. Эти изменения:
+- Переименован `type` в `calculation_method`
+- Переименован `sql` в `expression`
+- Переименованы метрики метода расчета `expression` в метрики метода расчета `derived`
 
-We plan to keep backward compatibility for a full minor version. Defining metrics with the old names will raise an error in dbt Core v1.4.
+Мы планируем сохранить обратную совместимость на протяжении целой минорной версии. Определение метрик с использованием старых названий вызовет ошибку в dbt Core v1.4.
 
-### For consumers of dbt artifacts (metadata)
+### Для потребителей артефактов dbt (метаданные)
 
-We have updated the manifest schema version to `v7`. This includes the changes to metrics described above and a few other changes related to the addition of Python models:
-- Renamed `raw_sql` to `raw_code`
-- Renamed `compiled_sql` to `compiled_code`
-- A new top-level node property, `language` (`'sql'` or `'python'`)
+Мы обновили версию схемы манифеста до `v7`. Это включает изменения в метриках, описанные выше, и несколько других изменений, связанных с добавлением моделей Python:
+- Переименован `raw_sql` в `raw_code`
+- Переименован `compiled_sql` в `compiled_code`
+- Новое свойство верхнего уровня, `language` (`'sql'` или `'python'`)
 
-For users of [state-based selection](/reference/node-selection/syntax#about-node-selection): This release includes logic providing backward and forward compatibility for older manifest versions. While running dbt Core v1.3, it should be possible to use `state:modified --state ...` selection against a manifest produced by dbt Core v1.0 and higher.
+Для пользователей [выбора на основе состояния](/reference/node-selection/syntax#about-node-selection): Это обновление включает логику, обеспечивающую обратную и прямую совместимость для более старых версий манифеста. При запуске dbt Core v1.3 должно быть возможно использовать выбор `state:modified --state ...` по отношению к манифесту, созданному dbt Core v1.0 и выше.
 
-### For maintainers of adapter plugins
+### Для поддерживающих адаптеры плагинов
 
-GitHub discussion with details: [dbt-labs/dbt-core#6011](https://github.com/dbt-labs/dbt-core/discussions/6011)
+Обсуждение на GitHub с деталями: [dbt-labs/dbt-core#6011](https://github.com/dbt-labs/dbt-core/discussions/6011)
 
-## New and changed documentation
+## Новая и измененная документация
 
-- **[Python models](/docs/build/python-models)** are natively supported in `dbt-core` for the first time, on data warehouses that support Python runtimes.
-- Updates made to **[Metrics](/docs/build/build-metrics-intro)** reflect their new syntax for definition, as well as additional properties that are now available.
-- Plus, a few related updates to **[exposure properties](/reference/exposure-properties)**: `config`, `label`, and `name` validation.
+- **[Модели Python](/docs/build/python-models)** впервые нативно поддерживаются в `dbt-core` для дата-складов, которые поддерживают Python-окружения.
+- Обновления, внесенные в **[Метрики](/docs/build/build-metrics-intro)**, отражают их новый синтаксис для определения, а также дополнительные свойства, которые теперь доступны.
+- Кроме того, несколько связанных обновлений для **[свойств экспозиции](/reference/exposure-properties)**: валидация `config`, `label` и `name`.
 
-- **[Custom `node_color`](/reference/resource-configs/docs.md)** in `dbt-docs`. For the first time, you can control the colors displayed in dbt's DAG. Want bronze, silver, and gold layers? It's at your fingertips.
-- **[`Profiles.yml`](/docs/core/connect-data-platform/connection-profiles#advanced-customizing-a-profile-directory)** search order now looks in the current working directory before `~/.dbt`.
+- **[Пользовательский `node_color`](/reference/resource-configs/docs.md)** в `dbt-docs`. Впервые вы можете контролировать цвета, отображаемые в DAG dbt. Хотите бронзовые, серебряные и золотые слои? Это у вас под рукой.
+- **[`Profiles.yml`](/docs/core/connect-data-platform/connection-profiles#advanced-customizing-a-profile-directory)** порядок поиска теперь сначала проверяет текущий рабочий каталог, а затем `~/.dbt`.
 
-
-### Quick hits
-- **["Full refresh"](/reference/resource-configs/full_refresh)** flag supports a short name, `-f`.
-- **[The "config" selection method](/reference/node-selection/methods#config)** supports boolean and list config values, in addition to strings.
-- Two new dbt-Jinja context variables for accessing invocation metadata: [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) and [`dbt_metadata_envs`](/reference/dbt-jinja-functions/env_var#custom-metadata).
+### Быстрые обновления
+- **["Полное обновление"](/reference/resource-configs/full_refresh)** флаг поддерживает короткое имя `-f`.
+- **[Метод выбора "config"](/reference/node-selection/methods#config)** поддерживает булевы и списковые значения конфигурации, помимо строк.
+- Две новые переменные контекста dbt-Jinja для доступа к метаданным вызова: [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) и [`dbt_metadata_envs`](/reference/dbt-jinja-functions/env_var#custom-metadata).

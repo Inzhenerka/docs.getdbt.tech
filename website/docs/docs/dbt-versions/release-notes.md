@@ -1,441 +1,429 @@
 ---
-title: "dbt Cloud release notes"
-description: "dbt Cloud release notes"
+title: "Примечания к релизам dbt Cloud"
+description: "Примечания к релизам dbt Cloud"
 id: "dbt-cloud-release-notes"
-sidebar: "dbt Cloud release notes"
+sidebar: "Примечания к релизам dbt Cloud"
 pagination_next: null
 pagination_prev: null
 ---
 
-dbt Cloud release notes for recent and historical changes. Release notes fall into one of the following categories:
+Примечания к релизам dbt Cloud для недавних и исторических изменений. Примечания к релизам делятся на следующие категории:
 
-- **New:** New products and features
-- **Enhancement:** Performance improvements and feature enhancements
-- **Fix:** Bug and security fixes
-- **Behavior change:** A change to existing behavior that doesn't fit into the other categories, such as feature deprecations or changes to default settings
+- **Новое:** Новые продукты и функции
+- **Улучшение:** Улучшения производительности и расширение функциональности
+- **Исправление:** Исправления ошибок и уязвимостей
+- **Изменение поведения:** Изменение существующего поведения, которое не попадает в другие категории, такие как устаревание функций или изменения в настройках по умолчанию
 
-Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC)\* environments
+Примечания к релизам сгруппированы по месяцам как для многопользовательских, так и для виртуальных частных облачных (VPC)* сред.
 
-\* The official release date for this new format of release notes is May 15th, 2024. Historical release notes for prior dates may not reflect all available features released earlier this year or their tenancy availability.
+\* Официальная дата выпуска этого нового формата примечаний к релизам — 15 мая 2024 года. Исторические примечания к релизам за предыдущие даты могут не отражать все доступные функции, выпущенные ранее в этом году, или их доступность для арендаторов.
 
-## December 2024
+## Декабрь 2024
 
-- **New**: [Auto exposures](/docs/collaborate/auto-exposures) are now generally available to dbt Cloud Enterprise plans. Auto-exposures integrate natively with Tableau (Power BI coming soon) and auto-generate downstream lineage in dbt Explorer for a richer experience.
-- **New**: The dbt Semantic Layer supports Sigma as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in Preview. Refer to [Sigma](https://help.sigmacomputing.com/docs/configure-a-dbt-semantic-layer-integration) for more information.
-- **New**: The dbt Semantic Layer now supports Azure Single-tenant deployments. Refer to [Set up the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) for more information on how to get started.
-- **Fix**: Resolved intermittent issues in Single-tenant environments affecting Semantic Layer and query history.
-- **Fix**: [The dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) now respects the BigQuery [`execution_project` attribute](/docs/core/connect-data-platform/bigquery-setup#execution-project), including for exports.
-- **New**: [Model notifications](/docs/deploy/model-notifications) are now generally available in dbt Cloud. These notifications alert model owners through email about any issues encountered by models and tests as soon as they occur while running a job.
-- **New**: You can now use your [Azure OpenAI key](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations) (available in beta) to use dbt Cloud features like [dbt Copilot](/docs/cloud/dbt-copilot) and [Ask dbt](/docs/cloud-integrations/snowflake-native-app) . Additionally, you can use your own [OpenAI API key](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations) or use [dbt Labs-managed OpenAI](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations) key. Refer to [AI integrations](/docs/cloud/account-integrations#ai-integrations) for more information.
-- **New**: The [`hard_deletes`](/reference/resource-configs/hard-deletes) config gives you more control on how to handle deleted rows from the source. Supported options are `ignore` (default), `invalidate` (replaces the legacy `invalidate_hard_deletes=true`), and `new_record`. Note that `new_record` will create a new metadata column in the snapshot table.
+- **Новое**: dbt Semantic Layer поддерживает Sigma как [интеграцию партнера](/docs/cloud-integrations/avail-sl-integrations), доступную в режиме предварительного просмотра. Смотрите [Sigma](https://help.sigmacomputing.com/docs/configure-a-dbt-semantic-layer-integration) для получения дополнительной информации.
+- **Новое**: dbt Semantic Layer теперь поддерживает развертывания Azure с одним арендатором. Смотрите [Настройка dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) для получения дополнительной информации о том, как начать.
+- **Исправление**: Устранены периодические проблемы в средах с одним арендатором, влияющие на Semantic Layer и историю запросов.
+- **Исправление**: [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) теперь учитывает атрибут BigQuery [`execution_project`](/docs/core/connect-data-platform/bigquery-setup#execution-project), включая экспорт.
+- **Новое**: [Уведомления о моделях](/docs/deploy/model-notifications) теперь доступны в dbt Cloud. Эти уведомления информируют владельцев моделей по электронной почте о любых проблемах, с которыми сталкиваются модели и тесты, сразу после их возникновения во время выполнения задания.
+- **Новое**: Теперь вы можете использовать свой [ключ Azure OpenAI](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations) (доступный в бета-версии) для использования функций dbt Cloud, таких как [dbt Copilot](/docs/cloud/dbt-copilot) и [Ask dbt](/docs/cloud-integrations/snowflake-native-app). Кроме того, вы можете использовать свой собственный [ключ API OpenAI](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations) или использовать [ключ OpenAI, управляемый dbt Labs](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations). Смотрите [AI интеграции](/docs/cloud/account-integrations#ai-integrations) для получения дополнительной информации.
+- **Новое**: Конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) дает вам больше контроля над тем, как обрабатывать удаленные строки из источника. Поддерживаемые варианты: `ignore` (по умолчанию), `invalidate` (заменяет устаревший `invalidate_hard_deletes=true`) и `new_record`. Обратите внимание, что `new_record` создаст новый столбец метаданных в таблице снимков.
 
+## Ноябрь 2024
+- **Улучшение**: Иконки сигналов доверия в dbt Explorer теперь доступны для Exposures, предоставляя быстрый обзор состояния данных при просмотре ресурсов. Чтобы увидеть иконки сигналов доверия, перейдите в dbt Explorer и нажмите **Exposures** на вкладке **Resource**. Смотрите [Сигналы доверия для ресурсов](/docs/collaborate/explore-projects#trust-signals-for-resources) для получения дополнительной информации.
+- **Ошибка**: Обнаружена и исправлена ошибка с запросами Semantic Layer, которые занимали более 10 минут для завершения.
+- **Исправление**: Переопределения переменных окружения задания в учетных данных теперь учитываются для Экспортов. Ранее они игнорировались.
+- **Изменение поведения**: Если вы используете пользовательский макрос микропакетов, установите флаг поведения [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy) в вашем `dbt_project.yml`, чтобы включить пакетное выполнение. Если у вас нет пользовательского макроса микропакетов, вам не нужно устанавливать этот флаг, так как dbt будет автоматически обрабатывать микропакетирование для любой модели, использующей [стратегию микропакетов](/docs/build/incremental-microbatch#how-microbatch-compares-to-other-incremental-strategies).
+- **Улучшение**: Для пользователей, у которых включена функция Advanced CI [сравнить изменения](/docs/deploy/advanced-ci#compare-changes), вы можете оптимизировать производительность при выполнении сравнений, используя пользовательский синтаксис dbt для настройки использования отсрочки, исключения конкретных крупных моделей (или групп моделей с тегами) и многое другое. Смотрите [Пользовательские команды сравнения изменений](/docs/deploy/job-commands#compare-changes-custom-commands) для примеров настройки команды сравнения.
+- **Новое**: Линтинг SQL в CI заданиях теперь доступен в dbt Cloud. Вы можете включить линтинг SQL в своих CI заданиях, используя [SQLFluff](https://sqlfluff.com/), чтобы автоматически проверять все SQL файлы в вашем проекте на этапе выполнения перед сборкой вашего CI задания. Линтинг SQLFluff доступен на [релизных треках dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и для учетных записей dbt Cloud [Team или Enterprise](https://www.getdbt.com/pricing/). Смотрите [Линтинг SQL](/docs/deploy/continuous-integration#sql-linting) для получения дополнительной информации.
+- **Новое**: Используйте конфигурацию [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current), чтобы установить пользовательский индикатор для значения `dbt_valid_to` в текущих записях снимков (например, будущая дата). По умолчанию это значение равно `NULL`. При настройке dbt будет использовать указанное значение вместо `NULL` для `dbt_valid_to` для текущих записей в таблице снимков. Эта функция доступна в [релизном треке "Latest" dbt Cloud](/docs/dbt-versions/cloud-release-tracks) (ранее называвшемся `Versionless`) и dbt Core v1.9 и выше.
+- **Новое**: Используйте конфигурацию [`event_time`](/reference/resource-configs/event-time), чтобы указать "в какое время произошла строка". Эта конфигурация обязательна для [Incremental microbatch](/docs/build/incremental-microbatch) и может быть добавлена, чтобы гарантировать, что вы сравниваете перекрывающиеся времена в [Advanced CI's compare changes](/docs/deploy/advanced-ci). Доступно в [релизном треке "Latest" dbt Cloud](/docs/dbt-versions/cloud-release-tracks) (ранее называвшемся `Versionless`) и dbt Core v1.9 и выше.
+- **Исправление**: Это обновление улучшает [интеграцию dbt Semantic Layer с Tableau](/docs/cloud-integrations/semantic-layer/tableau), делая парсинг запросов более надежным. Некоторые ключевые исправления включают:
+  - Сообщения об ошибках для неподдерживаемых соединений между сохраненными запросами и ВСЕМИ таблицами.
+  - Улучшенная обработка запросов, когда в источнике данных выбрано несколько таблиц.
+  - Исправлена ошибка, когда фильтр IN содержал много значений.
+  - Улучшенное сообщение об ошибке для запросов, которые не могут быть правильно разобраны.
+- **Улучшение**: dbt Semantic Layer поддерживает создание новых учетных данных для пользователей, у которых нет разрешений на создание токенов службы. В боковой панели **Credentials & service tokens** опция **+Add Service Token** недоступна для пользователей, у которых нет разрешения. Вместо этого боковая панель отображает сообщение, указывающее, что у пользователя нет разрешения на создание токена службы, и он должен обратиться к своему администратору. Смотрите [Настройка dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) для получения дополнительных деталей.
 
-## November 2024
-- **Enhancement**: Data health signals in dbt Explorer are now available for Exposures, providing a quick view of data health while browsing resources. To view trust signal icons, go to dbt Explorer and click **Exposures** under the **Resource** tab. Refer to [Data health signals for resources](/docs/collaborate/data-health-signals) for more info.
-- **Bug**: Identified and fixed an error with Semantic Layer queries that take longer than 10 minutes to complete.
-- **Fix**: Job environment variable overrides in credentials are now respected for Exports. Previously, they were ignored.
-- **Behavior change**: If you use a custom microbatch macro, set a [`require_batched_execution_for_custom_microbatch_strategy` behavior flag](/reference/global-configs/behavior-changes#custom-microbatch-strategy) in your `dbt_project.yml` to enable batched execution. If you don't have a custom microbatch macro, you don't need to set this flag as dbt will handle microbatching automatically for any model using the [microbatch strategy](/docs/build/incremental-microbatch#how-microbatch-compares-to-other-incremental-strategies).
-- **Enhancement**: For users that have Advanced CI's [compare changes](/docs/deploy/advanced-ci#compare-changes) feature enabled, you can optimize performance when running comparisons by using custom dbt syntax to customize deferral usage, exclude specific large models (or groups of models with tags), and more. Refer to [Compare changes custom commands](/docs/deploy/job-commands#compare-changes-custom-commands) for examples of how to customize the comparison command.
-- **New**: SQL linting in CI jobs is now generally available in dbt Cloud. You can enable SQL linting in your CI jobs, using [SQLFluff](https://sqlfluff.com/), to automatically lint all SQL files in your project as a run step before your CI job builds. SQLFluff linting is available on [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) and to dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing/) accounts. Refer to [SQL linting](/docs/deploy/continuous-integration#sql-linting) for more information.
-- **New**: Use the [`dbt_valid_to_current`](/reference/resource-configs/dbt_valid_to_current) config to set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date). By default, this value is `NULL`. When configured, dbt will use the specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table. This feature is available in [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) (formerly called  `Versionless`) and dbt Core v1.9 and later.
-- **New**: Use the [`event_time`](/reference/resource-configs/event-time) configuration to specify "at what time did the row occur." This configuration is required for [Incremental microbatch](/docs/build/incremental-microbatch) and can be added to ensure you're comparing overlapping times in [Advanced CI's compare changes](/docs/deploy/advanced-ci). Available in [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) (formerly called `Versionless`) and dbt Core v1.9 and higher.
-- **Fix**: This update improves [dbt Semantic Layer Tableau integration](/docs/cloud-integrations/semantic-layer/tableau) making query parsing more reliable. Some key fixes include:
-  - Error messages for unsupported joins between saved queries and ALL tables.
-  - Improved handling of queries when multiple tables are selected in a data source.
-  - Fixed a bug when an IN filter contained a lot of values.
-  - Better error messaging for queries that can't be parsed correctly.
-- **Enhancement**: The dbt Semantic Layer supports creating new credentials for users who don't have permissions to create service tokens.  In the **Credentials & service tokens** side panel, the **+Add Service Token** option is unavailable for those users who don't have permission. Instead, the side panel displays a message indicating that the user doesn't have permission to create a service token and should contact their administration. Refer to [Set up dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) for more details.
+## Октябрь 2024
 
-## October 2024
+<Expandable alt_header="Объявления Coalesce 2024">
 
-<Expandable alt_header="Coalesce 2024 announcements">
+  Документация для новых функций и функциональности, объявленных на Coalesce 2024:
 
-  Documentation for new features and functionality announced at Coalesce 2024:
-
-  - Iceberg table support for [Snowflake](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#iceberg-table-format)
-  - [Athena](https://docs.getdbt.com/reference/resource-configs/athena-configs) and [Teradata](https://docs.getdbt.com/reference/resource-configs/teradata-configs) adapter support in dbt Cloud
-  - dbt Cloud now hosted on [Azure](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses)
-  - Get comfortable with [dbt Cloud Release Tracks](https://docs.getdbt.com/docs/dbt-versions/cloud-release-tracks) that keep your project up-to-date, automatically — on a cadence appropriate for your team
-  - Scalable [microbatch incremental models](https://docs.getdbt.com/docs/build/incremental-microbatch)
-  - Advanced CI [features](https://docs.getdbt.com/docs/deploy/advanced-ci)
-  - [Linting with CI jobs](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting)
-  - dbt Assist is now [dbt Copilot](https://docs.getdbt.com/docs/cloud/dbt-copilot)
-  - Developer blog on [Snowflake Feature Store and dbt: A bridge between data pipelines and ML](https://docs.getdbt.com/blog/snowflake-feature-store)
-  - New [Quickstart for dbt Cloud CLI](https://docs.getdbt.com/guides/dbt-cloud-cli?step=1)
-  - [Auto-exposures with Tableau](https://docs.getdbt.com/docs/collaborate/auto-exposures)
-  - Semantic Layer integration with [Excel desktop and M365](https://docs.getdbt.com/docs/cloud-integrations/semantic-layer/excel)
-  - [Data health tiles](https://docs.getdbt.com/docs/collaborate/data-tile)
-  - [Semantic Layer and Cloud IDE integration](https://docs.getdbt.com/docs/build/metricflow-commands#metricflow-commands)
-  - Query history in [Explorer](https://docs.getdbt.com/docs/collaborate/model-query-history#view-query-history-in-explorer)
-  - Semantic Layer Metricflow improvements, including [improved granularity and custom calendar](https://docs.getdbt.com/docs/build/metricflow-time-spine#custom-calendar) 
-  - [Python SDK](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-python) is now generally available 
+  - Поддержка таблиц Iceberg для [Snowflake](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#iceberg-table-format)
+  - Поддержка адаптеров [Athena](https://docs.getdbt.com/reference/resource-configs/athena-configs) и [Teradata](https://docs.getdbt.com/reference/resource-configs/teradata-configs) в dbt Cloud
+  - dbt Cloud теперь размещается на [Azure](https://docs.getdbt.com/docs/cloud/about-cloud/access-regions-ip-addresses)
+  - Ознакомьтесь с [релизными треками dbt Cloud](https://docs.getdbt.com/docs/dbt-versions/cloud-release-tracks), которые поддерживают ваш проект в актуальном состоянии автоматически — с частотой, подходящей для вашей команды
+  - Масштабируемые [инкрементальные модели микропакетов](https://docs.getdbt.com/docs/build/incremental-microbatch)
+  - Расширенные функции CI [функции](https://docs.getdbt.com/docs/deploy/advanced-ci)
+  - [Линтинг с CI заданиями](https://docs.getdbt.com/docs/deploy/continuous-integration#sql-linting)
+  - dbt Assist теперь [dbt Copilot](https://docs.getdbt.com/docs/cloud/dbt-copilot)
+  - Блог разработчиков о [Snowflake Feature Store и dbt: мост между конвейерами данных и ML](https://docs.getdbt.com/blog/snowflake-feature-store)
+  - Новый [Быстрый старт для dbt Cloud CLI](https://docs.getdbt.com/guides/dbt-cloud-cli?step=1)
+  - [Авто-экспозиции с Tableau](https://docs.getdbt.com/docs/collaborate/auto-exposures)
+  - Интеграция Semantic Layer с [Excel desktop и M365](https://docs.getdbt.com/docs/cloud-integrations/semantic-layer/excel)
+  - [Плитки состояния данных](https://docs.getdbt.com/docs/collaborate/data-tile)
+  - [Интеграция Semantic Layer и Cloud IDE](https://docs.getdbt.com/docs/build/metricflow-commands#metricflow-commands)
+  - История запросов в [Explorer](https://docs.getdbt.com/docs/collaborate/model-query-history#view-query-history-in-explorer)
+  - Улучшения Metricflow Semantic Layer, включая [улучшенную гранулярность и пользовательский календарь](https://docs.getdbt.com/docs/build/metricflow-time-spine#custom-calendar) 
+  - [Python SDK](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-python) теперь доступен в общем доступе 
 
 </Expandable>
 
-- **Behavior change:** [Multi-factor authentication](/docs/cloud/manage-access/mfa) is now enforced on all users who log in with username and password credentials. 
-- **Enhancement**: The dbt Semantic Layer JDBC now allows users to paginate `semantic_layer.metrics()` and `semantic_layer.dimensions()` for metrics and dimensions using `page_size` and `page_number` parameters. Refer to [Paginate metadata calls](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) for more information.
-- **Enhancement**: The dbt Semantic Layer JDBC now allows you to filter your metrics to include only those that contain a specific substring, using the `search` parameter. If no substring is provided, the query returns all metrics. Refer to [Fetch metrics by substring search](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) for more information.
-- **Fix**: The [dbt Semantic Layer Excel integration](/docs/cloud-integrations/semantic-layer/excel) now correctly surfaces errors when a query fails to execute. Previously, it was not clear why a query failed to run.
-- **Fix:** Previously, POST requests to the Jobs API with invalid `cron` strings would return HTTP response status code 500s but would update the underlying entity. Now, POST requests to the Jobs API with invalid `cron` strings will result in status code 400s, without the underlying entity being updated.
-- **Fix:** Fixed an issue where the `Source` view page in dbt Explorer did not correctly display source freshness status if older than 30 days.
-- **Fix:** The UI now indicates when the description of a model is inherited from a catalog comment.
-- **Behavior change:** User API tokens have been deprecated. Update to [personal access tokens](/docs/dbt-cloud-apis/user-tokens) if you have any still in use.
-- **New**: The dbt Cloud IDE supports signed commits for Git, available for Enterprise plans. You can sign your Git commits when pushing them to the repository to prevent impersonation and enhance security. Supported Git providers are GitHub and GitLab. Refer to [Git commit signing](/docs/cloud/dbt-cloud-ide/git-commit-signing.md) for more information.
-- **New:** With dbt Mesh, you can now enable bidirectional dependencies across your projects. Previously, dbt enforced dependencies to only go in one direction. dbt checks for cycles across projects and raises errors if any are detected. For details, refer to [Cycle detection](/docs/collaborate/govern/project-dependencies#cycle-detection). There's also the [Intro to dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) guide to help you learn more best practices. 
-- **New**: The [dbt Semantic Layer Python software development kit](/docs/dbt-cloud-apis/sl-python) is now [generally available](/docs/dbt-versions/product-lifecycles). It provides users with easy access to the dbt Semantic Layer with Python and enables developers to interact with the dbt Semantic Layer APIs to query metrics/dimensions in downstream tools.
-- **Enhancement**: You can now add a description to a singular data test. Use the [`description` property](/reference/resource-properties/description) to document [singular data tests](/docs/build/data-tests#singular-data-tests). You can also use [docs block](/docs/build/documentation#using-docs-blocks) to capture your test description. The enhancement is available now in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), and it will be included in dbt Core v1.9.
-- **New**: Introducing the [microbatch incremental model strategy](/docs/build/incremental-microbatch) (beta), available now in [dbt Cloud Latest](/docs/dbt-versions/cloud-release-tracks) and will soon be supported in dbt Core v1.9. The microbatch strategy allows for efficient, batch-based processing of large time-series datasets for improved performance and resiliency, especially when you're working with data that changes over time (like new records being added daily). To enable this feature in dbt Cloud, set the `DBT_EXPERIMENTAL_MICROBATCH` environment variable to `true` in your project.
-- **New**: The dbt Semantic Layer supports custom calendar configurations in MetricFlow, available in [Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). Custom calendar configurations allow you to query data using non-standard time periods like `fiscal_year` or `retail_month`. Refer to [custom calendar](/docs/build/metricflow-time-spine#custom-calendar) to learn how to define these custom granularities in your MetricFlow timespine YAML configuration.
-- **New**: In the "Latest" release track in dbt Cloud, [Snapshots](/docs/build/snapshots) have been updated to use YAML configuration files instead of SQL snapshot blocks. This new feature simplifies snapshot management and improves performance, and will soon be released in dbt Core 1.9.
-  - Who does this affect? Users of the "Latest" release track in dbt Cloud can define snapshots using the new YAML specification. Users upgrading to "Latest" who have existing snapshot definitions can keep their existing configurations, or they can choose to migrate their snapshot definitions to YAML. 
-  - Users on older versions: No action is needed; existing snapshots will continue to work as before. However, we recommend upgrading to the "Latest" release track to take advantage of the new snapshot features.
-- **Behavior change:** Set [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-changes#source-definitions-for-state) to true to reduce false positives for `state:modified` when configs differ between `dev` and `prod` environments.
-- **Behavior change:** Set the [`skip_nodes_if_on_run_start_fails`](/reference/global-configs/behavior-changes#failures-in-on-run-start-hooks) flag to `True` to skip all selected resources from running if there is a failure on an `on-run-start` hook.
-- **Enhancement**: In the "Latest" release track in dbt Cloud, snapshots defined in SQL files can now use `config` defined in `schema.yml` YAML files. This update resolves the previous limitation that required snapshot properties to be defined exclusively in `dbt_project.yml` and/or a `config()` block within the SQL file. This will also be released in dbt Core 1.9.
-- **New**: In the "Latest" release track in dbt Cloud, the `snapshot_meta_column_names` config allows for customizing the snapshot metadata columns. This feature allows an organization to align these automatically-generated column names with their conventions, and will be included in the upcoming dbt Core 1.9 release.
-- **Enhancement**: the "Latest" release track in dbt Cloud infers a model's `primary_key` based on configured data tests and/or constraints within `manifest.json`. The inferred `primary_key` is visible in dbt Explorer and utilized by the dbt Cloud [compare changes](/docs/deploy/run-visibility#compare-tab) feature. This will also be released in dbt Core 1.9. Read about the [order dbt infers columns can be used as primary key of a model](https://github.com/dbt-labs/dbt-core/blob/7940ad5c7858ff11ef100260a372f2f06a86e71f/core/dbt/contracts/graph/nodes.py#L534-L541). 
-- **New:** dbt Explorer now includes trust signal icons, which is currently available as a [Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). Trust signals offer a quick, at-a-glance view of data health when browsing your dbt models in Explorer. These icons indicate whether a model is **Healthy**, **Caution**, **Degraded**, or **Unknown**. For accurate health data, ensure the resource is up-to-date and has had a recent job run. Refer to [Data health signals](/docs/collaborate/data-health-signals) for more information. 
-- **New:** Auto exposures are now available in Preview in dbt Cloud. Auto-exposures helps users understand how their models are used in downstream analytics tools to inform investments and reduce incidents. It imports and auto-generates exposures based on Tableau dashboards, with user-defined curation. To learn more, refer to [Auto exposures](/docs/collaborate/auto-exposures).
+- **Изменение поведения:** [Многофакторная аутентификация](/docs/cloud/manage-access/mfa) теперь обязательна для всех пользователей, которые входят в систему с помощью учетных данных имени пользователя и пароля. 
+- **Улучшение**: dbt Semantic Layer JDBC теперь позволяет пользователям разбивать `semantic_layer.metrics()` и `semantic_layer.dimensions()` на страницы для метрик и измерений с использованием параметров `page_size` и `page_number`. Смотрите [Пагинация вызовов метаданных](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) для получения дополнительной информации.
+- **Улучшение**: dbt Semantic Layer JDBC теперь позволяет вам фильтровать ваши метрики, чтобы включать только те, которые содержат определенную подстроку, используя параметр `search`. Если подстрока не указана, запрос возвращает все метрики. Смотрите [Получение метрик по подстроке](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) для получения дополнительной информации.
+- **Исправление**: [Интеграция dbt Semantic Layer с Excel](/docs/cloud-integrations/semantic-layer/excel) теперь правильно отображает ошибки, когда запрос не удается выполнить. Ранее не было ясно, почему запрос не удалось выполнить.
+- **Исправление:** Ранее POST-запросы к API Jobs с недопустимыми строками `cron` возвращали код состояния HTTP 500, но обновляли основную сущность. Теперь POST-запросы к API Jobs с недопустимыми строками `cron` будут возвращать код состояния 400, без обновления основной сущности.
+- **Исправление:** Исправлена проблема, когда страница представления `Source` в dbt Explorer не отображала правильно статус свежести источника, если он был старше 30 дней.
+- **Исправление:** UI теперь указывает, когда описание модели унаследовано от комментария каталога.
+- **Изменение поведения:** Токены API пользователей были устаревшими. Обновите до [персональных токенов доступа](/docs/dbt-cloud-apis/user-tokens), если у вас есть какие-либо, которые все еще используются.
+- **Новое**: dbt Cloud IDE поддерживает подписанные коммиты для Git, доступные для корпоративных планов. Вы можете подписывать свои коммиты Git при их отправке в репозиторий, чтобы предотвратить подмену и повысить безопасность. Поддерживаемые провайдеры Git — GitHub и GitLab. Смотрите [Подпись коммитов Git](/docs/cloud/dbt-cloud-ide/git-commit-signing.md) для получения дополнительной информации.
+- **Новое:** С помощью dbt Mesh вы теперь можете включить двунаправленные зависимости между вашими проектами. Ранее dbt обеспечивал зависимости только в одном направлении. dbt проверяет наличие циклов между проектами и выдает ошибки, если они обнаружены. Для получения подробной информации смотрите [Обнаружение циклов](/docs/collaborate/govern/project-dependencies#cycle-detection). Также есть [Введение в dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), чтобы помочь вам узнать больше о лучших практиках. 
+- **Новое**: [Python SDK dbt Semantic Layer](/docs/dbt-cloud-apis/sl-python) теперь [в общем доступе](/docs/dbt-versions/product-lifecycles). Он предоставляет пользователям легкий доступ к dbt Semantic Layer с помощью Python и позволяет разработчикам взаимодействовать с API dbt Semantic Layer для запроса метрик/измерений в инструментах нижнего уровня.
+- **Улучшение**: Теперь вы можете добавить описание к единственному тесту данных. Используйте [`description` property](/reference/resource-properties/description), чтобы задокументировать [единственные тесты данных](/docs/build/data-tests#singular-data-tests). Вы также можете использовать [docs block](/docs/build/documentation#using-docs-blocks), чтобы зафиксировать описание вашего теста. Улучшение доступно сейчас в [релизном треке "Latest" в dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и будет включено в dbt Core v1.9.
+- **Новое**: Представляем стратегию [инкрементальной модели микропакетов](/docs/build/incremental-microbatch) (бета), доступную сейчас в [dbt Cloud Latest](/docs/dbt-versions/cloud-release-tracks) и вскоре будет поддерживаться в dbt Core v1.9. Стратегия микропакетов позволяет эффективно обрабатывать большие временные ряды данных для повышения производительности и устойчивости, особенно когда вы работаете с данными, которые изменяются со временем (например, новые записи, добавляемые ежедневно). Чтобы включить эту функцию в dbt Cloud, установите переменную окружения `DBT_EXPERIMENTAL_MICROBATCH` в `true` в вашем проекте.
+- **Новое**: dbt Semantic Layer поддерживает пользовательские конфигурации календаря в MetricFlow, доступные в [предварительном просмотре](/docs/dbt-versions/product-lifecycles#dbt-cloud). Пользовательские конфигурации календаря позволяют вам запрашивать данные, используя нестандартные временные периоды, такие как `fiscal_year` или `retail_month`. Смотрите [пользовательский календарь](/docs/build/metricflow-time-spine#custom-calendar), чтобы узнать, как определить эти пользовательские гранулярности в вашей конфигурации YAML для MetricFlow.
+- **Новое**: В релизном треке "Latest" в dbt Cloud [Снимки](/docs/build/snapshots) были обновлены для использования файлов конфигурации YAML вместо блоков SQL снимков. Эта новая функция упрощает управление снимками и улучшает производительность, и вскоре будет выпущена в dbt Core 1.9.
+  - Кто на это повлияет? Пользователи релизного трека "Latest" в dbt Cloud могут определять снимки, используя новую спецификацию YAML. Пользователи, обновляющиеся до "Latest", у которых есть существующие определения снимков, могут сохранить свои существующие конфигурации или выбрать миграцию своих определений снимков в YAML. 
+  - Пользователи на более старых версиях: никаких действий не требуется; существующие снимки будут продолжать работать как прежде. Однако мы рекомендуем обновиться до релизного трека "Latest", чтобы воспользоваться новыми функциями снимков.
+- **Изменение поведения:** Установите [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-changes#source-definitions-for-state) в true, чтобы уменьшить ложные срабатывания для `state:modified`, когда конфигурации различаются между средами `dev` и `prod`.
+- **Изменение поведения:** Установите флаг [`skip_nodes_if_on_run_start_fails`](/reference/global-configs/behavior-changes#failures-in-on-run-start-hooks) в `True`, чтобы пропустить все выбранные ресурсы от выполнения, если произошла ошибка в хуке `on-run-start`.
+- **Улучшение**: В релизном треке "Latest" в dbt Cloud снимки, определенные в SQL файлах, теперь могут использовать `config`, определенный в файлах YAML `schema.yml`. Это обновление устраняет предыдущее ограничение, требующее определения свойств снимков исключительно в `dbt_project.yml` и/или блоке `config()` внутри SQL файла. Это также будет выпущено в dbt Core 1.9.
+- **Новое**: В релизном треке "Latest" в dbt Cloud конфигурация `snapshot_meta_column_names` позволяет настраивать имена столбцов метаданных снимков. Эта функция позволяет организации согласовать эти автоматически сгенерированные имена столбцов с их соглашениями и будет включена в предстоящий релиз dbt Core 1.9.
+- **Улучшение**: релизный трек "Latest" в dbt Cloud выводит `primary_key` модели на основе настроенных тестов данных и/или ограничений в `manifest.json`. Выведенный `primary_key` виден в dbt Explorer и используется функцией [сравнить изменения](/docs/deploy/run-visibility#compare-tab) в dbt Cloud. Это также будет выпущено в dbt Core 1.9. Прочитайте о [порядке, в котором dbt выводит столбцы, которые могут использоваться в качестве первичного ключа модели](https://github.com/dbt-labs/dbt-core/blob/7940ad5c7858ff11ef100260a372f2f06a86e71f/core/dbt/contracts/graph/nodes.py#L534-L541). 
+- **Новое:** dbt Explorer теперь включает иконки сигналов доверия, которые в настоящее время доступны в [предварительном просмотре](/docs/dbt-versions/product-lifecycles#dbt-cloud). Сигналы доверия предлагают быстрый, наглядный обзор состояния данных при просмотре ваших моделей dbt в Explorer. Эти иконки указывают, является ли модель **Здоровой**, **С осторожностью**, **Ухудшенной** или **Неизвестной**. Для точных данных о состоянии убедитесь, что ресурс актуален и имел недавний запуск задания. Смотрите [Сигналы доверия](/docs/collaborate/explore-projects#trust-signals-for-resources) для получения дополнительной информации. 
+- **Новое:** Авто-экспозиции теперь доступны в предварительном просмотре в dbt Cloud. Авто-экспозиции помогают пользователям понять, как их модели используются в инструментах аналитики нижнего уровня, чтобы информировать о вложениях и уменьшить инциденты. Он импортирует и автоматически генерирует экспозиции на основе панелей Tableau с определенной пользователем кураторской работой. Чтобы узнать больше, смотрите [Авто-экспозиции](/docs/collaborate/auto-exposures).
 
+## Сентябрь 2024
 
-## September 2024
+- **Исправление**: MetricFlow обновил `get_and_expire`, чтобы заменить неподдерживаемую команду `GETEX` на `GET` и условное истечение, обеспечивая совместимость с Azure Redis 6.0.
+- **Улучшение**: [Python SDK dbt Semantic Layer](/docs/dbt-cloud-apis/sl-python) теперь поддерживает пользовательскую гранулярность `TimeGranularity` для метрик. Эта функция позволяет вам определять пользовательские временные гранулярности для метрик, такие как `fiscal_year` или `retail_month`, чтобы запрашивать данные, используя нестандартные временные периоды.
+- **Новое**: Используйте движок AI dbt Copilot для генерации семантической модели для ваших моделей, теперь доступно в бета-версии. dbt Copilot автоматически генерирует документацию, тесты и теперь семантические модели на основе данных в вашей модели. Чтобы узнать больше, смотрите [dbt Copilot](/docs/cloud/dbt-copilot).
+- **Новое**: Используйте новый рекомендуемый синтаксис для [определения ограничений `foreign_key`](/reference/resource-properties/constraints) с использованием `refs`, доступный в релизном треке "Latest" в dbt Cloud. Это вскоре будет выпущено в dbt Core v1.9. Этот новый синтаксис будет захватывать зависимости и работать в разных средах.
+- **Улучшение**: Теперь вы можете выполнять команды [Semantic Layer](/docs/build/metricflow-commands) в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). Поддерживаемые команды: `dbt sl list`, `dbt sl list metrics`, `dbt sl list dimension-values`, `dbt sl list saved-queries`, `dbt sl query`, `dbt sl list dimensions`, `dbt sl list entities` и `dbt sl validate`. 
+- **Новое**: Microsoft Excel, интеграция dbt Semantic Layer, теперь доступна в общем доступе. Интеграция позволяет вам подключаться к Microsoft Excel для запроса метрик и совместной работы с вашей командой. Доступно для [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26) или [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True). Для получения дополнительной информации смотрите [Microsoft Excel](/docs/cloud-integrations/semantic-layer/excel).
+- **Новое**: [Плитка состояния данных](/docs/collaborate/data-tile) теперь доступна в dbt Explorer. Плитки состояния данных предоставляют быстрый обзор качества ваших данных, подчеркивая потенциальные проблемы в ваших данных. Вы можете встраивать эти плитки в свои панели инструментов, чтобы быстро выявлять и устранять проблемы с качеством данных в вашем проекте dbt.
+- **Новое**: Функция истории запросов модели в dbt Explorer теперь доступна в предварительном просмотре для клиентов dbt Cloud Enterprise. История запросов модели позволяет вам просматривать количество запросов на потребление для модели на основе журналов запросов хранилища данных. Эта функция предоставляет командам данных информацию, чтобы они могли сосредоточить свое время и расходы на инфраструктуру на ценных используемых продуктах данных. Чтобы узнать больше, смотрите [История запросов модели](/docs/collaborate/model-query-history). 
+- **Улучшение**: Теперь вы можете использовать [Расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) и [Переменные окружения](/docs/build/environment-variables) при подключении к Semantic Layer. Если вы установите значение непосредственно в учетных данных Semantic Layer, оно будет иметь более высокий приоритет, чем Расширенные атрибуты. При использовании переменных окружения будет использоваться значение по умолчанию для среды. Если вы используете экспорты, переопределения переменных окружения задания пока не поддерживаются, но они будут скоро.
+- **Новое:** Появились два новых [значения по умолчанию для переменных окружения](/docs/build/environment-variables#dbt-cloud-context) &mdash; `DBT_CLOUD_ENVIRONMENT_NAME` и `DBT_CLOUD_ENVIRONMENT_TYPE`.
+- **Новое:** Подключение к хранилищу [Amazon Athena](/docs/cloud/connect-data-platform/connect-amazon-athena) доступно в качестве публичного предварительного просмотра для учетных записей dbt Cloud, которые обновились до [релизного трека "Latest"](/docs/dbt-versions/cloud-release-tracks).
 
-- **Fix**: MetricFlow updated `get_and_expire` to replace the unsupported `GETEX` command with a `GET` and conditional expiration, ensuring compatibility with Azure Redis 6.0.
-- **Enhancement**: The [dbt Semantic Layer Python SDK](/docs/dbt-cloud-apis/sl-python) now supports `TimeGranularity` custom grain for metrics. This feature allows you to define custom time granularities for metrics, such as `fiscal_year` or `retail_month`, to query data using non-standard time periods.
-- **New**: Use the dbt Copilot AI engine to generate semantic model for your models, now available in beta. dbt Copilot automatically generates documentation, tests, and now semantic models based on the data in your model, . To learn more, refer to [dbt Copilot](/docs/cloud/dbt-copilot).
-- **New**: Use the new recommended syntax for [defining `foreign_key` constraints](/reference/resource-properties/constraints) using `refs`, available in the "Latest" release track in dbt Cloud. This will soon be released in dbt Core v1.9. This new syntax will capture dependencies and works across different environments.
-- **Enhancement**: You can now run [Semantic Layer commands](/docs/build/metricflow-commands) commands in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). The supported commands are `dbt sl list`, `dbt sl list metrics`, `dbt sl list dimension-values`, `dbt sl list saved-queries`, `dbt sl query`, `dbt sl list dimensions`, `dbt sl list entities`, and `dbt sl validate`. 
-- **New**: Microsoft Excel, a dbt Semantic Layer integration, is now generally available. The integration allows you to connect to Microsoft Excel to query metrics and collaborate with your team. Available for [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26) or [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True). For more information, refer to [Microsoft Excel](/docs/cloud-integrations/semantic-layer/excel).
-- **New**: [Data health tile](/docs/collaborate/data-tile) is now generally available in dbt Explorer. Data health tiles provide a quick at-a-glance view of your data quality, highlighting potential issues in your data. You can embed these tiles in your dashboards to quickly identify and address data quality issues in your dbt project.
-- **New**: dbt Explorer's Model query history feature is now in Preview for dbt Cloud Enterprise customers. Model query history allows you to view the count of consumption queries for a model based on the data warehouse's query logs. This feature provides data teams insight, so they can focus their time and infrastructure spend on the worthwhile used data products. To learn more, refer to [Model query history](/docs/collaborate/model-query-history). 
-- **Enhancement**: You can now use [Extended Attributes](/docs/dbt-cloud-environments#extended-attributes) and [Environment Variables](/docs/build/environment-variables) when connecting to the Semantic Layer. If you set a value directly in the Semantic Layer Credentials, it will have a higher priority than Extended Attributes. When using environment variables, the default value for the environment will be used.  If you're using exports, job environment variable overrides aren't supported yet, but they will be soon.
-- **New:** There are two new [environment variable defaults](/docs/build/environment-variables#dbt-cloud-context) &mdash; `DBT_CLOUD_ENVIRONMENT_NAME` and `DBT_CLOUD_ENVIRONMENT_TYPE`.
-- **New:** The [Amazon Athena warehouse connection](/docs/cloud/connect-data-platform/connect-amazon-athena) is available as a public preview for dbt Cloud accounts that have upgraded to [the "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+## Август 2024
 
-## August 2024
+- **Исправление:** Исправлена проблема в [dbt Explorer](/docs/collaborate/explore-projects), когда переход к проекту потребителя из публичного узла приводил к отображению случайной публичной модели вместо первоначального выбора. 
+- **Новое**: Теперь вы можете настраивать метрики на более мелких временных гранулярностях, таких как час, минута или даже секунда. Это особенно полезно для более детального анализа и для наборов данных, где требуется высокое разрешение временных данных, таких как отслеживание событий по минутам. Смотрите [измерения](/docs/build/dimensions) для получения дополнительной информации о временной гранулярности.
+- **Улучшение**: Microsoft Excel теперь поддерживает [сохраненные выборки](/docs/cloud-integrations/semantic-layer/excel#using-saved-selections) и [сохраненные запросы](/docs/cloud-integrations/semantic-layer/excel#using-saved-queries). Используйте Сохраненные выборки, чтобы сохранить свои выборки запросов в приложении Excel. Приложение также по умолчанию очищает устаревшие данные в [конечных строках](/docs/cloud-integrations/semantic-layer/excel#other-settings). Чтобы вернуть ваши результаты и сохранить любые ранее выбранные данные, снимите отметку с опции **Очистить конечные строки**. 
+- **Изменение поведения:** GitHub больше не поддерживается для входа в dbt Cloud с помощью OAuth. Используйте поддерживаемый [SSO или провайдер OAuth](/docs/cloud/manage-access/sso-overview) для безопасного управления доступом к вашей учетной записи dbt Cloud.
 
-- **Fix:** Fixed an issue in [dbt Explorer](/docs/collaborate/explore-projects) where navigating to a consumer project from a public node resulted in displaying a random public model rather than the original selection. 
-- **New**: You can now configure metrics at granularities at finer time grains, such as hour, minute, or even by the second. This is particularly useful for more detailed analysis and for datasets where high-resolution time data is required, such as minute-by-minute event tracking. Refer to [dimensions](/docs/build/dimensions) for more information about time granularity.
-- **Enhancement**: Microsoft Excel now supports [saved selections](/docs/cloud-integrations/semantic-layer/excel#using-saved-selections) and [saved queries](/docs/cloud-integrations/semantic-layer/excel#using-saved-queries). Use Saved selections to save your query selections within the Excel application. The application also clears stale data in [trailing rows](/docs/cloud-integrations/semantic-layer/excel#other-settings) by default. To return your results and keep any previously selected data intact, un-select the **Clear trailing rows** option. 
-- **Behavior change:** GitHub is no longer supported for OAuth login to dbt Cloud. Use a supported [SSO or OAuth provider](/docs/cloud/manage-access/sso-overview) to securely manage access to your dbt Cloud account.
+## Июль 2024
+- **Изменение поведения:** `target_schema` больше не является обязательной конфигурацией для [снимков](/docs/build/snapshots). Теперь вы можете нацеливаться на разные схемы для снимков в различных средах разработки и развертывания, используя [конфигурацию схемы](/reference/resource-configs/schema).
+- **Новое:** [Подключения](/docs/cloud/connect-data-platform/about-connections#connection-management) теперь доступны в разделе **Настройки учетной записи** как глобальная настройка. Ранее они находились в разделе **Настройки проекта**. Это будет развернуто поэтапно в течение следующих недель.
+- **Новое:** Администраторы теперь могут назначать [разрешения на уровне среды](/docs/cloud/manage-access/environment-permissions) группам для конкретных ролей.
+- **Новое:** [Слияние заданий](/docs/deploy/merge-jobs) для реализации рабочих процессов [непрерывного развертывания (CD)](/docs/deploy/continuous-deployment) теперь доступны в dbt Cloud. Ранее вам нужно было либо настроить пользовательское действие GitHub, либо вручную собирать изменения каждый раз, когда запрос на вытягивание объединялся.
+- **Новое**: Возможность линтинга ваших SQL файлов из dbt Cloud CLI теперь доступна. Чтобы узнать больше, смотрите [Линтинг SQL файлов](/docs/cloud/configure-cloud-cli#lint-sql-files).
+- **Изменение поведения:** dbt Cloud IDE автоматически добавляет `--limit 100` к предварительным запросам, чтобы избежать медленных и дорогих запросов во время разработки. В последнее время dbt Core изменил способ применения `limit`, чтобы гарантировать, что `order by` всегда учитывается. Из-за этого запросы, которые уже содержат условие ограничения, могут теперь вызывать ошибки в предварительных просмотрах IDE. Чтобы решить эту проблему, dbt Labs планирует вскоре предоставить опцию для отключения применения ограничения. До тех пор dbt Labs рекомендует удалить (дублирующееся) условие ограничения из ваших запросов во время предварительных просмотров, чтобы избежать этих ошибок IDE.
 
-## July 2024
-- **Behavior change:** `target_schema` is no longer a required configuration for [snapshots](/docs/build/snapshots). You can now target different schemas for snapshots across development and deployment environments using the [schema config](/reference/resource-configs/schema).
-- **New:** [Connections](/docs/cloud/connect-data-platform/about-connections#connection-management) are now available under **Account settings** as a global setting. Previously, they were found under **Project settings**.  This is being rolled out in phases over the coming weeks.
-- **New:** Admins can now assign [environment-level permissions](/docs/cloud/manage-access/environment-permissions) to groups for specific roles.
-- **New:** [Merge jobs](/docs/deploy/merge-jobs) for implementing [continuous deployment (CD)](/docs/deploy/continuous-deployment) workflows are now GA in dbt Cloud. Previously, you had to either set up a custom GitHub action or manually build the changes every time a pull request is merged.
-- **New**: The ability to lint your SQL files from the dbt Cloud CLI is now available. To learn more, refer to [Lint SQL files](/docs/cloud/configure-cloud-cli#lint-sql-files).
-- **Behavior change:** dbt Cloud IDE automatically adds a `--limit 100` to preview queries to avoid slow and expensive queries during development. Recently, dbt Core changed how the `limit` is applied to ensure that `order by` clauses are consistently respected. Because of this, queries that already contain a limit clause might now cause errors in the IDE previews. To address this, dbt Labs plans to provide an option soon to disable the limit from being applied. Until then, dbt Labs recommends removing the (duplicate) limit clause from your queries during previews to avoid these IDE errors.
-
-- **Enhancement**: Introducing a revamped overview page for dbt Explorer, available in beta. It includes a new design and layout for the Explorer homepage. The new layout provides a more intuitive experience for users to navigate their dbt projects, as well as a new **Latest updates** section to view the latest changes or issues related to project resources. To learn more, refer to [Overview page](/docs/collaborate/explore-projects#overview-page).
-
-#### dbt Semantic Layer
-- **New**: Introduced the [`dbt-sl-sdk` Python software development kit (SDK)](https://github.com/dbt-labs/semantic-layer-sdk-python) Python library, which provides you with easy access to the dbt Semantic Layer with Python. It allows developers to interact with the dbt Semantic Layer APIs and query metrics and dimensions in downstream tools. Refer to the [dbt Semantic Layer Python SDK](/docs/dbt-cloud-apis/sl-python) for more information.
-- **New**: Introduced Semantic validations in CI pipelines. Automatically test your semantic nodes (metrics, semantic models, and saved queries) during code reviews by adding warehouse validation checks in your CI job using the `dbt sl validate` command. You can also validate modified semantic nodes to guarantee code changes made to dbt models don't break these metrics. Refer to [Semantic validations in CI](/docs/deploy/ci-jobs#semantic-validations-in-ci) to learn about the additional commands and use cases.
-- **New**: We now expose the `meta` field within the [config property](/reference/resource-configs/meta) for dbt Semantic Layer metrics in the [JDBC and GraphQL APIs](/docs/dbt-cloud-apis/sl-api-overview) under the `meta` field.
-- **New**: Added a new command in the dbt Cloud CLI called `export-all`, which allows you to export multiple or all of your saved queries. Previously, you had to explicitly specify the [list of saved queries](/docs/build/metricflow-commands#list-saved-queries).
-- **Enhancement**: The dbt Semantic Layer now offers more granular control by supporting multiple data platform credentials, which can represent different roles or service accounts. Available for dbt Cloud Enterprise plans, you can map credentials to service tokens for secure authentication. Refer to [Set up dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) for more details.
-- **Fix**: Addressed a bug where unicode query filters (such as Chinese characters) were not working correctly in the dbt Semantic Layer Tableau integration.
-- **Fix**: Resolved a bug with parsing certain private keys for BigQuery when running an export.
-- **Fix**: Addressed a bug that caused a "closed connection" error to be returned when querying or running an Export.
-- **Fix**: Resolved an issue in dbt Core where, during partial parsing, all generated metrics in a file were incorrectly deleted instead of just those related to the changed semantic model. Now, only the metrics associated with the modified model are affected.
-
-## June 2024
-- **New:** Introduced new granularity support for cumulative metrics in MetricFlow. Granularity options for cumulative metrics are slightly different than granularity for other metric types. For other metrics, we use the `date_trunc` function to implement granularity. However, because cumulative metrics are non-additive (values can't be added up), we can't use the `date_trunc` function to change their time grain granularity. 
-  
-  Instead, we use the `first()`, `last()`, and `avg()` aggregation functions to aggregate cumulative metrics over the requested period. By default, we take the first value of the period. You can change this behavior by using the `period_agg` parameter. For more information, refer to [Granularity options for cumulative metrics](/docs/build/cumulative#granularity-options).
+- **Улучшение**: Представляем обновленную страницу обзора для dbt Explorer, доступную в бета-версии. Она включает новый дизайн и макет для главной страницы Explorer. Новый макет обеспечивает более интуитивный опыт для пользователей при навигации по их проектам dbt, а также новый раздел **Последние обновления** для просмотра последних изменений или проблем, связанных с ресурсами проекта. Чтобы узнать больше, смотрите [Страница обзора](/docs/collaborate/explore-projects#overview-page).
 
 #### dbt Semantic Layer
-- **New:** Added support for <Term id="predicate-pushdown"/> SQL optimization in MetricFlow. We will now push down categorical dimension filters to the metric source table. Previously filters were applied after we selected from the metric source table. This change helps reduce full table scans on certain query engines.
-- **New:** Enabled `where` filters  on dimensions (included in saved queries) to use the cache during query time. This means you can now dynamically filter your dashboards without losing the performance benefits of caching. Refer to [caching](/docs/use-dbt-semantic-layer/sl-cache#result-caching) for more information.
-- **Enhancement:** In [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets), we added information icons and descriptions to metrics and dimensions options in the Query Builder menu. Click on the **Info** icon button to view a description of the metric or dimension. Available in the following Query Builder menu sections: metric, group by, where, saved selections, and saved queries.
-- **Enhancement:** In [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets), you can now apply granularity to all time dimensions, not just metric time. This update uses our [APIs](/docs/dbt-cloud-apis/sl-api-overview) to support granularity selection on any chosen time dimension.
-- **Enhancement**: MetricFlow time spine warnings now prompt users to configure missing or small-grain-time spines. An error message is displayed for multiple time spines per granularity.
-- **Enhancement**: Errors now display if no time spine is configured at the requested or smaller granularity. 
-- **Enhancement:** Improved querying error message when no semantic layer credentials were set.
-- **Enhancement:** Querying grains for cumulative metrics now returns multiple granularity options (day, week, month, quarter, year) like all other metric types. Previously, you could only query one grain option for cumulative metrics.
-- **Fix:** Removed errors that prevented querying cumulative metrics with other granularities.
-- **Fix:** Fixed various Tableau errors when querying certain metrics or when using calculated fields.
-- **Fix:** In Tableau, we relaxed naming field expectations to better identify calculated fields.
-- **Fix:** Fixed an error when refreshing database metadata for columns that we can't convert to Arrow. These columns will now be skipped. This mainly affected Redshift users with custom types.
-- **Fix:** Fixed Private Link connections for Databricks.
+- **Новое**: Введен [`dbt-sl-sdk` Python software development kit (SDK)](https://github.com/dbt-labs/semantic-layer-sdk-python) Python библиотека, которая предоставляет вам легкий доступ к dbt Semantic Layer с помощью Python. Она позволяет разработчикам взаимодействовать с API dbt Semantic Layer и запрашивать метрики и измерения в инструментах нижнего уровня. Смотрите [Python SDK dbt Semantic Layer](/docs/dbt-cloud-apis/sl-python) для получения дополнительной информации.
+- **Новое**: Введены семантические проверки в CI пайплайны. Автоматически тестируйте свои семантические узлы (метрики, семантические модели и сохраненные запросы) во время кодовых ревью, добавляя проверки валидации хранилища в вашу CI задачу с помощью команды `dbt sl validate`. Вы также можете проверять измененные семантические узлы, чтобы гарантировать, что изменения кода, внесенные в модели dbt, не нарушают эти метрики. Смотрите [Семантические проверки в CI](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы узнать о дополнительных командах и случаях использования.
+- **Новое**: Теперь мы открываем поле `meta` в [свойстве config](/reference/resource-configs/meta) для метрик dbt Semantic Layer в [JDBC и GraphQL API](/docs/dbt-cloud-apis/sl-api-overview) под полем `meta`.
+- **Новое**: Добавлена новая команда в dbt Cloud CLI под названием `export-all`, которая позволяет вам экспортировать несколько или все ваши сохраненные запросы. Ранее вам нужно было явно указывать [список сохраненных запросов](/docs/build/metricflow-commands#list-saved-queries).
+- **Улучшение**: dbt Semantic Layer теперь предлагает более детальный контроль, поддерживая несколько учетных данных платформы данных, которые могут представлять разные роли или учетные записи служб. Доступно для корпоративных планов dbt Cloud, вы можете сопоставить учетные данные с токенами служб для безопасной аутентификации. Смотрите [Настройка dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) для получения дополнительных деталей.
+- **Исправление**: Устранена ошибка, из-за которой фильтры запросов unicode (например, китайские символы) не работали корректно в интеграции dbt Semantic Layer с Tableau.
+- **Исправление**: Исправлена ошибка с парсингом некоторых закрытых ключей для BigQuery при выполнении экспорта.
+- **Исправление**: Устранена ошибка, которая вызывала возврат ошибки "закрытое соединение" при запросе или выполнении экспорта.
+- **Исправление**: Исправлена проблема в dbt Core, когда во время частичного парсинга все сгенерированные метрики в файле неправильно удалялись вместо только тех, которые были связаны с измененной семантической моделью. Теперь затрагиваются только метрики, связанные с измененной моделью.
 
-#### Also available this month:
-
-- **Enhancement:** Updates to the UI when [creating merge jobs](/docs/deploy/merge-jobs) are now available. The updates include improvements to helper text, new deferral settings, and performance improvements.
-- **New**: The dbt Semantic Layer now offers a seamless integration with Microsoft Excel, available in [preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). Build semantic layer queries and return data on metrics directly within Excel, through a custom menu. To learn more and install the add-on, check out [Microsoft Excel](/docs/cloud-integrations/semantic-layer/excel).
-- **New:** [Job warnings](/docs/deploy/job-notifications) are now GA. Previously, you could receive email or Slack alerts about your jobs when they succeeded, failed, or were canceled. Now with the new **Warns** option, you can also receive alerts when jobs have encountered warnings from tests or source freshness checks during their run. This gives you more flexibility on _when_ to be notified. 
-- **New:** A [preview](/docs/dbt-versions/product-lifecycles#dbt-cloud) of the dbt Snowflake Native App is now available. With this app, you can access dbt Explorer, the **Ask dbt** chatbot, and orchestration observability features, extending your dbt Cloud experience into the Snowflake UI. To learn more, check out [About the dbt Snowflake Native App](/docs/cloud-integrations/snowflake-native-app) and [Set up the dbt Snowflake Native App](/docs/cloud-integrations/set-up-snowflake-native-app).
-
-## May 2024
-
-- **Enhancement:** We've now introduced a new **Prune branches** [Git button](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) in the dbt Cloud IDE. This button allows you to delete local branches that have been deleted from the remote repository, keeping your branch management tidy. Available in all regions now and will be released to single tenant accounts during the next release cycle.
-
-#### dbt Cloud Launch Showcase event
-
-The following features are new or enhanced as part of our [dbt Cloud Launch Showcase](https://www.getdbt.com/resources/webinars/dbt-cloud-launch-showcase) event on May 14th, 2024:
-
-- **New:** [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful AI engine helping you generate documentation, tests, and semantic models, saving you time as you deliver high-quality data. Available in private beta for a subset of dbt Cloud Enterprise users and in the dbt Cloud IDE. [Register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) to join the private beta.
-
-- **New:** The new low-code editor, now in private beta, enables less SQL-savvy analysts to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud. These models compile directly to SQL and are indistinguishable from other dbt models in your projects: they are version-controlled, can be accessed across projects in dbt Mesh, and integrate with dbt Explorer and the Cloud IDE. [Register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) to join the private beta.
-
-- **New:** [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) is now Generally Available (GA) to all users. The dbt Cloud CLI is a command-line interface that allows you to interact with dbt Cloud, use automatic deferral, leverage dbt Mesh, and more!
-
-- **New:** The VS Code extension [Power user for dbt Core and dbt Cloud](https://docs.myaltimate.com/arch/beta/) is now available in beta for [dbt Cloud CLI](https://docs.myaltimate.com/setup/reqdConfigCloud/) users. The extension accelerates dbt and SQL development and includes features such as generating models from your source definitions or SQL, and [more](https://docs.myaltimate.com/)!
-
-- **New:** [Unit tests](/docs/build/unit-tests) are now GA in dbt Cloud. Unit tests enable you to test your SQL model logic against a set of static inputs.
-
-- <Expandable alt_header="New: Native support for Azure Synapse Analytics" lifecycle="preview"> 
-
-  Native support in dbt Cloud for Azure Synapse Analytics is now available as a [preview](/docs/dbt-versions/product-lifecycles#dbt-cloud)!
-
-  To learn more, refer to [Connect Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics) and [Microsoft Azure Synapse DWH configurations](/reference/resource-configs/azuresynapse-configs).
-
-  Also, check out the [Quickstart for dbt Cloud and Azure Synapse Analytics](/guides/azure-synapse-analytics?step=1). The guide walks you through:
-
-  - Loading the Jaffle Shop sample data (provided by dbt Labs) into Azure Synapse Analytics. 
-  - Connecting dbt Cloud to Azure Synapse Analytics.
-  - Turning a sample query into a model in your dbt project. A model in dbt is a SELECT statement.
-  - Adding tests to your models.
-  - Documenting your models.
-  - Scheduling a job to run.
-
-  </Expandable>
-
-- **New:** MetricFlow enables you to now add metrics as dimensions to your metric filters to create more complex metrics and gain more insights. Available for all dbt Cloud Semantic Layer users.
-
-- **New:** [Staging environment](/docs/deploy/deploy-environments#staging-environment) is now GA. Use staging environments to grant developers access to deployment workflows and tools while controlling access to production data. Available to all dbt Cloud users.
-
-- **New:** Oauth login support via [Databricks](/docs/cloud/manage-access/set-up-databricks-oauth) is now GA to Enterprise customers.
-
-- <Expandable alt_header="New: GA of dbt Explorer's features" > 
-
-  dbt Explorer's current capabilities &mdash; including column-level lineage, model performance analysis, and project recommendations &mdash; are now Generally Available for dbt Cloud Enterprise and Teams plans. With Explorer, you can more easily navigate your dbt Cloud project – including models, sources, and their columns – to gain a better understanding of its latest production or staging state.
-
-  To learn more about its features, check out:
+## Июнь 2024
+- **Новое:** Введена новая поддержка гранулярности для кумулятивных метрик в MetricFlow. Опции гранулярности для кумулятивных метрик немного отличаются от гранулярности для других типов метрик. Для других метрик мы используем функцию `date_trunc` для реализации гранулярности. Однако, поскольку кумулятивные метрики неаддитивны (значения нельзя складывать), мы не можем использовать функцию `date_trunc`, чтобы изменить их временную гранулярность. 
   
-  - [Explore projects](/docs/collaborate/explore-projects)
-  - [Explore multiple projects](/docs/collaborate/explore-multiple-projects) 
-  - [Column-level lineage](/docs/collaborate/column-level-lineage) 
-  - [Model performance](/docs/collaborate/model-performance) 
-  - [Project recommendations](/docs/collaborate/project-recommendations) 
+  Вместо этого мы используем функции агрегации `first()`, `last()` и `avg()` для агрегации кумулятивных метрик за запрашиваемый период. По умолчанию мы берем первое значение периода. Вы можете изменить это поведение, используя параметр `period_agg`. Для получения дополнительной информации смотрите [Опции гранулярности для кумулятивных метрик](/docs/build/cumulative#granularity-options).
+
+#### dbt Semantic Layer
+- **Новое:** Добавлена поддержка <Term id="predicate-pushdown"/> SQL оптимизации в MetricFlow. Теперь мы будем передавать фильтры категориальных измерений в таблицу источника метрик. Ранее фильтры применялись после выбора из таблицы источника метрик. Это изменение помогает уменьшить полные сканирования таблиц на определенных движках запросов.
+- **Новое:** Включены фильтры `where` на измерениях (включенных в сохраненные запросы), чтобы использовать кэш во время выполнения запроса. Это означает, что теперь вы можете динамически фильтровать свои панели инструментов, не теряя преимуществ производительности кэширования. Смотрите [кэширование](/docs/use-dbt-semantic-layer/sl-cache#result-caching) для получения дополнительной информации.
+- **Улучшение:** В [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets) добавлены информационные иконки и описания для опций метрик и измерений в меню Конструктора запросов. Нажмите на кнопку **Info**, чтобы просмотреть описание метрики или измерения. Доступно в следующих разделах меню Конструктора запросов: метрика, группировка, где, сохраненные выборки и сохраненные запросы.
+- **Улучшение:** В [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets) теперь вы можете применять гранулярность ко всем временным измерениям, а не только к временным метрикам. Это обновление использует наши [API](/docs/dbt-cloud-apis/sl-api-overview) для поддержки выбора гранулярности по любому выбранному временном измерению.
+- **Улучшение**: Предупреждения о временной оси MetricFlow теперь побуждают пользователей настраивать отсутствующие или мелкие временные оси. Сообщение об ошибке отображается для нескольких временных осей на одну гранулярность.
+- **Улучшение**: Ошибки теперь отображаются, если для запрашиваемой или меньшей гранулярности не настроена временная ось. 
+- **Улучшение:** Улучшено сообщение об ошибке при запросе, когда учетные данные семантического слоя не были установлены.
+- **Улучшение:** Запросы гранулярностей для кумулятивных метрик теперь возвращают несколько опций гранулярности (день, неделя, месяц, квартал, год), как и все другие типы метрик. Ранее вы могли запрашивать только одну опцию гранулярности для кумулятивных метрик.
+- **Исправление:** Устранены ошибки, которые мешали запросу кумулятивных метрик с другими гранулярностями.
+- **Исправление:** Исправлены различные ошибки Tableau при запросе определенных метрик или при использовании вычисляемых полей.
+- **Исправление:** В Tableau мы ослабили ожидания имен полей, чтобы лучше идентифицировать вычисляемые поля.
+- **Исправление:** Исправлена ошибка при обновлении метаданных базы данных для столбцов, которые мы не можем преобразовать в Arrow. Эти столбцы теперь будут пропущены. Это в основном касалось пользователей Redshift с пользовательскими типами.
+- **Исправление:** Исправлены соединения Private Link для Databricks.
+
+#### Также доступно в этом месяце:
+
+- **Улучшение:** Обновления пользовательского интерфейса при [создании заданий слияния](/docs/deploy/merge-jobs) теперь доступны. Обновления включают улучшения вспомогательного текста, новые настройки отсрочки и улучшения производительности.
+- **Новое**: dbt Semantic Layer теперь предлагает бесшовную интеграцию с Microsoft Excel, доступную в [предварительном просмотре](/docs/dbt-versions/product-lifecycles#dbt-cloud). Создавайте запросы семантического слоя и возвращайте данные по метрикам непосредственно в Excel через пользовательское меню. Чтобы узнать больше и установить надстройку, ознакомьтесь с [Microsoft Excel](/docs/cloud-integrations/semantic-layer/excel).
+- **Новое:** [Предупреждения о заданиях](/docs/deploy/job-notifications) теперь доступны в общем доступе. Ранее вы могли получать уведомления по электронной почте или Slack о ваших заданиях, когда они успешно завершались, терпели неудачу или были отменены. Теперь с новой опцией **Предупреждает** вы также можете получать уведомления, когда задания столкнулись с предупреждениями от тестов или проверок свежести источников во время их выполнения. Это дает вам больше гибкости в том, _когда_ получать уведомления. 
+- **Новое:** Предварительная версия приложения dbt Snowflake Native теперь доступна. С помощью этого приложения вы можете получить доступ к dbt Explorer, чат-боту **Ask dbt** и функциям наблюдаемости оркестрации, расширяя ваш опыт работы с dbt Cloud в интерфейсе Snowflake. Чтобы узнать больше, ознакомьтесь с [О приложении dbt Snowflake Native](/docs/cloud-integrations/snowflake-native-app) и [Настройка приложения dbt Snowflake Native](/docs/cloud-integrations/set-up-snowflake-native-app).
+
+## Май 2024
+
+- **Улучшение:** Мы теперь представили новую кнопку **Prune branches** [Git](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) в dbt Cloud IDE. Эта кнопка позволяет вам удалять локальные ветки, которые были удалены из удаленного репозитория, поддерживая порядок в управлении ветками. Доступно во всех регионах сейчас и будет выпущено для одноарендаторных учетных записей в следующем цикле релиза.
+
+#### Событие запуска dbt Cloud
+
+Следующие функции являются новыми или улучшенными в рамках нашего [события запуска dbt Cloud](https://www.getdbt.com/resources/webinars/dbt-cloud-launch-showcase) 14 мая 2024 года:
+
+- **Новое:** [dbt Copilot](/docs/cloud/dbt-copilot) — мощный движок AI, помогающий вам генерировать документацию, тесты и семантические модели, экономя ваше время при предоставлении качественных данных. Доступно в частной бета-версии для подмножества пользователей dbt Cloud Enterprise и в dbt Cloud IDE. [Зарегистрируйте свой интерес](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform), чтобы присоединиться к частной бета-версии.
+
+- **Новое:** Новый редактор с низким кодом, теперь в частной бета-версии, позволяет менее опытным в SQL аналитикам создавать или редактировать модели dbt через визуальный интерфейс перетаскивания внутри dbt Cloud. Эти модели компилируются непосредственно в SQL и неотличимы от других моделей dbt в ваших проектах: они контролируются версиями, могут быть доступны в разных проектах в dbt Mesh и интегрируются с dbt Explorer и Cloud IDE. [Зарегистрируйте свой интерес](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform), чтобы присоединиться к частной бета-версии.
+
+- **Новое:** [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) теперь доступен для всех пользователей. dbt Cloud CLI — это интерфейс командной строки, который позволяет вам взаимодействовать с dbt Cloud, использовать автоматическую отсрочку, использовать dbt Mesh и многое другое!
+
+- **Новое:** Расширение VS Code [Power user for dbt Core and dbt Cloud](https://docs.myaltimate.com/arch/beta/) теперь доступно в бета-версии для пользователей [dbt Cloud CLI](https://docs.myaltimate.com/setup/reqdConfigCloud/). Это расширение ускоряет разработку dbt и SQL и включает такие функции, как генерация моделей из ваших определений источников или SQL, и [многое другое](https://docs.myaltimate.com/)!
+
+- **Новое:** [Модульные тесты](/docs/build/unit-tests) теперь доступны в dbt Cloud. Модульные тесты позволяют вам тестировать логику вашей SQL модели на основе набора статических входных данных.
+
+- <Expandable alt_header="Новое: Нативная поддержка Azure Synapse Analytics" lifecycle="preview"> 
+
+  Нативная поддержка в dbt Cloud для Azure Synapse Analytics теперь доступна в [предварительном просмотре](/docs/dbt-versions/product-lifecycles#dbt-cloud)!
+
+  Чтобы узнать больше, смотрите [Подключение Azure Synapse Analytics](/docs/cloud/connect-data-platform/connect-azure-synapse-analytics) и [Конфигурации Microsoft Azure Synapse DWH](/reference/resource-configs/azuresynapse-configs).
+
+  Также ознакомьтесь с [Быстрым стартом для dbt Cloud и Azure Synapse Analytics](/guides/azure-synapse-analytics?step=1). В этом руководстве описывается:
+
+  - Загрузка образца данных Jaffle Shop (предоставленного dbt Labs) в Azure Synapse Analytics. 
+  - Подключение dbt Cloud к Azure Synapse Analytics.
+  - Превращение образца запроса в модель в вашем проекте dbt. Модель в dbt — это оператор SELECT.
+  - Добавление тестов к вашим моделям.
+  - Документирование ваших моделей.
+  - Запланируйте задание для выполнения.
 
   </Expandable>
 
-- **New:** Native support for Microsoft Fabric in dbt Cloud is now GA. This feature is powered by the [dbt-fabric](https://github.com/Microsoft/dbt-fabric) adapter. To learn more, refer to [Connect Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) and [Microsoft Fabric DWH configurations](/reference/resource-configs/fabric-configs). There's also a [quickstart guide](https://docs.getdbt.com/guides/microsoft-fabric?step=1) to help you get started. 
+- **Новое:** MetricFlow теперь позволяет вам добавлять метрики в качестве измерений к вашим фильтрам метрик, чтобы создавать более сложные метрики и получать больше информации. Доступно для всех пользователей dbt Cloud Semantic Layer.
 
-- **New:** dbt Mesh is now GA to dbt Cloud Enterprise users. dbt Mesh is a framework that helps organizations scale their teams and data assets effectively. It promotes governance best practices and breaks large projects into manageable sections. Get started with dbt Mesh by reading the [dbt Mesh quickstart guide](https://docs.getdbt.com/guides/mesh-qs?step=1).
+- **Новое:** [Стадия развертывания](/docs/deploy/deploy-environments#staging-environment) теперь доступна. Используйте стадии развертывания, чтобы предоставить разработчикам доступ к рабочим процессам и инструментам развертывания, контролируя доступ к производственным данным. Доступно для всех пользователей dbt Cloud.
 
-- **New:** The dbt Semantic Layer [Tableau Desktop, Tableau Server](/docs/cloud-integrations/semantic-layer/tableau), and [Google Sheets integration](/docs/cloud-integrations/semantic-layer/gsheets) is now GA to dbt Cloud Team or Enterprise accounts. These first-class integrations allow you to query and unlock valuable insights from your data ecosystem.
+- **Новое:** Поддержка входа через OAuth через [Databricks](/docs/cloud/manage-access/set-up-databricks-oauth) теперь доступна для корпоративных клиентов.
 
-- **Enhancement:** As part of our ongoing commitment to improving the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#considerations), the filesystem now comes with improvements to speed up dbt development, such as introducing a Git repository limit of 10GB.
+- <Expandable alt_header="Новое: GA функций dbt Explorer" > 
 
-#### Also available this month:
+  Текущие возможности dbt Explorer — включая линейность на уровне столбцов, анализ производительности моделей и рекомендации по проектам — теперь доступны в общем доступе для планов dbt Cloud Enterprise и Teams. С помощью Explorer вы можете легче навигировать по вашему проекту dbt Cloud — включая модели, источники и их столбцы — чтобы лучше понять его последнее состояние в производстве или тестировании.
 
-- **Update**: The [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) is now available for Azure single tenant and is accessible in all [deployment regions](/docs/cloud/about-cloud/access-regions-ip-addresses) for both multi-tenant and single-tenant accounts.
-
-- **New**: The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) introduces [declarative caching](/docs/use-dbt-semantic-layer/sl-cache), allowing you to cache common queries to speed up performance and reduce query compute costs. Available for dbt Cloud Team or Enterprise accounts.
-
-- <Expandable alt_header="New: Latest Release Track" > 
-
-  The **Latest** Release Track is now Generally Available (previously Public Preview).
-
-  On this release track, you get automatic upgrades of dbt, including early access to the latest features, fixes, and performance improvements for your dbt project. dbt Labs will handle upgrades behind-the-scenes, as part of testing and redeploying the dbt Cloud application &mdash; just like other dbt Cloud capabilities and other SaaS tools that you're using. No more manual upgrades and no more need for _a second sandbox project_ just to try out new features in development.
-
-  To learn more about the new setting, refer to [Release Tracks](/docs/dbt-versions/cloud-release-tracks) for details. 
-
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Example of the Latest setting"/>
+  Чтобы узнать больше о его функциях, ознакомьтесь с:
+  
+  - [Изучение проектов](/docs/collaborate/explore-projects)
+  - [Изучение нескольких проектов](/docs/collaborate/explore-multiple-projects) 
+  - [Линейность на уровне столбцов](/docs/collaborate/column-level-lineage) 
+  - [Производительность модели](/docs/collaborate/model-performance) 
+  - [Рекомендации по проектам](/docs/collaborate/project-recommendations) 
 
   </Expandable>
 
-- **Behavior change:** Introduced the `require_resource_names_without_spaces` flag, opt-in and disabled by default. If set to `True`, dbt will raise an exception if it finds a resource name containing a space in your project or an installed package. This will become the default in a future version of dbt. Read [No spaces in resource names](/reference/global-configs/behavior-changes#no-spaces-in-resource-names) for more information.
+- **Новое:** Нативная поддержка Microsoft Fabric в dbt Cloud теперь доступна. Эта функция поддерживается адаптером [dbt-fabric](https://github.com/Microsoft/dbt-fabric). Чтобы узнать больше, смотрите [Подключение Microsoft Fabric](/docs/cloud/connect-data-platform/connect-microsoft-fabric) и [Конфигурации Microsoft Fabric DWH](/reference/resource-configs/fabric-configs). Также есть [руководство по быстрому старту](https://docs.getdbt.com/guides/microsoft-fabric?step=1), чтобы помочь вам начать. 
 
-## April 2024
+- **Новое:** dbt Mesh теперь доступен для пользователей dbt Cloud Enterprise. dbt Mesh — это структура, которая помогает организациям эффективно масштабировать свои команды и активы данных. Она способствует соблюдению лучших практик управления и разбивает большие проекты на управляемые секции. Начните с dbt Mesh, прочитав [руководство по быстрому старту dbt Mesh](https://docs.getdbt.com/guides/mesh-qs?step=1).
 
-- <Expandable alt_header="New: Merge jobs" lifecycle="beta" > 
+- **Новое:** Интеграция dbt Semantic Layer с [Tableau Desktop, Tableau Server](/docs/cloud-integrations/semantic-layer/tableau) и [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets) теперь доступна для учетных записей dbt Cloud Team или Enterprise. Эти первоклассные интеграции позволяют вам запрашивать и раскрывать ценные идеи из вашей экосистемы данных.
 
-  You can now set up a continuous deployment (CD) workflow for your projects natively in dbt Cloud. You can now access a beta release of [Merge jobs](/docs/deploy/merge-jobs), which is a new [job type](/docs/deploy/jobs), that enables you to trigger dbt job runs as soon as changes (via Git pull requests) merge into production.
+- **Улучшение:** В рамках нашей постоянной приверженности улучшению [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#considerations) файловая система теперь включает улучшения для ускорения разработки dbt, такие как введение ограничения репозитория Git в 10 ГБ.
 
-  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-create-merge-job.png" width="90%" title="Example of creating a merge job"/>
+#### Также доступно в этом месяце:
+
+- **Обновление**: [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) теперь доступен для Azure с одним арендатором и доступен во всех [регионах развертывания](/docs/cloud/about-cloud/access-regions-ip-addresses) как для многопользовательских, так и для одноарендаторных учетных записей.
+
+- **Новое**: [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) вводит [декларативное кэширование](/docs/use-dbt-semantic-layer/sl-cache), позволяя вам кэшировать общие запросы для ускорения производительности и снижения затрат на вычисления запросов. Доступно для учетных записей dbt Cloud Team или Enterprise.
+
+- <Expandable alt_header="Новое: Последний релизный трек" > 
+
+  **Последний** релизный трек теперь доступен в общем доступе (ранее публичный предварительный просмотр).
+
+  На этом релизном треке вы получаете автоматические обновления dbt, включая ранний доступ к последним функциям, исправлениям и улучшениям производительности для вашего проекта dbt. dbt Labs будет обрабатывать обновления за кулисами, как часть тестирования и повторного развертывания приложения dbt Cloud &mdash; так же, как и другие возможности dbt Cloud и другие SaaS инструменты, которые вы используете. Больше никаких ручных обновлений и больше не нужно _второго песочницы_ просто для того, чтобы попробовать новые функции в разработке.
+
+  Чтобы узнать больше о новой настройке, смотрите [Релизные треки](/docs/dbt-versions/cloud-release-tracks) для получения подробной информации. 
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Пример настройки Latest"/>
+
+  </Expandable>
+
+- **Изменение поведения:** Введен флаг `require_resource_names_without_spaces`, который включен по умолчанию и отключен. Если установлен в `True`, dbt вызовет исключение, если найдет имя ресурса, содержащее пробел в вашем проекте или установленном пакете. Это станет значением по умолчанию в будущей версии dbt. Читайте [Без пробелов в именах ресурсов](/reference/global-configs/behavior-changes#no-spaces-in-resource-names) для получения дополнительной информации.
+
+## Апрель 2024
+
+- <Expandable alt_header="Новое: Задания слияния" lifecycle="beta" > 
+
+  Теперь вы можете настроить рабочий процесс непрерывного развертывания (CD) для ваших проектов нативно в dbt Cloud. Теперь вы можете получить доступ к бета-версии [Merge jobs](/docs/deploy/merge-jobs), которая является новым [типом задания](/docs/deploy/jobs), который позволяет вам запускать задания dbt сразу после того, как изменения (через запросы на вытягивание Git) объединяются в производственную среду.
+
+  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-create-merge-job.png" width="90%" title="Пример создания задания слияния"/>
 
   </Expandable>
   
-- **Behavior change:** Introduced the `require_explicit_package_overrides_for_builtin_materializations` flag, opt-in and disabled by default. If set to `True`, dbt will only use built-in materializations defined in the root project or within dbt, rather than implementations in packages. This will become the default in May 2024 (dbt Core v1.8 and dbt Cloud release tracks). Read [Package override for built-in materialization](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) for more information.
+- **Изменение поведения:** Введен флаг `require_explicit_package_overrides_for_builtin_materializations`, который включен по умолчанию и отключен. Если установлен в `True`, dbt будет использовать только встроенные материализации, определенные в корневом проекте или внутри dbt, а не реализации в пакетах. Это станет значением по умолчанию в мае 2024 года (dbt Core v1.8 и релизные треки dbt Cloud). Читайте [Переопределение пакета для встроенной материализации](/reference/global-configs/behavior-changes#package-override-for-built-in-materialization) для получения дополнительной информации.
 
 **dbt Semantic Layer**
-- **New**: Use Saved selections to [save your query selections](/docs/cloud-integrations/semantic-layer/gsheets#using-saved-selections) within the [Google Sheets application](/docs/cloud-integrations/semantic-layer/gsheets). They can be made private or public and refresh upon loading.
-- **New**: Metrics are now displayed by their labels as `metric_name`.
-- **Enhancement**: [Metrics](/docs/build/metrics-overview) now supports the [`meta` option](/reference/resource-configs/meta) under the [config](/reference/resource-properties/config) property. Previously, we only supported the now deprecated `meta` tag.
-- **Enhancement**: In the Google Sheets application, we added [support](/docs/cloud-integrations/semantic-layer/gsheets#using-saved-queries) to allow jumping off from or exploring MetricFlow-defined saved queries directly.
-- **Enhancement**: In the Google Sheets application, we added support to query dimensions without metrics. Previously, you needed a dimension.
-- **Enhancement**: In the Google Sheets application, we added support for time presets and complex time range filters such as "between", "after", and "before".
-- **Enhancement**: In the Google Sheets application, we added supported to automatically populate dimension values when you select a "where" filter, removing the need to manually type them.  Previously, you needed to manually type the dimension values.
-- **Enhancement**: In the Google Sheets application, we added support to directly query entities, expanding the flexibility of data requests.
-- **Enhancement**: In the Google Sheets application, we added an option to exclude column headers, which is useful for populating templates with only the required data.
-- **Deprecation**: For the Tableau integration, the [`METRICS_AND_DIMENSIONS` data source](/docs/cloud-integrations/semantic-layer/tableau#using-the-integration) has been deprecated for all accounts not actively using it. We encourage users to transition to the "ALL" data source for future integrations.
+- **Новое**: Используйте Сохраненные выборки, чтобы [сохранить свои выборки запросов](/docs/cloud-integrations/semantic-layer/gsheets#using-saved-selections) в приложении [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets). Они могут быть сделаны частными или публичными и обновляются при загрузке.
+- **Новое**: Метрики теперь отображаются по их меткам как `metric_name`.
+- **Улучшение**: [Метрики](/docs/build/metrics-overview) теперь поддерживают [`meta` option](/reference/resource-configs/meta) в [свойстве config](/reference/resource-properties/config). Ранее мы поддерживали только устаревший тег `meta`.
+- **Улучшение**: В приложении Google Sheets мы добавили [поддержку](/docs/cloud-integrations/semantic-layer/gsheets#using-saved-queries) для перехода от или изучения сохраненных запросов, определенных в MetricFlow, напрямую.
+- **Улучшение**: В приложении Google Sheets мы добавили поддержку для запроса измерений без метрик. Ранее вам нужно было использовать измерение.
+- **Улучшение**: В приложении Google Sheets мы добавили поддержку для предустановок времени и сложных фильтров временных диапазонов, таких как "между", "после" и "до".
+- **Улучшение**: В приложении Google Sheets мы добавили поддержку для автоматического заполнения значений измерений, когда вы выбираете фильтр "где", устраняя необходимость вручную вводить их. Ранее вам нужно было вручную вводить значения измерений.
+- **Улучшение**: В приложении Google Sheets мы добавили поддержку для прямого запроса сущностей, расширяя гибкость запросов данных.
+- **Улучшение**: В приложении Google Sheets мы добавили опцию исключить заголовки столбцов, что полезно для заполнения шаблонов только необходимыми данными.
+- **Устаревание**: Для интеграции Tableau [источник данных `METRICS_AND_DIMENSIONS`](/docs/cloud-integrations/semantic-layer/tableau#using-the-integration) был устаревшим для всех учетных записей, которые активно его не используют. Мы рекомендуем пользователям перейти на источник данных "ALL" для будущих интеграций.
 
-## March 2024
+## Март 2024
 
-- **New:** The Semantic Layer services now support using Privatelink for customers who have it enabled.
-- **New:** You can now develop against and test your Semantic Layer in the Cloud CLI if your developer credential uses SSO.
-- **Enhancement:** You can select entities to Group By, Filter By, and Order By.
-- **Fix:** `dbt parse` no longer shows an error when you use a list of filters (instead of just a string filter) on a metric.
-- **Fix:** `join_to_timespine` now properly gets applied to conversion metric input measures.
-- **Fix:** Fixed an issue where exports in Redshift were not always committing to the DWH, which also had the side-effect of leaving table locks open.
-- **Behavior change:** Introduced the `source_freshness_run_project_hooks` flag, opt-in and disabled by default. If set to `True`, dbt will include `on-run-*` project hooks in the `source freshness` command. This will become the default in a future version of dbt. Read [Project hooks with source freshness](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness) for more information.
+- **Новое:** Услуги Semantic Layer теперь поддерживают использование Privatelink для клиентов, у которых он включен.
+- **Новое:** Теперь вы можете разрабатывать и тестировать свой Semantic Layer в Cloud CLI, если ваши учетные данные разработчика используют SSO.
+- **Улучшение:** Вы можете выбирать сущности для группировки, фильтрации и сортировки.
+- **Исправление:** `dbt parse` больше не показывает ошибку, когда вы используете список фильтров (вместо просто строкового фильтра) на метрике.
+- **Исправление:** `join_to_timespine` теперь правильно применяется к входным мерам метрик преобразования.
+- **Исправление:** Исправлена проблема, когда экспорты в Redshift не всегда фиксировались в DWH, что также имело побочный эффект оставления открытых блокировок таблиц.
+- **Изменение поведения:** Введен флаг `source_freshness_run_project_hooks`, который включен по умолчанию и отключен. Если установлен в `True`, dbt будет включать хуки проекта `on-run-*` в команду `source freshness`. Это станет значением по умолчанию в будущей версии dbt. Читайте [Хуки проекта с свежестью источника](/reference/global-configs/behavior-changes#project-hooks-with-source-freshness) для получения дополнительной информации.
 
 
-## February 2024
+## Февраль 2024
 
-- **New:** [Exports](/docs/use-dbt-semantic-layer/exports#define-exports) allow you to materialize a saved query as a table or view in your data platform. By using exports, you can unify metric definitions in your data platform and query them as you would any other table or view.
-- **New:** You can access a list of your [exports](/docs/use-dbt-semantic-layer/exports) with the new list saved-queries command by adding `--show-exports`
-- **New:** The dbt Semantic Layer and [Tableau Connector](/docs/cloud-integrations/semantic-layer/tableau) now supports relative date filters in Tableau.
+- **Новое:** [Экспорты](/docs/use-dbt-semantic-layer/exports#define-exports) позволяют вам материализовать сохраненный запрос как таблицу или представление в вашей платформе данных. Используя экспорты, вы можете унифицировать определения метрик в вашей платформе данных и запрашивать их так же, как любую другую таблицу или представление.
+- **Новое:** Вы можете получить доступ к списку ваших [экспортов](/docs/use-dbt-semantic-layer/exports) с помощью новой команды list saved-queries, добавив `--show-exports`
+- **Новое:** dbt Semantic Layer и [Коннектор Tableau](/docs/cloud-integrations/semantic-layer/tableau) теперь поддерживают относительные фильтры даты в Tableau.
 
-- <Expandable alt_header="New: Use exports to write saved queries">
+- <Expandable alt_header="Новое: Используйте экспорты для записи сохраненных запросов">
 
-  You can now use the [exports](/docs/use-dbt-semantic-layer/exports) feature with [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), allowing you to query reliable metrics and fast data reporting. Exports enhance the saved queries feature, allowing you to write commonly used queries directly within your data platform using dbt Cloud's job scheduler.
+  Теперь вы можете использовать функцию [экспортов](/docs/use-dbt-semantic-layer/exports) с [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), позволяя вам запрашивать надежные метрики и быстрое представление данных. Экспорты улучшают функцию сохраненных запросов, позволяя вам записывать часто используемые запросы непосредственно в вашей платформе данных с помощью планировщика заданий dbt Cloud.
 
-  By exposing tables of metrics and dimensions, exports enable you to integrate with additional tools that don't natively connect with the dbt Semantic Layer, such as PowerBI.
+  Открывая таблицы метрик и измерений, экспорты позволяют вам интегрироваться с дополнительными инструментами, которые не подключаются нативно к dbt Semantic Layer, такими как PowerBI.
 
-  Exports are available for dbt Cloud multi-tenant [Team or Enterprise](https://www.getdbt.com/pricing/) plans on dbt versions 1.7 or newer. Refer to the [exports blog](https://www.getdbt.com/blog/announcing-exports-for-the-dbt-semantic-layer) for more details.
+  Экспорты доступны для многопользовательских планов dbt Cloud [Team или Enterprise](https://www.getdbt.com/pricing/) на версиях dbt 1.7 или новее. Смотрите [блог об экспортах](https://www.getdbt.com/blog/announcing-exports-for-the-dbt-semantic-layer) для получения дополнительных деталей.
 
-  <Lightbox src="/img/docs/dbt-cloud/semantic-layer/deploy_exports.jpg" width="90%" title="Add an environment variable to run exports in your production run." />
-
-  </Expandable>
-
-- <Expandable alt_header="New: Trigger on job completion " lifecycle="team,enterprise" >
-
-  Now available for dbt Cloud Team and Enterprise plans is the ability to trigger deploy jobs when other deploy jobs are complete. You can enable this feature [in the UI](/docs/deploy/deploy-jobs) with the  **Run when another job finishes** option in the **Triggers** section of your job or with the [Create Job API endpoint](/dbt-cloud/api-v2#/operations/Create%20Job). 
-
-  When enabled, your job will run after the specified upstream job completes. You can configure which run status(es) will trigger your job. It can be just on `Success` or on all statuses. If you have dependencies between your dbt projects, this allows you to _natively_ orchestrate your jobs within dbt Cloud &mdash; no need to set up a third-party tool.
-
-  An example of the **Triggers** section when creating the job:  
-
-  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Example of Triggers on the Deploy Job page"/>
+  <Lightbox src="/img/docs/dbt-cloud/semantic-layer/deploy_exports.jpg" width="90%" title="Добавьте переменную окружения, чтобы запустить экспорты в вашем производственном запуске." />
 
   </Expandable>
 
-- <Expandable alt_header="New: Latest Release Track" lifecycle="beta">
+- <Expandable alt_header="Новое: Запуск по завершении задания " lifecycle="team,enterprise" >
 
-  _Now available in the dbt version dropdown in dbt Cloud &mdash; starting with select customers, rolling out to wider availability through February and March._
+  Теперь доступна для планов dbt Cloud Team и Enterprise возможность запускать задания развертывания, когда другие задания развертывания завершены. Вы можете включить эту функцию [в интерфейсе](/docs/deploy/deploy-jobs) с помощью опции **Запускать, когда другое задание завершится** в разделе **Триггеры** вашего задания или с помощью [Create Job API endpoint](/dbt-cloud/api-v2#/operations/Create%20Job). 
 
-  On this release track, you get automatic upgrades of dbt, including early access to the latest features, fixes, and performance improvements for your dbt project. dbt Labs will handle upgrades behind-the-scenes, as part of testing and redeploying the dbt Cloud application &mdash; just like other dbt Cloud capabilities and other SaaS tools that you're using. No more manual upgrades and no more need for _a second sandbox project_ just to try out new features in development.
+  Когда включено, ваше задание будет выполняться после завершения указанного вышестоящего задания. Вы можете настроить, какие статусы выполнения будут запускать ваше задание. Это может быть только на `Успех` или на все статусы. Если у вас есть зависимости между вашими проектами dbt, это позволяет вам _нативно_ организовывать ваши задания внутри dbt Cloud &mdash; без необходимости настраивать сторонний инструмент.
 
-  To learn more about the new setting, refer to [Release Tracks](/docs/dbt-versions/cloud-release-tracks) for details. 
+  Пример раздела **Триггеры** при создании задания:  
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Example of the Latest setting"/>
+  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-triggers-section.png" width="90%" title="Пример триггеров на странице задания развертывания"/>
+
+  </Expandable>
+
+- <Expandable alt_header="Новое: Последний релизный трек" lifecycle="beta">
+
+  _Теперь доступно в выпадающем списке версий dbt в dbt Cloud &mdash; начиная с определенных клиентов, развертывание на более широкую доступность в течение февраля и марта._
+
+  На этом релизном треке вы получаете автоматические обновления dbt, включая ранний доступ к последним функциям, исправлениям и улучшениям производительности для вашего проекта dbt. dbt Labs будет обрабатывать обновления за кулисами, как часть тестирования и повторного развертывания приложения dbt Cloud &mdash; так же, как и другие возможности dbt Cloud и другие SaaS инструменты, которые вы используете. Больше никаких ручных обновлений и больше не нужно _второго песочницы_ просто для того, чтобы попробовать новые функции в разработке.
+
+  Чтобы узнать больше о новой настройке, смотрите [Релизные треки](/docs/dbt-versions/cloud-release-tracks) для получения подробной информации. 
+
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Пример настройки Latest"/>
 
   </Expandable>
 
 
-- <Expandable alt_header="New: Override dbt version with new User development settings" >
+- <Expandable alt_header="Новое: Переопределение версии dbt с новыми настройками разработки пользователя" >
 
-  You can now [override the dbt version](/docs/dbt-versions/upgrade-dbt-version-in-cloud#override-dbt-version) that's configured for the development environment within your project and use a different version &mdash; affecting only your user account. This lets you test new dbt features without impacting other people working on the same project. And when you're satisfied with the test results, you can safely upgrade the dbt version for your project(s).  
+  Теперь вы можете [переопределить версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud#override-dbt-version), которая настроена для среды разработки в вашем проекте, и использовать другую версию &mdash; это повлияет только на вашу учетную запись пользователя. Это позволяет вам тестировать новые функции dbt, не влияя на других людей, работающих над тем же проектом. И когда вы будете удовлетворены результатами тестирования, вы можете безопасно обновить версию dbt для ваших проектов.  
 
-  Use the **dbt version** dropdown to specify the version to override with. It's available on your project's credentials page in the **User development settings** section. For example:
+  Используйте выпадающий список **версия dbt**, чтобы указать версию для переопределения. Она доступна на странице учетных данных вашего проекта в разделе **Настройки разработки пользователя**. Например:
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-override-version.png" width="60%" title="Example of overriding the dbt version on your user account"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-override-version.png" width="60%" title="Пример переопределения версии dbt в вашей учетной записи пользователя"/>
 
   </Expandable>
 
-- <Expandable alt_header="Enhancement: Edit in primary git branch in IDE">
+- <Expandable alt_header="Улучшение: Редактирование в основной ветке git в IDE">
 
-  You can now edit, format, or lint files and execute dbt commands directly in your primary git branch in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).  This enhancement is available across various repositories, including native integrations, imported git URLs, and managed repos.
+  Теперь вы можете редактировать, форматировать или линтить файлы и выполнять команды dbt непосредственно в вашей основной ветке git в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). Это улучшение доступно для различных репозиториев, включая нативные интеграции, импортированные URL-адреса git и управляемые репозитории.
 
-  This enhancement is currently available to all dbt Cloud multi-tenant regions and will soon be available to single-tenant accounts.
+  Это улучшение в настоящее время доступно для всех многопользовательских регионов dbt Cloud и вскоре будет доступно для одноарендаторных учетных записей.
 
-  The primary branch of the connected git repo has traditionally been _read-only_ in the IDE. This update changes the branch to _protected_ and allows direct edits. When a commit is made, dbt Cloud will prompt you to create a new branch. dbt Cloud will pre-populate the new branch name with the GIT_USERNAME-patch-#; however, you can edit the field with a custom branch name.
+  Основная ветка подключенного репозитория git традиционно была _только для чтения_ в IDE. Это обновление изменяет ветку на _защищенную_ и позволяет прямые редактирования. Когда выполняется коммит, dbt Cloud предложит вам создать новую ветку. dbt Cloud автоматически заполнит имя новой ветки с GIT_USERNAME-patch-#, однако вы можете отредактировать поле с пользовательским именем ветки.
 
-  Previously, the primary branch was displayed as read-only, but now the branch is displayed with a lock icon to identify it as protected:
+  Ранее основная ветка отображалась как только для чтения, но теперь ветка отображается с иконкой замка, чтобы идентифицировать ее как защищенную:
 
   <DocCarousel slidesPerView={1}>
 
-  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/read-only.png" width="75%" title="Previous read-only experience"/>
+  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/read-only.png" width="75%" title="Предыдущее состояние только для чтения"/>
 
-  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/protected.png" width="75%" title="New protected experience"/>
+  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/protected.png" width="75%" title="Новое защищенное состояние"/>
 
   </DocCarousel>
 
-  When you make a commit while on the primary branch, a modal window will open prompting you to create a new branch and enter a commit message:
+  Когда вы делаете коммит, находясь на основной ветке, открывается модальное окно, предлагающее вам создать новую ветку и ввести сообщение коммита:
 
-  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-new-branch.png" width="75%" title="Create new branch window"/>
-
-  </Expandable>
-
-- **Enhancement:**  The dbt Semantic Layer [Google Sheets integration](/docs/cloud-integrations/semantic-layer/gsheets) now exposes a note on the cell where the data was requested, indicating clearer data requests. The integration also now exposes a new **Time Range** option, which allows you to quickly select date ranges.
-- **Enhancement:** The [GraphQL API](/docs/dbt-cloud-apis/sl-graphql) includes a `requiresMetricTime` parameter to better handle metrics that must be grouped by time. (Certain metrics defined in MetricFlow can't be looked at without a time dimension).
-- **Enhancement:** Enable querying metrics with offset and cumulative metrics with the time dimension name, instead of `metric_time`. [Issue #1000](https://github.com/dbt-labs/metricflow/issues/1000)
-  - Enable querying `metric_time` without metrics. [Issue #928](https://github.com/dbt-labs/metricflow/issues/928)
-- **Enhancement:** Added support for consistent SQL query generation, which enables ID generation consistency between otherwise identical MF queries. Previously, the SQL generated by `MetricFlowEngine` was not completely consistent between identical queries. [Issue 1020](https://github.com/dbt-labs/metricflow/issues/1020)
-- **Fix:** The Tableau Connector returns a date filter when filtering by dates. Previously it was erroneously returning a timestamp filter.
--  **Fix:** MetricFlow now validates if there are `metrics`, `group by`, or `saved_query` items in each query. Previously, there was no validation. [Issue 1002](https://github.com/dbt-labs/metricflow/issues/1002)
-- **Fix:** Measures using `join_to_timespine` in MetricFlow now have filters applied correctly after time spine join.
-- **Fix:** Querying multiple granularities with offset metrics:
-  - If you query a time offset metric with multiple instances of `metric_time`/`agg_time_dimension`, only one of the instances will be offset. All of them should be.
-  - If you query a time offset metric with one instance of `metric_time`/`agg_time_dimension` but filter by a different one, the query will fail.
-- **Fix:** MetricFlow prioritizes a candidate join type over the default type when evaluating nodes to join. For example, the default join type for distinct values queries is `FULL OUTER JOIN`, however, time spine joins require `CROSS JOIN`, which is more appropriate.
-- **Fix:** Fixed a bug that previously caused errors when entities were referenced in `where` filters.
-
-## January 2024
-
-- <Expandable alt_header="January docs updates">
-
-  Hello from the dbt Docs team: @mirnawong1, @matthewshaver, @nghi-ly, and @runleonarun! First, we’d like to thank the 10 new community contributors to docs.getdbt.com :pray: What a busy start to the year! We merged 110 PRs in January.
-
-  Here's how we improved the [docs.getdbt.com](http://docs.getdbt.com/) experience:
-
-  - Added new hover behavior for images
-  - Added new expandables for FAQs
-  - Pruned outdated notices and snippets as part of the docs site maintenance
-
-  January saw some great new content:
-
-  - New [dbt Mesh FAQs](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-4-faqs) page
-  - Beta launch of [Explorer’s column-level lineage](https://docs.getdbt.com/docs/collaborate/column-level-lineage) feature
-  - Developer blog posts:
-    - [More time coding, less time waiting: Mastering defer in dbt](https://docs.getdbt.com/blog/defer-to-prod)
-    - [Deprecation of dbt Server](https://docs.getdbt.com/blog/deprecation-of-dbt-server)
-    - From the community: [Serverless, free-tier data stack with dlt + dbt core](https://docs.getdbt.com/blog/serverless-dlt-dbt-stack)
-  - The Extrica team added docs for the [dbt-extrica community adapter](https://docs.getdbt.com/docs/core/connect-data-platform/extrica-setup)
-  - Semantic Layer: New [conversion metrics docs](https://docs.getdbt.com/docs/build/conversion) and added the parameter `fill_nulls_with` to all metric types (launched the week of January 12, 2024)
-  - New [dbt environment command](https://docs.getdbt.com/reference/commands/dbt-environment) and its flags for the dbt Cloud CLI
-
-  January also saw some refreshed content, either aligning with new product features or requests from the community:
-
-  - Native support for [partial parsing in dbt Cloud](https://docs.getdbt.com/docs/cloud/account-settings#partial-parsing)
-  - Updated guidance on using dots or underscores in the [Best practice guide for models](https://docs.getdbt.com/best-practices/how-we-style/1-how-we-style-our-dbt-models)
-  - Updated [PrivateLink for VCS docs](https://docs.getdbt.com/docs/cloud/secure/vcs-privatelink)
-  - Added a new `job_runner` role in our [Enterprise project role permissions docs](https://docs.getdbt.com/docs/cloud/manage-access/enterprise-permissions#project-role-permissions)
-  - Added saved queries to [Metricflow commands](https://docs.getdbt.com/docs/build/metricflow-commands#list-saved-queries)
-  - Removed [as_text docs](https://github.com/dbt-labs/docs.getdbt.com/pull/4726) that were wildly outdated
+  <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/create-new-branch.png" width="75%" title="Окно создания новой ветки"/>
 
   </Expandable>
 
-- **New:** New metric type that allows you to measure conversion events. For example, users who viewed a web page and then filled out a form. For more details, refer to [Conversion metrics](/docs/build/conversion). 
-- **New:** Instead of specifying the fully qualified dimension name (for example, `order__user__country`) in the group by or filter expression, you now only need to provide the primary entity and dimensions name, like `user__county`. 
-- **New:** You can now query the [saved queries](/docs/build/saved-queries) you've defined in the dbt Semantic Layer using [Tableau](/docs/cloud-integrations/semantic-layer/tableau), [GraphQL API](/docs/dbt-cloud-apis/sl-graphql), [JDBC API](/docs/dbt-cloud-apis/sl-jdbc), and the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). 
+- **Улучшение:**  Интеграция dbt Semantic Layer [Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets) теперь открывает заметку в ячейке, где были запрошены данные, указывая более четкие запросы данных. Интеграция также теперь открывает новую опцию **Временной диапазон**, которая позволяет вам быстро выбирать диапазоны дат.
+- **Улучшение:** [GraphQL API](/docs/dbt-cloud-apis/sl-graphql) включает параметр `requiresMetricTime`, чтобы лучше обрабатывать метрики, которые должны группироваться по времени. (Некоторые метрики, определенные в MetricFlow, не могут быть рассмотрены без временного измерения).
+- **Улучшение:** Включите запрос метрик с смещением и кумулятивных метрик с именем временного измерения, а не `metric_time`. [Проблема #1000](https://github.com/dbt-labs/metricflow/issues/1000)
+  - Включите запрос `metric_time` без метрик. [Проблема #928](https://github.com/dbt-labs/metricflow/issues/928)
+- **Улучшение:** Добавлена поддержка последовательного генерации SQL-запросов, что позволяет обеспечить согласованность генерации идентификаторов между иначе идентичными MF запросами. Ранее SQL, сгенерированный `MetricFlowEngine`, не был полностью согласован между идентичными запросами. [Проблема 1020](https://github.com/dbt-labs/metricflow/issues/1020)
+- **Исправление:** Коннектор Tableau возвращает фильтр даты при фильтрации по датам. Ранее он ошибочно возвращал фильтр временной метки.
+-  **Исправление:** MetricFlow теперь проверяет, есть ли `metrics`, `group by` или `saved_query` элементы в каждом запросе. Ранее не было проверки. [Проблема 1002](https://github.com/dbt-labs/metricflow/issues/1002)
+- **Исправление:** Меры, использующие `join_to_timespine` в MetricFlow, теперь имеют фильтры, применяемые правильно после соединения временной оси.
+- **Исправление:** Запрос нескольких гранулярностей с метриками смещения:
+  - Если вы запрашиваете временную метрику смещения с несколькими экземплярами `metric_time`/`agg_time_dimension`, только один из экземпляров будет смещен. Все они должны быть.
+  - Если вы запрашиваете временную метрику смещения с одним экземпляром `metric_time`/`agg_time_dimension`, но фильтруете по другому, запрос завершится неудачей.
+- **Исправление:** MetricFlow отдает приоритет типу соединения кандидата над типом по умолчанию при оценке узлов для соединения. Например, тип соединения по умолчанию для запросов с уникальными значениями — `FULL OUTER JOIN`, однако соединения временной оси требуют `CROSS JOIN`, что более уместно.
+- **Исправление:** Исправлена ошибка, которая ранее вызывала ошибки при ссылке на сущность в фильтре с использованием синтаксиса объекта. Например, `{{Entity('entity_name')}}` не удавалось разрешить.
 
-- <Expandable alt_header="New: Native support for partial parsing" >
+## Январь 2024
 
-  By default, dbt parses all the files in your project at the beginning of every dbt invocation. Depending on the size of your project, this operation can take a long time to complete. With the new partial parsing feature in dbt Cloud, you can reduce the time it takes for dbt to parse your project. When enabled, dbt Cloud parses only the changed files in your project instead of parsing all the project files. As a result, your dbt invocations will take less time to run.
+- <Expandable alt_header="Обновления документации января">
 
-  To learn more, refer to [Partial parsing](/docs/cloud/account-settings#partial-parsing).
+  Привет от команды документации dbt: @mirnawong1, @matthewshaver, @nghi-ly и @runleonarun! Во-первых, мы хотели бы поблагодарить 10 новых участников сообщества на docs.getdbt.com :pray: Какой насыщенный старт года! Мы объединили 110 PR в январе.
 
-  <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Partial parsing option" />
+  Вот как мы улучшили опыт на [docs.getdbt.com](http://docs.getdbt.com/):
+
+  - Добавлено новое поведение при наведении для изображений
+  - Добавлены новые расширяемые элементы для часто задаваемых вопросов
+  - Удалены устаревшие уведомления и фрагменты в рамках обслуживания сайта документации
+
+  Январь стал свидетелем появления отличного нового контента:
+
+  - Новая страница [часто задаваемых вопросов по dbt Mesh](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-4-faqs)
+  - Бета-запуск функции [линейности на уровне столбцов Explorer](https://docs.getdbt.com/docs/collaborate/column-level-lineage)
+  - Блог разработчиков:
+    - [Больше времени на кодирование, меньше времени на ожидание: Осваиваем отсрочку в dbt](https://docs.getdbt.com/blog/defer-to-prod)
+    - [Устаревание dbt Server](https://docs.getdbt.com/blog/deprecation-of-dbt-server)
+    - От сообщества: [Безсерверный стек данных с бесплатным уровнем dlt + dbt core](https://docs.getdbt.com/blog/serverless-dlt-dbt-stack)
+  - Команда Extrica добавила документацию для [сообщества адаптера dbt-extrica](https://docs.getdbt.com/docs/core/connect-data-platform/extrica-setup)
+  - Semantic Layer: Новая документация по [конверсионным метрикам](https://docs.getdbt.com/docs/build/conversion) и добавлен параметр `fill_nulls_with` ко всем типам метрик (запущен на неделе 12 января 2024 года)
+  - Новая команда [dbt environment](https://docs.getdbt.com/reference/commands/dbt-environment) и ее флаги для dbt Cloud CLI
+
+  Январь также стал свидетелем обновленного контента, либо в соответствии с новыми функциями продукта, либо по запросам сообщества:
+
+  - Нативная поддержка [частичного парсинга в dbt Cloud](https://docs.getdbt.com/docs/cloud/account-settings#partial-parsing)
+  - Обновленные рекомендации по использованию точек или подчеркиваний в [Руководстве по лучшим практикам для моделей](https://docs.getdbt.com/best-practices/how-we-style/1-how-we-style-our-dbt-models)
+  - Обновленная [документация по PrivateLink для VCS](https://docs.getdbt.com/docs/cloud/secure/vcs-privatelink)
+  - Добавлена новая роль `job_runner` в нашей [документации по разрешениям ролей проекта Enterprise](https://docs.getdbt.com/docs/cloud/manage-access/enterprise-permissions#project-role-permissions)
+  - Добавлены сохраненные запросы в [команды Metricflow](https://docs.getdbt.com/docs/build/metricflow-commands#list-saved-queries)
+  - Удалены [документы as_text](https://github.com/dbt-labs/docs.getdbt.com/pull/4726), которые были устаревшими
 
   </Expandable>
 
-- **Enhancement:** The YAML spec parameter `label` is now available for Semantic Layer metrics in [JDBC and GraphQL APIs](/docs/dbt-cloud-apis/sl-api-overview). This means you can conveniently use `label` as a display name for your metrics when exposing them.
-- **Enhancement:** Added support for `create_metric: true` for a measure, which is a shorthand to quickly create metrics. This is useful in cases when metrics are only used to build other metrics.
-- **Enhancement:** Added support for Tableau parameter filters. You can use the [Tableau connector](/docs/cloud-integrations/semantic-layer/tableau) to create and use parameters with your dbt Semantic Layer data.
-- **Enhancement:** Added support to expose `expr` and `agg` for [Measures](/docs/build/measures) in the [GraphQL API](/docs/dbt-cloud-apis/sl-graphql).
-- **Enhancement:** You have improved error messages in the command line interface when querying a dimension that is not reachable for a given metric.
-- **Enhancement:** You can now query entities using our Tableau integration (similar to querying dimensions). 
-- **Enhancement:** A new data source is available in our Tableau integration called "ALL", which contains all semantic objects defined. This has the same information as "METRICS_AND_DIMENSIONS". In the future, we will deprecate "METRICS_AND_DIMENSIONS" in favor of "ALL" for clarity. 
+- **Новое:** Новый тип метрики, который позволяет вам измерять события конверсии. Например, пользователи, которые просмотрели веб-страницу, а затем заполнили форму. Для получения дополнительных деталей смотрите [Конверсионные метрики](/docs/build/conversion). 
+- **Новое:** Вместо указания полностью квалифицированного имени измерения (например, `order__user__country`) в выражении группировки или фильтрации, теперь вам нужно указать только основное измерение и имя измерения, например `user__county`. 
+- **Новое:** Теперь вы можете запрашивать [сохраненные запросы](/docs/build/saved-queries), которые вы определили в dbt Semantic Layer, используя [Tableau](/docs/cloud-integrations/semantic-layer/tableau), [GraphQL API](/docs/dbt-cloud-apis/sl-graphql), [JDBC API](/docs/dbt-cloud-apis/sl-jdbc) и [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). 
 
-- **Fix:** Support for numeric types with precision greater than 38 (like `BIGDECIMAL`) in BigQuery is now available. Previously, it was unsupported so would return an error.
-- **Fix:** In some instances, large numeric dimensions were being interpreted by Tableau in scientific notation, making them hard to use. These should now be displayed as numbers as expected.
-- **Fix:** We now preserve dimension values accurately instead of being inadvertently converted into strings. 
-- **Fix:** Resolved issues with naming collisions in queries involving multiple derived metrics using the same metric input. Previously, this  could cause a naming collision. Input metrics are now deduplicated, ensuring each is referenced only once.
-- **Fix:** Resolved warnings related to using two duplicate input measures in a derived metric. Previously, this would trigger a warning. Input measures are now deduplicated, enhancing query processing and clarity.
-- **Fix:** Resolved an error where referencing an entity in a filter using the object syntax would fail. For example, `{{Entity('entity_name')}}` would fail to resolve.
+- <Expandable alt_header="Новое: Нативная поддержка частичного парсинга" >
+
+  По умолчанию dbt парсит все файлы в вашем проекте в начале каждого вызова dbt. В зависимости от размера вашего проекта эта операция может занять много времени. С новой функцией частичного парсинга в dbt Cloud вы можете сократить время, необходимое для парсинга вашего проекта. Когда она включена, dbt Cloud парсит только измененные файлы в вашем проекте, а не все файлы проекта. В результате ваши вызовы dbt будут занимать меньше времени для выполнения.
+
+  Чтобы узнать больше, смотрите [Частичный парсинг](/docs/cloud/account-settings#partial-parsing).
+
+  <Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Пример опции частичного парсинга" />
+
+  </Expandable>
+
+- **Улучшение:** Параметр спецификации YAML `label` теперь доступен для метрик Semantic Layer в [JDBC и GraphQL API](/docs/dbt-cloud-apis/sl-api-overview). Это означает, что вы можете удобно использовать `label` в качестве отображаемого имени для ваших метрик при их открытии.
+- **Улучшение:** Добавлена поддержка `create_metric: true` для меры, что является сокращением для быстрого создания метрик. Это полезно в случаях, когда метрики используются только для построения других метрик.
+- **Улучшение:** Добавлена поддержка параметров фильтров Tableau. Вы можете использовать [коннектор Tableau](/docs/cloud-integrations/semantic-layer/tableau), чтобы создавать и использовать параметры с вашими данными dbt Semantic Layer.
+- **Улучшение:** Добавлена поддержка для открытия `expr` и `agg` для [Мер](/docs/build/measures) в [GraphQL API](/docs/dbt-cloud-apis/sl-graphql).
+- **Ул

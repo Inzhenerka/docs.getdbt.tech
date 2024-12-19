@@ -1,19 +1,19 @@
 ---
-title: How do I change a user license type to read-only in dbt Cloud?
-description: "Changing a user license type to read-only in dbt Cloud"
-sidebar_label: 'How to change a user license type to read-only'
+title: Как изменить тип лицензии пользователя на только для чтения в dbt Cloud?
+description: "Изменение типа лицензии пользователя на только для чтения в dbt Cloud"
+sidebar_label: 'Как изменить тип лицензии пользователя на только для чтения'
 id: change-user-license
 
 ---
 
-To change the license type for a user from `developer` to `read-only` or `IT` in dbt Cloud, you must be an account owner or have admin privileges. You might make this change to free up a billable seat but retain the user’s access to view the information in the dbt Cloud account.
+Чтобы изменить тип лицензии для пользователя с `developer` на `read-only` или `IT` в dbt Cloud, вы должны быть владельцем аккаунта или иметь административные привилегии. Вы можете сделать это изменение, чтобы освободить оплачиваемое место, но сохранить доступ пользователя к просмотру информации в аккаунте dbt Cloud.
 
-1. From dbt Cloud, click on your account name in the left side menu and, select **Account settings**.
+1. В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Navigate to account settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Перейти к настройкам аккаунта" />
 
-2. In **Account Settings**, select **Users** under **Teams**.
-3. Select the user you want to remove and click **Edit** in the bottom of their profile.
-4. For the **License** option, choose **Read-only** or **IT** (from **Developer**), and click **Save**.
+2. В **Account Settings** выберите **Users** в разделе **Teams**.
+3. Выберите пользователя, тип лицензии которого вы хотите изменить, и нажмите **Edit** внизу его профиля.
+4. Для опции **License** выберите **Read-only** или **IT** (из **Developer**), и нажмите **Save**.
 
-<Lightbox src="/img/docs/dbt-cloud/change_user_to_read_only_20221023.gif" title="Change user's license type" />
+<Lightbox src="/img/docs/dbt-cloud/change_user_to_read_only_20221023.gif" title="Изменение типа лицензии пользователя" />

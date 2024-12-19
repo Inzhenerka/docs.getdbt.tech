@@ -1,23 +1,23 @@
 ---
-title: "Vertica setup"
+title: "Настройка Vertica"
 id: "vertica-setup"
 meta:
   maintained_by: 'Vertica'
-  authors: 'Vertica (Former authors: Matthew Carter, Andy Regan, Andrew Hedengren)'
+  authors: 'Vertica (Бывшие авторы: Matthew Carter, Andy Regan, Andrew Hedengren)'
   github_repo: 'vertica/dbt-vertica'
   pypi_package: 'dbt-vertica'
   min_core_version: 'v1.8.5'
-  cloud_support: 'Not Supported'
+  cloud_support: 'Не поддерживается'
   min_supported_version: 'Vertica 24.3.0'
-  slack_channel_name: 'n/a'
+  slack_channel_name: 'н/д'
   slack_channel_link: 'https://www.getdbt.com/community/'
   platform_name: 'Vertica'
   config_page: '/reference/resource-configs/vertica-configs'
 ---
 
-:::info VENDOR-SUPPORTED PLUGIN
+:::info ПЛАГИН, ПОДДЕРЖИВАЕМЫЙ ПРОИЗВОДИТЕЛЕМ
 
-If you're interested in contributing, check out the source code for each repository listed below.
+Если вы заинтересованы в внесении вклада, ознакомьтесь с исходным кодом для каждого из перечисленных ниже репозиториев.
 
 :::
 
@@ -26,13 +26,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta}/>
 
 
-<h3> Connecting to {frontMatter.meta.platform_name}   with {frontMatter.meta.pypi_package} </h3>
+<h3> Подключение к {frontMatter.meta.platform_name} с помощью {frontMatter.meta.pypi_package} </h3>
 
-#### Username / password authentication
+#### Аутентификация по имени пользователя и паролю
 
-Configure your dbt profile for using Vertica:
+Настройте свой профиль dbt для использования Vertica:
 
-##### Vertica connection information
+##### Информация о подключении Vertica
 
 <File name='profiles.yml'>
 
@@ -40,9 +40,9 @@ Configure your dbt profile for using Vertica:
 your-profile:
   outputs:
     dev:
-      type: vertica # Don't change this!
+      type: vertica # Не изменяйте это!
       host: [hostname]
-      port: [port] # or your custom port (optional)
+      port: [port] # или ваш собственный порт (необязательно)
       username: [your username]
       password: [your password]
       database: [database name]
@@ -60,29 +60,24 @@ your-profile:
 </File>
 
 
-##### Description of Profile Fields:
+##### Описание полей профиля:
 
-
-
-
-| Property                         | Description                                                                                                  | Required?                                                                                                        |Default Value |Example                          |
+| Свойство                         | Описание                                                                                                  | Обязательно?                                                                                                        | Значение по умолчанию | Пример                          |
 |--------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|----------------------------|----------------------------------|
-|type                         | The specific adapter to use.                                                                        | Yes    | None          | vertica
-| host                           | The host name or IP address of any active node in the Vertica Server.                                                                         |Yes                                                 | None                     | 127.0.0.1
-| port                       | The port to use, default or custom.                                                                      | Yes                                                                      | 5433       |5433
-| username                         | The username to use to connect to the server.                                                              | Yes                                                           | None            | dbadmin|
-password   |The password to use for authenticating to the server. |Yes|None|my_password|
-database |The name of the database running on the server. |Yes | None | my_db |
-| oauth_access_token | To authenticate via OAuth, provide an OAuth Access Token that authorizes a user to the database. | No | "" | Default: "" |
-schema|	The schema to build models into.|	No|	None	|VMart|
-connection_load_balance|	A Boolean value that indicates whether the connection can be redirected to a host in the database other than host.|	No|	True	|True|
-backup_server_node|	List of hosts to connect to if the primary host specified in the connection (host, port) is unreachable. Each item in the list should be either a host string (using default port 5433) or a (host, port) tuple. A host can be a host name or an IP address.|	No|	None	|['123.123.123.123','www.abc.com',('123.123.123.124',5433)]|
-retries	|The retry times after an unsuccessful connection.|	No|	2	|3|
-threads	|The number of threads the dbt project will run on.|	No|	1|	3|
-label|	A session label to identify the connection.	|No	|An auto-generated label with format of: dbt_username	|dbt_dbadmin|
-autocommit | Boolean value that indicates if the connection can enable or disable auto-commit.| No | True | False
+| type                         | Конкретный адаптер для использования.                                                                        | Да    | Нет          | vertica
+| host                           | Имя хоста или IP-адрес любого активного узла в сервере Vertica.                                                                         | Да                                                 | Нет                     | 127.0.0.1
+| port                       | Порт для использования, стандартный или пользовательский.                                                                      | Да                                                                      | 5433       | 5433
+| username                         | Имя пользователя для подключения к серверу.                                                              | Да                                                           | Нет            | dbadmin|
+| password   | Пароль для аутентификации на сервере. | Да|Нет|my_password|
+| database | Имя базы данных, работающей на сервере. | Да | Нет | my_db |
+| oauth_access_token | Для аутентификации через OAuth предоставьте токен доступа OAuth, который авторизует пользователя к базе данных. | Нет | "" | По умолчанию: "" |
+| schema|	Схема для создания моделей.|	Нет|	Нет	|VMart|
+| connection_load_balance|	Булевое значение, указывающее, может ли соединение быть перенаправлено на другой узел в базе данных, отличной от указанного хоста.|	Нет|	True	|True|
+| backup_server_node|	Список хостов для подключения, если основной хост, указанный в соединении (host, port), недоступен. Каждый элемент списка должен быть либо строкой хоста (с использованием порта по умолчанию 5433), либо кортежем (host, port). Хост может быть именем хоста или IP-адресом.|	Нет|	Нет	|['123.123.123.123','www.abc.com',('123.123.123.124',5433)]|
+| retries	| Количество попыток повторного подключения после неудачного соединения.|	Нет|	2	|3|
+| threads	| Количество потоков, на которых будет работать проект dbt.|	Нет|	1|	3|
+| label|	Метка сессии для идентификации соединения.	|Нет	|Автоматически сгенерированная метка формата: dbt_username	|dbt_dbadmin|
+| autocommit | Булевое значение, указывающее, может ли соединение включать или отключать автоматическую фиксацию.| Нет | True | False
 
 
-For more information on Vertica’s connection properties please refer to [Vertica-Python](https://github.com/vertica/vertica-python#create-a-connection) Connection Properties.
-
-
+Для получения дополнительной информации о свойствах подключения Vertica, пожалуйста, обратитесь к [Vertica-Python](https://github.com/vertica/vertica-python#create-a-connection) Свойства подключения.

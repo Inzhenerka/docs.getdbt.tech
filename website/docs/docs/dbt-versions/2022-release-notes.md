@@ -1,43 +1,43 @@
 ---
-title: "2022 dbt Cloud release notes"
-description: "dbt Cloud release notes for 2022"
+title: "2022 заметки о релизах dbt Cloud"
+description: "Заметки о релизах dbt Cloud за 2022 год"
 id: "2022-release-notes"
-sidebar: "2022 release notes"
+sidebar: "Заметки о релизах 2022 года"
 pagination_next: null
 pagination_prev: null
 ---
 
-Archived release notes for dbt Cloud from 2022
+Архивированные заметки о релизах dbt Cloud за 2022 год
 
-## December 2022
+## Декабрь 2022
 
-### Threads default value changed to 4
+### Значение по умолчанию для потоков изменено на 4
 
-Threads help parallelize node execution in the dbt directed acyclic graph [(DAG)](https://docs.getdbt.com/terms/dag). 
+Потоки помогают параллелизовать выполнение узлов в направленном ациклическом графе dbt [(DAG)](https://docs.getdbt.com/terms/dag).
 
-Previously, the thread value defaulted to 1, which can increase the runtime of your project. To help reduce the runtime of your project, the default value for threads in user profiles is now set to 4 threads. 
+Ранее значение потоков по умолчанию составляло 1, что могло увеличить время выполнения вашего проекта. Чтобы помочь сократить время выполнения вашего проекта, значение по умолчанию для потоков в пользовательских профилях теперь установлено на 4 потока.
 
-You can supply a custom thread count if you'd prefer more or less parallelization. 
+Вы можете указать собственное количество потоков, если хотите больше или меньше параллелизации.
 
-For more information, read [Understanding threads](/docs/running-a-dbt-project/using-threads). 
+Для получения дополнительной информации прочитайте [Понимание потоков](/docs/running-a-dbt-project/using-threads).
 
-### Creating a new job no longer triggers a run by default
+### Создание новой задачи больше не запускает выполнение по умолчанию
 
-To help save compute time, new jobs will no longer be triggered to run by default. When you create a new job in dbt Cloud, you can trigger the job to run by selecting **Run on schedule** and completing the desired schedule and timing information.
+Чтобы сэкономить вычислительное время, новые задачи больше не будут запускаться по умолчанию. Когда вы создаете новую задачу в dbt Cloud, вы можете запустить задачу, выбрав **Запуск по расписанию** и заполнив необходимую информацию о расписании и времени.
 
-For more information, refer to [Deploy jobs](/docs/deploy/deploy-jobs).
+Для получения дополнительной информации обратитесь к [Развертыванию задач](/docs/deploy/deploy-jobs).
 
-<Lightbox src="/img/docs/release-notes/new-jobs-default-as-off.png" title="Default for newly created jobs"/>
+<Lightbox src="/img/docs/release-notes/new-jobs-default-as-off.png" title="По умолчанию для вновь созданных задач"/>
 
-### Private packages must be cloned using access tokens provided by environment variables
+### Приватные пакеты должны быть клонированы с использованием токенов доступа, предоставленных переменными окружения
 
-The supported method for cloning private GitHub packages is the [git token method](/docs/build/packages#git-token-method), where an appropriate access token is passed into the package repository URL with an environment variable. 
+Поддерживаемый метод клонирования приватных пакетов GitHub — это [метод токена git](/docs/build/packages#git-token-method), при котором соответствующий токен доступа передается в URL-адрес репозитория пакета с помощью переменной окружения.
 
-A small number of people have been able to clone private packages using dbt's native GitHub application without explicitly providing an access token. This functionality is being deprecated as it’s limited in flexibility. 
+Небольшое количество людей смогли клонировать приватные пакеты, используя родное приложение GitHub dbt, не предоставляя явно токен доступа. Эта функциональность устаревает, так как она ограничена в гибкости.
 
-If you have been using a package hosted in a private repository on GitHub, you must start passing an access token into the URL. 
+Если вы использовали пакет, размещенный в приватном репозитории на GitHub, вам необходимо начать передавать токен доступа в URL.
 
-An example of passing an access token:
+Пример передачи токена доступа:
 
 <File name='packages.yml'>
 
@@ -51,194 +51,192 @@ packages:
 </File>
 
 
-## Novemver 2022
+## Ноябрь 2022
 
-### The dbt Cloud + Databricks experience is getting even better
+### Опыт работы dbt Cloud + Databricks становится еще лучше
 
-dbt Cloud is the easiest and most reliable way to develop and deploy a dbt project. It helps remove complexity while also giving you more features and better performance. A simpler Databricks connection experience with support for Databricks’ Unity Catalog and better modeling defaults is now available for your use.
+dbt Cloud — это самый простой и надежный способ разработки и развертывания проекта dbt. Он помогает устранить сложность, одновременно предоставляя вам больше функций и лучшую производительность. Теперь доступен более простой опыт подключения к Databricks с поддержкой Unity Catalog и лучшими значениями по умолчанию для моделирования.
 
-For all the Databricks customers already using dbt Cloud with the dbt-spark adapter, you can now [migrate](/guides/migrate-from-spark-to-databricks) your connection to the [dbt-databricks adapter](/docs/core/connect-data-platform/databricks-setup) to get the benefits. [Databricks](https://www.databricks.com/blog/2022/11/17/introducing-native-high-performance-integration-dbt-cloud.html) is committed to maintaining and improving the adapter, so this integrated experience will continue to provide the best of dbt and Databricks.
+Для всех клиентов Databricks, уже использующих dbt Cloud с адаптером dbt-spark, теперь вы можете [мигрировать](/guides/migrate-from-spark-to-databricks) ваше подключение к [адаптеру dbt-databricks](/docs/core/connect-data-platform/databricks-setup), чтобы получить преимущества. [Databricks](https://www.databricks.com/blog/2022/11/17/introducing-native-high-performance-integration-dbt-cloud.html) стремится поддерживать и улучшать адаптер, поэтому этот интегрированный опыт продолжит предоставлять лучшее из dbt и Databricks.
 
-Check out our [live blog post](https://www.getdbt.com/blog/dbt-cloud-databricks-experience/) to learn more.
+Посмотрите наш [live blog post](https://www.getdbt.com/blog/dbt-cloud-databricks-experience/) для получения дополнительной информации.
 
-### Extra features in new and refreshed IDE
+### Дополнительные функции в новом и обновленном IDE
 
-The refreshed version of the dbt Cloud IDE has launched four brand-new additional features, making it easier and faster for you to develop in the IDE.
+Обновленная версия IDE dbt Cloud запустила четыре совершенно новых дополнительных функции, что делает разработку в IDE проще и быстрее.
 
-The new features are:
+Новые функции:
 
-- **Formatting** &mdash; Format your dbt SQL files to a single code style with a click of a button. This uses the tool [sqlfmt](https://github.com/tconbeer/sqlfmt).
-- **Git diff view** &mdash; Highlights the changes in a file before opening a pull request.
-- **dbt autocomplete** &mdash; There are four new types of autocomplete features to help you develop faster:
-    - Use `ref` to autocomplete your model names
-    - Use `source` to autocomplete your source name + table name
-    - Use `macro` to autocomplete your arguments
-    - Use `env var` to autocomplete env var
-- **Dark mode**	&mdash;  Use dark mode in the dbt Cloud IDE for low-light environments.
+- **Форматирование** &mdash; Форматируйте ваши SQL-файлы dbt в едином стиле кода одним нажатием кнопки. Это использует инструмент [sqlfmt](https://github.com/tconbeer/sqlfmt).
+- **Просмотр различий Git** &mdash; Подсвечивает изменения в файле перед открытием запроса на слияние.
+- **Автозаполнение dbt** &mdash; Четыре новых типа функций автозаполнения, чтобы помочь вам разрабатывать быстрее:
+    - Используйте `ref` для автозаполнения имен ваших моделей
+    - Используйте `source` для автозаполнения имени источника + имени таблицы
+    - Используйте `macro` для автозаполнения ваших аргументов
+    - Используйте `env var` для автозаполнения переменной окружения
+- **Темный режим** &mdash; Используйте темный режим в IDE dbt Cloud для низкоосвещенных условий.
 
-Read more about all the [Cloud IDE features](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#cloud-ide-features).
+Читать больше о всех [функциях Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#cloud-ide-features).
 
-### Classic IDE deprecation notice
+### Уведомление об устаревании классического IDE
 
-In December 2022, dbt Labs will deprecate the classic IDE. The [new and refreshed IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) will be available for _all_ dbt Cloud users. You will no longer be able to access the classic IDE and dbt Labs might introduce changes that break the classic IDE.
+В декабре 2022 года dbt Labs объявит об устаревании классического IDE. Новый и обновленный IDE (/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) будет доступен для _всех_ пользователей dbt Cloud. Вы больше не сможете получить доступ к классическому IDE, и dbt Labs может внести изменения, которые нарушат работу классического IDE.
 
-With deprecation, dbt Labs will only support the refreshed version of the dbt Cloud IDE.
+С устареванием dbt Labs будет поддерживать только обновленную версию IDE dbt Cloud.
 
-Virtual Private Cloud (VPC) customers with questions about when this change will affect your account can contact your account team or support contact for assistance.
+Клиенты Virtual Private Cloud (VPC), у которых есть вопросы о том, когда это изменение повлияет на вашу учетную запись, могут обратиться к вашей команде по работе с клиентами или в службу поддержки за помощью.
 
 
-## October 2022
+## Октябрь 2022
 
-### Announcing dbt Cloud’s native integration with Azure DevOps
+### Объявление о нативной интеграции dbt Cloud с Azure DevOps
 
-dbt Cloud now offers a native integration with Azure DevOps for dbt Cloud customers on the enterprise plan.  We built this integration to remove friction, increase security, and unlock net new product experiences for our customers. [Setting up the Azure DevOps integration](/docs/cloud/git/connect-azure-devops) in dbt Cloud provides:
-  - easy dbt project set up,
-  - an improved security posture,
-  - repo permissions enforcement in dbt Cloud IDE, and
+dbt Cloud теперь предлагает нативную интеграцию с Azure DevOps для клиентов dbt Cloud на корпоративном плане. Мы создали эту интеграцию, чтобы устранить трение, повысить безопасность и открыть новые возможности для наших клиентов. [Настройка интеграции Azure DevOps](/docs/cloud/git/connect-azure-devops) в dbt Cloud предоставляет:
+  - простую настройку проекта dbt,
+  - улучшенную безопасность,
+  - соблюдение разрешений репозитория в IDE dbt Cloud, и
   - dbt Cloud Slim CI.
 
-Check out our [live blog post](https://www.getdbt.com/blog/dbt-cloud-integration-azure-devops/) to learn more!
+Посмотрите наш [live blog post](https://www.getdbt.com/blog/dbt-cloud-integration-azure-devops/) для получения дополнительной информации!
 
-### Introducing a snappier, improved, and powerful Cloud IDE
+### Введение в более быстрый, улучшенный и мощный Cloud IDE
 
-The new version of the Cloud IDE makes it easy for you to build data models without thinking much about environment setup and configuration.
+Новая версия Cloud IDE упрощает создание вами моделей данных, не задумываясь о настройке окружения и конфигурации.
 
-The new Cloud IDE includes performance upgrades, ergonomics improvements, and some delightful enhancements!
+Новый Cloud IDE включает в себя улучшения производительности, улучшения эргономики и некоторые приятные дополнения!
 
-Some of the improvements include:
+Некоторые из улучшений включают:
 
-- Improved Cloud IDE startup time (starting the IDE), interaction time (saving and committing), and reliability.
-- Better organization and navigation with features like drag and drop of files, breadcrumb, build button drop-down, and more.
-- You can use new features like auto-format your file, auto-complete model names, and git diff view to see your changes before making a pull request.
+- Улучшенное время запуска Cloud IDE (запуск IDE), время взаимодействия (сохранение и коммит) и надежность.
+- Лучшая организация и навигация с такими функциями, как перетаскивание файлов, хлебные крошки, выпадающее меню кнопки сборки и многое другое.
+- Вы можете использовать новые функции, такие как автоформатирование вашего файла, автозаполнение имен моделей и просмотр различий Git, чтобы увидеть ваши изменения перед созданием запроса на слияние.
 
-Read more about the new [Cloud IDE features](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#cloud-ide-features) and check out [New and improved Cloud IDE](https://www.getdbt.com/blog/new-improved-cloud-ide/) blog for more info!
+Читать больше о новых [функциях Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#cloud-ide-features) и ознакомьтесь с [новым и улучшенным Cloud IDE](https://www.getdbt.com/blog/new-improved-cloud-ide/) для получения дополнительной информации!
 
-## September 2022
+## Сентябрь 2022
 
-### List Steps API endpoint deprecation warning
+### Предупреждение об устаревании конечной точки API List Steps
 
-On October 14th, 2022 dbt Labs is deprecating the List Steps API endpoint. From October 14th, any GET requests to this endpoint will fail. Please prepare to stop using the List Steps endpoint as soon as possible. 
+14 октября 2022 года dbt Labs объявляет об устаревании конечной точки API List Steps. С 14 октября любые GET-запросы к этой конечной точке будут завершаться неудачей. Пожалуйста, подготовьтесь к прекращению использования конечной точки List Steps как можно скорее.
 
-dbt Labs will continue to maintain the [Retrieve Run](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/Retrieve%20Run) endpoint, which is a viable alternative depending on the use case. 
+dbt Labs продолжит поддерживать конечную точку [Retrieve Run](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/Retrieve%20Run), которая является жизнеспособной альтернативой в зависимости от случая использования.
 
-You can fetch run steps for an individual run with a GET request to the following URL,  replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan:
+Вы можете получить шаги выполнения для отдельного выполнения с помощью GET-запроса к следующему URL, заменив `YOUR_ACCESS_URL` на [соответствующий Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана:
 
 `https://YOUR_ACCESS_URL/api/v2/accounts/{accountId}/runs/{runId}/?include_related=["run_steps"]`
 
-### Query the previous three months of data using the metadata API
+### Запрос данных за предыдущие три месяца с использованием API метаданных
 
-In order to make the metadata API more scalable and improve its latency, we’ve implemented data retention limits. The metadata API can now query data from the previous three months. For example, if today was March 1, you could query data back to January 1st.
+Чтобы сделать API метаданных более масштабируемым и улучшить его задержку, мы внедрили ограничения на хранение данных. Теперь API метаданных может запрашивать данные за предыдущие три месяца. Например, если сегодня 1 марта, вы можете запрашивать данные с 1 января.
 
-For more information, see [Metadata API](/docs/dbt-cloud-apis/discovery-api)
+Для получения дополнительной информации смотрите [Metadata API](/docs/dbt-cloud-apis/discovery-api)
 
-## August 2022
+## Август 2022
 
-### Support for cross-database sources on Redshift RA3 instances
+### Поддержка кросс-базовых источников на экземплярах Redshift RA3
 
-Cross-database queries for RA3 instances are now supported by dbt Cloud projects using a Redshift connection. 
+Кросс-базовые запросы для экземпляров RA3 теперь поддерживаются проектами dbt Cloud, использующими подключение Redshift.
 
-With cross-database queries, you can seamlessly query data from any database in the cluster, regardless of which database you are connected to with dbt. 
+С помощью кросс-базовых запросов вы можете бесшовно запрашивать данные из любой базы данных в кластере, независимо от того, к какой базе данных вы подключены с помощью dbt.
 
-The [connection configuration](https://docs.getdbt.com/reference/warehouse-profiles/redshift-profile) `ra3_node` has been defaulted to `true`. This allows users to:
+Конфигурация подключения [connection configuration](https://docs.getdbt.com/reference/warehouse-profiles/redshift-profile) `ra3_node` была установлена по умолчанию на `true`. Это позволяет пользователям:
 
-- benefit from the full RA3 nodes’ capabilities, 
-- generate appropriate dbt documentation.
+- воспользоваться всеми возможностями узлов RA3,
+- генерировать соответствующую документацию dbt.
 
-## July 2022
+## Июль 2022
 
-### Large DAG feature
+### Функция больших DAG
 
-You can now select **Render Lineage** to visualize large DAGs. 
+Теперь вы можете выбрать **Отобразить наследие**, чтобы визуализировать большие DAG.
 
-Large DAGs can take a long time (10 or more seconds, if not minutes) to render and can cause browsers to crash. 
+Большие DAG могут занимать много времени (10 секунд или более, если не минуты) для рендеринга и могут вызывать сбои браузеров.
 
-The new button prevents large DAGs from rendering automatically. Instead, you can select **Render Lineage** to load the visualization. This should affect about 15% of the DAGs.
+Новая кнопка предотвращает автоматический рендеринг больших DAG. Вместо этого вы можете выбрать **Отобразить наследие**, чтобы загрузить визуализацию. Это должно затронуть около 15% DAG.
 
-<Lightbox src="/img/docs/dbt-cloud/dag v1.1.56 release.png" title="Render Lineage"/>
+<Lightbox src="/img/docs/dbt-cloud/dag v1.1.56 release.png" title="Отобразить наследие"/>
 
-## May 2022
+## Май 2022
 
-### Refresh expired access tokens in the IDE when using GitLab
+### Обновление истекших токенов доступа в IDE при использовании GitLab
 
-On May 22, GitLab changed how they treat [OAuth access tokens that don't expire](https://docs.gitlab.com/ee/update/deprecations.html#oauth-tokens-without-expiration). We updated our IDE logic to handle OAuth token expiration more gracefully. Now, the first time your token expires after 2 hours of consecutive IDE usage, you will have to re-authenticate in GitLab to refresh your expired OAuth access token. We will handle subsequent refreshes for you if you provide the authorization when you re-authenticate.
+22 мая GitLab изменил способ обработки [OAuth токенов доступа, которые не истекают](https://docs.gitlab.com/ee/update/deprecations.html#oauth-tokens-without-expiration). Мы обновили логику нашего IDE, чтобы более корректно обрабатывать истечение токенов OAuth. Теперь, в первый раз, когда ваш токен истекает после 2 часов непрерывного использования IDE, вам нужно будет повторно аутентифицироваться в GitLab, чтобы обновить истекший токен OAuth. Мы будем обрабатывать последующие обновления за вас, если вы предоставите авторизацию при повторной аутентификации.
 
-This additional security layer in the IDE is available only to the dbt Cloud enterprise plan.
+Этот дополнительный уровень безопасности в IDE доступен только для корпоративного плана dbt Cloud.
 
-## April 2022
+## Апрель 2022
 
-### Audit log
+### Журнал аудита
 
-To review actions performed by people in your organization, dbt provides logs of audited user and system events. The dbt Cloud audit log lists events triggered in your organization within the last 90 days. 
+Чтобы просмотреть действия, выполненные людьми в вашей организации, dbt предоставляет журналы аудируемых пользовательских и системных событий. Журнал аудита dbt Cloud перечисляет события, вызванные в вашей организации за последние 90 дней.
 
-The audit log includes details such as who performed the action, what the action was, and when it was performed. For more details, review [the audit log for dbt Cloud Enterprise](/docs/cloud/manage-access/audit-log) documentation.
+Журнал аудита включает в себя такие детали, как кто выполнил действие, что это было за действие и когда оно было выполнено. Для получения дополнительной информации ознакомьтесь с [журналом аудита для dbt Cloud Enterprise](/docs/cloud/manage-access/audit-log).
 
+### Устранение случайного удаления учетных данных при редактировании окружения
 
-### Credentials no longer accidentally wiped when editing an environment
+Мы исправили ошибку, при которой обновление незашифрованных полей (например, потоков, имени схемы) в настройках окружения приводило к удалению секретных полей (например, пароля, ключа, деталей учетных данных) из этого окружения. Теперь пользователи могут свободно обновлять настройки окружения, не опасаясь случайного удаления учетных данных.
 
-We resolved a bug where when updating unencrypted fields (e.g. threads, schema name) in an environment setting would cause secret fields (e.g. password, keypair, credential details) to be deleted from that environment. Now users can freely update environment settings without fear of unintentionally wiping credentials.
+### Подтверждение электронной почты
 
-### Email verification
+Чтобы повысить безопасность создания пользователей, пользователи dbt Cloud, созданные с использованием SAML Just-in-Time (JIT), теперь будут подтверждать свою личность по электронной почте для активации своей учетной записи. Использование электронной почты для подтверждения личности гарантирует, что у пользователя по-прежнему есть доступ к тому же адресу электронной почты, который он использует для входа через SAML.
 
-To enhance the security of user creation, dbt Cloud users created using SAML Just-in-Time (JIT) will now confirm identity via email to activate their account. Using email to confirm identity ensures the user still has access to the same email address they use to login via SAML. 
+### Улучшение производительности планировщика
 
-### Scheduler performance improvements
+Мы развернули наш новый распределенный планировщик, который имеет гораздо более быстрое время подготовки, особенно в начале часа. Мы делимся дополнительной информацией о нашей работе и улучшениях в нашем [блог-посте о новостях продукта](https://www.getdbt.com/blog/a-good-problem-to-have/).
 
-We rolled out our new distributed scheduler, which has much faster prep times, especially at the top of the hour. We share more about our work and improvements in our [product news blog post](https://www.getdbt.com/blog/a-good-problem-to-have/).
+## Март 2022
 
-## March 2022
+### Проблемы с нестабильным интернетом больше не вызывают сообщение о тайм-ауте сессии
 
-### Spotty internet issues no longer cause a session time out message
+Мы исправили проблему, при которой нестабильное интернет-соединение могло неожиданно вызывать сообщение "Сессия IDE истекла". Люди, использующие VPN, чаще всего сталкивались с этой проблемой.
 
-We fixed an issue where a spotty internet connection could cause the “IDE session timed out” message to appear unexpectedly. People using a VPN were most likely to see this issue.
+Мы обновили логику проверки состояния, чтобы теперь она исключала проблемы с подключением на стороне клиента из проверки состояния сессии IDE. Если вы потеряете интернет-соединение, мы больше не будем обновлять состояние проверки состояния. Теперь потеря интернет-соединения больше не вызовет это неожиданное сообщение.
 
-We updated the health check logic so it now excludes client-side connectivity issues from the IDE session check. If you lose your internet connection, we no longer update the health-check state. Now, losing internet connectivity will no longer cause this unexpected message.
+<Lightbox src="/img/docs/dbt-cloud/Fix Session Timeout.png" title="Исправление тайм-аута сессии"/>
 
-<Lightbox src="/img/docs/dbt-cloud/Fix Session Timeout.png" title="Fix Session Timeout"/>
+### Разделение времени ожидания на время ожидания и время подготовки
 
-### Dividing queue time into waiting and prep time
+Теперь dbt Cloud показывает "время ожидания" и "время подготовки" для выполнения, которое ранее выражалось в совокупности как "время в очереди". Время ожидания фиксирует время, которое dbt Cloud ждет, чтобы запустить вашу задачу, если нет доступного слота для выполнения или если предыдущее выполнение той же задачи все еще выполняется. Время подготовки представляет собой время, необходимое dbt Cloud для подготовки вашей задачи к выполнению в вашем облачном хранилище данных.
 
-dbt Cloud now shows "waiting time" and "prep time" for a run, which used to be expressed in aggregate as "queue time". Waiting time captures the time dbt Cloud waits to run your job if there isn't an available run slot or if a previous run of the same job is still running. Prep time represents the time it takes dbt Cloud to ready your job to run in your cloud data warehouse.
+<Lightbox src="/img/docs/dbt-cloud/v1.1.46releasenotes_img1.png" title="Новое время подготовки и время ожидания"/>
 
-<Lightbox src="/img/docs/dbt-cloud/v1.1.46releasenotes_img1.png" title="New prep time and waiting time"/>
+## Февраль 2022
 
-## February 2022
+### Обновления DAG и улучшения производительности
 
-### DAG updates and performance improvements
+Любите DAG в IDE так же, как и мы? Теперь, когда вы нажимаете на узел в DAG, файл модели или конфигурации откроется в новой вкладке в IDE, чтобы вы могли напрямую просмотреть или отредактировать код. Мы продолжим внедрять лучшие функции для разработчиков в течение года.
 
-Love the DAG in the IDE as much as we do? Now when you click on a node in the DAG, the model or config file will open as a new tab in the IDE, so you can directly view or edit the code. We'll continue to ship better developer ergonomic functionality throughout the year.
+#### Улучшения производительности и улучшения
 
-#### Performance improvements and enhancements
+* Обновлены рекомендуемые команды dbt в IDE, чтобы включить команды dbt Core v1.0, такие как "build" и аргумент "--select".
 
-* Updated recommended dbt commands in the IDE to include dbt Core v1.0 commands, such as "build" and the "--select" argument.  
+### Сервисные токены и исправления ошибок
 
-### Service tokens and bug fixes
+Сервисные токены теперь могут быть назначены с детализированными разрешениями для обеспечения минимально необходимого доступа. Если вы находитесь на корпоративном плане, вы можете назначить любой набор разрешений для предприятия вновь выданным сервисным токенам. Если вы находитесь на командном плане, вы можете назначить набор разрешений администратора задач вновь выданным сервисным токенам. Мы настоятельно рекомендуем вам переиздать сервисные токены с этими новыми разрешениями, чтобы повысить вашу безопасность! Смотрите документацию [здесь](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
 
-Service tokens can now be assigned granular permissions to enforce least privilege access. If you're on Enterprise, you can assign any enterprise permission set to newly issued service tokens. If you're on Teams, you can assign the Job Admin permission set to newly issued service tokens. We highly recommend you re-issue service tokens with these new permissions to increase your security posture! See docs [here](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
+#### Новые продукты и функции
 
-#### New products and features
+- Мы присоединяемся к [программе партнеров по сканированию секретов GitHub](https://docs.github.com/en/developers/overview/secret-scanning-partner-program), чтобы лучше защитить ваш токен от случайного публичного раскрытия и потенциального мошеннического использования.
 
-- We are joining the [GitHub secret scanning partner program](https://docs.github.com/en/developers/overview/secret-scanning-partner-program) to better secure your token against accidental public exposure and potential fraudulent usage.
+#### Исправления ошибок
 
-#### Bug fixes
+- Учетные данные больше не удаляются случайно, когда пользователь обновляет настройки окружения.
 
-- Credentials are no longer accidentally deleted when a user updates an environment setting.
+## Январь 2022
 
-## January 2022
+### Автозаполнение фрагментов для SQL и YAML файлов в IDE
 
-### Autocomplete snippets for SQL and YAML files in IDE
+Некоторые примечательные улучшения включают автозаполнение фрагментов для SQL и YAML файлов в IDE, которые теперь доступны для использования! Мы также добавили [новую страницу уровня метрик](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-metrics-layer) в docs.getdbt.com, чтобы помочь вам начать думать о слое метрик в dbt Cloud.
 
-Some noteworthy improvements include autocomplete snippets for sql and YAML files in the IDE, which are available for use now! We also added a [new metric layer page](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-metrics-layer) to docs.getdbt.com to help you begin thinking about the metrics layer in dbt Cloud.
+#### Улучшения производительности и улучшения
 
-#### Performance improvements and enhancements
+* Имена веток теперь по умолчанию устанавливаются на "main" вместо "master" в новых управляемых и неуправляемых Git репозиториях.
+* Обновите фрагменты автозаполнения IDE.
 
-* Branch names now default to "main" instead of "master" in new managed and unmanaged Git repositories.
-* Update IDE autocomplete snippets.
+### Время модели для многопользовательских команд и корпоративных учетных записей
 
+Мы начали новый год с подарка! Многопользовательские командные и корпоративные учетные записи теперь могут использовать новую вкладку [Model timing](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) в dbt Cloud. Вы можете использовать эту вкладку, чтобы более подробно изучить модели с длительным временем выполнения, чтобы увидеть, нуждаются ли они в рефакторинге или перенастройке.
 
-### Model timing for Multi-tenant Team and Enterprise accounts
+#### Улучшения производительности и улучшения
 
-We started the new year with a gift! Multi-tenant Team and Enterprise accounts can now use the new [Model timing](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) tab in dbt Cloud. You can use this tab to further explore long-running models to see if they need refactoring or rescheduling.
-
-#### Performance improvements and enhancements
-
-* We added client-side naming validation for file or folder creation.
+* Мы добавили проверку имен на стороне клиента для создания файлов или папок.

@@ -1,13 +1,12 @@
 ---
-title: Can I store my snapshots in a directory other than the `snapshot` directory in my project?
-description: "You can see how to change snapshots directory in your project"
-sidebar_label: 'Store snapshot in other directory'
+title: Могу ли я хранить свои снимки в директории, отличной от директории `snapshot` в моем проекте?
+description: "Вы можете узнать, как изменить директорию для снимков в вашем проекте"
+sidebar_label: 'Хранение снимков в другой директории'
 id: configurable-snapshot-path
 ---
-By default, dbt expects your snapshot files to be located in the `snapshots` subdirectory of your project.
+По умолчанию dbt ожидает, что ваши файлы снимков будут находиться в подпапке `snapshots` вашего проекта.
 
-To change this, update the [snapshot-paths](reference/project-configs/snapshot-paths.md) configuration in your `dbt_project.yml`
-file, like so:
+Чтобы изменить это, обновите конфигурацию [snapshot-paths](reference/project-configs/snapshot-paths.md) в вашем файле `dbt_project.yml`, следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -17,4 +16,4 @@ snapshot-paths: ["snapshots"]
 
 </File>
 
-Note that you cannot co-locate snapshots and models in the same directory.
+Обратите внимание, что вы не можете размещать снимки и модели в одной и той же директории.

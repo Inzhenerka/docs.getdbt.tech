@@ -1,38 +1,38 @@
 ---
-title: "Use cases and examples for the Discovery API"
-sidebar_label: "Uses and examples"
+title: "Сценарии использования и примеры для Discovery API"
+sidebar_label: "Сценарии и примеры"
 ---
 
-With the Discovery API, you can query the metadata in dbt Cloud to learn more about your dbt deployments and the data it generates to analyze them and make improvements.
+С помощью Discovery API вы можете запрашивать метаданные в dbt Cloud, чтобы узнать больше о ваших развертываниях dbt и данных, которые они генерируют, для их анализа и улучшения.
 
-You can use the API in a variety of ways to get answers to your business questions. Below describes some of the uses of the API and is meant to give you an idea of the questions this API can help you answer.
+Вы можете использовать API различными способами, чтобы получить ответы на ваши бизнес-вопросы. Ниже описаны некоторые из сценариев использования API и приведены примеры вопросов, на которые этот API может помочь вам ответить.
 
-| Use case | Outcome | <div style={{width:'400px'}}>Example questions</div> |
+| Сценарий использования | Результат | <div style={{width:'400px'}}>Примеры вопросов</div> |
 | --- | --- | --- |
-| [Performance](#performance) | Identify inefficiencies in pipeline execution to reduce infrastructure costs and improve timeliness. | <ul><li>What’s the latest status of each model?</li> <li>Do I need to run this model?</li><li>How long did my DAG take to run?</li> </ul>|
-| [Quality](#quality) | Monitor data source freshness and test results to resolve issues and drive trust in data. | <ul><li>How fresh are my data sources?</li><li>Which tests and models failed?</li><li>What’s my project’s test coverage?</li></ul>  |
-| [Discovery](#discovery) | Find and understand relevant datasets and semantic nodes with rich context and metadata. | <ul><li>What do these tables and columns mean?</li><li>What’s the full data lineage?</li><li>Which metrics can I query?</li> </ul> |
-| [Governance](#governance) | Audit data development and facilitate collaboration within and between teams. | <ul><li>Who is responsible for this model?</li><li>How do I contact the model’s owner?</li><li>Who can use this model?</li></ul>|
-| [Development](#development) | Understand dataset changes and usage and gauge impacts to inform project definition. | <ul><li>How is this metric used in BI tools?</li><li>Which nodes depend on this data source?</li><li>How has a model changed? What impact?</li> </ul>|
+| [Производительность](#performance) | Определение неэффективности в выполнении конвейера для снижения затрат на инфраструктуру и улучшения своевременности. | <ul><li>Каков последний статус каждой модели?</li> <li>Нужно ли мне запускать эту модель?</li><li>Сколько времени заняло выполнение моего DAG?</li> </ul>|
+| [Качество](#quality) | Мониторинг свежести источников данных и результатов тестов для решения проблем и повышения доверия к данным. | <ul><li>Насколько свежи мои источники данных?</li><li>Какие тесты и модели не прошли?</li><li>Каково покрытие тестами моего проекта?</li></ul>  |
+| [Обнаружение](#discovery) | Поиск и понимание соответствующих наборов данных и семантических узлов с богатым контекстом и метаданными. | <ul><li>Что означают эти таблицы и столбцы?</li><li>Какова полная линия данных?</li><li>Какие метрики я могу запрашивать?</li> </ul> |
+| [Управление](#governance) | Аудит разработки данных и содействие сотрудничеству внутри и между командами. | <ul><li>Кто отвечает за эту модель?</li><li>Как мне связаться с владельцем модели?</li><li>Кто может использовать эту модель?</li></ul>|
+| [Разработка](#development) | Понимание изменений и использования наборов данных и оценка влияния для информирования определения проекта. | <ul><li>Как эта метрика используется в BI-инструментах?</li><li>Какие узлы зависят от этого источника данных?</li><li>Как изменилась модель? Какое влияние?</li> </ul>|
 
-## Performance
+## Производительность
 
-You can use the Discovery API to identify inefficiencies in pipeline execution to reduce infrastructure costs and improve timeliness. Below are example questions and queries you can run.
+Вы можете использовать Discovery API для определения неэффективности в выполнении конвейера, чтобы снизить затраты на инфраструктуру и улучшить своевременность. Ниже приведены примеры вопросов и запросов, которые вы можете выполнить.
 
-For performance use cases, people typically query the historical or latest applied state across any part of the DAG (for example, models) using the `environment`, `modelByEnvironment`, or job-level endpoints.
+Для сценариев использования производительности люди обычно запрашивают историческое или последнее примененное состояние в любой части DAG (например, модели), используя конечные точки `environment`, `modelByEnvironment` или уровня задания.
 
-### How long did each model take to run?
+### Сколько времени заняло выполнение каждой модели?
 
-It’s helpful to understand how long it takes to build models (tables) and tests to execute during a dbt run. Longer model build times result in higher infrastructure costs and fresh data arriving later to stakeholders. Analyses like these can be in observability tools or ad-hoc queries, like in a notebook.
+Полезно понимать, сколько времени требуется для построения моделей (таблиц) и выполнения тестов во время выполнения dbt. Более длительное время сборки модели приводит к более высоким затратам на инфраструктуру и более позднему поступлению свежих данных к заинтересованным сторонам. Такие анализы могут быть выполнены в инструментах наблюдаемости или в виде ad-hoc запросов, например, в блокноте.
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.png" width="200%" title="Model timing visualization in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.png" width="200%" title="Визуализация времени выполнения модели в dbt Cloud"/>
 
 <details>
-<summary>Example query with code</summary>
+<summary>Пример запроса с кодом</summary>
 
-Data teams can monitor the performance of their models, identify bottlenecks, and optimize the overall data pipeline by fetching execution details like `executionTime` and `runElapsedTime`:
+Команды данных могут отслеживать производительность своих моделей, выявлять узкие места и оптимизировать общий конвейер данных, получая детали выполнения, такие как `executionTime` и `runElapsedTime`:
 
-1. Use latest state environment-level API to get a list of all executed models and their execution time. Then, sort the models by `executionTime` in descending order.
+1. Используйте API уровня состояния последнего состояния, чтобы получить список всех выполненных моделей и их времени выполнения. Затем отсортируйте модели по `executionTime` в порядке убывания.
 
 ```graphql
 query AppliedModels($environmentId: BigInt!, $first: Int!) {
@@ -57,7 +57,7 @@ query AppliedModels($environmentId: BigInt!, $first: Int!) {
 }
 ```
 
-2. Get the most recent 20 run results for the longest running model. Review the results of the model across runs or you can go to the job/run or commit itself to investigate further.
+2. Получите 20 последних результатов выполнения для самой длительно выполняемой модели. Просмотрите результаты модели по запускам или вы можете перейти к заданию/запуску или самому коммиту для дальнейшего расследования.
 
 ```graphql
 query ModelHistoricalRuns(
@@ -85,20 +85,20 @@ query ModelHistoricalRuns(
 }
 ```
 
-3. Use the query results to plot a graph of the longest running model’s historical run time and execution time trends.
+3. Используйте результаты запроса для построения графика исторического времени выполнения и тенденций времени выполнения самой длительно выполняемой модели.
 
 <!-- TODO: TEST THIS PYTHON CODE WORKS WITH NEW API AND DOCS! -->
 ```python
-# Import libraries
+# Импорт библиотек
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
 import requests
 
-# Set API key
+# Установите API-ключ
 auth_token = *[SERVICE_TOKEN_HERE]*
 
-# Query the API
+# Запрос к API
 def query_discovery_api(auth_token, gql_query, variables):
     response = requests.post('https://metadata.cloud.getdbt.com/graphql',
         headers={"authorization": "Bearer "+auth_token, "content-type": "application/json"},
@@ -107,72 +107,72 @@ def query_discovery_api(auth_token, gql_query, variables):
 
     return data
 
-# Get the latest run metadata for all models
+# Получите последние метаданные выполнения для всех моделей
 models_latest_metadata = query_discovery_api(auth_token, query_one, variables_query_one)['environment']
 
-# Convert to dataframe
+# Преобразуйте в dataframe
 models_df = pd.DataFrame([x['node'] for x in models_latest_metadata['applied']['models']['edges']])
 
-# Unnest the executionInfo column
+# Разверните столбец executionInfo
 models_df = pd.concat([models_df.drop(['executionInfo'], axis=1), models_df['executionInfo'].apply(pd.Series)], axis=1)
 
-# Sort the models by execution time
+# Отсортируйте модели по времени выполнения
 models_df_sorted = models_df.sort_values('executionTime', ascending=False)
 
 print(models_df_sorted)
 
-# Get the uniqueId of the longest running model
+# Получите uniqueId самой длительно выполняемой модели
 longest_running_model = models_df_sorted.iloc[0]['uniqueId']
 
-# Define second query variables
+# Определите переменные второго запроса
 variables_query_two = {
     "environmentId": *[ENVR_ID_HERE]*
     "lastRunCount": 10,
     "uniqueId": longest_running_model
 }
 
-# Get the historical run metadata for the longest running model
+# Получите исторические метаданные выполнения для самой длительно выполняемой модели
 model_historical_metadata = query_discovery_api(auth_token, query_two, variables_query_two)['environment']['applied']['modelHistoricalRuns']
 
-# Convert to dataframe
+# Преобразуйте в dataframe
 model_df = pd.DataFrame(model_historical_metadata)
 
-# Filter dataframe to only successful runs
+# Отфильтруйте dataframe, чтобы оставить только успешные запуски
 model_df = model_df[model_df['status'] == 'success']
 
-# Convert the runGeneratedAt, executeStartedAt, and executeCompletedAt columns to datetime
+# Преобразуйте столбцы runGeneratedAt, executeStartedAt и executeCompletedAt в datetime
 model_df['runGeneratedAt'] = pd.to_datetime(model_df['runGeneratedAt'])
 model_df['executeStartedAt'] = pd.to_datetime(model_df['executeStartedAt'])
 model_df['executeCompletedAt'] = pd.to_datetime(model_df['executeCompletedAt'])
 
-# Plot the runElapsedTime over time
+# Постройте график runElapsedTime по времени
 plt.plot(model_df['runGeneratedAt'], model_df['runElapsedTime'])
-plt.title('Run Elapsed Time')
+plt.title('Время выполнения')
 plt.show()
 
-# # Plot the executionTime over time
+# # Постройте график executionTime по времени
 plt.plot(model_df['executeStartedAt'], model_df['executionTime'])
-plt.title(model_df['name'].iloc[0]+" Execution Time")
+plt.title(model_df['name'].iloc[0]+" Время выполнения")
 plt.show()
 ```
 
-Plotting examples:
+Примеры графиков:
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/plot-of-runelapsedtime.png" width="80%" title="The plot of runElapsedTime over time"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/plot-of-runelapsedtime.png" width="80%" title="График runElapsedTime по времени"/>
 
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/plot-of-executiontime.png" width="80%" title="The plot of executionTime over time"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/plot-of-executiontime.png" width="80%" title="График executionTime по времени"/>
 
 </details>
 
-### What’s the latest state of each model?
+### Каково последнее состояние каждой модели?
 
-The Discovery API provides information about the applied state of models and how they arrived in that state. You can retrieve the status information from the most recent run and most recent successful run (execution) from the `environment` endpoint and dive into historical runs using job-based and `modelByEnvironment` endpoints.
+Discovery API предоставляет информацию о примененном состоянии моделей и о том, как они достигли этого состояния. Вы можете получить информацию о статусе из последнего запуска и последнего успешного запуска (выполнения) из конечной точки `environment` и углубиться в исторические запуски, используя конечные точки на основе заданий и `modelByEnvironment`.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-The API returns full identifier information (`database.schema.alias`) and the `executionInfo` for both the most recent run and most recent successful run from the database:
+API возвращает полную информацию об идентификаторе (`database.schema.alias`) и `executionInfo` как для последнего запуска, так и для последнего успешного запуска из базы данных:
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -208,14 +208,14 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-### What happened with my job run?
+### Что произошло с выполнением моего задания?
 
-You can query the metadata at the job level to review results for specific runs. This is helpful for historical analysis of deployment performance or optimizing particular jobs.
+Вы можете запрашивать метаданные на уровне задания, чтобы просмотреть результаты для конкретных запусков. Это полезно для исторического анализа производительности развертывания или оптимизации конкретных заданий.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-Deprecated example:
+Устаревший пример:
 ```graphql
 query ($jobId: Int!, $runId: Int!) {
   models(jobId: $jobId, runId: $runId) {
@@ -229,7 +229,7 @@ query ($jobId: Int!, $runId: Int!) {
 }
 ```
 
-New example:
+Новый пример:
 
 ```graphql
 query ($jobId: BigInt!, $runId: BigInt!) {
@@ -248,13 +248,13 @@ query ($jobId: BigInt!, $runId: BigInt!) {
 
 </details>
 
-### What’s changed since the last run?
-Unnecessary runs incur higher infrastructure costs and load on the data team and their systems. A model doesn’t need to be run if it’s a view and there's no code change since the last run, or if it’s a table/incremental with no code change since last run and source data has not been updated since the last run.
+### Что изменилось с последнего запуска?
+Необязательные запуски приводят к более высоким затратам на инфраструктуру и нагрузке на команду данных и их системы. Модель не нужно запускать, если это представление и с последнего запуска не было изменений в коде, или если это таблица/инкрементальная модель без изменений в коде с последнего запуска и исходные данные не были обновлены с последнего запуска.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-With the API, you can compare the `rawCode` between the definition and applied state, and review when the sources were last loaded (source `maxLoadedAt` relative to model `executeCompletedAt`) given the `materializedType` of the model:
+С помощью API вы можете сравнить `rawCode` между определением и примененным состоянием и проверить, когда источники были загружены в последний раз (source `maxLoadedAt` относительно model `executeCompletedAt`) с учетом `materializedType` модели:
 
 
 ```graphql
@@ -304,20 +304,20 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-## Quality
+## Качество
 
-You can use the Discovery API to monitor data source freshness and test results to diagnose and resolve issues and drive trust in data. When used with [webhooks](/docs/deploy/webhooks), can also help with detecting, investigating, and alerting issues. Below lists example questions the API can help you answer. Below are example questions and queries you can run.
+Вы можете использовать Discovery API для мониторинга свежести источников данных и результатов тестов, чтобы диагностировать и решать проблемы и повышать доверие к данным. При использовании с [вебхуками](/docs/deploy/webhooks) он также может помочь в обнаружении, расследовании и оповещении о проблемах. Ниже приведены примеры вопросов, на которые API может помочь вам ответить. Ниже приведены примеры вопросов и запросов, которые вы можете выполнить.
 
-For quality use cases, people typically query the historical or latest applied state, often in the upstream part of the DAG (for example, sources), using the `environment` or `environment { applied { modelHistoricalRuns } }` endpoints.
+Для сценариев использования качества люди обычно запрашивают историческое или последнее примененное состояние, часто в верхней части DAG (например, источники), используя конечные точки `environment` или `environment { applied { modelHistoricalRuns } }`.
 
-### Which models and tests failed to run?
+### Какие модели и тесты не прошли?
 
-By filtering on the latest status, you can get lists of models that failed to build and tests that failed during their most recent execution. This is helpful when diagnosing issues with the deployment that result in delayed or incorrect data.
+Фильтруя по последнему статусу, вы можете получить списки моделей, которые не удалось построить, и тестов, которые не прошли во время их последнего выполнения. Это полезно при диагностике проблем с развертыванием, которые приводят к задержкам или неправильным данным.
 
 <details>
-<summary>Example query with code</summary>
+<summary>Пример запроса с кодом</summary>
 
-1. Get the latest run results across all jobs in the environment and return only the models and tests that errored/failed.
+1. Получите последние результаты выполнения для всех заданий в окружении и верните только модели и тесты, которые выдали ошибку/не прошли.
 
 
 ```graphql
@@ -349,7 +349,7 @@ query ($environmentId: BigInt!, $first: Int!) {
 }
 ```
 
-2. Review the historical execution and test failure rate (up to 20 runs) for a given model, such as a frequently used and important dataset.
+2. Просмотрите историческое выполнение и уровень неудач тестов (до 20 запусков) для данной модели, такой как часто используемый и важный набор данных.
 
 
 ```graphql
@@ -370,18 +370,18 @@ query ($environmentId: BigInt!, $uniqueId: String!, $lastRunCount: Int) {
 }
 ```
 
-3. Identify the runs and plot the historical trends of failure/error rates.
+3. Определите запуски и постройте исторические тенденции уровней неудач/ошибок.
 
 
 </details>
 
 
-### When was the data my model uses last refreshed?
+### Когда данные, которые использует моя модель, были обновлены в последний раз?
 
-You can get the metadata on the latest execution for a particular model or across all models in your project. For instance, investigate when each model or snapshot that's feeding into a given model was last executed or the source or seed was last loaded to gauge the _freshness_ of the data.
+Вы можете получить метаданные о последнем выполнении для конкретной модели или для всех моделей в вашем проекте. Например, исследуйте, когда каждая модель или снимок, который подает данные в данную модель, был выполнен в последний раз, или когда источник или семя были загружены в последний раз, чтобы оценить _свежесть_ данных.
 
 <details>
-<summary>Example query with code</summary>
+<summary>Пример запроса с кодом</summary>
 
 
 ```graphql
@@ -437,7 +437,7 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 <!-- TODO: TEST THIS PYTHON CODE WORKS WITH NEW API AND DOCS! -->
 ```python
-# Extract graph nodes from response
+# Извлечение узлов графа из ответа
 def extract_nodes(data):
     models = []
     sources = []
@@ -454,7 +454,7 @@ def extract_nodes(data):
 
     return models_df, sources_df, groups_df
 
-# Construct a lineage graph with freshness info
+# Построение графа зависимости с информацией о свежести
 def create_freshness_graph(models_df, sources_df):
     G = nx.DiGraph()
     current_time = datetime.now(timezone.utc)
@@ -486,21 +486,21 @@ def create_freshness_graph(models_df, sources_df):
     return G
 ```
 
-Graph example:
+Пример графика:
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/lineage-graph-with-freshness-info.png" width="75%" title="A lineage graph with source freshness information"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/lineage-graph-with-freshness-info.png" width="75%" title="График зависимости с информацией о свежести источников"/>
 
 </details>
 
 
-### Are my data sources fresh?
+### Свежи ли мои источники данных?
 
-Checking [source freshness](/docs/build/sources#source-data-freshness) allows you to ensure that sources loaded and used in your dbt project are compliant with expectations. The API provides the latest metadata about source loading and information about the freshness check criteria.
+Проверка [свежести источников](/docs/build/sources#source-data-freshness) позволяет вам убедиться, что источники, загруженные и используемые в вашем проекте dbt, соответствуют ожиданиям. API предоставляет последние метаданные о загрузке источников и информацию о критериях проверки свежести.
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/source-freshness-page.png" width="75%" title="Source freshness page in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/source-freshness-page.png" width="75%" title="Страница свежести источников в dbt Cloud"/>
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -546,14 +546,14 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-### What’s the test coverage and status?
+### Каково покрытие тестами и статус?
 
-[Tests](https://docs.getdbt.com/docs/build/tests) are an important way to ensure that your stakeholders are reviewing high-quality data. You can execute tests during a dbt Cloud run. The Discovery API provides complete test results for a given environment or job, which it represents as the `children` of a given node that’s been tested (for example, a `model`).
+[Тесты](https://docs.getdbt.com/docs/build/tests) являются важным способом обеспечения того, чтобы ваши заинтересованные стороны проверяли качественные данные. Вы можете выполнять тесты во время выполнения dbt Cloud. Discovery API предоставляет полные результаты тестов для данного окружения или задания, которые он представляет как `children` данного узла, который был протестирован (например, `model`).
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-For the following example, the `parents` are the nodes (code) that's being tested and `executionInfo` describes the latest test results:
+Для следующего примера `parents` — это узлы (код), которые тестируются, а `executionInfo` описывает последние результаты тестов:
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -584,14 +584,14 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-### How is this model contracted and versioned?
+### Как эта модель контрактована и версионирована?
 
-To enforce the shape of a model's definition, you can define contracts on models and their columns. You can also specify model versions to keep track of discrete stages in its evolution and use the appropriate one.
+Чтобы обеспечить форму определения модели, вы можете определить контракты для моделей и их столбцов. Вы также можете указать версии модели, чтобы отслеживать дискретные этапы ее эволюции и использовать соответствующую.
 
-<!-- TODO: The description above is not accurate for the desired query below because only applied models can query catalogs, so the query is changed to `environment.applied`. We need to change the description to refer to the applied state, or do not query `catalog` from the definition state node. -->
+<!-- TODO: Описание выше не точно для желаемого запроса ниже, потому что только примененные модели могут запрашивать каталоги, поэтому запрос изменен на `environment.applied`. Нам нужно изменить описание, чтобы сослаться на примененное состояние, или не запрашивать `catalog` из узла состояния определения. -->
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 
 ```graphql
@@ -626,18 +626,18 @@ query {
 
 </details>
 
-## Discovery
+## Обнаружение
 
-You can use the Discovery API to find and understand relevant datasets and semantic nodes with rich context and metadata. Below are example questions and queries you can run.
+Вы можете использовать Discovery API для поиска и понимания соответствующих наборов данных и семантических узлов с богатым контекстом и метаданными. Ниже приведены примеры вопросов и запросов, которые вы можете выполнить.
 
-For discovery use cases, people typically query the latest applied or definition state, often in the downstream part of the DAG (for example, mart models or metrics), using the `environment` endpoint.
+Для сценариев использования обнаружения люди обычно запрашивают последнее примененное или определенное состояние, часто в нижней части DAG (например, модели или метрики), используя конечную точку `environment`.
 
-### What does this dataset and its columns mean?
+### Что означают этот набор данных и его столбцы?
 
-Query the Discovery API to map a table/view in the data platform to the model in the dbt project; then, retrieve metadata about its meaning, including descriptive metadata from its YAML file and catalog information from its YAML file and the schema.
+Запросите Discovery API, чтобы сопоставить таблицу/представление в платформе данных с моделью в проекте dbt; затем получите метаданные о ее значении, включая описательные метаданные из ее YAML-файла и информацию из каталога из ее YAML-файла и схемы.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -673,18 +673,18 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-<!-- TODO: Revise this section to use the `environment.definition.lineage` endpoints instead of querying all nodes
+<!-- TODO: Пересмотреть этот раздел, чтобы использовать конечные точки `environment.definition.lineage` вместо запроса всех узлов
 
-### What’s the full data lineage?
+### Какова полная линия данных?
 
-Lineage, enabled by the `ref` function, is at the core of dbt. Understanding lineage provides many benefits, such as understanding the structure and relationships of datasets (and metrics) and performing impact-and-root-cause analyses to resolve or present issues given changes to definitions or source data. With the Discovery API, you can construct lineage using the `parents` nodes or its `children` and query the entire upstream lineage using `ancestors`.
+Линейность, обеспеченная функцией `ref`, является основой dbt. Понимание линейности предоставляет множество преимуществ, таких как понимание структуры и взаимосвязей наборов данных (и метрик) и выполнение анализа влияния и коренных причин для решения или представления проблем, учитывая изменения в определениях или исходных данных. С помощью Discovery API вы можете построить линейность, используя узлы `parents` или его `children` и запросить всю верхнюю линейность, используя `ancestors`.
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/example-dag.png" width="80%" title="Example of a DAG"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/example-dag.png" width="80%" title="Пример DAG"/>
 
 <details>
-<summary>Example query with code</summary>
+<summary>Пример запроса с кодом</summary>
 
-1. Query all project nodes
+1. Запросите все узлы проекта
 
 ```graphql
 query Lineage($environmentId: BigInt!, $first: Int!) {
@@ -770,16 +770,16 @@ query Lineage($environmentId: BigInt!, $first: Int!) {
           }
         }
       }
-      # metrics and semanticModels coming soon...
+      # метрики и семантические модели скоро появятся...
     }
   }
 }
 ```
 
-Then, extract the node definitions and create a lineage graph. You can traverse downstream from sources and seeds (adding an edge from each node with children to its children) or iterate through each node’s parents (if it has them). Remember that models, snapshots, and metrics can have parents and children, whereas sources and seeds have only children and exposures only have parents.
+Затем извлеките определения узлов и создайте граф зависимости. Вы можете пройти вниз от источников и семян (добавляя ребро от каждого узла с дочерними элементами к его дочерним элементам) или пройти через родителей каждого узла (если они есть). Помните, что модели, снимки и метрики могут иметь родителей и детей, в то время как источники и семена имеют только детей, а экспозиции имеют только родителей.
 
 
-2. Extract the node definitions, construct a lineage graph, and plot the graph.
+2. Извлеките определения узлов, постройте граф зависимости и визуализируйте граф.
 
 ```python
 # TODO: TEST THIS PYTHON CODE WORKS WITH NEW API AND DOCS!
@@ -790,7 +790,7 @@ import pandas as pd
 import requests
 from collections import defaultdict
 
-# Write Discovery API query
+# Запишите запрос Discovery API
 gql_query = """
 query Definition($environmentId: BigInt!, $first: Int!) {
 *[ADD QUERY HERE]*
@@ -798,14 +798,14 @@ query Definition($environmentId: BigInt!, $first: Int!) {
 
 """
 
-# Define query variables
+# Определите переменные запроса
 variables = {
     "environmentId": *[ADD ENV ID HERE]*,
     "first": 500
 }
 
 
-# Query the API
+# Запрос к API
 def query_discovery_api(auth_token, gql_query, variables):
     response = requests.post('https://metadata.cloud.getdbt.com/beta/graphql',
         headers={"authorization": "Bearer "+auth_token, "content-type": "application/json"},
@@ -815,10 +815,10 @@ def query_discovery_api(auth_token, gql_query, variables):
     return data
 
 
-# Extract nodes for graph
+# Извлечение узлов для графа
 def extract_node_definitions(api_response):
     nodes = []
-    node_types = ["models", "sources", "seeds", "snapshots", "exposures"]  # support for metrics and semanticModels coming soon
+    node_types = ["models", "sources", "seeds", "snapshots", "exposures"]  # поддержка метрик и семантических моделей скоро появится
     for node_type in node_types:
         if node_type in api_response["definition"]:
             for node_edge in api_response["definition"][node_type]["edges"]:
@@ -828,7 +828,7 @@ def extract_node_definitions(api_response):
 		return nodes_df
 
 
-# Construct the graph
+# Построение графа
 def create_generic_lineage_graph(nodes_df):
     G = nx.DiGraph()
     for _, node in nodes_df.iterrows():
@@ -840,7 +840,7 @@ def create_generic_lineage_graph(nodes_df):
     return G
 
 
-# Assign graph layers
+# Назначение слоев графу
 def assign_layers(G):
     layers = {}
     layer_counts = defaultdict(int)
@@ -854,23 +854,23 @@ def assign_layers(G):
     return layer_counts
 
 
-# Plot the lineage graph
+# Визуализация графа зависимости
 def plot_generic_graph(G):
     plt.figure(figsize=(10, 6.5))
 
-    # Assign layers to the nodes
+    # Назначьте слои узлам
     layer_counts = assign_layers(G)
 
-    # Use the multipartite_layout to create a layered layout
+    # Используйте multipartite_layout для создания слоистого макета
     pos = nx.multipartite_layout(G, subset_key="layer", align='vertical', scale=2)
 
-    # Adjust the y-coordinate of nodes to spread them out
+    # Настройте y-координату узлов, чтобы их распределить
     y_offset = 1.0
     for node, coords in pos.items():
         layer = G.nodes[node]["layer"]
         coords[1] = (coords[1] - 0.5) * (y_offset * layer_counts[layer])
 
-    # Define a color mapping for node types
+    # Определите цветовую схему для типов узлов
     type_color_map = {
         "models": "blue",
         "sources": "green",
@@ -895,21 +895,21 @@ G = create_generic_lineage_graph(nodes_df)
 plot_generic_graph(G)
 ```
 
-Graph example:
+Пример графика:
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/lineage-graph.png" width="75%" title="A lineage graph"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/lineage-graph.png" width="75%" title="График зависимости"/>
 
 
 </details>
 
 -->
 
-### Which metrics are available?
+### Какие метрики доступны?
 
-You can define and query metrics using the [dbt Semantic Layer](/docs/build/about-metricflow), use them for documentation purposes (like for a data catalog), and calculate aggregations (like in a BI tool that doesn’t query the SL).
+Вы можете определить и запрашивать метрики, используя [Семантический уровень dbt](/docs/build/about-metricflow), использовать их для документирования (например, для каталога данных) и вычислять агрегаты (например, в BI-инструменте, который не запрашивает SL).
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -938,18 +938,18 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-## Governance
+## Управление
 
-You can use the Discovery API to audit data development and facilitate collaboration within and between teams.
+Вы можете использовать Discovery API для аудита разработки данных и содействия сотрудничеству внутри и между командами.
 
-For governance use cases, people tend to query the latest definition state, often in the downstream part of the DAG (for example, public models), using the `environment` endpoint.
+Для сценариев использования управления люди, как правило, запрашивают последнее состояние определения, часто в нижней части DAG (например, публичные модели), используя конечную точку `environment`.
 
-### Who is responsible for this model?
+### Кто отвечает за эту модель?
 
-You can define and surface the groups each model is associated with. Groups contain information like owner. This can help you identify which team owns certain models and who to contact about them.
+Вы можете определить и отобразить группы, с которыми связана каждая модель. Группы содержат информацию, такую как владелец. Это может помочь вам определить, какая команда владеет определенными моделями и с кем связаться по ним.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -987,13 +987,13 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-### Who can use this model?
+### Кто может использовать эту модель?
 
-You can enable people the ability to specify the level of access for a given model. In the future, public models will function like APIs to unify project lineage and enable reuse of models using cross-project refs.
+Вы можете предоставить людям возможность указать уровень доступа для данной модели. В будущем публичные модели будут функционировать как API для унификации линейности проекта и повторного использования моделей с использованием ссылок между проектами.
 
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -1031,22 +1031,22 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-## Development
+## Разработка
 
-You can use the Discovery API to understand dataset changes and usage and gauge impacts to inform project definition. Below are example questions and queries you can run.
+Вы можете использовать Discovery API для понимания изменений и использования наборов данных и оценки влияния для информирования определения проекта. Ниже приведены примеры вопросов и запросов, которые вы можете выполнить.
 
-For development use cases, people typically query the historical or latest definition or applied state across any part of the DAG using the `environment` endpoint.
+Для сценариев использования разработки люди обычно запрашивают историческое или последнее состояние определения или применения в любой части DAG, используя конечную точку `environment`.
 
-### How is this model or metric used in downstream tools?
-[Exposures](/docs/build/exposures) provide a method to define how a model or metric is actually used in dashboards and other analytics tools and use cases. You can query an exposure’s definition to see how project nodes are used and query its upstream lineage results to understand the state of the data used in it, which powers use cases like a freshness and quality status tile.
+### Как эта модель или метрика используется в инструментах нижнего уровня?
+[Экспозиции](/docs/build/exposures) предоставляют метод определения того, как модель или метрика фактически используется в панелях и других аналитических инструментах и сценариях. Вы можете запросить определение экспозиции, чтобы увидеть, как узлы проекта используются, и запросить результаты верхней линейности, чтобы понять состояние данных, используемых в ней, что позволяет реализовать такие сценарии, как статус свежести и качества.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Embed data health tiles in your dashboards to distill trust signals for data consumers." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Встраивайте плитки состояния данных в свои панели, чтобы выделить сигналы доверия для потребителей данных." />
 
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-Below is an example that reviews an exposure and the models used in it including when they were last executed.
+Ниже приведен пример, который рассматривает экспозицию и модели, используемые в ней, включая информацию о том, когда они были выполнены в последний раз.
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -1078,14 +1078,14 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-### How has this model changed over time?
+### Как эта модель изменялась со временем?
 
-The Discovery API provides historical information about any resource in your project. For instance, you can view how a model has evolved over time (across recent runs) given changes to its shape and contents.
+Discovery API предоставляет историческую информацию о любом ресурсе в вашем проекте. Например, вы можете просмотреть, как модель эволюционировала со временем (в ходе недавних запусков), учитывая изменения в ее структуре и содержимом.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
-Review the differences in `compiledCode` or `columns` between runs or plot the “Approximate Size” and “Row Count” `stats` over time:
+Просмотрите различия в `compiledCode` или `columns` между запусками или постройте статистику "Приблизительный размер" и "Количество строк" со временем:
 
 ```graphql
 query (
@@ -1117,14 +1117,14 @@ query (
 ```
 </details>
 
-### Which nodes depend on this data source?
+### Какие узлы зависят от этого источника данных?
 
-dbt lineage begins with data sources. For a given source, you can look at which nodes are its children then iterate downstream to get the full list of dependencies.
+Линейность dbt начинается с источников данных. Для данного источника вы можете посмотреть, какие узлы являются его дочерними, а затем пройти вниз, чтобы получить полный список зависимостей.
 
-Currently, querying beyond 1 generation (defined as a direct parent-to-child) is not supported. To see the grandchildren of a node, you need to make two queries: one to get the node and its children, and another to get the children nodes and their children.
+В настоящее время запросы за пределами 1 поколения (определяемого как прямое родительское-детское отношение) не поддерживаются. Чтобы увидеть внуков узла, вам нужно сделать два запроса: один, чтобы получить узел и его детей, и другой, чтобы получить дочерние узлы и их детей.
 
 <details>
-<summary>Example query</summary>
+<summary>Пример запроса</summary>
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -1155,6 +1155,6 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-## Related docs
+## Связанные документы
 
-- [Query Discovery API](/docs/dbt-cloud-apis/discovery-querying)
+- [Запрос Discovery API](/docs/dbt-cloud-apis/discovery-querying)

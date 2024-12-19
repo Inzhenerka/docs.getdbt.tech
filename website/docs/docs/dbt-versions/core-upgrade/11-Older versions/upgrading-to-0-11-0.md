@@ -1,22 +1,22 @@
 ---
-title: "Upgrading to 0.11.0"
+title: "Обновление до 0.11.0"
 id: "upgrading-to-0-11-0"
 displayed_sidebar: "docs"
 ---
 
-## Schema.yml v2 syntax
-dbt v0.11.0 adds an auto-generated docs site to your dbt project. To make effective use of the documentation site, you'll need to use the new "version 2" schema.yml syntax. For a full explanation of the version 2 syntax, check out the [schema.yml Files](/reference/configs-and-properties) section of the documentation.
+## Синтаксис schema.yml версии 2
+dbt v0.11.0 добавляет автоматически сгенерированный сайт документации к вашему проекту dbt. Чтобы эффективно использовать сайт документации, вам нужно использовать новый синтаксис "версии 2" для schema.yml. Для полного объяснения синтаксиса версии 2 ознакомьтесь с разделом [schema.yml Files](/reference/configs-and-properties) документации.
 
-### Translating schema.yml files to the v2 syntax
+### Перевод файлов schema.yml на синтаксис версии 2
 
-1. You can find a script that will translate a v1 schema.yml file to the v2 syntax [here](https://discourse.getdbt.com/t/migrating-to-schema-yml-v2/111).
-2. You can upgrade v1 schema.yml files to the v2 syntax manually.
+1. Вы можете найти скрипт, который переведет файл schema.yml версии 1 на синтаксис версии 2 [здесь](https://discourse.getdbt.com/t/migrating-to-schema-yml-v2/111).
+2. Вы можете вручную обновить файлы schema.yml версии 1 до синтаксиса версии 2.
 
-If you're upgrading to the v2 syntax manually, there are some caveats to be aware of:
+Если вы обновляете синтаксис версии 2 вручную, есть несколько нюансов, о которых следует знать:
 
-### 1. Some v1 schema tests do not have immediately obvious representations in the v2 spec
+### 1. Некоторые тесты схемы версии 1 не имеют очевидных представлений в спецификации версии 2
 
-Given:
+Пример:
 ```
 events:
   constraints:
@@ -25,7 +25,7 @@ events:
       - "concat(first_name, last_name)"
 ```
 
-The v2 representation for this schema.yml is:
+Представление для этого schema.yml в версии 2 будет следующим:
 
 ```
 models:
@@ -39,14 +39,13 @@ models:
           - unique
 ```
 
-Note that the expression provided as a uniqueness test does _not_ pertain to a single column, so it should be created as a model-level test.
+Обратите внимание, что выражение, предоставленное в качестве теста на уникальность, _не_ относится к одному столбцу, поэтому его следует создать как тест на уровне модели.
 
+### 2. Вывод аргументов для пользовательских тестов схемы
 
-### 2. Argument inference for custom schema tests
+Если вы используете пользовательский тест схемы в файле schema.yml версии 1, может быть не очевидно, как перевести тест на синтаксис версии 2. В общем, вы всегда можете сделать тест на уровне модели, как показано ниже.
 
-If you're using a custom schema test in a v1 schema.yml file, it might not be obvious how to translate the test to the v2 syntax. In general, you can always make the test into a model-level test as shown below.
-
-Given:
+Пример:
 ```
 events:
   constraints:
@@ -54,7 +53,7 @@ events:
             - {field: created_at, datepart: day, interval: 1}
 ```
 
-The v2 representation for this schema.yml could be:
+Представление для этого schema.yml в версии 2 может быть следующим:
 
 ```
 models:
@@ -66,9 +65,9 @@ models:
           interval: 1
 ```
 
-## Default Snowflake Quoting
+## Стандартное экранирование в Snowflake
 
-The default quoting config on Snowflake has changed from being _on_ to being _off_ by default. If you haven't already, you should add a [quoting config](reference/project-configs/quoting.md) to your `dbt_project.yml` file. To use the exact same quoting behavior present in 0.10.2, add this config to your `dbt_project.yml` file:
+Стандартная конфигурация экранирования в Snowflake изменилась с _включено_ на _выключено_ по умолчанию. Если вы еще этого не сделали, вам следует добавить [конфигурацию экранирования](reference/project-configs/quoting.md) в ваш файл `dbt_project.yml`. Чтобы использовать точно такое же поведение экранирования, как в версии 0.10.2, добавьте эту конфигурацию в ваш файл `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 

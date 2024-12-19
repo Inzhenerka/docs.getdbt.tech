@@ -1,6 +1,6 @@
 ---
-title: "Authentication tokens"
-description: "Learn how to authenticate with user tokens and service account tokens "
+title: "Токены аутентификации"
+description: "Узнайте, как аутентифицироваться с помощью пользовательских токенов и токенов сервисных аккаунтов"
 pagination_next: "docs/dbt-cloud-apis/user-tokens"
 pagination_prev: null
 ---
@@ -8,30 +8,30 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Personal access tokens"
-    body="Learn about user tokens and how to use them to execute queries against the dbt Cloud API."
+    title="Личные токены доступа"
+    body="Узнайте о пользовательских токенах и о том, как использовать их для выполнения запросов к API dbt Cloud."
     link="/docs/dbt-cloud-apis/user-tokens"
     icon="dbt-bit"/>
 
 <Card
-    title="Service account tokens"
-    body="Learn how to use service account tokens to securely authenticate with the dbt Cloud API for system-level integrations."
+    title="Токены сервисных аккаунтов"
+    body="Узнайте, как использовать токены сервисных аккаунтов для безопасной аутентификации с API dbt Cloud для интеграций на уровне системы."
     link="/docs/dbt-cloud-apis/service-tokens"
     icon="dbt-bit"/>
 
 </div>
 
-## Types of API access tokens
+## Типы токенов доступа к API
 
-**Personal access tokens:** Preferred and secure way of accessing dbt Cloud APIs on behalf of a user. PATs are scoped to an account and can be enhanced with more granularity and control. 
+**Личные токены доступа:** Предпочтительный и безопасный способ доступа к API dbt Cloud от имени пользователя. Личные токены доступа (PAT) ограничены определенной учетной записью и могут быть дополнительно настроены с большей гранулярностью и контролем.
 
-**Service tokens:** Service tokens are similar to service accounts and are the preferred method to enable access on behalf of the dbt Cloud account.
+**Сервисные токены:** Сервисные токены аналогичны сервисным аккаунтам и являются предпочтительным методом для предоставления доступа от имени учетной записи dbt Cloud.
 
-### Which token type should you use
+### Какой тип токена следует использовать
 
-You should use service tokens broadly for any production workflow where you need a service account. You should use PATs only for developmental workflows _or_ dbt Cloud client workflows that require user context. The following examples show you when to use a personal access token (PAT) or a service token: 
+Вы должны использовать сервисные токены в широком смысле для любых производственных рабочих процессов, где вам нужен сервисный аккаунт. Личные токены доступа (PAT) следует использовать только для рабочих процессов разработки _или_ рабочих процессов клиента dbt Cloud, которые требуют контекста пользователя. Следующие примеры показывают, когда использовать личный токен доступа (PAT) или сервисный токен:
 
-* **Connecting a partner integration to dbt Cloud** &mdash; Some examples include the [dbt Semantic Layer Google Sheets integration](/docs/cloud-integrations/avail-sl-integrations), Hightouch, Datafold, a custom app you’ve created, etc. These types of integrations should use a service token instead of a PAT because service tokens give you visibility, and you can scope them to only what the integration needs and ensure the least privilege. We highly recommend switching to a service token if you’re using a personal acess token for these integrations today. 
-* **Production Terraform** &mdash; Use a service token since this is a production workflow and is acting as a service account and not a user account. 
-* **Cloud CLI** &mdash; Use a PAT since the dbt Cloud CLI works within the context of a user (the user is making the requests and has to operate within the context of their user account).
-* **Testing a custom script and staging Terraform or Postman** &mdash; We recommend using a PAT as this is a developmental workflow and is scoped to the user making the changes. When you push this script or Terraform into production, use a service token instead.
+* **Подключение интеграции партнера к dbt Cloud** &mdash; Некоторые примеры включают [интеграцию dbt Semantic Layer с Google Sheets](/docs/cloud-integrations/avail-sl-integrations), Hightouch, Datafold, пользовательское приложение, которое вы создали и т.д. Эти типы интеграций должны использовать сервисный токен вместо PAT, поскольку сервисные токены обеспечивают видимость, и вы можете ограничить их только тем, что необходимо для интеграции, обеспечивая наименьшие привилегии. Мы настоятельно рекомендуем перейти на сервисный токен, если вы в настоящее время используете личный токен доступа для этих интеграций.
+* **Производственный Terraform** &mdash; Используйте сервисный токен, так как это производственный рабочий процесс и он действует как сервисный аккаунт, а не как пользовательский аккаунт.
+* **Cloud CLI** &mdash; Используйте PAT, так как dbt Cloud CLI работает в контексте пользователя (пользователь делает запросы и должен действовать в рамках своей учетной записи).
+* **Тестирование пользовательского скрипта и развертывание Terraform или Postman** &mdash; Мы рекомендуем использовать PAT, так как это рабочий процесс разработки и он ограничен пользователем, вносящим изменения. Когда вы развернете этот скрипт или Terraform в производственной среде, используйте вместо этого сервисный токен.

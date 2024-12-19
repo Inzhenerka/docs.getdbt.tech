@@ -1,64 +1,64 @@
 ---
-title: "Upgrading to 0.19.0"
+title: "Обновление до 0.19.0"
 displayed_sidebar: "docs"
 
 ---
 
-### Resources
+### Ресурсы
 
 - [Discourse](https://discourse.getdbt.com/t/1951)
-- [Release notes](https://github.com/dbt-labs/dbt-core/releases/tag/v0.19.0)
-- [Full changelog](https://github.com/dbt-labs/dbt-core/blob/0.19.latest/CHANGELOG.md)
+- [Примечания к выпуску](https://github.com/dbt-labs/dbt-core/releases/tag/v0.19.0)
+- [Полный журнал изменений](https://github.com/dbt-labs/dbt-core/blob/0.19.latest/CHANGELOG.md)
 
-## Breaking changes
+## Ломающие изменения
 
-### For dbt users
+### Для пользователей dbt
 
-Please be aware of the following changes in v0.19.0:
+Обратите внимание на следующие изменения в версии v0.19.0:
 
-1. dbt artifacts have a new schema. From here on, artifact schemas are officially versioned at **schemas.getdbt.com**. Future breaking changes will be limited to minor version releases. Some dbt classes, such as the `Result` object, have associated breaking changes.
-2. Defer, a beta feature introduced in v0.18.0, has subtly changed to better support the "Slim CI" use case.
-3. The `call statement` block returns a structured `response` instead of a `status` string, though they print identically. If you previously accessed `statement['status']` within a custom macro or materalization, you should now use `statement['response']`.
+1. Артефакты dbt имеют новую схему. С этого момента схемы артефактов официально версионируются на **schemas.getdbt.com**. Будущие ломающие изменения будут ограничены минорными версиями. Некоторые классы dbt, такие как объект `Result`, имеют связанные ломающие изменения.
+2. Defer, бета-функция, представленная в v0.18.0, немного изменилась, чтобы лучше поддерживать случай использования "Slim CI".
+3. Блок `call statement` возвращает структурированный `response` вместо строки `status`, хотя они печатаются одинаково. Если вы ранее обращались к `statement['status']` в пользовательской макросе или материализации, теперь вам следует использовать `statement['response']`.
 
-See the docs below for more details. We don't expect these to require action in most projects.
+Смотрите документацию ниже для получения более подробной информации. Мы не ожидаем, что это потребует действий в большинстве проектов.
 
-#### Deprecations
+#### Устаревания
 
-Removed support for `config-version: 1` of dbt_project.yml, which was deprecated in v0.17.0. Use `config-version: 2` in all projects and installed packages. Otherwise, dbt will raise an error. See docs on [config-version](/reference/project-configs/config-version) and the [v0.17.0 Migration Guide](/docs/dbt-versions/core-upgrade) for details.
+Удалена поддержка `config-version: 1` в dbt_project.yml, которая была устаревшей в v0.17.0. Используйте `config-version: 2` во всех проектах и установленных пакетах. В противном случае dbt выдаст ошибку. Смотрите документацию по [config-version](/reference/project-configs/config-version) и [Руководство по миграции v0.17.0](/docs/dbt-versions/core-upgrade) для получения подробностей.
 
-### For dbt plugin maintainers
+### Для поддерживающих плагины dbt
 
-(You know who you are!)
+(Вы знаете, кто вы!)
 
-Related to change #3 above: The `results` context and `run_results.json` artifact include a new unstructured dictionary called `adapter_response`. This reflects structured information returned by the database after dbt runs the "main" query for a model, seed, snapshot, etc.
+Связано с изменением #3 выше: Контекст `results` и артефакт `run_results.json` включают новый неструктурированный словарь под названием `adapter_response`. Это отражает структурированную информацию, возвращаемую базой данных после выполнения dbt "основного" запроса для модели, seed, snapshot и т.д.
 
-By default, this dict accepts keys such as `code` (`OK`, `SUCCESS`, `CREATE TABLE`, etc) and `rows_affected` (integer). You can add custom arguments to reflect information specific to your adapter. For instance, `dbt-bigquery` populates an additional argument, `bytes_processed`.
+По умолчанию этот словарь принимает ключи, такие как `code` (`OK`, `SUCCESS`, `CREATE TABLE` и т.д.) и `rows_affected` (целое число). Вы можете добавить пользовательские аргументы для отражения информации, специфичной для вашего адаптера. Например, `dbt-bigquery` заполняет дополнительный аргумент `bytes_processed`.
 
-As part of this change:
-- the `SQLConnectionManager` method `get_status` has been renamed to `get_response`
-- `execute` now returns a tuple instead of a string
+В рамках этого изменения:
+- Метод `get_status` в `SQLConnectionManager` был переименован в `get_response`
+- `execute` теперь возвращает кортеж вместо строки
 
-See [dbt#2961](https://github.com/dbt-labs/dbt-core/pull/2961) for full implementation details. While `adapter_response` is not yet populated by tests or source freshness checks, we hope to add those in a future release ([dbt#2964](https://github.com/dbt-labs/dbt-core/issues/2964)).
+Смотрите [dbt#2961](https://github.com/dbt-labs/dbt-core/pull/2961) для получения полных деталей реализации. Хотя `adapter_response` еще не заполняется тестами или проверками свежести источников, мы надеемся добавить это в будущем релизе ([dbt#2964](https://github.com/dbt-labs/dbt-core/issues/2964)).
 
-## New and changed documentation
+## Новая и измененная документация
 
-### Core
-- [dbt Artifacts](/docs/deploy/artifacts): The <Term id="json" /> artifacts produced by dbt—manifest, catalog, run results, and sources—are simpler to consume and more clearly documented.
-- [dbt Classes](/reference/dbt-classes#result-objects), [on-run-end Context](/reference/dbt-jinja-functions/on-run-end-context#results): The `Result` object has a new schema, in line with changes to `run_results.json`.
-- [Statement blocks](/reference/dbt-jinja-functions/statement-blocks): The `call statement` result `status` string is now a structured object named `response`.
-- [Snapshots](/docs/build/snapshots#snapshot-configurations): If the config `invalidate_hard_deletes` is enabled, `dbt snapshot` will update records whose unique key no longer exist in the snapshot query. Should those uniquely identified records "revive," `dbt snapshot` will re-add them.
-- [YAML selectors](/reference/node-selection/yaml-selectors) support a `description` property and record their expanded dictionary representations in the manifest.
-- [Modules](/reference/dbt-jinja-functions/modules): The regex python module, `re`, is available in dbt's Jinja context.
-- [parse](/reference/commands/parse): New command to parse a dbt project and write detailed timing info.
+### Основные изменения
+- [Артефакты dbt](/docs/deploy/artifacts): Артефакты <Term id="json" /> , производимые dbt — манифест, каталог, результаты выполнения и источники — стали проще для восприятия и более четко задокументированы.
+- [Классы dbt](/reference/dbt-classes#result-objects), [Контекст on-run-end](/reference/dbt-jinja-functions/on-run-end-context#results): Объект `Result` имеет новую схему, в соответствии с изменениями в `run_results.json`.
+- [Блоки операторов](/reference/dbt-jinja-functions/statement-blocks): Строка результата `status` в `call statement` теперь является структурированным объектом с именем `response`.
+- [Снимки](/docs/build/snapshots#snapshot-configurations): Если конфигурация `invalidate_hard_deletes` включена, `dbt snapshot` обновит записи, уникальный ключ которых больше не существует в запросе снимка. Если эти уникально идентифицированные записи "возродятся", `dbt snapshot` снова добавит их.
+- [YAML селекторы](/reference/node-selection/yaml-selectors) поддерживают свойство `description` и записывают их расширенные словарные представления в манифест.
+- [Модули](/reference/dbt-jinja-functions/modules): Модуль регулярных выражений Python, `re`, доступен в контексте Jinja dbt.
+- [parse](/reference/commands/parse): Новая команда для разбора проекта dbt и записи подробной информации о времени.
 
-#### State
-- [About state](/reference/node-selection/syntax#about-node-selection): New docs outlining the conceptual background of state-informed runs, as well as the [known caveats](/reference/node-selection/state-comparison-caveats) for state comparison. In v0.19.0, dbt is a little bit smarter at identifying `state:modified` "false positives" that previously resulted from env-based configurations in `dbt_project`.
-- [Defer](/reference/node-selection/defer) has changed: Instead of deferring all unselected node references, dbt now defers an unselected node reference _if and only if_ it does not exist in the current environment. Tests can defer their upstream references as well. This better supports the "Slim CI" use case by addressing the current environment's resources across `seed`, `run`, and `test` steps.
-- [RPC](/reference/commands/rpc): Added `state` and `defer` as arguments to RPC methods for which it is supported on the CLI.
+#### Состояние
+- [О состоянии](/reference/node-selection/syntax#about-node-selection): Новая документация, описывающая концептуальные основы запусков, информированных состоянием, а также [известные ограничения](/reference/node-selection/state-comparison-caveats) для сравнения состояния. В v0.19.0 dbt стал немного умнее в определении "ложных срабатываний" `state:modified`, которые ранее возникали из-за конфигураций на основе окружения в `dbt_project`.
+- [Defer](/reference/node-selection/defer) изменился: Вместо того чтобы откладывать все невыбранные ссылки на узлы, dbt теперь откладывает невыбранную ссылку на узел _только в том случае_, если она не существует в текущем окружении. Тесты также могут откладывать свои ссылки на вышестоящие узлы. Это лучше поддерживает случай использования "Slim CI", учитывая ресурсы текущего окружения на этапах `seed`, `run` и `test`.
+- [RPC](/reference/commands/rpc): Добавлены `state` и `defer` в качестве аргументов к методам RPC, для которых это поддерживается в CLI.
 
 ### BigQuery
-- [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup): dbt can connect via OAuth tokens (one-time or refresh), and it can use the default project when connecting via `gcloud` oauth.
-- [Hourly, monthly and yearly partitions](/reference/resource-configs/bigquery-configs#partitioning-by-a-date-or-timestamp): With a new `granularity` attribute of the `partition_by` config, dbt can materialize models as tables partitioned by hour, month, or year.
+- [Профиль BigQuery](/docs/core/connect-data-platform/bigquery-setup): dbt может подключаться через OAuth токены (однократные или обновляемые), и он может использовать проект по умолчанию при подключении через `gcloud` oauth.
+- [Часовые, месячные и годовые разделы](/reference/resource-configs/bigquery-configs#partitioning-by-a-date-or-timestamp): С новым атрибутом `granularity` конфигурации `partition_by` dbt может материализовать модели как таблицы, разделенные по часам, месяцам или годам.
 
 ### Spark
-- [Spark profile](/docs/core/connect-data-platform/spark-setup): The `thrift` and `http` connection methods require installation of a `PyHive` extra.
+- [Профиль Spark](/docs/core/connect-data-platform/spark-setup): Методы подключения `thrift` и `http` требуют установки дополнительного пакета `PyHive`.

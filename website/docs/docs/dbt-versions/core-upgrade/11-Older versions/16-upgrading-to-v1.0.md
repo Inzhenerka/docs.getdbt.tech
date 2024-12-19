@@ -1,76 +1,76 @@
 ---
-title: "Upgrading to v1.0"
-description: New features and changes in dbt Core v1.0
+title: "Обновление до v1.0"
+description: Новые функции и изменения в dbt Core v1.0
 id: "upgrading-to-v1.0"
 displayed_sidebar: "docs"
 ---
 
 
-### Resources
+### Ресурсы
 
 - [Discourse](https://discourse.getdbt.com/t/3180)
 - [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.0.latest/CHANGELOG.md)
-- [dbt Core CLI Installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [Руководство по установке dbt Core CLI](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Core major version 1.0 includes a number of breaking changes! Wherever possible, we have offered backwards compatibility for old behavior, and (where necessary) made migration simple.
+Основная версия dbt Core 1.0 включает ряд изменений, которые могут повлиять на совместимость! Где это возможно, мы предложили обратную совместимость для старого поведения и (где это необходимо) упростили миграцию.
 
-### Renamed fields in `dbt_project.yml`
+### Переименованные поля в `dbt_project.yml`
 
-**These affect everyone:**
-- [model-paths](/reference/project-configs/model-paths) have replaced `source-paths` in `dbt-project.yml`.
-- [seed-paths](/reference/project-configs/seed-paths) have replaced `data-paths` in `dbt-project.yml` with a default value of `seeds`.
-- The [packages-install-path](/reference/project-configs/packages-install-path) was updated from `modules-path`.  Additionally the default value is now `dbt_packages` instead of `dbt_modules`.  You may need to update this value in [`clean-targets`](/reference/project-configs/clean-targets).
-- Default for `quote_columns` is now `True` for all adapters other than Snowflake.
+**Это касается всех:**
+- [model-paths](/reference/project-configs/model-paths) заменили `source-paths` в `dbt-project.yml`.
+- [seed-paths](/reference/project-configs/seed-paths) заменили `data-paths` в `dbt-project.yml` с значением по умолчанию `seeds`.
+- [packages-install-path](/reference/project-configs/packages-install-path) был обновлен с `modules-path`. Кроме того, значение по умолчанию теперь `dbt_packages` вместо `dbt_modules`. Вам может потребоваться обновить это значение в [`clean-targets`](/reference/project-configs/clean-targets).
+- Значение по умолчанию для `quote_columns` теперь `True` для всех адаптеров, кроме Snowflake.
 
-**These probably don't:**
-- The default value of [test-paths](/reference/project-configs/test-paths) has been updated to be the plural `tests`.
-- The default value of [analysis-paths](/reference/project-configs/analysis-paths) has been updated to be the plural `analyses`.
+**Это, вероятно, не касается:**
+- Значение по умолчанию для [test-paths](/reference/project-configs/test-paths) было обновлено на множественное число `tests`.
+- Значение по умолчанию для [analysis-paths](/reference/project-configs/analysis-paths) было обновлено на множественное число `analyses`.
 
-### Tests
+### Тесты
 
-The two **test types** are now "singular" and "generic" (instead of "data" and "schema", respectively). The `test_type:` selection method accepts `test_type:singular` and `test_type:generic`. (It will also accept `test_type:schema` and `test_type:data` for backwards compatibility.) **Not backwards compatible:** The `--data` and `--schema` flags to dbt test are no longer supported, and tests no longer have the tags `'data'` and `'schema'` automatically applied. Updated docs: [tests](/docs/build/data-tests), [test selection](/reference/node-selection/test-selection-examples), [selection methods](/reference/node-selection/methods).
+Два **типа тестов** теперь называются "единственный" и "общий" (вместо "данные" и "схема", соответственно). Метод выбора `test_type:` принимает `test_type:singular` и `test_type:generic`. (Он также будет принимать `test_type:schema` и `test_type:data` для обратной совместимости.) **Не обратная совместимость:** Флаги `--data` и `--schema` для dbt test больше не поддерживаются, и тесты больше не имеют автоматически применяемых тегов `'data'` и `'schema'`. Обновленная документация: [тесты](/docs/build/data-tests), [выбор тестов](/reference/node-selection/test-selection-examples), [методы выбора](/reference/node-selection/methods).
 
-The `greedy` flag/property has been renamed to **`indirect_selection`**, which is now eager by default. **Note:** This reverts test selection to its pre-v0.20 behavior by default. `dbt test -s my_model` _will_ select multi-parent tests, such as `relationships`, that depend on unselected resources. To achieve the behavior change in v0.20 + v0.21, set `--indirect-selection=cautious` on the CLI or `indirect_selection: cautious` in YAML selectors. Updated docs: [test selection examples](/reference/node-selection/test-selection-examples), [yaml selectors](/reference/node-selection/yaml-selectors).
+Флаг/свойство `greedy` был переименован в **`indirect_selection`**, который теперь по умолчанию является жадным. **Примечание:** Это возвращает выбор тестов к поведению до v0.20 по умолчанию. `dbt test -s my_model` _будет_ выбирать тесты с несколькими родителями, такие как `relationships`, которые зависят от невыбранных ресурсов. Чтобы достичь изменения поведения в v0.20 + v0.21, установите `--indirect-selection=cautious` в CLI или `indirect_selection: cautious` в YAML селекторах. Обновленная документация: [примеры выбора тестов](/reference/node-selection/test-selection-examples), [yaml селекторы](/reference/node-selection/yaml-selectors).
 
-### Global macros
+### Глобальные макросы
 
-Global project macros have been reorganized, and some old unused macros have been removed: `column_list`, `column_list_for_create_table`, `incremental_upsert`. This is unlikely to affect your project.
+Глобальные проектные макросы были реорганизованы, и некоторые старые неиспользуемые макросы были удалены: `column_list`, `column_list_for_create_table`, `incremental_upsert`. Это вряд ли повлияет на ваш проект.
 
-### Installation
+### Установка
 
-- [Installation docs](/docs/supported-data-platforms) reflects adapter-specific installations
-- `python -m pip install dbt` is no longer supported, and will raise an explicit error. Install the specific adapter plugin you need as `python -m pip install dbt-<adapter>`.
-- `brew install dbt` is no longer supported. Install the specific adapter plugin you need (among Postgres, Redshift, Snowflake, or BigQuery) as `brew install dbt-<adapter>`.
-- Removed official support for python 3.6, which is reaching end of life on December 23, 2021
+- [Документация по установке](/docs/supported-data-platforms) отражает установки, специфичные для адаптеров.
+- `python -m pip install dbt` больше не поддерживается и вызовет явную ошибку. Установите конкретный плагин адаптера, который вам нужен, как `python -m pip install dbt-<adapter>`.
+- `brew install dbt` больше не поддерживается. Установите конкретный плагин адаптера, который вам нужен (среди Postgres, Redshift, Snowflake или BigQuery), как `brew install dbt-<adapter>`.
+- Удалена официальная поддержка python 3.6, который достигает конца жизни 23 декабря 2021 года.
 
-### For users of adapter plugins
+### Для пользователей плагинов адаптеров
 
-- **BigQuery:** Support for ingestion-time-partitioned tables has been officially deprecated in favor of modern approaches. Use `partition_by` and incremental modeling strategies instead. For more information, refer to [Incremental models](/docs/build/incremental-models).
+- **BigQuery:** Поддержка таблиц с разделением по времени загрузки официально устарела в пользу современных подходов. Используйте `partition_by` и стратегии инкрементального моделирования. Для получения дополнительной информации смотрите [Инкрементальные модели](/docs/build/incremental-models).
 
-### For maintainers of plugins + other integrations
+### Для поддерживающих плагины + другие интеграции
 
-We've introduced a new [**structured event interface**](/reference/events-logging), and we've transitioned all dbt logging to use this new system. **This includes a breaking change for adapter plugins**, requiring a very simple migration. For more details, see the [`events` module README](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/events/README.md#adapter-maintainers). If you maintain a different kind of plugin that _needs_ legacy logging, for the time being, you can re-enable it with an env var (`DBT_ENABLE_LEGACY_LOGGER=True`); be advised that we will remove this capability in a future version of dbt Core.
+Мы представили новый [**интерфейс структурированных событий**](/reference/events-logging) и перешли на использование этой новой системы для всех логов dbt. **Это включает в себя изменение, которое не совместимо с предыдущими версиями для плагинов адаптеров**, требующее очень простой миграции. Для получения дополнительной информации смотрите [README модуля `events`](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/events/README.md#adapter-maintainers). Если вы поддерживаете другой тип плагина, который _нуждается_ в устаревшем логировании, на данный момент вы можете повторно включить его с помощью переменной окружения (`DBT_ENABLE_LEGACY_LOGGER=True`); имейте в виду, что мы удалим эту возможность в будущей версии dbt Core.
 
-The [**dbt RPC Server**](/reference/commands/rpc) has been split out from `dbt-core` and is now packaged separately. Its functionality will be fully deprecated by the end of 2022, in favor of a new dbt Server. Instead of `dbt rpc`, use `dbt-rpc serve`.
+[**Сервер dbt RPC**](/reference/commands/rpc) был выделен из `dbt-core` и теперь упакован отдельно. Его функциональность будет полностью устаревшей к концу 2022 года в пользу нового сервера dbt. Вместо `dbt rpc` используйте `dbt-rpc serve`.
 
-**Artifacts:** New schemas (manifest v4, run results v4, sources v3). Notable changes: add `metrics` nodes; schema test + data test nodes are renamed to generic test + singular test nodes; freshness threshold default values look slightly different.
+**Артефакты:** Новые схемы (манифест v4, результаты выполнения v4, источники v3). Замечательные изменения: добавлены узлы `metrics`; узлы схемных тестов и тестов данных переименованы в узлы общих тестов и узлов единственного теста; значения по умолчанию для порогов свежести выглядят немного иначе.
 
-### Deprecations from long ago
+### Устаревания из давнего прошлого
 
-Several under-the-hood changes from past minor versions, tagged with deprecation warnings, have now been fully deprecated.
-- The `packages` argument of [dispatch](/reference/dbt-jinja-functions/dispatch) has been deprecated and will raise an exception when used.
-- The "adapter_macro" macro has been deprecated. Instead, use the [dispatch](/reference/dbt-jinja-functions/dispatch) method to find a macro and call the result.
-- The `release` arg has been removed from the `execute_macro` method.
+Несколько изменений под капотом из прошлых минорных версий, помеченных предупреждениями об устаревании, теперь полностью устарели.
+- Аргумент `packages` функции [dispatch](/reference/dbt-jinja-functions/dispatch) устарел и вызовет исключение при использовании.
+- Макрос "adapter_macro" устарел. Вместо этого используйте метод [dispatch](/reference/dbt-jinja-functions/dispatch) для поиска макроса и вызова результата.
+- Аргумент `release` был удален из метода `execute_macro`.
 
-## New features and changed documentation
+## Новые функции и измененная документация
 
-- Add [metrics](/docs/build/build-metrics-intro), a new node type
-- [Generic tests](/best-practices/writing-custom-generic-tests) can be defined in `tests/generic` (new), in addition to `macros/` (as before)
-- [Parsing](/reference/parsing): partial parsing and static parsing have been turned on by default.
-- [Global configs](/reference/global-configs/about-global-configs) have been standardized. Related updates to [global CLI flags](/reference/global-configs/about-global-configs) and [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml).
-- [The `init` command](/reference/commands/init) has a whole new look and feel. It's no longer just for first-time users.
-- Add `result:<status>` subselectors for smarter reruns when dbt models have errors and tests fail. See examples: [Pro-tips for Workflows](/best-practices/best-practice-workflows#pro-tips-for-workflows)
-- Secret-prefixed [env vars](/reference/dbt-jinja-functions/env_var) are now allowed only in `profiles.yml` + `packages.yml`
+- Добавлены [метрики](/docs/build/build-metrics-intro), новый тип узла.
+- [Общие тесты](/best-practices/writing-custom-generic-tests) могут быть определены в `tests/generic` (новый), в дополнение к `macros/` (как и прежде).
+- [Парсинг](/reference/parsing): частичный парсинг и статический парсинг теперь включены по умолчанию.
+- [Глобальные конфигурации](/reference/global-configs/about-global-configs) были стандартизированы. Связанные обновления для [глобальных флагов CLI](/reference/global-configs/about-global-configs) и [`profiles.yml`](/docs/core/connect-data-platform/profiles.yml).
+- [Команда `init`](/reference/commands/init) имеет совершенно новый вид и ощущение. Она больше не предназначена только для новых пользователей.
+- Добавлены подвыборки `result:<status>` для более умных повторных запусков, когда модели dbt имеют ошибки и тесты не проходят. Смотрите примеры: [Советы по рабочим процессам](/best-practices/best-practice-workflows#pro-tips-for-workflows).
+- Переменные окружения с префиксом secret теперь разрешены только в `profiles.yml` + `packages.yml`.

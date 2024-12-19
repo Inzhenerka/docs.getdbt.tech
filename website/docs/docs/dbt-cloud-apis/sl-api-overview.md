@@ -1,50 +1,50 @@
 ---
-title: "Semantic Layer APIs"
+title: "API Семантического Уровня"
 id: sl-api-overview
-description: "Integrate and query metrics and dimensions in downstream tools using the Semantic Layer APIs"
-tags: [Semantic Layer, API]
+description: "Интеграция и запрос метрик и измерений в инструментах нижнего уровня с использованием API Семантического Уровня"
+tags: [Семантический Уровень, API]
 hide_table_of_contents: true
 pagination_next: "docs/dbt-cloud-apis/sl-jdbc"
 ---
- 
-The rapid growth of different tools in the modern data stack has helped data professionals address the diverse needs of different teams. The downside of this growth is the fragmentation of business logic across teams, tools, and workloads.<br /><br />
 
-The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) allows you to define metrics in code (with [MetricFlow](/docs/build/about-metricflow)) and dynamically generate and query datasets in downstream tools based on their dbt governed assets, such as metrics and models. Integrating with the dbt Semantic Layer will help organizations that use your product make more efficient and trustworthy decisions with their data. It also helps you to avoid duplicative coding, optimize development workflow, ensure data governance, and guarantee consistency for data consumers.  
+Быстрый рост различных инструментов в современном стекe данных помог специалистам по данным удовлетворить разнообразные потребности различных команд. Однако недостатком этого роста является фрагментация бизнес-логики между командами, инструментами и рабочими нагрузками.<br /><br />
 
-You can use the dbt Semantic Layer for a variety of tools and applications of data. Some common use cases are:
+[Семантический Уровень dbt](/docs/use-dbt-semantic-layer/dbt-sl) позволяет вам определять метрики в коде (с помощью [MetricFlow](/docs/build/about-metricflow)) и динамически генерировать и запрашивать наборы данных в инструментах нижнего уровня на основе их активов, управляемых dbt, таких как метрики и модели. Интеграция с Семантическим Уровнем dbt поможет организациям, использующим ваш продукт, принимать более эффективные и надежные решения на основе данных. Это также помогает избежать дублирования кода, оптимизировать рабочий процесс разработки, обеспечить управление данными и гарантировать согласованность для потребителей данных.
 
-* Business intelligence (BI), reporting, and analytics
-* Data quality and monitoring
-* Governance and privacy
-* Data discovery and cataloging
-* Machine learning and data science
+Вы можете использовать Семантический Уровень dbt для различных инструментов и приложений данных. Некоторые распространенные случаи использования:
 
-<!-- this partial lives here: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Use it on diff pages and to tailor the message depending which instance can access the SL and what product lifecycle we're in. -->
+* Бизнес-аналитика (BI), отчетность и аналитика
+* Качество данных и мониторинг
+* Управление и конфиденциальность
+* Обнаружение и каталогизация данных
+* Машинное обучение и наука о данных
+
+<!-- этот фрагмент находится здесь: https://github.com/dbt-labs/docs.getdbt.com/website/snippets/_sl-plan-info. Используйте его на разных страницах и адаптируйте сообщение в зависимости от того, какой экземпляр может получить доступ к SL и на каком этапе жизненного цикла продукта мы находимся. -->
 
 import Features from '/snippets/_sl-plan-info.md'
 
 <Features
-product="dbt Semantic Layer"
-plan="dbt Cloud Team or Enterprise"
+product="Семантический Уровень dbt"
+plan="dbt Cloud Team или Enterprise"
 />
 
 <div className="grid--3-col">
 
 <Card
     title="JDBC API"
-    body="Use a JDBC driver to query metrics and dimensions in downstream tools, while also providing standard metadata functionality."
+    body="Используйте JDBC-драйвер для запроса метрик и измерений в инструментах нижнего уровня, а также для предоставления стандартной функциональности метаданных."
     link="/docs/dbt-cloud-apis/sl-jdbc"
     icon="dbt-bit"/>
 
 <Card
     title="GraphQL API"
-    body="Use GraphQL to query metrics and dimensions in downstream tools."
+    body="Используйте GraphQL для запроса метрик и измерений в инструментах нижнего уровня."
     link="/docs/dbt-cloud-apis/sl-graphql"
     icon="dbt-bit"/>
 
 <Card
     title="Python SDK"
-    body="Use the Python SDK to interact with the dbt Semantic Layer using Python."
+    body="Используйте Python SDK для взаимодействия с Семантическим Уровнем dbt с помощью Python."
     link="/docs/dbt-cloud-apis/sl-python"
     icon="dbt-bit"/>
 

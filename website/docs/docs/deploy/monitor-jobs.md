@@ -1,32 +1,32 @@
 ---
-title: "Monitor jobs and alerts"
+title: "Мониторинг заданий и оповещений"
 id: "monitor-jobs"
-description: "Monitor your dbt Cloud job and set up alerts to ensure seamless orchestration and optimize your data transformations"
+description: "Мониторьте свои задания в dbt Cloud и настраивайте оповещения для обеспечения бесперебойной оркестрации и оптимизации ваших преобразований данных"
 tags: ["scheduler"]
 pagination_next: "docs/deploy/run-visibility"
 ---
 
-Monitor your dbt Cloud jobs to help identify improvement and set up alerts to proactively alert the right people or team. 
+Мониторьте свои задания в dbt Cloud, чтобы помочь выявить области для улучшения, и настраивайте оповещения, чтобы проактивно информировать нужных людей или команды.
 
-This portion of our documentation will go over dbt Cloud's various capabilities that help you monitor your jobs and set up alerts to ensure seamless orchestration, including:
+Эта часть нашей документации охватывает различные возможности dbt Cloud, которые помогут вам мониторить ваши задания и настраивать оповещения для обеспечения бесперебойной оркестрации, включая:
 
-- [Run visibility](/docs/deploy/run-visibility) &mdash; View your run history to help identify where improvements can be made to scheduled jobs.
-- [Retry jobs](/docs/deploy/retry-jobs) &mdash; Rerun your errored jobs from start or the failure point.
-- [Job notifications](/docs/deploy/job-notifications) &mdash; Receive email or Slack notifications when a job run succeeds, encounters warnings, fails, or is canceled. 
-- [Model notifications](/docs/deploy/model-notifications) &mdash; Receive email notifications about any issues encountered by your models and tests as soon as they occur while running a job. 
-- [Webhooks](/docs/deploy/webhooks) &mdash; Use webhooks to send events about your dbt jobs' statuses to other systems.
-- [Leverage artifacts](/docs/deploy/artifacts) &mdash; dbt Cloud generates and saves artifacts for your project, which it uses to power features like creating docs for your project and reporting freshness of your sources.
-- [Source freshness](/docs/deploy/source-freshness) &mdash; Monitor data governance by enabling snapshots to capture the freshness of your data sources. 
+- [Видимость выполнения](/docs/deploy/run-visibility) &mdash; Просматривайте историю выполнения, чтобы помочь определить, где можно внести улучшения в запланированные задания.
+- [Повторное выполнение заданий](/docs/deploy/retry-jobs) &mdash; Повторно запустите ваши задания с ошибками с самого начала или с точки сбоя.
+- [Оповещения о заданиях](/docs/deploy/job-notifications) &mdash; Получайте уведомления по электронной почте или в Slack, когда выполнение задания завершается успешно, встречает предупреждения, терпит неудачу или отменяется.
+- [Оповещения о моделях](/docs/deploy/model-notifications) &mdash; Получайте уведомления по электронной почте о любых проблемах, с которыми сталкиваются ваши модели и тесты, сразу после их возникновения во время выполнения задания.
+- [Webhooks](/docs/deploy/webhooks) &mdash; Используйте вебхуки для отправки событий о статусах ваших заданий dbt в другие системы.
+- [Использование артефактов](/docs/deploy/artifacts) &mdash; dbt Cloud генерирует и сохраняет артефакты для вашего проекта, которые используются для реализации таких функций, как создание документации для вашего проекта и отчетность о свежести ваших источников.
+- [Свежесть источников](/docs/deploy/source-freshness) &mdash; Мониторьте управление данными, включая снимки для захвата свежести ваших источников данных.
 
-To set up and add data health tiles to view data freshness and quality checks in your dashboard, refer to [data health tiles](/docs/collaborate/data-tile).
+Чтобы настроить и добавить плитки состояния данных для просмотра свежести данных и проверок качества на вашей панели инструментов, обратитесь к [плиткам состояния данных](/docs/collaborate/data-tile).
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="98%" title="An overview of a dbt Cloud job run which contains Run Summary, Job Trigger, Run Duration, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/deployment/deploy-scheduler.jpg" width="98%" title="Обзор выполнения задания в dbt Cloud, который содержит сводку выполнения, триггер задания, продолжительность выполнения и многое другое."/>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/run-history.png" width="95%" title="Run History dashboard allows you to monitor the health of your dbt project and displays jobs, job status, environment, timing, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/deployment/run-history.png" width="95%" title="Панель мониторинга истории выполнения позволяет вам отслеживать состояние вашего проекта dbt и отображает задания, статус заданий, окружение, время выполнения и многое другое."/>
 
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/access-logs.gif" width="85%" title="Access logs for run steps" />
+<Lightbox src="/img/docs/dbt-cloud/deployment/access-logs.gif" width="85%" title="Журналы доступа для шагов выполнения" />
 
 </DocCarousel>

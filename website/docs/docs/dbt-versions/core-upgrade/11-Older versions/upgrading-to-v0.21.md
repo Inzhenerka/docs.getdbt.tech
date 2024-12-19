@@ -1,53 +1,52 @@
 ---
-title: "Upgrading to v0.21"
+title: "Обновление до v0.21"
 id: "upgrading-to-v0.21"
 displayed_sidebar: "docs"
 
 ---
 
-
-:::caution Unsupported version
-dbt Core v0.21 has reached the end of critical support. No new patch versions will be released, and it will stop running in dbt Cloud on June 30, 2022. Read ["About dbt Core versions"](/docs/dbt-versions/core) for more details.
+:::caution Не поддерживаемая версия
+dbt Core v0.21 достиг конца критической поддержки. Новые патч-версии не будут выпускаться, и он перестанет работать в dbt Cloud 30 июня 2022 года. Читайте ["О версиях dbt Core"](/docs/dbt-versions/core) для получения дополнительной информации.
 :::
 
-### Resources
+### Ресурсы
 
 - [Discourse](https://discourse.getdbt.com/t/3077)
-- [Release notes](https://github.com/dbt-labs/dbt-core/releases/tag/v0.21.0)
-- [Full changelog](https://github.com/dbt-labs/dbt-core/blob/0.21.latest/CHANGELOG.md)
+- [Примечания к выпуску](https://github.com/dbt-labs/dbt-core/releases/tag/v0.21.0)
+- [Полный журнал изменений](https://github.com/dbt-labs/dbt-core/blob/0.21.latest/CHANGELOG.md)
 
-## Breaking changes
+## Ломающие изменения
 
-- `dbt source snapshot-freshness` has been renamed to `dbt source freshness`. Its node selection logic is now consistent with other tasks. In order to check freshness for a specific source, you must prefix it with `source:`.
-- **Snowflake:** Turn off transactions and turn on `autocommit` by default. Within dbt materializations, wrap [DML statements](https://stackoverflow.com/a/44796508) in explicit `begin` and `commit`. Note that it is not recommended to run <Term id="dml" /> statements outside of dbt <Term id="materialization" /> logic. If you do this, despite our recommendation, you will need to wrap those statements in explicit `begin` and `commit`. Note also that this may affect user-space code that depends on transactions, such as pre-hooks and post-hooks that specify `transaction: true` or `transaction: false`. We recommend removing those references to transactions.
-- **Artifacts:**
-    - [`manifest.json`](/reference/artifacts/manifest-json) uses a `v3` schema that includes additional node properties (no changes to existing properties)
-    - [`run_results.json`](/reference/artifacts/run-results-json) uses a `v3` schema that has added `skipped` as a potential `TestResult`
-    - [`sources.json`](/reference/artifacts/sources-json) has a new `v2` schema that has added timing and thread details
+- `dbt source snapshot-freshness` был переименован в `dbt source freshness`. Логика выбора узлов теперь согласована с другими задачами. Чтобы проверить свежесть для конкретного источника, необходимо предварить его `source:`.
+- **Snowflake:** По умолчанию отключены транзакции и включен `autocommit`. Внутри материализаций dbt оборачивайте [DML-операторы](https://stackoverflow.com/a/44796508) в явные `begin` и `commit`. Обратите внимание, что не рекомендуется выполнять <Term id="dml" /> операторы вне логики <Term id="materialization" /> dbt. Если вы это сделаете, несмотря на наши рекомендации, вам нужно будет обернуть эти операторы в явные `begin` и `commit`. Также обратите внимание, что это может повлиять на код пользовательского пространства, который зависит от транзакций, например, на пред- и пост-хуки, которые указывают `transaction: true` или `transaction: false`. Мы рекомендуем удалить эти ссылки на транзакции.
+- **Артефакты:**
+    - [`manifest.json`](/reference/artifacts/manifest-json) использует схему `v3`, которая включает дополнительные свойства узлов (без изменений в существующих свойствах)
+    - [`run_results.json`](/reference/artifacts/run-results-json) использует схему `v3`, в которой добавлено `skipped` как потенциальный `TestResult`
+    - [`sources.json`](/reference/artifacts/sources-json) имеет новую схему `v2`, в которой добавлены детали времени и потока
 
-## New and changed documentation
+## Новая и измененная документация
 
-### Tasks
-- [Commands](/reference/dbt-commands), [`build`](/reference/commands/build), [rpc](/reference/commands/rpc): Add `dbt build`
-- [Commands: `source`](/reference/commands/source): Renamed to `dbt source freshness`.
-- [`deps`](/reference/commands/deps): Add `dbt deps` logging for outdated packages
-- [`list`](/reference/commands/list): Add `--output-keys` flag and RPC parameter
+### Задачи
+- [Команды](/reference/dbt-commands), [`build`](/reference/commands/build), [rpc](/reference/commands/rpc): Добавлена команда `dbt build`
+- [Команды: `source`](/reference/commands/source): Переименована в `dbt source freshness`.
+- [`deps`](/reference/commands/deps): Добавлен логгинг для устаревших пакетов в `dbt deps`
+- [`list`](/reference/commands/list): Добавлен флаг `--output-keys` и параметр RPC
 
-## Selection
-- [Commands: `source`](/reference/commands/source): Updated selection logic to match other tasks. When selecting a specific source to check freshness, you must prefix it with `source:`.
-- [Node selection syntax](/reference/node-selection/syntax), [commands](/reference/dbt-commands): Switch `--models` for `--select` across the board. (Commands which previously used the `--models` flag still support it for backwards compatibility.)
-- [YAML selectors](/reference/node-selection/yaml-selectors#default) now support an optional `default` property. If set, dbt will use custom selection criteria for commands that do not specify their own selection/exclusion flags.
-- [Selection methods](/reference/node-selection/methods) and [state comparison caveats](/reference/node-selection/state-comparison-caveats): Add `state:modified` subselectors, and reflect that it now includes changes to upstream macros.
-- [Test selection examples](/reference/node-selection/test-selection-examples) includes more discussion of indirect selection (a change in v0.20), and the optional "greedy" flag/property (new in v0.21), which you can optionally set to include tests that have a mix of selected + unselected parents
+## Выбор
+- [Команды: `source`](/reference/commands/source): Обновлена логика выбора, чтобы соответствовать другим задачам. При выборе конкретного источника для проверки свежести, необходимо предварить его `source:`.
+- [Синтаксис выбора узлов](/reference/node-selection/syntax), [команды](/reference/dbt-commands): Замените `--models` на `--select` повсеместно. (Команды, которые ранее использовали флаг `--models`, по-прежнему поддерживают его для обратной совместимости.)
+- [YAML селекторы](/reference/node-selection/yaml-selectors#default) теперь поддерживают необязательное свойство `default`. Если оно установлено, dbt будет использовать пользовательские критерии выбора для команд, которые не указывают свои собственные флаги выбора/исключения.
+- [Методы выбора](/reference/node-selection/methods) и [предостережения по сравнению состояний](/reference/node-selection/state-comparison-caveats): Добавлены подселекторы `state:modified`, и отражено, что теперь они включают изменения в верхних макросах.
+- [Примеры выбора тестов](/reference/node-selection/test-selection-examples) содержат больше обсуждений о косвенном выборе (изменение в v0.20) и необязательном флаге/свойстве "жадный" (новое в v0.21), который вы можете установить, чтобы включить тесты, имеющие смесь выбранных и невыбранных родителей.
 
-### Elsewhere in Core
-- [Resource configs and properties](/reference/configs-and-properties) docs have been consolidated and reconciled. New `config` property that makes it possible to configure models, seeds, snapshots, and tests in all YAML files.
-- [Configuring incremental models](/docs/build/incremental-models): New optional configuration for incremental models, `on_schema_change`.
-- [Environment variables](/reference/dbt-jinja-functions/env_var): Add a log-scrubbing prefix, `DBT_ENV_SECRET_`
-- [Test `where` config](/reference/resource-configs/where) has been reimplemented as a macro (`get_where_subquery`) that you can optionally reimplement, too
-- [`dispatch`](/reference/dbt-jinja-functions/dispatch) now supports reimplementing global macros residing in the `dbt` macro namespace with versions from installed packages, by leveraging `search_order` in the [`dispatch` project config](/reference/project-configs/dispatch-config)
+### В других частях Core
+- Документация по [конфигурациям ресурсов и свойствам](/reference/configs-and-properties) была консолидирована и согласована. Новое свойство `config`, которое позволяет настраивать модели, семена, снимки и тесты во всех YAML файлах.
+- [Конфигурирование инкрементальных моделей](/docs/build/incremental-models): Новая необязательная конфигурация для инкрементальных моделей, `on_schema_change`.
+- [Переменные окружения](/reference/dbt-jinja-functions/env_var): Добавлен префикс для очистки логов, `DBT_ENV_SECRET_`
+- Конфигурация `where` для тестов (/reference/resource-configs/where) была реализована заново как макрос (`get_where_subquery`), который вы также можете переопределить.
+- [`dispatch`](/reference/dbt-jinja-functions/dispatch) теперь поддерживает переопределение глобальных макросов, находящихся в пространстве имен макросов `dbt`, с версиями из установленных пакетов, используя `search_order` в [конфигурации проекта `dispatch`](/reference/project-configs/dispatch-config).
 
-### Plugins
-- **Postgres** [profile](/docs/core/connect-data-platform/postgres-setup) property `connect_timeout` now configurable. Also applicable to child plugins (e.g. `dbt-redshift`)
-- **Redshift**: [profile](/docs/core/connect-data-platform/redshift-setup) property `ra3_node: true` to support cross-database source definitions and read-only querying
-- **BigQuery**: [profile](/docs/core/connect-data-platform/bigquery-setup) property `execution_project` now configurable. [Snapshots](/docs/build/snapshots) support `target_project` and `target_dataset` config aliases.
+### Плагины
+- **Postgres** свойство [профиля](/docs/core/connect-data-platform/postgres-setup) `connect_timeout` теперь настраиваемое. Также применимо к дочерним плагинам (например, `dbt-redshift`).
+- **Redshift**: свойство [профиля](/docs/core/connect-data-platform/redshift-setup) `ra3_node: true` для поддержки определения источников из разных баз данных и запросов только для чтения.
+- **BigQuery**: свойство [профиля](/docs/core/connect-data-platform/bigquery-setup) `execution_project` теперь настраиваемое. [Снимки](/docs/build/snapshots) поддерживают конфигурационные псевдонимы `target_project` и `target_dataset`.

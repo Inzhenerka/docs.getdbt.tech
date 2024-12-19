@@ -1,17 +1,17 @@
 ---
-title: Where can I find my user id?
-description: "Instructions on where to find your user id"
-sidebar_label: 'Where can I find my user ID'
+title: Где я могу найти свой идентификатор пользователя?
+description: "Инструкции по поиску вашего идентификатора пользователя"
+sidebar_label: 'Где я могу найти свой идентификатор пользователя'
 id: find-user-id
 ---
 
-Knowing your dbt Cloud user ID can help with interacting with support. 
+Знание вашего идентификатора пользователя dbt Cloud может помочь в взаимодействии с поддержкой.
 
-To find your user ID in dbt Cloud, read the following steps:
+Чтобы найти свой идентификатор пользователя в dbt Cloud, выполните следующие шаги:
 
-1. Go to **Account Settings**, **Team**, and then **Users**,
-2. Select your user, <br />
-3. In the address bar, the number after `/users` is your user ID. 
-4. Copy that number or save it somewhere safe. <br />
+1. Перейдите в **Настройки аккаунта**, **Команда**, а затем **Пользователи**,
+2. Выберите своего пользователя, <br />
+3. В адресной строке число после `/users` — это ваш идентификатор пользователя. 
+4. Скопируйте это число или сохраните его в надежном месте. <br />
 
-For example, if the URL is `https://YOUR_ACCESS_URL/settings/accounts/12345/users/67891` &mdash; the user ID is `67891`<br /><br />
+Например, если URL-адрес `https://YOUR_ACCESS_URL/settings/accounts/12345/users/67891` &mdash; идентификатор пользователя будет `67891`<br /><br />

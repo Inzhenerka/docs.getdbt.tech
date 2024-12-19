@@ -1,72 +1,70 @@
 ---
-title: "Run visibility"
-description: "Monitor your jobs to make performance improvements."
-tags: ["scheduler"]
+title: "Видимость выполнения"
+description: "Мониторьте свои задания для улучшения производительности."
+tags: ["расписание"]
 ---
 
-You can view the history of your runs and the model timing dashboard to help identify where improvements can be made to jobs.
+Вы можете просмотреть историю своих запусков и панель мониторинга времени моделей, чтобы помочь определить, где можно улучшить выполнение заданий.
 
+## История запусков
 
-## Run history
+Панель **История запусков** в dbt Cloud помогает вам контролировать состояние вашего проекта dbt. Она предоставляет подробный обзор всех запусков заданий вашего проекта и предлагает различные фильтры, которые позволяют сосредоточиться на конкретных аспектах. Вы также можете использовать ее для просмотра недавних запусков, поиска завершившихся с ошибками запусков и отслеживания прогресса текущих запусков. Доступ к ней можно получить из верхнего меню навигации, нажав **Развертывание**, а затем **История запусков**.
 
-The **Run history** dashboard in dbt Cloud helps you monitor the health of your dbt project. It provides a detailed overview of all your project's job runs and empowers you with a variety of filters that enable you to focus on specific aspects. You can also use it to review recent runs, find errored runs, and track the progress of runs in progress. You can access it from the top navigation menu by clicking **Deploy** and then **Run history**. 
+Панель отображает полную историю ваших запусков, включая имя задания, статус, связанную среду, триггер задания, SHA коммита, схему и информацию о времени.
 
-The dashboard displays your full run history, including job name, status, associated environment, job trigger, commit SHA, schema, and timing info. 
+Разработчики dbt Cloud могут получить доступ к своей истории запусков за последние 365 дней через пользовательский интерфейс (UI) и API dbt Cloud.
 
-dbt Cloud developers can access their run history for the last 365 days through the dbt Cloud user interface (UI) and API.
+dbt Labs ограничивает самостоятельный доступ к метаданным истории запусков 365 днями для улучшения производительности dbt Cloud.
 
-dbt Labs limits self-service retrieval of run history metadata to 365 days to improve dbt Cloud's performance.
+<Lightbox src="/img/docs/dbt-cloud/deployment/run-history.png" width="85%" title="Панель истории запусков позволяет вам контролировать состояние вашего проекта dbt и отображает задания, статус заданий, среду, время и многое другое."/>
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/run-history.png" width="85%" title="Run history dashboard allows you to monitor the health of your dbt project and displays jobs, job status, environment, timing, and more."/>
+## Подробности выполнения задания
 
-## Job run details
+С панели **История запусков** выберите запуск, чтобы просмотреть полные детали о нем. Страница с деталями выполнения задания отображает триггер задания, SHA коммита, время, проведенное в очереди планировщика, все шаги выполнения и их [логи](#access-logs), [время моделей](#model-timing) и многое другое.
 
-From the **Run history** dashboard, select a run to view complete details about it. The job run details page displays job trigger, commit SHA, time spent in the scheduler queue, all the run steps and their [logs](#access-logs), [model timing](#model-timing), and more. 
+Нажмите **Запустить снова**, чтобы немедленно перезапустить задание.
 
-Click **Rerun now** to rerun the job immediately. 
+Пример завершенного запуска с конфигурацией для [триггера завершения задания](/docs/deploy/deploy-jobs#trigger-on-job-completion):
 
-An example of a completed run with a configuration for a [job completion trigger](/docs/deploy/deploy-jobs#trigger-on-job-completion):
+<Lightbox src="/img/docs/dbt-cloud/deployment/example-job-details.png" width="65%" title="Пример деталей выполнения" />
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/example-job-details.png" width="65%" title="Example of run details" />
+### Вкладка сводки выполнения
 
-### Run summary tab
+Вы можете просмотреть или скачать логи для ваших dbt запусков, как текущие, так и исторические. Это упрощает команде отладку ошибок более эффективно.
 
-You can view or download in-progress and historical logs for your dbt runs. This makes it easier for the team to debug errors more efficiently.
+<Lightbox src="/img/docs/dbt-cloud/deployment/access-logs.png" width="85%" title="Доступ к логам для шагов выполнения" />
 
-<Lightbox src="/img/docs/dbt-cloud/deployment/access-logs.png" width="85%" title="Access logs for run steps" />
+### Вкладка родословной
 
-### Lineage tab
+Просмотрите граф родословной, связанный с выполнением задания, чтобы лучше понять зависимости и отношения ресурсов в вашем проекте. Чтобы просмотреть метаданные узла непосредственно в [dbt Explorer](/docs/collaborate/explore-projects), выберите его (двойной щелчок) на графе.
 
-View the lineage graph associated with the job run so you can better understand the dependencies and relationships of the resources in your project. To view a node's metadata directly in [dbt Explorer](/docs/collaborate/explore-projects), select it (double-click) from the graph. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" width="85%" title="Пример доступа к dbt Explorer из вкладки родословной" />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" width="85%" title="Example of accessing dbt Explorer from the Lineage tab" />
+### Вкладка времени моделей <Lifecycle status="team,enterprise" />
 
-### Model timing tab <Lifecycle status="team,enterprise" /> 
+Вкладка **Время моделей** отображает состав, порядок и время, которое занимает каждая модель в выполнении задания. Визуализация появляется для успешных заданий и выделяет верхние 1% длительности моделей. Это помогает вам выявить узкие места в ваших запусках, чтобы вы могли их исследовать и, возможно, внести изменения для улучшения производительности.
 
-The **Model timing** tab displays the composition, order, and time each model takes in a job run. The visualization appears for successful jobs and highlights the top 1% of model durations. This helps you identify bottlenecks in your runs so you can investigate them and potentially make changes to improve their performance. 
+Вы можете найти панель на [странице деталей выполнения задания](#job-run-details).
 
-You can find the dashboard on the [job's run details](#job-run-details). 
+<Lightbox src="/img/docs/dbt-cloud/model-timing.png" width="85%" title="Вкладка Время моделей отображает верхние 1% длительности моделей и визуализирует узкие места моделей" />
 
-<Lightbox src="/img/docs/dbt-cloud/model-timing.png" width="85%" title="The Model timing tab displays the top 1% of model durations and visualizes model bottlenecks" />
+### Вкладка артефактов
 
-### Artifacts tab
+Эта вкладка предоставляет список артефактов, сгенерированных в ходе выполнения задания. Файлы сохраняются и доступны для скачивания.
 
-This provides a list of the artifacts generated by the job run. The files are saved and available for download.
+<Lightbox src="/img/docs/dbt-cloud/example-artifacts-tab.png" width="85%" title="Пример вкладки Артефакты" />
 
-<Lightbox src="/img/docs/dbt-cloud/example-artifacts-tab.png" width="85%" title="Example of the Artifacts tab" />
+### Вкладка сравнения <Lifecycle status="enterprise" />
 
-### Compare tab <Lifecycle status="enterprise" />
+Вкладка **Сравнение** отображается для [CI запусков заданий](/docs/deploy/ci-jobs) с включенной настройкой **Сравнить изменения выполнения**. Она отображает детали [изменений, которые dbt выполнил в сравнении](/docs/deploy/advanced-ci#compare-changes) между тем, что находится в вашей производственной среде, и запросом на слияние. Чтобы помочь вам лучше визуализировать различия, dbt Cloud выделяет изменения в ваших моделях красным (удаления) и зеленым (вставки).
 
-The **Compare** tab is shown for [CI job runs](/docs/deploy/ci-jobs) with the **Run compare changes** setting enabled. It displays details about [the changes from the comparison dbt performed](/docs/deploy/advanced-ci#compare-changes) between what's in your production environment and the pull request. To help you better visualize the differences, dbt Cloud highlights changes to your models in red (deletions) and green (inserts).
+В разделе **Измененные** вы можете просмотреть следующее:
 
-From the **Modified** section, you can view the following:
+- **Обзор** &mdash; Общее резюме изменений в моделях, таких как количество первичных ключей, которые были добавлены или удалены.
+- **Первичные ключи** &mdash; Подробности об изменениях в записях.
+- **Измененные строки** &mdash; Подробности об измененных строках. Нажмите **Показать полный предварительный просмотр**, чтобы отобразить все столбцы.
+- **Столбцы** &mdash; Подробности об изменениях в столбцах.
 
-- **Overview** &mdash; High-level summary about the changes to the models such as the number of primary keys that were added or removed. 
-- **Primary keys** &mdash; Details about the changes to the records.
-- **Modified rows** &mdash; Details about the modified rows. Click **Show full preview** to display all columns.
-- **Columns** &mdash; Details about the changes to the columns. 
+Чтобы более подробно рассмотреть зависимости и отношения ресурсов в вашем проекте, нажмите **Просмотреть в Explorer**, чтобы запустить [dbt Explorer](/docs/collaborate/explore-projects).
 
-To view the dependencies and relationships of the resources in your project more closely, click **View in Explorer** to launch [dbt Explorer](/docs/collaborate/explore-projects). 
-
-<Lightbox src="/img/docs/dbt-cloud/example-ci-compare-changes-tab.png" width="85%" title="Example of the Compare tab" />
-
+<Lightbox src="/img/docs/dbt-cloud/example-ci-compare-changes-tab.png" width="85%" title="Пример вкладки Сравнение" />

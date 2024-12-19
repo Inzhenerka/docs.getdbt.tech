@@ -1,33 +1,33 @@
 ---
-title: "Retry your dbt jobs" 
-sidebar_label: "Retry jobs"
-description: "Rerun your errored jobs from start or the failure point."
+title: "Повторите свои задания dbt" 
+sidebar_label: "Повторить задания"
+description: "Запустите свои задания с ошибками заново с самого начала или с точки сбоя."
 ---
 
-If your dbt job run completed with a status of **Error**, you can rerun it from start or from the point of failure in dbt Cloud.
+Если выполнение вашего задания dbt завершилось со статусом **Ошибка**, вы можете запустить его заново с самого начала или с точки сбоя в dbt Cloud.
 
-## Prerequisites
+## Предварительные условия
 
-- You have a [dbt Cloud account](https://www.getdbt.com/signup).
-- You must be using [dbt version](/docs/dbt-versions/upgrade-dbt-version-in-cloud) 1.6 or newer.
-- dbt can successfully parse the project and generate a [manifest](/reference/artifacts/manifest-json)
-- The most recent run of the job hasn't completed successfully. The latest status of the run is **Error**.
-    - The job command that failed in the run must be one that supports the [retry command](/reference/commands/retry).
+- У вас есть [аккаунт dbt Cloud](https://www.getdbt.com/signup).
+- Вы должны использовать [версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud) 1.6 или новее.
+- dbt может успешно разобрать проект и сгенерировать [манифест](/reference/artifacts/manifest-json).
+- Последний запуск задания не завершился успешно. Последний статус выполнения — **Ошибка**.
+    - Команда задания, которая завершилась с ошибкой, должна поддерживать [команду повторного запуска](/reference/commands/retry).
 
-## Rerun an errored job
+## Повторный запуск задания с ошибкой
 
-1. Select **Deploy** from the top navigation bar and choose **Run History.** 
-2. Choose the job run that has errored. 
-3. In the **Run Summary** tab on the job’s **Run** page, expand the run step that failed. An :x: denotes the failed step. 
-4. Examine the error message and determine how to fix it. After you have made your changes, save and commit them to your [Git repo](/docs/collaborate/git-version-control).
-5. Return to your job’s **Run** page. In the upper right corner, click **Rerun** and choose **Rerun from start** or **Rerun from failure**.
+1. Выберите **Развертывание** в верхней навигационной панели и выберите **История запусков**. 
+2. Выберите выполнение задания, которое завершилось с ошибкой. 
+3. На вкладке **Сводка запуска** на странице **Запуск** задания разверните шаг выполнения, который завершился с ошибкой. Знак :x: обозначает неудачный шаг. 
+4. Изучите сообщение об ошибке и определите, как ее исправить. После внесения изменений сохраните и зафиксируйте их в вашем [Git репозитории](/docs/collaborate/git-version-control).
+5. Вернитесь на страницу **Запуск** вашего задания. В правом верхнем углу нажмите **Повторный запуск** и выберите **Повторный запуск с начала** или **Повторный запуск с точки сбоя**.
     
-    If you chose to rerun from the failure point, a **Rerun failed steps** modal opens. The modal lists the run steps that will be invoked: the failed step and any skipped steps. To confirm these run steps, click **Rerun from failure**. The job reruns from the failed command in the previously failed run. A banner at the top of the **Run Summary** tab captures this with the message, "This run resumed execution from last failed step".
+    Если вы выбрали повторный запуск с точки сбоя, откроется модальное окно **Повторный запуск неудачных шагов**. В модальном окне перечислены шаги выполнения, которые будут вызваны: неудачный шаг и любые пропущенные шаги. Чтобы подтвердить эти шаги выполнения, нажмите **Повторный запуск с точки сбоя**. Задание будет запущено заново с неудачной команды в ранее завершенном с ошибкой запуске. В верхней части вкладки **Сводка запуска** появится баннер с сообщением: "Этот запуск возобновил выполнение с последнего неудачного шага".
 
-<Lightbox src="/img/docs/deploy/native-retry.gif" width="70%" title="Example of the Rerun options in dbt Cloud"/>
+<Lightbox src="/img/docs/deploy/native-retry.gif" width="70%" title="Пример вариантов повторного запуска в dbt Cloud"/>
 
-## Related content
-- [Retry a failed run for a job](/dbt-cloud/api-v2#/operations/Retry%20Failed%20Job) API endpoint
-- [Run visibility](/docs/deploy/run-visibility)
-- [Jobs](/docs/deploy/jobs)
-- [Job commands](/docs/deploy/job-commands)
+## Связанный контент
+- [Повторный запуск неудачного выполнения задания](/dbt-cloud/api-v2#/operations/Retry%20Failed%20Job) API-эндпоинт
+- [Видимость запусков](/docs/deploy/run-visibility)
+- [Задания](/docs/deploy/jobs)
+- [Команды заданий](/docs/deploy/job-commands)

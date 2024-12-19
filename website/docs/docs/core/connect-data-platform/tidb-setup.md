@@ -1,6 +1,6 @@
 ---
-title: "TiDB setup"
-description: "Read this guide to learn about the TiDB warehouse setup in dbt."
+title: "Настройка TiDB"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища TiDB в dbt."
 id: "tidb-setup"
 meta:
   maintained_by: PingCAP
@@ -8,8 +8,8 @@ meta:
   github_repo: 'pingcap/dbt-tidb'
   pypi_package: 'dbt-tidb'
   min_core_version: 'v1.0.0'
-  core_version: 'v1.0.0 and newer'
-  cloud_support: Not Supported
+  core_version: 'v1.0.0 и новее'
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-tidb'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03CC86R1NY'
@@ -17,10 +17,10 @@ meta:
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-Some [core functionality](https://github.com/pingcap/dbt-tidb/blob/main/README.md#supported-features) may be limited. 
-If you're interested in contributing, check out the source code repository listed below.
+Некоторые [основные функции](https://github.com/pingcap/dbt-tidb/blob/main/README.md#supported-features) могут быть ограничены. 
+Если вы заинтересованы в внесении вклада, ознакомьтесь с репозиторием исходного кода, указанным ниже.
 
 :::
 
@@ -28,13 +28,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-## Connecting to TiDB with **dbt-tidb**
+## Подключение к TiDB с помощью **dbt-tidb**
 
-### User / Password Authentication
+### Аутентификация пользователя / пароля
 
-Configure your dbt profile for using TiDB:
+Настройте свой профиль dbt для использования TiDB:
 
-#### TiDB connection profile
+#### Профиль подключения TiDB
 <File name='profiles.yml'>
 
 ```yaml
@@ -49,61 +49,61 @@ dbt-tidb:
       username: tidb_username
       password: tidb_password
 
-      # optional
-      retries: 3 # default 1
+      # необязательно
+      retries: 3 # по умолчанию 1
 ```
 
 </File>
 
-#### Description of Profile Fields
+#### Описание полей профиля
 
-| Option   | Description                                          | Required? | Example             |
-|----------|------------------------------------------------------|-----------|---------------------|
-| type     | The specific adapter to use                          | Required  | `tidb`              |
-| server   | The server (hostname) to connect to                  | Required  | `yourorg.tidb.com`  |
-| port     | The port to use                                      | Required  | `4000`              |
-| schema   | Specify the schema (database) to build models into   | Required  | `analytics`         |
-| username | The username to use to connect to the server         | Required  | `dbt_admin`         |
-| password | The password to use for authenticating to the server | Required  | `awesome_password`  |
-| retries  | The retry times after an unsuccessful connection     | Optional  | `default 1`         |
+| Опция    | Описание                                           | Обязательно? | Пример              |
+|----------|---------------------------------------------------|--------------|---------------------|
+| type     | Конкретный адаптер для использования               | Обязательно  | `tidb`              |
+| server   | Сервер (имя хоста), к которому нужно подключиться | Обязательно  | `yourorg.tidb.com`  |
+| port     | Порт для использования                             | Обязательно  | `4000`              |
+| schema   | Укажите схему (базу данных), в которую будут создаваться модели | Обязательно  | `analytics`         |
+| username | Имя пользователя для подключения к серверу        | Обязательно  | `dbt_admin`         |
+| password | Пароль для аутентификации на сервере             | Обязательно  | `awesome_password`  |
+| retries  | Количество попыток после неудачного подключения   | Необязательно | `по умолчанию 1`    |
 
-## Database User Privileges
+## Привилегии пользователя базы данных
 
-Your database user would be able to have some abilities to read or write, such as `SELECT`, `CREATE`, and so on.
-You can find some help [here](https://docs.pingcap.com/tidb/v4.0/privilege-management) with TiDB privileges management.
+Ваш пользователь базы данных должен иметь возможность выполнять некоторые операции чтения или записи, такие как `SELECT`, `CREATE` и так далее. 
+Вы можете найти дополнительную информацию [здесь](https://docs.pingcap.com/tidb/v4.0/privilege-management) о управлении привилегиями в TiDB.
 
-| Required Privilege     |
-|------------------------|
-| SELECT                 |
-| CREATE                 |
-| CREATE TEMPORARY TABLE |
-| CREATE VIEW            |
-| INSERT                 |
-| DROP                   |
-| SHOW DATABASE          |
-| SHOW VIEW              |
-| SUPER                  |
+| Обязательное привилегия     |
+|-----------------------------|
+| SELECT                      |
+| CREATE                      |
+| CREATE TEMPORARY TABLE      |
+| CREATE VIEW                 |
+| INSERT                      |
+| DROP                        |
+| SHOW DATABASE               |
+| SHOW VIEW                   |
+| SUPER                       |
 
-## Supported features
+## Поддерживаемые функции
 
-| TiDB 4.X | TiDB 5.0 ~ 5.2 | TiDB >= 5.3 |           Feature           |
+| TiDB 4.X | TiDB 5.0 ~ 5.2 | TiDB >= 5.3 |           Функция           |
 |:--------:|:--------------:|:-----------:|:---------------------------:|
-|    ✅     |       ✅        |      ✅      |    Table materialization    |
-|    ✅     |       ✅        |      ✅      |    View materialization     |
-|    ❌     |       ❌        |      ✅      | Incremental materialization |
-|    ❌     |       ✅        |      ✅      |  Ephemeral materialization  |
+|    ✅     |       ✅        |      ✅      |    Материализация таблиц    |
+|    ✅     |       ✅        |      ✅      |    Материализация представлений     |
+|    ❌     |       ❌        |      ✅      | Инкрементальная материализация |
+|    ❌     |       ✅        |      ✅      |  Эфемерная материализация  |
 |    ✅     |       ✅        |      ✅      |            Seeds            |
 |    ✅     |       ✅        |      ✅      |           Sources           |
-|    ✅     |       ✅        |      ✅      |      Custom data tests      |
-|    ✅     |       ✅        |      ✅      |        Docs generate        |
-|    ❌     |       ❌        |      ✅      |          Snapshots          |
+|    ✅     |       ✅        |      ✅      |      Пользовательские тесты данных      |
+|    ✅     |       ✅        |      ✅      |        Генерация документации        |
+|    ❌     |       ❌        |      ✅      |          Снимки          |
 |    ✅     |       ✅        |      ✅      |            Grant            |
-|    ✅     |       ✅        |      ✅      |      Connection retry       |
+|    ✅     |       ✅        |      ✅      |      Повторное подключение       |
 
-**Note:**
+**Примечание:**
 
-* TiDB 4.0 ~ 5.0 does not support [CTE](https://docs.pingcap.com/tidb/dev/sql-statement-with),
-  you should avoid using `WITH` in your SQL code.
-* TiDB 4.0 ~ 5.2 does not support creating a [temporary table or view](https://docs.pingcap.com/tidb/v5.2/sql-statement-create-table#:~:text=sec\)-,MySQL%20compatibility,-TiDB%20does%20not).
-* TiDB 4.X does not support using SQL func in `CREATE VIEW`, avoid it in your SQL code.
-  You can find more detail [here](https://github.com/pingcap/tidb/pull/27252).
+* TiDB 4.0 ~ 5.0 не поддерживает [CTE](https://docs.pingcap.com/tidb/dev/sql-statement-with),
+  вам следует избегать использования `WITH` в вашем SQL-коде.
+* TiDB 4.0 ~ 5.2 не поддерживает создание [временной таблицы или представления](https://docs.pingcap.com/tidb/v5.2/sql-statement-create-table#:~:text=sec\)-,MySQL%20compatibility,-TiDB%20does%20not).
+* TiDB 4.X не поддерживает использование SQL-функций в `CREATE VIEW`, избегайте этого в вашем SQL-коде.
+  Вы можете найти больше деталей [здесь](https://github.com/pingcap/tidb/pull/27252).

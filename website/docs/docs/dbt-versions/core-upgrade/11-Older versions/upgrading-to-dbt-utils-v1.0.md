@@ -1,64 +1,64 @@
 ---
-title: "Upgrading to dbt utils v1.0"
-description: New features and breaking changes to consider as you upgrade to dbt utils v1.0.
+title: "Обновление до dbt utils v1.0"
+description: Новые функции и изменения, которые следует учитывать при обновлении до dbt utils v1.0.
 ---
 
-# Upgrading to dbt utils v1.0
+# Обновление до dbt utils v1.0
 
-For the first time, [dbt utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) is crossing the major version boundary. From [last month’s blog post](https://www.getdbt.com/blog/announcing-dbt-v1.3-and-utils/): 
+Впервые [dbt utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) переходит на новую основную версию. Из [блог-поста прошлого месяца](https://www.getdbt.com/blog/announcing-dbt-v1.3-and-utils/):
 
-> It’s time to formalize what was already unofficial policy: you can rely on dbt utils in the same way as you do dbt Core, with stable interfaces and consistent and intuitive naming.
+> Пора формализовать то, что уже было неофициальной политикой: вы можете полагаться на dbt utils так же, как и на dbt Core, с стабильными интерфейсами и последовательным и интуитивно понятным наименованием.
 
-Just like the switch to dbt Core 1.0 last year, there are some breaking changes as we standardized and prepared for the future. Most changes can be handled with find-and-replace. If you need help, post on the [Community Forum](https://discourse.getdbt.com) or in [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) channel on Slack. 
+Как и переход на dbt Core 1.0 в прошлом году, здесь есть некоторые изменения, которые могут привести к несовместимости, поскольку мы стандартизировали и готовились к будущему. Большинство изменений можно обработать с помощью поиска и замены. Если вам нужна помощь, напишите на [Community Forum](https://discourse.getdbt.com) или в канале [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) в Slack.
 
-## New features
+## Новые функции
 
-- `get_single_value()` &mdash; An easy way to pull a single value from a SQL query, instead of having to access the `[0][0]`th element of a `run_query` result.
-- `safe_divide()` &mdash; Returns null when the denominator is 0, instead of throwing a divide-by-zero error.
-- New `not_empty_string` test &mdash; An easier wrapper than using `expression_is_true` to check the length of a column.
+- `get_single_value()` &mdash; Простой способ извлечь одно значение из SQL-запроса, вместо того чтобы обращаться к элементу `[0][0]` результата `run_query`.
+- `safe_divide()` &mdash; Возвращает null, когда знаменатель равен 0, вместо того чтобы вызывать ошибку деления на ноль.
+- Новый тест `not_empty_string` &mdash; Упрощенная обертка по сравнению с использованием `expression_is_true` для проверки длины столбца.
 
-## Enhancements
+## Улучшения
 
-- Many tests are more meaningful when you run them against subgroups of a table. For example, you may need to validate that recent data exists for every turnstile instead of a single data source being sufficient. Add the new `group_by_columns` argument to your tests to do so. Review [this article](https://www.emilyriederer.com/post/grouping-data-quality/) by the test's author for more information.
-- With the addition of an on-by-default `quote_identifiers` argument in the `star()` macro, you can now disable quoting if necessary.
-- The `recency` test now has an optional `ignore_time_component` argument which can be used when testing against a date column. This prevents the time of day the test runs from causing false negatives/positives.
+- Многие тесты становятся более значимыми, когда вы запускаете их против подгрупп таблицы. Например, вам может потребоваться проверить, что для каждого турникета существуют недавние данные, а не достаточно одной источника данных. Добавьте новый аргумент `group_by_columns` к вашим тестам, чтобы сделать это. Ознакомьтесь с [этой статьей](https://www.emilyriederer.com/post/grouping-data-quality/) автора теста для получения дополнительной информации.
+- С добавлением аргумента `quote_identifiers`, который включен по умолчанию в макросе `star()`, теперь вы можете отключить кавычки, если это необходимо.
+- Тест `recency` теперь имеет необязательный аргумент `ignore_time_component`, который можно использовать при тестировании по столбцу даты. Это предотвращает влияние времени суток, когда выполняется тест, на ложные отрицательные/положительные результаты.
 
-## Fixes
+## Исправления
 
-- `union()` now includes/excludes columns case-insensitively
-- `slugify()` prefixes an underscore when the first char is a digit
-- The `expression_is_true` test doesn’t output `*` unless storing failures, a cost improvement for BigQuery.
+- `union()` теперь включает/исключает столбцы без учета регистра.
+- `slugify()` добавляет подчеркивание, когда первый символ является цифрой.
+- Тест `expression_is_true` не выводит `*`, если не сохраняет ошибки, что улучшает затраты для BigQuery.
 
-## Breaking Changes
-### Changes to `surrogate_key()`:
+## Изменения, которые могут привести к несовместимости
+### Изменения в `surrogate_key()`:
 
-- `surrogate_key()` has been replaced by `generate_surrogate_key()`. The original treated null values and blank strings the same, which could lead to duplicate keys being created.  `generate_surrogate_key()` does not have this flaw. Compare the [surrogate keys calculated for these columns](https://docs.google.com/spreadsheets/d/1qWfdbieUOSgkzdY0kmJ9iCgdqyWccA0R-6EW0EgaMQc/edit#gid=0):
+- `surrogate_key()` был заменен на `generate_surrogate_key()`. Ранее он обрабатывал null-значения и пустые строки одинаково, что могло привести к созданию дублирующих ключей. `generate_surrogate_key()` не имеет этого недостатка. Сравните [суррогатные ключи, рассчитанные для этих столбцов](https://docs.google.com/spreadsheets/d/1qWfdbieUOSgkzdY0kmJ9iCgdqyWccA0R-6EW0EgaMQc/edit#gid=0):
 
-![A table comparing the behavior of surrogate_key and generate_surrogate_key](/img/guides/migration/versions/surrogate_key_behaviour.png)
+![Таблица, сравнивающая поведение surrogate_key и generate_surrogate_key](/img/guides/migration/versions/surrogate_key_behaviour.png)
 
-Changing the calculation method for surrogate keys, even for the better, could have significant consequences in downstream uses (such as snapshots and incremental models which use this column as their `unique_key`). As a result, it's possible to opt into the legacy behavior by setting the following variable in your dbt project:
+Изменение метода расчета суррогатных ключей, даже если оно улучшено, может иметь значительные последствия для последующего использования (например, для снимков и инкрементальных моделей, которые используют этот столбец в качестве `unique_key`). В результате возможно включение старого поведения, установив следующую переменную в вашем проекте dbt:
 
 ```yaml
 #dbt_project.yml
 vars:
-  surrogate_key_treat_nulls_as_empty_strings: true #turn on legacy behavior
+  surrogate_key_treat_nulls_as_empty_strings: true #включить старое поведение
 ```
 
-By creating a new macro instead of updating the behavior of the old one, we are requiring all projects who use this macro to make an explicit decision about which approach is better for their context. 
+Создавая новый макрос вместо обновления поведения старого, мы требуем от всех проектов, использующих этот макрос, принять явное решение о том, какой подход лучше для их контекста.
 
-**Our recommendation is that existing users should opt into the legacy behavior** unless you are confident that either:
+**Наша рекомендация заключается в том, что существующие пользователи должны включить старое поведение**, если вы не уверены, что:
 
-- your surrogate keys never contained nulls, or 
-- your surrogate keys are not used for incremental models, snapshots or other stateful artifacts and so can be regenerated with new values without issue.
+- ваши суррогатные ключи никогда не содержали null, или
+- ваши суррогатные ключи не используются для инкрементальных моделей, снимков или других состояний и могут быть сгенерированы с новыми значениями без проблем.
 
-:::caution Warning to package maintainers
+:::caution Предупреждение для поддерживающих пакеты
 
-You can not assume one behavior or the other, as each project can customize its behavior.
+Вы не можете предполагать одно или другое поведение, так как каждый проект может настраивать свое поведение.
 
 :::
 
-### Functionality now native to dbt Core:
-- The `expression_is_true` test no longer has a dedicated `condition` argument. Instead, use `where` which is [now available natively to all tests](https://docs.getdbt.com/reference/resource-configs/where):
+### Функциональность, теперь встроенная в dbt Core:
+- Тест `expression_is_true` больше не имеет отдельного аргумента `condition`. Вместо этого используйте `where`, который [теперь доступен для всех тестов](https://docs.getdbt.com/reference/resource-configs/where):
 
 ```yaml
 version: 2
@@ -68,67 +68,67 @@ models:
     tests:
       - dbt_utils.expression_is_true:
           expression: "col_a + col_b = total"
-          #replace this...
+          #замените это...
           condition: "created_at > '2018-12-31'" 
 
   - name: new_syntax
     tests:
       - dbt_utils.expression_is_true:
           expression: "col_a + col_b = total"
-          # ...with this...
+          # ...на это...
           where: "created_at > '2018-12-31'"
 ```
-**Note** &mdash; This may cause some tests to get the same autogenerated names. To resolve this, you can [define a custom name for a test](/reference/resource-properties/data-tests#define-a-custom-name-for-one-test).
-- The deprecated `unique_where` and `not_null_where` tests have been removed, because [where is now available natively to all tests](https://docs.getdbt.com/reference/resource-configs/where). To migrate, find and replace `dbt_utils.unique_where` with `unique` and `dbt_utils.not_null_where` with `not_null`.
-- `dbt_utils.current_timestamp()` is replaced by `dbt.current_timestamp()`. 
-  - Note that Postgres and Snowflake’s implementation of `dbt.current_timestamp()` differs from the old `dbt_utils` one ([full details here](https://github.com/dbt-labs/dbt-utils/pull/597#issuecomment-1231074577)). If you use Postgres or Snowflake and need identical backwards-compatible behavior, use `dbt.current_timestamp_backcompat()`. This discrepancy will hopefully be reconciled in a future version of dbt Core.
-- All other cross-db macros have moved to the dbt namespace, with no changes necessary other than replacing `dbt_utils.` with `dbt.`. Review the [cross database macros documentation](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros) for the full list.
-    - In your code editor, you can do a global find and replace with regex: `\{\{\s*dbt_utils\.(any_value|bool_or|cast_bool_to_text|concat|dateadd|datediff|date_trunc|escape_single_quotes|except|hash|intersect|last_day|length|listagg|position|replace|right|safe_cast|split_part|string_literal|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|except|intersect|concat|hash|length|position|replace|right|split_part|escape_single_quotes|string_literal|any_value|bool_or|listagg|cast_bool_to_text|safe_cast|dateadd|datediff|date_trunc|last_day)` → `{{ dbt.$1`
-### Removal of `insert_by_period` materialization
-- The `insert_by_period` materialization has been moved to the [experimental-features repo](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/main/insert_by_period). To continue to use it, add the below to your packages.yml file:
+**Примечание** &mdash; Это может привести к тому, что некоторые тесты получат одинаковые автоматически сгенерированные имена. Чтобы решить эту проблему, вы можете [определить пользовательское имя для теста](/reference/resource-properties/data-tests#define-a-custom-name-for-one-test).
+- Устаревшие тесты `unique_where` и `not_null_where` были удалены, потому что [где теперь доступно для всех тестов](https://docs.getdbt.com/reference/resource-configs/where). Для миграции найдите и замените `dbt_utils.unique_where` на `unique`, а `dbt_utils.not_null_where` на `not_null`.
+- `dbt_utils.current_timestamp()` заменен на `dbt.current_timestamp()`. 
+  - Обратите внимание, что реализация `dbt.current_timestamp()` в Postgres и Snowflake отличается от старой версии `dbt_utils` ([полные детали здесь](https://github.com/dbt-labs/dbt-utils/pull/597#issuecomment-1231074577)). Если вы используете Postgres или Snowflake и нуждаетесь в идентичном обратном совместимом поведении, используйте `dbt.current_timestamp_backcompat()`. Эта разница, надеемся, будет устранена в будущей версии dbt Core.
+- Все другие кросс-базовые макросы были перемещены в пространство имен dbt, без необходимости в каких-либо изменениях, кроме замены `dbt_utils.` на `dbt.`. Ознакомьтесь с [документацией по кросс-базовым макросам](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros) для полного списка.
+    - В вашем редакторе кода вы можете выполнить глобальный поиск и замену с помощью регулярного выражения: `\{\{\s*dbt_utils\.(any_value|bool_or|cast_bool_to_text|concat|dateadd|datediff|date_trunc|escape_single_quotes|except|hash|intersect|last_day|length|listagg|position|replace|right|safe_cast|split_part|string_literal|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|except|intersect|concat|hash|length|position|replace|right|split_part|escape_single_quotes|string_literal|any_value|bool_or|listagg|cast_bool_to_text|safe_cast|dateadd|datediff|date_trunc|last_day)` → `{{ dbt.$1`
+### Удаление материализации `insert_by_period`
+- Материализация `insert_by_period` была перемещена в [репозиторий экспериментальных функций](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/main/insert_by_period). Чтобы продолжить ее использование, добавьте следующее в ваш файл packages.yml:
 
 ```yaml
 packages:
   - git: https://github.com/dbt-labs/dbt-labs-experimental-features
     subdirectory: insert_by_period
-    revision: XXXX #optional but highly recommended. Provide a full git sha hash, e.g. 1c0bfacc49551b2e67d8579cf8ed459d68546e00. If not provided, uses the current HEAD.
+    revision: XXXX #необязательно, но настоятельно рекомендуется. Укажите полный git sha хэш, например 1c0bfacc49551b2e67d8579cf8ed459d68546e00. Если не указано, используется текущий HEAD.
 ```
-### Removal of deprecated legacy behavior:
-- `safe_add()` only works with a list of arguments; use `{{ dbt_utils.safe_add(['column_1', 'column_2']) }}` instead of varargs `{{ dbt_utils.safe_add('column_1', 'column_2') }}`.
-- Several long-promised deprecations to `deduplicate()` have been applied:
-    - The `group_by` argument is replaced by `partition_by`.
-    - `relation_alias` is removed. If you need an alias, you can pass it directly to the `relation` argument.
-    - `order_by` is now mandatory. Pass a static value like `1` if you don’t care how they are deduplicated.
-- The deprecated `table` argument has been removed from `unpivot()`. Use `relation` instead.
+### Удаление устаревшего поведения:
+- `safe_add()` работает только со списком аргументов; используйте `{{ dbt_utils.safe_add(['column_1', 'column_2']) }}` вместо varargs `{{ dbt_utils.safe_add('column_1', 'column_2') }}`.
+- Применены несколько давно обещанных устареваний к `deduplicate()`:
+    - Аргумент `group_by` заменен на `partition_by`.
+    - `relation_alias` удален. Если вам нужен псевдоним, вы можете передать его напрямую в аргумент `relation`.
+    - `order_by` теперь обязателен. Передайте статическое значение, например `1`, если вам не важно, как они будут дублироваться.
+- Устаревший аргумент `table` был удален из `unpivot()`. Используйте `relation` вместо этого.
 
 
-## Resolving error messages
-After upgrading, these are common error messages you may encounter, along with their resolutions.
+## Устранение сообщений об ошибках
+После обновления это распространенные сообщения об ошибках, с которыми вы можете столкнуться, а также их решения.
 <details>
 	<summary><code>dict object has no attribute MACRO_NAME</code></summary>
 	<div>
-		<p><b>Cause</b>: No macro called <code>MACRO_NAME</code> exists. This is most likely because the macro has moved to the <code>dbt</code> namespace (see above). It could also be because you haven't run dbt deps or have misspelled a macro's name.</p>
-		<p><b>Resolution</b>: For <a href="/reference/dbt-jinja-functions/cross-database-macros">cross-database macros</a>, change <code>dbt_utils.MACRO_NAME()</code> to <code>dbt.MACRO_NAME()</code>.</p>
+		<p><b>Причина</b>: Нет макроса с именем <code>MACRO_NAME</code>. Это, скорее всего, связано с тем, что макрос был перемещен в пространство имен <code>dbt</code> (см. выше). Это также может быть связано с тем, что вы не запустили dbt deps или неправильно написали имя макроса.</p>
+		<p><b>Решение</b>: Для <a href="/reference/dbt-jinja-functions/cross-database-macros">кросс-базовых макросов</a> измените <code>dbt_utils.MACRO_NAME()</code> на <code>dbt.MACRO_NAME()</code>.</p>
 	</div>
 </details>
 <details>
 	<summary><code>macro 'dbt_macro__generate_surrogate_key' takes not more than 1 argument(s)</code> </summary>
 	<div>
-		<p><b>Cause</b>: <code>generate_surrogate_key()</code> requires a single argument containing a list of columns, not a set of varargs.</p>
-		<p><b>Resolution</b>: Change to <code>dbt_utils.generate_surrogate_key(['column_1', 'column_2'])</code> - note the square brackets. </p>
+		<p><b>Причина</b>: <code>generate_surrogate_key()</code> требует один аргумент, содержащий список столбцов, а не набор varargs.</p>
+		<p><b>Решение</b>: Измените на <code>dbt_utils.generate_surrogate_key(['column_1', 'column_2'])</code> - обратите внимание на квадратные скобки. </p>
 	</div>
 </details>
 <details>
 	<summary><code>The dbt_utils.surrogate_key has been replaced by dbt_utils.generate_surrogate_key</code></summary>
 	<div>
 		<p>
-      <b>Cause</b>: <code>surrogate_key()</code> has been replaced. 
+      <b>Причина</b>: <code>surrogate_key()</code> был заменен. 
     </p>
 		<p>
-      <b>Resolution</b>:
+      <b>Решение</b>:
 			<ol>
-				<li>Decide whether you need to enable backwards compatibility <a href="#changes-to-surrogate_key">as detailed above</a>.</li>
-				<li>Find and replace <code>dbt_utils.surrogate_key</code> with <code>dbt_utils.generate_surrogate_key</code>.</li>
+				<li>Решите, нужно ли вам включить обратную совместимость <a href="#changes-to-surrogate_key">как описано выше</a>.</li>
+				<li>Найдите и замените <code>dbt_utils.surrogate_key</code> на <code>dbt_utils.generate_surrogate_key</code>.</li>
 			</ol>
 		</p>
 	</div>
@@ -136,21 +136,21 @@ After upgrading, these are common error messages you may encounter, along with t
 <details>
 	<summary><code>macro dbt_macro__test_expression_is_true takes no keyword argument condition</code></summary>
 	<div>
-		<p><b>Cause</b>: <code>condition</code> has been removed from the <code>expression_is_true</code> test, now that <code>where</code> is available on all tests automatically.</p>
-		<p><b>Resolution</b>: Replace <code>condition</code> with <code>where</code>. </p>
+		<p><b>Причина</b>: <code>condition</code> был удален из теста <code>expression_is_true</code>, теперь, когда <code>where</code> доступен для всех тестов автоматически.</p>
+		<p><b>Решение</b>: Замените <code>condition</code> на <code>where</code>. </p>
 	</div>
 </details>
 <details>
 	<summary><code>No materialization insert_by_period was found for adapter</code></summary>
 	<div>
-		<p><b>Cause</b>: <code>insert_by_period</code> has moved to the experimental features repo (see above).</p>
-		<p><b>Resolution</b>: Install the package as <a href="#removal-of-insert_by_period-materialization">described above</a>. </p>
+		<p><b>Причина</b>: <code>insert_by_period</code> был перемещен в репозиторий экспериментальных функций (см. выше).</p>
+		<p><b>Решение</b>: Установите пакет, как <a href="#removal-of-insert_by_period-materialization">описано выше</a>. </p>
 	</div>
 </details>
 <details>
 	<summary><code>dbt found two tests with the name "XXX".</code></summary>
 	<div>
-		<p><b>Cause</b>: Changing from <code>condition</code> to <code>where</code> in the <code>expression_is_true</code> test, as configs are not part of a test's unique name.</p>
-		<p><b>Resolution</b>: Define a <a href="https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test">custom name for your test</a>.</p>
+		<p><b>Причина</b>: Изменение с <code>condition</code> на <code>where</code> в тесте <code>expression_is_true</code>, так как конфигурации не являются частью уникального имени теста.</p>
+		<p><b>Решение</b>: Определите <a href="https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test">пользовательское имя для вашего теста</a>.</p>
 	</div>
 </details>

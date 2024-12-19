@@ -1,30 +1,30 @@
 ---
-title: "Upgrading to 0.14.1"
+title: "Обновление до 0.14.1"
 id: "upgrading-to-0-14-1"
 displayed_sidebar: "docs"
 ---
 
-The dbt v0.14.1 release _does not_ contain any breaking code changes for users upgrading from v0.14.0. If you are upgrading from a version less than 0.14.0, consult the [Upgrading to 0.14.0](upgrading-to-0-14-0) migration guide. The following section contains important information for users of the `check` strategy on Snowflake and BigQuery. Action may be required in your database.
+В выпуске dbt v0.14.1 _нет_ никаких разрушающих изменений в коде для пользователей, обновляющихся с версии v0.14.0. Если вы обновляетесь с версии ниже 0.14.0, ознакомьтесь с руководством по миграции [Обновление до 0.14.0](upgrading-to-0-14-0). В следующем разделе содержится важная информация для пользователей стратегии `check` на Snowflake и BigQuery. Возможно, потребуется предпринять действия в вашей базе данных.
 
-## Changes to the Snapshot "check" algorithm
+## Изменения в алгоритме "check" для Snapshots
 
-:::caution Snowflake and BigQuery
+:::caution Snowflake и BigQuery
 
-The following section only applies to Snapshots running against Snowflake or BigQuery. If you are using a different database, then the following section does not apply to your dbt project.
+Следующий раздел применим только к Snapshots, работающим с Snowflake или BigQuery. Если вы используете другую базу данных, то следующий раздел не относится к вашему проекту dbt.
 
 :::
 
-When a [Snapshot](/docs/build/snapshots) is configured to use the `check` strategy, dbt will compare the specified `check_cols` between the source dataset and the snapshotted dataset to determine if a row in the Snapshot has changed. A logic error in the v0.14.0 release of dbt caused this strategy to fail if the values of the specified `check_cols` for a given row cycled back into a previously known state. Importantly, this issue only affects Snowflake and BigQuery due to their respective uses of the `merge` statement in Snapshots.
+Когда [Snapshot](/docs/build/snapshots) настроен на использование стратегии `check`, dbt будет сравнивать указанные `check_cols` между исходным набором данных и набором данных, находящимся в Snapshot, чтобы определить, изменилась ли строка в Snapshot. Логическая ошибка в выпуске v0.14.0 dbt привела к тому, что эта стратегия не работала, если значения указанных `check_cols` для данной строки возвращались в ранее известное состояние. Важно отметить, что эта проблема затрагивает только Snowflake и BigQuery из-за их соответствующего использования оператора `merge` в Snapshots.
 
-In this failure mode, dbt would "finalize" existing records by setting a `dbt_valid_to` date for a changed record without correspondingly inserting a new record for the change. **In this state, the finalized records will no longer be tracked in the Snapshot <Term id="table" />**.
+В этом режиме сбоя dbt "финализировал" существующие записи, устанавливая дату `dbt_valid_to` для измененной записи, не вставляя соответствующую новую запись для изменения. **В этом состоянии финализированные записи больше не будут отслеживаться в Snapshot <Term id="table" />**.
 
-### Resolution
+### Решение
 
-To determine if your Snapshot <Term id="table" /> is affected by this issue, you can run a query to find "stuck" records. These "stuck" records:
- - Are the most recent records for a given `unique_key` in the snapshot
- - Have a value for both `dbt_valid_from` and `dbt_valid_to`
+Чтобы определить, затрагивает ли вашу Snapshot <Term id="table" /> эта проблема, вы можете выполнить запрос для поиска "застрявших" записей. Эти "застрявшие" записи:
+ - Являются последними записями для данного `unique_key` в snapshot
+ - Имеют значение как для `dbt_valid_from`, так и для `dbt_valid_to`
 
-The following query will return rows which meet this criteria:
+Следующий запрос вернет строки, которые соответствуют этому критерию:
 
 <File name='snapshot_check_cols_migrate.sql'>
 
@@ -33,10 +33,10 @@ with base as (
 
     select *,
 
-        -- Replace `<your unique key>` with your specified unique_key 
+        -- Замените `<your unique key>` на ваш указанный unique_key 
         <your unique key> as dbt_unique_key
 
-    -- Replace <your snapshot table> with a snapshot table name
+    -- Замените <your snapshot table> на имя таблицы snapshot
     from <your snapshot table>
 
 ),
@@ -68,25 +68,25 @@ limit 100;
 
 </File>
 
-If the above query returns a non-zero number of records, then you will need to manually fix the "stuck" records in this snapshot table.
+Если вышеуказанный запрос возвращает ненулевое количество записей, вам необходимо вручную исправить "застрявшие" записи в этой таблице snapshot.
 
-There are two methods available for resolving this issue. In either case, it is recommended that you upgrade your Snapshot jobs to v0.14.1 as soon as possible to prevent this failure mode from occurring in subsequent snapshots.
+Существует два метода для решения этой проблемы. В любом случае рекомендуется как можно скорее обновить ваши задачи Snapshot до v0.14.1, чтобы предотвратить возникновение этого режима сбоя в последующих snapshots.
 
-### Approach #1: Manually update your snapshot tables
+### Подход #1: Ручное обновление ваших таблиц snapshot
 
-:::caution Warning!
+:::caution Внимание!
 
-This migration is only required for users of the `check` snapshot strategy on Snowflake and BigQuery. If your project doesn't meet these criteria, then you do not need to migrate your Snapshot tables.
+Эта миграция требуется только для пользователей стратегии snapshot `check` на Snowflake и BigQuery. Если ваш проект не соответствует этим критериям, то вам не нужно мигрировать ваши таблицы Snapshot.
 
 :::
 
-The query shown above will generate a set of rows which are in a "stuck" state. You can use the output of this query to update the records in your snapshot table to become "unstuck". To do this, use an `update` statement that sets the `dbt_valid_to` column to `null` for records identified in the query above. **Use caution when running <Term id="dml" /> directly against a snapshot table. It is a good idea to make a backup of this table before applying running this migration manually!** A sample query has been provided below: please test this query _thoroughly_ before running it in production.
+Запрос, показанный выше, сгенерирует набор строк, которые находятся в "застрявшем" состоянии. Вы можете использовать вывод этого запроса для обновления записей в вашей таблице snapshot, чтобы они стали "разблокированными". Для этого используйте оператор `update`, который устанавливает столбец `dbt_valid_to` в `null` для записей, идентифицированных в запросе выше. **Будьте осторожны при выполнении <Term id="dml" /> непосредственно против таблицы snapshot. Хорошей идеей будет сделать резервную копию этой таблицы перед тем, как вручную применять эту миграцию!** Пример запроса приведен ниже: пожалуйста, тщательно протестируйте этот запрос _перед_ его выполнением в производственной среде.
 
 <File name='fix_snapshot_stuck_records.sql'>
 
 ```sql
 
--- Replace <your snapshot table> with a snapshot table name
+-- Замените <your snapshot table> на имя таблицы snapshot
 update <your snapshot table>
 set dbt_valid_to = null
 where dbt_scd_id in (
@@ -95,10 +95,10 @@ where dbt_scd_id in (
 
       select *,
 
-          -- Replace `<your unique key>` with your specified unique_key 
+          -- Замените `<your unique key>` на ваш указанный unique_key 
           <your unique key> as dbt_unique_key
 
-      -- Replace <your snapshot table> with a Snapshot table name
+      -- Замените <your snapshot table> на имя таблицы Snapshot
       from <your snapshot table>
 
   ),
@@ -131,16 +131,16 @@ where dbt_scd_id in (
 
 </File>
 
-### Approach #2: Delete the existing snapshot tables
+### Подход #2: Удаление существующих таблиц snapshot
 
-:::caution Warning!
+:::caution Внимание!
 
-This migration is only required for users of the `check` snapshot strategy on Snowflake and BigQuery. If your project doesn't meet these criteria, then you do not need to migrate your Snapshot tables.
+Эта миграция требуется только для пользователей стратегии snapshot `check` на Snowflake и BigQuery. Если ваш проект не соответствует этим критериям, то вам не нужно мигрировать ваши таблицы Snapshot.
 
 :::
 
-If you have only recently started snapshotting tables using the `check` strategy, you may simply drop your existing snapshot table(s) and begin recording new snapshot table(s) from scratch. **In general, you should be very careful when operating on snapshot tables manually. Take great care when deleting Snapshot tables.** If you choose to go this route, you _will_ lose data. Balance this tradeoff with the complexity specified in the first approach.
+Если вы только недавно начали создавать snapshots таблиц с использованием стратегии `check`, вы можете просто удалить существующие таблицы snapshot и начать запись новых таблиц snapshot с нуля. **В общем, вы должны быть очень осторожны при ручной работе с таблицами snapshot. Будьте очень внимательны при удалении таблиц Snapshot.** Если вы решите пойти по этому пути, вы _потеряете_ данные. Уравновесьте этот компромисс с сложностью, указанной в первом подходе.
 
-### Getting help
+### Получение помощи
 
-We're happy to help with this migration if you have any questions or issues. Please let us know [on Slack](https://community.getdbt.com) if you'd like a hand!
+Мы рады помочь с этой миграцией, если у вас есть какие-либо вопросы или проблемы. Пожалуйста, дайте нам знать [в Slack](https://community.getdbt.com), если вам нужна помощь!

@@ -1,26 +1,26 @@
 ---
-title: "Using threads"
+title: "Использование потоков"
 id: "using-threads"
-sidebar_label: "Use threads"
-description: "Understand what threads mean and how to use them."
+sidebar_label: "Используйте потоки"
+description: "Поймите, что такое потоки и как их использовать."
 pagination_next: null
 ---
 
-When dbt runs, it creates a directed acyclic graph (DAG) of links between models. The number of threads represents the maximum number of paths through the graph dbt may work on at once – increasing the number of threads can minimize the run time of your project.
+Когда dbt выполняется, он создает направленный ациклический граф (DAG) связей между моделями. Количество потоков представляет собой максимальное количество путей через граф, над которыми dbt может работать одновременно – увеличение числа потоков может минимизировать время выполнения вашего проекта.
 
-For example, if you specify `threads: 1`, dbt will start building only one model, and finish it, before moving onto the next. Specifying `threads: 8` means that dbt will work on _up to_ 8 models at once without violating dependencies – the actual number of models it can work on will likely be constrained by the available paths through the dependency graph.
+Например, если вы укажете `threads: 1`, dbt начнет строить только одну модель и завершит ее, прежде чем перейти к следующей. Указание `threads: 8` означает, что dbt будет работать над _до_ 8 моделей одновременно, не нарушая зависимости – фактическое количество моделей, над которыми он может работать, вероятно, будет ограничено доступными путями через граф зависимостей.
 
-There's no set limit of the maximum number of threads you can set – while increasing the number of threads generally decreases execution time, there are a number of things to consider:
-* Increasing the number of threads increases the load on your warehouse, which may impact other tools in your data stack. For example, if your BI tool uses the same compute resources as dbt, their queries may get queued during a dbt run.
-* The number of concurrent queries your database will allow you to run may be a limiting factor in how many models can be actively built – some models may queue while waiting for an available query slot.
+Нет установленного предела для максимального количества потоков, которое вы можете задать – хотя увеличение числа потоков обычно уменьшает время выполнения, есть несколько факторов, которые следует учитывать:
+* Увеличение числа потоков увеличивает нагрузку на ваш хранилище данных, что может повлиять на другие инструменты в вашем стекe данных. Например, если ваш BI-инструмент использует те же вычислительные ресурсы, что и dbt, их запросы могут быть поставлены в очередь во время выполнения dbt.
+* Количество одновременных запросов, которые ваша база данных позволит вам выполнять, может быть ограничивающим фактором в том, сколько моделей может быть активно построено – некоторые модели могут ожидать, пока не освободится слот для запроса.
 
-Generally the optimal number of threads depends on your data warehouse and its configuration. It’s best to test different values to find the best number of threads for your project. We recommend setting this to 4 to start with.
+Как правило, оптимальное количество потоков зависит от вашего хранилища данных и его конфигурации. Лучше всего протестировать разные значения, чтобы найти наилучшее количество потоков для вашего проекта. Мы рекомендуем начать с установки этого значения на 4.
 
-You can use a different number of threads than the value defined in your target by using the `--threads` option when executing a dbt command.
+Вы можете использовать другое количество потоков, чем значение, определенное в вашей цели, используя опцию `--threads` при выполнении команды dbt.
 
-You will define the number of threads in your `profiles.yml` file (for dbt Core users only), dbt Cloud job definition, and dbt Cloud development credentials under your profile.
+Вы определите количество потоков в вашем файле `profiles.yml` (только для пользователей dbt Core), в определении задания dbt Cloud и в учетных данных разработки dbt Cloud под вашим профилем.
 
 
-## Related docs
-- [About profiles.yml](/docs/core/connect-data-platform/profiles.yml)
-- [dbt Cloud job scheduler](/docs/deploy/job-scheduler)
+## Связанные документы
+- [О profiles.yml](/docs/core/connect-data-platform/profiles.yml)
+- [Планировщик заданий dbt Cloud](/docs/deploy/job-scheduler)

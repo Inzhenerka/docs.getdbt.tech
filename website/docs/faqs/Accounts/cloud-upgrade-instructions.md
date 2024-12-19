@@ -1,92 +1,89 @@
 ---
-title: "How to upgrade a dbt Cloud account"
+title: "Как обновить аккаунт dbt Cloud"
 id: "cloud-upgrade-instructions"
-description: "Instructions for upgrading a dbt Cloud account after the trial ends."
+description: "Инструкции по обновлению аккаунта dbt Cloud после окончания пробного периода."
 ---
 
-dbt Cloud offers [several plans](https://www.getdbt.com/pricing/) with different features that meet your needs. This document is for dbt Cloud admins and explains how to select a plan in order to continue using dbt Cloud. 
+dbt Cloud предлагает [несколько тарифных планов](https://www.getdbt.com/pricing/) с различными функциями, которые соответствуют вашим потребностям. Этот документ предназначен для администраторов dbt Cloud и объясняет, как выбрать план, чтобы продолжить использование dbt Cloud.
 
-## Prerequisites 
+## Предварительные условия
 
-Before you begin: 
-- You _must_ be part of the [Owner](/docs/cloud/manage-access/self-service-permissions) user group to make billing changes. Users not included in this group will not see these options.
-- All amounts shown in dbt Cloud are in U.S. Dollars (USD)   
-- When your trial expires, your account's default plan enrollment will be a Team plan.
+Перед началом:
+- Вы _должны_ быть частью группы пользователей [Owner](/docs/cloud/manage-access/self-service-permissions), чтобы вносить изменения в выставление счетов. Пользователи, не входящие в эту группу, не увидят эти опции.
+- Все суммы, указанные в dbt Cloud, представлены в долларах США (USD).
+- Когда ваш пробный период истечет, ваш аккаунт будет автоматически переведен на тарифный план Team.
 
+## Выбор плана
+Когда ваш [14-дневный пробный период](https://www.getdbt.com/signup/) закончится или если ваш платеж по подписке просрочен, вам нужно будет выбрать план, чтобы продолжить использование вашего аккаунта:
 
+- После входа в систему вы должны увидеть всплывающее сообщение "Аккаунт заблокирован" с инструкциями по разблокировке вашего аккаунта и обновлению платежных данных.
+- Нажмите **Перейти к выставлению счетов**, чтобы перейти на страницу выставления счетов.
+- В разделе **Выставление счетов** вы можете просмотреть доступные тарифные планы dbt Cloud [планы](https://www.getdbt.com/pricing/) и их функции.
 
-## Select a plan 
-When your [14 day trial](https://www.getdbt.com/signup/) ends or if your subscription payment is past due , you'll need to select a plan in order to continue using your account:
+Чтобы разблокировать ваш аккаунт и выбрать план, ознакомьтесь с следующими рекомендациями для каждого типа плана:
 
-- Upon logging in, you should see an "Account locked" pop up message with instructions to unlock your account and update your payment details
-- Click **Go to Billing** to go to the billing page
-- Under **Billing**, you can review the available dbt Cloud [plans](https://www.getdbt.com/pricing/) and their features
+### Тарифный план Developer
 
-
-To unlock your account and select a plan, review the following guidance per plan type:
-
-### Developer plan
-
-1. To select a Developer plan, choose the Developer tab under **Billing**. 
-2. Click **Select Plan** on the right. 
-3. Confirm your plan selection on the pop up message. 
-4. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Developer plan. 🎉
+1. Чтобы выбрать тарифный план Developer, выберите вкладку Developer в разделе **Выставление счетов**.
+2. Нажмите **Выбрать план** справа.
+3. Подтвердите выбор плана во всплывающем сообщении.
+4. Это автоматически разблокирует ваш аккаунт dbt Cloud, и вы сможете наслаждаться преимуществами тарифного плана Developer. 🎉
 
 <Lightbox src="/img/docs/dbt-cloud/downgrade-dev-flow.gif"/>
 
-### Team plan
+### Тарифный план Team
 
-1. When your trial expires, your account's default plan enrollment will be a Team plan. 
-2. To unlock your account and continue using the Team plan, you need to enter your payment details. 
-3. Go to **Payment Information** and click **Edit** on the right.
-4. Enter your payment details and click **Save**.
-5. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
+1. Когда ваш пробный период истечет, ваш аккаунт будет автоматически переведен на тарифный план Team.
+2. Чтобы разблокировать ваш аккаунт и продолжить использование тарифного плана Team, вам нужно ввести свои платежные данные.
+3. Перейдите в **Платежная информация** и нажмите **Редактировать** справа.
+4. Введите свои платежные данные и нажмите **Сохранить**.
+5. Это автоматически разблокирует ваш аккаунт dbt Cloud, и вы сможете наслаждаться преимуществами тарифного плана Team. 🎉
 
 <Lightbox src="/img/docs/dbt-cloud/trial-team-flow.gif"/>
 
-### Enterprise plan
+### Тарифный план Enterprise
 
-1. If you're interested in our Enterprise plan, select the Enterprise tab under **Billing**.
-2. Click **Contact Sales** on the right. This opens a chat window for you to contact the dbt Cloud Support team, who will connect you to our Sales team.
-3. Once you submit your request, our Sales team will contact you with more information. 
+1. Если вас интересует наш тарифный план Enterprise, выберите вкладку Enterprise в разделе **Выставление счетов**.
+2. Нажмите **Связаться с отделом продаж** справа. Это откроет окно чата, чтобы вы могли связаться с командой поддержки dbt Cloud, которая свяжет вас с нашей командой продаж.
+3. После того как вы отправите свой запрос, наша команда продаж свяжется с вами для предоставления дополнительной информации.
 
 <Lightbox src="/img/docs/dbt-cloud/enterprise-upgrade.gif"/>
 
-4. Alternatively, you can [contact](https://www.getdbt.com/contact/) our Sales team directly to chat about how dbt Cloud can help you and your team. 
+4. Кроме того, вы можете [связаться](https://www.getdbt.com/contact/) с нашей командой продаж напрямую, чтобы обсудить, как dbt Cloud может помочь вам и вашей команде.
 
-## Related questions
+## Связанные вопросы
 
-For commonly asked billings questions, refer to the dbt Cloud [pricing page](https://www.getdbt.com/pricing/).
+Для часто задаваемых вопросов по выставлению счетов обратитесь к [странице цен](https://www.getdbt.com/pricing/) dbt Cloud.
 
 <details>
-  <summary>How does billing work?</summary>
+  <summary>Как работает выставление счетов?</summary>
 
-  Team plans are billed monthly on the credit card used to sign up, based on <a href="/docs/cloud/billing">developer seat count and usage</a>. You’ll also be sent a monthly receipt to the billing email of your choice. You can change any billing information in your <b>Account Settings</b> &gt; <b>Billing page</b>.
+  Тарифные планы Team выставляются ежемесячно на кредитную карту, использованную для регистрации, на основе <a href="/docs/cloud/billing">количества разработчиков и использования</a>. Вам также будет отправлен ежемесячный чек на выбранный вами адрес электронной почты для выставления счетов. Вы можете изменить любую информацию о выставлении счетов в разделе <b>Настройки аккаунта</b> &gt; <b>Страница выставления счетов</b>.
 
-  Enterprise plan customers are billed annually based on the number of developer seats, as well as any additional services + features in your chosen plan.
+  Клиенты тарифного плана Enterprise выставляются ежегодно на основе количества мест для разработчиков, а также любых дополнительных услуг и функций в выбранном вами плане.
 
 </details>
 <details>
-  <summary>Can I upgrade or downgrade my plan?</summary>
+  <summary>Могу ли я обновить или понизить свой план?</summary>
   
-  Yes, you can upgrade or downgrade at any time. Account Owners can access their dedicated billing section via the account settings page.
+  Да, вы можете обновить или понизить свой план в любое время. Владельцы аккаунтов могут получить доступ к своему разделу выставления счетов через страницу настроек аккаунта.
     
-  If you’re not sure which plan is right for you, get in touch and we’ll be happy to help you find one that fits your needs.
+  Если вы не уверены, какой план подходит вам, свяжитесь с нами, и мы с радостью поможем вам найти подходящий вариант.
 
 </details>
 <details>
-  <summary>Can I pay by invoice?</summary>
+  <summary>Могу ли я оплачивать по счету?</summary>
   
-  Currently, dbt Cloud Team plan payments must be made with a credit card, and by default they will be billed monthly based on the number of <a href="/docs/cloud/billing">developer seats and usage</a>.
+  В настоящее время платежи по тарифному плану Team должны производиться с помощью кредитной карты, и по умолчанию они будут выставляться ежемесячно на основе количества <a href="/docs/cloud/billing">разработчиков и использования</a>.
   
-  We don’t have any plans to do invoicing for Team plan accounts in the near future, but we do currently support invoices for companies on the dbt Cloud Enterprise plan. Feel free to <a href="https://www.getdbt.com/contact/">contact</a> us to build your Enterprise pricing plan.
+  У нас нет планов по выставлению счетов для аккаунтов тарифного плана Team в ближайшем будущем, но мы в настоящее время поддерживаем счета для компаний на тарифном плане dbt Cloud Enterprise. Не стесняйтесь <a href="https://www.getdbt.com/contact/">связаться</a> с нами, чтобы составить ваш тарифный план Enterprise.
 
 </details>
 <details>
-  <summary>Why did I receive a <b>Failed payment</b> error email?</summary>
+  <summary>Почему я получил электронное письмо с ошибкой <b>Неудачная оплата</b>?</summary>
   
-  This means we were unable to charge the credit card you have on file, or you have not provided an updated card for payment. If you're a current account owner with a card on file, contact your credit card issuer to inquire as to why your card was declined or update the credit card on your account.
+  Это означает, что мы не смогли списать средства с кредитной карты, указанной в вашем аккаунте, или вы не предоставили обновленную карту для оплаты. Если вы являетесь текущим владельцем аккаунта с картой на счету, свяжитесь с вашим эмитентом кредитной карты, чтобы узнать, почему ваша карта была отклонена, или обновите кредитную карту в вашем аккаунте.
 
-  Your Account Owner can update payment details in the <b>Account Settings</b> -> <b>Billing</b> page. Click <b>Edit</b> next to your card details, double check your information is up-to-date, and we'll give it another go at the next billing run.
+  Ваш владелец аккаунта может обновить платежные данные на странице <b>Настройки аккаунта</b> -> <b>Выставление счетов</b>. Нажмите <b>Редактировать</b> рядом с данными вашей карты, дважды проверьте, что ваша информация актуальна, и мы попробуем снова при следующем выставлении счета.
 
 </details>

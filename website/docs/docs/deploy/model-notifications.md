@@ -1,33 +1,33 @@
 ---
-title: "Model notifications"
-description: "While a job is running, receive email notifications in real time about any issues with your models and tests. "
+title: "Уведомления о моделях"
+description: "Во время выполнения задания получайте уведомления по электронной почте в реальном времени о любых проблемах с вашими моделями и тестами."
 ---
 
-Set up dbt to notify the appropriate model owners through email about issues as soon as they occur, while the job is still running. Model owners can specify which statuses to receive notifications about: 
+Настройте dbt для уведомления соответствующих владельцев моделей по электронной почте о проблемах, как только они возникают, пока задание все еще выполняется. Владельцы моделей могут указать, о каких статусах они хотят получать уведомления:
 
-- `Success` and `Fails` for models
-- `Warning`, `Success`, and `Fails` for tests
+- `Успех` и `Ошибка` для моделей
+- `Предупреждение`, `Успех` и `Ошибка` для тестов
 
-With model-level notifications, model owners can be the first ones to know about issues before anyone else (like the stakeholders). 
+С уведомлениями на уровне моделей владельцы могут первыми узнать о проблемах, прежде чем кто-либо другой (например, заинтересованные стороны).
 
-To be timely and keep the number of notifications to a reasonable amount when multiple models or tests trigger them, dbt observes the following guidelines when notifying the owners:  
+Чтобы быть своевременными и сократить количество уведомлений до разумного уровня, когда несколько моделей или тестов вызывают их, dbt соблюдает следующие рекомендации при уведомлении владельцев:
 
-- Send a notification to each unique owner/email during a job run about any models (with status of failure/success) or tests (with status of warning/failure/success). Each owner receives only one notification, the initial one.
-- No notifications sent about subsequent models or tests while a dbt job is still running.
-- Each owner/user who subscribes to notifications for one or more statuses (like failure, success, warning) will receive only _one_ email notification at the end of the job run.
-- The email includes a consolidated list of all models or tests that match the statuses the user subscribed to, instead of sending separate emails for each status.
+- Отправляйте уведомление каждому уникальному владельцу/электронной почте во время выполнения задания о любых моделях (со статусом ошибки/успеха) или тестах (со статусом предупреждения/ошибки/успеха). Каждый владелец получает только одно уведомление — первоначальное.
+- Уведомления о последующих моделях или тестах не отправляются, пока задание dbt все еще выполняется.
+- Каждый владелец/пользователь, подписавшийся на уведомления о одном или нескольких статусах (таких как ошибка, успех, предупреждение), получит только _одно_ уведомление по электронной почте в конце выполнения задания.
+- Электронное письмо включает сводный список всех моделей или тестов, соответствующих статусам, на которые подписан пользователь, вместо отправки отдельных писем для каждого статуса.
 
-Create configuration YAML files in your project for dbt to send notifications about the status of your models and tests.
+Создайте конфигурационные YAML файлы в вашем проекте, чтобы dbt мог отправлять уведомления о статусе ваших моделей и тестов.
 
-## Prerequisites
-- Your dbt Cloud administrator has [enabled the appropriate account setting](#enable-access-to-model-notifications) for you.
-- Your environment(s) must be on a [release track](/docs/dbt-versions/cloud-release-tracks) instead of a legacy dbt Core version.
+## Предварительные условия
+- Ваш администратор dbt Cloud [включил соответствующую настройку аккаунта](#enable-access-to-model-notifications) для вас.
+- Ваши окружения должны находиться на [релизной ветке](/docs/dbt-versions/cloud-release-tracks), а не на устаревшей версии dbt Core.
 
-## Configure groups
+## Настройка групп
 
-Define your groups in any `.yml` file in your [models directory](/reference/project-configs/model-paths). Each group must have a single email address specified &mdash; multiple email fields or lists aren't supported.
+Определите ваши группы в любом `.yml` файле в вашем [каталоге моделей](/reference/project-configs/model-paths). Каждая группа должна иметь указанный единственный адрес электронной почты — несколько полей электронной почты или списков не поддерживаются.
 
-The following example shows how to define groups in a `groups.yml` file.
+Следующий пример показывает, как определить группы в файле `groups.yml`.
 
 <File name='models/groups.yml'>
 
@@ -37,25 +37,25 @@ version: 2
 groups:
   - name: finance
     owner:
-      # Email is required to receive model-level notifications, additional properties are also allowed.
-      name: "Finance Team"
-      description: "Models related to the finance department"
+      # Электронная почта обязательна для получения уведомлений на уровне модели, также допускаются дополнительные свойства.
+      name: "Финансовая команда"
+      description: "Модели, связанные с финансовым отделом"
       email: finance@dbtlabs.com
       favorite_food: donuts
 
   - name: marketing
     owner:
-      name: "Marketing Team"
-      description: "Models related to the marketing department"
+      name: "Маркетинговая команда"
+      description: "Модели, связанные с маркетинговым отделом"
       email: marketing@dbtlabs.com
       favorite_food: jaffles
 ```
 
 </File>
 
-## Attach groups to models
+## Привязка групп к моделям
 
-Attach groups to models as you would any other config, in either the `dbt_project.yml` or `whatever.yml` files. For example: 
+Привязывайте группы к моделям так же, как и любую другую конфигурацию, в файлах `dbt_project.yml` или `whatever.yml`. Например:
 
 <File name='models/marts.yml'>
 
@@ -64,21 +64,21 @@ version: 2
 
 models:
   - name: sales
-    description: "Sales data model"
+    description: "Модель данных о продажах"
     config:
       group: finance
 
   - name: campaigns
-    description: "Campaigns data model"
+    description: "Модель данных о кампаниях"
     config:
       group: marketing
 
 ```
 </File>
 
-By assigning groups in the `dbt_project.yml` file, you can capture all models in a subdirectory at once. 
+Присваивая группы в файле `dbt_project.yml`, вы можете захватить все модели в подкаталоге сразу.
 
-In this example, model notifications related to staging models go to the data engineering group, `marts/sales` models to the finance team, and `marts/campaigns` models to the marketing team.
+В этом примере уведомления о моделях, связанных с моделями промежуточной обработки, отправляются группе по обработке данных, модели `marts/sales` — финансовой команде, а модели `marts/campaigns` — маркетинговой команде.
 
 <File name='dbt_project.yml'>
 
@@ -101,15 +101,15 @@ models:
 ```
 
 </File>
-Attaching a group to a model also encompasses its tests, so you will also receive notifications for a model's test failures. 
+Привязка группы к модели также охватывает ее тесты, поэтому вы также будете получать уведомления о сбоях тестов модели.
 
-## Enable access to model notifications 
+## Включение доступа к уведомлениям о моделях
 
-Provide dbt Cloud account members the ability to configure and receive alerts about issues with models or tests that are encountered during job runs.  
+Предоставьте участникам аккаунта dbt Cloud возможность настраивать и получать уведомления о проблемах с моделями или тестами, которые возникают во время выполнения заданий.
 
-To use model-level notifications, your dbt Cloud account must have access to the feature. Ask your dbt Cloud administrator to enable this feature for account members by following these steps:
+Чтобы использовать уведомления на уровне модели, ваш аккаунт dbt Cloud должен иметь доступ к этой функции. Попросите вашего администратора dbt Cloud включить эту функцию для участников аккаунта, следуя этим шагам:
 
-1. Navigate to **Notification settings** from your profile name in the sidebar (lower left-hand side). 
-1. From **Email notifications**, enable the setting **Enable group/owner notifications on models** under the **Model notifications** section. Then, specify which statuses to receive notifications about (Success, Warning, and/or Fails). 
+1. Перейдите в **Настройки уведомлений** из вашего имени профиля в боковой панели (в нижнем левом углу).
+1. В разделе **Email уведомления** включите настройку **Включить уведомления для групп/владельцев по моделям** в разделе **Уведомления о моделях**. Затем укажите, о каких статусах вы хотите получать уведомления (Успех, Предупреждение и/или Ошибка).
 
-  <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Example of the setting Enable group/owner notifications on models" /> 
+  <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Пример настройки Включить уведомления для групп/владельцев по моделям" />

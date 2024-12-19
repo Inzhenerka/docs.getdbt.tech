@@ -1,11 +1,11 @@
 ---
-title: How can I update my billing information?
-description: "Instructions on how to update your billing info"
-sidebar_label: 'How to update billing'
+title: Как обновить информацию о выставлении счетов?
+description: "Инструкции по обновлению вашей информации о выставлении счетов"
+sidebar_label: 'Как обновить выставление счетов'
 id: change-billing
 ---
 
 
-If you want to change your account's credit card details, go to the left side panel, click **Account settings**  &#8594; **Billing**  &#8594; scroll to **Payment information**. Enter the new credit card details on the respective fields then click on **Update payment information**. Only the _account owner_ can make this change. 
+Если вы хотите изменить данные кредитной карты вашей учетной записи, перейдите в левую боковую панель, нажмите **Настройки учетной записи**  &#8594; **Выставление счетов**  &#8594; прокрутите до **Информация о платеже**. Введите новые данные кредитной карты в соответствующие поля, затем нажмите **Обновить информацию о платеже**. Только _владелец учетной записи_ может внести это изменение.
 
-To change your billing name or location address, send our Support team a message at support@getdbt.com with the newly updated information, and we can make that change for you! 
+Чтобы изменить имя для выставления счетов или адрес местоположения, отправьте сообщение нашей команде поддержки по адресу support@getdbt.com с обновленной информацией, и мы сможем внести это изменение за вас!

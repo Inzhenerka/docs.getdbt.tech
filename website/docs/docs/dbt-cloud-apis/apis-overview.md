@@ -1,23 +1,23 @@
 ---
-title: "APIs Overview"
-description: "Learn how dbt accounts on the Team and Enterprise plans can query the dbt Cloud APIs."
+title: "Обзор API"
+description: "Узнайте, как аккаунты на тарифах Team и Enterprise могут запрашивать API dbt Cloud."
 id: "overview"
 pagination_next: "docs/dbt-cloud-apis/user-tokens"
 pagination_prev: null
 ---
 
-# APIs overview <Lifecycle status="team,enterprise"/>
+# Обзор API <Lifecycle status="team,enterprise"/>
 
-Accounts on the _Team_ and _Enterprise_ plans can query the dbt Cloud APIs.
+Аккаунты на тарифах _Team_ и _Enterprise_ могут запрашивать API dbt Cloud.
 
-dbt Cloud provides the following APIs:
+dbt Cloud предоставляет следующие API:
 
-- The [dbt Cloud Administrative API](/docs/dbt-cloud-apis/admin-cloud-api) can be used to administrate a dbt Cloud account. It can be called manually or with [the dbt Cloud Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest).
-- The [dbt Cloud Discovery API](/docs/dbt-cloud-apis/discovery-api) can be used to fetch metadata related to the state and health of your dbt project.
-- The [dbt Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) provides multiple API options which allow you to query your metrics defined in the dbt Semantic Layer.
+- [Административный API dbt Cloud](/docs/dbt-cloud-apis/admin-cloud-api) может использоваться для администрирования аккаунта dbt Cloud. Его можно вызывать вручную или с помощью [провайдера Terraform для dbt Cloud](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest).
+- [API обнаружения dbt Cloud](/docs/dbt-cloud-apis/discovery-api) может использоваться для получения метаданных, связанных с состоянием и здоровьем вашего проекта dbt.
+- [API семантического слоя dbt](/docs/dbt-cloud-apis/sl-api-overview) предоставляет несколько вариантов API, которые позволяют запрашивать ваши метрики, определенные в семантическом слое dbt.
 
-If you want to learn more about webhooks, refer to [Webhooks for your jobs](/docs/deploy/webhooks).
+Если вы хотите узнать больше о вебхуках, обратитесь к разделу [Вебхуки для ваших задач](/docs/deploy/webhooks).
 
-## How to Access the APIs
+## Как получить доступ к API
 
-dbt Cloud supports two types of API Tokens: [personal access tokens](/docs/dbt-cloud-apis/user-tokens) and [service account tokens](/docs/dbt-cloud-apis/service-tokens). Requests to the dbt Cloud APIs can be authorized using these tokens.
+dbt Cloud поддерживает два типа токенов API: [персональные токены доступа](/docs/dbt-cloud-apis/user-tokens) и [токены сервисного аккаунта](/docs/dbt-cloud-apis/service-tokens). Запросы к API dbt Cloud могут быть авторизованы с использованием этих токенов.

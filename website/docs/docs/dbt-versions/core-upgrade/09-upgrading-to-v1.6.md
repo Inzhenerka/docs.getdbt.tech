@@ -1,97 +1,97 @@
 ---
-title: "Upgrading to v1.6"
-description: New features and changes in dbt Core v1.6
+title: "Обновление до v1.6"
+description: Новые функции и изменения в dbt Core v1.6
 id: "upgrading-to-v1.6"
 displayed_sidebar: "docs"
 ---
 
-dbt Core v1.6 has three significant areas of focus:
-1. Next milestone of [multi-project deployments](https://github.com/dbt-labs/dbt-core/discussions/6725): improvements to contracts, groups/access, versions; and building blocks for cross-project `ref`
-1. Semantic layer re-launch: dbt Core and [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow) integration
-1. Mechanisms to support mature deployment at scale (`dbt clone` and `dbt retry`)
+dbt Core v1.6 сосредоточен на трех основных областях:
+1. Следующий этап [многоуровневых развертываний](https://github.com/dbt-labs/dbt-core/discussions/6725): улучшения контрактов, групп/доступа, версий; и строительные блоки для кросс-проектного `ref`
+2. Перезапуск семантического слоя: интеграция dbt Core и [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow)
+3. Механизмы для поддержки зрелого развертывания в масштабе (`dbt clone` и `dbt retry`)
 
-## Resources
+## Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/1.6.latest/CHANGELOG.md)
-- [dbt Core installation guide](/docs/core/installation-overview)
-- [Cloud upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
-- [Release schedule](https://github.com/dbt-labs/dbt-core/issues/7481)
+- [Журнал изменений](https://github.com/dbt-labs/dbt-core/blob/1.6.latest/CHANGELOG.md)
+- [Руководство по установке dbt Core](/docs/core/installation-overview)
+- [Руководство по обновлению в облаке](/docs/dbt-versions/upgrade-dbt-version-in-cloud)
+- [График релизов](https://github.com/dbt-labs/dbt-core/issues/7481)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x, with the exception of any changes explicitly mentioned below. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new).
+dbt Labs стремится обеспечить обратную совместимость для всех версий 1.x, за исключением любых изменений, явно упомянутых ниже. Если вы столкнетесь с ошибкой при обновлении, пожалуйста, дайте нам знать, [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new).
 
-### Behavior changes
+### Изменения в поведении
 
-:::info Action required if your project defines `metrics`
+:::info Требуется действие, если ваш проект определяет `metrics`
 
-The [spec for metrics](https://github.com/dbt-labs/dbt-core/discussions/7456) has changed and now uses [MetricFlow](/docs/build/about-metricflow). 
+[Спецификация для метрик](https://github.com/dbt-labs/dbt-core/discussions/7456) изменилась и теперь использует [MetricFlow](/docs/build/about-metricflow). 
 
 :::
 
-If your dbt project defines metrics, you must migrate to dbt v1.6 because the YAML spec has moved from dbt_metrics to MetricFlow. Any tests you have won't compile on v1.5 or older. 
+Если ваш проект dbt определяет метрики, вам необходимо перейти на dbt v1.6, так как спецификация YAML была перенесена с dbt_metrics на MetricFlow. Любые тесты, которые у вас есть, не будут компилироваться на v1.5 или более ранних версиях.
 
-- dbt Core v1.6 does not support Python 3.7, which reached End Of Life on June 23. Support Python versions are 3.8, 3.9, 3.10, and 3.11.
-- As part of the [dbt Semantic layer](/docs/use-dbt-semantic-layer/dbt-sl) re-launch (in beta), the spec for `metrics` has changed significantly. Refer to the [migration guide](/guides/sl-migration) for more info on how to migrate to the re-launched dbt Semantic Layer.
-- The manifest schema version is now v10.
-- dbt Labs is ending support for Homebrew installation of dbt-core and adapters. See [the discussion](https://github.com/dbt-labs/dbt-core/discussions/8277) for more details.
+- dbt Core v1.6 не поддерживает Python 3.7, который достиг конца поддержки 23 июня. Поддерживаемые версии Python: 3.8, 3.9, 3.10 и 3.11.
+- В рамках перезапуска [семантического слоя dbt](/docs/use-dbt-semantic-layer/dbt-sl) (в бета-версии) спецификация для `metrics` значительно изменилась. Обратитесь к [руководству по миграции](/guides/sl-migration) для получения дополнительной информации о том, как перейти на перезапущенный семантический слой dbt.
+- Версия схемы манифеста теперь v10.
+- dbt Labs прекращает поддержку установки dbt-core и адаптеров через Homebrew. См. [обсуждение](https://github.com/dbt-labs/dbt-core/discussions/8277) для получения дополнительных деталей.
 
-### For consumers of dbt artifacts (metadata)
+### Для потребителей артефактов dbt (метаданные)
 
-The [manifest](/reference/artifacts/manifest-json) schema version has been updated to `v10`. Specific changes:
-- Addition of `semantic_models` and changes to `metrics` attributes
-- Addition of `deprecation_date` as a model property
-- Addition of `on_configuration_change` as default node configuration (to support materialized views)
-- Small type changes to `contracts` and `constraints`
-- Manifest `metadata` includes `project_name`
+Схема [манифеста](/reference/artifacts/manifest-json) была обновлена до `v10`. Конкретные изменения:
+- Добавление `semantic_models` и изменения в атрибутах `metrics`
+- Добавление `deprecation_date` как свойства модели
+- Добавление `on_configuration_change` как конфигурации узла по умолчанию (для поддержки материализованных представлений)
+- Небольшие изменения типов в `contracts` и `constraints`
+- Метаданные манифеста включают `project_name`
 
-### For maintainers of adapter plugins
+### Для поддерживающих плагины адаптеров
 
-For more detailed information and to ask questions, please read and comment on the GH discussion: [dbt-labs/dbt-core#7958](https://github.com/dbt-labs/dbt-core/discussions/7958).
+Для получения более подробной информации и для задавания вопросов, пожалуйста, читайте и комментируйте обсуждение на GH: [dbt-labs/dbt-core#7958](https://github.com/dbt-labs/dbt-core/discussions/7958).
 
-## New and changed documentation
+## Новая и измененная документация
 
 ### MetricFlow
 
-- [**Build your metrics**](/docs/build/build-metrics-intro) with MetricFlow, a key component of the dbt Semantic Layer. You can define your metrics and build semantic models with MetricFlow, available on the command line (CLI) for dbt Core v1.6 beta or higher.
+- [**Создайте свои метрики**](/docs/build/build-metrics-intro) с MetricFlow, ключевым компонентом семантического слоя dbt. Вы можете определить свои метрики и создать семантические модели с помощью MetricFlow, доступного в командной строке (CLI) для dbt Core v1.6 beta или выше.
 
-### Materialized views
+### Материализованные представления
 
-Supported on:
+Поддерживается на:
 - [Postgres](/reference/resource-configs/postgres-configs#materialized-view)
 - [Redshift](/reference/resource-configs/redshift-configs#materialized-view)
 - [Snowflake](/reference/resource-configs/snowflake-configs#dynamic-tables)
 - [Databricks](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
 
-Support for BigQuery coming soon.
+Поддержка BigQuery скоро появится.
 
-### New commands for mature deployment
+### Новые команды для зрелого развертывания
 
-[`dbt retry`](/reference/commands/retry) executes the previously run command from the point of failure. Rebuild just the nodes that errored or skipped in a previous run/build/test, rather than starting over from scratch.
+[`dbt retry`](/reference/commands/retry) выполняет ранее запущенную команду с точки сбоя. Перестраивает только узлы, которые выдали ошибку или были пропущены в предыдущем запуске/сборке/тестировании, вместо того чтобы начинать с нуля.
 
-[`dbt clone`](/reference/commands/clone) leverages each data platform's functionality for creating lightweight copies of dbt models from one environment into another. Useful when quickly spinning up a new development environment, or promoting specific models from a staging environment into production.
+[`dbt clone`](/reference/commands/clone) использует функциональность каждой платформы данных для создания легковесных копий моделей dbt из одной среды в другую. Полезно при быстром создании новой среды разработки или при продвижении конкретных моделей из тестовой среды в продуктивную.
 
-### Multi-project collaboration
+### Многоуровневая совместная работа
 
-[**Deprecation date**](/reference/resource-properties/deprecation_date): Models can declare a deprecation date that will warn model producers and downstream consumers. This enables clear migration windows for versioned models, and provides a mechanism to facilitate removal of immature or little-used models, helping to avoid project bloat.
+[**Дата устаревания**](/reference/resource-properties/deprecation_date): Модели могут объявлять дату устаревания, которая будет предупреждать производителей моделей и downstream-потребителей. Это позволяет четко определить окна миграции для версионированных моделей и предоставляет механизм для упрощения удаления незрелых или малоиспользуемых моделей, что помогает избежать разрастания проекта.
 
-[Model names](/faqs/Project/unique-resource-names) can be duplicated across different namespaces (projects/packages), so long as they are unique within each project/package. We strongly encourage using [two-argument `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models) when referencing a model from a different package/project.
+[Имена моделей](/faqs/Project/unique-resource-names) могут дублироваться в разных пространствах имен (проектах/пакетах), при условии, что они уникальны в каждом проекте/пакете. Мы настоятельно рекомендуем использовать [двухаргументный `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models) при ссылке на модель из другого пакета/проекта.
 
-More consistency and flexibility around packages. Resources defined in a package will respect variable and global macro definitions within the scope of that package.
-- `vars` defined in a package's `dbt_project.yml` are now available in the resolution order when compiling nodes in that package, though CLI `--vars` and the root project's `vars` will still take precedence. See ["Variable Precedence"](/docs/build/project-variables#variable-precedence) for details.
-- `generate_x_name` macros (defining custom rules for database, schema, alias naming) follow the same pattern as other "global" macros for package-scoped overrides. See [macro dispatch](/reference/dbt-jinja-functions/dispatch) for an overview of the patterns that are possible.
+Больше согласованности и гибкости в отношении пакетов. Ресурсы, определенные в пакете, будут учитывать определения переменных и глобальных макросов в пределах этого пакета.
+- `vars`, определенные в `dbt_project.yml` пакета, теперь доступны в порядке разрешения при компиляции узлов в этом пакете, хотя CLI `--vars` и `vars` корневого проекта все еще будут иметь приоритет. См. ["Приоритет переменных"](/docs/build/project-variables#variable-precedence) для получения подробной информации.
+- Макросы `generate_x_name` (определяющие пользовательские правила для именования базы данных, схемы, псевдонима) следуют той же схеме, что и другие "глобальные" макросы для переопределений в рамках пакета. См. [диспетчеризацию макросов](/reference/dbt-jinja-functions/dispatch) для обзора возможных схем.
 
-:::caution Closed Beta - dbt Cloud Enterprise
-[**Project dependencies**](/docs/collaborate/govern/project-dependencies): Introduces `dependencies.yml` and dependent `projects` as a feature of dbt Cloud Enterprise. Allows enforcing model access (public vs. protected/private) across project/package boundaries. Enables cross-project `ref` of public models, without requiring the installation of upstream source code.
+:::caution Закрытая бета-версия - dbt Cloud Enterprise
+[**Зависимости проектов**](/docs/collaborate/govern/project-dependencies): Вводит `dependencies.yml` и зависимые `projects` как функцию dbt Cloud Enterprise. Позволяет обеспечивать доступ к моделям (публичный против защищенного/частного) через границы проектов/пакетов. Позволяет кросс-проектный `ref` публичных моделей без необходимости установки исходного кода верхнего уровня.
 :::
 
-### Deprecated functionality
+### Устаревшая функциональность
 
-The ability for installed packages to override built-in materializations without explicit opt-in from the user is being deprecated.
+Возможность для установленных пакетов переопределять встроенные материализации без явного согласия пользователя устаревает.
 
-- Overriding a built-in materialization from an installed package raises a deprecation warning.
-- Using a custom materialization from an installed package does not raise a deprecation warning.
-- Using a built-in materialization package override from the root project via a wrapping materialization is still supported. For example:
+- Переопределение встроенной материализации из установленного пакета вызывает предупреждение об устаревании.
+- Использование пользовательской материализации из установленного пакета не вызывает предупреждения об устаревании.
+- Использование переопределения встроенной материализации пакета из корневого проекта через обернутую материализацию по-прежнему поддерживается. Например:
 
   ```
   {% materialization view, default %}
@@ -99,13 +99,12 @@ The ability for installed packages to override built-in materializations without
   {% endmaterialization %}
   ```
 
-### Quick hits
+### Быстрые заметки
 
-- [`state:unmodified` and `state:old`](/reference/node-selection/methods#state) for [MECE](https://en.wikipedia.org/wiki/MECE_principle) stateful selection
-- [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) includes full `invocation_command` as string
-- [`dbt debug --connection`](/reference/commands/debug) to test just the data platform connection specified in a profile
-- [`dbt docs generate --empty-catalog`](/reference/commands/cmd-docs) to skip catalog population while generating docs
-- [`--defer-state`](/reference/node-selection/defer) enables more-granular control 
-- [`dbt ls`](/reference/commands/list) adds the Semantic model selection method to allow for `dbt ls -s "semantic_model:*"` and the ability to execute `dbt ls --resource-type semantic_model`.
-- Syntax for `DBT_ENV_SECRET_` has changed to `DBT_ENV_SECRET` and no longer requires the closing underscore.
-
+- [`state:unmodified` и `state:old`](/reference/node-selection/methods#state) для [MECE](https://en.wikipedia.org/wiki/MECE_principle) выборки по состоянию
+- [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) включает полную `invocation_command` в виде строки
+- [`dbt debug --connection`](/reference/commands/debug) для тестирования только соединения с платформой данных, указанного в профиле
+- [`dbt docs generate --empty-catalog`](/reference/commands/cmd-docs) для пропуска заполнения каталога при генерации документации
+- [`--defer-state`](/reference/node-selection/defer) позволяет более детально управлять
+- [`dbt ls`](/reference/commands/list) добавляет метод выбора семантической модели, позволяя использовать `dbt ls -s "semantic_model:*"` и возможность выполнять `dbt ls --resource-type semantic_model`.
+- Синтаксис для `DBT_ENV_SECRET_` изменился на `DBT_ENV_SECRET` и больше не требует закрывающего подчеркивания.

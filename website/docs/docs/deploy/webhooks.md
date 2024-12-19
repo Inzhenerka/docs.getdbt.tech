@@ -1,90 +1,88 @@
 ---
-title: "Webhooks for your jobs" 
-sidebar_label: "Webhooks"
-description: "Get real-time notifications about your dbt jobs with webhooks."
+title: "Вебхуки для ваших заданий" 
+sidebar_label: "Вебхуки"
+description: "Получайте уведомления в реальном времени о ваших заданиях dbt с помощью вебхуков."
 ---
 
-With dbt Cloud, you can create outbound webhooks to send events (notifications) about your dbt jobs to your other systems. Your other systems can listen for (subscribe to) these events to further automate your workflows or to help trigger automation flows you have set up.
+С помощью dbt Cloud вы можете создавать исходящие вебхуки для отправки событий (уведомлений) о ваших заданиях dbt в другие системы. Ваши другие системы могут подписываться на эти события, чтобы дополнительно автоматизировать ваши рабочие процессы или помочь запустить автоматизированные потоки, которые вы настроили.
 
-A webhook is an HTTP-based callback function that allows event-driven communication between two different web applications. This allows you to get the latest information on your dbt jobs in real time. Without it, you would need to make API calls repeatedly to check if there are any updates that you need to account for (polling). Because of this, webhooks are also called _push APIs_ or _reverse APIs_ and are often used for infrastructure development.
+Вебхук — это функция обратного вызова на основе HTTP, которая позволяет осуществлять событийно-ориентированную связь между двумя различными веб-приложениями. Это позволяет вам получать актуальную информацию о ваших заданиях dbt в реальном времени. Без этого вам пришлось бы многократно выполнять API-запросы, чтобы проверить, есть ли обновления, которые вам нужно учесть (опрос). Из-за этого вебхуки также называют _push API_ или _reverse API_ и часто используют для разработки инфраструктуры.
 
-dbt Cloud sends a JSON payload to your application's endpoint URL when your webhook is triggered. You can send a [Slack](/guides/zapier-slack) notification, a [Microsoft Teams](/guides/zapier-ms-teams) notification, [open a PagerDuty incident](/guides/serverless-pagerduty) when a dbt job fails. 
+dbt Cloud отправляет JSON-данные на URL-адрес конечной точки вашего приложения, когда ваш вебхук срабатывает. Вы можете отправить уведомление в [Slack](/guides/zapier-slack), уведомление в [Microsoft Teams](/guides/zapier-ms-teams), [открыть инцидент в PagerDuty](/guides/serverless-pagerduty), когда задание dbt завершилось с ошибкой.
 
-You can create webhooks for these events from the [dbt Cloud web-based UI](#create-a-webhook-subscription) and by using the [dbt Cloud API](#api-for-webhooks):
+Вы можете создать вебхуки для этих событий через [веб-интерфейс dbt Cloud](#create-a-webhook-subscription) и с помощью [API dbt Cloud](#api-for-webhooks):
 
-- `job.run.started` &mdash; Run started.
-- `job.run.completed` &mdash; Run completed. This can be a run that has failed or succeeded.
-- `job.run.errored` &mdash; Run errored.
+- `job.run.started` &mdash; Запуск начат.
+- `job.run.completed` &mdash; Запуск завершен. Это может быть запуск, который завершился с ошибкой или успешно.
+- `job.run.errored` &mdash; Ошибка при выполнении.
 
-dbt Cloud retries sending each event five times. dbt Cloud keeps a log of each webhook delivery for 30 days. Every webhook has its own **Recent Deliveries** section, which lists whether a delivery was successful or failed at a glance. 
+dbt Cloud повторно пытается отправить каждое событие пять раз. dbt Cloud ведет журнал каждой доставки вебхука в течение 30 дней. У каждого вебхука есть свой раздел **Недавние доставки**, который наглядно показывает, была ли доставка успешной или неудачной.
 
-A webhook in dbt Cloud has a timeout of 10 seconds. This means that if the endpoint doesn't respond within 10 seconds, the webhook processor will time out. This can result in a situation where the client responds successfully after the 10 second timeout and records a success status while the dbt cloud webhooks system will interpret this as a failure.
+Вебхук в dbt Cloud имеет тайм-аут в 10 секунд. Это означает, что если конечная точка не отвечает в течение 10 секунд, обработчик вебхуков завершит работу. Это может привести к ситуации, когда клиент успешно отвечает после 10-секундного тайм-аута и фиксирует статус успеха, в то время как система вебхуков dbt Cloud интерпретирует это как сбой.
 
-:::tip Videos 
-If you're interested in course learning with videos, check out the [Webhooks on-demand course](https://learn.getdbt.com/courses/webhooks) from dbt Labs.
+:::tip Видео 
+Если вас интересует обучение с помощью видео, ознакомьтесь с [онлайн-курсом по вебхукам](https://learn.getdbt.com/courses/webhooks) от dbt Labs.
 
-You can also check out the free [dbt Fundamentals course](https://learn.getdbt.com/courses/dbt-fundamentals). 
+Вы также можете ознакомиться с бесплатным [курсом по основам dbt](https://learn.getdbt.com/courses/dbt-fundamentals). 
 :::
 
-## Prerequisites
-- You have a dbt Cloud account that is on the [Team or Enterprise plan](https://www.getdbt.com/pricing/). 
-- For `write` access to webhooks: 
-    - **Enterprise plan accounts** &mdash; Permission sets are the same for both API service tokens and the dbt Cloud UI. You, or the API service token, must have the Account Admin, Admin, or Developer [permission set](/docs/cloud/manage-access/enterprise-permissions).  
-    - **Team plan accounts** &mdash; For the dbt Cloud UI, you need to have a [Developer license](/docs/cloud/manage-access/self-service-permissions). For API service tokens, you must assign the service token to have the [Account Admin or Member](/docs/dbt-cloud-apis/service-tokens#team-plans-using-service-account-tokens) permission set. 
-- You have a multi-tenant or an AWS single-tenant deployment model in dbt Cloud. For more information, refer to [Tenancy](/docs/cloud/about-cloud/tenancy).
-- Your destination system supports [Authorization headers](#troubleshooting).
+## Предварительные условия
+- У вас есть учетная запись dbt Cloud, которая находится на [плане Team или Enterprise](https://www.getdbt.com/pricing/). 
+- Для доступа `write` к вебхукам: 
+    - **Учетные записи на плане Enterprise** &mdash; Наборы разрешений одинаковы как для токенов API, так и для интерфейса dbt Cloud. Вы или токен API должны иметь набор разрешений Account Admin, Admin или Developer [permission set](/docs/cloud/manage-access/enterprise-permissions).  
+    - **Учетные записи на плане Team** &mdash; Для интерфейса dbt Cloud вам необходимо иметь [лицензию разработчика](/docs/cloud/manage-access/self-service-permissions). Для токенов API вы должны назначить токену сервисного аккаунта набор разрешений [Account Admin или Member](/docs/dbt-cloud-apis/service-tokens#team-plans-using-service-account-tokens). 
+- У вас есть многоарендная или одноарендная модель развертывания AWS в dbt Cloud. Для получения дополнительной информации смотрите [Tenancy](/docs/cloud/about-cloud/tenancy).
+- Ваша целевая система поддерживает [заголовки авторизации](#troubleshooting).
 
-## Create a webhook subscription {#create-a-webhook-subscription}
+## Создание подписки на вебхук {#create-a-webhook-subscription}
 
-Navigate to **Account settings** in dbt Cloud (by clicking your account name from the left side panel), and click **Create New Webhook** in the **Webhooks** section. You can find the appropriate dbt Cloud access URL for your region and plan with [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).
+Перейдите в **Настройки учетной записи** в dbt Cloud (нажав на имя вашей учетной записи в левой боковой панели) и нажмите **Создать новый вебхук** в разделе **Вебхуки**. Вы можете найти соответствующий URL-адрес доступа dbt Cloud для вашего региона и плана в [Регионов и IP-адресов](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
-To configure your new webhook: 
+Чтобы настроить ваш новый вебхук: 
 
-- **Name** &mdash; Enter a name for your outbound webhook.
-- **Description** &mdash; Enter a description of the webhook.
-- **Events** &mdash; Choose the event you want to trigger this webhook. You can subscribe to more than one event.
-- **Jobs** &mdash; Specify the job(s) you want the webhook to trigger on. Or, you can leave this field empty for the webhook to trigger on all jobs in your account. By default, dbt Cloud configures your webhook at the account level. 
-- **Endpoint** &mdash; Enter your application's endpoint URL, where dbt Cloud can send the event(s) to.
+- **Имя** &mdash; Введите имя для вашего исходящего вебхука.
+- **Описание** &mdash; Введите описание вебхука.
+- **События** &mdash; Выберите событие, которое вы хотите использовать для активации этого вебхука. Вы можете подписаться на более чем одно событие.
+- **Задания** &mdash; Укажите задание(я), на которые вы хотите, чтобы вебхук срабатывал. Или вы можете оставить это поле пустым, чтобы вебхук срабатывал для всех заданий в вашей учетной записи. По умолчанию dbt Cloud настраивает ваш вебхук на уровне учетной записи. 
+- **Конечная точка** &mdash; Введите URL-адрес конечной точки вашего приложения, куда dbt Cloud может отправлять событие(я).
 
-When done, click **Save**. dbt Cloud provides a secret token that you can use to [check for the authenticity of a webhook](#validate-a-webhook). It’s strongly recommended that you perform this check on your server to protect yourself from fake (spoofed) requests.
+Когда закончите, нажмите **Сохранить**. dbt Cloud предоставляет секретный токен, который вы можете использовать для [проверки подлинности вебхука](#validate-a-webhook). Настоятельно рекомендуется выполнять эту проверку на вашем сервере, чтобы защитить себя от поддельных (спуфированных) запросов.
 
-### Differences between completed and errored webhook events {#completed-errored-event-difference}
-The `job.run.errored` event is a subset of the `job.run.completed` events. If you subscribe to both, you will receive two notifications when your job encounters an error. However, dbt Cloud triggers the two events at different times:
+### Различия между завершенными и ошибочными событиями вебхука {#completed-errored-event-difference}
+Событие `job.run.errored` является подмножеством событий `job.run.completed`. Если вы подписываетесь на оба, вы получите два уведомления, когда ваше задание столкнется с ошибкой. Однако dbt Cloud вызывает два события в разное время:
 
-- `job.run.completed` &mdash;  This event only fires once the job’s metadata and artifacts have been ingested and are available from the dbt Cloud Admin and Discovery APIs. 
-- `job.run.errored` &mdash; This event fires immediately so the job’s metadata and artifacts might not have been ingested. This means that information might not be available for you to use.
+- `job.run.completed` &mdash; Это событие срабатывает только после того, как метаданные и артефакты задания были обработаны и доступны из API администрирования и Discovery dbt Cloud. 
+- `job.run.errored` &mdash; Это событие срабатывает немедленно, поэтому метаданные и артефакты задания могут еще не быть обработаны. Это означает, что информация может быть недоступна для вас.
 
-If your integration depends on data from the Admin API (such as accessing the logs from the run) or Discovery API (accessing model-by-model statuses), use the `job.run.completed` event and filter on `runStatus` or `runStatusCode`. 
+Если ваша интеграция зависит от данных из API администрирования (например, доступ к журналам выполнения) или API Discovery (доступ к статусам по моделям), используйте событие `job.run.completed` и фильтруйте по `runStatus` или `runStatusCode`. 
 
-If your integration doesn’t depend on additional data or if improved delivery performance is more important for you, use `job.run.errored` and build your integration to handle API calls that might not return data a short period at first. 
+Если ваша интеграция не зависит от дополнительных данных или если для вас более важна производительность доставки, используйте `job.run.errored` и создайте свою интеграцию так, чтобы обрабатывать API-запросы, которые могут не возвращать данные в течение короткого времени в начале. 
 
+## Проверка вебхука
 
-## Validate a webhook
+Вы можете использовать секретный токен, предоставленный dbt Cloud, чтобы проверить, что вебхуки, полученные вашей конечной точкой, действительно были отправлены dbt Cloud. Официальные вебхуки будут включать заголовок `Authorization`, который содержит SHA256-хэш тела запроса и использует секретный токен в качестве ключа. 
 
-You can use the secret token provided by dbt Cloud to validate that webhooks received by your endpoint were actually sent by dbt Cloud. Official webhooks will include the `Authorization` header that contains a SHA256 hash of the request body and uses the secret token as a key. 
-
-An example for verifying the authenticity of the webhook in Python:
+Пример проверки подлинности вебхука на Python:
 
 ```python
 auth_header = request.headers.get('authorization', None)
 app_secret = os.environ['MY_DBT_CLOUD_AUTH_TOKEN'].encode('utf-8')
 signature = hmac.new(app_secret, request_body, hashlib.sha256).hexdigest()
 return signature == auth_header
-
 ```
 
-Note that the destination system must support [Authorization headers](#troubleshooting) for the webhook to work correctly. You can test your endpoint's support by sending a request with curl and an Authorization header, like this:
+Обратите внимание, что целевая система должна поддерживать [заголовки авторизации](#troubleshooting), чтобы вебхук работал корректно. Вы можете протестировать поддержку вашей конечной точки, отправив запрос с помощью curl и заголовка авторизации, как показано ниже:
 
 ```shell
 curl -H 'Authorization: 123' -X POST https://<your-webhook-endpoint>
 ```
 
-## Inspect HTTP requests 
-When working with webhooks, it’s good practice to use tools like [RequestBin](https://requestbin.com/) and [Requestly](https://requestly.io/). These tools allow you to inspect your HTML requests, response payloads, and response headers so you can debug and test webhooks before incorporating them into your systems. 
+## Проверка HTTP-запросов 
+При работе с вебхуками полезно использовать такие инструменты, как [RequestBin](https://requestbin.com/) и [Requestly](https://requestly.io/). Эти инструменты позволяют вам проверять ваши HTML-запросы, полезные нагрузки ответов и заголовки ответов, чтобы вы могли отлаживать и тестировать вебхуки перед их интеграцией в ваши системы. 
 
-## Examples of JSON payloads
+## Примеры JSON-данных
 
-An example of a webhook payload for a run that's started:
+Пример полезной нагрузки вебхука для запущенного задания:
 
 ```json
 {
@@ -112,7 +110,7 @@ An example of a webhook payload for a run that's started:
 }
 ```
 
-An example of a webhook payload for a completed run:
+Пример полезной нагрузки вебхука для завершенного задания:
 
 ```json
 {
@@ -141,7 +139,7 @@ An example of a webhook payload for a completed run:
 }
 ```
 
-An example of a webhook payload for an errored run: 
+Пример полезной нагрузки вебхука для задания с ошибкой: 
 
 ```json
 {
@@ -170,28 +168,28 @@ An example of a webhook payload for an errored run:
 }
 ```
 
-## API for webhooks {#api-for-webhooks}
-You can use the dbt Cloud API to create new webhooks that you want to subscribe to, get detailed information about your webhooks, and to manage the webhooks that are associated with your account. The following sections describe the API endpoints you can use for this. 
+## API для вебхуков {#api-for-webhooks}
+Вы можете использовать API dbt Cloud для создания новых вебхуков, на которые вы хотите подписаться, получения подробной информации о ваших вебхуках и управления вебхуками, связанными с вашей учетной записью. В следующих разделах описаны конечные точки API, которые вы можете использовать для этого. 
 
-:::info Access URLs
-dbt Cloud is hosted in multiple regions in the world and each region has a different access URL. People on Enterprise plans can choose to have their account hosted in any one of these regions. For a complete list of available dbt Cloud access URLs, refer to [Regions & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses).   
+:::info URL-адреса доступа
+dbt Cloud размещается в нескольких регионах мира, и у каждого региона есть свой URL-адрес доступа. Люди на планах Enterprise могут выбрать размещение своей учетной записи в любом из этих регионов. Для получения полного списка доступных URL-адресов доступа dbt Cloud смотрите [Регионов и IP-адресов](/docs/cloud/about-cloud/access-regions-ip-addresses).   
 :::
 
-### List all webhook subscriptions
-List all webhooks that are available from a specific dbt Cloud account.
+### Список всех подписок на вебхуки
+Список всех вебхуков, доступных из конкретной учетной записи dbt Cloud.
 
-#### Request 
+#### Запрос 
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptions
 ```
 
-#### Path parameters
-| Name       | Description                          |
+#### Параметры пути
+| Имя       | Описание                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhooks are associated with. |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связаны вебхуки. |
 
-#### Response sample
+#### Пример ответа
 ```json
 {
     "data": [
@@ -250,39 +248,39 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Response schema 
-| Name | Description | Possible Values |
+#### Схема ответа 
+| Имя | Описание | Возможные значения |
 | --- | --- | --- |
-| `data` | List of available webhooks for the specified dbt Cloud account ID. |  |
-| `id` | The webhook ID. This is a universally unique identifier (UUID) that's unique across all regions, including multi-tenant and single-tenant |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
-| `name` | Name of the outbound webhook. |  |
-| `description` | Description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
-| `event_types` | The event type(s) the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
-| `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `created_at` | Timestamp of when the webhook was created. |  |
-| `updated_at` | Timestamp of when the webhook was last updated. |  |
-| `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
-| `dispatched_at` | Timestamp of when the webhook was last dispatched to the specified endpoint URL. |  |
-| `account_id` | The dbt Cloud account ID. |  |
+| `data` | Список доступных вебхуков для указанного идентификатора учетной записи dbt Cloud. |  |
+| `id` | Идентификатор вебхука. Это универсальный уникальный идентификатор (UUID), который уникален для всех регионов, включая многоарендные и одноарендные. |  |
+| `account_identifier` | Уникальный идентификатор для _вашей_ учетной записи dbt Cloud. |  |
+| `name` | Имя исходящего вебхука. |  |
+| `description` | Описание вебхука. |  |
+| `job_ids` | Конкретные задания, для которых вебхук настроен на срабатывание. Когда список пуст, вебхук настроен на срабатывание для всех заданий в вашей учетной записи; по умолчанию dbt Cloud настраивает вебхуки на уровне учетной записи. | <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
+| `event_types` | Тип(ы) события, на которое вебхук настроен на срабатывание. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `client_url` | URL-адрес конечной точки для приложения, куда dbt Cloud может отправлять событие(я). |  |
+| `active` | Логическое значение, указывающее, активен ли вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `created_at` | Временная метка, когда вебхук был создан. |  |
+| `updated_at` | Временная метка, когда вебхук был последний раз обновлен. |  |
+| `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [HTTP-кодом ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук никогда не срабатывал. |
+| `dispatched_at` | Временная метка, когда вебхук последний раз был отправлен на указанный URL-адрес конечной точки. |  |
+| `account_id` | Идентификатор учетной записи dbt Cloud. |  |
 
-### Get details about a webhook
-Get detailed information about a specific webhook. 
+### Получить информацию о вебхуке
+Получите подробную информацию о конкретном вебхуке. 
 
-#### Request
+#### Запрос
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
-#### Path parameters
-| Name       | Description                          |
+#### Параметры пути
+| Имя       | Описание                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
-| `webhook_id` | The webhook you want detailed information on. |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связан вебхук. |
+| `webhook_id` | Вебхук, о котором вы хотите получить подробную информацию. |
 
-#### Response sample
+#### Пример ответа
 ```json
 {
     "data": {
@@ -308,27 +306,27 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Response schema
-| Name | Description | Possible Values |
+#### Схема ответа
+| Имя | Описание | Возможные значения |
 | --- | --- | --- |
-| `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
-| `name` | Name of the outbound webhook. |  |
-| `description` | Complete description of the webhook. |  |
-| `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
-| `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `created_at` | Timestamp of when the webhook was created. |  |
-| `updated_at` | Timestamp of when the webhook was last updated. |  |
-| `dispatched_at` | Timestamp of when the webhook was last dispatched to the specified endpoint URL. |  |
-| `account_id` | The dbt Cloud account ID. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
-| `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
+| `id` | Идентификатор вебхука. |  |
+| `account_identifier` | Уникальный идентификатор для _вашей_ учетной записи dbt Cloud. |  |
+| `name` | Имя исходящего вебхука. |  |
+| `description` | Полное описание вебхука. |  |
+| `event_types` | Тип события, на которое вебхук настроен на срабатывание. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `client_url` | URL-адрес конечной точки для приложения, куда dbt Cloud может отправлять событие(я). |  |
+| `active` | Логическое значение, указывающее, активен ли вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `created_at` | Временная метка, когда вебхук был создан. |  |
+| `updated_at` | Временная метка, когда вебхук был последний раз обновлен. |  |
+| `dispatched_at` | Временная метка, когда вебхук последний раз был отправлен на указанный URL-адрес конечной точки. |  |
+| `account_id` | Идентификатор учетной записи dbt Cloud. |  |
+| `job_ids` | Конкретные задания, для которых вебхук настроен на срабатывание. Когда список пуст, вебхук настроен на срабатывание для всех заданий в вашей учетной записи; по умолчанию dbt Cloud настраивает вебхуки на уровне учетной записи. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
+| `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [HTTP-кодом ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук никогда не срабатывал. |
 
-### Create a new webhook subscription
-Create a new outbound webhook and specify the endpoint URL that will be subscribing (listening) to the webhook's events.
+### Создание новой подписки на вебхук
+Создайте новый исходящий вебхук и укажите URL-адрес конечной точки, который будет подписываться (слушать) события вебхука.
 
-#### Request sample
+#### Пример запроса
 
 ```shell
 POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptions
@@ -350,23 +348,23 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 }
 ```
 
-#### Path parameters
-| Name | Description |
+#### Параметры пути
+| Имя | Описание |
 | --- | --- |
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связан вебхук. |
 
-#### Request parameters
-| Name | Description | Possible Values |
+#### Параметры запроса
+| Имя | Описание | Возможные значения |
 | --- | --- | --- |
-| `event_types` | Enter the event you want to trigger this webhook. You can subscribe to more than one event. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `name` | Enter the name of your webhook. |  |
-| `client_url` | Enter your application's endpoint URL, where dbt Cloud can send the event(s) to.|  |
-| `active` | Enter a Boolean value to indicate whether your webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `description` | Enter a description of your webhook. |  |
-| `job_ids` | Enter the specific jobs you want the webhook to trigger on or you can leave this parameter as an empty list. If this is an empty list, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `event_types` | Укажите событие, которое вы хотите использовать для активации этого вебхука. Вы можете подписаться на более чем одно событие. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `name` | Укажите имя вашего вебхука. |  |
+| `client_url` | Укажите URL-адрес конечной точки вашего приложения, куда dbt Cloud может отправлять событие(я).|  |
+| `active` | Укажите логическое значение, чтобы указать, активен ли ваш вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `description` | Укажите описание вашего вебхука. |  |
+| `job_ids` | Укажите конкретные задания, на которые вы хотите, чтобы вебхук срабатывал, или вы можете оставить этот параметр пустым. Если это пустой список, вебхук настроен на срабатывание для всех заданий в вашей учетной записи; по умолчанию dbt Cloud настраивает вебхуки на уровне учетной записи. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
 
-#### Response sample
+#### Пример ответа
 ```json
 {
     "data": {
@@ -395,27 +393,27 @@ POST https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscriptio
 }
 ```
 
-#### Response schema
-| Name | Description | Possible Values |
+#### Схема ответа
+| Имя | Описание | Возможные значения |
 | --- | --- | --- |
-| `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
-| `name` | Name of the outbound webhook. |  |
-| `description` | Complete description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
-| `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
-| `hmac_secret` | The secret key for your new webhook. You can use this key to [validate the authenticity of this webhook](#validate-a-webhook). |  |
-| `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `created_at` | Timestamp of when the webhook was created. |  |
-| `updated_at` | Timestamp of when the webhook was last updated. |  |
-| `account_id` | The dbt Cloud account ID. |  |
-| `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
+| `id` | Идентификатор вебхука. |  |
+| `account_identifier` | Уникальный идентификатор для _вашей_ учетной записи dbt Cloud. |  |
+| `name` | Имя исходящего вебхука. |  |
+| `description` | Полное описание вебхука. |  |
+| `job_ids` | Конкретные задания, для которых вебхук настроен на срабатывание. Когда список пуст, вебхук настроен на срабатывание для всех заданий в вашей учетной записи; по умолчанию dbt Cloud настраивает вебхуки на уровне учетной записи. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
+| `event_types` | Тип события, на которое вебхук настроен на срабатывание. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `client_url` | URL-адрес конечной точки для приложения, куда dbt Cloud может отправлять событие(я). |  |
+| `hmac_secret` | Секретный ключ для вашего нового вебхука. Вы можете использовать этот ключ для [проверки подлинности этого вебхука](#validate-a-webhook). |  |
+| `active` | Логическое значение, указывающее, активен ли вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `created_at` | Временная метка, когда вебхук был создан. |  |
+| `updated_at` | Временная метка, когда вебхук был последний раз обновлен. |  |
+| `account_id` | Идентификатор учетной записи dbt Cloud. |  |
+| `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [HTTP-кодом ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук никогда не срабатывал. |
 
-### Update a webhook
-Update the configuration details for a specific webhook. 
+### Обновление вебхука
+Обновите параметры конфигурации для конкретного вебхука. 
 
-#### Request sample
+#### Пример запроса
 ```shell
 PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
@@ -436,24 +434,24 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Path parameters
-| Name       | Description                          |
+#### Параметры пути
+| Имя       | Описание                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
-| `webhook_id` | The webhook you want to update. |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связан вебхук. |
+| `webhook_id` | Вебхук, который вы хотите обновить. |
 
-#### Request parameters
-| Name | Description | Possible Values |
+#### Параметры запроса
+| Имя | Описание | Возможные значения |
 |------|-------------|-----------------|
-| `event_types` | Update the event type the webhook is set to trigger on. You can subscribe to more than one. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `name` | Change the name of your webhook. |  |
-| `client_url` | Update the endpoint URL for an application where dbt Cloud can send event(s) to. |  |
-| `active` | Change the Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `description` | Update the webhook's description. |  |
-| `job_ids` | Change which jobs you want the webhook to trigger for. Or, you can use an empty list to trigger it for all jobs in your account. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
+| `event_types` | Обновите тип события, на которое вебхук настроен на срабатывание. Вы можете подписаться на более чем одно. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `name` | Измените имя вашего вебхука. |  |
+| `client_url` | Обновите URL-адрес конечной точки для приложения, куда dbt Cloud может отправлять событие(я). |  |
+| `active` | Измените логическое значение, указывающее, активен ли вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `description` | Обновите описание вебхука. |  |
+| `job_ids` | Измените, для каких заданий вы хотите, чтобы вебхук срабатывал. Или вы можете использовать пустой список, чтобы срабатывать для всех заданий в вашей учетной записи. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
 
-#### Response sample
+#### Пример ответа
 ```json
 {
     "data": {
@@ -480,39 +478,38 @@ PUT https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-#### Response schema
-| Name | Description | Possible Values |
+#### Схема ответа
+| Имя | Описание | Возможные значения |
 | --- | --- | --- |
-| `id` | The webhook ID. |  |
-| `account_identifier` | The unique identifier for _your_ dbt Cloud account. |  |
-| `name` | Name of the outbound webhook. |  |
-| `description` | Complete description of the webhook. |  |
-| `job_ids` | The specific jobs the webhook is set to trigger for. When the list is empty, the webhook is set to trigger for all jobs in your account; by default, dbt Cloud configures webhooks at the account level. | One of these: <ul><li>Empty list</li> <li>List of job IDs</li></ul> |
-| `event_types` | The event type the webhook is set to trigger on. | One or more of these: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
-| `client_url` | The endpoint URL for an application where dbt Cloud can send event(s) to. |  |
-| `active` | A Boolean value indicating whether the webhook is active or not. | One of these: <ul><li>`true`</li><li>`false`</li></ul> |
-| `created_at` | Timestamp of when the webhook was created. |  |
-| `updated_at` | Timestamp of when the webhook was last updated. |  |
-| `http_status_code` | The latest HTTP status of the webhook. | Can be any [HTTP response status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). If the value is `0`, that means the webhook has never been triggered. |
-| `account_id` | The dbt Cloud account ID. |  |
+| `id` | Идентификатор вебхука. |  |
+| `account_identifier` | Уникальный идентификатор для _вашей_ учетной записи dbt Cloud. |  |
+| `name` | Имя исходящего вебхука. |  |
+| `description` | Полное описание вебхука. |  |
+| `job_ids` | Конкретные задания, для которых вебхук настроен на срабатывание. Когда список пуст, вебхук настроен на срабатывание для всех заданий в вашей учетной записи; по умолчанию dbt Cloud настраивает вебхуки на уровне учетной записи. | Одно из следующих: <ul><li>Пустой список</li> <li>Список идентификаторов заданий</li></ul> |
+| `event_types` | Тип события, на которое вебхук настроен на срабатывание. | Один или несколько из следующих: <ul><li>`job.run.started`</li> <li>`job.run.completed`</li><li>`job.run.errored`</li></ul> |
+| `client_url` | URL-адрес конечной точки для приложения, куда dbt Cloud может отправлять событие(я). |  |
+| `active` | Логическое значение, указывающее, активен ли вебхук или нет. | Одно из следующих: <ul><li>`true`</li><li>`false`</li></ul> |
+| `created_at` | Временная метка, когда вебхук был создан. |  |
+| `updated_at` | Временная метка, когда вебхук был последний раз обновлен. |  |
+| `http_status_code` | Последний HTTP-статус вебхука. | Может быть любым [HTTP-кодом ответа](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Если значение равно `0`, это означает, что вебхук никогда не срабатывал. |
+| `account_id` | Идентификатор учетной записи dbt Cloud. |  |
 
+### Тестирование вебхука
+Тестируйте конкретный вебхук. 
 
-### Test a webhook
-Test a specific webhook. 
-
-#### Request
+#### Запрос
 ```shell
 GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}/test
 ```
 
-#### Path parameters
-| Name       | Description                          |
+#### Параметры пути
+| Имя       | Описание                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
-| `webhook_id` | The webhook you want to test.  |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связан вебхук. |
+| `webhook_id` | Вебхук, который вы хотите протестировать.  |
 
-#### Response sample
+#### Пример ответа
 ```json
 {
     "data": {
@@ -525,22 +522,22 @@ GET https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription
 }
 ```
 
-### Delete a webhook
-Delete a specific webhook. 
+### Удаление вебхука
+Удалите конкретный вебхук. 
 
-#### Request
+#### Запрос
 ```shell
 DELETE https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscription/{webhook_id}
 ```
 
-#### Path parameters
-| Name       | Description                          |
+#### Параметры пути
+| Имя       | Описание                          |
 |------------|--------------------------------------|
-| `your access URL` | The login URL for your dbt Cloud account. |
-| `account_id` | The dbt Cloud account the webhook is associated with. |
-| `webhook_id` | The webhook you want to delete. |
+| `your access URL` | URL для входа в вашу учетную запись dbt Cloud. |
+| `account_id` | Учетная запись dbt Cloud, с которой связан вебхук. |
+| `webhook_id` | Вебхук, который вы хотите удалить. |
 
-#### Response sample
+#### Пример ответа
 
 ```json
 {
@@ -554,13 +551,13 @@ DELETE https://{your access URL}/api/v3/accounts/{account_id}/webhooks/subscript
 }
 ```
 
-## Related docs 
+## Связанные документы 
 - [dbt Cloud CI](/docs/deploy/continuous-integration)
-- [Use dbt Cloud's webhooks with other SaaS apps](https://docs.getdbt.com/guides?tags=Webhooks)
+- [Используйте вебхуки dbt Cloud с другими SaaS-приложениями](https://docs.getdbt.com/guides?tags=Webhooks)
 
-## Troubleshooting
+## Устранение неполадок
 
-If your destination system isn't receiving dbt Cloud webhooks, ensure it allows Authorization headers. dbt Cloud webhooks send an Authorization header, and if your endpoint doesn't support this, it may be incompatible. Services like Azure Logic Apps and Power Automate may not accept Authorization headers, so they won't work with dbt Cloud webhooks. You can test your endpoint's support by sending a request with curl and an Authorization header, like this:
+Если ваша целевая система не получает вебхуки dbt Cloud, убедитесь, что она позволяет заголовки авторизации. Вебхуки dbt Cloud отправляют заголовок авторизации, и если ваша конечная точка не поддерживает это, она может быть несовместима. Такие сервисы, как Azure Logic Apps и Power Automate, могут не принимать заголовки авторизации, поэтому они не будут работать с вебхуками dbt Cloud. Вы можете протестировать поддержку вашей конечной точки, отправив запрос с помощью curl и заголовка авторизации, как показано ниже:
 
 ```shell
 curl -H 'Authorization: 123' -X POST https://<your-webhook-endpoint>

@@ -1,44 +1,44 @@
 ---
-title: "Service account tokens"
+title: "Токены сервисных аккаунтов"
 id: "service-tokens"
-description: "Service account tokens help you define permissions for securing access to your dbt Cloud account and its projects."
+description: "Токены сервисных аккаунтов помогают вам определить разрешения для обеспечения доступа к вашему аккаунту dbt Cloud и его проектам."
 ---
 
-# Service account tokens <Lifecycle status="team,enterprise"/>
+# Токены сервисных аккаунтов <Lifecycle status="team,enterprise"/>
 
-:::info Important service account token update
+:::info Важное обновление токенов сервисных аккаунтов
 
-If you have service tokens created on or before July 18, 2023, please read [this important update](/docs/dbt-cloud-apis/service-tokens#service-token-update).
+Если у вас есть сервисные токены, созданные 18 июля 2023 года или ранее, пожалуйста, прочитайте [это важное обновление](/docs/dbt-cloud-apis/service-tokens#service-token-update).
 
 :::
 
-Service account tokens enable you to securely authenticate with the dbt Cloud API by assigning each token a narrow set of permissions that more precisely manages access to the API. While similar to [personal access tokens](user-tokens), service account tokens belong to an account rather than a user.
+Токены сервисных аккаунтов позволяют вам безопасно аутентифицироваться с API dbt Cloud, назначая каждому токену узкий набор разрешений, который более точно управляет доступом к API. Хотя они похожи на [персональные токены доступа](user-tokens), токены сервисных аккаунтов принадлежат аккаунту, а не пользователю.
 
-You can use service account tokens for system-level integrations that do not run on behalf of any one user. Assign any permission sets available in dbt Cloud to your service account token, which can vary slightly depending on your plan:
+Вы можете использовать токены сервисных аккаунтов для интеграций на уровне системы, которые не выполняются от имени какого-либо конкретного пользователя. Назначьте любые наборы разрешений, доступные в dbt Cloud, вашему токену сервисного аккаунта, которые могут немного различаться в зависимости от вашего плана:
 
-* Enterprise plans can apply any permission sets available to service tokens.
-* Team plans can apply Account Admin, Member, Job Admin, Read-Only, Metadata, and Semantic Layer permissions set to service tokens.
+* В корпоративных планах можно применять любые наборы разрешений, доступные для сервисных токенов.
+* В командных планах можно применять наборы разрешений Account Admin, Member, Job Admin, Read-Only, Metadata и Semantic Layer к сервисным токенам.
 
-You can assign as many permission sets as needed to one token. For more on permissions sets, see "[Enterprise Permissions](/docs/cloud/manage-access/enterprise-permissions)."
+Вы можете назначить столько наборов разрешений, сколько необходимо, одному токену. Для получения дополнительной информации о наборах разрешений смотрите "[Корпоративные разрешения](/docs/cloud/manage-access/enterprise-permissions)."
 
-## Generate service account tokens
+## Генерация токенов сервисных аккаунтов
 
-You can generate service tokens if you have a Developer [license](/docs/cloud/manage-access/seats-and-users) and account admin [permissions](/docs/cloud/manage-access/about-user-access#permission-sets). To create a service token in dbt Cloud, follow these steps:
+Вы можете генерировать сервисные токены, если у вас есть лицензия разработчика [license](/docs/cloud/manage-access/seats-and-users) и разрешения администратора аккаунта [permissions](/docs/cloud/manage-access/about-user-access#permission-sets). Чтобы создать сервисный токен в dbt Cloud, выполните следующие шаги:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
-2. On the left sidebar, click on **Service Tokens**.
-3. Click the **+ New Token** button to generate a new token.
-4. Once the token is generated, you won't be able to view this token again so make sure to save it somewhere safe.
+1. В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Настройки аккаунта**.
+2. В левой боковой панели нажмите на **Сервисные токены**.
+3. Нажмите кнопку **+ Новый токен**, чтобы сгенерировать новый токен.
+4. После генерации токена вы не сможете снова его просмотреть, поэтому убедитесь, что сохранили его в безопасном месте.
 
-## Permissions for service account tokens
+## Разрешения для токенов сервисных аккаунтов
 
-You can assign service account tokens to any permission set available in dbt Cloud. When you assign a permission set to a token, you will also be able to choose whether to grant those permissions to all projects in the account or to specific projects.
+Вы можете назначить токены сервисных аккаунтов любому набору разрешений, доступному в dbt Cloud. Когда вы назначаете набор разрешений токену, вы также сможете выбрать, предоставлять ли эти разрешения для всех проектов в аккаунте или для конкретных проектов.
 
-### Team plans using service account tokens
+### Командные планы с использованием токенов сервисных аккаунтов
 
-The following permissions can be assigned to a service account token on a Team plan. Refer to [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions) for more information about these roles. 
+Следующие разрешения могут быть назначены токену сервисного аккаунта в командном плане. Обратитесь к [Корпоративным разрешениям](/docs/cloud/manage-access/enterprise-permissions) для получения дополнительной информации об этих ролях.
 
-- Account Admin &mdash; Account Admin service tokens have full `read + write` access to an account, so please use them with caution.  A Team plan refers to this permission set as an "Owner role."
+- Account Admin &mdash; Токены сервисного аккаунта Account Admin имеют полный доступ `чтение + запись` к аккаунту, поэтому используйте их с осторожностью. Командный план называет этот набор разрешений "Роль владельца".
 - Billing Admin
 - Job Admin 
 - Metadata Only
@@ -46,11 +46,11 @@ The following permissions can be assigned to a service account token on a Team p
 - Read-only 
 - Semantic Layer Only 
 
-### Enterprise plans using service account tokens
+### Корпоративные планы с использованием токенов сервисных аккаунтов
 
-Refer to [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions) for more information about these roles. 
+Обратитесь к [Корпоративным разрешениям](/docs/cloud/manage-access/enterprise-permissions) для получения дополнительной информации об этих ролях.
 
-- Account Admin &mdash; Account Admin service tokens have full `read + write` access to an account, so please use them with caution. 
+- Account Admin &mdash; Токены сервисного аккаунта Account Admin имеют полный доступ `чтение + запись` к аккаунту, поэтому используйте их с осторожностью. 
 - Account Viewer
 - Admin
 - Analyst
@@ -68,18 +68,17 @@ Refer to [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissio
 - Stakeholder
 - Team Admin
 
+## Обновление токена
 
-## Service token update
+18 июля 2023 года dbt Labs внесли критические изменения в инфраструктуру токенов сервисных аккаунтов. Эти улучшения повышают безопасность и производительность всех токенов, созданных после 18 июля 2023 года. Чтобы обеспечить соблюдение лучших практик безопасности, мы рекомендуем вам обновить ваши сервисные токены, созданные до этой даты.
 
-On July 18, 2023, dbt Labs made critical infrastructure changes to service account tokens. These enhancements improve the security and performance of all tokens created after July 18, 2023. To ensure security best practices are in place, we recommend you rotate your service tokens created before this date.
+Чтобы обновить ваш токен:
+1. Перейдите в **Настройки аккаунта** и нажмите **Сервисные токены** в левой панели.
+2. Убедитесь, что дата **Создан** для токена _18 июля 2023 года или ранее_. 
+    <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/service-token-date.png" title="Дата создания сервисного токена"/>
+3. Нажмите **+ Новый токен** в правом верхнем углу экрана. Убедитесь, что новый токен имеет такие же разрешения, как и старый.
+4. Скопируйте новый токен и замените старый в ваших системах. Храните его в безопасном месте, так как он не будет доступен снова после закрытия экрана создания.
+5. Удалите старый токен в dbt Cloud, нажав на **иконку корзины**. _Принимайте это действие только после того, как новый токен будет установлен, чтобы избежать сбоев в работе сервиса_.
 
-To rotate your token:
-1. Navigate to **Account settings** and click **Service tokens** on the left side pane.
-2. Verify the **Created** date for the token is _on or before_ July 18, 2023. 
-    <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/service-token-date.png" title="Service token created date"/>
-3. Click **+ New Token** on the top right side of the screen. Ensure the new token has the same permissions as the old one. 
-4. Copy the new token and replace the old one in your systems. Store it in a safe place, as it will not be available again once the creation screen is closed.
-5. Delete the old token in dbt Cloud by clicking the **trash can icon**. _Only take this action after the new token is in place to avoid service disruptions_.
-
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Troubleshooting/ip-restrictions" />

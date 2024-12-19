@@ -1,15 +1,14 @@
 ---
-title: Why am I getting an "account in use" error?
-description: "What to do when you receive a Git account in use error"
-sidebar_label: 'Git account in use'
+title: Почему я получаю ошибку "учетная запись используется"?
+description: "Что делать, когда вы получаете ошибку учетной записи Git"
+sidebar_label: 'Учетная запись Git используется'
 id: git-account-in-use
 ---
 
-If you're receiving an 'Account in use' error when trying to integrate GitHub in your Profile page, this is because the Git integration is a 1-to-1 integration, so you can only have your Git account linked to one dbt Cloud user account. 
+Если вы получаете ошибку 'Учетная запись используется' при попытке интегрировать GitHub на странице вашего профиля, это происходит потому, что интеграция Git является интеграцией 1 к 1, то есть вы можете связать свою учетную запись Git только с одной учетной записью пользователя dbt Cloud.
 
-Here are some steps to take to get you unstuck:
+Вот несколько шагов, которые помогут вам решить эту проблему:
 
-* Log in to the dbt Cloud account integrated with your Git account. Go to your user profile and click on Integrations to remove the link.
+* Войдите в учетную запись dbt Cloud, интегрированную с вашей учетной записью Git. Перейдите в свой профиль пользователя и нажмите на Интеграции, чтобы удалить связь.
 
-If you don't remember which dbt Cloud account is integrated, please email dbt Support at support@getdbt.com and we'll do our best to disassociate the integration for you.
-
+Если вы не помните, какая учетная запись dbt Cloud интегрирована, пожалуйста, напишите в службу поддержки dbt по адресу support@getdbt.com, и мы постараемся разорвать интеграцию для вас.

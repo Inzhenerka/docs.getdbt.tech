@@ -1,82 +1,81 @@
 ---
-title: "Upgrading to 0.18.0"
+title: "Обновление до 0.18.0"
 displayed_sidebar: "docs"
 
 ---
 
-### Resources
+### Ресурсы
 
-- [Changelog](https://github.com/dbt-labs/dbt-core/blob/dev/marian-anderson/CHANGELOG.md)
-- [Discussion: Prerelease](https://discourse.getdbt.com/t/prerelease-v0-18-0-marian-anderson/1545)
+- [Список изменений](https://github.com/dbt-labs/dbt-core/blob/dev/marian-anderson/CHANGELOG.md)
+- [Обсуждение: Предварительная версия](https://discourse.getdbt.com/t/prerelease-v0-18-0-marian-anderson/1545)
 
-## Breaking changes
+## Ломающие изменения
 
-Please be aware of the following changes in v0.18.0. While breaking, we do not expect these to affect the majority of projects.
+Обратите внимание на следующие изменения в версии 0.18.0. Хотя они являются ломающими, мы не ожидаем, что они повлияют на большинство проектов.
 
-### Adapter macros
+### Макросы адаптера
 
-- dbt only has access to adapter plugin macros from the currently-in-use adapter or one of its dependencies, rather than all installed adapters in the namespace.
-- `adapter_macro` is no longer a macro and will raise a deprecation warning. Use `adapter.dispatch` instead.
+- dbt теперь имеет доступ только к макросам плагина адаптера, который используется в данный момент, или к одному из его зависимостей, а не ко всем установленным адаптерам в пространстве имен.
+- `adapter_macro` больше не является макросом и вызовет предупреждение о устаревании. Вместо этого используйте `adapter.dispatch`.
 
-### Data tests
+### Тесты данных
 
-- Data tests are written as <Term id="cte">CTEs</Term> instead of <Term id="subquery">subqueries</Term>. Adapter plugins for databases that don't support CTEs may need to override this behavior.
+- Тесты данных теперь пишутся как <Term id="cte">CTE</Term>, а не как <Term id="subquery">подзапросы</Term>. Плагины адаптеров для баз данных, которые не поддерживают CTE, могут потребовать переопределения этого поведения.
 
-### Python requirements
-- Upgraded `snowflake-connector-python` dependency to 2.2.10 and enabled the SSO token cache
+### Требования к Python
+- Обновлена зависимость `snowflake-connector-python` до версии 2.2.10 и включен кэш токенов SSO.
 
-## New features
+## Новые функции
 
-For more details, see [new and changed documentation](#new-and-changed-documentation) below.
+Для получения более подробной информации смотрите [новую и измененную документацию](#new-and-changed-documentation) ниже.
 
-:::info [β] Beta Features
-There are several pieces of net-new functionality in v0.18.0, with iterative improvements to come. If you encounter unexpected behavior, please post in Slack or open an issue.
+:::info [β] Бета-функции
+В версии 0.18.0 добавлено несколько новых функций, с последующими улучшениями. Если вы столкнетесь с неожиданным поведением, пожалуйста, напишите в Slack или откройте проблему.
 :::
 
-### Node selection
-- methods: `config`, `test_type`, `test_name`, `package`, [β] `state`
-- intersections
+### Выбор узлов
+- методы: `config`, `test_type`, `test_name`, `package`, [β] `state`
+- пересечения
 - nth-parent/child
-- [β] version-controlled YAML selectors
-- [β] defer unselected node references to state defined by a previous run's artifacts
+- [β] селекторы YAML с контролем версий
+- [β] отложить ссылки на невыбранные узлы до состояния, определенного артефактами предыдущего запуска
 
-### Adapter macros
-- `adapter.dispatch` replaces `adapter_macro`, with much greater flexibility
-- Schema tests are now defined via `dispatch`, such that non-core plugins
-can override schema test definitions
+### Макросы адаптера
+- `adapter.dispatch` заменяет `adapter_macro`, предоставляя гораздо большую гибкость
+- Тесты схемы теперь определяются через `dispatch`, так что неосновные плагины могут переопределять определения тестов схемы
 
-### Docs
-- Include static assets (such as images) in auto-generated docs site
-- Improved resource search
-- Project-level overviews
+### Документация
+- Включение статических ресурсов (таких как изображения) в автоматически сгенерированный сайт документации
+- Улучшенный поиск ресурсов
+- Обзоры на уровне проекта
 
-### Database-specific
-- Specify IAM profile when connecting to Redshift
-- Snowflake query tags at connection and model level
-- Impersonate a BigQuery service account when connecting via oauth
-- Adding policy tags to BigQuery columns
-- Configure time-to-live for BigQuery tables
+### Специфично для базы данных
+- Указание профиля IAM при подключении к Redshift
+- Теги запросов Snowflake на уровне подключения и модели
+- Имитация учетной записи службы BigQuery при подключении через oauth
+- Добавление тегов политики к столбцам BigQuery
+- Настройка времени жизни для таблиц BigQuery
 
-## New and changed documentation
+## Новая и измененная документация
 
 **Core**
-- [node selection syntax](/reference/node-selection/syntax)
-- [list (ls)](/reference/commands/list)
-- [defer](/reference/node-selection/defer)
+- [синтаксис выбора узлов](/reference/node-selection/syntax)
+- [список (ls)](/reference/commands/list)
+- [отложить](/reference/node-selection/defer)
 - [adapter.dispatch](/reference/dbt-jinja-functions/adapter#dispatch)
-- [`asset-paths` config](/reference/project-configs/asset-paths) (also updated [dbt_project.yml](/reference/dbt_project.yml) and [description](/reference/resource-properties/description))
-- [flag for colorized logs](/reference/commands/run#enable-or-disable-colorized-logs)
-- [`full_refresh` config](/reference/resource-configs/full_refresh)
+- [`asset-paths` конфигурация](/reference/project-configs/asset-paths) (также обновлены [dbt_project.yml](/reference/dbt_project.yml) и [описание](/reference/resource-properties/description))
+- [флаг для цветных логов](/reference/commands/run#enable-or-disable-colorized-logs)
+- [`full_refresh` конфигурация](/reference/resource-configs/full_refresh)
 
-**Docs**
-- [project-level overviews](/docs/build/documentation#custom-project-level-overviews)
+**Документация**
+- [обзоры на уровне проекта](/docs/build/documentation#custom-project-level-overviews)
 
 **Redshift**
 - [`iam_profile`](/docs/core/connect-data-platform/redshift-setup#specifying-an-iam-profile)
 
 **Snowflake**
-- `query_tag` in [profile](/docs/core/connect-data-platform/snowflake-setup), [model config](/reference/resource-configs/snowflake-configs#query-tags)
-- automatic SSO [session caching](/docs/core/connect-data-platform/snowflake-setup#sso-authentication) support
+- `query_tag` в [профиле](/docs/core/connect-data-platform/snowflake-setup), [конфигурации модели](/reference/resource-configs/snowflake-configs#query-tags)
+- автоматическая поддержка [кэширования сессий SSO](/docs/core/connect-data-platform/snowflake-setup#sso-authentication)
 
 **BigQuery**
 - [`impersonate_service_account`](/docs/core/connect-data-platform/bigquery-setup#service-account-impersonation)

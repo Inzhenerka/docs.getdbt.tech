@@ -1,39 +1,39 @@
 ---
-title: "dbt Cloud Administrative API"
+title: "Административный API dbt Cloud"
 id: "admin-cloud-api"
 pagination_next: "docs/dbt-cloud-apis/discovery-api"
 ---
 
-The dbt Cloud Administrative API is enabled by default for [Team and Enterprise plans](https://www.getdbt.com/pricing/). It can be used to:
+Административный API dbt Cloud включен по умолчанию для [командных и корпоративных планов](https://www.getdbt.com/pricing/). Его можно использовать для:
 
-- Download artifacts after a job has completed
-- Kick off a job run from an orchestration tool
-- Manage your dbt Cloud account
-- and more
+- Загрузки артефактов после завершения задания
+- Запуска выполнения задания из инструмента оркестрации
+- Управления вашей учетной записью dbt Cloud
+- и многого другого
 
-dbt Cloud currently supports two versions of the Administrative API: v2 and v3. In general, v3 is the recommended version to use, but we don't yet have all our v2 routes upgraded to v3. We're currently working on this. If you can't find something in our v3 docs, check out the shorter list of v2 endpoints because you might find it there. 
+В настоящее время dbt Cloud поддерживает две версии Административного API: v2 и v3. В общем, рекомендуется использовать версию v3, но у нас еще не все маршруты v2 обновлены до v3. Мы сейчас работаем над этим. Если вы не можете найти что-то в нашей документации v3, посмотрите на более короткий список конечных точек v2, так как вы можете найти нужное там.
 
-Many endpoints of the Administrative API can also be called through the [dbt Cloud Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest). The built-in documentation on the Terraform registry contains [a guide on how to get started with the provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/1_getting_started) as well as [a page showing all the Terraform resources available](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/99_list_resources) to configure.
+Многие конечные точки Административного API также можно вызывать через [провайдер Terraform для dbt Cloud](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest). Встроенная документация на реестре Terraform содержит [руководство по началу работы с провайдером](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/1_getting_started), а также [страницу, показывающую все доступные ресурсы Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/99_list_resources) для настройки.
 
 <div className="grid--2-col">
 
 <Card
     title="API v2"
-    body="Our legacy API version, with limited endpoints and features. Contains information not available in v3."
+    body="Наша устаревшая версия API с ограниченными конечными точками и функциями. Содержит информацию, недоступную в v3."
 link="/dbt-cloud/api-v2"
     icon="pencil-paper"/>
 
 <Card
     title="API v3"
-    body="Our latest API version, with new endpoints and features."
+    body="Наша последняя версия API с новыми конечными точками и функциями."
 link="/dbt-cloud/api-v3"
     icon="pencil-paper"/>
 
 <div className="card-container">
  <Card
-    title="dbt Cloud Terraform provider"
+    title="Провайдер Terraform для dbt Cloud"
     link="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
-    body="The Terraform provider maintained by dbt Labs which can be used to manage a dbt Cloud account."
+    body="Провайдер Terraform, поддерживаемый dbt Labs, который можно использовать для управления учетной записью dbt Cloud."
     icon="pencil-paper"/>
     <a href="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
     className="external-link"      

@@ -1,68 +1,68 @@
 ---
-title: "Deployment environments"
+title: "Среды развертывания"
 id: "deploy-environments"
-description: "Learn about dbt Cloud's deployment environment to seamlessly schedule jobs or enable CI."
+description: "Узнайте о средах развертывания dbt Cloud для бесшовного планирования задач или включения CI."
 ---
 
-Deployment environments in dbt Cloud are crucial for deploying dbt jobs in production and using features or integrations that depend on dbt metadata or results. To execute dbt, environments determine the settings used during job runs, including:
+Среды развертывания в dbt Cloud имеют решающее значение для развертывания задач dbt в производственной среде и использования функций или интеграций, которые зависят от метаданных или результатов dbt. Для выполнения dbt среды определяют настройки, используемые во время выполнения задач, включая:
 
-- The version of dbt Core that will be used to run your project
-- The warehouse connection information (including the target database/schema settings)
-- The version of your code to execute
+- Версию dbt Core, которая будет использоваться для запуска вашего проекта
+- Информацию о подключении к хранилищу (включая настройки целевой базы данных/схемы)
+- Версию вашего кода для выполнения
 
-A dbt Cloud project can have multiple deployment environments, providing you the flexibility and customization to tailor the execution of dbt jobs. You can use deployment environments to [create and schedule jobs](/docs/deploy/deploy-jobs#create-and-schedule-jobs), [enable continuous integration](/docs/deploy/continuous-integration), or more based on your specific needs or requirements.
+Проект dbt Cloud может иметь несколько сред развертывания, что дает вам гибкость и возможность настройки для адаптации выполнения задач dbt. Вы можете использовать среды развертывания для [создания и планирования задач](/docs/deploy/deploy-jobs#create-and-schedule-jobs), [включения непрерывной интеграции](/docs/deploy/continuous-integration) или других действий в зависимости от ваших конкретных потребностей или требований.
 
-:::tip Learn how to manage dbt Cloud environments
-To learn different approaches to managing dbt Cloud environments and recommendations for your organization's unique needs, read [dbt Cloud environment best practices](/guides/set-up-ci).
+:::tip Узнайте, как управлять средами dbt Cloud
+Чтобы узнать о различных подходах к управлению средами dbt Cloud и рекомендациях для уникальных потребностей вашей организации, прочитайте [лучшие практики работы со средами dbt Cloud](/guides/set-up-ci).
 :::
 
-Learn more about development vs. deployment environments in [dbt Cloud Environments](/docs/dbt-cloud-environments).
+Узнайте больше о средах разработки и развертывания в [Средах dbt Cloud](/docs/dbt-cloud-environments).
 
-There are three types of deployment environments:
-- **Production**: Environment for transforming data and building pipelines for production use.
-- **Staging**: Environment for working with production tools while limiting access to production data.
-- **General**: General use environment for deployment development. 
+Существует три типа сред развертывания:
+- **Производственная**: Среда для преобразования данных и построения конвейеров для производственного использования.
+- **Тестовая**: Среда для работы с производственными инструментами при ограниченном доступе к производственным данным.
+- **Общая**: Среда общего назначения для разработки развертывания.
 
-We highly recommend using the `Production` environment type for the final, source of truth deployment data. There can be only one environment marked for final production workflows and we don't recommend using a `General` environment for this purpose. 
+Мы настоятельно рекомендуем использовать тип среды `Производственная` для окончательных, достоверных данных развертывания. Может быть только одна среда, помеченная для окончательных производственных рабочих процессов, и мы не рекомендуем использовать `Общую` среду для этой цели.
 
-## Create a deployment environment
+## Создание среды развертывания
 
-To create a new dbt Cloud deployment environment, navigate to **Deploy** -> **Environments** and then click **Create Environment**. Select **Deployment** as the environment type. The option will be greyed out if you already have a development environment.
+Чтобы создать новую среду развертывания dbt Cloud, перейдите в **Развертывание** -> **Среды**, а затем нажмите **Создать среду**. Выберите **Развертывание** в качестве типа среды. Опция будет недоступна, если у вас уже есть среда разработки.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-deploy-env.png" width="85%" title="Navigate to Deploy ->  Environments to create a deployment environment" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-deploy-env.png" width="85%" title="Перейдите в Развертывание -> Среды, чтобы создать среду развертывания" />
 
-### Set as production environment
+### Установить как производственную среду
 
-In dbt Cloud, each project can have one designated deployment environment, which serves as its production environment. This production environment is _essential_ for using features like dbt Explorer and cross-project references. It acts as the source of truth for the project's production state in dbt Cloud.
+В dbt Cloud каждый проект может иметь одну назначенную среду развертывания, которая служит его производственной средой. Эта производственная среда является _необходимой_ для использования таких функций, как dbt Explorer и межпроектные ссылки. Она служит источником правды для производственного состояния проекта в dbt Cloud.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Set your production environment as the default environment in your Environment Settings"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Установите вашу производственную среду как среду по умолчанию в настройках среды"/>
 
-### Semantic Layer
+### Семантический уровень
 
-For customers using the dbt Semantic Layer, the next section of environment settings is the Semantic Layer configurations. [The Semantic Layer setup guide](/docs/use-dbt-semantic-layer/setup-sl) has the most up-to-date setup instructions.
+Для клиентов, использующих семантический уровень dbt, следующий раздел настроек среды — это конфигурации семантического уровня. [Руководство по настройке семантического уровня](/docs/use-dbt-semantic-layer/setup-sl) содержит самые актуальные инструкции по настройке.
 
-You can also leverage the dbt Job scheduler to [validate your semantic nodes in a CI job](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
+Вы также можете использовать планировщик задач dbt, чтобы [проверить ваши семантические узлы в CI задаче](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения кода, внесенные в модели dbt, не нарушают эти метрики.
 
-## Staging environment
+## Тестовая среда
 
-Use a Staging environment to grant developers access to deployment workflows and tools while controlling access to production data. Staging environments enable you to achieve more granular control over permissions, data warehouse connections, and data isolation — within the purview of a single project in dbt Cloud.
+Используйте тестовую среду, чтобы предоставить разработчикам доступ к рабочим процессам развертывания и инструментам, контролируя доступ к производственным данным. Тестовые среды позволяют вам добиться более детального контроля над разрешениями, подключениями к хранилищу данных и изоляцией данных — в рамках одного проекта в dbt Cloud.
 
-### Git workflow
+### Git рабочий процесс
 
-You can approach this in a couple of ways, but the most straightforward is configuring Staging with a long-living branch (for example, `staging`) similar to but separate from the primary branch (for example, `main`). 
+Вы можете подойти к этому несколькими способами, но самый простой — настроить тестовую среду с долгоживущей веткой (например, `staging`), аналогичной, но отдельной от основной ветки (например, `main`).
 
-In this scenario, the workflows would ideally move upstream from the Development environment -> Staging environment -> Production environment with developer branches feeding into the `staging` branch, then ultimately merging into `main`. In many cases, the `main` and `staging` branches will be identical after a merge and remain until the next batch of changes from the `development` branches are ready to be elevated. We recommend setting branch protection rules on `staging` similar to `main`.
+В этом сценарии рабочие процессы, как правило, движутся вверх от среды разработки -> тестовой среды -> производственной среды, при этом ветки разработчиков вливаются в ветку `staging`, а затем в конечном итоге сливаются в `main`. В большинстве случаев ветки `main` и `staging` будут идентичны после слияния и останутся такими до следующей партии изменений из веток `development`, готовых к повышению. Мы рекомендуем установить правила защиты веток на `staging`, аналогичные `main`.
 
-Some customers prefer to connect Development and Staging to their `main` branch and then cut release branches on a regular cadence (daily or weekly), which feeds into Production.
+Некоторые клиенты предпочитают подключать разработки и тестирование к своей ветке `main`, а затем регулярно создавать ветки для релизов (ежедневно или еженедельно), которые будут поступать в производственную среду.
 
-### Why use a staging environment
+### Зачем использовать тестовую среду
 
-These are the primary motivations for using a Staging environment:
-1. An additional validation layer before changes are deployed into Production. You can deploy, test, and explore your dbt models in Staging.
-2. Clear isolation between development workflows and production data. It enables developers to work in metadata-powered ways, using features like deferral and cross-project references, without accessing data in production deployments.
-3. Provide developers with the ability to create, edit, and trigger ad hoc jobs in the Staging environment, while keeping the Production environment locked down using [environment-level permissions](/docs/cloud/manage-access/environment-permissions). 
+Основные причины для использования тестовой среды:
+1. Дополнительный уровень проверки перед развертыванием изменений в производственной среде. Вы можете развертывать, тестировать и исследовать свои модели dbt в тестовой среде.
+2. Четкая изоляция между рабочими процессами разработки и производственными данными. Это позволяет разработчикам работать с использованием метаданных, используя такие функции, как отложенные и межпроектные ссылки, без доступа к данным в производственных развертываниях.
+3. Предоставление разработчикам возможности создавать, редактировать и запускать разовые задачи в тестовой среде, при этом производственная среда остается заблокированной с использованием [разрешений на уровне среды](/docs/cloud/manage-access/environment-permissions).
 
-**Conditional configuration of sources** enables you to point to "prod" or "non-prod" source data, depending on the environment you're running in. For example, this source will point to `<DATABASE>.sensitive_source.table_with_pii`, where `<DATABASE>` is dynamically resolved based on an environment variable.
+**Условная конфигурация источников** позволяет вам указывать "prod" или "non-prod" исходные данные в зависимости от среды, в которой вы работаете. Например, этот источник будет указывать на `<DATABASE>.sensitive_source.table_with_pii`, где `<DATABASE>` динамически разрешается на основе переменной среды.
 
 <File name="models/sources.yml">
 
@@ -76,184 +76,178 @@ sources:
 
 </File>
 
-There is exactly one source (`sensitive_source`), and all downstream dbt models select from it as `{{ source('sensitive_source', 'table_with_pii') }}`. The code in your project and the shape of the DAG remain consistent across environments. By setting it up in this way, rather than duplicating sources, you get some important benefits.
+Существует ровно один источник (`sensitive_source`), и все последующие модели dbt выбирают из него как `{{ source('sensitive_source', 'table_with_pii') }}`. Код в вашем проекте и структура DAG остаются неизменными между средами. Настраивая это таким образом, вместо дублирования источников, вы получаете важные преимущества.
 
-**Cross-project references in dbt Mesh:** Let's say you have `Project B` downstream of `Project A` with cross-project refs configured in the models. When developers work in the IDE for `Project B`, cross-project refs will resolve to the Staging environment of `Project A`, rather than production. You'll get the same results with those refs when jobs are run in the Staging environment. Only the Production environment will reference the Production data, keeping the data and access isolated without needing separate projects.
+**Межпроектные ссылки в dbt Mesh:** Предположим, у вас есть `Project B`, который находится ниже по потоку от `Project A` с настроенными межпроектными ссылками в моделях. Когда разработчики работают в IDE для `Project B`, межпроектные ссылки будут разрешаться на тестовую среду `Project A`, а не на производственную. Вы получите те же результаты с этими ссылками, когда задачи выполняются в тестовой среде. Только производственная среда будет ссылаться на производственные данные, сохраняя данные и доступ изолированными без необходимости в отдельных проектах.
 
-**Faster development enabled by deferral:** If `Project B` also has a Staging deployment, then references to unbuilt upstream models within `Project B` will resolve to that environment, using [deferral](/docs/cloud/about-cloud-develop-defer), rather than resolving to the models in Production. This saves developers time and warehouse spend, while preserving clear separation of environments.
+**Более быстрое развитие благодаря отложенным задачам:** Если у `Project B` также есть тестовое развертывание, то ссылки на не построенные модели выше по потоку в `Project B` будут разрешаться на эту среду, используя [отложенные задачи](/docs/cloud/about-cloud-develop-defer), а не разрешаться на модели в производственной среде. Это экономит время разработчиков и затраты на хранилище, сохраняя четкое разделение сред.
 
-Finally, the Staging environment has its own view in [dbt Explorer](/docs/collaborate/explore-projects), giving you a full view of your prod and pre-prod data.
+Наконец, тестовая среда имеет свой собственный вид в [dbt Explorer](/docs/collaborate/explore-projects), предоставляя вам полный обзор ваших производственных и пред-производственных данных.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="85%" title="Explore in a staging environment" />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="85%" title="Исследуйте в тестовой среде" />
 
+### Создание тестовой среды
 
-### Create a Staging environment
+В dbt Cloud перейдите в **Развертывание** -> **Среды**, а затем нажмите **Создать среду**. Выберите **Развертывание** в качестве типа среды. Опция будет недоступна, если у вас уже есть среда разработки.
 
-In the dbt Cloud, navigate to **Deploy** -> **Environments** and then click **Create Environment**. Select **Deployment** as the environment type. The option will be greyed out if you already have a development environment.
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-staging-environment.png" width="85%" title="Создайте тестовую среду" />
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-staging-environment.png" width="85%" title="Create a staging environment" />
+Следуйте шагам, описанным в [учетных данных развертывания](#deployment-connection), чтобы завершить настройку среды.
 
+Мы рекомендуем, чтобы учетные данные хранилища данных были для выделенного пользователя или сервисного принципала.
 
-Follow the steps outlined in [deployment credentials](#deployment-connection) to complete the remainder of the environment setup.
+## Подключение развертывания
 
-We recommend that the data warehouse credentials be for a dedicated user or service principal.
+:::info Подключения к хранилищу
 
-
-## Deployment connection
-
-:::info Warehouse Connections
-
- Warehouse connections are set at the Project level for dbt Cloud accounts, and each Project can have one connection (Snowflake account, Redshift host, Bigquery project, Databricks host, etc.). Some details of that connection (databases/schemas/etc.) can be overridden within this section of the dbt Cloud environment settings.
+ Подключения к хранилищу устанавливаются на уровне проекта для учетных записей dbt Cloud, и каждый проект может иметь одно подключение (аккаунт Snowflake, хост Redshift, проект Bigquery, хост Databricks и т.д.). Некоторые детали этого подключения (базы данных/схемы и т.д.) могут быть переопределены в этом разделе настроек среды dbt Cloud.
 
 :::
 
-This section determines the exact location in your warehouse dbt should target when building warehouse objects! This section will look a bit different depending on your warehouse provider.
+Этот раздел определяет точное местоположение в вашем хранилище, на которое dbt должен нацеливаться при создании объектов хранилища! Этот раздел будет выглядеть немного иначе в зависимости от вашего поставщика хранилища.
 
-For all warehouses, use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings.
-
-<WHCode>
-
-
-<div warehouse="Postgres">
-
-This section will not appear if you are using Postgres, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
-
-</div>
-
-<div warehouse="Redshift">
-
-This section will not appear if you are using Redshift, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
-
-</div>
-
-<div warehouse="Snowflake">
-
-<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Snowflake Deployment Connection Settings"/>
-
-#### Editable fields
-
-- **Role**: Snowflake role
-- **Database**: Target database
-- **Warehouse**: Snowflake warehouse
-
-</div>
-
-<div warehouse="Bigquery">
-
-This section will not appear if you are using Bigquery, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
-
-</div>
-
-<div warehouse="Spark">
-
-This section will not appear if you are using Spark, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
-
-</div>
-
-<div warehouse="Databricks">
-
-<Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Databricks Deployment Connection Settings"/>
-
-#### Editable fields
-
-- **Catalog** (optional): [Unity Catalog namespace](/docs/core/connect-data-platform/databricks-setup)
-
-</div>
-
-</WHCode>
-
-
-### Deployment credentials
-
-This section allows you to determine the credentials that should be used when connecting to your warehouse. The authentication methods may differ depending on the warehouse and dbt Cloud tier you are on.
-
-For all warehouses, use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings. For credentials, we recommend wrapping extended attributes in [environment variables](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`) to avoid displaying the secret value in the text box and the logs.
+Для всех хранилищ используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения отсутствующих или неактивных (затемненных) настроек.
 
 <WHCode>
 
 <div warehouse="Postgres">
 
-<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Postgres Deployment Credentials Settings"/>
-
-#### Editable fields
-
-- **Username**: Postgres username to use (most likely a service account)
-- **Password**: Postgres password for the listed user
-- **Schema**: Target schema
+Этот раздел не появится, если вы используете Postgres, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения этих значений.
 
 </div>
 
 <div warehouse="Redshift">
 
-<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Redshift Deployment Credentials Settings"/>
-
-#### Editable fields
-
-- **Username**: Redshift username to use (most likely a service account)
-- **Password**: Redshift password for the listed user
-- **Schema**: Target schema
+Этот раздел не появится, если вы используете Redshift, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения этих значений.
 
 </div>
 
 <div warehouse="Snowflake">
 
-<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-credentials.png" width="85%" title="Snowflake Deployment Credentials Settings"/>
+<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения развертывания Snowflake"/>
 
-#### Editable fields
+#### Редактируемые поля
 
-- **Auth Method**: This determines the way dbt connects to your warehouse
-  - One of: [**Username & Password**, **Key Pair**]
-- If **Username & Password**:
-  - **Username**: username to use (most likely a service account)
-  - **Password**: password for the listed user
-- If **Key Pair**:
-  - **Username**: username to use (most likely a service account)
-  - **Private Key**: value of the Private SSH Key (optional)
-  - **Private Key Passphrase**: value of the Private SSH Key Passphrase (optional, only if required)
-- **Schema**: Target Schema for this environment
+- **Роль**: Роль Snowflake
+- **База данных**: Целевая база данных
+- **Хранилище**: Хранилище Snowflake
 
 </div>
 
 <div warehouse="Bigquery">
 
-<Lightbox src="/img/docs/collaborate/bigquery-deploy-env-deploy-credentials.png" width="85%" title="Bigquery Deployment Credentials Settings"/>
-
-#### Editable fields
-
-- **Dataset**: Target dataset
-
-Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings. For credentials, we recommend wrapping extended attributes in [environment variables](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`) to avoid displaying the secret value in the text box and the logs.
+Этот раздел не появится, если вы используете Bigquery, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения этих значений.
 
 </div>
 
 <div warehouse="Spark">
 
-<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Spark Deployment Credentials Settings"/>
-
-#### Editable fields
-
-- **Token**: Access token
-- **Schema**: Target schema
+Этот раздел не появится, если вы используете Spark, так как все значения выводятся из подключения проекта. Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения этих значений.
 
 </div>
 
 <div warehouse="Databricks">
 
-<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Databricks Deployment Credentials Settings"/>
+<Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения развертывания Databricks"/>
 
-#### Editable fields
+#### Редактируемые поля
 
-- **Token**: Access token
-- **Schema**: Target schema
+- **Каталог** (необязательно): [Пространство имен Unity Catalog](/docs/core/connect-data-platform/databricks-setup)
 
 </div>
 
 </WHCode>
 
-## Related docs
+### Учетные данные развертывания
 
-- [dbt Cloud environment best practices](/guides/set-up-ci)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [CI jobs](/docs/deploy/continuous-integration)
-- [Delete a job or environment in dbt Cloud](/faqs/Environments/delete-environment-job)
+Этот раздел позволяет вам определить учетные данные, которые должны использоваться при подключении к вашему хранилищу. Методы аутентификации могут различаться в зависимости от хранилища и уровня dbt Cloud, на котором вы находитесь.
 
+Для всех хранилищ используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения отсутствующих или неактивных (затемненных) настроек. Для учетных данных мы рекомендуем оборачивать расширенные атрибуты в [переменные среды](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`), чтобы избежать отображения секретного значения в текстовом поле и логах.
+
+<WHCode>
+
+<div warehouse="Postgres">
+
+<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Postgres"/>
+
+#### Редактируемые поля
+
+- **Имя пользователя**: Имя пользователя Postgres для использования (скорее всего, сервисная учетная запись)
+- **Пароль**: Пароль Postgres для указанного пользователя
+- **Схема**: Целевая схема
+
+</div>
+
+<div warehouse="Redshift">
+
+<Lightbox src="/img/docs/collaborate/postgres-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Redshift"/>
+
+#### Редактируемые поля
+
+- **Имя пользователя**: Имя пользователя Redshift для использования (скорее всего, сервисная учетная запись)
+- **Пароль**: Пароль Redshift для указанного пользователя
+- **Схема**: Целевая схема
+
+</div>
+
+<div warehouse="Snowflake">
+
+<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Snowflake"/>
+
+#### Редактируемые поля
+
+- **Метод аутентификации**: Это определяет способ подключения dbt к вашему хранилищу
+  - Один из: [**Имя пользователя и пароль**, **Ключевая пара**]
+- Если **Имя пользователя и пароль**:
+  - **Имя пользователя**: имя пользователя для использования (скорее всего, сервисная учетная запись)
+  - **Пароль**: пароль для указанного пользователя
+- Если **Ключевая пара**:
+  - **Имя пользователя**: имя пользователя для использования (скорее всего, сервисная учетная запись)
+  - **Закрытый ключ**: значение закрытого SSH-ключа (необязательно)
+  - **Пароль закрытого ключа**: значение пароля закрытого SSH-ключа (необязательно, только если требуется)
+- **Схема**: Целевая схема для этой среды
+
+</div>
+
+<div warehouse="Bigquery">
+
+<Lightbox src="/img/docs/collaborate/bigquery-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Bigquery"/>
+
+#### Редактируемые поля
+
+- **Набор данных**: Целевой набор данных
+
+Используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для переопределения отсутствующих или неактивных (затемненных) настроек. Для учетных данных мы рекомендуем оборачивать расширенные атрибуты в [переменные среды](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`), чтобы избежать отображения секретного значения в текстовом поле и логах.
+
+</div>
+
+<div warehouse="Spark">
+
+<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Spark"/>
+
+#### Редактируемые поля
+
+- **Токен**: Токен доступа
+- **Схема**: Целевая схема
+
+</div>
+
+<div warehouse="Databricks">
+
+<Lightbox src="/img/docs/collaborate/spark-deploy-env-deploy-credentials.png" width="85%" title="Настройки учетных данных развертывания Databricks"/>
+
+#### Редактируемые поля
+
+- **Токен**: Токен доступа
+- **Схема**: Целевая схема
+
+</div>
+
+</WHCode>
+
+## Связанные документы
+
+- [Лучшие практики работы со средами dbt Cloud](/guides/set-up-ci)
+- [Развертывание задач](/docs/deploy/deploy-jobs)
+- [CI задачи](/docs/deploy/continuous-integration)
+- [Удаление задачи или среды в dbt Cloud](/faqs/Environments/delete-environment-job)

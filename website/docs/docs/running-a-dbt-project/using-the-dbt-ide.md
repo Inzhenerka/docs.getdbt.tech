@@ -1,57 +1,56 @@
 ---
-title: "Using the dbt IDE"
+title: "Использование dbt IDE"
 id: "using-the-dbt-ide"
 ---
 
-The dbt Integrated Development Environment (IDE) is a single interface for building, testing, running, and version controlling dbt projects.
+Интегрированная среда разработки (IDE) dbt представляет собой единый интерфейс для создания, тестирования, запуска и контроля версий проектов dbt.
 
-### Requirements
+### Требования
 
-- The dbt IDE is powered by [dbt-rpc](/reference/commands/rpc) which has been overhauled in dbt v0.15.0. In order to use the IDE, your dbt project must be compatible with dbt v0.15.0.
-- To use the IDE, you must have a [Developer License](/docs/cloud/manage-access/seats-and-users). 
-- Write access must be enabled for your dbt repository in dbt Cloud. See [Connecting your GitHub Account](/docs/cloud/git/connect-github) and [Importing a project by git URL](/docs/cloud/git/import-a-project-by-git-url) for detailed setup instructions.
+- dbt IDE работает на основе [dbt-rpc](/reference/commands/rpc), который был переработан в dbt v0.15.0. Чтобы использовать IDE, ваш проект dbt должен быть совместим с dbt v0.15.0.
+- Для использования IDE вам необходимо иметь [Лицензию разработчика](/docs/cloud/manage-access/seats-and-users).
+- Доступ на запись должен быть включен для вашего репозитория dbt в dbt Cloud. См. [Подключение вашей учетной записи GitHub](/docs/cloud/git/connect-github) и [Импорт проекта по URL git](/docs/cloud/git/import-a-project-by-git-url) для получения подробных инструкций по настройке.
 
-### Creating a development environment
-New dbt Cloud accounts will automatically be created with a Development Environment for the project created during setup. If you have an existing dbt Cloud account, you may need to create a Development Environment manually to use the dbt IDE.
+### Создание среды разработки
+Новые учетные записи dbt Cloud автоматически создаются с средой разработки для проекта, созданного во время настройки. Если у вас уже есть учетная запись dbt Cloud, вам может потребоваться вручную создать среду разработки для использования dbt IDE.
 
-To create a development environment, choose **Deploy** > **Environments** from the top left. Then, click **Create Environment**.
+Чтобы создать среду разработки, выберите **Развертывание** > **Среды** в верхнем левом углу. Затем нажмите **Создать среду**.
 
-<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/empty-env-page.png" title="Creating a new environment for the Analytics project"/>
+<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/empty-env-page.png" title="Создание новой среды для проекта Analytics"/>
 
-Enter an environment **Name** that would help you identify it among your other environments (for example, `Nate's Development Environment`). Choose **Development** as the **Environment Type**. You can also select which **dbt Version** to use at this time. For compatibility reasons, we recommend that you select the same dbt version that you plan to use in your deployment environment. Finally, click **Save** to finish creating your development environment.
+Введите **Имя** среды, которое поможет вам идентифицировать ее среди других сред (например, `Среда разработки Нейта`). Выберите **Разработка** в качестве **Типа среды**. Вы также можете выбрать, какую **Версию dbt** использовать в данный момент. По соображениям совместимости мы рекомендуем выбрать ту же версию dbt, которую вы планируете использовать в вашей среде развертывания. Наконец, нажмите **Сохранить**, чтобы завершить создание вашей среды разработки.
 
-<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/create-dev-env.png" title="Creating a development environment"/>
+<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/create-dev-env.png" title="Создание среды разработки"/>
 
-### Setting up developer credentials
+### Настройка учетных данных разработчика
 
-The IDE uses *developer credentials* to connect to your database. These developer credentials should be specific to your user. They should *not* be super user credentials, or the same credentials that you use for your production deployment of dbt.
+IDE использует *учетные данные разработчика* для подключения к вашей базе данных. Эти учетные данные должны быть специфичны для вашего пользователя. Они *не должны* быть учетными данными суперпользователя или теми же учетными данными, которые вы используете для развертывания dbt в производственной среде.
 
-New dbt Cloud accounts should have developer credentials created automatically as a part of Project creation in the initial application setup.
+Новые учетные записи dbt Cloud должны автоматически создавать учетные данные разработчика в рамках создания проекта в процессе первоначальной настройки приложения.
 
-<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/dev-cred-project-setup.png" title="Developer credentials are created during project setup"/>
+<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/dev-cred-project-setup.png" title="Учетные данные разработчика создаются во время настройки проекта"/>
 
-New users on existing accounts *might not* have their development credentials already configured. 
-To manage your development credentials: 
-1. Navigate to your **Credentials** under **Your Profile** settings, which you can access at `https://YOUR_ACCESS_URL/settings/profile#credentials`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. 
-2. Select the relevant project in the list. After entering your developer credentials, you'll be able to access the dbt IDE.
+Новые пользователи на существующих учетных записях *могут не иметь* уже настроенных учетных данных разработчика. 
+Чтобы управлять своими учетными данными разработчика:
+1. Перейдите в раздел **Учетные данные** в настройках **Вашего профиля**, который вы можете получить по адресу `https://YOUR_ACCESS_URL/settings/profile#credentials`, заменив `YOUR_ACCESS_URL` на [соответствующий URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана. 
+2. Выберите соответствующий проект в списке. После ввода ваших учетных данных разработчика вы сможете получить доступ к dbt IDE.
 
-<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/dev-cred-edit-proj.png" title="Configure developer credentials in your Profile."/>
+<Lightbox src="/img/docs/running-a-dbt-project/using-the-dbt-ide/dev-cred-edit-proj.png" title="Настройка учетных данных разработчика в вашем профиле."/>
 
-### Compiling and running SQL
+### Компиляция и выполнение SQL
 
-This video explores entering the IDE and compiling and running SQL for a dbt project.
-
+Это видео демонстрирует вход в IDE, компиляцию и выполнение SQL для проекта dbt.
 
 <LoomVideo id="a4a1695e0f2445ffbbef8a2ccf514877" />
 
-### Running dbt projects
+### Запуск проектов dbt
 
-This video explores running dbt projects in the dbt IDE. For a full list of the commands that can be run in the IDE, consult the [dbt Command reference](/reference/dbt-commands).
+Это видео демонстрирует запуск проектов dbt в dbt IDE. Для получения полного списка команд, которые можно выполнять в IDE, обратитесь к [Справочнику команд dbt](/reference/dbt-commands).
 
 <LoomVideo id="3f247c8ee0c7414b88eb64ac75b8918d" />
 
-### Version control
+### Контроль версий
 
-This video explores version controlling changes to dbt projects with git in the dbt IDE.
+Это видео демонстрирует контроль версий изменений в проектах dbt с помощью git в dbt IDE.
 
 <LoomVideo id="efa64fa9db6346c4b0f4c64999146445" />

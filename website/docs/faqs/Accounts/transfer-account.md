@@ -1,23 +1,22 @@
 ---
-title: How do I transfer account ownership to another user? 
-description: "Instructions on how to transfer your dbt Cloud user account to another user"
-sidebar_label: 'How to transfer dbt Cloud account?'
+title: Как передать право собственности на аккаунт другому пользователю? 
+description: "Инструкции по передаче вашего аккаунта пользователя dbt Cloud другому пользователю"
+sidebar_label: 'Как передать аккаунт dbt Cloud?'
 id: transfer-account
 
 ---
 
-You can transfer your dbt Cloud [access control](/docs/cloud/manage-access/about-user-access) to another user by following the steps below, depending on your dbt Cloud account plan:
+Вы можете передать свой dbt Cloud [контроль доступа](/docs/cloud/manage-access/about-user-access) другому пользователю, следуя приведенным ниже шагам, в зависимости от вашего тарифного плана dbt Cloud:
 
-| Account plan| Steps | 
+| Тарифный план | Шаги | 
 | ------ | ---------- | 
-| **Developer** |  You can transfer ownership by changing the email directly on your dbt Cloud profile page, which you can access using this URL when you replace `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan: `https://YOUR_ACCESS_URL/settings/profile`. Before doing this, please ensure that you unlink your GitHub profile. The email address of the new account owner cannot be associated with another dbt Cloud account.|
-| **Team** | Existing account admins with account access can add users to, or remove users from the owner group. | 
-| **Enterprise** | Account admins can add users to, or remove users from a group with Account Admin permissions. | 
-| **If all account owners left the company** | If the account owner has left your organization, you will need to work with _your_ IT department to have incoming emails forwarded to the new account owner. Once your IT department has redirected the emails, you can request to reset the user password. Once you log in, you can change the email on the Profile page when you replace `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan:  `https://YOUR_ACCESS_URL/settings/profile`. |
+| **Разработчик** | Вы можете передать право собственности, изменив адрес электронной почты непосредственно на странице профиля вашего dbt Cloud, к которой вы можете получить доступ по этому URL, заменив `YOUR_ACCESS_URL` на [соответствующий Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана: `https://YOUR_ACCESS_URL/settings/profile`. Перед этим, пожалуйста, убедитесь, что вы отвязали свой профиль GitHub. Адрес электронной почты нового владельца аккаунта не может быть связан с другим аккаунтом dbt Cloud. |
+| **Команда** | Существующие администраторы аккаунта с доступом к аккаунту могут добавлять пользователей в группу владельцев или удалять пользователей из нее. | 
+| **Корпоративный** | Администраторы аккаунта могут добавлять пользователей в группу с правами администратора аккаунта или удалять пользователей из нее. | 
+| **Если все владельцы аккаунта покинули компанию** | Если владелец аккаунта покинул вашу организацию, вам нужно будет работать с _вашим_ IT-отделом, чтобы перенаправить входящие электронные письма на нового владельца аккаунта. После того как ваш IT-отдел перенаправит электронные письма, вы можете запросить сброс пароля пользователя. После входа в систему вы можете изменить адрес электронной почты на странице профиля, заменив `YOUR_ACCESS_URL` на [соответствующий Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана: `https://YOUR_ACCESS_URL/settings/profile`. |
 
-When you make any account owner and email changes:
+Когда вы вносите изменения в владельца аккаунта и адрес электронной почты:
 
-- The new email address _must_ be verified through our email verification process. 
-- You can update any billing email address or [Notifications Settings](/docs/deploy/job-notifications) to reflect the new account owner changes, if applicable.
-- When transferring account ownership, please ensure you [unlink](/faqs/Accounts/git-account-in-use) your GitHub account in dbt Cloud. This is because you can only have your Git account linked to one dbt Cloud user account. 
- 
+- Новый адрес электронной почты _должен_ быть подтвержден через наш процесс подтверждения электронной почты. 
+- Вы можете обновить любой адрес электронной почты для выставления счетов или [Настройки уведомлений](/docs/deploy/job-notifications), чтобы отразить изменения нового владельца аккаунта, если это применимо.
+- При передаче права собственности на аккаунт, пожалуйста, убедитесь, что вы [отвязали](/faqs/Accounts/git-account-in-use) свой аккаунт GitHub в dbt Cloud. Это связано с тем, что ваш аккаунт Git может быть связан только с одним аккаунтом пользователя dbt Cloud. 

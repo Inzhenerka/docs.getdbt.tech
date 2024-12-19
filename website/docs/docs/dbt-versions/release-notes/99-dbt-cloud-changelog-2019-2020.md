@@ -1,809 +1,785 @@
 ---
-title: "Changelog 2019 and 2020"
+title: "Журнал изменений 2019 и 2020"
 id: "dbt-cloud-changelog-2019-2020"
-sidebar_label: Changelog (2019 and 2020)
-description: "2019 and 2020 Changelog for the dbt Cloud application"
+sidebar_label: Журнал изменений (2019 и 2020)
+description: "Журнал изменений 2019 и 2020 для приложения dbt Cloud"
 
 tags: [v1.1.16, v1.1.15, v1.1.14, v1.1.13, v1.1.12, v1.1.11, v1.1.10, v1.1.09, v1.1.08, v1.1.07, v1.1.06, v1.1.05, v1.1.04, v1.1.03, v1.1.02, v1.1.01, v0.5.0, Jan-1-2020]
 ---
 
-Welcome to the 2019 and 2020 changelog for the dbt Cloud application! You can use this changelog to see the highlights of what was new, fixed, and enhanced during this time period.
+Добро пожаловать в журнал изменений 2019 и 2020 для приложения dbt Cloud! Вы можете использовать этот журнал изменений, чтобы увидеть основные новшества, исправления и улучшения, которые были внесены в этот период.
 
-## dbt Cloud v1.1.16 (December 23, 2020)
+## dbt Cloud v1.1.16 (23 декабря 2020)
 
-This release adds preview support for Databricks Spark in dbt Cloud
-and adds two new permission sets for Enterprise acccounts.
+Этот релиз добавляет предварительную поддержку Databricks Spark в dbt Cloud и два новых набора разрешений для корпоративных аккаунтов.
 
-#### Enhancements
+#### Улучшения
 
-- Added preview support for Databricks Spark support
-- Added two new Enterprise permission sets: Account Viewer and Project Creator
+- Добавлена предварительная поддержка Databricks Spark
+- Добавлены два новых набора разрешений для корпоративных аккаунтов: Account Viewer и Project Creator
 
-#### Fixed
+#### Исправления
 
-- Improve logging infrastructure for dbt run logs
-- Fix for SSH tunnel logging errors
+- Улучшена инфраструктура логирования для логов dbt run
+- Исправлены ошибки логирования SSH туннелей
 
 
-## dbt Cloud v1.1.15 (December 10, 2020)
+## dbt Cloud v1.1.15 (10 декабря 2020)
 
-Lots of great stuff to confer about this go-round: things really coalesced this week! Lots of excitement around adding Spark to the connection family, as well as knocking out some longstanding bugs. 
+Много интересного в этом обновлении: на этой неделе действительно все сошлось! Много волнений по поводу добавления Spark в семью подключений, а также исправления некоторых давних ошибок.
 
-#### Enhancements
+#### Улучшения
 
-- Add Spark as an option for database setup
+- Добавлен Spark как опция для настройки базы данных
 
-#### Fixed
+#### Исправления
 
-- Fix this one hairy bug where one email could have multiple user accounts
-- Fix setup-connection react-page routing
-- Break out group selection logic from license types and group names
-- Handle json errors in v1/v2 body parsing
-- Handle AuthForbidden and AuthCancelled graciously - ie, not throw 500s
-- Fix regression with IDE loading spinner
+- Исправлена ошибка, когда один адрес электронной почты мог иметь несколько учетных записей пользователей
+- Исправлена маршрутизация react-страницы настройки подключения
+- Разделена логика выбора группы по типам лицензий и именам групп
+- Обработаны ошибки json при парсинге тела v1/v2
+- Корректная обработка AuthForbidden и AuthCancelled - т.е. без выбрасывания 500 ошибок
+- Исправлена регрессия с индикатором загрузки IDE
 
 
-## dbt Cloud v1.1.14 (November 25, 2020)
+## dbt Cloud v1.1.14 (25 ноября 2020)
 
-This release adds a few new pieces of connective tissue, notably OAuth for BigQuery and SparkAdapter work. There are also some quality of life improvements and investments for the future, focused on our beloved IDE users, and some improved piping for observability into log management and API usage. 
+Этот релиз добавляет несколько новых функций, в частности OAuth для BigQuery и работу с SparkAdapter. Также были внесены некоторые улучшения качества жизни и инвестиции в будущее, сосредоточенные на наших любимых пользователях IDE, а также улучшена видимость в управлении логами и использовании API.
 
-#### Enhancements
+#### Улучшения
 
-- Update IP allowlist
-- User can OAuth for BigQuery in profile credentials
-- Adding SparkAdapter backend models, mappers and services
-- Added BigQuery OAuth integration
-- Adding db index for owner_thread_id
+- Обновлен IP allowlist
+- Пользователь может использовать OAuth для BigQuery в учетных данных профиля
+- Добавлены модели, мапперы и сервисы для SparkAdapter
+- Добавлена интеграция OAuth для BigQuery
+- Добавлен индекс базы данных для owner_thread_id
 
-#### Fixed
+#### Исправления
 
-- Fix post /run error rate
-- Fix bug where bad argument was passed to dbt runs
-- Log out unhandled error in environment variable context manager
-- Remove account settings permissions for user integrations
+- Исправлена частота ошибок post /run
+- Исправлена ошибка, когда неверный аргумент передавался в dbt runs
+- Логирование необработанных ошибок в менеджере контекста переменных окружения
+- Удалены разрешения настроек аккаунта для интеграций пользователей
 
 
-## dbt Cloud v1.1.13 (November 12, 2020)
+## dbt Cloud v1.1.13 (12 ноября 2020)
 
-This release adds support for triggering runs with overriden attributes via the
-[triggerRun](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun) API endpoint. Additionally,
-a number of bugs have been squashed and performance improvements have been made.
+Этот релиз добавляет поддержку запуска с переопределенными атрибутами через API-эндпоинт [triggerRun](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun). Кроме того, было исправлено множество ошибок и улучшена производительность.
 
-#### Enhancements
+#### Улучшения
 
-- Improve error handling for long-running queries in the IDE
-- Use S3 client caching to improve log download speed for scheduled runs
-- Support triggering jobs [with overriden attributes from the API](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun)
-- Clarify "upgrade" copy on the billing page
+- Улучшена обработка ошибок для долгих запросов в IDE
+- Использование кэширования клиента S3 для повышения скорости загрузки логов для запланированных запусков
+- Поддержка запуска заданий [с переопределенными атрибутами из API](https://docs.getdbt.com/dbt-cloud/api/#operation/triggerRun)
+- Уточнено сообщение "upgrade" на странице выставления счетов
 
-#### Fixed
+#### Исправления
 
-- GitLab groups endpoint now returns all groups and subgroups
-- Support BigQuery retry configs with value 0
-- Prevent web IDE from crashing after running an invalid dbt command
-- Apply additional log scrubbing to filter short-lived git credentials
-- Fix older migration to make auth_url field nullable
-- Support paths in GitLab instance URL
-- Fix for auth token request url in GitLab oauth flow
+- Эндпоинт групп GitLab теперь возвращает все группы и подгруппы
+- Поддержка конфигураций повторных попыток BigQuery со значением 0
+- Предотвращение сбоя веб-IDE после выполнения недопустимой команды dbt
+- Применение дополнительной очистки логов для фильтрации краткосрочных git-учетных данных
+- Исправлена старая миграция, чтобы сделать поле auth_url допустимым
+- Поддержка путей в URL-адресе экземпляра GitLab
+- Исправление URL-адреса запроса токена аутентификации в потоке GitLab oauth
 
 
-## dbt Cloud v1.1.12 (October 30, 2020)
+## dbt Cloud v1.1.12 (30 октября 2020)
 
-This release adds dbt v.18.1 and 0.19.0b1 to dbt Cloud. Additionally, a number of bugs have been fixed.
+Этот релиз добавляет dbt v.18.1 и 0.19.0b1 в dbt Cloud. Кроме того, было исправлено множество ошибок.
 
-#### Enhancements
+#### Улучшения
 
-- Update copy on billing page for picking a plan at the end of a trial
-- Improved authorization for metadata API
-- Add dbt 0.19.0b1
-- Add dbt 0.18.1
+- Обновлено сообщение на странице выставления счетов для выбора плана в конце пробного периода
+- Улучшена авторизация для API метаданных
+- Добавлен dbt 0.19.0b1
+- Добавлен dbt 0.18.1
 
-#### Fixed
+#### Исправления
 
-- Fixed an issue where groups from other logged-in accounts appeared in the RBAC UI
-- Fixed requested GitLab scopes and an issue when encrypting deploy tokens for GitLab auth
-- Fixed an issue where null characters in logs threw errors in scheduled runs
+- Исправлена проблема, когда группы из других вошедших в систему аккаунтов появлялись в интерфейсе RBAC
+- Исправлены запрашиваемые области GitLab и проблема с шифрованием токенов развертывания для аутентификации GitLab
+- Исправлена проблема, когда нулевые символы в логах вызывали ошибки в запланированных запусках
 
 
-## dbt Cloud v1.1.11 (October 15, 2020)
+## dbt Cloud v1.1.11 (15 октября 2020)
 
-Release v1.1.11 includes some quality-of-life enhancements, copy tweaks, and error resolutions. It also marks the last time we'll have the same digit four times in a row in a release until v2.2.22.
+Релиз v1.1.11 включает в себя некоторые улучшения качества жизни, изменения в тексте и исправления ошибок. Это также последний раз, когда у нас будет одна и та же цифра четыре раза подряд в релизе до v2.2.22.
 
-#### Enhancements
+#### Улучшения
 
-- Add InterfaceError exception handling for commands
-- Rename My Account --> Profile
-- Add project and connection to admin backend
+- Добавлена обработка исключений InterfaceError для команд
+- Переименован My Account в Profile
+- Добавлены проект и подключение в админский бэкенд
 
-#### Fixed
+#### Исправления
 
-- Resolve errors from presence of null-characters in logs
-- Email verifications backend
-- Undo run.serialize
-- Fix error while serialized run
-- Fix logic error in connection setup
-- Fix a bug with GitLab auth flow for unauthenticated users
-- Fix bug where Native Okta SSO uses the wrong port
+- Устранены ошибки из-за наличия нулевых символов в логах
+- Бэкенд проверки электронной почты
+- Отменено run.serialize
+- Исправлена ошибка во время сериализованного запуска
+- Исправлена логическая ошибка в настройке подключения
+- Исправлена ошибка с потоком аутентификации GitLab для неаутентифицированных пользователей
+- Исправлена ошибка, когда Native Okta SSO использует неправильный порт
 
 
-## dbt Cloud v1.1.10 (October 8, 2020)
+## dbt Cloud v1.1.10 (8 октября 2020)
 
-This release adds support for repositories imported via GitLab (Enterprise)
-and contains a number of bugfixes and improvements in the dbt Cloud IDE.
+Этот релиз добавляет поддержку репозиториев, импортируемых через GitLab (Enterprise), и содержит множество исправлений ошибок и улучшений в dbt Cloud IDE.
 
-#### Enhancements
+#### Улучшения
 
-- Add Gitlab integration (Enterprise)
-- Add GitLab repository setup to project setup flow (Enterprise)
-- Add GitLab automated Deploy Token installation (Enterprise)
-- Add dbt 0.18.1rc1
+- Добавлена интеграция с GitLab (Enterprise)
+- Добавлена настройка репозитория GitLab в процессе настройки проекта (Enterprise)
+- Добавлена автоматическая установка токена развертывания GitLab (Enterprise)
+- Добавлен dbt 0.18.1rc1
 
-#### Fixed
+#### Исправления
 
-- Fix bug where IDE gets stuck after changing project repository
-- Fix race condition where connections can be added to the wrong project
-- Fix revoking email invites
-- Fix a bug in slim CI deferring run search where missing previous run caused the scheduler to raise an error
-- Fix a source of IDE instability
-- Gracefully clean up IDE backend on shutdown
-- Always show SSO mappings on Group Details page
+- Исправлена ошибка, когда IDE зависала после изменения репозитория проекта
+- Исправлено состояние гонки, когда подключения могли быть добавлены к неправильному проекту
+- Исправлено аннулирование приглашений по электронной почте
+- Исправлена ошибка в slim CI, откладывающая поиск запуска, когда отсутствовал предыдущий запуск, что вызывало ошибку планировщика
+- Исправлен источник нестабильности IDE
+- Корректная очистка бэкенда IDE при завершении работы
+- Всегда отображать сопоставления SSO на странице деталей группы
 
 
-## dbt Cloud v1.1.9 (October 1, 2020)
+## dbt Cloud v1.1.9 (1 октября 2020)
 
-This release adds the ability for admins on the Enterprise plan to configure
-the Role Based Access Control permissions applied to Projects in their account.
-Additionally, job execution deferral is now available behind a feature flag,
-and a number of fixes and improvements were released as well.
+Этот релиз добавляет возможность администраторам на корпоративном плане настраивать разрешения управления доступом на основе ролей, применяемые к проектам в их аккаунте. Кроме того, теперь доступно откладывание выполнения заданий за флагом функции, а также было выпущено множество исправлений и улучшений.
 
-#### Enhancements
+#### Улучшения
 
-- Add dbt Cloud version in the navigation sidebar
-- Add RBAC Group Permission view, create, and modify UIs
-- Add personal git auth for IDE error handling modals
-- Add Develop Requests to backend views
-- Implemented job execution deferral
-- Add support for dbt v0.18.1b2
+- Добавлена версия dbt Cloud в боковой панели навигации
+- Добавлен интерфейс просмотра, создания и изменения разрешений группы RBAC
+- Добавлена личная аутентификация git для модальных окон обработки ошибок IDE
+- Добавлены запросы на разработку в бэкенд
+- Реализовано откладывание выполнения заданий
+- Добавлена поддержка dbt v0.18.1b2
 
-#### Fixed
+#### Исправления
 
-- Fixed the scenario where interacting with the Refresh IDE button causes an index.lock file to remain in the IDE file system
-- Validate PR URL for XSS attempts
-- Address RBAC inconsistencies
-- Fixed users not being able to update their dbt Cloud password in-app
-- Fix for applying user permissions across multiple accounts after SSO auth
-- Google API: default to common api endpoint but allow override
-- Fix for missing email variable in GSuite debug logging
-- Destroy IDE session when switching projects
+- Исправлен сценарий, когда взаимодействие с кнопкой обновления IDE вызывает оставление файла index.lock в файловой системе IDE
+- Проверка URL PR на попытки XSS
+- Устранены несоответствия RBAC
+- Исправлена проблема, когда пользователи не могли обновить свой пароль dbt Cloud в приложении
+- Исправление применения разрешений пользователей для нескольких аккаунтов после аутентификации SSO
+- Google API: по умолчанию использовать общий конечный API, но разрешить переопределение
+- Исправление отсутствующей переменной электронной почты в отладочном журнале GSuite
+- Уничтожение сеанса IDE при переключении проектов
 
 
-## dbt Cloud v1.1.8 (September 17, 2020)
+## dbt Cloud v1.1.8 (17 сентября 2020)
 
-This release adds native support for Okta SSO and dbt v0.18.0. It also adds
-initial support for a GitLab integration and self-service RBAC configuration.
+Этот релиз добавляет нативную поддержку Okta SSO и dbt v0.18.0. Он также добавляет начальную поддержку интеграции с GitLab и конфигурации RBAC самообслуживания.
 
-#### Enhancements
-- Add dbt 0.18.0
-- Add native Okta SSO support
-- Add additional logging for Gsuite and Azure SSO
-- Add git cloning support via GitLab deploy tokens for scheduled runs (coming soon)
-- add RBAC Groups Detail Page and Groups List UIs
+#### Улучшения
+- Добавлен dbt 0.18.0
+- Добавлена нативная поддержка Okta SSO
+- Добавлено дополнительное логирование для Gsuite и Azure SSO
+- Добавлена поддержка клонирования git через токены развертывания GitLab для запланированных запусков (скоро)
+- добавлены страницы деталей групп RBAC и интерфейсы списка групп
 
-#### Fixed
+#### Исправления
 
-- Allow `*_proxy` env vars in scheduled runs
+- Разрешить переменные окружения `*_proxy` в запланированных запусках
 
 
-## dbt Cloud v1.1.7 [September 3, 2020]
+## dbt Cloud v1.1.7 (3 сентября 2020)
 
-This release adds a Release Candidate for [dbt
-v0.18.0](/docs/dbt-versions/core-upgrade) and
-includes bugfixes and improvements to the Cloud IDE
-and job scheduler.
+Этот релиз добавляет кандидат на выпуск для [dbt v0.18.0](/docs/dbt-versions/core-upgrade) и включает исправления ошибок и улучшения в Cloud IDE и планировщике заданий.
 
-#### Enhancements
-- Improve scheduler backoff behavior
-- Add dbt 0.18.0rc1
-- Add support for non-standard ssh ports in connection tunnels
-- Add support for closing the IDE filesystem context menu by clicking outside the menu
+#### Улучшения
+- Улучшено поведение отката планировщика
+- Добавлен dbt 0.18.0rc1
+- Добавлена поддержка нестандартных ssh портов в туннелях подключения
+- Добавлена поддержка закрытия контекстного меню файловой системы IDE при нажатии вне меню
 
-#### Fixed
-- Fix for joining threads in run triggers
-- Fix thread caching for s3 uploads
+#### Исправления
+- Исправление объединения потоков в триггерах запуска
+- Исправление кэширования потоков для загрузок s3
 
 
-## dbt Cloud v1.1.6 (August 20, 2020)
+## dbt Cloud v1.1.6 (20 августа 2020)
 
-This release includes security enhancements and improvements across the entire
-dbt Cloud application.
+Этот релиз включает в себя улучшения безопасности и улучшения по всему приложению dbt Cloud.
 
-#### Enhancements
-- Support for viewing development docs inside of the IDE ([docs](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)
-- Change CI temporary schema names to be prefixed with `dbt_cloud` instead of `sinter`
-- Change coloring and iconography to improve accessibility and UX across the application
-- [Enterprise] Support the specification of multiple authorized domains in SSO configuration
-- [On-premises] Upgrade boto3 to support KIAM authentication
+#### Улучшения
+- Поддержка просмотра документации по разработке внутри IDE ([docs](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud))
+- Изменение временных имен схем CI, чтобы они начинались с `dbt_cloud` вместо `sinter`
+- Изменение цветовой схемы и иконографии для улучшения доступности и UX по всему приложению
+- [Enterprise] Поддержка указания нескольких авторизованных доменов в конфигурации SSO
+- [On-premises] Обновление boto3 для поддержки аутентификации KIAM
 
-#### Fixed
-- [Enterprise] Fix for missing IdP group membership mappings when users belong to >100 Azure AD groups
-- Disallow the creation of symlinks in the IDE
-- Improve reliability of background cleanup processes
-- Improve performance and reliability of artifact management and PR webhook processing
+#### Исправления
+- [Enterprise] Исправление отсутствия сопоставлений членства групп IdP, когда пользователи принадлежат к более чем 100 группам Azure AD
+- Запрет на создание символических ссылок в IDE
+- Улучшение надежности фоновых процессов очистки
+- Улучшение производительности и надежности управления артефактами и обработки вебхуков PR
 
 
-## dbt Cloud v1.1.5 (August 4, 2020)
+## dbt Cloud v1.1.5 (4 августа 2020)
 
-This release adds a major new feature to the IDE: merge conflict resolution!
+Этот релиз добавляет новую основную функцию в IDE: разрешение конфликтов слияния!
 
-It also includes changes to the job scheduler that cut the time and resource utilization
-significantly.
+Он также включает изменения в планировщике заданий, которые значительно сокращают время и использование ресурсов.
 
-#### Enhancements
+#### Улучшения
 
-- Add dbt 0.17.2
-- Add dbt 0.18.0 beta 2
-- Add merge conflict resolution, a merge commit workflow, and merge abort workflow to the IDE
-- Deprecate dbt versions prior to 0.13.0
-- Refactor to cut job scheduler loop time
-- Reduce extra database calls to account <Term id="table" /> in job scheduler loop
-- [On-premises] Allow clients to disable authentication for SMTP
-- [On-premises] Allow disabling of TLS for SMTP
-- [On-premises] Making k8s access mode for IDE pods an environment variable
-- [Security] Force session cookie to be secure
-- Make api and admin modules flake8 complaint
+- Добавлен dbt 0.17.2
+- Добавлен dbt 0.18.0 beta 2
+- Добавлено разрешение конфликтов слияния, рабочий процесс слияния и рабочий процесс отмены слияния в IDE
+- Устаревание версий dbt до 0.13.0
+- Рефакторинг для сокращения времени цикла планировщика заданий
+- Сокращение дополнительных вызовов базы данных в цикле планировщика заданий
+- [On-premises] Разрешить клиентам отключать аутентификацию для SMTP
+- [On-premises] Разрешить отключение TLS для SMTP
+- [On-premises] Сделать режим доступа k8s для подов IDE переменной окружения
+- [Security] Принудительное использование защищенного сеансового cookie
+- Сделать модули api и admin соответствующими flake8
 
-#### Fixed
+#### Исправления
 
-- Fix incorrect usage of `region_name` in KMS client
-- Fix a call to a deprecated Github API
-- Remove extraneous billing API calls during job scheduler loop
-- Fix error where refreshing the IDE would leave running dbt processes in a bad state
+- Исправлено неправильное использование `region_name` в клиенте KMS
+- Исправлен вызов устаревшего API Github
+- Удалены лишние вызовы API выставления счетов во время цикла планировщика заданий
+- Исправлена ошибка, когда обновление IDE оставляло работающие процессы dbt в плохом состоянии
 
 
-## dbt Cloud v1.1.4 (July 21, 2020)
+## dbt Cloud v1.1.4 (21 июля 2020)
 
-This release dramatically speeds up the job scheduler. It adds a new
-stable dbt version (0.17.1) and a new prerelease (0.17.2b1), and it
-includes a number of bugfixes.
+Этот релиз значительно ускоряет планировщик заданий. Он добавляет новую стабильную версию dbt (0.17.1) и новую предварительную версию (0.17.2b1), а также включает в себя множество исправлений ошибок.
 
-#### Enhancements
+#### Улучшения
 
-- Add dbt 0.17.2b1
-- Add dbt 0.17.1 and set as default version
-- Speed up job scheduler by 50%
-- Added generate docs to rpc service and new view docs route
-- Queue limiting by account for scheduled jobs
+- Добавлен dbt 0.17.2b1
+- Добавлен dbt 0.17.1 и установлен как версия по умолчанию
+- Ускорение планировщика заданий на 50%
+- Добавлена генерация документации для rpc-сервиса и новый маршрут просмотра документации
+- Ограничение очереди по аккаунту для запланированных заданий
 
-#### Fixed
+#### Исправления
 
-- Fix enterprise SSO configuration when old Auth0 Azure AD is configured
-- Do not schedule jobs for deleted job definitions or environments
-- Fix permissions issues
-- Fix a bug with metadata set in azure storage provider
-- Fixed error when switching to developer plan from trial
-- Fix authentication bug where we setup all accounts with same domain
-- \[Security\] Add security check to prevent potentially malicious html files in dbt docs
+- Исправление конфигурации SSO для предприятий, когда настроен старый Auth0 Azure AD
+- Не планировать задания для удаленных определений заданий или окружений
+- Исправление проблем с разрешениями
+- Исправление ошибки с метаданными, установленными в провайдере хранилища azure
+- Исправление ошибки при переходе на план разработчика из пробного
+- Исправление ошибки аутентификации, когда мы настраиваем все аккаунты с одним и тем же доменом
+- \[Security\] Добавление проверки безопасности для предотвращения потенциально вредоносных html-файлов в документах dbt
 
 
-## dbt Cloud v1.1.3 (July 7, 2020)
+## dbt Cloud v1.1.3 (7 июля 2020)
 
-This release contains a number of IDE features and bugfixes, a new release candidate of dbt, and a brand new Enterprise Single-Sign On method: Azure Active Directory!
+Этот релиз содержит множество функций IDE и исправлений ошибок, новую кандидатную версию dbt и совершенно новый метод единого входа для предприятий: Azure Active Directory!
 
-#### Enhancements
+#### Улучшения
 
-- Add dbt 0.17.1rc3
-- Snowflake: Add support for `client_session_keep_alive` config
-- Enterprise: Native Azure Oauth2 for Enterprise accounts
-- IDE: Add custom command palette for finding files
+- Добавлен dbt 0.17.1rc3
+- Snowflake: добавлена поддержка конфигурации `client_session_keep_alive`
+- Enterprise: нативный Azure Oauth2 для корпоративных аккаунтов
+- IDE: добавлен пользовательский командный палитра для поиска файлов
 
-#### Fixed
+#### Исправления
 
-- Do not run CI builds for draft PRs in GitHub
-- Remove race condition when syncing account with stripe billing events
-- Enterprise: Fixed JIT provisioning bug impacting accounts with shared IdP domains
-- IDE: Fix a regression with Github git clone method
-- IDE: Fix a race condition where git clone didn't complete before user entered IDE
-- IDE: Fix bug with checking out an environment custom branch on IDE refresh
-- Bigquery: Fix PR schema dropping
+- Не запускать CI сборки для черновиков PR в GitHub
+- Устранение состояния гонки при синхронизации аккаунта с событиями выставления счетов Stripe
+- Enterprise: исправление ошибки JIT-прProvisioning, влияющей на аккаунты с общими доменами IdP
+- IDE: исправление регрессии с методом git clone GitHub
+- IDE: исправление состояния гонки, когда git clone не завершался до того, как пользователь вошел в IDE
+- IDE: исправление ошибки с проверкой пользовательской ветки окружения при обновлении IDE
+- Bigquery: исправление удаления схем PR
 
 
-## dbt Cloud v1.1.2 (June 23, 2020)
+## dbt Cloud v1.1.2 (23 июня 2020)
 
-This branch includes an important security fix, two new versions of dbt, and some miscellaneous fixes.
+Этот релиз включает в себя важное исправление безопасности, две новые версии dbt и несколько различных исправлений.
 
-#### Enhancements
+#### Улучшения
 
-- Add project names to the account settings notifications section
-- Add dbt 0.17.1 release candidate
-- Update development dbt version to Marian Anderson
-- Add remember me to login page and expire user sessions at browser close
-- Adding Auth Provider and enabling Gsuite SSO for enterprise customers
+- Добавить имена проектов в раздел уведомлений настроек аккаунта
+- Добавлен кандидат на релиз dbt 0.17.1
+- Обновление версии разработки dbt до Marian Anderson
+- Добавление функции "запомнить меня" на страницу входа и истечение сеансов пользователей при закрытии браузера
+- Добавление провайдера аутентификации и включение Gsuite SSO для корпоративных клиентов
 
-#### Fixed
+#### Исправления
 
-- \[Security\] Fix intra-account API key leakage
-- Support queries containing unicode characters in the IDE
+- \[Security\] Исправление утечки API-ключа между аккаунтами
+- Поддержка запросов, содержащих символы unicode в IDE
 
 
-## dbt Cloud v1.1.1 (June 9, 2020)
+## dbt Cloud v1.1.1 (9 июня 2020)
 
-This release includes dbt 0.17.0 and a number of IDE quality of life improvements.
+Этот релиз включает в себя dbt 0.17.0 и множество улучшений качества жизни в IDE.
 
-#### Enhancements
+#### Улучшения
 
-- Added dbt 0.17.0
-- Added the ability to create a new folder in the IDE
-- Added gitignore status to file system and display dbt artifacts, including directories dbt_modules, logs and target
-- (Cloud only) Added rollbar and update some various error handling clean up
-- (On-premises only) Admin site: allow Repository's Pull Request Template field to be blank
-- (On-premises only) Added AWS KMS support
+- Добавлен dbt 0.17.0
+- Добавлена возможность создавать новую папку в IDE
+- Добавлен статус gitignore к файловой системе и отображение артефактов dbt, включая директории dbt_modules, логи и целевые
+- (Только Cloud) Добавлен rollbar и обновлены различные обработки ошибок
+- (Только on-premises) Админский сайт: разрешить полю шаблона запроса на вытягивание репозитория быть пустым
+- (Только on-premises) Добавлена поддержка AWS KMS
 
-#### Fixed
+#### Исправления
 
-- Expires old pending password reset codes when a new password reset is requested
+- Истечение старых ожидающих кодов сброса пароля, когда запрашивается новый сброс пароля
 
 
-## dbt Cloud v1.1.0 (June 2, 2020)
+## dbt Cloud v1.1.0 (2 июня 2020)
 
-This release adds some new admin backend functionality, as well as automatic seat usage reporting.
+Этот релиз добавляет новую функциональность админского бэкенда, а также автоматическую отчетность о использовании мест.
 
-### On-Premises Only
+### Только для On-Premises
 
-#### Added
+#### Добавлено
 
-- Added automatic reporting of seat usage.
+- Добавлена автоматическая отчетность о использовании мест.
 
-#### Changed
+#### Изменено
 
-- Admins can now edit remote URLs for repository in the admin backend.
-- Admins can now edit credentials in the admin backend.
+- Администраторы теперь могут редактировать удаленные URL-адреса для репозитория в админском бэкенде.
+- Администраторы теперь могут редактировать учетные данные в админском бэкенде.
 
 ---
 
-## dbt Cloud v1.0.12 (May 27, 2020)
+## dbt Cloud v1.0.12 (27 мая 2020)
 
-This release contains a few bugfixes for the IDE and email notifications, as well as the latest release candidate of 0.17.0.
+Этот релиз содержит несколько исправлений ошибок для IDE и уведомлений по электронной почте, а также последнюю кандидатную версию 0.17.0.
 
-### All versions
+### Все версии
 
-#### Added
+#### Добавлено
 
-- Use the correct starter project tag, based on dbt version, when initializing a new project in the IDE
-- Added branch filtering to IDE git checkout UI.
-- Added dbt 0.17.0-rc3.
+- Используйте правильный тег стартового проекта, основанный на версии dbt, при инициализации нового проекта в IDE
+- Добавлено фильтрация веток в интерфейсе git checkout IDE.
+- Добавлен dbt 0.17.0-rc3.
 
-#### Fixed
+#### Исправления
 
-- Fixed source freshness report for dbt version v0.17.0
-- Fixed issue with checking-out git branches
-- Fixed issue of logs being omitted on long running queries in the IDE
-- Fixed slack notifications failing to send if email notifications fail
+- Исправлен отчет о свежести источника для версии dbt v0.17.0
+- Исправлена проблема с проверкой git-веток
+- Исправлена проблема с отсутствием логов при длительных запросах в IDE
+- Исправлена ошибка отправки уведомлений в slack, если уведомления по электронной почте не отправляются
 
-### On-Premises Only
+### Только для On-Premises
 
-#### Added
+#### Добавлено
 
-- Added an Admin page for deleting credentials.
-
----
-
-## dbt Cloud v1.0.11 (May 19, 2020)
-
-This version adds some new permission sets, and a new release candidate of dbt.
-
-### All versions
-
-#### Added
-
-- Added permission sets for Job Viewer, Job Admin and Analyst.
-- Added dbt 0.17.0-rc1
+- Добавлена страница администратора для удаления учетных данных.
 
 ---
 
-## dbt Cloud v1.0.10 (May 11, 2020)
+## dbt Cloud v1.0.11 (19 мая 2020)
 
-### All versions
+Эта версия добавляет новые наборы разрешений и новую кандидатную версию dbt.
 
-#### Added
+### Все версии
 
-- Added dbt 0.17.0-b1.
-- PR Url is now self serve configurable.
-- Added more granular permissions around creating and deleting permissions. (Account Admin can create new projects by default while both Account Admin and Project Admin can delete the projects they have permissions for by default)
-- Added an error message to display to users that do not have permissions set up for any projects on an account.
+#### Добавлено
 
-#### Fixed
-
-- Removed .sql from csv download filename
-- Fixed breaking JobDefinition API with new param custom_branch_only
-- Fixed IDE query table column heading casing
+- Добавлены наборы разрешений для Job Viewer, Job Admin и Analyst.
+- Добавлен dbt 0.17.0-rc1
 
 ---
 
-## dbt Cloud v1.0.9 (May 5, 2020)
+## dbt Cloud v1.0.10 (11 мая 2020)
 
-This release includes bugfixes around how permissions are applied to runs and run steps, fixes a bug where the scheduler would hang up, and improves performance of the IDE.
+### Все версии
 
-### All versions
+#### Добавлено
 
-#### Fixed
+- Добавлен dbt 0.17.0-b1.
+- URL PR теперь можно настраивать самостоятельно.
+- Добавлены более детализированные разрешения для создания и удаления разрешений. (Администратор аккаунта может создавать новые проекты по умолчанию, в то время как как администратор аккаунта, так и администратор проекта могут удалять проекты, для которых у них есть разрешения по умолчанию)
+- Добавлено сообщение об ошибке для отображения пользователям, у которых не настроены разрешения для каких-либо проектов в аккаунте.
 
-- Fixed permission checks around Runs and Run Steps, this should only affect Enterprise accounts with per-project permissions.
-- Fixed receiving arbitrary remote_url when creating a git url repository.
-- Fixed issue when handling non-resource specific errors from RPC server in IDE.
-- Fixed a bug where the scheduler would stop if the database went away.
-- Fixed IDE query results <Term id="table" /> not supporting horizontal scrolling.
+#### Исправления
 
-#### Changed
-
-- Improve IDE query results performance.
-- Allow configuration on jobs to only run builds when environment target branch is env's custom branch.
-- Allow configuration of GitHub installation IDs in the admin backend.
-
-### On-Premises Only
-
-#### Fixed
-
-- Fixed logic error for installations with user/password auth enabled in an on-premises context
+- Удалено .sql из имени файла при загрузке csv
+- Исправлен разрыв API JobDefinition с новым параметром custom_branch_only
+- Исправлена заглавная буква заголовка столбца таблицы запроса IDE
 
 ---
 
-## dbt Cloud v1.0.8 (April 28, 2020)
+## dbt Cloud v1.0.9 (5 мая 2020)
 
-This release adds a new version of dbt (0.16.1), fixes a number of IDE bugs, and fixes some dbt Cloud on-premises bugs.
+Этот релиз включает в себя исправления ошибок, касающиеся того, как разрешения применяются к запускам и шагам запуска, исправляет ошибку, из-за которой планировщик зависал, и улучшает производительность IDE.
 
-### All versions
+### Все версии
 
-#### Added
+#### Исправления
 
-- Add dbt 0.16.1
+- Исправлены проверки разрешений для запусков и шагов запуска, это должно затронуть только корпоративные аккаунты с разрешениями на уровне проекта.
+- Исправлено получение произвольного remote_url при создании git url репозитория.
+- Исправлена проблема при обработке ошибок, не относящихся к ресурсам, от RPC-сервера в IDE.
+- Исправлена ошибка, из-за которой планировщик останавливался, если база данных исчезала.
+- Исправлены результаты запросов IDE <Term id="table" /> без поддержки горизонтальной прокрутки.
 
-#### Fixed
+#### Изменено
 
-- Fixed IDE filesystem loading to check for directories to ensure that load and write methods are only performed on files.
-- Fixed a bug with generating private keys for connection SSH tunnels.
-- Fixed issue preventing temporary PR schemas from being dropped when PR is closed.
-- Fix issues with IDE tabs not updating query compile and run results.
-- Fix issues with query runtime timer in IDE for compile and run query functions.
-- Fixed what settings are displayed on the account settings page to allign with the user's permissions.
-- Fixed bug with checking user's permissions in frontend when user belonged to more than one project.
-- Fixed bug with access control around environments and file system/git interactions that occurred when using IDE.
-- Fixed a bug with Environments too generously matching repository.
+- Улучшена производительность результатов запросов IDE.
+- Разрешить конфигурацию заданий для выполнения сборок только тогда, когда целевая ветка окружения является пользовательской веткой окружения.
+- Разрешить конфигурацию идентификаторов установок GitHub в админском бэкенде.
 
-#### Changed
+### Только для On-Premises
 
-- Make the configured base branch in the IDE read-only.
-- Support configuring groups using an account ID in the admin backend.
-- Use gunicorn webserver in IDE.
-- Allow any repository with a Github installation ID to use build-on-PR.
-- Member and Owner Groups are now editable from admin UI.
+#### Исправления
 
-### On-Premises Only
-
-#### Fixed
-
-- Fixed an issue where account license counts were not set correctly from onprem license file.
-- Fixed an issue where docs would sometimes fail to load due to a server error.
+- Исправлена логическая ошибка для установок с включенной аутентификацией пользователя/пароля в контексте on-premises
 
 ---
 
-## dbt Cloud v1.0.7 (April 13, 2020)
+## dbt Cloud v1.0.8 (28 апреля 2020)
 
-This release rolls out a major change to how permissions are applied in dbt Cloud's API. It also adds some minor bugfixes, and some tooling for improved future QA.
+Этот релиз добавляет новую версию dbt (0.16.1), исправляет множество ошибок IDE и исправляет некоторые ошибки dbt Cloud on-premises.
 
-### All versions
+### Все версии
 
-#### Added
+#### Добавлено
 
-- Added support to permission connections on a per project basis.
-- Added support to permission credentials on a per project basis.
-- Added support to permission repositories on a per project basis.
-- Smoke tests for account signup, user login and basic project setup
-- Add dbt 0.16.1rc1
-- Non-enterprise users can now add new accounts from the Accounts dropdown.
+- Добавлен dbt 0.16.1
 
-#### Fixed
+#### Исправления
 
-- Fix missing migration for credentials.
-- Fixed issue with testing connections with a non-default target name specified in the credentials.
-- Fix issue where Bigquery connections could be created with invalid values for `location`.
+- Исправлена загрузка файловой системы IDE для проверки директорий, чтобы гарантировать, что методы загрузки и записи выполняются только для файлов.
+- Исправлена ошибка с генерацией закрытых ключей для SSH-туннелей подключения.
+- Исправлена проблема, предотвращающая удаление временных схем PR при закрытии PR.
+- Исправлены проблемы с обновлением вкладок IDE, не обновляющими результаты компиляции и выполнения запросов.
+- Исправлены проблемы с таймером времени выполнения запросов в IDE для функций компиляции и выполнения запросов.
+- Исправлено, какие настройки отображаются на странице настроек аккаунта, чтобы соответствовать разрешениям пользователя.
+- Исправлена ошибка с проверкой разрешений пользователя на фронтенде, когда пользователь принадлежал к более чем одному проекту.
+- Исправлена ошибка с контролем доступа к окружениям и взаимодействиями с файловой системой/git, которые возникали при использовании IDE.
+- Исправлена ошибка с окружениями, слишком щедро соответствующими репозиторию.
 
----
+#### Изменено
 
-## dbt Cloud v1.0.6 (March 30, 2020)
+- Сделать настроенную базовую ветку в IDE только для чтения.
+- Поддержка настройки групп с использованием идентификатора аккаунта в админском бэкенде.
+- Использовать веб-сервер gunicorn в IDE.
+- Разрешить любому репозиторию с идентификатором установки GitHub использовать сборку на PR.
+- Группы участников и владельцев теперь можно редактировать из интерфейса администратора.
 
-This release adds UIs to select group permissions in the project settings UI. It also contains bugfixes for the IDE, PR build schema dropping, and adds support for dissociating Github and Slack integrations via the Admin backend.
+### Только для On-Premises
 
-### All versions
+#### Исправления
 
-#### Added
-
-- (Enterprise only) Added ability to create group permissions for specific projects in the project settings UI.
-
-#### Fixed
-
-- Fix empty state for selecting github repositories
-- Fixed an issue with the IDE failing to report an invalid project subdirectory for a dbt project
-- Fix blank loading screen displayed when switching accounts while on account/profile settings page
-- Fix issue preventing schemas from dropping during PR builds
-- Fix issue where whitespace in user's name breaks default schema name
-- Added webhook processing for when a user disassociates github access to their account.
-- Added slack disassociation capability on user integrations page and on backend admin panel (for notifications).
-
-#### Changed
-
-- Declare application store using configureStore from redux-toolkit
+- Исправлена проблема, когда количество лицензий аккаунта не устанавливалось правильно из файла лицензии on-premises.
+- Исправлена проблема, когда документация иногда не загружалась из-за ошибки сервера.
 
 ---
 
-## dbt Cloud v1.0.5 (March 23, 2020)
+## dbt Cloud v1.0.7 (13 апреля 2020)
 
-### All versions
+Этот релиз вводит значительное изменение в то, как разрешения применяются в API dbt Cloud. Он также добавляет некоторые незначительные исправления ошибок и инструменты для улучшения будущего контроля качества.
 
-#### Added
+### Все версии
 
-- Add support for authenticating Development and Deployment Snowflake credentials using keypair auth
-- Add support for checking out tags, render git output in "clone" run step
-- Add dbt 0.15.3
-- Add dbt 0.16.0
+#### Добавлено
 
-#### Fixed
+- Добавлена поддержка разрешения подключений на уровне проекта.
+- Добавлена поддержка разрешения учетных данных на уровне проекта.
+- Добавлена поддержка разрешения репозиториев на уровне проекта.
+- Тесты на дым для регистрации аккаунта, входа пользователя и базовой настройки проекта
+- Добавлен dbt 0.16.1rc1
+- Пользователи, не относящиеся к предприятию, теперь могут добавлять новые аккаунты из выпадающего списка аккаунтов.
 
-- Git provider urls now built with correct github account and repository directories.
-- Invalid DateTime Start time in IDE Results Panel KPIs.
-- Fix a race condition causing the Invite User UI to not work properly.
-- Incorrect model build times in IDE.
+#### Исправления
 
-#### Changed
-
-- Git: ignore `logs/` and `target/` directories in the IDE.
-
----
-
-## 1.0.4 (March 16, 2020)
-
-This release adds two new versions of dbt, adds Snowflake SSO support for Enterprise accounts, and fixes a number of bugs.
-
-### All versions
-
-#### Added
-
-- Added dbt 0.15.3rc1
-- Added dbt 0.16.0rc2
-- Add support for cloning private deps in the IDE when using deploy key auth.
-- Log user that kicked off manual runs.
-- Enterprise support for authenticating user Snowflake connections using Snowflake single sign-on
-
-#### Fixed
-
-- Fixed issue loading accounts for a user if they lack permissions for any subset of accounts they have a user license for.
-- Fixed issue with showing blank page for user who is not associated with any accounts.
-- Fixed issue where runs would continue to kick off on a deleted project.
-- Fixed issue where accounts connected to GitHub integrations with SAML protection could not import repositories
-- Improved error messages shown to the user if repos are unauthorized in a GitHub integration when importing a repo
-- Fix colors of buttons in generated emails
-
-### On-Premises
-
-#### Added
-
-- Added Admin backend UIs for managing user permissions.
+- Исправлена отсутствующая миграция для учетных данных.
+- Исправлена проблема с тестированием подключений с указанным именем цели, отличным от значения по умолчанию.
+- Исправлена проблема, когда подключения Bigquery могли быть созданы с недопустимыми значениями для `location`.
 
 ---
 
-## 1.0.3 (March 1, 2020)
+## dbt Cloud v1.0.6 (30 марта 2020)
 
-This release contains the building blocks for RBAC, and a number of bugfixes and upgrades.
+Этот релиз добавляет интерфейсы для выбора разрешений групп в интерфейсе настроек проекта. Он также содержит исправления ошибок для IDE, удаления схем сборки PR и добавляет поддержку разъединения интеграций GitHub и Slack через админский бэкенд.
 
-### All versions
+### Все версии
 
-#### Added
+#### Добавлено
 
-- Add support for a read replica for reading runs from the API.
-- Added groups, group permissions, and user groups.
-- Add email address to email verification screen.
-- Add Enterprise Permissions.
-- Allow account-level access to resources for groups with a permission statement of "all resources" for api backwards compatibility.
-- Add dbt 0.16.0b3
+- (Только для Enterprise) Добавлена возможность создавать групповые разрешения для конкретных проектов в интерфейсе настроек проекта.
 
-#### Fixed
+#### Исправления
 
-- Fix issue with loading projects after switching accounts.
-- Fix broken links to connections from deployment environment settings.
-- Fix a bug with inviting readonly users.
-- Fix a bug where permissions were removed from Enterprise users upon login.
+- Исправление пустого состояния для выбора репозиториев github
+- Исправлена проблема с тем, что IDE не сообщала о недопустимом подкаталоге проекта для проекта dbt
+- Исправлена пустая загрузка, отображаемая при переключении аккаунтов на странице настроек аккаунта/профиля
+- Исправлена проблема, предотвращающая удаление схем во время сборок PR
+- Исправлена проблема, когда пробелы в имени пользователя нарушали имя схемы по умолчанию
+- Добавлена обработка вебхуков для случаев, когда пользователь разъединяет доступ к github к своему аккаунту.
+- Добавлена возможность разъединения slack на странице интеграций пользователей и на панели администратора (для уведомлений).
 
-#### Changed
+#### Изменено
 
-- Update Django version: 2.2.10
-- Update Django admin panel version
-- Update Social Auth version and the related Django component
-- Update jobs from using account-based resource permissions to project-based resource permissions
-- Update modal that shows when trials are expired; fix copy for past-due accounts in modal
-- Replace formatted string logging with structured logging
-- Move connection and repository settings from account settings to project settings
-- Update project setup flow to be used for creating projects
-- Update develop requests to have a foreign key on projects
-
-### On-Premises
-
-#### Added
-
-- Accounts created from admin backend will come with a default set of groups
-
-#### Changed
-
-- Rename "Fishtown Analytics User" to "Superuser"
+- Объявить хранилище приложения, используя configureStore из redux-toolkit
 
 ---
 
-## dbt Cloud v1.0.2 (February 20, 2020)
+## dbt Cloud v1.0.5 (23 марта 2020)
 
-This release contains a number of package upgrades, and a number of bugfixes.
+### Все версии
 
-### All versions
+#### Добавлено
 
-#### Added
+- Добавлена поддержка аутентификации учетных данных Snowflake для разработки и развертывания с использованием аутентификации по ключевой паре
+- Добавлена поддержка проверки тегов, отображение вывода git в шаге выполнения "clone"
+- Добавлен dbt 0.15.3
+- Добавлен dbt 0.16.0
 
-- Add request context data to logs
-- Comprehensive logging for git subprocesses
+#### Исправления
 
-#### Fixed
+- URL-адреса поставщика git теперь формируются с правильным аккаунтом GitHub и директориями репозитория.
+- Неверное время начала DateTime в панели KPI результатов IDE.
+- Исправлена ошибка состояния гонки, из-за которой интерфейс приглашения пользователя не работал должным образом.
+- Неверное время сборки модели в IDE.
 
-- Fix an issue where the "Cancel Run" button does not work
-- Fix warnings regarding mutable resource model defaults for jobs and job notifications
-- Fix bug where users can create multiple connection user credentials through the project setup workflow
-- Update auth for requests against Github's api from using query parameters to using an Authorization header
-- Remove unused threads input from deployment environments
-- Fix issue that prevented user from viewing documentation and data sources
-- Fix issue rendering code editor panel in the IDE when using Safari
-- Fix issue with log levels that caused dbt logs to be too chatty
+#### Изменено
 
-#### Changed
-
-- Update Django version: 2.2.10
-- Update Django admin panel version
-- Update Social Auth version and the related Django component
-- Update jobs from using account-based resource permissions to project-based resource permissions
-- Update modal that shows when trials are expired; fix copy for past-due accounts in modal
-- Replace formatted string logging with structured logging
-- Move connection and repository settings from account settings to project settings
-- Update project setup flow to be used for creating projects
-
-#### Removed
-
-None.
+- Git: игнорировать директории `logs/` и `target/` в IDE.
 
 ---
 
-## dbt Cloud v1.0.1 (February 4, 2020)
+## 1.0.4 (16 марта 2020)
 
-This release makes the IDE generally available, and adds two new versions of dbt (0.15.1, 0.15.2).
+Этот релиз добавляет две новые версии dbt, добавляет поддержку SSO Snowflake для корпоративных аккаунтов и исправляет множество ошибок.
 
-For on-premises customers, there is a new set of configurations in the configuration console:
+### Все версии
 
-SMTP: You can now configure dbt Cloud to send email notifications through your own SMTP server.
+#### Добавлено
 
-RSA Encryption: You can now provide your own RSA keypair for dbt Cloud to use for encryption.
+- Добавлен dbt 0.15.3rc1
+- Добавлен dbt 0.16.0rc2
+- Добавлена поддержка клонирования частных зависимостей в IDE при использовании аутентификации по ключу развертывания.
+- Логирование пользователя, который запустил ручные запуски.
+- Корпоративная поддержка аутентификации пользовательских подключений Snowflake с использованием единого входа Snowflake
 
-These fields need to be specified for your instance of dbt Cloud to function properly.
+#### Исправления
 
-### All versions
+- Исправлена проблема загрузки аккаунтов для пользователя, если у него нет разрешений для какой-либо подгруппы аккаунтов, для которых у него есть лицензия пользователя.
+- Исправлена проблема с отображением пустой страницы для пользователя, который не связан с какими-либо аккаунтами.
+- Исправлена проблема, когда запуски продолжали инициироваться на удаленном проекте.
+- Исправлена проблема, когда аккаунты, подключенные к интеграциям GitHub с защитой SAML, не могли импортировать репозитории
+- Улучшены сообщения об ошибках, отображаемые пользователю, если репозитории не авторизованы в интеграции GitHub при импорте репозитория
+- Исправлены цвета кнопок в сгенерированных электронных письмах
 
-#### Added
+### Только для On-Premises
 
-- New Team List page
-- New Team User Detail page
-- New Invite User page
-- New dashboard for Read Only users
-- New dbt version: 0.15.1
-- New dbt version: 0.15.2
-- Ability to rename files in IDE
-- New backend service for project-based resource permissions
+#### Добавлено
 
-#### Fixed
-
-- Fix an issue where the user has to repeat steps in the onboarding flow
-- Fix issue where user can get stuck in the onboarding flow
-- Fix bug where email notifications could be sent to deleted users
-- Fix UI bug not allowing user to check "Build on pull request?" when creating a job
-- Fix UI bug in header of the Edit User page
-- Fix issue that did not take into account pending invites and license seats when re-sending a user invite.
-- Fix an issue when processing Github webhooks with unconfigured environments
-- Fix console warning presented when updating React state from unmounted component
-- Fix issue where closed tabs would continue to be shown, though the content was removed correctly
-- Fix issue that prevented opening an adjacent tab when a tab was closed
-- Fix issue creating BigQuery connections causing the the account connections list to not load correctly.
-- Fix for locked accounts that have downgraded to the developer plan at trial end
-- Fix for not properly showing server error messages on the user invite page
-
-#### Changed
-
-- Deployed a number of IDE visual improvements
-- Batch logs up every 5 seconds instead of every second to improve database performance
-- Make `retries` profile configuration for BigQuery connections optional
-- Support `retries` profile configuration for BigQuery connections (new in dbt v0.15.1)
-- Replace Gravatar images with generic person icons in the top navbar
-- Remove deprecated account subscription models
-- Remove external JS dependencies
-
-#### Removed
-
-- Remove the "read only" role (this is now a "read only" license type)
-- Remove the "standard" license type
-- Remove "beta" tag from dbt IDE
-- Remove unused frontend code (team page/create repository page and related services)
-
-### Self-Service
-
-#### Fixed
-
-- Fix for locked accounts that have downgraded to the developer plan at trial end
-
-#### Added
-
-- New Plans page
-- Add a 14 day free trial
-- Add the ability to provision a new repository via dbt Cloud
-- New Invite Team step for project setup process for trial accounts
-
-#### Changed
-
-- The "Basic" and "Pro" plans are no longer available. The new "Developer" and "Team" plans are available.
-- Prorations are now charged immediately, instead of applied to the next billing cycle.
-- It is no longer possible to downgrade to a plan that does not support the current number of allocated seats.
-- A "Team" plan that has been cancelled will be locked (closed) at the end of the subscription's period
-
-### On-Premises
-
-#### Added
-
-- Support custom SMTP settings
-- Support Azure Blob Storage for run logs + artifacts
-- Optionally disable anonymous usage tracking
+- Добавлены интерфейсы админского бэкенда для управления разрешениями пользователей.
 
 ---
 
-## dbt Cloud v0.5.0 (December 19, 2019)
+## 1.0.3 (1 марта 2020)
 
-This release preps dbt Cloud for the general IDE release in January. Beta IDE functionality can be turned on by checking "Develop file system" in the Accounts page in the dbt Cloud backend.
+Этот релиз содержит строительные блоки для RBAC, а также множество исправлений ошибок и обновлений.
 
-### All versions
+### Все версии
 
-#### Added
+#### Добавлено
 
-- New dbt version: 0.14.2
-- New dbt version: 0.14.3
-- New dbt version: 0.14.4
-- New dbt version: 0.15.0
-- New API endpoint: v3/projects
-- New API endpoint: v3/credentials
-- New API endpoint: v3/environments
-- New API endpoint: v3/events
-- IDE: Add git workflow UI
-- IDE: Add filesystem management
-- IDE: Hup the server when files change
-- IDE: Display server status and task history
-- Added development and deployment environments and credentials
-- Support `--warn-error` flag in dbt runs
+- Добавлена поддержка реплики для чтения запусков из API.
+- Добавлены группы, групповые разрешения и пользовательские группы.
+- Добавлен адрес электронной почты на экран проверки электронной почты.
+- Добавлены корпоративные разрешения.
+- Разрешить доступ на уровне аккаунта к ресурсам для групп с заявлением о разрешении "все ресурсы" для обратной совместимости API.
+- Добавлен dbt 0.16.0b3
 
-#### Fixed
+#### Исправления
 
-- Fixed an issue where the run scheduler would hang up when deleting PR schemas
-- Fixed an issue where the webhook processor would mark a webhook as processed without queuing a run
-- Fix a bug where SSH tunnels were not created for the Develop IDE
-- Fix Develop IDE scrolling in Firefox
-- Fix a bug where requests were timed out too aggressively
-- Require company name at signup
-- Fix security issue where IP blacklist could be bypassed using shorthand
-- Do a better job of handling git errors
-- Allow users to delete projects
+- Исправлена проблема с загрузкой проектов после переключения аккаунтов.
+- Исправлены неработающие ссылки на подключения из настроек среды развертывания.
+- Исправлена ошибка с приглашением пользователей с правами только на чтение.
+- Исправлена ошибка, когда разрешения были удалены у пользователей Enterprise при входе в систему.
 
-#### Changed
+#### Изменено
 
-- Move account picker to sidebar
-- Increase require.js timeout from 7s to 30s
-- Migrate environments to projects
-- Move some UIs into Account Settings
-- Make cron scheduling available on the free tier
-- Apply new styles to IDE
-- Speed up develop
+- Обновление версии Django: 2.2.10
+- Обновление версии панели администратора Django
+- Обновление версии Social Auth и связанного компонента Django
+- Обновление заданий с использованием разрешений на уровне аккаунта на разрешения на уровне проекта
+- Обновление модального окна, которое отображается, когда пробные версии истекли; исправление текста для просроченных аккаунтов в модальном окне
+- Замена форматированной строковой записи на структурированное логирование
+- Перемещение настроек подключения и репозитория из настроек аккаунта в настройки проекта
+- Обновление потока настройки проекта для использования при создании проектов
+- Обновление запросов на разработку, чтобы иметь внешний ключ на проектах
+
+### Только для On-Premises
+
+#### Добавлено
+
+- Аккаунты, созданные из админского бэкенда, будут иметь набор групп по умолчанию
+
+#### Изменено
+
+- Переименование "Пользователь Fishtown Analytics" в "Суперпользователь"
+
+---
+
+## dbt Cloud v1.0.2 (20 февраля 2020)
+
+Этот релиз содержит множество обновлений пакетов и множество исправлений ошибок.
+
+### Все версии
+
+#### Добавлено
+
+- Добавление данных контекста запроса в логи
+- Комплексное логирование для git-подпроцессов
+
+#### Исправления
+
+- Исправлена проблема, когда кнопка "Отменить запуск" не работает
+- Исправлены предупреждения о изменяемых значениях по умолчанию для ресурсов моделей для заданий и уведомлений о заданиях
+- Исправлена ошибка, когда пользователи могут создавать несколько учетных данных пользователя подключения через рабочий процесс настройки проекта
+- Обновление аутентификации для запросов к API GitHub с использованием параметров запроса на использование заголовка авторизации
+- Удаление неиспользуемых входных потоков из сред развертывания
+- Исправлена проблема, которая не позволяла пользователю просматривать документацию и источники данных
+- Исправлена проблема с отображением панели редактора кода в IDE при использовании Safari
+- Исправлена проблема с уровнями логирования, из-за которой логи dbt были слишком многословными
+
+#### Изменено
+
+- Обновление версии Django: 2.2.10
+- Обновление версии панели администратора Django
+- Обновление версии Social Auth и связанного компонента Django
+- Обновление заданий с использованием разрешений на уровне аккаунта на разрешения на уровне проекта
+- Обновление модального окна, которое отображается, когда пробные версии истекли; исправление текста для просроченных аккаунтов в модальном окне
+- Замена форматированной строковой записи на структурированное логирование
+- Перемещение настроек подключения и репозитория из настроек аккаунта в настройки проекта
+
+#### Удалено
+
+Нет.
+
+---
+
+## dbt Cloud v1.0.1 (4 февраля 2020)
+
+Этот релиз делает IDE общедоступной и добавляет две новые версии dbt (0.15.1, 0.15.2).
+
+Для клиентов on-premises в консоли конфигурации есть новый набор конфигураций:
+
+SMTP: теперь вы можете настроить dbt Cloud для отправки уведомлений по электронной почте через ваш собственный SMTP-сервер.
+
+RSA Шифрование: теперь вы можете предоставить свою пару ключей RSA для использования dbt Cloud для шифрования.
+
+Эти поля необходимо указать для правильной работы вашей инстанции dbt Cloud.
+
+### Все версии
+
+#### Добавлено
+
+- Новая страница списка команд
+- Новая страница деталей пользователя команды
+- Новая страница приглашения пользователя
+- Новый дашборд для пользователей с правами только на чтение
+- Новая версия dbt: 0.15.1
+- Новая версия dbt: 0.15.2
+- Возможность переименовывать файлы в IDE
+- Новый бэкенд-сервис для разрешений на уровне проекта
+
+#### Исправления
+
+- Исправлена проблема, когда пользователю приходилось повторять шаги в процессе онбординга
+- Исправлена проблема, когда пользователь мог застрять в процессе онбординга
+- Исправлена ошибка, когда уведомления по электронной почте могли отправляться удаленным пользователям
+- Исправлена ошибка интерфейса, не позволяющая пользователю отметить "Собирать на запрос на вытягивание?" при создании задания
+- Исправлена ошибка интерфейса в заголовке страницы редактирования пользователя
+- Исправлена проблема, которая не учитывала ожидающие приглашения и лицензии при повторной отправке приглашения пользователю.
+- Исправлена проблема при обработке вебхуков GitHub с неконфигурированными окружениями
+- Исправлено предупреждение консоли, представленное при обновлении состояния React из размонтированного компонента
+- Исправлена проблема, когда закрытые вкладки продолжали отображаться, хотя содержимое было правильно удалено
+- Исправлена проблема, которая не позволяла открывать соседнюю вкладку, когда вкладка была закрыта
+- Исправлена проблема создания подключений BigQuery, из-за которой список подключений аккаунта не загружался правильно.
+- Исправление для заблокированных аккаунтов, которые перешли на план разработчика по окончании пробного периода
+- Исправление для неправильного отображения сообщений об ошибках сервера на странице приглашения пользователя
+
+#### Изменено
+
+- Развернуто множество визуальных улучшений IDE
+- Пакетировать логи каждые 5 секунд вместо каждой секунды для улучшения производительности базы данных
+- Сделать конфигурацию `retries` для подключений BigQuery необязательной
+- Поддержка конфигурации `retries` для подключений BigQuery (новое в dbt v0.15.1)
+- Заменить изображения Gravatar на общие иконки людей в верхней навигационной панели
+- Удалить устаревшие модели подписки аккаунта
+- Удалить внешние зависимости JS
+
+#### Удалено
+
+- Удалить роль "только для чтения" (это теперь тип лицензии "только для чтения")
+- Удалить тип лицензии "стандартный"
+- Удалить тег "бета" из dbt IDE
+- Удалить неиспользуемый фронтенд-код (страница команды/страница создания репозитория и связанные сервисы)
+
+### Самообслуживание
+
+#### Исправления
+
+- Исправление для заблокированных аккаунтов, которые перешли на план разработчика по окончании пробного периода
+
+#### Добавлено
+
+- Новая страница планов
+- Добавление 14-дневного бесплатного пробного периода
+- Добавление возможности предоставить новый репозиторий через dbt Cloud
+- Новый шаг приглашения команды для процесса настройки проекта для пробных аккаунтов
+
+#### Изменено
+
+- Планы "Базовый" и "Профессиональный" больше недоступны. Теперь доступны новые планы "Разработчик" и "Команда".
+- Пропорции теперь взимаются немедленно, а не применяются к следующему расчетному циклу.
+- Теперь невозможно перейти на план, который не поддерживает текущее количество выделенных мест.
+- План "Команда", который был отменен, будет заблокирован (закрыт) в конце периода подписки
+
+### Только для On-Premises
+
+#### Добавлено
+
+- Поддержка пользовательских настроек SMTP
+- Поддержка Azure Blob Storage для журналов выполнения + артефактов
+- Опционально отключить анонимный сбор данных об использовании
+
+---
+
+## dbt Cloud v0.5.0 (19 декабря 2019)
+
+Этот релиз подготавливает dbt Cloud к общему релизу IDE в январе. Функциональность бета-IDE можно включить, отметив "Разработать файловую систему" на странице аккаунтов в бэкенде dbt Cloud.
+
+### Все версии
+
+#### Добавлено
+
+- Новая версия dbt: 0.14.2
+- Новая версия dbt: 0.14.3
+- Новая версия dbt: 0.14.4
+- Новая версия dbt: 0.15.0
+- Новый API-эндпоинт: v3/projects
+- Новый API-эндпоинт: v3/credentials
+- Новый API-эндпоинт: v3/environments
+- Новый API-эндпоинт: v3/events
+- IDE: добавлен интерфейс рабочего процесса git
+- IDE: добавлено управление файловой системой
+- IDE: перезагрузка сервера при изменении файлов
+- IDE: отображение статуса сервера и истории задач
+- Добавлены среды и учетные данные для разработки и развертывания
+- Поддержка флага `--warn-error` в запусках dbt
+
+#### Исправления
+
+- Исправлена проблема, когда планировщик запусков зависал при удалении схем PR
+- Исправлена проблема, когда процессор вебхуков помечал вебхук как обработанный, не ставя в очередь запуск
+- Исправлена ошибка, когда SSH-туннели не создавались для Develop IDE
+- Исправлена прокрутка Develop IDE в Firefox
+- Исправлена ошибка, когда запросы слишком агрессивно превышали время ожидания
+- Требовать название компании при регистрации
+- Исправление проблемы безопасности, когда черный список IP мог быть обойден с помощью сокращений
+- Улучшение обработки ошибок git
+- Разрешить пользователям удалять проекты
+
+---

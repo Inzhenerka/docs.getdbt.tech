@@ -1,125 +1,123 @@
 ---
-title: "About dbt Core versions"
+title: "О версиях dbt Core"
 id: "core"
-description: "Learn about semantic versioning for dbt Core, and how long those versions are supported."
+description: "Узнайте о семантическом версионировании для dbt Core и о том, как долго поддерживаются эти версии."
 pagination_next: "docs/dbt-versions/upgrade-dbt-version-in-cloud"
 pagination_prev: null
 ---
 
-dbt Core releases follow [semantic versioning](https://semver.org/) guidelines. For more on how we use semantic versions, see [How dbt Core uses semantic versioning](#how-dbt-core-uses-semantic-versioning). 
+Релизы dbt Core следуют рекомендациям [семантического версионирования](https://semver.org/). Для получения дополнительной информации о том, как мы используем семантические версии, смотрите [Как dbt Core использует семантическое версионирование](#how-dbt-core-uses-semantic-versioning).
 
-:::tip Release Tracks keep you up to date, always
+:::tip Трек релизов всегда держит вас в курсе
 
-_Did you know that you can always be working with the latest features and functionality?_ 
+_Знали ли вы, что вы всегда можете работать с последними функциями и возможностями?_
 
-With dbt Cloud, you can get early access to new functionality before it becomes available in dbt Core and without the need of managing your own version upgrades. Refer to the ["Latest" Release Track](/docs/dbt-versions/cloud-release-tracks) setting for details.
+С помощью dbt Cloud вы можете получить ранний доступ к новым функциям до их появления в dbt Core и без необходимости управлять собственными обновлениями версий. Смотрите настройки ["Последний" трек релизов](/docs/dbt-versions/cloud-release-tracks) для получения подробной информации.
 
 :::
 
-dbt Labs provides different support levels for different versions, which may include new features, bug fixes, or security patches:
+dbt Labs предоставляет разные уровни поддержки для различных версий, которые могут включать новые функции, исправления ошибок или патчи безопасности:
 
 <Snippet path="core-version-support" />
 
-
 <Snippet path="core-versions-table" />
 
-### Further reading
+### Дополнительные материалы
 
-- To learn how you can use dbt Core versions in dbt Cloud, see [Choosing a dbt Core version](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
-- To learn about installing dbt Core, see "[How to install dbt Core](/docs/core/installation-overview)."
-- To restrict your project to only work with a range of dbt Core versions, or use the currently running dbt Core version, see [`require-dbt-version`](/reference/project-configs/require-dbt-version) and [`dbt_version`](/reference/dbt-jinja-functions/dbt_version).
+- Чтобы узнать, как вы можете использовать версии dbt Core в dbt Cloud, смотрите [Выбор версии dbt Core](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Чтобы узнать о установке dbt Core, смотрите "[Как установить dbt Core](/docs/core/installation-overview)."
+- Чтобы ограничить ваш проект работой только с определенным диапазоном версий dbt Core или использовать текущую версию dbt Core, смотрите [`require-dbt-version`](/reference/project-configs/require-dbt-version) и [`dbt_version`](/reference/dbt-jinja-functions/dbt_version).
 
-## Version support prior to v1.0
+## Поддержка версий до v1.0
 
-All dbt Core versions released prior to 1.0 and their version-specific documentation have been deprecated. If upgrading to a currently supported version, reference our [best practices for upgrading](#best-practices-for-upgrading)
+Все версии dbt Core, выпущенные до 1.0, и их документация, специфичная для версий, были устаревшими. Если вы обновляетесь до текущей поддерживаемой версии, обратитесь к нашим [рекомендациям по обновлению](#best-practices-for-upgrading).
 
-## EOL version support 
+## Поддержка версий EOL
 
-All dbt Core minor versions that have reached end-of-life (EOL) will have no new patch releases. This means they will no longer receive any fixes, including for known bugs that have been identified. Fixes for those bugs will instead be made in newer minor versions that are still under active support.
+Все минорные версии dbt Core, которые достигли конца жизненного цикла (EOL), не будут иметь новых патч-релизов. Это означает, что они больше не будут получать исправления, включая известные ошибки. Исправления для этих ошибок будут сделаны в более новых минорных версиях, которые все еще находятся под активной поддержкой.
 
-We recommend upgrading to a newer version in [dbt Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud) or [dbt Core](/docs/core/installation-overview#upgrading-dbt-core) to continue receiving support. 
+Мы рекомендуем обновиться до более новой версии в [dbt Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud) или [dbt Core](/docs/core/installation-overview#upgrading-dbt-core), чтобы продолжать получать поддержку.
 
-All dbt Core v1.0 and later are available in dbt Cloud until further notice. In the future, we intend to align dbt Cloud availability with dbt Core ongoing support. You will receive plenty of advance notice before any changes take place.
+Все версии dbt Core v1.0 и более поздние доступны в dbt Cloud до дальнейшего уведомления. В будущем мы намерены согласовать доступность dbt Cloud с продолжающейся поддержкой dbt Core. Вы получите достаточно предварительного уведомления перед любыми изменениями.
 
+## Поддержка текущих версий
 
-## Current version support
+### Минорные версии
 
-### Minor versions
+Минорные версии включают новые функции и возможности. Они будут поддерживаться в течение одного года с момента их первоначального выпуска. _dbt Labs привержен этому 12-месячному сроку поддержки._ Наш механизм продолжения поддержки минорной версии заключается в выпуске новых патчей: небольших, целенаправленных исправлений ошибок. Каждый раз, когда мы упоминаем минорную версию, такую как v1.0, мы всегда имеем в виду ее последний доступный патч-релиз (v1.0.x).
 
-Minor versions include new features and capabilities. They will be supported for one year from their initial release date. _dbt Labs is committed to this 12-month support timeframe._ Our mechanism for continuing to support a minor version is by releasing new patches: small, targeted bug fixes. Whenever we refer to a minor version, such as v1.0, we always mean its latest available patch release (v1.0.x).
+Пока минорная версия официально поддерживается:
+- Вы можете использовать ее в dbt Cloud. Для получения дополнительной информации о версионировании dbt Cloud смотрите [Выбор версии dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Вы можете выбрать ее из выпадающего списка версий на этом сайте, чтобы увидеть документацию, которая актуальна для использования с этой минорной версией.
 
-While a minor version is officially supported:
-- You can use it in dbt Cloud. For more on dbt Cloud versioning, see [Choosing a dbt version](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
-- You can select it from the version dropdown on this website, to see documentation that is accurate for use with that minor version.
+### Текущие патчи
 
-### Ongoing patches
+В течение 12-месячного окна поддержки мы будем продолжать выпускать новые патч-версии, которые включают исправления.
 
-During the 12-month support window, we will continue to release new patch versions that include fixes.
+**Активная поддержка:** В первые несколько месяцев после первоначального выпуска минорной версии мы будем патчить ее с помощью релизов "исправлений ошибок". Эти релизы будут включать исправления для регрессий и новых ошибок, которые присутствовали в оригинальном выпуске минорной версии.
 
-**Active Support:** In the first few months after a minor version's initial release, we will patch it with "bugfix" releases. These will include fixes for regressions and net-new bugs that were present in the minor version's original release.
+**Критическая поддержка:** Когда станет доступна новая минорная версия, мы переведем предыдущую минорную версию в "Критическую поддержку". Последующие патчи для этой старой минорной версии будут только "безопасностными" релизами, ограниченными критическими исправлениями, связанными с безопасностью и установкой.
 
-**Critical Support:** When a newer minor version is available, we will transition the previous minor version into "Critical Support." Subsequent patches to that older minor version will be "security" releases only, limited to critical fixes related to security and installation.
+После того как минорная версия достигнет конца своего периода критической поддержки, через год после ее первоначального выпуска, новые патчи не будут выпускаться.
 
-After a minor version reaches the end of its critical support period, one year after its initial release, no new patches will be released.
+### Будущие версии
 
-### Future versions
+Для получения последней информации о предстоящих релизах, включая запланированные даты релиза и какие функции и исправления могут быть включены, смотрите [вехи репозитория `dbt-core`](https://github.com/dbt-labs/dbt-core/milestones) и [дорожные карты продукта](https://github.com/dbt-labs/dbt-core/tree/main/docs/roadmap).
 
-For the latest information about upcoming releases, including planned release dates and which features and fixes might be included, consult the [`dbt-core` repository milestones](https://github.com/dbt-labs/dbt-core/milestones) and [product roadmaps](https://github.com/dbt-labs/dbt-core/tree/main/docs/roadmap).
+## Рекомендации по обновлению
 
-## Best practices for upgrading
+Из-за нашей новой практики версионирования мы изложили лучшие практики и ожидания для пользователей dbt по обновлению, поскольку мы продолжаем выпускать новые версии dbt Core.
 
-Because of our new version practice, we've outlined best practices and expectations for dbt users to upgrade as we continue to release new versions of dbt Core.
+### Обновление до новых патч-версий
 
-### Upgrading to new patch versions
+Мы ожидаем, что пользователи будут обновляться до патчей, как только они станут доступны. Когда мы упоминаем "минорную версию" dbt Core, такую как v1.0, мы всегда имеем в виду последний доступный патч-релиз для этой минорной версии. Мы рекомендуем вам организовать ваши среды разработки и производства так, чтобы вы всегда могли устанавливать последние патчи `dbt-core` и любые адаптеры. (Обратите внимание, что номера патчей могут отличаться между `dbt-core` и плагинами. [Смотрите ниже](#how-we-version-adapter-plugins) для объяснения.)
 
-We expect users to upgrade to patches as soon as they're available. When we refer to a "minor version" of dbt Core, such as v1.0, we are always referring to the latest available patch release for that minor version. We encourage you to structure your development and production environments so that you can always install the latest patches of `dbt-core` and any adapter plugins. (Note that patch numbers may be different between dbt-core and plugins. [See below](#how-we-version-adapter-plugins) for an explanation.)
+### Обновление до новых минорных версий
 
-### Upgrading to new minor versions
+В течение официального периода поддержки минорные версии будут оставаться доступными в dbt Cloud и в выпадающем списке версий на сайте документации. Хотя мы не ожидаем, что пользователи немедленно обновятся до новых минорных версий, как только они станут доступны, всегда будут некоторые функции и исправления, доступные только для пользователей последней минорной версии.
 
-During the official support period, minor versions will remain available in dbt Cloud and the version dropdown on the docs site. While we do not expect users to immediately upgrade to newer minor versions as soon as they're available, there will always be some features and fixes only available for users of the latest minor version.
+### Тестирование предварительных релизов
 
-### Trying prereleases
+Все версии dbt Core доступны как _предварительные релизы_ перед окончательным релизом. "Кандидаты на релиз" доступны для тестирования в средах, похожих на производственные, за две недели до окончательного релиза. Для минорных версий мы также стремимся выпустить один или несколько "бета-релизов", которые включают новые функции и приглашают сообщество к обратной связи, за 4+ недели до окончательного релиза. Вам будет выгодно помочь нам протестировать предварительные релизы — нам нужна ваша помощь!
 
-All dbt Core versions are available as _prereleases_ before the final release. "Release candidates" are available for testing, in production-like environments, two weeks before the final release. For minor versions, we also aim to release one or more "betas," which include new features and invite community feedback, 4+ weeks before the final release. It is in your interest to help us test prereleases—we need your help!
+## Как dbt Core использует семантическое версионирование
 
-## How dbt Core uses semantic versioning
+Как и многие программные проекты, релизы dbt Core следуют [семантическому версионированию](https://semver.org/), которое определяет три типа релизов версий.
 
-Like many software projects, dbt Core releases follow [semantic versioning](https://semver.org/), which defines three types of version releases.
+- **Основные версии:** На данный момент dbt Core имел один релиз основной версии: v1.0.0. Когда будет выпущена v2.0.0, она введет новые функции, а функциональность, которая была объявлена устаревшей, перестанет работать.
+- **Минорные версии**, также называемые "релизами функций", включают смесь новых функций, улучшений за кулисами и изменений в существующих возможностях, которые **обратнос совместимы** с предыдущими минорными версиями. Они не сломают код в вашем проекте, который зависит от задокументированной функциональности.
+- **Патч-версии**, также называемые "исправлениями ошибок" или "релизами безопасности", включают **исправления _только_**. Эти исправления могут потребоваться для восстановления предыдущего (задокументированного) поведения, исправления очевидных недостатков новых функций или предоставления критических исправлений для проблем безопасности или установки. Мы тщательно подходим к выбору исправлений, которые включаются в патч-релизы, чтобы минимизировать область изменений.
 
-- **Major versions:** To date, dbt Core has had one major version release: v1.0.0. When v2.0.0 is released, it will introduce new features, and functionality that has been announced for deprecation will stop working.
-- **Minor versions**, also called "feature" releases, include a mix of new features, behind-the-scenes improvements, and changes to existing capabilities that are **backwards compatible** with previous minor versions. They will not break code in your project that relies on documented functionality.
-- **Patch versions**, also called "bugfix" or "security" releases, include **fixes _only_**. These fixes could be needed to restore previous (documented) behavior, fix obvious shortcomings of new features, or offer critical fixes for security or installation issues. We are judicious about which fixes are included in patch releases, to minimize the surface area of changes.
+Мы привержены избеганию разрушающих изменений в минорных версиях для конечных пользователей dbt. Существуют два типа разрушающих изменений, которые могут быть включены в минорные версии:
 
-We are committed to avoiding breaking changes in minor versions for end users of dbt. There are two types of breaking changes that may be included in minor versions:
+- Изменения в интерфейсе Python для адаптеров. Эти изменения актуальны _только_ для поддерживающих адаптеров, и они будут четко сообщены в документации и примечаниях к релизам. Для получения дополнительной информации смотрите руководство [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
+- Изменения в интерфейсах метаданных, включая [артефакты](/docs/deploy/artifacts) и [логирование](/reference/events-logging), сигнализируемые увеличением версии. Эти обновления версий могут потребовать от вас обновления внешнего кода, который зависит от этих интерфейсов, или координации обновлений между dbt-оркестрациями, которые делят метаданные, такие как [выбор на основе состояния](/reference/node-selection/syntax#about-node-selection).
 
-- Changes to the Python interface for adapter plugins. These changes are relevant _only_ to adapter maintainers, and they will be clearly communicated in documentation and release notes. For more information, refer to [Build, test, document, and promote adapters](/guides/adapter-creation) guide.
-- Changes to metadata interfaces, including [artifacts](/docs/deploy/artifacts) and [logging](/reference/events-logging), signalled by a version bump. Those version upgrades may require you to update external code that depends on these interfaces, or to coordinate upgrades between dbt orchestrations that share metadata, such as [state-powered selection](/reference/node-selection/syntax#about-node-selection).
+### Как мы версионируем адаптеры
 
-### How we version adapter plugins
+Когда вы используете dbt, вы используете комбинацию `dbt-core` и адаптера, специфичного для вашей базы данных. Вы можете увидеть текущий список в [Поддерживаемых платформах данных](/docs/supported-data-platforms). Как `dbt-core`, так и адаптеры dbt следуют семантическому версионированию.
 
-When you use dbt, you use a combination of `dbt-core` and an adapter plugin specific to your database. You can see the current list in [Supported Data Platforms](/docs/supported-data-platforms). Both `dbt-core` and dbt adapter plugins follow semantic versioning.
+`dbt-core` и адаптеры используют интерфейс `dbt-adapters` для координации новых функций и изменений за кулисами. Новые функции адаптера определяются в `dbt-adapters` (которые будет использовать `dbt-core`). Эти функции являются опциональными, что означает, что они влияют только на адаптеры, которые явно их реализуют. Это позволяет нам независимо выпускать адаптеры, `dbt-adapters` и `dbt-core`, не создавая проблем для пользователей.
 
-`dbt-core` and adapter plugins use the `dbt-adapters` interface to coordinate new features and behind-the-scenes changes. New adapter features are defined in `dbt-adapters` (which `dbt-core` will use). These features are opt-in, meaning they only impact adapters that explicitly implement them. This allows us to independently release adapters, `dbt-adapters`, and `dbt-core` without creating a broken experience for users.
+В отличие от версий `dbt-core` до 1.8, номера минорных и патч-версий могут не совпадать между `dbt-core` и установленными вами адаптером(и).
 
-Unlike `dbt-core` versions before 1.8, the minor and patch version numbers might not match between `dbt-core` and the adapter plugin(s) you've installed. 
+Например, вы можете обнаружить, что используете `dbt-core==1.8.0` с `dbt-snowflake==1.9.0`. Хотя у них разные минорные версии, они все равно могут работать вместе, так как оба работают с `dbt-adapters==1.8.0`. Патч-релизы могут содержать важные исправления ошибок или безопасности, поэтому критически важно оставаться в курсе.
 
-For example, you might find you're using `dbt-core==1.8.0` with `dbt-snowflake==1.9.0`. Even though these don't have the same minor version, they can still work together as they both work with `dbt-adapters==1.8.0`. Patch releases can contain important bug or security fixes so it’s critical to stay up to date. 
-
-You can use the `dbt --version` command to see which versions you have installed:
+Вы можете использовать команду `dbt --version`, чтобы увидеть, какие версии у вас установлены:
 
 ```
 $ dbt --version
 Core:
   - installed: 1.8.0
-  - latest:    1.8.0 - Up to date!
+  - latest:    1.8.0 - В актуальном состоянии!
 
 Plugins:
-  - snowflake: 1.9.0 - Up to date!
+  - snowflake: 1.9.0 - В актуальном состоянии!
 ```
 
-You can see which version of the registered adapter that's being invoked in the [logs](/reference/global-configs/logs). Below is an example of the message in the `logs/dbt.log` file: 
+Вы можете увидеть, какая версия зарегистрированного адаптера вызывается в [логах](/reference/global-configs/logs). Ниже приведен пример сообщения в файле `logs/dbt.log`: 
 ```
-[0m13:13:48.572182 [info ] [MainThread]: Registered adapter: snowflake=1.9.0
+[0m13:13:48.572182 [info ] [MainThread]: Зарегистрированный адаптер: snowflake=1.9.0
 ```
 
-It's likely that newer patches have become available since then, so it's always important to check and make sure you're up to date!
+Скорее всего, с тех пор стали доступны новые патчи, поэтому всегда важно проверять и удостовериться, что вы в актуальном состоянии!

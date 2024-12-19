@@ -1,8 +1,8 @@
 ---
-title: What parts of Jinja are dbt-specific?
-description: "You can check which Jinja functions are dbt-specific"
-sidebar_label: 'dbt-specific Jinja'
+title: Какие части Jinja специфичны для dbt?
+description: "Вы можете проверить, какие функции Jinja специфичны для dbt"
+sidebar_label: 'Специфичный для dbt Jinja'
 id: dbt-specific-jinja
 ---
 
-There are certain expressions that are specific to dbt — these are documented in the [Jinja function reference](/reference/dbt-jinja-functions) section of these docs. Further, docs blocks, snapshots, and <Term id="materialization">materializations</Term> are custom Jinja _blocks_ that exist only in dbt.
+Существуют определенные выражения, которые специфичны для dbt — они задокументированы в разделе [справочник функций Jinja](/reference/dbt-jinja-functions) этой документации. Кроме того, блоки документации, снимки и <Term id="materialization">материализации</Term> являются пользовательскими Jinja _блоками_, которые существуют только в dbt.

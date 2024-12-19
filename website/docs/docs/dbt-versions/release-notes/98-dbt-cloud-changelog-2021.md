@@ -1,419 +1,377 @@
 ---
-title: "Changelog 2021"
+title: "Журнал изменений 2021"
 id: "dbt-cloud-changelog-2021"
-sidebar_label: Changelog (2021)
-description: "2021 Changelog for the dbt Cloud application"
+sidebar_label: Журнал изменений (2021)
+description: "Журнал изменений 2021 для приложения dbt Cloud"
 
 tags: [v1.1.41, v1.1.40, v1.1.39, v1.1.38, v1.1.37, v1.1.36, v1.1.35, v1.1.34, v1.1.33, v1.1.32, v1.1.31, v1.1.30, v1.1.29, v1.1.28, v1.1.27, v1.1.26, v1.1.25, v1.1.24, v1.1.23, v1.1.22, v1.1.21, v1.1.20, v1.1.19, v1.1.18, Jan-1-2021]
 ---
 
-Welcome to the 2021 changelog for the dbt Cloud application! You can use this changelog to see highlights of what was new, fixed, and enhanced.
+Добро пожаловать в журнал изменений 2021 для приложения dbt Cloud! Вы можете использовать этот журнал, чтобы увидеть основные моменты того, что было нового, исправленного и улучшенного.
 
-## dbt Cloud v1.1.41 (December 8, 2021)
+## dbt Cloud v1.1.41 (8 декабря 2021 года)
 
-It's one of the best weeks of the year - it's [Coalesce](https://coalesce.getdbt.com/)! We'll have some exciting product announcements to share! Did somebody say [metrics](https://coalesce.getdbt.com/talks/keynote-metric-system/) and [dbt Core v1.0](https://coalesce.getdbt.com/talks/dbt-v10-reveal/)?!
+Это одна из лучших недель в году - это [Coalesce](https://coalesce.getdbt.com/)! У нас будут захватывающие анонсы продуктов! Кто-то говорил о [метриках](https://coalesce.getdbt.com/talks/keynote-metric-system/) и [dbt Core v1.0](https://coalesce.getdbt.com/talks/dbt-v10-reveal/)?!
 
-#### New products and features
+#### Новые продукты и функции
 
-- dbt v1.0 is now available in dbt Cloud... nbd.
+- dbt v1.0 теперь доступен в dbt Cloud... не беда.
 
+#### Улучшения производительности и доработки
 
-#### Performance improvements and enhancements
+- Теперь, когда вы снова входите в dbt Cloud, вы вернетесь в аккаунт и проект, с которыми вы работали в последний раз!
 
-- Now whenever you log back into dbt Cloud, you'll return to the account and project that you most recently were working in!
+## dbt Cloud v1.1.39 (10 ноября 2021 года)
+Мы добавили переменные окружения в dbt Cloud. Переменные окружения создают способ отделить код от конфигурации - позволяя вам настраивать конфигурацию в зависимости от контекста и безопасно хранить секреты, такие как токены git.
 
+#### Новые продукты и функции
+- Теперь вы можете добавлять переменные окружения в ваш проект dbt Cloud. Почему это важно? Переменные окружения являются основным строительным блоком проекта dbt, который до сих пор был доступен только в dbt Core. Они поддерживают множество сценариев, таких как клонирование частных пакетов, ограничение объема обрабатываемых данных в средах разработки, изменение источников данных в зависимости от среды и многое другое. Прочитайте о переменных окружения в нашем [блог-посте](https://blog.getdbt.com/introducing-environment-variables-in-dbt-cloud/) или [документации](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables).
 
-## dbt Cloud v1.1.39 (November 10, 2021)
-We shipped environment variables in dbt Cloud. Environment variables create a way to separate code from configuration - allowing you to set config based on context and keep secrets like git tokens securely stored.
+## dbt Cloud v1.1.38 (27 октября 2021 года)
+Вы уже использовали [Metadata API](https://docs.getdbt.com/docs/dbt-cloud-apis/metadata-api)? Metadata API доступен для клиентов на тарифных планах Team и Enterprise, и с его помощью вы можете узнать много нового о вашем проекте dbt, если он работает на dbt v0.19.0 или более поздней версии. Теперь вы можете запрашивать информацию о _любом_ запуске, а не только о последнем запуске задания. Больше данных - больше удовольствия!
 
-#### New products and features
-- You can now add environment variables to your dbt Cloud project. Why does this matter? Environment variables are a fundamental building block of a dbt project, which until now, we only enabled in dbt Core. They power many use cases such as cloning private packages, limiting the amount of data that is processed in development environments, changing your data sources depending on the environment, and more. Read about environment variables in our [blog post](https://blog.getdbt.com/introducing-environment-variables-in-dbt-cloud/) or [docs](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables).
+## dbt Cloud v1.1.37 (13 октября 2021 года)
+dbt v0.21 теперь доступен в dbt Cloud. Главное изменение в этом релизе - это введение команды `dbt build`. `dbt build` логически выполняет все, что вы хотите сделать в вашем DAG. Он запускает ваши модели, тестирует ваши тесты, создает снимки и инициализирует ваши данные. Он делает это, ресурс за ресурсом, слева направо по вашему DAG. dbt build - это задача с определенной точкой зрения. Это кульминация всего, что мы построили - запуск моделей с надежными <Term id="materialization">материализациями</Term>, приоритет качества данных с тестами, обновление фикстур с семенами, захват медленно меняющихся измерений с помощью снимков. Попробуйте!
 
+#### Новые продукты и функции
+- У нас есть новая бета-функция, которую мы называем Model Bottlenecks. Она позволяет вам визуально видеть, сколько времени занимает создание моделей в каждом запуске, чтобы вы могли четко видеть, какие модели занимают больше всего времени. Если вы хотите узнать больше, загляните в #beta-feedback-model-bottlenecks в сообществе dbt Slack, и мы можем добавить вас в бета-тестирование.
 
-## dbt Cloud v1.1.38 (October 27, 2021)
-Have you used the [Metadata API](https://docs.getdbt.com/docs/dbt-cloud-apis/metadata-api) yet? The Metadata API is available to customers on the Team and Enterprise plans, and with it, you can learn tons about your dbt project, if it's running dbt v0.19.0 or later. You can now query information about _any_ run, not just the last run of a job. Mo' data, mo' fun!
+## dbt Cloud v1.1.36 (29 сентября 2021 года)
+Посмотрите кандидат на релиз для `dbt v0.21.0`! Также переключение вкладок в dbt Cloud IDE теперь сохраняет ваше положение прокрутки - наконец-то!
 
+#### Исправления ошибок
+- Некоторые клиенты Redshift сталкивались с тайм-аутами при запусках. Мы исправили эту ошибку, продлив время жизни сессии.
 
-## dbt Cloud v1.1.37 (October 13, 2021)
-dbt v0.21 is now available in dbt Cloud. The big change with this release is it introduces the `dbt build` command. `dbt build` logically does everything you'd want to do in your DAG. It runs your models, tests your tests, snapshots your snapshots, and seeds your seeds. It does this, resource by resource, from left to right across your DAG. dbt build is an opinionated task. It’s the culmination of all we’ve built- running models with resilient <Term id="materialization">materializations</Term>, prioritizing data quality with tests, updating fixtures with seeds, capturing slowly changing dimensions with snapshot. Give it a try!
+#### Улучшения производительности и доработки
+- Вы не потеряете след вашего кода, когда будете переключаться между вкладками в dbt Cloud IDE, так как мы теперь отслеживаем ваше положение прокрутки.
 
-#### New products and features
-- We have a new beta feature, which we're calling Model Bottlenecks. It allows you to visually see how long it takes to build models in each run, so you can see clearly which models are taking the longest. If you're interested in learning more, check out #beta-feedback-model-bottlenecks in the dbt community Slack, and we can add you to the beta.
+## dbt Cloud v1.1.35 (15 сентября 2021 года)
+Вы когда-нибудь работали в IDE, делали перерыв на несколько часов, и когда вернулись к своей работе, IDE начала вести себя неожиданным образом? Ваша сессия разработки стала неактивной без каких-либо уведомлений. Ну, эта тихая ошибка больше не произойдет! dbt Cloud теперь уведомит вас, когда вам нужно обновить IDE, чтобы вы могли продолжить работу с того места, где остановились.
 
-## dbt Cloud v1.1.36 (September 29, 2021)
-Check out the release candidate for `dbt v0.21.0`! Also tab switching in the dbt Cloud IDE now keeps track of your scroll position - at last!
+#### Новые продукты и функции
+- dbt v0.20.2 выпущен в dbt Cloud.
 
-#### Bug fixes
-- Some Redshift customers were experiencing timeouts on runs. We've since fixed this bug by keeping the session alive longer.
+#### Улучшения производительности и доработки
+- Установлены значения по умолчанию для потоков равные 4 для новых заданий и в учетных данных разработки.
 
-#### Performance improvements and enhancements
-- You won't lose track of the code snippets you were looking at when you switch back and forth between tabs in the dbt Cloud IDE, as we now keep track of your scroll position.
+#### Исправления ошибок
+- Пользователь теперь получает запрос на обновление страницы, когда находится в состоянии отключенной IDE.
+- Задания dbt, которые завершаются с ошибкой, теперь правильно упорядочены в истории выполнения.
 
-## dbt Cloud v1.1.35 (September 15, 2021)
-Have you ever been working in the IDE, taken a several hour break from developing, and when you returned to your work, the IDE started behaving in unexpected ways? Your develop session became inactive, without any notification. Well, that silent failure won’t happen anymore! dbt Cloud now will let you know when you have to refresh your IDE so you can continue to pick up work where you last left off.
+## dbt Cloud v1.1.34 (1 сентября 2021 года)
+Мы только что запустили бета-версию поддержки переменных окружения в dbt Cloud. Переменные окружения интересны, потому что они позволяют вам клонировать частные пакеты. Если вы хотите присоединиться к бета-тестированию, загляните в канал #beta-feedback-for-env-vars в dbt Slack для получения дополнительной информации.
 
-#### New products and features
-- dbt v0.20.2 is released in dbt Cloud.
+#### Улучшения производительности и доработки
+Наш SQL-дисплей в IDE получил новый свежий вид, и теперь он улучшил доступность.
 
-#### Performance improvements and enhancements
-- Set default threads to 4 for new jobs and in development creds.
+## dbt Cloud v1.1.33 (18 августа 2021 года)
+Мы добавили DAG в IDE, чтобы вы могли видеть зависимости ваших моделей во время разработки! Если вы еще не видели визуализацию DAG, уделите время, чтобы открыть IDE, перейти на вкладку Lineage и пощелкать там — это действительно совершенно новый способ разработки проектов dbt, и это то, чем стоит гордиться!
 
-#### Bug fixes
-- The user is now prompted to refresh the page when in a disconnected IDE state.
-- dbt tasks that fail or error are now correctly ordered in the run drawer history.
+#### Новые продукты и функции
+- [Статусные плитки панели управления](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles) теперь можно встраивать на панели управления (или в любом месте, где можно встроить iFrame), чтобы предоставить немедленный обзор свежести и качества данных. Это помогает поддерживающим проекты dbt установить доверие внутри компании к данным, которые видят конечные пользователи.
+- Мы выпустили DAG в IDE в GA!
+- Поддержка `dbt v0.20.1` в Cloud.
 
+#### Исправления ошибок
+- Пользователи Databricks теперь смогут видеть и обновлять токен/схему для сред развертывания.
+- Некоторые пользователи Github сталкивались с проблемой отображения изображения профиля в dbt Cloud. Это должно быть исправлено, если пользователи отключат и снова подключат свои аккаунты Github.
 
-## dbt Cloud v1.1.34 (September 1, 2021)
-We just launched our beta for supporting environment variables in dbt Cloud. Environment variables are exciting because they allow you to clone private packages. If you’re interested in joining the beta, check out the #beta-feedback-for-env-vars channel in dbt Slack for more information.
+## dbt Cloud v1.1.32 (4 августа 2021 года)
+Metadata API теперь в GA! Когда dbt Cloud вызывает определенные команды, такие как run, test, seed и т.д., dbt генерирует метаданные в виде [артефактов](https://docs.getdbt.com/reference/artifacts/dbt-artifacts). Эти артефакты предоставляют вам множество информации о настройке проекта, времени выполнения, деталях тестов, скомпилированном SQL и многом другом. Теперь dbt Cloud предоставляет GraphQL API, который поддерживает произвольные запросы к этим артефактам, так что вы можете почти мгновенно получить нужные метаданные.
 
-#### Performance improvements and enhancements
-Our IDE SQL drawer got a fresh new look, and it now has improved accessibility.
+#### Новые продукты и функции
+- Metadata API - это начало нашего набора продуктов по метаданным. Узнайте больше о том, как использовать Metadata API [здесь](https://docs.getdbt.com/docs/dbt-cloud-apis/metadata-api).
+- Клиенты dbt Enterprise, использующие GitHub, теперь получают лучший <Term id="grain">тонкий</Term> контроль доступа в своих проектах dbt. dbt будет применять git-разрешения для каждого разработчика, чтобы гарантировать, что политики чтения/записи в GitHub сохраняются в действиях git в IDE.
 
+## dbt Cloud v1.1.31 (21 июля 2021 года)
+Мы улучшили работу с вкладками в IDE. Вкладки теперь работают гораздо более интуитивно, и вам больше не нужно беспокоиться о том, что вы потеряете свою работу!
 
-## dbt Cloud v1.1.33 (August 18, 2021)
-We added a DAG in the IDE, so that you can see your model dependencies as you develop! If you haven’t seen the DAG visualization yet, take a moment to spin up the IDE, navigate to the Lineage tab, and click-click-click around in there — it is legitimately a brand new modality for developing dbt projects, and it’s something worth being excited about!
+#### Новые продукты и функции
+- Мы работаем над тем, чтобы выпустить DAG прямо в IDE, чтобы, когда вы разрабатываете, у вас было четкое представление о том, где находится модель, над которой вы работаете, в графе зависимостей. Если вы хотите протестировать эту функцию заранее, загляните в канал `#beta-feedback-for-ide-dag` в dbt Slack, и мы активируем новую функцию для вашего аккаунта!
+- Добавлен dbt 0.20.0 в Cloud.
 
-#### New products and features
-- [Dashboard Status Tiles](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles) can now be embedded on dashboards (or anywhere you can embed an iFrame) to give immediate insight into data freshness and quality. This helps dbt project maintainers build trust internally about the data that end users are seeing.
-- We shipped DAG in the IDE to GA!
-- Support for `dbt v0.20.1` in Cloud.
+#### Исправления ошибок
+- Пользователи теперь смогут инициализировать любой проект, который не содержит файл `dbt_project.yml`, независимо от того, есть ли в этом репозитории предварительно существующие файлы и/или коммиты.
 
-#### Bug fixes
-- Databricks users will now be able to see and update the token/schema for deployment environments.
-- Some Github users were experiencing a broken profile image in dbt Cloud. This should be fixed if users disconnect and reconnect their Github accounts.
+#### Улучшения производительности и доработки
+- Мы работали над некоторыми хорошими улучшениями вкладок в нашем IDE. Мы исправили недостатки с вкладками, которые заставляли пользователей терять работу, если они не сохраняли достаточно регулярно. Кроме того, открытие, закрытие и порядок вкладок теперь работают гораздо более плавно.
+- Вы могли заметить, что теперь в ваших настройках выполнения есть флажок свежести источника, когда вы настраиваете задание в dbt Cloud. Выбор этого флажка запустит `dbt source freshness` в качестве первого шага в вашем задании, но это не прервет последующие шаги, если оно завершится неудачно. Обновленная документация по свежести источников доступна [здесь](/docs/deploy/source-freshness).
+- Добавлен новый конечный пункт для ротации API-ключа через `POST https://cloud.getdbt.com/api/v2/users/{user-id}/apikey`.
 
+## dbt Cloud v1.1.30 (7 июля 2021 года)
+Мы выпустили изменяемую панель папок в IDE, и мы слышим отличные отзывы! "Мое качество жизни значительно улучшилось с этим небольшим обновлением!" Надеемся, это поможет всем остальным немного больше наслаждаться IDE.
 
-## dbt Cloud v1.1.32 (August 4, 2021)
-The Metadata API is now in GA! When dbt Cloud invokes certain commands like run, test, seed, etc, dbt generates metadata in the form of [artifacts](https://docs.getdbt.com/reference/artifacts/dbt-artifacts). These artifacts give you tons of information about project set up, run times, test details, compiled SQL, and so much more. Now dbt Cloud serves a GraphQL API which supports arbitrary queries over these artifacts, so you can retrieve the metadata you want almost instantaneously.
+#### Новые продукты и функции
+- Изменяемая панель папок в IDE: Вы когда-нибудь работали в IDE и не могли увидеть полное название вашей модели, потому что не могли настроить ширину панели файлов? Да, и мы тоже. Теперь вы сможете настроить ширину дерева файлов вашего проекта так, как вам нужно. Именно такие мелочи делают разработку в IDE намного проще.
 
-#### New products and features
-- The Metadata API is the start of our metadata product suite. Learn more about how to use the Metadata API [here](https://docs.getdbt.com/docs/dbt-cloud-apis/metadata-api).
-- dbt Enterprise customers using GitHub now get better <Term id="grain">fine-grained</Term> access control in their dbt projects. dbt will enforce git permissions for every developer to ensure that read / write policies in GitHub carry through to the IDE.
+#### Исправления ошибок
+- Внесены изменения в вебхуки GitLab, чтобы статус выполнения dbt обновлялся правильно в GitLab.
+- Исправлена проблема, когда пользователи видели пустой экран вместо страницы повторной аутентификации SSO.
 
-
-## dbt Cloud v1.1.31 (July 21, 2021)
-We’ve improved the tabbing experience in the IDE. Tabs now work much more intuitively, and you don’t have to worry about losing your work anymore!
-
-#### New products and features
-- We are working to release a DAG directly in the IDE, so that when you’re developing, you have a clear idea of where the model you’re working on sits in the dependency graph. If you’re interested in testing out the feature early, head over to the `#beta-feedback-for-ide-dag` channel in the dbt Slack, and we’ll get the new product feature-flagged on your account!
-- Added dbt 0.20.0 to Cloud
-
-#### Bug fixes
-- Users will now be able to initialize any project that doesn't contain a `dbt_project.yml` file, regardless of whether or not there are pre-existing files and/or commits to that repo.
-
-#### Performance improvements and enhancements
-- We've been working on some nice improvements to tabs in our IDE. We’ve fixed deficiencies with tabs that caused users to lose work if they didn’t hit save regularly enough. Additionally, opening, closing, and the order of the tabs work much more smoothly.
-- You may have noticed that there is now a source freshness checkbox in your execution settings when you configure a job on dbt Cloud. Selecting this checkbox will run `dbt source freshness` as the first step in your job, but it will not break subsequent steps if it fails. Updated source freshness documentation available [here](/docs/deploy/source-freshness).
-- Added a new endpoint to allow API key rotation via `POST https://cloud.getdbt.com/api/v2/users/{user-id}/apikey`
-
-
-## dbt Cloud v1.1.30 (July 7, 2021)
-We shipped a resizable folder pane in the IDE, and we're hearing great things! "My quality of life has greatly increased with this little update!" Hope this helps everyone else enjoy the IDE a little more too.
-
-#### New products and features
-- Resizable folder pane in the IDE: Have you ever developed in the IDE and not been able to see the full name of your model because you couldn’t adjust the width of the file pane? Yeah, us too. Now you’ll be able to adjust your project’s file tree width to be as wide or as narrow as you’d like. It’s these small things that make developing in the IDE so much easier.
-
-#### Bug fixes
-- Made some changes to GitLab webhooks so that the status of the dbt run gets properly updated in GitLab.
-- Resolved an issue where users saw a blank screen rather than the SSO reauthentication page.
-
-#### Performance improvements and enhancements
-- Refreshed the design of the repository import page.
-
-
-## dbt Cloud v1.1.29 (June 23, 2021)
-We're heads down working on a handful of new features that we're going to share at the end of this month. The finish line is in sight. In the meantime, check out our latest release candidates for dbt Core. The biggest changes are better tests, providing consistency, configurability, and persistence. Additionally, we've refactored partial parsing and introduced an experimental parser; both are set to off by default.
-
-#### New products and features
-- Add support for latest Core release candidates to dbt Cloud: v0.19.2-rc2 and v0.20.0-rc1
-
-#### Bug fixes
-- Add a safeguard for the SSO reauth page to avoid 401 interceptors
-
-#### Performance improvements and enhancements
-- Ensure navigation bar is in dark mode when IDE is set to dark mode
-
-
-## dbt Cloud v1.1.28 (June 9, 2021)
-We shipped a far better experience for GitLab users. Be sure to check out new CI features that are now available for customers using GitLab. Additionally, all developers should test out Slim CI which will speed up their model builds.
-
-#### New products and features
-
-- `Slim CI`: We’ve made Slim CI available for all our cloud customers! With Slim CI, you don't have to rebuild and test all your models; you can instruct dbt Cloud to run jobs on only modified or new resources. If you are a GitHub or GitLab user, try creating a new job that runs on pull requests and you can signal to dbt to run only on these modified resources by including the `state:modified+` argument. Read more about Slim CI [here](/docs/deploy/continuous-integration).
-
-- Native GitLab authentication for dbt Cloud Developer and Team Tiers: We’ve shipped native GitLab auth into GA. You can now import new GitLab repos with a couple clicks, trigger CI builds when Merge Requests are opened in GitLab, and carry GitLab permissions through to dbt Cloud IDE's git actions. Read how to set up native GitLab auth [here](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-gitlab).
-
-#### Bug fixes
-- Allow users to select artifacts from a job that runs source freshness on jobs with the source freshness execution settings set to `ON`.
-- Resolve `RUN ONLY ON CUSTOM BRANCH?` button to toggle on and off properly.
-- Retain information in a `Statement` tab when the page is refreshed.
-- Unsaved changes in the IDE are now saved when committing work.
-- Drop temporary schemas in the data warehouse for closed or merged GitLab merge requests.
-
-#### Performance improvements and enhancements
-- Behind the scenes, we’ve been moving off of Angular and onto React. We’ve started the process of migrating the central pieces of our UI over - the first of which is the main navigation. We think this will have a big impact on our ability to reduce UI bugs and improve user experience.
-- Added support for dbt 0.19.2rc2 + 0.20.0rc1 in dbt Cloud.
-
-
-## dbt Cloud v1.1.27 (May 26, 2021)
-
-A lot of improvements coming for GitLab webhooks and native auth. We also fixed a number of bugs in the IDE. Our goal is for you to never see an infinite spinner again!
-
-#### Enhancements
-
-- Add dbt v0.19.2rc1 and v0.20.0b1
-- Add an open/closable overlay for the DAG
-- Disable department dropdown
-- Add DAG flags, button, and tab context
-- Add run source freshness option to jobs
-- Implement conditional redirecting after GitLab app integration
-- Add Develop Pod Support for Rook and Ceph file storage
-- Show all common actions for valid top level commands
-
-#### Fixed
-
-- Fix link to documentation
-- Disable the "Restart IDE" Button while the IDE is loading
-- Continue canceling runs when we run into deleted accounts
-- Fix SSO re-auth page
-- Fix blank verify email page
-- Resolve git refresh regression
-- Fix missing "Run on Merge" button in Job creation/edit form-
-- Warn users they have unsaved changes
-- Updates test command suggestions and regex for common action suggestions
-- Updates order of stylesheet import to fix missing border bug
-- Fix GitLab PR link for Run Page
-- Fix infinite spinner for missing environment or development credentials
-- Fix infinite spinner when user is missing dev credentials
-- Do not try to push if awaiting a merge
-- Fix deleting schemas
-- Fix favicon reference
-
-## dbt Cloud v1.1.26 (May 12, 2021)
-
-If you haven't seen it yet, spin up the IDE: the command bar now has recent actions (you can up-arrow like on the command line) as well as some hardcoded suggestions that will auto-populate your active model, if there is one. Check it out! Other fixes and adjustments as well, as we all get ready for Staging this Thursday - exciting week for the Product org over at ol' Fishtown!
-
-#### Enhancements
-
-- Made dbt default version on env 0.19.1
-- Rolled out new command line experience to all customers
-- Post webhook triggered run status back to gitlab
-- Temporary tabs can also populate the model from manifest
-- Check command line content is minimally valid
-- Allow user to restart server when develop pod crashes
-- Prevent overflow of menu items
-
-#### Fixed
-
-- Handle validation error for improper remote URLs in the Scheduler
-- Refactor exception logging out of GitRepo and into exception handlers
-- Required tags returning null from core no longer causing infinite spinner
-- Removed deleted repos while fetching repository for sending commit statuses
-- Refactor git provider service
-- Resolve files with special characters becoming forever dirty
-- Disable input when RPC command running & add button when command bar is empty
-- Updating button for the Cancel/Enter button on commandline
-- Fix connection setup to always use the project referenced in the route
-- Fix "View data sources" URL in environment page
-- Add support for clicking on previously run commands and updating the text inside of the commandline
-- Fix sources URL in environments page
-- Fix metadata token not allowed API response
-
-## dbt Cloud v1.1.25 (April 28, 2021)
-
-Exciting things coming down the pipe - ongoing enhancements to the command bar experience in the IDE, doing some work to ensure that more git providers are presented with a first class experience in Cloud, as well as assorted bug fixes - "I must have bug fixes, always and always" - that was Monet I think  
-
-#### Enhancements
-
-- Made a grip of visual updates to the new command bar work
-- Moved to using the active model name instead of a placeholder in command bar work
-- Added user ability to delete connections, remove association from a given project.
-- Added verification of dbt version for command bar beta feature flag
-
-#### Fixed
-
-- Removed testing prop that keeps drawer open
-- Added double encoding to handle Snowflake roles with spaces
-- Fixed account switching in user notifications
-- Handled invalid Azure SSO group responses
-- Fixed error which only showed common actions when run drawer was closed
-- Allowed unencrypted adapter fields to be edited
-- Fixed bugs with file and folder renaming, alongside associated tab state
-
-
-## dbt Cloud v1.1.24 (April 14, 2021)
-
-Phew! As our company grows, so too does our changelog! Look at all these! The big chunks you'll see here are related to some ongoing in-IDE work, focused on the command bar experience, as well as some partner & connection work (see the Gits, Databricks, and so forth), and of course ongoing longer-term bets around metadata!
-
-#### Enhancements
-
-- Added onFocus and onBlur properties to populate and remove "dbt" in command bar
-- Enabled executing command on enter if user's cursor is in the command bar
-- Added Metadata API access button to account settings
-- Added feature flag for displaying only recent actions
-- Added dbt 0.19.1
-- Added regex validation to Databrick's hostname web-form field
-- Updated Connection Edit to allow adapter editing
-- Enabled self-service Github and GitLab integration disconnection
-- Added link to docs for license map & handle duplicate error gracefully
-- Moved deferred job execution to execution settings.
-- Recorded user command history
-- Enabled new file creation flow
-
-#### Fixed
-
-- Added styling class to popup to ensure text is readable
-- Fixed sourcemaps syntax for dev commands
-- Added timeout and retry to dbt deps
-- Updated databricks schema field type and add error handling to ConnectionSetup
-- Fixed Bigquery private keys & convert text to textarea
-- Fixed last used datetime in the service token UI
-- Added missing token URI to Bigquery connection edit
-- Prevent multiple develop sessions for one user
-- Fixed SchemaForm validating non-displayed fields
-- Fixed required fields for Bigquery connection JSON uploads
-- Fixed self selection as deferred job
-- Always create a Monaco model on tab open if no matching model exists
-- Fixed tab dirty indicator on open tab
-- Fixed password reset flow
-- Fixed docs and sources links in dashboard page for read only users
-- Fixed truncating first_name to 30 characters
-
-
-## dbt Cloud v1.1.23 (March 31, 2021)
-
-Some backend work, some frontend work, some bug fixes: a nice mix for this release. A few user facing changes you may have noticed already are the persistence of dark/light mode settings across refresh (no more blinding IDE!), branches in the IDE being categorized by Active vs. Removed from Remote, and a tidier new file creation flow, with the file tree expanding to show the new file and opening a new tab to populate the said file!
-
-#### Enhancements
-
-- Splitting Local-only and Remote branches into different sections of the dropdown selector
-- Update Profile Integrations to include SSO info
-- Upgrade to Tailwind 2.0 and FUI 0.0.5
-- Allow users to create metadata tokens from the UI
-- Support manually-managed group memberships
-- SSO: resolve bug w/ first & last names acting up
-- Integrate Delighted for NPS surveys
-- Add dbt 0.19.1rc1 to Cloud
-- Add an account-level setting to require users to re-authenticate via SSO
-- Read-only metadata ServiceToken for Cloud
-- Persist IDE light mode / dark mode across refresh
-- Categorize & order git branches
-- Improve new file creation flow
-
-#### Fixed
-
-- Check for an empty repository before checking matching remote
-- Increase wait if run was finished recently
-- Support default branches through git when a custom branch is not specified
-- Don't download logs for skipped steps
-- API Gateway is no longer flooded with errors due to IDE blindly polling dead Develop pod
-- Fix user license creation via admin interface
-- Adjusted addition of global .gitignore
-
-
-## dbt Cloud v1.1.22 (March 17, 2021)
-
-Rolling out a few long-term bets to ensure that our beloved dbt Cloud does not fall over for want of memory, as well as a grip of bug fixes and error messaging improvements (error messages should be helpful, not scolding or baffling, after all!)
-
-#### Enhancements
-
-- Release Scribe to 100% of multi-tenant accounts
-- Update language for SQL drawer empty state
-- Reduce Scribe memory usage
-
-#### Fixed
-
-- Fix NoSuchKey error
-- Guarantee unique notification settings per account, user, and type
-- Fix for account notification settings
-- Dont show deleted projects on notifications page
-- Fix unicode error while decoding last_chunk
-- Show more relevant errors to customers
-- Groups are now editable by non-sudo requests
-- Normalize domain names across inputs/outputs
-- Redirect auth failed errors back to appropriate page with error description
-
-
-## dbt Cloud v1.1.21 (March 3, 2021)
-
-This changelog wraps up work on what we've been calling the SQL Drawer in the IDE - some design nudges, some interface adjustments, overall a cleaner and snappier experience. If you haven't dipped into the IDE in a while it's worth taking a look! Some back-end work as well, making SSO and role based admin easier and more broadly available for Enterprise level folks, along with your usual assortment of bug squashes and iterations.
-
-
-#### Enhancements
-
-- Styling and copy adjustments in the Cloud IDE
-- Open self-service role based access control to all Enterprise customers
-- Update AuthProvider UI to enable SAML and Okta
-- Add a SAML auth redirect URL
-
-#### Fixed
-
-- Add param to admin project mapper to included soft deleted projects
-- Fix delaying logs when we are waiting for a model to finish executing
-- Saving GSuite auth provider form triggers an authorize
-- Scribe populates truncated debug logs when runs are executing
-- Delay attempts for non-200 status codes
-- Add logic to support select fields in adapter UI
-- Undo clobbering groups
-
-
-## dbt Cloud v1.1.20 (February 17, 2021)
-
-Continued stability and quality of life improvements for folks with multiple accounts and projects - no longer will you have to remember the chronological order of birth of your accounts and projects, as they'll be ordered by the much easier to parse (for human brains anyway) alphabetical order. We're also shipping some experience improvements in the SQL Drawer at the bottom half of the IDE.
-
-#### Enhancements
-
-- Deleted Info and Logs IDE Tabs, logs will now be displayed in Results Tab
-- Removed service token feature flag
-- List Jobs dropdown in alphabetical order
-- List Account and Project dropdowns in alphabetica order
-- Pre-join Job Definition results to speed up scheduler
-- Combine scheduler queries to speedup runtime by about 30%
-
-#### Fixed
-
-- Fix issue with source freshness for 0.19.0
-
-
-## dbt Cloud v1.1.19 (February 3, 2021)
-
-The latest release of dbt (Oh Nineteen Oh) is now available for your enjoyment on dbt Cloud! We're also releasing some service token pieces here, though they're not quite ready for wide release yet. Moving forward, Oh Nineteen Oh will probably end up being the minimum version required to run the Metadata API & Metadata Toolkit, so, this is a big release!
-
-#### Enhancements
-
-- Added dbt 0.19.0 :heart_eyes_cat:
-- Allowed account-wide service tokens to create connections
-- Added integration for service token UI and API
-- Authorized requests that supply a service token
-
-#### Fixed
-
-- Added logic to show the entered service token name prior to the request completing
-- Fixed endlessly running rpc queries with non-working cancel button on IDE refresh
-
-
-## dbt Cloud v1.1.18 (January 20, 2021)
-
-Most notable things here are around foundational work toward future feature releases, as well as strong assurances of future stability for dbt Cloud, and ensuring future sales tax compliance (which we understand turns out to be quite important!) - turns out to be a quite future-looking release!
-
-#### Enhancements
-
-- Add service tokens UI (stubbed) behind a feature flag
-- Fixing and Upgrading social-auth
-- Add dbt Spark 0.19.0rc1
-- Adds the reconciliation of persisted file content and tab state when navigating into the IDE
-- Adds the reconciliation of persisted file content and tab state between IDE sessions
-- Read logs from scribe and stop logging to db
-- Upgrade social auth 3.3.3
-- Add warning logs for social auth failures
-- Add dbt 0.19.0rc1
-
-#### Fixed
-
-- Prevent social-auth from updating first or last name
-- Page through Stripe results when listing subscriptions
-- Prevent enqueueing runs in deleted projects
-- Fix IDE git actions causing open tab contents to be lost on IDE re-entry
-- Add DBT_CLOUD_CONTEXT environment variable
-- Add logic to hide IP whitelist message for on-prem customers
-- fix 0.19.0rc1 run image dependencies
+#### Улучшения производительности и доработки
+- Обновлен дизайн страницы импорта репозитория.
+
+## dbt Cloud v1.1.29 (23 июня 2021 года)
+Мы активно работаем над несколькими новыми функциями, которые собираемся представить в конце этого месяца. Финишная прямая уже на горизонте. Тем временем ознакомьтесь с нашими последними кандидатами на релиз для dbt Core. Главные изменения - это лучшие тесты, обеспечивающие согласованность, настраиваемость и постоянство. Кроме того, мы переработали частичный парсинг и представили экспериментальный парсер; оба по умолчанию отключены.
+
+#### Новые продукты и функции
+- Добавлена поддержка последних кандидатов на релиз Core в dbt Cloud: v0.19.2-rc2 и v0.20.0-rc1.
+
+#### Исправления ошибок
+- Добавлена защита для страницы повторной аутентификации SSO, чтобы избежать 401 перехватчиков.
+
+#### Улучшения производительности и доработки
+- Убедитесь, что навигационная панель находится в темном режиме, когда IDE установлена в темный режим.
+
+## dbt Cloud v1.1.28 (9 июня 2021 года)
+Мы выпустили гораздо лучший опыт для пользователей GitLab. Обязательно ознакомьтесь с новыми функциями CI, которые теперь доступны для клиентов, использующих GitLab. Кроме того, все разработчики должны протестировать Slim CI, который ускорит сборку их моделей.
+
+#### Новые продукты и функции
+- `Slim CI`: Мы сделали Slim CI доступным для всех наших облачных клиентов! С помощью Slim CI вам не нужно перестраивать и тестировать все ваши модели; вы можете указать dbt Cloud запускать задания только на измененных или новых ресурсах. Если вы являетесь пользователем GitHub или GitLab, попробуйте создать новое задание, которое запускается на запросах на слияние, и вы можете указать dbt запускать только на этих измененных ресурсах, добавив аргумент `state:modified+`. Узнайте больше о Slim CI [здесь](/docs/deploy/continuous-integration).
+
+- Нативная аутентификация GitLab для уровней разработчиков и команд dbt Cloud: Мы выпустили нативную аутентификацию GitLab в GA. Теперь вы можете импортировать новые репозитории GitLab всего за несколько кликов, запускать сборки CI, когда запросы на слияние открыты в GitLab, и переносить разрешения GitLab в действия git в dbt Cloud IDE. Узнайте, как настроить нативную аутентификацию GitLab [здесь](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-gitlab).
+
+#### Исправления ошибок
+- Позволить пользователям выбирать артефакты из задания, которое запускает свежесть источника с установленными параметрами выполнения свежести источника на `ON`.
+- Исправить кнопку `RUN ONLY ON CUSTOM BRANCH?`, чтобы она правильно переключалась.
+- Сохранить информацию на вкладке `Statement`, когда страница обновляется.
+- Несохраненные изменения в IDE теперь сохраняются при коммите работы.
+- Удалить временные схемы в хранилище данных для закрытых или объединенных запросов GitLab.
+
+#### Улучшения производительности и доработки
+- За кулисами мы переходим с Angular на React. Мы начали процесс миграции центральных частей нашего интерфейса - первой из которых является основная навигация. Мы считаем, что это окажет большое влияние на нашу способность уменьшить количество ошибок интерфейса и улучшить пользовательский опыт.
+- Добавлена поддержка dbt 0.19.2rc2 + 0.20.0rc1 в dbt Cloud.
+
+## dbt Cloud v1.1.27 (26 мая 2021 года)
+
+Много улучшений для вебхуков GitLab и нативной аутентификации. Мы также исправили ряд ошибок в IDE. Наша цель - чтобы вы больше никогда не видели бесконечный спиннер!
+
+#### Улучшения
+- Добавлены dbt v0.19.2rc1 и v0.20.0b1.
+- Добавлен открываемый/закрываемый оверлей для DAG.
+- Отключен выпадающий список отделов.
+- Добавлены флаги DAG, кнопка и контекст вкладки.
+- Добавлена опция запуска свежести источника для заданий.
+- Реализовано условное перенаправление после интеграции приложения GitLab.
+- Добавлена поддержка Develop Pod для Rook и Ceph файлового хранилища.
+- Показать все общие действия для действительных команд верхнего уровня.
+
+#### Исправления
+- Исправлена ссылка на документацию.
+- Отключена кнопка "Перезапустить IDE", пока IDE загружается.
+- Продолжить отмену запусков, когда мы сталкиваемся с удаленными аккаунтами.
+- Исправлена страница повторной аутентификации SSO.
+- Исправлена пустая страница подтверждения электронной почты.
+- Исправлен регресс в обновлении git.
+- Исправлена отсутствующая кнопку "Запустить на слиянии" в форме создания/редактирования задания.
+- Предупредить пользователей о несохраненных изменениях.
+- Обновлены предложения команд тестирования и регулярные выражения для предложений общих действий.
+- Обновлен порядок импорта стилей, чтобы исправить ошибку отсутствия границы.
+- Исправлена ссылка на PR GitLab для страницы выполнения.
+- Исправлен бесконечный спиннер для отсутствующей среды или учетных данных разработки.
+- Исправлен бесконечный спиннер, когда у пользователя отсутствуют учетные данные разработки.
+- Не пытаться отправить, если ожидается слияние.
+- Исправлено удаление схем.
+
+## dbt Cloud v1.1.26 (12 мая 2021 года)
+
+Если вы еще не видели, откройте IDE: панель команд теперь имеет недавние действия (вы можете использовать стрелку вверх, как в командной строке), а также некоторые жестко закодированные предложения, которые будут автоматически заполнять вашу активную модель, если она есть. Проверьте это! Другие исправления и корректировки также, поскольку мы все готовимся к Staging в этот четверг - захватывающая неделя для продуктовой команды в старом Фиштауне!
+
+#### Улучшения
+- Установлена версия dbt по умолчанию на env 0.19.1.
+- Расширен новый опыт командной строки для всех клиентов.
+- Пост вебхука триггерит статус выполнения обратно в gitlab.
+- Временные вкладки также могут заполнять модель из манифеста.
+- Проверка содержимого командной строки на минимальную валидность.
+- Позволить пользователю перезапустить сервер, когда развивающий под сбой.
+- Предотвратить переполнение элементов меню.
+
+#### Исправления
+- Обработать ошибку валидации для неправильных удаленных URL в планировщике.
+- Переработать ведение исключений из GitRepo и в обработчики исключений.
+- Обязательные теги, возвращающие null из core, больше не вызывают бесконечный спиннер.
+- Удалены удаленные репозитории при получении репозитория для отправки статусов коммитов.
+- Переработан сервис поставщика git.
+- Исправлены файлы со специальными символами, которые навсегда оставались грязными.
+- Отключить ввод, когда выполняется RPC-команда, и добавить кнопку, когда панель команд пустая.
+- Обновлена кнопка для кнопки Отменить/Ввести на командной строке.
+- Исправлена настройка подключения, чтобы всегда использовать проект, указанный в маршруте.
+- Исправлена ссылка "Просмотреть источники данных" на странице среды.
+- Добавлена поддержка для нажатия на ранее выполненные команды и обновления текста внутри командной строки.
+- Исправлена ссылка на источники на странице сред.
+- Исправлен ответ API, запрещающий токен метаданных.
+
+## dbt Cloud v1.1.25 (28 апреля 2021 года)
+
+Захватывающие вещи на подходе - продолжающиеся улучшения опыта панели команд в IDE, работа над тем, чтобы больше поставщиков git имели первоклассный опыт в Cloud, а также различные исправления ошибок - "Мне всегда нужны исправления ошибок, всегда и всегда" - это, кажется, был Моне.
+
+#### Улучшения
+- Проведены визуальные обновления для новой панели команд.
+- Перешли на использование имени активной модели вместо заполнителя в работе панели команд.
+- Добавлена возможность пользователю удалять подключения, удалять ассоциацию от данного проекта.
+- Добавлена проверка версии dbt для флага бета-функции панели команд.
+
+#### Исправления
+- Удален тестовый проп, который удерживает ящик открытым.
+- Добавлено двойное кодирование для обработки ролей Snowflake с пробелами.
+- Исправлено переключение аккаунтов в уведомлениях пользователей.
+- Обработаны недопустимые ответы групп SSO Azure.
+- Исправлена ошибка, которая показывала только общие действия, когда ящик выполнения был закрыт.
+- Разрешено редактирование незашифрованных полей адаптера.
+- Исправлены ошибки с переименованием файлов и папок, а также связанного состояния вкладок.
+
+## dbt Cloud v1.1.24 (14 апреля 2021 года)
+
+Фух! По мере роста нашей компании растет и наш журнал изменений! Посмотрите на все это! Основные изменения, которые вы увидите здесь, связаны с продолжающейся работой в IDE, сосредоточенной на опыте панели команд, а также с работой с партнерами и подключениями (см. Git, Databricks и т.д.), и, конечно же, с долгосрочными ставками на метаданные!
+
+#### Улучшения
+- Добавлены свойства onFocus и onBlur для заполнения и удаления "dbt" в панели команд.
+- Включено выполнение команды при нажатии Enter, если курсор пользователя находится в панели команд.
+- Добавлена кнопка доступа к Metadata API в настройках аккаунта.
+- Добавлен флаг функции для отображения только недавних действий.
+- Добавлен dbt 0.19.1.
+- Добавлена проверка регулярных выражений для поля веб-формы имени хоста Databricks.
+- Обновлен редактирование подключения, чтобы разрешить редактирование адаптера.
+- Включено отключение интеграции Github и GitLab в режиме самообслуживания.
+- Добавлена ссылка на документацию для карты лицензий и обработка дублирующейся ошибки.
+- Перемещено отложенное выполнение задания в настройки выполнения.
+- Записана история команд пользователя.
+- Включен новый процесс создания файлов.
+
+#### Исправления
+- Добавлен стиль к всплывающему окну, чтобы текст был читаемым.
+- Исправлен синтаксис sourcemaps для команд разработки.
+- Добавлено время ожидания и повтор для dbt deps.
+- Обновлено поле типа схемы databricks и добавлена обработка ошибок в ConnectionSetup.
+- Исправлены закрытые ключи Bigquery и преобразован текст в текстовую область.
+- Исправлено последнее использованное время в интерфейсе токена сервиса.
+- Добавлен отсутствующий URI токена в редактировании подключения Bigquery.
+- Предотвращено создание нескольких сессий разработки для одного пользователя.
+- Исправлена валидация SchemaForm для невидимых полей.
+- Исправлены обязательные поля для загрузок JSON подключения Bigquery.
+- Исправлено самоотбор в качестве отложенной работы.
+- Всегда создавайте модель Monaco при открытии вкладки, если не существует соответствующей модели.
+- Исправлен индикатор грязной вкладки на открытой вкладке.
+- Исправлен процесс сброса пароля.
+- Исправлены ссылки на документацию и источники на странице панели управления для пользователей только для чтения.
+- Исправлено обрезание first_name до 30 символов.
+
+## dbt Cloud v1.1.23 (31 марта 2021 года)
+
+Некоторая работа на заднем плане, некоторая работа на переднем плане, некоторые исправления ошибок: приятное сочетание для этого релиза. Несколько изменений, которые могут быть заметны пользователям, - это сохранение настроек темного/светлого режима между обновлениями (больше никаких ослепляющих IDE!), категории веток в IDE по Активным и Удаленным из Удаленного, а также более аккуратный процесс создания новых файлов, при котором дерево файлов расширяется, чтобы показать новый файл и открывает новую вкладку для заполнения указанного файла!
+
+#### Улучшения
+- Разделение локальных и удаленных веток на разные секции выпадающего селектора.
+- Обновление интеграций профиля для включения информации SSO.
+- Обновление до Tailwind 2.0 и FUI 0.0.5.
+- Позволить пользователям создавать токены метаданных из интерфейса.
+- Поддержка вручную управляемых членств в группах.
+- SSO: исправление ошибки с именами и фамилиями.
+- Интеграция Delighted для опросов NPS.
+- Добавление dbt 0.19.1rc1 в Cloud.
+- Добавление настройки на уровне аккаунта, требующей от пользователей повторной аутентификации через SSO.
+- Токен метаданных только для чтения для Cloud.
+- Сохранение настроек светлого/темного режима IDE между обновлениями.
+- Категоризация и упорядочение git-веток.
+- Улучшение процесса создания новых файлов.
+
+#### Исправления
+- Проверка на пустой репозиторий перед проверкой соответствующего удаленного.
+- Увеличение времени ожидания, если запуск завершился недавно.
+- Поддержка веток по умолчанию через git, когда не указана пользовательская ветка.
+- Не загружать логи для пропущенных шагов.
+- API Gateway больше не переполнен ошибками из-за слепого опроса мертвого Develop pod в IDE.
+- Исправление создания лицензий пользователей через интерфейс администратора.
+- Корректировка добавления глобального .gitignore.
+
+## dbt Cloud v1.1.22 (17 марта 2021 года)
+
+Выпускаем несколько долгосрочных ставок, чтобы гарантировать, что наш любимый dbt Cloud не упадет из-за нехватки памяти, а также множество исправлений ошибок и улучшений сообщений об ошибках (сообщения об ошибках должны быть полезными, а не ругающими или сбивающими с толку, в конце концов!).
+
+#### Улучшения
+- Выпуск Scribe для 100% многопользовательских аккаунтов.
+- Обновление языка для пустого состояния ящика SQL.
+- Снижение использования памяти Scribe.
+
+#### Исправления
+- Исправление ошибки NoSuchKey.
+- Гарантировать уникальные настройки уведомлений для каждого аккаунта, пользователя и типа.
+- Исправление настроек уведомлений аккаунта.
+- Не показывать удаленные проекты на странице уведомлений.
+- Исправление ошибки юникода при декодировании last_chunk.
+- Показать более актуальные ошибки клиентам.
+- Группы теперь редактируемы не sudo-запросами.
+- Нормализовать доменные имена по входам/выходам.
+- Перенаправить ошибки аутентификации на соответствующую страницу с описанием ошибки.
+
+## dbt Cloud v1.1.21 (3 марта 2021 года)
+
+Этот журнал изменений завершает работу над тем, что мы называем ящиком SQL в IDE - некоторые дизайнерские корректировки, некоторые изменения интерфейса, в целом более чистый и быстрый опыт. Если вы давно не заглядывали в IDE, стоит взглянуть! Также некоторая работа на заднем плане, упрощающая SSO и управление ролями для уровня Enterprise, наряду с обычным набором исправлений ошибок и итераций.
+
+#### Улучшения
+- Корректировки стиля и текста в Cloud IDE.
+- Открытие самообслуживания управления доступом на основе ролей для всех клиентов Enterprise.
+- Обновление интерфейса AuthProvider для включения SAML и Okta.
+- Добавление URL перенаправления аутентификации SAML.
+
+#### Исправления
+- Добавление параметра в сопоставитель проектов администратора для включения мягко удаленных проектов.
+- Исправление задержки логов, когда мы ждем завершения выполнения модели.
+- Сохранение формы провайдера аутентификации GSuite вызывает авторизацию.
+- Scribe заполняет усеченные журналы отладки, когда выполняются запуски.
+- Задержка попыток для кодов состояния, отличных от 200.
+- Добавление логики для поддержки выбора полей в интерфейсе адаптера.
+- Отмена перезаписи групп.
+
+## dbt Cloud v1.1.20 (17 февраля 2021 года)
+
+Продолжаем улучшения стабильности и качества жизни для людей с несколькими аккаунтами и проектами - вам больше не нужно будет запоминать хронологический порядок рождения ваших аккаунтов и проектов, так как они будут упорядочены по гораздо более удобному (для человеческого мозга, по крайней мере) алфавитному порядку. Мы также выпускаем некоторые улучшения в опыте работы с ящиком SQL в нижней части IDE.
+
+#### Улучшения
+- Удалены вкладки Info и Logs IDE, логи теперь будут отображаться на вкладке Results.
+- Удален флаг функции токена сервиса.
+- Выпадающий список Jobs в алфавитном порядке.
+- Выпадающие списки Account и Project в алфавитном порядке.
+- Предварительное соединение результатов определения задания для ускорения планировщика.
+- Объединение запросов планировщика для ускорения времени выполнения примерно на 30%.
+
+#### Исправления
+- Исправление проблемы со свежестью источника для 0.19.0.
+
+## dbt Cloud v1.1.19 (3 февраля 2021 года)
+
+Последний релиз dbt (О, Девятнадцать Ноль) теперь доступен для вашего удовольствия в dbt Cloud! Мы также выпускаем некоторые элементы токена сервиса, хотя они еще не готовы к широкому выпуску. В дальнейшем, О, Девятнадцать Ноль, вероятно, станет минимальной версией, необходимой для работы с Metadata API и Metadata Toolkit, так что это важный релиз!
+
+#### Улучшения
+- Добавлен dbt 0.19.0 :heart_eyes_cat:
+- Разрешены токены сервиса на уровне аккаунта для создания подключений.
+- Добавлена интеграция для интерфейса токена сервиса и API.
+- Авторизованные запросы, которые предоставляют токен сервиса.
+
+#### Исправления
+- Добавлена логика для отображения введенного имени токена сервиса до завершения запроса.
+- Исправлено бесконечное выполнение rpc-запросов с неработающей кнопкой отмены при обновлении IDE.
+
+## dbt Cloud v1.1.18 (20 января 2021 года)
+
+Наиболее заметные вещи здесь касаются основополагающей работы по подготовке к будущим релизам функций, а также сильных гарантий будущей стабильности для dbt Cloud и обеспечения соблюдения налогового законодательства (что, как мы понимаем, оказывается довольно важным!) - оказывается, это довольно ориентированный на будущее релиз!
+
+#### Улучшения
+- Добавление интерфейса токенов сервиса (заготовка) за флагом функции.
+- Исправление и обновление social-auth.
+- Добавление dbt Spark 0.19.0rc1.
+- Добавление согласования сохраненного содержимого файла и состояния вкладки при навигации в IDE.
+- Добавление согласования сохраненного содержимого файла и состояния вкладки между сессиями IDE.
+- Чтение логов из scribe и прекращение ведения журнала в db.
+- Обновление social auth до 3.3.3.
+- Добавление предупреждающих логов для сбоев аутентификации social auth.
+- Добавление dbt 0.19.0rc1.
+
+#### Исправления
+- Предотвращение обновления social-auth имени или фамилии.
+- Пагинация результатов Stripe при перечислении подписок.
+- Предотвращение добавления запусков в удаленные проекты.
+- Исправление действий git в IDE, вызывающих потерю содержимого открытой вкладки при повторном входе в IDE.
+- Добавление переменной окружения DBT_CLOUD_CONTEXT.
+- Добавление логики для скрытия сообщения о белом списке IP для локальных клиентов.
+- Исправление зависимостей изображения выполнения 0.19.0rc1.

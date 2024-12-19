@@ -1,199 +1,199 @@
 ---
-title: "Upgrade dbt version in Cloud"
+title: "Обновление версии dbt в Cloud"
 id: "upgrade-dbt-version-in-cloud"
 ---
 
-In dbt Cloud, both [jobs](/docs/deploy/jobs) and [environments](/docs/dbt-cloud-environments) are configured to use a specific version of dbt Core. The version can be upgraded at any time.
+В dbt Cloud как [задачи](/docs/deploy/jobs), так и [окружения](/docs/dbt-cloud-environments) настроены на использование конкретной версии dbt Core. Версию можно обновить в любое время.
 
-## Environments
+## Окружения
 
-Navigate to the settings page of an environment, then click **Edit**. Click the **dbt version** dropdown bar and make your selection. You can select a [release track](#release-tracks) to receive ongoing updates (recommended), or a legacy version of dbt Core. Be sure to save your changes before navigating away.
+Перейдите на страницу настроек окружения, затем нажмите **Редактировать**. Нажмите на выпадающее меню **версия dbt** и сделайте свой выбор. Вы можете выбрать [релизный трек](#release-tracks) для получения постоянных обновлений (рекомендуется) или устаревшую версию dbt Core. Не забудьте сохранить изменения перед тем, как покинуть страницу.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Example environment settings in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-environment-settings.png" width="90%" title="Пример настроек окружения в dbt Cloud"/>
 
-### Release Tracks
+### Релизные треки
 
-Starting in 2024, your project will be upgraded automatically on a cadence that you choose
+Начиная с 2024 года, ваш проект будет автоматически обновляться с заданной вами периодичностью.
 
-The **Latest** track ensures you have up-to-date dbt Cloud functionality, and early access to new features of the dbt framework. The **Compatible** and **Extended** tracks are designed for customers who need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of dbt Core.
+Трек **Latest** гарантирует, что у вас есть актуальная функциональность dbt Cloud и ранний доступ к новым функциям фреймворка dbt. Треки **Compatible** и **Extended** предназначены для клиентов, которым требуется менее частая периодичность релизов, возможность тестировать новые релизы dbt перед их запуском в производственной среде и/или постоянная совместимость с последними открытыми релизами dbt Core.
 
-As a best practice, dbt Labs recommends that you test the upgrade in development first; use the [Override dbt version](#override-dbt-version) setting to test _your_ project on the latest dbt version before upgrading your deployment environments and the default development environment for all your colleagues.
+В качестве лучшей практики dbt Labs рекомендует сначала протестировать обновление в разработке; используйте настройку [Override dbt version](#override-dbt-version), чтобы протестировать _ваш_ проект на последней версии dbt перед обновлением ваших развертываний и стандартного окружения разработки для всех ваших коллег.
 
-To upgrade an environment in the [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), set `dbt_version` to the name of your release track:
-- `latest` (formerly called `versionless`; the old name is still supported)
-- `compatible` (available to Team + Enterprise)
-- `extended` (available to Enterprise)
+Чтобы обновить окружение в [dbt Cloud Admin API](/docs/dbt-cloud-apis/admin-cloud-api) или [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), установите `dbt_version` на имя вашего релизного трека:
+- `latest` (ранее назывался `versionless`; старое название все еще поддерживается)
+- `compatible` (доступно для Team + Enterprise)
+- `extended` (доступно для Enterprise)
 
-### Override dbt version
+### Переопределение версии dbt
 
-Configure your project to use a different dbt Core version than what's configured in your [development environment](/docs/dbt-cloud-environments#types-of-environments). This _override_ only affects your user account, no one else's. Use this to safely test new dbt features before upgrading the dbt version for your projects. 
+Настройте ваш проект на использование другой версии dbt Core, чем та, что настроена в вашем [окружении разработки](/docs/dbt-cloud-environments#types-of-environments). Это _переопределение_ затрагивает только вашу учетную запись, а не других пользователей. Используйте это, чтобы безопасно протестировать новые функции dbt перед обновлением версии dbt для ваших проектов.
 
-1. Click your account name from the left side panel and select **Account settings**. 
-1. Choose **Credentials** from the sidebar and select a project. This opens a side panel.
-1. In the side panel, click **Edit** and scroll to the **User development settings** section. Choose a version from the **dbt version** dropdown and click **Save**.
+1. Нажмите на имя вашей учетной записи в левой панели и выберите **Настройки учетной записи**. 
+1. Выберите **Учетные данные** в боковой панели и выберите проект. Это откроет боковую панель.
+1. В боковой панели нажмите **Редактировать** и прокрутите до раздела **Настройки разработки пользователя**. Выберите версию из выпадающего меню **версия dbt** и нажмите **Сохранить**.
 
-  An example of overriding the configured version with 1.7 for the selected project:
+  Пример переопределения настроенной версии на 1.7 для выбранного проекта:
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-override-version.png" width="60%" title="Example of overriding the dbt version on your user account"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-override-version.png" width="60%" title="Пример переопределения версии dbt в вашей учетной записи"/>
 
-1. (Optional) Verify that dbt Cloud will use your override setting to build the project. Invoke `dbt build` in the IDE's command bar. Expand the **System Logs** section and find the output's first line. It should begin with `Running with dbt=` and list the version dbt Cloud is using.
+1. (Необязательно) Убедитесь, что dbt Cloud будет использовать вашу настройку переопределения для сборки проекта. Введите `dbt build` в командной строке IDE. Разверните раздел **Системные журналы** и найдите первую строку вывода. Она должна начинаться с `Running with dbt=` и указывать версию, которую использует dbt Cloud.
 
-  Example output of a successful `dbt build` run: 
+  Пример вывода успешного выполнения `dbt build`: 
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-verify-overridden-version.png" title="Example output showing version 1.7 being used, not 1.5"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/example-verify-overridden-version.png" title="Пример вывода, показывающий использование версии 1.7, а не 1.5"/>
 
-## Jobs
+## Задачи
 
-Each job in dbt Cloud can be configured to inherit parameters from the environment it belongs to.
+Каждая задача в dbt Cloud может быть настроена на наследование параметров от окружения, к которому она принадлежит.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/job-settings.png" width="200%" title="Settings of a dbt Cloud job"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/choosing-dbt-version/job-settings.png" width="200%" title="Настройки задачи dbt Cloud"/>
 
-The example job seen in the screenshot above belongs to the environment "Prod". It inherits the dbt version of its environment as shown by the **Inherited from ENVIRONMENT_NAME (DBT_VERSION)** selection. You may also manually override the dbt version of a specific job to be any of the current Core releases supported by Cloud by selecting another option from the dropdown.
+Пример задачи, показанной на скриншоте выше, принадлежит окружению "Prod". Она наследует версию dbt своего окружения, как показано в выборе **Наследуется от ENVIRONMENT_NAME (DBT_VERSION)**. Вы также можете вручную переопределить версию dbt для конкретной задачи, выбрав другой вариант из выпадающего меню.
 
-## Supported versions
+## Поддерживаемые версии
 
-dbt Labs has always encouraged users to upgrade dbt Core versions whenever a new minor version is released. We released our first major version of dbt - `dbt 1.0` - in December 2021. Alongside this release, we updated our policy on which versions of dbt Core we will support in dbt Cloud.
+dbt Labs всегда призывал пользователей обновлять версии dbt Core всякий раз, когда выходит новая минорная версия. Мы выпустили нашу первую основную версию dbt - `dbt 1.0` - в декабре 2021 года. Вместе с этим релизом мы обновили нашу политику относительно версий dbt Core, которые мы будем поддерживать в dbt Cloud.
 
-> **Starting with v1.0, all subsequent minor versions are available in dbt Cloud. Versions are actively supported, with patches and bug fixes, for 1 year after their initial release. At the end of the 1-year window, we encourage all users to upgrade to a newer version for better ongoing maintenance and support.**
+> **Начиная с v1.0, все последующие минорные версии доступны в dbt Cloud. Версии активно поддерживаются, с патчами и исправлениями ошибок, в течение 1 года после их первоначального выпуска. В конце 1-летнего периода мы призываем всех пользователей обновиться до более новой версии для лучшего обслуживания и поддержки.**
 
-We provide different support levels for different versions, which may include new features, bug fixes, or security patches:
+Мы предоставляем различные уровни поддержки для разных версий, которые могут включать новые функции, исправления ошибок или патчи безопасности:
 
 <Snippet path="core-version-support" />
 
-We'll continue to update the following release table so that users know when we plan to stop supporting different versions of Core in dbt Cloud.
+Мы продолжим обновлять следующую таблицу релизов, чтобы пользователи знали, когда мы планируем прекратить поддержку различных версий Core в dbt Cloud.
 
 <Snippet path="core-versions-table" />
 
-Starting with v1.0, dbt Cloud will ensure that you're always using the latest compatible patch release of `dbt-core` and plugins, including all the latest fixes. You may also choose to try prereleases of those patch releases before they are generally available.
+Начиная с v1.0, dbt Cloud будет гарантировать, что вы всегда используете последнюю совместимую патч-версию `dbt-core` и плагинов, включая все последние исправления. Вы также можете попробовать предварительные версии этих патч-релизов до их общего выпуска.
 
-<!--- TODO: Include language to reflect:
-  - notifying users when new minor versions are available
-  - notifying users when using a minor version that is nearing the end of its critical support period
-  - auto-upgrading users to the subsequent minor version when critical support ends
+<!--- TODO: Включить информацию о:
+  - уведомлении пользователей, когда доступны новые минорные версии
+  - уведомлении пользователей, когда используется минорная версия, которая приближается к концу своего критического периода поддержки
+  - автоматическом обновлении пользователей до последующей минорной версии, когда критическая поддержка заканчивается
 --->
 
-For more on version support and future releases, see [Understanding dbt Core versions](/docs/dbt-versions/core).
+Для получения дополнительной информации о поддержке версий и будущих релизах смотрите [Понимание версий dbt Core](/docs/dbt-versions/core).
 
-#### Need help upgrading?
+#### Нужна помощь с обновлением?
 
-If you want more advice on how to upgrade your dbt projects, check out our [migration guides](/docs/dbt-versions/core-upgrade/) and our [upgrading Q&A page](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-legacy-versions-under-10).
+Если вам нужны дополнительные советы по обновлению ваших проектов dbt, ознакомьтесь с нашими [руководствами по миграции](/docs/dbt-versions/core-upgrade/) и нашей [страницей вопросов и ответов по обновлению](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-legacy-versions-under-10).
 
-## Upgrading legacy versions under 1.0
+## Обновление устаревших версий до 1.0
 
-You can use the following sections to successfully upgrade your version of dbt Core in dbt Cloud. We recommend everyone upgrade to the most recent version of dbt Core, as new versions contain enhancements, bug fixes, and updated security features. We document which [versions of dbt Core are currently supported](/docs/dbt-versions/upgrade-dbt-version-in-cloud#supported-versions).
+Вы можете использовать следующие разделы, чтобы успешно обновить вашу версию dbt Core в dbt Cloud. Мы рекомендуем всем обновиться до самой последней версии dbt Core, так как новые версии содержат улучшения, исправления ошибок и обновленные функции безопасности. Мы документируем, какие [версии dbt Core в настоящее время поддерживаются](/docs/dbt-versions/upgrade-dbt-version-in-cloud#supported-versions).
 
-There aren't many breaking changes between minor versions, and it may be the case that you don't need to change any code to upgrade to a newer version of dbt in dbt Cloud. There are only breaking changes between minor versions of dbt before dbt 1.0. Minor releases starting with dbt 1.0, do not have breaking code changes. If there are no code changes needed, all you have to do is [change the settings](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-to-the-latest-version-of-dbt-in-cloud) in your environment or job to run a more recent version of dbt.
+Между минорными версиями не так много разрушающих изменений, и может оказаться, что вам не нужно изменять никакой код для обновления до более новой версии dbt в dbt Cloud. Разрушающие изменения происходят только между минорными версиями dbt до dbt 1.0. Минорные релизы, начиная с dbt 1.0, не имеют разрушающих изменений в коде. Если изменения кода не требуются, все, что вам нужно сделать, это [изменить настройки](/docs/dbt-versions/upgrade-dbt-version-in-cloud#upgrading-to-the-latest-version-of-dbt-in-cloud) в вашем окружении или задаче, чтобы запустить более свежую версию dbt.
 
-#### Changes between minor versions of dbt that will affect your project
+#### Изменения между минорными версиями dbt, которые повлияют на ваш проект
 
-Below we try to help you answer the question of whether a known breaking change between minor versions of dbt will affect your project. If you answer "yes" to any of the questions below, we recommend that you read the migration guides that we've put together for every dbt minor version release.
+Ниже мы постараемся помочь вам ответить на вопрос, повлияет ли известное разрушающее изменение между минорными версиями dbt на ваш проект. Если вы ответите "да" на любой из вопросов ниже, мы рекомендуем вам прочитать руководства по миграции, которые мы подготовили для каждого релиза минорной версии dbt.
 
-:::info An Important Note on Packages
+:::info Важное примечание о пакетах
 
-If you use any packages from [dbt Hub](https://hub.getdbt.com/), make sure you also upgrade to a version of the package that supports the dbt version you intend to upgrade to. You can see which dbt versions a package supports by checking on the `require-dbt-version:` in the package's dbt_project.yml file on GitHub.
+Если вы используете какие-либо пакеты из [dbt Hub](https://hub.getdbt.com/), убедитесь, что вы также обновляетесь до версии пакета, которая поддерживает версию dbt, на которую вы собираетесь обновиться. Вы можете увидеть, какие версии dbt поддерживает пакет, проверив `require-dbt-version:` в файле dbt_project.yml пакета на GitHub.
 
-As an example, dbt-utils version 0.7.6 supports dbt v0.20, v0.21, and v1.0, as described in its [dbt_project.yml](https://github.com/dbt-labs/dbt-utils/blob/0.7.6/dbt_project.yml).
+Например, версия dbt-utils 0.7.6 поддерживает dbt v0.20, v0.21 и v1.0, как указано в ее [dbt_project.yml](https://github.com/dbt-labs/dbt-utils/blob/0.7.6/dbt_project.yml).
 
-After you've changed the package version in your packages.yml file, be sure to run `dbt deps` in the IDE to install the updated version.
+После того как вы измените версию пакета в вашем файле packages.yml, обязательно выполните `dbt deps` в IDE, чтобы установить обновленную версию.
 
 :::
 
 <details>
-<summary>  Upgrading to v1.0.latest from v0.21 </summary>
+<summary>  Обновление до v1.0.latest с v0.21 </summary>
 <br></br>
 
-:::info Universal change
-Certain configurations in dbt_project.yml have been renamed
+:::info Универсальное изменение
+Некоторые конфигурации в dbt_project.yml были переименованы
 :::
 
-Existing projects will see non-breaking deprecation warnings. You can change three lines in most projects to remove the warnings:
+Существующие проекты увидят предупреждения о неразрушающей депрекации. Вы можете изменить три строки в большинстве проектов, чтобы удалить предупреждения:
 
 <File name='dbt_project.yml'>
 
 ```yml
-model-paths: ["models"] # formerly named "source-paths"
-seed-paths: ["data"]    # formerly named "data-paths"
+model-paths: ["models"] # ранее назывался "source-paths"
+seed-paths: ["data"]    # ранее назывался "data-paths"
 clean-targets:
   - "target"
-  - "dbt_packages"      # formerly named "dbt_modules"
+  - "dbt_packages"      # ранее назывался "dbt_modules"
 ```
 
 </File>
 
-- Do you select tests using the old names for test types? (`test_type:schema`, `test_type:data`, `--schema`, `--data`)
-- Do you have custom macro code that calls the (undocumented) global macros `column_list`, `column_list_for_create_table`, `incremental_upsert`?
-- Do you have custom scripts that parse dbt <Term id="json" /> artifacts?
-- (BigQuery only) Do you use dbt's legacy capabilities around ingestion-time-partitioned tables?
+- Вы выбираете тесты, используя старые названия для типов тестов? (`test_type:schema`, `test_type:data`, `--schema`, `--data`)
+- У вас есть пользовательский макрос, который вызывает (недокументированные) глобальные макросы `column_list`, `column_list_for_create_table`, `incremental_upsert`?
+- У вас есть пользовательские скрипты, которые разбирают артефакты dbt <Term id="json" />?
+- (Только BigQuery) Вы используете устаревшие возможности dbt, связанные с таблицами, разделенными по времени загрузки?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.0).
 
 </details>
 
 
 <details>
-<summary>  Upgrading to v0.21.latest from v0.20 </summary>
+<summary>  Обновление до v0.21.latest с v0.20 </summary>
 <br></br>
 
-- Do you select specific sources to check freshness (`dbt snapshot-freshness --select <source_name>`)?
-- Do you have custom scripts that parse dbt JSON artifacts?
-- (Snowflake only) Do you have custom macros or <Term id="materialization">materializations</Term> that depend on using transactions, such as statement blocks with `auto_begin=True`?
+- Вы выбираете конкретные источники для проверки свежести (`dbt snapshot-freshness --select <source_name>`)?
+- У вас есть пользовательские скрипты, которые разбирают артефакты dbt JSON?
+- (Только Snowflake) У вас есть пользовательские макросы или <Term id="materialization">материализации</Term>, которые зависят от использования транзакций, такие как блоки операторов с `auto_begin=True`?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 
 </details>
 
 
 
 <details>
-<summary>  Upgrading to v0.20.latest from v0.19 </summary>
+<summary>  Обновление до v0.20.latest с v0.19 </summary>
 <br></br>
 
-- Does your project define any custom schema tests?
-- Does your project use `adapter.dispatch` or the `spark_utils` package?
-- Do you have custom scripts that parse dbt JSON artifacts?
+- Ваш проект определяет какие-либо пользовательские схемные тесты?
+- Использует ли ваш проект `adapter.dispatch` или пакет `spark_utils`?
+- У вас есть пользовательские скрипты, которые разбирают артефакты dbt JSON?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 
 </details>
 
 
 
 <details>
-<summary>  Upgrading to v0.19.latest from v0.18 </summary>
+<summary>  Обновление до v0.19.latest с v0.18 </summary>
 <br></br>
 <div>
 
 </div>
 
 
-- Do you have custom scripts that parse dbt JSON artifacts?
-- Do you have any custom materializations?
+- У вас есть пользовательские скрипты, которые разбирают артефакты dbt JSON?
+- У вас есть какие-либо пользовательские материализации?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 
 </details>
 
 
 <details>
-<summary>  Upgrading to v0.18.latest from v0.17 </summary>
+<summary>  Обновление до v0.18.latest с v0.17 </summary>
 <br></br>
 
-- Do you directly call `adapter_macro`?
+- Вы напрямую вызываете `adapter_macro`?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 
 </details>
 
 
 
 <details>
-<summary>  Upgrading to v0.17.latest from v0.16 </summary>
+<summary>  Обновление до v0.17.latest с v0.16 </summary>
 <br></br>
 <div>
 
-:::info Universal change
+:::info Универсальное изменение
 
-You must add `config-version: 2` to your dbt_project.yml file.
+Вы должны добавить `config-version: 2` в ваш файл dbt_project.yml.
 :::
 </div>
 
@@ -217,9 +217,9 @@ models:
 
 <div>
 
-:::info Universal change
+:::info Универсальное изменение
 
-`vars:` are now defined not in your `models:` but are a separate section in dbt_project.yml file.
+`vars:` теперь определяются не в ваших `models:`, а являются отдельным разделом в файле dbt_project.yml.
 :::
 </div>
 
@@ -243,7 +243,7 @@ models:
 </File>
 
 
-- Do you have dictionary configs in your dbt_project.yml such as `partition_by` or `persist_docs`? If yes, you need to add a preceding +.
+- У вас есть словарные конфигурации в вашем dbt_project.yml, такие как `partition_by` или `persist_docs`? Если да, вам нужно добавить предшествующий +.
 
 <File name='dbt_project.yml'>
 
@@ -258,53 +258,50 @@ models:
 ```
 </File>
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 
 </details>
 
 
 <details>
-<summary>  Upgrading to v0.16.latest from v0.15 </summary>
+<summary>  Обновление до v0.16.latest с v0.15 </summary>
 <br></br>
 
-- Do you use the custom `generate_schema_name` macro?
-- Do you use `partition_by` config for BigQuery models?
+- Вы используете пользовательский макрос `generate_schema_name`?
+- Используете ли вы конфигурацию `partition_by` для моделей BigQuery?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 </details>
 
 
 <details>
-<summary>  Upgrading to v0.15.latest from v0.14 </summary>
+<summary>  Обновление до v0.15.latest с v0.14 </summary>
 
 <br></br>
 
-- Do you have a custom materialization?
-- Do you have a macro that accesses `Relations` directly?
+- У вас есть пользовательская материализация?
+- У вас есть макрос, который обращается к `Relations` напрямую?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 </details>
 
 <details>
-<summary>  Upgrading to v0.14.latest from v0.13 </summary>
+<summary>  Обновление до v0.14.latest с v0.13 </summary>
 <br></br>
 
-- Do you still use `Archives`?
-- Do you use the custom `generate_schema_name` macro?
-- Do you use the `—non-destructive` flag?
+- Вы все еще используете `Archives`?
+- Вы используете пользовательский макрос `generate_schema_name`?
+- Вы используете флаг `—non-destructive`?
 
-If you believe your project might be affected, read more details in the migration guide [here](/docs/dbt-versions/core-upgrade).
+Если вы считаете, что ваш проект может быть затронут, прочитайте более подробную информацию в руководстве по миграции [здесь](/docs/dbt-versions/core-upgrade).
 </details>
 
 
-#### Testing your changes before upgrading
-Once you know what code changes you'll need to make, you can start implementing them. We recommend you create a separate dbt project, **Upgrade Project**, to test your changes before making them live in your main dbt project. In your **Upgrade Project**, connect to the same repository you use for your production project. This time, set the development environment [settings](/docs/dbt-versions/upgrade-dbt-version-in-cloud) to run the latest version of dbt Core. Next, check out a branch `dbt-version-upgrade`, make the appropriate updates to your project, and verify your dbt project compiles and runs with the new version in the IDE. If upgrading directly to the latest version results in too many issues, try testing your project iteratively on successive minor versions. There are years of development and a few breaking changes between distant versions of dbt Core (for example, 0.14 --> 1.0). The likelihood of experiencing problems upgrading between successive minor versions is much lower, which is why upgrading regularly is recommended.
+#### Тестирование ваших изменений перед обновлением
+Как только вы узнаете, какие изменения кода вам нужно внести, вы можете начать их реализовывать. Мы рекомендуем создать отдельный проект dbt, **Upgrade Project**, чтобы протестировать ваши изменения перед тем, как сделать их активными в вашем основном проекте dbt. В вашем **Upgrade Project** подключитесь к тому же репозиторию, который вы используете для вашего производственного проекта. На этот раз установите настройки окружения разработки [настройки](/docs/dbt-versions/upgrade-dbt-version-in-cloud), чтобы запустить последнюю версию dbt Core. Затем создайте ветку `dbt-version-upgrade`, внесите соответствующие обновления в ваш проект и убедитесь, что ваш проект dbt компилируется и работает с новой версией в IDE. Если прямое обновление до последней версии вызывает слишком много проблем, попробуйте протестировать ваш проект итеративно на последовательных минорных версиях. Между далекими версиями dbt Core (например, 0.14 --> 1.0) прошло много лет разработки и несколько разрушающих изменений. Вероятность возникновения проблем при обновлении между последовательными минорными версиями значительно ниже, поэтому рекомендуется регулярно обновляться.
 
-Once you have your project compiling and running on the latest version of dbt in the development environment for your `dbt-version-upgrade` branch, try replicating one of your production jobs to run off your branch's code. You can do this by creating a new deployment environment for testing, setting the custom branch to 'ON' and referencing your `dbt-version-upgrade` branch. You'll also need to set the dbt version in this environment to the latest dbt Core version.
+Как только ваш проект будет компилироваться и работать на последней версии dbt в окружении разработки для вашей ветки `dbt-version-upgrade`, попробуйте воспроизвести одну из ваших производственных задач, чтобы запустить код вашей ветки. Вы можете сделать это, создав новое развертываемое окружение для тестирования, установив пользовательскую ветку на 'ON' и сославшись на вашу ветку `dbt-version-upgrade`. Вам также нужно будет установить версию dbt в этом окружении на последнюю версию dbt Core.
 
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-environment.png" title="Настройка вашего тестового окружения" />
 
-
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions/upgrade-environment.png" title="Setting your testing environment" />
-
-
-Then add a job to the new testing environment that replicates one of the production jobs your team relies on. If that job runs smoothly, you should be all set to merge your branch into main and change your development and deployment environments in your main dbt project to run off the newest version of dbt Core.
+Затем добавьте задачу в новое тестовое окружение, которая воспроизводит одну из производственных задач, на которые полагается ваша команда. Если эта задача выполняется без проблем, вы можете смело объединять вашу ветку с основной и изменить ваши окружения разработки и развертывания в вашем основном проекте dbt, чтобы использовать новейшую версию dbt Core.

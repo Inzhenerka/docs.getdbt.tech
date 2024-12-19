@@ -1,65 +1,63 @@
 ---
-title: "Merge jobs in dbt Cloud"
-sidebar_label: "Merge jobs"
-description: "Learn how to trigger a dbt job run when a Git pull request merges."
+title: "Слияние заданий в dbt Cloud"
+sidebar_label: "Слияние заданий"
+description: "Узнайте, как запустить выполнение задания dbt при слиянии запроса на извлечение Git."
 ---
 
+Вы можете настроить задание слияния для реализации рабочего процесса непрерывного развертывания (CD) в dbt Cloud. Задание слияния запускает выполнение задания dbt, когда кто-то сливает запросы на извлечение Git в продуктивную среду. Этот рабочий процесс создает бесшовный опыт разработки, при котором изменения в коде автоматически обновляют данные в продуктивной среде. Также вы можете использовать этот рабочий процесс для выполнения `dbt compile`, чтобы обновить манифест вашей среды, что сделает последующие запуски CI более производительными.
 
-You can set up a merge job to implement a continuous deployment (CD) workflow in dbt Cloud. The merge job triggers a dbt job to run when someone merges Git pull requests into production. This workflow creates a seamless development experience where changes made in code will automatically update production data. Also, you can use this workflow for running `dbt compile` to update your environment's manifest so subsequent CI job runs are more performant.
+Используя CD в dbt Cloud, вы можете воспользоваться отложенным выполнением, чтобы строить только измененную модель и любые изменения downstream. С заданиями слияния состояние будет обновляться почти мгновенно, всегда предоставляя самую актуальную информацию о состоянии в [dbt Explorer](/docs/collaborate/explore-projects).
 
-By using CD in dbt Cloud, you can take advantage of deferral to build only the edited model and any downstream changes. With merge jobs, state will be updated almost instantly, always giving the most up-to-date state information in [dbt Explorer](/docs/collaborate/explore-projects).
+## Предварительные требования
+- У вас есть аккаунт dbt Cloud.
+- Вы настроили [соединение с вашим Git-поставщиком](/docs/cloud/git/git-configuration-in-dbt-cloud). Эта интеграция позволяет dbt Cloud запускать задания от вашего имени для триггера заданий.
+   - Если вы используете нативную интеграцию с [GitLab](/docs/cloud/git/connect-gitlab), вам нужен платный или самохостингованный аккаунт, который включает поддержку вебхуков GitLab и [токенов доступа к проекту](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html). Если вы используете GitLab Free, запросы на слияние будут триггерить CI задания, но обновления статуса CI заданий (успех или неудача задания) не будут возвращаться в GitLab.
+- Для отложенного выполнения (что является значением по умолчанию) убедитесь, что в среде, к которой вы откладываете, был хотя бы один успешный запуск задания.
 
-## Prerequisites
-- You have a dbt Cloud account. 
-- You have set up a [connection with your Git provider](/docs/cloud/git/git-configuration-in-dbt-cloud). This integration lets dbt Cloud run jobs on your behalf for job triggering.
-   - If you're using a native [GitLab](/docs/cloud/git/connect-gitlab) integration, you need a paid or self-hosted account that includes support for GitLab webhooks and [project access tokens](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html). If you're using GitLab Free, merge requests will trigger CI jobs but CI job status updates (success or failure of the job) will not be reported back to GitLab.
-- For deferral (which is the default), make sure there has been at least one successful job run in the environment you defer to.
+## Настройка триггера задания при слиянии в Git {#set-up-merge-jobs}
 
-## Set up job trigger on Git merge {#set-up-merge-jobs}
+1. На странице вашей среды развертывания нажмите **Создать задание** > **Задание слияния**.
+1. Опции в разделе **Настройки задания**:
+    - **Имя задания** &mdash; Укажите имя для задания слияния.
+    - **Описание** &mdash; Укажите описание задания.
+    - **Среда** &mdash; По умолчанию установлено на среду, из которой вы создали задание.
+1. В разделе **Git триггер** опция **Запуск при слиянии** включена по умолчанию. Каждый раз, когда PR сливается (в базовую ветку, настроенную в среде) в вашем репозитории Git, это задание будет триггериться для выполнения.
+1. Опции в разделе **Настройки выполнения**:
+    - **Команды** &mdash; По умолчанию включает команду `dbt build --select state:modified+`. Это информирует dbt Cloud о том, чтобы строить только новые или измененные модели и их downstream зависимости. Важно, что сравнение состояния может происходить только при выбранной отложенной среде для сравнения состояния. Нажмите **Добавить команду**, чтобы добавить больше [команд](/docs/deploy/job-commands), которые вы хотите вызвать при выполнении этого задания.
+    - **Сравнить изменения с** &mdash; По умолчанию установлено на сравнение изменений с средой, из которой вы создали задание. Эта опция позволяет dbt Cloud проверять состояние кода в PR по сравнению с кодом, работающим в отложенной среде, чтобы проверять только измененный код, а не строить полную таблицу или весь DAG. Чтобы изменить настройки по умолчанию, вы можете выбрать **Без отложенного выполнения**, **Это задание** для самостановки или выбрать другую среду.
+1. (необязательно) Опции в разделе **Расширенные настройки**:
+    - **Переменные среды** &mdash; Определите [переменные среды](/docs/build/environment-variables), чтобы настроить поведение вашего проекта при выполнении этого задания.
+    - **Имя цели** &mdash; Определите [имя цели](/docs/build/custom-target-names). Аналогично переменным среды, эта опция позволяет вам настроить поведение проекта.
+    - **Таймаут выполнения** &mdash; Отменить это задание, если время выполнения превышает значение таймаута.
+    - **Версия dbt** &mdash; По умолчанию установлено на наследование [версии dbt](/docs/dbt-versions/core) из среды. dbt Labs настоятельно рекомендует не изменять настройки по умолчанию. Эта опция изменения версии на уровне задания полезна только при обновлении проекта до следующей версии dbt; в противном случае несоответствующие версии между средой и заданием могут привести к путанице.
+    - **Потоки** &mdash; По умолчанию установлено на 4 [потока](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Увеличьте количество потоков, чтобы увеличить параллелизм выполнения модели.
 
-1. On your deployment environment page, click **Create job** > **Merge job**. 
-1. Options in the **Job settings** section:
-    - **Job name** &mdash; Specify the name for the merge job.
-    - **Description** &mdash; Provide a descripion about the job. 
-    - **Environment** &mdash; By default, it’s set to the environment you created the job from.
-1. In the **Git trigger** section, the **Run on merge** option is enabled by default. Every time a PR merges (to a base
-branch configured in the environment) in your Git repo, this job will get triggered to run. 
-1. Options in the **Execution settings** section:
-    - **Commands** &mdash; By default, it includes the `dbt build --select state:modified+` command. This informs dbt Cloud to build only new or changed models and their downstream dependents. Importantly, state comparison can only happen when there is a deferred environment selected to compare state to. Click **Add command** to add more [commands](/docs/deploy/job-commands) that you want to be invoked when this job runs.
-    - **Compare changes against** &mdash; By default, it's set to compare changes against the environment you created the job from. This option allows dbt Cloud to check the state of the code in the PR against the code running in the deferred environment, so as to only check the modified code, instead of building the full table or the entire DAG. To change the default settings, you can select **No deferral**, **This job** for self-deferral, or choose a different environment. 
-1. (optional) Options in the **Advanced settings** section: 
-    - **Environment variables** &mdash; Define [environment variables](/docs/build/environment-variables) to customize the behavior of your project when this job runs.
-    - **Target name** &mdash; Define the [target name](/docs/build/custom-target-names). Similar to environment variables, this option lets you customize the behavior of the project. 
-    - **Run timeout** &mdash; Cancel this job if the run time exceeds the timeout value.
-    - **dbt version** &mdash; By default, it’s set to inherit the [dbt version](/docs/dbt-versions/core) from the environment. dbt Labs strongly recommends that you don't change the default setting. This option to change the version at the job level is useful only when you upgrade a project to the next dbt version; otherwise, mismatched versions between the environment and job can lead to confusing behavior.
-    - **Threads** &mdash; By default, it’s set to 4 [threads](/docs/core/connect-data-platform/connection-profiles#understanding-threads). Increase the thread count to increase model execution concurrency.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-create-merge-job.png" title="Пример создания задания слияния"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-create-merge-job.png" title="Example of creating a merge job"/>
+## Проверьте события push в Git
 
-## Verify push events in Git
+Задания слияния требуют событий push, поэтому убедитесь, что они включены у вашего Git-поставщика, особенно если у вас уже есть интеграция с Git. Однако для новой настройки интеграции вы можете пропустить эту проверку, так как события push обычно включены по умолчанию.
 
-Merge jobs require push events so make sure they've been enabled in your Git provider, especially if you have an already-existing Git integration. However, for a new integration setup, you can skip this check since push events are typically enabled by default. 
+<Expandable alt_header="Пример GitHub" >
 
-<Expandable alt_header="GitHub example" >
+Следующий пример GitHub показывает, когда события push уже настроены:
 
-The following is a GitHub example of when the push events are already set: 
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-push-events.png" title="Example of the Pushes option enabled in the GitHub settings"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-github-push-events.png" title="Пример включенной опции Pushes в настройках GitHub"/>
 
 </Expandable>
 
-<Expandable alt_header="GitLab example" >
+<Expandable alt_header="Пример GitLab" >
 
-The following is a GitLab example of when the push events are already set:
+Следующий пример GitLab показывает, когда события push уже настроены:
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-gitlab-push-events.png" title="Example of the Push events option enabled in the GitLab settings"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-gitlab-push-events.png" title="Пример включенной опции Push events в настройках GitLab"/>
 
 </Expandable>
 
-<Expandable alt_header="Azure DevOps example" >
+<Expandable alt_header="Пример Azure DevOps" >
 
-The following is an example of creating a new **Code pushed** trigger in Azure DevOps. Create a new service hooks subscription when code pushed events haven't been set: 
+Следующий пример показывает создание нового триггера **Код отправлен** в Azure DevOps. Создайте новую подписку на сервисные хуки, когда события отправки кода не были настроены:
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-azuredevops-new-event.png" title="Example of creating a new trigger to push events in Azure Devops"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/example-azuredevops-new-event.png" title="Пример создания нового триггера для событий push в Azure DevOps"/>
 
 </Expandable>

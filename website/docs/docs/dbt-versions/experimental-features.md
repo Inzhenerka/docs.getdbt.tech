@@ -1,29 +1,29 @@
 ---
-title: "Preview new and experimental features in dbt Cloud"
+title: "Предварительный просмотр новых и экспериментальных функций в dbt Cloud"
 id: "experimental-features"
-sidebar_label: "Preview new dbt Cloud features"
-description: "Gain early access to many new dbt Labs experimental features by enabling this in your profile."
+sidebar_label: "Предварительный просмотр новых функций dbt Cloud"
+description: "Получите ранний доступ ко многим новым экспериментальным функциям dbt Labs, активировав это в своем профиле."
 pagination_next: null
 ---
 
-dbt Labs often tests experimental features before deciding to continue on the [Product lifecycle](https://docs.getdbt.com/docs/dbt-versions/product-lifecycles#dbt-cloud).
+dbt Labs часто тестирует экспериментальные функции, прежде чем принять решение о продолжении их разработки в рамках [жизненного цикла продукта](https://docs.getdbt.com/docs/dbt-versions/product-lifecycles#dbt-cloud).
 
-You can access experimental features to preview beta features that haven’t yet been released to dbt Cloud. You can toggle on or off all experimental features in your Profile settings. Experimental features:
+Вы можете получить доступ к экспериментальным функциям, чтобы предварительно ознакомиться с бета-функциями, которые еще не были выпущены в dbt Cloud. Вы можете включать или отключать все экспериментальные функции в настройках вашего профиля. Экспериментальные функции:
 
-- May not be feature-complete or fully stable as we’re actively developing them.
-- Could be discontinued at any time.
-- May require feedback from you to understand their limitations or impact. Each experimental feature collects feedback directly in dbt Cloud, which may impact dbt Labs' decisions to implement. 
-- May have limited technical support and be excluded from our Support SLAs.
-- May not have public documentation available.
+- Могут быть не полностью завершенными или стабильными, так как мы активно их разрабатываем.
+- Могут быть прекращены в любое время.
+- Могут требовать от вас обратной связи для понимания их ограничений или влияния. Каждая экспериментальная функция собирает обратную связь непосредственно в dbt Cloud, что может повлиять на решения dbt Labs о внедрении.
+- Могут иметь ограниченную техническую поддержку и быть исключены из наших SLA по поддержке.
+- Могут не иметь доступной публичной документации.
 
-To enable or disable experimental features:
+Чтобы включить или отключить экспериментальные функции:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**
-2. Go to **Personal profile** under the **Your profile** header.
-2. Find Experimental features at the bottom of Your Profile page.
-3. Click **Beta** to toggle the features on or off as shown in the following image.
-   ![Experimental features](/img/docs/dbt-versions/experimental-feats.png)
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом боковом меню и выберите **Настройки учетной записи**.
+2. Перейдите в **Личный профиль** в разделе **Ваш профиль**.
+3. Найдите Экспериментальные функции внизу страницы вашего профиля.
+4. Нажмите **Beta**, чтобы включить или отключить функции, как показано на следующем изображении.
+   ![Экспериментальные функции](/img/docs/dbt-versions/experimental-feats.png)
 
-## Beta terms and conditions
+## Условия и положения бета-версии
 
-By using or enabling features that are not yet in general release ("Beta Features"), you agree to the [Beta Features Terms and Conditions](/assets/beta-tc.pdf).
+Используя или активируя функции, которые еще не находятся в общем доступе ("Бета-функции"), вы соглашаетесь с [Условиями и положениями бета-функций](/assets/beta-tc.pdf).

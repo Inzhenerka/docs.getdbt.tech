@@ -1,119 +1,79 @@
 ---
-title: "Upgrading to 0.16.0"
+title: "Обновление до 0.16.0"
 id: "upgrading-to-0-16-0"
 displayed_sidebar: "docs"
 ---
 
-dbt v0.16.0 contains many new features, bug fixes, and improvements. This guide
-covers all of the important information to consider when upgrading from an earlier
-version of dbt to 0.16.0.
+dbt v0.16.0 содержит множество новых функций, исправлений ошибок и улучшений. Этот гид охватывает всю важную информацию, которую следует учитывать при обновлении с более ранней версии dbt до 0.16.0.
 
-## Articles:
- - [BigQuery incremental model changes](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982)
- - [BigQuery incremental model performance bechmarking](https://discourse.getdbt.com/t/benchmarking-incremental-strategies-on-bigquery/981)
+## Статьи:
+ - [Изменения в инкрементальных моделях BigQuery](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982)
+ - [Бенчмаркинг производительности инкрементальных моделей BigQuery](https://discourse.getdbt.com/t/benchmarking-incremental-strategies-on-bigquery/981)
 
-## Breaking changes
+## Ломающие изменения
 
-The following changes may require you to change the code in your dbt project
-after upgrading to v0.16.0.
+Следующие изменения могут потребовать от вас изменения кода в вашем проекте dbt после обновления до v0.16.0.
 
-### Seed type inference
-A number of improvements have been made to the type-inference logic in dbt. dbt
-previously errantly converted string values in [seed CSV files](/docs/build/seeds)
-like `sunday` or `March` into date timestamps in the year `0001`.
-This was obviously incorrect and has now been remedied, but if you
-_relied_ on this functionality, then this represents a breaking change. See
-[this pull request](https://github.com/dbt-labs/dbt-core/pull/1920) for more
-information on the change.
+### Вывод типов для Seed
+В dbt было внесено несколько улучшений в логику вывода типов. Ранее dbt ошибочно преобразовывал строковые значения в [seed CSV файлах](/docs/build/seeds), такие как `sunday` или `March`, в временные метки даты в году `0001`. Это было явно неверно и теперь исправлено, но если вы _полагались_ на эту функциональность, то это представляет собой ломающее изменение. Дополнительную информацию об изменении можно найти в [этом запросе на изменение](https://github.com/dbt-labs/dbt-core/pull/1920).
 
-### One-argument generate_schema_name deprecation
-Support for the one-argument variant of `generate_schema_name` macros (deprecated
-in a previous release) are no longer supported. If you are using the one-argument
-variant of `generate_schema_name`, see [the docs on custom schemas](/docs/build/custom-schemas)
-for an example of how to use the two-argument variant of `generate_schema_name`.
+### Устаревание однопараметрического варианта generate_schema_name
+Поддержка однопараметрического варианта макроса `generate_schema_name` (устаревшего в предыдущем релизе) больше не поддерживается. Если вы используете однопараметрический вариант `generate_schema_name`, смотрите [документацию по пользовательским схемам](/docs/build/custom-schemas) для примера использования двухпараметрического варианта `generate_schema_name`.
 
-### BigQuery partition_by syntax
+### Синтаксис partition_by для BigQuery
 
-The `partition_by` config for BigQuery models now accepts a dictionary containing
-the following keys:
-- `field`: The field name in the <Term id="table" /> to partition by
-- `data_type`: The data type for the partitioning field (`date`, `timestamp`, `datetime`, `int64`)
-- `range`: Only required if the `data_type` is `int64` (for range bucket partitioning)
+Конфигурация `partition_by` для моделей BigQuery теперь принимает словарь, содержащий следующие ключи:
+- `field`: Имя поля в <Term id="table" />, по которому будет происходить разбиение
+- `data_type`: Тип данных для поля разбиения (`date`, `timestamp`, `datetime`, `int64`)
+- `range`: Требуется только если `data_type` равен `int64` (для разбиения по диапазону)
 
-If a string is provided as the `partition_by` config for a model on BigQuery, dbt
-will attempt to parse that string out to a field and data_type representation. A future
-release of dbt will remove the ability for `partition_by` configs to be configured
-using a string.
+Если строка предоставляется в качестве конфигурации `partition_by` для модели в BigQuery, dbt попытается разобрать эту строку на представление поля и типа данных. В будущем релизе dbt будет удалена возможность конфигурирования `partition_by` с использованием строки.
 
-See the docs on [BigQuery partitioning](/reference/resource-configs/bigquery-configs#partition-clause) for
-more information on the updated `partition_by` syntax for BigQuery models. See also
-[this guide](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982) for
-more information on how dbt leverages this new syntax to make incremental models build
-faster and cheaper.
+Смотрите документацию по [разбиению в BigQuery](/reference/resource-configs/bigquery-configs#partition-clause) для получения дополнительной информации о обновленном синтаксисе `partition_by` для моделей BigQuery. Также смотрите [этот гид](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982) для получения дополнительной информации о том, как dbt использует этот новый синтаксис для ускорения и удешевления построения инкрементальных моделей.
 
-### Source test argument compilation
-Source test arguments are now handled the same way as model test arguments.
-If you are providing jinja expressions in Source table schema tests, then this
-is a breaking change for your project. See [this pull request](https://github.com/dbt-labs/dbt-core/pull/2150)
-for more information on the change.
+### Компиляция аргументов тестов источника
+Аргументы тестов источника теперь обрабатываются так же, как и аргументы тестов моделей. Если вы предоставляете выражения jinja в тестах схемы таблиц источника, то это является ломающим изменением для вашего проекта. Смотрите [этот запрос на изменение](https://github.com/dbt-labs/dbt-core/pull/2150) для получения дополнительной информации об изменении.
 
-### Debug log timestamp formatting
-The format of timestamps in debug logs has changed. Previously, a comma (`,`)
-was used to separate the seconds and microseconds in debug log timestamps. If you are
-programmatically consuming the debug logs emitted by dbt, this could be a breaking change.
-See [this pull request](https://github.com/dbt-labs/dbt-core/pull/2099) for more
-information on the change.
+### Форматирование временных меток в отладочных логах
+Формат временных меток в отладочных логах изменился. Ранее для разделения секунд и микросекунд в временных метках отладочных логов использовалась запятая (`,`). Если вы программно обрабатываете отладочные логи, создаваемые dbt, это может быть ломающим изменением. Смотрите [этот запрос на изменение](https://github.com/dbt-labs/dbt-core/pull/2099) для получения дополнительной информации об изменении.
 
-### Docrefs removed from manifest
-`docrefs` are no longer present in the compiled `manifest.json` file. If you are programmatically
-consuming the `manifest.json` file emitted by dbt and making use of the `docrefs` field
-in the manifest, then this is a breaking change. See [this pull request](https://github.com/dbt-labs/dbt-core/pull/2096) for more information no the change.
+### Удаление docrefs из манифеста
+`docrefs` больше не присутствуют в скомпилированном файле `manifest.json`. Если вы программно обрабатываете файл `manifest.json`, создаваемый dbt, и используете поле `docrefs` в манифесте, то это является ломающим изменением. Смотрите [этот запрос на изменение](https://github.com/dbt-labs/dbt-core/pull/2096) для получения дополнительной информации об изменении.
 
-### get_catalog macro interface change
-`get_catalog` macros should now accept two arguments: a Relation pointing to an
-information schema, and a list of schemas to search for in the supplied information schema.
-If you are overriding the `get_catalog` macro in your project, you can find more
-information about this change in [this pull request](https://github.com/dbt-labs/dbt-core/pull/2037).
+### Изменение интерфейса макроса get_catalog
+Макросы `get_catalog` теперь должны принимать два аргумента: Relation, указывающий на информационную схему, и список схем для поиска в предоставленной информационной схеме. Если вы переопределяете макрос `get_catalog` в вашем проекте, вы можете найти дополнительную информацию об этом изменении в [этом запросе на изменение](https://github.com/dbt-labs/dbt-core/pull/2037).
 
-### snowflake__list_schemas macro interface change
-The `snowflake__list_schemas` macro should now return an Agate dataframe with a
-column named `"name"`. If you are overriding the `snowflake__list_schemas` macro in your
-project, you can find more information about this change in [this pull request](https://github.com/dbt-labs/dbt-core/pull/2171).
+### Изменение интерфейса макроса snowflake__list_schemas
+Макрос `snowflake__list_schemas` теперь должен возвращать фрейм данных Agate с колонкой, названной `"name"`. Если вы переопределяете макрос `snowflake__list_schemas` в вашем проекте, вы можете найти дополнительную информацию об этом изменении в [этом запросе на изменение](https://github.com/dbt-labs/dbt-core/pull/2171).
 
-### Snowflake databases wih 10,000 schemas
-dbt no longer supports running against Snowflake databases containing more than
-10,000 schemas. This is due limitations of the `show schemas in database` query
-that dbt now uses to find schemas in a Snowflake database. If your dbt project
-is running against a Snowflake database containing more than 10,000 schemas, you should
-not upgrade to dbt v0.16.0.
+### Snowflake базы данных с 10,000 схем
+dbt больше не поддерживает работу с базами данных Snowflake, содержащими более 10,000 схем. Это связано с ограничениями запроса `show schemas in database`, который dbt теперь использует для поиска схем в базе данных Snowflake. Если ваш проект dbt работает с базой данных Snowflake, содержащей более 10,000 схем, вам не следует обновляться до dbt v0.16.0.
 
-If this change is applicable to your dbt project, please let us know in a dbt
-issue or in the dbt Slack.
+Если это изменение применимо к вашему проекту dbt, пожалуйста, дайте нам знать в вопросе dbt или в Slack dbt.
 
-## Python requirements
+## Требования к Python
 
-If you are installing dbt in a Python environment alongside other Python modules,
-please be mindful of the following changes to dbt's Python dependencies:
+Если вы устанавливаете dbt в среде Python вместе с другими модулями Python, пожалуйста, обратите внимание на следующие изменения в зависимостях Python dbt:
 
-- Added dependency on `'cffi>=1.9,<1.14',` to fix `snowflake-connector-python` issues
-- Changed upper bound `'requests<2.23.0',` to fix `snowflake-connector-python` issues
-- Added dependency on `'idna<2.9'` to fix `snowflake-connector-python` issues
-- Changed `snowflake-connector-python` to `2.2.1`
-- Increased `google-cloud-bigquery` to `>=1.22.0` to add support for integer bucket partitioning
-- Changed upper bound on `Jinja2 < 3`
+- Добавлена зависимость на `'cffi>=1.9,<1.14',` для исправления проблем с `snowflake-connector-python`
+- Изменен верхний предел на `'requests<2.23.0',` для исправления проблем с `snowflake-connector-python`
+- Добавлена зависимость на `'idna<2.9'` для исправления проблем с `snowflake-connector-python`
+- Изменен `snowflake-connector-python` на `2.2.1`
+- Увеличен `google-cloud-bigquery` до `>=1.22.0` для добавления поддержки разбиения по целым числам
+- Изменен верхний предел на `Jinja2 < 3`
 
-## New and changed documentation
-- [BigQuery partitioning configs](/reference/resource-configs/bigquery-configs)
-- [Select specific seeds to run with `--select`](/reference/commands/seed)
-- [New `generate_database_name` macro](/docs/build/custom-databases#generate_database_name)
-- [New `dbt_project.yml context`](/reference/dbt-jinja-functions/dbt-project-yml-context)
-- [New configurations for schema.yml files](/reference/configs-and-properties)
-- [New configurations for Source declarations](/docs/build/sources)
-- [New Postgres connection configs](/docs/core/connect-data-platform/postgres-setup)
-- [New Snowflake KeyPair auth configs](/docs/core/connect-data-platform/snowflake-setup)
-- [New `builtins` jinja context variable](/reference/dbt-jinja-functions/builtins)
-- [New `fromyaml` context method](/reference/dbt-jinja-functions/fromyaml)
-- [New `toyaml` context method](/reference/dbt-jinja-functions/toyaml)
-- [New `project_name` context variable](/reference/dbt-jinja-functions/project_name)
-- [New `dbt_version` context variable](/reference/dbt-jinja-functions/dbt_version)
-- [New `database_schemas` variable in the `on-run-end` context](/reference/dbt-jinja-functions/on-run-end-context)
+## Новая и измененная документация
+- [Конфигурации разбиения BigQuery](/reference/resource-configs/bigquery-configs)
+- [Выбор конкретных seed для запуска с помощью `--select`](/reference/commands/seed)
+- [Новый макрос `generate_database_name`](/docs/build/custom-databases#generate_database_name)
+- [Новый контекст `dbt_project.yml`](/reference/dbt-jinja-functions/dbt-project-yml-context)
+- [Новые конфигурации для файлов schema.yml](/reference/configs-and-properties)
+- [Новые конфигурации для деклараций источников](/docs/build/sources)
+- [Новые конфигурации подключения для Postgres](/docs/core/connect-data-platform/postgres-setup)
+- [Новые конфигурации аутентификации Snowflake KeyPair](/docs/core/connect-data-platform/snowflake-setup)
+- [Новая переменная контекста `builtins` jinja](/reference/dbt-jinja-functions/builtins)
+- [Новый метод контекста `fromyaml`](/reference/dbt-jinja-functions/fromyaml)
+- [Новый метод контекста `toyaml`](/reference/dbt-jinja-functions/toyaml)
+- [Новая переменная контекста `project_name`](/reference/dbt-jinja-functions/project_name)
+- [Новая переменная контекста `dbt_version`](/reference/dbt-jinja-functions/dbt_version)
+- [Новая переменная `database_schemas` в контексте `on-run-end`](/reference/dbt-jinja-functions/on-run-end-context)
