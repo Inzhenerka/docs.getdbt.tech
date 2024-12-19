@@ -1,13 +1,13 @@
 ---
-title: How do I remove deleted models from my data warehouse?
-description: "Remove deleted models directly in your data warehouse"
-sidebar_label: 'Removing deleted models from your warehouse'
+title: Как удалить удаленные модели из моего хранилища данных?
+description: "Удалите удаленные модели непосредственно в вашем хранилище данных"
+sidebar_label: 'Удаление удаленных моделей из вашего хранилища'
 id: removing-deleted-models
 
 ---
 
-If you delete a model from your dbt project, dbt does not automatically drop the relation from your schema. This means that you can end up with extra objects in schemas that dbt creates, which can be confusing to other users.
+Если вы удаляете модель из вашего проекта dbt, dbt не удаляет автоматически связь из вашей схемы. Это означает, что в схемах, которые создает dbt, могут остаться лишние объекты, что может запутать других пользователей.
 
-(This can also happen when you switch a model from being a <Term id="view" /> or <Term id="table" />, to ephemeral)
+(Это также может произойти, если вы переключаете модель с <Term id="view" /> или <Term id="table" /> на ephemeral)
 
-When you remove models from your dbt project, you should manually drop the related relations from your schema.
+Когда вы удаляете модели из вашего проекта dbt, вам следует вручную удалить связанные связи из вашей схемы.

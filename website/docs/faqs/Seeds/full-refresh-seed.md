@@ -1,11 +1,11 @@
 ---
-title: The columns of my seed changed, and now I get an error when running the `seed` command, what should I do?
-description: "Rerun the command with a `--full-refresh` flag"
-sidebar_label: 'debug error when columns of seed changes'
+title: Столбцы моего seed изменились, и теперь я получаю ошибку при выполнении команды `seed`, что мне делать?
+description: "Повторите команду с флагом `--full-refresh`"
+sidebar_label: 'отладка ошибки при изменении столбцов seed'
 id: full-refresh-seed
 
 ---
-If you changed the columns of your seed, you may get a `Database Error`:
+Если вы изменили столбцы вашего seed, вы можете получить ошибку `Database Error`:
 
 <Tabs
   defaultValue="snowflake"
@@ -65,16 +65,16 @@ Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
 
 </Tabs>
 
-In this case, you should rerun the command with a `--full-refresh` flag, like so:
+В этом случае вам следует повторить команду с флагом `--full-refresh`, вот так:
 
 ```shell
 dbt seed --full-refresh
 ```
 
-**Why is this the case?**
+**Почему это происходит?**
 
-When you typically run dbt seed, dbt truncates the existing <Term id="table" /> and reinserts the data. This pattern avoids a `drop cascade` command, which may cause downstream objects (that your BI users might be querying!) to get dropped.
+Когда вы обычно выполняете dbt seed, dbt очищает существующую <Term id="table" /> и заново вставляет данные. Эта схема позволяет избежать команды `drop cascade`, которая может привести к удалению объектов на нижнем уровне (которые могут запрашивать ваши BI пользователи!).
 
-However, when column names are changed, or new columns are added, these statements will fail as the table structure has changed.
+Однако, когда имена столбцов изменяются или добавляются новые столбцы, эти операции завершатся неудачей, так как структура таблицы изменилась.
 
-The `--full-refresh` flag will force dbt to `drop cascade` the existing table before rebuilding it.
+Флаг `--full-refresh` заставит dbt выполнить `drop cascade` для существующей таблицы перед ее восстановлением.

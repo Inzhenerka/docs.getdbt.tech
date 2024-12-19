@@ -1,12 +1,12 @@
 ---
-title: What if my source is in a different database to my target database?
-description: "Use database property to define source in a diff database"
-sidebar_label: 'Source is in a different database to target database'
+title: Что делать, если мой источник находится в другой базе данных, чем целевая база данных?
+description: "Используйте свойство базы данных для определения источника в другой базе данных"
+sidebar_label: 'Источник находится в другой базе данных, чем целевая база данных'
 id: source-in-different-database
 
 ---
 
-Use the [`database` property](/reference/resource-properties/database) to define the database that the source is in.
+Используйте [`свойство database`](/reference/resource-properties/database), чтобы определить базу данных, в которой находится источник.
 
 <File name='models/<filename>.yml'>
 

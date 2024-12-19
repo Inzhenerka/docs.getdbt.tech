@@ -1,14 +1,14 @@
 ---
-title: Do hooks run with seeds?
-description: "Run hooks with seeds and configure them in project.yml file"
-sidebar_label: "Use hooks to run with seeds"
+title: Запускаются ли хуки с сидами?
+description: "Запуск хуков с сидами и их настройка в файле project.yml"
+sidebar_label: "Использование хуков для запуска с сидами"
 id: seed-hooks
 
 ---
 
-Yes! The following hooks are available:
+Да! Доступны следующие хуки:
 
 - [pre-hooks & post-hooks](reference/resource-configs/pre-hook-post-hook.md)
 - [on-run-start & on-run-end hooks](reference/project-configs/on-run-start-on-run-end.md)
 
-Configure these in your `dbt_project.yml` file.
+Настройте их в вашем файле `dbt_project.yml`.

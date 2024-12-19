@@ -1,14 +1,14 @@
 ---
-title: How do I create dependencies between models?
-description: "Using ref function to create dependencies"
-sidebar_label: 'Creating dependencies between models'
+title: Как создать зависимости между моделями?
+description: "Использование функции ref для создания зависимостей"
+sidebar_label: 'Создание зависимостей между моделями'
 id: create-dependencies
 
 ---
 
-When you use the `ref` [function](/reference/dbt-jinja-functions/ref), dbt automatically infers the dependencies between models.
+Когда вы используете функцию `ref` [функция](/reference/dbt-jinja-functions/ref), dbt автоматически определяет зависимости между моделями.
 
-For example, consider a model, `customer_orders`, like so:
+Например, рассмотрим модель `customer_orders`, как показано ниже:
 
 <File name='models/customer_orders.sql'>
 
@@ -25,7 +25,7 @@ group by 1
 
 </File>
 
-**There's no need to explicitly define these dependencies.** dbt will understand that the `stg_orders` model needs to be built before the above model (`customer_orders`). When you execute `dbt run`, you will see these being built in order:
+**Нет необходимости явно определять эти зависимости.** dbt поймет, что модель `stg_orders` должна быть построена перед вышеуказанной моделью (`customer_orders`). Когда вы выполните команду `dbt run`, вы увидите, что они будут построены в порядке:
 
 ```txt
 $ dbt run
@@ -44,4 +44,4 @@ Found 2 models, 28 tests, 0 snapshots, 0 analyses, 130 macros, 0 operations, 0 s
 Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 ```
 
-To learn more about building a dbt project, we recommend you complete the [quickstart guide](/guides).
+Чтобы узнать больше о создании проекта dbt, мы рекомендуем вам ознакомиться с [руководством по быстрому старту](/guides).

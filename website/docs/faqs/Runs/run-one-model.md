@@ -1,15 +1,15 @@
 ---
-title: How do I run one model at a time?
-description: "Use select flags to run one model at a time"
-sidebar_label: 'Run one model at a time'
+title: Как запустить одну модель за раз?
+description: "Используйте флаги select, чтобы запустить одну модель за раз"
+sidebar_label: 'Запуск одной модели за раз'
 id: run-one-model
 
 ---
 
-To run one model, use the `--select` flag (or `-s` flag), followed by the name of the model:
+Чтобы запустить одну модель, используйте флаг `--select` (или флаг `-s`), за которым следует имя модели:
 
 ```shell
 $ dbt run --select customers
 ```
 
-Check out the [model selection syntax documentation](/reference/node-selection/syntax) for more operators and examples.
+Посмотрите [документацию по синтаксису выбора моделей](/reference/node-selection/syntax) для получения дополнительных операторов и примеров.

@@ -1,11 +1,11 @@
 ---
-title: How do I write long-form explanations in my descriptions?
-description: "Write long descriptions in your documentation"
-sidebar_label: 'Write long descriptions'
+title: Как написать длинные объяснения в своих описаниях?
+description: "Напишите длинные описания в вашей документации"
+sidebar_label: 'Напишите длинные описания'
 id: long-descriptions
 ---
-If you need more than a sentence to explain a model, you can:
-1. Split your description over multiple lines using `>`. Interior line breaks are removed and Markdown can be used. This method is recommended for simple, single-paragraph descriptions:
+Если вам нужно больше одного предложения, чтобы объяснить модель, вы можете:
+1. Разделить ваше описание на несколько строк, используя `>`. Внутренние переносы строк удаляются, и можно использовать Markdown. Этот метод рекомендуется для простых, однопараграфных описаний:
 ```yml
   version: 2
 
@@ -18,7 +18,7 @@ If you need more than a sentence to explain a model, you can:
       consequat.
 ```
 
-2. Split your description over multiple lines using `|`. Interior line breaks are maintained and Markdown can be used. This method is recommended for more complex descriptions:
+2. Разделить ваше описание на несколько строк, используя `|`. Внутренние переносы строк сохраняются, и можно использовать Markdown. Этот метод рекомендуется для более сложных описаний:
 ```yml
   version: 2
 
@@ -31,4 +31,4 @@ If you need more than a sentence to explain a model, you can:
       * tempor incididunt ut labore et dolore magna aliqua.
 ```
 
-3. Use a [docs block](/docs/build/documentation#using-docs-blocks) to write the description in a separate Markdown file.
+3. Использовать [docs block](/docs/build/documentation#using-docs-blocks), чтобы написать описание в отдельном Markdown файле.

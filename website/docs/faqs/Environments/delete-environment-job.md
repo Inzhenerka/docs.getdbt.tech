@@ -1,45 +1,43 @@
 ---
-title: How to delete a job or environment in dbt Cloud?
-description: "How to delete a job or environment"
-sidebar_label: 'Delete a job or environment'
+title: Как удалить задачу или окружение в dbt Cloud?
+description: "Как удалить задачу или окружение"
+sidebar_label: 'Удалить задачу или окружение'
 id: delete-environment-job
 --- 
 
+Чтобы удалить окружение или задачу в dbt Cloud, у вас должна быть лицензия `developer` и необходимые права доступа.
 
-To delete an environment or job in dbt Cloud, you must have a `developer` [license](/docs/cloud/manage-access/seats-and-users) and have the necessary [access permissions](/docs/cloud/manage-access/about-user-access). 
+## Удаление задачи
 
-## Delete a job
+Чтобы удалить задачу или несколько задач в dbt Cloud:
 
-To delete a job or multiple jobs in dbt Cloud:
-
-1. Click **Deploy** on the navigation header.
-2. Click **Jobs** and select the job(s) you want to delete. 
-3. Click **Settings** on the top right of the page and then click **Edit**.
-4. Scroll to the bottom of the page and click **Delete** to delete the job. <br />
+1. Нажмите **Deploy** в навигационном заголовке.
+2. Нажмите **Jobs** и выберите задачу(и), которую(ые) вы хотите удалить. 
+3. Нажмите **Settings** в правом верхнем углу страницы, а затем нажмите **Edit**.
+4. Прокрутите страницу вниз и нажмите **Delete**, чтобы удалить задачу. <br />
 
 <figure>
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-job.png" width="100%" title="Delete a job"/>
-<figcaption align = "center">Delete a job</figcaption>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-job.png" width="100%" title="Удалить задачу"/>
+<figcaption align = "center">Удалить задачу</figcaption>
 </figure>
 
-5. Confirm your action in the **Confirm Delete** pop-up by clicking **Confirm Delete** in the bottom right to delete the job immediately. This action cannot be undone. However, you can create a new job with the same information if the deletion was made in error. 
+5. Подтвердите ваше действие в всплывающем окне **Confirm Delete**, нажав **Confirm Delete** в правом нижнем углу, чтобы немедленно удалить задачу. Это действие нельзя отменить. Однако вы можете создать новую задачу с той же информацией, если удаление было ошибочным.
 
-Refresh the page, and the deleted job should now be gone. If you want to delete multiple jobs, you'll need to perform these steps for each job. 
+Обновите страницу, и удаленная задача должна исчезнуть. Если вы хотите удалить несколько задач, вам нужно будет выполнить эти шаги для каждой задачи. 
 
-## Delete an environment
+## Удаление окружения
 
-Deleting an environment automatically deletes its associated job(s). If you want to keep those jobs, move them to a different environment first. To delete an environment in dbt Cloud:
+Удаление окружения автоматически удаляет связанные с ним задачи. Если вы хотите сохранить эти задачи, сначала переместите их в другое окружение. Чтобы удалить окружение в dbt Cloud:
 
-1. Click **Deploy** on the navigation header and then click **Environments** 
-2. Select the Environment you want to delete. 
-3. Click **Settings** on the top right of the page and then click **Edit**.
-4. Scroll to the bottom of the page and click **Delete** to delete the environment. <br />
+1. Нажмите **Deploy** в навигационном заголовке, а затем нажмите **Environments**. 
+2. Выберите окружение, которое вы хотите удалить. 
+3. Нажмите **Settings** в правом верхнем углу страницы, а затем нажмите **Edit**.
+4. Прокрутите страницу вниз и нажмите **Delete**, чтобы удалить окружение. <br />
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-environment.png" width="100%" title="Delete an environment"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/delete-environment.png" width="100%" title="Удалить окружение"/>
 
-5. Confirm your action in the **Confirm Delete** pop-up by clicking **Confirm Delete** in the bottom right to delete the environment immediately. This action cannot be undone. However, you can create a new environment with the same information if the deletion was made in error. <br /><br />
+5. Подтвердите ваше действие в всплывающем окне **Confirm Delete**, нажав **Confirm Delete** в правом нижнем углу, чтобы немедленно удалить окружение. Это действие нельзя отменить. Однако вы можете создать новое окружение с той же информацией, если удаление было ошибочным. <br /><br />
 
+Обновите страницу, и удаленное окружение должно исчезнуть. Если вы хотите удалить несколько окружений, вам нужно будет выполнить эти шаги для каждого из них.
 
-Refresh your page, and the deleted environment should now be gone. If you want to delete multiple environments, you'll need to perform these steps to delete each one. 
-
-If you're having any issues, feel free to [contact us](mailto:support@getdbt.com) for additional help.
+Если у вас возникли какие-либо проблемы, не стесняйтесь [связаться с нами](mailto:support@getdbt.com) для получения дополнительной помощи.

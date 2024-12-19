@@ -1,15 +1,15 @@
 ---
-title: How do I run one snapshot at a time?
-description: "Use select flags to run one snapshot at a time"
-sidebar_label: 'Run one snapshot at a time'
+title: Как запустить один снимок за раз?
+description: "Используйте флаги select, чтобы запустить один снимок за раз"
+sidebar_label: 'Запуск одного снимка за раз'
 id: run-one-snapshot
 
 ---
 
-To run one snapshot, use the `--select` flag, followed by the name of the snapshot:
+Чтобы запустить один снимок, используйте флаг `--select`, за которым следует имя снимка:
 
 ```shell
 $ dbt snapshot --select order_snapshot
 ```
 
-Check out the [model selection syntax documentation](/reference/node-selection/syntax) for more operators and examples.
+Посмотрите [документацию по синтаксису выбора моделей](/reference/node-selection/syntax) для получения дополнительных операторов и примеров.

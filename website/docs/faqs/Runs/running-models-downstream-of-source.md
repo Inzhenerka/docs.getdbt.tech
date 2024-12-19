@@ -1,21 +1,21 @@
 ---
-title: How do I run models downstream of one source?
-description: "Use source selector to run models downstream of a source"
-sidebar_label: 'Run  models downstream of one source'
+title: Как запустить модели, зависящие от одного источника?
+description: "Используйте селектор источника для запуска моделей, зависящих от источника"
+sidebar_label: 'Запуск моделей, зависящих от одного источника'
 id: running-model-downstream-of-source
 
 ---
-To run models downstream of a source, use the `source:` selector:
+Чтобы запустить модели, зависящие от источника, используйте селектор `source:`:
 
 ```shell
 $ dbt run --select source:jaffle_shop+
 ```
-(You can also use the `-s` shorthand here instead of `--select`)
+(Вы также можете использовать сокращение `-s` вместо `--select`)
 
-To run models downstream of one source <Term id="table" />:
+Чтобы запустить модели, зависящие от одного источника <Term id="table" />:
 
 ```shell
 $ dbt run --select source:jaffle_shop.orders+
 ```
 
-Check out the [model selection syntax](/reference/node-selection/syntax) for more examples!
+Посмотрите [синтаксис выбора моделей](/reference/node-selection/syntax) для получения дополнительных примеров!

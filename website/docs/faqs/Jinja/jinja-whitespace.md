@@ -1,12 +1,12 @@
 ---
-title: My compiled SQL has a lot of spaces and new lines, how can I get rid of it?
-description: "Managing whitespace control"
-sidebar_label: 'Compiled sql has a lot of white space'
+title: Мой скомпилированный SQL содержит много пробелов и переносов строк, как я могу от них избавиться?
+description: "Управление пробелами"
+sidebar_label: 'Скомпилированный SQL содержит много пробелов'
 id: jinja-whitespace
 ---
 
-This is known as "whitespace control".
+Это известно как "управление пробелами".
 
-Use a minus sign (`-`, e.g. `{{- ... -}}`, `{%- ... %}`, `{#- ... -#}`) at the start or end of a block to strip whitespace before or after the block (more docs [here](https://jinja.palletsprojects.com/page/templates/#whitespace-control)). Check out the [tutorial on using Jinja](/guides/using-jinja#use-whitespace-control-to-tidy-up-compiled-code) for an example.
+Используйте знак минус (`-`, например, `{{- ... -}}`, `{%- ... %}`, `{#- ... -#}`) в начале или в конце блока, чтобы удалить пробелы перед или после блока (больше документации [здесь](https://jinja.palletsprojects.com/page/templates/#whitespace-control)). Ознакомьтесь с [учебником по использованию Jinja](/guides/using-jinja#use-whitespace-control-to-tidy-up-compiled-code) для примера.
 
-Take caution: it's easy to fall down a rabbit hole when it comes to whitespace control!
+Будьте осторожны: легко запутаться, когда дело касается управления пробелами!

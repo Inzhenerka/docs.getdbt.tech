@@ -1,12 +1,12 @@
 ---
-title: If models can only be `select` statements, how do I insert records?
-description: "Incremental models to insert records"
-sidebar_label: 'How to insert records'
+title: Если модели могут быть только `select` запросами, как мне вставить записи?
+description: "Инкрементальные модели для вставки записей"
+sidebar_label: 'Как вставить записи'
 id: insert-records
 
 ---
 
-For those coming from an <Term id="etl" /> (Extract Transform Load) paradigm, there's often a desire to write transformations as `insert` and `update` statements. In comparison, dbt will wrap your `select` query in a `create table as` statement, which can feel counter-productive.
+Для тех, кто приходит из парадигмы <Term id="etl" /> (Извлечение, Преобразование, Загрузка), часто возникает желание писать преобразования в виде `insert` и `update` запросов. В сравнении с этим, dbt оборачивает ваш `select` запрос в оператор `create table as`, что может показаться контрпродуктивным.
 
-* If you wish to use `insert` statements for performance reasons (i.e. to reduce data that is processed), consider [incremental models](/docs/build/incremental-models)
-* If you wish to use `insert` statements since your source data is constantly changing (e.g. to create "Type 2 Slowly Changing Dimensions"), consider [snapshotting your source data](/docs/build/sources#source-data-freshness), and building models on top of your snaphots.
+* Если вы хотите использовать `insert` запросы по соображениям производительности (т.е. чтобы уменьшить объем обрабатываемых данных), рассмотрите возможность использования [инкрементальных моделей](/docs/build/incremental-models).
+* Если вы хотите использовать `insert` запросы, поскольку ваши исходные данные постоянно меняются (например, для создания "Тип 2 Медленно Изменяющихся Размерностей"), рассмотрите возможность [снимков ваших исходных данных](/docs/build/sources#source-data-freshness) и создания моделей на основе ваших снимков.

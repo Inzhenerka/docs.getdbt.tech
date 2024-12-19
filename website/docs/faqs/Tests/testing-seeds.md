@@ -1,14 +1,14 @@
 ---
-title: How do I test and document seeds?
-description: "Use a schema file to test and document seeds"
-sidebar_label: 'Test and document seeds'
+title: Как протестировать и задокументировать семена?
+description: "Используйте файл схемы для тестирования и документирования семян"
+sidebar_label: 'Тестирование и документирование семян'
 id: testing-seeds
 
 ---
 
-To test and document seeds, use a [schema file](/reference/configs-and-properties) and nest the configurations under a `seeds:` key
+Чтобы протестировать и задокументировать семена, используйте [файл схемы](/reference/configs-and-properties) и вложите конфигурации под ключом `seeds:`
 
-## Example
+## Пример
 
 <File name='seeds/schema.yml'>
 
@@ -17,7 +17,7 @@ version: 2
 
 seeds:
   - name: country_codes
-    description: A mapping of two letter country codes to country names
+    description: Сопоставление двухбуквенных кодов стран с названиями стран
     columns:
       - name: country_code
         tests:

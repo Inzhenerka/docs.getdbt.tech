@@ -1,10 +1,9 @@
 ---
-title: Why are profiles stored outside of my project?
-description: "Profiles stored outside version control"
-sidebar_label: 'Profiles stored outside project'
+title: Почему профили хранятся вне моего проекта?
+description: "Профили хранятся вне системы контроля версий"
+sidebar_label: 'Профили вне проекта'
 id: separate-profile
 
 ---
 
-Profiles are stored separately to dbt projects to avoid checking credentials into version control. Database credentials are extremely sensitive information and should **never be checked into version control**.
-
+Профили хранятся отдельно от проектов dbt, чтобы избежать проверки учетных данных в систему контроля версий. Учетные данные базы данных являются крайне чувствительной информацией и **никогда не должны проверяться в систему контроля версий**.

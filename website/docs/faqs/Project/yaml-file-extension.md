@@ -1,9 +1,9 @@
 ---
-title: Can I use a YAML file extension?
-description: "dbt will only search for files with a `.yml` file extension"
-sidebar_label: '.yml file extension search'
+title: Могу ли я использовать расширение файла YAML?
+description: "dbt будет искать только файлы с расширением `.yml`"
+sidebar_label: 'Поиск файлов с расширением .yml'
 id: yaml-file-extension
 
 ---
 
-No. At present, dbt will only search for files with a `.yml` file extension. In a future release of dbt, dbt will also search for files with a `.yaml` file extension.
+Нет. В настоящее время dbt будет искать только файлы с расширением `.yml`. В будущих версиях dbt также будет осуществляться поиск файлов с расширением `.yaml`.

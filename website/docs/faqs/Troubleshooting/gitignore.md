@@ -1,38 +1,38 @@
 ---
-title: How can I fix my .gitignore file?
-description: "Use these instructions to fix your gitignore file"
-sidebar_label: 'How to fix your .gitignore file'
+title: Как я могу исправить свой файл .gitignore?
+description: "Используйте эти инструкции, чтобы исправить ваш файл gitignore"
+sidebar_label: 'Как исправить свой .gitignore'
 id: gitignore
 ---
 
-A gitignore file specifies which files Git should intentionally ignore. You can identify these files in your project by their italics formatting.
+Файл gitignore указывает, какие файлы Git должен намеренно игнорировать. Вы можете определить эти файлы в вашем проекте по их курсивному оформлению.
 
-If you can't revert changes, check out a branch, or click commit &mdash; this is usually do to your project missing a [.gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) file OR your gitignore file doesn't contain the necessary content inside the folder.
+Если вы не можете отменить изменения, переключиться на ветку или нажать на commit — это обычно связано с тем, что в вашем проекте отсутствует файл [.gitignore](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) ИЛИ ваш файл gitignore не содержит необходимого содержимого внутри папки.
 
-To fix this, complete the following steps:
+Чтобы исправить это, выполните следующие шаги:
 
-1. In the dbt Cloud IDE, add the following [.gitignore contents](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) in your dbt project `.gitignore` file:
+1. В dbt Cloud IDE добавьте следующие [.gitignore содержимое](https://github.com/dbt-labs/dbt-starter-project/blob/main/.gitignore) в ваш файл `.gitignore` проекта dbt:
 ```bash
 target/
 dbt_packages/
 logs/
-# legacy -- renamed to dbt_packages in dbt v1
+# legacy -- переименован в dbt_packages в dbt v1
 dbt_modules/
 ```
-2. Save your changes but _don't commit_
-3. Restart the IDE by clicking on the three dots next to the **IDE Status button** on the lower right of the IDE.
+2. Сохраните изменения, но _не коммитьте_
+3. Перезапустите IDE, нажав на три точки рядом с кнопкой **Статус IDE** в правом нижнем углу IDE.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.jpg" width="50%" title="Restart the IDE by clicking the three dots on the lower right or click on the Status bar" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/restart-ide.jpg" width="50%" title="Перезапустите IDE, нажав на три точки в правом нижнем углу или кликнув на панель состояния" />
 
-4. Select **Restart IDE**.
-5. Go back to your dbt project and delete the following files or folders if you have them:
+4. Выберите **Перезапустить IDE**.
+5. Вернитесь к вашему проекту dbt и удалите следующие файлы или папки, если они у вас есть:
     * `target`, `dbt_modules`, `dbt_packages`, `logs`
-6. **Save** and then **Commit and sync** your changes.
-7. Restart the IDE again.
-8. Create a pull request (PR) under the **Version Control** menu to integrate your new changes.
-9.  Merge the PR on your git provider page.
-10. Switch to your main branch and click on **Pull from remote** to pull in all the changes you made to your main branch. You can verify the changes by making sure the files/folders in the .gitignore file are in italics. 
+6. **Сохраните** и затем **Закоммитьте и синхронизируйте** ваши изменения.
+7. Снова перезапустите IDE.
+8. Создайте pull request (PR) в меню **Управление версиями**, чтобы интегрировать ваши новые изменения.
+9. Объедините PR на странице вашего git-провайдера.
+10. Переключитесь на вашу основную ветку и нажмите **Получить из удаленного** для того, чтобы подтянуть все изменения, которые вы внесли в вашу основную ветку. Вы можете проверить изменения, убедившись, что файлы/папки в файле .gitignore оформлены курсивом.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/gitignore-italics.jpg" width="50%" title="A dbt project on the main branch that has properly configured gitignore folders (highlighted in italics)."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/gitignore-italics.jpg" width="50%" title="Проект dbt на основной ветке с правильно настроенными папками gitignore (выделены курсивом)."/>
 
-For more info, refer to this [detailed video](https://www.loom.com/share/9b3b8e2b617f41a8bad76ec7e42dd014) for additional guidance. 
+Для получения дополнительной информации обратитесь к этому [подробному видео](https://www.loom.com/share/9b3b8e2b617f41a8bad76ec7e42dd014) для дополнительной помощи.

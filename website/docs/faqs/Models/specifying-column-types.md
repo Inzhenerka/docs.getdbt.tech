@@ -1,11 +1,11 @@
 ---
-title: How do I specify column types?
-description: "Specify column types in models"
-sidebar_label: 'Specify column types in models'
+title: Как указать типы столбцов?
+description: "Укажите типы столбцов в моделях"
+sidebar_label: 'Укажите типы столбцов в моделях'
 id: specifying-column-types
 
 ---
-Simply cast the column to the correct type in your model:
+Просто приведите столбец к правильному типу в вашей модели:
 
 ```sql
 select
@@ -14,7 +14,7 @@ select
 from some_other_table
 ```
 
-You might have this question if you're used to running statements like this:
+Вы можете задаться этим вопросом, если привыкли выполнять такие операторы:
 
 ```sql
 create table dbt_alice.my_table
@@ -26,7 +26,7 @@ insert into dbt_alice.my_table (
 )
 ```
 
-In comparison, dbt would build this <Term id="table" /> using a `create table as` statement:
+В сравнении, dbt создаст эту <Term id="table" /> с помощью оператора `create table as`:
 
 ```sql
 create table dbt_alice.my_table as (
@@ -34,10 +34,10 @@ create table dbt_alice.my_table as (
 )
 ```
 
-So long as your model queries return the correct column type, the table you create will also have the correct column type.
+При условии, что ваши запросы модели возвращают правильный тип столбца, создаваемая вами таблица также будет иметь правильный тип столбца.
 
-To define additional column options:
+Чтобы определить дополнительные параметры столбца:
 
-* Rather than enforcing uniqueness and not-null constraints on your column, use dbt's [data testing](/docs/build/data-tests) functionality to check that your assertions about your model hold true.
-* Rather than creating default values for a column, use SQL to express defaults (e.g. `coalesce(updated_at, current_timestamp()) as updated_at`)
-* In edge-cases where you _do_ need to alter a column (e.g. column-level encoding on Redshift), consider implementing this via a [post-hook](/reference/resource-configs/pre-hook-post-hook).
+* Вместо того чтобы накладывать ограничения уникальности и NOT NULL на ваш столбец, используйте функциональность [тестирования данных](/docs/build/data-tests) в dbt, чтобы проверить, что ваши утверждения о модели верны.
+* Вместо создания значений по умолчанию для столбца используйте SQL для выражения значений по умолчанию (например, `coalesce(updated_at, current_timestamp()) as updated_at`)
+* В крайних случаях, когда вам действительно нужно изменить столбец (например, кодирование на уровне столбца в Redshift), рассмотрите возможность реализации этого через [post-hook](/reference/resource-configs/pre-hook-post-hook).

@@ -1,9 +1,9 @@
 ---
-title: What happens if one of my runs fails?
-description: "Set up notifications to debug failed runs"
-sidebar_label: 'Notifications to debug failed runs'
+title: Что происходит, если один из моих запусков завершился неудачей?
+description: "Настройте уведомления для отладки неудачных запусков"
+sidebar_label: 'Уведомления для отладки неудачных запусков'
 id: failed-prod-run
 
 ---
 
-If you're using dbt Cloud, we recommend setting up email and Slack notifications (`Account Settings > Notifications`) for any failed runs. Then, debug these runs the same way you would debug any runs in development.
+Если вы используете dbt Cloud, мы рекомендуем настроить уведомления по электронной почте и в Slack (`Настройки аккаунта > Уведомления`) для любых неудачных запусков. Затем отлаживайте эти запуски так же, как вы бы отлаживали любые запуски в разработке.

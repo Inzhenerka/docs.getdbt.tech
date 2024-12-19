@@ -1,34 +1,34 @@
 ---
-title: How do I use the 'Custom Branch' settings in a dbt Cloud Environment?
-description: "Use custom code from your repository"
-sidebar_label: 'Custom branch settings'
+title: Как использовать настройки 'Custom Branch' в окружении dbt Cloud?
+description: "Используйте пользовательский код из вашего репозитория"
+sidebar_label: 'Настройки пользовательской ветки'
 id: custom-branch-settings
 ---
 
-In dbt Cloud environments, you can change your git settings to use a different branch in your dbt project repositories besides the default branch. When you make this change, you run dbt on a custom branch. When specified, dbt Cloud executes models using the custom branch setting for that environment. Development and deployment environments have slightly different effects.
+В окружениях dbt Cloud вы можете изменить настройки git, чтобы использовать другую ветку в ваших репозиториях dbt, помимо ветки по умолчанию. Когда вы вносите это изменение, вы запускаете dbt на пользовательской ветке. При указании dbt Cloud выполняет модели, используя настройки пользовательской ветки для этого окружения. Окружения разработки и развертывания имеют несколько разные эффекты.
 
-To specify a custom branch:
-1. Edit an existing environment or create a new one
-2. Select **Only run on a custom branch** under General Settings
-3. Specify the **branch name or tag**
+Чтобы указать пользовательскую ветку:
+1. Отредактируйте существующее окружение или создайте новое
+2. Выберите **Только запуск на пользовательской ветке** в Общих настройках
+3. Укажите **имя ветки или тег**
 
-## Development
+## Разработка
 
-In a development environment, the primary branch (usually named `main`) is protected in your connected repositories. You can directly edit, format, or lint files and execute dbt commands in your protected default git branch. Since the dbt Cloud IDE prevents commits to the protected branch, you can commit those changes to a new branch when you're ready.
+В окружении разработки основная ветка (обычно называемая `main`) защищена в ваших подключенных репозиториях. Вы можете напрямую редактировать, форматировать или проверять файлы и выполнять команды dbt в вашей защищенной ветке по умолчанию. Поскольку dbt Cloud IDE предотвращает коммиты в защищенную ветку, вы можете зафиксировать эти изменения в новой ветке, когда будете готовы.
 
-Specifying a **Custom branch** overrides the default behavior. It makes the custom branch protected and enables you to create new development branches from it. You can directly edit, format, or lint files and execute dbt commands in your custom branch, but you cannot make commits to it. dbt Cloud prompts you to commit those changes to a new branch.
+Указание **Пользовательской ветки** переопределяет поведение по умолчанию. Это делает пользовательскую ветку защищенной и позволяет вам создавать новые ветки разработки из нее. Вы можете напрямую редактировать, форматировать или проверять файлы и выполнять команды dbt в вашей пользовательской ветке, но не можете делать коммиты в нее. dbt Cloud предлагает вам зафиксировать эти изменения в новой ветке.
 
-Only one branch can be protected. If you specify a custom branch, the primary branch is no longer protected.  If you want to protect the primary branch and prevent any commits on it, you need to set up branch protection rules in your git provider settings. This ensures your primary branch remains secure and no new commits can be made to it.
+Только одна ветка может быть защищена. Если вы указываете пользовательскую ветку, основная ветка больше не защищена. Если вы хотите защитить основную ветку и предотвратить любые коммиты в нее, вам необходимо настроить правила защиты веток в настройках вашего git-провайдера. Это гарантирует, что ваша основная ветка останется защищенной и в нее не смогут быть внесены новые коммиты.
 
-For example, if you want to use the `develop` branch of a connected repository:
+Например, если вы хотите использовать ветку `develop` подключенного репозитория:
 
-- Go to an environment and select **Settings** to edit it
-- Select  **Only run on a custom branch** in **General settings**
-- Enter **develop** as the name of your custom branch
-- Click **Save**
+- Перейдите в окружение и выберите **Настройки** для редактирования
+- Выберите **Только запуск на пользовательской ветке** в **Общих настройках**
+- Введите **develop** в качестве имени вашей пользовательской ветки
+- Нажмите **Сохранить**
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dev-environment-custom-branch.png" width="100%" title="Configuring a custom base repository branch"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dev-environment-custom-branch.png" width="100%" title="Настройка пользовательской базовой ветки репозитория"/>
 
-## Deployment
+## Развертывание
 
-When running jobs in a deployment environment, dbt will clone your project from your connected repository before executing your models. By default, dbt uses the default branch of your repository (commonly the `main` branch). To specify a different version of your project for dbt to execute during job runs in a particular environment, you can edit the Custom Branch setting as shown in the previous steps. 
+При выполнении задач в окружении развертывания dbt клонирует ваш проект из подключенного репозитория перед выполнением ваших моделей. По умолчанию dbt использует ветку по умолчанию вашего репозитория (обычно ветку `main`). Чтобы указать другую версию вашего проекта для выполнения dbt во время выполнения задач в конкретном окружении, вы можете отредактировать настройку Пользовательской ветки, как показано в предыдущих шагах.

@@ -1,30 +1,27 @@
 ---
-title: "I'm receiving a 'This run exceeded your account's run memory limits' error in my failed job"
-description: "Use incremental models or optimize queries for job failures due to exceeded memory limits."
-sidebar_label: 'Job failures due to exceeded memory limits'
+title: "Я получаю ошибку 'Этот запуск превысил лимиты памяти вашего аккаунта' в своем неудачном задании"
+description: "Используйте инкрементные модели или оптимизируйте запросы для устранения ошибок заданий из-за превышения лимитов памяти."
+sidebar_label: 'Ошибки заданий из-за превышения лимитов памяти'
 ---
 
-If you're receiving a `This run exceeded your account's run memory limits` error in your failed job, it means that the job exceeded the [memory limits](/docs/deploy/job-scheduler#job-memory) set for your account. All dbt Cloud accounts have a pod memory of 600Mib and memory limits are on a per run basis. They're typically influenced by the amount of result data that dbt has to ingest and process, which is small but can become bloated unexpectedly by project design choices.
+Если вы получаете ошибку `Этот запуск превысил лимиты памяти вашего аккаунта` в своем неудачном задании, это означает, что задание превысило [лимиты памяти](/docs/deploy/job-scheduler#job-memory), установленные для вашего аккаунта. Все аккаунты dbt Cloud имеют память пода 600 MiB, и лимиты памяти действуют на каждую отдельную сессию. Обычно они зависят от объема данных, которые dbt должен получить и обработать, что обычно невелико, но может неожиданно увеличиваться из-за проектных решений.
 
-### Common reasons
+### Общие причины
 
-Some common reasons for higher memory usage are:
+Некоторые распространенные причины более высокого использования памяти:
 
-- dbt run/build:  Macros that capture large result sets from run query may not all be necessary and may be memory inefficient.
-- dbt docs generate: Source or model schemas with large numbers of tables (even if those tables aren't all used by dbt) cause the ingest of very large results for catalog queries.
+- dbt run/build: Макросы, которые захватывают большие наборы результатов из выполняемого запроса, могут быть не все необходимыми и могут быть неэффективными с точки зрения памяти.
+- dbt docs generate: Схемы источников или моделей с большим количеством таблиц (даже если эти таблицы не используются dbt) приводят к получению очень больших результатов для запросов каталога.
 
-### Resolution
+### Решение
 
-There are various reasons why you could be experiencing this error but they are mostly the outcome of retrieving too much data back into dbt. For example, using the `run_query()` operations or similar macros, or even using database/schemas that have a lot of other non-dbt related tables/views. Try to reduce the amount of data / number of rows retrieved back into dbt by refactoring the SQL in your `run_query()` operation using `group`, `where`, or `limit` clauses. Additionally, you can also use a database/schema with fewer non-dbt related tables/views.
+Существует множество причин, по которым вы можете сталкиваться с этой ошибкой, но в основном они связаны с получением слишком большого объема данных обратно в dbt. Например, использование операций `run_query()` или аналогичных макросов, или даже использование баз данных/схем, которые содержат много других таблиц/представлений, не относящихся к dbt. Попробуйте уменьшить объем данных / количество строк, получаемых обратно в dbt, изменив SQL в вашей операции `run_query()`, используя операторы `group`, `where` или `limit`. Кроме того, вы также можете использовать базу данных/схему с меньшим количеством таблиц/представлений, не относящихся к dbt.
 
-
-
-:::tip Video example
-As an additional resource, check out [this example video](https://www.youtube.com/watch?v=sTqzNaFXiZ8), which demonstrates how to refactor the sample code by reducing the number of rows returned. 
+:::tip Пример видео
+В качестве дополнительного ресурса посмотрите [это видео-пример](https://www.youtube.com/watch?v=sTqzNaFXiZ8), которое демонстрирует, как изменить пример кода, уменьшая количество возвращаемых строк.
 :::
 
+Если вы попробовали предыдущие рекомендации и все еще сталкиваетесь с неудачными запусками заданий с этой ошибкой о превышении лимитов памяти вашего аккаунта, пожалуйста, [свяжитесь с поддержкой](mailto:support@getdbt.com). Мы рады помочь!
 
-If you've tried the earlier suggestions and are still experiencing failed job runs with this error about hitting the memory limits of your account, please [reach out to support](mailto:support@getdbt.com). We're happy to help!
-
-### Additional resources
-- [Blog post on how we shaved 90 mins off](https://docs.getdbt.com/blog/how-we-shaved-90-minutes-off-model)
+### Дополнительные ресурсы
+- [Пост в блоге о том, как мы сократили время на 90 минут](https://docs.getdbt.com/blog/how-we-shaved-90-minutes-off-model)

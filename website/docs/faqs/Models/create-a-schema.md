@@ -1,8 +1,8 @@
 ---
-title: Do I need to create my target schema before running dbt?
-description: "Target schema is checked or created for you before running dbt"
-sidebar_label: 'Target schema before running dbt'
+title: Нужно ли создавать целевую схему перед запуском dbt?
+description: "Целевая схема проверяется или создается для вас перед запуском dbt"
+sidebar_label: 'Целевая схема перед запуском dbt'
 id: create-a-schema
 
 ---
-Nope! dbt will check if the schema exists when it runs. If the schema does not exist, dbt will create it for you.
+Нет! dbt проверит, существует ли схема, когда он будет выполняться. Если схема не существует, dbt создаст ее для вас.

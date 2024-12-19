@@ -1,11 +1,11 @@
 ---
-title: How should I structure my project?
-description: "Recommendations on how to structure project"
-sidebar_label: 'How to structure project'
+title: Как мне структурировать свой проект?
+description: "Рекомендации по структурированию проекта"
+sidebar_label: 'Как структурировать проект'
 id: structure-a-project
 
 ---
 
-There's no one best way to structure a project! Every organization is unique.
+Нет единственно правильного способа структурировать проект! Каждая организация уникальна.
 
-If you're just getting started, check out how we (dbt Labs) [structure our dbt projects](/best-practices/how-we-structure/1-guide-overview).
+Если вы только начинаете, ознакомьтесь с тем, как мы (dbt Labs) [структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview).

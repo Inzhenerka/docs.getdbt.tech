@@ -1,11 +1,11 @@
 ---
-title: How do I debug my Jinja?
-description: "Using target folder or log function to debug Jinja"
-sidebar_label: 'Debugging Jinja'
+title: Как мне отладить свой Jinja?
+description: "Использование папки target или функции log для отладки Jinja"
+sidebar_label: 'Отладка Jinja'
 id: debugging-jinja
 
 ---
 
-You should get familiar with checking the compiled SQL in `target/compiled/<your_project>/` and the logs in `logs/dbt.log` to see what dbt is running behind the scenes.
+Вам следует ознакомиться с проверкой скомпилированного SQL в `target/compiled/<your_project>/` и логами в `logs/dbt.log`, чтобы увидеть, что dbt выполняет за кулисами.
 
-You can also use the [log](/reference/dbt-jinja-functions/log) function to debug Jinja by printing objects to the command line. 
+Вы также можете использовать функцию [log](/reference/dbt-jinja-functions/log) для отладки Jinja, выводя объекты в командную строку.

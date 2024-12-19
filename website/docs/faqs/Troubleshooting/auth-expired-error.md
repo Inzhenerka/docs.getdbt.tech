@@ -1,19 +1,19 @@
 ---
-title: Receiving an `authentication has expired` error when trying to run queries in the IDE.
-description: "Reauthenticate warehouse when seeing `authentication has expired` error"
-sidebar_label: 'Receiving `authentication has expired` error in the IDE'
+title: Получение ошибки `authentication has expired` при попытке выполнить запросы в IDE.
+description: "Повторная аутентификация хранилища при появлении ошибки `authentication has expired`"
+sidebar_label: 'Получение ошибки `authentication has expired` в IDE'
 ---
 
-If you see a `authentication has expired` error when you try to run queries in the dbt CLoud IDE, this means your [OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) connection between Snowflake and dbt Cloud has expired.
+Если вы видите ошибку `authentication has expired`, когда пытаетесь выполнить запросы в dbt Cloud IDE, это означает, что ваше соединение [OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth) между Snowflake и dbt Cloud истекло.
 
-To fix this, you must reconnect the two tools.
+Чтобы это исправить, вам необходимо повторно подключить оба инструмента.
 
-Your Snowflake administrator can [configure](/docs/cloud/manage-access/set-up-snowflake-oauth#create-a-security-integration) the refresh tokens' validity, which has a maximum 90-day validity period.
+Ваш администратор Snowflake может [настроить](/docs/cloud/manage-access/set-up-snowflake-oauth#create-a-security-integration) срок действия токенов обновления, который имеет максимальный срок действия 90 дней.
 
-To resolve the issue, complete the following steps:
+Чтобы решить проблему, выполните следующие шаги:
 
-1. Go to your **Profile settings** page, accessible from the navigation menu.
-2. Navigate to **Credentials** and click on the project you're experiencing the issue with.
-3. Under **Development credentials**, click the **Reconnect Snowflake Account** (green) button. This steps you through reauthentication using the SSO workflow. 
+1. Перейдите на страницу **Настройки профиля**, доступную из навигационного меню.
+2. Перейдите в раздел **Учетные данные** и нажмите на проект, с которым у вас возникла проблема.
+3. В разделе **Учетные данные для разработки** нажмите кнопку **Повторно подключить учетную запись Snowflake** (зеленая). Этот шаг проведет вас через процесс повторной аутентификации с использованием рабочего процесса SSO.
 
-If you've tried these step and are still getting this error, please contact the Support team at support@getdbt.com for further assistance.
+Если вы выполнили эти шаги и все еще получаете эту ошибку, пожалуйста, свяжитесь с командой поддержки по адресу support@getdbt.com для получения дополнительной помощи.

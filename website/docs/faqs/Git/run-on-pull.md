@@ -1,14 +1,14 @@
 ---
-title: Why is Run on Pull request grayed out?
-description: "Use the GitHub auth method to enable Rull on Pull request"
-sidebar_label: 'Run on Pull request grayed out'
+title: Почему опция "Запуск при запросе на слияние" недоступна?
+description: "Используйте метод аутентификации GitHub для включения запуска при запросе на слияние"
+sidebar_label: 'Запуск при запросе на слияние недоступен'
 id: run-on-pull
 ---
 
-If you're unable to enable Run on Pull requests, you'll want to make sure your existing repo was not added via the Deploy Key auth method.
+Если вы не можете включить опцию "Запуск при запросе на слияние", убедитесь, что ваш существующий репозиторий не был добавлен с помощью метода аутентификации Deploy Key.
 
-If it was added via a deploy key method, you'll want to use the [GitHub auth method](https://docs.getdbt.com/docs/cloud-installing-the-github-application) to enable CI in dbt Cloud.
+Если он был добавлен с помощью метода deploy key, вам нужно использовать [метод аутентификации GitHub](https://docs.getdbt.com/docs/cloud-installing-the-github-application) для включения CI в dbt Cloud.
 
-To go ahead and enable 'Run on Pull requests', you'll want to remove dbt Cloud from the Apps & Integration on GitHub and re-integrate it again via the GitHub app method.
+Чтобы включить "Запуск при запросе на слияние", вам нужно удалить dbt Cloud из раздела Приложения и интеграции на GitHub и заново интегрировать его с помощью метода приложения GitHub.
 
-If you've tried the workaround above and are still experiencing this behavior - reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы попробовали предложенное решение и по-прежнему сталкиваетесь с этой проблемой, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

@@ -1,7 +1,7 @@
 ---
-title: Can I use environment variables in my profile?
-description: "Use env_var in your profile"
-sidebar_label: 'Use env_var in your profile'
+title: Могу ли я использовать переменные окружения в своем профиле?
+description: "Используйте env_var в своем профиле"
+sidebar_label: 'Используйте env_var в своем профиле'
 id: profile-env-vars
 ---
-Yes! Check out the docs on [environment variables](/reference/dbt-jinja-functions/env_var) for more information.
+Да! Ознакомьтесь с документацией по [переменным окружения](/reference/dbt-jinja-functions/env_var) для получения дополнительной информации.

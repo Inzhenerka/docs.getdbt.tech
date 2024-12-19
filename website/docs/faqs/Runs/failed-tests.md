@@ -1,18 +1,17 @@
 ---
-title: One of my tests failed, how can I debug it?
-description: "You can debug failed tests by finding the SQL"
-sidebar_label: 'Debug failed tests'
+title: Один из моих тестов не прошел, как я могу его отладить?
+description: "Вы можете отладить неудачные тесты, найдя SQL"
+sidebar_label: 'Отладка неудачных тестов'
 id: failed-tests
 
 ---
-To debug a failing test, find the SQL that dbt ran by:
+Чтобы отладить неудачный тест, найдите SQL, который выполнил dbt:
 
 * dbt Cloud:
-  * Within the test output, click on the failed test, and then select "Details"
+  * В выводе теста нажмите на неудавшийся тест, а затем выберите "Подробности"
 
 * dbt Core:
-  * Open the file path returned as part of the error message.
-  * Navigate to the `target/compiled/schema_tests` directory for all compiled test queries
+  * Откройте путь к файлу, указанный в сообщении об ошибке.
+  * Перейдите в директорию `target/compiled/schema_tests` для всех скомпилированных тестовых запросов
 
-Copy the SQL into a query editor (in dbt Cloud, you can paste it into a new `Statement`), and run the query to find the records that failed.
-
+Скопируйте SQL в редактор запросов (в dbt Cloud вы можете вставить его в новое `Statement`) и выполните запрос, чтобы найти записи, которые не прошли.

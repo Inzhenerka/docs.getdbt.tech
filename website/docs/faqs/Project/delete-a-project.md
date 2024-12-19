@@ -1,18 +1,18 @@
 ---
-title: How do I delete a project in dbt Cloud?
-description: "Deleting a project in dbt Cloud"
-sidebar_label: 'How to delete a project'
+title: Как удалить проект в dbt Cloud?
+description: "Удаление проекта в dbt Cloud"
+sidebar_label: 'Как удалить проект'
 id: delete-a-project
 
 ---
-To delete a project in dbt Cloud, you must be the account owner or have admin privileges. 
+Чтобы удалить проект в dbt Cloud, вы должны быть владельцем аккаунта или иметь административные привилегии.
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. В dbt Cloud нажмите на имя вашего аккаунта в левом меню и выберите **Настройки аккаунта**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Navigate to account settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate-to-account-settings.png" title="Перейти к настройкам аккаунта" />
 
-2. In **Account Settings**, select **Projects**. Click the project you want to delete from the **Projects** page.
-3. Click the edit icon in the lower right-hand corner of the **Project Details**. A **Delete** option will appear on the left side of the same details view. 
-4. Select **Delete**. Confirm the action to immediately delete the user without additional password prompts. There will be no account password prompt, and the project is deleted immediately after confirmation.  Once a project is deleted, this action cannot be undone. 
+2. В **Настройках аккаунта** выберите **Проекты**. Нажмите на проект, который вы хотите удалить, на странице **Проекты**.
+3. Нажмите на значок редактирования в правом нижнем углу **Деталей проекта**. Опция **Удалить** появится с левой стороны того же окна деталей.
+4. Выберите **Удалить**. Подтвердите действие, чтобы немедленно удалить проект без дополнительных запросов пароля. Запроса пароля аккаунта не будет, и проект будет удален сразу после подтверждения. После удаления проекта это действие нельзя отменить.
 
-<Lightbox src="/img/docs/dbt-cloud/delete_projects_from_dbt_cloud.png" title="Delete projects" />
+<Lightbox src="/img/docs/dbt-cloud/delete_projects_from_dbt_cloud.png" title="Удалить проекты" />

@@ -1,8 +1,8 @@
 ---
-title: Can I set a different connection at the environment level?
-description: "Separate projects for different environments workaround"
-sidebar_label: 'Set different database connections at environment level'
+title: Могу ли я установить другое соединение на уровне окружения?
+description: "Обходной путь для отдельных проектов для разных окружений"
+sidebar_label: 'Установить разные соединения с базой данных на уровне окружения'
 id: diff-database-environment
 ---
 
-Although you're unable to set a different connection at the environment level, there is a workaround where you can have separate projects for their different environments and link them to different hostnames, while still connecting to the same repo.
+Хотя вы не можете установить другое соединение на уровне окружения, существует обходной путь, при котором вы можете создать отдельные проекты для разных окружений и связать их с разными хостами, при этом продолжая подключаться к одному и тому же репозиторию.

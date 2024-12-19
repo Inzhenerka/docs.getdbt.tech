@@ -1,15 +1,14 @@
 ---
-title: "I'm receiving a 403 error 'Forbidden: Access denied' when using service tokens"
-description: "All service token traffic is now subject to IP restrictions. To resolve 403 errors, add your third-party integration CIDRs (network addresses) to the allowlist."
-sidebar_label: 'Service token 403 error: Forbidden: Access denied'
+title: "Я получаю ошибку 403 'Запрещено: Доступ запрещен' при использовании сервисных токенов"
+description: "Весь трафик сервисных токенов теперь подлежит ограничениям по IP. Чтобы устранить ошибки 403, добавьте CIDR (сетевые адреса) вашей сторонней интеграции в белый список."
+sidebar_label: 'Ошибка 403 сервисного токена: Запрещено: Доступ запрещен'
 ---
 
+Весь [трафик сервисных токенов](/docs/dbt-cloud-apis/service-tokens) подлежит ограничениям по IP.
 
-All [service token](/docs/dbt-cloud-apis/service-tokens) traffic is subject to IP restrictions.
+При использовании сервисного токена следующая ошибка ответа 403 указывает на то, что IP-адрес не находится в белом списке. Чтобы решить эту проблему, вам следует добавить CIDR (сетевые адреса) вашей сторонней интеграции в ваш белый список.
 
-When using a service token, the following 403 response error indicates the IP is not on the allowlist. To resolve this, you should add your third-party integration CIDRs (network addresses) to your allowlist.
-
-The following is an example of the 403 response error:
+Следующий пример иллюстрирует ошибку ответа 403:
 
 ```json
         {

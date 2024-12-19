@@ -1,10 +1,10 @@
 ---
-title: Add a seed file
+title: Добавление seed-файла
 id: add-a-seed
-description: Learn how to add a seed file to your project
+description: Узнайте, как добавить seed-файл в ваш проект
 ---
 
-1. Add a seed file:
+1. Добавьте seed-файл:
 
 <File name='seeds/country_codes.csv'>
 
@@ -18,8 +18,8 @@ GB,United Kingdom
 
 </File>
 
-2. Run `dbt seed`
-3. Ref the model in a downstream model
+2. Выполните команду `dbt seed`
+3. Ссылайтесь на модель в последующей модели
 
 <File name='models/something.sql'>
 

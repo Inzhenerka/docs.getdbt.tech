@@ -1,16 +1,16 @@
 ---
-title: How can I see the SQL that dbt is running?
-description: "Review logs to check the sql dbt is running"
-sidebar_label: 'Reviewing sql that dbt runs'
+title: Как я могу увидеть SQL, который выполняет dbt?
+description: "Просмотрите логи, чтобы проверить SQL, который выполняет dbt"
+sidebar_label: 'Просмотр SQL, который выполняет dbt'
 id: checking-logs
 
 ---
 
-To check out the SQL that dbt is running, you can look in:
+Чтобы проверить SQL, который выполняет dbt, вы можете обратиться к:
 
 * dbt Cloud:
-  * Within the run output, click on a model name, and then select "Details"
+  * В выводе выполнения нажмите на имя модели, а затем выберите "Подробности"
 * dbt Core:
-  * The `target/compiled/` directory for compiled `select` statements
-  * The `target/run/` directory for compiled `create` statements
-  * The `logs/dbt.log` file for verbose logging.
+  * Директория `target/compiled/` для скомпилированных операторов `select`
+  * Директория `target/run/` для скомпилированных операторов `create`
+  * Файл `logs/dbt.log` для подробного логирования.

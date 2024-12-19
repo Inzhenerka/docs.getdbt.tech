@@ -1,15 +1,14 @@
 ---
-title: Can I store my models in a directory other than the `models` directory in my project?
-description: "How to name models directory"
-sidebar_label: 'How to name models directory'
+title: Могу ли я хранить свои модели в директории, отличной от директории `models` в моем проекте?
+description: "Как назвать директорию моделей"
+sidebar_label: 'Как назвать директорию моделей'
 id: configurable-model-path
 
 ---
 
-By default, dbt expects the files defining your models to be located in the `models` subdirectory of your project.
+По умолчанию dbt ожидает, что файлы, определяющие ваши модели, будут находиться в подпапке `models` вашего проекта.
 
-To change this, update the [model-paths](reference/project-configs/model-paths.md) configuration in your `dbt_project.yml`
-file, like so:
+Чтобы изменить это, обновите конфигурацию [model-paths](reference/project-configs/model-paths.md) в вашем файле `dbt_project.yml`, как показано ниже:
 
 <File name='dbt_project.yml'>
 

@@ -1,32 +1,32 @@
 ---
-title: How can I consolidate projects in dbt Cloud?
-description: "Consolidating projects in dbt Cloud"
-sidebar_label: 'How to consolidate projects'
+title: Как объединить проекты в dbt Cloud?
+description: "Объединение проектов в dbt Cloud"
+sidebar_label: 'Как объединить проекты'
 id: consolidate-projects
 
 ---
 
-Consolidating your dbt projects can be an enormous task, and there is no universal solution. But, there are some common approaches to project consolidation in dbt Cloud that you can follow, depending on the scope of the work that needs to be done.
+Объединение ваших проектов dbt может быть огромной задачей, и универсального решения не существует. Однако есть несколько общих подходов к объединению проектов в dbt Cloud, которые вы можете использовать в зависимости от объема работы, которую необходимо выполнить.
 
-If you have multiple projects that contain production-worthy code, there are rarely straightforward solutions to merging them. Let's suppose you have `Main Project` and `Smaller Subset Project`.
+Если у вас есть несколько проектов, содержащих код, готовый к производству, редко бывают простые решения для их слияния. Предположим, у вас есть `Main Project` и `Smaller Subset Project`.
 
-## Files and Folders
+## Файлы и папки
 
-### Git and the local directory
+### Git и локальный каталог
 
-Reference the [merge git commands](https://gist.github.com/msrose/2feacb303035d11d2d05) to help complete the migration plan. Using the commands will help retain git commit history, but you might result in duplicate folders called `models`, `tests`, etc. You will most likely still have to move files around manually.
+Обратитесь к [командам слияния git](https://gist.github.com/msrose/2feacb303035d11d2d05), чтобы помочь завершить план миграции. Использование этих команд поможет сохранить историю коммитов git, но вы можете столкнуться с дублированием папок, таких как `models`, `tests` и т.д. Скорее всего, вам все равно придется вручную перемещать файлы.
 
-Another option would be to use an external code editor (for example, VS Code) to move files from the `Smaller Subset Project` to the `Main Project`. This is what internal dbt Labs experts recommend to stay informed about what comes over to the main project and also allows you to be more aware of the incoming files, with the ability to make any minor tweaks to folder hierarchy that you might want to do at the same time.
+Другой вариант — использовать внешний редактор кода (например, VS Code), чтобы переместить файлы из `Smaller Subset Project` в `Main Project`. Это то, что рекомендуют внутренние эксперты dbt Labs, чтобы быть в курсе того, что переносится в основной проект, а также позволяет вам лучше осознавать входящие файлы, с возможностью внести небольшие изменения в иерархию папок, которые вы, возможно, захотите сделать одновременно.
 
-### Manual migration with multiple browser tabs
+### Ручная миграция с несколькими вкладками браузера
 
-If you only have a couple of models or macros that you want to consolidate, copy the raw file contents from your git provider in `Smaller Subset Project`. Then, in the dbt Cloud IDE, paste the contents into a new file in your `Main Project`.
+Если у вас есть всего несколько моделей или макросов, которые вы хотите объединить, скопируйте содержимое файлов из вашего git-провайдера в `Smaller Subset Project`. Затем в IDE dbt Cloud вставьте содержимое в новый файл в вашем `Main Project`.
 
-Alternatively, you can download those files from your git provider (`Smaller Subset Project` repo) and upload them back to your other repository (`Main Project` repo). This doesn’t scale well and could bypass change controls, so it might only be a viable solution for organizations with only a few files.
+В качестве альтернативы вы можете скачать эти файлы из вашего git-провайдера (репозиторий `Smaller Subset Project`) и загрузить их обратно в другой репозиторий (репозиторий `Main Project`). Это не масштабируется и может обойти контроль изменений, поэтому это может быть жизнеспособным решением только для организаций с небольшим количеством файлов.
 
-## Production jobs
-If you have multiple projects with deployment environments deploying jobs, this poses another challenge. Assuming all the models from `Smaller Subset Project` can be consolidated into `Main Project`, your commands within your jobs will take on a new meaning. In lieu of refactoring your global job strategy at the same time, you can add tags to the incoming project models and utilize that in your job command syntax, with the help of node selection syntax.
+## Производственные задания
+Если у вас есть несколько проектов с развертываемыми окружениями, выполняющими задания, это создает еще одну проблему. Предполагая, что все модели из `Smaller Subset Project` могут быть объединены в `Main Project`, ваши команды в рамках заданий приобретут новое значение. Вместо того чтобы одновременно рефакторить вашу глобальную стратегию заданий, вы можете добавить теги к моделям входящего проекта и использовать это в синтаксисе команд ваших заданий с помощью синтаксиса выбора узлов.
 
-Main Project job command example: `dbt build --exclude tag:smaller_subset_project`
+Пример команды задания для Main Project: `dbt build --exclude tag:smaller_subset_project`
 
-Smaller Subset Project commands: `dbt build --select tag:smaller_subset_project`
+Команды для Smaller Subset Project: `dbt build --select tag:smaller_subset_project`

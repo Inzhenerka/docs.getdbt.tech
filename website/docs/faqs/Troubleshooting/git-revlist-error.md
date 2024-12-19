@@ -1,11 +1,11 @@
 ---
-title: I'm receiving a git rev-list master error in the IDE?
-description: "Primary branch not recognized"
-sidebar_label: 'Receiving git rev-list master error in the IDE'
+title: Я получаю ошибку git rev-list master в IDE?
+description: "Основная ветка не распознана"
+sidebar_label: 'Получение ошибки git rev-list master в IDE'
 id: git-revlist-error
 ---
 
-If you're unable to access the IDE due to the below error message, we'll do our best to get you unstuck with the below steps!
+Если вы не можете получить доступ к IDE из-за следующего сообщения об ошибке, мы постараемся помочь вам с решением проблемы с помощью следующих шагов!
 
 ```shell
 git rev-list master..origin/main --count
@@ -14,18 +14,18 @@ Use '--' to separate paths from revisions, like this:
 'git <command> [<revision>...] -- [<file>...]'
 ```
 
-Usually this error indicates that the "main" branch name has changed or it is possible that dbt Cloud was unable to determine what your primary branch was. No worries, we have a few workarounds for you to try:
+Обычно эта ошибка указывает на то, что имя ветки "main" изменилось, или возможно, что dbt Cloud не смог определить, какая у вас основная ветка. Не переживайте, у нас есть несколько обходных путей, которые вы можете попробовать:
 
-**Workaround 1**
-Take a look at your Environment Settings - If you **do not** have a custom branch filled in your Environment Settings:
+**Обходной путь 1**
+Посмотрите на настройки вашей среды - если у вас **нет** заполненной пользовательской ветки в настройках среды:
 
-1. Disconnect and reconnect your repository [connection](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-import-a-project-by-git-url) on your Project Settings page. This should then allow dbt Cloud to pick up that the "main" branch is now called `main`
-2. In the Environment Settings, set the custom branch to 'master' and refresh the IDE 
+1. Отключите и снова подключите ваше [соединение](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-import-a-project-by-git-url) репозитория на странице настроек проекта. Это должно позволить dbt Cloud определить, что ветка "main" теперь называется `main`.
+2. В настройках среды установите пользовательскую ветку на 'master' и обновите IDE.
 
-**Workaround 2**
-Take a look at your Environment Settings - If you **do** have a custom branch filled in your Environment Settings:
+**Обходной путь 2**
+Посмотрите на настройки вашей среды - если у вас **есть** заполненная пользовательская ветка в настройках среды:
 
-1. Disconnecting and reconnecting your repository [connection](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-import-a-project-by-git-url) on your Project Settings page. This should then allow dbt Cloud to pick up that the "main" branch is now called `main`
-2. In the Environment Settings, remove the custom branch and refresh the IDE
+1. Отключите и снова подключите ваше [соединение](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-import-a-project-by-git-url) репозитория на странице настроек проекта. Это должно позволить dbt Cloud определить, что ветка "main" теперь называется `main`.
+2. В настройках среды удалите пользовательскую ветку и обновите IDE.
 
-If you've tried the workarounds above and are still experiencing this behavior - reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы попробовали указанные обходные пути и все еще испытываете эту проблему, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

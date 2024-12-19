@@ -1,17 +1,17 @@
 ---
-title: Which SQL dialect should I write my models in? Or which SQL dialect does dbt use?
-description: "Use SQL dialect of your own database"
-sidebar_label: 'Which SQL dialect to use?'
+title: На каком SQL-диалекте мне писать свои модели? Или какой SQL-диалект использует dbt?
+description: "Используйте SQL-диалект вашей базы данных"
+sidebar_label: 'Какой SQL-диалект использовать?'
 id: sql-dialect
 ---
 
-dbt can feel like magic, but it isn't actually magic. Under the hood, it's running SQL in your own warehouse — your data is not processed outside of your warehouse.
+dbt может казаться магией, но на самом деле это не магия. За кулисами он выполняет SQL в вашем собственном хранилище — ваши данные не обрабатываются вне вашего хранилища.
 
-As such, your models should just use the **SQL dialect of your own database**. Then, when dbt wraps your `select` statements in the appropriate <Term id="ddl" /> or <Term id="dml" />, it will use the correct DML for your warehouse — all of this logic is written in to dbt.
+Таким образом, ваши модели должны использовать **SQL-диалект вашей базы данных**. Затем, когда dbt оборачивает ваши `select` операторы в соответствующий <Term id="ddl" /> или <Term id="dml" />, он будет использовать правильный DML для вашего хранилища — вся эта логика уже заложена в dbt.
 
-You can find more information about the databases, platforms, and query engines that dbt supports in the [Supported Data Platforms](/docs/supported-data-platforms) docs.
+Вы можете найти больше информации о поддерживаемых базах данных, платформах и движках запросов в документации [Поддерживаемые платформы данных](/docs/supported-data-platforms).
 
-Want to go a little deeper on how this works? Consider a snippet of SQL that works on each warehouse:
+Хотите углубиться в то, как это работает? Рассмотрим фрагмент SQL, который работает в каждом хранилище:
 
 <File name='models/test_model.sql'>
 
@@ -22,7 +22,7 @@ select 1 as my_column
 
 </File>
 
-To replace an existing <Term id="table" />, here's an _illustrative_ example of the SQL dbt will run on different warehouses (the actual SQL can get much more complicated than this!)
+Чтобы заменить существующую <Term id="table" />, вот _иллюстративный_ пример SQL, который dbt будет выполнять в разных хранилищах (фактический SQL может быть гораздо сложнее этого!)
 
 <Tabs
   defaultValue="redshift"
@@ -34,7 +34,7 @@ To replace an existing <Term id="table" />, here's an _illustrative_ example of 
   <TabItem value="redshift">
 
 ```sql
--- you can't create or replace on redshift, so use a transaction to do this in an atomic way
+-- вы не можете создать или заменить в redshift, поэтому используйте транзакцию, чтобы сделать это атомарно
 
 begin;
 
@@ -61,7 +61,7 @@ commit;
 
 ```sql
 
--- Make an API call to create a dataset (no DDL interface for this)!!;
+-- Сделайте API-вызов для создания набора данных (нет DDL интерфейса для этого)!!;
 
 create or replace table `dbt-dev-87681`.`dbt_alice`.`test_model` as (
   select 1 as my_column

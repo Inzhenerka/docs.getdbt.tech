@@ -1,9 +1,9 @@
 ---
-title: When should I run my tests?
-description: "Run tests in production or when writing new code"
-sidebar_label: 'When to run tests'
-id: when-to-test
+title: Когда мне следует запускать тесты?
+description: "Запускайте тесты в производственной среде или при написании нового кода"
+sidebar_label: 'Когда запускать тесты'
+id: когда-запускать-тесты
 
 ---
 
-You should run your tests whenever you are writing new code (to ensure you haven't broken any existing models by changing SQL), and whenever you run your transformations in production (to ensure that your assumptions about your source data are still valid).
+Вы должны запускать свои тесты всякий раз, когда вы пишете новый код (чтобы убедиться, что вы не сломали существующие модели, изменив SQL), и всякий раз, когда вы выполняете свои трансформации в производственной среде (чтобы убедиться, что ваши предположения о исходных данных по-прежнему верны).

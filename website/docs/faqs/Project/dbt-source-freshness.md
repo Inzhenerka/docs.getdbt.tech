@@ -1,14 +1,14 @@
 ---
-title: Are the results of freshness stored anywhere?
-description: "How to access Source Freshness results"
-sidebar_label: 'Accessing Source Freshness results'
+title: Хранятся ли результаты свежести где-либо?
+description: "Как получить доступ к результатам свежести источников"
+sidebar_label: 'Доступ к результатам свежести источников'
 id: dbt-source-freshness
 
 ---
-Yes!
+Да!
 
-The `dbt source freshness` command will output a pass/warning/error status for each <Term id="table" /> selected in the freshness snapshot.
+Команда `dbt source freshness` выведет статус прохождения/предупреждения/ошибки для каждой <Term id="table" /> выбранной в снимке свежести.
 
-Additionally, dbt will write the freshness results to a file in the `target/` directory called `sources.json` by default. You can also override this destination, use the `-o` flag to the `dbt source freshness` command.
+Кроме того, dbt запишет результаты свежести в файл в директории `target/`, который по умолчанию называется `sources.json`. Вы также можете переопределить это местоположение, используя флаг `-o` в команде `dbt source freshness`.
 
-After enabling source freshness within a job, configure [Artifacts](/docs/deploy/artifacts) in your **Project Details** page, which you can find by selectng your account name on the left side menu in dbt Cloud and clicking **Account settings**. You can see the current status for source freshness by clicking **View Sources** in the job page.
+После включения свежести источников в задаче настройте [Артефакты](/docs/deploy/artifacts) на странице **Детали проекта**, которую можно найти, выбрав имя вашей учетной записи в левом меню в dbt Cloud и нажав **Настройки учетной записи**. Вы можете увидеть текущий статус свежести источников, нажав **Просмотреть источники** на странице задачи.

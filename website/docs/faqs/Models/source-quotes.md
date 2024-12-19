@@ -1,16 +1,16 @@
 ---
-title: I need to use quotes to select from my source, what should I do?
-description: "Use quoting property to quote values"
-sidebar_label: 'How to quote values'
+title: Мне нужно использовать кавычки для выбора из моего источника, что мне делать?
+description: "Используйте свойство quoting для обрамления значений в кавычки"
+sidebar_label: 'Как обрамлять значения в кавычки'
 id: source-quotes
 
 ---
 
-This is reasonably common on Snowflake in particular.
+Это довольно распространено, особенно в Snowflake.
 
-By default, dbt will not quote the database, schema, or identifier for the source tables that you've specified.
+По умолчанию dbt не обрамляет в кавычки базу данных, схему или идентификатор для источниковых таблиц, которые вы указали.
 
-To force dbt to quote one of these values, use the [`quoting` property](/reference/resource-properties/quoting):
+Чтобы заставить dbt обрамить в кавычки одно из этих значений, используйте свойство [`quoting`](/reference/resource-properties/quoting):
 
 <File name='models/<filename>.yml'>
 
@@ -28,7 +28,7 @@ sources:
     tables:
       - name: order_items
       - name: orders
-        # This overrides the `jaffle_shop` quoting config
+        # Это переопределяет конфигурацию quoting для `jaffle_shop`
         quoting:
           identifier: false
 ```

@@ -1,33 +1,33 @@
 ---
-title: "Why can't I just write DML in my transformations?"
-description: "Using SQL in your transformations instead of DML."
-sidebar_label: 'Why not write in DML'
+title: "Почему я не могу просто писать DML в своих трансформациях?"
+description: "Использование SQL в ваших трансформациях вместо DML."
+sidebar_label: 'Почему не писать в DML'
 id: why-not-write-dml
 
 ---
 
-#### `select` statements make transformations accessible
+#### Операторы `select` делают трансформации доступными
 
-More people know how to write `select` statements, than <Term id="dml" />, making the transformation layer accessible to more people!
+Больше людей умеют писать операторы `select`, чем <Term id="dml" />, что делает уровень трансформации доступным для большего числа людей!
 
-#### Writing good DML is hard
+#### Написание хорошего DML сложно
 
-If you write the <Term id="ddl" /> / DML yourself you can end up getting yourself tangled in problems like:
+Если вы пишете <Term id="ddl" /> / DML самостоятельно, вы можете столкнуться с проблемами, такими как:
 
-* What happens if the <Term id="table" /> already exists? Or this table already exists as a <Term id="view" />, but now I want it to be a table?
-* What if the schema already exists? Or, should I check if the schema already exists?
-* How do I replace a model atomically (such that there's no down-time for someone querying the table)
-* What if I want to parameterize my schema so I can run these transformations in a development environment?
-* What order do I need to run these statements in? If I run a `cascade` does it break other things?
+* Что произойдет, если <Term id="table" /> уже существует? Или эта таблица уже существует как <Term id="view" />, но теперь я хочу, чтобы она была таблицей?
+* Что если схема уже существует? Или мне следует проверить, существует ли схема?
+* Как мне атомарно заменить модель (так, чтобы не было времени простоя для тех, кто запрашивает таблицу)?
+* Что если я хочу параметризовать свою схему, чтобы я мог выполнять эти трансформации в среде разработки?
+* В каком порядке мне нужно выполнять эти операторы? Если я выполню `cascade`, не сломает ли это другие вещи?
 
-Each of these problems _can_ be solved, but they are unlikely to be the best use of your time.
+Каждая из этих проблем _может_ быть решена, но вряд ли это будет наилучшее использование вашего времени.
 
-#### dbt does more than generate SQL
+#### dbt делает больше, чем просто генерирует SQL
 
-You can test your models, generate documentation, create snapshots, and more!
+Вы можете тестировать свои модели, генерировать документацию, создавать снимки и многое другое!
 
-#### You reduce your vendor lock in
+#### Вы снижаете зависимость от поставщика
 
-SQL dialects tend to diverge the most in DML and DDL (rather than in `select` statements) — check out the example [here](/faqs/Models/sql-dialect). By writing less SQL, it can make a migration to a new database technology easier.
+Диалекты SQL, как правило, наиболее сильно различаются в DML и DDL (в отличие от операторов `select`) — посмотрите пример [здесь](/faqs/Models/sql-dialect). Писать меньше SQL может облегчить миграцию на новую технологию базы данных.
 
-If you do need to write custom DML, there are ways to do this in dbt using [custom materializations](/guides/create-new-materializations).
+Если вам действительно нужно написать пользовательский DML, есть способы сделать это в dbt с помощью [пользовательских материализаций](/guides/create-new-materializations).

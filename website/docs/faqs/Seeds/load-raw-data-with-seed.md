@@ -1,13 +1,13 @@
 ---
-title: Can I use seeds to load raw data?
-description: "Use seeds to load business specific logic"
-sidebar_label: 'Seed data files requirements'
+title: Могу ли я использовать семена для загрузки сырых данных?
+description: "Используйте семена для загрузки бизнес-логики"
+sidebar_label: 'Требования к файлам семян'
 id: load-raw-data-with-seed
 
 ---
 
-Seeds should **not** be used to load raw data (for example, large CSV exports from a production database).
+Семена **не должны** использоваться для загрузки сырых данных (например, больших CSV-экспортов из производственной базы данных).
 
-Since seeds are version controlled, they are best suited to files that contain business-specific logic, for example a list of country codes or user IDs of employees.
+Поскольку семена находятся под контролем версий, они лучше всего подходят для файлов, содержащих бизнес-специфическую логику, например, список кодов стран или идентификаторов пользователей сотрудников.
 
-Loading CSVs using dbt's seed functionality is not performant for large files. Consider using a different tool to load these CSVs into your <Term id="data-warehouse" />.
+Загрузка CSV-файлов с использованием функциональности семян dbt неэффективна для больших файлов. Рассмотрите возможность использования другого инструмента для загрузки этих CSV-файлов в ваш <Term id="data-warehouse" />.

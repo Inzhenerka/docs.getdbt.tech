@@ -1,12 +1,12 @@
 ---
-title: How do I access documentation in dbt Explorer?
-description: "Use read-only seats to share documentation"
-sidebar_label: 'Access documentation in dbt Explorer'
+title: Как получить доступ к документации в dbt Explorer?
+description: "Используйте лицензии только для чтения для совместного использования документации"
+sidebar_label: 'Доступ к документации в dbt Explorer'
 id: sharing-documentation
 ---
 
-If you're using dbt Cloud to deploy your project and have the [Team or Enterprise plan](https://www.getdbt.com/pricing/), you can use dbt Explorer to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their <Term id="data-lineage">lineage</Term> to gain a better understanding of its latest production state. 
+Если вы используете dbt Cloud для развертывания вашего проекта и у вас есть [Командный или Корпоративный план](https://www.getdbt.com/pricing/), вы можете использовать dbt Explorer для просмотра ресурсов вашего проекта (таких как модели, тесты и метрики) и их <Term id="data-lineage">потомственности</Term>, чтобы лучше понять его текущее состояние в производственной среде.
 
-Access dbt Explorer in dbt Cloud by clicking the **Explore** link in the navigation. You can have up to 5 read-only users access the documentation for your project.
+Получите доступ к dbt Explorer в dbt Cloud, нажав на ссылку **Explore** в навигации. Вы можете предоставить доступ к документации вашего проекта до 5 пользователям с лицензией только для чтения.
 
-dbt Cloud developer plan and dbt Core users can use [dbt Docs](/docs/collaborate/build-and-view-your-docs#dbt-docs), which generates basic documentation but it doesn't offer the same speed, metadata, or visibility as dbt Explorer. 
+Пользователи dbt Cloud с разработческим планом и пользователи dbt Core могут использовать [dbt Docs](/docs/collaborate/build-and-view-your-docs#dbt-docs), который генерирует базовую документацию, но не предлагает такую же скорость, метаданные или видимость, как dbt Explorer.

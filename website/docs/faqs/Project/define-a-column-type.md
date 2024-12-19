@@ -1,39 +1,39 @@
 ---
-title: How do I define a column type?
-description: "Using cast function to define a column type"
-sidebar_label: 'How to define a column type'
+title: Как определить тип столбца?
+description: "Использование функции cast для определения типа столбца"
+sidebar_label: 'Как определить тип столбца'
 id: define-a-column-type
 
 ---
 
-Your warehouse's SQL engine automatically assigns a [datatype](https://www.w3schools.com/sql/sql_datatypes.asp) to every column, whether it's found in a source or model. To force SQL to treat a columns a certain datatype, use `cast` functions:
+SQL-движок вашего хранилища данных автоматически присваивает [тип данных](https://www.w3schools.com/sql/sql_datatypes.asp) каждому столбцу, независимо от того, находится ли он в источнике или модели. Чтобы заставить SQL рассматривать столбец как определенный тип данных, используйте функции `cast`:
 
 <File name='models/order_prices.sql'>
 
 ```sql
 select
     cast(order_id as integer),
-    cast(order_price as double(6,2)) -- a more generic way of doing type conversion
+    cast(order_price as double(6,2)) -- более общий способ выполнения преобразования типов
 from {{ ref('stg_orders') }}
 
 ```
 
 </File>
 
-Many modern <Term id="data-warehouse" />s now support `::` syntax as a shorthand for `cast( as )`.
+Многие современные <Term id="data-warehouse" /> теперь поддерживают синтаксис `::` как сокращение для `cast( as )`.
 
 <File name='models/orders_prices_colon_syntax.sql'>
 
 ```sql
 select
     order_id::integer,
-    order_price::numeric(6,2) -- you might find this in Redshift, Snowflake, and Postgres
+    order_price::numeric(6,2) -- вы можете встретить это в Redshift, Snowflake и Postgres
 from {{ ref('stg_orders') }}
 
 ```
 
 </File>
 
-Be warned, reading in data and casting that data may not always yield expected results, and every warehouse has its own subtleties. Certain casts may not be allowed (e.g. on Bigquery, you can't cast a `boolean`-type value to a `float64`). Casts that involve a loss in precision loss (e.g. `float` to `integer`) rely on your SQL engine to make a best guess or follow a specific schema not used by competing services. When performing casts, it's imperative that you are familiar with your warehouse's casting rules to best label fields in your sources and models.
+Имейте в виду, что чтение данных и преобразование этих данных может не всегда давать ожидаемые результаты, и у каждого хранилища есть свои особенности. Некоторые преобразования могут быть недопустимы (например, в Bigquery вы не можете преобразовать значение типа `boolean` в `float64`). Преобразования, которые приводят к потере точности (например, `float` в `integer`), зависят от вашего SQL-движка, который должен сделать наилучшее предположение или следовать определенной схеме, не используемой конкурентами. При выполнении преобразований крайне важно быть знакомым с правилами преобразования вашего хранилища, чтобы правильно обозначать поля в ваших источниках и моделях.
 
-Thankfully, popular database services tend to have type docs--[Redshift](https://docs.amazonaws.cn/en_us/redshift/latest/dg/r_CAST_function.html) and [Bigquery](https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_rules).
+К счастью, популярные сервисы баз данных, как правило, имеют документацию по типам данных -- [Redshift](https://docs.amazonaws.cn/en_us/redshift/latest/dg/r_CAST_function.html) и [Bigquery](https://cloud.google.com/bigquery/docs/reference/standard-sql/conversion_rules).

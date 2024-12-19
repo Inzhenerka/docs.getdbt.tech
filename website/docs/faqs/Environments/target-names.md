@@ -1,8 +1,8 @@
 ---
-title: What should I name my target?
-description: "Using targets to clarify development and production runs"
-sidebar_label: 'Naming your target'
+title: Как мне назвать свою цель?
+description: "Использование целей для уточнения запусков разработки и производства"
+sidebar_label: 'Названия ваших целей'
 id: target-names
 ---
 
-We typically use targets to differentiate between development and production runs of dbt, naming the targets `dev` and `prod`, respectively. Check out the docs on [managing environments in dbt Core](/docs/core/dbt-core-environments) for more information.
+Мы обычно используем цели для различения запусков разработки и производства в dbt, называя цели `dev` и `prod`, соответственно. Ознакомьтесь с документацией по [управлению окружениями в dbt Core](/docs/core/dbt-core-environments) для получения дополнительной информации.

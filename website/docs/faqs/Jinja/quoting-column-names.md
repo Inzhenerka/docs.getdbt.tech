@@ -1,22 +1,22 @@
 ---
-title: Why do I need to quote column names in Jinja?
-description: "Use quotes to pass string"
-sidebar_label: 'Why quote column names in Jinja'
+title: Зачем мне нужно заключать имена столбцов в Jinja?
+description: "Используйте кавычки для передачи строки"
+sidebar_label: 'Зачем заключать имена столбцов в Jinja'
 id: quoting-column-names
 ---
 
-In the [macro example](/docs/build/jinja-macros#macros) we passed the column name `amount` quotes:
+В [примере макроса](/docs/build/jinja-macros#macros) мы передали имя столбца `amount` в кавычках:
 
 ```sql
 {{ cents_to_dollars('amount') }} as amount_usd
 ```
 
-We have to use quotes to pass the _string_ `'amount'` to the macro.
+Мы должны использовать кавычки, чтобы передать _строку_ `'amount'` в макрос.
 
-Without the quotes, the Jinja parser will look for a variable named `amount`. Since this doesn't exist, it will compile to nothing.
+Без кавычек парсер Jinja будет искать переменную с именем `amount`. Поскольку такой переменной не существует, это приведет к тому, что код не будет скомпилирован.
 
-Quoting in Jinja can take a while to get used to! The rule is that you're within a Jinja expression or statement (i.e. within `{% ... %}` or `{{ ... }}`), you'll need to use quotes for any arguments that are strings.
+Привыкнуть к использованию кавычек в Jinja может занять некоторое время! Правило таково: если вы находитесь внутри выражения или оператора Jinja (т.е. внутри `{% ... %}` или `{{ ... }}`), вам нужно использовать кавычки для любых аргументов, которые являются строками.
 
-Single and double quotes are equivalent in Jinja – just make sure you match them appropriately.
+Одиночные и двойные кавычки эквивалентны в Jinja – просто убедитесь, что вы правильно их сопоставляете.
 
-And if you do need to pass a variable as an argument, make sure you [don't nest your curlies](/best-practices/dont-nest-your-curlies).
+И если вам действительно нужно передать переменную в качестве аргумента, убедитесь, что вы [не вкладываете фигурные скобки друг в друга](/best-practices/dont-nest-your-curlies).

@@ -1,12 +1,12 @@
 ---
-title: Do ref-able resource names need to be unique?
-description: "Unique resource names to build dependencies"
-sidebar_label: 'Resource names need to be unique'
+title: Нужно ли, чтобы имена ресурсов, доступных через ref, были уникальными?
+description: "Уникальные имена ресурсов для построения зависимостей"
+sidebar_label: 'Имена ресурсов должны быть уникальными'
 id: unique-resource-names
 ---
 
-Within one project: yes! To build dependencies between resources (such as models, seeds, and snapshots), you need to use the `ref` function, and pass in the resource name as an argument. dbt uses that resource name to uniquely resolve the `ref` to a specific resource. As a result, these resource names need to be unique, _even if they are in distinct folders_.
+В рамках одного проекта: да! Для построения зависимостей между ресурсами (такими как модели, семена и снимки) необходимо использовать функцию `ref` и передавать имя ресурса в качестве аргумента. dbt использует это имя ресурса для уникального разрешения `ref` на конкретный ресурс. В результате эти имена ресурсов должны быть уникальными, _даже если они находятся в разных папках_.
 
-A resource in one project can have the same name as a resource in another project (installed as a dependency). dbt uses the project name to uniquely identify each resource. We call this "namespacing." If you `ref` a resource with a duplicated name, it will resolve to the resource within the same namespace (package or project), or raise an error because of an ambiguous reference. Use [two-argument `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models) to disambiguate references by specifying the namespace.
+Ресурс в одном проекте может иметь то же имя, что и ресурс в другом проекте (установленном в качестве зависимости). dbt использует имя проекта для уникальной идентификации каждого ресурса. Мы называем это "пространством имен". Если вы используете `ref` для ресурса с дублирующимся именем, он будет разрешен на ресурс в том же пространстве имен (пакете или проекте) или вызовет ошибку из-за неоднозначной ссылки. Используйте [двухаргументный `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models), чтобы устранить неоднозначность ссылок, указав пространство имен.
 
-Those resource will still need to land in distinct locations in the data warehouse. Read the docs on [custom aliases](/docs/build/custom-aliases) and [custom schemas](/docs/build/custom-schemas) for details on how to achieve this.
+Эти ресурсы все равно должны находиться в различных местах в хранилище данных. Ознакомьтесь с документацией о [пользовательских псевдонимах](/docs/build/custom-aliases) и [пользовательских схемах](/docs/build/custom-schemas) для получения подробной информации о том, как это сделать.

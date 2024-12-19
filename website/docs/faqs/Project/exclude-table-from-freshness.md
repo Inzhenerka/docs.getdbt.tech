@@ -1,14 +1,14 @@
 ---
-title: How do I exclude a table from a freshness snapshot?
-description: "Use null to exclude a table from a freshness snapshot"
-sidebar_label: 'Exclude a table from freshness snapshot '
+title: Как исключить таблицу из снимка свежести?
+description: "Используйте null, чтобы исключить таблицу из снимка свежести"
+sidebar_label: 'Исключить таблицу из снимка свежести'
 id: exclude-table-from-freshness
 
 ---
 
-Some tables in a data source may be updated infrequently. If you've set a `freshness` property at the source level, this <Term id="table" /> is likely to fail checks.
+Некоторые таблицы в источнике данных могут обновляться нечасто. Если вы установили свойство `freshness` на уровне источника, эта <Term id="table" />, вероятно, не пройдет проверки.
 
-To work around this, you can set the table's freshness to null (`freshness: null`) to "unset" the freshness for a particular table:
+Чтобы обойти это, вы можете установить свежесть таблицы в null (`freshness: null`), чтобы "сбросить" свежесть для конкретной таблицы:
 
 <File name='models/<filename>.yml'>
 
@@ -29,7 +29,7 @@ sources:
     tables:
       - name: orders
       - name: product_skus
-        freshness: null # do not check freshness for this table
+        freshness: null # не проверять свежесть для этой таблицы
 ```
 
 </File>

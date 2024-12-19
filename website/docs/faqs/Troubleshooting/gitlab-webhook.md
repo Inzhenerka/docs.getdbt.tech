@@ -1,19 +1,19 @@
 ---
-title: Unable to trigger a CI job with GitLab
-description: "Unable to trigger a CI job"
-sidebar_label: 'Unable to trigger a CI job'
+title: Невозможно запустить CI задачу с GitLab
+description: "Невозможно запустить CI задачу"
+sidebar_label: 'Невозможно запустить CI задачу'
 id: gitlab-webhook
 ---
 
-When you connect dbt Cloud to a GitLab repository, GitLab automatically registers a webhook in the background, viewable under the repository settings. This webhook is also used to trigger [CI jobs](/docs/deploy/ci-jobs) when you push to the repository.
+Когда вы подключаете dbt Cloud к репозиторию GitLab, GitLab автоматически регистрирует вебхук в фоновом режиме, который можно просмотреть в настройках репозитория. Этот вебхук также используется для запуска [CI задач](/docs/deploy/ci-jobs) при отправке изменений в репозиторий.
 
-If you're unable to trigger a CI job, this usually indicates that the webhook registration is missing or incorrect.
+Если вы не можете запустить CI задачу, это обычно указывает на то, что регистрация вебхука отсутствует или некорректна.
 
-To resolve this issue, navigate to the repository settings in GitLab and view the webhook registrations by navigating to GitLab --> **Settings** --> **Webhooks**.
+Чтобы решить эту проблему, перейдите в настройки репозитория в GitLab и просмотрите регистрации вебхуков, перейдя в GitLab --> **Настройки** --> **Вебхуки**.
 
-Some things to check:
+Некоторые вещи, которые стоит проверить:
 
-- The webhook registration is enabled in GitLab. 
-- The webhook registration is configured with the correct URL and secret.
+- Регистрация вебхука включена в GitLab.
+- Регистрация вебхука настроена с правильным URL и секретом.
 
-If you're still experiencing this issue, reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы все еще испытываете эту проблему, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

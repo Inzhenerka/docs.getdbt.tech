@@ -1,15 +1,15 @@
 ---
-title: What model configurations exist?
-description: "Learning about model configurations"
-sidebar_label: 'Model configurations'
+title: Какие конфигурации моделей существуют?
+description: "Изучение конфигураций моделей"
+sidebar_label: 'Конфигурации моделей'
 id: available-configurations
 ---
-You can also configure:
+Вы также можете настроить:
 
-* [tags](/reference/resource-configs/tags) to support easy categorization and graph selection
-* [custom schemas](/reference/resource-properties/schema) to split your models across multiple schemas
-* [aliases](/reference/resource-configs/alias) if your <Term id="view" />/<Term id="table" /> name should differ from the filename
-* Snippets of SQL to run at the start or end of a model, known as [hooks](/docs/build/hooks-operations)
-* Warehouse-specific configurations for performance (e.g. `sort` and `dist` keys on Redshift, `partitions` on BigQuery)
+* [теги](/reference/resource-configs/tags) для удобной категоризации и выбора графиков
+* [пользовательские схемы](/reference/resource-properties/schema) для распределения ваших моделей по нескольким схемам
+* [псевдонимы](/reference/resource-configs/alias), если ваше <Term id="view" />/<Term id="table" /> имя должно отличаться от имени файла
+* Фрагменты SQL, которые выполняются в начале или в конце модели, известные как [хуки](/docs/build/hooks-operations)
+* Конфигурации, специфичные для склада, для повышения производительности (например, `sort` и `dist` ключи на Redshift, `partitions` на BigQuery)
 
-Check out the docs on [model configurations](/reference/model-configs) to learn more.
+Посмотрите документацию о [конфигурациях моделей](/reference/model-configs), чтобы узнать больше.

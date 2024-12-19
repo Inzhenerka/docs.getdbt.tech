@@ -1,12 +1,12 @@
 ---
-title: Which docs should I use when writing Jinja or creating a macro?
-description: "Useful Jinja docs"
-sidebar_label: 'Useful Jinja docs'
+title: Какие документы мне использовать при написании Jinja или создании макроса?
+description: "Полезная документация по Jinja"
+sidebar_label: 'Полезная документация по Jinja'
 id: which-jinja-docs
 ---
 
-If you are stuck with a Jinja issue, it can get confusing where to check for more information. We recommend you check (in order):
+Если у вас возникла проблема с Jinja, может быть сложно понять, где искать дополнительную информацию. Мы рекомендуем вам проверять (в следующем порядке):
 
-1. [Jinja's Template Designer Docs](https://jinja.palletsprojects.com/page/templates/): This is the best reference for most of the Jinja you'll use
-2. [Our Jinja function reference](/reference/dbt-jinja-functions): This documents any additional functionality we've added to Jinja in dbt.
-3. [Agate's table docs](https://agate.readthedocs.io/page/api/table.html): If you're operating on the result of a query, dbt will pass it back to you as an agate table. This means that the methods you call on the <Term id="table" /> belong to the Agate library rather than Jinja or dbt.
+1. [Документация по шаблонам Jinja](https://jinja.palletsprojects.com/page/templates/): Это лучший справочник для большинства случаев использования Jinja.
+2. [Наша справка по функциям Jinja](/reference/dbt-jinja-functions): Здесь документируется любая дополнительная функциональность, которую мы добавили в Jinja в dbt.
+3. [Документация по таблицам Agate](https://agate.readthedocs.io/page/api/table.html): Если вы работаете с результатом запроса, dbt вернет его вам в виде таблицы agate. Это означает, что методы, которые вы вызываете на <Term id="table" />, принадлежат библиотеке Agate, а не Jinja или dbt.

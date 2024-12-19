@@ -1,29 +1,29 @@
 ---
-title: I'm seeing a Gitlab authentication out of date error loop
-description: "GitLab and dbt Cloud deploy key mismatch "
-sidebar_label: 'GitLab authentication out of date'
+title: Я вижу ошибку "Срок действия аутентификации GitLab истек"
+description: "Несоответствие ключа развертывания GitLab и dbt Cloud"
+sidebar_label: 'Срок действия аутентификации GitLab истек'
 id: gitlab-authentication
 ---
 
-If you're seeing a 'GitLab Authentication is out of date' 500 server error page - this usually occurs when the deploy key in the repository settings in both dbt Cloud and GitLab do not match. 
+Если вы видите страницу с ошибкой сервера 500 "Срок действия аутентификации GitLab истек" - это обычно происходит, когда ключ развертывания в настройках репозитория в dbt Cloud и GitLab не совпадают.
 
-No worries - this is a current issue the dbt Labs team is working on and we have a few workarounds for you to try:
+Не переживайте - это текущая проблема, над которой работает команда dbt Labs, и у нас есть несколько обходных путей, которые вы можете попробовать:
 
-### 1st Workaround
+### 1-й обходной путь
 
-1. Disconnect repo from project in dbt Cloud.
-2. Go to Gitlab and click on Settings > Repository.
-3. Under Repository Settings, remove/revoke active dbt Cloud deploy tokens and deploy keys.
-4. Attempt to reconnect your repository via dbt Cloud.
-5. You would then need to check Gitlab to make sure that the new deploy key is added.
-6. Once confirmed that it's added, refresh dbt Cloud and try developing once again.
+1. Отключите репозиторий от проекта в dbt Cloud.
+2. Перейдите в GitLab и нажмите на Настройки > Репозиторий.
+3. В разделе Настройки репозитория удалите/отмените активные токены развертывания и ключи развертывания dbt Cloud.
+4. Попробуйте снова подключить ваш репозиторий через dbt Cloud.
+5. Затем вам нужно будет проверить GitLab, чтобы убедиться, что новый ключ развертывания добавлен.
+6. После подтверждения, что он добавлен, обновите dbt Cloud и попробуйте снова начать разработку.
 
-### 2nd Workaround
+### 2-й обходной путь
 
-1. Keep repo in project as is -- don't disconnect.
-2. Copy the deploy key generated in dbt Cloud.
-3. Go to Gitlab and click on Settings > Repository.
-4. Under Repository Settings, manually add to your Gitlab project deploy key repo (with `Grant write permissions` box checked).
-5. Go back to dbt Cloud, refresh your page and try developing again.
+1. Оставьте репозиторий в проекте как есть — не отключайте.
+2. Скопируйте ключ развертывания, сгенерированный в dbt Cloud.
+3. Перейдите в GitLab и нажмите на Настройки > Репозиторий.
+4. В разделе Настройки репозитория вручную добавьте ключ развертывания вашего проекта GitLab (с отмеченным полем `Предоставить права на запись`).
+5. Вернитесь в dbt Cloud, обновите страницу и попробуйте снова начать разработку.
 
-If you've tried the workarounds above and are still experiencing this behavior - reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы попробовали указанные обходные пути и все еще испытываете эту проблему, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

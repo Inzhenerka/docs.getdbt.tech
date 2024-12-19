@@ -1,31 +1,31 @@
 ---
-title: Receiving a `Failed to connect to DB` error when connecting to Snowflake
-description: "Edit your OAuth Security integration when you see error"
-sidebar_label: 'Receiving `Failed to connect to database` error'
+title: Получение ошибки `Не удалось подключиться к БД` при подключении к Snowflake
+description: "Измените вашу интеграцию OAuth Security, когда вы видите ошибку"
+sidebar_label: 'Получение ошибки `Не удалось подключиться к базе данных`'
 ---
 
-1. If you see the following error: 
+1. Если вы видите следующую ошибку:
 
    ```text
    Failed to connect to DB: xxxxxxx.snowflakecomputing.com:443. The role requested in the connection, or the default role if none was requested in the connection ('xxxxx'), is not listed in the Access Token or was filtered. 
    Please specify another role, or contact your OAuth Authorization server administrator.
    ```
 
-2. Edit your OAuth Security integration and explicitly specify this scope mapping attribute:
+2. Измените вашу интеграцию OAuth Security и явно укажите этот атрибут сопоставления области:
 
    ```sql
    ALTER INTEGRATION <my_int_name> SET EXTERNAL_OAUTH_SCOPE_MAPPING_ATTRIBUTE = 'scp';
    ```
 
-You can read more about this error in [Snowflake's documentation](https://community.snowflake.com/s/article/external-custom-oauth-error-the-role-requested-in-the-connection-is-not-listed-in-the-access-token).
+Вы можете узнать больше об этой ошибке в [документации Snowflake](https://community.snowflake.com/s/article/external-custom-oauth-error-the-role-requested-in-the-connection-is-not-listed-in-the-access-token).
 
 ----
 
-1. If you see the following error:
+1. Если вы видите следующую ошибку:
 
    ```text
    Failed to connect to DB: xxxxxxx.snowflakecomputing.com:443. Incorrect username or password was specified.
    ```
 
-   * **Unique email addresses** &mdash; Each user in Snowflake must have a unique email address. You can't have multiple users (for example, a human user and a service account) using the same email, such as `alice@acme.com`, to authenticate to Snowflake.
-   * **Match email addresses with identity provider** &mdash; The email address of your Snowflake user must exactly match the email address you use to authenticate with your Identity Provider (IdP). For example, if your Snowflake user's email is `alice@acme.com` but you log in to Entra or Okta with `alice_adm@acme.com`, this mismatch can cause an error.
+   * **Уникальные адреса электронной почты** &mdash; Каждый пользователь в Snowflake должен иметь уникальный адрес электронной почты. Нельзя иметь несколько пользователей (например, человека и сервисный аккаунт), использующих один и тот же адрес электронной почты, такой как `alice@acme.com`, для аутентификации в Snowflake.
+   * **Сопоставление адресов электронной почты с поставщиком удостоверений** &mdash; Адрес электронной почты вашего пользователя Snowflake должен точно совпадать с адресом электронной почты, который вы используете для аутентификации у вашего поставщика удостоверений (IdP). Например, если адрес электронной почты вашего пользователя Snowflake — `alice@acme.com`, но вы входите в систему через Entra или Okta с `alice_adm@acme.com`, это несоответствие может вызвать ошибку.

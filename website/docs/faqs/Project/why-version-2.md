@@ -1,12 +1,11 @@
 ---
-title: "Why do model and source yml files always start with `version: 2`?"
-description: ".yml file structure more extensible with version 2."
-sidebar_label: 'Why does yml file start with version 2'
+title: "Почему файлы yml моделей и источников всегда начинаются с `version: 2`?"
+description: "Структура .yml файлов более расширяемая с версией 2."
+sidebar_label: 'Почему файл yml начинается с версии 2'
 id: why-version-2
 
 ---
 
-Once upon a time, the structure of these `.yml` files was very different (s/o to anyone who was using dbt back then!). Adding `version: 2` allowed us to make this structure more extensible.
+Когда-то структура этих `.yml` файлов была совершенно другой (привет всем, кто использовал dbt в то время!). Добавление `version: 2` позволило сделать эту структуру более расширяемой.
 
-Resource yml files do not currently require this config. We only support `version: 2` if it's specified. Although we do not expect to update yml files to `version: 3` soon, having this config will make it easier for us to introduce new structures in the future
-
+Файлы yml ресурсов в настоящее время не требуют этой конфигурации. Мы поддерживаем `version: 2` только в том случае, если она указана. Хотя мы не ожидаем, что файлы yml будут обновлены до `version: 3` в ближайшее время, наличие этой конфигурации упростит нам введение новых структур в будущем.

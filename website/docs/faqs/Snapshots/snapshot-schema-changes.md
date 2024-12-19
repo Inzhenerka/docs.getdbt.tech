@@ -1,13 +1,13 @@
 ---
-title: What happens if I add new columns to my snapshot query?
-description: "Reconcile changes when adding new columns in snapshot query"
-sidebar_label: 'Snapshot column changes'
+title: Что произойдет, если я добавлю новые столбцы в запрос снимка?
+description: "Согласование изменений при добавлении новых столбцов в запрос снимка"
+sidebar_label: 'Изменения столбцов снимка'
 id: snapshot-schema-changes
 
 ---
-When the columns of your source query changes, dbt will attempt to reconcile this change in the destination snapshot <Term id="table" />. dbt does this by:
+Когда столбцы вашего исходного запроса изменяются, dbt попытается согласовать это изменение в целевом снимке <Term id="table" />. dbt делает это следующим образом:
 
-1. Creating new columns from the source query in the destination table
-2. Expanding the size of string types where necessary (eg. `varchar`s on Redshift)
+1. Создает новые столбцы из исходного запроса в целевой таблице
+2. Увеличивает размер строковых типов, где это необходимо (например, `varchar` в Redshift)
 
-dbt _will not_ delete columns in the destination snapshot table if they are removed from the source query. It will also not change the type of a column beyond expanding the size of varchar columns. That is, if a `string` column is changed to a `date` column in the snapshot source query, dbt will not attempt to change the type of the column in the destination table.
+dbt _не будет_ удалять столбцы в целевой таблице снимка, если они были удалены из исходного запроса. Он также не изменит тип столбца, кроме увеличения размера столбцов типа varchar. То есть, если столбец `string` изменяется на столбец `date` в исходном запросе снимка, dbt не будет пытаться изменить тип столбца в целевой таблице.

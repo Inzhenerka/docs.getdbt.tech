@@ -1,16 +1,14 @@
 ---
-title: Can I store my seeds in a directory other than the `seeds` directory in my project?
-description: "Where to store seeds in a directory"
-sidebar_label: 'How to name seeds directory'
+title: Могу ли я хранить свои семена в директории, отличной от директории `seeds` в моем проекте?
+description: "Где хранить семена в директории"
+sidebar_label: 'Как назвать директорию семян'
 id: configurable-data-path
 
 ---
 
-By default, dbt expects your seed files to be located in the `seeds` subdirectory
-of your project.
+По умолчанию dbt ожидает, что ваши файлы семян будут находиться в подпапке `seeds` вашего проекта.
 
-To change this, update the [seed-paths](reference/project-configs/seed-paths.md) configuration in your `dbt_project.yml`
-file, like so:
+Чтобы изменить это, обновите конфигурацию [seed-paths](reference/project-configs/seed-paths.md) в вашем файле `dbt_project.yml`, как показано ниже:
 
 <File name='dbt_project.yml'>
 

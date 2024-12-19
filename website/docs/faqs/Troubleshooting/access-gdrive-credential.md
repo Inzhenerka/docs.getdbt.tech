@@ -1,32 +1,32 @@
 ---
-title: I'm receiving a "Permission denied while getting Drive credential" error when trying to query from Google Drive?
-description: "Grant BigQuery service account access"
-sidebar_label: 'Error when trying to query from Google Drive'
+title: Я получаю ошибку "Permission denied while getting Drive credential" при попытке выполнить запрос из Google Drive?
+description: "Предоставьте доступ учетной записи службы BigQuery"
+sidebar_label: 'Ошибка при попытке выполнить запрос из Google Drive'
 id: access-gdrive-credential
 
 ---
 
-If you're seeing the below error when you try to query a dataset from a Google Drive document in the IDE,  the IDE due to the below error message, we'll do our best to get you unstuck with the below steps! 
+Если вы видите приведенную ниже ошибку, когда пытаетесь выполнить запрос к набору данных из документа Google Drive в IDE, мы постараемся помочь вам с решением этой проблемы с помощью следующих шагов!
 
 ```
 Access denied: BigQuery BigQuery: Permission denied while getting Drive credentials
 ```
 
-Usually, this error indicates that you haven't granted the BigQuery service account access to the specific Google Drive document. If you're seeing this error, try giving the service account (Client email field seen [here](/docs/cloud/connect-data-platform/connect-bigquery)) you are using for your BigQuery connection in dbt Cloud, permission to your Google Drive or Google Sheet. You'll want to do this directly in your Google Document, click the **Share** button, and enter the client email. 
+Обычно эта ошибка указывает на то, что вы не предоставили учетной записи службы BigQuery доступ к конкретному документу Google Drive. Если вы видите эту ошибку, попробуйте предоставить учетной записи службы (поле Client email, которое можно увидеть [здесь](/docs/cloud/connect-data-platform/connect-bigquery)), которую вы используете для подключения к BigQuery в dbt Cloud, разрешение на доступ к вашему Google Drive или Google Sheet. Вам нужно сделать это непосредственно в вашем документе Google, нажав кнопку **Share** и введя адрес электронной почты клиента.
 
-If you are experiencing this error when using OAuth, and you have verified your access to the Google Sheet, you may need to grant permissions for gcloud to access Google Drive:
+Если вы сталкиваетесь с этой ошибкой при использовании OAuth и подтвердили свой доступ к Google Sheet, вам может потребоваться предоставить разрешения для gcloud для доступа к Google Drive:
 
 ```
 gcloud auth application-default login --disable-quota-project
 ```
-For more info see the [gcloud auth application-default documentation](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login)
+Для получения дополнительной информации смотрите [документацию gcloud auth application-default](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login).
 
-If you've tried the earlier steps and are still experiencing this behavior, try using the following command to log into Google Cloud and enable access to Google Drive. It also updates the Application Default Credentials (ADC) file, which many Google Cloud libraries use to authenticate API calls.
+Если вы попробовали предыдущие шаги и все еще сталкиваетесь с этой проблемой, попробуйте использовать следующую команду для входа в Google Cloud и включения доступа к Google Drive. Она также обновляет файл учетных данных по умолчанию (ADC), который многие библиотеки Google Cloud используют для аутентификации API-вызовов.
 
 ```
 gcloud auth login --enable-gdrive-access --update-adc
 ```
 
-For more info, refer to [gcloud auth login documentation](https://cloud.google.com/sdk/gcloud/reference/auth/login#--enable-gdrive-access).
+Для получения дополнительной информации обратитесь к [документации gcloud auth login](https://cloud.google.com/sdk/gcloud/reference/auth/login#--enable-gdrive-access).
 
-If you've tried the steps above and are still experiencing this behavior - reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы попробовали указанные выше шаги и все еще сталкиваетесь с этой проблемой, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

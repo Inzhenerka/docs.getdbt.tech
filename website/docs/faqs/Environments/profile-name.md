@@ -1,7 +1,7 @@
 ---
-title: What should I name my profile?
-description: "Use company name for profile name"
-sidebar_label: 'Naming your profile'
+title: Как назвать свой профиль?
+description: "Используйте название компании для имени профиля"
+sidebar_label: 'Названия вашего профиля'
 id: profile-name
 ---
-We typically use a company name for a profile name, and then use targets to differentiate between `dev` and `prod`. Check out the docs on [environments in dbt Core](/docs/core/dbt-core-environments) for more information.
+Мы обычно используем название компании в качестве имени профиля, а затем используем цели для различения между `dev` и `prod`. Ознакомьтесь с документацией о [окружениях в dbt Core](/docs/core/dbt-core-environments) для получения дополнительной информации.

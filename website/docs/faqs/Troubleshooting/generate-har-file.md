@@ -1,71 +1,71 @@
 ---
-title: "How to generate HAR files"
-description: "How to generate HAR files for debugging"
-sidebar_label: 'Generate HAR files'
+title: "Как сгенерировать файлы HAR"
+description: "Как сгенерировать файлы HAR для отладки"
+sidebar_label: 'Сгенерировать файлы HAR'
 sidebar_position: 1
 keywords:
-  - HAR files
+  - файлы HAR
   - HTTP Archive
-  - Troubleshooting
-  - Debugging
+  - Устранение неполадок
+  - Отладка
 ---
 
-HTTP Archive (HAR) files are used to gather data from users’ browser, which dbt Support uses to troubleshoot network or resource issues. This information includes detailed timing information about the requests made between the browser and the server. 
+Файлы HTTP Archive (HAR) используются для сбора данных из браузера пользователей, которые служба поддержки dbt использует для устранения проблем с сетью или ресурсами. Эта информация включает в себя подробные временные данные о запросах, сделанных между браузером и сервером.
 
-The following sections describe how to generate HAR files using common browsers such as [Google Chrome](#google-chrome), [Mozilla Firefox](#mozilla-firefox), [Apple Safari](#apple-safari), and [Microsoft Edge](#microsoft-edge).
+В следующих разделах описывается, как сгенерировать файлы HAR с помощью распространенных браузеров, таких как [Google Chrome](#google-chrome), [Mozilla Firefox](#mozilla-firefox), [Apple Safari](#apple-safari) и [Microsoft Edge](#microsoft-edge).
 
 :::info
-Remove or hide any confidential or personally identifying information before you send the HAR file to dbt Labs. You can edit the file using a text editor. 
+Удалите или скройте любую конфиденциальную или личную информацию, прежде чем отправлять файл HAR в dbt Labs. Вы можете отредактировать файл с помощью текстового редактора.
 :::
 
 ### Google Chrome
 
-1. Open Google Chrome.
-2. Click on **View** --> **Developer Tools**.
-3. Select the **Network** tab.
-4. Ensure that Google Chrome is recording. A red button (🔴) indicates that a recording is already in progress. Otherwise, click **Record network log**.
-5. Select **Preserve Log**.
-6. Clear any existing logs by clicking **Clear network log** (🚫).
-7. Go to the page where the issue occurred and reproduce the issue.
-8. Click **Export HAR** (the down arrow icon) to export the file as HAR. The icon is located on the same row as the **Clear network log** button.
-9. Save the HAR file.
-10. Upload the HAR file to the dbt Support ticket thread.
+1. Откройте Google Chrome.
+2. Нажмите **Просмотр** --> **Инструменты разработчика**.
+3. Выберите вкладку **Сеть**.
+4. Убедитесь, что Google Chrome записывает данные. Красная кнопка (🔴) указывает на то, что запись уже идет. В противном случае нажмите **Записать сетевой журнал**.
+5. Выберите **Сохранить журнал**.
+6. Очистите любые существующие журналы, нажав **Очистить сетевой журнал** (🚫).
+7. Перейдите на страницу, где возникла проблема, и воспроизведите ее.
+8. Нажмите **Экспортировать HAR** (значок вниз) для экспорта файла в формате HAR. Значок находится на той же строке, что и кнопка **Очистить сетевой журнал**.
+9. Сохраните файл HAR.
+10. Загрузите файл HAR в поток тикетов службы поддержки dbt.
 
 ### Mozilla Firefox
 
-1. Open Firefox.
-2. Click the application menu and then **More tools** --> **Web Developer Tools**.
-3. In the developer tools docked tab, select **Network**.
-4. Go to the page where the issue occurred and reproduce the issue. The page automatically starts recording as you navigate.
-5. When you're finished, click **Pause/Resume recording network log**.
-6. Right-click anywhere in the **File** column and select **Save All as HAR**.
-7. Save the HAR file.
-8. Upload the HAR file to the dbt Support ticket thread.
+1. Откройте Firefox.
+2. Нажмите на меню приложения, затем выберите **Дополнительные инструменты** --> **Инструменты веб-разработчика**.
+3. В закрепленной вкладке инструментов разработчика выберите **Сеть**.
+4. Перейдите на страницу, где возникла проблема, и воспроизведите ее. Страница автоматически начинает запись по мере навигации.
+5. Когда закончите, нажмите **Приостановить/Возобновить запись сетевого журнала**.
+6. Щелкните правой кнопкой мыши в любом месте в столбце **Файл** и выберите **Сохранить все как HAR**.
+7. Сохраните файл HAR.
+8. Загрузите файл HAR в поток тикетов службы поддержки dbt.
 
 ### Apple Safari
 
-1. Open Safari.
-2. In case the **Develop** menu doesn't appear in the menu bar, go to **Safari** and then **Settings**.
-3. Click **Advanced**.
-4. Select the **Show features for web developers** checkbox.
-5. From the **Develop** menu, select **Show Web Inspector**.
-6. Click the **Network tab**.
-7. Go to the page where the issue occurred and reproduce the issue.
-8. When you're finished, click **Export**.
-9. Save the file.
-10. Upload the HAR file to the dbt Support ticket thread.
+1. Откройте Safari.
+2. Если меню **Разработка** не отображается в строке меню, перейдите в **Safari**, затем **Настройки**.
+3. Нажмите **Дополнительно**.
+4. Установите флажок **Показать функции для веб-разработчиков**.
+5. В меню **Разработка** выберите **Показать веб-инспектор**.
+6. Нажмите на вкладку **Сеть**.
+7. Перейдите на страницу, где возникла проблема, и воспроизведите ее.
+8. Когда закончите, нажмите **Экспорт**.
+9. Сохраните файл.
+10. Загрузите файл HAR в поток тикетов службы поддержки dbt.
 
 ### Microsoft Edge
 
-1. Open Microsoft Edge.
-2. Click the **Settings and more** menu (...) to the right of the toolbar and then select **More tools** --> **Developer tools**.
-3. Click **Network**.
-4. Ensure that Microsoft Edge is recording. A red button (🔴) indicates that a recording is already in progress. Otherwise, click **Record network log**.
-5. Go to the page where the issue occurred and reproduce the issue.
-6. When you're finished, click **Stop recording network log**.
-7. Click **Export HAR** (the down arrow icon) or press **Ctrl + S** to export the file as HAR.
-8. Save the HAR file.
-9. Upload the HAR file to the dbt Support ticket thread.
+1. Откройте Microsoft Edge.
+2. Нажмите на меню **Настройки и другое** (...) справа от панели инструментов, затем выберите **Дополнительные инструменты** --> **Инструменты разработчика**.
+3. Нажмите **Сеть**.
+4. Убедитесь, что Microsoft Edge записывает данные. Красная кнопка (🔴) указывает на то, что запись уже идет. В противном случае нажмите **Записать сетевой журнал**.
+5. Перейдите на страницу, где возникла проблема, и воспроизведите ее.
+6. Когда закончите, нажмите **Остановить запись сетевого журнала**.
+7. Нажмите **Экспортировать HAR** (значок вниз) или нажмите **Ctrl + S** для экспорта файла в формате HAR.
+8. Сохраните файл HAR.
+9. Загрузите файл HAR в поток тикетов службы поддержки dbt.
 
-### Additional resources
-Check out the [How to generate a HAR file in Chrome](https://www.loom.com/share/cabdb7be338243f188eb619b4d1d79ca) video for a visual guide on how to generate HAR files in Chrome.
+### Дополнительные ресурсы
+Посмотрите видео [Как сгенерировать файл HAR в Chrome](https://www.loom.com/share/cabdb7be338243f188eb619b4d1d79ca) для визуального руководства по генерации файлов HAR в Chrome.

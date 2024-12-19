@@ -1,14 +1,14 @@
 ---
-title: What if my source is in a poorly named schema or table?
-description: "Use schema and identifier properities to define names"
-sidebar_label: 'Source is in a poorly-named scheme or table'
+title: Что делать, если мой источник находится в плохо названной схеме или таблице?
+description: "Используйте свойства schema и identifier для определения имен"
+sidebar_label: 'Источник в плохо названной схеме или таблице'
 id: source-has-bad-name
 
 ---
 
-By default, dbt will use the `name:` parameters to construct the source reference.
+По умолчанию dbt будет использовать параметры `name:` для создания ссылки на источник.
 
-If these names are a little less-than-perfect, use the [schema](/reference/resource-properties/schema) and [identifier](/reference/resource-properties/identifier) properties to define the names as per the database, and use your `name:` property for the name that makes sense!
+Если эти имена не идеальны, используйте свойства [schema](/reference/resource-properties/schema) и [identifier](/reference/resource-properties/identifier), чтобы определить имена в соответствии с базой данных, а свойство `name:` используйте для имени, которое имеет смысл!
 
 <File name='models/<filename>.yml'>
 
@@ -23,18 +23,16 @@ sources:
       - name: orders
         identifier: api_orders
 
-
 ```
 
 </File>
 
-
-In a downstream model:
+В модели ниже:
 ```sql
 select * from {{ source('jaffle_shop', 'orders') }}
 ```
 
-Will get compiled to:
+Будет скомпилировано в:
 ```sql
 select * from raw.postgres_backend_public_schema.api_orders
 ```

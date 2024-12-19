@@ -1,14 +1,14 @@
 ---
-title: How did dbt choose which schema to build my models in?
-description: "You can change your target schema in your Environment Settings."
-sidebar_label: 'dbt builds models in your target schema'
+title: Как dbt выбирает, в какой схеме строить мои модели?
+description: "Вы можете изменить целевую схему в настройках окружения."
+sidebar_label: 'dbt строит модели в вашей целевой схеме'
 id: which-schema
 
 ---
-By default, dbt builds models in your target schema. To change your target schema:
-* If you're developing in **dbt Cloud**, these are set for each user when you first use a development environment.
-* If you're developing with **dbt Core**, this is the `schema:` parameter in your `profiles.yml` file.
+По умолчанию dbt строит модели в вашей целевой схеме. Чтобы изменить целевую схему:
+* Если вы разрабатываете в **dbt Cloud**, эти настройки устанавливаются для каждого пользователя при первом использовании среды разработки.
+* Если вы разрабатываете с **dbt Core**, это параметр `schema:` в вашем файле `profiles.yml`.
 
-If you wish to split your models across multiple schemas, check out the docs on [using custom schemas](/docs/build/custom-schemas).
+Если вы хотите разделить свои модели по нескольким схемам, ознакомьтесь с документацией о [использовании пользовательских схем](/docs/build/custom-schemas).
 
-Note: on BigQuery, `dataset` is used interchangeably with `schema`.
+Примечание: в BigQuery `dataset` используется как синоним `schema`.

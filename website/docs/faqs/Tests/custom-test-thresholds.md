@@ -1,14 +1,14 @@
 ---
-title: Can I set test failure thresholds?
-description: "Use configs to set custom failure thresholds in tests"
-sidebar_label: 'How to set failure thresholds in test'
+title: Могу ли я установить пороги для неудач тестов?
+description: "Используйте конфигурации для установки пользовательских порогов неудач в тестах"
+sidebar_label: 'Как установить пороги неудач в тестах'
 id: custom-test-thresholds
 
 ---
 
-You can use the `error_if` and `warn_if` configs to set custom failure thresholds in your tests. For more details, see [reference](/reference/resource-configs/severity) for more information.
+Вы можете использовать конфигурации `error_if` и `warn_if`, чтобы установить пользовательские пороги неудач в ваших тестах. Для получения дополнительной информации смотрите [справку](/reference/resource-configs/severity).
 
-You can also try the following solutions:
+Вы также можете попробовать следующие решения:
 
-* Setting the [severity](/reference/resource-properties/data-tests#severity) to `warn`, or:
-* Writing a [custom generic test](/best-practices/writing-custom-generic-tests) that accepts a threshold argument ([example](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966))
+* Установить [severity](/reference/resource-properties/data-tests#severity) на `warn`, или:
+* Написать [пользовательский общий тест](/best-practices/writing-custom-generic-tests), который принимает аргумент порога ([пример](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966))

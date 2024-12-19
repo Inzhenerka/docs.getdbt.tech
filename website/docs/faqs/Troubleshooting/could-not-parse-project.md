@@ -1,17 +1,17 @@
 ---
-title: Receiving a 'Could not parse dbt_project.yml' error in dbt Cloud job
-description: "Receiving a 'Could not parse dbt_project.yml' error in dbt Cloud? This error is typically caused by a tab indentation in your dbt_project.yml file."
-sidebar_label: 'Could not parse dbt_project.yml error in dbt Cloud'
+title: Получение ошибки 'Не удалось разобрать dbt_project.yml' в задаче dbt Cloud
+description: "Получаете ошибку 'Не удалось разобрать dbt_project.yml' в dbt Cloud? Эта ошибка обычно вызвана отступами с помощью табуляции в вашем файле dbt_project.yml."
+sidebar_label: 'Ошибка не удалось разобрать dbt_project.yml в dbt Cloud'
 ---
 
-The error message `Could not parse dbt_project.yml: while scanning for...` in your dbt Cloud job run or development usually occurs for several reasons:
+Сообщение об ошибке `Не удалось разобрать dbt_project.yml: во время сканирования для...` в вашей задаче dbt Cloud или в процессе разработки обычно возникает по нескольким причинам:
 
-- There's a parsing failure in a YAML file (such as a tab indentation or Unicode characters).
-- Your `dbt_project.yml` file has missing fields or incorrect formatting.
-- Your `dbt_project.yml` file doesn't exist in your dbt project repository.
+- Произошла ошибка разбора в файле YAML (например, отступы с помощью табуляции или символы Unicode).
+- В вашем файле `dbt_project.yml` отсутствуют поля или неверное форматирование.
+- Ваш файл `dbt_project.yml` отсутствует в репозитории вашего проекта dbt.
 
-To resolve this issue, consider the following:
-- Use an online YAML parser or validator to check for any parsing errors in your YAML file. Some known parsing errors include missing fields, incorrect formatting, or tab indentation.
-- Or ensure your `dbt_project.yml` file exists.
+Чтобы решить эту проблему, рассмотрите следующее:
+- Используйте онлайн-парсер или валидатор YAML, чтобы проверить наличие ошибок разбора в вашем файле YAML. Некоторые известные ошибки разбора включают отсутствующие поля, неверное форматирование или отступы с помощью табуляции.
+- Либо убедитесь, что ваш файл `dbt_project.yml` существует.
 
-Once you've identified the issue, you can fix the error and rerun your dbt Cloud job.
+После того как вы определите проблему, вы сможете исправить ошибку и повторно запустить вашу задачу dbt Cloud.

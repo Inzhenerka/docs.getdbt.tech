@@ -1,14 +1,14 @@
 ---
-title: How can we move our project from a managed repository, to a self-hosted repository? 
-description: "Email Support to request your managed repository"
-sidebar_label: 'How to request your managed repository zipfile'
+title: Как перенести наш проект из управляемого репозитория в самостоятелный репозиторий?
+description: "Напишите в службу поддержки, чтобы запросить ваш управляемый репозиторий"
+sidebar_label: 'Как запросить zip-архив вашего управляемого репозитория'
 id: managed-repo
 ---
 
-dbt Labs can send your managed repository through a ZIP file in its current state for you to push up to a git provider. After that, you'd just need to switch over to the [repo in your project](/docs/cloud/git/import-a-project-by-git-url) to point to the new repository.
+dbt Labs может отправить ваш управляемый репозиторий в виде ZIP-файла в его текущем состоянии, чтобы вы могли загрузить его в git-провайдер. После этого вам просто нужно будет переключиться на [репозиторий в вашем проекте](/docs/cloud/git/import-a-project-by-git-url), чтобы указать на новый репозиторий.
 
-When you're ready to do this, [contact the dbt Labs Support team](mailto:support@getdbt.com) with your request and your managed repo URL, which you can find by navigating to your project setting. To find project settings:
+Когда вы будете готовы сделать это, [свяжитесь с командой поддержки dbt Labs](mailto:support@getdbt.com) с вашим запросом и URL вашего управляемого репозитория, который вы можете найти, перейдя в настройки вашего проекта. Чтобы найти настройки проекта:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
-2. Click **Projects**, and then select your project. 
-3. Under **Repository** in the project details page, you can find your managed repo URL.
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
+2. Нажмите **Проекты**, а затем выберите ваш проект.
+3. В разделе **Репозиторий** на странице деталей проекта вы можете найти URL вашего управляемого репозитория.

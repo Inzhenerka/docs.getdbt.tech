@@ -1,14 +1,14 @@
 ---
-title: How do I run models downstream of a seed?
-description: "You run models downstread using model selection syntax"
-sidebar_label: 'Run models downstream of a seed'
+title: Как запустить модели, зависящие от seed?
+description: "Вы запускаете модели, зависящие от seed, используя синтаксис выбора моделей"
+sidebar_label: 'Запуск моделей, зависящих от seed'
 id: run-downstream-of-seed
 
 ---
 
-You can run models downstream of a seed using the [model selection syntax](/reference/node-selection/syntax), and treating the seed like a model.
+Вы можете запустить модели, зависящие от seed, используя [синтаксис выбора моделей](/reference/node-selection/syntax) и рассматривая seed как модель.
 
-For example, the following would run all models downstream of a seed named `country_codes`:
+Например, следующее запустит все модели, зависящие от seed с именем `country_codes`:
 
 ```shell
 $ dbt run --select country_codes+

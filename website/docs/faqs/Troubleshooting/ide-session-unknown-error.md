@@ -1,11 +1,11 @@
 ---
-title: I'm receiving an 'Your IDE session experienced an unknown error and was terminated. Please contact support'.
-description: "Add a repository when seeing IDE unknown error"
-sidebar_label: 'Receiving unknown error in the IDE'
+title: Я получаю сообщение 'Ваша сессия IDE столкнулась с неизвестной ошибкой и была завершена. Пожалуйста, свяжитесь с поддержкой'.
+description: "Добавьте репозиторий при возникновении неизвестной ошибки в IDE"
+sidebar_label: 'Получение неизвестной ошибки в IDE'
 
 ---
 
-If you're seeing the following error when you launch the dbt Cloud IDE, it could be due to a few scenarios but, commonly, it indicates a missing repository:
+Если вы видите следующую ошибку при запуске dbt Cloud IDE, это может быть связано с несколькими сценариями, но чаще всего это указывает на отсутствие репозитория:
 
 ```shell
 
@@ -13,7 +13,6 @@ Your IDE session experienced an unknown error and was terminated. Please contact
 
 ```
 
-You can try to resolve this by adding a repository like a [managed repository](/docs/collaborate/git/managed-repository) or your preferred Git account. To add your Git account, navigate to **Project** > **Repository** and select your repository.
+Вы можете попробовать решить эту проблему, добавив репозиторий, например, [управляемый репозиторий](/docs/collaborate/git/managed-repository) или ваш предпочтительный аккаунт Git. Чтобы добавить ваш аккаунт Git, перейдите в **Project** > **Repository** и выберите ваш репозиторий.
 
-
-If you're still running into this error, please contact the Support team at support@getdbt.com for help. 
+Если ошибка продолжает возникать, пожалуйста, свяжитесь с командой поддержки по адресу support@getdbt.com для получения помощи.

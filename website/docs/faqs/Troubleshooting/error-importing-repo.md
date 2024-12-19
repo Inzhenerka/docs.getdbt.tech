@@ -1,14 +1,14 @@
 ---
-title: Errors importing a repository on dbt Cloud project set up
-description: "Errors importing a repository on dbt Cloud project set up"
-sidebar_label: 'Errors importing a repository on dbt Cloud project set up'
+title: Ошибки при импорте репозитория в настройках проекта dbt Cloud
+description: "Ошибки при импорте репозитория в настройках проекта dbt Cloud"
+sidebar_label: 'Ошибки при импорте репозитория в настройках проекта dbt Cloud'
 id: error-importing-repo
 ---
 
-If you don't see your repository listed, double-check that:
-- Your repository is in a Gitlab group you have access to. dbt Cloud will not read repos associated with a user.
+Если вы не видите свой репозиторий в списке, дважды проверьте, что:
+- Ваш репозиторий находится в группе Gitlab, к которой у вас есть доступ. dbt Cloud не будет считывать репозитории, связанные с пользователем.
 
-If you do see your repository listed, but are unable to import the repository successfully, double-check that:
-- You are a maintainer of that repository. Only users with maintainer permissions can set up repository connections.
+Если вы видите свой репозиторий в списке, но не можете успешно его импортировать, дважды проверьте, что:
+- Вы являетесь мейнтейнером этого репозитория. Только пользователи с правами мейнтейнера могут настраивать соединения с репозиториями.
 
-If you imported a repository using the dbt Cloud native integration with GitLab, you should be able to see if the clone strategy is using a `deploy_token`. If it's relying on an SSH key, this means the repository was not set up using the native GitLab integration, but rather using the generic git clone option. The repository must be reconnected in order to get the benefits described above.
+Если вы импортировали репозиторий с помощью нативной интеграции dbt Cloud с GitLab, вы должны увидеть, использует ли стратегия клонирования `deploy_token`. Если она полагается на SSH-ключ, это означает, что репозиторий не был настроен с использованием нативной интеграции GitLab, а был импортирован с помощью общего варианта git clone. Репозиторий необходимо переподключить, чтобы получить описанные выше преимущества.

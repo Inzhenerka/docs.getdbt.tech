@@ -1,10 +1,10 @@
 ---
-title: Which materialization should I use for my model?
-description: "Recommendations on materializations to use for models"
-sidebar_label: 'What materializations to use'
+title: Какую материализацию использовать для моей модели?
+description: "Рекомендации по материализациям для моделей"
+sidebar_label: 'Какие материализации использовать'
 id: which-materialization
 
 ---
-Start out with <Term id="view">views</Term>, and then change models to tables when required for performance reasons (i.e. downstream queries have slowed).
+Начните с <Term id="view">представлений</Term>, а затем измените модели на таблицы, когда это потребуется по причинам производительности (т.е. если запросы вниз по потоку замедлились).
 
-Check out the [docs on materializations](/docs/build/materializations) for advice on when to use each <Term id="materialization" />.
+Посмотрите [документацию по материализациям](/docs/build/materializations) для получения советов о том, когда использовать каждую <Term id="materialization" />.
