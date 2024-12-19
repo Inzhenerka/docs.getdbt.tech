@@ -1,12 +1,12 @@
 ---
-title: How do I load data into my warehouse?
-description: "Recommendations on tools to load data to warehouse"
-sidebar_label: 'Recommendations on tools to get data into your warehouse'
+title: Как загрузить данные в свой хранилище?
+description: "Рекомендации по инструментам для загрузки данных в хранилище"
+sidebar_label: 'Рекомендации по инструментам для загрузки данных в ваше хранилище'
 id: loading-data
 
 ---
-dbt assumes that you already have a copy of your data, in your <Term id="data-warehouse" />. We recommend you use an off-the-shelf tool like [Stitch](https://www.stitchdata.com/) or [Fivetran](https://fivetran.com/) to get data into your warehouse.
+dbt предполагает, что у вас уже есть копия ваших данных в вашем <Term id="data-warehouse" />. Мы рекомендуем использовать готовые инструменты, такие как [Stitch](https://www.stitchdata.com/) или [Fivetran](https://fivetran.com/), для загрузки данных в ваше хранилище.
 
-**Can dbt be used to load data?**
+**Можно ли использовать dbt для загрузки данных?**
 
-No, dbt does not extract or load data. It focuses on the transformation step only.
+Нет, dbt не извлекает и не загружает данные. Он сосредоточен только на этапе трансформации.

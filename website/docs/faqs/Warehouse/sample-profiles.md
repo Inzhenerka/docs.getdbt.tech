@@ -1,9 +1,9 @@
 ---
-title: What should my profiles.yml file look like for my warehouse?
-description: "Go to Profile Set up to see the structure of a profile"
-sidebar_label: 'Structure of profile for each warehouse'
+title: Как должен выглядеть мой файл profiles.yml для моего хранилища?
+description: "Перейдите к настройке профиля, чтобы увидеть структуру профиля"
+sidebar_label: 'Структура профиля для каждого хранилища'
 id: sample-profiles
 
 ---
 
-The structure of a profile looks different on each warehouse. Check out the [Supported Data Platforms](/docs/supported-data-platforms) page, and navigate to the `Profile Setup` section for your warehouse.
+Структура профиля различается в зависимости от хранилища. Ознакомьтесь со страницей [Поддерживаемые платформы данных](/docs/supported-data-platforms) и перейдите в раздел `Настройка профиля` для вашего хранилища.

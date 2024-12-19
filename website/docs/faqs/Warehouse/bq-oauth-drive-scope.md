@@ -1,8 +1,8 @@
 ---
-title: Why does the BigQuery OAuth application require scopes to Google Drive?
-description: "Learn more about Google Drive scopes in the BigQuery OAuth application"
-sidebar_label: "BigQuery OAuth Drive Scopes"
+title: Почему приложению OAuth BigQuery требуются области доступа к Google Drive?
+description: "Узнайте больше об областях доступа Google Drive в приложении OAuth BigQuery"
+sidebar_label: "Области доступа OAuth BigQuery Drive"
 id: bq-oauth-drive-scope
 ---
 
-BigQuery supports external tables over both personal Google Drive files and shared files. For more information, refer to [Create Google Drive external tables](https://cloud.google.com/bigquery/docs/external-data-drive).
+BigQuery поддерживает внешние таблицы как для личных файлов Google Drive, так и для общих файлов. Для получения дополнительной информации смотрите [Создание внешних таблиц Google Drive](https://cloud.google.com/bigquery/docs/external-data-drive).

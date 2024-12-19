@@ -1,130 +1,126 @@
 ---
-title: "Quickstart for dbt Cloud and BigQuery"
+title: "Быстрый старт для dbt Cloud и BigQuery"
 id: "bigquery"
-# time_to_complete: '30 minutes' commenting out until we test
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'bigquery'
 hide_table_of_contents: true
-tags: ['BigQuery', 'dbt Cloud','Quickstart']
+tags: ['BigQuery', 'dbt Cloud','Быстрый старт']
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with BigQuery. It will show you how to: 
+В этом руководстве быстрого старта вы узнаете, как использовать dbt Cloud с BigQuery. Оно покажет вам, как: 
 
-- Create a Google Cloud Platform (GCP) project.
-- Access sample data in a public dataset.
-- Connect dbt Cloud to BigQuery.
-- Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add tests to your models.
-- Document your models.
-- Schedule a job to run.
+- Создать проект в Google Cloud Platform (GCP).
+- Получить доступ к образцам данных в публичном наборе данных.
+- Подключить dbt Cloud к BigQuery.
+- Взять пример запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
-:::tip Videos for you
-You can check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
+:::tip Видео для вас
+Если вам интересно обучение с видео, вы можете бесплатно ознакомиться с курсом [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
-### Prerequisites​
+### Предварительные требования
 
-- You have a  [dbt Cloud account](https://www.getdbt.com/signup/). 
-- You have a [Google account](https://support.google.com/accounts/answer/27441?hl=en).
-- You can use a personal or work account to set up BigQuery through [Google Cloud Platform (GCP)](https://cloud.google.com/free).
+- У вас есть [аккаунт dbt Cloud](https://www.getdbt.com/signup/). 
+- У вас есть [аккаунт Google](https://support.google.com/accounts/answer/27441?hl=en).
+- Вы можете использовать личный или рабочий аккаунт для настройки BigQuery через [Google Cloud Platform (GCP)](https://cloud.google.com/free).
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
+- Узнайте больше с помощью курсов [dbt Learn](https://learn.getdbt.com)
 - [CI jobs](/docs/deploy/continuous-integration)
 - [Deploy jobs](/docs/deploy/deploy-jobs)
 - [Job notifications](/docs/deploy/job-notifications)
 - [Source freshness](/docs/deploy/source-freshness)
 
-## Create a new GCP project​
+## Создание нового проекта GCP
 
-1. Go to the [BigQuery Console](https://console.cloud.google.com/bigquery) after you log in to your Google account. If you have multiple Google accounts, make sure you’re using the correct one. 
-2. Create a new project from the [Manage resources page](https://console.cloud.google.com/projectcreate?previousPage=%2Fcloud-resource-manager%3Fwalkthrough_id%3Dresource-manager--create-project%26project%3D%26folder%3D%26organizationId%3D%23step_index%3D1&walkthrough_id=resource-manager--create-project). For more information, refer to [Creating a project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) in the Google Cloud docs. GCP automatically populates the Project name field for you. You can change it to be more descriptive for your use. For example, `dbt Learn - BigQuery Setup`.
+1. Перейдите в [Консоль BigQuery](https://console.cloud.google.com/bigquery) после входа в ваш аккаунт Google. Если у вас несколько аккаунтов Google, убедитесь, что вы используете правильный.
+2. Создайте новый проект на странице [Управление ресурсами](https://console.cloud.google.com/projectcreate?previousPage=%2Fcloud-resource-manager%3Fwalkthrough_id%3Dresource-manager--create-project%26project%3D%26folder%3D%26organizationId%3D%23step_index%3D1&walkthrough_id=resource-manager--create-project). Для получения дополнительной информации обратитесь к разделу [Создание проекта](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) в документации Google Cloud. GCP автоматически заполнит поле имени проекта для вас. Вы можете изменить его на более описательное для вашего использования. Например, `dbt Learn - Настройка BigQuery`.
 
-## Create BigQuery datasets
+## Создание наборов данных BigQuery
 
-1. From the [BigQuery Console](https://console.cloud.google.com/bigquery), click **Editor**. Make sure to select your newly created project, which is available at the top of the page.
-1. Verify that you can run SQL queries. Copy and paste these queries into the Query Editor: 
+1. В [Консоли BigQuery](https://console.cloud.google.com/bigquery) нажмите **Редактор**. Убедитесь, что выбран ваш вновь созданный проект, который доступен в верхней части страницы.
+2. Убедитесь, что вы можете выполнять SQL-запросы. Скопируйте и вставьте эти запросы в редактор запросов: 
     ```sql
     select * from `dbt-tutorial.jaffle_shop.customers`;
     select * from `dbt-tutorial.jaffle_shop.orders`;
     select * from `dbt-tutorial.stripe.payment`;
     ```
 
-    Click **Run**, then check for results from the queries. For example: 
+    Нажмите **Выполнить**, затем проверьте результаты запросов. Например: 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/bigquery/query-results.png" title="Bigquery Query Results" />
+    <Lightbox src="/img/bigquery/query-results.png" title="Результаты запроса BigQuery" />
     </div>
-2. Create new datasets from the [BigQuery Console](https://console.cloud.google.com/bigquery). For more information, refer to [Create datasets](https://cloud.google.com/bigquery/docs/datasets#create-dataset) in the Google Cloud docs. Datasets in BigQuery are equivalent to schemas in a traditional database. On the **Create dataset** page:
-    - **Dataset ID** &mdash; Enter a name that fits the purpose. This name is used like schema in fully qualified references to your database objects such as `database.schema.table`. As an example for this guide, create one for `jaffle_shop` and another one for `stripe` afterward.
-    - **Data location** &mdash; Leave it blank (the default). It determines the GCP location of where your data is stored. The current default location is the US multi-region. All tables within this dataset will share this location.
-    - **Enable table expiration** &mdash; Leave it unselected (the default). The default for the billing table expiration is 60 days. Because billing isn’t enabled for this project, GCP defaults to deprecating tables.
-    - **Google-managed encryption key** &mdash; This option is available under **Advanced options**. Allow Google to manage encryption (the default). 
+3. Создайте новые наборы данных в [Консоли BigQuery](https://console.cloud.google.com/bigquery). Для получения дополнительной информации обратитесь к разделу [Создание наборов данных](https://cloud.google.com/bigquery/docs/datasets#create-dataset) в документации Google Cloud. Наборы данных в BigQuery эквивалентны схемам в традиционной базе данных. На странице **Создание набора данных**:
+    - **Идентификатор набора данных** &mdash; Введите имя, соответствующее назначению. Это имя используется как схема в полностью квалифицированных ссылках на ваши объекты базы данных, такие как `database.schema.table`. В качестве примера для этого руководства создайте один для `jaffle_shop`, а затем другой для `stripe`.
+    - **Местоположение данных** &mdash; Оставьте пустым (по умолчанию). Оно определяет местоположение GCP, где хранятся ваши данные. Текущим местоположением по умолчанию является многорайонный регион США. Все таблицы в этом наборе данных будут делить это местоположение.
+    - **Включить истечение срока действия таблицы** &mdash; Оставьте невыбранным (по умолчанию). По умолчанию срок действия таблицы для выставления счетов составляет 60 дней. Поскольку выставление счетов не включено для этого проекта, GCP по умолчанию прекращает действие таблиц.
+    - **Ключ шифрования, управляемый Google** &mdash; Эта опция доступна в разделе **Дополнительные параметры**. Позвольте Google управлять шифрованием (по умолчанию). 
     <div style={{maxWidth: '400px'}}>
-    <Lightbox src="/img/bigquery/create-dataset-id.png" title="Bigquery Create Dataset ID" />
+    <Lightbox src="/img/bigquery/create-dataset-id.png" title="Создание идентификатора набора данных BigQuery" />
     </div>
-3. After you create the `jaffle_shop` dataset, create one for `stripe` with all the same values except for **Dataset ID**.
+4. После создания набора данных `jaffle_shop` создайте набор данных для `stripe` с теми же значениями, кроме **Идентификатора набора данных**.
 
-## Generate BigQuery credentials {#generate-bigquery-credentials}
-In order to let dbt connect to your warehouse, you'll need to generate a keyfile. This is analogous to using a database username and password with most other <Term id="data-warehouse">data warehouses</Term>.
+## Генерация учетных данных BigQuery {#generate-bigquery-credentials}
+Чтобы dbt мог подключиться к вашему хранилищу, вам нужно будет сгенерировать файл ключа. Это аналогично использованию имени пользователя и пароля базы данных с большинством других <Term id="data-warehouse">хранилищ данных</Term>.
 
-1. Start the [GCP credentials wizard](https://console.cloud.google.com/apis/credentials/wizard). Make sure your new project is selected in the header. If you do not see your account or project, click your profile picture to the right and verify you are using the correct email account. For **Credential Type**: 
-    - From the **Select an API** dropdown, choose **BigQuery API**
-    - Select **Application data** for the type of data you will be accessing
-    - Click **Next** to create a new service account.
-2. Create a service account for your new project from the [Service accounts page](https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project). For more information, refer to [Create a service account](https://developers.google.com/workspace/guides/create-credentials#create_a_service_account) in the Google Cloud docs. As an example for this guide, you can:
-    - Type `dbt-user` as the **Service account name**
-    - From the **Select a role** dropdown, choose **BigQuery Job User** and **BigQuery Data Editor** roles and click **Continue** 
-    - Leave the **Grant users access to this service account** fields blank
-    - Click **Done**
-3. Create a service account key for your new project from the [Service accounts page](https://console.cloud.google.com/iam-admin/serviceaccounts?walkthrough_id=iam--create-service-account-keys&start_index=1#step_index=1). For more information, refer to [Create a service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating) in the Google Cloud docs. When downloading the JSON file, make sure to use a filename you can easily remember. For example, `dbt-user-creds.json`. For security reasons, dbt Labs recommends that you protect this JSON file like you would your identity credentials; for example, don't check the JSON file into your version control software.
+1. Запустите [мастера учетных данных GCP](https://console.cloud.google.com/apis/credentials/wizard). Убедитесь, что ваш новый проект выбран в заголовке. Если вы не видите свой аккаунт или проект, нажмите на свою фотографию профиля справа и убедитесь, что вы используете правильный адрес электронной почты. Для **Типа учетных данных**: 
+    - В выпадающем списке **Выберите API** выберите **BigQuery API**
+    - Выберите **Данные приложения** для типа данных, к которым вы будете получать доступ
+    - Нажмите **Далее**, чтобы создать новую учетную запись службы.
+2. Создайте учетную запись службы для вашего нового проекта на странице [Учетные записи служб](https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project). Для получения дополнительной информации обратитесь к разделу [Создание учетной записи службы](https://developers.google.com/workspace/guides/create-credentials#create_a_service_account) в документации Google Cloud. В качестве примера для этого руководства вы можете:
+    - Ввести `dbt-user` в качестве **Имени учетной записи службы**
+    - В выпадающем списке **Выберите роль** выберите роли **BigQuery Job User** и **BigQuery Data Editor**, затем нажмите **Продолжить** 
+    - Оставьте поля **Предоставить пользователям доступ к этой учетной записи службы** пустыми
+    - Нажмите **Готово**
+3. Создайте ключ учетной записи службы для вашего нового проекта на странице [Учетные записи служб](https://console.cloud.google.com/iam-admin/serviceaccounts?walkthrough_id=iam--create-service-account-keys&start_index=1#step_index=1). Для получения дополнительной информации обратитесь к разделу [Создание ключа учетной записи службы](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating) в документации Google Cloud. При загрузке JSON-файла убедитесь, что вы используете имя файла, которое легко запомнить. Например, `dbt-user-creds.json`. По соображениям безопасности dbt Labs рекомендует защищать этот JSON-файл так же, как и ваши учетные данные; например, не загружайте JSON-файл в ваше программное обеспечение для контроля версий.
 
-## Connect dbt Cloud to BigQuery​
-1. Create a new project in [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses). Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New project**.
-2. Enter a project name and click **Continue**.
-3. For the warehouse, click **BigQuery** then **Next** to set up your connection.
-4. Click **Upload a Service Account JSON File** in settings.
-5. Select the JSON file you downloaded in [Generate BigQuery credentials](#generate-bigquery-credentials) and dbt Cloud will fill in all the necessary fields.
-6. Optional &mdash; dbt Cloud Enterprise plans can configure developer OAuth with BigQuery, providing an additional layer of security. For more information, refer to [Set up BigQuery OAuth](/docs/cloud/manage-access/set-up-bigquery-oauth).
-7. Click **Test Connection**. This verifies that dbt Cloud can access your BigQuery account.
-8. Click **Next** if the test succeeded. If it failed, you might need to go back and regenerate your BigQuery credentials.
+## Подключение dbt Cloud к BigQuery​
+1. Создайте новый проект в [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses). Перейдите в **Настройки аккаунта** (нажав на имя вашего аккаунта в левом меню) и нажмите **+ Новый проект**.
+2. Введите имя проекта и нажмите **Продолжить**.
+3. Для хранилища нажмите **BigQuery**, затем **Далее**, чтобы настроить подключение.
+4. Нажмите **Загрузить файл JSON учетной записи службы** в настройках.
+5. Выберите JSON-файл, который вы загрузили в [Генерация учетных данных BigQuery](#generate-bigquery-credentials), и dbt Cloud заполнит все необходимые поля.
+6. Необязательно &mdash; Планы dbt Cloud Enterprise могут настраивать OAuth для разработчиков с BigQuery, обеспечивая дополнительный уровень безопасности. Для получения дополнительной информации обратитесь к разделу [Настройка OAuth для BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth).
+7. Нажмите **Проверить подключение**. Это проверяет, что dbt Cloud может получить доступ к вашему аккаунту BigQuery.
+8. Нажмите **Далее**, если тест прошел успешно. Если он не удался, вам, возможно, придется вернуться и сгенерировать ваши учетные данные BigQuery заново.
 
-
-## Set up a dbt Cloud managed repository 
+## Настройка управляемого репозитория dbt Cloud 
 <Snippet path="tutorial-managed-repo" />
 
+## Инициализация вашего проекта dbt и начало разработки
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
 
-## Initialize your dbt project​ and start developing
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
-
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize dbt project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit` and click **Commit**. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - Click **+ Create new file**, add this query to the new file, and click **Save as** to save the new file:  
+1. Нажмите **Начать разработку в IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как он устанавливает ваше соединение с git, клонирует ваш репозиторий и тестирует соединение с хранилищем.
+2. Над деревом файлов слева нажмите **Инициализировать проект dbt**. Это создаст вашу структуру папок с примерами моделей.
+3. Сделайте ваш первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit` и нажмите **Коммит**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которой вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
+    - Нажмите **+ Создать новый файл**, добавьте этот запрос в новый файл и нажмите **Сохранить как**, чтобы сохранить новый файл:  
         ```sql
         select * from `dbt-tutorial.jaffle_shop.customers`
         ```
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Build your first model
+## Создание вашей первой модели
 
-You have two options for working with files in the dbt Cloud IDE:
+У вас есть два варианта работы с файлами в IDE dbt Cloud:
 
-- Create a new branch (recommended) &mdash; Create a new branch to edit and commit your changes. Navigate to **Version Control** on the left sidebar and click **Create branch**.
-- Edit in the protected primary branch &mdash; If you prefer to edit, format, or lint files and execute dbt commands directly in your primary git branch. The dbt Cloud IDE prevents commits to the protected branch, so you will be prompted to commit your changes to a new branch.
+- Создать новую ветку (рекомендуется) &mdash; Создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Управление версиями** на левой боковой панели и нажмите **Создать ветку**.
+- Редактировать в защищенной основной ветке &mdash; Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. IDE dbt Cloud предотвращает коммиты в защищенную ветку, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
 
-Name the new branch `add-customers-model`.
+Назовите новую ветку `add-customers-model`.
 
-1. Click the **...** next to the `models` directory, then select **Create file**.  
-2. Name the file `customers.sql`, then click **Create**.
-3. Copy the following query into the file and click **Save**.
-
+1. Нажмите **...** рядом с директорией `models`, затем выберите **Создать файл**.  
+2. Назовите файл `customers.sql`, затем нажмите **Создать**.
+3. Скопируйте следующий запрос в файл и нажмите **Сохранить**.
 
 ```sql
 with customers as (
@@ -184,11 +180,11 @@ final as (
 select * from final
 ```
 
-4. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный результат и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить ваши инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -196,20 +192,20 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Change the way your model is materialized
+## Изменение способа материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удаление примерных моделей
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL-файл, `models/stg_customers.sql`, с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL-файл, `models/stg_orders.sql`, с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -238,7 +234,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Отредактируйте SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -292,20 +288,18 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt строит `customers` последним. Вам не нужно явно определять эти зависимости.
 
-
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект по мере создания большего количества моделей? Как мне называть свои модели?" />
 
 </div>
 
 <Snippet path="quickstarts/test-and-document-your-project" />
 
 <Snippet path="quickstarts/schedule-a-job" />
-

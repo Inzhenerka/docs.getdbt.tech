@@ -1,18 +1,18 @@
 ---
-title: Can I connect my dbt project to two databases?
-description: "Prepare your warehouse for dbt transformations"
-sidebar_label: 'Can you connect dbt project to two databases?'
+title: Могу ли я подключить свой проект dbt к двум базам данных?
+description: "Подготовьте свой хранилище для преобразований dbt"
+sidebar_label: 'Можно ли подключить проект dbt к двум базам данных?'
 id: connecting-to-two-dbs-not-allowed
 
 ---
 
-The meaning of the term 'database' varies with each major warehouse manager. Hence, the answer to "can a dbt project connect to more than one database?" depends on the warehouse used in your tech stack.
+Значение термина 'база данных' варьируется в зависимости от каждого основного менеджера хранилищ. Поэтому ответ на вопрос "может ли проект dbt подключаться к более чем одной базе данных?" зависит от используемого в вашем технологическом стеке хранилища.
 
-* dbt projects connecting to warehouses like Snowflake or Bigquery&mdash;these empower one set of credentials to draw from all datasets or 'projects' available to an account&mdash;are _sometimes_ said to connect to more than one database.
-* dbt projects connecting to warehouses like Redshift and Postgres&mdash;these tie one set of credentials to one database&mdash;are said to connect to one database only.
+* Проекты dbt, подключающиеся к хранилищам, таким как Snowflake или Bigquery — эти хранилища позволяют одной учетной записи использовать одни и те же учетные данные для доступа ко всем наборам данных или 'проектам', доступным в аккаунте — _иногда_ говорят, что они подключаются к более чем одной базе данных.
+* Проекты dbt, подключающиеся к хранилищам, таким как Redshift и Postgres — эти хранилища связывают один набор учетных данных с одной базой данных — говорят, что они подключаются только к одной базе данных.
 
-Sidestep the 'one database problem' by relying on <Term id="elt" /> thinking (i.e. extract -> load -> transform). Remember, dbt is not a loader--with few exceptions, it doesn't move data from sources to a warehouse. dbt is a transformer. It enters the picture after extractors and loaders have funneled sources into a warehouse. It moves and combines data inside the warehouse itself.
+Избегайте проблемы 'одной базы данных', полагаясь на мышление <Term id="elt" /> (т.е. извлечение -> загрузка -> преобразование). Помните, что dbt не является загрузчиком — за редкими исключениями, он не перемещает данные из источников в хранилище. dbt является преобразователем. Он вступает в игру после того, как извлекатели и загрузчики направили источники в хранилище. Он перемещает и комбинирует данные внутри самого хранилища.
 
-Hence, instead of thinking "how do I connect my dbt project to two databases", ask "what loader services will best prepare our warehouse for dbt transformations."
+Таким образом, вместо того чтобы думать "как мне подключить мой проект dbt к двум базам данных", задайте вопрос "какие службы загрузки лучше всего подготовят наше хранилище для преобразований dbt."
 
-For more on the modern 'ELT-powered' data stack, see the "dbt and the modern BI stack" section of this [dbt blog post](https://blog.getdbt.com/what-exactly-is-dbt).
+Для получения дополнительной информации о современном 'ELT-ориентированном' стекe данных, смотрите раздел "dbt и современный BI стек" в этом [посте в блоге dbt](https://blog.getdbt.com/what-exactly-is-dbt).

@@ -1,13 +1,12 @@
 ---
-title: What happens if the SQL in my query is bad or I get a database error?
-description: "Use error message and logs to debug"
-sidebar_label: 'How to debug SQL or database error'
+title: Что происходит, если в моем запросе SQL есть ошибка или я получаю ошибку базы данных?
+description: "Используйте сообщение об ошибке и логи для отладки"
+sidebar_label: 'Как отладить ошибку SQL или базы данных'
 id: sql-errors
 
 ---
 
-
-If there's a mistake in your SQL, dbt will return the error that your database returns.
+Если в вашем SQL есть ошибка, dbt вернет ошибку, которую возвращает ваша база данных.
 
 ```shell
 $ dbt run --select customers
@@ -30,4 +29,4 @@ Database Error in model customers (models/customers.sql)
 Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
 ```
 
-Any models downstream of this model will also be skipped. Use the error message and the [compiled SQL](/faqs/Runs/checking-logs) to debug any errors.
+Любые модели, зависящие от этой модели, также будут пропущены. Используйте сообщение об ошибке и [собранный SQL](/faqs/Runs/checking-logs) для отладки любых ошибок.

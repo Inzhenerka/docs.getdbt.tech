@@ -1,21 +1,21 @@
 ---
-title: What privileges does my database user need to use dbt?
-description: "Database privileges to use dbt"
-sidebar_label: 'Database privileges to use dbt'
+title: Какие привилегии нужны моему пользователю базы данных для использования dbt?
+description: "Привилегии базы данных для использования dbt"
+sidebar_label: 'Привилегии базы данных для использования dbt'
 id: database-privileges
 
 ---
-Your user will need to be able to:
-* `select` from raw data in your warehouse (i.e. data to be transformed)
-* `create` schemas, and therefore create tables/views within that
-schema¹
-* read system <Term id="view">views</Term> to generate documentation (i.e. views in
+Вашему пользователю необходимо иметь возможность:
+* `select` из сырых данных в вашем хранилище (т.е. данные, которые будут преобразованы)
+* `create` схемы, а следовательно, создавать таблицы/представления в этой
+схеме¹
+* читать системные <Term id="view">представления</Term> для генерации документации (т.е. представления в
 `information_schema`)
 
-On Postgres, Redshift, Databricks, and Snowflake, use a series of `grants` to ensure that
-your user has the correct privileges. Check out [example permissions](/reference/database-permissions/about-database-permissions) for these warehouses.
+В Postgres, Redshift, Databricks и Snowflake используйте серию `grants`, чтобы убедиться, что
+ваш пользователь имеет правильные привилегии. Ознакомьтесь с [примером разрешений](/reference/database-permissions/about-database-permissions) для этих хранилищ.
 
-On BigQuery, use the "BigQuery User" role to assign these privileges.
+В BigQuery используйте роль "BigQuery User" для назначения этих привилегий.
 
 ---
-¹Alternatively, a separate user can create a schema for the dbt user, and then grant the user privileges to create within this schema. We generally recommend granting your dbt user the ability to create schemas, as it is less complicated to implement.
+¹В качестве альтернативы, отдельный пользователь может создать схему для пользователя dbt, а затем предоставить пользователю привилегии на создание в этой схеме. Мы обычно рекомендуем предоставлять вашему пользователю dbt возможность создавать схемы, так как это менее сложно в реализации.

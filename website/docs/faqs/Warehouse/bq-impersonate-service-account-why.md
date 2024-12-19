@@ -1,22 +1,11 @@
 ---
-title: Why would I want to impersonate a service account?
-description: "Build models using dedicated service account"
-sidebar_label: 'Why impersonate a service account'
+title: Зачем мне имитировать сервисный аккаунт?
+description: "Создание моделей с использованием выделенного сервисного аккаунта"
+sidebar_label: 'Зачем имитировать сервисный аккаунт'
 id: bq-impersonate-service-account-why
 
 ---
 
-You may want your models to be built using a dedicated service account that has
-elevated access to read or write data to the specified project or dataset.
-Typically, this requires you to create a service account key for running under
-development or on your CI server. By specifing the email address of the service
-account you want to build models as, you can use [Application Default Credentials](https://cloud.google.com/sdk/gcloud/reference/auth/application-default) or the
-service's configured service account (when running in GCP) to assume the identity
-of the service account with elevated permissions.
+Вы можете захотеть, чтобы ваши модели создавались с использованием выделенного сервисного аккаунта, который имеет повышенные права доступа для чтения или записи данных в указанный проект или набор данных. Обычно это требует создания ключа сервисного аккаунта для работы в режиме разработки или на вашем CI-сервере. Указав адрес электронной почты сервисного аккаунта, от имени которого вы хотите создавать модели, вы можете использовать [Application Default Credentials](https://cloud.google.com/sdk/gcloud/reference/auth/application-default) или настроенный сервисный аккаунт (при работе в GCP), чтобы принять личность сервисного аккаунта с повышенными правами.
 
-This allows you to reap the advantages of using federated identity for developers
-(via ADC) without needing to grant individual access to read and write data
-directly, and without needing to create separate service account and keys for
-each user. It also allows you to completely eliminate the need for service
-account keys in CI as long as your CI is running on GCP (Cloud Build, Jenkins,
-GitLab/Github Runners, etc).
+Это позволяет вам воспользоваться преимуществами использования федеративной идентичности для разработчиков (через ADC) без необходимости предоставлять индивидуальный доступ для чтения и записи данных напрямую и без необходимости создания отдельных сервисных аккаунтов и ключей для каждого пользователя. Это также позволяет полностью исключить необходимость в ключах сервисного аккаунта в CI, если ваш CI работает в GCP (Cloud Build, Jenkins, GitLab/Github Runners и т.д.).

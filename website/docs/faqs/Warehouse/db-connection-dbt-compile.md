@@ -1,33 +1,30 @@
 ---
-title: Why dbt compile needs a data platform connection
-description: "`dbt compile` needs a data platform connection because the work it does depends on the current state of your warehouse"
-sidebar_label: "Why dbt compile needs a data platform connection"
+title: Почему dbt compile нуждается в подключении к платформе данных
+description: "`dbt compile` нуждается в подключении к платформе данных, потому что работа, которую он выполняет, зависит от текущего состояния вашего хранилища"
+sidebar_label: "Почему dbt compile нуждается в подключении к платформе данных"
 id: db-connection-dbt-compile
 ---
 
-`dbt compile` needs a data platform connection in order to gather the info it needs (including from introspective queries) to prepare the SQL for every model in your project.
+`dbt compile` нуждается в подключении к платформе данных для сбора необходимой информации (включая данные из интроспективных запросов), чтобы подготовить SQL для каждой модели в вашем проекте.
 
 ### dbt compile
 
-The [`dbt compile` command](/reference/commands/compile) generates executable SQL from `source`, `model`, `test`, and `analysis` files. `dbt compile` is similar to `dbt run` except that it doesn't materialize the model's compiled SQL into an existing table. So, up until the point of materialization, `dbt compile` and `dbt run` are similar because they both require a data platform connection, run queries, and have an [`execute` variable](/reference/dbt-jinja-functions/execute) set to `True`. 
+Команда [`dbt compile`](/reference/commands/compile) генерирует исполняемый SQL из файлов `source`, `model`, `test` и `analysis`. `dbt compile` похож на `dbt run`, за исключением того, что он не материализует скомпилированный SQL модели в существующей таблице. Таким образом, до момента материализации `dbt compile` и `dbt run` схожи, поскольку оба требуют подключения к платформе данных, выполняют запросы и имеют переменную [`execute`](/reference/dbt-jinja-functions/execute), установленную в `True`.
 
-However, here are some things to consider:
+Однако есть несколько моментов, которые стоит учесть:
 
-- You don't need to execute `dbt compile` before `dbt run`
-- In dbt, `compile` doesn't mean `parse`. This is because `parse` validates your written `YAML`, configured tags, and so on.
+- Вам не нужно выполнять `dbt compile` перед `dbt run`
+- В dbt `compile` не означает `parse`. Это связано с тем, что `parse` проверяет ваш написанный `YAML`, настроенные теги и так далее.
 
-### Introspective queries
+### Интроспективные запросы
 
-To generate the compiled SQL for many models, dbt needs to run introspective queries, (which is when dbt needs to run SQL in order to pull data back and do something with it) against the data platform.
+Чтобы сгенерировать скомпилированный SQL для многих моделей, dbt необходимо выполнять интроспективные запросы (это когда dbt нужно выполнить SQL, чтобы получить данные и что-то с ними сделать) к платформе данных.
 
-These introspective queries include:
+Эти интроспективные запросы включают:
 
-- Populating the relation cache. For more information, refer to the [Create new materializations](/guides/create-new-materializations) guide. Caching speeds up the metadata checks, including whether an [incremental model](/docs/build/incremental-models) already exists in the data platform. 
-- Resolving [macros](/docs/build/jinja-macros#macros), such as `run_query` or `dbt_utils.get_column_values` that you're using to template out your SQL. This is because dbt needs to run those queries during model SQL compilation. 
+- Заполнение кэша отношений. Для получения дополнительной информации обратитесь к руководству [Создание новых материализаций](/guides/create-new-materializations). Кэширование ускоряет проверки метаданных, включая проверку существования [инкрементной модели](/docs/build/incremental-models) в платформе данных.
+- Разрешение [макросов](/docs/build/jinja-macros#macros), таких как `run_query` или `dbt_utils.get_column_values`, которые вы используете для шаблонирования вашего SQL. Это необходимо, потому что dbt должен выполнить эти запросы во время компиляции SQL модели.
 
-Without a data platform connection, dbt can't perform these introspective queries and won't be able to generate the compiled SQL needed for the next steps in the dbt workflow. You can [`parse`](/reference/commands/parse) a project and use the [`list`](/reference/commands/list) resources in the project, without an internet or data platform connection. Parsing a project is enough to produce a [manifest](/reference/artifacts/manifest-json), however, keep in mind that the written-out manifest won't include compiled SQL.
+Без подключения к платформе данных dbt не сможет выполнить эти интроспективные запросы и не сможет сгенерировать скомпилированный SQL, необходимый для следующих шагов в рабочем процессе dbt. Вы можете [`parse`](/reference/commands/parse) проект и использовать [`list`](/reference/commands/list) ресурсы в проекте без подключения к интернету или платформе данных. Парсинг проекта достаточно для создания [манифеста](/reference/artifacts/manifest-json), однако имейте в виду, что записанный манифест не будет включать скомпилированный SQL.
 
-To configure a project, you do need a [connection profile](/docs/core/connect-data-platform/connection-profiles) (`profiles.yml` if using the CLI). You need this file because the project's configuration depends on its contents. For example, you may need to use [`{{target}}`](/reference/dbt-jinja-functions/target) for conditional configs or know what platform you're running against so that you can choose the right flavor of SQL. 
-
-
-
+Для настройки проекта вам необходимо иметь [профиль подключения](/docs/core/connect-data-platform/connection-profiles) (`profiles.yml`, если вы используете CLI). Этот файл необходим, потому что конфигурация проекта зависит от его содержимого. Например, вам может понадобиться использовать [`{{target}}`](/reference/dbt-jinja-functions/target) для условных конфигураций или знать, с какой платформой вы работаете, чтобы выбрать правильный вариант SQL.

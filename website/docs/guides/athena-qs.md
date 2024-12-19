@@ -1,154 +1,152 @@
 ---
-title: "Quickstart for dbt Cloud and Amazon Athena"
+title: "Быстрый старт для dbt Cloud и Amazon Athena"
 id: "athena"
-# time_to_complete: '30 minutes' commenting out until we test
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'athena'
 hide_table_of_contents: true
-tags: ['Amazon','Athena', 'dbt Cloud','Quickstart']
+tags: ['Amazon','Athena', 'dbt Cloud','Быстрый старт']
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with Amazon Athena. It will show you how to: 
+В этом руководстве быстрого старта вы узнаете, как использовать dbt Cloud с Amazon Athena. Оно покажет вам, как: 
 
-- Create an S3 bucket for Athena query results.
-- Creat an Athena database.
-- Access sample data in a public dataset.
-- Connect dbt Cloud to Amazon Athena.
-- Take a sample query and turn it into a model in your dbt project. A model in dbt is a select statement.
-- Add tests to your models.
-- Document your models.
-- Schedule a job to run.
+- Создать S3-ведро для результатов запросов Athena.
+- Создать базу данных Athena.
+- Получить доступ к образцам данных в публичном наборе данных.
+- Подключить dbt Cloud к Amazon Athena.
+- Взять образец запроса и превратить его в модель в вашем проекте dbt. Модель в dbt — это оператор select.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
-:::tip Videos for you
-You can check out [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) for free if you're interested in course learning with videos.
+:::tip Видео для вас
+Если вам интересно обучение с видео, вы можете бесплатно ознакомиться с [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 :::
 
-### Prerequisites​
+### Предварительные требования
 
-- You have a [dbt Cloud account](https://www.getdbt.com/signup/). 
-- You have an [AWS account](https://aws.amazon.com/).
-- You have set up [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/getting-started.html).
+- У вас есть [учетная запись dbt Cloud](https://www.getdbt.com/signup/). 
+- У вас есть [учетная запись AWS](https://aws.amazon.com/).
+- Вы настроили [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/getting-started.html).
 
-### Related content
+### Связанный контент
 
-- Learn more with [dbt Learn courses](https://learn.getdbt.com)
-- [CI jobs](/docs/deploy/continuous-integration)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
+- Узнайте больше с помощью [курсов dbt Learn](https://learn.getdbt.com)
+- [CI задания](/docs/deploy/continuous-integration)
+- [Задания на развертывание](/docs/deploy/deploy-jobs)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источников](/docs/deploy/source-freshness)
 
-## Getting started
+## Начало работы
 
-For the following guide you can use an existing S3 bucket or [create a new one](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html).
+Для следующего руководства вы можете использовать существующее S3-ведро или [создать новое](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html).
 
-Download the following CSV files (the Jaffle Shop sample data) and upload them to your S3 bucket:
+Скачайте следующие CSV-файлы (образцы данных Jaffle Shop) и загрузите их в ваше S3-ведро:
 - [jaffle_shop_customers.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_customers.csv)
 - [jaffle_shop_orders.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/jaffle_shop_orders.csv)
 - [stripe_payments.csv](https://dbt-tutorial-public.s3-us-west-2.amazonaws.com/stripe_payments.csv)
 
+## Настройка Amazon Athena
 
-## Configure Amazon Athena
+1. Войдите в свою учетную запись AWS и перейдите в **консоль Athena**.
+    - Если вы впервые находитесь в консоли Athena (в вашем текущем регионе AWS), нажмите **Изучить редактор запросов**, чтобы открыть редактор запросов. В противном случае Athena автоматически откроется в редакторе запросов.
+2. Откройте **Настройки** и найдите поле **Местоположение результатов запросов**.
+    1. Введите путь к S3-ведру (предварительно добавив `s3://`).
+    2. Перейдите в **Обзор S3**, выберите созданное вами S3-ведро и нажмите **Выбрать**.
+3. **Сохраните** эти настройки.
+4. В **редакторе запросов** создайте базу данных, выполнив `create database YOUR_DATABASE_NAME`.
+5. Чтобы сделать созданную вами базу данных той, в которую вы будете `записывать`, выберите ее из списка **База данных** в левом меню. 
+6. Получите доступ к данным Jaffle Shop в S3-ведре, используя один из следующих вариантов:
+    1. Создайте таблицы вручную.
+    2. Создайте crawler Glue, чтобы воссоздать данные в виде внешних таблиц (рекомендуется).
+7. После создания таблиц вы сможете выполнять `SELECT` из них. 
 
-1. Log into your AWS account and navigate to the **Athena console**.
-    - If this is your first time in the Athena console (in your current AWS Region), click **Explore the query editor** to open the query editor. Otherwise, Athena opens automatically in the query editor.
-1. Open **Settings** and find the **Location of query result box** field.
-    1. Enter the path of the S3 bucket (prefix it with `s3://`).
-    2. Navigate to **Browse S3**, select the S3 bucket you created, and click **Choose**.
-1. **Save** these settings.
-1. In the **query editor**, create a database by running `create database YOUR_DATABASE_NAME`.
-1. To make the database you created the one you `write` into, select it from the **Database** list on the left side menu. 
-1. Access the Jaffle Shop data in the S3 bucket using one of these options:
-    1. Manually create the tables.
-    2. Create a glue crawler to recreate the data as external tables (recommended).
-1. Once the tables have been created, you will able to `SELECT` from them. 
+## Настройка доступа к Athena
 
-## Set up security access to Athena
+Чтобы настроить доступ к Athena, определите, какой метод доступа вы хотите использовать: 
+* Получите `aws_access_key_id` и `aws_secret_access_key` (рекомендуется)
+* Получите файл **учетных данных AWS**.
 
-To setup the security access for Athena, determine which access method you want to use: 
-* Obtain `aws_access_key_id` and `aws_secret_access_key` (recommended)
-* Obtain an **AWS credentials** file.
+### Ключ доступа AWS (рекомендуется)
 
-### AWS access key (recommended)
+Чтобы получить ваш `aws_access_key_id` и `aws_secret_access_key`:
 
-To obtain your `aws_access_key_id` and `aws_secret_access_key`:
+1. Откройте **Консоль AWS**.
+2. Нажмите на ваше **имя пользователя** в правом верхнем углу и выберите **Учетные данные безопасности**.
+3. Нажмите на **Пользователи** в боковом меню.
+4. Нажмите на ваше **имя пользователя** (или имя пользователя, для которого нужно создать ключ).
+5. Перейдите на вкладку **Учетные данные безопасности**.
+6. Нажмите **Создать ключ доступа**.
+7. Нажмите **Показать учетные данные безопасности пользователя** и 
 
-1. Open the **AWS Console**.
-1. Click on your **username** near the top right and click **Security Credentials**.
-1. Click on **Users** in the sidebar.
-1. Click on your **username** (or the name of the user for whom to create the key).
-1. Click on the **Security Credentials** tab.
-1. Click **Create Access Key**.
-1. Click **Show User Security Credentials** and 
+Сохраните `aws_access_key_id` и `aws_secret_access_key` для последующего шага.
 
-Save the `aws_access_key_id` and `aws_secret_access_key` for a future step.
+### Файл учетных данных AWS
 
-### AWS credentials file
-
-To obtain your AWS credentials file:
-1. Follow the instructions for [configuring the credentials file](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) usin the AWS CLI
-1. Locate the `~/.aws/credentials` file on your computer
+Чтобы получить файл учетных данных AWS:
+1. Следуйте инструкциям по [настройке файла учетных данных](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) с помощью AWS CLI.
+2. Найдите файл `~/.aws/credentials` на вашем компьютере:
     1. Windows: `%USERPROFILE%\.aws\credentials`
     2. Mac/Linux: `~/.aws/credentials`
 
-Retrieve the `aws_access_key_id` and `aws_secret_access_key` from the `~/.aws/credentials` file for a future step.
+Извлеките `aws_access_key_id` и `aws_secret_access_key` из файла `~/.aws/credentials` для последующего шага.
 
-## Configure the connection in dbt Cloud
+## Настройка подключения в dbt Cloud
 
-To configure the Athena connection in dbt Cloud:
-1. Click your **account name** on the left-side menu and click **Account settings**.
-1. Click **Connections** and click **New connection**.
-1. Click **Athena** and fill out the required fields (and any optional fields).
-    1. **AWS region name** &mdash; The AWS region of your environment.
-    1. **Database (catalog)** &mdash; Enter the database name created in earlier steps (lowercase only).
-    1. **AWS S3 staging directory** &mdash; Enter the S3 bucket created in earlier steps.
-1. Click **Save**
+Чтобы настроить подключение Athena в dbt Cloud:
+1. Нажмите на **имя вашей учетной записи** в левом меню и выберите **Настройки учетной записи**.
+2. Нажмите **Подключения** и выберите **Новое подключение**.
+3. Выберите **Athena** и заполните обязательные поля (и любые дополнительные поля).
+    1. **Имя региона AWS** — Регион AWS вашей среды.
+    2. **База данных (каталог)** — Введите имя базы данных, созданной на предыдущих шагах (только строчные буквы).
+    3. **Каталог S3 для промежуточного хранения AWS** — Введите S3-ведро, созданное на предыдущих шагах.
+4. Нажмите **Сохранить**.
 
-### Configure your environment
+### Настройка вашей среды
 
-To configure the Athena credentials in your environment:
-1. Click **Deploy** on the left-side menu and click **Environments**.
-1. Click **Create environment** and fill out the **General settings**. 
-    - Your **dbt version** must be set to `Versionless` to use the Athena connection. 
-1. Select the Athena connection from the **Connection** dropdown. 
-1. Fill out the `aws_access_key` and `aws_access_id` recorded in previous steps, as well as the `Schema` to write to. 
-1. Click **Test connection** and once it succeeds, **Save** the environment.
+Чтобы настроить учетные данные Athena в вашей среде:
+1. Нажмите **Развертывание** в левом меню и выберите **Среды**.
+2. Нажмите **Создать среду** и заполните **Общие настройки**. 
+    - Ваша **версия dbt** должна быть установлена на `Без версии`, чтобы использовать подключение Athena. 
+3. Выберите подключение Athena из выпадающего списка **Подключение**. 
+4. Заполните `aws_access_key` и `aws_access_id`, записанные на предыдущих шагах, а также `Schema`, в который нужно записывать. 
+5. Нажмите **Проверить подключение**, и после успешной проверки нажмите **Сохранить**.
 
-Repeat the process to create a [development environment](https://docs.getdbt.com/docs/dbt-cloud-environments#types-of-environments). 
+Повторите процесс, чтобы создать [разработческую среду](https://docs.getdbt.com/docs/dbt-cloud-environments#types-of-environments). 
 
-## Set up a dbt Cloud managed repository 
+## Настройка управляемого репозитория dbt Cloud 
 <Snippet path="tutorial-managed-repo" />
 
-## Initialize your dbt project​ and start developing
+## Инициализация вашего проекта dbt и начало разработки
 
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать свой проект и начать разработку в dbt Cloud:
 
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize dbt project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit` and click **Commit**. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - Click **+ Create new file**, add this query to the new file, and click **Save as** to save the new file: 
+1. Нажмите **Начать разработку в IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как устанавливается соединение с git, клонируется ваш репозиторий и проверяется соединение с хранилищем.
+2. Над деревом файлов слева нажмите **Инициализировать проект dbt**. Это создаст структуру папок с примерами моделей.
+3. Сделайте свой первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit` и нажмите **Коммит**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которую вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего хранилища и выполнять `dbt run`. Вы можете попробовать это сейчас:
+    - Нажмите **+ Создать новый файл**, добавьте этот запрос в новый файл и нажмите **Сохранить как**, чтобы сохранить новый файл: 
         ```sql
         select * from jaffle_shop.customers
         ```
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Build your first model
+## Создание вашей первой модели
 
-You have two options for working with files in the dbt Cloud IDE:
+У вас есть два варианта работы с файлами в dbt Cloud IDE:
 
-- Create a new branch (recommended) &mdash; Create a new branch to edit and commit your changes. Navigate to **Version Control** on the left sidebar and click **Create branch**.
-- Edit in the protected primary branch &mdash; If you prefer to edit, format, or lint files and execute dbt commands directly in your primary git branch. The dbt Cloud IDE prevents commits to the protected branch, so you will be prompted to commit your changes to a new branch.
+- Создать новую ветку (рекомендуется) — Создайте новую ветку, чтобы редактировать и коммитить ваши изменения. Перейдите в **Управление версиями** на левой боковой панели и нажмите **Создать ветку**.
+- Редактировать в защищенной основной ветке — Если вы предпочитаете редактировать, форматировать или проверять файлы и выполнять команды dbt непосредственно в вашей основной ветке git. dbt Cloud IDE предотвращает коммиты в защищенной ветке, поэтому вам будет предложено коммитить ваши изменения в новую ветку.
 
-Name the new branch `add-customers-model`.
+Назовите новую ветку `add-customers-model`.
 
-1. Click the **...** next to the `models` directory, then select **Create file**.  
-2. Name the file `customers.sql`, then click **Create**.
-3. Copy the following query into the file and click **Save**.
+1. Нажмите **...** рядом с директорией `models`, затем выберите **Создать файл**.  
+2. Назовите файл `customers.sql`, затем нажмите **Создать**.
+3. Скопируйте следующий запрос в файл и нажмите **Сохранить**.
 
 ```sql
 with customers as (
@@ -208,11 +206,11 @@ final as (
 select * from final
 ```
 
-4. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+4. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный результат и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить свои инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -220,20 +218,20 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Change the way your model is materialized
+## Измените способ материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удалите примерные модели
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL-файл, `models/stg_customers.sql`, с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL-файл, `models/stg_orders.sql`, с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -262,7 +260,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Отредактируйте SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -316,16 +314,15 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt строит `customers` последним. Вам не нужно явно определять эти зависимости.
 
-
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект по мере создания большего количества моделей? Как мне называть свои модели?" />
 
 </div>
 

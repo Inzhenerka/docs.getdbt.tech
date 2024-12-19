@@ -1,12 +1,12 @@
 ---
-title: Why am I receiving a Runtime Error in my packages?
-description: "Update dbt_utils package in packages.yml file"
-sidebar_label: 'Runtime error in packages.yml file'
+title: Почему я получаю ошибку времени выполнения в своих пакетах?
+description: "Обновите пакет dbt_utils в файле packages.yml"
+sidebar_label: 'Ошибка времени выполнения в файле packages.yml'
 id: runtime-packages.yml
 
 ---
 
-If you're receiving the runtime error below in your packages.yml folder, it may be due to an old version of your dbt_utils package that isn't compatible with your current dbt Cloud version.
+Если вы получаете ошибку времени выполнения, приведенную ниже, в вашей папке packages.yml, это может быть связано со старой версией вашего пакета dbt_utils, которая несовместима с вашей текущей версией dbt Cloud.
 
 ```shell
 Running with dbt=xxx
@@ -16,7 +16,7 @@ Runtime Error
   Error encountered in dbt_utils/dbt_project.yml
   ```
 
-Try updating the old version of the dbt_utils package in your packages.yml to the latest version found in the [dbt hub](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/):
+Попробуйте обновить старую версию пакета dbt_utils в вашем файле packages.yml до последней версии, найденной на [dbt hub](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/):
 
 ```shell
 packages:
@@ -25,4 +25,4 @@ packages:
 version: xxx
 ```
 
-If you've tried the workaround above and are still experiencing this behavior - reach out to the Support team at support@getdbt.com and we'll be happy to help!
+Если вы попробовали предложенное решение и все еще испытываете эту проблему, свяжитесь с командой поддержки по адресу support@getdbt.com, и мы будем рады помочь!

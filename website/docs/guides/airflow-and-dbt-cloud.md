@@ -1,49 +1,49 @@
 ---
-title: Airflow and dbt Cloud
+title: Airflow и dbt Cloud
 id: airflow-and-dbt-cloud
-# time_to_complete: '30 minutes' commenting out until we test
+# time_to_complete: '30 minutes' комментируем до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Orchestration']
-level: 'Intermediate'
+tags: ['dbt Cloud', 'Оркестрация']
+level: 'Средний'
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-Many organization already use [Airflow](https://airflow.apache.org/) to orchestrate their data workflows. dbt Cloud works great with Airflow, letting you execute your dbt code in dbt Cloud while keeping orchestration duties with Airflow. This ensures your project's metadata (important for tools like dbt Explorer) is available and up-to-date, while still enabling you to use Airflow for general tasks such as:
+Многие организации уже используют [Airflow](https://airflow.apache.org/) для оркестрации своих рабочих процессов с данными. dbt Cloud отлично работает с Airflow, позволяя вам выполнять ваш dbt код в dbt Cloud, сохраняя при этом обязанности по оркестрации за Airflow. Это гарантирует, что метаданные вашего проекта (важные для таких инструментов, как dbt Explorer) доступны и актуальны, при этом позволяя вам использовать Airflow для общих задач, таких как:
 
-- Scheduling other processes outside of dbt runs
-- Ensuring that a [dbt job](/docs/deploy/job-scheduler) kicks off before or after another process outside of dbt Cloud
-- Triggering a dbt job only after another has completed
+- Планирование других процессов вне выполнения dbt
+- Обеспечение запуска [dbt job](/docs/deploy/job-scheduler) до или после другого процесса вне dbt Cloud
+- Запуск dbt job только после завершения другого
 
-In this guide, you'll learn how to:
+В этом руководстве вы узнаете, как:
 
-1. Create a working local Airflow environment
-2. Invoke a dbt Cloud job with Airflow
-3. Reuse tested and trusted Airflow code for your specific use cases
+1. Создать рабочую локальную среду Airflow
+2. Вызвать dbt Cloud job с помощью Airflow
+3. Повторно использовать проверенный и надежный код Airflow для ваших конкретных случаев использования
 
-You’ll also gain a better understanding of how this will:
+Вы также лучше поймете, как это поможет:
 
-- Reduce the cognitive load when building and maintaining pipelines
-- Avoid dependency hell (think: `pip install` conflicts)
-- Define clearer handoff of workflows between data engineers and analytics engineers
+- Снизить когнитивную нагрузку при создании и поддержке пайплайнов
+- Избежать "ад зависимости" (подумайте о конфликтах `pip install`)
+- Определить более четкую передачу рабочих процессов между инженерами данных и аналитическими инженерами
 
-## Prerequisites
+## Предварительные требования
 
-- [dbt Cloud Teams or Enterprise account](https://www.getdbt.com/pricing/) (with [admin access](/docs/cloud/manage-access/enterprise-permissions)) in order to create a service token. Permissions for service tokens can be found [here](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
-- A [free Docker account](https://hub.docker.com/signup) in order to sign in to Docker Desktop, which will be installed in the initial setup.
-- A local digital scratchpad for temporarily copy-pasting API keys and URLs
+- [Учетная запись dbt Cloud Teams или Enterprise](https://www.getdbt.com/pricing/) (с [административным доступом](/docs/cloud/manage-access/enterprise-permissions)) для создания токена службы. Права для токенов службы можно найти [здесь](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
+- Бесплатная [учетная запись Docker](https://hub.docker.com/signup) для входа в Docker Desktop, который будет установлен в процессе начальной настройки.
+- Локальный цифровой блокнот для временного копирования и вставки API-ключей и URL-адресов
 
-🙌 Let’s get started! 🙌
+🙌 Давайте начнем! 🙌
 
-## Install the Astro CLI
+## Установите Astro CLI
 
-Astro is a managed software service that includes key features for teams working with Airflow. In order to use Astro, we’ll install the Astro CLI, which will give us access to useful commands for working with Airflow locally. You can read more about Astro [here](https://docs.astronomer.io/astro/).
+Astro — это управляемый программный сервис, который включает ключевые функции для команд, работающих с Airflow. Чтобы использовать Astro, мы установим Astro CLI, который предоставит нам доступ к полезным командам для работы с Airflow локально. Вы можете узнать больше об Astro [здесь](https://docs.astronomer.io/astro/).
 
-In this example, we’re using Homebrew to install Astro CLI. Follow the instructions to install the Astro CLI for your own operating system [here](https://docs.astronomer.io/astro/install-cli).
+В этом примере мы используем Homebrew для установки Astro CLI. Следуйте инструкциям для установки Astro CLI для вашей операционной системы [здесь](https://docs.astronomer.io/astro/install-cli).
 
 ```bash
 brew install astro
@@ -51,70 +51,70 @@ brew install astro
 
 <WistiaVideo id="uosszw1qul" paddingTweak="62.25%" />
 
-## Install and start Docker Desktop
+## Установите и запустите Docker Desktop
 
-Docker allows us to spin up an environment with all the apps and dependencies we need for this guide.
+Docker позволяет нам создать среду со всеми приложениями и зависимостями, необходимыми для этого руководства.
 
-Follow the instructions [here](https://docs.docker.com/desktop/) to install Docker desktop for your own operating system. Once Docker is installed, ensure you have it up and running for the next steps.
+Следуйте инструкциям [здесь](https://docs.docker.com/desktop/) для установки Docker Desktop для вашей операционной системы. После установки Docker убедитесь, что он запущен для следующих шагов.
 
 <WistiaVideo id="qr84pa8k9f" paddingTweak="62.25%" />
 
-## Clone the airflow-dbt-cloud repository
+## Клонируйте репозиторий airflow-dbt-cloud
 
-Open your terminal and clone the [airflow-dbt-cloud repository](https://github.com/dbt-labs/airflow-dbt-cloud). This contains example Airflow DAGs that you’ll use to orchestrate your dbt Cloud job. Once cloned, navigate into the `airflow-dbt-cloud` project.
+Откройте терминал и клонируйте [репозиторий airflow-dbt-cloud](https://github.com/dbt-labs/airflow-dbt-cloud). Он содержит пример Airflow DAG, который вы будете использовать для оркестрации вашего dbt Cloud job. После клонирования перейдите в проект `airflow-dbt-cloud`.
 
 ```bash
 git clone https://github.com/dbt-labs/airflow-dbt-cloud.git
 cd airflow-dbt-cloud
 ```
 
-For more information about cloning GitHub repositories, refer to "[Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)" in the GitHub documentation.
+Для получения дополнительной информации о клонировании репозиториев GitHub обратитесь к разделу "[Клонирование репозитория](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)" в документации GitHub.
 
-## Start the Docker container
+## Запустите контейнер Docker
 
-1. From the `airflow-dbt-cloud` directory you cloned and opened in the prior step, run the following command to start your local Airflow deployment:
+1. Из директории `airflow-dbt-cloud`, которую вы клонировали и открыли на предыдущем шаге, выполните следующую команду, чтобы запустить вашу локальную установку Airflow:
 
    ```bash
    astro dev start
    ```
 
-   When this finishes, you should see a message similar to the following:
+   Когда это завершится, вы должны увидеть сообщение, похожее на следующее:
 
    ```bash
-   Airflow is starting up! This might take a few minutes…
+   Airflow запускается! Это может занять несколько минут…
 
-   Project is running! All components are now available.
+   Проект запущен! Все компоненты теперь доступны.
 
    Airflow Webserver: http://localhost:8080
    Postgres Database: localhost:5432/postgres
-   The default Airflow UI credentials are: admin:admin
-   The default Postgres DB credentials are: postgres:postgres
+   Учетные данные по умолчанию для Airflow UI: admin:admin
+   Учетные данные по умолчанию для Postgres DB: postgres:postgres
    ```
 
-2. Open the Airflow interface. Launch your web browser and navigate to the address for the **Airflow Webserver** from your output above (for us, `http://localhost:8080`).
+2. Откройте интерфейс Airflow. Запустите веб-браузер и перейдите по адресу **Airflow Webserver** из вашего вывода выше (в нашем случае `http://localhost:8080`).
 
-   This will take you to your local instance of Airflow. You’ll need to log in with the **default credentials**:
+   Это перенаправит вас на вашу локальную инстанцию Airflow. Вам нужно будет войти с **учетными данными по умолчанию**:
 
-   - Username: admin
-   - Password: admin
+   - Имя пользователя: admin
+   - Пароль: admin
 
-   ![Airflow login screen](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-login.png)
+   ![Экран входа в Airflow](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-login.png)
 
 <WistiaVideo id="2rzsjo0uml" paddingTweak="62.25%" />
 
-## Create a dbt Cloud service token
+## Создайте токен службы dbt Cloud
 
-[Create a service token](/docs/dbt-cloud-apis/service-tokens) with `Job Admin` privileges from within dbt Cloud. Ensure that you save a copy of the token, as you won’t be able to access this later.
+[Создайте токен службы](/docs/dbt-cloud-apis/service-tokens) с правами `Job Admin` в dbt Cloud. Убедитесь, что вы сохранили копию токена, так как вы не сможете получить к нему доступ позже.
 
 <WistiaVideo id="amubh6qmwq" paddingTweak="62.25%" />
 
-## Create a dbt Cloud job
+## Создайте dbt Cloud job
 
-[Create a job in your dbt Cloud account](/docs/deploy/deploy-jobs#create-and-schedule-jobs), paying special attention to the information in the bullets below.
+[Создайте job в вашей учетной записи dbt Cloud](/docs/deploy/deploy-jobs#create-and-schedule-jobs), уделяя особое внимание информации в следующих пунктах.
 
-- Configure the job with the full commands that you want to include when this job kicks off. This sample code has Airflow triggering the dbt Cloud job and all of its commands, instead of explicitly identifying individual models to run from inside of Airflow.
-- Ensure that the schedule is turned **off** since we’ll be using Airflow to kick things off.
-- Once you hit `save` on the job, make sure you copy the URL and save it for referencing later. The url will look similar to this:
+- Настройте job с полными командами, которые вы хотите включить, когда этот job запускается. Этот пример кода имеет Airflow, который запускает dbt Cloud job и все его команды, вместо того чтобы явно указывать отдельные модели для выполнения из Airflow.
+- Убедитесь, что расписание отключено, так как мы будем использовать Airflow для запуска.
+- После нажатия `сохранить` на job убедитесь, что вы скопировали URL и сохранили его для дальнейшего использования. URL будет выглядеть примерно так:
 
 ```html
 https://YOUR_ACCESS_URL/#/accounts/{account_id}/projects/{project_id}/jobs/{job_id}/
@@ -122,67 +122,67 @@ https://YOUR_ACCESS_URL/#/accounts/{account_id}/projects/{project_id}/jobs/{job_
 
 <WistiaVideo id="qiife5rzlp" paddingTweak="62.25%" />
 
-## Connect dbt Cloud to Airflow
+## Подключите dbt Cloud к Airflow
 
-Now you have all the working pieces to get up and running with Airflow + dbt Cloud. It's time to **set up a connection** and **run a DAG in Airflow** that kicks off a dbt Cloud job.
+Теперь у вас есть все рабочие элементы, чтобы начать работу с Airflow + dbt Cloud. Пора **настроить соединение** и **запустить DAG в Airflow**, который запускает dbt Cloud job.
 
-1. From the Airflow interface, navigate to Admin and click on **Connections**
+1. В интерфейсе Airflow перейдите в раздел Admin и нажмите на **Connections**
 
-    ![Airflow connections menu](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-connections-menu.png)
+    ![Меню соединений Airflow](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-connections-menu.png)
 
-2. Click on the `+` sign to add a new connection, then click on the drop down to search for the dbt Cloud Connection Type
+2. Нажмите на знак `+`, чтобы добавить новое соединение, затем нажмите на выпадающее меню, чтобы найти тип соединения dbt Cloud
 
-    ![Connection type](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type.png)
+    ![Тип соединения](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type.png)
 
-3. Add in your connection details and your default dbt Cloud account id. This is found in your dbt Cloud URL after the accounts route section (`/accounts/{YOUR_ACCOUNT_ID}`), for example the account with id 16173 would see this in their URL: `https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/`
+3. Введите данные вашего соединения и ваш идентификатор учетной записи dbt Cloud по умолчанию. Это можно найти в вашем URL dbt Cloud после раздела маршрута учетных записей (`/accounts/{YOUR_ACCOUNT_ID}`), например, учетная запись с идентификатором 16173 увидит это в своем URL: `https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/`
 
-    ![Connection type](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type-configured.png)
+    ![Тип соединения](/img/guides/orchestration/airflow-and-dbt-cloud/connection-type-configured.png)
 
-## Update the placeholders in the sample code
+## Обновите заполнители в примере кода
 
- Add your `account_id` and `job_id` to the python file [dbt_cloud_run_job.py](https://github.com/dbt-labs/airflow-dbt-cloud/blob/main/dags/dbt_cloud_run_job.py).
+Добавьте ваш `account_id` и `job_id` в файл python [dbt_cloud_run_job.py](https://github.com/dbt-labs/airflow-dbt-cloud/blob/main/dags/dbt_cloud_run_job.py).
 
-Both IDs are included inside of the dbt Cloud job URL as shown in the following snippets:
+Оба идентификатора включены в URL dbt Cloud job, как показано в следующих фрагментах:
 
 ```python
-# For the dbt Cloud Job URL https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/
-# The account_id is 16173 and the job_id is 65767
-# Update lines 34 and 35
+# Для URL dbt Cloud Job https://YOUR_ACCESS_URL/#/accounts/16173/projects/36467/jobs/65767/
+# account_id равен 16173, а job_id равен 65767
+# Обновите строки 34 и 35
 ACCOUNT_ID = "16173"
 JOB_ID = "65767"
 ```
 
 <WistiaVideo id="wgy7wvgqof" paddingTweak="62.25%" />
 
-## Run the Airflow DAG
+## Запустите Airflow DAG
 
-Turn on the DAG and trigger it to run. Verify the job succeeded after running.
+Включите DAG и запустите его. Убедитесь, что job завершилась успешно после выполнения.
 
 ![Airflow DAG](/img/guides/orchestration/airflow-and-dbt-cloud/airflow-dag.png)
 
-Click Monitor Job Run to open the run details in dbt Cloud.
-![Task run instance](/img/guides/orchestration/airflow-and-dbt-cloud/task-run-instance.png)
+Нажмите "Мониторить выполнение job", чтобы открыть детали выполнения в dbt Cloud.
+![Экземпляр выполнения задачи](/img/guides/orchestration/airflow-and-dbt-cloud/task-run-instance.png)
 
-## Cleaning up
+## Очистка
 
-At the end of this guide, make sure you shut down your docker container.  When you’re done using Airflow, use the following command to stop the container:
+В конце этого руководства убедитесь, что вы остановили ваш контейнер Docker. Когда вы закончите использовать Airflow, используйте следующую команду, чтобы остановить контейнер:
 
 ```bash
 $ astrocloud dev stop
 
-[+] Running 3/3
- ⠿ Container airflow-dbt-cloud_e3fe3c-webserver-1  Stopped    7.5s
- ⠿ Container airflow-dbt-cloud_e3fe3c-scheduler-1  Stopped    3.3s
- ⠿ Container airflow-dbt-cloud_e3fe3c-postgres-1   Stopped    0.3s
+[+] Запуск 3/3
+ ⠿ Контейнер airflow-dbt-cloud_e3fe3c-webserver-1  Остановлен    7.5s
+ ⠿ Контейнер airflow-dbt-cloud_e3fe3c-scheduler-1  Остановлен    3.3s
+ ⠿ Контейнер airflow-dbt-cloud_e3fe3c-postgres-1   Остановлен    0.3s
 ```
 
-To verify that the deployment has stopped, use the following command:
+Чтобы убедиться, что развертывание остановлено, используйте следующую команду:
 
 ```bash
 astrocloud dev ps
 ```
 
-This should give you an output like this:
+Это должно дать вам вывод, похожий на этот:
 
 ```bash
 Name                                    State   Ports
@@ -193,45 +193,45 @@ airflow-dbt-cloud_e3fe3c-postgres-1     exited
 
 <WistiaVideo id="u83nuqegn9" paddingTweak="62.25%"/>
 
-## Frequently asked questions
+## Часто задаваемые вопросы
 
-### How can we run specific subsections of the dbt DAG in Airflow?
+### Как мы можем запускать конкретные подсекции dbt DAG в Airflow?
 
-Because the Airflow DAG references dbt Cloud jobs, your analytics engineers can take responsibility for configuring the jobs in dbt Cloud.
+Поскольку Airflow DAG ссылается на dbt Cloud jobs, ваши аналитические инженеры могут взять на себя ответственность за настройку jobs в dbt Cloud.
 
-For example, to run some models hourly and others daily, there will be jobs like `Hourly Run` or `Daily Run` using the commands `dbt run --select tag:hourly` and `dbt run --select tag:daily` respectively. Once configured in dbt Cloud, these can be added as steps in an Airflow DAG as shown in this guide. Refer to our full [node selection syntax docs here](/reference/node-selection/syntax).
+Например, чтобы запускать некоторые модели каждый час, а другие ежедневно, будут jobs, такие как `Hourly Run` или `Daily Run`, использующие команды `dbt run --select tag:hourly` и `dbt run --select tag:daily` соответственно. После настройки в dbt Cloud их можно добавить как шаги в Airflow DAG, как показано в этом руководстве. Обратитесь к нашей полной [документации по синтаксису выбора узлов здесь](/reference/node-selection/syntax).
 
-### How can I re-run models from the point of failure?  
+### Как я могу повторно запустить модели с точки сбоя?  
 
-You can trigger re-run from point of failure with the `rerun` API endpoint. See the docs on [retrying jobs](/docs/deploy/retry-jobs) for more information.
+Вы можете инициировать повторный запуск с точки сбоя с помощью конечной точки API `rerun`. См. документацию о [повторных попытках jobs](/docs/deploy/retry-jobs) для получения дополнительной информации.
 
-### Should Airflow run one big dbt job or many dbt jobs?
+### Должен ли Airflow запускать один большой dbt job или много dbt jobs?
 
-dbt jobs are most effective when a build command contains as many models at once as is practical. This is because dbt manages the dependencies between models and coordinates running them in order, which ensures that your jobs can run in a highly parallelized fashion. It also streamlines the debugging process when a model fails and enables re-run from point of failure.
+dbt jobs наиболее эффективны, когда команда сборки содержит как можно больше моделей одновременно. Это связано с тем, что dbt управляет зависимостями между моделями и координирует их выполнение в порядке, что обеспечивает возможность высокопараллельного выполнения ваших jobs. Это также упрощает процесс отладки, когда модель не проходит, и позволяет повторно запустить с точки сбоя.
 
-As an explicit example, it's not recommended to have a dbt job for every single node in your DAG. Try combining your steps according to desired run frequency, or grouping by department (finance, marketing, customer success...) instead.
+Как явный пример, не рекомендуется иметь dbt job для каждого отдельного узла в вашем DAG. Попробуйте объединить ваши шаги в зависимости от желаемой частоты выполнения или группировать по отделам (финансы, маркетинг, успех клиентов...) вместо этого.
 
-### We want to kick off our dbt jobs after our ingestion tool (such as Fivetran) / data pipelines are done loading data. Any best practices around that?
+### Мы хотим запускать наши dbt jobs после того, как наш инструмент загрузки (например, Fivetran) / конвейеры данных завершат загрузку данных. Есть ли лучшие практики по этому поводу?
 
-Astronomer's DAG registry has a sample workflow combining Fivetran, dbt Cloud and Census [here](https://registry.astronomer.io/dags/fivetran-dbt_cloud-census/versions/3.0.0).
+Реестр DAG Astronomer имеет пример рабочего процесса, объединяющего Fivetran, dbt Cloud и Census [здесь](https://registry.astronomer.io/dags/fivetran-dbt_cloud-census/versions/3.0.0).
   
-### How do you set up a CI/CD workflow with Airflow?
+### Как настроить CI/CD рабочий процесс с Airflow?
 
-Check out these two resources for accomplishing your own CI/CD pipeline:
+Посмотрите на эти два ресурса для создания вашего собственного CI/CD пайплайна:
 
-- [Continuous Integration with dbt Cloud](/docs/deploy/continuous-integration)
-- [Astronomer's CI/CD Example](https://docs.astronomer.io/software/ci-cd/#example-cicd-workflow)
+- [Непрерывная интеграция с dbt Cloud](/docs/deploy/continuous-integration)
+- [Пример CI/CD от Astronomer](https://docs.astronomer.io/software/ci-cd/#example-cicd-workflow)
 
-### Can dbt dynamically create tasks in the DAG like Airflow can?
+### Может ли dbt динамически создавать задачи в DAG, как это делает Airflow?
 
-As discussed above, we prefer to keep jobs bundled together and containing as many nodes as are necessary. If you must run nodes one at a time for some reason, then review [this article](https://www.astronomer.io/blog/airflow-dbt-1/) for some pointers.
+Как обсуждалось выше, мы предпочитаем держать jobs вместе и содержать столько узлов, сколько необходимо. Если вам необходимо запускать узлы по одному по какой-то причине, то ознакомьтесь с [этой статьей](https://www.astronomer.io/blog/airflow-dbt-1/) для получения некоторых советов.
 
-### Can you trigger notifications if a dbt job fails with Airflow?
+### Можете ли вы инициировать уведомления, если dbt job не проходит с помощью Airflow?
 
-Yes, either through [Airflow's email/slack](https://www.astronomer.io/guides/error-notifications-in-airflow/) functionality, or [dbt Cloud's notifications](/docs/deploy/job-notifications), which support email and Slack notifications. You could also create a [webhook](/docs/deploy/webhooks).
+Да, либо через функциональность [Airflow по электронной почте/Slack](https://www.astronomer.io/guides/error-notifications-in-airflow/), либо через [уведомления dbt Cloud](/docs/deploy/job-notifications), которые поддерживают уведомления по электронной почте и Slack. Вы также можете создать [вебхук](/docs/deploy/webhooks).
 
-### How should I plan my dbt Cloud + Airflow implementation?
+### Как мне спланировать реализацию dbt Cloud + Airflow?
 
-Check out [this recording](https://www.youtube.com/watch?v=n7IIThR8hGk) of a dbt meetup for some tips.
+Посмотрите [эту запись](https://www.youtube.com/watch?v=n7IIThR8hGk) встречи dbt для получения некоторых советов.
 
 </div>

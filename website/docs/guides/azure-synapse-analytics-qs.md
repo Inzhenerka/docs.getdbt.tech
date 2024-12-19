@@ -1,46 +1,45 @@
 ---
-title: "Quickstart for dbt Cloud and Azure Synapse Analytics"
+title: "Быстрый старт для dbt Cloud и Azure Synapse Analytics"
 id: "azure-synapse-analytics"
-level: 'Beginner'
+level: 'Начинающий'
 icon: 'azure-synapse-analytics'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Quickstart']
+tags: ['dbt Cloud','Быстрый старт']
 recently_updated: true
 ---
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-In this quickstart guide, you'll learn how to use dbt Cloud with [Azure Synapse Analytics](https://azure.microsoft.com/en-us/products/synapse-analytics/). It will show you how to:
+В этом руководстве по быстрому старту вы узнаете, как использовать dbt Cloud с [Azure Synapse Analytics](https://azure.microsoft.com/en-us/products/synapse-analytics/). В нем показано, как:
 
-- Load the Jaffle Shop sample data (provided by dbt Labs) into your Azure Synapse Analytics warehouse. 
-- Connect dbt Cloud to Azure Synapse Analytics.
-- Turn a sample query into a model in your dbt project. A model in dbt is a SELECT statement.
-- Add tests to your models.
-- Document your models.
-- Schedule a job to run.
+- Загрузить пример данных Jaffle Shop (предоставленный dbt Labs) в ваш склад данных Azure Synapse Analytics.
+- Подключить dbt Cloud к Azure Synapse Analytics.
+- Преобразовать пример запроса в модель в вашем проекте dbt. Модель в dbt — это оператор SELECT.
+- Добавить тесты к вашим моделям.
+- Документировать ваши модели.
+- Запланировать выполнение задания.
 
+### Предварительные требования
+- У вас есть учетная запись [dbt Cloud](https://www.getdbt.com/signup/).
+- У вас есть учетная запись Azure Synapse Analytics. Для бесплатной пробной версии обратитесь к [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) в документации Microsoft.
+- В качестве администратора Microsoft вы включили аутентификацию с помощью сервисного принципала. Вы должны добавить сервисный принципал в рабочее пространство Synapse с правами либо Члена (рекомендуется), либо Администратора. Для получения подробной информации обратитесь к [Создание сервисного принципала с помощью портала Azure](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) в документации Microsoft. dbt Cloud нуждается в этих учетных данных для аутентификации, чтобы подключиться к Azure Synapse Analytics.
 
-### Prerequisites
-- You have a [dbt Cloud](https://www.getdbt.com/signup/) account.
-- You have an Azure Synapse Analytics account. For a free trial, refer to [Synapse Analytics](https://azure.microsoft.com/en-us/free/synapse-analytics/) in the Microsoft docs.
-- As a Microsoft admin, you’ve enabled service principal authentication. You must add the service principal to the Synapse workspace with either a Member (recommended) or Admin permission set. For details, refer to [Create a service principal using the Azure portal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) in the Microsoft docs. dbt Cloud needs these authentication credentials to connect to Azure Synapse Analytics.
+### Связанный контент
+- [Курсы dbt Learn](https://learn.getdbt.com)
+- [О заданиях непрерывной интеграции](/docs/deploy/continuous-integration)
+- [Задания на развертывание](/docs/deploy/deploy-jobs)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Свежесть источников](/docs/deploy/source-freshness)
 
-### Related content
-- [dbt Learn courses](https://learn.getdbt.com)
-- [About continuous integration jobs](/docs/deploy/continuous-integration)
-- [Deploy jobs](/docs/deploy/deploy-jobs)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
+## Загрузка данных в Azure Synapse Analytics
 
-## Load data into your Azure Synapse Analytics
-
-1. Log in to your [Azure portal account](https://portal.azure.com/#home).  
-1. On the home page, select the **SQL databases** tile.
-1. From the **SQL databases** page, navigate to your organization’s workspace or create a new workspace; refer to [Create a Synapse workspace](https://learn.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-workspace) in the Microsoft docs for more details.
-1. From the workspace's sidebar, select **Data**. Click the three dot menu on your database and select **New SQL script** to open the SQL editor. 
-1. Copy these statements into the SQL editor to load the Jaffle Shop example data:
+1. Войдите в свою учетную запись [Azure portal](https://portal.azure.com/#home).  
+1. На главной странице выберите плитку **SQL базы данных**.
+1. На странице **SQL базы данных** перейдите в рабочее пространство вашей организации или создайте новое рабочее пространство; для получения дополнительных сведений обратитесь к [Создание рабочего пространства Synapse](https://learn.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-workspace) в документации Microsoft.
+1. В боковой панели рабочего пространства выберите **Данные**. Нажмите на меню с тремя точками на вашей базе данных и выберите **Новый SQL-скрипт**, чтобы открыть SQL-редактор. 
+1. Скопируйте следующие операторы в SQL-редактор для загрузки примерных данных Jaffle Shop:
 
     ```sql
 
@@ -88,42 +87,42 @@ In this quickstart guide, you'll learn how to use dbt Cloud with [Azure Synapse 
     );
     ```
 
-    <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-azure-syn-analytics.png" width="80%" title="Example of loading data" />
+    <Lightbox src="/img/quickstarts/dbt-cloud/example-load-data-azure-syn-analytics.png" width="80%" title="Пример загрузки данных" />
 
-## Connect dbt Cloud to Azure Synapse Analytics
+## Подключение dbt Cloud к Azure Synapse Analytics
 
-1. Create a new project in dbt Cloud. Click on your account name in the left side menu, select **Account settings**, and click **+ New Project**.
-2. Enter a project name and click **Continue**.
-3. Choose **Synapse** as your connection and click **Next**.
-4. In the **Configure your environment** section, enter the **Settings** for your new project:
-    - **Server** &mdash; Use the service principal's **Synapse host name** value (without the trailing `, 1433` string) for the Synapse test endpoint. 
-    - **Port** &mdash; 1433 (which is the default).
-    - **Database** &mdash; Use the service principal's **database** value for the Synapse test endpoint. 
-5. Enter the **Development credentials** for your new project:
-    - **Authentication** &mdash; Choose **Service Principal** from the dropdown.
-    - **Tenant ID** &mdash; Use the service principal’s **Directory (tenant) id** as the value.
-    - **Client ID** &mdash; Use the service principal’s **application (client) ID id** as the value.
-    - **Client secret** &mdash; Use the service principal’s **client secret** (not the  **client secret id**) as the value.
-6. Click **Test connection**. This verifies that dbt Cloud can access your Azure Synapse Analytics account.
-7. Click **Next** when the test succeeds. If it failed, you might need to check your Microsoft service principal.
+1. Создайте новый проект в dbt Cloud. Нажмите на имя вашей учетной записи в левом меню, выберите **Настройки учетной записи** и нажмите **+ Новый проект**.
+2. Введите имя проекта и нажмите **Продолжить**.
+3. Выберите **Synapse** в качестве вашего соединения и нажмите **Далее**.
+4. В разделе **Настройка вашей среды** введите **Настройки** для вашего нового проекта:
+    - **Сервер** — Используйте значение **имя хоста Synapse** сервисного принципала (без завершающей строки `, 1433`) для тестовой конечной точки Synapse. 
+    - **Порт** — 1433 (что является значением по умолчанию).
+    - **База данных** — Используйте значение **база данных** сервисного принципала для тестовой конечной точки Synapse. 
+5. Введите **Учетные данные для разработки** для вашего нового проекта:
+    - **Аутентификация** — Выберите **Сервисный принципал** из выпадающего списка.
+    - **Идентификатор арендатора** — Используйте **идентификатор директории (арендатора)** сервисного принципала в качестве значения.
+    - **Идентификатор клиента** — Используйте **идентификатор приложения (клиента)** сервисного принципала в качестве значения.
+    - **Секрет клиента** — Используйте **секрет клиента** сервисного принципала (не идентификатор **секрета клиента**) в качестве значения.
+6. Нажмите **Проверить соединение**. Это проверяет, что dbt Cloud может получить доступ к вашей учетной записи Azure Synapse Analytics.
+7. Нажмите **Далее**, когда тест пройдет успешно. Если он не удался, вам, возможно, нужно проверить ваш сервисный принципал Microsoft.
 
-## Set up a dbt Cloud managed repository 
+## Настройка управляемого репозитория dbt Cloud 
 <Snippet path="tutorial-managed-repo" />
 
-## Initialize your dbt project​ and start developing
-Now that you have a repository configured, you can initialize your project and start development in dbt Cloud:
+## Инициализация вашего проекта dbt и начало разработки
+Теперь, когда у вас настроен репозиторий, вы можете инициализировать ваш проект и начать разработку в dbt Cloud:
 
-1. Click **Start developing in the IDE**. It might take a few minutes for your project to spin up for the first time as it establishes your git connection, clones your repo, and tests the connection to the warehouse.
-2. Above the file tree to the left, click **Initialize dbt project**. This builds out your folder structure with example models.
-3. Make your initial commit by clicking **Commit and sync**. Use the commit message `initial commit` and click **Commit Changes**. This creates the first commit to your managed repo and allows you to open a branch where you can add new dbt code.
-4. You can now directly query data from your warehouse and execute `dbt run`. You can try this out now:
-    - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+1. Нажмите **Начать разработку в IDE**. Это может занять несколько минут, чтобы ваш проект запустился в первый раз, так как устанавливается соединение с git, клонируется ваш репозиторий и проверяется соединение со складом данных.
+2. Над деревом файлов слева нажмите **Инициализировать проект dbt**. Это создаст структуру папок с примерами моделей.
+3. Сделайте ваш первый коммит, нажав **Коммит и синхронизация**. Используйте сообщение коммита `initial commit` и нажмите **Коммит изменений**. Это создаст первый коммит в вашем управляемом репозитории и позволит вам открыть ветку, в которой вы можете добавить новый код dbt.
+4. Теперь вы можете напрямую запрашивать данные из вашего склада и выполнять `dbt run`. Попробуйте это сейчас:
+    - В строке команд внизу введите `dbt run` и нажмите **Enter**. Вы должны увидеть сообщение `dbt run succeeded`.
 
-## Build your first model
-1. Under **Version Control** on the left, click **Create branch**. You can name it `add-customers-model`. You need to create a new branch since the main branch is set to read-only mode.
-1. Click the three dot menu (**...**) next to the `models` directory, then select **Create file**.  
-1. Name the file `customers.sql`, then click **Create**.
-1. Copy the following query into the file and click **Save**.
+## Создание вашей первой модели
+1. В разделе **Контроль версий** слева нажмите **Создать ветку**. Вы можете назвать ее `add-customers-model`. Вам нужно создать новую ветку, так как основная ветка установлена в режим только для чтения.
+1. Нажмите на меню с тремя точками (**...**) рядом с каталогом `models`, затем выберите **Создать файл**.  
+1. Назовите файл `customers.sql`, затем нажмите **Создать**.
+1. Скопируйте следующий запрос в файл и нажмите **Сохранить**.
 
     <File name='customers.sql'>
 
@@ -182,11 +181,11 @@ Now that you have a repository configured, you can initialize your project and s
     ```
     </File>
 
-1. Enter `dbt run` in the command prompt at the bottom of the screen. You should get a successful run and see the three models.
+1. Введите `dbt run` в командной строке внизу экрана. Вы должны получить успешный результат и увидеть три модели.
 
-Later, you can connect your business intelligence (BI) tools to these views and tables so they only read cleaned up data rather than raw data in your BI tool.
+Позже вы можете подключить свои инструменты бизнес-аналитики (BI) к этим представлениям и таблицам, чтобы они читали только очищенные данные, а не сырые данные в вашем инструменте BI.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -194,20 +193,20 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 
-## Change the way your model is materialized
+## Изменение способа материализации вашей модели
 
 <Snippet path="quickstarts/change-way-model-materialized" />
 
-## Delete the example models
+## Удаление примерных моделей
 
 <Snippet path="quickstarts/delete-example-models" />
 
-## Build models on top of other models
+## Создание моделей на основе других моделей
 
 <Snippet path="quickstarts/intro-build-models-atop-other-models" />
 
-1. Create a new SQL file, `models/stg_customers.sql`, with the SQL from the `customers` CTE in our original query.
-2. Create a second new SQL file, `models/stg_orders.sql`, with the SQL from the `orders` CTE in our original query.
+1. Создайте новый SQL-файл `models/stg_customers.sql` с SQL из CTE `customers` в нашем оригинальном запросе.
+2. Создайте второй новый SQL-файл `models/stg_orders.sql` с SQL из CTE `orders` в нашем оригинальном запросе.
 
     <File name='models/stg_customers.sql'>
 
@@ -236,7 +235,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-3. Edit the SQL in your `models/customers.sql` file as follows:
+3. Отредактируйте SQL в вашем файле `models/customers.sql` следующим образом:
 
     <File name='models/customers.sql'>
 
@@ -290,15 +289,15 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 
     </File>
 
-4. Execute `dbt run`.
+4. Выполните `dbt run`.
 
-    This time, when you performed a `dbt run`, separate views/tables were created for `stg_customers`, `stg_orders` and `customers`. dbt inferred the order to run these models. Because `customers` depends on `stg_customers` and `stg_orders`, dbt builds `customers` last. You do not need to explicitly define these dependencies.
+    На этот раз, когда вы выполнили `dbt run`, были созданы отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. dbt определил порядок выполнения этих моделей. Поскольку `customers` зависит от `stg_customers` и `stg_orders`, dbt создает `customers` последним. Вам не нужно явно определять эти зависимости.
 
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект, когда я создаю больше моделей? Как мне называть свои модели?" />
 
 </div>
 
