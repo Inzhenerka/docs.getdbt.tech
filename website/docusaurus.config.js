@@ -106,9 +106,9 @@ var siteSettings = {
     navbar: {
       hideOnScroll: true,
       logo: {
-        src: "/img/dbt-logo.svg",
-        srcDark: "img/dbt-logo-light.svg",
-        alt: "dbt Logo",
+        src: "/img/dbt-logo.png",
+        srcDark: "img/dbt-logo-light.png",
+        alt: "site Logo",
       },
       items: [
         {
@@ -116,12 +116,12 @@ var siteSettings = {
           position: "left",
           items: [
             {
-              label: "Product docs",
+              label: "Документация dbt",
               to: "/docs/introduction",
               activeBaseRegex: "docs/(?!(dbt-cloud))",
             },
             {
-              label: "API docs",
+              label: "dbt Cloud API",
               to: "/docs/dbt-cloud-apis/overview",
             },
             {
@@ -129,7 +129,7 @@ var siteSettings = {
               to: "/best-practices",
             },
             {
-              label: "Release notes",
+              label: "Что нового",
               to: "/docs/dbt-versions/dbt-cloud-release-notes",
             },
           ],
