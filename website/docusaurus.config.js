@@ -9,14 +9,14 @@ require("dotenv").config();
 /* Debugging */
 var SITE_URL;
 if (!process.env.CONTEXT || process.env.CONTEXT == "production") {
-  SITE_URL = "https://docs.getdbt.com";
+  SITE_URL = "https://docs.getdbt.tech";
 } else {
   SITE_URL = process.env.DEPLOY_URL;
 }
 
 var GIT_BRANCH;
 if (!process.env.CONTEXT || process.env.CONTEXT == "production") {
-  GIT_BRANCH = "current";
+  GIT_BRANCH = "main";
 } else {
   GIT_BRANCH = process.env.HEAD;
 }
@@ -151,7 +151,7 @@ var siteSettings = {
           items: [
             {
               label: "Courses",
-              href: "https://learn.getdbt.com",
+              href: "https://inzhenerka.tech",
             },
             {
               label: "Best practices",
@@ -243,7 +243,7 @@ var siteSettings = {
           rehypePlugins: [katex],
 
           editUrl:
-            "https://github.com/dbt-labs/docs.getdbt.com/edit/" +
+            "https://github.com/Inzhenerka/docs.getdbt.tech/edit/" +
             GIT_BRANCH +
             "/website/",
           showLastUpdateTime: true,
