@@ -2,14 +2,14 @@
 id: mariah-rogers
 title: Mariah Rogers
 description: |
-  I got my start in the data world helping create a new major and minor in Data Science at my alma mater. I then became a data engineer, learned a ton, and propelled myself into the clean energy sector. Now I do data things at a clean energy company and geek out on solar energy at work and at home!
+  Я начала свою карьеру в мире данных, помогая создать новую специальность и дополнительную программу по Data Science в своем alma mater. Затем я стала инженером данных, многому научилась и перешла в сектор чистой энергии. Сейчас я занимаюсь данными в компании по производству чистой энергии и увлекаюсь солнечной энергией как на работе, так и дома!
 
-  I attended my first Coalesce virtually in 2021 when my former colleague Emily Ekdahl gave a talk about some cool things we'd been working on. She inspired me to propose a talk the following year, so I submitted two topics and, surprisingly, both were accepted! I ultimately chose to speak about Testing in dbt in New Orleans in 2022, and the community's reception of that talk continues to be a highlight of my career.
+  Я впервые посетила Coalesce виртуально в 2021 году, когда моя бывшая коллега Эмили Экдаль выступила с докладом о некоторых интересных проектах, над которыми мы работали. Она вдохновила меня предложить тему для доклада в следующем году, и я подала две темы, и, к моему удивлению, обе были приняты! В конечном итоге я выбрала тему о тестировании в dbt в Новом Орлеане в 2022 году, и реакция сообщества на этот доклад до сих пор остается одним из ярких моментов моей карьеры.
 
 image: /img/community/spotlight/mariah-rogers.jpg
 pronouns: she/her
 location: Irvine, California
-jobTitle: Senior Analytics Engineer
+jobTitle: Старший аналитический инженер
 companyName: Arcadia
 organization: ""
 socialLinks:
@@ -20,26 +20,26 @@ hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-My colleague and I discovered dbt in mid-2020 while hunting down documentation for Jinja2 because we had just spent four months writing our own Jinja2-powered SQL templating tool. We immediately backtracked that project, migrated everything to dbt, and never looked back.
+Я и мой коллега открыли для себя dbt в середине 2020 года, когда искали документацию по Jinja2, потому что мы только что потратили четыре месяца на создание собственного инструмента шаблонов SQL на основе Jinja2. Мы сразу же свернули этот проект, перенесли все на dbt и больше не оглядывались назад.
 
-I joined the dbt Slack community in shortly after we started our migration (fun fact, my first access log into the community Slack was on October 12, 2020). The tool, and the wonderful, supportive community around it, changed the way I work with data every single day and has helped me launch a career more successful and fulfilling than I could have imagined. 
+Я присоединилась к сообществу dbt в Slack вскоре после начала миграции (интересный факт: мой первый лог доступа в сообщество Slack был 12 октября 2020 года). Этот инструмент и замечательное, поддерживающее сообщество вокруг него изменили мой подход к работе с данными каждый день и помогли мне построить карьеру, более успешную и удовлетворяющую, чем я могла себе представить.
 
-I have spoken at Coalesce and a local Meetup, made countless online and IRL friends that are a blast to run into each year at the various conferences and events, and paved a path for my career long-term that I did not know could have existed before I found dbt and became an Analytics Engineer.
+Я выступала на Coalesce и на местных встречах, завела множество друзей как онлайн, так и в реальной жизни, с которыми приятно встречаться каждый год на различных конференциях и мероприятиях, и проложила долгосрочный путь для своей карьеры, о котором не знала, что он может существовать, прежде чем нашла dbt и стала аналитическим инженером.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Sometimes it feels hard to exist in this space as "just" a practitioner living in a vendor-ruled world. I am most inspired by my fellow practitioners who have their day jobs and still make the time and exude passion for the analytics craft both in- and outside of work, and share that with the community. I also greatly appreciate and aspire to be the type of community leader who crafts safe spaces and supportive networks like the women leading Data Angels, Women in Data, and other such groups. I have found so much profound community in these groups, and I hope to give back to these networks everything I have gotten out of them and more.
+Иногда кажется, что трудно существовать в этом пространстве как "просто" практикующему, живущему в мире, управляемом поставщиками. Меня больше всего вдохновляют мои коллеги-практики, которые совмещают свою основную работу с увлечением аналитическим ремеслом как на работе, так и вне ее, и делятся этим с сообществом. Я также очень ценю и стремлюсь быть тем типом лидера сообщества, который создает безопасные пространства и поддерживающие сети, как женщины, возглавляющие Data Angels, Women in Data и другие подобные группы. Я нашла много глубокой поддержки в этих группах и надеюсь вернуть этим сетям все, что я из них получила, и даже больше.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Чему вы научились у членов сообщества? Чему вы надеетесь научить других?
 
-They say that there are builders and there are optimizers. I am firmly in the optimizer camp. Everything I do, I do to make my life easier, the lives of my collaborators or stakeholders easier, or to help others in the community do the same for themselves. 
+Говорят, что есть строители и оптимизаторы. Я однозначно отношусь к лагерю оптимизаторов. Все, что я делаю, я делаю для того, чтобы облегчить свою жизнь, жизнь своих коллег или заинтересованных сторон, или помочь другим в сообществе сделать то же самое для себя.
 
-At least half of the expertise I have working with dbt or as an Analytics Engineer I learned from community members' blog posts, substacks, tweets, Coalesce talks, or even casual conversations at Meetups. The other half I earned out of curiosity about whether there was a better or more efficient way to accomplish the task at hand than the way I first learned to do it or first tried to complete it (and there usually is!). 
+По меньшей мере половину знаний, которые я имею о работе с dbt или как аналитический инженер, я получила из блогов, субстаков, твитов, докладов на Coalesce или даже из непринужденных разговоров на встречах. Остальную половину я приобрела из любопытства, есть ли лучший или более эффективный способ выполнить поставленную задачу, чем тот, который я изначально изучила или пыталась выполнить (и, как правило, есть!). 
 
-It is my goal to help spread this sense of curiosity and wonder around the community, as well as to share some of my more substantive learnings and opinions in the form of articles or conference talks in the future! I still feel like a caterpillar in my cocoon, trying to figure out what shape I'll take before I make my imprint on the world, but I will emerge soon!
+Моя цель — помочь распространить это чувство любопытства и удивления по всему сообществу, а также поделиться некоторыми из моих более значительных знаний и мнений в виде статей или докладов на конференциях в будущем! Я все еще чувствую себя гусеницей в своем коконе, пытаясь понять, какую форму я приму, прежде чем оставить свой след в мире, но вскоре я появлюсь!
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-Catch me in the purple jean jacket covered in data patches in Vegas this October at Coalesce 2024!
+Увидимся в фиолетовой джинсовой куртке, покрытой патчами с данными, в Лас-Вегасе в этом октябре на Coalesce 2024!

@@ -1,55 +1,55 @@
 ---
-title: "Writing contributions"
+title: "Написание вкладов"
 id: "contributing-writing"
 ---
 
-### Contribute to the product documentation
+### Внесите вклад в документацию продукта
 
-#### Overview
+#### Обзор
 
-The [dbt Product Documentation](https://docs.getdbt.com/docs/introduction) sits at the heart of how people learn to use and engage with dbt. From explaining dbt to newcomers to providing references for advanced functionality and APIs, the product docs are a frequent resource for _every_ dbt Developer.
+[Документация продукта dbt](https://docs.getdbt.com/docs/introduction) является основным ресурсом для обучения пользователей использованию и взаимодействию с dbt. Она объясняет dbt для новичков и предоставляет справочные материалы по расширенному функционалу и API, что делает её частым источником информации для _каждого_ разработчика dbt.
 
-#### Contribution opportunities
+#### Возможности для вклада
 
-We strive to create pathways that inspire you to learn more about dbt and enable you to continuously improve the way you solve data problems. We always appreciate the vigilance of the Community helping us to accurately represent the functionality and capabilities of dbt. You can participate by:
+Мы стремимся создать пути, которые вдохновляют вас узнать больше о dbt и позволяют вам постоянно улучшать способы решения задач с данными. Мы всегда ценим бдительность сообщества, помогающего нам точно представлять функциональность и возможности dbt. Вы можете участвовать, выполняя следующие действия:
 
-- [Opening an issue](https://github.com/dbt-labs/docs.getdbt.com/issues/new/choose) when you see something that can be fixed, whether it’s large or small.
-- Creating a PR when you see something you want to fix, or to address an existing issue. You can do this by clicking **Edit this page** at the bottom of any page on [docs.getdbt.com](http://docs.getdbt.com).
+- [Открыть проблему](https://github.com/dbt-labs/docs.getdbt.com/issues/new/choose), когда вы видите что-то, что можно исправить, независимо от того, насколько это большое или маленькое.
+- Создать PR, когда вы видите что-то, что хотите исправить, или чтобы решить существующую проблему. Вы можете сделать это, нажав **Редактировать эту страницу** внизу любой страницы на [docs.getdbt.com](http://docs.getdbt.com).
 
-#### Sample contributions
+#### Примеры вкладов
 
-We appreciate these contributions because they contain context in the original post (OP) that helps us understand their relevance. The also add value to the docs, even in small ways!
+Мы ценим эти вклады, потому что они содержат контекст в оригинальном сообщении (OP), который помогает нам понять их значимость. Они также добавляют ценность в документацию, даже в небольших аспектах!
 
-- Larger contribution: https://github.com/dbt-labs/docs.getdbt.com/pull/1898
-- Smaller contribution: https://github.com/dbt-labs/docs.getdbt.com/pull/1114
+- Более крупный вклад: https://github.com/dbt-labs/docs.getdbt.com/pull/1898
+- Более мелкий вклад: https://github.com/dbt-labs/docs.getdbt.com/pull/1114
 
-#### Get started
+#### Как начать
 
-- You can contribute to [docs.getdbt.com](http://docs.getdbt.com) by looking at our repository’s [README](https://github.com/dbt-labs/docs.getdbt.com#readme) or clicking **Edit this page** at the bottom of most pages at docs.getdbt.com.
-- Read the [OSS Expectations](/community/resources/oss-expectations).
-- Find an issue labeled “[good first issue](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+).”
-- Need help: Visit #community-writers on the Community Slack or mention `@dbt-labs/product-docs` in a pull request or issue comment.
+- Вы можете внести вклад в [docs.getdbt.com](http://docs.getdbt.com), ознакомившись с [README](https://github.com/dbt-labs/docs.getdbt.com#readme) нашего репозитория или нажав **Редактировать эту страницу** внизу большинства страниц на docs.getdbt.com.
+- Ознакомьтесь с [Ожиданиями OSS](/community/resources/oss-expectations).
+- Найдите проблему с меткой “[хорошая первая проблема](https://github.com/dbt-labs/docs.getdbt.com/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+).”
+- Нужна помощь: посетите #community-writers в Slack-сообществе или упомяните `@dbt-labs/product-docs` в комментарии к PR или проблеме.
 
-### Write a Developer Blog Post
+### Напишите пост в блоге разработчиков
 
-#### Overview
+#### Обзор
 
-The [dbt Developer Blog](https://docs.getdbt.com/blog) is the place for analytics practitioners to talk about _what it’s like to do data work right now._ This is the place to share tips and tricks, hard won knowledge and stories from the trenches with the dbt Community.
+[Блог разработчиков dbt](https://docs.getdbt.com/blog) — это место, где аналитики могут говорить о _том, каково это — работать с данными прямо сейчас._ Здесь можно делиться советами и хитростями, ценными знаниями и историями из практики с сообществом dbt.
 
-#### Contribution opportunities
+#### Возможности для вклада
 
-We want to hear your stories! Did you recently solve a cool problem, discover an interesting bug or lead an organizational change? Come tell the story on the dbt Developer Blog.
+Мы хотим услышать ваши истории! Вы недавно решили интересную задачу, обнаружили интересный баг или инициировали организационные изменения? Приходите и расскажите свою историю в блоге разработчиков dbt.
 
-#### Sample contributions
+#### Примеры вкладов
 
-- [Founding an Analytics Engineering Team From Scratch](https://docs.getdbt.com/blog/founding-an-analytics-engineering-team-smartsheet#our-own-take-on-data-mesh)
-- [Tackling the Complexity of Joining Snapshots](https://docs.getdbt.com/blog/joining-snapshot-complexity)
+- [Создание команды аналитической инженерии с нуля](https://docs.getdbt.com/blog/founding-an-analytics-engineering-team-smartsheet#our-own-take-on-data-mesh)
+- [Преодоление сложности объединения снимков](https://docs.getdbt.com/blog/joining-snapshot-complexity)
 
-#### Get started
+#### Как начать
 
-- [Read the contribution guide](https://github.com/dbt-labs/docs.getdbt.com/blob/current/contributing/developer-blog.md)
-- [Open up an issue with your idea for a post](https://github.com/dbt-labs/docs.getdbt.com/issues/new?assignees=&labels=content%2Cdeveloper+blog&template=contribute-to-developer-blog.yml)
+- [Прочитайте руководство по вкладам](https://github.com/dbt-labs/docs.getdbt.com/blob/current/contributing/developer-blog.md)
+- [Откройте проблему с вашей идеей для поста](https://github.com/dbt-labs/docs.getdbt.com/issues/new?assignees=&labels=content%2Cdeveloper+blog&template=contribute-to-developer-blog.yml)
 
-#### Need help?
+#### Нужна помощь?
 
-Visit #community-writers in the dbt Community Slack
+Посетите #community-writers в Slack-сообществе dbt.

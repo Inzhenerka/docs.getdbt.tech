@@ -1,35 +1,35 @@
 ---
-title: "Incremental models in-depth"
+title: "Глубокое понимание инкрементальных моделей"
 id: materializations-guide-4-incremental-models
 slug: 4-incremental-models
-description: Read this guide to understand the incremental models you can create in dbt.
-displayText: Materializations best practices
-hoverSnippet: Read this guide to understand the incremental models you can create in dbt.
+description: Прочитайте этот гид, чтобы понять инкрементальные модели, которые вы можете создать в dbt.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте этот гид, чтобы понять инкрементальные модели, которые вы можете создать в dbt.
 ---
 
-So far we’ve looked at tables and views, which map to the traditional objects in the data warehouse. As mentioned earlier, incremental models are a little different. This is where we start to deviate from this pattern with more powerful and complex materializations.
+До сих пор мы рассматривали таблицы и представления, которые соответствуют традиционным объектам в хранилище данных. Как уже упоминалось, инкрементальные модели немного отличаются. Здесь мы начинаем отклоняться от этой схемы, используя более мощные и сложные материализации.
 
-- 📚 **Incremental models generate tables.** They physically persist the data itself to the warehouse, just piece by piece. What’s different is **how we build that table**.
-- 💅 **Only apply our transformations to rows of data with new or updated information**, this maximizes efficiency.
-  - 🌍  If we have a very large set of data or compute-intensive transformations, or both, it can be very slow and costly to process the entire corpus of source data being input into a model or chain of models. If instead we can identify _only rows that contain new information_ (that is, **new or updated records**), we then can process just those rows, building our models _incrementally_.
-- 3️⃣  We need **3 key things** in order to accomplish the above:
-  - a **filter** to select just the new or updated records
-  - a **conditional block** that wraps our filter and only applies it when we want it
-  - **configuration** that tells dbt we want to build incrementally and helps apply the conditional filter when needed
+- 📚 **Инкрементальные модели генерируют таблицы.** Они физически сохраняют данные в хранилище, но по частям. Главное отличие заключается в **том, как мы строим эту таблицу**.
+- 💅 **Применяем наши преобразования только к строкам данных с новой или обновленной информацией**, что максимизирует эффективность.
+  - 🌍  Если у нас есть очень большой объем данных или ресурсоемкие преобразования, или и то, и другое, обработка всего объема исходных данных, поступающих в модель или цепочку моделей, может быть очень медленной и дорогостоящей. Если мы можем идентифицировать _только строки, содержащие новую информацию_ (то есть **новые или обновленные записи**), мы можем обрабатывать только эти строки, строя наши модели _инкрементально_.
+- 3️⃣  Нам нужно **3 ключевых элемента**, чтобы достичь этого:
+  - **фильтр**, чтобы выбрать только новые или обновленные записи
+  - **условный блок**, который оборачивает наш фильтр и применяет его только тогда, когда это необходимо
+  - **конфигурация**, которая сообщает dbt, что мы хотим строить инкрементально и помогает применять условный фильтр при необходимости
 
-Let’s dig into how exactly we can do that in dbt. Let’s say we have an `orders` table that looks like the below:
+Давайте углубимся в то, как именно мы можем это сделать в dbt. Предположим, у нас есть таблица `orders`, которая выглядит следующим образом:
 
 | order_id | order_status | customer_id | order_item_id | ordered_at | updated_at |
 | -------- | ------------ | ----------- | ------------- | ---------- | ---------- |
 | 123      | shipped      | 7           | 5791          | 2022-01-30 | 2022-01-30 |
 | 234      | confirmed    | 15          | 1643          | 2022-01-31 | 2022-01-31 |
 
-We did our last `dbt build` job on `2022-01-31`, so any new orders since that run won’t appear in our table. When we do our next run (for simplicity let’s say the next day, although for an orders model we’d more realistically run this hourly), we have two options:
+Мы выполнили нашу последнюю задачу `dbt build` 31 января 2022 года, поэтому любые новые заказы с тех пор не появятся в нашей таблице. Когда мы выполним следующий запуск (для простоты предположим, что это будет на следующий день, хотя для модели заказов мы бы более реалистично запускали это каждый час), у нас есть два варианта:
 
-- 🏔️ build the table from the **beginning of time again — a _table materialization_**
-  - Simple and solid, if we can afford to do it (in terms of time, compute, and money — which are all directly correlated in a cloud warehouse). It’s the easiest and most accurate option.
-- 🤏 find a way to run **just new and updated rows since our previous run — _an_ _incremental materialization_**
-  - If we _can’t_ realistically afford to run the whole table — due to complex transformations or big source data, it takes too long — then we want to build incrementally. We want to just transform and add the row with id 567 below, _not_ the previous two with ids 123 and 234 that are already in the table.
+- 🏔️ построить таблицу с **начала времен снова — _материализация таблицы_**
+  - Простой и надежный вариант, если мы можем себе это позволить (с точки зрения времени, вычислений и денег — которые все напрямую связаны в облачном хранилище). Это самый простой и точный вариант.
+- 🤏 найти способ выполнить **только новые и обновленные строки с момента нашего предыдущего запуска — _инкрементальная материализация_**
+  - Если мы _не можем_ реально позволить себе запустить всю таблицу — из-за сложных преобразований или большого объема исходных данных, это занимает слишком много времени — тогда мы хотим строить инкрементально. Мы хотим просто преобразовать и добавить строку с id 567 ниже, _а не_ предыдущие две с id 123 и 234, которые уже находятся в таблице.
 
 | order_id | order_status | customer_id | order_item_id | ordered_at | updated_at |
 | -------- | ------------ | ----------- | ------------- | ---------- | ---------- |
@@ -37,14 +37,14 @@ We did our last `dbt build` job on `2022-01-31`, so any new orders since that ru
 | 234      | confirmed    | 15          | 1643          | 2022-01-31 | 2022-01-31 |
 | 567      | shipped      | 61          | 28            | 2022-02-01 | 2022-02-01 |
 
-### Writing incremental logic
+### Написание инкрементальной логики
 
-Let’s think through the information we’d need to build such a model that only processes new and updated data. We would need:
+Давайте подумаем о том, какая информация нам нужна для построения такой модели, которая обрабатывает только новые и обновленные данные. Нам потребуется:
 
-- 🕜  **a timestamp indicating when a record was last updated**, let’s call it our `updated_at` timestamp, as that’s a typical convention and what we have in our example above.
-- ⌛ the **most recent timestamp from this table _in our warehouse_** _—_ that is, the one created by the previous run — to act as a cutoff point. We’ll call the model we’re working in `this`, for ‘this model we’re working in’.
+- 🕜  **метка времени, указывающая, когда запись была последний раз обновлена**, давайте назовем ее нашей меткой времени `updated_at`, так как это типичная конвенция и то, что у нас есть в нашем примере выше.
+- ⌛  **самая последняя метка времени из этой таблицы _в нашем хранилище_** _—_ то есть, созданная предыдущим запуском — чтобы служить в качестве контрольной точки. Мы будем называть модель, с которой мы работаем, `this`, для «этой модели, с которой мы работаем».
 
-That would lets us construct logic like this:
+Это позволит нам построить логику, подобную этой:
 
 ```sql
 select * from orders
@@ -53,38 +53,38 @@ where
   updated_at > (select max(updated_at) from {{ this }})
 ```
 
-Let’s break down that `where` clause a bit, because this is where the action is with incremental models. Stepping through the code **_right-to-left_** we:
+Давайте немного разберем этот `where`-клауза, потому что именно здесь происходит действие с инкрементальными моделями. Проходя по коду **_справа налево_**, мы:
 
-1. Get our **cutoff.**
-   1. Select the `max(updated_at)` timestamp — the **most recent record**
-   2. from `{{ this }}` — the table for this model as it exists in the warehouse, as **built in our last run**,
-   3. so `max(updated_at) from {{ this }}` the **_most recent record processed in our last run,_**
-   4. that’s exactly what we want as a **cutoff**!
-2. **Filter** the rows we’re selecting to add in this run.
-   1. Use the `updated_at` timestamp from our input, the equivalent column to the one in the warehouse, but in the up-to-the-minute **source data we’re selecting from** and
-   2. check if it’s **greater than our cutoff,**
-   3. if so it will satisfy our where clause, so we’re **selecting all the rows more recent than our cutoff.**
+1. Получаем нашу **контрольную точку.**
+   1. Выбираем метку времени `max(updated_at)` — **самую последнюю запись**
+   2. из `{{ this }}` — таблицы для этой модели, как она существует в хранилище, **как построенная в нашем последнем запуске**,
+   3. так что `max(updated_at) from {{ this }}` — **_самая последняя запись, обработанная в нашем последнем запуске,_**
+   4. это именно то, что нам нужно в качестве **контрольной точки**!
+2. **Фильтруем** строки, которые мы выбираем для добавления в этот запуск.
+   1. Используем метку времени `updated_at` из нашего входа, эквивалентный столбец к тому, что в хранилище, но в актуальных **исходных данных, из которых мы выбираем** и
+   2. проверяем, больше ли она **нашей контрольной точки,**
+   3. если да, то это удовлетворяет нашему условию where, так что мы **выбираем все строки более поздние, чем наша контрольная точка.**
 
-This logic would let us isolate and apply our transformations to just the records that have come in since our last run, and I’ve got some great news: that magic `{{ this }}` keyword [does in fact exist in dbt](/reference/dbt-jinja-functions/this), so we can write exactly this logic in our models.
+Эта логика позволит нам изолировать и применить наши преобразования только к записям, которые поступили с момента нашего последнего запуска, и у меня есть отличные новости: это волшебное слово `{{ this }}` [действительно существует в dbt](/reference/dbt-jinja-functions/this), так что мы можем написать именно эту логику в наших моделях.
 
-### Configuring incremental models
+### Конфигурирование инкрементальных моделей
 
-So we’ve found a way to isolate the new rows we need to process. How then do we handle the rest? We still need to:
+Итак, мы нашли способ изолировать новые строки, которые нам нужно обработать. Как же нам справиться с остальными? Нам все еще нужно:
 
-- ➕  make sure dbt knows to **_add_ new rows on top** of the existing table in the warehouse, **not replace** it.
-- 👉  If there are **updated rows**, we need a way for dbt to know **which rows to update**.
-- 🌍  Lastly, if we’re building into a new environment and there’s **no previous run to reference**, or we need to **build the model from scratch.** Put another way, we’ll want a means to skip the incremental logic and transform all of our input data like a regular table if needed.
-- 😎 **Visualized below**, we’ve figured out how to get the red ‘new records’ portion selected, but we need to sort out the step to the right, where we stick those on to our model.
+- ➕  убедиться, что dbt знает, что нужно **_добавить_ новые строки поверх** существующей таблицы в хранилище, **а не заменять** ее.
+- 👉  Если есть **обновленные строки**, нам нужен способ для dbt узнать, **какие строки обновить**.
+- 🌍  Наконец, если мы строим в новой среде и **нет предыдущего запуска для ссылки**, или нам нужно **построить модель с нуля.** Другими словами, нам нужен способ пропустить инкрементальную логику и преобразовать все наши входные данные как обычную таблицу, если это необходимо.
+- 😎 **На схеме ниже** мы выяснили, как выбрать красную часть «новые записи», но нам нужно разобраться с шагом вправо, где мы добавляем их к нашей модели.
 
-![Diagram visualizing how incremental models work](/img/best-practices/materializations/incremental-diagram.png)
+![Схема, визуализирующая, как работают инкрементальные модели](/img/best-practices/materializations/incremental-diagram.png)
 
 :::info
-😌 Incremental models can be confusing at first, **take your time reviewing** this visual and the previous steps until you have a **clear mental model.** Be patient with yourself. This materialization will become second nature soon, but it’s tough at first. If you’re feeling confused the [dbt Community is here for you on the Forum and Slack](https://www.getdbt.com/community/join-the-community).
+😌 Инкрементальные модели могут быть запутанными в начале, **потратьте время на изучение** этой визуализации и предыдущих шагов, пока у вас не появится **четкая ментальная модель.** Будьте терпеливы к себе. Эта материализация вскоре станет для вас второй натурой, но в начале это сложно. Если вы чувствуете себя запутанным, [сообщество dbt здесь, чтобы помочь вам на Форуме и Slack](https://www.getdbt.com/community/join-the-community).
 :::
 
-Thankfully dbt has some additional configuration and special syntax just for incremental models.
+К счастью, dbt имеет дополнительную конфигурацию и специальный синтаксис только для инкрементальных моделей.
 
-First, let’s look at a config block for incremental materialization:
+Сначала давайте посмотрим на блок конфигурации для инкрементальной материализации:
 
 ```sql
 {{
@@ -97,28 +97,28 @@ First, let’s look at a config block for incremental materialization:
 select ...
 ```
 
-- 📚 The **`materialized` config** works just like tables and views, we just pass it the value `'incremental'`.
-- 🔑 We’ve **added a new config option `unique_key`,** that tells dbt that if it finds a record in our previous run — the data in the warehouse already — with the same unique id (in our case `order_id` for our `orders` table) that exists in the new data we’re adding incrementally, to **update that record instead of adding it as a separate row**.
-- 👯 This **hugely broadens the types of data we can build incrementally** from just immutable tables (data where rows only ever get added, never updated) to mutable records (where rows might change over time). As long as we’ve got a column that specifies when records were updated (such as `updated_at` in our example), we can handle almost anything.
-- ➕ We’re now **adding records** to the table **and updating existing rows**. That’s 2 of 3 concerns.
-- 🆕 We still need to **build the table from scratch** (via `dbt build` or `run` in a job) when necessary — whether because we’re in a new environment so don’t have an initial table to build on, or our model has drifted from the original over time due to data loading latency.
-- 🔀 We need to wrap our incremental logic, that is our `where` clause with our `updated_at` cutoff, in a **conditional statement that will only apply it when certain conditions are met**. If you’re thinking this is **a case for a Jinja `{% if %}` statement**, you’re absolutely right!
+- 📚 **Конфигурация `materialized`** работает так же, как таблицы и представления, мы просто передаем ей значение `'incremental'`.
+- 🔑 Мы **добавили новую опцию конфигурации `unique_key`**, которая сообщает dbt, что если он находит запись в нашем предыдущем запуске — данные в хранилище уже — с тем же уникальным идентификатором (в нашем случае `order_id` для нашей таблицы `orders`), который существует в новых данных, которые мы добавляем инкрементально, то **обновить эту запись вместо того, чтобы добавлять ее как отдельную строку**.
+- 👯 Эта **значительно расширяет типы данных, которые мы можем строить инкрементально** — от просто неизменяемых таблиц (данные, где строки только добавляются, никогда не обновляются) до изменяемых записей (где строки могут изменяться со временем). Пока у нас есть столбец, который указывает, когда записи были обновлены (например, `updated_at` в нашем примере), мы можем обрабатывать почти все.
+- ➕ Теперь мы **добавляем записи** в таблицу **и обновляем существующие строки**. Это 2 из 3 вопросов.
+- 🆕 Нам все еще нужно **построить таблицу с нуля** (через `dbt build` или `run` в задаче) при необходимости — будь то потому, что мы находимся в новой среде, поэтому у нас нет начальной таблицы для построения, или наша модель со временем отклонилась от оригинала из-за задержки загрузки данных.
+- 🔀 Нам нужно обернуть нашу инкрементальную логику, то есть наш `where`-клауза с нашей контрольной точкой `updated_at`, в **условное выражение, которое будет применяться только тогда, когда выполнены определенные условия**. Если вы думаете, что это **случай для Jinja `{% if %}` выражения**, вы абсолютно правы!
 
-### Incremental conditions
+### Условия инкрементальности
 
-So we’re going to use an **if statement** to apply our cutoff filter **only when certain conditions are met**. We want to apply our cutoff filter _if_ the **following things are true**:
+Итак, мы собираемся использовать **if-выражение**, чтобы применить наш фильтр контрольной точки **только тогда, когда выполнены определенные условия**. Мы хотим применить наш фильтр контрольной точки _если_ **выполнены следующие условия**:
 
-- ➕  we’ve set the materialization **config** to incremental,
-- 🛠️  there is an **existing table** for this model in the warehouse to build on,
-- 🙅‍♀️  and the `--full-refresh` **flag was _not_ passed.**
-  - [full refresh](/reference/resource-configs/full_refresh) is a configuration and flag that is specifically designed to let us override the incremental materialization and build a table from scratch again.
+- ➕  мы установили конфигурацию **материализации** на инкрементальную,
+- 🛠️  в хранилище есть **существующая таблица** для этой модели, на основе которой можно строить,
+- 🙅‍♀️  и флаг `--full-refresh` **_не был_ передан.**
+  - [полное обновление](/reference/resource-configs/full_refresh) — это конфигурация и флаг, специально предназначенные для того, чтобы позволить нам переопределить инкрементальную материализацию и снова построить таблицу с нуля.
 
-Thankfully, we don’t have to dig into the guts of dbt to sort out each of these conditions individually.
+К счастью, нам не нужно углубляться в внутренности dbt, чтобы разобраться с каждым из этих условий по отдельности.
 
-- ⚙️  dbt provides us with a **macro [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro)** that checks all of these conditions for this exact use case.
-- 🔀  By **wrapping our cutoff logic** in this macro, it will only get applied when the macro returns true for all of the above conditions.
+- ⚙️  dbt предоставляет нам **макрос [`is_incremental`](/docs/build/incremental-models#understand-the-is_incremental-macro)**, который проверяет все эти условия для этого конкретного случая.
+- 🔀  Оборачивая **нашу логику контрольной точки** в этот макрос, она будет применяться только тогда, когда макрос возвращает true для всех вышеперечисленных условий.
 
-Let’s take a look at all these pieces together:
+Давайте посмотрим на все эти элементы вместе:
 
 ```sql
 {{
@@ -138,22 +138,22 @@ where
 {% endif %}
 ```
 
-Fantastic! We’ve got a working incremental model. On our first run, when there is no corresponding table in the warehouse, `is_incremental` will evaluate to false and we’ll capture the entire table. On subsequent runs it will evaluate to true and we’ll apply our filter logic, capturing only the newer data.
+Отлично! У нас есть работающая инкрементальная модель. При нашем первом запуске, когда в хранилище нет соответствующей таблицы, `is_incremental` будет оцениваться как false, и мы захватим всю таблицу. При последующих запусках он будет оцениваться как true, и мы применим нашу фильтрационную логику, захватывая только новые данные.
 
-### Late arriving facts
+### Поздно поступающие факты
 
-Our last concern specific to incremental models is what to do when data is inevitably loaded in a less-than-perfect way. Sometimes data loaders will, for a variety of reasons, load data late. Either an entire load comes in late, or some rows come in on a load after those with which they should have. The following is best practice for every incremental model to slow down the drift this can cause.
+Наша последняя проблема, специфичная для инкрементальных моделей, заключается в том, что делать, когда данные неизбежно загружаются не идеально. Иногда загрузчики данных по разным причинам загружают данные с опозданием. Либо вся загрузка приходит с опозданием, либо некоторые строки приходят в загрузке после тех, с которыми они должны были быть. Следующее является лучшей практикой для каждой инкрементальной модели, чтобы замедлить отклонение, которое это может вызвать.
 
-- 🕐 For example if most of our records for `2022-01-30` come in the raw schema of our warehouse on the morning of `2022-01-31`, but a handful don’t get loaded til `2022-02-02`, how might we tackle that? There will already be `max(updated_at)` timestamps of `2022-01-31` in the warehouse, filtering out those late records. **They’ll never make it to our model.**
-- 🪟 To mitigate this, we can add a **lookback window** to our **cutoff** point. By **subtracting a few days** from the `max(updated_at)`, we would capture any late data within the window of what we subtracted.
-- 👯 As long as we have a **`unique_key` defined in our config**, we’ll simply update existing rows and avoid duplication. We process more data this way, but in a fixed way, and it keeps our model hewing closer to the source data.
+- 🕐 Например, если большинство наших записей за `2022-01-30` поступают в сыром формате в наше хранилище утром `2022-01-31`, но небольшая часть не загружается до `2022-02-02`, как мы можем с этим справиться? В хранилище уже будут метки времени `max(updated_at)` `2022-01-31`, фильтруя эти поздние записи. **Они никогда не попадут в нашу модель.**
+- 🪟 Чтобы смягчить это, мы можем добавить **окно обратного просмотра** к нашей **контрольной точке**. Вычитая несколько дней из `max(updated_at)`, мы захватим любые поздние данные в пределах окна, которое мы вычли.
+- 👯 Пока у нас есть **определенный `unique_key` в нашей конфигурации**, мы просто обновим существующие строки и избегаем дублирования. Мы обрабатываем больше данных таким образом, но фиксированным образом, и это позволяет нашей модели оставаться ближе к исходным данным.
 
-### Long-term considerations
+### Долгосрочные соображения
 
-Late arriving facts point to the biggest tradeoff with incremental models:
+Поздно поступающие факты указывают на наибольшую компромиссу с инкрементальными моделями:
 
-- 🪢 In addition to extra **complexity**, they also inevitably **drift from the source data over time.** Due to the imperfection of loaders and the reality of late arriving facts, we can’t help but miss some day in-between our incremental runs, and this accumulates.
-- 🪟 We can slow this entropy with the lookback window described above — **the longer the window the less efficient the model, but the slower the drift.** It’s important to note it will still occur though, however slowly. If we have a lookback window of 3 days, and a record comes in 4 days late from the loader, we’re still going to miss it.
-- 🌍 Thankfully, there is a way we can reset the relationship of the model to the source data. We can run the model with the **`--full-refresh` flag passed** (such as `dbt build --full-refresh -s orders`). As we saw in the `is_incremental` conditions above, that will make our logic return false, and our `where` clause filter will not be applied, running the whole table.
-- 🏗️ This will let us **rebuild the entire table from scratch,** a good practice to do regularly **if the size of the data will allow**.
-- 📆 A common pattern for incremental models of manageable size is to run a **full refresh on the weekend** (or any low point in activity), either **weekly or monthly**, to consistently reset the drift from late arriving facts.
+- 🪢 В дополнение к дополнительной **сложности**, они также неизбежно **отклоняются от исходных данных со временем.** Из-за несовершенства загрузчиков и реальности поздно поступающих фактов мы не можем избежать пропуска некоторых дней между нашими инкрементальными запусками, и это накапливается.
+- 🪟 Мы можем замедлить эту энтропию с помощью описанного выше окна обратного просмотра — **чем длиннее окно, тем менее эффективна модель, но тем медленнее отклонение.** Важно отметить, что оно все равно будет происходить, хотя и медленно. Если у нас есть окно обратного просмотра в 3 дня, и запись поступает с опозданием на 4 дня от загрузчика, мы все равно пропустим ее.
+- 🌍 К счастью, есть способ сбросить связь модели с исходными данными. Мы можем запустить модель с переданным **флагом `--full-refresh`** (например, `dbt build --full-refresh -s orders`). Как мы видели в условиях `is_incremental` выше, это заставит нашу логику вернуть false, и наш фильтр `where` не будет применен, запуская всю таблицу.
+- 🏗️ Это позволит нам **восстановить всю таблицу с нуля**, что является хорошей практикой делать регулярно **если размер данных это позволяет**.
+- 📆 Распространенная практика для инкрементальных моделей управляемого размера — проводить **полное обновление в выходные** (или в любой низкий период активности), либо **еженедельно, либо ежемесячно**, чтобы постоянно сбрасывать отклонение от поздно поступающих фактов.

@@ -1,22 +1,22 @@
 ---
-title: How we style our YAML
+title: Как мы оформляем наш YAML
 id: 5-how-we-style-our-yaml
 ---
 
-## YAML Style Guide
+## Руководство по стилю YAML
 
-- 2️⃣ Indents should be two spaces
-- ➡️ List items should be indented
-- 🔠 List items with a single entry can be a string. For example, `'select': 'other_user'`, but it's best practice to provide the argument as an explicit list. For example, `'select': ['other_user']`
-- 🆕 Use a new line to separate list items that are dictionaries where appropriate
-- 📏 Lines of YAML should be no longer than 80 characters.
-- 🛠️ Use the [dbt JSON schema](https://github.com/dbt-labs/dbt-jsonschema) with any compatible IDE and a YAML formatter (we recommend [Prettier](https://prettier.io/)) to validate your YAML files and format them automatically.
+- 2️⃣ Отступы должны составлять два пробела
+- ➡️ Элементы списка должны быть с отступом
+- 🔠 Элементы списка с единственным значением могут быть строкой. Например, `'select': 'other_user'`, но лучшей практикой является предоставление аргумента в виде явного списка. Например, `'select': ['other_user']`
+- 🆕 Используйте новую строку для разделения элементов списка, которые являются словарями, когда это уместно
+- 📏 Строки YAML не должны превышать 80 символов.
+- 🛠️ Используйте [dbt JSON schema](https://github.com/dbt-labs/dbt-jsonschema) с любым совместимым IDE и форматировщиком YAML (рекомендуем [Prettier](https://prettier.io/)) для проверки ваших YAML файлов и их автоматического форматирования.
 
 :::info
-☁️ As with Python and SQL, the dbt Cloud IDE comes with built-in formatting for YAML files (Markdown and JSON too!), via Prettier. Just click the `Format` button and you're in perfect style. As with the other tools, you can [also customize the formatting rules](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format#format-yaml-markdown-json) to your liking to fit your company's style guide.
+☁️ Как и в Python и SQL, в dbt Cloud IDE есть встроенное форматирование для YAML файлов (также для Markdown и JSON!), с помощью Prettier. Просто нажмите кнопку `Format`, и вы получите идеальный стиль. Как и в других инструментах, вы также можете [настроить правила форматирования](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format#format-yaml-markdown-json) по своему усмотрению, чтобы соответствовать стилевому руководству вашей компании.
 :::
 
-### Example YAML
+### Пример YAML
 
 ```yaml
 version: 2

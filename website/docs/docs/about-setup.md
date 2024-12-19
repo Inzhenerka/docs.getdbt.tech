@@ -1,33 +1,33 @@
 ---
-title: About dbt setup
+title: О настройке dbt
 id: about-setup
-description: "About setup of dbt Core and Cloud"
-sidebar_label: "About dbt setup"
+description: "О настройке dbt Core и Cloud"
+sidebar_label: "О настройке dbt"
 pagination_next: "docs/environments-in-dbt"
 pagination_prev: null
 ---
 
-dbt compiles and runs your analytics code against your data platform, enabling you and your team to collaborate on a single source of truth for metrics, insights, and business definitions. There are two options for deploying dbt:
+dbt компилирует и выполняет ваш аналитический код на вашей платформе данных, позволяя вам и вашей команде сотрудничать на едином источнике правды для метрик, инсайтов и бизнес-определений. Существует два варианта развертывания dbt:
 
-**dbt Cloud** runs dbt Core in a hosted (single or multi-tenant) environment with a browser-based interface. The intuitive user interface aids you in setting up the various components. dbt Cloud comes equipped with turnkey support for scheduling jobs, CI/CD, hosting documentation, monitoring, and alerting. It also offers an integrated development environment (IDE) and allows you to develop and run dbt commands from your local command line (CLI) or code editor.
+**dbt Cloud** запускает dbt Core в хостинг-среде (одиночной или многопользовательской) с интерфейсом на основе браузера. Интуитивно понятный пользовательский интерфейс помогает вам настраивать различные компоненты. dbt Cloud поставляется с готовой поддержкой для планирования задач, CI/CD, хостинга документации, мониторинга и оповещения. Он также предлагает интегрированную среду разработки (IDE) и позволяет вам разрабатывать и выполнять команды dbt из вашей локальной командной строки (CLI) или редактора кода.
 
-**dbt Core** is an open-source command line tool that can be installed locally in your environment, and communication with databases is facilitated through adapters.
+**dbt Core** — это инструмент командной строки с открытым исходным кодом, который можно установить локально в вашей среде, а связь с базами данных осуществляется через адаптеры.
 
-If you're not sure which is the right solution for you, read our [What is dbt?](/docs/introduction) and our [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features) articles to help you decide. If you still have questions, don't hesitate to [contact us](https://www.getdbt.com/contact/).
+Если вы не уверены, какое решение подходит именно вам, прочитайте наши статьи [Что такое dbt?](/docs/introduction) и [особенности dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features), чтобы помочь вам определиться. Если у вас все еще есть вопросы, не стесняйтесь [связаться с нами](https://www.getdbt.com/contact/).
 
-To begin configuring dbt now, select the option that is right for you.
+Чтобы начать настраивать dbt сейчас, выберите подходящий для вас вариант.
 
 <div className="grid--2-col">
 
 <Card
-    title="dbt Cloud setup"
-    body="Learn how to connect to a data platform, integrate with secure authentication methods, and configure a sync with a git repo."
+    title="Настройка dbt Cloud"
+    body="Узнайте, как подключиться к платформе данных, интегрироваться с безопасными методами аутентификации и настроить синхронизацию с репозиторием git."
     link="/docs/cloud/about-cloud-setup"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Core setup"
-    body="Learn about dbt Core and how to setup data platform connections."
+    title="Настройка dbt Core"
+    body="Узнайте о dbt Core и о том, как настроить подключения к платформам данных."
     link="/docs/core/about-core-setup"
     icon="dbt-bit"/>
 

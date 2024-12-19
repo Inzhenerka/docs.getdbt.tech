@@ -1,39 +1,39 @@
 ---
-title: "Building semantic models"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Создание семантических моделей"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-4-build-metrics"
 ---
 
-## How to build a semantic model
+## Как создать семантическую модель
 
-A semantic model is the Semantic Layer equivalent to a logical layer model (what historically has just been called a 'model' in dbt land). Just as configurations for models are defined on the `models:` YAML key, configurations for semantic models are housed under `semantic models:`. A key difference is that while a logical model consists of configuration and SQL or Python code, a **semantic model is defined purely via YAML**. Rather than encoding a specific dataset, a **semantic model describes relationships and expressions** that let your end users select and refine their own datasets dynamically and reliably.
+Семантическая модель является эквивалентом логической модели в семантическом слое. Так же, как конфигурации для моделей определяются в ключе YAML `models:`, конфигурации для семантических моделей размещаются под `semantic models:`. Ключевое отличие заключается в том, что в то время как логическая модель состоит из конфигурации и SQL или Python кода, **семантическая модель определяется исключительно с помощью YAML**. Вместо того чтобы кодировать конкретный набор данных, **семантическая модель описывает отношения и выражения**, которые позволяют конечным пользователям динамически и надежно выбирать и уточнять свои собственные наборы данных.
 
-- ⚙️ Semantic models are **comprised of three components**:
-  - 🫂 **entities**: these describe the **relationships** between various semantic models (think ids)
-  - 🔪 **dimensions**: these are the columns you want to **slice, dice, group, and filter by** (think timestamps, categories, booleans).
-  - 📏 **measures**: these are the **quantitative values you want to aggregate**
-- 🪣 We define **columns as being an entity, dimension, or measure**. Columns will typically fit into one of these 3 buckets, or if they're a complex aggregation expression, they might constitute a metric.
+- ⚙️ Семантические модели **состоят из трех компонентов**:
+  - 🫂 **сущности**: они описывают **отношения** между различными семантическими моделями (например, идентификаторы)
+  - 🔪 **измерения**: это столбцы, по которым вы хотите **разделять, группировать и фильтровать** (например, временные метки, категории, булевы значения).
+  - 📏 **меры**: это **количественные значения, которые вы хотите агрегировать**
+- 🪣 Мы определяем **столбцы как сущность, измерение или меру**. Столбцы обычно попадают в одну из этих трех категорий, или, если они представляют собой сложное агрегированное выражение, могут составлять метрику.
 
-## Defining orders
+## Определение заказов
 
-Let's zoom in on how we might define an _orders_ semantic model.
+Давайте подробнее рассмотрим, как мы можем определить семантическую модель _заказов_.
 
-- 📗 We define it as a **YAML dictionary in the `semantic_models` list**.
-- 📑 It will have a **name, entities list, dimensions list, and measures list**.
-- ⏬ We recommend defining them **in this order consistently** as a style best practice.
+- 📗 Мы определяем ее как **словарь YAML в списке `semantic_models`**.
+- 📑 Она будет иметь **имя, список сущностей, список измерений и список мер**.
+- ⏬ Мы рекомендуем определять их **в этом порядке последовательно** как лучшую практику стиля.
 
 <File name="models/marts/orders.yml" />
 
 ```yaml
 semantic_models:
   - name: orders
-    entities: ... # we'll define these later
-    dimensions: ... # we'll define these later
-    measures: ... # we'll define these later
+    entities: ... # мы определим их позже
+    dimensions: ... # мы определим их позже
+    measures: ... # мы определим их позже
 ```
 
-- Next we'll point to the corresponding logical model by supplying a [`ref`](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) in the `model:` property, and a `description` for documentation.
+- Далее мы укажем соответствующую логическую модель, предоставив [`ref`](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) в свойстве `model:` и `description` для документации.
 
 <File name="models/marts/orders.yml" />
 
@@ -41,25 +41,25 @@ semantic_models:
 semantic_models:
   - name: orders
     description: |
-      Model containing order data. The grain of the table is the order id.
+      Модель, содержащая данные о заказах. Уровень детализации таблицы — идентификатор заказа.
     model: ref('stg_orders')
     entities: ...
     dimensions: ...
     measures: ...
 ```
 
-## Establishing our entities
+## Установление наших сущностей
 
-- 🫂 Entities are the **objects and concepts** in our data that _have_ dimensions and measures. You can think of them as the **nouns** of our project, the **spines** of our queries that we may want to aggregate by, or simply the **join keys**.
-- 🔀 Entities help MetricFlow understand **how various semantic models relate to one another**.
-- ⛓️ Unlike many other semantic layers, in MetricFlow **we do not need to describe joins explicitly**, instead the **relationships are implicitly described by entities**.
-- 1️⃣ Each semantic model should have **one primary entity** defined for itself, and **any number of foreign entities** for other semantic models it may join to.
-- 🫂 Entities require a **name and type**
-  - 🔑 Types available are **primary**, **foreign**, **unique** or **natural** — we'll be focused on the first two for now, but you can [read more about unique and natural keys](https://docs.getdbt.com/docs/build/entities#entity-types).
+- 🫂 Сущности — это **объекты и концепции** в наших данных, которые _имеют_ измерения и меры. Вы можете рассматривать их как **существительные** нашего проекта, **основу** наших запросов, по которым мы можем агрегировать, или просто как **ключи для соединения**.
+- 🔀 Сущности помогают MetricFlow понять, **как различные семантические модели соотносятся друг с другом**.
+- ⛓️ В отличие от многих других семантических слоев, в MetricFlow **нам не нужно явно описывать соединения**, вместо этого **отношения описываются неявно через сущности**.
+- 1️⃣ Каждая семантическая модель должна иметь **одну основную сущность**, определенную для себя, и **любое количество внешних сущностей** для других семантических моделей, с которыми она может соединяться.
+- 🫂 Сущности требуют **имя и тип**
+  - 🔑 Доступные типы: **основной**, **внешний**, **уникальный** или **естественный** — мы сосредоточимся на первых двух на данный момент, но вы можете [узнать больше о уникальных и естественных ключах](https://docs.getdbt.com/docs/build/entities#entity-types).
 
-### Entities in action
+### Сущности в действии
 
-If we look at an example staging model for orders, we see that it has 3 id columns, so we'll need three entities.
+Если мы посмотрим на пример модели подготовки данных для заказов, мы увидим, что у нее есть 3 столбца идентификаторов, поэтому нам понадобятся три сущности.
 
 <File name="models/staging/stg_orders.sql" />
 
@@ -68,24 +68,24 @@ renamed as (
 
     select
 
-        ----------  ids
+        ----------  идентификаторы
         id as order_id,
         store_id as location_id,
         customer as customer_id,
 
-        ---------- properties
+        ---------- свойства
         (order_total / 100.0) as order_total,
         (tax_paid / 100.0) as tax_paid,
 
-        ---------- timestamps
+        ---------- временные метки
         ordered_at
 
     from source
 ```
 
-- 👉 We add them with a **`name`, `type`, and optional `expr`** (expression). The expression can be any valid SQL expression on your platform.
-- 📛 If you **don't add an expression**, MetricFlow will **assume the name is equal to the column name** in the underlying logical model.
-- 👍 Our best practices pattern is to, whenever possible, provide a `name` that is the singular form of the subject or grain of the table, and use `expr` to specify the precise column name (with `_id` etc). This will let us write **more readable metrics** on top of these semantic models. For example, we'll use `location` instead of `location_id`.
+- 👉 Мы добавляем их с помощью **`name`, `type` и необязательного `expr`** (выражение). Выражение может быть любым допустимым SQL выражением на вашей платформе.
+- 📛 Если вы **не добавите выражение**, MetricFlow будет **предполагать, что имя равно имени столбца** в основной логической модели.
+- 👍 Наша лучшая практика заключается в том, чтобы, когда это возможно, предоставлять `name`, который является единственным числом предмета или уровнем детализации таблицы, и использовать `expr`, чтобы указать точное имя столбца (с `_id` и т.д.). Это позволит нам писать **более читаемые метрики** на основе этих семантических моделей. Например, мы будем использовать `location` вместо `location_id`.
 
 <File name="models/marts/orders.yml" />
 
@@ -94,7 +94,7 @@ semantic_models:
   - name: orders
     ...
     entities:
-      # we use the column for the name here because order is a reserved word in SQL
+      # мы используем столбец для имени здесь, потому что order — зарезервированное слово в SQL
       - name: order_id
         type: primary
       - name: location
@@ -110,42 +110,42 @@ semantic_models:
       ...
 ```
 
-## Defining our dimensions
+## Определение наших измерений
 
-- 🧮 Dimensions are the columns that we want to **filter and group by**, **the adjectives of our project**. They come in three types:
-  - **categorical**
-  - **time**
-  - slowly changing dimensions — [these are covered in the documentation](https://docs.getdbt.com/docs/build/dimensions#scd-type-ii), and a little more complex. To focus on building your mental models of MetricFlow's fundamentals, we won't be using SCDs in this guide.
-- ➕ We're **not limited to existing columns**, we can use the `expr` property to add simple computations in our dimensions.
-- 📛 Categorical dimensions are the simplest, they simply require a `name` and `type` (type being categorical). **If the `name` property matches the name of the dimension column**, that's it, you're done. If you want or need to use a `name` other than the column name, or do some filtering or computation, **you can supply an optional `expr` property** to evaluate for the dimension.
+- 🧮 Измерения — это столбцы, по которым мы хотим **фильтровать и группировать**, **прилагательные нашего проекта**. Они бывают трех типов:
+  - **категориальные**
+  - **временные**
+  - медленно изменяющиеся измерения — [они описаны в документации](https://docs.getdbt.com/docs/build/dimensions#scd-type-ii) и немного сложнее. Чтобы сосредоточиться на построении ваших ментальных моделей основ семантического слоя MetricFlow, мы не будем использовать SCD в этом руководстве.
+- ➕ Мы **не ограничены существующими столбцами**, мы можем использовать свойство `expr`, чтобы добавить простые вычисления в наши измерения.
+- 📛 Категориальные измерения являются самыми простыми, они просто требуют `name` и `type` (тип — категориальный). **Если свойство `name` совпадает с именем столбца измерения**, на этом все, вы закончили. Если вы хотите или вам нужно использовать имя, отличное от имени столбца, или сделать какое-либо фильтрацию или вычисление, **вы можете предоставить необязательное свойство `expr`** для оценки для измерения.
 
-### Dimensions in action
+### Измерения в действии
 
-- 👀 Let's look at our staging model again and see what fields we have available.
+- 👀 Давайте снова посмотрим на нашу модель подготовки данных и увидим, какие поля у нас есть.
 
 <File name="models/staging/stg_orders.sql" />
 
 ```sql
 select
 
-    ----------  ids -> entities
+    ----------  идентификаторы -> сущности
     id as order_id,
     store_id as location_id,
     customer as customer_id,
 
-    ---------- numerics -> measures
+    ---------- числовые значения -> меры
     (order_total / 100.0) as order_total,
     (tax_paid / 100.0) as tax_paid,
 
-    ---------- timestamps -> dimensions
+    ---------- временные метки -> измерения
     ordered_at
 
 from source
 ```
 
-- ⏰ For now the only dimension to add is a **time dimension**: `ordered_at`.
-- 🕰️ At least one **primary time dimension** is **required** for any semantic models that **have measures**.
-- 1️⃣ We denote this with the `is_primary` property, or if there is only a one-time dimension supplied it is primary by default. Below we only have `ordered_at` as a timestamp so we don't need to specify anything except the _minimum granularity_ we're bucketing to (in this case, day). By this we mean that we're not going to be looking at orders at a finer granularity than a day.
+- ⏰ На данный момент единственным измерением, которое нужно добавить, является **временное измерение**: `ordered_at`.
+- 🕰️ По крайней мере одно **основное временное измерение** является **обязательным** для любых семантических моделей, которые **имеют меры**.
+- 1️⃣ Мы обозначаем это с помощью свойства `is_primary`, или если предоставлено только одно временное измерение, оно по умолчанию является основным. Ниже у нас только `ordered_at` как временная метка, поэтому нам не нужно указывать ничего, кроме _минимальной детализации_, к которой мы группируем (в данном случае, день). Это означает, что мы не будем рассматривать заказы с более тонкой детализацией, чем день.
 
 <File name="models/marts/orders.yml" />
 
@@ -159,13 +159,13 @@ dimensions:
 ```
 
 :::tip
-**Dimensional models**. You may have some models that do not contain measures, just dimensional data that enriches other facts. That's totally fine, a semantic model does not require dimensions or measures, it just needs a primary entity, and if you do have measures, a primary time dimension.
+**Измерительные модели**. У вас могут быть некоторые модели, которые не содержат мер, только измерительные данные, которые обогащают другие факты. Это совершенно нормально, семантическая модель не требует измерений или мер, ей просто нужна основная сущность, а если у вас есть меры, то основное временное измерение.
 
-We'll discuss an alternate situation, dimensional tables that have static numeric values like supply costs or tax rates but no time dimensions, later in the Guide.
+Мы обсудим альтернативную ситуацию, измерительные таблицы, которые имеют статические числовые значения, такие как затраты на поставки или налоговые ставки, но не имеют временных измерений, позже в Руководстве.
 :::
 
-- 🔢 We can also **make a dimension out of a numeric column** that would typically be a measure.
-- 🪣 Using `expr` we can **create buckets of values that we label** for our dimension. We'll add one of these in for labeling 'large orders' as any order totals over $50.
+- 🔢 Мы также можем **создать измерение из числового столбца**, который обычно был бы мерой.
+- 🪣 Используя `expr`, мы можем **создать группы значений, которые мы помечаем** для нашего измерения. Мы добавим одно из этих измерений для обозначения 'крупных заказов' как любых заказов на сумму более 50 долларов.
 
 <File name="models/marts/orders.yml" />
 
@@ -181,69 +181,69 @@ dimensions:
     expr: case when order_total > 50 then true else false end
 ```
 
-## Making our measures
+## Создание наших мер
 
-- 📏 Measures are the final component of a semantic model. They describe the **numeric values that we want to aggregate**.
-- 🧱 Measures form **the building blocks of metrics**, with entities and dimensions helping us combine, group, and filter those metrics correctly.
-- 🏃 You can think of them as something like the **verbs of a semantic model**.
+- 📏 Меры являются последним компонентом семантической модели. Они описывают **числовые значения, которые мы хотим агрегировать**.
+- 🧱 Меры формируют **строительные блоки метрик**, с сущностями и измерениями, которые помогают нам правильно комбинировать, группировать и фильтровать эти метрики.
+- 🏃 Вы можете рассматривать их как нечто вроде **глаголов семантической модели**.
 
-### Measures in action
+### Меры в действии
 
-- 👀 Let's look at **our staging model** one last time and see what **fields we want to measure**.
+- 👀 Давайте еще раз посмотрим на **нашу модель подготовки данных** и увидим, какие **поля мы хотим измерить**.
 
 <File name="models/staging/stg_orders.sql" />
 
 ```sql
 select
 
-    ----------  ids -> entities
+    ----------  идентификаторы -> сущности
     id as order_id,
     store_id as location_id,
     customer as customer_id,
 
-    ---------- numerics -> measures
+    ---------- числовые значения -> меры
     (order_total / 100.0) as order_total,
     (tax_paid / 100.0) as tax_paid,
 
-    ---------- timestamps -> dimensions
+    ---------- временные метки -> измерения
     ordered_at
 
 from source
 ```
 
-- ➕ Here `order_total` and `tax paid` are the **columns we want as measures**.
-- 📝 We can describe them via the code below, specifying a **name, description, aggregation, and expression**.
-- 👍 As before MetricFlow will default to the **name being the name of a column when no expression is supplied**.
-- 🧮 [Many different aggregations](https://docs.getdbt.com/docs/build/measures#aggregation) are available to us. Here we just want sums.
+- ➕ Здесь `order_total` и `tax_paid` — это **столбцы, которые мы хотим использовать как меры**.
+- 📝 Мы можем описать их с помощью кода ниже, указав **имя, описание, агрегацию и выражение**.
+- 👍 Как и прежде, MetricFlow по умолчанию будет считать, что **имя является именем столбца, если выражение не предоставлено**.
+- 🧮 [Доступно множество различных агрегаций](https://docs.getdbt.com/docs/build/measures#aggregation). Здесь мы просто хотим суммы.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 measures:
   - name: order_total
-    description: The total amount for each order including taxes.
+    description: Общая сумма для каждого заказа, включая налоги.
     agg: sum
   - name: tax_paid
-    description: The total tax paid on each order.
+    description: Общая сумма налога, уплаченного по каждому заказу.
     agg: sum
 ```
 
-- 🆕 We can also **create new measures using expressions**, for instance adding a count of individual orders as below.
+- 🆕 Мы также можем **создавать новые меры с помощью выражений**, например, добавляя количество отдельных заказов, как показано ниже.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 - name: order_count
-  description: The count of individual orders.
+  description: Количество отдельных заказов.
   expr: 1
   agg: sum
 ```
 
-## Reviewing our work
+## Обзор нашей работы
 
-Our completed code will look like this, our first semantic model! Here are two examples showing different organizational approaches:
+Наш завершенный код будет выглядеть следующим образом, это наша первая семантическая модель! Вот два примера, показывающих разные организационные подходы:
 
-<Expandable alt_header="Co-located approach">
+<Expandable alt_header="Подход с совместным расположением">
 
 <File name="models/marts/orders.yml" />
 
@@ -253,7 +253,7 @@ semantic_models:
     defaults:
       agg_time_dimension: ordered_at
     description: |
-      Order fact table. This table is at the order grain with one row per order.
+      Фактическая таблица заказов. Эта таблица имеет уровень детализации заказа с одной строкой на заказ.
 
     model: ref('stg_orders')
 
@@ -270,7 +270,7 @@ semantic_models:
     dimensions:
       - name: ordered_at
         expr: date_trunc('day', ordered_at)
-        # use date_trunc(ordered_at, DAY) if using BigQuery
+        # используйте date_trunc(ordered_at, DAY), если используете BigQuery
         type: time
         type_params:
           time_granularity: day
@@ -280,19 +280,19 @@ semantic_models:
 
     measures:
       - name: order_total
-        description: The total revenue for each order.
+        description: Общая выручка по каждому заказу.
         agg: sum
       - name: order_count
-        description: The count of individual orders.
+        description: Количество отдельных заказов.
         expr: 1
         agg: sum
       - name: tax_paid
-        description: The total tax paid on each order.
+        description: Общая сумма налога, уплаченного по каждому заказу.
         agg: sum
 ```
 </Expandable>
 
-<Expandable alt_header="Parallel sub-folder approach">
+<Expandable alt_header="Подход с параллельной подпапкой">
 
 <File name="models/semantic_models/sem_orders.yml" />
 
@@ -302,7 +302,7 @@ semantic_models:
     defaults:
       agg_time_dimension: ordered_at
     description: |
-      Order fact table. This table is at the order grain with one row per order.
+      Фактическая таблица заказов. Эта таблица имеет уровень детализации заказа с одной строкой на заказ.
 
     model: ref('stg_orders')
 
@@ -319,7 +319,7 @@ semantic_models:
     dimensions:
       - name: ordered_at
         expr: date_trunc('day', ordered_at)
-        # use date_trunc(ordered_at, DAY) if using BigQuery
+        # используйте date_trunc(ordered_at, DAY), если используете BigQuery
         type: time
         type_params:
           time_granularity: day
@@ -329,36 +329,36 @@ semantic_models:
 
     measures:
       - name: order_total
-        description: The total revenue for each order.
+        description: Общая выручка по каждому заказу.
         agg: sum
       - name: order_count
-        description: The count of individual orders.
+        description: Количество отдельных заказов.
         expr: 1
         agg: sum
       - name: tax_paid
-        description: The total tax paid on each order.
+        description: Общая сумма налога, уплаченного по каждому заказу.
         agg: sum
 ```
 </Expandable>
 
-As you can see, the content of the semantic model is identical in both approaches. The key differences are:
+Как вы можете видеть, содержание семантической модели идентично в обоих подходах. Ключевые различия заключаются в следующем:
 
-1. **File location**
-   - Co-located approach: `models/marts/orders.yml`
-   - Parallel sub-folder approach: `models/semantic_models/sem_orders.yml`
+1. **Расположение файла**
+   - Подход с совместным расположением: `models/marts/orders.yml`
+   - Подход с параллельной подпапкой: `models/semantic_models/sem_orders.yml`
 
-2. **File naming**
-   - Co-located approach: Uses the same name as the corresponding mart (`orders.yml`)
-   - Parallel sub-folder approach: Prefixes the file with `sem_` (`sem_orders.yml`)
+2. **Именование файлов**
+   - Подход с совместным расположением: Использует то же имя, что и соответствующий mart (`orders.yml`)
+   - Подход с параллельной подпапкой: Префиксирует файл с `sem_` (`sem_orders.yml`)
 
-Choose the approach that best fits your project structure and team preferences. The co-located approach is often simpler for new projects, while the parallel sub-folder approach can be clearer for migrating large existing projects to the Semantic Layer.
+Выберите подход, который лучше всего соответствует структуре вашего проекта и предпочтениям вашей команды. Подход с совместным расположением часто проще для новых проектов, в то время как подход с параллельной подпапкой может быть более ясным для миграции крупных существующих проектов на семантический слой.
 
-## Next steps
+## Следующие шаги
 
-Let's review the basics of semantic models:
+Давайте рассмотрим основы семантических моделей:
 
-- 🧱 Consist of **entities, dimensions, and measures**.
-- 🫂 Describe the **semantics and relationships of objects** in the warehouse.
-- 1️⃣ Correspond to a **single logical model** in your dbt project.
+- 🧱 Состоят из **сущностей, измерений и мер**.
+- 🫂 Описывают **семантику и отношения объектов** в хранилище данных.
+- 1️⃣ Соответствуют **одной логической модели** в вашем проекте dbt.
 
-Next up, let's use our new semantic model to **build a metric**!
+Следующим шагом давайте используем нашу новую семантическую модель, чтобы **создать метрику**!

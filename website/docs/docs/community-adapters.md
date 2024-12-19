@@ -1,11 +1,11 @@
 ---
-title: "Community adapters"
+title: "Адаптеры сообщества"
 id: "community-adapters"
 ---
 
-Community adapters are adapter plugins contributed and maintained by members of the community. We welcome and encourage [adapter plugins contributions](/docs/contribute-core-adapters#contribute-to-a-pre-existing-adapter) from the dbt community.  Please be mindful that these [community maintainers](/docs/connect-adapters#maintainers) are intrepid volunteers who donate their time and effort — so be kind, understanding, and help out where you can!
+Адаптеры сообщества — это плагины адаптеров, разработанные и поддерживаемые членами сообщества. Мы приветствуем и поощряем [вклад в плагины адаптеров](/docs/contribute-core-adapters#contribute-to-a-pre-existing-adapter) от сообщества dbt. Пожалуйста, имейте в виду, что эти [сотрудники сообщества](/docs/connect-adapters#maintainers) — это смелые волонтеры, которые жертвуют своим временем и усилиями, поэтому будьте добры, понимающими и помогайте, где можете!
 
-| Data platforms (click to view setup guide) |||
+| Платформы данных (нажмите, чтобы просмотреть руководство по настройке) |||
 | ------------------------------------------ | -------------------------------- | ------------------------------------- |
 | [Clickhouse](/docs/core/connect-data-platform/clickhouse-setup) | [CrateDB](/docs/core/connect-data-platform/cratedb-setup)
 | [Databend Cloud](/docs/core/connect-data-platform/databend-setup) | [Doris & SelectDB](/docs/core/connect-data-platform/doris-setup)  |

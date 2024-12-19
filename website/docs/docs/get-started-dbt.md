@@ -1,72 +1,72 @@
 ---
-title: "dbt Quickstarts"
+title: "Быстрые стартовые руководства по dbt"
 id: get-started-dbt
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
-Begin your dbt journey by trying one of our quickstarts, which provides a step-by-step guide to help you set up [dbt Cloud](#dbt-cloud) or [dbt Core](#dbt-core) with a [variety of data platforms](/docs/cloud/connect-data-platform/about-connections).
+Начните свое путешествие с dbt, попробовав одно из наших быстрых стартовых руководств, которое предоставляет пошаговое руководство по настройке [dbt Cloud](#dbt-cloud) или [dbt Core](#dbt-core) с [разнообразными платформами данных](/docs/cloud/connect-data-platform/about-connections).
 
 ## dbt Cloud
 
-dbt Cloud is a scalable solution that enables you to develop, test, deploy, and explore data products using a single, fully managed software service. It enables teams with diverse skills to build reliable data products at any scale, with capabilities including:
+dbt Cloud — это масштабируемое решение, которое позволяет вам разрабатывать, тестировать, развертывать и исследовать продукты данных, используя единую полностью управляемую программную службу. Оно позволяет командам с различными навыками создавать надежные продукты данных в любом масштабе, включая такие возможности, как:
 
-- Development experiences tailored to multiple personas (in-browser [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or locally with the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
-- Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
-- The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics that can be delivered to any endpoint
-- Domain ownership of data with multi-project [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) setups
-- [dbt Explorer](/docs/collaborate/explore-projects) for collaborative data discovery and understanding
+- Опыт разработки, адаптированный для различных пользователей (в браузере [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или локально с помощью [dbt Cloud CLI](/docs/cloud/cloud-cli-installation))
+- Готовые [CI/CD рабочие процессы](/docs/deploy/ci-jobs)
+- [Семантический уровень dbt](/docs/use-dbt-semantic-layer/dbt-sl) для согласованных метрик, которые могут быть доставлены в любую конечную точку
+- Владение данными в домене с многоуровневыми [настройками dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro)
+- [dbt Explorer](/docs/collaborate/explore-projects) для совместного открытия и понимания данных
 
-Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features) and [start your free trial](https://www.getdbt.com/signup/) today.
+Узнайте больше о [возможностях dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features) и [начните бесплатный пробный период](https://www.getdbt.com/signup/) уже сегодня.
 
 <div className="grid--3-col">
 
 <Card
-    title="Quickstart for dbt Cloud and Azure Synapse Analytics"
-    body="Discover how to integrate dbt Cloud with Azure Synapse Analytics for your data transformations."
+    title="Быстрый старт для dbt Cloud и Azure Synapse Analytics"
+    body="Узнайте, как интегрировать dbt Cloud с Azure Synapse Analytics для ваших преобразований данных."
     link="https://docs.getdbt.com/guides/azure-synapse-analytics"
     icon="azure-synapse-analytics"/>
 
 <Card
-    title="Quickstart for dbt Cloud and BigQuery"
-    body="Discover how to leverage dbt Cloud with BigQuery to streamline your analytics workflows."
+    title="Быстрый старт для dbt Cloud и BigQuery"
+    body="Узнайте, как использовать dbt Cloud с BigQuery для оптимизации ваших аналитических рабочих процессов."
     link="https://docs.getdbt.com/guides/bigquery"
     icon="bigquery"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Databricks"
-    body="Learn how to integrate dbt Cloud with Databricks for efficient data processing and analysis."
+    title="Быстрый старт для dbt Cloud и Databricks"
+    body="Узнайте, как интегрировать dbt Cloud с Databricks для эффективной обработки и анализа данных."
     link="https://docs.getdbt.com/guides/databricks"
     icon="databricks"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Microsoft Fabric"
-    body="Explore the synergy between dbt Cloud and Microsoft Fabric to optimize your data transformations."
+    title="Быстрый старт для dbt Cloud и Microsoft Fabric"
+    body="Изучите синергию между dbt Cloud и Microsoft Fabric для оптимизации ваших преобразований данных."
     link="https://docs.getdbt.com/guides/microsoft-fabric"
     icon="fabric"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Redshift"
-    body="Learn how to connect dbt Cloud to Redshift for more agile data transformations."
+    title="Быстрый старт для dbt Cloud и Redshift"
+    body="Узнайте, как подключить dbt Cloud к Redshift для более гибких преобразований данных."
     link="https://docs.getdbt.com/guides/redshift"
     icon="redshift"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Snowflake"
-    body="Unlock the full potential of using dbt Cloud with Snowflake for your data transformations."
+    title="Быстрый старт для dbt Cloud и Snowflake"
+    body="Раскройте весь потенциал использования dbt Cloud с Snowflake для ваших преобразований данных."
     link="https://docs.getdbt.com/guides/snowflake"
     icon="snowflake"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Starburst Galaxy"
-    body="Leverage dbt Cloud with Starburst Galaxy to enhance your data transformation workflows."
+    title="Быстрый старт для dbt Cloud и Starburst Galaxy"
+    body="Используйте dbt Cloud с Starburst Galaxy для улучшения ваших рабочих процессов преобразования данных."
     link="https://docs.getdbt.com/guides/starburst-galaxy"
     icon="starburst"/>
 
 <Card
-    title="Quickstart for dbt Cloud and Teradata"
-    body="Discover and use dbt Cloud with Teradata to enhance your data transformation workflows."
+    title="Быстрый старт для dbt Cloud и Teradata"
+    body="Изучите и используйте dbt Cloud с Teradata для улучшения ваших рабочих процессов преобразования данных."
     link="https://docs.getdbt.com/guides/teradata"
     icon="teradata"/>
 
@@ -74,29 +74,29 @@ Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-feature
 
 ## dbt Core
 
-[dbt Core](/docs/core/about-core-setup) is a command-line [open-source tool](https://github.com/dbt-labs/dbt-core) that enables data practitioners to transform data using analytics engineering best practices. It suits individuals and small technical teams who prefer manual setup and customization, supports community adapters, and open-source standards.
+[dbt Core](/docs/core/about-core-setup) — это инструмент командной строки [с открытым исходным кодом](https://github.com/dbt-labs/dbt-core), который позволяет специалистам по данным преобразовывать данные, используя лучшие практики аналитического проектирования. Он подходит для отдельных пользователей и небольших технических команд, которые предпочитают ручную настройку и кастомизацию, поддерживает адаптеры сообщества и стандарты с открытым исходным кодом.
 
 <div className="grid--3-col">
 
 <Card
-    title="dbt Core from a manual install"
-    body="Learn how to install dbt Core and set up a project."
+    title="dbt Core с ручной установкой"
+    body="Узнайте, как установить dbt Core и настроить проект."
     link="https://docs.getdbt.com/guides/manual-install"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Core using GitHub Codespace"
-    body="Learn how to create a codespace and execute the dbt build command."
+    title="dbt Core с использованием GitHub Codespace"
+    body="Узнайте, как создать кодовое пространство и выполнить команду dbt build."
     link="https://docs.getdbt.com/guides/codespace?step=1"
     icon="dbt-bit"/>
 </div>
 
-## Related docs
+## Связанные документы
 
-Expand your dbt knowledge and expertise with these additional resources:
+Расширьте свои знания и опыт работы с dbt с помощью этих дополнительных ресурсов:
 
-- [Join the bi-weekly demos](https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts) to see dbt Cloud in action and ask questions.
-- [dbt Cloud AWS marketplace](https://aws.amazon.com/marketplace/pp/prodview-tjpcf42nbnhko) contains information on how to deploy dbt Cloud on AWS, user reviews, and more.
-- [Best practices](https://docs.getdbt.com/best-practices) contains information on how dbt Labs approaches building projects through our current viewpoints on structure, style, and setup.
-- [dbt Learn](https://learn.getdbt.com) offers free online courses that cover dbt fundamentals, advanced topics, and more.
-- [Join the dbt Community](https://www.getdbt.com/community/join-the-community) to learn how other data practitioners globally are using dbt, share your own experiences, and get help with your dbt projects.
+- [Присоединяйтесь к двухнедельным демонстрациям](https://www.getdbt.com/resources/webinars/dbt-cloud-demos-with-experts), чтобы увидеть dbt Cloud в действии и задать вопросы.
+- [Маркетплейс dbt Cloud на AWS](https://aws.amazon.com/marketplace/pp/prodview-tjpcf42nbnhko) содержит информацию о том, как развернуть dbt Cloud на AWS, отзывы пользователей и многое другое.
+- [Лучшие практики](https://docs.getdbt.com/best-practices) содержат информацию о том, как dbt Labs подходит к созданию проектов, основываясь на наших текущих взглядах на структуру, стиль и настройку.
+- [dbt Learn](https://learn.getdbt.com) предлагает бесплатные онлайн-курсы, охватывающие основы dbt, продвинутые темы и многое другое.
+- [Присоединяйтесь к сообществу dbt](https://www.getdbt.com/community/join-the-community), чтобы узнать, как другие специалисты по данным по всему миру используют dbt, поделиться своим опытом и получить помощь с вашими проектами dbt.

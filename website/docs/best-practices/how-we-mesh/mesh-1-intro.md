@@ -1,44 +1,44 @@
 ---
-title: "Intro to dbt Mesh"
-description: Getting started with dbt Mesh patterns
-hoverSnippet: Learn how to get started with dbt Mesh
+title: "Введение в dbt Mesh"
+description: Начало работы с паттернами dbt Mesh
+hoverSnippet: Узнайте, как начать работу с dbt Mesh
 ---
 
-## What is dbt Mesh?
+## Что такое dbt Mesh?
 
-Organizations of all sizes rely upon dbt to manage their data transformations, from small startups to large enterprises. At scale, it can be challenging to coordinate all the organizational and technical requirements demanded by your stakeholders within the scope of a single dbt project.
+Организации всех размеров полагаются на dbt для управления своими преобразованиями данных, от небольших стартапов до крупных предприятий. На больших масштабах может быть сложно координировать все организационные и технические требования, предъявляемые вашими заинтересованными сторонами, в рамках одного проекта dbt.
 
-To date, there also hasn't been a first-class way to effectively manage the dependencies, governance, and workflows between multiple dbt projects. 
+На сегодняшний день также не существовало первоклассного способа эффективно управлять зависимостями, управлением и рабочими процессами между несколькими проектами dbt.
 
-That's where **dbt Mesh** comes in - empowering data teams to work *independently and collaboratively*; sharing data, code, and best practices without sacrificing security or autonomy. 
+Здесь на помощь приходит **dbt Mesh** — он позволяет командам данных работать *независимо и совместно*, делясь данными, кодом и лучшими практиками, не жертвуя безопасностью или автономией.
 
-This guide will walk you through the concepts and implementation details needed to get started. dbt Mesh is not a single product - it is a pattern enabled by a convergence of several features in dbt:
+Этот гид проведет вас через концепции и детали реализации, необходимые для начала работы. dbt Mesh не является единым продуктом — это паттерн, обеспечиваемый конвергенцией нескольких функций в dbt:
 
-- **[Cross-project references](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)** - this is the foundational feature that enables the multi-project deployments. `{{ ref() }}`s now work across dbt Cloud projects on Enterprise plans.
-- **[dbt Explorer](/docs/collaborate/explore-projects)** - dbt Cloud's metadata-powered documentation platform, complete with full, cross-project lineage.
-- **Governance** - dbt's governance features allow you to manage access to your dbt models both within and across projects.
-  - **[Groups](/docs/collaborate/govern/model-access#groups)** - With groups, you can organize nodes in your dbt DAG that share a logical connection (for example, by functional area) and assign an owner to the entire group.
-  - **[Access](/docs/collaborate/govern/model-access#access-modifiers)** - access configs allow you to control who can reference models.
-  - **[Model Versions](/docs/collaborate/govern/model-versions)** - when coordinating across projects and teams, we recommend treating your data models as stable APIs. Model versioning is the mechanism to allow graceful adoption and deprecation of models as they evolve.
-  - **[Model Contracts](/docs/collaborate/govern/model-contracts)** - data contracts set explicit expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
+- **[Ссылки между проектами](/docs/collaborate/govern/project-dependencies#how-to-write-cross-project-ref)** — это основная функция, которая позволяет развертываниям с несколькими проектами. `{{ ref() }}` теперь работает между проектами dbt Cloud на корпоративных планах.
+- **[dbt Explorer](/docs/collaborate/explore-projects)** — платформа документации, основанная на метаданных dbt Cloud, с полной кросс-проектной линией.
+- **Управление** — функции управления dbt позволяют вам управлять доступом к вашим моделям dbt как внутри, так и между проектами.
+  - **[Группы](/docs/collaborate/govern/model-access#groups)** — с помощью групп вы можете организовать узлы в вашем DAG dbt, которые имеют логическую связь (например, по функциональной области) и назначить владельца для всей группы.
+  - **[Доступ](/docs/collaborate/govern/model-access#access-modifiers)** — конфигурации доступа позволяют контролировать, кто может ссылаться на модели.
+  - **[Версии моделей](/docs/collaborate/govern/model-versions)** — при координации между проектами и командами мы рекомендуем рассматривать ваши модели данных как стабильные API. Версионирование моделей — это механизм, позволяющий плавно внедрять и выводить модели из эксплуатации по мере их эволюции.
+  - **[Контракты моделей](/docs/collaborate/govern/model-contracts)** — контракты данных устанавливают явные ожидания относительно структуры данных, чтобы гарантировать, что изменения данных выше по потоку dbt или в логике проекта не нарушают работу продуктов данных downstream.
 
-## When is the right time to use dbt Mesh?
+## Когда настает подходящее время для использования dbt Mesh?
 
-The multi-project architecture helps organizations with mature, complex transformation workflows in dbt increase the flexibility and performance of their dbt projects. If you're already using dbt and your project has started to experience any of the following, you're likely ready to start exploring this paradigm:
+Многоуровневая архитектура помогает организациям с зрелыми, сложными рабочими процессами преобразования в dbt увеличить гибкость и производительность своих проектов dbt. Если вы уже используете dbt и ваш проект начал испытывать любое из следующих, вы, вероятно, готовы начать исследовать эту парадигму:
 
-- The **number of models** in your project is degrading performance and slowing down development.
-- Teams have developed **separate workflows** and need to decouple development from each other.
-- Teams are experiencing **communication challenges**, and the reliability of some of your data products has started to deteriorate.
-- **Security and governance** requirements are increasing and would benefit from increased isolation.
+- **Количество моделей** в вашем проекте ухудшает производительность и замедляет разработку.
+- Команды разработали **отдельные рабочие процессы** и нуждаются в разъединении разработки друг от друга.
+- Команды сталкиваются с **проблемами коммуникации**, и надежность некоторых ваших продуктов данных начала ухудшаться.
+- **Требования к безопасности и управлению** увеличиваются и выиграют от большей изоляции.
 
-dbt Cloud is designed to coordinate the features above and simplify the complexity to solve for these problems.
+dbt Cloud предназначен для координации вышеупомянутых функций и упрощения сложности для решения этих проблем.
 
-If you're just starting your dbt journey, don't worry about building a multi-project architecture right away. You can _incrementally_ adopt the features in this guide as you scale. The collection of features work effectively as independent tools. Familiarizing yourself with the tooling and features that make up a multi-project architecture, and how they can apply to your organization will help you make better decisions as you grow.
+Если вы только начинаете свой путь с dbt, не беспокойтесь о том, чтобы сразу строить многоуровневую архитектуру. Вы можете _постепенно_ внедрять функции из этого руководства по мере масштабирования. Набор функций эффективно работает как независимые инструменты. Ознакомление с инструментами и функциями, которые составляют многоуровневую архитектуру, и тем, как они могут применяться в вашей организации, поможет вам принимать более обоснованные решения по мере роста.
 
-For additional information, refer to the [dbt Mesh FAQs](/best-practices/how-we-mesh/mesh-5-faqs).
+Для получения дополнительной информации обратитесь к [FAQ по dbt Mesh](/best-practices/how-we-mesh/mesh-5-faqs).
 
-## Learning goals
+## Цели обучения
 
-- Understand the **purpose and tradeoffs** of building a multi-project architecture.
-- Develop an intuition for various **dbt Mesh patterns** and how to design a multi-project architecture for your organization.
-- Establish recommended steps to **incrementally adopt** these patterns in your dbt implementation.
+- Понять **цели и компромиссы** построения многоуровневой архитектуры.
+- Развить интуицию для различных **паттернов dbt Mesh** и как спроектировать многоуровневую архитектуру для вашей организации.
+- Установить рекомендуемые шаги для **постепенного внедрения** этих паттернов в вашу реализацию dbt.

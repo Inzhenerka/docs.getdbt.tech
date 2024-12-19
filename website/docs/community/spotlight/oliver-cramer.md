@@ -1,16 +1,16 @@
 ---
 id: oliver-cramer
-title: Oliver Cramer
+title: Оливер Крамер
 description: |
-  When I joined Aquila Capital in early 2022, I had the ModernDataStack with SqlDBM, dbt & Snowflake available. During the first half year I joined the dbt community. I have been working in the business intelligence field for many years. In 2006 I founded the first TDWI Roudtable in the DACH region. I often speak at conferences, such as the Snowflake Summit and the German TDWI conference.
-  I have been very involved in the data vault community for over 20 years and I do a lot of work with dbt Labs’ Sean McIntyre and Victoria Mola to promote Data Vault in EMEA. I have even travelled to Canada and China to meet data vault community members! Currently I have a group looking at the Data Vault dbt packages. The German Data Vault User Group (DDVUG) has published a sample database to test Data Warehouse Automation tools. 
-  In addition, I founded the Analytics Engineering Northern Germany Meetup Group, which will transition into an official dbt Meetup, the <a href="https://www.meetup.com/norther-germany-dbt-meetup/" rel="noopener noreferrer" target="_blank">Northern Germany dbt Meetup</a>. 
+  Когда я присоединился к Aquila Capital в начале 2022 года, у меня был доступ к ModernDataStack с SqlDBM, dbt и Snowflake. В течение первых шести месяцев я присоединился к сообществу dbt. Я работаю в области бизнес-аналитики уже много лет. В 2006 году я основал первую TDWI Roudtable в регионе DACH. Я часто выступаю на конференциях, таких как Snowflake Summit и немецкая конференция TDWI.
+  Я активно участвую в сообществе Data Vault более 20 лет и много работаю с Шоном Макинтайром и Викторией Молой из dbt Labs, чтобы продвигать Data Vault в регионе EMEA. Я даже путешествовал в Канаду и Китай, чтобы встретиться с членами сообщества Data Vault! В настоящее время у меня есть группа, которая изучает пакеты Data Vault для dbt. Немецкая группа пользователей Data Vault (DDVUG) опубликовала образец базы данных для тестирования инструментов автоматизации хранилищ данных.
+  Кроме того, я основал группу Meetup по аналитической инженерии в Северной Германии, которая станет официальным Meetup для dbt, <a href="https://www.meetup.com/norther-germany-dbt-meetup/" rel="noopener noreferrer" target="_blank">Northern Germany dbt Meetup</a>.
 image: /img/community/spotlight/oliver.jpg
 pronouns: he/him
-location: Celle, Germany
-jobTitle: Lead Data Warehouse Architect
+location: Целле, Германия
+jobTitle: Ведущий архитектор хранилищ данных
 companyName: Aquila Capital
-organization: TDWI Germany
+organization: TDWI Германия
 socialLinks:
   - name: LinkedIn
     link: https://www.linkedin.com/in/oliver-cramer/
@@ -20,18 +20,18 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community in 2022. My current focus is on building modern data teams. There is no magic formula for structuring your analytics function. Given the pace of technological change in our industry, the structure of a data team must evolve over time.
+Я присоединился к сообществу dbt в 2022 году. Мой текущий фокус — создание современных команд данных. Нет волшебной формулы для структурирования вашей аналитической функции. Учитывая темпы технологических изменений в нашей отрасли, структура команды данных должна эволюционировать со временем.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I like working with dbt Labs' Sean McIntyre to promote Data Vault in Europe and Victoria Perez Mola, also from dbt Labs, is always a great help when I have questions about dbt.
+Мне нравится работать с Шоном Макинтайром из dbt Labs для продвижения Data Vault в Европе, а Виктория Перес Мола, также из dbt Labs, всегда готова помочь, когда у меня есть вопросы по dbt.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I just think it's good to have a community, to be able to ask questions and get good answers.
+Я просто считаю, что хорошо иметь сообщество, где можно задавать вопросы и получать хорошие ответы.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-Data Vault is actively looking forward to supporting the messaging that dbt Cloud (+packages) is a real alternative that works.
+Data Vault активно стремится поддерживать сообщение о том, что dbt Cloud (+пакеты) — это реальная работающая альтернатива.

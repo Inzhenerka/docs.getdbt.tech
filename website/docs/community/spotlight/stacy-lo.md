@@ -2,11 +2,11 @@
 id: stacy-lo
 title: Stacy Lo
 description: |
-  I began my career as a data analyst, then transitioned to a few different roles in data and software development. Analytics Engineer is the best title to describe my expertise in data.
+  Я начала свою карьеру как аналитик данных, затем перешла на несколько различных ролей в области данных и разработки программного обеспечения. Должность аналитического инженера лучше всего описывает мою экспертизу в данных.
 
-  I’ve been in the dbt Community for almost a year. In April, I shared my experience adopting dbt at the <a href="https://www.meetup.com/taipei-dbt-meetup/" rel="noopener noreferrer" target="_blank">Taipei dbt Meetup</a>, which inspired me to write technical articles.
+  Я являюсь частью сообщества dbt почти год. В апреле я поделилась своим опытом внедрения dbt на <a href="https://www.meetup.com/taipei-dbt-meetup/" rel="noopener noreferrer" target="_blank">встрече Taipei dbt Meetup</a>, что вдохновило меня на написание технических статей.
 
-  In Taiwan, the annual "iThome Iron Man Contest" happens in September, where participants post a technical article written in Mandarin every day for 30 consecutive days. Since no one has ever written about dbt in the contest, I'd like to be the first person, and that’s what I have been busy with for in the past couple of months.
+  В Тайване ежегодный конкурс "iThome Iron Man Contest" проходит в сентябре, где участники публикуют технические статьи на мандаринском языке каждый день в течение 30 последовательных дней. Поскольку никто никогда не писал о dbt в этом конкурсе, я хотела бы стать первым человеком, и именно этим я занималась в последние пару месяцев.
 image: /img/community/spotlight/stacy.jpg
 pronouns: she/her
 location: Taipei, Taiwan
@@ -21,22 +21,22 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined dbt Slack on November 2022. It was the time our company decided to use dbt in our data architecture, so I joined the #local-taipei channel in <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">dbt Slack</a> and introduced myself. To my surprise, I was immediately invited to share my experience at a <a href="https://www.meetup.com/taipei-dbt-meetup/" rel="noopener noreferrer" target="_blank">Taipei dbt Meetup</a>. I just joined the community, never joined any other meetups, did not know anyone there, and was very new to dbt. 
+Я присоединилась к dbt Slack в ноябре 2022 года. Это было в то время, когда наша компания решила использовать dbt в нашей архитектуре данных, поэтому я присоединилась к каналу #local-taipei в <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">dbt Slack</a> и представилась. К моему удивлению, меня сразу пригласили поделиться своим опытом на <a href="https://www.meetup.com/taipei-dbt-meetup/" rel="noopener noreferrer" target="_blank">встрече Taipei dbt Meetup</a>. Я только что присоединилась к сообществу, никогда не была на других встречах, никого там не знала и была совершенно новой в dbt.
 
-The biggest impact to my career is that I gained a lot of visibility! I got to know a lot of great data people, and now I have one <a href="https://youtu.be/KWfoT1nnexc?t=291" rel="noopener noreferrer" target="_blank">meetup presentation recorded on YouTube</a>, 30 technical articles on iThome Iron Man Contest, and now I am featured in the dbt Community Spotlight!
+Наибольшее влияние на мою карьеру оказало то, что я получила много видимости! Я познакомилась с множеством замечательных людей в области данных, и теперь у меня есть одна <a href="https://youtu.be/KWfoT1nnexc?t=291" rel="noopener noreferrer" target="_blank">презентация на встрече, записанная на YouTube</a>, 30 технических статей на конкурсе iThome Iron Man, и теперь я представлена в сообществе dbt Spotlight!
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Karen Hsieh is the best! She not only brought me in to the dbt Community by way of the #local-taipei channel in dbt Slack, but she also encouraged me to contribute to the community in many ways, without making me feel pressured. With her passion and leading style, Karen successfully built a friendly and diverse group of people in #local-taipei.
+Карен Хсие — лучшая! Она не только привела меня в сообщество dbt через канал #local-taipei в dbt Slack, но и вдохновила меня вносить вклад в сообщество различными способами, не создавая давления. Благодаря своей страсти и стилю руководства Карен успешно создала дружную и разнообразную группу людей в #local-taipei.
 
-I’d also like to recommend <a href="/community/spotlight/bruno-de-lima">Bruno de Lima</a>'s LinkedIn posts. His 'dbt Tips of the Day' effectively delivery knowledge in a user-friendly way. In addition, I really enjoyed the dbt exam practice polls. Learning dbt can be a challenge, but Bruno makes it both easy and fun!
+Я также хотела бы порекомендовать <a href="/community/spotlight/bruno-de-lima">посты Бруно де Лимы</a> в LinkedIn. Его 'dbt Tips of the Day' эффективно передают знания в удобной для пользователя форме. Кроме того, мне очень понравились опросы по практике экзамена dbt. Изучение dbt может быть сложной задачей, но Бруно делает это и легким, и увлекательным!
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I learned that there are many ways to contribute to the community, regardless of our background or skill level. Everyone has something valuable to offer, and we should never be afraid to share. Let's find our own ways to make an impact!
+Я узнала, что есть много способов внести вклад в сообщество, независимо от нашего фона или уровня навыков. У каждого есть что-то ценное, что можно предложить, и нам никогда не следует бояться делиться. Давайте найдем свои собственные способы оказать влияние!
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-Although the #local-taipei channel in dbt Slack is not made up of many, many people, we still managed to assemble a team of 7 people to join the Iron Man Contest. We produced a total of 200 articles in 30 days in topics around dbt and data. I don’t know how many people will find them useful, but it's definitely a great start to raising awareness of dbt in Taiwan.
+Хотя канал #local-taipei в dbt Slack не состоит из множества людей, нам все же удалось собрать команду из 7 человек для участия в конкурсе Iron Man. Мы написали в общей сложности 200 статей за 30 дней на темы, связанные с dbt и данными. Я не знаю, сколько людей найдут их полезными, но это определенно отличный старт для повышения осведомленности о dbt в Тайване.

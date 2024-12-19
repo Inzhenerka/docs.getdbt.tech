@@ -1,47 +1,47 @@
 ---
-title: "Maintaining a Slack channel"
+title: "Поддержка канала в Slack"
 id: "maintaining-a-channel"
-description: There are three things you should do to be a good channel maintainer in the dbt Slack community
+description: Существует три вещи, которые вы должны сделать, чтобы быть хорошим куратором канала в сообществе dbt Slack
 ---
 
-## TL;DR
+## Кратко
 
-There are three things you should do to be a good channel maintainer in the [dbt Slack community](https://community.getdbt.com/):
+Существует три вещи, которые вы должны сделать, чтобы быть хорошим куратором канала в [сообществе dbt Slack](https://community.getdbt.com/):
 
-- Once you see some folks in the channel, post initial conversation topics to help them get to know each other.
-- Keep an eye out in #introductions for folks who might benefit from your new channel. For example, if someone works in the space or on  the same problems, then direct them to the channel.
-- Make sure folks follow the [Rules of the Road](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road) in the channel. If you notice someone is not following one, gently remind them of the rule in thread, and, ideally, provide an example of how they can rephrase their message or where they can redirect it.  If you have a question about how to proceed, just post it in #moderation-and-administration with a screenshot or link to the thread and someone will give you advice.
+- Как только вы увидите людей в канале, опубликуйте начальные темы для обсуждения, чтобы помочь им познакомиться друг с другом.
+- Следите за #introductions на предмет людей, которые могут извлечь выгоду из вашего нового канала. Например, если кто-то работает в этой области или над теми же проблемами, направьте их в канал.
+- Убедитесь, что участники соблюдают [Правила поведения](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road) в канале. Если вы заметите, что кто-то не соблюдает одно из правил, мягко напомните им об этом в обсуждении и, по возможности, приведите пример того, как они могут переформулировать свое сообщение или куда его можно перенаправить. Если у вас есть вопрос о том, как действовать дальше, просто опубликуйте его в #moderation-and-administration с скриншотом или ссылкой на обсуждение, и кто-то даст вам совет.
 
-## Scope of the role
+## Обязанности куратора
 
-A maintainer can be a dbt Labs employee but does not have to be. *Slack channel maintainer* is philosophically similar to OSS maintainer. At the onset, the channel maintainer will help build up this new space in Slack and stir up conversation during the first few weeks of the channel's existence. They are someone who stays on top of feedback and encourages generative contributions. This is not necessarily someone who is the generator of content and contributions, or answers every question.
+Куратором может быть сотрудник dbt Labs, но это не обязательно. *Куратор канала в Slack* философски схож с куратором в OSS. В начале куратор канала поможет развить это новое пространство в Slack и активизировать обсуждения в первые несколько недель существования канала. Это человек, который следит за отзывами и поощряет конструктивные вклады. Это не обязательно тот, кто генерирует контент и вклады, или отвечает на каждый вопрос.
 
-## Initial instructions
+## Первоначальные инструкции
 
-1. Review the [Rules of the Road](/community/resources/community-rules-of-the-road) and [Code of Conduct](/community/resources/code-of-conduct) and please let the folks who created the channel know that you read both documents and you agree to be mindful of them.
+1. Ознакомьтесь с [Правилами поведения](/community/resources/community-rules-of-the-road) и [Кодексом поведения](/community/resources/code-of-conduct) и сообщите людям, которые создали канал, что вы прочитали оба документа и согласны быть внимательными к ним.
 
-2. To request a new channel, go to the [#moderation-and-administration channel](https://getdbt.slack.com/archives/C02JJ8N822H), click **Workflows** on the top of the channel description. Click **Request a New Channel**.
-  - Fill out the fields and click **Submit** to submit your request. Someone will get in touch from there.
+2. Чтобы запросить новый канал, перейдите в [канал #moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H), нажмите **Workflows** в верхней части описания канала. Нажмите **Request a New Channel**.
+  - Заполните поля и нажмите **Submit**, чтобы отправить ваш запрос. Кто-то свяжется с вами после этого.
 ![request-slack-chnl](https://github.com/siljamardla/docs.getdbt.com/assets/89008547/b14abc52-4164-40a8-b48a-e8061fb4b51a)
 
-3. If you are a vendor, review the [Vendor Expectations](/community/resources/community-rules-of-the-road#vendor-expectations).
+3. Если вы являетесь поставщиком, ознакомьтесь с [Ожиданиями от поставщиков](/community/resources/community-rules-of-the-road#vendor-expectations).
 
-4. Add the Topic and Description to the channel. @Mention your name in the channel Description, identifying yourself as the maintainer. Ex: *Maintainer: First Last (pronouns).* If you are a vendor, make sure your Handle contains your affiliation.
+4. Добавьте тему и описание в канал. Упомяните свое имя в описании канала, обозначив себя как куратора. Пример: *Куратор: Имя Фамилия (местоимения).* Если вы являетесь поставщиком, убедитесь, что ваш ник содержит ваше место работы.
 
-5. Complete or update your Slack profile by making sure your Company (in the ‘What I do’ field), Pronouns, and Handle, if you’re a vendor, are up-to-date.
+5. Завершите или обновите свой профиль в Slack, убедившись, что ваша компания (в поле «Чем я занимаюсь»), местоимения и ник, если вы поставщик, актуальны.
 
-6. Post initial conversation topics once a few folks get in the channel to help folks get to know each other. Check out this [example introductory post](https://getdbt.slack.com/archives/C02FXAZRRDW/p1632407767005000).
+6. Опубликуйте начальные темы для обсуждения, как только несколько человек присоединятся к каналу, чтобы помочь им познакомиться друг с другом. Ознакомьтесь с [примером вводного сообщения](https://getdbt.slack.com/archives/C02FXAZRRDW/p1632407767005000).
 
-7. Stir up conversation during the first few weeks of the channel's existence. As you get started, answer the questions you can or help find someone with answers, seed discussions about once a week, and making sure folks follow the Rules of the Road.
+7. Активизируйте обсуждения в первые несколько недель существования канала. Начав, отвечайте на вопросы, на которые можете ответить, или помогайте найти кого-то с ответами, инициируйте обсуждения примерно раз в неделю и следите за тем, чтобы участники соблюдали Правила поведения.
 
-## Long-term expectations
+## Долгосрочные ожидания
 
-- Maintaining the channel, checking in, and being active on a regular basis by answering folks' questions, and seeding discussions. Want an example? Check out [this poll](https://getdbt.slack.com/archives/C022A67TLFL/p1628279819038800).
-- For guidance on how to answer a question, see [Answering Community Questions](https://www.getdbt.com/community/answering-community-questions). If you are not sure how to answer a lingering or unanswered question, you can post about it in #moderation-and-administration or direct it to another channel, if relevant.
-- If the channel is an industry channel, it’s helpful to monitor [#introductions](https://getdbt.slack.com/archives/CETJLH1V3) and invite people. Keep an eye out for folks who might benefit from being in the new channel if they mention they are working in the space, or are thinking about some of these problems.
-- Make sure folks follow the [Rules of the Road](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road). For example, if you notice someone is not following one, gently remind them of the rule in thread, and, ideally, provide an example of how they can rephrase their message or where they can redirect it.  If you have a question about how to proceed, just post about it in #moderation-and-administration with a link to the thread or screenshot and someone will give you advice.
-- In tools channels, sharing customer stories and product updates is very okay in this channel because folks expect that when they join. However, please avoid any direct sales campaigns, pricing offers, etc.
-- If you have any questions/doubts about the [Rules of the Road and Vendor Expectations](/community/resources/community-rules-of-the-road), please post a question in #moderation-and-administration about what sort of things the community expects from interactions with vendors.
-- A reminder that we never DM anyone in Slack without their permission in a public channel or some prior relationship.
-- A reminder that @ here/all/channel are disabled.
-- Use and encourage the use of threads 🧵 to keep conversations tidy!
+- Поддержка канала, регулярные проверки и активное участие, отвечая на вопросы участников и инициируя обсуждения. Хотите пример? Ознакомьтесь с [этим опросом](https://getdbt.slack.com/archives/C022A67TLFL/p1628279819038800).
+- Для получения рекомендаций о том, как ответить на вопрос, смотрите [Ответы на вопросы сообщества](https://www.getdbt.com/community/answering-community-questions). Если вы не уверены, как ответить на неразрешенный или оставшийся без ответа вопрос, вы можете опубликовать его в #moderation-and-administration или направить в другой канал, если это уместно.
+- Если канал является отраслевым, полезно следить за [#introductions](https://getdbt.slack.com/archives/CETJLH1V3) и приглашать людей. Обратите внимание на тех, кто может извлечь выгоду из нового канала, если они упоминают, что работают в этой области или думают о некоторых из этих проблем.
+- Убедитесь, что участники соблюдают [Правила поведения](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road). Например, если вы заметите, что кто-то не соблюдает одно из правил, мягко напомните им об этом в обсуждении и, по возможности, приведите пример того, как они могут переформулировать свое сообщение или куда его можно перенаправить. Если у вас есть вопрос о том, как действовать дальше, просто опубликуйте его в #moderation-and-administration с ссылкой на обсуждение или скриншотом, и кто-то даст вам совет.
+- В каналах инструментов делиться историями клиентов и обновлениями продуктов вполне допустимо, так как участники этого ожидают, когда присоединяются. Однако, пожалуйста, избегайте любых прямых продаж, предложений по ценам и т.д.
+- Если у вас есть какие-либо вопросы или сомнения по поводу [Правил поведения и Ожиданий от поставщиков](/community/resources/community-rules-of-the-road), пожалуйста, задайте вопрос в #moderation-and-administration о том, что сообщество ожидает от взаимодействия с поставщиками.
+- Напоминаем, что мы никогда не отправляем личные сообщения в Slack без их разрешения в публичном канале или без каких-либо предварительных отношений.
+- Напоминаем, что @here/all/channel отключены.
+- Используйте и поощряйте использование потоков 🧵, чтобы поддерживать порядок в обсуждениях!

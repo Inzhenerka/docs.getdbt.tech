@@ -1,57 +1,57 @@
 ---
-title: "Organizing inclusive events"
+title: "Организация инклюзивных мероприятий"
 id: "organizing-inclusive-events"
 ---
 
-# Tips for organizing inclusive events
+# Советы по организации инклюзивных мероприятий
 
-The dbt community is filled with dedicated community leaders who create opportunities for connection, learning and professional development within the analytics community.
+Сообщество dbt наполнено преданными лидерами, которые создают возможности для связи, обучения и профессионального развития в аналитическом сообществе.
 
-This guide is a resource to help organizers execute **inclusive digital events**. We understand that organizers, presenters, speakers, etc. might not be able to apply these tips to *every* event, but this guide will offer some food for thought.
+Этот гид является ресурсом, который поможет организаторам проводить **инклюзивные цифровые мероприятия**. Мы понимаем, что организаторы, презентующие, спикеры и т.д. могут не всегда применять эти советы к *каждому* мероприятию, но этот гид предложит некоторые идеи для размышления.
 
-Additionally, this list can grow. If you would like to contribute a tip, please email [community@dbtlabs.com](mailto:community@dbtlabs.com).
+Кроме того, этот список может расширяться. Если вы хотите поделиться советом, пожалуйста, напишите на [community@dbtlabs.com](mailto:community@dbtlabs.com).
 
-## General logistics
+## Общая логистика
 
-- Try to choose a date that does not overlap with [holidays](http://www.holidayscalendar.com/months/) or general major events. Don’t forget to check international holidays (if applicable)
-- Avoid really large national/local events (i.e. World Cup)
+- Постарайтесь выбрать дату, которая не совпадает с [праздниками](http://www.holidayscalendar.com/months/) или крупными событиями. Не забудьте проверить международные праздники (если это применимо).
+- Избегайте действительно крупных национальных/местных мероприятий (например, Чемпионат мира).
 
-## Marketing
+## Маркетинг
 
-- If you are using photos, share images that include community members with a wide range of presentations, including people from underrepresented groups.
-- Put event accessibility information on your event page (i.e. “closed captioning available for all video resources”)
-- In the registration process provide an opportunity for attendees to:
-    - share pronouns
-    - ask questions in advance
-    - request specific needs or other accommodations (interpreting services, braille transcription, dietary restrictions, etc.)
-- If this is a paid event (e.g. a conference), create a scholarship for attendees that might need financial support
-- Think about how you are promoting your event — are you reaching underrepresented communities, marginalized populations and people who might not have access to the internet?
+- Если вы используете фотографии, делитесь изображениями, на которых представлены члены сообщества с разнообразными презентациями, включая людей из недостаточно представленных групп.
+- Укажите информацию о доступности мероприятия на вашей странице (например, "доступны субтитры для всех видеоресурсов").
+- В процессе регистрации предоставьте возможность участникам:
+    - указать местоимения
+    - задать вопросы заранее
+    - запросить конкретные потребности или другие условия (услуги перевода, транскрипция на брайле, диетические ограничения и т.д.)
+- Если это платное мероприятие (например, конференция), создайте стипендию для участников, которым может понадобиться финансовая поддержка.
+- Подумайте о том, как вы продвигаете ваше мероприятие — достигаете ли вы недостаточно представленных сообществ, маргинализированных групп и людей, которые могут не иметь доступа к интернету?
 
-## Programming
+## Программирование
 
-- Book diverse speakers. Include speakers that represent underrepresented and marginalized populations.
-- Do research on your speakers. Is there any reason that your speakers would make the audience uncomfortable?
-- Design an [accessible presentation](https://www.smashingmagazine.com/2018/11/inclusive-design-accessible-presentations/)
-- If possible, share a recording after the event for community members who are not able to make it and add closed captioning.
-- Ask speakers to introduce themselves before starting their presentation, so that transcription services can capture who is talking.
+- Приглашайте разнообразных спикеров. Включайте спикеров, представляющих недостаточно представленные и маргинализированные группы.
+- Изучите ваших спикеров. Есть ли какие-либо причины, по которым ваши спикеры могут вызвать дискомфорт у аудитории?
+- Разработайте [доступную презентацию](https://www.smashingmagazine.com/2018/11/inclusive-design-accessible-presentations/).
+- Если возможно, поделитесь записью после мероприятия для членов сообщества, которые не смогли присутствовать, и добавьте субтитры.
+- Попросите спикеров представиться перед началом своей презентации, чтобы службы транскрипции могли зафиксировать, кто говорит.
 
-## Digital platforms for online events
+## Цифровые платформы для онлайн-мероприятий
 
-- Take a minute or two to explain the features of the platform that attendees will be using in the beginning of the event
-- Offer the option for attendees to dial-in by phone and participate without a computer or internet
-- Explore the accessibility features your platform offers and apply it where necessary (i.e. closed captioning, automatic transcripts, screen reader support, etc.)
-- Check if your platform is compatible with assistive technology
+- Потратьте минуту или две, чтобы объяснить функции платформы, которую будут использовать участники, в начале мероприятия.
+- Предложите участникам возможность подключиться по телефону и участвовать без компьютера или интернета.
+- Изучите функции доступности, которые предлагает ваша платформа, и применяйте их, где это необходимо (например, субтитры, автоматические транскрипции, поддержка экранных читалок и т.д.).
+- Проверьте, совместима ли ваша платформа с вспомогательными технологиями.
 
-## Attendee communication
+## Коммуникация с участниками
 
-- Make sure that attendees have any addresses, links, codes, numbers to accessing the event beforehand
-- Share the agenda of the event beforehand so that attendees are able to make arrangements (if necessary)
-- Share contact information with attendees so that they are able to reach out with questions before and after the event.
-- Ask attendees for feedback in a post-event survey so that you are able to improve future experiences.
+- Убедитесь, что участники заранее получили все адреса, ссылки, коды и номера для доступа к мероприятию.
+- Поделитесь повесткой мероприятия заранее, чтобы участники могли сделать необходимые приготовления (если это необходимо).
+- Поделитесь контактной информацией с участниками, чтобы они могли обратиться с вопросами до и после мероприятия.
+- Попросите участников оставить отзывы в опросе после мероприятия, чтобы вы могли улучшить будущие мероприятия.
 
-## Speaker communication
+## Коммуникация со спикерами
 
-- Ask speakers how to pronounce their names before the event
-- Ask speakers for their pronouns before the event
-- Suggest that speakers use headphones to ensure clear audio
-- Ask speakers to use plain language and avoid jargon, slang, idioms, etc.
+- Попросите спикеров сообщить, как правильно произносить их имена перед мероприятием.
+- Попросите спикеров указать свои местоимения перед мероприятием.
+- Рекомендуйте спикерам использовать наушники для обеспечения четкого звука.
+- Попросите спикеров использовать простой язык и избегать жаргона, сленга, идиом и т.д.

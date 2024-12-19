@@ -1,70 +1,69 @@
 ---
-title: "dbt Community Rules of the Road"
+title: "Правила сообщества dbt"
 id: "community-rules-of-the-road"
-description: "This community is filled with smart, kind, and helpful people who share our commitment to elevating the analytics profession. These rules help everyone understand how to best participate."
+description: "Это сообщество наполнено умными, добрыми и отзывчивыми людьми, которые разделяют нашу приверженность повышению статуса аналитической профессии. Эти правила помогают всем понять, как лучше участвовать."
 ---
 
-As of June 2023, the dbt Community includes over 50,000 data professionals and is still growing. People genuinely love this community. It's filled with smart, kind, and helpful people who share our commitment to elevating the analytics profession.
+По состоянию на июнь 2023 года сообщество dbt включает более 50 000 специалистов в области данных и продолжает расти. Люди искренне любят это сообщество. Оно наполнено умными, добрыми и отзывчивыми людьми, которые разделяют нашу приверженность повышению статуса аналитической профессии.
 
-We are committed to maintaining the spirit of this community, and have written these rules alongside its members to help everyone understand how to best participate. We appreciate your support in continuing to build a community we're all proud of.
+Мы стремимся поддерживать дух этого сообщества и написали эти правила вместе с его участниками, чтобы помочь всем понять, как лучше участвовать. Мы ценим вашу поддержку в продолжении создания сообщества, которым мы все гордимся.
 
-## Expectations for all members
-### Rule 1: Be respectful
-We want everyone in this community to have a fulfilling and positive experience. Therefore, this first rule is serious and straightforward; we simply will not tolerate disrespectful behavior of any kind.
+## Ожидания от всех участников
+### Правило 1: Будьте уважительными
+Мы хотим, чтобы каждый в этом сообществе имел полноценный и положительный опыт. Поэтому это первое правило серьезное и простое; мы просто не потерпим неуважительного поведения любого рода.
 
-Everyone interacting on a dbt platform – including Slack, the forum, codebase, issue trackers, and mailing lists – is expected to follow the [Community Code of Conduct](/community/resources/code-of-conduct). If you are unable to abide by the code of conduct set forth here, we encourage you not to participate in the community.
+Все, кто взаимодействует на платформе dbt – включая Slack, форум, кодовую базу, трекеры проблем и списки рассылки – должны следовать [Кодексу поведения сообщества](/community/resources/code-of-conduct). Если вы не можете соблюдать кодекс поведения, изложенный здесь, мы призываем вас не участвовать в сообществе.
 
-### Rule 2: Keep it in public spaces
-Unless you have someone's express permission to contact them directly, do not directly message other community members, whether on a dbt Community platform or other spaces like LinkedIn.
+### Правило 2: Общайтесь в публичных пространствах
+Если у вас нет явного разрешения от кого-либо на прямой контакт, не отправляйте личные сообщения другим участникам сообщества, будь то на платформе сообщества dbt или в других местах, таких как LinkedIn.
 
-We highly value the time community members put into helping each other, and we have precisely zero tolerance for people who abuse their access to experienced professionals. If you are being directly messaged with requests for assistance without your consent, let us know in the [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) Slack channel. We will remove that person from the community. Your time and attention is valuable.
+Мы высоко ценим время, которое участники сообщества тратят на помощь друг другу, и у нас абсолютно нулевая терпимость к людям, которые злоупотребляют своим доступом к опытным профессионалам. Если вам отправляют личные сообщения с просьбами о помощи без вашего согласия, дайте нам знать в канале Slack [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H). Мы удалим этого человека из сообщества. Ваше время и внимание ценны.
 
-### Rule 3: Follow messaging etiquette
-In short: put effort into your question, use threads, post in the right channel, and do not seek extra attention by tagging individuals or double-posting. For more information, see our [guide on getting help](/community/resources/getting-help).
+### Правило 3: Соблюдайте этикет сообщений
+Короче говоря: приложите усилия к вашему вопросу, используйте темы, публикуйте в правильном канале и не ищите дополнительного внимания, отмечая отдельных людей или дублируя сообщения. Для получения дополнительной информации смотрите наш [гид по получению помощи](/community/resources/getting-help).
 
-### Rule 4: Do not solicit community members
-This community is built for data practitioners to discuss the work that they do, the ideas that they have, and the things that they are learning. It is decidedly not intended to be lead generation for vendors or recruiters.
+### Правило 4: Не запрашивайте у участников сообщества
+Это сообщество создано для специалистов в области данных, чтобы обсуждать свою работу, идеи и то, что они изучают. Оно явно не предназначено для генерации лидов для поставщиков или рекрутеров.
 
-Vendors and recruiters are subject to additional rules to ensure this space remains welcoming to everyone. These requirements are detailed below and are enforced vigorously.
+Поставщики и рекрутеры подлежат дополнительным правилам, чтобы гарантировать, что это пространство остается приветливым для всех. Эти требования подробно изложены ниже и строго соблюдаются.
 
-## Vendor expectations
+## Ожидания от поставщиков
 
-As a vendor/dbt partner, you are also a member of this community, and we encourage you to participate fully in the space. We have seen folks grow fantastic user relationships for their products when they come in with the mindset to share rather than pushing a pitch. At the same time, active community members have a finely honed sense of when they are being reduced to an audience or a resource to be monetized, and their response is reliably negative.
+Как поставщик/партнер dbt, вы также являетесь членом этого сообщества, и мы призываем вас активно участвовать в этом пространстве. Мы видели, как люди развивают отличные отношения с пользователями для своих продуктов, когда они приходят с намерением делиться, а не навязывать свои предложения. В то же время активные участники сообщества имеют тонкое чувство, когда их сводят к аудитории или ресурсу для монетизации, и их реакция, как правило, негативная.
 
-:::info Who is a vendor?
-Vendors are generally individuals belonging to companies that are creating products or services primarily targeted at data professionals, but this title also includes recruiters, investors, open source maintainers (with or without a paid offering), consultants and freelancers. If in doubt, err on the side of caution. 
+:::info Кто является поставщиком?
+Поставщики, как правило, это лица, принадлежащие компаниям, которые создают продукты или услуги, в первую очередь ориентированные на специалистов в области данных, но это определение также включает рекрутеров, инвесторов, поддерживающих открытый исходный код (с платным предложением или без него), консультантов и фрилансеров. Если вы сомневаетесь, лучше проявить осторожность. 
 :::
 
-### Rule 1: Identify yourself 
-Include your company in your display name, e.g. "Alice (DataCo)". When joining a discussion about your product (after the waiting period below), be sure to note your business interests. 
+### Правило 1: Представьтесь
+Укажите вашу компанию в вашем отображаемом имени, например, "Алиса (DataCo)". Когда вы присоединяетесь к обсуждению о вашем продукте (после указанного ниже периода ожидания), обязательно укажите свои бизнес-интересы.
 
-### Rule 2: Let others speak first
-If a community member asks a question about your product directly, or mentions that they have a problem that your product could help with, wait 1 business day before responding to allow other members to share their experiences and recommendations. (This doesn't apply to unambiguously support-style questions from existing users, or in your `#tools-` channel if you have one).
+### Правило 2: Дайте другим высказаться первыми
+Если участник сообщества задает вопрос о вашем продукте напрямую или упоминает, что у него есть проблема, с которой ваш продукт может помочь, подождите 1 рабочий день перед тем, как ответить, чтобы дать другим участникам возможность поделиться своим опытом и рекомендациями. (Это не относится к однозначно поддерживающим вопросам от существующих пользователей или в вашем канале `#tools-`, если он у вас есть).
 
-### Rule 3: Keep promotional content to specified spaces
-As a space for professional practice, the dbt Community is primarily a non-commercial space. However, as a service to community members who want to be able to keep up to date with the data industry, there are several areas available on the Community Slack for vendors to share promotional material: 
+### Правило 3: Ограничьте рекламный контент определенными пространствами
+Как пространство для профессиональной практики, сообщество dbt в первую очередь является некоммерческим пространством. Однако, в качестве услуги для участников сообщества, которые хотят быть в курсе событий в индустрии данных, существует несколько областей на Slack сообщества, где поставщики могут делиться рекламными материалами: 
 - [#vendor-content](https://getdbt.slack.com/archives/C03B0Q4EBL3)
 - [#events](https://getdbt.slack.com/archives/C80RCAZ5E)
-- #tools-* (post in [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) to request a channel for your tool/product)
+- #tools-* (опубликуйте в [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H), чтобы запросить канал для вашего инструмента/продукта)
 
-Recruiters may also post in [#jobs](https://getdbt.slack.com/archives/C7A7BARGT)/[#jobs-eu](https://getdbt.slack.com/archives/C04JMHHK6CD) but may not solicit applications in DMs. 
+Рекрутеры также могут публиковать в [#jobs](https://getdbt.slack.com/archives/C7A7BARGT)/[#jobs-eu](https://getdbt.slack.com/archives/C04JMHHK6CD), но не могут запрашивать заявки в личных сообщениях.
 
-The definition of "vendor content" can be blurry at the edges, and we defer to members' instincts in these scenarios. As a rule, if something is hosted on a site controlled by that company or its employees (including platforms like Substack and Medium), or contains a CTA such as signing up for a mailing list or trial account, it will likely be considered promotional. 
+Определение "рекламного контента" может быть размытым, и мы полагаемся на инстинкты участников в этих сценариях. Как правило, если что-то размещено на сайте, контролируемом этой компанией или ее сотрудниками (включая платформы, такие как Substack и Medium), или содержит призыв к действию, такой как подписка на рассылку или пробный аккаунт, это, вероятно, будет считаться рекламным.
 
-### One more tip: Be yourself
-Speak in your own voice, and join in any or all of the conversations that interest you. Share your expertise as a data professional. Make a meme if you're so inclined. Get in a (friendly) debate. You are not limited to only your company's products and services, and making yourself known as a familiar face outside of commercial contexts is one of the most effective ways of building trust with the community. Put another way, [create more value than you capture](/community/resources/code-of-conduct#create-more-value-than-you-capture). 
+### Еще один совет: Будьте собой
+Говорите своим голосом и участвуйте в любых или всех обсуждениях, которые вас интересуют. Делитесь своим опытом как специалиста в области данных. Создайте мем, если вам это интересно. Участвуйте в (дружественных) дебатах. Вы не ограничены только продуктами и услугами вашей компании, и знакомство с вами как с привычным лицом вне коммерческих контекстов – один из самых эффективных способов завоевать доверие сообщества. Иными словами, [создавайте больше ценности, чем захватываете](/community/resources/code-of-conduct#create-more-value-than-you-capture).
 
-Because unaffiliated community members are able to share links in any channel, the most effective way to have your work reach a wider audience is to create things that are genuinely useful to the community. 
+Поскольку неаффилированные участники сообщества могут делиться ссылками в любом канале, наиболее эффективный способ донести вашу работу до более широкой аудитории – это создавать вещи, которые действительно полезны для сообщества.
 
+## Обработка нарушений
 
-## Handling violations
+Цель этих правил не в том, чтобы найти возможности наказать людей, а в том, чтобы обеспечить долговечность сообщества. Участие в этом сообществе – это привилегия, и мы оставляем за собой право удалять людей из него.
 
-The point of these rules is not to find opportunities to punish people, but to ensure the longevity of the community. Participation in this community is a privilege, and we reserve the right to remove people from it. 
+Чтобы сообщить о проблеме или обжаловать решение, отправьте электронное письмо на адрес [community@dbtlabs.com](mailto:community@dbtlabs.com) или используйте рабочие процессы в [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) в Slack.
 
-To report an issue or appeal a judgement, email [community@dbtlabs.com](mailto:community@dbtlabs.com) or use the workflows in [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) on Slack.
+Нарушения, связанные с нашей политикой против домогательств, приведут к немедленному удалению. Другие проблемы обрабатываются пропорционально их влиянию и могут включать:
 
-Violations related to our anti-harassment policy will result in immediate removal. Other issues are handled in proportion to their impact, and may include:
-
-- a friendly, but public, reminder that the behavior is inappropriate according to our guidelines.
-- a private message with a warning that any additional violations will result in removal from the community.
-- temporary or permanent suspension of your account.
+- дружеское, но публичное напоминание о том, что поведение является неприемлемым в соответствии с нашими рекомендациями.
+- личное сообщение с предупреждением о том, что любые дополнительные нарушения приведут к удалению из сообщества.
+- временная или постоянная приостановка вашей учетной записи.

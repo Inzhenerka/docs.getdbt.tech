@@ -1,116 +1,116 @@
 ---
-title: "Code of Conduct"
+title: "Кодекс поведения"
 id: "code-of-conduct"
-description: "Learn about the community values that shape our rules, and review our anti-harassment policy."
+description: "Узнайте о ценностях сообщества, которые формируют наши правила, и ознакомьтесь с нашей политикой против домогательств."
 ---
 
-# dbt Community Code of Conduct
+# Кодекс поведения сообщества dbt
 
-This Code of Conduct applies to all dbt Community spaces, both online and offline. This includes Slack, Discourse, code repositories (dbt Core, dbt packages, etc.), Office Hours, and Meetups. Participants are responsible for knowing and abiding by this Code of Conduct.
+Этот Кодекс поведения применяется ко всем пространствам сообщества dbt, как онлайн, так и офлайн. Это включает в себя Slack, Discourse, репозитории кода (dbt Core, пакеты dbt и т.д.), часы работы и встречи. Участники несут ответственность за знание и соблюдение этого Кодекса поведения.
 
-This Code of Conduct has two sections:
+Этот Кодекс поведения состоит из двух разделов:
 
-- **dbt Community Values:** These values apply to all of our community spaces, and all of our guidelines are based on these values.
-- **Anti-harassment policy:**  We are dedicated to providing a harassment-free experience for everyone in our community — here, we outline exactly what that means.
+- **Ценности сообщества dbt:** Эти ценности применимы ко всем нашим пространствам сообщества, и все наши рекомендации основаны на этих ценностях.
+- **Политика против домогательств:** Мы стремимся обеспечить свободный от домогательств опыт для всех в нашем сообществе — здесь мы четко описываем, что это означает.
 
-We appreciate your support in continuing to build a community we’re all proud of.
+Мы ценим вашу поддержку в продолжении создания сообщества, которым мы все гордимся.
 
-— The dbt Community Admin Team.
+— Команда администраторов сообщества dbt.
 
-## dbt Community Values
-### Create more value than you capture.
+## Ценности сообщества dbt
+### Создавайте больше ценности, чем получаете.
 
-Each community member should strive to create more value in the community than they capture. This is foundational to being a community.
+Каждый член сообщества должен стремиться создавать больше ценности в сообществе, чем он получает. Это основа существования сообщества.
 
-Ways to demonstrate this value:
+Способы продемонстрировать эту ценность:
 
-- [Coding contributions](/community/contributing/contributing-coding): Contribute to dbt Core, a package, or an adapter. Beyond implementing new functionality, you can also open issues or participate in discussions.
-- [Writing contributions](/community/contributing/contributing-writing): You can suggest edits to every page of the dbt documentation, or suggest a topic for the dbt Developer Blog. 
-- [Join in online](/community/contributing/contributing-online-community): Ask and answer questions on the Discourse forum, kick off a lively discussion in Slack, or even maintain a Slack channel of your own. 
-- [Participate in events](/community/contributing/contributing-realtime-events): Organise a community Meetup, speak at an event, or provide office space/sponsorship for an existing event. 
+- [Кодовые вклады](/community/contributing/contributing-coding): Вносите вклад в dbt Core, пакет или адаптер. Кроме реализации новой функциональности, вы также можете открывать проблемы или участвовать в обсуждениях.
+- [Письменные вклады](/community/contributing/contributing-writing): Вы можете предложить правки к каждой странице документации dbt или предложить тему для блога разработчиков dbt.
+- [Присоединяйтесь к онлайн-обсуждениям](/community/contributing/contributing-online-community): Задавайте и отвечайте на вопросы на форуме Discourse, начинайте живое обсуждение в Slack или даже поддерживайте собственный канал в Slack.
+- [Участвуйте в мероприятиях](/community/contributing/contributing-realtime-events): Организуйте встречу сообщества, выступите на мероприятии или предоставьте офисное пространство/спонсорство для существующего мероприятия.
 
-### Be you.
+### Будьте собой.
 
-Some developer communities allow and even encourage anonymity — we prefer it when people identify themselves clearly. It helps to build empathy, and form relationships.
+Некоторые сообщества разработчиков допускают и даже поощряют анонимность — мы предпочитаем, чтобы люди четко идентифицировали себя. Это помогает строить эмпатию и формировать отношения.
 
-Ways to demonstrate this value:
+Способы продемонстрировать эту ценность:
 
-- Update your profile on dbt Community platforms to include your name and a clear picture of yourself. Where available, use the "what I do" section to add your role, title and current company.
-- Join your `#local-` channel in Slack, or if it doesn't exist then propose a new one. 
-- Write in your own voice, and offer your own advice, rather than speaking in your company’s marketing or support voice.
+- Обновите свой профиль на платформах сообщества dbt, чтобы включить ваше имя и четкое изображение себя. Где это возможно, используйте раздел "что я делаю", чтобы добавить вашу роль, должность и текущую компанию.
+- Присоединяйтесь к вашему каналу `#local-` в Slack, или если его нет, предложите создать новый.
+- Пишите своим голосом и предлагайте свои советы, а не говорите от имени маркетинга или поддержки вашей компании.
 
-### Encourage diversity and participation.
+### Поощряйте разнообразие и участие.
 
-People with different mindsets and experiences, working together, create better outcomes. This includes diversity of race and gender, as well as the diversity of academic and career backgrounds, socio-economic backgrounds, geographic backgrounds, ideologies, and interests.
+Люди с разными взглядами и опытом, работающие вместе, создают лучшие результаты. Это включает в себя разнообразие расы и пола, а также разнообразие академических и карьерных путей, социо-экономического фона, географического положения, идеологий и интересов.
 
-Ways to demonstrate this value:
+Способы продемонстрировать эту ценность:
 
-- Make everyone in our community feel welcome, regardless of their background, and do everything possible to encourage participation in our community.
-- Demonstrate empathy for a community member’s experience — not everyone comes from the same career background, so adjust answers accordingly.
-- If you are sourcing speakers for events, put in additional effort to find speakers from underrepresented groups.
+- Создавайте атмосферу, в которой каждый в нашем сообществе будет чувствовать себя желанным, независимо от их фона, и делайте все возможное, чтобы поощрять участие в нашем сообществе.
+- Проявляйте эмпатию к опыту членов сообщества — не все приходят из одинакового карьерного фона, поэтому корректируйте свои ответы соответственно.
+- Если вы ищете спикеров для мероприятий, приложите дополнительные усилия, чтобы найти спикеров из недостаточно представленных групп.
 
-### Be curious.
+### Будьте любознательными.
 
-Always ask yourself "why?" and strive to be continually learning.
+Всегда задавайте себе вопрос "почему?" и стремитесь к постоянному обучению.
 
-Ways to demonstrate this value:
+Способы продемонстрировать эту ценность:
 
-- Try solving a problem yourself before asking for help, e.g. rather than asking "what happens when I do X", experiment and observe the results!
-- When asking questions, explain the "why" behind your decisions, e.g. "I’m trying to solve X problem, by writing Y code. I’m getting Z problem"
-- When helping someone else, explain why you chose that solution, or if no solution exists, elaborate on the reason for that, e.g. "That’s not possible in dbt today — but here’s a workaround / check out this GitHub issue for a relevant discussion"
+- Попробуйте решить проблему самостоятельно, прежде чем просить о помощи, например, вместо того чтобы спрашивать "что происходит, когда я делаю X", экспериментируйте и наблюдайте за результатами!
+- При задавании вопросов объясняйте "почему" ваших решений, например: "Я пытаюсь решить проблему X, написав код Y. У меня возникает проблема Z".
+- Когда вы помогаете кому-то другому, объясняйте, почему вы выбрали это решение, или если решения нет, уточняйте причину этого, например: "Это невозможно в dbt сегодня — но вот обходной путь / посмотрите эту проблему на GitHub для соответствующего обсуждения".
 
-## Anti-harassment policy
+## Политика против домогательств
 
-We are dedicated to providing a harassment-free experience for everyone. We do not tolerate harassment of participants in any form.
+Мы стремимся обеспечить свободный от домогательств опыт для всех. Мы не терпим домогательства участников в любой форме.
 
-Harassment includes:
+Домогательства включают в себя:
 
-- Offensive comments related to gender, gender identity and expression, sexual orientation, disability, mental illness, neuro(a)typicality, physical appearance, body size, age, race, or religion.
-- Unwelcome comments regarding a person’s lifestyle choices and practices, including those related to food, health, parenting, drugs, and employment.
-- Deliberate misgendering or use of ‘dead’ or rejected names.
-- Gratuitous or off-topic sexual images or behaviour in spaces where they’re not appropriate.
-- Physical contact and simulated physical contact (eg, textual descriptions like "*hug*" or "*backrub*") without consent or after a request to stop.
-- Threats of violence.
-- Incitement of violence towards any individual, including encouraging a person to commit suicide or to engage in self-harm.
-- Deliberate intimidation.
-- Stalking or following.
-- Harassing photography or recording, including logging online activity for harassment purposes.
-- Sustained disruption of discussion.
-- Unwelcome sexual attention.
-- Pattern of inappropriate social contact, such as requesting/assuming inappropriate levels of intimacy with others
-- Continued one-on-one communication after requests to cease.
-- Deliberate "outing" of any aspect of a person’s identity without their consent except as necessary to protect vulnerable people from intentional abuse.
-- Publication of non-harassing private communication.
+- Оскорбительные комментарии, связанные с полом, гендерной идентичностью и выражением, сексуальной ориентацией, инвалидностью, психическими заболеваниями, нейро(а)типичностью, физическим внешним видом, размером тела, возрастом, расой или религией.
+- Нежелательные комментарии относительно образа жизни и практик человека, включая те, которые касаются пищи, здоровья, родительства, наркотиков и трудоустройства.
+- Умышленное неправильное определение пола или использование "мертвых" или отвергнутых имен.
+- Ненадлежащие или неуместные сексуальные изображения или поведение в пространствах, где они неуместны.
+- Физический контакт и имитация физического контакта (например, текстовые описания, такие как "*объятие*" или "*массаж спины*") без согласия или после просьбы прекратить.
+- Угрозы насилия.
+- Подстрекательство к насилию против любого человека, включая побуждение человека к самоубийству или самоповреждению.
+- Умышленное запугивание.
+- Преследование или слежка.
+- Домогательства через фотографирование или запись, включая регистрацию онлайн-активности с целью домогательства.
+- Постоянные нарушения обсуждения.
+- Нежелательное сексуальное внимание.
+- Шаблон неуместного социального контакта, такой как запрос/предположение о неуместных уровнях близости с другими.
+- Продолжение общения один на один после просьбы прекратить.
+- Умышленное "выдавание" любого аспекта идентичности человека без его согласия, кроме случаев, когда это необходимо для защиты уязвимых людей от преднамеренного насилия.
+- Публикация не домогательных частных коммуникаций.
 
-Be mindful that others may not want their image or name on social media. Ask permission prior to posting about another person at in-person events.
+Имейте в виду, что другие могут не хотеть, чтобы их изображение или имя появлялись в социальных сетях. Запрашивайте разрешение перед публикацией о другом человеке на личных мероприятиях.
 
-The dbt Community prioritizes marginalized people’s safety over privileged people’s comfort. The dbt Community Admin team reserves the right not to act on complaints regarding:
+Сообщество dbt приоритизирует безопасность маргинализированных людей над комфортом привилегированных. Команда администраторов сообщества dbt оставляет за собой право не реагировать на жалобы, касающиеся:
 
-- ‘Reverse’ -isms, including ‘reverse racism,’ ‘reverse sexism,’ and ‘cisphobia’
-- Reasonable communication of boundaries, such as "leave me alone," "go away," or "I’m not discussing this with you."
-- Communicating in a ‘tone’ you don’t find congenial
-- Criticizing racist, sexist, cissexist, or otherwise oppressive behavior or assumptions
+- "Обратных" -измов, включая "обратный расизм", "обратный сексизм" и "цисфобию".
+- Разумного общения границ, такого как "оставь меня в покое", "уйди" или "я не обсуждаю это с тобой".
+- Общения в "тоне", который вам не кажется приятным.
+- Критики расистского, сексистского, цисгендерного или иного угнетающего поведения или предположений.
 
-### Reporting harassment
+### Сообщение о домогательствах
 
-If you are being harassed by a member of the dbt Community, notice that someone else is being harassed, or have any other concerns, please contact us at [community@dbtlabs.com](mailto:community@dbtlabs.com) or use the workflows in [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) on Slack.
+Если вы подвергаетесь домогательствам со стороны члена сообщества dbt, замечаете, что кто-то другой подвергается домогательствам, или у вас есть другие опасения, пожалуйста, свяжитесь с нами по адресу [community@dbtlabs.com](mailto:community@dbtlabs.com) или используйте рабочие процессы в [#moderation-and-administration](https://getdbt.slack.com/archives/C02JJ8N822H) в Slack.
 
-We will respect confidentiality requests for the purpose of protecting victims of abuse. At our discretion, we may publicly name a person about whom we’ve received harassment complaints, or privately warn third parties about them, if we believe that doing so will increase the safety of dbt community members or the general public. We will not name harassment victims without their affirmative consent.
+Мы будем уважать запросы о конфиденциальности с целью защиты жертв насилия. На наше усмотрение мы можем публично назвать человека, о котором мы получили жалобы на домогательства, или частно предупредить третьих лиц о нем, если мы считаем, что это повысит безопасность членов сообщества dbt или широкой общественности. Мы не будем называть жертв домогательств без их явного согласия.
 
-### Consequences
-Participants asked to stop any harassing behavior are expected to comply immediately.
+### Последствия
+Участники, которых просят прекратить любое домогательное поведение, должны немедленно подчиниться.
 
-If a participant engages in harassing behavior, the dbt Community Admin team may take any action they deem appropriate, up to and including expulsion from all dbt Community spaces and identification of the participant as a harasser to other dbt Community members or the general public.
+Если участник ведет себя домогательно, команда администраторов сообщества dbt может предпринять любые действия, которые они сочтут необходимыми, вплоть до исключения из всех пространств сообщества dbt и идентификации участника как домогателя для других членов сообщества dbt или широкой общественности.
 
-## Coalesce and other events
-We reserve the right to prohibit certain directly competitive companies from attending and / or sponsoring Coalesce and other dbt Labs-hosted events. 
+## Coalesce и другие мероприятия
+Мы оставляем за собой право запретить определенным непосредственно конкурентным компаниям участвовать и/или спонсировать Coalesce и другие мероприятия, организованные dbt Labs.
 
-While we actively support the broader ecosystem around dbt, it is not the right business decision for us to allow directly competitive companies to market to or sell to our users and customers at events that we invest very significant company resources into hosting. 
+Хотя мы активно поддерживаем более широкую экосистему вокруг dbt, для нас не является правильным бизнес-решением позволять непосредственно конкурентным компаниям рекламировать или продавать нашим пользователям и клиентам на мероприятиях, в организацию которых мы вкладываем значительные ресурсы компании.
 
-Any event declines will be handled directly with the individuals / companies in question, and full refunds will be issued.
+Все отказы от участия будут обсуждаться непосредственно с соответствующими лицами/компаниями, и будут выданы полные возвраты.
 
-Events that are hosted by other members of the dbt community, such as most dbt Community Meetups, are free to make their own guidelines about attendance.
+Мероприятия, организованные другими членами сообщества dbt, такие как большинство встреч сообщества dbt, могут свободно устанавливать свои собственные правила относительно участия.
 
-## Credits
+## Благодарности
 
-Credit to [01.org](https://01.org/community/participation-guidelines), [Tizen.org](https://www.tizen.org/community/guidelines), and [Geek Feminism](https://geekfeminism.wikia.org/wiki/Community_anti-harassment/Policy) for some of the wording used in this Code of Conduct.
+Благодарим [01.org](https://01.org/community/participation-guidelines), [Tizen.org](https://www.tizen.org/community/guidelines) и [Geek Feminism](https://geekfeminism.wikia.org/wiki/Community_anti-harassment/Policy) за некоторые формулировки, использованные в этом Кодексе поведения.

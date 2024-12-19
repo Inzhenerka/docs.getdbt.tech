@@ -1,12 +1,12 @@
 ---
 id: ruth-onyekwe
-title: Ruth Onyekwe
+title: Рут Онякве
 description: |
-  I've been working in the world of Data Analytics for over 5 years and have been part of the dbt community for the last 4. With a background in International Business and Digital Marketing, I experienced first hand the need for reliable data to fuel business decisions. This inspired a career move into the technology space to be able to work with the tools and the people that were facilitating this process. Today I am leading teams to deliver data modernization projects, as well as helping grow the analytics arm of my company on a day to day basis. I also have the privilege of organising the <a target="_blank" rel="noopener noreferrer" href="https://www.meetup.com/barcelona-dbt-meetup/">dbt Meetups in Barcelona, Spain</a> - and am excited to continue to grow the community across Europe. 
+  Я работаю в области аналитики данных более 5 лет и являюсь частью сообщества dbt последние 4 года. Имея опыт в международном бизнесе и цифровом маркетинге, я на собственном опыте убедилась в необходимости надежных данных для принятия бизнес-решений. Это вдохновило меня на переход в технологическую сферу, чтобы иметь возможность работать с инструментами и людьми, которые способствуют этому процессу. Сегодня я руковожу командами, которые реализуют проекты по модернизации данных, а также помогаю развивать аналитическое направление моей компании на ежедневной основе. Мне также выпала честь организовывать <a target="_blank" rel="noopener noreferrer" href="https://www.meetup.com/barcelona-dbt-meetup/">встречи dbt в Барселоне, Испания</a> - и я с нетерпением жду возможности продолжать развивать сообщество по всей Европе.
 image: /img/community/spotlight/ruth-onyekwe.jpeg
 pronouns: she/her
-location: Madrid, Spain
-jobTitle: Data Analytics Manager
+location: Мадрид, Испания
+jobTitle: Менеджер по аналитике данных
 companyName: Spaulding Ridge
 socialLinks:
   - name: LinkedIn
@@ -17,15 +17,14 @@ communityAward: true
 communityAwardYear: 2024 
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community in 2021, after meeting dbt Labs reps at a conference. Through partnering with dbt Labs and learning the technology, we (Spaulding Ridge) were able to open a whole new offering in our service catalogue, and meet the growing needs of our customers.
+Я присоединилась к сообществу dbt в 2021 году, после встречи с представителями dbt Labs на конференции. Партнерство с dbt Labs и изучение технологии позволили нам (Spaulding Ridge) открыть совершенно новое предложение в нашем каталоге услуг и удовлетворить растущие потребности наших клиентов.
 
-## Which dbt Community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свои лидерские качества в сообществе dbt?
 
-I identify with the transparent leaders - those willing to share their learnings, knowledge, and experiences. I want to encourage other dbt enthusiasts to stretch themselves professionally and actively participate in the analytics community.  
+Я ассоциирую себя с прозрачными лидерами - теми, кто готов делиться своими знаниями, опытом и уроками. Я хочу вдохновить других энтузиастов dbt развиваться профессионально и активно участвовать в аналитическом сообществе.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I've learnt that most of us working in data have experienced the same struggles, be it searching for the best testing frameworks, or deciding how to build optimised and scalable models, or searching for the answers to non-technical questions like how to best organise teams or how to communicate with business stakeholders and translate their needs - we're all faced with the same dilemmas. And the great thing I've learned being in the dbt community, is that if you're brave enough to share your stories, you'll connect with someone who has already gone through those experiences, and can help you reach a solution a lot faster than if you tried to start from scratch.
-
+Я узнала, что большинство из нас, работающих с данными, сталкивались с одинаковыми трудностями, будь то поиск лучших тестовых фреймворков, решение о том, как строить оптимизированные и масштабируемые модели, или поиск ответов на нетехнические вопросы, такие как как лучше организовать команды или как общаться с бизнес-стейкхолдерами и переводить их потребности - мы все сталкиваемся с одними и теми же дилеммами. И самое замечательное, что я узнала, находясь в сообществе dbt, это то, что если вы достаточно смелы, чтобы делиться своими историями, вы свяжетесь с кем-то, кто уже прошел через эти опыты и может помочь вам быстрее найти решение, чем если бы вы пытались начать с нуля.

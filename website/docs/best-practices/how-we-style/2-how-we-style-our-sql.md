@@ -1,46 +1,46 @@
 ---
-title: How we style our SQL
+title: Как мы стилизуем наш SQL
 id: 2-how-we-style-our-sql
 ---
 
-## Basics
+## Основы
 
-- ☁️ Use [SQLFluff](https://sqlfluff.com/) to maintain these style rules automatically.
-  - Customize `.sqlfluff` configuration files to your needs.
-  - Refer to our [SQLFluff config file](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) for the rules we use in our own projects. 
-  - Exclude files and directories by using a standard `.sqlfluffignore` file. Learn more about the syntax in the [.sqlfluffignore syntax docs](https://docs.sqlfluff.com/en/stable/configuration/index.html).
-    - Excluding unnecessary folders and files (such as `target/`, `dbt_packages/`, and `macros/`) can speed up linting, improve run times, and help you avoid irrelevant logs.
-- 👻 Use Jinja comments (`{# #}`) for comments that should not be included in the compiled SQL.
-- ⏭️ Use trailing commas.
-- 4️⃣ Indents should be four spaces.
-- 📏 Lines of SQL should be no longer than 80 characters.
-- ⬇️ Field names, keywords, and function names should all be lowercase.
-- 🫧 The `as` keyword should be used explicitly when aliasing a field or table.
+- ☁️ Используйте [SQLFluff](https://sqlfluff.com/) для автоматического соблюдения этих правил стиля.
+  - Настройте файлы конфигурации `.sqlfluff` в соответствии с вашими потребностями.
+  - Ознакомьтесь с нашим [файлом конфигурации SQLFluff](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) для правил, которые мы используем в своих проектах.
+  - Исключайте файлы и директории, используя стандартный файл `.sqlfluffignore`. Узнайте больше о синтаксисе в [документации по синтаксису .sqlfluffignore](https://docs.sqlfluff.com/en/stable/configuration/index.html).
+    - Исключение ненужных папок и файлов (таких как `target/`, `dbt_packages/` и `macros/`) может ускорить линтинг, улучшить время выполнения и помочь избежать нерелевантных логов.
+- 👻 Используйте комментарии Jinja (`{# #}`) для комментариев, которые не должны включаться в скомпилированный SQL.
+- ⏭️ Используйте завершающие запятые.
+- 4️⃣ Отступы должны составлять четыре пробела.
+- 📏 Строки SQL не должны превышать 80 символов.
+- ⬇️ Имена полей, ключевые слова и имена функций должны быть написаны строчными буквами.
+- 🫧 Ключевое слово `as` должно использоваться явно при создании псевдонима для поля или таблицы.
 
 :::info
-☁️ dbt Cloud users can use the built-in [SQLFluff Cloud IDE integration](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format) to automatically lint and format their SQL. The default style sheet is based on dbt Labs style as outlined in this guide, but you can customize this to fit your needs. No need to setup any external tools, just hit `Lint`! Also, the more opinionated [sqlfmt](http://sqlfmt.com/) formatter is also available if you prefer that style.
+☁️ Пользователи dbt Cloud могут использовать встроенную [интеграцию SQLFluff Cloud IDE](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format) для автоматического линтинга и форматирования своего SQL. Стандартный стиль основан на стиле dbt Labs, как описано в этом руководстве, но вы можете настроить его в соответствии с вашими потребностями. Нет необходимости настраивать какие-либо внешние инструменты, просто нажмите `Lint`! Также доступен более строгий форматировщик [sqlfmt](http://sqlfmt.com/), если вам больше нравится этот стиль.
 :::
 
-## Fields, aggregations, and grouping
+## Поля, агрегации и группировка
 
-- 🔙 Fields should be stated before aggregates and window functions.
-- 🤏🏻 Aggregations should be executed as early as possible (on the smallest data set possible) before joining to another table to improve performance.
-- 🔢 Ordering and grouping by a number (eg. group by 1, 2) is preferred over listing the column names (see [this classic rant](https://www.getdbt.com/blog/write-better-sql-a-defense-of-group-by-1) for why). Note that if you are grouping by more than a few columns, it may be worth revisiting your model design.
+- 🔙 Поля должны указываться перед агрегатами и оконными функциями.
+- 🤏🏻 Агрегации должны выполняться как можно раньше (на наименьшем возможном наборе данных) перед объединением с другой таблицей для повышения производительности.
+- 🔢 Предпочтительно использовать группировку и сортировку по номеру (например, group by 1, 2) вместо перечисления имен столбцов (см. [это классическое возмущение](https://www.getdbt.com/blog/write-better-sql-a-defense-of-group-by-1) о том, почему). Обратите внимание, что если вы группируете по более чем нескольким столбцам, возможно, стоит пересмотреть дизайн вашей модели.
 
-## Joins
+## Объединения
 
-- 👭🏻 Prefer `union all` to `union` unless you explicitly want to remove duplicates.
-- 👭🏻 If joining two or more tables, _always_ prefix your column names with the table name. If only selecting from one table, prefixes are not needed.
-- 👭🏻 Be explicit about your join type (i.e. write `inner join` instead of `join`).
-- 🥸 Avoid table aliases in join conditions (especially initialisms) — it's harder to understand what the table called "c" is as compared to "customers".
-- ➡️ Always move left to right to make joins easy to reason about - `right joins` often indicate that you should change which table you select `from` and which one you `join` to.
+- 👭🏻 Предпочитайте `union all` вместо `union`, если вы явно не хотите удалять дубликаты.
+- 👭🏻 Если вы объединяете две или более таблиц, _всегда_ добавляйте префикс к именам столбцов с именем таблицы. Если вы выбираете только из одной таблицы, префиксы не нужны.
+- 👭🏻 Будьте явными в отношении типа вашего объединения (т.е. пишите `inner join` вместо `join`).
+- 🥸 Избегайте использования псевдонимов таблиц в условиях объединения (особенно аббревиатур) — труднее понять, что за таблица называется "c", по сравнению с "customers".
+- ➡️ Всегда двигайтесь слева направо, чтобы объединения было легко понимать - `right joins` часто указывают на то, что вам следует изменить, из какой таблицы вы выбираете `from`, и с какой вы `join`.
 
-## 'Import' CTEs
+## 'Импортные' CTE
 
-- 🔝 All `{{ ref('...') }}` statements should be placed in CTEs at the top of the file.
-- 📦 'Import' CTEs should be named after the table they are referencing.
-- 🤏🏻 Limit the data scanned by CTEs as much as possible. Where possible, only select the columns you're actually using and use `where` clauses to filter out unneeded data.
-- For example:
+- 🔝 Все операторы `{{ ref('...') }}` должны располагаться в CTE в верхней части файла.
+- 📦 'Импортные' CTE должны называться в честь таблицы, на которую они ссылаются.
+- 🤏🏻 Ограничьте объем данных, сканируемых CTE, насколько это возможно. По возможности выбирайте только те столбцы, которые вы действительно используете, и используйте условия `where`, чтобы отфильтровать ненужные данные.
+- Например:
 
 ```sql
 with
@@ -60,18 +60,18 @@ orders as (
 )
 ```
 
-## 'Functional' CTEs
+## 'Функциональные' CTE
 
-- ☝🏻 Where performance permits, CTEs should perform a single, logical unit of work.
-- 📖 CTE names should be as verbose as needed to convey what they do e.g. `events_joined_to_users` instead of `user_events` (this could be a good model name, but does not describe a specific function or transformation).
-- 🌉 CTEs that are duplicated across models should be pulled out into their own intermediate models. Look out for chunks of repeated logic that should be refactored into their own model.
-- 🔚 The last line of a model should be a `select *` from your final output CTE. This makes it easy to materialize and audit the output from different steps in the model as you're developing it. You just change the CTE referenced in the `select` statement to see the output from that step.
+- ☝🏻 Если позволяет производительность, CTE должны выполнять единичную, логическую единицу работы.
+- 📖 Имена CTE должны быть настолько подробными, насколько это необходимо, чтобы передать, что они делают, например, `events_joined_to_users` вместо `user_events` (это может быть хорошим именем модели, но не описывает конкретную функцию или преобразование).
+- 🌉 CTE, которые дублируются в разных моделях, должны быть вынесены в отдельные промежуточные модели. Обратите внимание на куски повторяющейся логики, которые следует рефакторить в свою модель.
+- 🔚 Последняя строка модели должна быть `select *` из вашего конечного выходного CTE. Это упрощает материализацию и аудит вывода из различных этапов модели в процессе ее разработки. Вы просто изменяете CTE, на который ссылается оператор `select`, чтобы увидеть вывод с этого шага.
 
-## Model configuration
+## Конфигурация модели
 
-- 📝 Model-specific attributes (like sort/dist keys) should be specified in the model.
-- 📂 If a particular configuration applies to all models in a directory, it should be specified in the `dbt_project.yml` file.
-- 👓 In-model configurations should be specified like this for maximum readability:
+- 📝 Атрибуты, специфичные для модели (такие как ключи сортировки/распределения), должны быть указаны в модели.
+- 📂 Если конкретная конфигурация применяется ко всем моделям в директории, она должна быть указана в файле `dbt_project.yml`.
+- 👓 Конфигурации в модели должны быть указаны следующим образом для максимальной читаемости:
 
 ```sql
 {{
@@ -83,7 +83,7 @@ orders as (
 }}
 ```
 
-## Example SQL
+## Пример SQL
 
 ```sql
 with
@@ -94,7 +94,7 @@ events as (
 
 ),
 
-{# CTE comments go here #}
+{# Комментарии CTE здесь #}
 filtered_events as (
 
     ...
@@ -104,7 +104,7 @@ filtered_events as (
 select * from filtered_events
 ```
 
-### Example SQL
+### Пример SQL
 
 ```sql
 with
@@ -154,7 +154,7 @@ joined as (
         my_data.field_2,
         my_data.field_3,
 
-        -- use line breaks to visually separate calculations into blocks
+        -- используйте разрывы строк, чтобы визуально разделить вычисления на блоки
         case
             when my_data.cancellation_date is null
                 and my_data.expiration_date is not null

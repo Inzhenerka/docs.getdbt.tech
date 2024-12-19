@@ -1,20 +1,20 @@
 ---
 id: josh-devlin
-title: Josh Devlin
+title: Джош Девлин
 description: |
-  Josh Devlin has a rich history of community involvement and technical expertise in both the dbt and wider analytics communities.
+  Джош Девлин имеет богатую историю участия в сообществе и технической экспертизы как в dbt, так и в более широком аналитическом сообществе.
 
-  Discovering dbt in early 2020, he quickly became an integral member of its <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">community</a>, leveraging the platform as a learning tool and aiding others along their dbt journey. Josh has helped thousands of dbt users with his advice and near-encyclopaedic knowledge of dbt.
+  Узнав о dbt в начале 2020 года, он быстро стал неотъемлемой частью его <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">сообщества</a>, используя платформу как инструмент для обучения и помогая другим на их пути с dbt. Джош помог тысячам пользователей dbt своими советами и почти энциклопедическими знаниями о dbt.
 
-  Beyond the online community, he transitioned from being an attendee at the first virtual Coalesce conference in December 2020 to a <a href="https://coalesce.getdbt.com/blog/babies-and-bathwater-is-kimball-still-relevant" title="at the first in-person Coalesce" rel="noopener noreferrer" target="_blank">presenter at the first in-person Coalesce event</a> in New Orleans in 2022.  He has also contributed to the dbt-core and dbt-snowflake codebases, helping improve the product in the most direct way.
+  За пределами онлайн-сообщества он прошел путь от участника первой виртуальной конференции Coalesce в декабре 2020 года до <a href="https://coalesce.getdbt.com/blog/babies-and-bathwater-is-kimball-still-relevant" title="на первой очной конференции Coalesce" rel="noopener noreferrer" target="_blank">докладчика на первой очной конференции Coalesce</a> в Новом Орлеане в 2022 году. Он также внес свой вклад в кодовые базы dbt-core и dbt-snowflake, помогая улучшить продукт самым непосредственным образом.
 
-  His continuous contributions echo his philosophy of learning through teaching, a principle that has not only enriched the dbt community but also significantly bolstered his proficiency with the tool, making him a valuable community member.
+  Его постоянные вклады отражают его философию обучения через преподавание, принцип, который не только обогатил сообщество dbt, но и значительно повысил его мастерство в использовании инструмента, сделав его ценным членом сообщества.
 
-  Aside from his technical endeavors, Josh carries a heart for communal growth and an individual's ability to contribute to a larger whole, a trait mirrored in his earlier pursuits as an orchestral musician. His story is a blend of technical acumen, communal involvement, and a nuanced appreciation for the symbiotic relationship between teaching and learning, making him a notable figure in the analytics engineering space.
+  Помимо своих технических усилий, Джош стремится к общему развитию и верит в способность каждого человека внести вклад в более целое, что также проявляется в его предыдущих увлечениях как оркестрового музыканта. Его история — это сочетание технической компетенции, участия в сообществе и тонкого понимания симбиотических отношений между обучением и преподаванием, что делает его заметной фигурой в области аналитической инженерии.
 image: /img/community/spotlight/josh-devlin.jpg
-pronouns: he/him
-location: Melbourne, Australia (but spent most of the last decade in Houston, USA)
-jobTitle: Senior Analytics Engineer
+pronouns: он/его
+location: Мельбурн, Австралия (но большую часть последнего десятилетия провел в Хьюстоне, США)
+jobTitle: Старший аналитический инженер
 companyName: Canva
 socialLinks:
   - name: Twitter
@@ -27,18 +27,18 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I have been a subscriber to 'The Data Science Roundup' (now ['The Analytics Engineering Roundup'](https://roundup.getdbt.com/)) since its inception, so I knew that dbt existed from the very beginning, since the time that dbt Labs was still called Fishtown Analytics.  Despite that, I never really understood what the tool was or how it fit in until early 2020 when I first started experimenting with the tool.  I immediately joined the community and found it warm and welcoming, so I started to help people where I could and never stopped!
+Я подписан на 'The Data Science Roundup' (теперь ['The Analytics Engineering Roundup'](https://roundup.getdbt.com/)) с самого начала, поэтому знал о существовании dbt с самого начала, когда dbt Labs еще назывался Fishtown Analytics. Несмотря на это, я никогда по-настоящему не понимал, что это за инструмент и как он вписывается в общую картину, пока в начале 2020 года не начал экспериментировать с ним. Я сразу же присоединился к сообществу и нашел его теплым и дружелюбным, поэтому начал помогать людям, где мог, и не останавливался!
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I like to think I represent the warm, helpful vibes of the early days of the Community, where folks like Claire Carroll warmly welcomed myself and others!
+Я люблю думать, что представляю теплую и дружелюбную атмосферу первых дней сообщества, когда такие люди, как Клэр Кэрролл, тепло приветствовали меня и других!
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I've learned that the more you give, the more you get. I've put hundreds of hours into helping other people in the community, but I've gotten all that back and much more. I hope I can encourage others to give of themselves and reap the rewards later!
+Я узнал, что чем больше ты отдаешь, тем больше получаешь. Я вложил сотни часов в помощь другим людям в сообществе, но получил все это обратно и даже больше. Я надеюсь, что смогу вдохновить других делиться собой и пожинать плоды позже!
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-In a previous life I was an orchestral musician!
+В прошлой жизни я был оркестровым музыкантом!

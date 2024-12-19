@@ -1,14 +1,14 @@
 ---
 id: alison-stanton
-title: Alison Stanton
+title: Алисон Стэнтон
 description: |
-  I started programming 20+ years ago. I moved from web applications into transforming data and business intelligence reporting because it's both hard and useful. The majority of my career has been in engineering for SaaS companies. For my last few positions I've been brought in to transition larger, older companies to a modern data platform and ways of thinking.
+  Я начала программировать более 20 лет назад. Я перешла от веб-приложений к трансформации данных и бизнес-аналитике, потому что это и сложно, и полезно. Большая часть моей карьеры была связана с инженерией в SaaS-компаниях. В последние несколько должностей меня привлекали для перехода крупных, устаревших компаний на современную платформу данных и новые подходы.
 
-  I am dbt Certified. I attend Coalesce and other dbt events virtually. I speak up in <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">dbt Slack</a> and on the dbt-core, dbt-redshift, and dbt-sqlserver repositories. dbt Slack is my happy place, especially #advice-for-dbt-power-users. I care a lot about the dbt documentation and dbt doc.
+  Я сертифицированный специалист dbt. Я посещаю Coalesce и другие мероприятия dbt в виртуальном формате. Я активно участвую в <a href="https://www.getdbt.com/community/join-the-community" rel="noopener noreferrer" target="_blank">dbt Slack</a> и на репозиториях dbt-core, dbt-redshift и dbt-sqlserver. dbt Slack — это мое счастливое место, особенно канал #advice-for-dbt-power-users. Мне очень важна документация dbt и dbt doc.
 image: /img/community/spotlight/alison.jpg
 pronouns: she/her
-location: Chicago, IL, USA
-jobTitle: AVP, Analytics Engineering Lead
+location: Чикаго, штат Иллинойс, США
+jobTitle: AVP, Ведущий аналитик
 organization: Advocates for SOGIE Data Collection
 socialLinks:
   - name: LinkedIn
@@ -21,74 +21,74 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community when I joined an employer in mid-2020. To summarize the important things that dbt has given me: it allowed me to focus on the next set of data challenges instead of staying in toil. Data folks joke that we're plumbers, but we're digital plumbers and that distinction should enable us to be DRY. That means not only writing DRY code like dbt allows, but also having tooling automation to DRY up repetitive tasks like dbt provides.
+Я присоединилась к сообществу dbt, когда начала работать у нового работодателя в середине 2020 года. Чтобы подвести итоги важным вещам, которые dbt мне дало: он позволил мне сосредоточиться на следующих задачах с данными, а не оставаться в рутине. Люди, работающие с данными, шутят, что мы сантехники, но мы цифровые сантехники, и это различие должно позволить нам быть DRY. Это означает не только написание DRY-кода, как это позволяет делать dbt, но и наличие инструментов автоматизации для упрощения повторяющихся задач, как это предоставляет dbt.
 
-dbt's existence flipped the experience of data testing on its head for me. I went from a)years of instigating tech discussions on how to systematize data quality checks and b) building my own SQL tests and design patterns, to having built-in mechanisms for data testing.
+Существование dbt перевернуло мой опыт тестирования данных. Я перешла от a) многолетних обсуждений технологий о том, как систематизировать проверки качества данных, и b) создания собственных SQL-тестов и шаблонов проектирования к наличию встроенных механизмов для тестирования данных.
 
-dbt and the dbt community materials are assets I can use in order to provide validation for things I have, do, and will say about data. Having outside voices to point to when requesting investment in data up-front - to avoid problems later - is an under-appreciated tool for data leader's toolboxes.
+Материалы сообщества dbt и сам dbt являются активами, которые я могу использовать для подтверждения того, что я имею, делаю и буду говорить о данных. Наличие внешних голосов, на которые можно ссылаться при запросе инвестиций в данные заранее — чтобы избежать проблем позже — это недооцененный инструмент в арсенале лидеров данных.
 
-dbt's community has given me access to both a) high-quality, seasoned SMEs in my field to learn from and b) newer folks I can help. Both are gifts that I cherish.
+Сообщество dbt дало мне доступ как к a) высококвалифицированным, опытным экспертам в моей области, от которых я могу учиться, так и b) к новым людям, которым я могу помочь. Оба этих аспекта я ценю.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I want to be when I grow up:
+Когда я вырасту, я хочу быть:
 
-- MJ, who was the first person to ever say "data build tool" to me. If I'd listened to her then I could have been part of the dbt community years sooner.
+- MJ, которая первой сказала мне "data build tool". Если бы я тогда ее послушала, я могла бы стать частью сообщества dbt гораздо раньше.
 
-- Christine Dixon who presented <a href="https://www.youtube.com/watch?v=vD6IrGtxNAM" rel="noopener noreferrer" target="_blank">"Could You Defend Your Data in Court?"</a> at Coalesce 2023. In your entire data career, that is the most important piece of education you'll get.
+- Кристин Диксон, которая представила <a href="https://www.youtube.com/watch?v=vD6IrGtxNAM" rel="noopener noreferrer" target="_blank">"Можете ли вы защитить свои данные в суде?"</a> на Coalesce 2023. Это самый важный урок, который вы получите за всю свою карьеру в области данных.
 
-- The dbt community team in general. Hands-down the most important work they do is the dbt Slack community, which gives me and others the accessibility we need to participate. Gwen Windflower (Winnie) for her extraordinary ability to bridge technical nuance with business needs on-the-fly. Dave Connors for being the first voice for "a node is a node is a node". Joel Labes for creating the ability to emoji-react with :sparkles: to post to the #best-of-slack channel. And so on. The decision to foster a space for data instead of just for their product because that enhances their product. The extremely impressive ability to maintain a problem-solving-is-cool, participate-as-you-can, chorus-of-voices, international, not-only-cis-men, and we're-all-in-this-together community.
+- Команда сообщества dbt в целом. Безусловно, самая важная работа, которую они делают, — это сообщество dbt Slack, которое дает мне и другим доступ, необходимый для участия. Гвен Уиндфлауэр (Винни) за ее необыкновенную способность соединять технические нюансы с бизнес-потребностями на лету. Дэйв Коннорс за то, что он стал первым голосом для "узел — это узел — это узел". Джоэл Лабес за создание возможности реагировать на сообщения с помощью :sparkles: в канале #best-of-slack. И так далее. Решение создать пространство для данных, а не только для их продукта, потому что это улучшает их продукт. Удивительная способность поддерживать сообщество, где решение проблем — это круто, участие — по мере возможности, многообразие голосов, международное, не только для цис-мен, и мы все вместе.
 
-- Other (all?) dbt labs employees who engage with the community, instead of having a false separation with it &mdash; like most software companies. Welcoming feedback, listening to it, and actioning or filtering it out (ex. Mirna Wong, account reps). Thinking holistically about the eco-system, not just one feature at a time (ex. Anders). Responsiveness and ability to translate diverse items into technical clarity and focused actions (ex. Doug Beatty, the dbt support team). I've been in software and open source and online communities for a long time - these are rare things we should not take for granted.
+- Другие (все?) сотрудники dbt labs, которые взаимодействуют с сообществом, а не создают ложное разделение с ним — как это делают большинство программных компаний. Открытость к обратной связи, умение слушать и действовать или фильтровать ее (например, Мирна Вонг, аккаунт-менеджеры). Целостный подход к экосистеме, а не только к одной функции за раз (например, Андерс). Быстрая реакция и способность переводить разнообразные элементы в техническую ясность и целенаправленные действия (например, Даг Бити, команда поддержки dbt). Я долгое время работала в программном обеспечении, открытом коде и онлайн-сообществах — это редкие вещи, которые мы не должны принимать как должное.
 
-- Josh Devlin for prolificness that demonstrates expertise and dedication to helping.
+- Джош Девлин за его продуктивность, которая демонстрирует экспертизу и преданность помощи.
 
-- The maintainers of dbt packages like dbt-utils, dbt-expectations, dbt-date, etc.
+- Содержатели пакетов dbt, таких как dbt-utils, dbt-expectations, dbt-date и т.д.
 
-- Everyone who gets over their fear to ask a question, propose an answer that may not work, or otherwise take a risk by sharing their voice.
+- Всем, кто преодолевает свой страх задать вопрос, предложить ответ, который может не сработать, или иначе рискнуть, поделившись своим мнением.
 
-I hope I can support my employer my professional development and my dbt community through the following:
+Я надеюсь, что смогу поддержать своего работодателя, свое профессиональное развитие и сообщество dbt следующим образом:
 
-- Elevate dbt understanding of and support for Enterprise-size company use cases through dialogue, requests, and examples.
-- Emphasize rigor with defensive coding and comprehensive testing practices.
-- Improve the onboarding and up-skilling of dbt engineers through feedback and edits on <a href="/">docs.getdbt.com</a>.
-- Contribute to the maintenance of a collaborative and helpful dbt community as the number of dbt practitioners reaches various growth stages and tipping points.
-- Engage in dialogue. Providing feedback. Champion developer experience as a priority. Be a good open-source citizen on GitHub.
+- Повышение понимания dbt и поддержки случаев использования для компаний корпоративного размера через диалог, запросы и примеры.
+- Подчеркнуть важность строгого подхода к защитному программированию и комплексному тестированию.
+- Улучшить процесс адаптации и повышения квалификации инженеров dbt через обратную связь и правки на <a href="/">docs.getdbt.com</a>.
+- Способствовать поддержанию совместного и полезного сообщества dbt по мере того, как количество практиков dbt достигает различных стадий роста и критических точек.
+- Участвовать в диалоге. Предоставлять обратную связь. Поддерживать опыт разработчиков как приоритет. Быть хорошим гражданином открытого кода на GitHub.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Чему вы научились у членов сообщества? Чему вы надеетесь научить других?
 
-I have learned:
+Я научилась:
 
-- Details on DAG sequencing.
-- How to make an engineering proposal a community conversation.
-- The <a href="https://www.getdbt.com/product/semantic-layer" rel="noopener noreferrer" target="_blank">dbt semantic layer</a>
+- Подробностям о последовательности DAG.
+- Как сделать инженерное предложение общественным обсуждением.
+- <a href="https://www.getdbt.com/product/semantic-layer" rel="noopener noreferrer" target="_blank">семантическому слою dbt</a>.
 
-So many things that are now so engrained in me that I can't remember not knowing them.
+Так много вещей, которые теперь так укоренились во мне, что я не могу вспомнить, каково это — не знать их.
 
-I can teach and share about:
+Я могу обучать и делиться знаниями о:
 
-- Naming new concepts and how to choose those names.
-- Reproducibility, reconciliation, and audits.
-- Data ethics.
-- Demographic questions for sexual orientation and/or gender identity on a form. I'm happy to be your shortcut to the most complicated data and most engrained tech debt in history.
+- Названии новых концепций и о том, как выбирать эти названия.
+- Воспроизводимости, сверке и аудитах.
+- Этических аспектах данных.
+- Демографических вопросах о сексуальной ориентации и/или гендерной идентичности в форме. Я рада быть вашим кратким путеводителем по самым сложным данным и самым укоренившимся техническим долгам в истории.
 
-I also geek out talking about: 
+Мне также нравится обсуждать:
 
-- reusing functionality in creative ways,
-- balancing trade-offs in data schema modeling,
-- dealing with all of an organization's data holistically,
-- tracking instrumentation, and
-- the philosophy on prioritization.
+- повторное использование функциональности креативными способами,
+- балансировку компромиссов в моделировании схем данных,
+- комплексный подход к данным всей организации,
+- отслеживание инструментов, и
+- философию приоритизации.
 
-The next things on my agenda to learn about:
+Следующие вещи в моем списке для изучения:
 
-- Successes and failures in data literacy work. The best I've found so far is 1:1 interactions and that doesn't scale.
-- How to reduce the amount of time running dbt test takes while maintaining coverage.
-Data ethics.
-The things you think are most important by giving them a :sparkles: emoji reaction in Slack.
+- Успехи и неудачи в работе по повышению грамотности в области данных. Лучшее, что я нашла до сих пор, — это взаимодействие один на один, и это не масштабируется.
+- Как сократить время выполнения dbt test, сохраняя покрытие.
+- Этические аспекты данных.
+- Вещи, которые вы считаете наиболее важными, давая им реакцию :sparkles: в Slack.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-My gratitude to each community member for this community.
+Я благодарна каждому члену сообщества за это сообщество.

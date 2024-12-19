@@ -1,123 +1,123 @@
 ---
-title: "Expectations for OSS contributors"
+title: "Ожидания от участников OSS"
 ---
 
-Whether it's `dbt-core`, adapters, packages, or this very documentation site, contributing to the open source code that supports the dbt ecosystem is a great way to share your knowledge, level yourself up as a developer, and to give back to the community. The goal of this page is to help you understand what to expect when contributing to dbt open source software (OSS).
+Будь то `dbt-core`, адаптеры, пакеты или этот сайт документации, участие в открытом исходном коде, который поддерживает экосистему dbt, — отличный способ поделиться своими знаниями, повысить свои навыки как разработчика и внести свой вклад в сообщество. Цель этой страницы — помочь вам понять, чего ожидать при внесении вклада в программное обеспечение dbt с открытым исходным кодом (OSS).
 
-Have you seen things in other OSS projects that you quite like, and think we could learn from? [Open a discussion on the dbt Community Forum](https://discourse.getdbt.com), or start a conversation in the [dbt Community Slack](https://www.getdbt.com/community/join-the-community) (for example: `#community-strategy`, `#dbt-core-development`, `#package-ecosystem`, `#adapter-ecosystem`). We always appreciate hearing from you!
+Вы видели что-то в других проектах OSS, что вам нравится и чему мы могли бы научиться? [Откройте обсуждение на форуме сообщества dbt](https://discourse.getdbt.com) или начните разговор в [Slack-сообществе dbt](https://www.getdbt.com/community/join-the-community) (например: `#community-strategy`, `#dbt-core-development`, `#package-ecosystem`, `#adapter-ecosystem`). Мы всегда рады услышать ваше мнение!
 
-## Principles
+## Принципы
 
-### Open source is participatory
+### Открытый исходный код — это участие
 
-We all build dbt together -- whether you write code or contribute your ideas. By using dbt, you're invested in the future of the tool, and have an active role in pushing forward the standard of analytics engineering. You already benefit from using code and documentation contributed by community members. Contributing to the dbt community is your way to be an active participant in the thing we're all creating together.
+Мы все вместе создаем dbt — независимо от того, пишете ли вы код или вносите свои идеи. Используя dbt, вы заинтересованы в будущем инструмента и играете активную роль в продвижении стандартов аналитической инженерии. Вы уже получаете выгоду от использования кода и документации, предоставленных членами сообщества. Участие в сообществе dbt — это ваш способ стать активным участником того, что мы все создаем вместе.
 
-There's a very practical reason, too: OSS prioritizes our collective knowledge and experience over any one person's. We don't have experience using every database, operating system, security environment, ... We rely on the community of OSS users to hone our product capabilities and documentation to the wide variety of contexts in which it operates. In this way, dbt gets to be the handiwork of thousands, rather than a few dozen.
+Существует и очень практическая причина: OSS придает приоритет нашим коллективным знаниям и опыту над опытом одного человека. У нас нет опыта работы с каждой базой данных, операционной системой, средой безопасности и т. д. Мы полагаемся на сообщество пользователей OSS, чтобы уточнить возможности нашего продукта и документацию для широкого спектра контекстов, в которых он работает. Таким образом, dbt становится результатом работы тысяч людей, а не нескольких десятков.
 
-### We take seriously our role as maintainers of a standard
+### Мы серьезно относимся к нашей роли как к поддерживающим стандарт
 
-As a standard, dbt must be reliable and consistent. Our first priority is ensuring the continued high quality of existing dbt capabilities before we introduce net-new capabilities.
+Как стандарт, dbt должен быть надежным и последовательным. Наша первоочередная задача — обеспечить высокое качество существующих возможностей dbt, прежде чем мы введем новые функции.
 
-We also believe dbt as a framework should be extensible enough to ["make the easy things easy, and the hard things possible"](https://en.wikipedia.org/wiki/Perl#Philosophy). To that end, we _don't_ believe it's appropriate for dbt to have an out-of-the-box solution for every niche problem. Users have the flexibility to achieve many custom behaviors by defining their own macros, materializations, hooks, and more. We view it as our responsibility as maintainers to decide when something should be "possible" — via macros, packages, etc. — and when something should be "easy" — built into the dbt Core standard.
+Мы также считаем, что dbt как фреймворк должен быть достаточно расширяемым, чтобы ["делать простые вещи простыми, а сложные вещи возможными"](https://en.wikipedia.org/wiki/Perl#Philosophy). В этой связи мы _не_ считаем, что dbt должен иметь готовое решение для каждой узкой проблемы. Пользователи имеют возможность достигать многих пользовательских поведений, определяя свои собственные макросы, материализации, хуки и многое другое. Мы считаем своей ответственностью как поддерживающих решать, когда что-то должно быть "возможно" — через макросы, пакеты и т. д. — и когда что-то должно быть "легким" — встроенным в стандарт dbt Core.
 
-So when will we say "yes" to new capabilities for dbt Core? The signals we look for include:
-- Upvotes on issues in our GitHub repos
-- Open source dbt packages trying to close a gap
-- Technical advancements in the ecosystem
+Так когда мы скажем "да" новым возможностям для dbt Core? Сигналы, на которые мы обращаем внимание, включают:
+- Голоса за проблемы в наших репозиториях GitHub
+- Открытые пакеты dbt, пытающиеся закрыть пробел
+- Технические достижения в экосистеме
 
-In the meantime — we'll do our best to respond to new issues with:
-- Clarity about whether the proposed feature falls into the intended scope of dbt Core
-- Context (including links to related issues)
-- Alternatives and workarounds
-- When possible, pointers to code that would aid a community contributor
+Тем временем — мы сделаем все возможное, чтобы ответить на новые проблемы с:
+- Ясностью о том, попадает ли предложенная функция в предполагаемую область dbt Core
+- Контекстом (включая ссылки на связанные проблемы)
+- Альтернативами и обходными путями
+- Когда это возможно, указаниями на код, который поможет участнику сообщества
 
-### Initiative is everything
+### Инициатива — это все
 
-Given that we, as maintainers, will not be able to resolve every bug or flesh out every feature request, we empower you, as a community member, to initiate a change.
+Учитывая, что мы, как поддерживающие, не сможем решить каждую ошибку или проработать каждую просьбу о функции, мы даем вам, как члену сообщества, возможность инициировать изменения.
 
-- If you open the bug report, it's more likely to be identified.
-- If you open the feature request, it's more likely to be discussed.
-- If you comment on the issue, engaging with ideas and relating it to your own experience, it's more likely to be prioritized.
-- If you open a PR to fix an identified bug, it's more likely to be fixed.
-- If you comment on an existing PR, to confirm it solves the concrete problem for your team in practice, it's more likely to be merged.
+- Если вы откроете отчет об ошибке, это с большей вероятностью будет замечено.
+- Если вы откроете запрос на функцию, это с большей вероятностью будет обсуждено.
+- Если вы прокомментируете проблему, взаимодействуя с идеями и связывая их с вашим собственным опытом, это с большей вероятностью будет приоритизировано.
+- Если вы откроете PR для исправления выявленной ошибки, это с большей вероятностью будет исправлено.
+- Если вы прокомментируете существующий PR, чтобы подтвердить, что он решает конкретную проблему для вашей команды на практике, это с большей вероятностью будет объединено.
 
-Sometimes, this can feel like shouting into the void, especially if you aren't met with an immediate response. We promise that there are dozens (if not hundreds) of folks who will read your comment, including us as maintainers. It all adds up to a real difference.
+Иногда это может показаться криком в пустоту, особенно если вы не получаете немедленного ответа. Мы обещаем, что есть десятки (если не сотни) людей, которые прочитают ваш комментарий, включая нас, как поддерживающих. Все это складывается в реальное изменение.
 
-## Practicalities
+## Практические аспекты
 
-### Discussions
+### Обсуждения
 
-A discussion is best suited to propose a Big Idea, such as brand-new capability in dbt Core or an adapter. Anyone can open a discussion, comment on an existing one, or reply in a thread.
+Обсуждение лучше всего подходит для предложения большой идеи, такой как совершенно новая возможность в dbt Core или адаптере. Любой может открыть обсуждение, прокомментировать существующее или ответить в теме.
 
-When you open a new discussion, you might be looking for validation from other members of the community — folks who identify with your problem statement, who like your proposed idea, and who may have their own ideas for how it could be improved. The most helpful comments propose nuances or desirable user experiences to be considered in design and refinement. Unlike an **issue**, there is no specific code change that would “resolve” a discussion.
+Когда вы открываете новое обсуждение, вы можете искать подтверждение от других членов сообщества — людей, которые идентифицируют себя с вашей проблемой, которым нравится ваша предложенная идея и которые могут иметь свои собственные идеи о том, как ее можно улучшить. Наиболее полезные комментарии предлагают нюансы или желаемые пользовательские опыты, которые следует учитывать при проектировании и доработке. В отличие от **проблемы**, нет конкретного изменения кода, которое могло бы "разрешить" обсуждение.
 
-If, over the course of a discussion, we reach a consensus on specific elements of a proposed design, we can open new implementation issues that reference the discussion for context. Those issues will connect desired user outcomes to specific implementation details, acceptance testing, and remaining questions that need answering.
+Если в ходе обсуждения мы достигнем консенсуса по конкретным элементам предложенного дизайна, мы можем открыть новые вопросы реализации, которые ссылаются на обсуждение для контекста. Эти вопросы свяжут желаемые пользовательские результаты с конкретными деталями реализации, тестированием на приемлемость и оставшимися вопросами, которые нужно решить.
 
-### Issues
+### Проблемы
 
-An issue could be a bug you've identified while using the product or reading the documentation. It could also be a specific idea you've had for a narrow extension of existing functionality.
+Проблема может быть ошибкой, которую вы выявили при использовании продукта или чтении документации. Это также может быть конкретная идея, которую вы имели для узкого расширения существующей функциональности.
 
-#### Best practices for issues
+#### Лучшие практики для проблем
 
-- Issues are **not** for support / troubleshooting / debugging help. Please see [dbt support](/docs/dbt-support) for more details and suggestions on how to get help.
-- Always search existing issues first, to see if someone else had the same idea / found the same bug you did.
-- Many dbt repositories offer templates for creating issues, such as reporting a bug or requesting a new feature. If available, please select the relevant template and fill it out to the best of your ability. This information helps us (and others) understand your issue.
+- Проблемы **не** предназначены для поддержки / устранения неполадок / помощи в отладке. Пожалуйста, смотрите [поддержку dbt](/docs/dbt-support) для получения дополнительных сведений и рекомендаций о том, как получить помощь.
+- Всегда сначала ищите существующие проблемы, чтобы увидеть, имел ли кто-то другую идею / нашел ли ту же ошибку, что и вы.
+- Многие репозитории dbt предлагают шаблоны для создания проблем, такие как сообщение об ошибке или запрос новой функции. Если доступно, пожалуйста, выберите соответствующий шаблон и заполните его наилучшим образом. Эта информация помогает нам (и другим) понять вашу проблему.
 
-##### You've found an existing issue that interests you. What should you do?
+##### Вы нашли существующую проблему, которая вас интересует. Что вам делать?
 
-Comment on it! Explain that you've run into the same bug, or had a similar idea for a new feature. If the issue includes a detailed proposal for a change, say which parts of the proposal you find most compelling, and which parts give you pause.
+Прокомментируйте ее! Объясните, что вы столкнулись с той же ошибкой или имели аналогичную идею для новой функции. Если проблема включает в себя детальное предложение по изменению, скажите, какие части предложения вам кажутся наиболее убедительными, а какие вызывают у вас сомнения.
 
-##### You've opened a new issue. What can you expect to happen?
+##### Вы открыли новую проблему. Что вы можете ожидать?
 
-In our most critical repositories (such as `dbt-core`), our goal is to respond to new issues as soon as possible. This initial response will often be a short acknowledgement that the maintainers are aware of the issue, signalling our perception of its urgency. Depending on the nature of your issue, it might be well suited to an external contribution, from you or another community member.
+В наших самых критических репозиториях (таких как `dbt-core`) наша цель — ответить на новые проблемы как можно скорее. Этот первоначальный ответ часто будет коротким подтверждением того, что поддерживающие знают о проблеме, сигнализируя о нашем восприятии ее срочности. В зависимости от характера вашей проблемы, она может быть хорошо подходящей для внешнего вклада, от вас или другого члена сообщества.
 
-**What if you're opening an issue in a different repository?** We have engineering teams dedicated to active maintenance of [`dbt-core`](https://github.com/dbt-labs/dbt-core) and its component libraries ([`dbt-common`](https://github.com/dbt-labs/dbt-common) + [`dbt-adapters`](https://github.com/dbt-labs/dbt-adapters)), as well as several platform-specific adapters ([`dbt-snowflake`](https://github.com/dbt-labs/dbt-snowflake), [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery), [`dbt-redshift`](https://github.com/dbt-labs/dbt-redshift), [`dbt-postgres`](https://github.com/dbt-labs/dbt-postgres)). We've open-sourced a number of other software projects over the years, and the majority of them do not have the same activity or maintenance guarantees. Check to see if other recent issues have responses, or when the last commit was added to the `main` branch.
+**Что если вы открываете проблему в другом репозитории?** У нас есть инженерные команды, которые занимаются активным обслуживанием [`dbt-core`](https://github.com/dbt-labs/dbt-core) и его компонентных библиотек ([`dbt-common`](https://github.com/dbt-labs/dbt-common) + [`dbt-adapters`](https://github.com/dbt-labs/dbt-adapters)), а также нескольких платформо-специфичных адаптеров ([`dbt-snowflake`](https://github.com/dbt-labs/dbt-snowflake), [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery), [`dbt-redshift`](https://github.com/dbt-labs/dbt-redshift), [`dbt-postgres`](https://github.com/dbt-labs/dbt-postgres)). Мы открыли исходный код ряда других программных проектов за эти годы, и большинство из них не имеют такой же активности или гарантий обслуживания. Проверьте, есть ли у других недавних проблем ответы или когда был добавлен последний коммит в ветку `main`.
 
-**You're not sure about the status of your issue.** If your issue is in an actively maintained repo and has a `triage` label attached, we're aware it's something that needs a response. If the issue has been triaged, but not prioritized, this could mean:
-- The intended scope or user experience of a proposed feature requires further refinement from a maintainer
-- We believe the required code change is too tricky for an external contributor
+**Вы не уверены в статусе вашей проблемы.** Если ваша проблема находится в активно поддерживаемом репозитории и имеет прикрепленную метку `triage`, мы знаем, что это что-то, что требует ответа. Если проблема была проанализирована, но не приоритизирована, это может означать:
+- Предполагаемая область или пользовательский опыт предложенной функции требует дальнейшей доработки от поддерживающего
+- Мы считаем, что требуемое изменение кода слишком сложное для внешнего участника
 
-We'll do our best to explain the open questions or complexity, and when / why we could foresee prioritizing it.
+Мы сделаем все возможное, чтобы объяснить открытые вопросы или сложность, и когда / почему мы могли бы предвидеть приоритизацию.
 
-**Automation that can help us:** In many repositories, we use a bot that marks issues as stale if they haven't had any activity for 180 days. This helps us keep our backlog organized and up-to-date. We encourage you to comment on older open issues that you're interested in, to keep them from being marked stale. You're also always welcome to comment on closed issues to say that you're still interested in the proposal.
+**Автоматизация, которая может помочь нам:** Во многих репозиториях мы используем бота, который помечает проблемы как устаревшие, если они не имели активности в течение 180 дней. Это помогает нам поддерживать наш бэклог организованным и актуальным. Мы призываем вас комментировать старые открытые проблемы, которые вас интересуют, чтобы они не были помечены как устаревшие. Вы также всегда можете комментировать закрытые проблемы, чтобы сказать, что вы все еще заинтересованы в предложении.
 
-#### Issue labels
+#### Метки проблем
 
-In all likelihood, the maintainer who responds will also add a number of labels. Not all of these labels are used in every repository.
+Скорее всего, поддерживающий, который отвечает, также добавит несколько меток. Не все эти метки используются в каждом репозитории.
 
-In some cases, the right resolution to an open issue might be tangential to the codebase. The right path forward might be in another codebase (we'll transfer it), a documentation update, or a change that you can make yourself in user-space code. In other cases, the issue might describe functionality that the maintainers are unwilling or unable to incorporate into the main codebase. In these cases, a maintainer will close the issue (perhaps using a `wontfix` label) and explain why.
+В некоторых случаях правильное решение открытой проблемы может быть косвенным к кодовой базе. Правильный путь вперед может быть в другой кодовой базе (мы перенесем ее), обновлении документации или изменении, которое вы можете сделать сами в пользовательском коде. В других случаях проблема может описывать функциональность, которую поддерживающие не хотят или не могут включить в основную кодовую базу. В этих случаях поддерживающий закроет проблему (возможно, используя метку `wontfix`) и объяснит, почему.
 
-Some of the most common labels are explained below:
+Некоторые из самых распространенных меток объяснены ниже:
 
-| tag                | description                                                                                                                                                                                                                                                            |
+| метка                | описание                                                                                                                                                                                                                                                            |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `triage`           | This is a new issue which has not yet been reviewed by a maintainer. This label is removed when a maintainer reviews and responds to the issue.                                                                                                                        |
-| `bug`              | This issue represents a defect or regression from the behavior that's documented                                                                                                                                                        |
-| `enhancement`      | This issue represents a narrow extension of an existing capability                                                                                                                                                                          |
-| `good_first_issue` | This issue does not require deep knowledge of the codebase to implement, and it is appropriate for a first-time contributor.                                                                                                                                       |
-| `help_wanted`      | This issue is trickier than a "good first issue." The required changes are scattered across the codebase, or more difficult to test. The maintainers are happy to help an experienced community contributor; they aren't planning to prioritize this issue themselves. |
-| `duplicate`        | This issue is functionally identical to another open issue. The maintainers will close this issue and encourage community members to focus conversation on the other one.                                                                                              |
-| `stale`            | This is an old issue which has not recently been updated. In repositories with a lot of activity, stale issues will periodically be closed.                                                                                                                            |
-| `wontfix`          | This issue does not require a code change in the repository, or the maintainers are unwilling to merge a change which implements the proposed behavior.                                                                                                                |
+| `triage`           | Это новая проблема, которая еще не была рассмотрена поддерживающим. Эта метка удаляется, когда поддерживающий рассматривает и отвечает на проблему.                                                                                                                        |
+| `bug`              | Эта проблема представляет собой дефект или регрессию от задокументированного поведения                                                                                                                                                        |
+| `enhancement`      | Эта проблема представляет собой узкое расширение существующей возможности                                                                                                                                                                          |
+| `good_first_issue` | Эта проблема не требует глубоких знаний кодовой базы для реализации и подходит для первого участника.                                                                                                                                       |
+| `help_wanted`      | Эта проблема сложнее, чем "хорошая первая проблема". Требуемые изменения разбросаны по кодовой базе или их труднее протестировать. Поддерживающие рады помочь опытному участнику сообщества; они не планируют приоритизировать эту проблему сами. |
+| `duplicate`        | Эта проблема функционально идентична другой открытой проблеме. Поддерживающие закроют эту проблему и призовут членов сообщества сосредоточить обсуждение на другой.                                                                                              |
+| `stale`            | Это старая проблема, которая недавно не обновлялась. В репозиториях с высокой активностью устаревшие проблемы периодически закрываются.                                                                                                                            |
+| `wontfix`          | Эта проблема не требует изменения кода в репозитории, или поддерживающие не хотят объединять изменение, которое реализует предложенное поведение.                                                                                                                |
 
-### Pull requests
+### Запросы на изменение
 
-**Every PR should be associated with an issue.** Why? Before you spend a lot of time working on a contribution, we want to make sure that your proposal will be accepted. You should open an issue first, describing your desired outcome and outlining your planned change. If you've found an older issue that's already open, comment on it with an outline for your planned implementation _before_ putting in the work to open a pull request.
+**Каждый PR должен быть связан с проблемой.** Почему? Прежде чем вы потратите много времени на работу над вкладом, мы хотим убедиться, что ваше предложение будет принято. Вы должны сначала открыть проблему, описывая желаемый результат и очерчивая запланированное изменение. Если вы нашли старую проблему, которая уже открыта, прокомментируйте ее с планом вашей реализации _прежде чем_ начинать работу над открытием запроса на изменение.
 
-**PRs must include robust testing.** Comprehensive testing within pull requests is crucial for the stability of dbt. By prioritizing robust testing, we ensure the reliability of our codebase, minimize unforeseen issues, and safeguard against potential regressions. **We cannot merge changes that risk the backward incompatibility of existing documented behaviors.** We understand that creating thorough tests often requires significant effort, and your dedication to this process greatly contributes to the project's overall reliability. Thank you for your commitment to maintaining the integrity of our codebase and the experience of everyone using dbt!
+**PR должны включать надежное тестирование.** Комплексное тестирование в рамках запросов на изменение имеет решающее значение для стабильности dbt. Придавая приоритет надежному тестированию, мы обеспечиваем надежность нашей кодовой базы, минимизируем непредвиденные проблемы и защищаем от потенциальных регрессий. **Мы не можем объединить изменения, которые рискуют нарушить обратную совместимость существующих задокументированных поведений.** Мы понимаем, что создание тщательных тестов часто требует значительных усилий, и ваша преданность этому процессу значительно способствует общей надежности проекта. Спасибо за вашу приверженность поддержанию целостности нашей кодовой базы и опыта всех пользователей dbt!
 
-**PRs go through two review steps.** First, we aim to respond with feedback on whether we think the implementation is appropriate from a product & usability standpoint. At this point, we will close PRs that we believe fall outside the scope of dbt Core, or which might lead to an inconsistent user experience. This is an important part of our role as maintainers; we're always open to hearing disagreement. If a PR passes this first review, we will queue it up for code review, at which point we aim to test it ourselves and provide thorough feedback.
+**PR проходят через два этапа проверки.** Сначала мы стремимся ответить с отзывом о том, считаем ли мы реализацию подходящей с точки зрения продукта и удобства использования. На этом этапе мы закроем PR, которые, по нашему мнению, выходят за рамки dbt Core или могут привести к непоследовательному пользовательскому опыту. Это важная часть нашей роли как поддерживающих; мы всегда открыты для несогласия. Если PR проходит этот первый обзор, мы поставим его в очередь на код-ревью, в ходе которого мы стремимся протестировать его сами и предоставить подробный отзыв.
 
-**We receive more PRs than we can thoroughly review, test, and merge.** Our teams have finite capacity, and our top priority is maintaining a well-scoped, high-quality framework for the tens of thousands of people who use it every week. To that end, we must prioritize overall stability and planned improvements over a long tail of niche potential features. For best results, say what in particular you'd like feedback on, and explain what would it mean to you, your team, and other community members to have the proposed change merged. Smaller PRs tackling well-scoped issues tend to be easier and faster for review. Two examples of community-contributed PRs:
-- [(dbt-core#9347) Fix configuration of turning test warnings into failures](https://github.com/dbt-labs/dbt-core/pull/9347)
-- [(dbt-core#9863) Better error message when trying to select a disabled model](https://github.com/dbt-labs/dbt-core/pull/9863)
+**Мы получаем больше PR, чем можем тщательно проверить, протестировать и объединить.** У наших команд ограниченные возможности, и нашим главным приоритетом является поддержание хорошо определенного, высококачественного фреймворка для десятков тысяч людей, которые используют его каждую неделю. В этой связи мы должны приоритизировать общую стабильность и запланированные улучшения над длинным списком узких потенциальных функций. Для наилучших результатов укажите, на что именно вы хотели бы получить отзыв, и объясните, что это будет значить для вас, вашей команды и других членов сообщества, если предложенное изменение будет объединено. Более мелкие PR, решающие хорошо определенные проблемы, как правило, легче и быстрее проверяются. Два примера PR, внесенных сообществом:
+- [(dbt-core#9347) Исправление конфигурации превращения предупреждений тестов в ошибки](https://github.com/dbt-labs/dbt-core/pull/9347)
+- [(dbt-core#9863) Улучшение сообщения об ошибке при попытке выбрать отключенную модель](https://github.com/dbt-labs/dbt-core/pull/9863)
 
-**Automation that can help us:** Many repositories have a template for pull request descriptions, which will include a checklist that must be completed before the PR can be merged. You don't have to do all of these things to get an initial PR, but they will delay our review process. Those include:
+**Автоматизация, которая может помочь нам:** Во многих репозиториях есть шаблон для описаний запросов на изменение, который будет включать контрольный список, который должен быть выполнен, прежде чем PR может быть объединен. Вам не нужно выполнять все эти действия, чтобы получить первоначальный PR, но они задержат наш процесс проверки. К ним относятся:
 
-- **Tests, tests, tests.** When you open a PR, some tests and code checks will run. (For security reasons, some may need to be approved by a maintainer.) We will not merge any PRs with failing tests. If you're not sure why a test is failing, please say so, and we'll do our best to get to the bottom of it together.
-- **Contributor License Agreement** (CLA): This ensures that we can merge your code, without worrying about unexpected implications for the copyright or license of open source dbt software. For more details, read: ["Contributor License Agreements"](../resources/contributor-license-agreements.md)
-- **Changelog:** In projects that include a number of changes in each release, we need a reliable way to signal what's been included. The mechanism for this will vary by repository, so keep an eye out for notes about how to update the changelog.
+- **Тесты, тесты, тесты.** Когда вы открываете PR, некоторые тесты и проверки кода будут запущены. (По соображениям безопасности некоторые могут потребовать одобрения поддерживающего.) Мы не объединим ни один PR с неудачными тестами. Если вы не уверены, почему тест не проходит, пожалуйста, скажите об этом, и мы сделаем все возможное, чтобы разобраться в этом вместе.
+- **Соглашение о лицензии участника** (CLA): Это гарантирует, что мы можем объединить ваш код, не беспокоясь о неожиданных последствиях для авторских прав или лицензии программного обеспечения dbt с открытым исходным кодом. Для получения дополнительных сведений читайте: ["Соглашения о лицензии участников"](../resources/contributor-license-agreements.md)
+- **Журнал изменений:** В проектах, которые включают множество изменений в каждом выпуске, нам нужен надежный способ сигнализировать о том, что было включено. Механизм для этого будет различаться в зависимости от репозитория, поэтому следите за примечаниями о том, как обновить журнал изменений.
 
-#### Inclusion in release versions
+#### Включение в версии релиза
 
-Both bug fixes and backwards-compatible new features will be included in the [next minor release of dbt Core](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning). Fixes for regressions and net-new bugs that were present in the minor version's original release will be backported to versions with [active support](/docs/dbt-versions/core). Other bug fixes may be backported when we have high confidence that they're narrowly scoped and won't cause unintended side effects.
+Как исправления ошибок, так и новые функции, совместимые с предыдущими версиями, будут включены в [следующий минорный релиз dbt Core](/docs/dbt-versions/core#how-dbt-core-uses-semantic-versioning). Исправления для регрессий и новых ошибок, которые присутствовали в оригинальном релизе минорной версии, будут перенесены в версии с [активной поддержкой](/docs/dbt-versions/core). Другие исправления ошибок могут быть перенесены, когда у нас есть высокая уверенность в том, что они узко определены и не вызовут непредвиденных побочных эффектов.

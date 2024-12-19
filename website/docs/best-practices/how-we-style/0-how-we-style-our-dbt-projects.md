@@ -1,29 +1,29 @@
 ---
-title: How we style our dbt projects
+title: Как мы оформляем наши проекты dbt
 id: 0-how-we-style-our-dbt-projects
 ---
 
-## Why does style matter?
+## Почему стиль важен?
 
-Style might seem like a trivial, surface-level issue, but it's a deeply material aspect of a well-built project. A consistent, clear style enhances readability and makes your project easier to understand and maintain. Highly readable code helps build clear mental models making it easier to debug and extend your project. It's not just a favor to yourself, though; equally importantly, it makes it less effort for others to understand and contribute to your project, which is essential for peer collaboration, open-source work, and onboarding new team members. [A style guide lets you focus on what matters](https://mtlynch.io/human-code-reviews-1/#settle-style-arguments-with-a-style-guide), the logic and impact of your project, rather than the superficialities of how it's written. This brings harmony and pace to your team's work, and makes reviews more enjoyable and valuable.
+Стиль может показаться тривиальным вопросом, но это важный аспект хорошо построенного проекта. Последовательный и ясный стиль улучшает читаемость и делает ваш проект более понятным и легким в обслуживании. Высокая читаемость кода помогает формировать четкие ментальные модели, что упрощает отладку и расширение вашего проекта. Это не только услуга для вас; не менее важно, что это снижает усилия других людей для понимания и участия в вашем проекте, что имеет решающее значение для совместной работы, открытого программного обеспечения и адаптации новых членов команды. [Руководство по стилю позволяет сосредоточиться на том, что действительно важно](https://mtlynch.io/human-code-reviews-1/#settle-style-arguments-with-a-style-guide) — логике и влиянии вашего проекта, а не на поверхностных аспектах его написания. Это приносит гармонию и ритм в работу вашей команды и делает обзоры более приятными и ценными.
 
-## What's important about style?
+## Что важно в стиле?
 
-There are two crucial tenets of code style:
+Существует два ключевых принципа стиля кода:
 
-- Clarity
-- Consistency
+- Ясность
+- Последовательность
 
-Style your code in such a way that you can quickly read and understand it. It's also important to consider code review and git diffs. If you're making a change to a model, you want reviewers to see just the material changes you're making clearly.
+Оформляйте свой код так, чтобы его можно было быстро прочитать и понять. Также важно учитывать код-ревью и различия в git. Если вы вносите изменения в модель, вы хотите, чтобы рецензенты четко видели только те изменения, которые вы вносите.
 
-Once you've established a clear style, stay consistent. This is the most important thing. Everybody on your team needs to have a unified style, which is why having a style guide is so crucial. If you're writing a model, you should be able to look at other models in the project that your teammates have written and read in the same style. If you're writing a macro or a test, you should see the same style as your models. Consistency is key.
+Как только вы установите ясный стиль, придерживайтесь его. Это самое важное. У всех в вашей команде должен быть единый стиль, поэтому наличие руководства по стилю так важно. Если вы пишете модель, вы должны иметь возможность посмотреть на другие модели в проекте, написанные вашими коллегами, и читать их в том же стиле. Если вы пишете макрос или тест, вы должны видеть тот же стиль, что и в ваших моделях. Последовательность — это ключевое.
 
-## How should I style?
+## Как мне оформлять?
 
-You should style the project in a way you and your teammates or collaborators agree on. The most important thing is that you have a style guide and stick to it. This guide is just a suggestion to get you started and to give you a sense of what a style guide might look like. It covers various areas you may want to consider, with suggested rules. It emphasizes lots of whitespace, clarity, clear naming, and comments.
+Вы должны оформлять проект так, как вы и ваши коллеги или партнеры согласны. Самое важное — это наличие руководства по стилю и следование ему. Это руководство является лишь предложением, чтобы помочь вам начать и дать представление о том, как может выглядеть руководство по стилю. Оно охватывает различные области, которые вы можете рассмотреть, с предложенными правилами. Оно подчеркивает важность большого количества пробелов, ясности, четких названий и комментариев.
 
-We believe one of the strengths of SQL is that it reads like English, so we lean into that declarative nature throughout our projects. Even within dbt Labs, though, there are differing opinions on how to style, even a small but passionate contingent of leading comma enthusiasts! Again, the important thing is not to follow this style guide; it's to make _your_ style guide and follow it. Lastly, be sure to include rules, tools, _and_ examples in your style guide to make it as easy as possible for your team to follow.
+Мы считаем, что одной из сильных сторон SQL является то, что он читается как английский, поэтому мы используем эту декларативную природу на протяжении всех наших проектов. Даже внутри dbt Labs существуют разные мнения о том, как оформлять, включая небольшую, но страстную группу сторонников запятых! Важно не просто следовать этому руководству по стилю; важно создать _ваше_ руководство по стилю и следовать ему. Наконец, обязательно включите правила, инструменты и примеры в ваше руководство по стилю, чтобы сделать его как можно более удобным для вашей команды.
 
-## Automation
+## Автоматизация
 
-Use formatters and linters as much as possible. We're all human, we make mistakes. Not only that, but we all have different preferences and opinions while writing code. Automation is a great way to ensure that your project is styled consistently and correctly and that people can write in a way that's quick and comfortable for them, while still getting perfectly consistent output.
+Используйте форматировщики и линтеры как можно чаще. Мы все люди, мы совершаем ошибки. Более того, у всех нас разные предпочтения и мнения при написании кода. Автоматизация — отличный способ обеспечить последовательное и правильное оформление вашего проекта, а также позволить людям писать так, как им удобно и быстро, при этом получая идеально согласованный результат.

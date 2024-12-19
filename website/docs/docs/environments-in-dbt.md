@@ -1,40 +1,40 @@
 ---
-title: "About environments"
+title: "О средах"
 id: "environments-in-dbt"
 hide_table_of_contents: true
 pagination_next: null
 ---
 
-In software engineering, environments are used to enable engineers to develop and test code without impacting the users of their software. Typically, there are two types of environments in dbt:
+В программной инженерии среды используются для того, чтобы инженеры могли разрабатывать и тестировать код, не влияя на пользователей их программного обеспечения. Обычно в dbt существуют два типа сред:
 
-- **Deployment or Production** (or _prod_) &mdash; Refers to the environment that end users interact with. 
+- **Развертывание или Производственная** (или _prod_) &mdash; относится к среде, с которой взаимодействуют конечные пользователи.
 
-- **Development** (or _dev_) &mdash; Refers to the environment that engineers work in. This means that engineers can work iteratively when writing and testing new code in _development_. Once they are confident in these changes, they can deploy their code to _production_.
+- **Разработка** (или _dev_) &mdash; относится к среде, в которой работают инженеры. Это означает, что инженеры могут работать итеративно, когда пишут и тестируют новый код в _разработке_. Как только они уверены в этих изменениях, они могут развернуть свой код в _производственной_ среде.
 
-In traditional software engineering, different environments often use completely separate architecture. For example, the dev and prod versions of a website may use different servers and databases. <Term id="data-warehouse">Data warehouses</Term> can also be designed to have separate environments &mdash; the _production_ environment refers to the relations (for example, schemas, tables, and <Term id="view">views</Term>) that your end users query (often through a BI tool).
+В традиционной программной инженерии разные среды часто используют совершенно отдельную архитектуру. Например, версии сайта для разработки и производства могут использовать разные серверы и базы данных. <Term id="data-warehouse">Хранилища данных</Term> также могут быть спроектированы с отдельными средами &mdash; _производственная_ среда относится к отношениям (например, схемам, таблицам и <Term id="view">представлениям</Term>), которые запрашивают ваши конечные пользователи (часто через инструмент BI).
 
-Configure environments to tell dbt Cloud or dbt Core how to build and execute your project in development and production:
+Настройте среды, чтобы указать dbt Cloud или dbt Core, как строить и выполнять ваш проект в разработке и производственной среде:
 
 <div className="grid--2-col">
 
 <Card
-    title="Environments in dbt Cloud"
-    body="Seamlessly configure development and deployment environments in dbt Cloud to control how your project runs in both the dbt Cloud IDE, dbt Cloud CLI, and dbt jobs."
+    title="Среды в dbt Cloud"
+    body="Бесшовно настраивайте среды разработки и развертывания в dbt Cloud, чтобы контролировать, как ваш проект работает как в dbt Cloud IDE, так и в dbt Cloud CLI и заданиях dbt."
     link="/docs/dbt-cloud-environments"
     icon="dbt-bit"/>
 
 <Card
-    title="Environments in dbt Core"
-    body="Setup and maintain separate deployment and development environments through the use of targets within a profile file"
+    title="Среды в dbt Core"
+    body="Настройте и поддерживайте отдельные среды развертывания и разработки с помощью целей в файле профиля."
     link="/docs/core/dbt-core-environments"
     icon="command-line"/>
 
 </div> <br />
 
-## Related docs
+## Связанные документы
 
-- [dbt Cloud environment best practices](/guides/set-up-ci)
-- [Deployment environments](/docs/deploy/deploy-environments)
-- [About dbt Core versions](/docs/dbt-versions/core)
-- [Set Environment variables in dbt Cloud](/docs/build/environment-variables#special-environment-variables)
-- [Use Environment variables in jinja](/reference/dbt-jinja-functions/env_var)
+- [Лучшие практики для среды dbt Cloud](/guides/set-up-ci)
+- [Среды развертывания](/docs/deploy/deploy-environments)
+- [О версиях dbt Core](/docs/dbt-versions/core)
+- [Установить переменные среды в dbt Cloud](/docs/build/environment-variables#special-environment-variables)
+- [Использовать переменные среды в jinja](/reference/dbt-jinja-functions/env_var)

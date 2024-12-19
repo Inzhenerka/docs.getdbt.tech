@@ -1,52 +1,51 @@
 ---
-title: "dbt Cloud environments"
+title: "Среды dbt Cloud"
 id: "dbt-cloud-environments"
-description: "Learn about dbt Cloud's development environment to execute your project in the IDE"
+description: "Узнайте о среде разработки dbt Cloud для выполнения вашего проекта в IDE"
 pagination_next: null
 ---
 
-An environment determines how dbt Cloud will execute your project in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) or [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (for development) and scheduled jobs (for deployment).
+Среда определяет, как dbt Cloud будет выполнять ваш проект в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) (для разработки) и запланированных заданиях (для развертывания).
 
-Critically, in order to execute dbt, environments define three variables:
+Критически важно, что для выполнения dbt среды определяют три переменные:
 
-1. The version of dbt Core that will be used to run your project
-2. The warehouse connection information (including the target database/schema settings)
-3. The version of your code to execute
+1. Версия dbt Core, которая будет использоваться для запуска вашего проекта
+2. Информация о подключении к хранилищу (включая настройки целевой базы данных/схемы)
+3. Версия вашего кода для выполнения
 
-Each dbt Cloud project can have only one [development environment](#create-a-development-environment), but there is no limit to the number of [deployment environments](/docs/deploy/deploy-environments), providing you the flexibility and customization to tailor the execution of scheduled jobs. 
+Каждый проект dbt Cloud может иметь только одну [разработческую среду](#create-a-development-environment), но нет ограничений на количество [развертываемых сред](/docs/deploy/deploy-environments), что предоставляет вам гибкость и возможность настройки для адаптации выполнения запланированных заданий.
 
-Use environments to customize settings for different stages of your project and streamline the execution process by using software engineering principles. 
+Используйте среды для настройки параметров для различных этапов вашего проекта и оптимизации процесса выполнения, применяя принципы программной инженерии.
 
-<Lightbox src="/img/dbt-env.png" width="90%" title="dbt Cloud environment hierarchy showing projects, environments, connections, and orchestration jobs." />
+<Lightbox src="/img/dbt-env.png" width="90%" title="Иерархия сред dbt Cloud, показывающая проекты, среды, подключения и оркестрационные задания." />
 
-The following sections detail the different types of environments and how to intuitively configure your development environment in dbt Cloud. 
+В следующих разделах подробно описаны различные типы сред и как интуитивно настроить вашу разработческую среду в dbt Cloud.
 
 import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 
 <CloudEnvInfo setup={'/snippets/_cloud-environments-info.md'} />
 
 
-## Create a development environment
+## Создание разработческой среды
 
-To create a new dbt Cloud development environment:
+Чтобы создать новую разработческую среду dbt Cloud:
 
-1. Navigate to **Deploy** -> **Environments** 
-2. Click **Create Environment**.
-3. Select **Development** as the environment type.
-4. Fill in the fields under **General Settings** and **Development Credentials**.
-5. Click **Save** to create the environment.
+1. Перейдите в **Deploy** -> **Environments** 
+2. Нажмите **Create Environment**.
+3. Выберите **Development** в качестве типа среды.
+4. Заполните поля в разделе **General Settings** и **Development Credentials**.
+5. Нажмите **Save**, чтобы создать среду.
 
-### Set developer credentials
+### Установка учетных данных разработчика
 
-To use the dbt Cloud IDE or dbt Cloud CLI, each developer will need to set up [personal development credentials](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) to your warehouse connection in their **Profile Settings**. This allows you to set separate target information and maintain individual credentials to connect to your warehouse.
+Чтобы использовать dbt Cloud IDE или dbt Cloud CLI, каждому разработчику необходимо настроить [личные учетные данные разработчика](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) для подключения к вашему хранилищу в их **Profile Settings**. Это позволяет вам устанавливать отдельную целевую информацию и поддерживать индивидуальные учетные данные для подключения к вашему хранилищу.
 
-<Lightbox src="/img/docs/dbt-cloud/refresh-ide/new-environment-fields.png" width="85%" height="200" title="Creating a development environment"/>
+<Lightbox src="/img/docs/dbt-cloud/refresh-ide/new-environment-fields.png" width="85%" height="200" title="Создание разработческой среды"/>
 
-## Deployment environment
+## Развертываемая среда
 
-Deployment environments in dbt Cloud are necessary to execute scheduled jobs and use other features (like different workspaces for different tasks). You can have many environments in a single dbt Cloud project, enabling you to set up each space in a way that suits different needs (such as experimenting or testing).
+Развертываемые среды в dbt Cloud необходимы для выполнения запланированных заданий и использования других функций (таких как различные рабочие пространства для разных задач). Вы можете иметь множество сред в одном проекте dbt Cloud, что позволяет вам настраивать каждое пространство в соответствии с различными потребностями (например, для экспериментов или тестирования).
 
-Even though you can have many environments, only one of them can be the "main" deployment environment. This would be considered your "production" environment and represents your project's "source of truth", meaning it's where your most reliable and final data transformations live.
+Несмотря на то, что вы можете иметь множество сред, только одна из них может быть "основной" развертываемой средой. Это будет считаться вашей "производственной" средой и представляет собой "источник правды" вашего проекта, что означает, что именно здесь находятся ваши самые надежные и окончательные преобразования данных.
 
-
-To learn more about dbt Cloud deployment environments and how to configure them, refer to the [Deployment environments](/docs/deploy/deploy-environments) page. For our best practices guide, read [dbt Cloud environment best practices](/guides/set-up-ci) for more info.
+Чтобы узнать больше о развертываемых средах dbt Cloud и о том, как их настроить, обратитесь к странице [Развертываемые среды](/docs/deploy/deploy-environments). Для получения рекомендаций по лучшим практикам прочитайте [рекомендации по лучшим практикам для сред dbt Cloud](/guides/set-up-ci) для получения дополнительной информации.

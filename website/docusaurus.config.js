@@ -190,8 +190,8 @@ var siteSettings = {
           ],
         },
         {
-          label: "Create a free account",
-          to: "https://www.getdbt.com/signup/",
+          label: "Записаться на курс",
+          to: "https://inzhenerka.tech/dbt",
           position: "right",
           className: "nav-create-account button button--primary",
         },

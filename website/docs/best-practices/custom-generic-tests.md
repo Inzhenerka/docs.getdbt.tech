@@ -1,28 +1,28 @@
 ---
-title: "Writing custom generic data tests"
+title: "Создание пользовательских универсальных тестов данных"
 id: "writing-custom-generic-tests"
-description: Learn how to define your own custom generic data tests.
-displayText: Writing custom generic data tests
-hoverSnippet: Learn how to write your own custom generic data tests.
+description: Узнайте, как определить собственные пользовательские универсальные тесты данных.
+displayText: Создание пользовательских универсальных тестов данных
+hoverSnippet: Узнайте, как написать собственные пользовательские универсальные тесты данных.
 ---
 
-dbt ships with [Not Null](/reference/resource-properties/data-tests#not-null), [Unique](/reference/resource-properties/data-tests#unique), [Relationships](/reference/resource-properties/data-tests#relationships), and [Accepted Values](/reference/resource-properties/data-tests#accepted-values) generic data tests. (These used to be called "schema tests," and you'll still see that name in some places.) Under the hood, these generic data tests are defined as `test` blocks (like macros).
+dbt поставляется с универсальными тестами данных, такими как [Not Null](/reference/resource-properties/data-tests#not-null), [Unique](/reference/resource-properties/data-tests#unique), [Relationships](/reference/resource-properties/data-tests#relationships) и [Accepted Values](/reference/resource-properties/data-tests#accepted-values). (Ранее они назывались "тестами схемы", и вы все еще можете встретить это название в некоторых местах.) Внутри эти универсальные тесты данных определяются как блоки `test` (как макросы).
 
 :::info
-There are tons of generic data tests defined in open source packages, such as [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) and [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) — the test you're looking for might already be here!
+Существует множество универсальных тестов данных, определенных в открытых пакетах, таких как [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) и [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) — возможно, искомый вами тест уже здесь!
 :::
 
-### Generic tests with standard arguments
+### Универсальные тесты со стандартными аргументами
 
-Generic tests are defined in SQL files. Those files can live in two places:
-- `tests/generic/`: that is, a special subfolder named `generic` within your [test paths](/reference/project-configs/test-paths) (`tests/` by default)
-- `macros/`: Why? Generic tests work a lot like macros, and historically, this was the only place they could be defined. If your generic test depends on complex macro logic, you may find it more convenient to define the macros and the generic test in the same file.
+Универсальные тесты определяются в SQL-файлах. Эти файлы могут находиться в двух местах:
+- `tests/generic/`: то есть в специальной подпапке с именем `generic` в ваших [путях тестирования](/reference/project-configs/test-paths) (по умолчанию `tests/`)
+- `macros/`: Почему? Универсальные тесты работают очень похоже на макросы, и исторически это было единственное место, где их можно было определить. Если ваш универсальный тест зависит от сложной логики макроса, вам может быть удобнее определить макросы и универсальный тест в одном файле.
 
-To define your own generic tests, simply create a `test` block called `<test_name>`. All generic tests should accept one or both of the standard arguments:
-- `model`: The resource on which the test is defined, templated out to its relation name. (Note that the argument is always named `model`, even when the resource is a source, seed, or snapshot.)
-- `column_name`: The column on which the test is defined. Not all generic tests operate on the column level, but if they do, they should accept `column_name` as an argument.
+Чтобы определить собственные универсальные тесты, просто создайте блок `test` с именем `<test_name>`. Все универсальные тесты должны принимать один или оба стандартных аргумента:
+- `model`: Ресурс, на котором определен тест, с подстановкой его имени отношения. (Обратите внимание, что аргумент всегда называется `model`, даже когда ресурс является источником, семенем или снимком.)
+- `column_name`: Столбец, на котором определен тест. Не все универсальные тесты работают на уровне столбца, но если они это делают, они должны принимать `column_name` в качестве аргумента.
 
-Here's an example of an `is_even` schema test that uses both arguments:
+Вот пример теста `is_even`, который использует оба аргумента:
 
 <File name='tests/generic/test_is_even.sql'>
 
@@ -44,7 +44,7 @@ validation_errors as (
         even_field
 
     from validation
-    -- if this is true, then even_field is actually odd!
+    -- если это правда, то even_field на самом деле нечетное!
     where (even_field % 2) = 1
 
 )
@@ -57,9 +57,9 @@ from validation_errors
 
 </File>
 
-If this `select` statement returns zero records, then every record in the supplied `model` argument is even! If a nonzero number of records is returned instead, then at least one record in `model` is odd, and the test has failed.
+Если этот оператор `select` возвращает ноль записей, значит, каждая запись в переданном аргументе `model` четная! Если возвращается ненулевое количество записей, значит, по крайней мере одна запись в `model` нечетная, и тест не прошел.
 
-To use this generic test, specify it by name in the `tests` property of a model, source, snapshot, or seed:
+Чтобы использовать этот универсальный тест, укажите его по имени в свойстве `tests` модели, источника, снимка или семени:
 
 <File name='models/<filename>.yml'>
 
@@ -76,12 +76,12 @@ models:
 
 </File>
 
-With one line of code, you've just created a test! In this example, `users` will be passed to the `is_even` test as the `model` argument, and `favorite_number` will be passed in as the `column_name` argument. You could add the same line for other columns, other models—each will add a new test to your project, _using the same generic test definition_.
+С одной строкой кода вы только что создали тест! В этом примере `users` будет передан в тест `is_even` в качестве аргумента `model`, а `favorite_number` будет передан в качестве аргумента `column_name`. Вы можете добавить ту же строку для других столбцов, других моделей — каждая из них добавит новый тест в ваш проект, _используя одно и то же определение универсального теста_.
 
 
-### Generic tests with additional arguments
+### Универсальные тесты с дополнительными аргументами
 
-The `is_even` test works without needing to specify any additional arguments. Other tests, like `relationships`, require more than just `model` and `column_name`. If your custom tests requires more than the standard arguments, include those arguments in the test signature, as `field` and `to` are included below:
+Тест `is_even` работает без необходимости указывать дополнительные аргументы. Другие тесты, такие как `relationships`, требуют больше, чем просто `model` и `column_name`. Если ваши пользовательские тесты требуют больше стандартных аргументов, включите эти аргументы в сигнатуру теста, как `field` и `to`, указано ниже:
 
 <File name='tests/generic/test_relationships.sql'>
 
@@ -116,7 +116,7 @@ where id is not null
 
 </File>
 
-When calling this test from a `.yml` file, supply the arguments to the test in a dictionary. Note that the standard arguments (`model` and `column_name`) are provided by the context, so you do not need to define them again.
+При вызове этого теста из файла `.yml` передайте аргументы тесту в виде словаря. Обратите внимание, что стандартные аргументы (`model` и `column_name`) предоставляются контекстом, поэтому вам не нужно определять их снова.
 
 <File name='models/<filename>.yml'>
 
@@ -135,9 +135,9 @@ models:
 
 </File>
 
-### Generic tests with default config values
+### Универсальные тесты с значениями конфигурации по умолчанию
 
-It is possible to include a `config()` block in a generic test definition. Values set there will set defaults for all specific instances of that generic test, unless overridden within the specific instance's `.yml` properties.
+Возможно включить блок `config()` в определение универсального теста. Значения, установленные там, будут задавать значения по умолчанию для всех конкретных экземпляров этого универсального теста, если они не переопределены в свойствах конкретного экземпляра `.yml`.
 
 <File name='tests/generic/warn_if_odd.sql'>
 
@@ -153,7 +153,7 @@ It is possible to include a `config()` block in a generic test definition. Value
 {% endtest %}
 ```
 
-Any time the `warn_if_odd` test is used, it will _always_ have warning-level severity, unless the specific test overrides that value:
+Каждый раз, когда тест `warn_if_odd` используется, он _всегда_ будет иметь уровень предупреждения, если конкретный тест не переопределяет это значение:
 
 </File>
 
@@ -167,34 +167,34 @@ models:
     columns:
       - name: favorite_number
         tests:
-      	  - warn_if_odd         # default 'warn'
+      	  - warn_if_odd         # по умолчанию 'warn'
       - name: other_number
         tests:
           - warn_if_odd:
-              severity: error   # overrides
+              severity: error   # переопределение
 ```
 
 </File>
 
-### Customizing dbt's built-in tests
+### Настройка встроенных тестов dbt
 
-To change the way a built-in generic test works—whether to add additional parameters, re-write the SQL, or for any other reason—you simply add a test block named `<test_name>` to your own project. dbt will favor your version over the global implementation!
+Чтобы изменить способ работы встроенного универсального теста — добавив дополнительные параметры, переписав SQL или по любой другой причине — просто добавьте блок теста с именем `<test_name>` в свой собственный проект. dbt будет предпочитать вашу версию глобальной реализации!
 
 <File name='tests/generic/<filename>.sql'>
 
 ```sql
 {% test unique(model, column_name) %}
 
-    -- whatever SQL you'd like!
+    -- любой SQL, который вам нравится!
 
 {% endtest %}
 ```
 
 </File>
 
-### Examples
+### Примеры
 
-Here's some additional examples of custom generic ("schema") tests from the community:
-* [Creating a custom schema test with an error threshold](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966)
-* [Using custom schema tests to only run tests in production](https://discourse.getdbt.com/t/conditionally-running-dbt-tests-only-running-dbt-tests-in-production/322)
-* [Additional examples of custom schema tests](https://discourse.getdbt.com/t/examples-of-custom-schema-tests/181)
+Вот несколько дополнительных примеров пользовательских универсальных ("схемных") тестов от сообщества:
+* [Создание пользовательского теста схемы с порогом ошибок](https://discourse.getdbt.com/t/creating-an-error-threshold-for-schema-tests/966)
+* [Использование пользовательских тестов схемы для выполнения тестов только в производственной среде](https://discourse.getdbt.com/t/conditionally-running-dbt-tests-only-running-dbt-tests-in-production/322)
+* [Дополнительные примеры пользовательских тестов схемы](https://discourse.getdbt.com/t/examples-of-custom-schema-tests/181)

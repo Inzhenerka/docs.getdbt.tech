@@ -1,16 +1,16 @@
 ---
 id: bruno-de-lima
-title: Bruno de Lima
+title: Бруно де Лима
 description: |
-  Hey all! I was born and raised in Florianopolis, Brazil, and I'm a Senior Data Engineer at phData. I live with my fiancée and I enjoy music, photography, and powerlifting.
+  Привет всем! Я родился и вырос в Флорианополисе, Бразилия, и я старший инженер по данным в компании phData. Я живу с невестой и увлекаюсь музыкой, фотографией и пауэрлифтингом.
   
-  I started my career in early 2022 at Indicium as an Analytics Engineer, working with dbt from day 1. By 2023, my path took a global trajectory as I joined phData as a Data Engineer, expanding my experiences and creating connections beyond Brazil. While dbt is my main expertise, because of my work in consultancy I have experience with a large range of tools, specially the ones related to Snowflake, Databricks, AWS and GCP; but I have already tried several other modern data stack tools too. 
+  Я начал свою карьеру в начале 2022 года в компании Indicium в качестве аналитического инженера, работая с dbt с первого дня. К 2023 году мой путь стал глобальным, когда я присоединился к phData в качестве инженера по данным, расширяя свой опыт и создавая связи за пределами Бразилии. Хотя dbt является моей основной специализацией, благодаря работе в консалтинге у меня есть опыт работы с широким спектром инструментов, особенно связанных со Snowflake, Databricks, AWS и GCP; но я также пробовал несколько других современных инструментов для работы с данными.
   
-  I actively participate in the dbt community, having organized dbt Meetups in Brazil (in <a href="https://www.meetup.com/en-AU/florianopolis-dbt-meetup" rel="noopener noreferrer" target="_blank">Floripa</a> and <a href="https://www.meetup.com/sao-paulo-dbt-meetup-group/" target="_blank">São Paulo</a>); writing about dbt-related topics in my Medium and LinkedIn profiles; contributing to the dbt Core code and to the docs; and frequently checking <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">dbt Slack</a> and <a href="https://discourse.getdbt.com/" rel="noopener noreferrer" target="_blank">Discourse</a>, helping (and being helped by) other dbt practitioners. If you are a community member, you may have seen me around!
+  Я активно участвую в сообществе dbt, организовывал встречи dbt в Бразилии (в <a href="https://www.meetup.com/en-AU/florianopolis-dbt-meetup" rel="noopener noreferrer" target="_blank">Флорианополисе</a> и <a href="https://www.meetup.com/sao-paulo-dbt-meetup-group/" target="_blank">Сан-Паулу</a>); пишу о темах, связанных с dbt, в своих профилях на Medium и LinkedIn; вношу вклад в код dbt Core и в документацию; и часто проверяю <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">dbt Slack</a> и <a href="https://discourse.getdbt.com/" rel="noopener noreferrer" target="_blank">Discourse</a>, помогая (и получая помощь от) других практиков dbt. Если вы член сообщества, возможно, вы видели меня!
 image: /img/community/spotlight/bruno-souza-de-lima-newimage.jpg
-pronouns: he/him
-location: Florianópolis, Brazil
-jobTitle: Senior Data Engineer
+pronouns: он/его
+location: Флорианополис, Бразилия
+jobTitle: Старший инженер по данным
 companyName: phData
 socialLinks:
   - name: LinkedIn
@@ -23,30 +23,30 @@ communityAward: true
 communityAwardYear: 2024
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I was not truly happy with my academic life. My career took a new turn when I enrolled in the Analytics Engineer course by Indicium. That was my first contact with dbt, and I didn't realize how much it would transform my career. After that, I was hired at the company as an Analytics Engineer and worked extensively with dbt from day one.
+Я не был по-настоящему счастлив в своей академической жизни. Моя карьера изменилась, когда я записался на курс аналитического инженера в компании Indicium. Это был мой первый контакт с dbt, и я не осознавал, насколько это изменит мою карьеру. После этого меня наняли в компанию в качестве аналитического инженера, и я с первого дня активно работал с dbt.
 
-It took me some time to become an active member of the dbt community. I started working with dbt at the beginning of 2022 and became more involved towards the end of that year, encouraged by Daniel Avancini. I regret not doing this earlier, because being an active community member has been a game-changer for me, as my knowledge of dbt has grown exponentially just by participating in daily discussions on Slack. I have found #advice-dbt-help and #advice-dbt-for-power-users channels particularly useful, as well as the various database-specific channels. Additionally, the #i-made-this and #i-read-this channels have allowed me to learn about the innovative things that community members are doing.
+Мне потребовалось некоторое время, чтобы стать активным членом сообщества dbt. Я начал работать с dbt в начале 2022 года и стал более вовлеченным к концу того года, вдохновленный Даниэлем Авансини. Я сожалею, что не сделал этого раньше, потому что активное участие в сообществе стало для меня переломным моментом, так как мои знания о dbt значительно возросли просто благодаря участию в ежедневных обсуждениях в Slack. Я нашел каналы #advice-dbt-help и #advice-dbt-for-power-users особенно полезными, а также различные каналы, специфичные для баз данных. Кроме того, каналы #i-made-this и #i-read-this позволили мне узнать о новаторских вещах, которые делают члены сообщества.
 
-Inspired by other members, especially Josh Devlin and Owen Prough, I began answering questions on Slack and Discourse. For questions I couldn't answer, I would try engaging in discussions about possible solutions or provide useful links. I also started posting dbt tips on LinkedIn to help practitioners learn about new features or to refresh their memories about existing ones.
+Вдохновленный другими участниками, особенно Джошем Девлином и Оуэном Пру, я начал отвечать на вопросы в Slack и Discourse. На вопросы, на которые я не мог ответить, я старался участвовать в обсуждениях возможных решений или предоставлять полезные ссылки. Я также начал публиковать советы по dbt в LinkedIn, чтобы помочь практикам узнать о новых функциях или освежить свои знания о существующих.
 
-By being more involved in the community, I felt more connected and supported. I received help from other members, and now, I could help others, too. I was happy with this arrangement, but more unexpected surprises came my way. My active participation in Slack, Discourse, and LinkedIn opened doors to new connections and career opportunities. I had the pleasure of meeting a lot of incredible people and receiving exciting job offers, including the ones for working at phData and teaching at Zach Wilson's data engineering bootcamp.
+Став более вовлеченным в сообщество, я почувствовал себя более связанным и поддерживаемым. Я получал помощь от других участников, и теперь я тоже мог помогать другим. Мне нравилось это сотрудничество, но на этом сюрпризы не закончились. Мое активное участие в Slack, Discourse и LinkedIn открыло двери для новых связей и карьерных возможностей. Мне посчастливилось встретить много удивительных людей и получить захватывающие предложения о работе, включая предложения по работе в phData и преподаванию на буткемпе по инженерии данных Заком Уилсоном.
 
-Thanks to the dbt community, I went from feeling uncertain about my career prospects to having a solid career and being surrounded by incredible people.
+Благодаря сообществу dbt я перешел от неопределенности в отношении своих карьерных перспектив к уверенной карьере и окружению удивительных людей.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I identify with Gwen Windflower and Joel Labes, or at least they are the kind of leader I admire. Their strong presence and continuous interaction with all types of dbt enthusiasts make everyone feel welcomed in the community. They uplift those who contribute to the community, whether it's through a LinkedIn post or answering a question, and provide constructive feedback to help them improve. And of course they show a very strong knowledge about dbt and data in general, which is reflected in their contributions.
+Я ассоциирую себя с Гвен Уиндфлауэр и Джоэлем Лабесом, или, по крайней мере, они являются теми лидерами, которыми я восхищаюсь. Их сильное присутствие и постоянное взаимодействие со всеми типами энтузиастов dbt заставляют всех чувствовать себя желанными в сообществе. Они поддерживают тех, кто вносит вклад в сообщество, будь то через пост в LinkedIn или ответ на вопрос, и предоставляют конструктивную обратную связь, чтобы помочь им улучшиться. И, конечно, они демонстрируют очень глубокие знания о dbt и данных в целом, что отражается в их вкладе.
 
-And that is how I aspire to grow as a leader in the dbt Community. Despite of being an introvert, I like interacting with people, helping solve problems and providing suggestions. Recognizing and acknowledging the achievements of others is also important to me, as it fosters a positive environment where everyone's contributions are valued. And I am continuously learning about dbt to improve my skills, and to become a trustworthy reference for others to rely on.
+И именно так я стремлюсь развиваться как лидер в сообществе dbt. Несмотря на то, что я интроверт, мне нравится взаимодействовать с людьми, помогать решать проблемы и предоставлять предложения. Признание и оценка достижений других также важны для меня, так как это способствует созданию позитивной атмосферы, где ценятся вклады каждого. Я постоянно учусь о dbt, чтобы улучшить свои навыки и стать надежным источником, на который могут полагаться другие.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь, что другие смогут научиться у вас?
 
-I have learned that regardless of one's level of expertise, each person's voice is valued and respected in the community. I have also learned the importance of helping others and thinking critically, not just answering questions, but assuring that is the right question. By actively engaging with others, sharing knowledge and insights, we can collectively improve our understanding and use of dbt. Moreover, I have discovered that having fun with dbt and fostering a positive, supportive community culture can greatly enhance the learning experience.
+Я узнал, что независимо от уровня экспертизы, голос каждого человека ценен и уважаем в сообществе. Я также узнал о важности помощи другим и критического мышления, не просто отвечая на вопросы, но и удостоверяясь, что это правильный вопрос. Активно взаимодействуя с другими, делясь знаниями и идеями, мы можем коллективно улучшить наше понимание и использование dbt. Более того, я обнаружил, что получать удовольствие от работы с dbt и способствовать созданию позитивной, поддерживающей культуры сообщества может значительно улучшить процесс обучения.
 
-I hope the others can learn from me that it doesn’t matter who you are, where are you from and how old you are, you can make a difference in the community. I hope to inspire others to become more involved in the community, and to not be afraid to share their thoughts or ideas, or to post something because they think it is not cool enough. Through this process of mutual learning and support, we can accelerate our professional development and achieve our goals. So don't hold back, take initiative, and be an active contributor to this amazing community!
+Я надеюсь, что другие смогут научиться у меня тому, что не имеет значения, кто вы, откуда вы и сколько вам лет, вы можете внести свой вклад в сообщество. Я надеюсь вдохновить других стать более вовлеченными в сообщество и не бояться делиться своими мыслями или идеями, или публиковать что-то, потому что они думают, что это недостаточно круто. Через этот процесс взаимного обучения и поддержки мы можем ускорить наше профессиональное развитие и достичь наших целей. Так что не стесняйтесь, проявляйте инициативу и будьте активным участником этого удивительного сообщества!
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-I would like to mention my very first contribution to the community, a dbt commands cheatsheet. I made it because I was very new to dbt and wanted a resource where I could quickly check the available commands and what I could do with them. I made it for me, but then I thought it could help other beginners and shared it. I was incredibly surprised when it appeared in a dbt newsletter, and I think that was the starting point for me in the community. At this point, I knew everyone could contribute and felt more comfortable to do more of that.
+Я хотел бы упомянуть о своем первом вкладе в сообщество — шпаргалке по командам dbt. Я создал ее, потому что был очень нов в dbt и хотел ресурс, где я мог бы быстро проверить доступные команды и что я мог бы с ними сделать. Я сделал это для себя, но потом подумал, что это может помочь другим новичкам, и поделился ею. Я был невероятно удивлен, когда она появилась в рассылке dbt, и я думаю, что это был стартовый пункт для меня в сообществе. В этот момент я понял, что каждый может внести свой вклад и почувствовал себя более уверенно, чтобы делать это чаще.

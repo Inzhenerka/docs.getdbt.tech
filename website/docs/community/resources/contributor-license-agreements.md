@@ -1,26 +1,25 @@
 ---
-title: "Contributor License Agreements"
+title: "Соглашения о лицензировании для участников"
 id: "contributor-license-agreements"
 ---
 
-## Why we have a CLA
+## Зачем нам CLA
 
-As the sponsor of dbt, dbt Labs would like to ensure the long-term viability of dbt and its community. The Contributor License Agreement helps ensure everyone can enjoy dbt with confidence that dbt is here to stay.
+В качестве спонсора dbt, dbt Labs хочет обеспечить долгосрочную жизнеспособность dbt и его сообщества. Соглашение о лицензировании для участников (CLA) помогает гарантировать, что каждый может пользоваться dbt с уверенностью в том, что он останется на рынке.
 
-Specifically, our Contributor License Agreements (CLAs) grant the contributor and dbt Labs joint copyright interest in contributed code. Further, it provides assurance from the contributor that contributions are original work that does not violate any third-party license agreement. The agreement between contributors and project is explicit, so dbt users can be confident in the legal status of the source code and their right to use it.
+В частности, наши Соглашения о лицензировании для участников (CLA) предоставляют участнику и dbt Labs совместный авторский интерес в внесенном коде. Кроме того, оно предоставляет уверенность от участника в том, что внесенные материалы являются оригинальной работой и не нарушают никаких соглашений о лицензировании третьих сторон. Соглашение между участниками и проектом является явным, поэтому пользователи dbt могут быть уверены в правовом статусе исходного кода и своем праве на его использование.
 
-## Our CLAs
+## Наши CLA
 
-For all code contributions to dbt, we ask that contributors complete and sign a Contributor License Agreement. We have two different CLAs, depending on whether you are contributing to dbt in a personal or professional capacity:
+Для всех кодовых вкладов в dbt мы просим участников заполнить и подписать Соглашение о лицензировании для участников. У нас есть два разных CLA, в зависимости от того, в каком качестве вы вносите вклад в dbt: личном или профессиональном:
 
-- [Individual Contributor License Agreement v1.0](https://docs.google.com/forms/d/e/1FAIpQLScfOV7K4enYRHozrDRP6BBIXjOij-JDGca6WBTHyP_ANXSqlg/viewform?usp=sf_link)
-- [Software Grant and Corporate Contributor License Agreement v1.0](https://docs.google.com/forms/d/e/1FAIpQLScDSTwGIlVyGWCMMvmszaXSE5IhIIRyeLQkgWf1-CSC2RnLww/viewform?usp=sf_link)
+- [Соглашение о лицензировании для индивидуальных участников v1.0](https://docs.google.com/forms/d/e/1FAIpQLScfOV7K4enYRHozrDRP6BBIXjOij-JDGca6WBTHyP_ANXSqlg/viewform?usp=sf_link)
+- [Соглашение о лицензировании для корпоративных участников и передача программного обеспечения v1.0](https://docs.google.com/forms/d/e/1FAIpQLScDSTwGIlVyGWCMMvmszaXSE5IhIIRyeLQkgWf1-CSC2RnLww/viewform?usp=sf_link)
 
-## For Lawyers
+## Для юристов
 
-Our individual and corporate CLAs are based on the Contributor License Agreements published by the [Apache Software Foundation](http://www.apache.org/), with modifications:
-- [Individual Contributor License Agreement ("Agreement") V2.0](http://www.apache.org/licenses/icla.txt)
-- [Software Grant and Corporate Contributor License Agreement ("Agreement") v r190612](http://www.apache.org/licenses/cla-corporate.txt)
+Наши индивидуальные и корпоративные CLA основаны на Соглашениях о лицензировании для участников, опубликованных [Фондом программного обеспечения Apache](http://www.apache.org/), с изменениями:
+- [Соглашение о лицензировании для индивидуальных участников ("Соглашение") V2.0](http://www.apache.org/licenses/icla.txt)
+- [Соглашение о лицензировании для корпоративных участников ("Соглашение") v r190612](http://www.apache.org/licenses/cla-corporate.txt)
 
-
-If you have questions about these CLAs, please contact us at support@getdbt.com.
+Если у вас есть вопросы по этим CLA, пожалуйста, свяжитесь с нами по адресу support@getdbt.com.

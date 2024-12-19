@@ -1,16 +1,16 @@
 ---
 id: faith-lierheimer
-title: Faith Lierheimer
+title: Фейт Лиерхаймер
 description: |
-  I've been a dbt Community member for around a year and a half. I come to the data world from teaching and academic research. Working in data fuses the aspects of those careers that I like the most, which are technical problem solving, and helping non-technical audiences understand data and what they can do with it. I have a dream stack with Databricks, dbt, and Looker. 
+  Я являюсь членом сообщества dbt уже около полутора лет. Я пришла в мир данных из преподавания и академических исследований. Работа с данными объединяет те аспекты этих профессий, которые мне нравятся больше всего: техническое решение проблем и помощь непрофессиональным аудиториям в понимании данных и того, что они могут с ними сделать. У меня есть идеальный стек с Databricks, dbt и Looker.
 
-  Professionally, I help shippers of perishable goods (everything from blueberries to childhood vaccinations) understand the risks their goods face in transit and how to mitigate them.This reduces food and medical waste worldwide.
+  Профессионально я помогаю отправителям скоропортящихся товаров (всё, от черники до детских вакцин) понимать риски, с которыми сталкиваются их товары в процессе транспортировки, и как их минимизировать. Это снижает количество пищевых и медицинских отходов по всему миру.
 
-  You can read more about these interests at <a href="https://faithfacts.substack.com/" title="faithfacts.substack.com" rel="noopener noreferrer" target="_blank">faithfacts.substack.com</a>.
+  Вы можете узнать больше об этих интересах на <a href="https://faithfacts.substack.com/" title="faithfacts.substack.com" rel="noopener noreferrer" target="_blank">faithfacts.substack.com</a>.
 image: /img/community/spotlight/faith-lierheimer.jpg
 pronouns: she/her
-location: Denver, CO, USA
-jobTitle: Data Analyst II
+location: Денвер, штат Колорадо, США
+jobTitle: Аналитик данных II
 companyName: Parsyl
 organization: Data Angels
 socialLinks:
@@ -26,22 +26,22 @@ dateCreated: 2023-06-28
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community early in 2022 hoping to find technical help with dbt, and instead found a wide support network of career-minded data professionals. Being in the dbt community has helped me find my niche in the data world, and has helped me discover ways I can grow my career and technical acumen. Being in this community has been huge in easing my career transition from teaching into data.
+Я присоединилась к сообществу dbt в начале 2022 года, надеясь найти техническую помощь с dbt, и вместо этого нашла широкую сеть поддержки профессионалов в области данных, ориентированных на карьеру. Пребывание в сообществе dbt помогло мне найти свою нишу в мире данных и открыло возможности для роста моей карьеры и технической компетенции. Это сообщество сыграло огромную роль в облегчении моего перехода от преподавания к работе с данными.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свои лидерские качества в сообществе dbt?
 
-I primarily conceptualize of leadership as raising the floor beneath everyone, rather than enabling a few to touch its vaulted ceiling. As I gain more experience, I'd be delighted to be a resource for fellow career changers and teachers in transition. 
+Я в первую очередь рассматриваю лидерство как создание возможностей для всех, а не как возможность для немногих достичь вершины. По мере накопления опыта мне было бы приятно стать ресурсом для коллег, меняющих карьеру, и для преподавателей в переходный период.
 
-And, I love to goof in #roast-my-graph in the dbt Slack. [Come join](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) that channel, it's a hoot and a holler.
+Кроме того, мне нравится шутить в #roast-my-graph в Slack dbt. [Присоединяйтесь](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) к этому каналу, это весело и интересно.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I've learned a lot from community members, but most notably and concretely, I've actually gotten excellent visualization advice in #roast-my-graph. I've taken graphs there several times where I felt stuck on the presentation and have learned a lot about effective vizzes from my peers there. 
+Я многому научилась у членов сообщества, но особенно и конкретно я получила отличные советы по визуализации в #roast-my-graph. Я несколько раз приносила графики, когда чувствовала себя в тупике с их представлением, и многому научилась о эффективных визуализациях от своих коллег.
 
-As I continue to gain experience, I hope others can learn from me what a successful career change looks like. And, ultimately, to take the work seriously but to not take ourselves that seriously.
+По мере накопления опыта я надеюсь, что другие смогут узнать от меня, как выглядит успешный переход в карьере. И, в конечном итоге, важно относиться к работе серьезно, но не относиться к себе слишком серьезно.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-I have a black cat with one eye named Gus and my purpose is now to give him the best existence possible.
+У меня есть черный кот с одним глазом по имени Гас, и моя цель сейчас — обеспечить ему наилучшие условия существования.

@@ -1,36 +1,36 @@
 ---
-title: How we style our Python
+title: Как мы стилизуем наш Python
 id: 3-how-we-style-our-python
 ---
 
-## Python tooling
+## Инструменты Python
 
-- 🐍 Python has a more mature and robust ecosystem for formatting and linting (helped by the fact that it doesn't have a million distinct dialects). We recommend using those tools to format and lint your code in the style you prefer.
+- 🐍 Python имеет более зрелую и надежную экосистему для форматирования и линтинга (что облегчено тем фактом, что у него нет миллиона различных диалектов). Мы рекомендуем использовать эти инструменты для форматирования и линтинга вашего кода в предпочитаемом вами стиле.
 
-- 🛠️ Our current recommendations are
+- 🛠️ Наши текущие рекомендации:
 
-  - [black](https://pypi.org/project/black/) formatter
-  - [ruff](https://pypi.org/project/ruff/) linter
+  - [black](https://pypi.org/project/black/) для форматирования
+  - [ruff](https://pypi.org/project/ruff/) для линтинга
 
   :::info
-  ☁️ dbt Cloud comes with the [black formatter built-in](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format) to automatically lint and format their SQL. You don't need to download or configure anything, just click `Format` in a Python model and you're good to go!
+  ☁️ dbt Cloud поставляется с [встроенным форматером black](https://docs.getdbt.com/docs/cloud/dbt-cloud-ide/lint-format), который автоматически выполняет линтинг и форматирование вашего SQL. Вам не нужно ничего загружать или настраивать, просто нажмите `Format` в модели Python, и вы готовы к работе!
   :::
 
-## Example Python
+## Пример Python
 
 ```python
 import pandas as pd
 
 
 def model(dbt, session):
-    # set length of time considered a churn
+    # устанавливаем продолжительность времени, считаемого оттоком
     pd.Timedelta(days=2)
 
     dbt.config(enabled=False, materialized="table", packages=["pandas==1.5.2"])
 
     orders_relation = dbt.ref("stg_orders")
 
-    # converting a DuckDB Python Relation into a pandas DataFrame
+    # преобразуем отношение DuckDB Python в DataFrame pandas
     orders_df = orders_relation.df()
 
     orders_df.sort_values(by="ordered_at", inplace=True)

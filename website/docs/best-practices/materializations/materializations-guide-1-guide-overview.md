@@ -1,39 +1,39 @@
 ---
-title: "Materializations best practices"
+title: "Лучшие практики материализаций"
 id: materializations-guide-1-guide-overview
 slug: 1-guide-overview
-description: Read this guide to understand how using materializations in dbt is a crucial skill for effective analytics engineering.
-displayText: Materializations best practices
-hoverSnippet: Read this guide to understand how using materializations in dbt is a crucial skill for effective analytics engineering.
+description: Прочитайте это руководство, чтобы понять, как использование материализаций в dbt является важным навыком для эффективной аналитической инженерии.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте это руководство, чтобы понять, как использование материализаций в dbt является важным навыком для эффективной аналитической инженерии.
 ---
 
-What _really_ happens when you type `dbt build`? Contrary to popular belief, a crack team of microscopic data elves do _not_ construct your data row by row, although the truth feels equally magical. This guide explores the real answer to that question, with an introductory look at the objects that get built into your warehouse, why they matter, and how dbt knows what to build.
+Что _на самом деле_ происходит, когда вы вводите `dbt build`? Вопреки распространенному мнению, команда микроскопических эльфов данных _не_ строит ваши данные построчно, хотя правда кажется не менее волшебной. Это руководство исследует реальный ответ на этот вопрос, с вводным взглядом на объекты, которые создаются в вашем хранилище, почему они важны и как dbt знает, что нужно строить.
 
-The configurations that tell dbt how to construct these objects are called _materializations,_ and knowing how to use them is a crucial skill for effective analytics engineering. When you’ve completed this guide, you will have that ability to use the three core materializations that cover most common analytics engineering situations.
+Конфигурации, которые указывают dbt, как строить эти объекты, называются _материализациями_, и знание о том, как их использовать, является важным навыком для эффективной аналитической инженерии. После завершения этого руководства вы сможете использовать три основные материализации, которые охватывают большинство распространенных ситуаций в аналитической инженерии.
 
 :::info
-😌 **Materializations abstract away DDL and DML**. Typically in raw SQL- or python-based [data transformation](https://www.getdbt.com/analytics-engineering/transformation/), you have to write specific imperative instructions on how to build or modify your data objects. dbt’s materializations make this declarative, we tell dbt how we want things to be constructed and it figures out how to do that given the unique conditions and qualities of our warehouse.
+😌 **Материализации абстрагируют DDL и DML**. Обычно в сыром SQL или на основе Python [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/) вам нужно писать конкретные императивные инструкции о том, как строить или изменять ваши объекты данных. Материализации dbt делают это декларативным образом: мы говорим dbt, как мы хотим, чтобы вещи были построены, а он сам разбирается, как это сделать, учитывая уникальные условия и характеристики нашего хранилища.
 :::
 
-### Learning goals
+### Цели обучения
 
-By the end of this guide you should have a solid understanding of:
+К концу этого руководства вы должны будете иметь четкое понимание:
 
-- 🛠️ what **materializations** are
-- 👨‍👨‍👧 how the three main materializations that ship with dbt — **table**, **view**, and **incremental** — differ
-- 🗺️ **when** and **where** to use specific materializations to optimize your development and production builds
-- ⚙️ how to **configure materializations** at various scopes, from an individual model to entire folder
+- 🛠️ что такое **материализации**
+- 👨‍👨‍👧 как три основные материализации, которые поставляются с dbt — **table**, **view** и **incremental** — отличаются друг от друга
+- 🗺️ **когда** и **где** использовать конкретные материализации для оптимизации ваших разработок и производственных сборок
+- ⚙️ как **настраивать материализации** на различных уровнях, от отдельной модели до целой папки
 
-### Prerequisites
+### Предварительные требования
 
-- 📒 You’ll want to have worked through the [quickstart guide](/guides) and have a project setup to work through these concepts.
-- 🏃🏻‍♀️ Concepts like dbt runs, `ref()` statements, and models should be familiar to you.
-- 🔧 [**Optional**] Reading through the [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview) Guide will be beneficial for the last section of this guide, when we review best practices for materializations using the dbt project approach of staging models and marts.
+- 📒 Вам следует пройти [руководство по быстрому старту](/guides) и настроить проект, чтобы проработать эти концепции.
+- 🏃🏻‍♀️ Концепции, такие как запуски dbt, операторы `ref()` и модели, должны быть вам знакомы.
+- 🔧 [**Необязательно**] Ознакомление с [Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview) будет полезно для последнего раздела этого руководства, когда мы рассмотрим лучшие практики для материализаций, используя подход dbt к моделям и рынкам.
 
-### Guiding principle
+### Основной принцип
 
-We’ll explore this in-depth throughout, but the basic guideline is **start as simple as possible**. We’ll follow a tiered approached, only moving up a tier when it’s necessary.
+Мы будем подробно исследовать это в течение всего руководства, но основное правило — **начинайте с самого простого**. Мы будем следовать многоуровневому подходу, переходя на следующий уровень только тогда, когда это необходимо.
 
-- 🔍 **Start with a view.** When the view gets too long to _query_ for end users,
-- ⚒️ **Make it a table.** When the table gets too long to _build_ in your dbt Jobs,
-- 📚 **Build it incrementally.** That is, layer the data on in chunks as it comes in.
+- 🔍 **Начните с представления.** Когда представление становится слишком длинным для _запроса_ конечными пользователями,
+- ⚒️ **Сделайте это таблицей.** Когда таблица становится слишком длинной для _построения_ в ваших заданиях dbt,
+- 📚 **Стройте это инкрементально.** То есть добавляйте данные порциями по мере их поступления.

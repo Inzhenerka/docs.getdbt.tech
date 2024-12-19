@@ -2,11 +2,11 @@
 id: sam-debruyn
 title: Sam Debruyn
 description: |
-  I have a background of about 10 years in software engineering and moved to data engineering in 2020. Today, I lead dataroots's data & cloud unit on a technical level, allowing me to share knowledge and help multiple teams and customers, while still being hands-on every day. In 2021 and 2022, I did a lot of work on dbt-core and the dbt adapters for Microsoft SQL Server, Azure SQL, Azure Synapse, and now also Microsoft Fabric. I spoke at a few meetups and conferences about dbt and other technologies which I'm passionate about. Sharing knowledge is what drives me, so in 2023 I founded the <a href="https://www.meetup.com/analytics-engineering-belgium/" rel="noopener noreferrer" target="_blank">Belgium dbt Meetup</a>. Every meetup reached its maximum capacity ever since.
+  У меня более 10 лет опыта в области программной инженерии, и в 2020 году я перешел в область инженерии данных. Сегодня я возглавляю технический уровень подразделения данных и облака в dataroots, что позволяет мне делиться знаниями и помогать нескольким командам и клиентам, оставаясь при этом вовлеченным в работу каждый день. В 2021 и 2022 годах я много работал над dbt-core и адаптерами dbt для Microsoft SQL Server, Azure SQL, Azure Synapse, а теперь также и Microsoft Fabric. Я выступал на нескольких встречах и конференциях, посвященных dbt и другим технологиям, которые меня увлекают. Деление знаниями — это то, что меня вдохновляет, поэтому в 2023 году я основал <a href="https://www.meetup.com/analytics-engineering-belgium/" rel="noopener noreferrer" target="_blank">Belgium dbt Meetup</a>. Каждая встреча достигала максимальной заполняемости с тех пор.
 image: /img/community/spotlight/sam.jpg
 pronouns: he/him
 location: Heist-op-den-Berg, Belgium
-jobTitle: Tech Lead Data & Cloud
+jobTitle: Технический руководитель данных и облака
 companyName: dataroots
 organization: ""
 socialLinks:
@@ -22,18 +22,18 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">joined the dbt Community</a> at the end of 2020, when we had dbt 0.18. At first, I was a bit suspicious. I thought to myself, how could a tool this simple make such a big difference? But after giving it a try, I was convinced: this is what we'll all be using for our data transformations in the future. dbt shines in its simplicity and very low learning curve. Thanks to dbt, a lot more people can become proficient in data analytics. I became a dbt evangelist, both at my job as well as in local and online data communities. I think that data holds the truth. And I think that the more people we can give access to work with data, so that they don't having to depend on others to work with complex tooling, the more we can achieve together.
+Я <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">присоединился к сообществу dbt</a> в конце 2020 года, когда у нас была версия dbt 0.18. Сначала я был немного скептически настроен. Я думал, как такой простой инструмент может оказать такое большое влияние? Но после того, как я попробовал его, я был убежден: это то, что мы все будем использовать для наших преобразований данных в будущем. dbt выделяется своей простотой и очень низким порогом входа. Благодаря dbt гораздо больше людей могут стать профессионалами в области аналитики данных. Я стал евангелистом dbt как на своей работе, так и в местных и онлайн-сообществах данных. Я считаю, что данные хранят истину. И я думаю, что чем больше людей мы сможем привлечь к работе с данными, чтобы им не приходилось зависеть от других для работы с сложными инструментами, тем больше мы сможем достичь вместе.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-It's hard to pick one person. There are lots of folks who inspired me along the way. There is Anders Swanson (known as dataders on Github), with whom I've spent countless hours discussing how we can bring two things I like together: dbt and the Microsoft SQL products. It's amazing to look back on what we achieved now that dbt Labs and Microsoft are working together to bring dbt support for Fabric and Synapse. There is also Jeremy Cohen (jerco) whose lengthy GitHub discussions bring inspiration to how you can do even more with dbt and what the future might hold. Cor Zuurmond (JCZuurmond) inspired me to start contributing to dbt-core, adapters, and related packages. He did an impressive amount of work by making dbt-spark even better, building pytest integration for dbt, and of course by bringing dbt to world's most used database: dbt-excel.
+Трудно выбрать одного человека. Есть много людей, которые вдохновили меня на этом пути. Это Андерс Свонсон (известный как dataders на Github), с которым я провел бесчисленные часы, обсуждая, как мы можем объединить две вещи, которые мне нравятся: dbt и продукты Microsoft SQL. Удивительно оглядываться назад на то, что мы достигли, теперь, когда dbt Labs и Microsoft работают вместе, чтобы обеспечить поддержку dbt для Fabric и Synapse. Также есть Джереми Коэн (jerco), чьи длинные обсуждения на GitHub вдохновляют на то, как можно сделать еще больше с dbt и что может ждать нас в будущем. Кор Зуурмонд (JCZuurmond) вдохновил меня начать вносить вклад в dbt-core, адаптеры и связанные пакеты. Он проделал впечатляющую работу, сделав dbt-spark еще лучше, создав интеграцию pytest для dbt и, конечно, привнеся dbt в самую используемую базу данных в мире: dbt-excel.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-dbt doesn't only shine when you're using it, but also under the hood. dbt's codebase is very approachable and consistently well written with code that is clean, elegant, and easy to understand. When you're thinking about a potential feature, a bugfix, or building integrations with dbt, just go to <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">Slack</a> or <a href="https://github.com/dbt-labs" rel="noopener noreferrer" target="_blank">Github</a> and see what you can do to make that happen. You can contribute by discussing potential features, adding documentation, writing code, and more. You don't need to be a Python expert to get started.
+dbt сияет не только когда вы его используете, но и под капотом. Кодовая база dbt очень доступна и последовательно хорошо написана, с чистым, элегантным и понятным кодом. Когда вы думаете о потенциальной функции, исправлении ошибки или создании интеграций с dbt, просто зайдите в <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">Slack</a> или <a href="https://github.com/dbt-labs" rel="noopener noreferrer" target="_blank">Github</a> и посмотрите, что вы можете сделать, чтобы это осуществить. Вы можете внести свой вклад, обсуждая потенциальные функции, добавляя документацию, пиша код и многое другое. Вам не нужно быть экспертом в Python, чтобы начать.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-The dbt community is one of the biggest data communities globally, but also the most welcoming one. It's amazing how nice, friendly, and approachable everyone is. It's great to be part of this community.
+Сообщество dbt — одно из крупнейших сообществ данных в мире, но также и самое гостеприимное. Удивительно, насколько все добрые, дружелюбные и доступные. Приятно быть частью этого сообщества.

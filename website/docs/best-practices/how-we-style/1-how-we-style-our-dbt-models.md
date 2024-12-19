@@ -1,32 +1,32 @@
 ---
-title: How we style our dbt models
+title: Как мы стилизуем наши модели dbt
 id: 1-how-we-style-our-dbt-models
 ---
 
-## Fields and model names
+## Поля и имена моделей
 
-- 👥 Models should be pluralized, for example, `customers`, `orders`, `products`.
-- 🔑 Each model should have a primary key.
-- 🔑 The primary key of a model should be named `<object>_id`, for example, `account_id`. This makes it easier to know what `id` is being referenced in downstream joined models.
-- Use underscores for naming dbt models; avoid dots.
+- 👥 Модели должны быть во множественном числе, например, `customers`, `orders`, `products`.
+- 🔑 Каждая модель должна иметь первичный ключ.
+- 🔑 Первичный ключ модели должен называться `<object>_id`, например, `account_id`. Это упрощает понимание того, какой `id` используется в связанных моделях.
+- Используйте подчеркивания для именования моделей dbt; избегайте точек.
   - ✅  `models_without_dots`
   - ❌ `models.with.dots`
-  - Most data platforms use dots to separate `database.schema.object`, so using underscores instead of dots reduces your need for [quoting](/reference/resource-properties/quoting) as well as the risk of issues in certain parts of dbt Cloud. For more background, refer to [this GitHub issue](https://github.com/dbt-labs/dbt-core/issues/3246).
-- 🔑 Keys should be string data types.
-- 🔑 Consistency is key! Use the same field names across models where possible. For example, a key to the `customers` table should be named `customer_id` rather than `user_id` or 'id'.
-- ❌ Do not use abbreviations or aliases. Emphasize readability over brevity. For example, do not use `cust` for `customer` or `o` for `orders`.
-- ❌ Avoid reserved words as column names.
-- ➕ Booleans should be prefixed with `is_` or `has_`.
-- 🕰️ Timestamp columns should be named `<event>_at`(for example, `created_at`) and should be in UTC. If a different timezone is used, this should be indicated with a suffix (`created_at_pt`).
-- 📆 Dates should be named `<event>_date`. For example, `created_date.`
-- 🔙 Events dates and times should be past tense &mdash; `created`, `updated`, or `deleted`.
-- 💱 Price/revenue fields should be in decimal currency (`19.99` for $19.99; many app databases store prices as integers in cents). If a non-decimal currency is used, indicate this with a suffix (`price_in_cents`).
-- 🐍 Schema, table and column names should be in `snake_case`.
-- 🏦 Use names based on the _business_ terminology, rather than the source terminology. For example, if the source database uses `user_id` but the business calls them `customer_id`, use `customer_id` in the model.
-- 🔢 Versions of models should use the suffix `_v1`, `_v2`, etc for consistency (`customers_v1` and `customers_v2`).
-- 🗄️ Use a consistent ordering of data types and consider grouping and labeling columns by type, as in the example below. This will minimize join errors and make it easier to read the model, as well as help downstream consumers of the data understand the data types and scan models for the columns they need. We prefer to use the following order: ids, strings, numerics, booleans, dates, and timestamps.
+  - Большинство платформ данных используют точки для разделения `database.schema.object`, поэтому использование подчеркиваний вместо точек снижает необходимость в [квотировании](/reference/resource-properties/quoting), а также риск возникновения проблем в некоторых частях dbt Cloud. Для получения дополнительной информации обратитесь к [этой проблеме на GitHub](https://github.com/dbt-labs/dbt-core/issues/3246).
+- 🔑 Ключи должны быть строковыми типами данных.
+- 🔑 Последовательность имеет значение! Используйте одни и те же имена полей в моделях, где это возможно. Например, ключ к таблице `customers` должен называться `customer_id`, а не `user_id` или 'id'.
+- ❌ Не используйте аббревиатуры или псевдонимы. Поддерживайте читаемость, а не краткость. Например, не используйте `cust` для `customer` или `o` для `orders`.
+- ❌ Избегайте зарезервированных слов в качестве имен столбцов.
+- ➕ Булевы значения должны иметь префикс `is_` или `has_`.
+- 🕰️ Столбцы с временными метками должны называться `<event>_at` (например, `created_at`) и должны быть в UTC. Если используется другой часовой пояс, это должно быть указано с помощью суффикса (`created_at_pt`).
+- 📆 Даты должны называться `<event>_date`. Например, `created_date`.
+- 🔙 Даты и времена событий должны быть в прошедшем времени — `created`, `updated` или `deleted`.
+- 💱 Поля цены/дохода должны быть в десятичной валюте (`19.99` за $19.99; многие базы данных приложений хранят цены как целые числа в центах). Если используется недесятичная валюта, укажите это с помощью суффикса (`price_in_cents`).
+- 🐍 Имена схем, таблиц и столбцов должны быть в `snake_case`.
+- 🏦 Используйте имена, основанные на _бизнес_ терминологии, а не на терминологии источника. Например, если исходная база данных использует `user_id`, но бизнес называет их `customer_id`, используйте `customer_id` в модели.
+- 🔢 Версии моделей должны использовать суффиксы `_v1`, `_v2` и т.д. для последовательности (`customers_v1` и `customers_v2`).
+- 🗄️ Используйте последовательный порядок типов данных и рассмотрите возможность группировки и маркировки столбцов по типу, как в приведенном ниже примере. Это минимизирует ошибки при соединении и упрощает чтение модели, а также помогает downstream-пользователям данных понять типы данных и находить нужные столбцы. Мы предпочитаем использовать следующий порядок: ids, строки, числовые значения, булевы значения, даты и временные метки.
 
-## Example model
+## Пример модели
 
 ```sql
 with

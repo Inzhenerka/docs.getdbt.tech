@@ -1,20 +1,20 @@
 ---
-title: "Trusted adapters"
+title: "Доверенные адаптеры"
 id: "trusted-adapters"
 hide_table_of_contents: true
 ---
 
 
-Trusted adapters take part in the Trusted Adapter Program, including a commitment to meet the program's requirements. They are maintained by dbt Labs, partners, and community members. Trusted adapters in dbt Cloud undergo an additional rigorous process that covers development, documentation, user experience, and maintenance requirements. We strongly recommend using them in production environments. For further details, refer to [What it means to be trusted](/guides/adapter-creation?step=8#what-it-means-to-be-trusted).
+Доверенные адаптеры участвуют в Программе доверенных адаптеров, включая обязательство соответствовать требованиям программы. Они поддерживаются dbt Labs, партнерами и членами сообщества. Доверенные адаптеры в dbt Cloud проходят дополнительный строгий процесс, который охватывает требования к разработке, документации, пользовательскому опыту и обслуживанию. Мы настоятельно рекомендуем использовать их в производственных средах. Для получения дополнительной информации обратитесь к разделу [Что значит быть доверенным](/guides/adapter-creation?step=8#what-it-means-to-be-trusted).
 
-Free and open-source tools for the data professional are increasingly abundant. This is by-and-large a *good thing*, however it requires due diligence that wasn't required in a paid-license, closed-source software world. As a user, there are questions to answer important before taking a dependency on an open-source project. The trusted adapter designation is meant to streamline this process for end users.
+Бесплатные и открытые инструменты для специалистов по данным становятся все более распространенными. В целом это *хорошо*, однако это требует должной осмотрительности, которая не была необходима в мире программного обеспечения с платной лицензией и закрытым исходным кодом. Как пользователю, вам необходимо ответить на важные вопросы, прежде чем зависеть от проекта с открытым исходным кодом. Обозначение доверенного адаптера предназначено для упрощения этого процесса для конечных пользователей.
 
-### Trusted adapter specifications
+### Спецификации доверенных адаптеров
 
-Refer to the [Build, test, document, and promote adapters](/guides/adapter-creation) guide for more information, particularly if you are an adapter maintainer considering having your adapter be added to the trusted list.
+Обратитесь к руководству [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation) для получения дополнительной информации, особенно если вы являетесь поддерживающим адаптером и рассматриваете возможность добавления вашего адаптера в доверенный список.
 
 
-### Trusted adapters
+### Доверенные адаптеры
 
 import AdaptersTrusted from '/snippets/_adapters-trusted.md';
 

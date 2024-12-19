@@ -1,83 +1,79 @@
 ---
-title: Deciding how to structure your dbt Mesh
-description: Getting started with dbt Mesh patterns
-hoverSnippet: Learn how to get started with dbt Mesh
+title: Решение о структуре вашего dbt Mesh
+description: Начало работы с шаблонами dbt Mesh
+hoverSnippet: Узнайте, как начать работу с dbt Mesh
 ---
-## Exploring mesh patterns
+## Изучение шаблонов mesh
 
-When adopting a multi-project architecture, where do you draw the lines between projects?
+При принятии архитектуры с несколькими проектами, где провести границы между проектами?
 
-How should you organize data workflows in a world where instead of having a single dbt DAG, you have multiple projects speaking to each other, each comprised of their own DAG?
+Как организовать рабочие процессы с данными в мире, где вместо одной DAG dbt у вас есть несколько проектов, взаимодействующих друг с другом, каждый из которых состоит из своей DAG?
 
-Adopting the dbt Mesh pattern is not a one-size-fits-all process. In fact, it's the opposite! It's about customizing your project structure to fit _your_ team and _your_ data. Now you can mold your organizational knowledge graph to your organizational people graph, bringing people and data closer together rather than compromising one for the other.
+Принятие шаблона dbt Mesh — это не универсальный процесс. На самом деле, это противоположное! Это о том, как настроить структуру вашего проекта, чтобы она соответствовала _вашей_ команде и _вашим_ данным. Теперь вы можете адаптировать свою организационную графовую модель знаний к графовой модели людей вашей организации, сближая людей и данные, а не жертвуя одним ради другого.
 
-While there is not a single best way to implement this pattern, there are some common decision points that will be helpful for you to consider.
+Хотя нет единственно правильного способа реализации этого шаблона, есть несколько общих точек принятия решений, которые будут полезны для вас.
 
-At a high level, you’ll need to decide:
+На высоком уровне вам нужно будет решить:
 
-- Where to draw the lines between your dbt Projects -- i.e. how do you determine where to split your DAG and which models go in which project?
-- How to manage your code -- do you want multiple dbt Projects living in the same repository (mono-repo) or do you want to have multiple repos with one repo per project?
+- Где провести границы между вашими проектами dbt — т.е. как определить, где разделить вашу DAG и какие модели должны находиться в каком проекте?
+- Как управлять вашим кодом — хотите ли вы, чтобы несколько проектов dbt находились в одном репозитории (моно-репозиторий) или хотите иметь несколько репозиториев, по одному на проект?
 
-## Define your project interfaces by splitting your DAG
+## Определите интерфейсы вашего проекта, разделив вашу DAG
 
-The first (and perhaps most difficult!) decision when migrating to a multi-project architecture is deciding where to draw the line in your DAG to define the interfaces between your projects. Let's explore some language for discussing the design of these patterns.
+Первое (и, возможно, самое сложное!) решение при переходе к архитектуре с несколькими проектами — это решение о том, где провести границу в вашей DAG, чтобы определить интерфейсы между вашими проектами. Давайте рассмотрим некоторые термины для обсуждения дизайна этих шаблонов.
 
-### Vertical splits
+### Вертикальные разделения
 
-Vertical splits separate out layers of transformation in DAG order. Let's look at some examples.
+Вертикальные разделения отделяют слои трансформации в порядке DAG. Рассмотрим несколько примеров.
 
-- **Splitting up staging and mart layers** to create a more tightly-controlled, shared set of components that other projects build on but can't edit.
-- **Isolating earlier models for security and governance requirements** to separate out and mask PII data so that downstream consumers can't access it is a common use case for a vertical split.
-- **Protecting complex or expensive data** to isolate large or complex models that are expensive to run so that they are safe from accidental selection, independently deployable, and easier to debug when they have issues.
+- **Разделение слоев staging и mart** для создания более строго контролируемого, общего набора компонентов, на основе которых строятся другие проекты, но которые нельзя редактировать.
+- **Изоляция более ранних моделей для требований безопасности и управления** для отделения и маскировки PII данных, чтобы downstream-пользователи не могли к ним получить доступ — это распространенный случай использования вертикального разделения.
+- **Защита сложных или дорогостоящих данных** для изоляции больших или сложных моделей, которые дорого запускать, чтобы они были защищены от случайного выбора, могли быть развернуты независимо и легче отлаживались в случае возникновения проблем.
 
-<Lightbox src="/img/best-practices/how-we-mesh/vertical_split.png" title="A simplified dbt DAG with a dotted line representing a vertical split." />
+<Lightbox src="/img/best-practices/how-we-mesh/vertical_split.png" title="Упрощенная DAG dbt с пунктирной линией, представляющей вертикальное разделение." />
 
-### Horizontal splits
+### Горизонтальные разделения
 
-Horizontal splits separate your DAG based on source or domain. These splits are often based around the shape and size of the data and how it's used. Let's consider some possibilities for horizontal splitting.
+Горизонтальные разделения разделяют вашу DAG на основе источника или домена. Эти разделения часто основаны на форме и размере данных и том, как они используются. Рассмотрим некоторые возможности для горизонтального разделения.
 
-- **Team consumption patterns.** For example, splitting out the marketing team's data flow into a separate project.
-- **Data from different sources.** For example, clickstream event data and transactional ecommerce data may need to be modeled independently of each other.
-- **Team workflows.** For example, if two embedded groups operate at different paces, you may want to split the projects up so they can move independently.
+- **Шаблоны потребления команд.** Например, выделение потока данных маркетинговой команды в отдельный проект.
+- **Данные из разных источников.** Например, данные о событиях кликов и транзакционные данные электронной коммерции могут потребовать независимого моделирования.
+- **Рабочие процессы команд.** Например, если две встроенные группы работают с разной скоростью, вы можете захотеть разделить проекты, чтобы они могли двигаться независимо.
 
+<Lightbox src="/img/best-practices/how-we-mesh/horizontal_split.png" title="Упрощенная DAG dbt с пунктирной линией, представляющей горизонтальное разделение." />
 
-<Lightbox src="/img/best-practices/how-we-mesh/horizontal_split.png" title="A simplified dbt DAG with a dotted line representing a horizontal split." />
+### Сочетание этих стратегий
 
-### Combining these strategies
+- **Это не методы «или/или».** Вам следует рассмотреть оба типа разделений и комбинировать их любым способом, который имеет смысл для вашей организации.
+- **Выберите один тип разделения и сосредоточьтесь на нем в первую очередь.** Если у вас, например, топология команды «центр-спица», сначала разберитесь с выделением центрального платформенного проекта, прежде чем разделять остальные на домены. Затем, если вам нужно разбить эти домены горизонтально, вы можете сосредоточиться на этом позже.
+- **DRY применимо к исходным данным, а не только к коду.** Независимо от вашей стратегии, вы не должны использовать одни и те же строки и столбцы в нескольких узлах. При работе в шаблоне mesh становится все более важным, чтобы мы не дублировали логику или данные.
 
-- **These are not either/or techniques**. You should consider both types of splits, and combine them in any way that makes sense for your organization.
-- **Pick one type of split and focus on that first**. If you have a hub-and-spoke team topology for example, handle breaking out the central platform project before you split the remainder into domains. Then if you need to break those domains up horizontally you can focus on that after the fact.
-- **DRY applies to underlying data, not just code.** Regardless of your strategy, you should not be sourcing the same rows and columns into multiple nodes. When working within a mesh pattern it becomes increasingly important that we don't duplicate logic or data.
+<Lightbox src="/img/best-practices/how-we-mesh/combined_splits.png" title="Упрощенная DAG dbt с двумя пунктирными линиями, представляющими как вертикальное, так и горизонтальное разделение." />
 
+## Определите свою стратегию git
 
-<Lightbox src="/img/best-practices/how-we-mesh/combined_splits.png" title="A simplified dbt DAG with two dotted lines representing both a vertical and horizontal split." />
+Архитектура с несколькими проектами может существовать в одном репозитории (моно-репозиторий) или как несколько проектов, каждый из которых находится в своем собственном репозитории (мульти-репозиторий).
 
+- Если вы **меньшая команда**, стремящаяся в первую очередь ускорить и упростить разработку, **моно-репозиторий** вероятно будет правильным выбором, но может стать неудобным по мере роста числа проектов, моделей и участников.
+- Если вы **большая команда с несколькими группами** и вам нужно разъединить проекты для обеспечения безопасности и возможности различных стилей и ритмов разработки, **мульти-репозиторий** — ваш лучший выбор.
 
-## Determine your git strategy
+## Проекты, разделения и команды
 
-A multi-project architecture can exist in a single repo (monorepo) or as multiple projects, with each one being in their own repository (multi-repo).
+С момента запуска dbt Mesh наиболее распространенным шаблоном, который мы наблюдали, является тот, где проекты 1:1 соответствуют командам, и каждый проект имеет свою собственную кодовую базу в своем собственном репозитории. Это не жесткое правило: некоторые организации хотят, чтобы несколько команд работали из одного репозитория, а некоторые команды владеют несколькими доменами, которые неудобно держать вместе.
 
-- If you're a **smaller team** looking primarily to speed up and simplify development, a **monorepo** is likely the right choice, but can become unwieldy as the number of projects, models and contributors grow.
-- If you’re a **larger team with multiple groups**, and need to decouple projects for security and enablement of different development styles and rhythms, a **multi-repo setup** is your best bet.
+Пользователи могут потребоваться вносить модели в нескольких проектах, и это нормально. Это может вызвать некоторые трения по сравнению с одним репозиторием, но это _полезное_ трение, особенно если нужно передать изменение от «спицы» к «центру». Это следует рассматривать как внесение изменения в API, с которым другая команда будет работать в течение некоторого времени. Вам следует беспокоиться, если ваши коллеги обнаружат, что им часто (каждую неделю) нужно вносить согласованные изменения в нескольких проектах или это является ключевым предварительным условием для ~20%+ их работы.
 
-## Projects, splits, and teams
-
-Since the launch of dbt Mesh, the most common pattern we've seen is one where projects are 1:1 aligned to teams, and each project has its own codebase in its own repository. This isn’t a hard-and-fast rule: Some organizations want multiple teams working out of a single repo, and some teams own multiple domains that feel awkward to keep combined.
-
-Users may need to contribute models across multiple projects and this is fine. There will be some friction doing this, versus a single repo, but this is _useful_ friction, especially if upstreaming a change from a “spoke” to a “hub.” This should be treated like making an API change, one that the other team will be living with for some time to come. You should be concerned if your teammates find they need to make a coordinated change across multiple projects very frequently (every week), or as a key prerequisite for ~20%+ of their work.
-
-### Cycle detection
+### Обнаружение циклов
 
 import CycleDetection from '/snippets/_mesh-cycle-detection.md';
 
 <CycleDetection />
 
+### Советы и рекомендации
 
-### Tips and tricks
+Страница [реализации](/best-practices/how-we-mesh/mesh-4-implementation) предоставляет более подробные примеры того, как разделить монолитный проект на несколько проектов. Вот несколько советов, чтобы помочь вам начать, когда вы рассматриваете методы разделения, перечисленные выше, для ваших собственных проектов:
 
-The [implementation](/best-practices/how-we-mesh/mesh-4-implementation) page provides more in-depth examples of how to split a monolithic project into multiple projects. Here are some tips to get you started when considering the splitting methods listed above on your own projects:
-
-1. Start by drawing a diagram of your teams doing data work. Map each team to a single dbt project. If you already have an existing monolithic project, and you’re onboarding _net-new teams,_ this could be as simple as declaring the existing project as your “hub” and creating new “spoke” sandbox projects for each team.
-2. Split off common foundations when you know that multiple downstream teams will require the same data source. Those could be upstreamed into a centralized hub or split off into a separate foundational project. need some splits to facilitate other splits, for example, source staging models in A that are used in both B and C (lack of project cycles).
-3. Split again to introduce intentional friction and encapsulate a particular set of models (for example, for external export).
-4. Recombine if you have “hot path” subsets of the DAG that you need to deploy with low latency because it powers in-app reporting or operational analytics. It might make sense to have a different dedicated team own these data models (see principle 1), similar to how software services with significantly different performance characteristics often warrant dedicated infrastructure, architecture, and staffing.
+1. Начните с рисования диаграммы ваших команд, работающих с данными. Соотнесите каждую команду с одним проектом dbt. Если у вас уже есть существующий монолитный проект и вы вводите _новые команды_, это может быть так же просто, как объявить существующий проект вашим «центром» и создать новые «спицы» песочницы для каждой команды.
+2. Разделите общие основы, когда вы знаете, что нескольким downstream-командам потребуется один и тот же источник данных. Эти данные могут быть переданы в централизованный хаб или выделены в отдельный базовый проект. Вам могут понадобиться некоторые разделения для облегчения других разделений, например, модели исходного staging в A, которые используются как в B, так и в C (отсутствие циклов проектов).
+3. Разделите снова, чтобы ввести преднамеренное трение и инкапсулировать определенный набор моделей (например, для внешнего экспорта).
+4. Объедините снова, если у вас есть подмножества «горячего пути» DAG, которые необходимо развернуть с низкой задержкой, потому что они поддерживают отчетность в приложении или операционную аналитику. Может иметь смысл, чтобы другая специализированная команда владела этими моделями данных (см. принцип 1), аналогично тому, как программные сервисы с существенно различающимися характеристиками производительности часто требуют специализированной инфраструктуры, архитектуры и кадров.

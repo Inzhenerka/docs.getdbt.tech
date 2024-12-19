@@ -1,51 +1,51 @@
 ---
-title: "Realtime event participation"
+title: "Участие в событиях в реальном времени"
 id: "contributing-realtime-events"
 ---
 
-### Speak at a Meetup
+### Выступите на встрече
 
-#### Overview
+#### Обзор
 
-Meetups are all about knowledge sharing; they are a place to connect and learn with your fellow dbt Community members. They usually take place in person, with some happening virtually. The Meetups take place across the globe, and you can check them all out [here](https://www.meetup.com/pro/dbt/).
+Встречи — это возможность делиться знаниями; это место для общения и обучения с другими участниками сообщества dbt. Обычно они проходят вживую, но некоторые из них проводятся виртуально. Встречи проходят по всему миру, и вы можете ознакомиться со всеми [здесь](https://www.meetup.com/pro/dbt/).
 
-#### Contribution opportunities
+#### Возможности для участия
 
-- Become a Meetup organizer
-- Speak at an event
-- Sponsor an event or provide your office space
+- Стать организатором встречи
+- Выступить на мероприятии
+- Стать спонсором мероприятия или предоставить офисное пространство
 
-For all of these opportunities, please fill out an [interest form](https://docs.google.com/forms/d/e/1FAIpQLScdzuz9Ouo1b07BMHveEBJsJ3rJAYuFvbTKep2fXDL0iZTZUg/viewform) and we will get back to you.
+Для всех этих возможностей, пожалуйста, заполните [форму интереса](https://docs.google.com/forms/d/e/1FAIpQLScdzuz9Ouo1b07BMHveEBJsJ3rJAYuFvbTKep2fXDL0iZTZUg/viewform), и мы свяжемся с вами.
 
-#### Sample contributions
+#### Примеры вкладов
 
-- Take a look at [the slides](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/edit#slide=id.g553a984de0_0_19) and [watch the video](https://www.youtube.com/watch?v=BF7HH8JDUS0) from Kenny Ning's 2020 Meetup talk on predicting customer conversions with dbt and ML for Better.com.
-- Dig into [the deck](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/edit#slide=id.p) and [the video](https://www.youtube.com/watch?v=VhH614WVufM) from Bowery Farmings talk on migrating dbt models from Redshift to Snowflake.
+- Ознакомьтесь с [презентацией](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/edit#slide=id.g553a984de0_0_19) и [посмотрите видео](https://www.youtube.com/watch?v=BF7HH8JDUS0) с выступления Кенни Нинга на встрече 2020 года о прогнозировании конверсий клиентов с помощью dbt и ML для Better.com.
+- Изучите [доклад](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/edit#slide=id.p) и [видео](https://www.youtube.com/watch?v=VhH614WVufM) с выступления Bowery Farming о миграции моделей dbt с Redshift на Snowflake.
 
-#### Get Started
+#### Начните
 
-- Read [How to Deliver a Fantastic Meetup Talk](/community/resources/speaking-at-a-meetup).
-- Find a [Meetup near you](https://www.meetup.com/pro/dbt/), start attending and let the organizers know you are interested!
-ß
-### Speak at Coalesce
+- Прочитайте [Как провести отличное выступление на встрече](/community/resources/speaking-at-a-meetup).
+- Найдите [встречу рядом с вами](https://www.meetup.com/pro/dbt/), начните посещать и дайте знать организаторам, что вы заинтересованы!
 
-#### Overview
+### Выступите на Coalesce
 
-[Coalesce](https://coalesce.getdbt.com/) is the annual analytics engineering conference hosted by dbt Labs. While Meetups are focused on sharing knowledge with a specific local hub of the Community - Coalesce is the way to share ideas with everyone. Each year we gather together, take stock of what we’ve learned and pool our best ideas about analytics.
+#### Обзор
 
-#### Contribution opportunities
+[Coalesce](https://coalesce.getdbt.com/) — это ежегодная конференция по аналитическому инжинирингу, организованная dbt Labs. В то время как встречи сосредоточены на обмене знаниями в конкретном местном центре сообщества, Coalesce — это возможность делиться идеями со всеми. Каждый год мы собираемся вместе, подводим итоги того, что мы узнали, и обмениваемся лучшими идеями в области аналитики.
 
-- Attend Coalesce:
-  - Coalesce is the once a year gathering for analytics engineers. Whether you choose to join online or at one of our in-person events, attending Coalesce is the best way to get an immersive experience of what the dbt Community is like.
-- Speak at Coalesce!
-  - We’d love to hear what you’ve been working on, thinking about and dreaming up in the analytics engineering space. Coalesce talks can be forward looking views on the industry, deep dives into particular technical solutions or personal stories about your journey in data.
+#### Возможности для участия
 
-#### Sample contributions
+- Посетите Coalesce:
+  - Coalesce — это ежегодное собрание для аналитических инженеров. Независимо от того, решите ли вы присоединиться онлайн или на одном из наших мероприятий вживую, участие в Coalesce — это лучший способ получить погружение в то, каково сообщество dbt.
+- Выступите на Coalesce!
+  - Нам будет интересно услышать о том, над чем вы работали, о чем думали и о чем мечтали в области аналитического инжиниринга. Выступления на Coalesce могут быть направлены на будущее отрасли, углубленным анализом конкретных технических решений или личными историями о вашем пути в данных.
 
-- [Run Your Data Team as a Product Team](https://www.getdbt.com/coalesce-2020/run-your-data-team-as-a-product-team/)
-- [Tailoring dbt's incremental_strategy to Artsy's data needs](https://www.getdbt.com/coalesce-2021/tailoring-dbts-incremental-strategy-to-artsys-data-needs/)
+#### Примеры вкладов
 
-#### Get started
+- [Управляйте своей командой данных как продуктовой командой](https://www.getdbt.com/coalesce-2020/run-your-data-team-as-a-product-team/)
+- [Адаптация стратегии инкрементного обновления dbt к потребностям данных Artsy](https://www.getdbt.com/coalesce-2021/tailoring-dbts-incremental-strategy-to-artsys-data-needs/)
 
-- If registrations are open register on the [Coalesce website](https://coalesce.getdbt.com/)
-- Join #coalesce-updates on the dbt Community Slack
+#### Начните
+
+- Если регистрация открыта, зарегистрируйтесь на [сайте Coalesce](https://coalesce.getdbt.com/)
+- Присоединяйтесь к #coalesce-updates в Slack-сообществе dbt

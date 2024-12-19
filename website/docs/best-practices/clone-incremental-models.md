@@ -1,61 +1,61 @@
 ---
-title: "Clone incremental models as the first step of your CI job"
+title: "Клонирование инкрементных моделей как первый шаг вашего CI задания"
 id: "clone-incremental-models"
-description: Learn how to define clone incremental models as the first step of your CI job.
-displayText: Clone incremental models as the first step of your CI job
-hoverSnippet: Learn how to clone incremental models for CI jobs.
+description: Узнайте, как определить клонирование инкрементных моделей в качестве первого шага вашего CI задания.
+displayText: Клонирование инкрементных моделей как первый шаг вашего CI задания
+hoverSnippet: Узнайте, как клонировать инкрементные модели для CI заданий.
 ---
 
-Before you begin, you must be aware of a few conditions:
-- `dbt clone` is only available with dbt version 1.6 and newer. Refer to our [upgrade guide](/docs/dbt-versions/upgrade-dbt-version-in-cloud) for help enabling newer versions in dbt Cloud
-- This strategy only works for warehouse that support zero copy cloning (otherwise `dbt clone` will just create pointer views).
-- Some teams may want to test that their incremental models run in both incremental mode and full-refresh mode.
+Перед тем как начать, вам необходимо знать несколько условий:
+- `dbt clone` доступен только в версиях dbt 1.6 и новее. Обратитесь к нашему [руководству по обновлению](/docs/dbt-versions/upgrade-dbt-version-in-cloud) для получения помощи в активации новых версий в dbt Cloud.
+- Эта стратегия работает только для хранилищ, которые поддерживают клонирование без копирования (в противном случае `dbt clone` просто создаст указатели).
+- Некоторые команды могут захотеть протестировать, что их инкрементные модели работают как в инкрементном режиме, так и в режиме полного обновления.
 
-Imagine you've created a [Slim CI job](/docs/deploy/continuous-integration) in dbt Cloud and it is configured to: 
+Представьте, что вы создали [Slim CI задание](/docs/deploy/continuous-integration) в dbt Cloud, и оно настроено на:
 
-- Defer to your production environment.
-- Run the command `dbt build --select state:modified+` to run and test all of the models you've modified and their downstream dependencies.
-- Trigger whenever a developer on your team opens a PR against the main branch.
+- Отложение на вашу производственную среду.
+- Выполнение команды `dbt build --select state:modified+`, чтобы запустить и протестировать все модели, которые вы изменили, и их зависимые модели.
+- Срабатывание каждый раз, когда разработчик вашей команды открывает PR против основной ветки.
 
-<Lightbox src="/img/best-practices/slim-ci-job.png" width="70%" title="Example of a slim CI job with the above configurations" />
+<Lightbox src="/img/best-practices/slim-ci-job.png" width="70%" title="Пример slim CI задания с вышеуказанными настройками" />
 
-Now imagine your dbt project looks something like this in the DAG:
+Теперь представьте, что ваш проект dbt выглядит примерно так в DAG:
 
-<Lightbox src="/img/best-practices/dag-example.png" width="70%" title="Sample project DAG" />
+<Lightbox src="/img/best-practices/dag-example.png" width="70%" title="Пример DAG проекта" />
 
-When you open a pull request (PR) that modifies `dim_wizards`, your CI job will kickoff and build _only the modified models and their downstream dependencies_ (in this case, `dim_wizards` and `fct_orders`) into a temporary schema that's unique to your PR. 
+Когда вы открываете pull request (PR), который изменяет `dim_wizards`, ваше CI задание начнется и построит _только измененные модели и их зависимые модели_ (в данном случае, `dim_wizards` и `fct_orders`) в временной схеме, уникальной для вашего PR.
 
-This build mimics the behavior of what will happen once the PR is merged into the main branch. It ensures you're not introducing breaking changes, without needing to build your entire dbt project. 
+Это построение имитирует поведение того, что произойдет, когда PR будет объединен с основной веткой. Это гарантирует, что вы не вводите разрушающие изменения, не нужно строить весь ваш проект dbt.
 
-## What happens when one of the modified models (or one of their downstream dependencies) is an incremental model?
+## Что происходит, когда одна из измененных моделей (или одна из их зависимых моделей) является инкрементной моделью?
 
-Because your CI job is building modified models into a PR-specific schema, on the first execution of `dbt build --select state:modified+`, the modified incremental model will be built in its entirety _because it does not yet exist in the PR-specific schema_ and [is_incremental will be false](/docs/build/incremental-models#understand-the-is_incremental-macro). You're running in `full-refresh` mode.
+Поскольку ваше CI задание строит измененные модели в схему, специфичную для PR, при первом выполнении `dbt build --select state:modified+` измененная инкрементная модель будет построена полностью _потому что она еще не существует в схеме, специфичной для PR_ и [is_incremental будет ложным](/docs/build/incremental-models#understand-the-is_incremental-macro). Вы работаете в режиме `full-refresh`.
 
-This can be suboptimal because:
-- Typically incremental models are your largest datasets, so they take a long time to build in their entirety which can slow down development time and incur high warehouse costs.
-- There are situations where a `full-refresh` of the incremental model passes successfully in your CI job but an _incremental_ build of that same table in prod would fail when the PR is merged into main (think schema drift where [on_schema_change](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change) config is set to `fail`)
+Это может быть не оптимально, потому что:
+- Обычно инкрементные модели являются вашими крупнейшими наборами данных, поэтому их полное построение занимает много времени, что может замедлить время разработки и привести к высоким затратам на хранилище.
+- Бывают ситуации, когда `full-refresh` инкрементной модели проходит успешно в вашем CI задании, но _инкрементное_ построение той же таблицы в продакшене потерпит неудачу, когда PR будет объединен с основной веткой (подумайте о сдвиге схемы, когда [on_schema_change](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change) настроен на `fail`).
 
-You can alleviate these problems by zero copy cloning the relevant, pre-existing incremental models into your PR-specific schema as the first step of the CI job using the `dbt clone` command. This way, the incremental models already exist in the PR-specific schema when you first execute the command `dbt build --select state:modified+` so the `is_incremental` flag will be `true`. 
+Вы можете смягчить эти проблемы, клонируя соответствующие, уже существующие инкрементные модели в вашу схему, специфичную для PR, как первый шаг CI задания, используя команду `dbt clone`. Таким образом, инкрементные модели уже будут существовать в схеме, специфичной для PR, когда вы впервые выполните команду `dbt build --select state:modified+`, поэтому флаг `is_incremental` будет `true`.
 
-You'll have two commands for your dbt Cloud CI check to execute:
-1. Clone all of the pre-existing incremental models that have been modified or are downstream of another model that has been modified:
+У вас будет две команды для выполнения проверки CI в dbt Cloud:
+1. Клонировать все существующие инкрементные модели, которые были изменены или являются зависимыми от другой измененной модели:
   ```shell
   dbt clone --select state:modified+,config.materialized:incremental,state:old
   ```
-1. Build all of the models that have been modified and their downstream dependencies:
+2. Построить все модели, которые были изменены, и их зависимые модели:
   ```shell
   dbt build --select state:modified+
   ```
 
-Because of your first clone step, the incremental models selected in your `dbt build` on the second step will run in incremental mode.
+Благодаря вашему первому шагу клонирования, инкрементные модели, выбранные в вашем `dbt build` на втором шаге, будут работать в инкрементном режиме.
 
-<Lightbox src="/img/best-practices/clone-command.png" width="70%" title="Clone command in the CI config" />
+<Lightbox src="/img/best-practices/clone-command.png" width="70%" title="Команда клонирования в конфигурации CI" />
 
-Your CI jobs will run faster, and you're more accurately mimicking the behavior of what will happen once the PR has been merged into main. 
+Ваши CI задания будут выполняться быстрее, и вы более точно имитируете поведение того, что произойдет, когда PR будет объединен с основной веткой.
 
-### Expansion on "think schema drift" where [on_schema_change](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change) config is set to `fail`" from above
+### Расширение на "подумайте о сдвиге схемы", когда конфигурация [on_schema_change](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change) установлена на `fail`
 
-Imagine you have an incremental model `my_incremental_model` with the following config:
+Представьте, что у вас есть инкрементная модель `my_incremental_model` с следующей конфигурацией:
 
 ```sql
 
@@ -69,17 +69,17 @@ Imagine you have an incremental model `my_incremental_model` with the following 
 
 ```
 
-Now, let’s say you open up a PR that adds a new column to `my_incremental_model`. In this case:
-- An incremental build will fail.
-- A `full-refresh` will succeed.
+Теперь, предположим, вы открываете PR, который добавляет новый столбец в `my_incremental_model`. В этом случае:
+- Инкрементное построение потерпит неудачу.
+- Полное обновление пройдет успешно.
 
-If you have a daily production job that just executes `dbt build` without a `--full-refresh` flag, once the PR is merged into main and the job kicks off, you will get a failure. So the question is - what do you want to happen in CI?
-- Do you want to also get a failure in CI, so that you know that once this PR is merged into main you need to immediately execute a `dbt build --full-refresh --select my_incremental_model` in production in order to avoid a failure in prod? This will block your CI check from passing.
-- Do you want your CI check to succeed, because once you do run a `full-refresh` for this model in prod you will be in a successful state? This may lead unpleasant surprises if your production job is suddenly failing when you merge this PR into main if you don’t remember you need to execute a `dbt build --full-refresh --select my_incremental_model` in production.
+Если у вас есть ежедневная производственная задача, которая просто выполняет `dbt build` без флага `--full-refresh`, как только PR будет объединен с основной веткой и задача начнется, вы получите ошибку. Так что вопрос в том, что вы хотите, чтобы произошло в CI?
+- Хотите ли вы также получить ошибку в CI, чтобы знать, что как только этот PR будет объединен с основной веткой, вам нужно немедленно выполнить `dbt build --full-refresh --select my_incremental_model` в продакшене, чтобы избежать ошибки в продакшене? Это заблокирует вашу проверку CI от успешного завершения.
+- Хотите ли вы, чтобы ваша проверка CI прошла успешно, потому что как только вы выполните `full-refresh` для этой модели в продакшене, вы будете в успешном состоянии? Это может привести к неприятным сюрпризам, если ваша производственная задача внезапно потерпит неудачу, когда вы объединяете этот PR с основной веткой, если вы не помните, что вам нужно выполнить `dbt build --full-refresh --select my_incremental_model` в продакшене.
 
-There’s probably no perfect solution here; it’s all just tradeoffs! Our preference would be to have the failing CI job and have to manually override the blocking branch protection rule so that there are no surprises and we can proactively run the appropriate command in production once the PR is merged. 
+Здесь, вероятно, нет идеального решения; это все компромиссы! Наша предпочтение было бы иметь неудачное CI задание и вручную отменить блокирующее правило защиты ветки, чтобы не было сюрпризов, и мы могли проактивно выполнить соответствующую команду в продакшене, как только PR будет объединен.
 
-### Expansion on "why `state:old`"
+### Расширение на "почему `state:old`"
 
-For brand new incremental models, you want them to run in `full-refresh` mode in CI, because they will run in `full-refresh` mode in production when the PR is merged into `main`. They also don't exist yet in the production environment... they're brand new!
-If you don't specify this, you won't get an error just a “No relation found in state manifest for…”. So, it technically works without specifying `state:old` but adding `state:old` is more explicit and means it won't even try to clone the brand new incremental models.
+Для совершенно новых инкрементных моделей вы хотите, чтобы они работали в режиме `full-refresh` в CI, потому что они будут работать в режиме `full-refresh` в продакшене, когда PR будет объединен с `main`. Они также еще не существуют в производственной среде... они совершенно новые!
+Если вы не укажете это, вы не получите ошибку, а просто "No relation found in state manifest for…". Так что, технически, это работает без указания `state:old`, но добавление `state:old` более явно и означает, что он даже не попытается клонировать совершенно новые инкрементные модели.

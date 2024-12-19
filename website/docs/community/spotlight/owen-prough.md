@@ -1,14 +1,14 @@
 ---
 id: owen-prough
-title: Owen Prough
+title: Оуэн Прау
 description: |
-  Well met, data adventurer! My professional data history is mostly USA healthcare-related (shout out to ANSI X12 claim files) while working with large (10k+ employee) software companies and small (but growing!) startups. My constant companion for the last decade has been SQL of various flavors <a href="https://xkcd.com/927/" rel="noopener noreferrer" target="_blank">https://xkcd.com/927/</a>, and these days I mostly work with PostgreSQL, AWS Athena, and Snowflake. I think SQL is a great tool to solve interesting problems.
+  Привет, искатель данных! Моя профессиональная история в области данных в основном связана с здравоохранением в США (привет файлам заявок ANSI X12), и я работал как в крупных (более 10 000 сотрудников) программных компаниях, так и в небольших (но растущих!) стартапах. Мой постоянный спутник на протяжении последнего десятилетия — это SQL в различных его проявлениях <a href="https://xkcd.com/927/" rel="noopener noreferrer" target="_blank">https://xkcd.com/927/</a>, а в настоящее время я в основном работаю с PostgreSQL, AWS Athena и Snowflake. Я считаю, что SQL — это отличный инструмент для решения интересных задач.
 
-  Oh and also dbt. I haven't done anything too fancy with dbt, but I have contributed to the <a href="https://docs.getdbt.com/docs/core/connect-data-platform/athena-setup" title="dbt-athena adapter">dbt-athena adapter</a> and a few different packages. Mostly I lurk on Slack, cleverly disguised as a duck. It's a professional goal of mine to someday attend <a href="https://coalesce.getdbt.com/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_coalesce-2023_aw&utm_content=coalesce____&utm_term=all_all__" title="Coalesce" rel="noopener noreferrer" target="_blank">Coalesce</a>.
+  О, и еще dbt. Я не делал ничего слишком сложного с dbt, но я внес свой вклад в <a href="https://docs.getdbt.com/docs/core/connect-data-platform/athena-setup" title="dbt-athena adapter">адаптер dbt-athena</a> и несколько различных пакетов. В основном я наблюдаю за обсуждениями в Slack, умело замаскировавшись под утку. Это моя профессиональная цель — когда-нибудь посетить <a href="https://coalesce.getdbt.com/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_coalesce-2023_aw&utm_content=coalesce____&utm_term=all_all__" title="Coalesce" rel="noopener noreferrer" target="_blank">Coalesce</a>.
 image: /img/community/spotlight/owen-prough.jpg
-pronouns: he/him
-location: Milwaukee, USA
-jobTitle: Data Engineer
+pronouns: он/его
+location: Милуоки, США
+jobTitle: Инженер данных
 companyName: Sift Healthcare
 organization: ""
 socialLinks:
@@ -18,24 +18,24 @@ dateCreated: 2023-06-28
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I committed dbt_project.yml to the company git repo in July 2021 so I've been hanging out with all of you for about 2 years. What I love the most about dbt is how easy it is to write data tests. Writing data tests without dbt was painful, but now with all the tests we have in dbt I have a dramatically improved confidence in our data quality.
+Я добавил dbt_project.yml в репозиторий компании в июле 2021 года, так что я общаюсь с вами уже около 2 лет. Больше всего мне нравится в dbt то, как легко писать тесты данных. Писать тесты данных без dbt было мучительно, но теперь, с теми тестами, которые у нас есть в dbt, я значительно повысил уверенность в качестве наших данных.
 
-The wider dbt community is also a reliable and constant source of education. I only interact in a few Slack channels, but I read *many* Slack channels to see what others are doing in the Analytics Engineering space and to get ideas about how to improve the processes/pipelines at my company. Y'all are great.
+Широкое сообщество dbt также является надежным и постоянным источником знаний. Я взаимодействую только в нескольких каналах Slack, но читаю *много* каналов Slack, чтобы увидеть, что делают другие в области аналитической инженерии, и получить идеи о том, как улучшить процессы/конвейеры в моей компании. Вы все замечательные.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-This is an interesting question. I think I most identify with or am inspired by [Josh Devlin](./josh-devlin), who seems to be everywhere on Slack and very knowledgeable/helpful. I also want to know things and pay it forward.
+Это интересный вопрос. Я больше всего ассоциирую себя или вдохновляюсь [Джошем Девлином](./josh-devlin), который, кажется, повсюду в Slack и очень знающий/полезный. Я также хочу знать вещи и делиться ими с другими.
 
-Also shout out to [Faith Lierheimer](./faith-lierheimer), whose contributions to [#roast-my-graph](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) always make me laugh and/or weep.
+Также привет [Фейт Лиерхаймер](./faith-lierheimer), чьи вклады в [#roast-my-graph](https://www.getdbt.com/community/join-the-community/?utm_medium=internal&utm_source=docs&utm_campaign=q3-2024_dbt-spotlight_aw&utm_content=____&utm_term=all___) всегда заставляют меня смеяться и/или плакать.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-The [public documentation for dbt](https://docs.getdbt.com/docs/introduction) is quite good. You should bookmark it and make it a personal goal to read through it all. There are a lot of cool things that dbt can do.
+[Публичная документация для dbt](https://docs.getdbt.com/docs/introduction) довольно хороша. Вам стоит добавить ее в закладки и поставить перед собой цель прочитать ее всю. В dbt есть много интересных возможностей.
 
-Also I think it's really cool to see newcomers asking questions on Slack/[Discourse](https://discourse.getdbt.com/) and then see those same people answering others' questions. It speaks to the value we all get from dbt that folks want to give back to the community.
+Также мне очень нравится видеть, как новички задают вопросы в Slack/[Discourse](https://discourse.getdbt.com/), а затем те же люди отвечают на вопросы других. Это говорит о ценности, которую мы все получаем от dbt, и о том, что люди хотят вернуть что-то сообществу.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-Did you notice how I avoided starting a sentence with "dbt"? That's because I know the standard is lowercase, but starting a sentence with a lowercase word looks weird to my eyes.
+Вы заметили, как я избегал начинать предложение со слова "dbt"? Это потому, что я знаю, что стандарт — писать с маленькой буквы, но начинать предложение с маленькой буквы выглядит странно для моих глаз.

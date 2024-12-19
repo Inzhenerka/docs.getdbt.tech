@@ -1,12 +1,12 @@
 ---
 id: christophe-oudar
-title: Christophe Oudar
+title: Кристоф Удар
 description: |
-  I joined the dbt Community in November 2021 after exchanging some issues in Github. I currently work as a staff engineer at a scaleup in the ad tech industry called Teads, which I joined 11 years ago as a new grad. I've been using dbt Core on BigQuery since then. I write about data engineering both on <a target="_blank" rel="noopener noreferrer" href="https://medium.com/@kayrnt">Medium</a> and <a target="_blank" rel="noopener noreferrer" href="https://smallbigdata.substack.com/">Substack</a>. I contribute on <a target="_blank" rel="noopener noreferrer" href="https://github.com/dbt-labs/dbt-bigquery/">dbt-bigquery</a>. I wrote an article that was then featured on the Developer Blog called <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.com/blog/bigquery-ingestion-time-partitioning-and-partition-copy-with-dbt.">BigQuery ingestion-time partitioning and partition copy with dbt</a>.
+  Я присоединился к сообществу dbt в ноябре 2021 года после обсуждения некоторых вопросов на GitHub. В настоящее время я работаю старшим инженером в компании Teads, которая занимается рекламными технологиями, и в которую я пришел 11 лет назад в качестве выпускника. С тех пор я использую dbt Core на BigQuery. Я пишу о инженерии данных как на <a target="_blank" rel="noopener noreferrer" href="https://medium.com/@kayrnt">Medium</a>, так и на <a target="_blank" rel="noopener noreferrer" href="https://smallbigdata.substack.com/">Substack</a>. Я вношу свой вклад в <a target="_blank" rel="noopener noreferrer" href="https://github.com/dbt-labs/dbt-bigquery/">dbt-bigquery</a>. Я написал статью, которая затем была опубликована в блоге разработчиков под названием <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.com/blog/bigquery-ingestion-time-partitioning-and-partition-copy-with-dbt.">Разделение по времени загрузки в BigQuery и копирование разделов с помощью dbt</a>.
 image: /img/community/spotlight/christophe-oudar.jpg
 pronouns: he/him
-location: Montpellier, France
-jobTitle: Staff Engineer
+location: Монпелье, Франция
+jobTitle: Старший инженер
 companyName: Teads
 socialLinks:
   - name: X
@@ -21,15 +21,14 @@ communityAward: true
 communityAwardYear: 2024
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the community in November 2021 as a way to explore how to move our in-house data modeling layer to dbt. The transition took over a year while we ensured we could cover all our bases and add missing features to dbt-bigquery. That project was one of stepping stones that helped me to move from senior to staff level at my current job.
+Я присоединился к сообществу в ноябре 2021 года, чтобы изучить, как перенести наш внутренний уровень моделирования данных на dbt. Переход занял более года, пока мы не убедились, что можем учесть все аспекты и добавить недостающие функции в dbt-bigquery. Этот проект стал одной из ступеней, которые помогли мне перейти с уровня старшего специалиста на уровень старшего инженера в моей текущей компании.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I identify with leaders that have strong convictions about how data engineering should move forward but remain open to innovation and ideas from everyone to bring the best to the field and make it as inclusive as possible to all cultures and profiles. I think that could mean people like Jordan Tigani or Mark Raasveldt. In the dbt community, my leadership has looked like helping people struggling and offering better ways to simplify one's day to day work when possible.
+Я ассоциирую себя с лидерами, которые имеют четкие убеждения о том, как должна развиваться инженерия данных, но при этом остаются открытыми к инновациям и идеям от всех, чтобы принести лучшее в эту область и сделать ее максимально инклюзивной для всех культур и профилей. Я думаю, это могут быть такие люди, как Джордан Тигани или Марк Раасвелдт. В сообществе dbt мое лидерство проявляется в помощи людям, испытывающим трудности, и предложении лучших способов упростить повседневную работу, когда это возможно.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I read a lot of articles about dbt, especially when I got started with it. It helped me a lot to build a proper Slim CI that could fit my company's ways of working. I also got to see how data pipelines were done in other companies and the pros and cons of my approaches. I hope I can share more of that knowledge for people to pick what's best for their needs.
-​
+Я прочитал много статей о dbt, особенно когда только начинал с ним работать. Это очень помогло мне создать подходящий Slim CI, который соответствовал бы методам работы моей компании. Я также увидел, как строятся конвейеры данных в других компаниях, и узнал о плюсах и минусах своих подходов. Я надеюсь, что смогу поделиться большим количеством этих знаний, чтобы люди могли выбрать то, что лучше всего подходит для их нужд.

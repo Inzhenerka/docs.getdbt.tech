@@ -1,101 +1,87 @@
 ---
-title: "dbt support"
+title: "Поддержка dbt"
 id: "dbt-support"
 pagination_next: null
 pagination_prev: null
 ---
 
-Support for dbt is available to all users through the following channels:
+Поддержка dbt доступна всем пользователям через следующие каналы:
 
-- Dedicated dbt Support team (dbt Cloud users).
-- [The Community Forum](https://discourse.getdbt.com/).
-- [dbt Community slack](https://www.getdbt.com/community/join-the-community/).
-  
-## dbt Core support
+- Специальная команда поддержки dbt (для пользователей dbt Cloud).
+- [Форум сообщества](https://discourse.getdbt.com/).
+- [Slack-сообщество dbt](https://www.getdbt.com/community/join-the-community/).
 
-If you're developing on the command line (CLI) and have questions or need some help &mdash; reach out to the helpful dbt community through [the Community Forum](https://discourse.getdbt.com/) or [dbt Community slack](https://www.getdbt.com/community/join-the-community/).
+## Поддержка dbt Core
 
-## dbt Cloud support
+Если вы разрабатываете в командной строке (CLI) и у вас есть вопросы или вам нужна помощь — обратитесь к полезному сообществу dbt через [Форум сообщества](https://discourse.getdbt.com/) или [Slack-сообщество dbt](https://www.getdbt.com/community/join-the-community/).
 
-The global dbt Support team is available to dbt Cloud customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the dbt Cloud navigation.
+## Поддержка dbt Cloud
 
-We want to help you work through implementing and utilizing dbt Cloud at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
+Глобальная команда поддержки dbt доступна для клиентов dbt Cloud по [электронной почте](mailto:support@getdbt.com) или по нажатию на **Создать тикет в поддержку** через навигацию dbt Cloud.
 
-- **Enterprise plans** &mdash; Priority [support](#severity-level-for-enterprise-support), options for custom support coverage hours, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
-- **Developer and Team plans** &mdash; 24x5 support (no service level agreement (SLA); [contact Sales](https://www.getdbt.com/pricing/) for Enterprise plan inquiries).
-- **Support team help** &mdash; Assistance with [common dbt Cloud questions](/category/troubleshooting), like project setup, login issues, error understanding, setup private packages, link to a new GitHub account, [how to generate a har file](/faqs/Troubleshooting/generate-har-file), and so on.
-- **Resource guide** &mdash; Check the [guide](/community/resources/getting-help) for effective help-seeking strategies.
+Мы хотим помочь вам в реализации и использовании dbt Cloud в вашей организации. У вас есть вопрос, на который вы не можете найти ответ в [нашей документации](https://docs.getdbt.com/) или [Форуме сообщества](https://discourse.getdbt.com/)? Наша команда поддержки здесь, чтобы `dbt помочь` вам!
+
+- **Корпоративные планы** — Приоритетная [поддержка](#severity-level-for-enterprise-support), варианты индивидуального покрытия часов поддержки, помощь в реализации, выделенное управление и проверки безопасности от dbt Labs в зависимости от ценового уровня.
+- **Планы для разработчиков и команд** — Поддержка 24x5 (без соглашения об уровне обслуживания (SLA); [свяжитесь с отделом продаж](https://www.getdbt.com/pricing/) для запросов по корпоративным планам).
+- **Помощь команды поддержки** — Помощь с [распространенными вопросами по dbt Cloud](/category/troubleshooting), такими как настройка проекта, проблемы с входом, понимание ошибок, настройка частных пакетов, привязка к новой учетной записи GitHub, [как сгенерировать файл har](/faqs/Troubleshooting/generate-har-file) и так далее.
+- **Руководство по ресурсам** — Ознакомьтесь с [руководством](/community/resources/getting-help) для эффективных стратегий поиска помощи.
 
 <details>
 
-<summary>Example of common support questions</summary>
+<summary>Примеры распространенных вопросов в поддержку</summary>
 
-Types of dbt Cloud-related questions our Support team can assist you with, regardless of your dbt Cloud plan:<br /><br />
-<b>How do I...</b><br />
-    - set up a dbt Cloud project?<br />
-    - set up a private package in dbt Cloud?<br />
-    - configure custom branches on git repos?<br />
-    - link dbt to a new GitHub account?<br /><br />
-<b>Help! I can't...</b><br />
-    - log in.<br />
-    - access logs.<br />
-    - update user groups.<br /><br />
-<b>I need help understanding...</b><br />
-    - why this run failed.<br />
-    - why I am getting this error message in dbt Cloud?<br />
-    - why my CI jobs are not kicking off as expected.<br />
+Типы вопросов, связанных с dbt Cloud, с которыми наша команда поддержки может вам помочь, независимо от вашего плана dbt Cloud:<br /><br />
+<b>Как мне...</b><br />
+    - настроить проект dbt Cloud?<br />
+    - настроить частный пакет в dbt Cloud?<br />
+    - настроить пользовательские ветки в git репозиториях?<br />
+    - связать dbt с новой учетной записью GitHub?<br /><br />
+<b>Помогите! Я не могу...</b><br />
+    - войти в систему.<br />
+    - получить доступ к логам.<br />
+    - обновить группы пользователей.<br /><br />
+<b>Мне нужна помощь в понимании...</b><br />
+    - почему этот запуск завершился неудачей.<br />
+    - почему я получаю это сообщение об ошибке в dbt Cloud?<br />
+    - почему мои CI задачи не запускаются, как ожидалось.<br />
 </details>
 
-<!--
-- **Enterprise plans** 
-  - Have [priority access](#severity-level-for-enterprise-support)
-  - Options for custom support coverage hours
-  - Receive implementation assistance
-  - Dedicated account management
-  - Security review by dbt Labs depending on price point
-- **Developer and Team plans**
-  - 24x5 support
-  - No service level agreement included. If you are interested in adding one, [contact Sales](https://www.getdbt.com/pricing/) to ask about our Enterprise plan.
--->
+## Корпоративные аккаунты dbt Cloud
 
-## dbt Cloud Enterprise accounts
+Базовая помощь в устранении неполадок проектов dbt.
+Помощь с ошибками и проблемами в макросах, моделях и пакетах dbt Labs.
+Для стратегических советов, лучших практик или обсуждений по расширению обратитесь к вашей команде аккаунта.
 
-Basic assistance with dbt project troubleshooting.
-Help with errors and issues in macros, models, and dbt Labs' packages.
-For strategic advice, best practices, or expansion conversations, consult your Account Team.
+Для клиентов с корпоративным планом dbt Cloud мы **также** предлагаем базовую помощь в устранении проблем с вашим проектом dbt:
+- **Что-то не работает так, как я ожидал...**
+    - в макросе, который я создал...
+    - в инкрементной модели, которую я строю...
+    - в одном из пакетов dbt Labs, таких как dbt_utils или audit_helper...
+- **Мне нужна помощь в понимании и устранении этой ошибки...**
+    - `Ошибка сервера: Ошибка компиляции в rpc запросе (от удаленной системы) 'dbt_utils' не определен`
+    - `Ошибка компиляции SQL: синтаксическая ошибка на строке 1 в позиции 38 неожиданный '<EOF>'.`
+    - `Ошибка компиляции Ошибка чтения name_of_folder/name_of_file.yml - Ошибка времени выполнения Синтаксическая ошибка рядом со строкой 9`
 
-For customers on a dbt Cloud Enterprise plan, we **also** offer basic assistance in troubleshooting issues with your dbt project:
-- **Something isn't working the way I would expect it to...**
-    - in a macro I created...
-    - in an incremental model I'm building...
-    - in one of dbt Labs' packages like dbt_utils or audit_helper...
-- **I need help understanding and troubleshooting this error...**
-    - `Server error: Compilation Error in rpc request (from remote system)
-    'dbt_utils' is undefined`
-    - `SQL compilation error: syntax error line 1 at position 38 unexpected '<EOF>'.`
-    - `Compilation Error Error reading name_of_folder/name_of_file.yml - Runtime Error Syntax
-        error near line 9`
+Типы вопросов, которые вы должны задать вашей команде аккаунта:
+- Как нам следует думать о настройке наших проектов dbt, окружений и задач в зависимости от структуры и потребностей нашей компании?
+- Я хочу расширить свой аккаунт! Как мне добавить больше людей и обучить их?
+- Вот наша дорожная карта данных на следующий год - можем ли мы обсудить, как dbt вписывается в это и какие функции мы, возможно, не используем, которые могут помочь нам достичь наших целей?
+- Время продления нашего контракта, какие у меня есть варианты?
 
-Types of questions you should ask your Account Team:
-- How should we think about setting up our dbt projects, environments, and jobs based on our company structure and needs?
-- I want to expand my account! How do I add more people and train them?
-- Here is our data road map for the next year - can we talk through how dbt fits into it and what features we may not be utilizing that can help us achieve our goals?
-- It is time for our contract renewal, what options do I have?
+### Уровень серьезности для корпоративной поддержки
 
-### Severity level for Enterprise support
+Тикеты поддержки получают уровень серьезности в зависимости от влияния проблемы на ваш бизнес. Уровень серьезности назначается dbt Labs, и назначенный уровень определяет приоритет поддержки, которую вы получите. Для конкретного времени ответа на тикеты или других вопросов, касающихся SLA вашего корпоративного аккаунта, пожалуйста, обратитесь к вашему корпоративному контракту.
 
-Support tickets are assigned a severity level based on the impact of the issue on your business. The severity level is assigned by dbt Labs, and the level assigned determines the priority level of support you will receive. For specific ticket response time or other questions that relate to your Enterprise account’s SLA, please refer to your Enterprise contract.
+| Уровень серьезности | Описание |
+| ------------------- | ----------- |
+| Уровень серьезности 1 | Любая ошибка, которая делает использование или продолжение использования подписки или ее основных функций невозможным; подписка не работает, альтернативы нет. | 
+| Уровень серьезности 2 | Отказ функции без обходного решения, но подписка работает. | 
+| Уровень серьезности 3 | Отказ функции, но существует обходное решение. | 
+| Уровень серьезности 4 | Ошибка с низким или отсутствующим влиянием на доступ клиента к подписке или ее использование, или у клиента есть общий вопрос или запрос на улучшение функции. | 
 
-| Severity Level | Description |
-| -------------- | ----------- |
-| Severity Level 1 | Any Error which makes the use or continued use of the Subscription or material features impossible; Subscription is not operational, with no alternative available. | 
-| Severity Level 2 | Feature failure, without a workaround, but Subscription is operational. | 
-| Severity Level 3 | Feature failure, but a workaround exists. | 
-| Severity Level 4 | Error with low-to-no impact on Client’s access to or use of the Subscription, or Client has a general question or feature enhancement request. | 
+## Внешняя помощь
 
-## External help
-
-For SQL writing, project performance review, or project building, refer to dbt Preferred Consulting Providers and dbt Labs' Services.
-For help writing SQL, reviewing the overall performance of your project, or want someone to actually help build your dbt project, refer to the following pages:
-- List of [dbt Consulting Partners](https://partners.getdbt.com/english/directory/).
-- dbt Labs' [Services](https://www.getdbt.com/dbt-labs/services/).
+Для написания SQL, обзора производительности проекта или его построения обратитесь к предпочтительным консультантам dbt и услугам dbt Labs.
+Для помощи в написании SQL, обзоре общей производительности вашего проекта или если вам нужен кто-то, кто действительно поможет построить ваш проект dbt, обратитесь к следующим страницам:
+- Список [партнеров по консультированию dbt](https://partners.getdbt.com/english/directory/).
+- Услуги dbt Labs [Услуги](https://www.getdbt.com/dbt-labs/services/).

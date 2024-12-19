@@ -1,52 +1,52 @@
 ---
-title: "Community Forum guidelines"
+title: "Правила форума сообщества"
 id: "forum-guidelines"
 ---
 
-## What is the dbt Community Forum?
+## Что такое Форум сообщества dbt?
 
-[The dbt Community Forum](https://discourse.getdbt.com) is the platform for getting support with dbt as well as to have long-lived discussions about dbt, analytics engineering, and analytics. It's a place for us to build up a long-lasting knowledge base around the common challenges, opportunities, and patterns we work with every day. The forum is different from the dbt Community Slack in a few key ways, most importantly it is:
+[Форум сообщества dbt](https://discourse.getdbt.com) — это платформа для получения поддержки по dbt, а также для долгосрочных обсуждений о dbt, аналитическом инжиниринге и аналитике. Это место, где мы можем создать долговечную базу знаний о общих проблемах, возможностях и шаблонах, с которыми мы сталкиваемся каждый день. Форум отличается от Slack-сообщества dbt несколькими ключевыми аспектами, наиболее важными из которых являются:
 
-- **Asynchronous** and **long-lived** - sometimes conversations continue over weeks, months, and beyond.
-- **Intentional** - we recommend taking at least 5 to 10 minutes thinking about and shaping your initial post and any comments.
-- **Citable** - Slack conversations tend to be great in the moment but get lost in the flow — forum posts can more easily shared and referenced.
+- **Асинхронный** и **долговечный** — иногда обсуждения продолжаются неделями, месяцами и дольше.
+- **Целенаправленный** — мы рекомендуем потратить как минимум 5-10 минут на обдумывание и формулирование вашего первоначального сообщения и любых комментариев.
+- **Цитируемый** — разговоры в Slack, как правило, хороши в моменте, но теряются в потоке — сообщения на форуме легче делиться и ссылаться на них.
 
-**Guidelines for engaging on the Forum**
+**Правила участия на Форуме**
 
-The community [Rules of the Road](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road) apply, and following them is the best way to get momentum behind your discussion or answers to your questions. The following guidelines will set you up for success:
+Применяются [Правила сообщества](https://docs.getdbt.com/docs/contributing/slack-rules-of-the-road), и следование им — лучший способ получить поддержку для вашего обсуждения или ответов на ваши вопросы. Следующие рекомендации помогут вам добиться успеха:
 
-- Be respectful
-- Put effort into your posts
-- Mark replies as Solutions in the Help section
-- Don’t double post
+- Будьте уважительными
+- Прилагайте усилия к вашим сообщениям
+- Отмечайте ответы как Решения в разделе Помощи
+- Не дублируйте сообщения
 
-## Categories
+## Категории
 
-The forum is broken down into three categories:
+Форум разделен на три категории:
 
-- [Help](https://discourse.getdbt.com/c/help/19)
-  - This is a Q&A style forum where you can ask the dbt Community for help with specific questions about dbt, dbt Cloud, data modeling, or anything else you want a definitive answer on.
-  - This category is for questions which can plausibly have a _single correct answer_.
-    - ✅ How do I debug this Jinja error?
-    - ✅ How do I set up CI in dbt Cloud on GitHub?
-    - ❌ What is the best way to do marketing attribution? (More general Discussions like this are perfect for the [In-Depth Discussions](https://discourse.getdbt.com/c/discussions/21) category)
-- [Show and Tell](https://discourse.getdbt.com/c/show-and-tell/22)
-  - This is the place to show off all of the cool things you are doing in dbt. Whether it’s a new macro, design pattern, or package, post here to show the community what you are up to!
-- [In-Depth Discussions](https://discourse.getdbt.com/c/discussions/21)
-  - Share anything you’re thinking about that has to do with dbt or analytics engineering! This is a great place to jot down some thoughts to share with the community or spark a discussion on a topic that’s currently interesting you.
+- [Помощь](https://discourse.getdbt.com/c/help/19)
+  - Это форум в формате вопросов и ответов, где вы можете обратиться к сообществу dbt за помощью по конкретным вопросам о dbt, dbt Cloud, моделировании данных или любым другим вопросам, на которые вы хотите получить однозначный ответ.
+  - Эта категория предназначена для вопросов, на которые можно разумно ожидать _единственно правильный ответ_.
+    - ✅ Как мне отладить эту ошибку Jinja?
+    - ✅ Как настроить CI в dbt Cloud на GitHub?
+    - ❌ Какой лучший способ сделать атрибуцию маркетинга? (Более общие обсуждения, подобные этому, идеально подходят для категории [Глубокие обсуждения](https://discourse.getdbt.com/c/discussions/21))
+- [Показать и рассказать](https://discourse.getdbt.com/c/show-and-tell/22)
+  - Это место, где можно продемонстрировать все интересные вещи, которые вы делаете в dbt. Будь то новый макрос, шаблон проектирования или пакет, публикуйте здесь, чтобы показать сообществу, чем вы занимаетесь!
+- [Глубокие обсуждения](https://discourse.getdbt.com/c/discussions/21)
+  - Делитесь всем, о чем вы думаете, что связано с dbt или аналитическим инжинирингом! Это отличное место, чтобы записать свои мысли для обсуждения с сообществом или инициировать обсуждение на тему, которая вас в данный момент интересует.
 
-## Inclusivity on the Community Forum
+## Инклюзивность на Форуме сообщества
 
-We are **strongly** committed to building a community where everyone can feel welcome.
+Мы **категорически** привержены созданию сообщества, в котором каждый может чувствовать себя желанным.
 
-The dbt community started with people who were not traditionally considered “technical”, did not have ownership over technical systems, and were often left out of organizational decision-making. We came together to learn from each other, solve hard problems together, and to help build a new discipline where data folks have greater ownership over our own work. It really matters to us that everyone feels like they can ask questions and engage, no matter their professional or personal background.
+Сообщество dbt началось с людей, которых традиционно не считали «техническими», которые не имели контроля над техническими системами и часто были исключены из организационного принятия решений. Мы объединились, чтобы учиться друг у друга, решать сложные задачи вместе и помогать строить новую дисциплину, где специалисты по данным имеют больше контроля над своей работой. Нам действительно важно, чтобы каждый чувствовал, что может задавать вопросы и участвовать, независимо от их профессионального или личного фона.
 
-Technical forums have the potential to replicate harmful power structures, and can feel intimidating or hostile. We are working hard to create and sustain an inclusive environment through community-building, technological solutions, inclusive content, and diverse contributors. This is a long-term project, and we will continue to iterate and make improvements.
+Технические форумы могут воспроизводить вредные властные структуры и могут казаться пугающими или враждебными. Мы усердно работаем над созданием и поддержанием инклюзивной среды через построение сообщества, технологические решения, инклюзивный контент и разнообразных участников. Это долгосрочный проект, и мы будем продолжать вносить изменения и улучшения.
 
-If you have any ideas or feedback on how to make this space friendlier or more inclusive please let us know, either on the community Slack in the #community-strategy channel or via email at [community@dbtlabs.com](mailto:community@dbtlabs.com). We want to hear from you!
+Если у вас есть идеи или отзывы о том, как сделать это пространство более дружелюбным или инклюзивным, пожалуйста, дайте нам знать, либо в Slack-сообществе в канале #community-strategy, либо по электронной почте на адрес [community@dbtlabs.com](mailto:community@dbtlabs.com). Мы хотим вас услышать!
 
-## Following new and ongoing Discussions
+## Следите за новыми и текущими обсуждениями
 
-The best way to stay up to date is to [browse the forum](https://discourse.getdbt.com/) directly. You can also Track or Watch specific threads or the whole category to receive updates on them without commenting.
+Лучший способ оставаться в курсе событий — это [просматривать форум](https://discourse.getdbt.com/) напрямую. Вы также можете отслеживать или следить за конкретными темами или всей категорией, чтобы получать обновления без необходимости комментировать.
 
-Each category also has a companion Slack channel (#advice-dbt-for-beginners, #show-and-tell and #in-depth-discussions). You can reply to the initial post in Slack and it will be added as a comment on the forum thread, allowing you to participate from inside Slack if you prefer.
+Каждая категория также имеет сопутствующий канал в Slack (#advice-dbt-for-beginners, #show-and-tell и #in-depth-discussions). Вы можете ответить на первоначальное сообщение в Slack, и оно будет добавлено как комментарий в тему форума, что позволит вам участвовать из Slack, если вы предпочитаете.

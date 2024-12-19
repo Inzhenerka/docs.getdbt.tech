@@ -2,11 +2,11 @@
 id: shinya-takimoto
 title: Shinya Takimoto
 description: |
-  I have about 3 years of dbt experience. I used to be in a large organization where the challenge was to create a quality analysis infrastructure for EC data managed by my department with a limited number of staff. It was then that I learned about dbt and I still remember the shock I felt when I ran a dbt run for the first time.
+  У меня около 3 лет опыта работы с dbt. Ранее я работал в крупной организации, где задача заключалась в создании качественной аналитической инфраструктуры для данных электронной коммерции, управляемых моим отделом, с ограниченным числом сотрудников. Именно тогда я узнал о dbt, и до сих пор помню шок, который я испытал, когда впервые запустил dbt run.
 
-  Currently, I work for a startup called 10X. We provide a system that allows retailers to seamlessly launch online grocery services in an O2O model.
+  В настоящее время я работаю в стартапе под названием 10X. Мы предоставляем систему, которая позволяет ритейлерам без проблем запускать онлайн-сервисы по продаже продуктов в модели O2O.
 
-  I am also actively involved in dbt Community activities, starting the #local-tokyo channel in dbt Slack, organizing the Tokyo dbt Meetup event and writing translations of dbt-related articles. In addition, I run a podcast called ModernDataStackRadio.
+  Я также активно участвую в деятельности сообщества dbt, создав канал #local-tokyo в Slack dbt, организуя мероприятие Tokyo dbt Meetup и переводя статьи, связанные с dbt. Кроме того, я веду подкаст под названием ModernDataStackRadio.
 image: /img/community/spotlight/shinya-takimoto.jpg
 pronouns: he/him
 location: Tokyo, Japan
@@ -24,18 +24,18 @@ dateCreated: 2023-04-03
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined dbt Slack in late 2021 and led the creation of the #local-tokyo channel soon after, which I still maintain. Community activities gave me the opportunity to meet more dbt users. By sharing the knowledge and insights I had gained in my own company, I was able to connect with people who were struggling with the same issues and difficulties. The shared sense of common data usage challenges has led to networking and recognition of individuals and the companies they work for, which has increased my opportunities to work with many people.
+Я присоединился к Slack dbt в конце 2021 года и вскоре после этого возглавил создание канала #local-tokyo, который я до сих пор поддерживаю. Участие в сообществе дало мне возможность встретить больше пользователей dbt. Делая обмен знаниями и инсайтами, которые я получил в своей компании, я смог связаться с людьми, которые сталкивались с теми же проблемами и трудностями. Общее чувство общих вызовов в использовании данных привело к налаживанию связей и признанию как отдельных людей, так и компаний, в которых они работают, что увеличило мои возможности сотрудничества с многими людьми.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-We have been working to create a place in Japan where people who feel the same way about the potential of dbt can interact with each other. Now we have almost 400 members. We would like to support the creation of an environment where more information can be shared through articles and discussions, whereby the focus can be on companies and players who are working on advanced projects. Thereby, we can increase the number of connections among dbt users.
+Мы работаем над созданием места в Японии, где люди, разделяющие схожие взгляды на потенциал dbt, могут взаимодействовать друг с другом. В настоящее время у нас почти 400 участников. Мы хотели бы поддержать создание среды, в которой можно будет делиться большим количеством информации через статьи и обсуждения, сосредоточив внимание на компаниях и участниках, работающих над передовыми проектами. Таким образом, мы можем увеличить количество связей среди пользователей dbt.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-Many members from enterprise companies to start-ups with various business sizes and a wide variety of business activities have joined the #local-tokyo channel in dbt Slack.
+Многие участники, от крупных компаний до стартапов с различными размерами бизнеса и широким спектром бизнес-активностей, присоединились к каналу #local-tokyo в Slack dbt.
 
-Therefore, ideas and knowledge about data modeling and testing differ from one business domain to another. I believe that they provide the local community with a variety of new insights and perspectives that are surprising as well as curious.
+Поэтому идеи и знания о моделировании данных и тестировании различаются в зависимости от бизнес-домена. Я верю, что они предоставляют местному сообществу разнообразные новые идеи и перспективы, которые удивляют и вызывают интерес.
 
-As a company that uses dbt in many production environments myself, I hope to share a lot of knowledge with the dbt Community.
+Как компания, использующая dbt во многих производственных средах, я надеюсь поделиться большим количеством знаний с сообществом dbt.

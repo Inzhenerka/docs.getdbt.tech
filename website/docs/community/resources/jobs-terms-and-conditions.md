@@ -1,16 +1,16 @@
 ---
-title: "dbt Labs Community #jobs Channels Terms and Conditions"
+title: "Условия и положения каналов #jobs сообщества dbt Labs"
 id: "jobs-terms-and-conditions"
-description: "Before posting a job in the dbt Community or submitting an application, review these terms and conditions."
+description: "Перед размещением вакансии в сообществе dbt или подачей заявки ознакомьтесь с этими условиями и положениями."
 ---
 
-I agree to abide by the [dbt Community Code of Conduct](/community/resources/code-of-conduct) and all laws applicable to me in my use of the dbt Community's #jobs channels. I further agree:
+Я согласен соблюдать [Кодекс поведения сообщества dbt](/community/resources/code-of-conduct) и все законы, применимые ко мне при использовании каналов #jobs сообщества dbt. Я также согласен с тем, что:
 
-- dbt Labs is not responsible for not does it warrant or guarantee the validity, accuracy, completeness, legality, or reliability of any functionality of any #jobs channel, any posting's content, or any application and/or solicitation of any kind of employment.
-- dbt Labs does not review and approve job-related content.
-- dbt Labs disclaims liability of any kind whatsoever for any type of damage that occurs while using the community Slack for job-related reasons, and I waive any type of claim (including actual, special or consequential damages) to the maximum extent permitted by law.
-- Without limitation, dbt Labs disclaims liability for quality, performance, merchantability, and fitness for a particular purpose, express or implied, that may arise out of my use of the community Slack for job-related content, my reliance on such information, and/or my provision/receipt of job-related information.
-- I understand that no internet-based site is without risk, and my use is at my own risk.
-- My use of any job-posting template (or other forum for providing job-related information) confirms my consent to provide the data posted, confirms that I have permission to post such data, and is subject to the terms of the [dbt Labs privacy policy](https://www.getdbt.com/cloud/privacy-policy).
+- dbt Labs не несет ответственности и не гарантирует действительность, точность, полноту, законность или надежность любой функциональности любого канала #jobs, содержания любого объявления или любой заявки и/или запроса на трудоустройство.
+- dbt Labs не проверяет и не одобряет контент, связанный с работой.
+- dbt Labs отказывается от какой-либо ответственности за любой вид ущерба, который может возникнуть при использовании Slack сообщества по вопросам, связанным с работой, и я отказываюсь от любых претензий (включая фактические, специальные или косвенные убытки) в максимальной степени, разрешенной законом.
+- Без ограничений dbt Labs отказывается от ответственности за качество, производительность, товарный вид и пригодность для конкретной цели, явные или подразумеваемые, которые могут возникнуть в результате моего использования Slack сообщества для контента, связанного с работой, моей зависимости от такой информации и/или моего предоставления/получения информации, связанной с работой.
+- Я понимаю, что ни один интернет-сайт не лишен рисков, и мое использование осуществляется на мой собственный риск.
+- Мое использование любого шаблона для размещения вакансий (или другого форума для предоставления информации, связанной с работой) подтверждает мое согласие предоставить размещенные данные, подтверждает, что у меня есть разрешение на размещение таких данных, и подчиняется условиям [политики конфиденциальности dbt Labs](https://www.getdbt.com/cloud/privacy-policy).
 
-For further information, please contact [legal@dbtlabs.com](mailto:legal@dbtlabs.com).
+Для получения дополнительной информации, пожалуйста, свяжитесь с [legal@dbtlabs.com](mailto:legal@dbtlabs.com).

@@ -1,34 +1,34 @@
 ---
-title: "Intro to the dbt Semantic Layer"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Введение в семантический слой dbt"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-2-setup"
 pagination_prev: null
 ---
 
-Flying cars, hoverboards, and true self-service analytics: this is the future we were promised. The first two might still be a few years out, but real self-service analytics is here today. With dbt Cloud's Semantic Layer, you can resolve the tension between accuracy and flexibility that has hampered analytics tools for years, empowering everybody in your organization to explore a shared reality of metrics. Best of all for analytics engineers, building with these new tools will significantly [DRY](https://docs.getdbt.com/terms/dry) up and simplify your codebase. As you'll see, the deep interaction between your dbt models and the Semantic Layer make your dbt project the ideal place to craft your metrics.
+Летающие автомобили, ховерборды и настоящая аналитика самообслуживания: это будущее, которое нам обещали. Первые два могут быть еще не скоро, но настоящая аналитика самообслуживания уже здесь. С семантическим слоем dbt Cloud вы можете разрешить противоречие между точностью и гибкостью, которое на протяжении многих лет мешало аналитическим инструментам, предоставляя всем в вашей организации возможность исследовать общую реальность метрик. И что самое главное для аналитических инженеров, работа с этими новыми инструментами значительно [сократит](https://docs.getdbt.com/terms/dry) и упростит вашу кодовую базу. Как вы увидите, глубокое взаимодействие между вашими моделями dbt и семантическим слоем делает ваш проект dbt идеальным местом для создания ваших метрик.
 
-## Learning goals
+## Цели обучения
 
-- ❓ Understand the **purpose and capabilities** of the **dbt Semantic Layer**, particularly MetricFlow as the engine that powers it.
-- 🧱 Familiarity with the core components of MetricFlow — **semantic models and metrics** — and how they work together.
-- 🔁 Know how to **refactor** dbt models for the Semantic Layer.
-- 🏅 Aware of **best practices** to take maximum advantage of the Semantic Layer.
+- ❓ Понять **цели и возможности** **семантического слоя dbt**, в частности MetricFlow как движка, который его поддерживает.
+- 🧱 Ознакомиться с основными компонентами MetricFlow — **семантическими моделями и метриками** — и тем, как они работают вместе.
+- 🔁 Знать, как **рефакторить** модели dbt для семантического слоя.
+- 🏅 Быть в курсе **лучших практик**, чтобы максимально использовать семантический слой.
 
-## Guide structure overview
+## Обзор структуры руководства
 
-1. Getting **setup** in your dbt project.
-2. Building a **semantic model** and its fundamental parts: **entities, dimensions, and measures**.
-3. Building a **metric**.
-4. Defining **advanced metrics**: `ratio` and `derived` types.
-5. **File and folder structure**: establishing a system for naming things.
-6. **Refactoring** marts and roll-ups for the Semantic Layer.
-7. Review **best practices**.
+1. Настройка в вашем проекте dbt.
+2. Создание **семантической модели** и ее основных частей: **сущности, измерения и показатели**.
+3. Создание **метрики**.
+4. Определение **расширенных метрик**: типов `ratio` и `derived`.
+5. **Структура файлов и папок**: установление системы именования.
+6. **Рефакторинг** хранилищ и сводок для семантического слоя.
+7. Обзор **лучших практик**.
 
-If you're ready to ship your users more power and flexibility with less code, let's dive in!
+Если вы готовы предоставить вашим пользователям больше возможностей и гибкости с меньшим количеством кода, давайте погрузимся в это!
 
 :::info
-MetricFlow is the engine for defining metrics in dbt and one of the key components of the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl). It handles SQL query construction and defines the specification for dbt semantic models and metrics.
+MetricFlow — это движок для определения метрик в dbt и один из ключевых компонентов [семантического слоя dbt](/docs/use-dbt-semantic-layer/dbt-sl). Он отвечает за построение SQL-запросов и определяет спецификацию для семантических моделей и метрик dbt.
 
-To fully experience the dbt Semantic Layer, including the ability to query dbt metrics via external integrations, you'll need a [dbt Cloud Team or Enterprise account](https://www.getdbt.com/pricing/). Refer to [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs) for more information.
+Чтобы полностью использовать семантический слой dbt, включая возможность запрашивать метрики dbt через внешние интеграции, вам понадобится [аккаунт dbt Cloud Team или Enterprise](https://www.getdbt.com/pricing/). Обратитесь к [вопросам и ответам по семантическому слою dbt](/docs/use-dbt-semantic-layer/sl-faqs) для получения дополнительной информации.
 :::

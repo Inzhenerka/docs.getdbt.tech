@@ -1,50 +1,51 @@
 ---
-title: Join the Community
+title: Присоединяйтесь к сообществу
 id: join
 ---
 
 <section className="community-home">
 
-Want to learn how organizations around the world are tackling the biggest challenges in data while making new friends from the best analytics teams? Join the dbt Community — data practitioners’ favorite place to learn new skills, keep on top of industry trends, and forge connections.
+Хотите узнать, как организации по всему миру справляются с крупнейшими вызовами в области данных, заводя новых друзей из лучших аналитических команд? Присоединяйтесь к сообществу dbt — любимое место практиков данных для изучения новых навыков, отслеживания тенденций в отрасли и налаживания связей.
 
 <div className="grid--3-col">
 
 <Card
-    title="Join us on Slack"
-    body="Follow the pulse of the dbt Community! Chat with other practitioners in your city, country or worldwide about data work, tech stacks, or simply share a killer meme."
-link="https://www.getdbt.com/community/join-the-community/"
+    title="Присоединяйтесь к нам в Slack"
+    body="Следите за событиями сообщества dbt! Общайтесь с другими практиками в вашем городе, стране или по всему миру о работе с данными, технологических стэках или просто делитесь классными мемами."
+    link="https://www.getdbt.com/community/join-the-community/"
     icon="slack"
 />
 
 <Card
-    title="Community Forum"
-    body="Have a question about how to do something in dbt? Hop into the Community Forum and work with others to create long lived community knowledge."
+    title="Форум сообщества"
+    body="Есть вопрос о том, как что-то сделать в dbt? Загляните на форум сообщества и работайте с другими, чтобы создать долгосрочные знания сообщества."
     link="/community/forum"
     icon="discussions"
 />
 
 <Card
-    title="How to contribute"
-    body="Want to get involved? This is the place! Learn how to contribute to our open source repositories, write for the blog, speak at a meetup and more."
-    link="community/contribute" icon="pencil-paper"
+    title="Как внести вклад"
+    body="Хотите участвовать? Это место для вас! Узнайте, как внести вклад в наши репозитории с открытым исходным кодом, писать для блога, выступать на встречах и многое другое."
+    link="community/contribute" 
+    icon="pencil-paper"
 />
 
 <Card
-    title="Code of Conduct"
-    body="We are committed to creating a space where everyone can feel welcome and safe. Our Code of Conduct reflects the agreement that all Community members make to uphold these ideals."
+    title="Кодекс поведения"
+    body="Мы стремимся создать пространство, где каждый может чувствовать себя желанным и в безопасности. Наш Кодекс поведения отражает соглашение, которое все члены сообщества принимают для поддержания этих идеалов."
     link="community/resources/code-of-conduct/"
     icon="folder"
 />
 
 <Card
-    title="Upcoming events"
-    body="Whether it's in-person Meetups in your local area, Coalesce – the annual Analytics Engineering Conference – or online Office Hours there are options for everyone."
+    title="Предстоящие события"
+    body="Будь то очные встречи в вашем районе, Coalesce — ежегодная конференция по аналитическому инжинирингу, или онлайн-час консультаций, у нас есть варианты для всех."
     link="community/events"
     icon="calendar" />
 
 <Card
-    title="Watch past events"
-    body="Get a taste for the energy of our live events, get inspired, or prepare for an upcoming event by watching recordings from our YouTube archives."
+    title="Смотрите прошлые события"
+    body="Почувствуйте атмосферу наших живых мероприятий, вдохновитесь или подготовьтесь к предстоящему событию, посмотрев записи из наших архивов на YouTube."
     link="https://www.youtube.com/playlist?list=PL0QYlrC86xQl1DGKBopQZiZ6tSqrMlD2M"
     icon="star"
 />

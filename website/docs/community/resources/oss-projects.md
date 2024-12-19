@@ -1,12 +1,12 @@
-# Open source projects
+# Проекты с открытым исходным кодом
 
-Looking for a good place to get involved contributing code? dbt Labs supports the following OSS repos, organized by the language primarily needed for contribution:
+Ищете хорошее место для участия в разработке кода? dbt Labs поддерживает следующие репозитории с открытым исходным кодом, организованные по языку, который в первую очередь необходим для внесения вклада:
 
 ## Python
 
-- [dbt-core](https://github.com/dbt-labs/dbt-core/discussions) - the primary shared functionality powering dbt
-- [hubcap](https://github.com/dbt-labs/hubcap) - the code powering the dbt Package hub
-- adapters - [the warehouse specific code that wires core up to various platforms](https://docs.getdbt.com/docs/contributing/adapter-development/1-what-are-adapters), several major platforms’ development is supported by dbt Labs:
+- [dbt-core](https://github.com/dbt-labs/dbt-core/discussions) - основная общая функциональность, обеспечивающая работу dbt
+- [hubcap](https://github.com/dbt-labs/hubcap) - код, обеспечивающий работу хаба пакетов dbt
+- адаптеры - [код, специфичный для хранилищ, который связывает core с различными платформами](https://docs.getdbt.com/docs/contributing/adapter-development/1-what-are-adapters), разработка для нескольких основных платформ поддерживается dbt Labs:
   - [dbt-bigquery](https://github.com/dbt-labs/dbt-bigquery)
   - [dbt-snowflake](https://github.com/dbt-labs/dbt-snowflake)
   - [dbt-redshift](https://github.com/dbt-labs/dbt-redshift)
@@ -14,12 +14,12 @@ Looking for a good place to get involved contributing code? dbt Labs supports th
 
 ## dbt
 
-- [dbt Labs' packages](https://hub.getdbt.com/dbt-labs/) - the dbt pacakges created and supported by dbt Labs. Packages are just dbt projects, so if you know the SQL, Jinja, and YAML necessary to work in dbt, you can contribute to packages.
+- [пакеты dbt Labs](https://hub.getdbt.com/dbt-labs/) - пакеты dbt, созданные и поддерживаемые dbt Labs. Пакеты представляют собой просто проекты dbt, поэтому если вы знаете SQL, Jinja и YAML, необходимые для работы в dbt, вы можете внести вклад в пакеты.
 
-## YAML and JSON Config
+## Конфигурация YAML и JSON
 
-- [dbt-jsonschema](https://github.com/dbt-labs/dbt-jsonschema) - powering completion and linting for YAML configuration in dbt projects.
+- [dbt-jsonschema](https://github.com/dbt-labs/dbt-jsonschema) - обеспечивает автозаполнение и линтинг для конфигурации YAML в проектах dbt.
 
 ## Shell
 
-- [dbt-completion.bash](https://github.com/dbt-labs/dbt-completion.bash) - provides shell completion of CLI commands and selectors such as models and tests for bash and zsh.
+- [dbt-completion.bash](https://github.com/dbt-labs/dbt-completion.bash) - предоставляет автозаполнение команд CLI и селекторов, таких как модели и тесты, для bash и zsh.

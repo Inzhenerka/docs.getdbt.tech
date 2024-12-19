@@ -1,60 +1,60 @@
 ---
-title: "How we structure our dbt projects"
+title: "Как мы структурируем наши проекты dbt"
 id: 1-guide-overview
-description: Learn how we structure our dbt projects.
-displayText: How we structure our dbt projects
-hoverSnippet: Learn how we structure our dbt projects.
+description: Узнайте, как мы структурируем наши проекты dbt.
+displayText: Как мы структурируем наши проекты dbt
+hoverSnippet: Узнайте, как мы структурируем наши проекты dbt.
 ---
 
-## Why does structure matter?
+## Почему структура важна?
 
-Analytics engineering, at its core, is about helping groups of human beings collaborate on better decisions at scale. We have [limited bandwidth for making decisions](https://en.wikipedia.org/wiki/Decision_fatigue). We also, as a cooperative social species, rely on [systems and patterns to optimize collaboration](https://en.wikipedia.org/wiki/Pattern_language) with others. This combination of traits means that for collaborative projects it's crucial to establish consistent and comprehensible norms such that your team’s limited bandwidth for decision making can be spent on unique and difficult problems, not deciding where folders should go or how to name files.
+Аналитическая инженерия, по своей сути, направлена на то, чтобы помочь группам людей совместно принимать более обоснованные решения в масштабах. У нас есть [ограниченные ресурсы для принятия решений](https://en.wikipedia.org/wiki/Decision_fatigue). Мы также, как кооперативный социальный вид, полагаемся на [системы и шаблоны для оптимизации сотрудничества](https://en.wikipedia.org/wiki/Pattern_language) с другими. Эта комбинация черт означает, что для совместных проектов крайне важно установить последовательные и понятные нормы, чтобы ограниченные ресурсы вашей команды для принятия решений могли быть потрачены на уникальные и сложные проблемы, а не на то, где должны находиться папки или как называть файлы.
 
-Building a great dbt project is an inherently collaborative endeavor, bringing together domain knowledge from every department to map the goals and narratives of the entire company. As such, it's especially important to establish a deep and broad set of patterns to ensure as many people as possible are empowered to leverage their particular expertise in a positive way, and to ensure that the project remains approachable and maintainable as your organization scales.
+Создание отличного проекта dbt — это по своей сути совместное начинание, объединяющее знания в области предметной области из каждого отдела для отображения целей и нарративов всей компании. Поэтому особенно важно установить широкий и глубокий набор шаблонов, чтобы как можно больше людей могли использовать свои конкретные знания положительным образом и чтобы проект оставался доступным и поддерживаемым по мере роста вашей организации.
 
-Famously, Steve Jobs [wore the same outfit everyday](https://images.squarespace-cdn.com/content/v1/5453c539e4b02ab5398ffc8f/1580381503218-E56FQDNFL1P4OBLQWHWW/ke17ZwdGBToddI8pDm48kJKedFpub2aPqa33K4gNUDwUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcxb5ZTIyC_D49_DDQq2Sj8YVGtM7O1i4h5tvKa2lazN4nGUQWMS_WcPM-ztWbVr-c/steve_jobs_outfit.jpg) to reduce decision fatigue. You can think of this guide similarly, as a black turtleneck and New Balance sneakers for your company’s dbt project. A dbt project’s power outfit, or more accurately its structure, is composed not of fabric but of files, folders, naming conventions, and programming patterns. How you label things, group them, split them up, or bring them together — the system you use to organize the [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) encoded in your dbt project — this is your project’s structure.
+Известно, что Стив Джобс [носил один и тот же наряд каждый день](https://images.squarespace-cdn.com/content/v1/5453c539e4b02ab5398ffc8f/1580381503218-E56FQDNFL1P4OBLQWHWW/ke17ZwdGBToddI8pDm48kJKedFpub2aPqa33K4gNUDwUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcxb5ZTIyC_D49_DDQq2Sj8YVGtM7O1i4h5tvKa2lazN4nGUQWMS_WcPM-ztWbVr-c/steve_jobs_outfit.jpg), чтобы уменьшить усталость от принятия решений. Вы можете рассматривать этот гид аналогично, как черный водолазку и кроссовки New Balance для проекта dbt вашей компании. Мощный наряд проекта dbt, или, точнее, его структура, состоит не из ткани, а из файлов, папок, соглашений о наименовании и программных шаблонов. То, как вы маркируете вещи, группируете их, разделяете или объединяете — система, которую вы используете для организации [преобразований данных](https://www.getdbt.com/analytics-engineering/transformation/) в вашем проекте dbt — это и есть структура вашего проекта.
 
-This guide is just a starting point. You may decide that you prefer Birkenstocks or a purple hoodie for your project over Jobs-ian minimalism. That's fine. What's important is that you think through the reasoning for those changes in your organization, explicitly declare them in a thorough, accessible way for all contributors, and above all _stay consistent_.
+Этот гид — всего лишь отправная точка. Вы можете решить, что предпочитаете Беркентоки или фиолетовый худи для вашего проекта вместо минимализма в стиле Джобса. Это нормально. Важно, чтобы вы обдумали причины этих изменений в вашей организации, явно заявили о них в тщательной, доступной форме для всех участников и, прежде всего, _сохраняли последовательность_.
 
-One foundational principle that applies to all dbt projects though, is the need to establish a cohesive arc moving data from _source-conformed_ to _business-conformed_. Source-conformed data is shaped by external systems out of our control, while business-conformed data is shaped by the needs, concepts, and definitions we create. No matter what patterns or conventions you define within your project, this process remains the essential purpose of the transformation layer, and dbt as your tool within it. This guide is an update to a seminal analytics engineering [post of the same name](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355) by the great Claire Carroll, and while some of the details have changed over time (as anticipated in that post) this fundamental trajectory holds true. Moving forward, this guide will be iteratively updated as new tools expand our viewpoints, new experiences sharpen our vision, and new voices strengthen our perspectives, but always in service of that aim.
+Однако одно основополагающее правило, которое применимо ко всем проектам dbt, — это необходимость установить согласованную арку, перемещающую данные от _source-conformed_ к _business-conformed_. Данные, соответствующие источнику, формируются внешними системами, находящимися вне нашего контроля, в то время как данные, соответствующие бизнесу, формируются потребностями, концепциями и определениями, которые мы создаем. Независимо от того, какие шаблоны или соглашения вы определяете в своем проекте, этот процесс остается основной целью слоя преобразования и dbt как вашего инструмента в этом процессе. Этот гид является обновлением знакового поста в области аналитической инженерии [с тем же названием](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355) от великой Клэр Кэрролл, и хотя некоторые детали изменились со временем (как и ожидалось в том посте), эта основополагающая траектория остается верной. В дальнейшем этот гид будет итеративно обновляться по мере появления новых инструментов, расширяющих наши взгляды, новых опытов, уточняющих наше видение, и новых голосов, укрепляющих наши перспективы, но всегда в служении этой цели.
 
-### Learning goals
+### Цели обучения
 
-This guide has three main goals:
+У этого гида три основные цели:
 
-- Thoroughly cover our most up-to-date recommendations on how to structure typical dbt projects
-- Illustrate these recommendations with comprehensive examples
-- At each stage, explain _why_ we recommend the approach that we do, so that you're equipped to decide when and where to deviate from these recommendations to better fit your organization’s unique needs
+- Полностью охватить наши самые актуальные рекомендации по структуре типичных проектов dbt
+- Проиллюстрировать эти рекомендации с помощью исчерпывающих примеров
+- На каждом этапе объяснить _почему_ мы рекомендуем тот или иной подход, чтобы вы могли решить, когда и где отклоняться от этих рекомендаций, чтобы лучше соответствовать уникальным потребностям вашей организации
 
-You should walk away from this guide with a deeper mental model of how the components of a dbt project fit together, such that purpose and principles of analytics engineering feel more clear and intuitive.
+Вы должны уйти от этого гида с более глубоким пониманием того, как компоненты проекта dbt сочетаются друг с другом, так что цели и принципы аналитической инженерии станут более ясными и интуитивными.
 
-By approaching our structure intentionally, we’ll gain a better understanding of foundational ideals like moving our data from the wide array of narrower source-conformed models that our systems give us to a narrower set of wider, richer business-conformed designs we create. As we move along that arc, we’ll understand how stacking our transformations in optimized, modular layers means we can apply each transformation in only one place. With a disciplined approach to the files, folders, and materializations that comprise our structure, we’ll find that we can create clear stories not only through our data, but also our codebase and the artifacts it generates in our warehouse.
+Подходя к нашей структуре целенаправленно, мы получим лучшее понимание основополагающих идеалов, таких как перемещение наших данных от широкого спектра более узких моделей, соответствующих источнику, которые предоставляют наши системы, к более узкому набору более широких, богатых моделей, соответствующих бизнесу, которые мы создаем. По мере продвижения по этой арке мы поймем, как укладка наших преобразований в оптимизированные, модульные слои позволяет нам применять каждое преобразование только в одном месте. С дисциплинированным подходом к файлам, папкам и материализациям, которые составляют нашу структуру, мы обнаружим, что можем создавать четкие истории не только через наши данные, но и через нашу кодовую базу и артефакты, которые она генерирует в нашем хранилище.
 
-Our hope is that by deepening your sense of the connections between these patterns and the principles they flow from, you'll be able to translate them to fit your specific needs and craft customized documentation for your team to act on.
+Наша надежда заключается в том, что, углубив ваше понимание связей между этими шаблонами и принципами, из которых они исходят, вы сможете адаптировать их под свои конкретные нужды и создать индивидуальную документацию для вашей команды.
 
-:::info Example project.
-This guide walks through our recommendations using a very simple dbt project — similar to the one used for the Getting Started guide and many other demos — from a fictional company called the Jaffle Shop. You can read more about [jaffles](https://en.wiktionary.org/wiki/jaffle) if you want (they _are_ a real thing), but that context isn’t important to understand the structure. We encourage you to follow along, try things out, make changes, and take notes on what works or doesn't work for you along the way.
+:::info Пример проекта.
+Этот гид проходит через наши рекомендации, используя очень простой проект dbt — аналогичный тому, который использовался в руководстве по началу работы и многих других демонстрациях — от вымышленной компании под названием Jaffle Shop. Вы можете прочитать больше о [jaffles](https://en.wiktionary.org/wiki/jaffle), если хотите (они _реальны_), но этот контекст не важен для понимания структуры. Мы призываем вас следовать за нами, пробовать, вносить изменения и делать заметки о том, что работает или не работает для вас на этом пути.
 :::
 
-We'll get a deeper sense of our project as we move through the guide, but for now we just need to know that the Jaffle Shop is a restaurant selling jaffles that has two main data sources:
+Мы получим более глубокое понимание нашего проекта, по мере того как будем двигаться по гиду, но на данный момент нам просто нужно знать, что Jaffle Shop — это ресторан, продающий jaffles, который имеет два основных источника данных:
 
-- A replica of our transactional database, called `jaffle_shop`, with core entities like orders and customers.
-- Synced data from [Stripe](https://stripe.com/), which we use for processing payments.
+- Реплика нашей транзакционной базы данных, называемой `jaffle_shop`, с основными сущностями, такими как заказы и клиенты.
+- Синхронизированные данные от [Stripe](https://stripe.com/), которые мы используем для обработки платежей.
 
-### Guide structure overview
+### Обзор структуры гида
 
-We'll walk through our topics in the same order that our data would move through transformation:
+Мы пройдем через наши темы в том же порядке, в котором наши данные будут проходить через преобразование:
 
-1. Dig into how we structure the files, folders, and models for our three primary layers in the `models` directory, which build on each other:
-   1. **Staging** — creating our atoms, our initial modular building blocks, from source data
-   2. **Intermediate** — stacking layers of logic with clear and specific purposes to prepare our staging models to join into the entities we want
-   3. **Marts** — bringing together our modular pieces into a wide, rich vision of the entities our organization cares about
-2. Explore how these layers fit into the rest of the project:
-   1. Review the overall structure comprehensively
-   2. Expand on YAML configuration in-depth
-   3. Discuss how to use the other folders in a dbt project: `tests`, `seeds`, and `analyses`
+1. Углубимся в то, как мы структурируем файлы, папки и модели для наших трех основных слоев в директории `models`, которые строятся друг на друге:
+   1. **Staging** — создание наших атомов, наших начальных модульных строительных блоков, из исходных данных
+   2. **Intermediate** — укладка слоев логики с четкими и конкретными целями для подготовки наших моделей staging к объединению в сущности, которые мы хотим
+   3. **Marts** — объединение наших модульных частей в широкое, богатое представление о сущностях, которые важны для нашей организации
+2. Исследуем, как эти слои вписываются в остальную часть проекта:
+   1. Обзор общей структуры в полном объеме
+   2. Углубленное изучение конфигурации YAML
+   3. Обсуждение того, как использовать другие папки в проекте dbt: `tests`, `seeds` и `analyses`
 
-Below is the complete file tree of the project we’ll be working through. Don’t worry if this looks like a lot of information to take in at once - this is just to give you the full vision of what we’re building towards. We’ll focus in on each of the sections one by one as we break down the project’s structure.
+Ниже приведено полное дерево файлов проекта, с которым мы будем работать. Не беспокойтесь, если это выглядит как много информации, чтобы воспринять сразу — это просто для того, чтобы дать вам полное представление о том, к чему мы стремимся. Мы сосредоточимся на каждом из разделов по одному, когда будем разбирать структуру проекта.
 
 ```shell
 jaffle_shop

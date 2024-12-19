@@ -1,22 +1,22 @@
 ---
-title: "Contribute to adapters"
+title: "Вклад в адаптеры"
 id: "contribute-core-adapters"
 pagination_next: null
 ---
 
-The dbt Community exists to allow analytics practitioners share their knowledge, help others and collectively to drive forward the discipline of analytics engineering. There are opportunities here for everyone to contribute whether you're at the beginning your analytics engineering journey or you are a seasoned data professional.
+Сообщество dbt существует для того, чтобы аналитики могли делиться своими знаниями, помогать другим и совместно развивать дисциплину аналитической инженерии. Здесь есть возможности для всех, чтобы внести свой вклад, независимо от того, на каком этапе вы находитесь в своем пути в аналитической инженерии — новичок вы или опытный специалист по данным.
 
-This section explains how you can contribute to existing adapters, or create a new adapter.
+В этом разделе объясняется, как вы можете внести вклад в существующие адаптеры или создать новый адаптер.
 
-### Contribute to a pre-existing adapter
+### Вклад в уже существующий адаптер
 
-Community-supported plugins are works in progress, and anyone is welcome to contribute by testing and writing code. If you're interested in contributing:
+Поддерживаемые сообществом плагины находятся в процессе разработки, и любой желающий может внести свой вклад, тестируя и пиша код. Если вы хотите внести свой вклад:
 
-- Join both the dedicated channel, [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM), in [dbt Slack](https://community.getdbt.com/) and the channel for your adapter's data store. Refer to the **Slack Channel** link in the [dbt Core platform](/docs/core/connect-data-platform/profiles.yml) pages. 
-- Check out the open issues in the plugin's source repository. Use the relevant **GitHub repo** link in the [dbt Core platform](/docs/core/connect-data-platform/profiles.yml) pages. 
+- Присоединяйтесь к специализированному каналу [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM) в [dbt Slack](https://community.getdbt.com/) и к каналу для хранилища данных вашего адаптера. Смотрите ссылку **Slack Channel** на страницах [dbt Core platform](/docs/core/connect-data-platform/profiles.yml).
+- Ознакомьтесь с открытыми проблемами в исходном репозитории плагина. Используйте соответствующую ссылку **GitHub repo** на страницах [dbt Core platform](/docs/core/connect-data-platform/profiles.yml).
 
-### Create a new adapter
+### Создание нового адаптера
 
-If you see something missing from the lists above, and you're interested in developing an integration, read more about adapters and how they're developed in the [Build, test, document, and promote adapters](/guides/adapter-creation).
+Если вы заметили, что чего-то не хватает в приведенных выше списках, и вас интересует разработка интеграции, прочитайте больше о адаптерах и о том, как они разрабатываются в разделе [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 
-If you have a new adapter, please add it to this list using a pull request! You can refer to [Build, test, document, and promote adapters](/guides/adapter-creation) for more information on documenting your adapter.
+Если у вас есть новый адаптер, пожалуйста, добавьте его в этот список с помощью pull request! Вы можете обратиться к разделу [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation) для получения дополнительной информации о документировании вашего адаптера.

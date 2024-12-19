@@ -1,53 +1,53 @@
 ---
-title: Now it's your turn
+title: Теперь ваша очередь
 id: 6-how-we-style-conclusion
 ---
 
-## BYO Styles
+## Собственные стили
 
-Now that you've seen how we style our dbt projects, it's time to build your own. Feel free to copy this guide and use it as a template for your own project. If you do, we'd love to hear about it! Reach out to us on [the Community Forum](https://discourse.getdbt.com/c/show-and-tell/22) or [Slack](https://www.getdbt.com/community) to share your style guide. We recommend co-locating your style guide with your code to make sure contributors can easily follow it. If you're using GitHub, you can add your style guide to your repository's wiki, or include it in your README.
+Теперь, когда вы увидели, как мы оформляем наши проекты dbt, пришло время создать свои собственные. Не стесняйтесь копировать этот гид и использовать его в качестве шаблона для вашего проекта. Если вы это сделаете, нам будет интересно узнать об этом! Свяжитесь с нами на [Форуме сообщества](https://discourse.getdbt.com/c/show-and-tell/22) или [Slack](https://www.getdbt.com/community), чтобы поделиться своим стилевым руководством. Мы рекомендуем размещать ваше стилевое руководство вместе с вашим кодом, чтобы участники могли легко следовать ему. Если вы используете GitHub, вы можете добавить ваше стилевое руководство в вики вашего репозитория или включить его в ваш README.
 
-## Pre-commit hooks
+## Предварительные хуки
 
-Lastly, to ensure your style guide's automated rules are being followed without additional mental overhead to your team, you can use [pre-commit hooks](https://pre-commit.com/) to automatically check your code for style violations (and often fix them automagically) before it's committed. This is a great way to make sure your style guide is followed by all contributors. We recommend implementing this once you've settled on and published your style guide, and your codebase is conforming to it. This will ensure that all future commits follow the style guide. You can find an excellent set of open source pre-commit hooks for dbt from the community [here in the dbt-checkpoint project](https://github.com/dbt-checkpoint/dbt-checkpoint).
+Наконец, чтобы убедиться, что автоматические правила вашего стилевого руководства соблюдаются без дополнительной умственной нагрузки для вашей команды, вы можете использовать [предварительные хуки](https://pre-commit.com/) для автоматической проверки вашего кода на наличие нарушений стиля (и часто их автоматического исправления) перед коммитом. Это отличный способ убедиться, что все участники следуют вашему стилевому руководству. Мы рекомендуем реализовать это, как только вы определитесь с вашим стилевым руководством и ваш код соответствует ему. Это обеспечит соблюдение стиля для всех будущих коммитов. Вы можете найти отличный набор открытых предварительных хуков для dbt от сообщества [здесь в проекте dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint).
 
-## Style guide template
+## Шаблон стилевого руководства
 
 ```markdown
-# dbt Example Style Guide
+# Пример стилевого руководства dbt
 
-## SQL Style
+## Стиль SQL
 
-- Use lowercase keywords.
-- Use trailing commas.
+- Используйте ключевые слова в нижнем регистре.
+- Используйте завершающие запятые.
 
-## Model Organization
+## Организация моделей
 
-Our models (typically) fit into two main categories:\
+Наши модели (обычно) делятся на две основные категории:\
 
-- Staging &mdash; Contains models that clean and standardize data.        
-- Marts &mdash; Contains models which combine or heavily transform data. 
+- Staging — Содержит модели, которые очищают и стандартизируют данные.        
+- Marts — Содержит модели, которые комбинируют или сильно трансформируют данные. 
 
-Things to note:
+Обратите внимание на следующее:
 
-- There are different types of models that typically exist in each of the above categories. See [Model Layers](#model-layers) for more information.
-- Read [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview) for an example and more details around organization.
+- Существуют разные типы моделей, которые обычно встречаются в каждой из вышеуказанных категорий. См. [Уровни моделей](#model-layers) для получения дополнительной информации.
+- Читайте [Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview) для примера и более подробной информации об организации.
 
-## Model Layers
+## Уровни моделей
 
-- Only models in `staging` should select from [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources).
-- Models not in the `staging` folder should select from [refs](https://docs.getdbt.com/reference/dbt-jinja-functions/ref).
+- Только модели в `staging` должны выбирать из [sources](https://docs.getdbt.com/docs/building-a-dbt-project/using-sources).
+- Модели, не находящиеся в папке `staging`, должны выбирать из [refs](https://docs.getdbt.com/reference/dbt-jinja-functions/ref).
 
-## Model File Naming and Coding
+## Именование файлов моделей и кодирование
 
-- All objects should be plural.  
-  Example: `stg_stripe__invoices.sql` vs. `stg_stripe__invoice.sql`
+- Все объекты должны быть во множественном числе.  
+  Пример: `stg_stripe__invoices.sql` против `stg_stripe__invoice.sql`
 
-- All models should use the naming convention `<type/dag_stage>_<source/topic>__<additional_context>`. See [this article](https://docs.getdbt.com/blog/stakeholder-friendly-model-names) for more information.
+- Все модели должны использовать соглашение об именовании `<type/dag_stage>_<source/topic>__<additional_context>`. См. [эту статью](https://docs.getdbt.com/blog/stakeholder-friendly-model-names) для получения дополнительной информации.
 
-  - Models in the **staging** folder should use the source's name as the `<source/topic>` and the entity name as the `additional_context`.
+  - Модели в папке **staging** должны использовать имя источника в качестве `<source/topic>` и имя сущности в качестве `additional_context`.
 
-    Examples:
+    Примеры:
 
     - seed_snowflake_spend.csv
     - base_stripe\_\_invoices.sql
@@ -56,52 +56,52 @@ Things to note:
     - int_customers\_\_unioned.sql
     - fct_orders.sql
 
-- Schema, table, and column names should be in `snake_case`.
+- Имена схем, таблиц и столбцов должны быть в `snake_case`.
 
-- Limit the use of abbreviations that are related to domain knowledge. An onboarding employee will understand `current_order_status` better than `current_os`.
+- Ограничьте использование аббревиатур, связанных с предметной областью. Сотруднику, проходящему обучение, будет легче понять `current_order_status`, чем `current_os`.
 
-- Use names based on the _business_ rather than the source terminology.
+- Используйте названия, основанные на _бизнесе_, а не на терминологии источника.
 
-- Each model should have a primary key to identify the unique row and should be named `<object>_id`. For example, `account_id`. This makes it easier to know what `id` is referenced in downstream joined models.
+- Каждая модель должна иметь первичный ключ для идентификации уникальной строки и должна называться `<object>_id`. Например, `account_id`. Это упрощает понимание того, какой `id` ссылается на объединенные модели ниже.
 
-- For `base` or `staging` models, columns should be ordered in categories, where identifiers are first and date/time fields are at the end.
-- Date/time columns should be named according to these conventions:
+- Для моделей `base` или `staging` столбцы должны быть упорядочены по категориям, где идентификаторы идут первыми, а поля даты/времени — в конце.
+- Столбцы даты/времени должны именоваться в соответствии с этими соглашениями:
 
-  - Timestamps: `<event>_at`  
-    Format: UTC  
-    Example: `created_at`
+  - Временные метки: `<event>_at`  
+    Формат: UTC  
+    Пример: `created_at`
 
-  - Dates: `<event>_date`
-    Format: Date  
-    Example: `created_date`
+  - Даты: `<event>_date`
+    Формат: Дата  
+    Пример: `created_date`
 
-- Booleans should be prefixed with `is_` or `has_`.
-  Example: `is_active_customer` and `has_admin_access`
+- Логические значения должны иметь префикс `is_` или `has_`.
+  Пример: `is_active_customer` и `has_admin_access`
 
-- Price/revenue fields should be in decimal currency (for example, `19.99` for $19.99; many app databases store prices as integers in cents). If a non-decimal currency is used, indicate this with suffixes. For example, `price_in_cents`.
+- Поля цены/дохода должны быть в десятичной валюте (например, `19.99` для $19.99; многие базы данных приложений хранят цены как целые числа в центах). Если используется недесятичная валюта, укажите это с помощью суффиксов. Например, `price_in_cents`.
 
-- Avoid using reserved words (such as [these](https://docs.snowflake.com/en/sql-reference/reserved-keywords.html) for Snowflake) as column names.
+- Избегайте использования зарезервированных слов (таких как [эти](https://docs.snowflake.com/en/sql-reference/reserved-keywords.html) для Snowflake) в качестве имен столбцов.
 
-- Consistency is key! Use the same field names across models where possible. For example, a key to the `customers` table should be named `customer_id` rather than `user_id`.
+- Последовательность — это ключ! Используйте одни и те же имена полей в моделях, где это возможно. Например, ключ к таблице `customers` должен называться `customer_id`, а не `user_id`.
 
-## Model Configurations
+## Конфигурации моделей
 
-- Model configurations at the [folder level](https://docs.getdbt.com/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml) should be considered (and if applicable, applied) first.
-- More specific configurations should be applied at the model level [using one of these methods](https://docs.getdbt.com/reference/model-configs#apply-configurations-to-one-model-only).
-- Models within the `marts` folder should be materialized as `table` or `incremental`.
-  - By default, `marts` should be materialized as `table` within `dbt_project.yml`.
-  - If switching to `incremental`, this should be specified in the model's configuration.
+- Конфигурации моделей на [уровне папки](https://docs.getdbt.com/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml) должны рассматриваться (и, если применимо, применяться) в первую очередь.
+- Более специфические конфигурации должны применяться на уровне модели [с использованием одного из этих методов](https://docs.getdbt.com/reference/model-configs#apply-configurations-to-one-model-only).
+- Модели в папке `marts` должны быть материализованы как `table` или `incremental`.
+  - По умолчанию `marts` должны быть материализованы как `table` в `dbt_project.yml`.
+  - Если вы переходите на `incremental`, это должно быть указано в конфигурации модели.
 
-## Testing
+## Тестирование
 
-- At a minimum, `unique` and `not_null` tests should be applied to the expected primary key of each model.
+- Минимум, тесты `unique` и `not_null` должны применяться к ожидаемому первичному ключу каждой модели.
 
-## CTEs
+## CTE
 
-For more information about why we use so many CTEs, read [this glossary entry](https://docs.getdbt.com/terms/cte).
+Для получения дополнительной информации о том, почему мы используем так много CTE, читайте [этот глоссарный термин](https://docs.getdbt.com/terms/cte).
 
-- Where performance permits, CTEs should perform a single, logical unit of work.
-- CTE names should be as verbose as needed to convey what they do.
-- CTEs with confusing or noteable logic should be commented with SQL comments as you would with any complex functions and should be located above the CTE.
-- CTEs duplicated across models should be pulled out and created as their own models.
+- Где это позволяет производительность, CTE должны выполнять единое логическое действие.
+- Имена CTE должны быть настолько подробными, насколько это необходимо, чтобы передать, что они делают.
+- CTE с запутанной или заметной логикой должны быть прокомментированы с помощью SQL-комментариев, как вы бы сделали с любыми сложными функциями, и должны находиться выше CTE.
+- CTE, дублирующиеся в разных моделях, должны быть вынесены и созданы как отдельные модели.
 ```

@@ -1,14 +1,14 @@
 ---
-title: "Conclusion"
+title: "Заключение"
 id: materializations-guide-7-conclusion
 slug: 7-conclusion
-description: Read this conclusion to our guide on using materializations in dbt and how it is a crucial skill for effective analytics engineering.
-displayText: Materializations best practices
-hoverSnippet: Read this conclusion to our guide on using materializations in dbt and how it is a crucial skill for effective analytics engineering.
+description: Прочитайте это заключение к нашему руководству по использованию материализаций в dbt и узнайте, как это является важным навыком для эффективной аналитической инженерии.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте это заключение к нашему руководству по использованию материализаций в dbt и узнайте, как это является важным навыком для эффективной аналитической инженерии.
 ---
 
-You're now following best practices in your project, and have optimized the materializations of your DAG. You’re equipped with the 3 main materializations that cover almost any analytics engineering situation!
+Теперь вы следуете лучшим практикам в своем проекте и оптимизировали материализации вашего DAG. У вас есть три основные материализации, которые охватывают почти любую ситуацию в аналитической инженерии!
 
-There are more configs and materializations available, as well as specific materializations for certain platforms and adapters — and like everything with dbt, materializations are extensible, meaning you can create your own [custom materializations](/guides/create-new-materializations) for your needs. So this is just the beginning of what you can do with these powerful configurations.
+Существуют и другие конфигурации и материализации, а также специфические материализации для определенных платформ и адаптеров — и, как и все в dbt, материализации расширяемы, что означает, что вы можете создать свои собственные [пользовательские материализации](/guides/create-new-materializations) в зависимости от ваших потребностей. Так что это только начало того, что вы можете сделать с этими мощными конфигурациями.
 
-For the vast majority of users and companies though, tables, views, and incremental models will handle everything you can throw at them. Develop your intuition and expertise for these materializations, and you’ll be well on your way to tackling advanced analytics engineering problems.
+Для подавляющего большинства пользователей и компаний таблицы, представления и инкрементальные модели справятся со всем, что вы можете им предложить. Развивайте свою интуицию и экспертизу в этих материализациях, и вы будете на правильном пути к решению сложных задач аналитической инженерии.

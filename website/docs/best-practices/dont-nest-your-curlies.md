@@ -1,38 +1,38 @@
 ---
-title: "Don't nest your curlies"
+title: "Не вкладывайте фигурные скобки"
 id: "dont-nest-your-curlies"
 ---
 
-### Poetry
+### Поэзия
 
-**Don't Nest Your Curlies**
+**Не вкладывайте фигурные скобки**
 
-> If dbt errors out early
+> Если dbt выдает ошибку на раннем этапе
 >
-> and your Jinja is making you surly
+> и ваш Jinja заставляет вас сердиться
 >
-> don't post to the slack
+> не пишите в Slack
 >
-> just take a step back
+> просто сделайте шаг назад
 >
-> and check if you're nesting your curlies.
+> и проверьте, не вкладываете ли вы фигурные скобки.
 
 ### Jinja
 
-When writing jinja code in a dbt project, it may be tempting to nest expressions inside of each other. Take this example:
+При написании кода jinja в проекте dbt может возникнуть соблазн вложить выражения друг в друга. Рассмотрим этот пример:
 
 ```
   {{ dbt_utils.date_spine(
       datepart="day",
-      start_date=[ USE JINJA HERE ]
+      start_date=[ ИСПОЛЬЗУЙТЕ JINJA ЗДЕСЬ ]
       )
   }}
 ```
 
-To nest a jinja expression inside of another jinja expression, simply place the desired code (without curly brackets) directly into the expression.
+Чтобы вложить выражение jinja в другое выражение jinja, просто поместите нужный код (без фигурных скобок) непосредственно в выражение.
 
-**Correct example**
-Here, the return value of the `var()` context method is supplied as the `start_date` argument to the `date_spine` macro. Great!
+**Правильный пример**
+Здесь возвращаемое значение метода контекста `var()` передается в качестве аргумента `start_date` для макроса `date_spine`. Отлично!
 
 ```
   {{ dbt_utils.date_spine(
@@ -42,11 +42,11 @@ Here, the return value of the `var()` context method is supplied as the `start_d
   }}
 ```
 
-**Incorrect example**
-*This code does not work in dbt &gt;= v0.15.0*. Once we've denoted that we're inside a jinja expression (using the `{{` syntax), no further curly brackets are required inside of the jinja expression. This code will supply a literal string value, `"{{ var('start_date') }}"`, as the `start_date` argument to the `date_spine` macro. This is probably not what you actually want to do!
+**Неправильный пример**
+*Этот код не работает в dbt &gt;= v0.15.0*. Как только мы обозначили, что находимся внутри выражения jinja (используя синтаксис `{{`), больше никаких фигурных скобок не требуется внутри выражения jinja. Этот код передаст буквальное строковое значение, `"{{ var('start_date') }}"`, в качестве аргумента `start_date` для макроса `date_spine`. Это, вероятно, не то, что вы на самом деле хотите сделать!
 
 ```
--- Do not do this! It will not work!
+-- Не делайте этого! Это не сработает!
 
   {{ dbt_utils.date_spine(
       datepart="day",
@@ -55,10 +55,10 @@ Here, the return value of the `var()` context method is supplied as the `start_d
   }}
 ```
 
-Here's another example:
+Вот еще один пример:
 
 ```sql
-{# Either of these work #}
+{# Любой из этих вариантов работает #}
 
 {% set query_sql = 'select * from ' ~ ref('my_model') %}
 
@@ -66,18 +66,18 @@ Here's another example:
 select * from {{ ref('my_model') }}
 {% endset %}
 
-{# This does not #}
+{# Это не работает #}
 {% set query_sql = "select * from {{ ref('my_model')}}" %}
 
 ```
 
-### An exception
+### Исключение
 
-There is one exception to this rule: curlies inside of curlies are acceptable in hooks (ie. `on-run-start`, `on-run-end`, `pre-hook`, and `post-hook`).
+Существует одно исключение из этого правила: фигурные скобки внутри фигурных скобок допустимы в хуках (например, `on-run-start`, `on-run-end`, `pre-hook` и `post-hook`).
 
-Code like this is both valid, and encouraged:
+Код, подобный этому, является как допустимым, так и рекомендуемым:
 ```
 {{ config(post_hook="grant select on {{ this }} to role bi_role") }}
 ```
 
-So why are curlies inside of curlies allowed in this case? Here, we actually _want_ the string literal `"grant select on {{ this }} ..."` to be saved as the configuration value for the post-hook in this model. This string will be re-rendered when the model runs, resulting in a sensible SQL expression like `grant select on "schema"."table"....` being executed against the database. These hooks are a special exception to the rule stated above.
+Почему же фигурные скобки внутри фигурных скобок допустимы в этом случае? Здесь мы на самом деле _хотим_, чтобы строка `"grant select on {{ this }} ..."` была сохранена как значение конфигурации для пост-хука в этой модели. Эта строка будет повторно отрендерена, когда модель будет выполняться, в результате чего будет выполнено разумное SQL-выражение, такое как `grant select on "schema"."table"....` против базы данных. Эти хуки являются специальным исключением из вышеуказанного правила.

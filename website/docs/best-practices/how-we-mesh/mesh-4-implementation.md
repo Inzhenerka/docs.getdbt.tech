@@ -1,45 +1,45 @@
 ---
-title: "Implementing your mesh plan"
-description: Getting started with dbt Mesh patterns
-hoverSnippet: Learn how to get started with dbt Mesh
+title: "Реализация вашего плана Mesh"
+description: Начало работы с паттернами dbt Mesh
+hoverSnippet: Узнайте, как начать работу с dbt Mesh
 ---
 
-### Where should your mesh journey start?
+### С чего начать ваше путешествие в Mesh?
 
-Moving to a dbt Mesh represents a meaningful change in development and deployment architecture. Before any sufficiently complex software refactor or migration, it's important to ask, 'Why might this not work?' The two most common reasons we've seen stem from
+Переход на dbt Mesh представляет собой значительное изменение в архитектуре разработки и развертывания. Прежде чем проводить достаточно сложную рефакторизацию программного обеспечения или миграцию, важно задать вопрос: «Почему это может не сработать?» Две самые распространенные причины, с которыми мы сталкивались, заключаются в следующем:
 
-1. Lack of buy-in that a dbt Mesh is the right long-term architecture
-2. Lack of alignment on a well-scoped starting point
+1. Отсутствие согласия по поводу того, что dbt Mesh является правильной долгосрочной архитектурой.
+2. Отсутствие согласованности по поводу хорошо определенной отправной точки.
 
-Creating alignment on your architecture and starting point are major steps in ensuring a successful migration. Deciding on the right starting point will look different for every organization, but there are some heuristics that can help you decide where to start. In all likelihood, your organization already has logical components, and you may already be grouping, building, and deploying your project according to these interfaces.The goal is to define and formalize these organizational interfaces and use these boundaries to split your project apart by domain.
+Создание согласованности в вашей архитектуре и отправной точке — это важные шаги для обеспечения успешной миграции. Определение правильной отправной точки будет выглядеть по-разному для каждой организации, но есть некоторые эвристики, которые могут помочь вам решить, с чего начать. Скорее всего, в вашей организации уже есть логические компоненты, и вы, возможно, уже группируете, строите и развертываете ваш проект в соответствии с этими интерфейсами. Цель состоит в том, чтобы определить и формализовать эти организационные интерфейсы и использовать эти границы для разделения вашего проекта по доменам.
 
-How do you find these organizational interfaces? Here are some steps to get you started:
+Как найти эти организационные интерфейсы? Вот несколько шагов, чтобы начать:
 
-- **Talk to teams** about what sort of separation naturally exists right now.
-  - Are there various domains people are focused on?
-  - Are there various sizes, shapes, and sources of data that get handled separately (such as click event data)?
-  - Are there people focused on separate levels of transformation, such as landing and staging data or building marts?
-  - Is there a single team that is *downstream* of your current dbt project, who could more easily migrate onto dbt Mesh as a consumer? 
+- **Поговорите с командами** о том, какое разделение существует в настоящее время.
+  - Есть ли различные домены, на которых сосредоточены люди?
+  - Есть ли различные размеры, формы и источники данных, которые обрабатываются отдельно (например, данные о кликах)?
+  - Есть ли люди, сосредоточенные на различных уровнях трансформации, таких как загрузка и подготовка данных или создание marts?
+  - Есть ли одна команда, которая находится *вниз по потоку* от вашего текущего проекта dbt, которая могла бы легче перейти на dbt Mesh в качестве потребителя?
 
-When attempting to define your project interfaces, you should consider investigating:
+При попытке определить интерфейсы вашего проекта вам следует рассмотреть возможность исследования:
 
-- **Your jobs:** Which sets of models are most often built together?
-- **Your lineage graph:** How are models connected?
-- **Your selectors(defined in `selectors.yml`):** How do people already define resource groups?
+- **Ваших задач:** Какие наборы моделей чаще всего создаются вместе?
+- **Вашей графа наследования:** Как связаны модели?
+- **Ваших селекторов (определенных в `selectors.yml`):** Как люди уже определяют группы ресурсов?
 
-Let's go through an example process of taking a monolithing project, using groups and access to define the interfaces, and then splitting it into multiple projects.
+Давайте рассмотрим пример процесса преобразования монолитного проекта, используя группы и доступ для определения интерфейсов, а затем разделим его на несколько проектов.
 
-To learn more, refer to our freely available [dbt Mesh learning course](https://learn.getdbt.com/courses/dbt-mesh). 
+Чтобы узнать больше, обратитесь к нашему бесплатному [курсу по обучению dbt Mesh](https://learn.getdbt.com/courses/dbt-mesh). 
 
 
-## Defining project interfaces with groups and access
+## Определение интерфейсов проекта с помощью групп и доступа
 
-Once you have a sense of some initial groupings, you can first implement **group and access permissions** within a single project.
+Как только у вас появится представление о некоторых начальных группах, вы можете сначала реализовать **группы и настройки доступа** в рамках одного проекта.
 
-- First you can create a [group](/docs/build/groups) to define the owner of a set of models.
+- Сначала вы можете создать [группу](/docs/build/groups), чтобы определить владельца набора моделей.
 
 ```yml
-# in models/__groups.yml
+# в models/__groups.yml
 
 groups: 
   - name: marketing
@@ -48,10 +48,10 @@ groups:
         email: ben.jaffleck@jaffleshop.com
 ```
 
-- Then, we can add models to that group using the `group:` key in the model's YAML entry.
+- Затем мы можем добавить модели в эту группу, используя ключ `group:` в YAML-записи модели.
 
 ```yml
-# in models/marketing/__models.yml
+# в models/marketing/__models.yml
 
 models: 
   - name: fct_marketing_model
@@ -60,10 +60,10 @@ models:
     group: marketing
 ```
 
-- Once you've added models to the group, you can **add [access](/docs/collaborate/govern/model-access) settings to the models** based on their connections between groups, *opting for the most private access that will maintain current functionality*. This means that any model that has *only* relationships to other models in the same group should be `private` , and any model that has cross-group relationships, or is a terminal node in the group DAG should be `protected` so that other parts of the DAG can continue to reference it.
+- После того как вы добавили модели в группу, вы можете **добавить [настройки доступа](/docs/collaborate/govern/model-access) к моделям** на основе их связей между группами, *выбирая наиболее закрытый доступ, который сохранит текущую функциональность*. Это означает, что любая модель, которая имеет *только* связи с другими моделями в той же группе, должна быть `private`, а любая модель, которая имеет межгрупповые связи или является терминальным узлом в DAG группы, должна быть `protected`, чтобы другие части DAG могли продолжать ссылаться на нее.
 
 ```yml
-# in models/marketing/__models.yml
+# в models/marketing/__models.yml
 
 models: 
   - name: fct_marketing_model
@@ -74,78 +74,78 @@ models:
     access: private
 ```
 
-- **Validate these groups by incrementally migrating your jobs** to execute these groups specifically via selection syntax. We would recommend doing this in parallel to your production jobs until you’re sure about them. This will help you feel out if you’ve drawn the lines in the right place.
-- If you find yourself **consistently making changes across multiple groups** when you update logic, that’s a sign that **you may want to rethink your groups**.
+- **Проверьте эти группы, постепенно мигрируя ваши задачи** для выполнения этих групп конкретно через синтаксис выбора. Мы рекомендуем делать это параллельно с вашими производственными задачами, пока вы не будете уверены в них. Это поможет вам понять, правильно ли вы провели границы.
+- Если вы обнаружите, что **постоянно вносите изменения в несколько групп**, когда обновляете логику, это знак того, что **вам, возможно, стоит пересмотреть ваши группы**.
 
-## Split your projects
+## Разделите ваши проекты
 
-1. **Move your grouped models into a subfolder**. This will include any model in the selected group, it's associated YAML entry, as well as its parent or child resources as appropriate depending on where this group sits in your DAG.
-   1. Note that just like in your dbt project, circular references are not allowed! Project B cannot have parents and children in Project A, for example.
-2. **Create a new `dbt_project.yml` file** in the subdirectory.
-3. **Copy any macros** used by the resources you moved.
-4. **Create a new `packages.yml` file** in your subdirectory with the packages that are used by the resources you moved.
-5. **Update `{{ ref }}` functions** &mdash; For any model that has a cross-project dependency (this may be in the files you moved, or in the files that remain in your project):
-   1. Update the `{{ ref() }}` function to have two arguments, where the first is the name of the source project and the second is the name of the model: e.g. `{{ ref('jaffle_shop', 'my_upstream_model') }}`
-   2. Update the upstream, cross-project parents’ `access` configs to `public` , ensuring any project can safely `{{ ref() }}` those models.
-   3. We *highly* recommend adding a [model contract](/docs/collaborate/govern/model-contracts) to the upstream models to ensure the data shape is consistent and reliable for your downstream consumers.
-6. **Create a `dependencies.yml` file** ([docs](/docs/collaborate/govern/project-dependencies)) for the downstream project, declaring the upstream project as a dependency.
+1. **Переместите ваши сгруппированные модели в подпапку**. Это будет включать любую модель из выбранной группы, ее связанную YAML-запись, а также ее родительские или дочерние ресурсы в зависимости от того, где эта группа находится в вашем DAG.
+   1. Обратите внимание, что, как и в вашем проекте dbt, циклические ссылки не допускаются! Проект B не может иметь родителей и детей в проекте A, например.
+2. **Создайте новый файл `dbt_project.yml`** в подпапке.
+3. **Скопируйте любые макросы**, используемые ресурсами, которые вы переместили.
+4. **Создайте новый файл `packages.yml`** в вашей подпапке с пакетами, которые используются ресурсами, которые вы переместили.
+5. **Обновите функции `{{ ref }}`** &mdash; Для любой модели, которая имеет межпроектную зависимость (это может быть в файлах, которые вы переместили, или в файлах, которые остались в вашем проекте):
+   1. Обновите функцию `{{ ref() }}`, чтобы она имела два аргумента, где первый — это имя исходного проекта, а второй — имя модели: например, `{{ ref('jaffle_shop', 'my_upstream_model') }}`
+   2. Обновите конфигурации `access` родительских моделей, находящихся выше по потоку, на `public`, чтобы гарантировать, что любой проект может безопасно `{{ ref() }}` эти модели.
+   3. Мы *настоятельно* рекомендуем добавить [контракт модели](/docs/collaborate/govern/model-contracts) к моделям выше по потоку, чтобы гарантировать, что форма данных является последовательной и надежной для ваших потребителей ниже по потоку.
+6. **Создайте файл `dependencies.yml`** ([docs](/docs/collaborate/govern/project-dependencies)) для проекта ниже по потоку, объявив проект выше по потоку как зависимость.
 
 ```yml
 
-# in dependencies.yml
+# в dependencies.yml
 projects:
   - name: jaffle_shop
 ```
 
-### Best practices
+### Лучшие практики
 
-- When you’ve **confirmed the right groups**, it's time to split your projects.
-  - **Do *one* group at a time**!
-  - **Do *not* refactor as you migrate**, however tempting that may be. Focus on getting 1-to-1 parity and log any issues you find in doing the migration for later. Once you’ve fully migrated the project then you can start optimizing it for its new life as part of your mesh.
-- Start by splitting your project within the same repository for full git tracking and easy reversion if you need to start from scratch.
+- Когда вы **подтвердите правильные группы**, пришло время разделить ваши проекты.
+  - **Делайте *одну* группу за раз**!
+  - **Не рефакторите во время миграции**, как бы это ни было заманчиво. Сосредоточьтесь на достижении паритета 1 к 1 и зафиксируйте любые проблемы, которые вы обнаружите в процессе миграции, для дальнейшего рассмотрения. Как только вы полностью мигрируете проект, вы можете начать оптимизировать его для новой жизни в рамках вашего Mesh.
+- Начните с разделения вашего проекта в рамках одного репозитория для полного отслеживания git и легкого возврата, если вам нужно начать с нуля.
 
 
-## Connecting existing projects
+## Подключение существующих проектов
 
-Some organizations may already be coordinating across multiple dbt projects. Most often this is via:
+Некоторые организации могут уже координировать работу через несколько проектов dbt. Чаще всего это происходит через:
 
-1. Installing parent projects as dbt packages
-2. Using `{{ source() }}` functions to read the outputs of a parent project as inputs to a child project. 
+1. Установку родительских проектов в качестве пакетов dbt.
+2. Использование функций `{{ source() }}` для чтения выходных данных родительского проекта в качестве входных данных для дочернего проекта.
 
-This has a few drawbacks:
+Это имеет несколько недостатков:
 
-1. If using packages, each project has to include *all* resources from *all* projects in its manifest, slowing down dbt and the development cycle.
-2. If using sources, there are breakages in the lineage, as there's no real connection between the parent and child projects.
+1. Если используются пакеты, каждый проект должен включать *все* ресурсы из *всех* проектов в своем манифесте, что замедляет работу dbt и цикл разработки.
+2. Если используются источники, возникают разрывы в наследовании, так как нет реальной связи между родительскими и дочерними проектами.
 
-The migration steps here are much simpler than splitting up a monolith!
+Шаги миграции здесь гораздо проще, чем разделение монолита!
 
-1. If using the `package` method:
-   1. In the parent project:
-      1. mark all models being referenced downstream as `public` and add a model contract.
-   2. In the child project:
-      1. Remove the package entry from `packages.yml`
-      2. Add the upstream project to your `dependencies.yml`
-      3. Update the `{{ ref() }}` functions to models from the upstream project to include the project name argument.
-1. If using `source` method:
-   1. In the parent project:
-      1. mark all models being imported downstream as `public` and add a model contract.
-   2. In the child project:
-      1. Add the upstream project to your `dependencies.yml`
-      2. Replace the `{{ source() }}` functions with cross project `{{ ref() }}` functions.
-      3. Remove the unnecessary `source` definitions.
+1. Если используется метод `package`:
+   1. В родительском проекте:
+      1. пометьте все модели, на которые ссылаются ниже по потоку, как `public` и добавьте контракт модели.
+   2. В дочернем проекте:
+      1. Удалите запись пакета из `packages.yml`
+      2. Добавьте проект выше по потоку в ваш `dependencies.yml`
+      3. Обновите функции `{{ ref() }}` для моделей из проекта выше по потоку, чтобы включить аргумент с именем проекта.
+2. Если используется метод `source`:
+   1. В родительском проекте:
+      1. пометьте все модели, которые импортируются ниже по потоку, как `public` и добавьте контракт модели.
+   2. В дочернем проекте:
+      1. Добавьте проект выше по потоку в ваш `dependencies.yml`
+      2. Замените функции `{{ source() }}` на межпроектные функции `{{ ref() }}`.
+      3. Удалите ненужные определения `source`.
 
-## Additional Resources
-### Our example projects
+## Дополнительные ресурсы
+### Наши примерные проекты
 
-We've provided a set of example projects you can use to explore the topics covered here. We've split our [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) project into 3 separate projects in a multi-repo dbt Mesh. Note that you'll need to leverage dbt Cloud to use multi-project architecture, as cross-project references are powered via dbt Cloud's APIs.
+Мы предоставили набор примерных проектов, которые вы можете использовать для изучения тем, рассмотренных здесь. Мы разделили наш проект [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) на 3 отдельных проекта в многорепозитории dbt Mesh. Обратите внимание, что вам нужно будет использовать dbt Cloud для работы с многопроектной архитектурой, так как межпроектные ссылки поддерживаются через API dbt Cloud.
 
-- **[Platform](https://github.com/dbt-labs/jaffle-shop-mesh-platform)** - containing our centralized staging models.
-- **[Marketing](https://github.com/dbt-labs/jaffle-shop-mesh-marketing)** - containing our marketing marts.
-- **[Finance](https://github.com/dbt-labs/jaffle-shop-mesh-finance)** - containing our finance marts.
+- **[Платформа](https://github.com/dbt-labs/jaffle-shop-mesh-platform)** - содержащая наши централизованные модели подготовки.
+- **[Маркетинг](https://github.com/dbt-labs/jaffle-shop-mesh-marketing)** - содержащая наши маркетинговые marts.
+- **[Финансы](https://github.com/dbt-labs/jaffle-shop-mesh-finance)** - содержащая наши финансовые marts.
 
 ### dbt-meshify
 
-We recommend using the `dbt-meshify` [command line tool](<https://dbt-labs.github.io/dbt-meshify/>) to help you do this. This comes with CLI operations to automate most of the above steps.
+Мы рекомендуем использовать инструмент командной строки `dbt-meshify` [command line tool](<https://dbt-labs.github.io/dbt-meshify/>), чтобы помочь вам в этом. Он включает в себя операции CLI для автоматизации большинства вышеуказанных шагов.
 
-## Related docs
-- [Quickstart with dbt Mesh](/guides/mesh-qs)
+## Связанные документы
+- [Быстрый старт с dbt Mesh](/guides/mesh-qs)

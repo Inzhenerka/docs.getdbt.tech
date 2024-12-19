@@ -1,31 +1,31 @@
 ---
-title: Best practices for materializations
+title: Лучшие практики для материализаций
 id: materializations-guide-5-best-practices
 slug: 5-best-practices
-description: Read this guide to understand the different types of materializations you can create in dbt.
-displayText: Materializations best practices
-hoverSnippet: Read this guide to understand the different types of materializations you can create in dbt.
+description: Прочитайте это руководство, чтобы понять различные типы материализаций, которые вы можете создать в dbt.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте это руководство, чтобы понять различные типы материализаций, которые вы можете создать в dbt.
 ---
 
-First, let’s consider some properties of various levels of our dbt project and materializations.
+Сначала давайте рассмотрим некоторые свойства различных уровней нашего проекта dbt и материализаций.
 
-- 🔍 **Views** return the freshest, real-time state of their input data when they’re queried, this makes them ideal as **building blocks** for larger models.
-  - 🧶  When we’re building a model that stitches lots of other models together, we don’t want to worry about all those models having different states of freshness because they were built into tables at different times. We want all those inputs to give us all the underlying source data available.
-- 🤏 **Views** are also great for **small datasets** with minimally intensive logic that we want **near realtime** access to.
-- 🛠️ **Tables** are the **most performant** materialization, as they just return the transformed data when they’re queried, with no need to reprocess it.
-  - 📊  This makes tables great for **things end users touch**, like a mart that services a popular dashboard.
-  - 💪 Tables are also ideal for **frequently used, compute intensive** transformations. Making a table allows us to ‘freeze’ those transformations in place.
-- 📚  **Incremental models** are useful for the **same purposes as tables**, they just enable us to build them on larger datasets, so they can be **built** _and_ **accessed** in a **performant** way.
+- 🔍 **Представления** возвращают самые свежие, актуальные данные своего входного источника, когда они запрашиваются, что делает их идеальными **строительными блоками** для более крупных моделей.
+  - 🧶 Когда мы создаем модель, которая объединяет множество других моделей, нам не нужно беспокоиться о том, что эти модели имеют разные состояния актуальности, так как они были созданы в таблицы в разное время. Мы хотим, чтобы все эти входные данные предоставляли нам все доступные исходные данные.
+- 🤏 **Представления** также отлично подходят для **малых наборов данных** с минимально интенсивной логикой, к которым мы хотим получить **почти в реальном времени** доступ.
+- 🛠️ **Таблицы** являются **наиболее производительной** материализацией, так как они просто возвращают преобразованные данные, когда их запрашивают, без необходимости повторной обработки.
+  - 📊 Это делает таблицы отличными для **вещей, с которыми работают конечные пользователи**, таких как хранилище, обслуживающее популярные панели мониторинга.
+  - 💪 Таблицы также идеально подходят для **часто используемых, вычислительно интенсивных** преобразований. Создание таблицы позволяет нам «заморозить» эти преобразования на месте.
+- 📚 **Инкрементальные модели** полезны для **тех же целей, что и таблицы**, они просто позволяют нам строить их на больших наборах данных, так что их можно **создавать** _и_ **доступать** к ним **производительным** способом.
 
-### Project-level configuration
+### Конфигурация на уровне проекта
 
-Keeping these principles in mind, we can applying these materializations to a project. Earlier we looked at how to configure an individual model’s materializations. In practice though, we’ll want to set materializations at the folder level, and use individual model configs to override those as needed. This will keep our code DRY and avoid repeating the same config blocks in every model.
+Учитывая эти принципы, мы можем применить эти материализации к проекту. Ранее мы рассматривали, как настроить материализации для отдельной модели. На практике, однако, мы захотим установить материализации на уровне папки и использовать конфигурации отдельных моделей для их переопределения по мере необходимости. Это позволит нам сохранить наш код DRY и избежать повторения одних и тех же блоков конфигурации в каждой модели.
 
-- 📂  In the `dbt_project.yml` we have a `models:` section (by default at the bottom of the file) we can use define various **configurations for entire directories**.
-- ⚙️  These are the **same configs that are passed to a `{{ config() }}` block** for individual models, but they get set for _every model in that directory and any subdirectories nested within it_.
-- ➕  We demarcate between a folder name and a configuration by using a `+`, so `marketing`, `paid_ads`, and `google` below are folder names, whereas **`+materialized` is a configuration** being applied to those folder and all folders nested below them.
-- ⛲  Configurations set in this way **cascade**, the **more specific scope** is the one that will be set.
-- 👇🏻  In the example below, all the models in the `marketing` and `paid_ads` folders would be views, but the `google` sub folder would be **tables.**
+- 📂 В `dbt_project.yml` у нас есть раздел `models:` (по умолчанию внизу файла), который мы можем использовать для определения различных **конфигураций для целых директорий**.
+- ⚙️ Это **те же конфигурации, которые передаются в блок `{{ config() }}`** для отдельных моделей, но они устанавливаются для _каждой модели в этой директории и любых вложенных поддиректориях_.
+- ➕ Мы разделяем имя папки и конфигурацию, используя `+`, так что `marketing`, `paid_ads` и `google` ниже — это имена папок, в то время как **`+materialized` — это конфигурация**, применяемая к этим папкам и всем вложенным папкам.
+- ⛲ Конфигурации, установленные таким образом, **каскадируют**, **более специфическая область** будет установлена.
+- 👇🏻 В приведенном ниже примере все модели в папках `marketing` и `paid_ads` будут представлениями, но вложенная папка `google` будет **таблицами.**
 
 ```yaml
 models:
@@ -37,15 +37,15 @@ models:
           +materialized: table
 ```
 
-### Staging views
+### Стадии представлений
 
-We’ll start off simple with staging models. Lets consider some aspects of staging models to determine the ideal materialization strategy:
+Начнем с простого — со стадийных моделей. Рассмотрим некоторые аспекты стадийных моделей, чтобы определить идеальную стратегию материализации:
 
-- 🙅‍♀️ Staging models are **rarely accessed** directly by our **end users.**
-- 🧱 They need to be always up-to-date and in sync with our source data as a **building blocks** for later models
-- 🔍  It’s clear we’ll want to keep our **staging models as views**.
-- 👍  Since views are the **default materialization** in dbt, we don’t _have_ to do any specific configuration for this.
-- 💎  Still, for clarity, it’s a **good idea** to go ahead and **specify the configuration** to be explicit. We’ll want to make sure our `dbt_project.yml` looks like this:
+- 🙅‍♀️ Стадийные модели **редко запрашиваются** напрямую нашими **конечными пользователями**.
+- 🧱 Они должны всегда быть актуальными и синхронизированными с нашими исходными данными как **строительные блоки** для последующих моделей.
+- 🔍 Очевидно, что мы хотим сохранить наши **стадийные модели как представления**.
+- 👍 Поскольку представления являются **материализацией по умолчанию** в dbt, нам не _нужно_ делать какую-либо конкретную конфигурацию для этого.
+- 💎 Тем не менее, для ясности, **хорошая идея** — заранее **указать конфигурацию** для явности. Мы хотим убедиться, что наш `dbt_project.yml` выглядит так:
 
 ```yaml
 models:
@@ -54,21 +54,21 @@ models:
       +materialized: view
 ```
 
-### Table and incremental marts
+### Таблицы и инкрементальные хранилища
 
-As we’ve learned, views store only the logic of the transformation in the warehouse, so our runs take only a couple seconds per model (or less). What happens when we go to query the data though?
+Как мы узнали, представления хранят только логику преобразования в хранилище, поэтому наши запуски занимают всего несколько секунд на модель (или меньше). Но что происходит, когда мы запрашиваем данные?
 
-![Long query time from Snowflake](/img/best-practices/materializations/snowflake-query-timing.png)
+![Долгое время запроса из Snowflake](/img/best-practices/materializations/snowflake-query-timing.png)
 
-Our marts are slow to query!
+Наши хранилища медленно запрашиваются!
 
-Let’s contrast the same aspects of marts that we considered for staging models to assess the best materialization strategy:
+Давайте сопоставим те же аспекты хранилищ, которые мы рассматривали для стадийных моделей, чтобы оценить лучшую стратегию материализации:
 
-- 📊  Marts are **frequently accessed directly by our end users**, and need to be **performant.**
-- ⌛  Can often **function with intermittently refreshed data**, end user decision making in many domains is **fine with hourly or daily data.**
-- 🛠️  Given the above properties we’ve got a great use case for **building the data itself** into the warehouse, not the logic. In other words, **a table**.
-- ❓ The only decision we need to make with our marts is whether we can **process the whole table at once or do we need to do it in chunks**, that is, are we going to use the `table` materialization or `incremental`.
+- 📊 Хранилища **часто запрашиваются напрямую нашими конечными пользователями** и должны быть **производительными**.
+- ⌛ Они могут **функционировать с периодически обновляемыми данными**, конечные пользователи в многих областях **не против** данных, обновляемых раз в час или день.
+- 🛠️ Учитывая вышеуказанные свойства, у нас есть отличное применение для **построения самих данных** в хранилище, а не логики. Другими словами, **таблицы**.
+- ❓ Единственное решение, которое нам нужно принять с нашими хранилищами, это можем ли мы **обработать всю таблицу сразу или нам нужно делать это по частям**, то есть будем ли мы использовать материализацию `table` или `incremental`.
 
 :::info
-🔑 **Golden Rule of Materializations** Start with models as views, when they take too long to query, make them tables, when the tables take too long to build, make them incremental.
+🔑 **Золотое правило материализаций** Начинайте с моделей как представлений, когда они слишком долго запрашиваются, делайте их таблицами, когда таблицы слишком долго строятся, делайте их инкрементальными.
 :::

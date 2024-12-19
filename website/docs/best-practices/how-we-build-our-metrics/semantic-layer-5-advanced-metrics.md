@@ -1,64 +1,64 @@
 ---
-title: "More advanced metrics"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Более сложные метрики"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-6-terminology"
 ---
 
-## More advanced metric types
+## Более сложные типы метрик
 
-We're not limited to just passing measures through to our metrics, we can also _combine_ measures to model more advanced metrics.
+Мы не ограничены только передачей измерений в наши метрики, мы также можем _комбинировать_ измерения для моделирования более сложных метрик.
 
-- 🍊 **Ratio** metrics are, as the name implies, about **comparing two metrics as a numerator and a denominator** to form a new metric, for instance the percentage of order items that are food items instead of drinks.
-- 🧱 **Derived** metrics are when we want to **write an expression** that calculates a metric **using multiple metrics**. A classic example here is our gross profit calculated by subtracting costs from revenue.
-- ➕ **Cumulative** metrics calculate all of a **measure over a given window**, such as the past week, or if no window is supplied, the all-time total of that measure.
+- 🍊 **Метрики отношения** — это, как следует из названия, **сравнение двух метрик в качестве числителя и знаменателя** для формирования новой метрики, например, процент заказанных товаров, которые являются продуктами питания, а не напитками.
+- 🧱 **Производные** метрики — это когда мы хотим **написать выражение**, которое вычисляет метрику **с использованием нескольких метрик**. Классическим примером здесь является наша валовая прибыль, вычисляемая путем вычитания затрат из дохода.
+- ➕ **Накопительные** метрики вычисляют все **измерение за заданный период**, например, за последнюю неделю, или, если период не указан, общую сумму этого измерения за все время.
 
-## Ratio metrics
+## Метрики отношения
 
-- 🔢 We need to establish one measure that will be our **numerator**, and one that will be our **denominator**.
-- 🥪 Let's calculate the **percentage** of our Jaffle Shop revenue that **comes from food items**.
-- 💰 We already have our denominator, revenue, but we'll want to **make a new metric for our numerator** called `food_revenue`.
+- 🔢 Нам нужно установить одно измерение, которое будет нашим **числителем**, и одно, которое будет нашим **знаменателем**.
+- 🥪 Давайте вычислим **процент** нашего дохода Jaffle Shop, который **приходит от продуктов питания**.
+- 💰 У нас уже есть наш знаменатель, доход, но мы хотим **создать новую метрику для нашего числителя** под названием `food_revenue`.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 - name: food_revenue
-  description: The revenue from food in each order.
-  label: Food Revenue
+  description: Доход от продуктов питания в каждом заказе.
+  label: Доход от продуктов питания
   type: simple
   type_params:
     measure: food_revenue
 ```
 
-- 📝 Now we can set up our ratio metric.
+- 📝 Теперь мы можем настроить нашу метрику отношения.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 - name: food_revenue_pct
-  description: The % of order revenue from food.
-  label: Food Revenue %
+  description: Процент дохода от заказов, приходящего от продуктов питания.
+  label: Процент дохода от продуктов питания
   type: ratio
   type_params:
     numerator: food_revenue
     denominator: revenue
 ```
 
-## Derived metrics
+## Производные метрики
 
-- 🆙 Now let's really have some fun. One of the most important metrics for any business is not just revenue, but _revenue growth_. Let's use a derived metric to build month-over-month revenue.
-- ⚙️ A derived metric has a couple key components:
-  - 📚 A list of metrics to build on. These can be manipulated and filtered in various way, here we'll use the `offset_window` property to lag by a month.
-  - 🧮 An expression that performs a calculation with these metrics.
-- With these parts we can assemble complex logic that would otherwise need to be 'frozen' in logical models.
+- 🆙 Теперь давайте действительно повеселимся. Одна из самых важных метрик для любого бизнеса — это не просто доход, а _рост дохода_. Давайте используем производную метрику для построения роста дохода по месяцам.
+- ⚙️ Производная метрика имеет несколько ключевых компонентов:
+  - 📚 Список метрик, на основе которых будет строиться. Эти метрики могут быть обработаны и отфильтрованы различными способами, здесь мы будем использовать свойство `offset_window`, чтобы сделать задержку на месяц.
+  - 🧮 Выражение, которое выполняет вычисление с этими метриками.
+- С этими частями мы можем собрать сложную логику, которая в противном случае потребовала бы "заморозки" в логических моделях.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 - name: revenue_growth_mom
-  description: "Percentage growth of revenue compared to 1 month ago. Excluded tax"
+  description: "Процентный рост дохода по сравнению с месяцем назад. Налог исключен"
   type: derived
-  label: Revenue Growth % M/M
+  label: Процент роста дохода М/М
   type_params:
     expr: (current_revenue - revenue_prev_month) * 100 / revenue_prev_month
     metrics:
@@ -69,17 +69,17 @@ We're not limited to just passing measures through to our metrics, we can also _
         alias: revenue_prev_month
 ```
 
-## Cumulative metrics
+## Накопительные метрики
 
-- ➕ Lastly, lets build a **cumulative metric**. In keeping with our theme of business priorities, let's continue with revenue and build an **all-time revenue metric** for any given time window.
-- 🪟 All we need to do is indicate the type is `cumulative` and not supply a `window` in the `type_params`, which indicates we want cumulative for the entire time period our end users select.
+- ➕ Наконец, давайте создадим **накопительную метрику**. В соответствии с нашей темой бизнес-приоритетов, давайте продолжим с доходом и создадим **метрику общего дохода** за любой заданный период.
+- 🪟 Все, что нам нужно сделать, это указать, что тип — `cumulative`, и не указывать `window` в `type_params`, что указывает на то, что мы хотим накопительную метрику за весь период, который выберут наши конечные пользователи.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 - name: cumulative_revenue
-  description: The cumulative revenue for all orders.
-  label: Cumulative Revenue (All Time)
+  description: Накопительный доход от всех заказов.
+  label: Накопительный доход (за все время)
   type: cumulative
   type_params:
     measure: revenue

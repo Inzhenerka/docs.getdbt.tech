@@ -1,14 +1,14 @@
 ---
 id: dakota-kelley
-title: Dakota Kelley
+title: Дакота Келли
 description: |
-  For the last ~2 years I've worked at phData. Before that I spent 8 years working as a Software Developer in the public sector. Currently I'm a Solution Architect, helping our customers and clients implement dbt on Snowflake, working across multiple cloud providers.
+  В течение последних ~2 лет я работал в компании phData. До этого я провел 8 лет, работая разработчиком программного обеспечения в государственном секторе. В настоящее время я являюсь архитектором решений, помогающим нашим клиентам внедрять dbt на платформе Snowflake, работая с несколькими облачными провайдерами.
 
-  I first started reading about dbt when I was in grad school about 3 years ago. When I began with phData I had a fantastic opportunity to work with dbt. From there I feel in love with the Engineering practices and structure that I always felt were missing from Data Work. Since then, I've been fortunate enough to speak at Coalesce 2022 and at <a href="https://www.youtube.com/watch?v=414-URZnZVY" rel="noopener noreferrer" target="_blank">Coalesce 2023</a>. On top of this, I've written numerous blogs about dbt as well.
+  Я впервые начал читать о dbt, когда учился в аспирантуре около 3 лет назад. Когда я начал работать в phData, у меня появилась замечательная возможность поработать с dbt. С тех пор я влюбился в инженерные практики и структуру, которых мне всегда не хватало в работе с данными. С тех пор мне повезло выступить на Coalesce 2022 и на <a href="https://www.youtube.com/watch?v=414-URZnZVY" rel="noopener noreferrer" target="_blank">Coalesce 2023</a>. Кроме того, я написал множество блогов о dbt.
 image: /img/community/spotlight/dakota.jpg
-pronouns: he/him
-location: Edmond, USA
-jobTitle: Solution Architect
+pronouns: он/его
+location: Эдмонд, США
+jobTitle: Архитектор решений
 companyName: phData
 socialLinks:
   - name: LinkedIn
@@ -19,14 +19,14 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">joined the dbt Community</a> not too long after my first working experience. One of my passions is giving back and helping others, and being a part of the community allows me to help others with problems I've tackled before. Along the way it helps me learn new ways and see different methods to solve a wide variety of problems. Every time I interact with the community I've learned something new and that energizes me.
+Я <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">присоединился к сообществу dbt</a> вскоре после своего первого рабочего опыта. Одна из моих страстей — это помощь другим, и участие в сообществе позволяет мне помогать людям с проблемами, с которыми я уже сталкивался. В процессе я учусь новым подходам и вижу различные методы решения самых разных задач. Каждый раз, когда я взаимодействую с сообществом, я узнаю что-то новое, и это меня вдохновляет.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-This is a tough one. I know there are several, but the main qualities I resonate with are from those who dig in and help each other. There are always nuances to others situations, and it's good to dig in together, understand those, and seek a solution. The other quality I look for is someone who is trying to pull others up with them. At the end of the day we should all be striving to make all things better than they were when we arrived, regardless if that's the dbt Community or the local park we visit for rest and relaxation.
+Это сложный вопрос. Я знаю, что таких людей много, но основные качества, с которыми я себя ассоциирую, — это те, кто углубляется в проблемы и помогает друг другу. Всегда есть нюансы в ситуациях других людей, и хорошо разбираться в них вместе, понимать их и искать решение. Другим качеством, которое я ценю, является стремление подтянуть других за собой. В конце концов, мы все должны стремиться сделать все лучше, чем было, когда мы пришли, независимо от того, идет ли речь о сообществе dbt или о местном парке, который мы посещаем для отдыха и расслабления.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-The thing I hope others take away from me, is to genuinely support others and tackle problems with curiosity. There used to be a time where I was always worried about being wrong, so I wouldn't get too involved. It's okay to be wrong, that's how we learn new ways to handle problems and find new ways to grow. We just all have to be open to learning and trying our best to help and support each other.
+Я надеюсь, что другие смогут извлечь из моего опыта урок о том, как искренне поддерживать других и подходить к решению проблем с любопытством. Раньше я всегда беспокоился о том, что могу ошибиться, поэтому не слишком вовлекался. Ошибаться — это нормально, так мы учимся новым способам решения проблем и находим новые пути для роста. Нам всем нужно быть открытыми к обучению и стараться изо всех сил помогать и поддерживать друг друга.

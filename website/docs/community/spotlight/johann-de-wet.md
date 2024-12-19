@@ -2,9 +2,9 @@
 id: johann-de-wet
 title: Johann de Wet
 description: |
-  I'm forever indebted to my manager, John Pienaar, who introduced me to both dbt and it's community when I joined his team as an Analytics Engineer at the start of 2022. I often joke about my career before dbt and after dbt. Our stack includes Fivetran, Segment, Airflow and BigQuery to name a few.
-  Prior to that I was a business intelligence consultant for 16 years working at big financial corporates. During this time I've had the opportunity to work in many different roles from front end development to data engineering and data warehouse platform development.
-  The only two constants in my career have been SQL en Ralph Kimball's Dimension Modeling methodology...which probably makes me a bit partial to those.
+  Я навсегда обязан своему менеджеру, Джону Пиенару, который познакомил меня как с dbt, так и с его сообществом, когда я присоединился к его команде в качестве аналитического инженера в начале 2022 года. Я часто шучу о своей карьере до dbt и после dbt. В нашем стеке есть Fivetran, Segment, Airflow и BigQuery, чтобы назвать лишь некоторые.
+  Ранее я работал консультантом по бизнес-аналитике в течение 16 лет в крупных финансовых корпорациях. За это время у меня была возможность работать в самых разных ролях — от фронтенд-разработки до инженерии данных и разработки платформы хранилищ данных.
+  Единственными двумя постоянными в моей карьере были SQL и методология моделирования измерений Ральфа Кимбала... что, вероятно, делает меня немного предвзятым к ним.
 image: /img/community/spotlight/johann-dewett.jpg
 pronouns: he/him
 location: Paarl, South Africa
@@ -19,22 +19,22 @@ hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community at the start of 2022 when I joined my current company. Having the community available to me from the start of my dbt career was invaluable not only in helping me get up to speed on dbt quickly but also in making me aware of so many capabilities, optimisations and solutions to problems that others have implemented. The knowledge gained here goes much further than just dbt itself.
+Я присоединился к сообществу dbt в начале 2022 года, когда пришел в свою текущую компанию. Наличие сообщества с самого начала моей карьеры в dbt было бесценным не только для того, чтобы быстро освоить dbt, но и для того, чтобы узнать о множестве возможностей, оптимизаций и решений проблем, которые реализовали другие. Полученные здесь знания выходят далеко за пределы самого dbt.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-It feels almost unfair to single out members where there are so many but people like Dave Connors and Benoit Perigaud really represent what this community is about in my opinion. Prompt, proficient, passionate and polite...all the P's you could want. Someone like Sara Leon also deserves a shoutout for keeping us abreast of the newest developments in dbt and also making us feel even more connected to the community.
+Кажется почти несправедливым выделять отдельных участников, когда их так много, но такие люди, как Дэйв Коннорс и Бенуа Периго, действительно представляют то, о чем это сообщество, на мой взгляд. Быстрые, профессиональные, увлеченные и вежливые... все те качества, которые вы могли бы пожелать. Также стоит отметить Сару Леон за то, что она держит нас в курсе новейших разработок в dbt и помогает нам чувствовать себя еще более связанными с сообществом.
 
-As for myself, I would like to make some contributions to dbt's codebase in the future to be able to assist the dbt engineers who have offered so much to us dbt users over the years.
+Что касается меня, я хотел бы внести некоторые вклады в кодовую базу dbt в будущем, чтобы помочь инженерам dbt, которые так много сделали для нас, пользователям dbt, на протяжении многих лет.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь, что другие смогут научиться у вас?
 
-I learned that community members are incredibly passionate about dbt as well as helping other members by sharing their knowledge and also contributing to dbt itself which is to everyone's benefit ultimately.
+Я узнал, что члены сообщества невероятно увлечены dbt, а также помогают другим участникам, делясь своими знаниями и внося свой вклад в сам dbt, что в конечном итоге приносит пользу всем.
 
-I try to help regardless of how "simple" a question may be. Even if it's been asked and answered a thousand times before for that person it's new and potentially a real blocker in their world. I remind myself that we were all new to dbt at some stage and every bit of help along the way got us to where we are now.
+Я стараюсь помогать, независимо от того, насколько "простой" может быть вопрос. Даже если он задавался и на него отвечали тысячу раз, для этого человека он новый и потенциально может стать реальной преградой в его мире. Я напоминаю себе, что мы все когда-то были новичками в dbt, и каждая помощь на этом пути привела нас к тому, где мы находимся сейчас.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-I'm hoping to attend my first Coalesce event in Las Vegas later this year.
+Я надеюсь посетить свое первое мероприятие Coalesce в Лас-Вегасе позже в этом году.

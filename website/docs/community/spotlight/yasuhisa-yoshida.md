@@ -1,13 +1,13 @@
 ---
 id: yasuhisa-yoshida
-title: Yasuhisa Yoshida
+title: Ясухиса Ёсида
 description: |
-  I currently work as a data engineer at a startup called <a href="https://10x.co.jp/">10X.</a> Specifically, I work with BigQuery to provide data marts for business users. Before using dbt, the queries for creating data marts were overly complex and lengthy, resulting in low data quality.  With dbt, we have improved our process by breaking down queries into manageable parts, visualizing data lineage, and enabling easy creation of tests.
-  I am actively involved in the dbt community and share our insights on using dbt at #local-tokyo. Specifically, I shared our experiences with efficient metadata management using dbt-osmosis, and visualizing data quality using elementary.
+  В настоящее время я работаю инженером данных в стартапе под названием <a href="https://10x.co.jp/">10X.</a> В частности, я работаю с BigQuery, чтобы предоставлять дата-марты для бизнес-пользователей. Прежде чем начать использовать dbt, запросы для создания дата-мартов были чрезмерно сложными и длинными, что приводило к низкому качеству данных. С помощью dbt мы улучшили наш процесс, разбив запросы на управляемые части, визуализировав происхождение данных и упростив создание тестов.
+  Я активно участвую в сообществе dbt и делюсь нашими идеями по использованию dbt на #local-tokyo. В частности, я поделился нашим опытом эффективного управления метаданными с использованием dbt-osmosis и визуализации качества данных с помощью elementary.
 image: /img/community/spotlight/yasuhisa-yoshida.jpg
-pronouns: he/him
-location: Kyoto, Japan
-jobTitle: Data Engineer
+pronouns: он/его
+location: Киото, Япония
+jobTitle: Инженер данных
 companyName: 10X, Inc
 organization: "datatech-jp"
 socialLinks:
@@ -15,35 +15,35 @@ socialLinks:
     link: https://twitter.com/syou6162
   - name: LinkedIn
     link: https://jp.linkedin.com/in/yasuhisa-yoshida-077b7b43
-  - name: Personal Website
+  - name: Личный сайт
     link: https://www.yasuhisay.info
 dateCreated: 2024-05-03
 hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined dbt's Slack at the end of 2021. I often follow dbt's Slack because it offers insights into dbt that I could not have gained on my own.
+Я присоединился к Slack dbt в конце 2021 года. Я часто следую за Slack dbt, потому что он предлагает идеи о dbt, которые я не мог бы получить самостоятельно.
 
-I also enjoy presenting my company's findings at the [Tokyo dbt Meetup](https://www.meetup.com/ja-JP/tokyo-dbt-meetup/) and receiving feedback from dbt community members outside my company. Participating in the dbt community frequently sparks ideas on how to enhance my company's data infrastructure.
+Мне также нравится представлять результаты своей компании на [Tokyo dbt Meetup](https://www.meetup.com/ja-JP/tokyo-dbt-meetup/) и получать отзывы от участников сообщества dbt вне моей компании. Участие в сообществе dbt часто вдохновляет меня на идеи о том, как улучшить инфраструктуру данных моей компании.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Although dbt is already a widely used tool, it is still young and actively being developed. Therefore, there may occasionally be times when there are small bugs, or you might not understand how to use it.
+Хотя dbt уже является широко используемым инструментом, он все еще молод и активно развивается. Поэтому иногда могут возникать небольшие ошибки, или вы можете не понимать, как его использовать.
 
-In such cases, you can ask questions on the dbt Slack or submit an issue on GitHub. These actions can lead to a direct solution to the problem and often help other community members who are struggling with similar issues—you are not the only one! I have been helped many times by seeing these types of questions from others on dbt Slack and GitHub issues.
+В таких случаях вы можете задавать вопросы в Slack dbt или отправлять проблему на GitHub. Эти действия могут привести к прямому решению проблемы и часто помогают другим участникам сообщества, которые сталкиваются с аналогичными вопросами — вы не одиноки! Я много раз получал помощь, видя такие вопросы от других в Slack dbt и на GitHub.
 
-Of course, answering questions and submitting pull requests on GitHub is also a great way to contribute to the community. However, starting with small contributions is perfectly fine. I would like to continue doing these kinds of activities to make the community more active.
+Конечно, отвечать на вопросы и отправлять pull-запросы на GitHub — это также отличный способ внести свой вклад в сообщество. Однако начинать с небольших вкладов совершенно нормально. Я хотел бы продолжать заниматься такими видами деятельности, чтобы сделать сообщество более активным.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от участников сообщества? Чему вы надеетесь научить других?
 
-dbt is widely used by various types of businesses, from startups needing fast development to enterprises requiring robust data quality. Different business phases and industries have diverse data requirements.
+dbt широко используется различными типами бизнеса, от стартапов, нуждающихся в быстром развитии, до крупных предприятий, требующих надежного качества данных. Разные фазы бизнеса и отрасли имеют разнообразные требования к данным.
 
-In the dbt community, members actively share best practices and lessons from failures, helping you adapt dbt to your company's needs. Having observed many such use cases, we have learned to deliver value to business users through  dimensional modeling and tools like [AutomateDV](https://automate-dv.readthedocs.io/en/latest/).
+В сообществе dbt участники активно делятся лучшими практиками и уроками из неудач, помогая адаптировать dbt к потребностям вашей компании. Наблюдая за многими такими примерами, мы научились предоставлять ценность бизнес-пользователям через многомерное моделирование и инструменты, такие как [AutomateDV](https://automate-dv.readthedocs.io/en/latest/).
 
-I am confident that you can find use cases on dbt Slack that match your company’s business needs, and I encourage you to share the practices and insights you gain from using these tools with the community.
+Я уверен, что вы можете найти примеры использования в Slack dbt, которые соответствуют бизнес-потребностям вашей компании, и призываю вас делиться практиками и идеями, которые вы получаете от использования этих инструментов, с сообществом.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-dbt and the surrounding ecosystem are powerful allies for data engineers and analytics engineers. Let's work together as dbt community members to further enhance these tools and build a better world!
+dbt и окружающая экосистема являются мощными союзниками для инженеров данных и аналитических инженеров. Давайте работать вместе как участники сообщества dbt, чтобы еще больше улучшить эти инструменты и построить лучший мир!

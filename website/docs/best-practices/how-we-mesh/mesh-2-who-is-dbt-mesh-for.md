@@ -1,53 +1,53 @@
 ---
-title: Who is dbt Mesh for?
-description: Understanding if dbt Mesh is the right fit for your team
-hoverSnippet: Learn how to get started with dbt Mesh
+title: Для кого предназначен dbt Mesh?
+description: Понимание того, подходит ли dbt Mesh вашей команде
+hoverSnippet: Узнайте, как начать работу с dbt Mesh
 ---
 
-Before embarking on a dbt Mesh implementation, it's important to understand if dbt Mesh is the right fit for your team. Here, we outline three common organizational structures to help teams identify whether dbt Mesh might fit your organization's needs. 
+Перед тем как приступить к внедрению dbt Mesh, важно понять, подходит ли он вашей команде. Здесь мы описываем три распространенные организационные структуры, чтобы помочь командам определить, может ли dbt Mesh удовлетворить потребности вашей организации.
 
-## The enterprise data mesh
+## Корпоративная сетка данных
 
-Some data teams operate on a global scale. By definition, the team needs to manage, deploy, and distribute data products across a large number of teams. Central IT may own some data products or simply own the platform upon which data products are built. Often, these organizations have “architects” who can advise line-of-business teams on their work while keeping track of what’s happening globally (regarding tooling and the substance of work). This is a lot like how software organizations work beyond a certain scale.
+Некоторые команды по работе с данными действуют на глобальном уровне. По определению, команде необходимо управлять, разрабатывать и распределять продукты данных среди большого числа команд. Центральный ИТ-отдел может владеть некоторыми продуктами данных или просто управлять платформой, на которой создаются продукты данных. Часто в таких организациях есть «архитекторы», которые могут консультировать команды, ориентированные на бизнес, по их работе, одновременно отслеживая, что происходит в глобальном масштабе (в отношении инструментов и содержания работы). Это похоже на то, как работают программные организации за пределами определенного масштаба.
 
-The headcount ratio of platform team to domain teams in this scenario is roughly ≥10:1. For each member of the central platform team, there might be dozens of members of domain-aligned data teams.
+Соотношение численности команды платформы к командам по предметной области в этом сценарии составляет примерно ≥10:1. На каждого члена центральной платформенной команды может приходиться десятки членов команд, ориентированных на предметную область.
 
-Is dbt Mesh a good fit in this scenario? Absolutely! There is no other way to share data products at scale. One dbt project would not keep up with the global demands of an organization like this.
+Подходит ли dbt Mesh в этом сценарии? Абсолютно! Нет другого способа делиться продуктами данных в масштабах. Один проект dbt не сможет удовлетворить глобальные потребности такой организации.
 
-### Tips and tricks
+### Советы и рекомендации
 
-- **Managing shared macros**: Teams operating at this scale will benefit from a separate repository containing a dbt package of reusable utility macros that all other projects will install. This is different from public models, which provide data-as-a-service (a set of “API endpoints”) — this is distributed as a **library**. This package can also standardize imports of other third-party packages, as well as providing wrappers / shims for those macros. This package should have a dedicated team of maintainers — probably the central platform team, or a set of “superusers” from domain-aligned data modeling teams.
+- **Управление общими макросами**: Команды, работающие в таком масштабе, получат выгоду от отдельного репозитория, содержащего пакет dbt с переиспользуемыми утилитными макросами, которые будут устанавливаться во всех других проектах. Это отличается от публичных моделей, которые предоставляют данные как услугу (набор «API-эндпоинтов») — это распределяется как **библиотека**. Этот пакет также может стандартизировать импорты других сторонних пакетов, а также предоставлять обертки / шимы для этих макросов. Этот пакет должен иметь выделенную команду поддерживающих — вероятно, центральную платформенную команду или группу «суперпользователей» из команд моделирования данных, ориентированных на предметную область.
 
-### Adoption challenges
+### Проблемы внедрения
 
-- Onboarding hundreds of people and dozens of projects is full of friction! The challenges of a scaled, global organization are not to be underestimated. To start the migration, prioritize teams that have strong dbt familiarity and fundamentals. dbt Mesh is an advancement of core dbt deployments, so these teams are likely to have a smoother transition. 
-  
-  Additionally, prioritize teams that manage strategic data assets that need to be shared widely. This ensures that dbt Mesh will help your teams deliver concrete value quickly.
+- Ввод в эксплуатацию сотен людей и десятков проектов полон трений! Проблемы масштабированной глобальной организации не следует недооценивать. Для начала миграции приоритизируйте команды, которые хорошо знакомы с dbt и основами. dbt Mesh является развитием основных развертываний dbt, поэтому этим командам, вероятно, будет легче перейти.
 
-If this sounds like your organization, dbt Mesh is the architecture you should pursue. ✅
+  Кроме того, приоритизируйте команды, которые управляют стратегическими активами данных, которые необходимо широко делиться. Это гарантирует, что dbt Mesh поможет вашим командам быстро предоставить конкретную ценность.
 
-## Hub and spoke
+Если это похоже на вашу организацию, dbt Mesh — это архитектура, которую вам следует рассмотреть. ✅
 
-Some slightly smaller organizations still operate with a central data team serving several business-aligned analytics teams in a ~5:1 headcount ratio. These central teams look less like an IT function and more like a modern data platform team of analytics engineers. This team provides the majority of the data products to the rest of the org, as well as the infrastructure for downstream analytics teams to spin up their own spoke projects to ensure quality and maintenance of the core platform.
+## Хаб и спица
 
-Is dbt Mesh a good fit in this scenario? Almost certainly! If your central data team starts to bottleneck analysts’ work, you need a way for those teams to operate relatively independently while still ensuring the quality of the most used data products. dbt Mesh is designed to solve this exact problem.
+Некоторые немного меньшие организации все еще работают с центральной командой данных, обслуживающей несколько аналитических команд, ориентированных на бизнес, в соотношении численности ~5:1. Эти центральные команды выглядят меньше как ИТ-функция и больше как современная команда платформы данных аналитических инженеров. Эта команда предоставляет большинство продуктов данных остальной части организации, а также инфраструктуру для последующих аналитических команд, чтобы они могли создавать свои собственные проекты-спицы, обеспечивая качество и поддержку основной платформы.
 
-### Tips and tricks
+Подходит ли dbt Mesh в этом сценарии? Почти наверняка! Если ваша центральная команда данных начинает создавать узкие места в работе аналитиков, вам нужен способ, чтобы эти команды могли работать относительно независимо, при этом обеспечивая качество наиболее используемых продуктов данных. dbt Mesh разработан для решения этой конкретной проблемы.
 
-- **Data products by some, for all:** The spoke teams shouldn’t produce public models. By contrast, development in the hub team project should be slower, more careful, and focus on producing foundational public models shared across domains. We’d recommend giving hub team members access (at least read-only) to downstream projects, which will help with more granular impact analysis within dbt Explorer. If a public model isn’t used in any downstream project or a specific column in that model, the hub team can feel better about removing it. However, they should still utilize the dbt governance features like `deprecation_date` and `version` as appropriate to set expectations. If there is a need for a public model in a spoke project to be shared across multiple projects, consider first whether it could or should be moved to the hub project.
-- **Sources:** Spokes should be allowed/encouraged to define and use _domain-specific_ data sources. The platform team should not need to worry about, say, `Thinkific` data when building core data marts, but the Training project may need to. _No two sources anywhere in a dbt mesh should point to the same relation object._ If a spoke feels like they need to use a source the hub already uses, the interfaces should change so that the spoke can get what they need from the platform project.
-- **Project quality:** More analyst-focused teams will have different skill levels & quality bars. Owning their data means they own the consequences as well. Rather than being accountable for the end-to-end delivery of data assets, the Hub team is an enablement team: their role is to provide guardrails and quality checks, but not to fix all the issues exactly to their liking (and thereby remain a bottleneck).
+### Советы и рекомендации
 
-### Adoption challenges
+- **Продукты данных от одних, для всех:** Команды-спицы не должны производить публичные модели. Напротив, разработка в проекте команды хаба должна быть медленнее, более осторожной и сосредоточенной на создании фундаментальных публичных моделей, общих для всех предметных областей. Мы рекомендуем предоставить членам команды хаба доступ (по крайней мере, только для чтения) к downstream проектам, что поможет с более детальным анализом воздействия в dbt Explorer. Если публичная модель не используется в каком-либо downstream проекте или конкретном столбце в этой модели, команда хаба может чувствовать себя лучше, удаляя ее. Тем не менее, они все равно должны использовать функции управления dbt, такие как `deprecation_date` и `version`, чтобы установить ожидания. Если есть необходимость в публичной модели в проекте-спице, которая должна быть общей для нескольких проектов, сначала подумайте, можно ли или следует ли переместить ее в проект хаба.
+- **Источники:** Спицам следует разрешить/поощрять определять и использовать _специфические для предметной области_ источники данных. Команда платформы не должна беспокоиться о, скажем, данных `Thinkific`, когда строит основные хранилища данных, но проект по обучению может это делать. _Ни один источник в сетке dbt не должен указывать на один и тот же объект отношения._ Если спица чувствует, что ей нужно использовать источник, который уже использует хаб, интерфейсы должны измениться так, чтобы спица могла получить то, что ей нужно из проектной платформы.
+- **Качество проекта:** Более ориентированные на аналитиков команды будут иметь разные уровни навыков и стандарты качества. Владение своими данными означает, что они также несут ответственность за последствия. Вместо того чтобы нести ответственность за полную доставку активов данных, команда хаба является командой поддержки: их роль заключается в предоставлении рамок и проверок качества, но не в исправлении всех проблем так, как им нравится (и тем самым оставаться узким местом).
 
-There are trade-offs to using this architecture, especially for the hub team managing and maintaining public models. This workflow has intentional friction to reduce the chances of unintentional model changes that break unspoken data contracts. These assurances may come with some sacrifices, such as faster onboarding or more flexible development workflows. Compared to having a single project, where a select few are doing all the development work, this architecture optimizes for slower development from a wider group of people.
+### Проблемы внедрения
 
-If this sounds like your organization, it's very likely that dbt Mesh is a good fit for you. ✅
+Существуют компромиссы при использовании этой архитектуры, особенно для команды хаба, управляющей и поддерживающей публичные модели. Этот рабочий процесс имеет намеренные трения, чтобы уменьшить вероятность непреднамеренных изменений модели, которые нарушают неформальные контракты данных. Эти гарантии могут сопровождаться некоторыми жертвами, такими как более медленный ввод в эксплуатацию или более гибкие рабочие процессы разработки. По сравнению с наличием одного проекта, где несколько человек выполняют всю работу по разработке, эта архитектура оптимизирует более медленную разработку от более широкой группы людей.
 
-## Single team monolith
+Если это похоже на вашу организацию, очень вероятно, что dbt Mesh хорошо вам подходит. ✅
 
-Some organizations operate on an even smaller scale. If your data org is a single small team that controls the end-to-end process of building and maintaining all data products at the organization, dbt Mesh may not be required. The complexity in projects comes from having a wide variety of data sources and stakeholders. However, given the team's size, operating on a single codebase may be the most efficient way to manage data products. Generally, if a team of this size and scope is looking to implement dbt Mesh, it's likely that they are looking for better interface design and/or performance improvements for certain parts of their dbt DAG, and not because they necessarily have an organizational pain point to solve.
+## Монолит одной команды
 
-_Is dbt Mesh a good fit?_  Maybe! There are reasons to separate out parts of a large monolithic project into several to better orchestrate and manage the models. However, if the same people are managing each project, they may find that the overhead of managing multiple projects is not worth the benefits.
+Некоторые организации работают на еще меньшем масштабе. Если ваша команда по работе с данными — это одна небольшая команда, которая контролирует весь процесс создания и поддержки всех продуктов данных в организации, dbt Mesh может не потребоваться. Сложность проектов возникает из-за наличия широкого спектра источников данных и заинтересованных сторон. Однако, учитывая размер команды, работа на одной кодовой базе может быть наиболее эффективным способом управления продуктами данных. Обычно, если команда такого размера и масштаба рассматривает внедрение dbt Mesh, вероятно, они ищут улучшения в дизайне интерфейса и/или производительности для определенных частей своего dbt DAG, а не потому, что у них обязательно есть организационная проблема, которую нужно решить.
 
-If this sounds like your organization, it's worth considering whether dbt Mesh is a good fit for you.
+_Подходит ли dbt Mesh?_ Возможно! Есть причины разделить части большого монолитного проекта на несколько, чтобы лучше организовать и управлять моделями. Однако, если одни и те же люди управляют каждым проектом, они могут обнаружить, что затраты на управление несколькими проектами не стоят получаемых преимуществ.
+
+Если это похоже на вашу организацию, стоит рассмотреть, подходит ли вам dbt Mesh.

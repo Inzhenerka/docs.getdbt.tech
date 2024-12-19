@@ -1,18 +1,18 @@
 ---
 id: tyler-rouze
-title: Tyler Rouze
+title: Тайлер Руз
 description: |
-  My journey in data started all the way back in college where I studied Industrial Engineering. One of the core topics you learn in this program is mathematical optimization, where we often use data files as inputs to model constraints on these kinds of problems! Since then, I've been a data analyst on both small and large teams, and more recently a consultant shepherding our firm's dbt-based projects towards success.
+  Мое путешествие в мир данных началось еще в колледже, где я изучал промышленную инженерию. Одной из основных тем, которые вы изучаете в этой программе, является математическая оптимизация, где мы часто используем файлы данных в качестве входных данных для моделирования ограничений в таких задачах! С тех пор я работал аналитиком данных как в небольших, так и в крупных командах, а в последнее время — консультантом, направляющим проекты нашей фирмы на основе dbt к успеху.
 
-  Since joining the dbt Community, I've spoken at the <a href="https://www.meetup.com/chicago-dbt-meetup/">Chicago dbt Meetup</a>, <a href="https://coalesce.getdbt.com/speakers/tyler-rouze">Coalesce</a> (a milestone for my career!), dbt's Data Leaders Series, and even made open source contributions to `dbt-core`! It has been the joy of my career to be a part of this vibrant community.
+  С тех пор как я присоединился к сообществу dbt, я выступал на <a href="https://www.meetup.com/chicago-dbt-meetup/">Chicago dbt Meetup</a>, <a href="https://coalesce.getdbt.com/speakers/tyler-rouze">Coalesce</a> (это был важный этап в моей карьере!), в серии Data Leaders от dbt и даже сделал открытые вклады в `dbt-core`! Для меня было радостью быть частью этого яркого сообщества.
 image: /img/community/spotlight/tyler-rouze.jpg
-pronouns: he/him
-location: Austin, TX, USA
-jobTitle: Managing Consultant
+pronouns: он/его
+location: Остин, Техас, США
+jobTitle: Управляющий консультант
 companyName: Analytics8
 organization: Chicago dbt Meetup
 socialLinks:
-  - name: Website
+  - name: Вебсайт
     link: https://tylerrouze.com
   - name: LinkedIn
     link: https://www.linkedin.com/in/tylerrouze
@@ -21,16 +21,16 @@ hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community a few years back, and if you've seen me speak you'll know that discovering dbt was a very "lightbulb on" moment for me as a data analyst in a past life. Making the data transformation process more visible and accessible to less technical backgrounds made a lot of sense to me, data analysts understand best how to derive value from your organization's data!
+Я присоединился к сообществу dbt несколько лет назад, и если вы видели, как я выступаю, вы знаете, что открытие dbt стало для меня настоящим "озарением" как для аналитика данных в прошлом. Сделать процесс трансформации данных более видимым и доступным для людей с менее техническим бэкграундом было для меня очень логично, аналитики данных лучше всего понимают, как извлечь ценность из данных вашей организации!
 
-While I do still get to be hands-on with dbt, I now spend more of my time thinking about architecting dbt implementations and building analytics teams around it. The beautiful thing about this industry is that we've made great strides in solving our technical problems, the biggest challenges we now face are more socio-technical and process-based which is just as interesting to me!
+Хотя я все еще активно работаю с dbt, теперь я больше времени уделяю архитектуре внедрения dbt и созданию аналитических команд вокруг этого. Прекрасно то, что в этой отрасли мы добились значительных успехов в решении наших технических проблем, и теперь самые большие вызовы, с которыми мы сталкиваемся, более социо-технические и процессные, что для меня также очень интересно!
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Leadership is a weird thing because you don't really realize you are a leader until you've been performing "leadership activities" for a while, so I'm honestly not sure what kind of leader I am yet. I made a commitment to myself a while back to share and talk about the things I was working on publicly in the event that someone else might find it useful, and hopefully had ideas of their own to offer me. The benefit of this is that it opens up a dialogue for our industry to evolve our best practices over time. If you've seen me speak, it's not uncommon for me to posit ideas during the talks I've given that aren't fully developed. My hope is that through a little bit of vulnerability others will feel that there's a place for them to share what they're working on and thinking about too, regardless of how polished it is!
+Лидерство — это странная вещь, потому что вы не осознаете, что являетесь лидером, пока не начнете выполнять "лидерские действия" в течение некоторого времени, поэтому я честно не уверен, каким лидером я являюсь. Я сделал себе обещание некоторое время назад делиться и говорить о том, над чем я работаю, публично, на случай, если кто-то другой найдет это полезным и, возможно, предложит свои идеи. Преимущество этого в том, что это открывает диалог для нашей отрасли, чтобы со временем развивать наши лучшие практики. Если вы видели, как я выступаю, не редкость, что я выдвигаю идеи во время своих выступлений, которые еще не полностью разработаны. Я надеюсь, что через немного уязвимости другие почувствуют, что у них есть место, чтобы поделиться тем, над чем они работают и о чем думают, независимо от того, насколько это отшлифовано!
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-In similar thinking to the kind of leadership I try to exemplify, I've found that the more I give to the community, the more I get in return. Contributing to the dbt Community has given me the ability to have numerous conversations with other practitioners about the problems they face in their role and how they've solved them, which in turn makes me better at my job. There is so much we can learn from others, but someone has to start the conversation!
+В соответствии с тем видом лидерства, который я стараюсь демонстрировать, я обнаружил, что чем больше я отдаю сообществу, тем больше получаю взамен. Участие в сообществе dbt дало мне возможность провести множество бесед с другими практиками о проблемах, с которыми они сталкиваются в своей роли, и о том, как они их решают, что, в свою очередь, делает меня лучше в своей работе. Мы можем многому научиться у других, но кто-то должен начать разговор!

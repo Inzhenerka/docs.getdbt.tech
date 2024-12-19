@@ -1,48 +1,48 @@
 ---
-title: "Building metrics"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Создание метрик"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-5-advanced-metrics"
 ---
 
-## How to build metrics
+## Как создать метрики
 
-- 💹 We'll start with one of the most important metrics for any business: **revenue**.
-- 📖 For now, our metric for revenue will be **defined as the sum of order totals excluding tax**.
+- 💹 Мы начнем с одной из самых важных метрик для любого бизнеса: **выручка**.
+- 📖 На данный момент наша метрика для выручки будет **определена как сумма общих заказов без учета налогов**.
 
-## Defining revenue
+## Определение выручки
 
-- 🔢 Metrics have four basic properties:
-  - `name:` We'll use 'revenue' to reference this metric.
-  - `description:` For documentation.
-  - `label:` The display name for the metric in downstream tools.
-  - `type:` one of `simple`, `ratio`, or `derived`.
-- 🎛️ Each type has different `type_params`.
-- 🛠️ We'll build a **simple metric** first to get the hang of it, and move on to ratio and derived metrics later.
-- 📏 Simple metrics are built on a **single measure defined as a type parameter**.
-- 🔜 Defining **measures as their own distinct component** on semantic models is critical to allowing the **flexibility of more advanced metrics**, though simple metrics act mainly as **pass-through that provide filtering** and labeling options.
+- 🔢 Метрики имеют четыре основные свойства:
+  - `name:` Мы будем использовать 'revenue' для ссылки на эту метрику.
+  - `description:` Для документации.
+  - `label:` Отображаемое имя метрики в инструментах нижнего уровня.
+  - `type:` один из `simple`, `ratio` или `derived`.
+- 🎛️ Каждый тип имеет разные `type_params`.
+- 🛠️ Сначала мы создадим **простую метрику**, чтобы разобраться в этом, а затем перейдем к метрикам отношения и производным метрикам.
+- 📏 Простые метрики строятся на **одном измерении, определенном как параметр типа**.
+- 🔜 Определение **измерений как отдельных компонентов** в семантических моделях критически важно для обеспечения **гибкости более сложных метрик**, хотя простые метрики в основном действуют как **передатчики, которые предоставляют возможности фильтрации** и маркировки.
 
 <File name="models/marts/orders.yml" />
 
 ```yml
 metrics:
   - name: revenue
-    description: Sum of the order total.
-    label: Revenue
+    description: Сумма общего заказа.
+    label: Выручка
     type: simple
     type_params:
       measure: order_total
 ```
 
-## Query your metric
+## Запрос вашей метрики
 
-You can use the dbt Cloud CLI for metric validation or queries during development, via the `dbt sl` set of subcommands. Here are some useful examples:
+Вы можете использовать dbt Cloud CLI для проверки метрик или запросов во время разработки с помощью набора подкоманд `dbt sl`. Вот несколько полезных примеров:
 
 ```bash
 dbt sl query revenue --group-by metric_time__month
-dbt sl list dimensions --metrics revenue # list all dimensions available for the revenue metric
+dbt sl list dimensions --metrics revenue # список всех доступных измерений для метрики выручки
 ```
 
-- It's best practice any time we're updating our Semantic Layer code to run `dbt parse` to update our development semantic manifest.
-- `dbt sl query` is not how you would typically use the tool in production, that's handled by the dbt Cloud Semantic Layer's features. It's available for testing results of various metric queries in development, exactly as we're using it now.
-- Note the structure of the above query. We select the metric(s) we want and the dimensions to group them by — we use dunders (double underscores e.g.`metric_time__[time bucket]`) to designate time dimensions or other non-unique dimensions that need a specified entity path to resolve (e.g. if you have an orders location dimension and an employee location dimension both named 'location' you would need dunders to specify `orders__location` or `employee__location`).
+- Рекомендуется каждый раз, когда мы обновляем наш код семантического слоя, запускать `dbt parse`, чтобы обновить наш семантический манифест разработки.
+- `dbt sl query` не является тем, как вы обычно будете использовать инструмент в производственной среде, это обрабатывается функциями семантического слоя dbt Cloud. Он доступен для тестирования результатов различных запросов метрик в процессе разработки, точно так же, как мы это делаем сейчас.
+- Обратите внимание на структуру вышеуказанного запроса. Мы выбираем метрику(и), которые хотим, и измерения, по которым их группируем — мы используем дублированные подчеркивания (двойные подчеркивания, например, `metric_time__[time bucket]`), чтобы обозначить временные измерения или другие неуникальные измерения, которые требуют указанного пути сущности для разрешения (например, если у вас есть измерение местоположения заказов и измерение местоположения сотрудников, оба названные 'location', вам понадобятся дублированные подчеркивания, чтобы указать `orders__location` или `employee__location`).

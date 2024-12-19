@@ -2,11 +2,11 @@
 id: mikko-sulonen
 title: Mikko Sulonen
 description: |
-  I've been working with data since 2016. I first started with the on-prem SQL Server S-stack of SSIS, SSAS, SSRS. I did some QlikView and Qlik Sense, and some Power BI. Nowadays, I work mostly with Snowflake, Databricks, Azure, and dbt, of course. While tools and languages have come and gone, SQL has stayed. I've been a consultant for all of my professional life.
+  Я работаю с данными с 2016 года. Я начал с локального SQL Server стека SSIS, SSAS, SSRS. Я немного поработал с QlikView и Qlik Sense, а также с Power BI. В настоящее время я в основном работаю со Snowflake, Databricks, Azure и, конечно, dbt. Хотя инструменты и языки приходят и уходят, SQL остается. Я был консультантом на протяжении всей своей профессиональной жизни.
 image: /img/community/spotlight/Mikko-Sulonen.png
 pronouns: he/him
-location: Tampere, Finland
-jobTitle: Data Architect, Partner
+location: Тампере, Финляндия
+jobTitle: Архитектор данных, Партнер
 companyName: Recordly Oy
 socialLinks:
   - name: LinkedIn
@@ -16,18 +16,18 @@ hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I started using dbt around 2019-2020, I think. Snapshots (no longer "archives") were a new thing along with the RPC server! I asked around my then-company: pretty much nobody had used dbt, though some commented that it did look promising. That left me looking elsewhere for experiences and best practices around the tool, and I found different blog writers and eventually the [dbt Slack](https://www.getdbt.com/community/join-the-community). I quickly noticed I could learn much more from the experiences of others than by trying everything myself. After just lurking for a while, I started to answer people's questions and give my own thoughts. This was completely new to me: voicing my input and opinions to people I had never met or who were not my colleagues.
+Я начал использовать dbt примерно в 2019-2020 годах, как мне кажется. Снимки (больше не "архивы") были новинкой наряду с RPC-сервером! Я спрашивал в своей тогдашней компании: практически никто не использовал dbt, хотя некоторые комментировали, что он выглядит многообещающе. Это заставило меня искать другие источники опыта и лучших практик по этому инструменту, и я нашел различных блогеров и в конечном итоге [Slack dbt](https://www.getdbt.com/community/join-the-community). Я быстро заметил, что могу узнать гораздо больше из опыта других, чем пытаясь все попробовать сам. После того как я немного понаблюдал, я начал отвечать на вопросы людей и делиться своими мыслями. Это было совершенно новым для меня: высказывать свои мнения и идеи людям, которых я никогда не встречал или которые не были моими коллегами.
 
-## Which dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-There are quite many. I started to write some names here, but felt the list was getting a bit long and I'd still forget somebody! What the community leaders have in common is that they are approachable, knowledgeable, and passionate. They want to help others, they want to drive the community forward, and they are down to earth. I've had the pleasure of meeting many of them in person at the past two [Coalesces](https://coalesce.getdbt.com/), and I hope to meet many more!
+Их довольно много. Я начал записывать несколько имен, но понял, что список становится слишком длинным, и я все равно кого-то забуду! Общее у лидеров сообщества то, что они доступны, знающи и увлечены. Они хотят помочь другим, стремятся развивать сообщество и остаются приземленными. Мне посчастливилось встретить многих из них лично на последних двух [Coalesces](https://coalesce.getdbt.com/), и я надеюсь встретить еще больше!
 
-Growing my own leadership in the community... That's an interesting question: I hadn't really identified myself as leader in the community before. Maybe I should come out of the Slack channels and join and/or organize some [dbt Meetups](https://www.meetup.com/pro/dbt/)? I always try to answer even the simplest questions, even if they've been answered a hundred times already. Every day, new people are introduced to dbt, and they are facing issues for the first time. Every one of us was new at one point!
+Развивать свое собственное лидерство в сообществе... Это интересный вопрос: я раньше не считал себя лидером в сообществе. Может быть, мне стоит выйти из Slack-каналов и присоединиться к некоторым [dbt Meetups](https://www.meetup.com/pro/dbt/) или организовать их? Я всегда стараюсь отвечать даже на самые простые вопросы, даже если на них уже отвечали сотни раз. Каждый день новые люди знакомятся с dbt и сталкиваются с проблемами впервые. Каждый из нас когда-то был новичком!
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I've learnt a surprising amount about the different teams and ways of working with and around data. I've learnt that it is highly probable that somebody somewhere has already had, and likely solved, the problem you are having. All that is needed to connect the dots is for people to speak and listen.
+Я узнал удивительное количество о различных командах и способах работы с данными и вокруг них. Я понял, что с высокой вероятностью кто-то где-то уже сталкивался с вашей проблемой и, вероятно, решил ее. Все, что нужно, чтобы соединить точки, — это чтобы люди говорили и слушали.
 
-When asking and answering questions, I try to hone in on what they're really trying to get at. I ask, why is it that you want to do something in that particular way? I like to say, don't love the solutions, love the problems!
+Когда я задаю вопросы и отвечаю на них, я стараюсь понять, к чему они на самом деле стремятся. Я спрашиваю, почему вы хотите сделать что-то именно таким образом? Мне нравится говорить: не любите решения, любите проблемы!

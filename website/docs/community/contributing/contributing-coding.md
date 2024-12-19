@@ -1,59 +1,59 @@
 ---
-title: "Coding contributions"
+title: "Вклад в код"
 id: "contributing-coding"
 ---
 
-### Contribute to dbt Packages
+### Вклад в пакеты dbt
 
-#### Overview
+#### Обзор
 
-[dbt Packages](https://docs.getdbt.com/docs/build/packages) are the easiest way for analytics engineers to get involved with contributing code to the dbt Community, because dbt Packages are just standard [dbt Projects](/docs/build/projects). If you can create a dbt Project, write a macro, and ref a model: you can make a dbt Package. Packages function much like libraries do in other programming languages. They allow for prewritten, modularized development of code to solve common problems in analytics engineering. You can view all dbt Packages on the [dbt Package Hub](https://hub.getdbt.com/).
+[Пакеты dbt](https://docs.getdbt.com/docs/build/packages) — это самый простой способ для аналитических инженеров начать вносить код в сообщество dbt, поскольку пакеты dbt представляют собой стандартные [проекты dbt](/docs/build/projects). Если вы можете создать проект dbt, написать макрос и сослаться на модель, вы можете создать пакет dbt. Пакеты функционируют аналогично библиотекам в других языках программирования. Они позволяют заранее написанную, модульную разработку кода для решения общих задач в аналитическом инжиниринге. Вы можете просмотреть все пакеты dbt на [dbt Package Hub](https://hub.getdbt.com/).
 
-#### Contribution opportunities
+#### Возможности для вклада
 
-- Create a new package for the dbt Package Hub. This might be a new set of macros or tests that have been useful to you in your projects, a set of models for engaging with a commonly used datasource or anything else that can be done from within a dbt project.
-- Improve an existing package: Alternatively you can help improve an existing package. This can be done by creating and engaging with Issues or by functionality to address an existing issue via opening a PR.
+- Создайте новый пакет для dbt Package Hub. Это может быть новый набор макросов или тестов, которые были полезны вам в ваших проектах, набор моделей для работы с часто используемым источником данных или что-то еще, что можно сделать в рамках проекта dbt.
+- Улучшите существующий пакет: В качестве альтернативы вы можете помочь улучшить существующий пакет. Это можно сделать, создавая и участвуя в обсуждениях или добавляя функциональность для решения существующей проблемы через открытие PR.
 
-#### Sample contributions
+#### Примеры вкладов
 
 - [dbt Expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/)
 - [dbt Artifacts](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/)
 
-#### Get started
+#### Как начать
 
-- Use packages in your own projects! The best way to know how to improve a package is to use it in a production environment then look for ways it can be modified or improved.
-- Read the following resources on package development:
-  - [So You Want to Build a dbt Package](https://docs.getdbt.com/blog/so-you-want-to-build-a-package)
-  - [Package Best Practices](https://github.com/dbt-labs/hubcap/blob/main/package-best-practices.md)
-- Need help: Visit #package-ecosystem in the dbt Slack
+- Используйте пакеты в своих проектах! Лучший способ узнать, как улучшить пакет, — это использовать его в производственной среде, а затем искать способы его модификации или улучшения.
+- Ознакомьтесь со следующими ресурсами по разработке пакетов:
+  - [Так вы хотите создать пакет dbt](https://docs.getdbt.com/blog/so-you-want-to-build-a-package)
+  - [Лучшие практики пакетов](https://github.com/dbt-labs/hubcap/blob/main/package-best-practices.md)
+- Нужна помощь: посетите #package-ecosystem в Slack dbt
 
-### Contribute to dbt open source software
+### Вклад в программное обеспечение с открытым исходным кодом dbt
 
-#### Overview
+#### Обзор
 
-dbt Core, adapters, tooling, and the sites powering the Package Hub and Developer Hub are all vibrant open source projects. Unlike dbt Packages, contributing code to these projects typically requires some working knowledge of programming languages outside of SQL and Jinja, but the supportive community around these repositories can help you advance those skills. Even without contributing code, there are many ways to be part of open source development in these projects, detailed below. You can find a curated list of the most active OSS projects that dbt Labs supports [here](/community/resources/oss-projects).
+dbt Core, адаптеры, инструменты и сайты, поддерживающие Package Hub и Developer Hub, — это все активные проекты с открытым исходным кодом. В отличие от пакетов dbt, вклад в код этих проектов обычно требует некоторых знаний языков программирования, помимо SQL и Jinja, но поддерживающее сообщество вокруг этих репозиториев может помочь вам развить эти навыки. Даже без внесения кода есть много способов стать частью разработки с открытым исходным кодом в этих проектах, подробно описанных ниже. Вы можете найти курируемый список самых активных OSS проектов, которые поддерживает dbt Labs, [здесь](/community/resources/oss-projects).
 
-#### Contribution opportunities
+#### Возможности для вклада
 
-There are three primary ways to contribute to the dbt OSS projects. We’ll use dbt Core as an example, as it’s the most active and mature OSS project we support, and a great place to start for newcomers:
+Существует три основных способа внести вклад в проекты dbt OSS. Мы будем использовать dbt Core в качестве примера, так как это самый активный и зрелый OSS проект, который мы поддерживаем, и отличное место для начала для новичков:
 
-- [Open an issue](https://github.com/dbt-labs/dbt-core/issues/new/choose) to suggest an improvement or give feedback.
-- Comment / engage on existing [issues](https://github.com/dbt-labs/dbt-core/issues) or [discussions](https://github.com/dbt-labs/dbt-core/discussions). This could be upvoting issues that would be helpful for your organization, commenting to add nuance to a feature request or sharing how a feature would impact your dbt usage.
-- Create a pull request that resolves an open Issue. This involves writing the code and tests that add the feature/resolve the bug described in an Issue, and then going through the code review process asynchronously with a dbt Labs engineer.
+- [Откройте проблему](https://github.com/dbt-labs/dbt-core/issues/new/choose), чтобы предложить улучшение или дать отзыв.
+- Комментируйте / участвуйте в существующих [проблемах](https://github.com/dbt-labs/dbt-core/issues) или [обсуждениях](https://github.com/dbt-labs/dbt-core/discussions). Это может быть голосование за проблемы, которые будут полезны вашей организации, комментирование для добавления нюансов к запросу функции или деление тем, как функция повлияет на ваше использование dbt.
+- Создайте запрос на изменение, который решает открытую проблему. Это включает в себя написание кода и тестов, которые добавляют функцию/решают ошибку, описанную в проблеме, а затем прохождение процесса проверки кода асинхронно с инженером dbt Labs.
 
-#### Sample contributions
+#### Примеры вкладов
 
-- Check out [this issue](https://github.com/dbt-labs/dbt-core/issues/3612) about improving error messages and [the PR that the community contributed to fix it](https://github.com/dbt-labs/dbt-core/pull/3703).
-- From the above issue [another issue was generated](https://github.com/dbt-labs/dbt-bigquery/issues/202) to change not just the error message, but improve the behavior. This is the virtuous cycle of open source community development! Bit by bit we, the community, craft the tool to better fit our needs.
+- Ознакомьтесь с [этой проблемой](https://github.com/dbt-labs/dbt-core/issues/3612) о улучшении сообщений об ошибках и [PR, который сообщество внесло для ее исправления](https://github.com/dbt-labs/dbt-core/pull/3703).
+- Из вышеуказанной проблемы [была сгенерирована другая проблема](https://github.com/dbt-labs/dbt-bigquery/issues/202), чтобы изменить не только сообщение об ошибке, но и улучшить поведение. Это добродетельный цикл разработки сообщества с открытым исходным кодом! Шаг за шагом мы, сообщество, создаем инструмент, чтобы он лучше соответствовал нашим потребностям.
 
-#### Get started
+#### Как начать
 
-- Read the dbt Core [contribution guide](https://github.com/dbt-labs/dbt-core/blob/main/CONTRIBUTING.md) and the [Open Source Software Expectations](/community/resources/oss-expectations).
-- If contributing to dbt Core, find an issue labeled “[good first issue](https://github.com/dbt-labs/dbt-core/issues?q=is%3Aopen+is%3Aissue+label%3Agood_first_issue)”, or look for similar labels on other repositories. If in doubt, also feel free to ask the maintainers for a good first issue, they’ll be excited to welcome you!
+- Ознакомьтесь с [руководством по вкладу в dbt Core](https://github.com/dbt-labs/dbt-core/blob/main/CONTRIBUTING.md) и [Ожиданиями по программному обеспечению с открытым исходным кодом](/community/resources/oss-expectations).
+- Если вы хотите внести вклад в dbt Core, найдите проблему с меткой “[хорошая первая проблема](https://github.com/dbt-labs/dbt-core/issues?q=is%3Aopen+is%3Aissue+label%3Agood_first_issue)”, или ищите аналогичные метки в других репозиториях. Если у вас есть сомнения, не стесняйтесь спрашивать у мейнтейнеров о хорошей первой проблеме, они будут рады вас приветствовать!
 
-#### Need help?
+#### Нужна помощь?
 
-The following channels in the dbt Community Slack are a great place to ask questions:
+Следующие каналы в Slack сообществе dbt — отличное место для задавания вопросов:
 
 - #dbt-core-development
 - #adapter-ecosystem

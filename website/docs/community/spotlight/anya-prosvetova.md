@@ -2,7 +2,7 @@
 id: anya-prosvetova
 title: Anya Prosvetova
 description: |
-  I’m a Data Engineer with a background in SaaS, consulting, financial services and the creative industries. I help organisations convert data into value, developing data pipelines and automating processes. I’m also a Tableau Visionary and DataDev Ambassador, and one of the organisers of Data + Women Netherlands community. I became an active member of the dbt Community about a year ago, and it was a great place to learn and ask questions. And it was really inspiring to speak at the first Amsterdam dbt Meetup recently, and meet the local community of fellow Analytics and Data Engineers.
+  Я инженер по данным с опытом работы в SaaS, консалтинге, финансовых услугах и креативных индустриях. Я помогаю организациям преобразовывать данные в ценность, разрабатывая конвейеры данных и автоматизируя процессы. Я также являюсь Tableau Visionary и DataDev Ambassador, а также одним из организаторов сообщества Data + Women Netherlands. Я стала активным членом сообщества dbt около года назад, и это было отличное место для обучения и задавания вопросов. Мне было действительно вдохновляюще выступить на первой встрече dbt в Амстердаме недавно и встретиться с местным сообществом коллег-аналитиков и инженеров по данным.
 image: /img/community/spotlight/anya-prosvetova.jpg
 pronouns: she/her
 location: Amsterdam, Netherlands
@@ -20,16 +20,16 @@ dateCreated: 2023-03-29
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-A few years back, I became a member of the dbt Community, but it wasn't until about a year ago, when I started using dbt at work, that I began actively engaging with it. Being the only data person in my company, the Community became a valuable resource for me to learn and ask questions. It's an excellent platform to gain insights from others, exchange experiences, and stay up-to-date with the latest product features.
+Несколько лет назад я стала членом сообщества dbt, но только около года назад, когда я начала использовать dbt на работе, я начала активно взаимодействовать с ним. Будучи единственным специалистом по данным в своей компании, сообщество стало для меня ценным ресурсом для обучения и задавания вопросов. Это отличная платформа для получения информации от других, обмена опытом и поддержания актуальности в отношении последних функций продукта.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-What I enjoy about the dbt Community is that its thought leaders are focused on working together to create a culture of mutual support and shared learning. Everyone is welcome to ask a question or share their latest blog without the fear of being judged. I believe that everyone has something valuable to contribute to the community, and I hope to help facilitate this supportive and collaborative environment where we can all learn from each other. 
+Мне нравится, что в сообществе dbt его лидеры сосредоточены на совместной работе для создания культуры взаимной поддержки и совместного обучения. Каждый может задать вопрос или поделиться своим последним блогом без страха быть осужденным. Я верю, что каждый может внести что-то ценное в сообщество, и надеюсь помочь создать эту поддерживающую и совместную среду, где мы все можем учиться друг у друга.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь, что другие смогут научиться у вас?
 
-I've learned a lot about best practices for working with dbt and data in general, as well as tips and tricks for specific use cases. I've also gained a better understanding of the diverse range of data challenges that people face in different industries and contexts.
+Я узнала много о лучших практиках работы с dbt и данными в целом, а также о советах и хитростях для конкретных случаев использования. Я также лучше поняла разнообразные проблемы с данными, с которыми сталкиваются люди в разных отраслях и контекстах.
 
-As for what I hope others can learn from me, I aim to share my own experiences and knowledge in a way that is approachable and useful to people at all skill levels and backgrounds.
+Что касается того, чему я надеюсь, что другие смогут научиться у меня, я стремлюсь делиться своим опытом и знаниями таким образом, чтобы это было доступно и полезно людям с любым уровнем навыков и из любых сфер.

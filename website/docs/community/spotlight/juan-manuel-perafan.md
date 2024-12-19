@@ -1,44 +1,44 @@
 ---
 id: juan-manuel-perafan
-title: Juan Manuel Perafan
+title: Хуан Мануэль Перафан
 description: |
-  Born and raised in Colombia! Living in the Netherlands since 2011. I've been working in the realm of analytics since 2017, focusing on Analytics Engineering, dbt, SQL, data governance, and business intelligence (BI). 
+  Родился и вырос в Колумбии! Живу в Нидерландах с 2011 года. Я работаю в области аналитики с 2017 года, сосредоточив внимание на аналитической инженерии, dbt, SQL, управлении данными и бизнес-аналитике (BI).
 
-  Besides consultancy work, I am very active in the data community. I co-authored the book *Fundamentals of Analytics Engineering* and have spoken at various conferences and meetups worldwide, including <a href="https://coalesce.getdbt.com/" rel="noopener noreferrer" target="_blank">Coalesce</a>, Linux Foundation OS Summit, Big Data Summit Warsaw, Dutch Big Data Expo, and Developer Week Latin America.
+  Кроме консультирования, я активно участвую в сообществе данных. Я соавтор книги *Основы аналитической инженерии* и выступал на различных конференциях и митапах по всему миру, включая <a href="https://coalesce.getdbt.com/" rel="noopener noreferrer" target="_blank">Coalesce</a>, Linux Foundation OS Summit, Big Data Summit Warsaw, Dutch Big Data Expo и Developer Week Latin America.
 
-  I also love meetups! I am the founder of the Analytics Engineering Meetup and co-founder of the <a href="https://www.meetup.com/amsterdam-dbt-meetup/" rel="noopener noreferrer" target="_blank">Netherlands dbt Meetup</a>.
+  Я также люблю митапы! Я основатель Meetup по аналитической инженерии и соучредитель <a href="https://www.meetup.com/amsterdam-dbt-meetup/" rel="noopener noreferrer" target="_blank">Meetup по dbt в Нидерландах</a>.
 image: /img/community/spotlight/juan-manuel-perafan.jpg
 pronouns: he/him
-location: Amsterdam, Netherlands
-jobTitle: Analytics Engineer
+location: Амстердам, Нидерланды
+jobTitle: Аналитический инженер
 companyName: Xebia
-organization: "Co-author: *Fundamentals of Analytics Engineering*"
+organization: "Соавтор: *Основы аналитической инженерии*"
 socialLinks:
   - name: LinkedIn
     link: https://www.linkedin.com/in/jmperafan/
-  - name: Amazon Profile
+  - name: Профиль на Amazon
     link: https://www.amazon.com/author/jmperafan
 dateCreated: 2024-05-05
 hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I've been a dbt user since 2020, but it wasn't until I attended Coalesce 2021 in New Orleans that I truly felt part of the community. The experience inspired me to start a dbt Meetup in Amsterdam.
+Я использую dbt с 2020 года, но только после того, как посетил Coalesce 2021 в Новом Орлеане, я действительно почувствовал себя частью сообщества. Этот опыт вдохновил меня начать Meetup по dbt в Амстердаме.
 
-I thoroughly enjoy organizing Meetups! They provide a platform to network and learn from some of the most experienced data professionals in your area. Additionally, it's rewarding to see how attendees bond. Often, in our day-to-day jobs, we're surrounded by people who don't fully grasp our work, so having deeper conversations at Meetups is refreshing.
+Мне очень нравится организовывать митапы! Они предоставляют платформу для налаживания контактов и обучения у одних из самых опытных специалистов в области данных в вашем регионе. Кроме того, приятно видеть, как участники сближаются. Часто в нашей повседневной работе мы окружены людьми, которые не полностью понимают нашу работу, поэтому углубленные разговоры на митапах освежают.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I am not the most knowledgeable Analytics Engineer out there, but I'm good at building communities. Starting from scratch is daunting. So, for me, leading means doing the hard work to make it easier for others to join. When it comes to Meetups, it means being ready to handle every aspect of an event alone, but also letting team members pitch in where they're comfortable. It's okay if they only want a small part at first, but maybe eventually, they'll feel comfortable running anything (not just meetups) on their own.
+Я не самый знающий аналитический инженер, но я хорошо умею строить сообщества. Начинать с нуля сложно. Поэтому для меня лидерство означает проделать тяжелую работу, чтобы другим было легче присоединиться. Когда речь идет о митапах, это означает готовность справляться с каждым аспектом мероприятия в одиночку, но также позволять членам команды участвовать в том, что им удобно. Ничего страшного, если они сначала хотят взять на себя лишь небольшую часть, но, возможно, в конечном итоге они почувствуют себя комфортно, чтобы самостоятельно вести любое мероприятие (не только митапы).
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Чему вы научились у членов сообщества? Чему вы надеетесь, что другие смогут научиться у вас?
 
-Along the way, I've gained insights into technical areas like data ops, data modeling, and lots of SQL best practices, as well as broader fields such as stakeholder management and data strategy.
+На этом пути я получил знания в технических областях, таких как операции с данными, моделирование данных и множество лучших практик SQL, а также в более широких областях, таких как управление заинтересованными сторонами и стратегия данных.
 
-It is easy to focus on the things you don't know. But each of us brings unique expertise and skills to the table. Analytics engineering is a diverse field, and mastering every aspect is not expected.
+Легко сосредоточиться на том, чего вы не знаете. Но каждый из нас приносит уникальную экспертизу и навыки. Аналитическая инженерия — это разнообразная область, и не ожидается, что вы будете мастером во всех аспектах.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-I am always up for a chat. If you see me in a conference or want to DM me, please don't hesitate. It is always a pleasure to network with other fellow data professionals.
+Я всегда готов пообщаться. Если вы увидите меня на конференции или хотите написать мне в личные сообщения, не стесняйтесь. Всегда приятно общаться с другими специалистами в области данных.

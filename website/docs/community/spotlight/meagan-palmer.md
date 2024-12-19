@@ -1,18 +1,18 @@
 ---
 id: meagan-palmer
-title: Meagan Palmer
+title: Меаган Палмер
 description: |
-  I first started using dbt in 2016 or 2017 (I can't remember exactly). Since then, I have moved into data and analytics consulting and have dipped in and out of the dbt Community. 
+  Я впервые начала использовать dbt в 2016 или 2017 году (точно не помню). С тех пор я перешла в консалтинг в области данных и аналитики и время от времени участвовала в сообществе dbt. 
   
-  Late last year, I started leading dbt Cloud training courses and spending more time in the <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">dbt Slack</a>. 
+  В конце прошлого года я начала вести курсы обучения dbt Cloud и проводить больше времени в <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">dbt Slack</a>. 
   
-  In consulting, I get to use a range of stacks. I've used dbt with Redshift, Snowflake, and Databricks in production settings with a range of loaders & reporting tools, and I've been enjoying using DuckDB for some home experimentation. 
+  В консалтинге я работаю с различными стековыми решениями. Я использовала dbt с Redshift, Snowflake и Databricks в производственных условиях с различными загрузчиками и инструментами отчетности, а также мне нравится использовать DuckDB для некоторых домашних экспериментов. 
  
-  To share some of the experiences, I regularly post to LinkedIn and have recently started <a href="https://www.linkedin.com/newsletters/analytics-engineering-today-7210968984693690370/" rel="noopener noreferrer" target="_blank">Analytics Engineering Today</a>, a twice monthly newsletter about dbt in practice.
+  Чтобы поделиться своим опытом, я регулярно публикую посты в LinkedIn и недавно начала выпускать <a href="https://www.linkedin.com/newsletters/analytics-engineering-today-7210968984693690370/" rel="noopener noreferrer" target="_blank">Analytics Engineering Today</a>, двуразовую рассылку о практическом применении dbt.
 image: /img/community/spotlight/Meagan-Palmer.png
 pronouns: she/her
-location: Sydney, Australia
-jobTitle: Principal Consultant
+location: Сидней, Австралия
+jobTitle: Главный консультант
 companyName: Altis Consulting
 socialLinks:
   - name: LinkedIn
@@ -23,23 +23,23 @@ communityAward: true
 communityAwardYear: 2024 
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I was fortunate that Jon Bradley at Nearmap had the vision to engage the then Fishtown Analytics team (as the dbt Labs team was formerly called) as consultants and begin using dbt in our stack. I can't thank him enough. It was a turning point for my career, where I could combine my interests and experiences in delivering business value, data, product management, and software engineering practices.
+Мне повезло, что Джон Бредли из Nearmap увидел возможность привлечь тогда еще команду Fishtown Analytics (так раньше называлась команда dbt Labs) в качестве консультантов и начать использовать dbt в нашем стеке. Я не могу ему достаточно поблагодарить. Это стало поворотным моментом в моей карьере, когда я смогла объединить свои интересы и опыт в создании бизнес-ценности, данных, управлении продуктами и практиках программной инженерии.
 
-## Which dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Being in Australia, I often see replies from <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jeremyyeo/">Jeremy Yeo</a> to people in the dbt Slack. His clarity of communication is impressive. 
+Находясь в Австралии, я часто вижу ответы <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jeremyyeo/">Джереми Ё</a> на вопросы людей в dbt Slack. Его ясность в общении впечатляет. 
 
-For growth, I'm hoping that others can benefit from the wide range of experience I have. My LinkedIn Newsletter, <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/newsletters/analytics-engineering-today-7210968984693690370/">Analytics Engineering Today</a> aims to upskill the dbt Community and shed some light on some useful features that might not be well known.
+Для роста я надеюсь, что другие смогут извлечь пользу из моего широкого опыта. Моя рассылка в LinkedIn, <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/newsletters/analytics-engineering-today-7210968984693690370/">Analytics Engineering Today</a>, направлена на повышение квалификации сообщества dbt и освещение полезных функций, которые могут быть не очень известны.
 
-I was at <a target="_blank" rel="noopener noreferrer" href="https://coalesce.getdbt.com/">Coalesce Online</a>and am doing some webinars/events later in the year. Come say hi, I love talking dbt and analytics engineering with people.
+Я была на <a target="_blank" rel="noopener noreferrer" href="https://coalesce.getdbt.com/">Coalesce Online</a> и планирую провести несколько вебинаров/мероприятий позже в этом году. Приходите, я люблю обсуждать dbt и аналитическую инженерию с людьми.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Чему вы научились у членов сообщества? Чему вы надеетесь научить других?
 
-The community members are amazing. It's great to be among a group of people that want to learn and improve. 
-I've learned a lot - both from other members helping with my queries and in reading how other businesses have implemented dbt, including their stories on the organizational & technical issues they face.
+Члены сообщества потрясающие. Приятно находиться среди людей, которые хотят учиться и развиваться. 
+Я многому научилась - как от других участников, помогавших мне с моими вопросами, так и читая о том, как другие компании внедряли dbt, включая их истории о организационных и технических проблемах, с которыми они сталкиваются.
 
-I hope I can help instill a sense that simple, clean solutions are possible and preferable. I want to highlight that it is important to focus on what is the actual problem you are trying to solve and the fact that it's worth asking for help when you're starting to get stuck. 
+Я надеюсь, что смогу помочь привить понимание того, что простые и чистые решения возможны и предпочтительны. Я хочу подчеркнуть, что важно сосредоточиться на том, какая именно проблема требует решения, и что стоит просить о помощи, когда вы начинаете застревать. 
 
-I'm keen to help more women get the courage to work & lead in STEM. There has been a lot of progress made over the course of my career which is great to see. Australian/NZ women, please connect with me, happy to chat.
+Я стремлюсь помочь большему количеству женщин получить смелость работать и вести в STEM. За время моей карьеры было достигнуто много прогресса, что приятно видеть. Женщины из Австралии и Новой Зеландии, пожалуйста, свяжитесь со мной, буду рада пообщаться.

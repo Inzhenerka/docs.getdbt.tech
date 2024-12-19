@@ -1,247 +1,246 @@
 ---
-title: "How to deliver a fantastic meetup talk"
+title: "Как провести замечательное выступление на митапе"
 id: "speaking-at-a-meetup"
 ---
 
-# How to deliver a fantastic meetup talk
+# Как провести замечательное выступление на митапе
 
-**Speaking at a dbt meetup? Here’s all the details you’ll need to know. If you’re speaking at another event, check out our additional tips at the end of the article.**
+**Вы выступаете на митапе dbt? Вот все детали, которые вам нужно знать. Если вы выступаете на другом мероприятии, ознакомьтесь с нашими дополнительными советами в конце статьи.**
 
-## Understanding dbt meetups
+## Понимание митапов dbt
 
-dbt meetups are an opportunity for the dbt community to learn from each other. We’re typically on the lookout for talks that last for ~15 minutes, and we reserve an additional 5-10 minutes for Q&A after your talk.
+Митапы dbt — это возможность для сообщества dbt учиться друг у друга. Обычно мы ищем выступления продолжительностью около 15 минут, и оставляем дополнительные 5-10 минут для вопросов и ответов после вашего выступления.
 
-We’re not *just* looking for talks that feature dbt — if your topic feels relevant to analytics engineers, we’d love to chat.
+Мы ищем не только выступления, связанные с dbt — если ваша тема кажется актуальной для аналитических инженеров, мы будем рады обсудить это.
 
-In general, you can assume that around three quarters of the audience are dbt users. When shaping your talk, consider whether there’s something in there that might be new to an experienced dbt user, and, on the other end of the scale, something that feels relevant to a data practitioner that isn’t yet a dbt user.
+В общем, вы можете предположить, что около трех четвертей аудитории — это пользователи dbt. При формировании вашего выступления подумайте, есть ли в нем что-то новое для опытного пользователя dbt, а с другой стороны, что-то, что будет актуально для специалиста по данным, который еще не является пользователем dbt.
 
-If you feel that your talk idea requires in-depth knowledge of dbt, consider speaking on Office Hours instead. Similarly, if you’re interested in giving a more introductory talk about dbt, consider reaching out to a local data meetup to see if it’s the right fit.
+Если вы считаете, что ваша идея выступления требует глубоких знаний dbt, подумайте о том, чтобы выступить на Office Hours. Аналогично, если вы хотите провести более вводное выступление о dbt, подумайте о том, чтобы обратиться в местный митап по данным, чтобы узнать, подходит ли это.
 
-For topic inspiration, you can find videos of past dbt meetup presentations [here](https://www.youtube.com/playlist?list=PL0QYlrC86xQn-jxWmEqtQRbZoyjq_ffq5).
+Для вдохновения по темам вы можете найти видео с прошедших выступлений на митапах dbt [здесь](https://www.youtube.com/playlist?list=PL0QYlrC86xQn-jxWmEqtQRbZoyjq_ffq5).
 
-If you want to present at a dbt meetup, let us know [here](https://docs.google.com/forms/d/e/1FAIpQLScU4c0UvXLsasc7uwFBrzt6YzuGiMzEH_EyFfXGnIYDmTBDfQ/viewform). If we haven’t met you before, we might book-in a call to say hi and help shape your topic! We’ll also book a meeting before the event for a dry-run of the presentation to give any additional feedback.
+Если вы хотите выступить на митапе dbt, дайте нам знать [здесь](https://docs.google.com/forms/d/e/1FAIpQLScU4c0UvXLsasc7uwFBrzt6YzuGiMzEH_EyFfXGnIYDmTBDfQ/viewform). Если мы не встречались с вами ранее, мы можем назначить звонок, чтобы познакомиться и помочь сформировать вашу тему! Мы также запланируем встречу перед мероприятием для репетиции презентации, чтобы дать дополнительные отзывы.
 
+## Признаки готовности к выступлению
+Ниже мы перечислили четыре признака того, что вы готовы к выступлению (изначально основано на [этой статье](https://thinkgrowth.org/how-to-write-about-your-work-652441747f41) нашего руководителя по маркетингу, Янессы — прочитайте ее тоже!). Мы также включили примеры для каждой категории — где это возможно, это выступления на митапах dbt, но некоторые из них также являются ссылками на блоги участников нашего сообщества.
 
-## Recognize when you’re ready to give a talk
-Below, we’ve listed four signs that you’re ready to give a talk (originally based on [this article](https://thinkgrowth.org/how-to-write-about-your-work-652441747f41) from our Head of Marketing, Janessa — read that too!). We’ve also included examples for each category — where possible these are dbt meetup talks, but some of them are also links to blog posts from members in our community.
+### Вы недавно завершили проект с высоким воздействием
+Это отличный вариант для выступающих в первый раз, так как они объединяют как стратегическое мышление, так и тактику. Например:
 
-### You recently finished a high-impact project
-These are a great option for first-time speakers as they mix together both big-picture thinking and tactics. For example:
+- "Улучшение надежности данных" — Андреа Копиц ([видео](https://www.youtube.com/watch?v=M_cNspn2XsE), [слайды](https://docs.google.com/presentation/d/1gHChax5aM3tqKkhepX7Mghmg0DTDbY5yoDBCfUR23lg/))
+- "Прогнозирование конверсий клиентов с использованием dbt + машинного обучения" — Кенни Нинг ([видео](https://www.youtube.com/watch?v=BF7HH8JDUS0), [слайды](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/))
+- "Миграция 387 моделей из Redshift в Snowflake" — Сэм Свифт и Трэвис Данлоп ([видео](https://www.youtube.com/watch?v=VhH614WVufM), [слайды](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/))
 
-- "Improving data reliability" — Andrea Kopitz ([video](https://www.youtube.com/watch?v=M_cNspn2XsE), [slides](https://docs.google.com/presentation/d/1gHChax5aM3tqKkhepX7Mghmg0DTDbY5yoDBCfUR23lg/))
-- "Predicting customer conversions using dbt + machine learning" — Kenny Ning ([video](https://www.youtube.com/watch?v=BF7HH8JDUS0), [slides](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/))
-- "Migrating 387 models from Redshift to Snowflake" — Sam Swift and Travis Dunlop ([video](https://www.youtube.com/watch?v=VhH614WVufM), [slides](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/))
+### Вы достигли переломного момента в своей карьере
+Вы недавно изменили что-то в своей карьере, чему, по вашему мнению, могут научиться другие? Начали новую работу, продвинулись по службе? Эти темы могут вообще не упоминать dbt, но будут актуальны для многих людей в аудитории. Например:
 
-### You hit an inflection point in your career
-Have you recently changed something about your career that you think others can learn from? Started a new job, grown in your role? These topics might not mention dbt at all, but will be relevant to many people in the audience. For example:
+- “Как меня наняли в качестве аналитического инженера: взгляд кандидата” — Даниэль Леонг ([видео](https://www.youtube.com/watch?v=6VCr30ZFxZ0))
+- “Руководство одного аналитика по переходу от хорошего к отличному” — Джейсон Ганц ([блог](https://blog.getdbt.com/one-analysts-guide-for-going-from-good-to-great/))
 
-- “Getting hired as an analytics engineer: a candidate’s perspective” — Danielle Leong ([video](https://www.youtube.com/watch?v=6VCr30ZFxZ0))
-- “One analyst's guide for going from good to great” — Jason Ganz ([blog post](https://blog.getdbt.com/one-analysts-guide-for-going-from-good-to-great/))
+Другие идеи:
+- Вы перешли из команды из многих в команду из одного (или наоборот) и хотите поделиться тем, что каждый может узнать друг от друга
+- Вы начали управлять другими и узнали некоторые вещи на этом пути
 
-Other ideas:
-- You moved from a team of many to a team of one (or vice-versa), and want to share what each can learn from the other
-- You started to manage others and learned some things along the way
+### Вы глубоко изучаете тему
+Если вы провели много часов, углубляясь в тему, возможно, стоит поделиться тем, что вы узнали. Например:
 
-### You’re digging deep into a topic
-If you’ve spent many hours going deep on a topic, it could be a good idea to share what you’ve learned. For example:
+- “Тестирование данных с фермы на стол” — Андреа Фабри ([блог](https://blog.getdbt.com/data-testing-framework/))
+- “Как создать карьерную лестницу” — Кейтлин Мурман ([блог](https://locallyoptimistic.com/post/career-ladders-part-2/))
 
-- “The farm-to-table testing framework” — Andrea Fabry ([blog post](https://blog.getdbt.com/data-testing-framework/))
-- “How to create a career ladder” — Caitlin Moorman ([blog post](https://locallyoptimistic.com/post/career-ladders-part-2/))
+### У вас есть сильное мнение по какому-то вопросу
+Есть ли “лучшие практики”, которые вы считаете устаревшими? Хотите убедить других увидеть вашу точку зрения? В области данных мы видели это в темах, таких как:
 
-### You have a strong opinion about something
-Is there a “best practice” that you think is outdated? Want to convince others to see your point of view? In the data-space, we’ve seen this in topics like:
+- “Инженеры не должны писать ETL” — Джефф Магнуссон ([блог](https://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/))
+- “Вам, вероятно, не нужен словарь данных” — Майкл Каминский и Александр Цзя ([блог](https://locallyoptimistic.com/post/data_dictionaries/))
+- “Пишите лучший SQL: в защиту `group by 1`” — Клэр Кэрролл ([блог](https://blog.getdbt.com/write-better-sql-a-defense-of-group-by-1/))
 
-- “Engineers shouldn’t write ETL” — Jeff Magnusson ([blog post](https://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/))
-- “You probably don’t need a data dictionary” — Michael Kaminsky & Alexander Jia ([blog post](https://locallyoptimistic.com/post/data_dictionaries/))
-- “Write better SQL: In defense of `group by 1`” — Claire Carroll ([blog post](https://blog.getdbt.com/write-better-sql-a-defense-of-group-by-1/))
+## Контрольная точка: может ли кто-то другой лучше подойти для этого выступления?
+Как только у вас появится идея темы, остановитесь на мгновение и подумайте, может ли кто-то другой в вашей команде также отлично подойти для проведения этого выступления. Люди из недостаточно представленных групп гораздо реже сами выдвигают свои кандидатуры для выступления — иногда небольшой толчок может быть тем, что нужно.
 
-## Checkpoint: Is someone else well-placed to give this talk?
-Once you have a topic idea, stop for a moment and consider whether someone else on your team might also be a great fit for delivering this talk. Individuals from underrepresented groups are far less likely to self-nominate to give a talk — sometimes a shoulder tap is the nudge that’s needed.
+## Формирование вашего выступления
+Теперь пришло время писать! Вместо того чтобы начинать с презентации, откройте пустой документ (или используйте [наш шаблон](https://docs.google.com/document/d/16aog0VitdLSScgxSNKe36q1C92QmG2vjXmtXYcPAhfw/edit#)) и начните записывать заметки. Это поможет вам прояснить свои мысли и является отличным способом получить раннюю обратную связь, а не тратить время на создание слайдов, которые могут позже потребовать переработки.
 
-## Shaping your talk
-Now, it’s time to write! Rather than starting with a slide deck, open up a blank document (or use [our template](https://docs.google.com/document/d/16aog0VitdLSScgxSNKe36q1C92QmG2vjXmtXYcPAhfw/edit#)), and start writing some notes. This helps you clarify your thinking, and is a great way to get feedback early, rather than investing the time into creating slides that might later be reworked.
+Не зацикливайтесь на названии на этом этапе — мы рады поработать с вами над этим позже в процессе.
 
-Don’t get too hung up on a title at this stage — we’re happy to work with you on that later in the process.
+## Основная структура
+Ниже мы описали общую структуру, используемую для выступлений на митапах — если это ваше первое выступление, это отличный способ начать (на самом деле, даже опытные выступающие часто используют подобную структуру). Используйте это как отправную точку, а не как точную формулу!
 
-## The basic structure
-Below, we’ve outlined a common structure used for meetup talks — if this is your first talk, this is a great way to get started (in fact, even experienced speakers often use a structure like this). Use this as a starting point, rather than an exact formula!
+1. Какова бизнес-проблема?
+    Связь с бизнес-проблемой помогает членам аудитории понять, почему вы взялись за проект. Например:
+    - Финансовая команда не доверяла нашим данным
+    - Мы никогда не были уверены, что привело к увеличению конверсии клиентов
+    - Команда данных не могла найти баланс между разовыми запросами и работой по дорожной карте
+    - Наше отслеживание на мобильных и веб-платформах было совершенно непоследовательным
 
-1. What is the business problem?
-    Relating to a business problem helps audience members understand why you undertook a project. For example:
-    - The finance team didn’t trust our numbers
-    - We were never sure what led to an increase in customer conversion
-    - The data team couldn’t find a balance between ad hoc requests and roadmap work
-    - Our tracking across mobile and web was completely inconsistent
+2. Как это проявилось?
+    Включите доказательства того, что это действительно проблема — это помогает создать доверие у аудитории. Скриншоты Slack, цитаты, графики и т. д. — все это хорошо!
 
-2. How did this manifest?
-    Include evidence that this is a genuine problem — this helps create buy-in from the audience. Slack screenshots, quotes, charts, etc. are all good here!
+3. Какие тактики были использованы для решения проблемы?
+    Три кажется хорошим числом здесь. Убедитесь, что вы подчеркиваете решения, связанные с людьми и процессами, а также технологические решения.
 
-3. What tactics were used to solve the problem?
-    Three feels like a good number here. Make sure to emphasize people and process solutions as well as technology solutions.
+4. Каков был эффект на бизнес-проблему?
+    Поскольку вы обозначили проблему, которую нужно решить, стоит вернуться к ней. Ничего страшного, если вы обнаружили, что ваш проект не пошел по плану — в этом есть ценное урок. Снова включение доказательств улучшения кажется ценным.
 
-4. What was the impact on the business problem?
-    Since you set out a problem to be solved, it’s worth revisiting it. It’s okay if you found that your project didn’t go as planned — there’s a valuable lesson in there. Again, including evidence of improvement feels valuable.
+5. Какие другие вещи были узнаны и/или какие следующие шаги вы собираетесь предпринять?
+    Подведите итоги высокоуровневых уроков, которые другие могут извлечь, и, возможно, поговорите о том, что вы сделали бы иначе или что планируете делать дальше.
 
-5. What other things were learned, and/or what next steps are you taking?
-    Summarize high level lessons that others can take-away, and potentially talk about what you’d do differently, or what you plan on doing next.
+### Почему эта структура работает?
 
-### Why does this structure work?
+Предыдущая структура может показаться формульной, но мы видели, как она работает множество раз. На наш взгляд, эта структура работает, потому что:
 
-The previous structure might seem formulaic, but we’ve seen it work a number of times. In our opinion, this structure works because:
+- **Ваша презентация имеет структуру истории** — проблема, путь, решение. Люди любят истории, и поэтому поток кажется естественным и легким для восприятия вашей аудиторией.
+- **Это увеличивает целевую аудиторию**. Делая несколько различных тактик, вы увеличиваете вероятность того, что в вашем выступлении будет что-то интересное для разных членов аудитории. Сравните это с узким фокусом на выступлении о “[Написании пакетов, когда исходная таблица может существовать или нет](https://discourse.getdbt.com/t/writing-packages-when-a-source-table-may-or-may-not-exist/1487)” — это не будет актуально для большинства людей в комнате.
+- **Это охватывает как теорию, так и практику.** Слишком много теории, и вы проводите TedTalk, слишком много практики, и вы просто проводите демонстрацию продукта. Лучшие выступления на митапах помогают людям понять, как вы обдумали проблему и почему вы приняли определенные решения, чтобы они могли применить ваши знания в своем уникальном контексте.
 
-- **Your presentation has the structure of a story** — problem, journey, solution. Human beings love stories, and so the flow feels natural and easy for your audience to follow.
-- **It increases the target audience**. Sharing a few different tactics means that it’s more likely there will be something in your talk for different audience members. Compare that to narrowly scoping a talk on “[Writing packages when a source table may or may not exist](https://discourse.getdbt.com/t/writing-packages-when-a-source-table-may-or-may-not-exist/1487)”— it’s not going to feel relevant to most people in the room.
-- **It covers both theory and application.** Too much theory and you’re giving a TedTalk, too much application and you’re just giving a product demo. The best Meetup talks help people understand how you thought through a problem and why you made certain decisions so they can apply your knowledge within their unique context.
+## Примеры, соответствующие этой структуре
 
-## Examples that follow this structure
+Вот несколько наших любимых выступлений, соответствующих структуре — поверьте, это работает!
 
-Here's a few of our favorite talks mapped to the structure — trust us, it works!
+### Улучшение надежности данных — Андреа Копиц, Envoy
 
-### Improving data reliability — Andrea Kopitz, Envoy
+*[Видео](https://www.youtube.com/watch?v=M_cNspn2XsE), [слайды](https://docs.google.com/presentation/d/1gHChax5aM3tqKkhepX7Mghmg0DTDbY5yoDBCfUR23lg/).*
 
-*[Video](https://www.youtube.com/watch?v=M_cNspn2XsE), [slides](https://docs.google.com/presentation/d/1gHChax5aM3tqKkhepX7Mghmg0DTDbY5yoDBCfUR23lg/).*
+1. Какова бизнес-проблема?
+Финансовые данные Envoy казались непоследовательными.
 
-1. What is the business problem?
-Envoy’s financial data appeared inconsistent.
+2. Как это проявилось?
+Респонденты опроса команды по данным сказали, что больше не доверяют данным.
 
-2. How did this manifest?
-Respondents to the team’s data survey said they no longer trusted the data.
+3. Какие тактики были использованы для решения проблемы?
+    1. Определить ответственность
+    2. Создать более специфические тесты dbt
+    3. Отслеживать прогресс
 
-3. What tactics were used to solve the problem?
-    1. Determine responsibility
-    2. Build more specific dbt tests
-    3. Track progress
+4. Каков был эффект на бизнес-проблему?
+На следующем опросе данных уровень удовлетворенности увеличился, и не было упоминаний о точности финансовых данных.
 
-4. What was the impact on the business problem?
-In their next data survey, satisfaction rating increased, and no mention of financial data accuracy.
+5. Какие другие вещи были узнаны и/или какие следующие шаги вы собираетесь предпринять?
+Урок: отправьте опрос данных вашей компании, чтобы проинформировать вашу дорожную карту.
 
-5. What other things were learned, and/or what next steps are you taking?
-Lesson: Send out a data survey to your company to inform your roadmap.
+### Прогнозирование конверсий клиентов с использованием dbt + машинного обучения — Кенни Нинг, Better.com
 
-### Predicting customer conversions with dbt + machine learning — Kenny Ning, Better.com
+*[Видео](https://www.youtube.com/watch?v=BF7HH8JDUS0), [слайды](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/).*
 
-*[Video](https://www.youtube.com/watch?v=BF7HH8JDUS0), [slides](https://docs.google.com/presentation/d/1iqVjzxxRggMnRoI40ku88miDKw795djpKV_v4bbLpPE/).*
+1. Какова бизнес-проблема?
+   Никто не знал, почему коэффициенты конверсии клиентов better.com улучшаются или ухудшаются, что затрудняло понимание ценности различных частей бизнеса.
 
-1. What is the business problem?
-   No one knew why conversion rates for better.com customers would improve or worsen, making it difficult to know the value of different parts of the business.
+2. Как это проявилось?
+   Разные части бизнеса брали на себя ответственность, когда показатели улучшались, но никто не брал на себя ответственность, когда они ухудшались.
 
-2. How did this manifest?
-   Different parts of the business took responsibility when it improved, no one took responsibility when it worsened.
+3. Какие тактики были использованы для решения проблемы?
+    1. Использовать другой подход к коэффициентам конверсии — коэффициенты конверсии каплана-майера
+    2. Набросать идеальное решение на основе машинного обучения и посмотреть, решает ли оно проблему теоретически
+    3. Реализовать это! (с демонстрацией решения)
 
-3. What tactics were used to solve the problem?
-    1. Use a different approach to conversion rates — kaplan-meier conversion rates
-    2. Sketch out an ideal ML solution and see if it theoretically solves the problem
-    3. Build it! (ft. demonstration of solution)
+4. Каков был эффект на бизнес-проблему?
+   В конечном итоге — не так ценно, как изначально надеялись (и это нормально!). Примечание редактора: [эта статья](https://better.engineering/2020-06-24-wizard-part-ii/) была отличным продолжением первоначального проекта.
 
-4. What was the impact on the business problem?
-   In the end — not as valuable as originally hoped (and that’s ok!). Editor note: [this article](https://better.engineering/2020-06-24-wizard-part-ii/) was a great follow up on the initial project.
+5. Какие другие вещи были узнаны и/или какие следующие шаги вы собираетесь предпринять?
+    - Сосредоточьтесь на комплексных решениях
+    - Материализуйте ваш очищенный набор данных для улучшения сотрудничества
+    - Продавайте бизнесу
 
-5. What other things were learned, and/or what next steps are you taking?
-    - Focus on end-to-end solutions
-    - Materialize your clean dataset to improve collaboration
-    - Sell to the business
+### Миграция 387 моделей из Redshift в Snowflake — Команда данных Bowery Farming
 
-### Migrating 387 models from Redshift to Snowflake — Bowery Farming Data Team
+*[Видео](https://www.youtube.com/watch?v=VhH614WVufM), [слайды](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/).*
 
-*[Video](https://www.youtube.com/watch?v=VhH614WVufM), [slides](https://docs.google.com/presentation/d/1wE8NSkFPLFKGQ8fvFUUKoZFVoUhws_FhFip-9mDhoPU/).*
+1. Какова бизнес-проблема?
+   Новый сайт Bowery Farming увеличил объем данных, с которыми команда работала, что создало нагрузку на их стек данных.
 
-1. What is the business problem?
-   A new Bowery Farming site had increased the amount of data the team were dealing with, which put a strain on their data stack.
+2. Как это проявилось?
+   Графики показывают увеличение времени выполнения dbt и увеличение затрат на Redshift.
 
-3. How did this manifest?
-   Charts show increased dbt run times, and increased Redshift costs.
+3. Какие тактики были использованы для решения проблемы?
+    1. Довести Redshift до предела: использовать Athena, конфигурации Redshift, отдельные кластеры, предварительную обработку на Python
+    2. Протестировать Snowflake на предмет стоимости и производительности
+    3. Принять решение о миграции с сильным управлением проектом
 
-3. What tactics were used to solve the problem?
-    1. Push Redshift to its limit: Leverage Athena, Redshift configurations, separate clusters, python pre-processing
-    2. Trial Snowflake for cost and performance
-    3. Commit to a migration with strong project management
+4. Каков был эффект на бизнес-проблему?
+   Еще предстоит определить (на тот момент они только что завершили проект). Но команда показала доказательства того, что проект был успешно завершен!
 
-4. What was the impact on the business problem?
-   Yet to be determined (at the time, they had just finished the project). But the team showed evidence that the project has been successfully completed!
+5. Какие другие вещи были узнаны и/или какие следующие шаги вы собираетесь предпринять?
+    Другие уроки:
+    - Различия между синтаксисом SQL Redshift и Snowflake
+    - Командная работа и координация являются ключевыми для завершения миграции
 
-5. What other things were learned, and/or what next steps are you taking?
-    Other things learned:
-    - Differences between Redshift and Snowflake SQL syntax
-    - Teamwork and coordination are key to completing a migration
+## Превратите это в презентацию
+Теперь пришло время взять вашу идею и превратить ее в презентацию.
 
-## Turn it into a presentation
-Now, it's time to take your idea and turn it into a presentation.
+### Структурирование ваших слайдов
+Кроме слайдов, которые непосредственно поддерживают ваш контент, подумайте о включении:
+- В начале:
+    - Вводный слайд о себе (и коллегах)
+    - Вводный слайд о вашей компании — вы также можете включить некоторые впечатляющие цифры о вашем бизнесе, в конце концов, ваша аудитория состоит из людей, которые любят цифры!
+    - Возможно, включите ваш технологический стек для контекста — нет необходимости тратить на это слишком много времени, большинство членов аудитории будут знакомы с инструментами.
+- Перед тем как углубиться в конкретные тактики:
+    - Используйте слайд, чтобы перечислить три тактики на высоком уровне — это поможет установить ожидания для членов аудитории.
+- В конце:
+    - Заключительный слайд для вопросов и указания ваших контактных данных.
+    - Если ваша компания нанимает, упомяните об этом тоже!
 
-### Structuring your slides
-As well as the slides that directly support your content, consider including:
-- At the start:
-    - An intro slide for yourself (and teammates)
-    - An intro slide for your company — you might also include some impressive numbers about your business, after all, your audience is full of people who love numbers!
-    - Potentially include your tech stack for context — there’s no need to spend too much time on this, most audience members will be familiar with the tools.
-- Before diving into the specific tactics used:
-    - Use a slide to list the three tactics at a high level — this signposting helps set expectations for audience members.
-- At the end:
-    - A closing slide to prompt questions, and list your contact details.
-    - If your company is hiring, mention that too!
+Если доступно, используйте свою корпоративную презентацию. У нас также есть слайды с брендом dbt, если вы хотите использовать их.
 
-If available, use your corporate-branded slide deck. We also have dbt-branded slides if you want to use those.
+### Сделайте вашу презентацию яркой
 
-### Making your presentation shine
+При превращении вашей истории в презентацию также подумайте о следующем:
 
-When turning your story into a presentation, also consider doing the following:
+#### Используйте полные предложения в заголовках слайдов
 
-#### Use full sentences in your slide headings
+При презентации (особенно виртуально) трудно удерживать внимание всех. Это нормально! Включив полные предложения в качестве заголовка, люди могут “зацепиться” за презентацию. Например, вместо того чтобы иметь слайд с заголовком "Заголовки слайдов", используйте название “Используйте полные предложения в заголовках слайдов” (вау — мета!)
 
-When presenting (especially virtually), it’s hard to hold everyone’s focus. That’s ok! By including full sentences as your heading, people can “hook” back into the presentation. For example, rather than having a slide on "Slide headings", use a title like “Use full sentences in your slide headings” (woah — meta!)
+#### Сделайте ваши слайды доступными
 
-#### Make your slides accessible
+Это [отличное руководство](https://www.smashingmagazine.com/2018/11/inclusive-design-accessible-presentations/) по созданию доступных слайдов — прочитайте его!
 
-This is a [great guide](https://www.smashingmagazine.com/2018/11/inclusive-design-accessible-presentations/) on making your slides accessible — read it!
+#### Используйте доказательства в ваших слайдах
 
-#### Use evidence in your slides
+Доказательства являются ключевой частью получения доверия к тому, что ваша история ценна. Подумайте о включении:
 
-Evidence is a key part of getting buy-in that the story you’re telling is valuable. Consider including:
+- Скриншотов разговоров в Slack
+- Цитат, результатов опросов, графиков
+- Если вы говорите о сложной трансформации, включите небольшие образцы данных, чтобы продемонстрировать концепцию. Возможно, вам придется сгенерировать некоторые фиктивные данные, чтобы упростить проблему (пример)
+- Если одна из ваших тактик сильно основана на коде, подумайте о том, чтобы поделиться этим кодом в отдельном документе, чтобы заинтересованные люди могли обратиться к нему позже. (Discourse отлично подходит для этого)
 
-- Screenshots of slack conversations
-- Quotes, survey results, charts
-- If talking about a complex transformation, include small samples of data to demonstrate the concept. You may need to generate some fake data to simplify the problem (example)
-- If one of your tactics is heavily code-based, consider sharing that code in a separate piece so that interested folks can refer back to it later. (Discourse is great for this)
+#### (Виртуальные мероприятия) Создайте моменты для интерактивности
 
-#### (Virtual events) Create moments for interactivity
+Для виртуальных мероприятий: есть ли опрос, который вы можете запустить, или вопрос, который вы можете задать в чате? Это может помочь создать чувство сообщества на мероприятии.
 
-For virtual events: is there a poll you can launch, or a question you can throw out to the chat? This can help create a sense of community at the event.
+## Превратите это в блог-пост
 
-## Pair it with a blog post
+Самая сложная часть успешного выступления — это контент, поэтому, если вы дошли до этого момента, вы уже сделали большую часть работы. Превращение вашего контента в блог-пост — отличный способ закрепить свои мысли и получить дополнительную曝光. Если вы хотите быть представленным на [блоге dbt](https://blog.getdbt.com/), пожалуйста, напишите нам на [community@dbtlabs.com](mailto:community@dbtlabs.com).
 
-The hardest part of nailing a great talk is the content, so if you’ve made it this far, you’ve already done most of the work. Turning your content into a blog post is a great way to solidify your thinking, and get some extra exposure. If you’d like to be featured on the [dbt Blog](https://blog.getdbt.com/), please email us at [community@dbtlabs.com](mailto:community@dbtlabs.com).
+Мы также скоро добавим больше ресурсов о том, как писать о своей работе!
 
-We’ll also be adding more resources on how to write about your work soon!
+## Выступление на мероприятии, не связанном с dbt
 
-## Speaking at a non-dbt event
+Выше мы дали конкретные советы для выступления на митапе dbt. Если вы член сообщества dbt и хотите выступить на митапе или конференции, не связанной с dbt, есть несколько дополнительных способов, как вы можете адаптировать свой процесс.
 
-Above, we’ve given specific advice for speaking at a dbt meetup. If you’re a dbt community member who wants to speak at a non-dbt meetup or conference, there’s a few extra ways you can adjust your process.
+### Вопросы к организатору мероприятия
 
-### Questions to ask the event organizer
+#### Каков технический уровень аудитории?
 
-#### What is the technical baseline for the audience?
+Знают ли они о dbt? Если нет, знакомы ли они с SQL? В аудитории, вероятно, будет широкий диапазон людей, поэтому не будет одного точного ответа, но сбор информации о среднем уровне знаний полезен. В качестве ориентира стремитесь научить чему-то новому как минимум половину аудитории.
 
-Do they know about dbt? If not, are they familiar with SQL? You’ll likely have a range of people in the audience so there won’t be one exact answer, but gathering information about the median knowledge is useful. As a guideline, aim to teach something new to at least half of the audience.
+#### Какие выступления были наиболее успешными?
 
-#### What kind of talks have been the most successful?
+Ориентировано ли мероприятие на технические выступления или стратегические? Ожидается ли демонстрация кода? Есть ли у них примеры прошлых выступлений, которые были хорошо восприняты, или какие-либо советы?
 
-Is the event oriented around technical talks or strategic talks? Is there an expectation of demo-ing code? Do they have past examples of talks that were well-received, or any tips?
+#### Какова логистика мероприятия?
 
-#### What are the event logistics?
+На сколько времени запланировано ваше выступление? Есть ли возможность задать вопросы?
 
-How long is your talk supposed to go for? Is there an opportunity to do Q&A?
+Если мероприятие виртуальное, какова настройка программного обеспечения? Как будут модерироваться вопросы?
 
-If the event is virtual, what is the software setup like? How will questions be moderated?
+Если мероприятие проходит вживую, сможете ли вы использовать свой компьютер или будете использовать чужой? Какой экран будет? Как к нему подключиться? И есть ли у вас нужный адаптер для вашего MacBook Pro?
 
-If the event is in-person, will you be able to use your own computer, or will you use someone else’s? What sort of screen is there? How do you connect to it? And do you have the right dongle for your MacBook Pro?
+#### Есть ли возможность получить обратную связь по теме?
 
-#### Is there an opportunity for topic feedback?
+Интересуется ли организатор тем, чтобы поработать с вами над улучшением вашей темы? Если нет, могут ли они указать кого-то в своем сообществе, кто мог бы помочь?
 
-Is the organizer interested in working with you to make your topic great? If not, can they point you to someone in their community who might be interested in helping out?
+#### Есть ли дополнительные соображения по доступности, о которых вам следует знать?
 
-#### Are there any additional accessibility considerations you should be aware of?
+Используют ли какие-либо члены аудитории устройство для общения? Можете ли вы поделиться своими слайдами заранее, чтобы облегчить доступ к ним для членов аудитории? Будет ли мероприятие записано для тех, кто не может присутствовать лично?
 
-Do any audience members use a communication device? Can you share your slides ahead of time to make them easier for audience members to access? Will the event be recorded for those who can’t attend in person?
+### Ответ на Call for Speakers конференции
 
-### Responding to a conference Call for Speakers
-
-If you’re submitting a response for a Call for Speakers, and talking about dbt, we’re happy to work with you on this. You may email us at [community@dbtlabs.com](mailto:community@dbtlabs.com) for more information.
+Если вы подаете заявку на Call for Speakers и говорите о dbt, мы рады помочь вам с этим. Вы можете написать нам на [community@dbtlabs.com](mailto:community@dbtlabs.com) для получения дополнительной информации.

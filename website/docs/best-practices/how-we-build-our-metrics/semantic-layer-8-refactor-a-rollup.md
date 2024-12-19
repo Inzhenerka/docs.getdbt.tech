@@ -1,49 +1,49 @@
 ---
-title: "Refactor an existing rollup"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Рефакторинг существующего сводного отчета"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-9-conclusion"
 ---
 
-## A new approach
+## Новый подход
 
-Now that we've set the stage, it's time to dig in to the fun and messy part: how do we refactor an existing rollup in dbt into semantic models and metrics?
+Теперь, когда мы подготовили почву, пришло время углубиться в интересную и сложную часть: как мы можем рефакторить существующий сводный отчет в dbt в семантические модели и метрики?
 
-Let's look at the differences we can observe in how we might approach this with MetricFlow supercharging dbt versus how we work without a Semantic Layer. These differences can then inform our structure.
+Давайте рассмотрим различия в том, как мы можем подойти к этому с использованием MetricFlow для улучшения dbt по сравнению с тем, как мы работаем без семантического слоя. Эти различия могут помочь нам в структурировании.
 
-- 🍊 In dbt, we tend to create **highly denormalized datasets** that bring **everything you want around a certain entity or process into a single table**.
-- 💜 The problem is, this **limits the dimensionality available to MetricFlow**. The more we pre-compute and 'freeze' into place, the less flexible our data is.
-- 🚰 In MetricFlow, we ideally want **highly normalized**, star schema-like data that then allows MetricFlow to shine as a **denormalization engine**.
-- ∞ Another way to think about this is that instead of moving down a list of requested priorities trying to pre-make as many combinations of our marts as possible — increasing lines of code and complexity — we can **let MetricFlow present every combination possible without specifically coding it**.
-- 🏗️ To resolve these approaches optimally, we'll need to shift some **fundamental aspects of our modeling strategy**.
+- 🍊 В dbt мы, как правило, создаем **высоко денормализованные наборы данных**, которые объединяют **все, что вам нужно вокруг определенной сущности или процесса, в одной таблице**.
+- 💜 Проблема в том, что это **ограничивает размерность, доступную для MetricFlow**. Чем больше мы предварительно вычисляем и «замораживаем» на месте, тем менее гибкими становятся наши данные.
+- 🚰 В MetricFlow мы, в идеале, хотим **высоко нормализованные** данные, подобные звездной схеме, которые позволят MetricFlow проявить себя как **движок денормализации**.
+- ∞ Другой способ подумать об этом заключается в том, что вместо того, чтобы двигаться по списку запрашиваемых приоритетов, пытаясь заранее создать как можно больше комбинаций наших marts — увеличивая количество строк кода и сложность — мы можем **позволить MetricFlow представлять каждую возможную комбинацию без специального кодирования**.
+- 🏗️ Чтобы оптимально разрешить эти подходы, нам нужно будет изменить некоторые **фундаментальные аспекты нашей стратегии моделирования**.
 
-## Refactor steps outlined
+## Шаги по рефакторингу
 
-We recommend an incremental implementation process that looks something like this:
+Мы рекомендуем поэтапный процесс реализации, который выглядит примерно так:
 
-1. 👉 Identify **an important output** (a revenue chart on a dashboard for example, and the mart model(s) that supplies this output.
-2. 🔍 Examine all the **entities that are components** of this rollup (for instance, an `active_customers_per_week` rollup may include customers, shipping, and product data).
-3. 🛠️ **Build semantic models** for all the underlying component marts.
-4. 📏 **Build metrics** for the required aggregations in the rollup.
-5. 👯 Create a **clone of the output** on top of the Semantic Layer.
-6. 💻 Audit to **ensure you get accurate outputs**.
-7. 👉 Identify **any other outputs** that point to the rollup and **move them to the Semantic Layer**.
-8. ✌️ Put a **deprecation plan** in place for the now extraneous frozen rollup.
+1. 👉 Определите **важный вывод** (например, график доходов на панели мониторинга) и модель mart(ов), которые обеспечивают этот вывод.
+2. 🔍 Изучите все **сущности, которые являются компонентами** этого сводного отчета (например, сводный отчет `active_customers_per_week` может включать данные о клиентах, доставке и продуктах).
+3. 🛠️ **Создайте семантические модели** для всех основных компонентных marts.
+4. 📏 **Создайте метрики** для необходимых агрегатов в сводном отчете.
+5. 👯 Создайте **клон вывода** на основе семантического слоя.
+6. 💻 Проведите аудит, чтобы **убедиться, что вы получаете точные результаты**.
+7. 👉 Определите **любые другие выводы**, которые ссылаются на сводный отчет, и **переместите их в семантический слой**.
+8. ✌️ Разработайте **план по прекращению использования** теперь уже избыточного замороженного сводного отчета.
 
-You would then **continue this process** on other outputs and marts moving down a list of **priorities**. Each model as you go along will be faster and easier as you'll **reuse many of the same components** that will already have been semantically modeled.
+Затем вы **продолжите этот процесс** с другими выводами и marts, двигаясь по списку **приоритетов**. Каждая модель по мере продвижения будет быстрее и проще, так как вы **будете повторно использовать многие из тех же компонентов**, которые уже были семантически смоделированы.
 
-## Let's make a `revenue` metric
+## Давайте создадим метрику `revenue`
 
-So far we've been working in new pointing at a staging model to simplify things as we build new mental models for MetricFlow. In reality, unless you're implementing MetricFlow in a green-field dbt project, you probably are going to have some refactoring to do. So let's get into that in detail.
+До сих пор мы работали с новым указанием на модель подготовки, чтобы упростить процесс, пока мы создаем новые ментальные модели для MetricFlow. На самом деле, если вы не реализуете MetricFlow в проекте dbt с нуля, вам, вероятно, придется провести некоторый рефакторинг. Давайте рассмотрим это подробнее.
 
-1. 📚 Per the above steps, let's say we've identified our target as a revenue rollup that is built on top of `orders` and `order_items`. Now we need to identify all the underlying components, these will be all the 'import' CTEs at the top of these marts. So in the Jaffle Shop project we'd need: `orders`, `order_items`, `products`, `locations`, and `supplies`.
-2. 🗺️ We'll next make semantic models for all of these. Let's walk through a straightforward conversion first with `locations`.
-3. ⛓️ We'll want to first decide if we need to do any joining to get this into the shape we want for our semantic model. The biggest determinants of this are two factors:
-   - 📏 Does this semantic model **contain measures**?
-   - 🕥 Does this semantic model have a **primary timestamp**?
-   - 🫂 If a semantic model **has measures but no timestamp** (for example, supplies in the example project, which has static costs of supplies), you'll likely want to **sacrifice some normalization and join it on to another model** that has a primary timestamp to allow for metric aggregation.
-4. 🔄 If we _don't_ need any joins, we'll just go straight to the staging model for our semantic model's `ref`. Locations does have a `tax_rate` measure, but it also has an `ordered_at` timestamp, so we can go **straight to the staging model** here.
-5. 🥇 We specify our **primary entity** (based on `location_id`), dimensions (one categorical, `location_name`, and one **primary time dimension** `opened_at`), and lastly our measures, in this case just `average_tax_rate`.
+1. 📚 Согласно вышеуказанным шагам, предположим, что мы определили нашу цель как сводный отчет по доходам, который построен на основе `orders` и `order_items`. Теперь нам нужно определить все основные компоненты, это будут все 'import' CTE на верхнем уровне этих marts. Таким образом, в проекте Jaffle Shop нам понадобятся: `orders`, `order_items`, `products`, `locations` и `supplies`.
+2. 🗺️ Далее мы создадим семантические модели для всех этих компонентов. Давайте сначала пройдемся по простому преобразованию с `locations`.
+3. ⛓️ Сначала нам нужно решить, нужно ли нам делать какие-либо соединения, чтобы привести это в нужную форму для нашей семантической модели. На это влияют два основных фактора:
+   - 📏 Содержит ли эта семантическая модель **меры**?
+   - 🕥 Имеет ли эта семантическая модель **основной временной штамп**?
+   - 🫂 Если семантическая модель **имеет меры, но нет временного штампа** (например, supplies в примере проекта, который имеет статические затраты на поставки), вам, вероятно, придется **пожертвовать некоторой нормализацией и соединить ее с другой моделью**, которая имеет основной временной штамп, чтобы обеспечить агрегирование метрик.
+4. 🔄 Если нам _не_ нужны соединения, мы просто перейдем к модели подготовки для `ref` нашей семантической модели. Locations имеет меру `tax_rate`, но также имеет временной штамп `ordered_at`, поэтому мы можем перейти **прямо к модели подготовки** здесь.
+5. 🥇 Мы указываем нашу **основную сущность** (на основе `location_id`), размеры (один категориальный, `location_name`, и один **основной временной размер** `opened_at`), и, наконец, наши меры, в данном случае только `average_tax_rate`.
 
 <File name="models/marts/locations.yml" />
 
@@ -51,7 +51,7 @@ So far we've been working in new pointing at a staging model to simplify things 
 semantic_models:
   - name: locations
     description: |
-      Location dimension table. The grain of the table is one row per location.
+      Таблица размерности местоположений. Гранулярность таблицы — одна строка на местоположение.
     model: ref('stg_locations')
     entities:
       - name: location
@@ -66,24 +66,24 @@ semantic_models:
           time_granularity: day
     measures:
       - name: average_tax_rate
-        description: Average tax rate.
+        description: Средняя налоговая ставка.
         expr: tax_rate
         agg: avg
 ```
 
-## Semantic and logical interaction
+## Семантическое и логическое взаимодействие
 
-Now, let's tackle a thornier situation. Products and supplies both have dimensions and measures but no time dimension. Products has a one-to-one relationship with `order_items`, enriching that table, which is itself just a mapping table of products to orders. Additionally, products have a one-to-many relationship with supplies. The high-level ERD looks like the diagram below.
+Теперь давайте рассмотрим более сложную ситуацию. Продукты и поставки имеют как размеры, так и меры, но не имеют временного размера. Продукты имеют взаимосвязь один к одному с `order_items`, обогащая эту таблицу, которая сама по себе является просто таблицей сопоставления продуктов с заказами. Кроме того, продукты имеют взаимосвязь один ко многим с поставками. Высокоуровневая ERD выглядит как диаграмма ниже.
 
 <Lightbox src='/img/best-practices/semantic-layer/orders_erd.png' />
 
-So to calculate, for instance, the cost of ingredients and supplies for a given order, we'll need to do some joining and aggregating, but again we **lack a time dimension for products and supplies**. This is the signal to us that we'll **need to build a logical mart** and point our semantic model at that.
+Таким образом, чтобы рассчитать, например, стоимость ингредиентов и поставок для данного заказа, нам нужно будет сделать некоторые соединения и агрегирование, но снова мы **не имеем временного размера для продуктов и поставок**. Это сигнал для нас о том, что нам **нужно построить логический mart** и указать нашу семантическую модель на него.
 
 :::tip
-**dbt 🧡 MetricFlow.** This is where integrating your semantic definitions into your dbt project really starts to pay dividends. The interaction between the logical and semantic layers is so dynamic, you either need to house them in one codebase or facilitate a lot of cross-project communication and dependency.
+**dbt 🧡 MetricFlow.** Здесь интеграция ваших семантических определений в ваш проект dbt действительно начинает приносить плоды. Взаимодействие между логическим и семантическим слоями настолько динамично, что вам нужно либо разместить их в одной кодовой базе, либо обеспечить много межпроектной коммуникации и зависимостей.
 :::
 
-1. 🎯 Let's aim at, to start, building a table at the `order_items` grain. We can aggregate supply costs up, map over the fields we want from products, such as price, and bring the `ordered_at` timestamp we need over from the orders table. You can see example code, copied below, in `models/marts/order_items.sql`.
+1. 🎯 Давайте начнем с создания таблицы на уровне `order_items`. Мы можем агрегировать затраты на поставки, сопоставить поля, которые нам нужны из продуктов, такие как цена, и перенести временной штамп `ordered_at`, который нам нужен, из таблицы заказов. Вы можете увидеть пример кода, приведенный ниже, в `models/marts/order_items.sql`.
 
 <File name="models/marts/order_items.sql" />
 
@@ -154,18 +154,18 @@ joined as (
 select * from joined
 ```
 
-2. 🏗️ Now we've got a table that looks more like what we want to feed into the Semantic Layer. Next, we'll **build a semantic model on top of this new mart** in `models/marts/order_items.yml`. Again, we'll identify our **entities, then dimensions, then measures**.
+2. 🏗️ Теперь у нас есть таблица, которая выглядит более подходящей для подачи в семантический слой. Далее мы **создадим семантическую модель на основе этого нового mart** в `models/marts/order_items.yml`. Снова мы определим наши **сущности, затем размеры, затем меры**.
 
 <File name="models/marts/order_items.yml" />
 
 ```yml
 semantic_models:
-   #The name of the semantic model.
+   #Имя семантической модели.
    - name: order_items
       defaults:
          agg_time_dimension: ordered_at
       description: |
-         Items contatined in each order. The grain of the table is one row per order item.
+         Элементы, содержащиеся в каждом заказе. Гранулярность таблицы — одна строка на элемент заказа.
       model: ref('order_items')
       entities:
          - name: order_item
@@ -189,53 +189,53 @@ semantic_models:
            type: categorical
       measures:
          - name: revenue
-           description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
+           description: Доход, генерируемый для каждого элемента заказа. Доход рассчитывается как сумма дохода, связанного с каждым продуктом в заказе.
            agg: sum
            expr: product_price
          - name: food_revenue
-           description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
+           description: Доход, генерируемый для каждого элемента заказа. Доход рассчитывается как сумма дохода, связанного с каждым продуктом в заказе.
            agg: sum
            expr: case when is_food_item = 1 then product_price else 0 end
          - name: drink_revenue
-           description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
+           description: Доход, генерируемый для каждого элемента заказа. Доход рассчитывается как сумма дохода, связанного с каждым продуктом в заказе.
            agg: sum
            expr: case when is_drink_item = 1 then product_price else 0 end
          - name: median_revenue
-           description: The median revenue generated for each order item.
+           description: Медианный доход, генерируемый для каждого элемента заказа.
            agg: median
            expr: product_price
 ```
 
-3. 📏 Finally, Let's **build a simple revenue metric** on top of our semantic model now.
+3. 📏 Наконец, давайте **создадим простую метрику дохода** на основе нашей семантической модели.
 
 <File name="models/marts/order_items.yml" />
 
 ```yaml
 metrics:
   - name: revenue
-    description: Sum of the product revenue for each order item. Excludes tax.
+    description: Сумма дохода от продуктов для каждого элемента заказа. Исключает налог.
     type: simple
-    label: Revenue
+    label: Доход
     type_params:
       measure: revenue
 ```
 
-## Checking our work
+## Проверка нашей работы
 
-- 🔍 We always start our **auditing** with a `dbt parse` to **ensure our code works** before we examine its output.
-- 👯 If we're working there, we'll move to trying out an `dbt sl query` that **replicates the logic of the output** we're trying to refactor.
-- 💸 For our example we want to **audit monthly revenue**, to do that we'd run the query below.
+- 🔍 Мы всегда начинаем наш **аудит** с `dbt parse`, чтобы **убедиться, что наш код работает**, прежде чем мы проверим его вывод.
+- 👯 Если мы работаем там, мы перейдем к выполнению `dbt sl query`, который **реплицирует логику вывода**, который мы пытаемся рефакторить.
+- 💸 В нашем примере мы хотим **аудировать месячный доход**, для этого мы запустим следующий запрос.
 
-### Example query
+### Пример запроса
 
 ```shell
 dbt sl query --metrics revenue --group-by metric_time__month
 ```
 
-### Example query results
+### Результаты примера запроса
 
 ```shell
-✔ Success 🦄 - query completed after 1.02 seconds
+✔ Успех 🦄 - запрос завершен за 1.02 секунды
 | METRIC_TIME__MONTH   |   REVENUE |
 |:---------------------|----------:|
 | 2016-09-01 00:00:00  |  17032.00 |
@@ -244,4 +244,4 @@ dbt sl query --metrics revenue --group-by metric_time__month
 | 2016-12-01 00:00:00  |  10685.00 |
 ```
 
-- Try introducing some other dimensions from the semantic models into the `group-by` arguments to get a feel for this command.
+- Попробуйте добавить некоторые другие размеры из семантических моделей в аргументы `group-by`, чтобы лучше понять эту команду.

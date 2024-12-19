@@ -1,12 +1,12 @@
 ---
 id: mike-stanley
-title: Mike Stanley
+title: Майк Стэнли
 description: |
-  I've split my time between financial services and the video games industry. Back when I wrote code every day, I worked in marketing analytics and marketing technology. I've been in the dbt community for about two years. I haven't authored any extensions to dbt's adapters yet but I've given feedback on proposed changes!
+  Я разделяю свое время между финансовыми услугами и индустрией видеоигр. Когда я каждый день писал код, я работал в области маркетинговой аналитики и маркетинговых технологий. Я в сообществе dbt уже около двух лет. Я еще не создавал расширения для адаптеров dbt, но давал отзывы по предложенным изменениям!
 image: /img/community/spotlight/mike-stanley.jpg
-pronouns: he/him
-location: London, United Kingdom
-jobTitle: Manager, Data
+pronouns: он/его
+location: Лондон, Великобритания
+jobTitle: Менеджер по данным
 companyName: Freetrade
 socialLinks:
   - name: LinkedIn
@@ -17,14 +17,14 @@ communityAward: true
 communityAwardYear: 2024
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I've led data teams for almost ten years now and it can be a challenge to stay current on new technology when you're spending a lot of time on leadership and management. I joined the dbt Community to learn how to get more from it, how to solve problems and use more advanced features, and to learn best practices. I find that answering questions is the way I learn best, so I started helping people!
+Я возглавляю команды по работе с данными почти десять лет, и бывает сложно оставаться в курсе новых технологий, когда ты много времени уделяешь руководству и управлению. Я присоединился к сообществу dbt, чтобы узнать, как извлечь из него больше, как решать проблемы и использовать более продвинутые функции, а также чтобы изучить лучшие практики. Я обнаружил, что отвечать на вопросы — это лучший способ учиться, поэтому я начал помогать людям!
 
-## Which dbt Community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свои лидерские качества в сообществе dbt?
 
-I hope that we can all continue to level up our dbt skills and leave the data environments that we work in better than we found them.
+Я надеюсь, что мы все сможем продолжать развивать наши навыки в dbt и оставлять те среды данных, в которых мы работаем, лучше, чем мы их нашли.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-Everything! People share so much about their best practices and when and how to deviate from them, interesting extensions to dbt that they've worked on, common bugs and problems, and how to think in a "dbtish" way. I couldn't have learned any of that without the community!
+Всё! Люди делятся так много о своих лучших практиках и о том, когда и как от них отклоняться, интересными расширениями для dbt, над которыми они работали, общими ошибками и проблемами, а также о том, как мыслить в "dbt-стиле". Я не смог бы узнать ничего из этого без сообщества!

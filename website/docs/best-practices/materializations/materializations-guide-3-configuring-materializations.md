@@ -1,27 +1,27 @@
 ---
-title: "Configuring materializations"
+title: "Настройка материализаций"
 id: materializations-guide-3-configuring-materializations
 slug: 3-configuring-materializations
-description: Read this guide to understand how to configure materializations in dbt.
-displayText: Materializations best practices
-hoverSnippet: Read this guide to understand how to configure materializations in dbt.
+description: Прочитайте это руководство, чтобы понять, как настраивать материализации в dbt.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте это руководство, чтобы понять, как настраивать материализации в dbt.
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-## Configuring materializations
+## Настройка материализаций
 
-Choosing which materialization is as simple as setting any other configuration in dbt. We’ll look first at how we select our materializations for individual models, then at more powerful ways of setting materializations for entire folders of models.
+Выбор материализации так же прост, как и настройка любой другой конфигурации в dbt. Сначала мы рассмотрим, как мы выбираем материализации для отдельных моделей, а затем более мощные способы настройки материализаций для целых папок моделей.
 
-### Configuring tables and views
+### Настройка таблиц и представлений
 
-Let’s look at how we can use tables and views to get started with materializations:
+Давайте посмотрим, как мы можем использовать таблицы и представления, чтобы начать работу с материализациями:
 
-- ⚙️ We can configure an individual model’s materialization using a **Jinja `config` block**, and passing in the **`materialized` argument**. This tells dbt what materialization to use.
-- 🚰 The underlying specifics of what is run depends on [which **adapter** you’re using](/docs/supported-data-platforms), but the end results will be equivalent.
-- 😌 This is one of the many valuable aspects of dbt: it lets us use a **declarative** approach, specifying the _outcome_ that we want in our code, rather than _specific steps_ to achieve it (the latter is an _imperative_ approach if you want to get computer science-y about it 🤓).
-- 🔍 In the below case, we want to create a SQL **view**, and can **declare** that in a **single line of code**. Note that python models [do not support materializing as views](https://docs.getdbt.com/docs/build/materializations#python-materializations) at this time.
+- ⚙️ Мы можем настроить материализацию отдельной модели, используя **блок конфигурации Jinja** и передавая **аргумент `materialized`**. Это указывает dbt, какую материализацию использовать.
+- 🚰 Конкретные детали того, что выполняется, зависят от [того, какой **адаптер** вы используете](/docs/supported-data-platforms), но конечные результаты будут эквивалентны.
+- 😌 Это один из многих ценных аспектов dbt: он позволяет нам использовать **декларативный** подход, указывая _результат_, который мы хотим получить в нашем коде, а не _конкретные шаги_ для его достижения (последнее является _императивным_ подходом, если хотите углубиться в компьютерные науки 🤓).
+- 🔍 В приведенном ниже случае мы хотим создать SQL **представление** и можем **объявить** это в **одной строке кода**. Обратите внимание, что модели на Python [в настоящее время не поддерживают материализацию в виде представлений](https://docs.getdbt.com/docs/build/materializations#python-materializations).
 
 ```sql
     {{
@@ -33,12 +33,11 @@ Let’s look at how we can use tables and views to get started with materializat
     select ...
 ```
 
-
 :::info
-🐍 **Not all adapters support python yet**, check the [docs here to be sure](/docs/build/python-models#specific-data-platforms) before spending time writing python models.
+🐍 **Не все адаптеры еще поддерживают Python**, проверьте [документацию здесь, чтобы убедиться](/docs/build/python-models#specific-data-platforms) перед тем, как тратить время на написание моделей на Python.
 :::
 
-- Configuring a model to materialize as a `table` is simple, and possible for both SQL and python models.
+- Настройка модели для материализации в виде `table` проста и возможна как для SQL, так и для Python моделей.
 
 <Tabs>
 <TabItem value="sql" label="SQL">
@@ -61,7 +60,7 @@ def model(dbt, session):
 
     dbt.config(materialized="table")
 
-    # model logic
+    # логика модели
 
     return model_df
 ```
@@ -69,4 +68,4 @@ def model(dbt, session):
 </TabItem>
 </Tabs>
 
-Go ahead and try some of these out!
+Попробуйте некоторые из этих вариантов!

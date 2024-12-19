@@ -1,68 +1,64 @@
 ---
-title: "Best practices for dbt and Unity Catalog"
+title: "Лучшие практики для dbt и Unity Catalog"
 id: "dbt-unity-catalog-best-practices"
-description: Learn how to configure your.
-displayText: Writing custom generic tests
-hoverSnippet: Learn how to define your own custom generic tests.
+description: Узнайте, как настроить ваш проект.
+displayText: Написание пользовательских общих тестов
+hoverSnippet: Узнайте, как определить свои собственные пользовательские общие тесты.
 ---
 
+Ваш проект dbt на Databricks должен быть настроен после выполнения руководства ["Как настроить ваш проект databricks dbt"](/guides/set-up-your-databricks-dbt-project). Теперь мы готовы начать создание проекта dbt с использованием Unity Catalog. Однако сначала мы должны рассмотреть, как мы хотим позволить пользователям dbt взаимодействовать с нашими различными каталогами. Мы рекомендуем следующие лучшие практики для обеспечения целостности ваших производственных данных:
 
-Your Databricks dbt project should be configured after following the ["How to set up your databricks dbt project guide"](/guides/set-up-your-databricks-dbt-project). Now we’re ready to start building a dbt project using Unity Catalog. However, we should first consider how we want to allow dbt users to interact with our different catalogs. We recommend the following best practices to ensure the integrity of your production data:
+## Изолируйте ваши данные Bronze (также известные как исходные)
 
-## Isolate your Bronze (aka source) data
+Мы рекомендуем использовать Unity Catalog, так как он позволяет вам ссылаться на данные по всей вашей организации из любого другого каталога, устаревшего метастора Hive, внешнего метастора или выходных данных Delta Live Table. Кроме того, Databricks предлагает возможность [взаимодействовать с внешними данными](https://docs.databricks.com/external-data/index.html#interact-with-external-data-on-databricks) и поддерживает федерацию запросов к многим [решениям баз данных](https://docs.databricks.com/query-federation/index.html#what-is-query-federation-for-databricks-sql). Это означает, что ваши среды разработки и производства будут иметь доступ к вашим исходным данным, даже если они определены в другом каталоге или внешнем источнике данных.
 
-We recommend using Unity Catalog because it allows you to reference data across your organization from any other catalog, legacy Hive metastore, external metastore, or Delta Live Table pipeline outputs. Additionally, Databricks offers the capability to [interact with external data](https://docs.databricks.com/external-data/index.html#interact-with-external-data-on-databricks) and supports query federation to many [database solutions](https://docs.databricks.com/query-federation/index.html#what-is-query-federation-for-databricks-sql). This means your dev and prod environments will have access to your source data, even if it is defined in another catalog or external data source.
+Сырые данные в вашем слое Bronze должны быть определены как dbt [sources](https://docs.getdbt.com/docs/build/sources) и должны быть только для чтения для всех взаимодействий dbt как в разработке, так и в производстве. По умолчанию мы рекомендуем, чтобы все эти входные данные были доступны всем пользователям dbt во всех средах dbt. Это гарантирует, что преобразования во всех средах начинаются с одних и тех же входных данных, и результаты, наблюдаемые в разработке, будут воспроизведены при развертывании этого кода. Тем не менее, бывают случаи, когда требования к управлению данными вашей компании требуют использования нескольких рабочих пространств или каталогов данных в зависимости от среды.
 
-Raw data in your Bronze layer should be defined as dbt [sources](https://docs.getdbt.com/docs/build/sources) and should be read-only for all dbt interactions in both development and production. By default, we recommend that all of these inputs should be accessible by all dbt users in all dbt environments. This ensures that transformations in all environments begin with the same input data, and the results observed in development will be replicated when that code is deployed. That being said, there are times when your company’s data governance requirements necessitate using multiple workspaces or data catalogs depending on the environment.
+Если у вас есть разные каталоги/схемы данных для ваших исходных данных в зависимости от вашей среды, вы можете использовать [target.name](https://docs.getdbt.com/reference/dbt-jinja-functions/target#use-targetname-to-change-your-source-database), чтобы изменить каталог/схему данных, из которой вы извлекаете данные в зависимости от среды.
 
-If you have different data catalogs/schemas for your source data depending on your environment, you can use the [target.name](https://docs.getdbt.com/reference/dbt-jinja-functions/target#use-targetname-to-change-your-source-database) to change the data catalog/schema you’re pulling from depending on the environment.
+Если вы используете несколько рабочих пространств Databricks для изоляции разработки от производства, вы можете использовать [переменные окружения](https://docs.getdbt.com/docs/build/environment-variables) dbt Cloud в ваших строках конфигурации подключения, чтобы ссылаться на несколько рабочих пространств из одного проекта dbt Cloud. Вы также можете сделать то же самое для вашего SQL-склада, чтобы иметь разные размеры в зависимости от ваших сред.
 
-If you use multiple Databricks workspaces to isolate development from production, you can use dbt Cloud’s [environment variables](https://docs.getdbt.com/docs/build/environment-variables) in your connection config strings to reference multiple workspaces from one dbt Cloud project. You can also do the same thing for your SQL warehouse so you can have different sizes based on your environments.
+Для этого используйте [синтаксис переменных окружения](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables#special-environment-variables) dbt для имени хоста сервера вашего URL-адреса рабочего пространства Databricks и HTTP-пути для SQL-склада в ваших настройках подключения. Обратите внимание, что имя хоста сервера все еще должно выглядеть как действительное доменное имя для прохождения проверок валидации, поэтому вам нужно будет жестко закодировать суффикс домена в URL, например `{{env_var('DBT_HOSTNAME')}}.cloud.databricks.com`, и префикс пути для ваших складов, например `/sql/1.0/warehouses/{{env_var('DBT_HTTP_PATH')}}`.
 
-To do so, use dbt's [environment variable syntax](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-environment-variables#special-environment-variables) for Server Hostname of your Databricks workspace URL and HTTP Path for the SQL warehouse in your connection settings. Note that Server Hostname still needs to appear to be a valid domain name to pass validation checks, so you will need to hard-code the domain suffix on the URL, eg `{{env_var('DBT_HOSTNAME')}}.cloud.databricks.com` and the path prefix for your warehouses, eg `/sql/1.0/warehouses/{{env_var('DBT_HTTP_PATH')}}`.
+<Lightbox src="/img/guides/databricks-guides/databricks-connection-env-vars.png" title="Использование синтаксиса переменных окружения в конфигурациях подключения" />
 
-<Lightbox src="/img/guides/databricks-guides/databricks-connection-env-vars.png" title="Using environment variable syntax in connection configs" />
+Когда вы создаете среды в dbt Cloud, вы можете назначать переменные окружения для динамического заполнения информации о подключении. Не забудьте убедиться, что токены, которые вы используете в учетных данных для этих сред, были сгенерированы из связанного рабочего пространства.
 
-When you create environments in dbt Cloud, you can assign environment variables to populate the connection information dynamically. Don’t forget to make sure the tokens you use in the credentials for those environments were generated from the associated workspace.
+<Lightbox src="/img/guides/databricks-guides/databricks-env-variables.png" title="Определение значений переменных окружения по умолчанию" />
 
-<Lightbox src="/img/guides/databricks-guides/databricks-env-variables.png" title="Defining default environment variable values" />
+## Контроль доступа
 
-## Access Control
+Для предоставления доступа потребителям данных используйте [настройки прав доступа](https://docs.getdbt.com/reference/resource-configs/grants) dbt, чтобы применить разрешения к объектам базы данных, созданным моделями dbt. Это позволяет вам настраивать права доступа в виде структурированного словаря, а не писать весь SQL самостоятельно, и позволяет dbt выбрать наиболее эффективный путь для применения этих прав.
 
-For granting access to data consumers, use dbt’s [grants config](https://docs.getdbt.com/reference/resource-configs/grants) to apply permissions to database objects generated by dbt models. This lets you configure grants as a structured dictionary rather than writing all the SQL yourself and lets dbt take the most efficient path to apply those grants.
+Что касается разрешений на выполнение dbt и чтение источников данных, не предназначенных для потребителей, таблица ниже обобщает модель доступа. Эффективно, все разработчики должны получать не более чем доступ на чтение к производственному каталогу и доступ на запись в каталоге разработки. При использовании dbt создание схемы осуществляется автоматически; в отличие от традиционных рабочих процессов хранения данных, вам не нужно вручную создавать какие-либо активы Unity Catalog, кроме верхнеуровневых каталогов.
 
-As for permissions to run dbt and read non-consumer-facing data sources, the table below summarizes an access model. Effectively, all developers should get no more than read access on the prod catalog and write access in the dev catalog. When using dbt, schema creation is taken care of for you; unlike traditional data warehousing workflows, you do not need to manually create any Unity Catalog assets other than the top-level catalogs.
+**Служебный принципал prod** должен иметь доступ "чтение" к сырым исходным данным и доступ "запись" к производственному каталогу. Если вы добавите каталог **test** и связанную среду dbt, вам следует создать отдельный служебный принципал. Служебный принципал тестирования должен иметь *чтение* на сырые исходные данные и *запись* на каталог **test**, но не иметь разрешений на производственные или разработческие каталоги. Для [CI-тестирования](https://www.getdbt.com/blog/adopting-ci-cd-with-dbt-cloud/) следует использовать отдельную тестовую среду.
 
-The **prod** service principal should have “read” access to raw source data, and “write” access to the prod catalog. If you add a **test** catalog and associated dbt environment, you should create a dedicated service principal. The test service principal should have *read* on raw source data, and *write* on the **test** catalog but no permissions on the prod or dev catalogs. A dedicated test environment should be used for [CI testing](https://www.getdbt.com/blog/adopting-ci-cd-with-dbt-cloud/) only.
+**Права доступа на уровне таблицы:**
 
-
-**Table-level grants:**
-
-|  | Source Data | Development catalog | Production catalog | Test catalog |
+|  | Исходные данные | Каталог разработки | Производственный каталог | Тестовый каталог |
 | --- | --- | --- | --- | --- |
-| developers | select | select & modify | select or none | none |
-| production service principal | select | none | select & modify | none |
-| Test service principal | select | none | none | select & modify |
+| разработчики | select | select & modify | select or none | none |
+| служебный принципал производства | select | none | select & modify | none |
+| служебный принципал тестирования | select | none | none | select & modify |
 
+**Права доступа на уровне схемы:**
 
-**Schema-level grants:**
-
-|  | Source Data | Development catalog | Production catalog | Test catalog |
+|  | Исходные данные | Каталог разработки | Производственный каталог | Тестовый каталог |
 | --- | --- | --- | --- | --- |
-| developers | use | use, create schema, table, & view | use or none | none |
-| production service principal | use | none | use, create schema, table & view | none |
-| Test service principal | use | none | none | use, create schema, table & view |
+| разработчики | use | use, create schema, table, & view | use or none | none |
+| служебный принципал производства | use | none | use, create schema, table & view | none |
+| служебный принципал тестирования | use | none | none | use, create schema, table & view |
 
+## Следующие шаги
 
-## Next steps
+Готовы начать преобразование ваших наборов данных Unity Catalog с помощью dbt?
 
-Ready to start transforming your Unity Catalog datasets with dbt?
+Посмотрите ресурсы ниже для руководств, советов и лучших практик:
 
-Check out the resources below for guides, tips, and best practices:
-
-- [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview)
-- [Self-paced dbt fundamentals training course](https://learn.getdbt.com/courses/dbt-fundamentals)
-- [Customizing CI/CD](/guides/custom-cicd-pipelines)
-- [Debugging errors](/guides/debug-errors)
-- [Writing custom generic tests](/best-practices/writing-custom-generic-tests)
-- [dbt packages hub](https://hub.getdbt.com/)
+- [Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview)
+- [Курс по основам dbt в формате самообучения](https://learn.getdbt.com/courses/dbt-fundamentals)
+- [Настройка CI/CD](/guides/custom-cicd-pipelines)
+- [Отладка ошибок](/guides/debug-errors)
+- [Написание пользовательских общих тестов](/best-practices/writing-custom-generic-tests)
+- [Центр пакетов dbt](https://hub.getdbt.com/)

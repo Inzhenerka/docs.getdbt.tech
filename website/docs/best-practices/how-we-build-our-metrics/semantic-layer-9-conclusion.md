@@ -1,35 +1,35 @@
 ---
-title: "Best practices"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Лучшие практики"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: null
 ---
 
-## Putting it all together
+## Объединение всего воедино
 
-- 📊 We've walked through **creating semantic models and metrics** for basic coverage of a key business area.
-- 🔁 In doing so we've looked at how to **refactor a frozen rollup** into a dynamic, flexible new life in the Semantic Layer.
+- 📊 Мы рассмотрели **создание семантических моделей и метрик** для базового охвата ключевой бизнес-области.
+- 🔁 В процессе мы изучили, как **рефакторить замороженные сводные таблицы** в динамичную, гибкую новую жизнь в семантическом слое.
 
-## Best practices
+## Лучшие практики
 
-- ✅ **Prefer normalization** when possible to allow MetricFlow to denormalize dynamically for end users.
-- ✅ Use **marts to denormalize** when needed, for instance grouping tables together into richer components, or getting measures on dimensional tables attached to a table with a time spine.
-- ✅ When source data is **well normalized** you can **build semantic models on top of staging models**.
-- ✅ **Prefer** computing values in **measures and metrics** when possible as opposed to in frozen rollups.
-- ❌ **Don't directly refactor the code you have in production**, build in parallel so you can audit the Semantic Layer output and deprecate old marts gracefully.
+- ✅ **Предпочитайте нормализацию**, когда это возможно, чтобы позволить MetricFlow динамически денормализовать данные для конечных пользователей.
+- ✅ Используйте **марты для денормализации**, когда это необходимо, например, группируя таблицы в более сложные компоненты или прикрепляя меры к размерным таблицам, связанным с таблицей временной оси.
+- ✅ Когда исходные данные **хорошо нормализованы**, вы можете **строить семантические модели на основе промежуточных моделей**.
+- ✅ **Предпочитайте** вычисление значений в **мерах и метриках**, когда это возможно, вместо использования замороженных сводных таблиц.
+- ❌ **Не рефакторите напрямую код, который у вас в производстве**, создавайте параллельно, чтобы вы могли проверять вывод семантического слоя и плавно выводить старые марты из эксплуатации.
 
-## Key commands
+## Ключевые команды
 
-- 🔑 Use `dbt parse` to generate a fresh semantic manifest.
-- 🔑 Use `dbt sl list dimensions --metrics [metric name]` to check that you're increasing dimensionality as you progress.
-- 🔑 Use `dbt sl query [query options]` to preview the output from your metrics as you develop.
+- 🔑 Используйте `dbt parse`, чтобы сгенерировать свежий семантический манифест.
+- 🔑 Используйте `dbt sl list dimensions --metrics [metric name]`, чтобы проверить, увеличиваете ли вы размерность по мере продвижения.
+- 🔑 Используйте `dbt sl query [query options]`, чтобы предварительно просмотреть вывод ваших метрик в процессе разработки.
 
-## Next steps
+## Следующие шаги
 
-- 🗺️ Use these best practices to map out your team's plan to **incrementally adopt the Semantic Layer**.
-- 🤗 Get involved in the community and ask questions, **help craft best practices**, and share your progress in building a dbt Semantic Layer.
-- [Validate semantic nodes in CI](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
+- 🗺️ Используйте эти лучшие практики, чтобы наметить план вашей команды по **постепенному внедрению семантического слоя**.
+- 🤗 Присоединяйтесь к сообществу, задавайте вопросы, **помогайте формировать лучшие практики** и делитесь своим прогрессом в создании семантического слоя dbt.
+- [Проверяйте семантические узлы в CI](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения кода, внесенные в модели dbt, не нарушают эти метрики.
 
-The dbt Semantic Layer is the biggest paradigm shift thus far in the young practice of analytics engineering. It's ready to provide value right away, but is most impactful if you move your project towards increasing normalization, and allow MetricFlow to do the denormalization for you with maximum dimensionality.
+Семантический слой dbt является самым значительным изменением парадигмы на сегодняшний день в молодой практике аналитического инжиниринга. Он готов предоставить ценность сразу, но будет наиболее эффективным, если вы будете двигать свой проект в сторону увеличения нормализации и позволите MetricFlow выполнять денормализацию за вас с максимальной размерностью.
 
-We will be releasing more resources soon covering implementation of the Semantic Layer in dbt Cloud with various integrated BI tools. This is just the beginning, hopefully this guide has given you a path forward for building your data platform in this new era. Refer to [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs) for more information.
+Скоро мы выпустим больше ресурсов, охватывающих реализацию семантического слоя в dbt Cloud с различными интегрированными BI-инструментами. Это только начало, надеемся, что этот гид дал вам путь вперед для создания вашей платформы данных в эту новую эпоху. Обратитесь к [Часто задаваемым вопросам о семантическом слое dbt](/docs/use-dbt-semantic-layer/sl-faqs) для получения дополнительной информации.

@@ -1,14 +1,14 @@
 ---
 id: sydney-burns
-title: Sydney Burns
+title: Сидни Бернс
 description: |
-  In 2019, I started as an analytics intern at a healthcare tech startup. I learned about dbt in 2020 and <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">joined the community</a> to self-teach. The following year, I started using dbt professionally as a consultant, and was able to pick up various parts of the stack and dive into different implementations. That experience empowered me to strike a better balance between "best practices" and what suits a specific team best. I also <a href="https://coalesce.getdbt.com/blog/babies-and-bathwater-is-kimball-still-relevant" rel="noopener noreferrer" target="_blank">spoke at Coalesce 2022</a>, a highlight of my career!
+  В 2019 году я начала свою карьеру в качестве стажера по аналитике в стартапе в области здравоохранения. Я узнала о dbt в 2020 году и <a href="https://www.getdbt.com/community/join-the-community/" rel="noopener noreferrer" target="_blank">присоединилась к сообществу</a>, чтобы самообучаться. В следующем году я начала использовать dbt профессионально в качестве консультанта и смогла освоить различные части стека и погрузиться в разные реализации. Этот опыт позволил мне лучше сбалансировать "лучшие практики" и то, что лучше всего подходит конкретной команде. Я также <a href="https://coalesce.getdbt.com/blog/babies-and-bathwater-is-kimball-still-relevant" rel="noopener noreferrer" target="_blank">выступила на Coalesce 2022</a>, что стало одним из ярких моментов моей карьеры!
 
-  Now, I collaborate with other data professionals at Webflow, where focused on enhancing and scaling our data operations. I strive to share the same enthusiasm, support, and knowledge with my team that I've gained from the broader community!
+  В настоящее время я сотрудничаю с другими специалистами по данным в Webflow, где сосредоточена на улучшении и масштабировании наших операций с данными. Я стремлюсь делиться тем же энтузиазмом, поддержкой и знаниями с моей командой, которые я получила от более широкого сообщества!
 image: /img/community/spotlight/sydney.jpg
 pronouns: she/her
-location: Panama City, FL, USA
-jobTitle: Senior Analytics Engineer
+location: Панама-Сити, Флорида, США
+jobTitle: Старший аналитический инженер
 companyName: Webflow
 socialLinks:
   - name: LinkedIn
@@ -19,18 +19,18 @@ communityAward: true
 communityAwardYear: 2023
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-The stack I used in my first data role was outdated and highly manual. Where I live, modern tech companies are few and far between, and I didn't have many in-person resources nor enough knowledge to realize that another world was possible at my skill level. I was thrilled to find a pocket of the Internet where similarly frustrated but creative data folks were sharing thoughtful solutions to problems I'd been struggling with!
+Стек, который я использовала на своей первой должности в области данных, был устаревшим и сильно ручным. В том месте, где я живу, современных технологических компаний очень мало, и у меня не было много ресурсов вживую, а также недостаточно знаний, чтобы понять, что другой мир возможен на моем уровне навыков. Я была в восторге, когда нашла уголок Интернета, где подобные мне, но креативные специалисты по данным делились продуманными решениями проблем, с которыми я сталкивалась!
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Christine Berger was my first ever (best ever!) data colleague, and the one who first introduced me to dbt.
+Кристин Бергер была моей первой (лучшей!) коллегой по данным и той, кто впервые познакомил меня с dbt.
 
-There are certain qualities I've always valued in her, that I've found in many others across the community, and strive to cultivate in myself — earnestness, curiosity, creativity, and consistently doing good work with deep care.
+Есть определенные качества, которые я всегда ценила в ней, которые я нашла во многих других членах сообщества, и стремлюсь развивать в себе — искренность, любопытство, креативность и постоянное выполнение хорошей работы с глубокой заботой.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Чему вы научились у членов сообщества? Чему вы надеетесь научить других?
 
-I spent too much time in my early career feeling scared to ask for help because I didn't want others to think I was incompetent. I'd spin my wheels on something for hours before finally asking someone to help me.
+В начале своей карьеры я слишком долго боялась просить о помощи, потому что не хотела, чтобы другие думали, что я некомпетентна. Я тратила часы на что-то, прежде чем наконец попросить кого-то помочь мне.
 
-The community has proven one thing to me time and time again: there are people here who will not only help you, but will be palpably *excited* to help you and share what they know, especially if it's clear you've made efforts to use your resources and try things on your own first. I'm one of those people now!
+Сообщество неоднократно доказывало мне одно: здесь есть люди, которые не только помогут вам, но и будут ощутимо *восторженно* рады помочь вам и поделиться тем, что они знают, особенно если видно, что вы приложили усилия, чтобы использовать свои ресурсы и попробовать что-то самостоятельно. Теперь я одна из таких людей!

@@ -1,12 +1,12 @@
 ---
 id: david-effiong
-title: David Effiong
+title: Дэвид Эфионг
 description: |
-  I started my career as a data analyst but I currently work as a data engineer in a financial Institution. I have experience working in both large organisations and startups. I have been in the dbt community for about 1 year and 6 months. I found out about dbt while working at a startup where I implemented a modern data stack using BigQuery, Airbyte, Metabase, and dbt. Currently my stack in my large organisation includes Azure tools + dbt. (😁 Of course I had to use dbt!) I have a YouTube channel where I share learnings about data and productivity. The name of my channel is David Data, please check it out. I spoke at the first in-person Lagos dbt meetup about and I am currently an organiser of the Lagos dbt meetup.
+  Я начал свою карьеру как аналитик данных, но в настоящее время работаю инженером данных в финансовом учреждении. У меня есть опыт работы как в крупных организациях, так и в стартапах. Я являюсь частью сообщества dbt около 1 года и 6 месяцев. Я узнал о dbt, работая в стартапе, где я внедрил современный стек данных, используя BigQuery, Airbyte, Metabase и dbt. В настоящее время мой стек в крупной организации включает инструменты Azure + dbt. (😁 Конечно, мне пришлось использовать dbt!) У меня есть канал на YouTube, где я делюсь знаниями о данных и продуктивности. Название моего канала - David Data, пожалуйста, загляните. Я выступал на первой встрече dbt в Лагосе и в настоящее время являюсь организатором встреч dbt в Лагосе.
 image: /img/community/spotlight/david-effiong.jpg
-pronouns: he/him
-location: Lagos, Nigeria
-jobTitle: Data Engineer
+pronouns: он/его
+location: Лагос, Нигерия
+jobTitle: Инженер данных
 companyName: Sterling Bank PLC
 organization: Young Data Professionals
 socialLinks:
@@ -20,18 +20,18 @@ dateCreated: 2023-03-26
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined the dbt community late 2021 when I joined the startup. I was a data team of one with little experience in the domain and dbt community was and has remained impactful to my career. With the help of the community I was able to build a data stack as a team of one because there was always support to answer questions I post on the community. The community is so rich with value from conversations that you can read through threads and learn best practices or diverse approaches to problem solving. The dbt community has also been of great help to me in my current organisation in implementing dbt as part of the stack for data quality assurance purposes. The community is open to support anyone regardless of nationality or skill level and I am happy and grateful to be a part of this community. 
+Я присоединился к сообществу dbt в конце 2021 года, когда начал работать в стартапе. Я был единственным членом команды данных с небольшим опытом в этой области, и сообщество dbt оказало значительное влияние на мою карьеру. С помощью сообщества я смог построить стек данных в одиночку, так как всегда была поддержка для ответов на вопросы, которые я задавал в сообществе. Сообщество настолько богато ценностью благодаря обсуждениям, что вы можете читать потоки и изучать лучшие практики или различные подходы к решению проблем. Сообщество dbt также очень помогло мне в моей текущей организации в внедрении dbt как части стека для обеспечения качества данных. Сообщество открыто для поддержки всех, независимо от национальности или уровня навыков, и я рад и благодарен, что являюсь частью этого сообщества.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I identify with Opeyemi Fabiyi as a community leader. Opeyemi introduced me to dbt as a tool and as a community. Based on this belief in the power of communities, he went on to start Young Data Professionals, pioneered dbt meetups in Lagos, Nigeria, and also spoke at Coalesce 2022. I am looking to grow my leadership in the community by interacting more in community conversations, organizing more dbt meetups this year and also by continuing to share my dbt learning videos on my YouTube Channel.
+Я ассоциирую себя с Опейеми Фабийи как с лидером сообщества. Опейеми познакомил меня с dbt как с инструментом и как с сообществом. Основываясь на этой вере в силу сообществ, он основал Young Data Professionals, стал пионером встреч dbt в Лагосе, Нигерия, и также выступал на Coalesce 2022. Я планирую развивать свое лидерство в сообществе, участвуя в обсуждениях, организуя больше встреч dbt в этом году и продолжая делиться своими видео о обучении dbt на моем канале YouTube.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I have learned solutions to technical problems from community members. I have also learned empathy and patience from community members while interacting with others. I hope I can provide technical solutions to other community members and also do it with patience and empathy. I also hope others can learn to be more involved in the community because the community has only grown because of people, and as more people get involved, more impact is made.
+Я узнал решения технических проблем от членов сообщества. Я также научился эмпатии и терпению, общаясь с другими участниками. Я надеюсь, что смогу предоставить технические решения другим членам сообщества и делать это с терпением и эмпатией. Я также надеюсь, что другие смогут стать более вовлеченными в сообщество, потому что сообщество росло только благодаря людям, и чем больше людей участвует, тем больше влияния оно оказывает.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-Outside of work, I play the piano and sing in the choir. I also write a faith based blog, [The Writings of David Uforo](https://daviduforo.wordpress.com/). You may want to check out.  
+Помимо работы, я играю на пианино и пою в хоре. Я также веду блог на религиозную тематику, [Письма Дэвида Уфоро](https://daviduforo.wordpress.com/). Вы можете заглянуть.  

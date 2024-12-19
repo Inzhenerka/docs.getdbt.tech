@@ -1,36 +1,36 @@
 ---
-title: "Semantic structure"
-description: Getting started with the dbt Semantic Layer
-hoverSnippet: Learn how to get started with the dbt Semantic Layer
+title: "Семантическая структура"
+description: Начало работы с семантическим слоем dbt
+hoverSnippet: Узнайте, как начать работу с семантическим слоем dbt
 pagination_next: "best-practices/how-we-build-our-metrics/semantic-layer-8-refactor-a-rollup"
 ---
 
-## Files and Folders
+## Файлы и папки
 
-The first thing you need to establish is how you’re going to consistently structure your code. There are two recommend best practices to choose from:
+Первое, что вам нужно установить, это как вы будете последовательно структурировать свой код. Существует два рекомендуемых лучших практики на выбор:
 
-- 🏡 **Co-locate your semantic layer code** in a one-YAML-file-per-marts-model system.
-  - Puts documentation, data tests, unit tests, semantic models, and metrics into a unified file that corresponds to a dbt-modeled mart.
-  - Trades larger file size for less clicking between files.
-  - Simpler for greenfield projects that are building the Semantic Layer alongside dbt models.
-- 🏘️**Create a sub-folder** called `models/semantic_models/`.
-  - Create a parallel file and folder structure within that specifically for semantic layer code.
-  - Gives you more targeted files, but may involves switching between files more often.
-  - Better for migrating large existing projects, as you can quickly see what marts have been codified into the Semantic Layer.
+- 🏡 **Соседство вашего кода семантического слоя** в системе один-YAML-файл-на-модель-торговли.
+  - Объединяет документацию, тесты данных, модульные тесты, семантические модели и метрики в едином файле, который соответствует модели торговой точки в dbt.
+  - Обменивает больший размер файла на меньшее количество кликов между файлами.
+  - Проще для проектов с нуля, которые строят семантический слой вместе с моделями dbt.
+- 🏘️ **Создайте подпапку** под названием `models/semantic_models/`.
+  - Создайте параллельную структуру файлов и папок, специально для кода семантического слоя.
+  - Обеспечивает более целенаправленные файлы, но может потребовать более частого переключения между файлами.
+  - Лучше для миграции крупных существующих проектов, так как вы можете быстро увидеть, какие торговые точки были закодированы в семантический слой.
 
-It’s not terribly difficult to shift between these (it can be done with some relatively straightforward shell scripting), and this is purely a decision based on your developers’ preference (i.e. it has no impact on execution or performance), so don’t feel locked in to either path. Just pick the one that feels right and you can always shift down the road if you change your mind.
+Не так уж сложно переключаться между этими подходами (это можно сделать с помощью относительно простого скрипта оболочки), и это чисто решение, основанное на предпочтениях ваших разработчиков (т.е. это не влияет на выполнение или производительность), поэтому не чувствуйте себя привязанными к какому-либо из путей. Просто выберите тот, который кажется правильным, и вы всегда можете изменить его в будущем, если передумаете.
 
 :::tip 
-Make sure to save all semantic models and metrics under the directory defined in the [`model-paths`](/reference/project-configs/model-paths) (or a subdirectory of it, like `models/semantic_models/`). If you save them outside of this path, it will result in an empty `semantic_manifest.json` file, and your semantic models or metrics won't be recognized.
+Убедитесь, что вы сохраняете все семантические модели и метрики в каталоге, определенном в [`model-paths`](/reference/project-configs/model-paths) (или в его подпапке, такой как `models/semantic_models/`). Если вы сохраните их вне этого пути, это приведет к созданию пустого файла `semantic_manifest.json`, и ваши семантические модели или метрики не будут распознаны.
 :::
 
-## Naming
+## НNaming
 
-Next, establish your system for consistent file naming:
+Далее установите свою систему для последовательного именования файлов:
 
-- 1️⃣ If you’re doing **one-YAML-file-per-mart** then you’d have an `orders.sql` and an `orders.yml`.
-- 📛 If you’re using a **parallel subfolder approach**, for the sake of unique file names it’s recommended to use the **prefix `sem_` e.g. `sem_orders.yml`** for the dedicated semantic model and metrics that build on `orders.sql` and `orders.yml`.
+- 1️⃣ Если вы используете **один-YAML-файл-на-торговую-точку**, тогда у вас будет `orders.sql` и `orders.yml`.
+- 📛 Если вы используете **параллельный подход с подпапками**, для уникальности имен файлов рекомендуется использовать **префикс `sem_`, например, `sem_orders.yml`** для специализированной семантической модели и метрик, которые основываются на `orders.sql` и `orders.yml`.
 
-## Can't decide?
+## Не можете решить?
 
-Start with a dedicated subfolder for your semantic models and metrics, and then if you find that you’re spending a lot of time clicking between files, you can always shift to a one-YAML-file-per-mart system. Our internal data team has found that the dedicated subfolder approach is more manageable for migrating existing projects, and this is the approach our documentation uses, so if you can't pick go with that.
+Начните с выделенной подпапки для ваших семантических моделей и метрик, а затем, если вы обнаружите, что тратите много времени на переключение между файлами, вы всегда можете перейти к системе один-YAML-файл-на-торговую-точку. Наша внутренняя команда данных обнаружила, что подход с выделенной подпапкой более управляем для миграции существующих проектов, и именно этот подход используется в нашей документации, так что если вы не можете выбрать, выберите его.

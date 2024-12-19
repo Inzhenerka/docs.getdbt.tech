@@ -1,27 +1,27 @@
 ---
 id: original-dbt-athena-maintainers
-title: The Original dbt-athena Maintainers
+title: Оригинальные мейнтейнеры dbt-athena
 description: |
-  The original dbt-athena Maintainers is a group of 5 people—Jérémy Guiselin, Mattia, Jesse Dobbelaere, Serhii Dimchenko, and Nicola Corda—who met via dbt Slack in the #db-athena channel, with the aim to make make <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.com/docs/core/connect-data-platform/athena-setup">dbt-athena</a> a production-ready adapter.
+  Оригинальные мейнтейнеры dbt-athena — это группа из 5 человек: Жереми Гизелен, Маттиа, Джесси Доббелаер, Сергей Димченко и Никола Корда, которые встретились в Slack dbt в канале #db-athena с целью сделать <a target="_blank" rel="noopener noreferrer" href="https://docs.getdbt.com/docs/core/connect-data-platform/athena-setup">dbt-athena</a> адаптером, готовым к производству.
 
-  In the first periods, Winter 2022 and Spring 2023, we focused on contributing directly to the adapter, adding relevant features like Iceberg and Lake Formation support, and stabilizing some internal behaviour.
- 
-  On a second iteration our role was triaging, providing community support and bug fixing. We encouraged community members to make their first contributions, and helped them to merge their PRs.
+  В первые периоды, зимой 2022 года и весной 2023 года, мы сосредоточились на прямом вкладе в адаптер, добавляя важные функции, такие как поддержка Iceberg и Lake Formation, а также стабилизируя некоторые внутренние процессы.
+
+  На втором этапе наша роль заключалась в приоритизации задач, предоставлении поддержки сообществу и исправлении ошибок. Мы поощряли членов сообщества делать свои первые вклады и помогали им объединять их PR.
 image: /img/community/spotlight/dbt-athena-groupheadshot.jpg
-location: Europe
-jobTitle: A group of data-engineers
-companyName: Mix of companies
-organization: dbt-athena (since November 2022)
+location: Европа
+jobTitle: Группа дата-инженеров
+companyName: Смешанные компании
+organization: dbt-athena (с ноября 2022 года)
 socialLinks:
-  - name: Jérémy's LinkedIn
+  - name: LinkedIn Жереми
     link: https://www.linkedin.com/in/jrmyy/
-  - name: Mattia's LinkedIn
+  - name: LinkedIn Маттиа
     link: https://www.linkedin.com/in/mattia-sappa/
-  - name: Jesse's LinkedIn
+  - name: LinkedIn Джесси
     link: https://www.linkedin.com/in/dobbelaerejesse/
-  - name: Serhii's LinkedIn
+  - name: LinkedIn Сергея
     link: https://www.linkedin.com/in/serhii-dimchenko-075b3061/
-  - name: Nicola's LinkedIn
+  - name: LinkedIn Никола
     link: https://www.linkedin.com/in/nicolacorda/
 dateCreated: 2024-11-06 
 hide_table_of_contents: true
@@ -29,16 +29,14 @@ communityAward: true
 communityAwardYear: 2024 
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-The dbt community allowed the dbt-athena maintainers to meet each other, and share the common goal of making the dbt-athena adapter production-ready.
+Сообщество dbt позволило мейнтейнерам dbt-athena встретиться и разделить общую цель — сделать адаптер dbt-athena готовым к производству.
 
-## Which dbt Community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-As we grow, we are looking to embody democratic leadership.
+По мере нашего роста мы стремимся воплощать демократическое лидерство.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-We learned that the power of the community was endless. People started to share best practises, and some of the best practises were incorporated directly in dbt-athena, allowing people to run the adapter smoothly in their production environment.
-We reached a point where people started to ask advice for their AWS architecture, which we found pretty awesome.  
-
+Мы узнали, что сила сообщества безгранична. Люди начали делиться лучшими практиками, и некоторые из них были непосредственно внедрены в dbt-athena, что позволило пользователям без проблем использовать адаптер в своей производственной среде. Мы достигли момента, когда люди начали запрашивать советы по своей архитектуре AWS, что нам показалось довольно замечательным.

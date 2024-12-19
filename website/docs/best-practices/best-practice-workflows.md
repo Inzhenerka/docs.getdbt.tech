@@ -1,127 +1,124 @@
 ---
-title: "Best practices for workflows"
+title: "Лучшие практики для рабочих процессов"
 id: "best-practice-workflows"
 ---
 
-This page contains the collective wisdom of experienced users of dbt on how to best use it in your analytics work. Observing these best practices will help your analytics team work as effectively as possible, while implementing the pro-tips will add some polish to your dbt projects!
+Эта страница содержит коллективную мудрость опытных пользователей dbt о том, как лучше всего использовать его в вашей аналитической работе. Соблюдение этих лучших практик поможет вашей аналитической команде работать максимально эффективно, а внедрение профессиональных советов добавит изящества вашим проектам dbt!
 
-## Best practice workflows
+## Лучшие практики рабочих процессов
 
-### Version control your dbt project
-All dbt projects should be managed in version control. Git branches should be created to manage development of new features and bug fixes. All code changes should be reviewed by a colleague (or yourself) in a Pull Request prior to merging into your production branch, such as `main`. 
+### Управляйте своим проектом dbt с помощью системы контроля версий
+Все проекты dbt должны управляться с помощью системы контроля версий. Следует создавать ветки Git для управления разработкой новых функций и исправлений ошибок. Все изменения кода должны быть проверены коллегой (или вами) в Pull Request перед слиянием с вашей производственной веткой, такой как `main`.
 
-:::info Git guide
+:::info Руководство по Git
 
-We've codified our best practices in Git, in our [Git guide](https://github.com/dbt-labs/corp/blob/main/git-guide.md).
-
-:::
-
-### Use separate development and production environments
-dbt makes it easy to maintain separate production and development environments through the use of targets within a profile. We recommend using a `dev` target when running dbt from your command line and only running against a `prod` target when running from a production deployment. You can read more [about managing environments here](/docs/environments-in-dbt).
-
-### Use a style guide for your project
-SQL styles, field naming conventions, and other rules for your dbt project should be codified, especially on projects where multiple dbt users are writing code.
-
-:::info Our style guide
-
-We've made our [style guide](/best-practices/how-we-style/0-how-we-style-our-dbt-projects) public – these can act as a good starting point for your own style guide.
+Мы зафиксировали наши лучшие практики в Git в нашем [руководстве по Git](https://github.com/dbt-labs/corp/blob/main/git-guide.md).
 
 :::
 
+### Используйте отдельные среды разработки и производства
+dbt упрощает поддержание отдельных производственных и развивающихся сред с помощью использования целей в профиле. Мы рекомендуем использовать цель `dev`, когда вы запускаете dbt из командной строки, и запускать только против цели `prod`, когда вы работаете из производственного развертывания. Вы можете узнать больше [о управлении средами здесь](/docs/environments-in-dbt).
 
-## Best practices in dbt projects
-### Use the ref function
-The [ref](/reference/dbt-jinja-functions/ref) function is what makes dbt so powerful! Using the `ref` function allows dbt to infer dependencies, ensuring that models are built in the correct order. It also ensures that your current model selects from upstream tables and <Term id="view">views</Term> in the same environment that you're working in.
-Always use the `ref` function when selecting from another model, rather than using the direct relation reference (e.g. `my_schema.my_table`).
+### Используйте стиль для вашего проекта
+Стиль SQL, соглашения о наименовании полей и другие правила для вашего проекта dbt должны быть зафиксированы, особенно в проектах, где несколько пользователей dbt пишут код.
 
-### Limit references to raw data
-Your dbt project will depend on raw data stored in your database. Since this data is normally loaded by third parties, the structure of it can change over time – tables and columns may be added, removed, or renamed. When this happens, it is easier to update models if raw data is only referenced in one place.
+:::info Наш стиль
 
-:::info Using sources for raw data references
-
-We recommend defining your raw data as [sources](/docs/build/sources), and selecting from the source rather than using the direct relation reference. Our dbt projects don't contain any direct relation references in any models.
+Мы сделали наше [руководство по стилю](/best-practices/how-we-style/0-how-we-style-our-dbt-projects) публичным – это может стать хорошей отправной точкой для вашего собственного руководства по стилю.
 
 :::
 
-### Rename and recast fields once
-Raw data is generally stored in a source-conformed structure, that is, following the schema and naming conventions that the source defines. Not only will this structure differ between different sources, it is also likely to differ from the naming conventions you wish to use for analytics.
 
-The first layer of transformations in a dbt project should:
-* Select from only one source
-* Rename fields and tables to fit the conventions you wish to use within your project, for example, ensuring all timestamps are named `<event>_at`. These conventions should be declared in your project coding conventions (see above).
-* Recast fields into the correct data type, for example, changing dates into UTC and prices into dollar amounts.
+## Лучшие практики в проектах dbt
+### Используйте функцию ref
+Функция [ref](/reference/dbt-jinja-functions/ref) делает dbt таким мощным! Использование функции `ref` позволяет dbt выводить зависимости, обеспечивая правильный порядок построения моделей. Это также гарантирует, что ваша текущая модель выбирает из вышестоящих таблиц и <Term id="view">представлений</Term> в той же среде, в которой вы работаете. Всегда используйте функцию `ref`, когда выбираете из другой модели, а не используйте прямую ссылку на отношение (например, `my_schema.my_table`).
 
-All subsequent data models should be built on top of these models, reducing the amount of duplicated code.
+### Ограничьте ссылки на необработанные данные
+Ваш проект dbt будет зависеть от необработанных данных, хранящихся в вашей базе данных. Поскольку эти данные обычно загружаются третьими сторонами, их структура может изменяться со временем – таблицы и столбцы могут добавляться, удаляться или переименовываться. Когда это происходит, обновлять модели проще, если необработанные данные ссылаются только в одном месте.
 
+:::info Использование источников для ссылок на необработанные данные
 
-:::info What happened to base models?
-
-Earlier versions of this documentation recommended implementing “base models” as the first layer of transformation, and gave advice on the SQL within these models. We realized that while the reasons behind this convention were valid, the specific advice around "base models" represented an opinion, so we moved it out of the official documentation.
-
-You can instead find our opinions on [how we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview).
+Мы рекомендуем определять ваши необработанные данные как [источники](/docs/build/sources) и выбирать из источника, а не использовать прямую ссылку на отношение. В наших проектах dbt нет никаких прямых ссылок на отношения в моделях.
 
 :::
 
-### Break complex models up into smaller pieces
-Complex models often include multiple Common Table Expressions (<Term id="cte">CTEs</Term>). In dbt, you can instead separate these CTEs into separate models that build on top of each other. It is often a good idea to break up complex models when:
-* A CTE is duplicated across two models. Breaking the CTE into a separate model allows you to reference the model from any number of downstream models, reducing duplicated code.
-* A CTE changes the <Term id="grain" /> of a the data it selects from. It's often useful to test any transformations that change the grain (as in, what one record represents) of your data. Breaking a CTE into a separate model allows you to test this transformation independently of a larger model.
-* The SQL in a query contains many lines. Breaking CTEs into separate models can reduce the cognitive load when another dbt user (or your future self) is looking at the code.
+### Переименовывайте и переклассифицируйте поля один раз
+Необработанные данные обычно хранятся в структуре, соответствующей источнику, то есть следуют схеме и соглашениям о наименовании, которые определяет источник. Эта структура не только будет отличаться между различными источниками, но также, вероятно, будет отличаться от соглашений о наименовании, которые вы хотите использовать для аналитики.
 
-### Group your models in directories
-Within your `models/` directory, you can have any number of nested subdirectories. We leverage directories heavily, since using a nested structure within directories makes it easier to:
-* Configure groups of models, by specifying configurations in your `dbt_project.yml` file.
-* Run subsections of your DAG, by using the [model selection syntax](/reference/node-selection/syntax).
-* Communicate modeling steps to collaborators
-* Create conventions around the allowed upstream dependencies of a model, for example, "models in the `marts` directory can only select from other models in the `marts` directory, or from models in the `staging` directory".
+Первый уровень преобразований в проекте dbt должен:
+* Выбирать только из одного источника
+* Переименовывать поля и таблицы, чтобы соответствовать соглашениям, которые вы хотите использовать в своем проекте, например, гарантируя, что все временные метки называются `<event>_at`. Эти соглашения должны быть зафиксированы в ваших кодовых соглашениях проекта (см. выше).
+* Переклассифицировать поля в правильный тип данных, например, изменяя даты на UTC и цены на долларовые суммы.
 
-### Add tests to your models
-dbt provides a framework to test assumptions about the results generated by a model. Adding tests to a project helps provide assurance that both:
-* your SQL is transforming data in the way you expect, and
-* your source data contains the values you expect
+Все последующие модели данных должны строиться на основе этих моделей, уменьшая количество дублируемого кода.
 
-:::info Recommended tests
+:::info Что произошло с базовыми моделями?
 
-Our [style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md) recommends that at a minimum, every model should have a <Term id="primary-key" /> that is tested to ensure it is unique, and not null.
+Ранее в этой документации рекомендовалось реализовывать "базовые модели" как первый уровень преобразования и давались советы по SQL внутри этих моделей. Мы поняли, что хотя причины, стоящие за этой конвенцией, были обоснованными, конкретные советы по "базовым моделям" представляли собой мнение, поэтому мы убрали это из официальной документации.
+
+Вы можете вместо этого найти наши мнения о [том, как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview).
 
 :::
 
-### Consider the information architecture of your data warehouse
-When a user connects to a <Term id="data-warehouse" /> via a SQL client, they often rely on the names of schemas, relations, and columns, to understand the data they are presented with. To improve the information architecture of a data warehouse, we:
+### Разделяйте сложные модели на более мелкие части
+Сложные модели часто включают несколько Общих Табличных Выражений (<Term id="cte">CTE</Term>). В dbt вы можете вместо этого разделить эти CTE на отдельные модели, которые строятся друг на друге. Часто разумно разбивать сложные модели, когда:
+* CTE дублируется в двух моделях. Разделение CTE на отдельную модель позволяет вам ссылаться на модель из любого количества последующих моделей, уменьшая дублирование кода.
+* CTE изменяет <Term id="grain" /> данных, из которых он выбирает. Часто полезно тестировать любые преобразования, которые изменяют зерно (то есть, что представляет собой одна запись) ваших данных. Разделение CTE на отдельную модель позволяет вам тестировать это преобразование независимо от более крупной модели.
+* SQL в запросе содержит много строк. Разделение CTE на отдельные модели может уменьшить когнитивную нагрузку, когда другой пользователь dbt (или ваше будущее "я") смотрит на код.
 
-* Use [custom schemas](/docs/build/custom-schemas) to separate relations into logical groupings, or hide intermediate models in a separate schema. Generally, these custom schemas align with the directories we use to group our models, and are configured from the `dbt_project.yml` file.
-* Use prefixes in <Term id="table" /> names (for example, `stg_`, `fct_` and `dim_`) to indicate which relations should be queried by end users.
+### Группируйте свои модели в директории
+Внутри вашей директории `models/` вы можете иметь любое количество вложенных поддиректорий. Мы активно используем директории, так как использование вложенной структуры в директориях упрощает:
+* Настройку групп моделей, указывая конфигурации в вашем файле `dbt_project.yml`.
+* Запуск подсекций вашего DAG, используя [синтаксис выбора модели](/reference/node-selection/syntax).
+* Общение шагов моделирования с коллегами
+* Создание соглашений о допустимых вышестоящих зависимостях модели, например, "модели в директории `marts` могут выбирать только из других моделей в директории `marts` или из моделей в директории `staging`".
 
-### Choose your materializations wisely
-[<Term id="materialization" />](/docs/build/materializations) determine the way models are built through configuration. As a general rule:
-* Views are faster to build, but slower to query compared to tables.
-* Incremental models provide the same query performance as tables, are faster to build compared to the table <Term id="materialization" />, however they introduce complexity into a project.
+### Добавляйте тесты к вашим моделям
+dbt предоставляет структуру для тестирования предположений о результатах, генерируемых моделью. Добавление тестов в проект помогает обеспечить уверенность в том, что как:
+* ваш SQL преобразует данные так, как вы ожидаете, и
+* ваши исходные данные содержат ожидаемые значения
 
-We often:
-* Use views by default
-* Use ephemeral models for lightweight transformations that shouldn't be exposed to end-users
-* Use tables for models that are queried by BI tools
-* Use tables for models that have multiple descendants
-* Use incremental models when the build time for table models exceeds an acceptable threshold 
+:::info Рекомендуемые тесты
 
-## Pro-tips for workflows
-### Use the model selection syntax when running locally
-When developing, it often makes sense to only run the model you are actively working on and any downstream models. You can choose which models to run by using the [model selection syntax](/reference/node-selection/syntax).
+Наше [руководство по стилю](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md) рекомендует, чтобы как минимум каждая модель имела <Term id="primary-key" />, который тестируется на уникальность и отсутствие нулевых значений.
 
-### Run only modified models to test changes ("slim CI")
-To merge code changes with confidence, you want to know that those changes will not cause breakages elsewhere in your project. For that reason, we recommend running models and tests in a sandboxed environment, separated from your production data, as an automatic check in your git workflow. (If you use GitHub and dbt Cloud, read about [how to set up CI jobs](/docs/deploy/ci-jobs).
+:::
 
-At the same time, it costs time (and money) to run and test all the models in your project. This inefficiency feels especially painful if your PR only proposes changes to a handful of models.
+### Учитывайте информационную архитектуру вашего хранилища данных
+Когда пользователь подключается к <Term id="data-warehouse" /> через SQL-клиент, он часто полагается на названия схем, отношений и столбцов, чтобы понять данные, которые ему представлены. Для улучшения информационной архитектуры хранилища данных мы:
 
-By comparing to artifacts from a previous production run, dbt can determine
-which models are modified and build them on top of of their unmodified parents.
+* Используем [пользовательские схемы](/docs/build/custom-schemas) для разделения отношений на логические группы или скрытия промежуточных моделей в отдельной схеме. Обычно эти пользовательские схемы соответствуют директориям, которые мы используем для группировки наших моделей, и настраиваются из файла `dbt_project.yml`.
+* Используем префиксы в названиях <Term id="table" /> (например, `stg_`, `fct_` и `dim_`), чтобы указать, какие отношения должны запрашиваться конечными пользователями.
+
+### Обдумайте свои материализации
+[<Term id="materialization" />](/docs/build/materializations) определяют способ построения моделей через конфигурацию. В общем случае:
+* Представления быстрее строятся, но медленнее запрашиваются по сравнению с таблицами.
+* Инкрементальные модели обеспечивают такую же производительность запросов, как таблицы, быстрее строятся по сравнению с таблицей <Term id="materialization" />, однако они вводят сложность в проект.
+
+Мы часто:
+* Используем представления по умолчанию
+* Используем эфемерные модели для легких преобразований, которые не должны быть доступны конечным пользователям
+* Используем таблицы для моделей, которые запрашиваются BI-инструментами
+* Используем таблицы для моделей, которые имеют несколько потомков
+* Используем инкрементальные модели, когда время сборки для таблиц превышает допустимый порог 
+
+## Профессиональные советы для рабочих процессов
+### Используйте синтаксис выбора модели при локальном запуске
+При разработке часто имеет смысл запускать только ту модель, над которой вы активно работаете, и любые последующие модели. Вы можете выбрать, какие модели запускать, используя [синтаксис выбора модели](/reference/node-selection/syntax).
+
+### Запускайте только измененные модели для тестирования изменений ("узкий CI")
+Чтобы с уверенностью объединить изменения кода, вы хотите знать, что эти изменения не вызовут сбоев в других частях вашего проекта. По этой причине мы рекомендуем запускать модели и тесты в изолированной среде, отделенной от ваших производственных данных, в качестве автоматической проверки в вашем рабочем процессе git. (Если вы используете GitHub и dbt Cloud, прочитайте о [настройке CI задач](/docs/deploy/ci-jobs).
+
+В то же время, запуск и тестирование всех моделей в вашем проекте занимает время (и деньги). Эта неэффективность особенно болезненно ощущается, если ваш PR предлагает изменения только для нескольких моделей.
+
+Сравнивая с артефактами из предыдущего производственного запуска, dbt может определить, какие модели были изменены, и построить их на основе их неизмененных родителей.
 
 ```bash
 dbt run -s state:modified+ --defer --state path/to/prod/artifacts
 dbt test -s state:modified+ --defer --state path/to/prod/artifacts
 ```
 
-By comparing to artifacts from a previous production run, dbt can determine model and test result statuses.
+Сравнивая с артефактами из предыдущего производственного запуска, dbt может определить статусы моделей и результатов тестов.
 
 - `result:fail`
 - `result:error`
@@ -130,55 +127,54 @@ By comparing to artifacts from a previous production run, dbt can determine mode
 - `result:skipped`
 - `result:pass`
 
-For smarter reruns, use the `result:<status>` selector instead of manually overriding dbt commands with the models in scope.
+Для более умных повторных запусков используйте селектор `result:<status>` вместо того, чтобы вручную переопределять команды dbt с моделями в области действия.
 ```bash
 dbt run --select state:modified+ result:error+ --defer --state path/to/prod/artifacts
 ```
-  - Rerun all my erroneous models AND run changes I made concurrently that may relate to the erroneous models for downstream use
+  - Повторно запустите все мои ошибочные модели И запустите изменения, которые я сделал одновременно, которые могут относиться к ошибочным моделям для последующего использования
 
 ```bash
 dbt build --select state:modified+ result:error+ --defer --state path/to/prod/artifacts
 ```
-  - Rerun and retest all my erroneous models AND run changes I made concurrently that may relate to the erroneous models for downstream use
+  - Повторно запустите и протестируйте все мои ошибочные модели И запустите изменения, которые я сделал одновременно, которые могут относиться к ошибочным моделям для последующего использования
 
 ```bash
 dbt build --select state:modified+ result:error+ result:fail+ --defer --state path/to/prod/artifacts
 ```
-  - Rerun all my erroneous models AND all my failed tests
-  - Rerun all my erroneous models AND run changes I made concurrently that may relate to the erroneous models for downstream use
-  - There's a failed test that's unrelated to modified or error nodes(think: source test that needs to refresh a data load in order to pass)
+  - Повторно запустите все мои ошибочные модели И все мои неудачные тесты
+  - Повторно запустите все мои ошибочные модели И запустите изменения, которые я сделал одновременно, которые могут относиться к ошибочным моделям для последующего использования
+  - Есть неудавшийся тест, который не связан с измененными или ошибочными узлами (например, тест источника, который нужно обновить, чтобы пройти)
 
 ```bash
 dbt test --select result:fail --exclude <example test> --defer --state path/to/prod/artifacts
 ```
-  - Rerun all my failed tests and exclude tests that I know will still fail
-  - This can apply to updates in source data during the "EL" process that need to be rerun after they are refreshed
+  - Повторно запустите все мои неудавшие тесты и исключите тесты, которые я знаю, что все равно потерпят неудачу
+  - Это может относиться к обновлениям в исходных данных во время процесса "EL", которые необходимо повторно запустить после их обновления
 
-> Note: If you're using the `--state target/` flag, `result:error` and `result:fail` flags can only be selected concurrently(in the same command) if using the `dbt build` command. `dbt test` will overwrite the `run_results.json` from `dbt run` in a previous command invocation.
+> Примечание: Если вы используете флаг `--state target/`, флаги `result:error` и `result:fail` могут быть выбраны одновременно (в одной команде) только при использовании команды `dbt build`. `dbt test` перезапишет `run_results.json` из `dbt run` в предыдущем вызове команды.
 
+Поддерживается только в версиях 1.1 или новее.
 
-Only supported by v1.1 or newer.
-
-By comparing to a `sources.json` artifact from a previous production run to a current `sources.json` artifact, dbt can determine which sources are fresher and run downstream models based on them.
+Сравнивая с артефактом `sources.json` из предыдущего производственного запуска с текущим артефактом `sources.json`, dbt может определить, какие источники более свежие, и запустить последующие модели на их основе.
 
 ```bash
-# job 1
-dbt source freshness # must be run to get previous state
+# задача 1
+dbt source freshness # должен быть запущен, чтобы получить предыдущее состояние
 ```
 
-Test all my sources that are fresher than the previous run, and run and test all models downstream of them:
+Проверьте все мои источники, которые более свежие, чем предыдущий запуск, и запустите и протестируйте все модели, находящиеся ниже них:
 
 ```bash
-# job 2
-dbt source freshness # must be run again to compare current to previous state
+# задача 2
+dbt source freshness # должен быть запущен снова, чтобы сравнить текущее с предыдущим состоянием
 dbt build --select source_status:fresher+ --state path/to/prod/artifacts
 ```
 
-To learn more, read the docs on [state](/reference/node-selection/syntax#about-node-selection).
+Чтобы узнать больше, прочитайте документацию о [состоянии](/reference/node-selection/syntax#about-node-selection).
 
-## Pro-tips for dbt Projects
-### Limit the data processed when in development
-In a development environment, faster run times allow you to iterate your code more quickly. We frequently speed up our runs by using a pattern that limits data based on the [target](/reference/dbt-jinja-functions/target) name:
+## Профессиональные советы для проектов dbt
+### Ограничьте обрабатываемые данные при разработке
+В среде разработки более быстрые времена выполнения позволяют вам быстрее итеративно разрабатывать код. Мы часто ускоряем наши запуски, используя шаблон, который ограничивает данные на основе имени [target](/reference/dbt-jinja-functions/target):
 ```sql
 select
 *
@@ -188,23 +184,22 @@ where created_at >= dateadd('day', -3, current_date)
 {% endif %}
 ```
 
-### Use hooks to manage privileges on objects that dbt creates
-Use `grant` statements from [hooks](/docs/build/hooks-operations) to ensure that permissions are applied to the objects created by dbt. By codifying these grant statements in hooks, you can version control and repeatably apply these permissions.
+### Используйте хуки для управления привилегиями на объекты, которые создает dbt
+Используйте операторы `grant` из [хуков](/docs/build/hooks-operations), чтобы гарантировать, что разрешения применяются к объектам, созданным dbt. Зафиксировав эти операторы grant в хуках, вы можете управлять версиями и повторно применять эти разрешения.
 
+:::info Рекомендуемые операторы grant
 
-:::info Recommended grant statements
-
-We've shared the exact grant statements we use over on [Discourse](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
+Мы поделились точными операторами grant, которые мы используем, на [Discourse](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
 
 :::
 
-### Separate source-centric and business-centric transformations
-When modeling data, we frequently find there are two stages:
+### Разделяйте трансформации, ориентированные на источник, и трансформации, ориентированные на бизнес
+При моделировании данных мы часто обнаруживаем, что есть два этапа:
 
-1. Source-centric transformations to transform data from different sources into a consistent structure, for example, re-aliasing and recasting columns, or unioning, joining or deduplicating source data to ensure your model has the correct grain; and
-2. Business-centric transformations that transform data into models that represent entities and processes relevant to your business, or implement business definitions in SQL.
+1. Трансформации, ориентированные на источник, для преобразования данных из различных источников в согласованную структуру, например, переименование и переклассификация столбцов, объединение, соединение или дедупликация исходных данных, чтобы гарантировать, что ваша модель имеет правильное зерно; и
+2. Трансформации, ориентированные на бизнес, которые преобразуют данные в модели, представляющие сущности и процессы, относящиеся к вашему бизнесу, или реализуют бизнес-определения в SQL.
 
-We find it most useful to separate these two types of transformations into different models, to make the distinction between source-centric and business-centric logic clear.
+Мы находим наиболее полезным разделять эти два типа трансформаций на разные модели, чтобы сделать различие между логикой, ориентированной на источник, и логикой, ориентированной на бизнес, ясным.
 
-### Managing whitespace generated by Jinja
-If you're using macros or other pieces of Jinja in your models, your compiled SQL (found in the `target/compiled` directory) may contain unwanted whitespace. Check out the [Jinja documentation](http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control) to learn how to control generated whitespace.
+### Управление пробелами, создаваемыми Jinja
+Если вы используете макросы или другие элементы Jinja в своих моделях, ваш скомпилированный SQL (находится в директории `target/compiled`) может содержать нежелательные пробелы. Ознакомьтесь с [документацией Jinja](http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control), чтобы узнать, как контролировать создаваемые пробелы.

@@ -1,16 +1,16 @@
 ---
-title: How we style our Jinja
+title: Как мы стилизуем наш Jinja
 id: 4-how-we-style-our-jinja
 ---
 
-## Jinja style guide
+## Руководство по стилю Jinja
 
-- 🫧 When using Jinja delimiters, use spaces on the inside of your delimiter, like `{{ this }}` instead of `{{this}}`
-- 🆕 Use newlines to visually indicate logical blocks of Jinja.
-- 4️⃣ Indent 4 spaces into a Jinja block to indicate visually that the code inside is wrapped by that block.
-- ❌ Don't worry (too much) about Jinja whitespace control, focus on your project code being readable. The time you save by not worrying about whitespace control will far outweigh the time you spend in your compiled code where it might not be perfect.
+- 🫧 При использовании разделителей Jinja используйте пробелы внутри вашего разделителя, например `{{ this }}` вместо `{{this}}`.
+- 🆕 Используйте переносы строк, чтобы визуально обозначить логические блоки Jinja.
+- 4️⃣ Отступайте на 4 пробела внутри блока Jinja, чтобы визуально указать, что код внутри обернут этим блоком.
+- ❌ Не беспокойтесь (слишком сильно) о контроле пробелов в Jinja, сосредоточьтесь на том, чтобы ваш проект был читаемым. Время, сэкономленное на беспокойстве о контроле пробелов, значительно превысит время, потраченное на ваш скомпилированный код, где он может быть не идеальным.
 
-## Examples of Jinja style
+## Примеры стиля Jinja
 
 ```jinja
 {% macro make_cool(uncool_id) %}

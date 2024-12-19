@@ -1,18 +1,18 @@
 ---
 id: emily-riederer
-title: Emily Riederer
+title: Эмили Ридерер
 description: |
-  I'm a long-time dbt user and have been an active community member for a few years. 
+  Я давний пользователь dbt и активный участник сообщества на протяжении нескольких лет.
 
-  Professionally, I've led a variety of data teams at Capital One spanning analytics, modeling, innersource data tools, and data infrastructure. The common denominator of all of these roles has been the overwhelming importance of high quality data processing pipelines. Outside of work, I enjoy doing pro bono projects and applying my same skillset to scrappier environments.
+  Профессионально я возглавляла различные команды по работе с данными в Capital One, охватывающие аналитику, моделирование, инструменты внутреннего источника данных и инфраструктуру данных. Общим знаменателем всех этих ролей была огромная важность высококачественных конвейеров обработки данных. Вне работы мне нравится заниматься проектами на безвозмездной основе и применять свои навыки в более скромных условиях.
 
-  My work with the dbt community is motivated by a passion for data quality and developer tooling. Some of my recent contributions include maintaining the <code>dbtplyr</code> package, speaking at Coalesce 2021, and <a href="https://docs.getdbt.com/blog/grouping-data-tests" title="writing a dbt Developer Blog post">writing a dbt Developer Blog post</a> about my PR to the <code>dbt-utils</code> test suite.
+  Моя работа с сообществом dbt мотивирована страстью к качеству данных и инструментам для разработчиков. Некоторые из моих недавних вкладов включают поддержку пакета <code>dbtplyr</code>, выступление на Coalesce 2021 и <a href="https://docs.getdbt.com/blog/grouping-data-tests" title="написание поста в блоге разработчиков dbt">написание поста в блоге разработчиков dbt</a> о моем PR к тестовому набору <code>dbt-utils</code>.
 image: /img/community/spotlight/emily-riederer.jpg
 pronouns: she/her
-location: Chicago, IL
-jobTitle: Senior Manager - Data Science & Analytics
+location: Чикаго, штат Иллинойс
+jobTitle: Старший менеджер - Наука о данных и аналитика
 companyName: Capital One
-organization: rOpenSci Editorial Board
+organization: Редакционная коллегия rOpenSci
 socialLinks:
   - name: Twitter
     link: https://twitter.com/emilyriederer
@@ -28,21 +28,20 @@ dateCreated: 2023-03-22
 hide_table_of_contents: true
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I have been involved in the dbt community for a few years now. While I enjoy being actively engaged, one of my favorite parts is simply "lurking" on the Slack channels. The data space is moving so fast right now with so many different competing frameworks, tools, and ideas. At the same time, data work tends to be less discussed and publicly shared than analysis methods (e.g. new modeling packages) due to data privacy and IP. I've found no better place to "drink from the firehouse" and benefit from the insights of others questions, challenges, and successes.
+Я участвую в сообществе dbt уже несколько лет. Хотя мне нравится активно участвовать, одной из моих любимых частей является просто "наблюдение" за каналами в Slack. Область данных сейчас развивается так быстро, с множеством различных конкурирующих фреймворков, инструментов и идей. В то же время работа с данными, как правило, обсуждается и делится публично меньше, чем методы анализа (например, новые пакеты моделирования) из-за конфиденциальности данных и интеллектуальной собственности. Я не нашла лучшего места, чтобы "пить из пожарного гидранта" и извлекать пользу из вопросов, проблем и успехов других.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-Two community members that really inspire me are Claire Carroll and Joel Labes. I think both showcase excellence in technical best practices, crystal-clear communication of technical concepts in their prolific writing, and a passion for building community and creating on-ramps. That mix of so-called 'hard' and 'soft' skills adds so much to the community and helps empower every member to be their best. I'm always looking to balance the time I spend growing my skills along both dimensions.
+Два участника сообщества, которые действительно вдохновляют меня, это Клэр Кэрролл и Джоэл Лабес. Я думаю, что оба демонстрируют превосходство в технических лучших практиках, кристально ясное объяснение технических концепций в своих обширных текстах и страсть к созданию сообщества и созданию путей для новых участников. Эта смесь так называемых "жестких" и "мягких" навыков добавляет много ценности сообществу и помогает каждому участнику быть лучшим. Я всегда стремлюсь сбалансировать время, которое я трачу на развитие своих навыков в обоих направлениях.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от участников сообщества? Чему вы надеетесь научить других?
 
-Given my passion for data quality and the design side of data, I particularly enjoy thinking about data modeling and learning from the community's experience with the variety of classical and novel frameworks for designing resilient, flexible datamarts. 
+Учитывая мою страсть к качеству данных и дизайну данных, мне особенно нравится думать о моделировании данных и учиться на опыте сообщества с разнообразными классическими и новыми фреймворками для проектирования устойчивых, гибких дата-мартов.
 
-As a passionate fan of open-source (and the also-thriving #rstats community), I hope to inspire others to create more packages and PRs that expand the developer toolkit. I also particularly enjoy discussing my thoughts on data quality and avoiding data disasters.
+Как страстный поклонник открытого программного обеспечения (и также процветающего сообщества #rstats), я надеюсь вдохновить других создавать больше пакетов и PR, которые расширяют инструментарий разработчиков. Мне также особенно нравится обсуждать свои мысли о качестве данных и избегании катастроф с данными.
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-test 
-My passion for open-source tools and open-knowledge extends beyond dbt. I also enjoy serving on the editorial board for rOpenSci to champion the creation of open-source research software, reviewing technical books for CRC Press, doing pro-bono data projects, and sharing my own learnings through conference talks and writing (including on my website, guest blogs, and books including [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) and [97 Things Every Data Engineer Should Know](https://www.oreilly.com/library/view/97-things-every/9781492062400/)).
+Моя страсть к инструментам с открытым исходным кодом и открытым знанием выходит за рамки dbt. Мне также нравится работать в редакционной коллегии rOpenSci, чтобы поддерживать создание программного обеспечения для открытых исследований, рецензировать технические книги для CRC Press, заниматься проектами на безвозмездной основе и делиться своими знаниями через выступления на конференциях и написание (включая мой веб-сайт, гостевые блоги и книги, такие как [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) и [97 Things Every Data Engineer Should Know](https://www.oreilly.com/library/view/97-things-every/9781492062400/)).

@@ -1,50 +1,50 @@
 ---
-title: "Examining our builds"
+title: "Изучение наших сборок"
 id: materializations-guide-6-examining-builds
 slug: 6-examining-builds
-description: Read this guide to understand how to examine your builds in dbt.
-displayText: Materializations best practices
-hoverSnippet: Read this guide to understand how to examine your builds in dbt.
+description: Прочитайте это руководство, чтобы понять, как изучать свои сборки в dbt.
+displayText: Лучшие практики материализаций
+hoverSnippet: Прочитайте это руководство, чтобы понять, как изучать свои сборки в dbt.
 ---
 
-## Examining our builds
+## Изучение наших сборок
 
-- ⌚ dbt keeps track of how **long each model took to build**, when it started, when it finished, its completion status (error, warn, or success), its materialization type, and _much_ more.
-- 🖼️ This information is stored in a couple files which dbt calls **artifacts**.
-- 📊 Artifacts contain a ton of information in JSON format, so aren’t easy to read, but **dbt Cloud** packages the most useful bits of information into a tidy **visualization** for you.
-- ☁️ If you’re not using Cloud, we can still use the output of the **dbt Core CLI to understand our runs**.
+- ⌚ dbt отслеживает, **сколько времени потребовалось для сборки каждой модели**, когда она началась, когда закончилась, ее статус завершения (ошибка, предупреждение или успех), тип материализации и _многое_ другое.
+- 🖼️ Эта информация хранится в нескольких файлах, которые dbt называет **артефактами**.
+- 📊 Артефакты содержат множество информации в формате JSON, поэтому их не так просто читать, но **dbt Cloud** упаковывает самые полезные данные в аккуратную **визуализацию** для вас.
+- ☁️ Если вы не используете Cloud, мы все равно можем использовать вывод **dbt Core CLI, чтобы понять наши запуски**.
 
-### Model Timing
+### Время модели
 
-That’s where dbt Cloud’s Model Timing visualization comes in extremely handy. If we’ve set up a [Job](/guides/bigquery) in dbt Cloud to run our models, we can use the Model Timing tab to pinpoint our longest-running models.
+Вот где визуализация времени модели в dbt Cloud оказывается крайне полезной. Если мы настроили [Задачу](/guides/bigquery) в dbt Cloud для запуска наших моделей, мы можем использовать вкладку времени модели, чтобы определить наши модели с самым длительным временем выполнения.
 
-![dbt Cloud's Model Timing diagram](/img/best-practices/materializations/model-timing-diagram.png)
+![Диаграмма времени модели dbt Cloud](/img/best-practices/materializations/model-timing-diagram.png)
 
-- 🧵 This view lets us see our **mapped out in threads** (up to 64 threads, we’re currently running with 4, so we get 4 tracks) over time. You can think of **each thread as a lane on a highway**.
-- ⌛ We can see above that `customer_status_histories` is **taking by far the most time**, so we may want to go ahead and **make that incremental**.
+- 🧵 Этот вид позволяет нам видеть наши **модели, распределенные по потокам** (до 64 потоков, в данный момент мы работаем с 4, так что у нас 4 дорожки) с течением времени. Вы можете представить **каждый поток как полосу на шоссе**.
+- ⌛ Мы видим выше, что `customer_status_histories` **занимает гораздо больше всего времени**, поэтому мы, возможно, захотим **сделать ее инкрементальной**.
 
-If you aren’t using dbt Cloud, that’s okay! We don’t get a fancy visualization out of the box, but we can use the output from the dbt Core CLI to check our model times, and it’s a great opportunity to become familiar with that output.
+Если вы не используете dbt Cloud, не переживайте! У нас нет красивой визуализации из коробки, но мы можем использовать вывод из dbt Core CLI, чтобы проверить время наших моделей, и это отличная возможность познакомиться с этим выводом.
 
-### dbt Core CLI output
+### Вывод dbt Core CLI
 
-If you’ve ever run dbt, whether `build`, `test`, `run` or something else, you’ve seen some output like below. Let’s take a closer look at how to read this.
+Если вы когда-либо запускали dbt, будь то `build`, `test`, `run` или что-то еще, вы видели вывод, похожий на приведенный ниже. Давайте подробнее рассмотрим, как его читать.
 
-![CLI output from a dbt build command](/img/best-practices/materializations/dbt-build-output.png)
+![Вывод CLI команды сборки dbt](/img/best-practices/materializations/dbt-build-output.png)
 
-- There are two entries per model, the **start** of a model’s build and the **completion**, which will include **how long** the model took to run. The **type** of model is included as well. For example:
+- Для каждой модели есть две записи: **начало** сборки модели и **завершение**, которые будут включать **сколько времени** модель потребовала для выполнения. Также указывается **тип** модели. Например:
 
 ```shell
-20:24:51  5 of 10 START sql view model main.stg_products ......... [RUN]
-20:24:51  5 of 10 OK created sql view model main.stg_products .... [OK in 0.13s]
+20:24:51  5 из 10 НАЧАЛО sql view model main.stg_products ......... [RUN]
+20:24:51  5 из 10 ОК создан sql view model main.stg_products .... [OK за 0.13с]
 ```
 
-- 5️⃣  On **both rows** we can see that our `stg_products` model is the 5th of 10 objects being built, the timestamp it started at, that it was defined in SQL (as opposed to python), and that it was a view.
-- 🆕  On the **first row** we can see the timestamp of when the model **started**.
-- ✅  On the **second row** — which does _not_ necessarily come right after, thanks to threads other models can be starting and finishing as this model runs — we see the **completion** entry which adds the **status**, in this case `OK` , and the **time to build**, a lightning-fast 0.13s. That’s not unexpected considering what we know about views.
-- 🏎️  **Views should typically take less than a second or two,** it’s tables and incremental models you’ll want to keep a closer eye on with these tools.
+- 5️⃣ На **обоих строках** мы видим, что наша модель `stg_products` является 5-й из 10 объектов, которые собираются, временную метку, когда она началась, что она была определена на SQL (в отличие от python), и что это было представление.
+- 🆕 На **первой строке** мы видим временную метку, когда модель **началась**.
+- ✅ На **второй строке** — которая _не обязательно_ идет сразу после, благодаря потокам другие модели могут начинаться и завершаться, пока эта модель выполняется — мы видим запись о **завершении**, которая добавляет **статус**, в данном случае `OK`, и **время сборки**, молниеносные 0.13с. Это не удивительно, учитывая, что мы знаем о представлениях.
+- 🏎️ **Представления обычно должны занимать менее одной-двух секунд**, это таблицы и инкрементальные модели, за которыми вам следует более внимательно следить с помощью этих инструментов.
 
-### dbt Artifacts package
+### Пакет артефактов dbt
 
-- 🎨  Lastly, when it comes to examining your dbt runs, you’re **not stuck without fancy visuals** if you’re using dbt Core. It’s not set up out-of-the-box, but if you want to introspect your project more deeply, you can use the [dbt Artifacts package](https://github.com/brooklyn-data/dbt_artifacts).
-- 👩‍🎨  This provides models you can **visualize for every aspect of your project** at a very granular level.
-- ⌚  You can use it to **create your own model timing visualization** in your BI tool, and any other reports you need to keep an eye on your materialization strategy.
+- 🎨 Наконец, когда дело доходит до изучения ваших запусков dbt, вы **не остаетесь без красивых визуализаций**, если используете dbt Core. Это не настроено из коробки, но если вы хотите более глубоко проанализировать свой проект, вы можете использовать [пакет артефактов dbt](https://github.com/brooklyn-data/dbt_artifacts).
+- 👩‍🎨 Это предоставляет модели, которые вы можете **визуализировать для каждого аспекта вашего проекта** на очень детальном уровне.
+- ⌚ Вы можете использовать его, чтобы **создать свою собственную визуализацию времени модели** в вашем BI инструменте и любые другие отчеты, которые вам нужны, чтобы следить за вашей стратегией материализации.

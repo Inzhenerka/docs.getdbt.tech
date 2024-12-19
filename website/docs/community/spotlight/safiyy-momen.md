@@ -2,13 +2,13 @@
 id: safiyy-momen
 title: Safiyy Momen
 description: |
-  I've been in the dbt community for ~4 years now. My experience is primarily in leading data teams, previously at a healthcare startup where I migrated the stack. The dbt Community was invaluable during that time. More recently I've built a product, Aero, that helps Snowflake users optimize costs with a Native extension. I'm exploring ways to automate analytics engineering workflows.
+  Я в сообществе dbt уже около 4 лет. Мой опыт в основном связан с руководством командами данных, ранее в стартапе в области здравоохранения, где я мигрировал стек. Сообщество dbt было неоценимо в то время. В последнее время я создал продукт Aero, который помогает пользователям Snowflake оптимизировать затраты с помощью нативного расширения. Я исследую способы автоматизации рабочих процессов в аналитическом инжиниринге.
 
-  I've spoken at various meetups, including the <a href="https://www.meetup.com/nyc-dbt-meetup/" rel="noopener noreferrer" target="_blank">New York dbt Meetup</a>, on data warehouse cost optimization.
+  Я выступал на различных встречах, включая <a href="https://www.meetup.com/nyc-dbt-meetup/" rel="noopener noreferrer" target="_blank">встречу dbt в Нью-Йорке</a>, по оптимизации затрат на хранилища данных.
 image: /img/community/spotlight/safiyy-momen.jpg
 pronouns: he/him
-location: Salt Lake City, Utah, USA
-jobTitle: Founder
+location: Солт-Лейк-Сити, Юта, США
+jobTitle: Основатель
 companyName: Aero
 socialLinks:
   - name: Twitter
@@ -20,18 +20,18 @@ hide_table_of_contents: true
 communityAward: false
 ---
 
-## When did you join the dbt community and in what way has it impacted your career?
+## Когда вы присоединились к сообществу dbt и как это повлияло на вашу карьеру?
 
-I joined a few years ago. It's helped me level up on best practices while making new friends and connections along the way.
+Я присоединился несколько лет назад. Это помогло мне повысить уровень знаний о лучших практиках, а также завести новых друзей и связи.
 
-## What dbt community leader do you identify with? How are you looking to grow your leadership in the dbt community?
+## С каким лидером сообщества dbt вы себя ассоциируете? Как вы планируете развивать свое лидерство в сообществе dbt?
 
-I remember Claire Carroll early on being a great example for community mentorship. I identify with leaders who bring constructive, opinionated, experience-driven insight to conversations.
+Я помню, как Клэр Кэрролл была отличным примером для наставничества в сообществе. Я ассоциирую себя с лидерами, которые вносят конструктивные, обоснованные и основанные на опыте идеи в обсуждения.
 
-## What have you learned from community members? What do you hope others can learn from you?
+## Что вы узнали от членов сообщества? Чему вы надеетесь научить других?
 
-I've learned lessons on scaling a large community and creating a culture of curiosity. Hoping others can learn new ways to be useful and build the courage to get themselves out there—to give talks, share their ideas, and engage in debate!
+Я извлек уроки о масштабировании большой общины и создании культуры любопытства. Надеюсь, другие смогут узнать новые способы быть полезными и набраться смелости, чтобы проявить себя — выступать с докладами, делиться своими идеями и участвовать в дебатах!
 
-## Anything else interesting you want to tell us?
+## Есть ли что-то еще интересное, что вы хотите нам рассказать?
 
-If you're not doing the basics to control costs on Snowflake, you should be! Try out [Aero Cost Optimizer](https://app.snowflake.com/marketplace/listing/GZT1ZYS85V/aero-aero-cost-optimizer).
+Если вы не делаете основное для контроля затрат в Snowflake, вам стоит это сделать! Попробуйте [Aero Cost Optimizer](https://app.snowflake.com/marketplace/listing/GZT1ZYS85V/aero-aero-cost-optimizer).

@@ -1,63 +1,62 @@
 ---
-title: Getting help
+title: Получение помощи
 ---
-## Community help
-dbt is open source, and has a generous community behind it. Asking questions well contributes to the community by building our collective body of knowledge. By following these steps, you'll be more likely to receive help from another community member.
+## Помощь сообщества
+dbt является проектом с открытым исходным кодом и имеет щедрое сообщество, поддерживающее его. Хорошо сформулированные вопросы способствуют развитию сообщества, увеличивая наше общее знание. Следуя этим шагам, вы повысите вероятность получения помощи от другого участника сообщества.
 
-### 1. Try to solve your problem first before asking for help
+### 1. Попробуйте сначала решить свою проблему, прежде чем просить о помощи
 
-#### Search the existing documentation
-The docs site you're on is highly searchable, make sure to explore for the answer here as a first step. If you're new to dbt, try working through the [quickstart guide](/guides) first to get a firm foundation on the essential concepts.
-#### Try to debug the issue yourself
-We have a handy guide on [debugging errors](/guides/debug-errors) to help out! This guide also helps explain why errors occur, and which docs you might need to search for help.
+#### Поиск в существующей документации
+Сайт документации, на котором вы находитесь, хорошо индексируется, поэтому обязательно исследуйте его в поисках ответа в первую очередь. Если вы новичок в dbt, попробуйте сначала пройтись по [руководству по быстрому старту](/guides), чтобы получить прочную основу по основным концепциям.
+#### Попробуйте отладить проблему самостоятельно
+У нас есть удобное руководство по [отладке ошибок](/guides/debug-errors), которое поможет вам! Это руководство также объясняет, почему возникают ошибки и какие документы могут понадобиться для поиска помощи.
 
-#### Search for answers using your favorite search engine
-We're committed to making more errors searchable, so it's worth checking if there's a solution already out there! Further, some errors related to installing dbt, the SQL in your models, or getting YAML right, are errors that are not-specific to dbt, so there may be other resources to check.
+#### Ищите ответы с помощью вашего любимого поисковика
+Мы стремимся сделать больше ошибок доступными для поиска, поэтому стоит проверить, есть ли уже решение! Кроме того, некоторые ошибки, связанные с установкой dbt, SQL в ваших моделях или правильностью YAML, не специфичны для dbt, поэтому могут быть другие ресурсы для проверки.
 
-#### Experiment!
-If the question you have is "What happens when I do `X`", try doing `X` and see what happens! Assuming you have a solid dev environment set up, making mistakes in development won't affect your end users
+#### Экспериментируйте!
+Если ваш вопрос звучит как "Что произойдет, если я сделаю `X`", попробуйте сделать `X` и посмотрите, что произойдет! Предполагая, что у вас настроена надежная среда разработки, ошибки в процессе разработки не повлияют на ваших конечных пользователей.
 
-### 2. Take a few minutes to formulate your question well
-Explaining the problems you are facing clearly will help others help you.
+### 2. Потратьте несколько минут на формулирование вашего вопроса
+Четкое объяснение проблем, с которыми вы сталкиваетесь, поможет другим помочь вам.
 
-#### Include relevant details in your question
-Include exactly what's going wrong! When asking your question, you should:
-* Paste the error message or relevant code inside three backticks in your question, instead of sharing a screenshot
-* Include the version of dbt you're on (which you can check with `dbt --version`)
-* Let us know which warehouse you're using
+#### Включите в ваш вопрос соответствующие детали
+Укажите, что именно идет не так! При формулировании вашего вопроса вы должны:
+* Вставить сообщение об ошибке или соответствующий код в три обратные кавычки в вашем вопросе, вместо того чтобы делиться скриншотом
+* Указать версию dbt, которую вы используете (это можно проверить с помощью `dbt --version`)
+* Сообщить, какой склад вы используете
 
-#### Avoid generalizing your code
-While we understand that you may wish to generalize your problem, or that you may have sensitive information you wish to anonymize, often replacing references in SQL can result in invalid code that creates an error different to the one you're hitting. This makes it harder for us to understand your problem. Wherever possible, share the exact code that you're trying to run.
+#### Избегайте обобщения вашего кода
+Хотя мы понимаем, что вы можете захотеть обобщить вашу проблему или что у вас может быть конфиденциальная информация, которую вы хотите анонимизировать, часто замена ссылок в SQL может привести к недействительному коду, который создает ошибку, отличную от той, с которой вы сталкиваетесь. Это затрудняет понимание вашей проблемы. По возможности делитесь точным кодом, который вы пытаетесь выполнить.
 
-#### Let us know what you've already tried
-In general, people are much more willing to help when they know you've already given something your best shot!
+#### Сообщите, что вы уже пробовали
+В общем, люди гораздо охотнее помогают, когда знают, что вы уже сделали все возможное!
 
-#### Share the context of the problem you're trying to solve
-Sometimes you might hit a boundary of dbt because you're trying to use it in a way that doesn't align with the opinions we've built into dbt. By sharing the context of the problem you're trying to solve, we might be able to share insight into whether there's an alternative way to think about it.
+#### Поделитесь контекстом проблемы, которую вы пытаетесь решить
+Иногда вы можете столкнуться с ограничениями dbt, потому что пытаетесь использовать его таким образом, который не соответствует мнениям, заложенным в dbt. Поделившись контекстом проблемы, которую вы пытаетесь решить, мы можем предложить альтернативный подход к ее решению.
 
-#### Post a single message and use threads
-The dbt Slack's culture revolves around threads. When posting a message, try drafting it to yourself first to make sure you have included all the context. Include big code blocks in a thread to avoid overwhelming the channel. 
+#### Публикуйте одно сообщение и используйте темы
+Культура Slack dbt вращается вокруг тем. При публикации сообщения сначала попробуйте написать его для себя, чтобы убедиться, что вы включили весь контекст. Включайте большие блоки кода в тему, чтобы не перегружать канал.
 
-#### Don't tag individuals to demand help
-If someone feels inclined to answer your question, they will do so. We are a community of volunteers, and we're generally pretty responsive and helpful! If nobody has replied to your question, consider if you've asked a question that helps us understand your problem. If you require in-depth, ongoing assistance, we have a wonderful group of experienced dbt consultants in our ecosystem. You can find a full list [below](#receiving-dedicated-support).
+#### Не отмечайте отдельных людей с требованием о помощи
+Если кто-то захочет ответить на ваш вопрос, он это сделает. Мы — сообщество волонтеров, и, как правило, мы довольно отзывчивы и полезны! Если никто не ответил на ваш вопрос, подумайте, задали ли вы вопрос, который помогает нам понять вашу проблему. Если вам требуется глубокая, постоянная помощь, у нас есть замечательная группа опытных консультантов dbt в нашей экосистеме. Полный список можно найти [ниже](#получение-специальной-поддержки).
 
+### 3. Выберите правильный канал для вашего вопроса
+Мы используем несколько различных каналов для обмена информацией
+- Если ваш вопрос примерно такой: "Я столкнулся с этой ошибкой и застрял", пожалуйста, задайте его на [Форуме сообщества dbt](https://discourse.getdbt.com).
+- Если вы думаете, что нашли ошибку, пожалуйста, сообщите об этом в соответствующем репозитории GitHub (например, [репозиторий dbt](https://github.com/dbt-labs/dbt), [репозиторий dbt-utils](https://github.com/dbt-labs/dbt-utils))
+- Если вы ищете более широкую дискуссию (например, "Какой лучший подход к X?", "Почему Y делается именно так?"), присоединяйтесь к нашему [сообществу в Slack](https://getdbt.com/community). Каналы последовательно именуются с префиксами для облегчения поиска.
 
-### 3. Choose the right medium for your question
-We use a number of different mediums to share information
-- If your question is roughly "I've hit this error and am stuck", please ask it on [the dbt Community Forum](https://discourse.getdbt.com).
-- If you think you've found a bug, please report it on the relevant GitHub repo (e.g. [dbt repo](https://github.com/dbt-labs/dbt), [dbt-utils repo](https://github.com/dbt-labs/dbt-utils))
-- If you are looking for a more wide-ranging conversation (e.g. "What's the best approach to X?", "Why is Y done this way?"), join our [Slack community](https://getdbt.com/community). Channels are consistently named with prefixes to aid discoverability. 
+## Получение специальной поддержки
+Если вам нужна специализированная поддержка для создания вашего проекта dbt, рассмотрите возможность обращения по поводу [профессиональных услуг](https://www.getdbt.com/contact/) или сотрудничества с одним из наших [консультационных партнеров](https://partners.getdbt.com/english/directory/).
 
-## Receiving dedicated support
-If you need dedicated support to build your dbt project, consider reaching out regarding [professional services](https://www.getdbt.com/contact/), or engaging one of our [consulting partners](https://partners.getdbt.com/english/directory/).
+## Обучение dbt
+Если вы хотите пройти обучение по dbt, ознакомьтесь с нашей программой [dbt Learn](https://learn.getdbt.com/).
 
-## dbt Training
-If you want to receive dbt training, check out our [dbt Learn](https://learn.getdbt.com/) program.
+## Поддержка dbt Cloud
+**Примечание:** Если вы являетесь **пользователем dbt Cloud** и нуждаетесь в помощи по одному из следующих вопросов, пожалуйста, свяжитесь с нами, нажав **Создать заявку на поддержку** через навигацию dbt Cloud или отправив электронное письмо на адрес support@getdbt.com:
+- Настройка аккаунта (например, проблемы с подключением, подключения репозиториев)
+- Выставление счетов
+- Сообщения об ошибках, связанных с веб-интерфейсом
 
-## dbt Cloud support
-**Note:** If you are a **dbt Cloud user** and need help with one of the following issues, please reach out to us by clicking **Create a support ticket** through the dbt Cloud navigation or emailing support@getdbt.com:
-- Account setup (e.g. connection issues, repo connections)
-- Billing
-- Bug reports related to the web interface
-
-As a rule of thumb, if you are using dbt Cloud, but your problem is related to code within your dbt project, then please follow the above process or checking out the [FAQs](/docs/faqs) rather than reaching out to support. Refer to [dbt Cloud support](/docs/dbt-support) for more information.
+Как правило, если вы используете dbt Cloud, но ваша проблема связана с кодом в вашем проекте dbt, пожалуйста, следуйте вышеуказанному процессу или ознакомьтесь с [Часто задаваемыми вопросами](/docs/faqs), а не обращайтесь в службу поддержки. Для получения дополнительной информации смотрите [поддержку dbt Cloud](/docs/dbt-support).
