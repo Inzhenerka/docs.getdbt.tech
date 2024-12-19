@@ -112,7 +112,7 @@ var siteSettings = {
       },
       items: [
         {
-          label: "Docs",
+          label: "Документация",
           position: "left",
           items: [
             {
@@ -125,7 +125,7 @@ var siteSettings = {
               to: "/docs/dbt-cloud-apis/overview",
             },
             {
-              label: "Best practices",
+              label: "Лучшие практики",
               to: "/best-practices",
             },
             {
@@ -146,25 +146,25 @@ var siteSettings = {
           activeBasePath: "reference",
         },
         {
-          label: "Resources",
+          label: "Ресурсы",
           position: "right",
           items: [
             {
-              label: "Courses",
-              href: "https://inzhenerka.tech",
+              label: "Обучение",
+              href: "https://inzhenerka.tech/dbt",
             },
             {
-              label: "Best practices",
+              label: "Лучшие практики",
               to: "/best-practices",
             },
             {
-              label: "Developer blog",
+              label: "Блог разработчиков",
               to: "/blog",
             },
           ],
         },
         {
-          label: "Community",
+          label: "Сообщество",
           position: "right",
           items: [
             {
