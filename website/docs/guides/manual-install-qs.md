@@ -5,7 +5,7 @@ description: "Подключение вашего хранилища к dbt Core
 level: 'Начинающий'
 platform: 'dbt-core'
 icon: 'fa-light fa-square-terminal'
-tags: ['dbt Core','Быстрый старт']
+tags: ['dbt Core','Quickstart']
 hide_table_of_contents: true
 ---
 

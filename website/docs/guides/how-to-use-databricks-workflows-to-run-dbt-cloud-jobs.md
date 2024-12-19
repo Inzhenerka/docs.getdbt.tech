@@ -7,7 +7,7 @@ hoverSnippet: Узнайте, как использовать рабочие п�
 # time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'databricks'
 hide_table_of_contents: true
-tags: ['Databricks', 'dbt Core','dbt Cloud','Оркестрация']
+tags: ['Databricks', 'dbt Core','dbt Cloud','Orchestration']
 level: 'Средний'
 recently_updated: true
 ---

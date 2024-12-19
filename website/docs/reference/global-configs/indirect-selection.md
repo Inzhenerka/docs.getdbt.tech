@@ -4,6 +4,8 @@ id: "indirect-selection"
 sidebar: "Косвенный отбор"
 ---
 
+import IndirSelect from '/snippets/_indirect-selection-definitions.md';
+
 Используйте флаг `--indirect-selection` для команд `dbt test` или `dbt build`, чтобы настроить, какие тесты запускать для указанных вами узлов. Вы можете установить это как флаг командной строки или как переменную окружения. В dbt Core вы также можете настроить пользовательские конфигурации в [YAML селекторах](/reference/node-selection/yaml-selectors) или в блоке `flags:` файла `dbt_project.yml`, который устанавливает флаги на уровне проекта.
 
 Когда все флаги установлены, порядок приоритета следующий. Дополнительные сведения смотрите в разделе [О глобальных конфигурациях](/reference/global-configs/about-global-configs):

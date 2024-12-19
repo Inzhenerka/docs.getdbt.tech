@@ -3,6 +3,8 @@ title: Свойства экспозиций
 description: "Прочитайте это руководство, чтобы понять свойства экспозиций в dbt."
 ---
 
+import PropsCallout from '/snippets/_config-prop-callout.md';
+
 ## Связанная документация
 - [Использование экспозиций](/docs/build/exposures)
 - [Объявление свойств ресурсов](/reference/configs-and-properties)

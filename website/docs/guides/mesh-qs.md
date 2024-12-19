@@ -3,7 +3,7 @@ title: "Быстрый старт с dbt Mesh"
 id: "mesh-qs"
 level: 'Intermediate'
 icon: 'guides'
-tags: ['dbt Cloud','Быстрый старт']
+tags: ['dbt Cloud','Quickstart']
 hide_table_of_contents: true
 ---
 

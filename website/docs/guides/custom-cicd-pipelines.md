@@ -7,7 +7,7 @@ hoverSnippet: Узнайте о коде под контролем версий,
 # time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Оркестрация', 'CI']
+tags: ['dbt Cloud', 'Orchestration', 'CI']
 level: 'Средний'
 recently_updated: true
 search_weight: "heavy"

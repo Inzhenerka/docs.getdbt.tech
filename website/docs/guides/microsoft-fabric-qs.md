@@ -4,7 +4,7 @@ id: "microsoft-fabric"
 level: 'Начинающий'
 icon: 'fabric'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Быстрый старт']
+tags: ['dbt Cloud','Quickstart']
 recently_updated: true
 ---
 

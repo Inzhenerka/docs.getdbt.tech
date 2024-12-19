@@ -4,7 +4,7 @@ id: "azure-synapse-analytics"
 level: 'Начинающий'
 icon: 'azure-synapse-analytics'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Быстрый старт']
+tags: ['dbt Cloud','Quickstart']
 recently_updated: true
 ---
 

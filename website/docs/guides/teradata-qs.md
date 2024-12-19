@@ -3,7 +3,7 @@ title: "Быстрый старт для dbt Cloud и Teradata"
 id: "teradata"
 level: 'Начинающий'
 icon: 'teradata'
-tags: ['dbt Cloud','Быстрый старт','Teradata']
+tags: ['dbt Cloud','Quickstart','Teradata']
 hide_table_of_contents: true
 ---
 

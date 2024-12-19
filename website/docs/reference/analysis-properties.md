@@ -2,6 +2,8 @@
 title: Свойства анализа
 ---
 
+import PropsCallout from '/snippets/_config-prop-callout.md';
+
 Мы рекомендуем определять свойства анализа в директории `analyses/`, что иллюстрируется в конфигурации [`analysis-paths`](/reference/project-configs/analysis-paths). <PropsCallout title={frontMatter.title}/>  <br /> 
 
 Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `analyses/` или `models/`.

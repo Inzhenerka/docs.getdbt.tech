@@ -6,7 +6,7 @@ hoverSnippet: "Узнайте, как перейти с dbt Core на dbt Cloud.
 icon: 'guides'
 time_to_complete: 'Общее время: 3-4 часа'
 hide_table_of_contents: true
-tags: ['Миграция','dbt Core','dbt Cloud']
+tags: ['Migration','dbt Core','dbt Cloud']
 keywords: ['dbt Core','dbt Cloud','Миграция', 'Перемещение dbt', 'Миграция dbt']
 level: 'Средний'
 recently_updated: true

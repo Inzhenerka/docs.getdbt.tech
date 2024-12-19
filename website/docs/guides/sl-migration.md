@@ -6,7 +6,7 @@ hoverSnippet: Миграция с устаревшего слоя семанти
 # time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Слой семантики', 'Миграция']
+tags: ['Semantic layer', 'Migration']
 level: 'Средний'
 recently_updated: true
 ---

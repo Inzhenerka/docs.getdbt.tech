@@ -12,7 +12,7 @@ id: "incremental-strategy"
 
 Некоторые адаптеры предоставляют необязательную конфигурацию `incremental_strategy`, которая контролирует код, используемый dbt для построения инкрементных моделей.
 
-:::info Микропакеты <Статус жизненного цикла="бета" />
+:::info Микропакеты <Lifecycle status="бета" />
 
 [`микропакетная` инкрементная стратегия](/docs/build/incremental-microbatch) предназначена для больших временных рядов данных. dbt будет обрабатывать инкрементную модель в нескольких запросах (или "пакетах") на основе настроенного столбца `event_time`. В зависимости от объема и характера ваших данных это может быть более эффективно и устойчиво, чем использование одного запроса для добавления новых данных.
 
@@ -24,7 +24,7 @@ id: "incremental-strategy"
 
 Нажмите на название адаптера в таблице ниже для получения дополнительной информации о поддерживаемых инкрементных стратегиях.
 
-| Адаптер платформы данных | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` <Статус жизненного цикла="бета"/> |
+| Адаптер платформы данных | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` <Lifecycle status="бета"/> |
 |--------------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
 | [dbt-postgres](/reference/resource-configs/postgres-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅            |
 | [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅        |
@@ -198,7 +198,7 @@ with large_source_table as (
 | `delete+insert`        | `get_incremental_delete_insert_sql`       |
 | `merge`                | `get_incremental_merge_sql`               |
 | `insert_overwrite`     | `get_incremental_insert_overwrite_sql`    |
-| `microbatch`  <Статус жизненного цикла="бета"/>         | `get_incremental_microbatch_sql`          |
+| `microbatch`  <Lifecycle status="бета"/>         | `get_incremental_microbatch_sql`          |
 
 
 Например, встроенная стратегия для `append` может быть определена и использована с помощью следующих файлов:

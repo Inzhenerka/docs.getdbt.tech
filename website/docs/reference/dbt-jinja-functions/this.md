@@ -1,12 +1,12 @@
 ---
-title: "об этом"
-sidebar_label: "это"
-id: "это"
+title: "о this"
+sidebar_label: "this"
+id: "this"
 description: "Представляет текущую модель в базе данных."
 keywords: 
   - отношение, объект отношения, эта функция, этот jinja, this.database, this.schema, this.identifier
 meta:
-  label: 'это'
+  label: 'this'
 ---
 
 `this` — это представление текущей модели в базе данных. Это полезно, когда:

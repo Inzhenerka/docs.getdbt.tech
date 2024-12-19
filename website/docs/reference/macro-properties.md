@@ -3,6 +3,8 @@ title: Свойства макросов
 id: macro-properties
 ---
 
+import PropsCallout from '/snippets/_config-prop-callout.md';
+
 Свойства макросов могут быть объявлены в любом файле `properties.yml`. <PropsCallout title={frontMatter.title}/> 
 
 Вы можете назвать эти файлы `что_угодно.yml` и вложить их на произвольную глубину в подпапки.

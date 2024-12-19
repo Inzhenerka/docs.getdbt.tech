@@ -5,7 +5,7 @@ platform: 'dbt-core'
 icon: 'fa-github'
 level: 'Начинающий'
 hide_table_of_contents: true
-tags: ['dbt Core','Быстрый старт']
+tags: ['dbt Core','Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>

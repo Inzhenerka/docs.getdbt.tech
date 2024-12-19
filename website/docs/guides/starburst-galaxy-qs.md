@@ -4,7 +4,7 @@ id: "starburst-galaxy"
 level: 'Начинающий'
 icon: 'starburst'
 hide_table_of_contents: true
-tags: ['dbt Cloud','Быстрый старт']
+tags: ['dbt Cloud','Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>

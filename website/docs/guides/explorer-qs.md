@@ -5,7 +5,7 @@ description: "Используйте это руководство для соз
 sidebar_label: "Быстрый старт dbt Explorer"
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Explorer', 'Snowflake', 'dbt Cloud','Быстрый старт']
+tags: ['Explorer', 'Snowflake', 'dbt Cloud','Quickstart']
 keywords: ['dbt Explorer','Mesh','dbt Cloud', 'Snowflake', 'Мульти-проект']
 level: 'Начинающий'
 recently_updated: true

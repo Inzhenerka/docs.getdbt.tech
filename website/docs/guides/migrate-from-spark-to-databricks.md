@@ -7,7 +7,7 @@ hoverSnippet: Узнайте, как мигрировать с dbt-spark на db
 # time_to_complete: '30 минут' временно отключено до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Миграция', 'dbt Core','dbt Cloud']
+tags: ['Migration', 'dbt Core','dbt Cloud']
 level: 'Средний'
 recently_updated: true
 ---

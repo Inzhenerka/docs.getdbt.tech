@@ -1,7 +1,7 @@
 ---
 title: "О переменной конфигурации"
-sidebar_label: "конфигурация"
-id: "конфигурация"
+sidebar_label: "config"
+id: "config"
 description: "Прочитайте это руководство, чтобы понять функцию конфигурации Jinja в dbt."
 ---
 

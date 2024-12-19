@@ -3,7 +3,7 @@ title: "Быстрый старт для dbt Cloud и Snowflake"
 id: "snowflake"
 level: 'Начинающий'
 icon: 'snowflake'
-tags: ['dbt Cloud','Быстрый старт','Snowflake']
+tags: ['dbt Cloud','Quickstart','Snowflake']
 hide_table_of_contents: true
 ---
 

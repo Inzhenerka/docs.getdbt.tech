@@ -4,7 +4,7 @@ id: airflow-and-dbt-cloud
 # time_to_complete: '30 minutes' комментируем до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Оркестрация']
+tags: ['dbt Cloud', 'Orchestration']
 level: 'Средний'
 recently_updated: true
 ---

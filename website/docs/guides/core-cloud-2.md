@@ -5,7 +5,7 @@ description: "Используйте это руководство, чтобы �
 hoverSnippet: "Используйте это руководство, чтобы понять аспекты и методы, необходимые для перехода с dbt Core на dbt Cloud."
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Миграция','dbt Core','dbt Cloud']
+tags: ['Migration','dbt Core','dbt Cloud']
 keywords: ['dbt Core','dbt Cloud','Миграция', 'Перемещение dbt', 'Миграция dbt']
 level: 'Средний'
 recently_updated: true

@@ -4,7 +4,7 @@ id: "bigquery"
 level: 'Начинающий'
 icon: 'bigquery'
 hide_table_of_contents: true
-tags: ['BigQuery', 'dbt Cloud','Быстрый старт']
+tags: ['BigQuery', 'dbt Cloud','Quickstart']
 recently_updated: true
 ---
 

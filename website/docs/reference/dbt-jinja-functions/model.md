@@ -1,7 +1,7 @@
 ---
-title: "О объекте модели"
-sidebar_label: "модель"
-id: "модель"
+title: "Об объекте model"
+sidebar_label: "model"
+id: "model"
 description: "`model` — это объект графа dbt (или узел) для текущей модели."
 ---
 

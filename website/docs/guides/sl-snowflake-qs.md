@@ -7,11 +7,20 @@ meta:
   api_name: API семантического слоя dbt
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Семантический слой', 'Snowflake', 'dbt Cloud','Быстрый старт']
+tags: ['Semantic layer', 'Snowflake', 'dbt Cloud','Quickstart']
 keywords: ['Семантический слой dbt','Метрики','dbt Cloud', 'Snowflake', 'Google Sheets']
 level: 'Средний'
 recently_updated: true
 ---
+
+<!-- The below snippets (or reusables) can be found in the following file locations in the docs code repository) -->
+import CreateModel from '/snippets/_sl-create-semanticmodel.md';
+import DefineMetrics from '/snippets/_sl-define-metrics.md';
+import ConfigMetric from '/snippets/_sl-configure-metricflow.md';
+import TestQuery from '/snippets/_sl-test-and-query-metrics.md';
+import ConnectQueryAPI from '/snippets/_sl-connect-and-query-api.md';
+import RunProdJob from '/snippets/_sl-run-prod-job.md';
+import SlSetUp from '/snippets/_new-sl-setup.md'; 
 
 ## Введение
 

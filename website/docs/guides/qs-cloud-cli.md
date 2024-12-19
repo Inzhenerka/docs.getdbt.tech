@@ -5,7 +5,7 @@ id: "dbt-cloud-cli"
 level: 'Начинающий'
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Cloud CLI', 'dbt Cloud','Быстрый старт']
+tags: ['Cloud CLI', 'dbt Cloud','Quickstart']
 recently_updated: true
 ---
 

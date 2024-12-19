@@ -4,7 +4,7 @@ id: "athena"
 level: 'Начинающий'
 icon: 'athena'
 hide_table_of_contents: true
-tags: ['Amazon','Athena', 'dbt Cloud','Быстрый старт']
+tags: ['Amazon','Athena', 'dbt Cloud','Quickstart']
 recently_updated: true
 ---
 

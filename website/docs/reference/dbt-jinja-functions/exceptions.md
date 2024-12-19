@@ -1,7 +1,7 @@
 ---
-title: "О пространстве имен исключений"
-sidebar_label: "исключения"
-id: "исключения"
+title: "об exceptions"
+sidebar_label: "exceptions"
+id: "exceptions"
 description: "Вызывайте предупреждения/ошибки с помощью пространства имен `исключения`."
 ---
 

@@ -6,7 +6,7 @@ hoverSnippet: Узнайте, как настроить безсерверное
 # time_to_complete: '30 минут' закомментировано до тестирования
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['Вебхуки']
+tags: ['Webhooks']
 level: 'Продвинутый'
 recently_updated: true
 ---

@@ -4,7 +4,7 @@ id: redshift
 level: 'Начинающий'
 icon: 'redshift'
 hide_table_of_contents: true
-tags: ['Redshift', 'dbt Cloud','Быстрый старт']
+tags: ['Redshift', 'dbt Cloud','Quickstart']
 ---
 
 <div style={{maxWidth: '900px'}}>
