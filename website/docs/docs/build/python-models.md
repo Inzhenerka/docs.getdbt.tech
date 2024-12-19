@@ -1,21 +1,19 @@
 ---
-title: "Python models"
+title: "Python модели"
 id: "python-models"
 ---
 
-Note that only [specific data platforms](#specific-data-platforms) support dbt-py models.
+Обратите внимание, что только [определенные платформы данных](#specific-data-platforms) поддерживают модели dbt-py.
 
-We encourage you to:
-- Read [the original discussion](https://github.com/dbt-labs/dbt-core/discussions/5261) that proposed this feature.
-- Contribute to [best practices for developing Python models in dbt](https://discourse.getdbt.com/t/dbt-python-model-dbt-py-best-practices/5204).
-- Share your thoughts and ideas on [next steps for Python models](https://github.com/dbt-labs/dbt-core/discussions/5742).
-- Join the **#dbt-core-python-models** channel in the [dbt Community Slack](https://www.getdbt.com/community/join-the-community/).
+Мы рекомендуем вам:
+- Прочитать [оригинальное обсуждение](https://github.com/dbt-labs/dbt-core/discussions/5261), в котором была предложена эта функция.
+- Внести свой вклад в [лучшие практики разработки Python моделей в dbt](https://discourse.getdbt.com/t/dbt-python-model-dbt-py-best-practices/5204).
+- Поделиться своими мыслями и идеями о [следующих шагах для Python моделей](https://github.com/dbt-labs/dbt-core/discussions/5742).
+- Присоединиться к каналу **#dbt-core-python-models** в [сообществе dbt Slack](https://www.getdbt.com/community/join-the-community/).
 
+## Обзор
 
-## Overview
-
-dbt Python (`dbt-py`) models can help you solve use cases that can't be solved with SQL. You can perform analyses using tools available in the open-source Python ecosystem, including state-of-the-art packages for data science and statistics. Before, you would have needed separate infrastructure and orchestration to run Python transformations in production. Python transformations defined in dbt are models in your project with all the same capabilities around testing, documentation, and lineage.
-
+Модели dbt Python (`dbt-py`) могут помочь вам решить задачи, которые нельзя решить с помощью SQL. Вы можете выполнять анализ, используя инструменты, доступные в экосистеме открытого кода Python, включая современные пакеты для науки о данных и статистики. Ранее вам потребовалась бы отдельная инфраструктура и оркестрация для выполнения Python-трансформаций в производственной среде. Python-трансформации, определенные в dbt, являются моделями в вашем проекте с теми же возможностями тестирования, документации и отслеживания.
 
 <File name='models/my_python_model.py'>
 
@@ -26,7 +24,7 @@ def model(dbt, session):
 
     my_sql_model_df = dbt.ref("my_sql_model")
 
-    final_df = ...  # stuff you can't write in SQL!
+    final_df = ...  # вещи, которые вы не можете написать на SQL!
 
     return final_df
 ```
@@ -41,54 +39,54 @@ version: 2
 models:
   - name: my_python_model
 
-    # Document within the same codebase
-    description: My transformation written in Python
+    # Документируйте в том же коде
+    description: Моя трансформация, написанная на Python
 
-    # Configure in ways that feel intuitive and familiar
+    # Настройте так, чтобы это было интуитивно и знакомо
     config:
       materialized: table
       tags: ['python']
 
-    # Test the results of my Python transformation
+    # Тестируйте результаты моей Python трансформации
     columns:
       - name: id
-        # Standard validation for 'grain' of Python results
+        # Стандартная проверка для 'grain' результатов Python
         tests:
           - unique
           - not_null
     tests:
-      # Write your own validation logic (in SQL) for Python results
+      # Напишите свою собственную логику проверки (на SQL) для результатов Python
       - [custom_generic_test](/best-practices/writing-custom-generic-tests)
 ```
 
 </File>
 
-<!--- TODO: how to make this image preview bigger? --->
-<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/python-model-dag.png" title="SQL + Python, together at last" style="width:200%"/>
+<!--- TODO: как сделать предварительный просмотр этого изображения больше? --->
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/python-model-dag.png" title="SQL + Python, наконец-то вместе" style="width:200%"/>
 
-The prerequisites for dbt Python models include using an adapter for a data platform that supports a fully featured Python runtime. In a dbt Python model, all Python code is executed remotely on the platform. None of it is run by dbt locally. We believe in clearly separating _model definition_ from _model execution_. In this and many other ways, you'll find that dbt's approach to Python models mirrors its longstanding approach to modeling data in SQL.
+Предварительные условия для моделей dbt Python включают использование адаптера для платформы данных, которая поддерживает полнофункциональную среду выполнения Python. В модели dbt Python весь код Python выполняется удаленно на платформе. Никакой из него не выполняется локально dbt. Мы верим в четкое разделение _определения модели_ и _выполнения модели_. В этом и многих других аспектах вы увидите, что подход dbt к Python моделям отражает его давний подход к моделированию данных в SQL.
 
-We've written this guide assuming that you have some familiarity with dbt. If you've never before written a dbt model, we encourage you to start by first reading [dbt Models](/docs/build/models). Throughout, we'll be drawing connections between Python models and SQL models, as well as making clear their differences.
+Мы написали этот гид, предполагая, что у вас есть некоторый опыт работы с dbt. Если вы никогда не писали модель dbt, мы рекомендуем вам сначала прочитать [Модели dbt](/docs/build/models). На протяжении всего текста мы будем проводить параллели между Python моделями и SQL моделями, а также четко указывать на их различия.
 
-### What is a Python model?
+### Что такое Python модель?
 
-A dbt Python model is a function that reads in dbt sources or other models, applies a series of transformations, and returns a transformed dataset. <Term id="dataframe">DataFrame</Term> operations define the starting points, the end state, and each step along the way.
+Python модель dbt — это функция, которая считывает источники dbt или другие модели, применяет ряд трансформаций и возвращает преобразованный набор данных. <Term id="dataframe">DataFrame</Term> операции определяют начальные точки, конечное состояние и каждый шаг на этом пути.
 
-This is similar to the role of <Term id="cte">CTEs</Term> in dbt SQL models. We use CTEs to pull in upstream datasets, define (and name) a series of meaningful transformations, and end with a final `select` statement. You can run the compiled version of a dbt SQL model to see the data included in the resulting view or table. When you `dbt run`, dbt wraps that query in `create view`, `create table`, or more complex DDL to save its results in the database.
+Это похоже на роль <Term id="cte">CTE</Term> в моделях dbt SQL. Мы используем CTE для извлечения верхних наборов данных, определения (и именования) ряда значимых трансформаций и завершаем финальным оператором `select`. Вы можете запустить скомпилированную версию модели dbt SQL, чтобы увидеть данные, включенные в результирующее представление или таблицу. Когда вы выполняете `dbt run`, dbt оборачивает этот запрос в `create view`, `create table` или более сложный DDL, чтобы сохранить его результаты в базе данных.
 
-Instead of a final `select` statement, each Python model returns a final DataFrame. Each DataFrame operation is "lazily evaluated." In development, you can preview its data, using methods like `.show()` or `.head()`. When you run a Python model, the full result of the final DataFrame will be saved as a table in your data warehouse.
+Вместо финального оператора `select` каждая Python модель возвращает финальный DataFrame. Каждая операция DataFrame "оценивается лениво". В процессе разработки вы можете предварительно просмотреть его данные, используя методы, такие как `.show()` или `.head()`. Когда вы запускаете Python модель, полный результат финального DataFrame будет сохранен как таблица в вашем хранилище данных.
 
-dbt Python models have access to almost all of the same configuration options as SQL models. You can test and document them, add `tags` and `meta` properties, and grant access to their results to other users. You can select them by their name, file path, configurations, whether they are upstream or downstream of another model, or if they have been modified compared to a previous project state.
+Модели dbt Python имеют доступ почти ко всем тем же параметрам конфигурации, что и SQL модели. Вы можете тестировать и документировать их, добавлять `tags` и `meta` свойства, а также предоставлять доступ к их результатам другим пользователям. Вы можете выбирать их по имени, пути к файлу, конфигурациям, являются ли они верхними или нижними по отношению к другой модели, или если они были изменены по сравнению с предыдущим состоянием проекта.
 
-### Defining a Python model
+### Определение Python модели
 
-Each Python model lives in a `.py` file in your `models/` folder. It defines a function named **`model()`**, which takes two parameters:
-- **`dbt`**: A class compiled by dbt Core, unique to each model, enables you to run your Python code in the context of your dbt project and DAG.
-- **`session`**: A class representing your data platform’s connection to the Python backend. The session is needed to read in tables as DataFrames, and to write DataFrames back to tables. In PySpark, by convention, the `SparkSession` is named `spark`, and available globally. For consistency across platforms, we always pass it into the `model` function as an explicit argument called `session`.
+Каждая Python модель находится в файле `.py` в вашей папке `models/`. Она определяет функцию с именем **`model()`**, которая принимает два параметра:
+- **`dbt`**: Класс, скомпилированный dbt Core, уникальный для каждой модели, который позволяет вам запускать ваш код Python в контексте вашего проекта dbt и DAG.
+- **`session`**: Класс, представляющий соединение вашей платформы данных с Python бэкендом. Сессия необходима для считывания таблиц как DataFrames и записи DataFrames обратно в таблицы. В PySpark по соглашению `SparkSession` называется `spark` и доступен глобально. Для согласованности между платформами мы всегда передаем его в функцию `model` как явный аргумент с именем `session`.
 
-The `model()` function must return a single DataFrame. On Snowpark (Snowflake), this can be a Snowpark or pandas DataFrame. Via PySpark (Databricks + BigQuery), this can be a Spark, pandas, or pandas-on-Spark DataFrame. For more about choosing between pandas and native DataFrames, see [DataFrame API + syntax](#dataframe-api-and-syntax).
+Функция `model()` должна возвращать один DataFrame. В Snowpark (Snowflake) это может быть Snowpark или pandas DataFrame. Через PySpark (Databricks + BigQuery) это может быть Spark, pandas или pandas-on-Spark DataFrame. Для получения дополнительной информации о выборе между pandas и нативными DataFrames смотрите [DataFrame API + синтаксис](#dataframe-api-and-syntax).
 
-When you `dbt run --select python_model`, dbt will prepare and pass in both arguments (`dbt` and `session`). All you have to do is define the function. This is how every single Python model should look:
+Когда вы выполняете `dbt run --select python_model`, dbt подготовит и передаст оба аргумента (`dbt` и `session`). Все, что вам нужно сделать, это определить функцию. Вот как должна выглядеть каждая Python модель:
 
 <File name='models/my_python_model.py'>
 
@@ -102,20 +100,19 @@ def model(dbt, session):
 
 </File>
 
+### Ссылки на другие модели
 
-### Referencing other models
-
-Python models participate fully in dbt's directed acyclic graph (DAG) of transformations. Use the `dbt.ref()` method within a Python model to read data from other models (SQL or Python). If you want to read directly from a raw source table, use `dbt.source()`. These methods return DataFrames pointing to the upstream source, model, seed, or snapshot.
+Python модели полностью участвуют в направленном ациклическом графе (DAG) трансформаций dbt. Используйте метод `dbt.ref()` внутри Python модели, чтобы считывать данные из других моделей (SQL или Python). Если вы хотите считывать данные непосредственно из сырой таблицы источника, используйте `dbt.source()`. Эти методы возвращают DataFrames, указывающие на верхний источник, модель, семя или снимок.
 
 <File name='models/my_python_model.py'>
 
 ```python
 def model(dbt, session):
 
-    # DataFrame representing an upstream model
+    # DataFrame, представляющий верхнюю модель
     upstream_model = dbt.ref("upstream_model_name")
 
-    # DataFrame representing an upstream source
+    # DataFrame, представляющий верхний источник
     upstream_source = dbt.source("upstream_source_name", "table_name")
 
     ...
@@ -123,7 +120,7 @@ def model(dbt, session):
 
 </File>
 
-Of course, you can `ref()` your Python model in downstream SQL models, too:
+Конечно, вы также можете `ref()` вашу Python модель в нижних SQL моделях:
 
 <File name='models/downstream_model.sql'>
 
@@ -141,61 +138,61 @@ with upstream_python_model as (
 
 :::caution
 
-Referencing [ephemeral](/docs/build/materializations#ephemeral) models is currently not supported (see [feature request](https://github.com/dbt-labs/dbt-core/issues/7288)) 
+Ссылки на [эпhemeral](/docs/build/materializations#ephemeral) модели в настоящее время не поддерживаются (см. [запрос функции](https://github.com/dbt-labs/dbt-core/issues/7288)) 
 :::
 
 <VersionBlock firstVersion="1.8">
 
-From dbt version 1.8, Python models also support dynamic configurations within Python f-strings. This allows for more nuanced and dynamic model configurations directly within your Python code. For example:
+С версии dbt 1.8 Python модели также поддерживают динамические конфигурации внутри f-строк Python. Это позволяет более тонким и динамическим конфигурациям моделей непосредственно в вашем коде Python. Например:
 
 <File name='models/my_python_model.py'>
 
 ```python
-# Previously, attempting to access a configuration value like this would result in None
-print(f"{dbt.config.get('my_var')}")  # Output before change: None
+# Ранее попытка получить значение конфигурации таким образом приводила к None
+print(f"{dbt.config.get('my_var')}")  # Вывод до изменения: None
 
-# Now you can access the actual configuration value
-# Assuming 'my_var' is configured to 5 for the current model
-print(f"{dbt.config.get('my_var')}")  # Output after change: 5
+# Теперь вы можете получить фактическое значение конфигурации
+# Предполагая, что 'my_var' настроен на 5 для текущей модели
+print(f"{dbt.config.get('my_var')}")  # Вывод после изменения: 5
 ```
 
-This also means you can use `dbt.config.get()` within Python models to ensure that configuration values are effectively retrievable and usable within Python f-strings.
+Это также означает, что вы можете использовать `dbt.config.get()` внутри Python моделей, чтобы гарантировать, что значения конфигурации эффективно извлекаются и используются внутри f-строк Python.
 
 </File>
 </VersionBlock>
 
-## Configuring Python models
+## Настройка Python моделей
 
-Just like SQL models, there are three ways to configure Python models:
-1. In `dbt_project.yml`, where you can configure many models at once
-2. In a dedicated `.yml` file, within the `models/` directory
-3. Within the model's `.py` file, using the `dbt.config()` method
+Так же, как и SQL модели, есть три способа настроить Python модели:
+1. В `dbt_project.yml`, где вы можете настроить множество моделей сразу
+2. В отдельном `.yml` файле в директории `models/`
+3. В `.py` файле модели, используя метод `dbt.config()`
 
-Calling the `dbt.config()` method will set configurations for your model within your `.py` file, similar to the `{{ config() }}` macro in `.sql` model files:
+Вызов метода `dbt.config()` установит конфигурации для вашей модели внутри вашего `.py` файла, аналогично макросу `{{ config() }}` в `.sql` файлах моделей:
 
 <File name='models/my_python_model.py'>
 
 ```python
 def model(dbt, session):
 
-    # setting configuration
+    # установка конфигурации
     dbt.config(materialized="table")
 ```
 
 </File>
 
-There's a limit to how complex you can get with the `dbt.config()` method. It accepts _only_ literal values (strings, booleans, and numeric types) and dynamic configuration. Passing another function or a more complex data structure is not possible. The reason is that dbt statically analyzes the arguments to `config()` while parsing your model without executing your Python code. If you need to set a more complex configuration, we recommend you define it using the [`config` property](/reference/resource-properties/config) in a YAML file.
+Существует ограничение на то, насколько сложными могут быть настройки с помощью метода `dbt.config()`. Он принимает _только_ литеральные значения (строки, булевы и числовые типы) и динамическую конфигурацию. Передача другой функции или более сложной структуры данных невозможна. Причина в том, что dbt статически анализирует аргументы для `config()`, когда парсит вашу модель, не выполняя ваш код Python. Если вам нужно установить более сложную конфигурацию, мы рекомендуем определить ее с помощью [`config` свойства](/reference/resource-properties/config) в YAML файле.
 
-#### Accessing project context
+#### Доступ к контексту проекта
 
-dbt Python models don't use Jinja to render compiled code. Python models have limited access to global project contexts compared to SQL models. That context is made available from the `dbt` class, passed in as an argument to the `model()` function.
+Модели dbt Python не используют Jinja для рендеринга скомпилированного кода. Python модели имеют ограниченный доступ к глобальным контекстам проекта по сравнению с SQL моделями. Этот контекст доступен из класса `dbt`, переданного в качестве аргумента функции `model()`.
 
-Out of the box, the `dbt` class supports:
-- Returning DataFrames referencing the locations of other resources: `dbt.ref()` + `dbt.source()`
-- Accessing the database location of the current model: `dbt.this()` (also: `dbt.this.database`, `.schema`, `.identifier`)
-- Determining if the current model's run is incremental: `dbt.is_incremental`
+По умолчанию класс `dbt` поддерживает:
+- Возвращение DataFrames, ссылающихся на местоположения других ресурсов: `dbt.ref()` + `dbt.source()`
+- Доступ к местоположению базы данных текущей модели: `dbt.this()` (также: `dbt.this.database`, `.schema`, `.identifier`)
+- Определение, является ли выполнение текущей модели инкрементальным: `dbt.is_incremental`
 
-It is possible to extend this context by "getting" them with `dbt.config.get()` after they are configured in the [model's config](/reference/model-configs). Starting from dbt v1.8, the `dbt.config.get()` method supports dynamic access to configurations within Python models, enhancing flexibility in model logic. This includes inputs such as `var`, `env_var`, and `target`. If you want to use those values for the conditional logic in your model, we require setting them through a dedicated YAML file config:
+Возможно расширить этот контекст, "получая" их с помощью `dbt.config.get()`, после того как они были настроены в [конфигурации модели](/reference/model-configs). Начиная с версии dbt 1.8, метод `dbt.config.get()` поддерживает динамический доступ к конфигурациям внутри Python моделей, что повышает гибкость в логике модели. Это включает такие входные данные, как `var`, `env_var` и `target`. Если вы хотите использовать эти значения для условной логики в вашей модели, мы требуем их настройки через специальный YAML файл конфигурации:
 
 <File name='models/config.yml'>
 
@@ -213,7 +210,7 @@ models:
 
 </File>
 
-Then, within the model's Python code, use the `dbt.config.get()` function to _access_ values of configurations that have been set:
+Затем в коде Python модели используйте функцию `dbt.config.get()`, чтобы _получить_ значения конфигураций, которые были установлены:
 
 <File name='models/my_python_model.py'>
 
@@ -225,7 +222,7 @@ def model(dbt, session):
 
     orders_df = dbt.ref("fct_orders")
 
-    # limit data in dev
+    # ограничить данные в dev
     if target_name == "dev":
         orders_df = orders_df.limit(500)
 ```
@@ -234,9 +231,9 @@ def model(dbt, session):
 
 <VersionBlock firstVersion="1.8">
 
-#### Dynamic configurations
+#### Динамические конфигурации
 
-In addition to the existing methods of configuring Python models, you also have dynamic access to configuration values set with `dbt.config()` within Python models using f-strings. This increases the possibilities for custom logic and configuration management.
+В дополнение к существующим методам настройки Python моделей, у вас также есть динамический доступ к значениям конфигурации, установленным с помощью `dbt.config()` внутри Python моделей, используя f-строки. Это увеличивает возможности для пользовательской логики и управления конфигурацией.
 
 <File name='models/my_python_model.py'>
 
@@ -244,26 +241,26 @@ In addition to the existing methods of configuring Python models, you also have 
 def model(dbt, session):
     dbt.config(materialized="table")
     
-    # Dynamic configuration access within Python f-strings, 
-    # which allows for real-time retrieval and use of configuration values.
-    # Assuming 'my_var' is set to 5, this will print: Dynamic config value: 5
-    print(f"Dynamic config value: {dbt.config.get('my_var')}")
+    # Динамический доступ к конфигурации внутри f-строк Python, 
+    # что позволяет в реальном времени извлекать и использовать значения конфигурации.
+    # Предполагая, что 'my_var' установлен на 5, это выведет: Динамическое значение конфигурации: 5
+    print(f"Динамическое значение конфигурации: {dbt.config.get('my_var')}")
 ```
 
 </File>
 </VersionBlock>
 
-### Materializations
+### Материализации
 
-Python models support these materializations:
-- `table` (default)
+Python модели поддерживают следующие материализации:
+- `table` (по умолчанию)
 - `incremental`
 
-Incremental Python models support all the same [incremental strategies](/docs/build/incremental-strategy) as their SQL counterparts. The specific strategies supported depend on your adapter. As an example, incremental models are supported on BigQuery with Dataproc for the `merge` incremental strategy; the `insert_overwrite` strategy is not yet supported.
+Инкрементальные Python модели поддерживают все те же [инкрементальные стратегии](/docs/build/incremental-strategy), что и их SQL аналоги. Конкретные поддерживаемые стратегии зависят от вашего адаптера. Например, инкрементальные модели поддерживаются в BigQuery с Dataproc для стратегии `merge`; стратегия `insert_overwrite` пока не поддерживается.
 
-Python models can't be materialized as `view` or `ephemeral`. Python isn't supported for non-model resource types (like tests and snapshots).
+Python модели не могут быть материализованы как `view` или `ephemeral`. Python не поддерживается для не-модельных типов ресурсов (таких как тесты и снимки).
 
-For incremental models, like SQL models, you need to filter incoming tables to only new rows of data:
+Для инкрементальных моделей, как и для SQL моделей, вам нужно фильтровать входящие таблицы, чтобы оставить только новые строки данных:
 
 <WHCode>
 
@@ -280,11 +277,11 @@ def model(dbt, session):
 
     if dbt.is_incremental:
 
-        # only new rows compared to max in current table
+        # только новые строки по сравнению с максимальным значением в текущей таблице
         max_from_this = f"select max(updated_at) from {dbt.this}"
         df = df.filter(df.updated_at >= session.sql(max_from_this).collect()[0][0])
 
-        # or only rows from the past 3 days
+        # или только строки за последние 3 дня
         df = df.filter(df.updated_at >= F.dateadd("day", F.lit(-3), F.current_timestamp()))
 
     ...
@@ -309,11 +306,11 @@ def model(dbt, session):
 
     if dbt.is_incremental:
 
-        # only new rows compared to max in current table
+        # только новые строки по сравнению с максимальным значением в текущей таблице
         max_from_this = f"select max(updated_at) from {dbt.this}"
         df = df.filter(df.updated_at >= session.sql(max_from_this).collect()[0][0])
 
-        # or only rows from the past 3 days
+        # или только строки за последние 3 дня
         df = df.filter(df.updated_at >= F.date_add(F.current_timestamp(), F.lit(-3)))
 
     ...
@@ -327,11 +324,11 @@ def model(dbt, session):
 
 </WHCode>
 
-## Python-specific functionality
+## Специфическая функциональность Python
 
-### Defining functions
+### Определение функций
 
-In addition to defining a `model` function, the Python model can import other functions or define its own. Here's an example on Snowpark, defining a custom `add_one` function:
+В дополнение к определению функции `model`, Python модель может импортировать другие функции или определять свои собственные. Вот пример на Snowpark, определяющий пользовательскую функцию `add_one`:
 
 <File name='models/my_python_model.py'>
 
@@ -343,20 +340,20 @@ def model(dbt, session):
     dbt.config(materialized="table")
     temps_df = dbt.ref("temperatures")
 
-    # warm things up just a little
+    # немного подогреваем
     df = temps_df.withColumn("degree_plus_one", add_one(temps_df["degree"]))
     return df
 ```
 
 </File>
 
-Currently, Python functions defined in one dbt model can't be imported and reused in other models. Refer to [Code reuse](#code-reuse) for the potential patterns being considered.
+В настоящее время функции Python, определенные в одной модели dbt, не могут быть импортированы и повторно использованы в других моделях. Смотрите [Повторное использование кода](#code-reuse) для потенциальных паттернов, которые рассматриваются.
 
-### Using PyPI packages
+### Использование пакетов PyPI
 
-You can also define functions that depend on third-party packages so long as those packages are installed and available to the Python runtime on your data platform. See notes on "Installing Packages" for [specific data platforms](#specific-data-platforms).
+Вы также можете определять функции, которые зависят от сторонних пакетов, при условии, что эти пакеты установлены и доступны для среды выполнения Python на вашей платформе данных. Смотрите примечания по "Установке пакетов" для [определенных платформ данных](#specific-data-platforms).
 
-In this example, we use the `holidays` package to determine if a given date is a holiday in France. The code below uses the pandas API for simplicity and consistency across platforms. The exact syntax, and the need to refactor for multi-node processing, still vary.
+В этом примере мы используем пакет `holidays`, чтобы определить, является ли данная дата праздником во Франции. Код ниже использует API pandas для простоты и согласованности между платформами. Точный синтаксис и необходимость рефакторинга для многонодовой обработки все еще могут различаться.
 
 <WHCode>
 
@@ -383,12 +380,12 @@ def model(dbt, session):
 
     df = orders_df.to_pandas()
 
-    # apply our function
-    # (columns need to be in uppercase on Snowpark)
+    # применяем нашу функцию
+    # (столбцы должны быть в верхнем регистре на Snowpark)
     df["IS_HOLIDAY"] = df["ORDER_DATE"].apply(is_holiday)
-    df["ORDER_DATE"].dt.tz_localize('UTC') # convert from Number/Long to tz-aware Datetime
+    df["ORDER_DATE"].dt.tz_localize('UTC') # конвертируем из Number/Long в tz-aware Datetime
 
-    # return final dataset (Pandas DataFrame)
+    # возвращаем финальный набор данных (Pandas DataFrame)
     return df
 ```
 
@@ -418,16 +415,16 @@ def model(dbt, session):
     orders_df = dbt.ref("stg_orders")
 
     df = orders_df.to_pandas_on_spark()  # Spark 3.2+
-    # df = orders_df.toPandas() in earlier versions
+    # df = orders_df.toPandas() в более ранних версиях
 
-    # apply our function
+    # применяем нашу функцию
     df["is_holiday"] = df["order_date"].apply(is_holiday)
 
-    # convert back to PySpark
+    # конвертируем обратно в PySpark
     df = df.to_spark()               # Spark 3.2+
-    # df = session.createDataFrame(df) in earlier versions
+    # df = session.createDataFrame(df) в более ранних версиях
 
-    # return final dataset (PySpark DataFrame)
+    # возвращаем финальный набор данных (PySpark DataFrame)
     return df
 ```
 
@@ -437,9 +434,9 @@ def model(dbt, session):
 
 </WHCode>
 
-#### Configuring packages
+#### Настройка пакетов
 
-We encourage you to configure required packages and versions so dbt can track them in project metadata. This configuration is required for the implementation on some platforms. If you need specific versions of packages, specify them.
+Мы рекомендуем вам настраивать необходимые пакеты и версии, чтобы dbt мог отслеживать их в метаданных проекта. Эта конфигурация обязательна для реализации на некоторых платформах. Если вам нужны конкретные версии пакетов, укажите их.
 
 <File name='models/my_python_model.py'>
 
@@ -467,11 +464,11 @@ models:
 
 </File>
 
-#### User-defined functions (UDFs)
+#### Пользовательские функции (UDF)
 
-You can use the `@udf` decorator or `udf` function to define an "anonymous" function and call it within your `model` function's DataFrame transformation. This is a typical pattern for applying more complex functions as DataFrame operations, especially if those functions require inputs from third-party packages.
-- [Snowpark Python: Creating UDFs](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs.html)
-- [PySpark functions: udf](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.udf.html)
+Вы можете использовать декоратор `@udf` или функцию `udf`, чтобы определить "анонимную" функцию и вызвать ее в трансформации DataFrame вашей функции `model`. Это типичный паттерн для применения более сложных функций в качестве операций DataFrame, особенно если эти функции требуют входных данных от сторонних пакетов.
+- [Snowpark Python: Создание UDF](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs.html)
+- [Функции PySpark: udf](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.functions.udf.html)
 
 <WHCode>
 
@@ -486,7 +483,7 @@ import numpy
 
 def register_udf_add_random():
     add_random = F.udf(
-        # use 'lambda' syntax, for simple functional behavior
+        # используйте синтаксис 'lambda' для простого функционального поведения
         lambda x: x + numpy.random.normal(),
         return_type=T.FloatType(),
         input_types=[T.FloatType()]
@@ -504,16 +501,16 @@ def model(dbt, session):
 
     add_random = register_udf_add_random()
 
-    # warm things up, who knows by how much
+    # подогреваем, кто знает на сколько
     df = temps_df.withColumn("degree_plus_random", add_random("degree"))
     return df
 ```
 
 </File>
 
-**Note:** Due to a Snowpark limitation, it is not currently possible to register complex named UDFs within stored procedures and, therefore, dbt Python models. We are looking to add native support for Python UDFs as a project/DAG resource type in a future release. For the time being, if you want to create a "vectorized" Python UDF via the Batch API, we recommend either:
-- Writing [`create function`](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) inside a SQL macro, to run as a hook or run-operation
-- [Registering from a staged file](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs#creating-a-udf-from-a-python-source-file) within your Python model code
+**Примечание:** Из-за ограничения Snowpark в настоящее время невозможно зарегистрировать сложные именованные UDF внутри хранимых процедур и, следовательно, в моделях dbt Python. Мы планируем добавить нативную поддержку Python UDF как типа ресурса проекта/DAG в будущем релизе. На данный момент, если вы хотите создать "векторизованный" Python UDF через Batch API, мы рекомендуем либо:
+- Написать [`create function`](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) внутри SQL макроса, чтобы выполнить его как хук или операцию выполнения
+- [Зарегистрировать из подготовленного файла](https://docs.snowflake.com/en/developer-guide/snowpark/python/creating-udfs#creating-a-udf-from-a-python-source-file) внутри кода вашей Python модели
 
 </div>
 
@@ -526,7 +523,7 @@ import pyspark.sql.types as T
 import pyspark.sql.functions as F
 import numpy
 
-# use a 'decorator' for more readable code
+# используйте 'декоратор' для более читаемого кода
 @F.udf(returnType=T.DoubleType())
 def add_random(x):
     random_number = numpy.random.normal()
@@ -540,7 +537,7 @@ def model(dbt, session):
 
     temps_df = dbt.ref("temperatures")
 
-    # warm things up, who knows by how much
+    # подогреваем, кто знает на сколько
     df = temps_df.withColumn("degree_plus_random", add_random("degree"))
     return df
 ```
@@ -551,62 +548,62 @@ def model(dbt, session):
 
 </WHCode>
 
-#### Code reuse
+#### Повторное использование кода
 
-Currently, Python functions defined in one dbt model can't be imported and reused in other models. This is something dbt Labs would like to support, so there are two patterns we're considering:
+В настоящее время функции Python, определенные в одной модели dbt, не могут быть импортированы и повторно использованы в других моделях. Это то, что dbt Labs хотел бы поддерживать, поэтому мы рассматриваем два паттерна:
 
-- Creating and registering **"named" UDFs** &mdash; This process is different across data platforms and has some performance limitations. For example, Snowpark supports [vectorized UDFs](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) for pandas-like functions that you can execute in parallel.
-- **Private Python packages** &mdash; In addition to importing reusable functions from public PyPI packages, many data platforms support uploading custom Python assets and registering them as packages. The upload process looks different across platforms, but your code’s actual `import` looks the same.
+- Создание и регистрация **"именованных" UDF** &mdash; Этот процесс различается между платформами данных и имеет некоторые ограничения по производительности. Например, Snowpark поддерживает [векторизованные UDF](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-batch.html) для функций, похожих на pandas, которые вы можете выполнять параллельно.
+- **Частные пакеты Python** &mdash; В дополнение к импорту повторно используемых функций из публичных пакетов PyPI, многие платформы данных поддерживают загрузку пользовательских активов Python и регистрацию их как пакетов. Процесс загрузки различается между платформами, но фактический `import` вашего кода выглядит одинаково.
 
-:::note ❓ dbt questions
+:::note ❓ Вопросы dbt
 
-- Should dbt have a role in abstracting over UDFs? Should dbt support a new type of DAG node, `function`? Would the primary use case be code reuse across Python models or defining Python-language functions that can be called from SQL models?
-- How can dbt help users when uploading or initializing private Python assets? Is this a new form of `dbt deps`?
-- How can dbt support users who want to test custom functions? If defined as UDFs: "unit testing" in the database? If "pure" functions in packages: encourage adoption of `pytest`?
+- Должен ли dbt играть роль в абстрагировании UDF? Должен ли dbt поддерживать новый тип узла DAG, `function`? Будет ли основным случаем использования повторное использование кода между Python моделями или определение функций на языке Python, которые могут быть вызваны из SQL моделей?
+- Как dbt может помочь пользователям при загрузке или инициализации частных активов Python? Является ли это новой формой `dbt deps`?
+- Как dbt может поддерживать пользователей, которые хотят тестировать пользовательские функции? Если они определены как UDF: "модульное тестирование" в базе данных? Если "чистые" функции в пакетах: поощрять использование `pytest`?
 
-💬 Discussion: ["Python models: package, artifact/object storage, and UDF management in dbt"](https://github.com/dbt-labs/dbt-core/discussions/5741)
+💬 Обсуждение: ["Python модели: управление пакетами, артефактами/объектами и UDF в dbt"](https://github.com/dbt-labs/dbt-core/discussions/5741)
 :::
 
-### DataFrame API and syntax
+### DataFrame API и синтаксис
 
-Over the past decade, most people writing [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) in Python have adopted <Term id="dataframe">DataFrame</Term> as their common abstraction. dbt follows this convention by returning `ref()` and `source()` as DataFrames, and it expects all Python models to return a DataFrame.
+За последнее десятилетие большинство людей, пишущих [трансформации данных](https://www.getdbt.com/analytics-engineering/transformation/) на Python, приняли <Term id="dataframe">DataFrame</Term> как свою общую абстракцию. dbt следует этой конвенции, возвращая `ref()` и `source()` как DataFrames, и ожидает, что все Python модели будут возвращать DataFrame.
 
-A DataFrame is a two-dimensional data structure (rows and columns). It supports convenient methods for transforming that data and creating new columns from calculations performed on existing columns. It also offers convenient ways for previewing data while developing locally or in a notebook.
+DataFrame — это двумерная структура данных (строки и столбцы). Она поддерживает удобные методы для трансформации этих данных и создания новых столбцов из вычислений, выполненных на существующих столбцах. Она также предлагает удобные способы предварительного просмотра данных во время разработки локально или в блокноте.
 
-That's about where the agreement ends. There are numerous frameworks with their own syntaxes and APIs for DataFrames. The [pandas](https://pandas.pydata.org/docs/) library offered one of the original DataFrame APIs, and its syntax is the most common to learn for new data professionals. Most newer DataFrame APIs are compatible with pandas-style syntax, though few can offer perfect interoperability. This is true for Snowpark and PySpark, which have their own DataFrame APIs.
+На этом согласие заканчивается. Существует множество фреймворков с собственными синтаксисами и API для DataFrames. Библиотека [pandas](https://pandas.pydata.org/docs/) предложила один из оригинальных API DataFrame, и ее синтаксис является наиболее распространенным для изучения новых специалистов по данным. Большинство новых API DataFrame совместимы с синтаксисом pandas, хотя немногие могут предложить идеальную совместимость. Это верно для Snowpark и PySpark, которые имеют свои собственные API DataFrame.
 
-When developing a Python model, you will find yourself asking these questions:
+При разработке Python модели вы можете задать себе следующие вопросы:
 
-**Why pandas?** &mdash; It's the most common API for DataFrames. It makes it easy to explore sampled data and develop transformations locally. You can “promote” your code as-is into dbt models and run it in production for small datasets.
+**Почему pandas?** &mdash; Это самый распространенный API для DataFrames. Он упрощает исследование выборочных данных и разработку трансформаций локально. Вы можете "продвигать" свой код как есть в модели dbt и запускать его в производственной среде для небольших наборов данных.
 
-**Why _not_ pandas?** &mdash; Performance. pandas runs "single-node" transformations, which cannot benefit from the parallelism and distributed computing offered by modern data warehouses. This quickly becomes a problem as you operate on larger datasets. Some data platforms support optimizations for code written using pandas DataFrame API, preventing the need for major refactors. For example, [pandas on PySpark](https://spark.apache.org/docs/latest/api/python/getting_started/quickstart_ps.html) offers support for 95% of pandas functionality, using the same API while still leveraging parallel processing.
+**Почему _не_ pandas?** &mdash; Производительность. pandas выполняет "один узел" трансформации, которые не могут воспользоваться параллелизмом и распределенными вычислениями, предлагаемыми современными хранилищами данных. Это быстро становится проблемой, когда вы работаете с большими наборами данных. Некоторые платформы данных поддерживают оптимизации для кода, написанного с использованием API DataFrame pandas, что предотвращает необходимость в крупных рефакторингах. Например, [pandas на PySpark](https://spark.apache.org/docs/latest/api/python/getting_started/quickstart_ps.html) предлагает поддержку 95% функциональности pandas, используя тот же API, при этом все еще используя параллельную обработку.
 
-:::note ❓ dbt questions
-- When developing a new dbt Python model, should we recommend pandas-style syntax for rapid iteration and then refactor?
-- Which open source libraries provide compelling abstractions across different data engines and vendor-specific APIs?
-- Should dbt attempt to play a longer-term role in standardizing across them?
+:::note ❓ Вопросы dbt
+- При разработке новой модели dbt Python, следует ли нам рекомендовать синтаксис в стиле pandas для быстрого итерационного процесса, а затем рефакторить?
+- Какие открытые библиотеки предоставляют убедительные абстракции для различных движков данных и специфичных для поставщиков API?
+- Должен ли dbt пытаться сыграть более долгосрочную роль в стандартизации между ними?
 
-💬 Discussion: ["Python models: the pandas problem (and a possible solution)"](https://github.com/dbt-labs/dbt-core/discussions/5738)
+💬 Обсуждение: ["Python модели: проблема pandas (и возможное решение)"](https://github.com/dbt-labs/dbt-core/discussions/5738)
 :::
 
-## Limitations
+## Ограничения
 
-Python models have capabilities that SQL models do not. They also have some drawbacks compared to SQL models:
+Python модели имеют возможности, которых нет у SQL моделей. У них также есть некоторые недостатки по сравнению с SQL моделями:
 
-- **Time and cost.** Python models are slower to run than SQL models, and the cloud resources that run them can be more expensive. Running Python requires more general-purpose compute. That compute might sometimes live on a separate service or architecture from your SQL models. **However:** We believe that deploying Python models via dbt—with unified lineage, testing, and documentation—is, from a human standpoint, **dramatically** faster and cheaper. By comparison, spinning up separate infrastructure to orchestrate Python transformations in production and different tooling to integrate with dbt is much more time-consuming and expensive.
-- **Syntax differences** are even more pronounced. Over the years, dbt has done a lot, via dispatch patterns and packages such as `dbt_utils`, to abstract over differences in SQL dialects across popular data warehouses. Python offers a **much** wider field of play. If there are five ways to do something in SQL, there are 500 ways to write it in Python, all with varying performance and adherence to standards. Those options can be overwhelming. As the maintainers of dbt, we will be learning from state-of-the-art projects tackling this problem and sharing guidance as we develop it.
-- **These capabilities are very new.** As data warehouses develop new features, we expect them to offer cheaper, faster, and more intuitive mechanisms for deploying Python transformations. **We reserve the right to change the underlying implementation for executing Python models in future releases.** Our commitment to you is around the code in your model `.py` files, following the documented capabilities and guidance we're providing here.
-- **Lack of `print()` support.** The data platform runs and compiles your Python model without dbt's oversight. This means it doesn't display the output of commands such as Python's built-in [`print()`](https://docs.python.org/3/library/functions.html#print) function in dbt's logs.
+- **Время и стоимость.** Python модели медленнее, чем SQL модели, и облачные ресурсы, которые их запускают, могут быть более дорогими. Запуск Python требует более общего вычисления. Это вычисление иногда может находиться на отдельной службе или архитектуре от ваших SQL моделей. **Тем не менее:** Мы считаем, что развертывание Python моделей через dbt — с единым отслеживанием, тестированием и документацией — с человеческой точки зрения **значительно** быстрее и дешевле. В сравнении, создание отдельной инфраструктуры для оркестрации Python трансформаций в производственной среде и использование различных инструментов для интеграции с dbt занимает гораздо больше времени и стоит дороже.
+- **Различия в синтаксисе** еще более выражены. На протяжении многих лет dbt сделал много, используя паттерны диспетчеризации и пакеты, такие как `dbt_utils`, чтобы абстрагировать различия в диалектах SQL между популярными хранилищами данных. Python предлагает **намного** более широкое поле для игры. Если в SQL есть пять способов сделать что-то, в Python есть 500 способов это написать, все с различной производительностью и соблюдением стандартов. Эти варианты могут быть подавляющими. Как хранители dbt, мы будем учиться на современных проектах, решающих эту проблему, и делиться рекомендациями по мере их разработки.
+- **Эти возможности очень новые.** Поскольку хранилища данных разрабатывают новые функции, мы ожидаем, что они предложат более дешевые, быстрые и интуитивно понятные механизмы для развертывания Python трансформаций. **Мы оставляем за собой право изменять основную реализацию для выполнения Python моделей в будущих релизах.** Наша приверженность вам заключается в коде в ваших файлах модели `.py`, следуя документированным возможностям и рекомендациям, которые мы предоставляем здесь.
+- **Отсутствие поддержки `print()`.** Платформа данных запускает и компилирует вашу Python модель без надзора dbt. Это означает, что она не отображает вывод команд, таких как встроенная функция Python [`print()`](https://docs.python.org/3/library/functions.html#print) в журналах dbt.
 
-- <Expandable alt_header="Alternatives to using print() in Python models">
+- <Expandable alt_header="Альтернативы использованию print() в Python моделях">
 
-    The following explains other methods you can use for debugging, such as writing messages to a dataframe column:
+    Следующее объясняет другие методы, которые вы можете использовать для отладки, такие как запись сообщений в столбец DataFrame:
     
-    - Using platform logs: Use your data platform's logs to debug your Python models.
-    - Return logs as a dataframe: Create a dataframe containing your logs and build it into the warehouse.
-    - Develop locally with DuckDB: Test and debug your models locally using DuckDB before deploying them.
+    - Использование журналов платформы: Используйте журналы вашей платформы данных для отладки ваших Python моделей.
+    - Возвращение журналов как DataFrame: Создайте DataFrame, содержащий ваши журналы, и постройте его в хранилище.
+    - Разработка локально с DuckDB: Тестируйте и отлаживайте ваши модели локально с помощью DuckDB перед развертыванием.
     
-    Here's an example of debugging in a Python model:
+    Вот пример отладки в Python модели:
 
     ```python
     def model(dbt, session):
@@ -616,31 +613,31 @@ Python models have capabilities that SQL models do not. They also have some draw
     
         df = dbt.ref("my_source_table").df()
     
-        # One option for debugging: write messages to temporary table column
-        # Pros: visibility
-        # Cons: won't work if table isn't building for some reason
-        msg = "something"
-        df["debugging"] = f"My debug message here: {msg}"
+        # Один из вариантов для отладки: записать сообщения в столбец временной таблицы
+        # Плюсы: видимость
+        # Минусы: не сработает, если таблица не строится по какой-то причине
+        msg = "что-то"
+        df["debugging"] = f"Мое отладочное сообщение здесь: {msg}"
     
         return df
     ```
     </Expandable>
 
-As a general rule, if there's a transformation you could write equally well in SQL or Python, we believe that well-written SQL is preferable: it's more accessible to a greater number of colleagues, and it's easier to write code that's performant at scale. If there's a transformation you _can't_ write in SQL, or where ten lines of elegant and well-annotated Python could save you 1000 lines of hard-to-read Jinja-SQL, Python is the way to go.
+В общем, если есть трансформация, которую вы можете написать одинаково хорошо на SQL или Python, мы считаем, что хорошо написанный SQL предпочтительнее: он более доступен для большего числа коллег и легче писать код, который будет производительным в масштабе. Если есть трансформация, которую вы _не можете_ написать на SQL, или где десять строк элегантного и хорошо аннотированного Python могут сэкономить вам 1000 строк трудночитаемого Jinja-SQL, Python — это правильный выбор.
 
-## Specific data platforms {#specific-data-platforms}
+## Специфические платформы данных {#specific-data-platforms}
 
-In their initial launch, Python models are supported on three of the most popular data platforms: Snowflake, Databricks, and BigQuery/GCP (via Dataproc). Both Databricks and GCP's Dataproc use PySpark as the processing framework. Snowflake uses its own framework, Snowpark, which has many similarities to PySpark.
+При их первоначальном запуске Python модели поддерживаются на трех самых популярных платформах данных: Snowflake, Databricks и BigQuery/GCP (через Dataproc). Как Databricks, так и GCP's Dataproc используют PySpark в качестве фреймворка обработки. Snowflake использует свой собственный фреймворк, Snowpark, который имеет много общего с PySpark.
 
 <WHCode>
 
 <div warehouse="Snowflake">
 
-**Additional setup:** You will need to [acknowledge and accept Snowflake Third Party Terms](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages.html#getting-started) to use Anaconda packages.
+**Дополнительная настройка:** Вам нужно будет [принять и согласиться с Условиями третьих сторон Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages.html#getting-started), чтобы использовать пакеты Anaconda.
 
-**Installing packages:** Snowpark supports several popular packages via Anaconda. Refer to the [complete list](https://repo.anaconda.com/pkgs/snowflake/) for more details. Packages are installed when your model is run. Different models can have different package dependencies. If you use third-party packages, Snowflake recommends using a dedicated virtual warehouse for best performance rather than one with many concurrent users.
+**Установка пакетов:** Snowpark поддерживает несколько популярных пакетов через Anaconda. Смотрите [полный список](https://repo.anaconda.com/pkgs/snowflake/) для получения дополнительной информации. Пакеты устанавливаются, когда ваша модель запускается. Разные модели могут иметь разные зависимости пакетов. Если вы используете сторонние пакеты, Snowflake рекомендует использовать выделенный виртуальный склад для лучшей производительности, а не тот, где много одновременных пользователей.
 
-**Python version:** To specify a different python version, use the following configuration:
+**Версия Python:** Чтобы указать другую версию Python, используйте следующую конфигурацию:
 
 ```python
 def model(dbt, session):
@@ -652,7 +649,7 @@ def model(dbt, session):
 
 <VersionBlock firstVersion="1.8">
 
-**External access integrations and secrets**: To query external APIs within dbt Python models, use Snowflake’s [external access](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview) together with [secrets](https://docs.snowflake.com/en/developer-guide/external-network-access/secret-api-reference). Here are some additional configurations you can use:
+**Интеграции внешнего доступа и секреты:** Чтобы запрашивать внешние API в моделях dbt Python, используйте внешний доступ Snowflake вместе с [секретами](https://docs.snowflake.com/en/developer-guide/external-network-access/secret-api-reference). Вот некоторые дополнительные конфигурации, которые вы можете использовать:
 
 ```python
 import pandas
@@ -674,55 +671,55 @@ def model(dbt, session: snowpark.Session):
 
 </VersionBlock>
 
-**About "sprocs":** dbt submits Python models to run as _stored procedures_, which some people call _sprocs_ for short. By default, dbt will use Snowpark's _temporary_ or _anonymous_ stored procedures ([docs](https://docs.snowflake.com/en/sql-reference/sql/call-with.html)), which are faster and keep query history cleaner than named sprocs containing your model's compiled Python code. To disable this feature, set `use_anonymous_sproc: False` in your model configuration. 
+**О "sprocs":** dbt отправляет Python модели для выполнения как _хранимые процедуры_, которые некоторые люди называют _sprocs_ для краткости. По умолчанию dbt будет использовать _временные_ или _анонимные_ хранимые процедуры Snowpark ([документы](https://docs.snowflake.com/en/sql-reference/sql/call-with.html)), которые быстрее и сохраняют историю запросов более чистой, чем именованные sprocs, содержащие скомпилированный код вашей модели Python. Чтобы отключить эту функцию, установите `use_anonymous_sproc: False` в конфигурации вашей модели. 
 
-**Docs:** ["Developer Guide: Snowpark Python"](https://docs.snowflake.com/en/developer-guide/snowpark/python/index.html)
+**Документы:** ["Руководство разработчика: Snowpark Python"](https://docs.snowflake.com/en/developer-guide/snowpark/python/index.html)
 
-#### Third-party Snowflake packages
+#### Пакеты третьих сторон Snowflake
 
-To use a third-party Snowflake package that isn't available in Snowflake Anaconda, upload your package by following [this example](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#importing-packages-through-a-snowflake-stage), and then configure the `imports` setting in the dbt Python model to reference to the zip file in your Snowflake staging.
+Чтобы использовать сторонний пакет Snowflake, который недоступен в Snowflake Anaconda, загрузите свой пакет, следуя [этому примеру](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#importing-packages-through-a-snowflake-stage), а затем настройте параметр `imports` в модели dbt Python, чтобы ссылаться на zip-файл в вашем Snowflake staging.
 
-Here’s a complete example configuration using a zip file, including using `imports` in a Python model:
+Вот полный пример конфигурации с использованием zip-файла, включая использование `imports` в Python модели:
 
 ```python
 
 def model(dbt, session):
-    # Configure the model
+    # Настройка модели
     dbt.config(
         materialized="table",
-        imports=["@mystage/mycustompackage.zip"],  # Specify the external package location
+        imports=["@mystage/mycustompackage.zip"],  # Укажите местоположение внешнего пакета
     )
     
-    # Example data transformation using the imported package
-    # (Assuming `some_external_package` has a function we can call)
+    # Пример трансформации данных с использованием импортированного пакета
+    # (Предполагая, что `some_external_package` имеет функцию, которую мы можем вызвать)
     data = {
         "name": ["Alice", "Bob", "Charlie"],
         "score": [85, 90, 88]
     }
     df = pd.DataFrame(data)
 
-    # Process data with the external package
+    # Обработка данных с помощью внешнего пакета
     df["adjusted_score"] = df["score"].apply(lambda x: some_external_package.adjust_score(x))
     
-    # Return the DataFrame as the model output
+    # Вернуть DataFrame как выход модели
     return df
 
 ```
 
-For more information on using this configuration, refer to [Snowflake's documentation](https://community.snowflake.com/s/article/how-to-use-other-python-packages-in-snowpark) on uploading and using other python packages in Snowpark not published on Snowflake's Anaconda channel.
+Для получения дополнительной информации о использовании этой конфигурации смотрите [документацию Snowflake](https://community.snowflake.com/s/article/how-to-use-other-python-packages-in-snowpark) о загрузке и использовании других пакетов Python в Snowpark, которые не опубликованы на канале Anaconda Snowflake.
 
 
 </div>
 
 <div warehouse="Databricks">
 
-**Submission methods:** Databricks supports a few different mechanisms to submit PySpark code, each with relative advantages. Some are better for supporting iterative development, while others are better for supporting lower-cost production deployments. The options are:
-- `all_purpose_cluster` (default): dbt will run your Python model using the cluster ID configured as `cluster` in your connection profile or for this specific model. These clusters are more expensive but also much more responsive. We recommend using an interactive all-purpose cluster for quicker iteration in development.
-  - `create_notebook: True`: dbt will upload your model's compiled PySpark code to a notebook in the namespace `/Shared/dbt_python_model/{schema}`, where `{schema}` is the configured schema for the model, and execute that notebook to run using the all-purpose cluster. The appeal of this approach is that you can easily open the notebook in the Databricks UI for debugging or fine-tuning right after running your model. Remember to copy any changes into your dbt `.py` model code before re-running.
-  - `create_notebook: False` (default): dbt will use the [Command API](https://docs.databricks.com/dev-tools/api/1.2/index.html#run-a-command), which is slightly faster.
-- `job_cluster`: dbt will upload your model's compiled PySpark code to a notebook in the namespace `/Shared/dbt_python_model/{schema}`, where `{schema}` is the configured schema for the model, and execute that notebook to run using a short-lived jobs cluster. For each Python model, Databricks will need to spin up the cluster, execute the model's PySpark transformation, and then spin down the cluster. As such, job clusters take longer before and after model execution, but they're also less expensive, so we recommend these for longer-running Python models in production. To use the `job_cluster` submission method, your model must be configured with `job_cluster_config`, which defines key-value properties for `new_cluster`, as defined in the [JobRunsSubmit API](https://docs.databricks.com/dev-tools/api/latest/jobs.html#operation/JobsRunsSubmit).
+**Методы отправки:** Databricks поддерживает несколько различных механизмов для отправки кода PySpark, каждый из которых имеет относительные преимущества. Некоторые лучше подходят для поддержки итеративной разработки, в то время как другие лучше подходят для поддержки более дешевых производственных развертываний. Опции:
+- `all_purpose_cluster` (по умолчанию): dbt будет запускать вашу Python модель, используя идентификатор кластера, настроенный как `cluster` в вашем профиле соединения или для этой конкретной модели. Эти кластеры более дорогие, но также гораздо более отзывчивые. Мы рекомендуем использовать интерактивный кластер общего назначения для более быстрой итерации в процессе разработки.
+  - `create_notebook: True`: dbt загрузит скомпилированный код PySpark вашей модели в блокнот в пространстве имен `/Shared/dbt_python_model/{schema}`, где `{schema}` — это настроенная схема для модели, и выполнит этот блокнот, чтобы запустить его с помощью кластера общего назначения. Привлекательность этого подхода заключается в том, что вы можете легко открыть блокнот в интерфейсе Databricks для отладки или доработки сразу после выполнения вашей модели. Не забудьте скопировать любые изменения в код вашей модели dbt `.py` перед повторным запуском.
+  - `create_notebook: False` (по умолчанию): dbt будет использовать [Command API](https://docs.databricks.com/dev-tools/api/1.2/index.html#run-a-command), который немного быстрее.
+- `job_cluster`: dbt загрузит скомпилированный код PySpark вашей модели в блокнот в пространстве имен `/Shared/dbt_python_model/{schema}`, где `{schema}` — это настроенная схема для модели, и выполнит этот блокнот, чтобы запустить его с помощью краткосрочного кластера задач. Для каждой Python модели Databricks необходимо будет развернуть кластер, выполнить трансформацию PySpark модели и затем остановить кластер. Таким образом, кластеры задач требуют больше времени до и после выполнения модели, но они также менее дорогие, поэтому мы рекомендуем их для более длительных Python моделей в производственной среде. Чтобы использовать метод отправки `job_cluster`, ваша модель должна быть настроена с `job_cluster_config`, который определяет ключевые свойства для `new_cluster`, как определено в [JobRunsSubmit API](https://docs.databricks.com/dev-tools/api/latest/jobs.html#operation/JobsRunsSubmit).
 
-You can configure each model's `submission_method` in all the standard ways you supply configuration:
+Вы можете настроить `submission_method` каждой модели всеми стандартными способами, которыми вы предоставляете конфигурацию:
 
 ```python
 def model(dbt, session):
@@ -748,41 +745,41 @@ models:
 models:
   project_name:
     subfolder:
-      # set defaults for all .py models defined in this subfolder
+      # установите значения по умолчанию для всех .py моделей, определенных в этой подпапке
       +submission_method: all_purpose_cluster
       +create_notebook: False
       +cluster_id: abcd-1234-wxyz
 ```
 
-If not configured, `dbt-spark` will use the built-in defaults: the all-purpose cluster (based on `cluster` in your connection profile) without creating a notebook. The `dbt-databricks` adapter will default to the cluster configured in `http_path`. We encourage explicitly configuring the clusters for Python models in Databricks projects.
+Если не настроено, `dbt-spark` будет использовать встроенные значения по умолчанию: кластер общего назначения (на основе `cluster` в вашем профиле соединения) без создания блокнота. Адаптер `dbt-databricks` будет по умолчанию использовать кластер, настроенный в `http_path`. Мы настоятельно рекомендуем явно настраивать кластеры для Python моделей в проектах Databricks.
 
-**Installing packages:** When using all-purpose clusters, we recommend installing packages which you will be using to run your Python models.
+**Установка пакетов:** При использовании кластеров общего назначения мы рекомендуем устанавливать пакеты, которые вы будете использовать для запуска ваших Python моделей.
 
-**Docs:**
-- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
-- [Databricks: Introduction to DataFrames - Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
+**Документы:**
+- [Синтаксис DataFrame PySpark](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
+- [Databricks: Введение в DataFrames - Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
 
 </div>
 
 <div warehouse="BigQuery">
 
-The `dbt-bigquery` adapter uses a service called Dataproc to submit your Python models as PySpark jobs. That Python/PySpark code will read from your tables and views in BigQuery, perform all computation in Dataproc, and write the final result back to BigQuery.
+Адаптер `dbt-bigquery` использует службу под названием Dataproc для отправки ваших Python моделей в виде заданий PySpark. Этот код Python/PySpark будет считывать из ваших таблиц и представлений в BigQuery, выполнять все вычисления в Dataproc и записывать окончательный результат обратно в BigQuery.
 
-**Submission methods.** Dataproc supports two submission methods: `serverless` and `cluster`. Dataproc Serverless does not require a ready cluster, which saves on hassle and cost—but it is slower to start up, and much more limited in terms of available configuration. For example, Dataproc Serverless supports only a small set of Python packages, though it does include `pandas`, `numpy`, and `scikit-learn`. (See the full list [here](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers#example_custom_container_image_build), under "The following packages are installed in the default image"). Whereas, by creating a Dataproc Cluster in advance, you can fine-tune the cluster's configuration, install any PyPI packages you want, and benefit from faster, more responsive runtimes.
+**Методы отправки.** Dataproc поддерживает два метода отправки: `serverless` и `cluster`. Dataproc Serverless не требует готового кластера, что экономит время и деньги, но он медленнее в запуске и гораздо более ограничен в доступной конфигурации. Например, Dataproc Serverless поддерживает только небольшой набор пакетов Python, хотя он включает `pandas`, `numpy` и `scikit-learn`. (Смотрите полный список [здесь](https://cloud.google.com/dataproc-serverless/docs/guides/custom-containers#example_custom_container_image_build), в разделе "Следующие пакеты установлены в образе по умолчанию"). В то время как, создавая кластер Dataproc заранее, вы можете точно настроить конфигурацию кластера, установить любые пакеты PyPI, которые хотите, и воспользоваться более быстрыми и отзывчивыми временными интервалами.
 
-Use the `cluster` submission method with dedicated Dataproc clusters you or your organization manage. Use the `serverless` submission method to avoid managing a Spark cluster. The latter may be quicker for getting started, but both are valid for production.
+Используйте метод отправки `cluster` с выделенными кластерами Dataproc, которые вы или ваша организация управляете. Используйте метод отправки `serverless`, чтобы избежать управления кластером Spark. Последний может быть быстрее для начала, но оба варианта подходят для производства.
 
-**Additional setup:**
-- Create or use an existing [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
-- Enable Dataproc APIs for your project + region
-- If using the `cluster` submission method: Create or use an existing [Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster) with the [Spark BigQuery connector initialization action](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google recommends copying the action into your own Cloud Storage bucket, rather than using the example version shown in the screenshot)
+**Дополнительная настройка:**
+- Создайте или используйте существующий [Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
+- Включите API Dataproc для вашего проекта + региона
+- Если вы используете метод отправки `cluster`: создайте или используйте существующий [кластер Dataproc](https://cloud.google.com/dataproc/docs/guides/create-cluster) с [инициализацией соединителя BigQuery Spark](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors#bigquery-connectors). (Google рекомендует копировать действие в ваш собственный Cloud Storage bucket, а не использовать примерную версию, показанную на скриншоте)
 
-<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-connector-initialization.png" title="Add the Spark BigQuery connector as an initialization action"/>
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-connector-initialization.png" title="Добавьте соединитель BigQuery Spark в качестве инициализационного действия"/>
 
-The following configurations are needed to run Python models on Dataproc. You can add these to your [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc) or configure them on specific Python models:
-- `gcs_bucket`: Storage bucket to which dbt will upload your model's compiled PySpark code.
-- `dataproc_region`: GCP region in which you have enabled Dataproc (for example `us-central1`).
-- `dataproc_cluster_name`: Name of Dataproc cluster to use for running Python model (executing PySpark job). Only required if `submission_method: cluster`.
+Следующие конфигурации необходимы для запуска Python моделей на Dataproc. Вы можете добавить их в ваш [профиль BigQuery](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc) или настроить их для конкретных Python моделей:
+- `gcs_bucket`: Хранилище, в которое dbt загрузит скомпилированный код PySpark вашей модели.
+- `dataproc_region`: Регион GCP, в котором вы включили Dataproc (например, `us-central1`).
+- `dataproc_cluster_name`: Имя кластера Dataproc, который будет использоваться для запуска Python модели (выполнение задания PySpark). Требуется только если `submission_method: cluster`.
 
 ```python
 def model(dbt, session):
@@ -800,9 +797,9 @@ models:
       submission_method: serverless
 ```
 
-Python models running on Dataproc Serverless can be further configured in your [BigQuery profile](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc).
+Python модели, работающие на Dataproc Serverless, могут быть дополнительно настроены в вашем [профиле BigQuery](/docs/core/connect-data-platform/bigquery-setup#running-python-models-on-dataproc).
 
-Any user or service account that runs dbt Python models will need the following permissions(in addition to the required BigQuery permissions) ([docs](https://cloud.google.com/dataproc/docs/concepts/iam/iam)):
+Любой пользователь или сервисный аккаунт, который запускает модели dbt Python, должен иметь следующие разрешения (в дополнение к необходимым разрешениям BigQuery) ([документы](https://cloud.google.com/dataproc/docs/concepts/iam/iam)):
 ```
 dataproc.batches.create
 dataproc.clusters.use
@@ -815,24 +812,23 @@ storage.objects.create
 storage.objects.delete
 ```
 
-**Installing packages:** If you are using a Dataproc Cluster (as opposed to Dataproc Serverless), you can add third-party packages while creating the cluster.
+**Установка пакетов:** Если вы используете кластер Dataproc (в отличие от Dataproc Serverless), вы можете добавить сторонние пакеты во время создания кластера.
 
-Google recommends installing Python packages on Dataproc clusters via initialization actions:
-- [How initialization actions are used](https://github.com/GoogleCloudDataproc/initialization-actions/blob/master/README.md#how-initialization-actions-are-used)
-- [Actions for installing via `pip` or `conda`](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/python)
+Google рекомендует устанавливать пакеты Python на кластерах Dataproc через инициализационные действия:
+- [Как используются инициализационные действия](https://github.com/GoogleCloudDataproc/initialization-actions/blob/master/README.md#how-initialization-actions-are-used)
+- [Действия для установки через `pip` или `conda`](https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/python)
 
-You can also install packages at cluster creation time by [defining cluster properties](https://cloud.google.com/dataproc/docs/tutorials/python-configuration#image_version_20): `dataproc:pip.packages` or `dataproc:conda.packages`.
+Вы также можете установить пакеты во время создания кластера, определив свойства кластера (https://cloud.google.com/dataproc/docs/tutorials/python-configuration#image_version_20): `dataproc:pip.packages` или `dataproc:conda.packages`.
 
-<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-pip-packages.png" title="Adding packages to install via pip at cluster startup"/>
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/python-models/dataproc-pip-packages.png" title="Добавление пакетов для установки через pip при запуске кластера"/>
 
-**Docs:**
+**Документы:**
 
-- [Dataproc overview](https://cloud.google.com/dataproc/docs/concepts/overview)
-- [Create a Dataproc cluster](https://cloud.google.com/dataproc/docs/guides/create-cluster)
-- [Create a Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
-- [PySpark DataFrame syntax](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
+- [Обзор Dataproc](https://cloud.google.com/dataproc/docs/concepts/overview)
+- [Создание кластера Dataproc](https://cloud.google.com/dataproc/docs/guides/create-cluster)
+- [Создание Cloud Storage bucket](https://cloud.google.com/storage/docs/creating-buckets)
+- [Синтаксис DataFrame PySpark](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 
 </div>
 
 </WHCode>
-

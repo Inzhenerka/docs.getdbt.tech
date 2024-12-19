@@ -1,68 +1,68 @@
 ---
-title: "Cumulative metrics"
+title: "Кумулятивные метрики"
 id: cumulative
-description: "Use Cumulative metrics to aggregate a measure over a given window."
-sidebar_label: Cumulative
-tags: [Metrics, Semantic Layer]
+description: "Используйте кумулятивные метрики для агрегирования показателя за заданный период."
+sidebar_label: Кумулятивные
+tags: [Метрики, Семантический уровень]
 ---
 
-Cumulative metrics aggregate a measure over a given accumulation window. If no window is specified, the window is considered infinite and accumulates values over all time. You will need to create a [time spine model](/docs/build/metricflow-time-spine) before you add cumulative metrics.
+Кумулятивные метрики агрегируют показатель за заданный период накопления. Если период не указан, он считается бесконечным и накапливает значения за все время. Вам необходимо создать [модель временной оси](/docs/build/metricflow-time-spine) перед добавлением кумулятивных метрик.
 
-Cumulative metrics are useful for calculating things like weekly active users, or month-to-date revenue. The parameters, description, and types for cumulative metrics are: 
+Кумулятивные метрики полезны для расчета таких показателей, как количество активных пользователей за неделю или доход с начала месяца. Параметры, описание и типы для кумулятивных метрик:
 
 :::tip
-Note that we use the double colon (::) to indicate whether a parameter is nested within another parameter. So for example, `measure::name` means the `name` parameter is nested under `measure`.
+Обратите внимание, что мы используем двойной двоеточие (::) для указания, является ли параметр вложенным в другой параметр. Например, `measure::name` означает, что параметр `name` вложен в `measure`.
 :::
 
-## Parameters
+## Параметры
 
 <VersionBlock firstVersion="1.9">
 
-| Parameter   | <div style={{width:'350px'}}>Description</div>   | Required | Type      |
+| Параметр   | <div style={{width:'350px'}}>Описание</div>   | Обязательный | Тип      |
 |-------------|---------------------------------------------------|----------|-----------|
-| `name`  | The name of the metric.       | Required  | String |
-| `description`       | The description of the metric.     | Optional  | String |
-| `type`    | The type of the metric (cumulative, derived, ratio, or simple).       | Required  | String |  
-| `label`     | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).  | Required  | String |
-| `type_params`    | The type parameters of the metric. Supports nested parameters indicated by the double colon, such as `type_params::measure`.  | Required  | Dict |
-| `type_params::measure`   | The measure associated with the metric. Supports both shorthand (string) and object syntax. The shorthand is used if only the name is needed, while the object syntax allows specifying additional attributes. | Required  | Dict |
-| `measure::name`    | The name of the measure being referenced. Required if using object syntax for `type_params::measure`.  | Optional  | String |
-| `measure::fill_nulls_with`     | Sets a value (for example, 0) to replace nulls in the metric definition.    | Optional  | Integer or string |
-| `measure::join_to_timespine` | Boolean indicating if the aggregated measure should be joined to the time spine table to fill in missing dates. Default is `false`. | Optional  | Boolean |
-| `type_params::cumulative_type_params`     | Configures the attributes like `window`, `period_agg`, and `grain_to_date` for cumulative metrics. | Optional  | Dict |
-| `cumulative_type_params::window`      | Specifies the accumulation window, such as `1 month`, `7 days`, or `1 year`. Cannot be used with `grain_to_date`.   | Optional  | String |
-| `cumulative_type_params::grain_to_date`   | Sets the accumulation grain, such as `month`, restarting accumulation at the beginning of each specified grain period. Cannot be used with `window`. | Optional  | String |
-| `cumulative_type_params::period_agg`  | Defines how to aggregate the cumulative metric when summarizing data to a different granularity: `first`, `last`, or `average`. Defaults to `first` if `window` is not specified. | Optional  | String |
+| `name`  | Имя метрики.       | Обязательный  | Строка |
+| `description`       | Описание метрики.     | Необязательный  | Строка |
+| `type`    | Тип метрики (кумулятивная, производная, отношение или простая).       | Обязательный  | Строка |  
+| `label`     | Обязательная строка, определяющая отображаемое значение в инструментах. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`).  | Обязательный  | Строка |
+| `type_params`    | Параметры типа метрики. Поддерживает вложенные параметры, обозначенные двойным двоеточием, такими как `type_params::measure`.  | Обязательный  | Словарь |
+| `type_params::measure`   | Показатель, связанный с метрикой. Поддерживает как сокращенный (строковый), так и объектный синтаксис. Сокращенный синтаксис используется, если нужно только имя, в то время как объектный синтаксис позволяет указать дополнительные атрибуты. | Обязательный  | Словарь |
+| `measure::name`    | Имя показателя, на который ссылаются. Обязательный, если используется объектный синтаксис для `type_params::measure`.  | Необязательный  | Строка |
+| `measure::fill_nulls_with`     | Устанавливает значение (например, 0) для замены null в определении метрики.    | Необязательный  | Целое число или строка |
+| `measure::join_to_timespine` | Логическое значение, указывающее, следует ли присоединять агрегированный показатель к таблице временной оси для заполнения пропущенных дат. По умолчанию `false`. | Необязательный  | Логическое |
+| `type_params::cumulative_type_params`     | Настраивает атрибуты, такие как `window`, `period_agg` и `grain_to_date` для кумулятивных метрик. | Необязательный  | Словарь |
+| `cumulative_type_params::window`      | Указывает период накопления, такой как `1 месяц`, `7 дней` или `1 год`. Не может использоваться с `grain_to_date`.   | Необязательный  | Строка |
+| `cumulative_type_params::grain_to_date`   | Устанавливает период накопления, такой как `месяц`, перезапуская накопление в начале каждого указанного периода. Не может использоваться с `window`. | Необязательный  | Строка |
+| `cumulative_type_params::period_agg`  | Определяет, как агрегировать кумулятивную метрику при обобщении данных до другой гранулярности: `first`, `last` или `average`. По умолчанию `first`, если `window` не указан. | Необязательный  | Строка |
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-| Parameter | <div style={{width:'350px'}}>Description</div> | Type |
+| Параметр | <div style={{width:'350px'}}>Описание</div> | Тип |
 | --------- | ----------- | ---- |
-| `name` | The name of the metric. | Required |
-| `description` | The description of the metric. | Optional |
-| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Required |
-| `type_params` | The type parameters of the metric. Supports nested parameters indicated by the double colon, such as `type_params::measure`. | Required |
-| `window` | The accumulation window, such as `1 month`, `7 days`, or `1 year`. This can't be used with `grain_to_date`. | Optional  |
-| `grain_to_date` | Sets the accumulation grain, such as `month`, which will accumulate data for one month and then restart at the beginning of the next. This can't be used with `window`. | Optional |
-| `type_params::measure` | A list of measure inputs | Required |
-| `measure:name` | The name of the measure being referenced. Required if using object syntax for `type_params::measure`.  | Optional  |
-| `measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero).| Optional |
-| `measure:join_to_timespine` | Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional |
+| `name` | Имя метрики. | Обязательный |
+| `description` | Описание метрики. | Необязательный |
+| `type` | Тип метрики (кумулятивная, производная, отношение или простая). | Обязательный |
+| `label` | Обязательная строка, определяющая отображаемое значение в инструментах. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). | Обязательный |
+| `type_params` | Параметры типа метрики. Поддерживает вложенные параметры, обозначенные двойным двоеточием, такими как `type_params::measure`. | Обязательный |
+| `window` | Период накопления, такой как `1 месяц`, `7 дней` или `1 год`. Не может использоваться с `grain_to_date`. | Необязательный  |
+| `grain_to_date` | Устанавливает период накопления, такой как `месяц`, который будет накапливать данные в течение одного месяца и затем перезапустится в начале следующего. Не может использоваться с `window`. | Необязательный |
+| `type_params::measure` | Список входных показателей | Обязательный |
+| `measure:name` | Имя показателя, на который ссылаются. Обязательный, если используется объектный синтаксис для `type_params::measure`.  | Необязательный  |
+| `measure:fill_nulls_with` | Установите значение в определении вашей метрики вместо null (например, ноль).| Необязательный |
+| `measure:join_to_timespine` | Логическое значение, указывающее, следует ли присоединять агрегированный показатель к таблице временной оси для заполнения пропущенных дат. По умолчанию `false`. | Необязательный |
 
 </VersionBlock>
 
-<Expandable alt_header="Explanation of type_params::measure">
+<Expandable alt_header="Объяснение type_params::measure">
   
-The`type_params::measure` configuration can be written in different ways:
-- Shorthand syntax &mdash;  To only specify the name of the measure, use a simple string value. This is a shorthand approach when no other attributes are required.
+Конфигурация `type_params::measure` может быть записана разными способами:
+- Синтаксис сокращения &mdash;  Чтобы указать только имя показателя, используйте простое строковое значение. Это сокращенный подход, когда не требуются другие атрибуты.
   ```yaml
   type_params:
     measure: revenue
   ```
-- Object syntax &mdash; To add more details or attributes to the measure (such as adding a filter, handling `null` values, or specifying whether to join to a time spine), you need to use the object syntax. This allows for additional configuration beyond just the measure's name.
+- Объектный синтаксис &mdash; Чтобы добавить больше деталей или атрибутов к показателю (например, добавить фильтр, обработать `null` значения или указать, следует ли присоединять к временной оси), необходимо использовать объектный синтаксис. Это позволяет добавить дополнительную конфигурацию помимо имени показателя.
 
   ```yaml
   type_params:
@@ -73,8 +73,8 @@ The`type_params::measure` configuration can be written in different ways:
   ```
 </Expandable>
 
-### Complete specification
-The following displays the complete specification for cumulative metrics, along with an example:
+### Полная спецификация
+Следующее отображает полную спецификацию для кумулятивных метрик, вместе с примером:
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
@@ -82,19 +82,19 @@ The following displays the complete specification for cumulative metrics, along 
 
 ```yaml
 metrics:
-  - name: The metric name # Required
-    description: The metric description # Optional
-    type: cumulative # Required
-    label: The value that will be displayed in downstream tools # Required
-    type_params: # Required
+  - name: Имя метрики # Обязательный
+    description: Описание метрики # Необязательный
+    type: cumulative # Обязательный
+    label: Значение, которое будет отображаться в инструментах # Обязательный
+    type_params: # Обязательный
       cumulative_type_params:
-        period_agg: first # Optional. Defaults to first. Accepted values: first|last|average
-        window: The accumulation window, such as 1 month, 7 days, 1 year. # Optional. It cannot be used with grain_to_date.
-        grain_to_date: Sets the accumulation grain, such as month will accumulate data for one month, then restart at the beginning of the next.  # Optional. It cannot be used with window.
+        period_agg: first # Необязательный. По умолчанию first. Допустимые значения: first|last|average
+        window: Период накопления, такой как 1 месяц, 7 дней, 1 год. # Необязательный. Не может использоваться с grain_to_date.
+        grain_to_date: Устанавливает период накопления, такой как месяц, который будет накапливать данные в течение одного месяца, затем перезапустится в начале следующего.  # Необязательный. Не может использоваться с window.
       measure: 
-        name: The measure you are referencing. # Required
-        fill_nulls_with: Set the value in your metric definition instead of null (such as zero). # Optional
-        join_to_timespine: true/false # Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. # Optional
+        name: Показатель, на который вы ссылаетесь. # Обязательный
+        fill_nulls_with: Установите значение в определении вашей метрики вместо null (например, ноль). # Необязательный
+        join_to_timespine: true/false # Логическое значение, указывающее, следует ли присоединять агрегированный показатель к таблице временной оси для заполнения пропущенных дат. По умолчанию `false`. # Необязательный
 
 ```
 </VersionBlock>
@@ -103,45 +103,45 @@ metrics:
 
 ```yaml
 metrics:
-  - name: The metric name  # Required
-    description: The metric description  # Optional
-    type: cumulative  # Required
-    label: The value that will be displayed in downstream tools  # Required
-    type_params:  # Required
+  - name: Имя метрики  # Обязательный
+    description: Описание метрики  # Необязательный
+    type: cumulative  # Обязательный
+    label: Значение, которое будет отображаться в инструментах  # Обязательный
+    type_params:  # Обязательный
       measure: 
-        name: The measure you are referencing  # Required
-        fill_nulls_with: Set the value in your metric definition instead of null (such as zero)  # Optional
-        join_to_timespine: false  # Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. # Optional
-      window: 1 month  # The accumulation window, such as 1 month, 7 days, 1 year. Optional. Cannot be used with grain_to_date.
-      grain_to_date: month  # Sets the accumulation grain, such as month will accumulate data for one month, then restart at the beginning of the next. Optional. Cannot be used with window.
+        name: Показатель, на который вы ссылаетесь  # Обязательный
+        fill_nulls_with: Установите значение в определении вашей метрики вместо null (например, ноль)  # Необязательный
+        join_to_timespine: false  # Логическое значение, указывающее, следует ли присоединять агрегированный показатель к таблице временной оси для заполнения пропущенных дат. По умолчанию `false`. # Необязательный
+      window: 1 месяц  # Период накопления, такой как 1 месяц, 7 дней, 1 год. Необязательный. Не может использоваться с grain_to_date.
+      grain_to_date: месяц  # Устанавливает период накопления, такой как месяц, который будет накапливать данные в течение одного месяца, затем перезапустится в начале следующего. Необязательный. Не может использоваться с window.
 ```
 </VersionBlock>
 
 </File>
 
-## Cumulative metrics example
+## Пример кумулятивных метрик
 
-Cumulative metrics measure data over a given window and consider the window infinite when no window parameter is passed, accumulating the data over all time.
+Кумулятивные метрики измеряют данные за заданный период и считают период бесконечным, когда параметр окна не передан, накапливая данные за все время.
 
-The following example shows how to define cumulative metrics in a YAML file:
+Следующий пример показывает, как определить кумулятивные метрики в YAML файле:
 
 <VersionBlock firstVersion="1.9">
 
-- `cumulative_order_total`: Calculates the cumulative order total over all time. Uses `type params` to specify the measure `order_total` to be aggregated.
+- `cumulative_order_total`: Рассчитывает кумулятивный общий заказ за все время. Использует `type params` для указания показателя `order_total`, который будет агрегирован.
 
-- `cumulative_order_total_l1m`: Calculates the trailing 1-month cumulative order total. Uses `cumulative_type_params` to specify a `window` of 1 month.
+- `cumulative_order_total_l1m`: Рассчитывает кумулятивный общий заказ за последние 1 месяц. Использует `cumulative_type_params` для указания `window` в 1 месяц.
 
-- `cumulative_order_total_mtd`: Calculates the month-to-date cumulative order total, respectively. Uses `cumulative_type_params` to specify a `grain_to_date` of `month`.
+- `cumulative_order_total_mtd`: Рассчитывает кумулятивный общий заказ с начала месяца. Использует `cumulative_type_params` для указания `grain_to_date` в `month`.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
-- `cumulative_order_total`: Calculates the cumulative order total over all time. Uses `type params` to specify the measure `order_total` to be aggregated.
+- `cumulative_order_total`: Рассчитывает кумулятивный общий заказ за все время. Использует `type params` для указания показателя `order_total`, который будет агрегирован.
 
-- `cumulative_order_total_l1m`: Calculates the trailing 1-month cumulative order total. Uses `type params` to specify a `window` of 1 month.
+- `cumulative_order_total_l1m`: Рассчитывает кумулятивный общий заказ за последние 1 месяц. Использует `type params` для указания `window` в 1 месяц.
 
-- `cumulative_order_total_mtd`: Calculates the month-to-date cumulative order total, respectively. Uses `type params` to specify a `grain_to_date` of `month`.
+- `cumulative_order_total_mtd`: Рассчитывает кумулятивный общий заказ с начала месяца. Использует `type params` для указания `grain_to_date` в `month`.
 
 </VersionBlock>
 
@@ -152,26 +152,26 @@ The following example shows how to define cumulative metrics in a YAML file:
 ```yaml
 metrics:
   - name: cumulative_order_total
-    label: Cumulative order total (All-Time)    
-    description: The cumulative value of all orders
+    label: Кумулятивный общий заказ (все время)    
+    description: Кумулятивное значение всех заказов
     type: cumulative
     type_params:
       measure: 
         name: order_total
   
   - name: cumulative_order_total_l1m
-    label: Cumulative order total (L1M)   
-    description: Trailing 1-month cumulative order total
+    label: Кумулятивный общий заказ (L1M)   
+    description: Кумулятивный общий заказ за последние 1 месяц
     type: cumulative
     type_params:
       measure: 
         name: order_total
       cumulative_type_params:
-        window: 1 month
+        window: 1 месяц
   
   - name: cumulative_order_total_mtd
-    label: Cumulative order total (MTD)
-    description: The month-to-date value of all orders
+    label: Кумулятивный общий заказ (MTD)
+    description: Кумулятивное значение всех заказов с начала месяца
     type: cumulative
     type_params:
       measure: 
@@ -186,25 +186,25 @@ metrics:
 ```yaml
 metrics:
   - name: cumulative_order_total
-    label: Cumulative order total (All-Time)    
-    description: The cumulative value of all orders
+    label: Кумулятивный общий заказ (все время)    
+    description: Кумулятивное значение всех заказов
     type: cumulative
     type_params:
       measure: 
         name: order_total
   
   - name: cumulative_order_total_l1m
-    label: Cumulative order total (L1M)   
-    description: Trailing 1-month cumulative order total
+    label: Кумулятивный общий заказ (L1M)   
+    description: Кумулятивный общий заказ за последние 1 месяц
     type: cumulative
     type_params:
       measure: 
         name: order_total
-      window: 1 month
+      window: 1 месяц
   
   - name: cumulative_order_total_mtd
-    label: Cumulative order total (MTD)
-    description: The month-to-date value of all orders
+    label: Кумулятивный общий заказ (MTD)
+    description: Кумулятивное значение всех заказов с начала месяца
     type: cumulative
     type_params:
       measure: 
@@ -217,44 +217,44 @@ metrics:
 
 <VersionBlock firstVersion="1.9">
 
-### Granularity options
+### Опции гранулярности
 
-Use the `period_agg` parameter with `first()`, `last()`, and `average()` functions to aggregate cumulative metrics over the requested period. This is because granularity options for cumulative metrics are different than the options for other metric types. 
-- For other metrics, we use the `date_trunc` function to implement granularity. 
-- However, cumulative metrics are non-additive (values can't be added up), so we can't use the `date_trunc` function to change their time grain granularity.
-- By default, we take the first value of the period. You can change this by specifying a different function using the `period_agg` parameter.
+Используйте параметр `period_agg` с функциями `first()`, `last()` и `average()` для агрегирования кумулятивных метрик за запрашиваемый период. Это связано с тем, что опции гранулярности для кумулятивных метрик отличаются от опций для других типов метрик. 
+- Для других метрик мы используем функцию `date_trunc` для реализации гранулярности. 
+- Однако кумулятивные метрики неаддитивны (значения не могут быть сложены), поэтому мы не можем использовать функцию `date_trunc` для изменения их временной гранулярности.
+- По умолчанию мы берем первое значение периода. Вы можете изменить это, указав другую функцию с помощью параметра `period_agg`.
 
-In the following example, we define a cumulative metric, `cumulative_revenue`, that calculates the cumulative revenue for all orders:
+В следующем примере мы определяем кумулятивную метрику `cumulative_revenue`, которая рассчитывает кумулятивный доход от всех заказов:
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
 ```yaml
 - name: cumulative_revenue
-  description: The cumulative revenue for all orders.
-  label: Cumulative revenue (all-time)
+  description: Кумулятивный доход от всех заказов.
+  label: Кумулятивный доход (все время)
   type: cumulative
   type_params:
     measure: revenue
     cumulative_type_params:
-      period_agg: first # Optional. Defaults to first. Accepted values: first|end|average
+      period_agg: first # Необязательный. По умолчанию first. Допустимые значения: first|end|average
 ```
 </File>
 
-In this example, `period_agg` is set to `first`, which chooses the first value for the selected granularity window. To query `cumulative_revenue` by week, use the following query syntax: 
+В этом примере `period_agg` установлен на `first`, что выбирает первое значение для выбранного окна гранулярности. Чтобы запросить `cumulative_revenue` по неделям, используйте следующий синтаксис запроса: 
 - `dbt sl query --metrics cumulative_revenue --group-by metric_time__week`
 
-<Expandable alt_header="Expand toggle to view how the SQL compiles">
+<Expandable alt_header="Раскрыть, чтобы увидеть, как компилируется SQL">
 
-Note the use of the `window` function to select the `first` value. For `last` and `average`, we would replace the `first_value()` function in the generated SQL with `last_value()` and `average` respectively.
+Обратите внимание на использование функции `window` для выбора `first` значения. Для `last` и `average` мы заменим функцию `first_value()` в сгенерированном SQL на `last_value()` и `average` соответственно.
 
 ```sql
--- re-aggregate metric via the group by
+-- повторная агрегация метрики через group by
 select
   metric_time__week,
   metric_time__quarter,
   revenue_all_time
 from (
-  -- window function for metric re-aggregation
+  -- оконная функция для повторной агрегации метрики
   select
     metric_time__week,
     metric_time__quarter,
@@ -266,17 +266,17 @@ from (
       rows between unbounded preceding and unbounded following
     ) as revenue_all_time
   from (
-    -- join self over time range
-    -- pass only elements: ['txn_revenue', 'metric_time__week', 'metric_time__quarter', 'metric_time__day']
-    -- aggregate measures
-    -- compute metrics via expressions
+    -- соединение с самим собой по диапазону времени
+    -- передать только элементы: ['txn_revenue', 'metric_time__week', 'metric_time__quarter', 'metric_time__day']
+    -- агрегировать показатели
+    -- вычислить метрики через выражения
     select
       subq_11.metric_time__day as metric_time__day,
       subq_11.metric_time__week as metric_time__week,
       subq_11.metric_time__quarter as metric_time__quarter,
       sum(revenue_src_28000.revenue) as revenue_all_time
     from (
-      -- time spine
+      -- временная ось
       select
         ds as metric_time__day,
         date_trunc('week', ds) as metric_time__week,
@@ -308,18 +308,18 @@ group by
 
 </VersionBlock>
 
-### Window options
+### Опции окна
 
-This section details examples of when to specify and not to specify window options.
+В этом разделе приведены примеры, когда следует указывать и не указывать параметры окна.
 
-- When a window is specified, MetricFlow applies a sliding window to the underlying measure, such as tracking weekly active users with a 7-day window.
-- Without specifying a window, cumulative metrics accumulate values over all time, useful for running totals like current revenue and active subscriptions.
+- Когда окно указано, MetricFlow применяет скользящее окно к базовому показателю, например, отслеживая активных пользователей за неделю с 7-дневным окном.
+- Без указания окна кумулятивные метрики накапливают значения за все время, что полезно для текущих сумм, таких как текущий доход и активные подписки.
 
-<Expandable alt_header="Example of window specified">
+<Expandable alt_header="Пример с указанным окном">
 
-If a window option is specified, MetricFlow applies a sliding window to the underlying measure.
+Если параметр окна указан, MetricFlow применяет скользящее окно к базовому показателю.
 
-Suppose the underlying measure `customers` is configured to count the unique customers making orders at the Jaffle shop.
+Предположим, что базовый показатель `customers` настроен для подсчета уникальных клиентов, делающих заказы в магазине Jaffle.
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
@@ -332,7 +332,7 @@ measures:
 ```
 </File>
 
-We can write a cumulative metric `weekly_customers` as such:
+Мы можем написать кумулятивную метрику `weekly_customers` следующим образом:
 
 <VersionBlock firstVersion="1.9">
 
@@ -340,25 +340,25 @@ We can write a cumulative metric `weekly_customers` as such:
 
 ``` yaml
 metrics: 
-  - name: weekly_customers # Define the measure and the window.
+  - name: weekly_customers # Определите показатель и окно.
   type: cumulative
   type_params:
     measure: customers
     cumulative_type_params:
-      window: 7 days # Setting the window to 7 days since we want to track weekly active
-      period_agg: first # This will choose the first value of the granularity window when changing the granularity.
+      window: 7 days # Устанавливаем окно на 7 дней, так как хотим отслеживать активных пользователей за неделю
+      period_agg: first # Это выберет первое значение окна гранулярности при изменении гранулярности.
 ```
 </File>
 
-From the sample YAML example, note the following:
+Из приведенного примера YAML обратите внимание на следующее:
 
-* `type`: Specify cumulative to indicate the type of metric. 
-* `type_params`: Configure the cumulative metric by providing a `measure`.
-* `cumulative_type_params`: Optionally add a `window`, `period_agg` and `grain_to_date` configuration.
+* `type`: Укажите cumulative, чтобы указать тип метрики. 
+* `type_params`: Настройте кумулятивную метрику, предоставив `measure`.
+* `cumulative_type_params`: При необходимости добавьте конфигурацию `window`, `period_agg` и `grain_to_date`.
 
-For example, in the `weekly_customers` cumulative metric, MetricFlow takes a sliding 7-day window of relevant customers and applies a count distinct function.
+Например, в кумулятивной метрике `weekly_customers` MetricFlow берет скользящее 7-дневное окно соответствующих клиентов и применяет функцию подсчета уникальных.
 
-If you remove `window`, the measure will accumulate over all time.
+Если вы уберете `window`, показатель будет накапливаться за все время.
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
@@ -367,61 +367,61 @@ If you remove `window`, the measure will accumulate over all time.
 
 ``` yaml
 metrics: 
-  - name: weekly_customers # Define the measure and the window.
+  - name: weekly_customers # Определите показатель и окно.
   type: cumulative
   type_params:
     measure: customers
-    window: 7 days # Setting the window to 7 days since we want to track weekly active
+    window: 7 days # Устанавливаем окно на 7 дней, так как хотим отслеживать активных пользователей за неделю
 ```
 </File>
 </VersionBlock>
 
-From the sample YAML example, note the following:
+Из приведенного примера YAML обратите внимание на следующее:
 
-* `type`: Specify cumulative to indicate the type of metric. 
-* `type_params`: Configure the cumulative metric by providing a `measure` and optionally add a `window` or `grain_to_date` configuration.
+* `type`: Укажите cumulative, чтобы указать тип метрики. 
+* `type_params`: Настройте кумулятивную метрику, предоставив `measure` и, при необходимости, добавив конфигурацию `window` или `grain_to_date`.
 
-For example, in the `weekly_customers` cumulative metric, MetricFlow takes a sliding 7-day window of relevant customers and applies a count distinct function.
+Например, в кумулятивной метрике `weekly_customers` MetricFlow берет скользящее 7-дневное окно соответствующих клиентов и применяет функцию подсчета уникальных.
 
-If you remove `window`, the measure will accumulate over all time.
+Если вы уберете `window`, показатель будет накапливаться за все время.
 
 </Expandable>
 
-<Expandable alt_header="Example of window not specified">
+<Expandable alt_header="Пример, когда окно не указано">
 
-Suppose you (a subscription-based company for the sake of this example) have an event-based log table with the following columns: 
+Предположим, что у вас (для примера, основанного на подписках) есть таблица событий с следующими столбцами: 
 
-* `date`: a date column 
-* `user_id`: (integer) an ID specified for each user that is responsible for the event 
-* `subscription_plan`: (integer) a column that indicates a particular subscription plan associated with the user. 
-* `subscription_revenue`: (integer) a column that indicates the value associated with the subscription plan.  
-* `event_type`: (integer) a column that populates with +1 to indicate an added subscription, or -1 to indicate a deleted subscription. 
-* `revenue`: (integer) a column that multiplies `event_type` and `subscription_revenue` to depict the amount of revenue added or lost for a specific date. 
+* `date`: столбец даты 
+* `user_id`: (целое число) ID, указанный для каждого пользователя, ответственного за событие 
+* `subscription_plan`: (целое число) столбец, который указывает конкретный план подписки, связанный с пользователем. 
+* `subscription_revenue`: (целое число) столбец, который указывает значение, связанное с планом подписки.  
+* `event_type`: (целое число) столбец, который заполняется +1 для указания добавленной подписки или -1 для указания удаленной подписки. 
+* `revenue`: (целое число) столбец, который умножает `event_type` и `subscription_revenue`, чтобы показать сумму дохода, добавленного или потерянного за конкретную дату. 
 
-Using cumulative metrics without specifying a window, you can calculate running totals for metrics like the count of active subscriptions and revenue at any point in time. The following YAML file shows creating a cumulative metrics to obtain current revenue and the total number of active subscriptions as a cumulative sum:
+Используя кумулятивные метрики без указания окна, вы можете рассчитать текущие суммы для таких метрик, как количество активных подписок и доход в любой момент времени. Следующий YAML файл показывает создание кумулятивных метрик для получения текущего дохода и общего количества активных подписок в виде кумулятивной суммы:
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
 ```yaml
 measures:
   - name: revenue
-    description: Total revenue
+    description: Общий доход
     agg: sum
     expr: revenue
   - name: subscription_count
-    description: Count of active subscriptions
+    description: Количество активных подписок
     agg: sum
     expr: event_type
 metrics:
   - name: current_revenue
-    description: Current revenue
-    label: Current Revenue
+    description: Текущий доход
+    label: Текущий доход
     type: cumulative
     type_params:
       measure: revenue
   - name: active_subscriptions
-    description: Count of active subscriptions
-    label: Active Subscriptions
+    description: Количество активных подписок
+    label: Активные подписки
     type: cumulative
     type_params:
       measure: subscription_count
@@ -433,9 +433,9 @@ metrics:
 
 ### Grain to date
 
-You can choose to specify a grain to date in your cumulative metric configuration to accumulate a metric from the start of a grain (such as week, month, or year). When using a window, such as a month, MetricFlow will go back one full calendar month. However, grain to date will always start accumulating from the beginning of the grain, regardless of the latest date of data.
+Вы можете выбрать указать grain to date в конфигурации вашей кумулятивной метрики, чтобы накапливать метрику с начала зерна (например, недели, месяца или года). При использовании окна, такого как месяц, MetricFlow будет возвращаться на целый календарный месяц. Однако grain to date всегда начнет накапливать с начала зерна, независимо от последней даты данных.
 
-For example, let's consider an underlying measure of `order_total.`
+Например, рассмотрим базовый показатель `order_total.`
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
@@ -446,9 +446,9 @@ For example, let's consider an underlying measure of `order_total.`
 ```
 </File>
 
-We can compare the difference between a 1-month window and a monthly grain to date. 
-- The cumulative metric in a window approach applies a sliding window of 1 month
-- The grain to date by month resets at the beginning of each month.
+Мы можем сравнить разницу между 1-месячным окном и месячным grain to date. 
+- Кумулятивная метрика в подходе с окном применяет скользящее окно в 1 месяц
+- Grain to date по месяцам сбрасывается в начале каждого месяца.
 
 <File name='models/marts/sem_semantic_model_name.yml'>
 
@@ -456,23 +456,23 @@ We can compare the difference between a 1-month window and a monthly grain to da
 
 ```yaml
 metrics:
-  - name: cumulative_order_total_l1m  # For this metric, we use a window of 1 month 
-    label: Cumulative order total (L1M)
-    description: Trailing 1-month cumulative order amount
+  - name: cumulative_order_total_l1m  # Для этой метрики мы используем окно в 1 месяц 
+    label: Кумулятивный общий заказ (L1M)
+    description: Кумулятивная сумма заказов за последний месяц
     type: cumulative
     type_params:
       measure: order_total
       cumulative_type_params:
-        window: 1 month # Applies a sliding window of 1 month
-  - name: cumulative_order_total_mtd   # For this metric, we use a monthly grain-to-date 
-    label: Cumulative order total (MTD)
-    description: The month-to-date value of all orders
+        window: 1 месяц # Применяет скользящее окно в 1 месяц
+  - name: cumulative_order_total_mtd   # Для этой метрики мы используем месячный grain-to-date 
+    label: Кумулятивный общий заказ (MTD)
+    description: Кумулятивное значение всех заказов с начала месяца
     type: cumulative
     type_params:
       measure: order_total
       cumulative_type_params:
-        grain_to_date: month # Resets at the beginning of each month
-        period_agg: first # Optional. Defaults to first. Accepted values: first|last|average
+        grain_to_date: month # Сбрасывается в начале каждого месяца
+        period_agg: first # Необязательный. По умолчанию first. Допустимые значения: first|last|average
 ```
 </VersionBlock>
 
@@ -480,32 +480,32 @@ metrics:
 
 ```yaml
 metrics:
-  - name: cumulative_order_total_l1m  # For this metric, we use a window of 1 month 
-    label: Cumulative order total (L1M)
-    description: Trailing 1-month cumulative order amount
+  - name: cumulative_order_total_l1m  # Для этой метрики мы используем окно в 1 месяц 
+    label: Кумулятивный общий заказ (L1M)
+    description: Кумулятивная сумма заказов за последний месяц
     type: cumulative
     type_params:
       measure: order_total
-    window: 1 month # Applies a sliding window of 1 month
-  - name: cumulative_order_total_mtd   # For this metric, we use a monthly grain-to-date 
-    label: Cumulative order total (MTD)
-    description: The month-to-date value of all orders
+    window: 1 месяц # Применяет скользящее окно в 1 месяц
+  - name: cumulative_order_total_mtd   # Для этой метрики мы используем месячный grain-to-date 
+    label: Кумулятивный общий заказ (MTD)
+    description: Кумулятивное значение всех заказов с начала месяца
     type: cumulative
     type_params:
       measure: order_total
-      grain_to_date: month # Resets at the beginning of each month
+      grain_to_date: month # Сбрасывается в начале каждого месяца
 ```
 </VersionBlock>
 </File>
 
-Cumulative metric with grain to date:
+Кумулятивная метрика с grain to date:
 
 <VersionBlock firstVersion="1.9">
 <File name='models/marts/sem_semantic_model_name.yml'>
 
 ```yaml
 - name: orders_last_month_to_date
-  label: Orders month to date
+  label: Заказы с начала месяца
   type: cumulative
   type_params:
     measure: order_count
@@ -514,7 +514,7 @@ Cumulative metric with grain to date:
 ```
 </File>
 
-<Expandable alt_header="Expand toggle to view how the SQL compiles">
+<Expandable alt_header="Раскрыть, чтобы увидеть, как компилируется SQL">
 
 ```sql
 with staging as (
@@ -564,7 +564,7 @@ order by
 
 ```yaml
 - name: orders_last_month_to_date
-  label: Orders month to date
+  label: Заказы с начала месяца
   type: cumulative
   type_params:
     measure: order_count
@@ -573,11 +573,11 @@ order by
 </File>
 </VersionBlock>
 
-## SQL implementation example
+## Пример реализации SQL
 
-To calculate the cumulative value of the metric over a given window we do a time range join to a timespine table using the primary time dimension as the join key. We use the accumulation window in the join to decide whether a record should be included on a particular day. The following SQL code produced from an example cumulative metric is provided for reference:
+Чтобы рассчитать кумулятивное значение метрики за заданный период, мы выполняем соединение по диапазону времени с таблицей временной оси, используя основное временное измерение в качестве ключа соединения. Мы используем период накопления в соединении, чтобы решить, следует ли включать запись в определенный день. Следующий SQL код, полученный из примера кумулятивной метрики, предоставлен для справки:
 
-To implement cumulative metrics, refer to the SQL code example:
+Для реализации кумулятивных метрик обратитесь к примеру SQL кода:
 
 ``` sql
 select
@@ -626,9 +626,9 @@ limit 100;
 
 ```
 
-## Limitations
+## Ограничения
 
-If you specify a `window` in your cumulative metric definition, you must include `metric_time` as a dimension in the SQL query. This is because the accumulation window is based on metric time. For example,
+Если вы указываете `window` в определении вашей кумулятивной метрики, вы должны включить `metric_time` в запрос SQL. Это связано с тем, что период накопления основан на времени метрики. Например,
 
 ```sql
 select
@@ -642,5 +642,5 @@ group by
   subq_3.metric_time
 ```
 
-## Related docs
-- [Fill null values for simple, derived, or ratio metrics](/docs/build/fill-nulls-advanced)
+## Связанные документы
+- [Заполнение значений null для простых, производных или отношенческих метрик](/docs/build/fill-nulls-advanced)

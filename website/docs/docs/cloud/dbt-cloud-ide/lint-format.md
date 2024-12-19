@@ -1,96 +1,95 @@
 ---
-title: "Lint and format your code"
+title: "Проверка и форматирование вашего кода"
 id: "lint-format"
-description: Integrate with popular linters and formatters like SQL Fluff, sqlfmt, Black, and Prettier."
-sidebar_label: "Lint and format"
+description: Интеграция с популярными линтерами и форматировщиками, такими как SQL Fluff, sqlfmt, Black и Prettier."
+sidebar_label: "Проверка и форматирование"
 tags: [IDE]
 ---
 
-Enhance your development workflow by integrating with popular linters and formatters like [SQLFluff](https://sqlfluff.com/), [sqlfmt](http://sqlfmt.com/), [Black](https://black.readthedocs.io/en/latest/), and [Prettier](https://prettier.io/). Leverage these powerful tools directly in the dbt Cloud IDE without interrupting your development flow.
+Улучшите свой рабочий процесс разработки, интегрировав популярные линтеры и форматировщики, такие как [SQLFluff](https://sqlfluff.com/), [sqlfmt](http://sqlfmt.com/), [Black](https://black.readthedocs.io/en/latest/) и [Prettier](https://prettier.io/). Используйте эти мощные инструменты прямо в dbt Cloud IDE, не прерывая свой процесс разработки.
 
 <details>
-<summary>What are linters and formatters? </summary>
-Linters analyze code for errors, bugs, and style issues, while formatters fix style and formatting rules.  Read more about when to use linters or formatters in the <a href="#faqs">FAQs</a>
+<summary>Что такое линтеры и форматировщики?</summary>
+Линтеры анализируют код на наличие ошибок, багов и проблем со стилем, в то время как форматировщики исправляют правила стиля и форматирования. Узнайте больше о том, когда использовать линтеры или форматировщики в <a href="#faqs">Часто задаваемых вопросах</a>.
 </details>
 
+В dbt Cloud IDE вы можете выполнять проверку, автоматическое исправление и форматирование для пяти различных типов файлов:
 
-In the dbt Cloud IDE, you can perform linting, auto-fix, and formatting on five different file types:
- 
-- SQL &mdash; [Lint](#lint) and fix with SQLFluff, and [format](#format) with sqlfmt
-- YAML, Markdown, and JSON &mdash; Format with Prettier
-- Python &mdash; Format with Black
+- SQL &mdash; [Проверка](#lint) и исправление с помощью SQLFluff, а также [форматирование](#format) с помощью sqlfmt
+- YAML, Markdown и JSON &mdash; Форматирование с помощью Prettier
+- Python &mdash; Форматирование с помощью Black
 
-Each file type has its own unique linting and formatting rules. You can [customize](#customize-linting) the linting process to add more flexibility and enhance problem and style detection.
+Каждый тип файла имеет свои уникальные правила проверки и форматирования. Вы можете [настроить](#customize-linting) процесс проверки, чтобы добавить больше гибкости и улучшить обнаружение проблем и стиля.
 
-By default, the IDE uses sqlfmt rules to format your code, making it convenient to use right away. However, if you have a file named `.sqlfluff` in the root directory of your dbt project, the IDE will default to SQLFluff rules instead.
+По умолчанию IDE использует правила sqlfmt для форматирования вашего кода, что делает его удобным для немедленного использования. Однако, если в корневом каталоге вашего проекта dbt есть файл с именем `.sqlfluff`, IDE будет по умолчанию использовать правила SQLFluff.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfluff.gif" width="100%" title="Use SQLFluff to lint/format your SQL code, and view code errors in the Code Quality tab."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfluff.gif" width="100%" title="Используйте SQLFluff для проверки/форматирования вашего SQL-кода и просмотра ошибок кода на вкладке Качество кода."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfmt.gif" width="95%" title="Use sqlfmt to format your SQL code."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfmt.gif" width="95%" title="Используйте sqlfmt для форматирования вашего SQL-кода."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="95%" title="Format YAML, Markdown, and JSON files using Prettier."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="95%" title="Форматируйте файлы YAML, Markdown и JSON с помощью Prettier."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sql-popup.jpg" width="95%" title="Use the Config button to select your tool."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sql-popup.jpg" width="95%" title="Используйте кнопку Конфигурация для выбора вашего инструмента."/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="95%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="95%" title="Настройте проверку, настроив свои собственные правила кода для проверки, включая линтинг/стилизацию dbtonic."/>
 
 </DocCarousel>
 
-## Lint
+## Проверка
 
-With the dbt Cloud IDE, you can seamlessly use [SQLFluff](https://sqlfluff.com/), a configurable SQL linter, to warn you of complex functions, syntax, formatting, and compilation errors. This integration allows you to run checks, fix, and display any code errors directly within the Cloud IDE:
+С помощью dbt Cloud IDE вы можете без проблем использовать [SQLFluff](https://sqlfluff.com/), настраиваемый линтер SQL, чтобы предупреждать вас о сложных функциях, синтаксических, форматировочных и компиляционных ошибках. Эта интеграция позволяет вам выполнять проверки, исправлять и отображать любые ошибки кода прямо в Cloud IDE:
 
-- Works with Jinja and SQL, 
-- Comes with built-in [linting rules](https://docs.sqlfluff.com/en/stable/rules.html). You can also [customize](#customize-linting) your own linting rules.
-- Empowers you to [enable linting](#enable-linting) with options like **Lint** (displays linting errors and recommends actions) or **Fix** (auto-fixes errors in the IDE).
-- Displays a **Code Quality** tab to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+- Работает с Jinja и SQL,
+- Имеет встроенные [правила проверки](https://docs.sqlfluff.com/en/stable/rules.html). Вы также можете [настроить](#customize-linting) свои собственные правила проверки.
+- Позволяет вам [включить проверку](#enable-linting) с такими опциями, как **Проверка** (отображает ошибки проверки и рекомендует действия) или **Исправить** (автоматически исправляет ошибки в IDE).
+- Отображает вкладку **Качество кода** для просмотра ошибок кода, предоставляет видимость и управление качеством кода, а также отображает используемую версию SQLFluff.
 
-:::info Ephemeral models not supported
-Linting doesn't support ephemeral models in dbt v1.5 and lower. Refer to the [FAQs](#faqs) for more info.
+:::info Эфемерные модели не поддерживаются
+Проверка не поддерживает эфемерные модели в dbt версии 1.5 и ниже. Смотрите [Часто задаваемые вопросы](#faqs) для получения дополнительной информации.
 :::
 
-### Enable linting
+### Включение проверки
 
-Linting is available on all branches, including your protected primary git branch. Since the dbt Cloud IDE prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Проверка доступна на всех ветках, включая вашу защищенную основную git-ветку. Поскольку dbt Cloud IDE предотвращает коммиты в защищенную ветку, он предлагает вам зафиксировать эти изменения в новой ветке.
 
-1. To enable linting, open a `.sql` file and click the **Code Quality** tab.
-2. Click on the **`</> Config`** button on the bottom right side of the [console section](/docs/cloud/dbt-cloud-ide/ide-user-interface#console-section), below the **File editor**. 
-3. In the code quality tool config pop-up, you have the option to select **sqlfluff** or **sqlfmt**. 
-4. To lint your code, select the **sqlfluff** radio button. (Use sqlfmt to [format](#format) your code)
-5. Once you've selected the **sqlfluff** radio button, go back to the console section (below the **File editor**) to select the **Lint** or **Fix** dropdown button:
-    - **Lint** button &mdash; Displays linting issues in the IDE as wavy underlines in the **File editor**. You can hover over an underlined issue to display the details and actions, including a **Quick Fix** option to fix all or specific issues. After linting, you'll see a message confirming the outcome. Linting doesn't rerun after saving. Click **Lint** again to rerun linting.
-    - **Fix** button &mdash; Automatically fixes linting errors in the **File editor**. When fixing is complete, you'll see a message confirming the outcome. 
-    - Use the **Code Quality** tab to view and debug any code errors.
+1. Чтобы включить проверку, откройте файл `.sql` и нажмите на вкладку **Качество кода**.
+2. Нажмите на кнопку **`</> Конфигурация`** в правом нижнем углу [консольного раздела](/docs/cloud/dbt-cloud-ide/ide-user-interface#console-section), под **Редактором файлов**.
+3. В всплывающем окне конфигурации инструмента качества кода у вас есть возможность выбрать **sqlfluff** или **sqlfmt**.
+4. Чтобы проверить ваш код, выберите радиокнопку **sqlfluff**. (Используйте sqlfmt для [форматирования](#format) вашего кода)
+5. После того как вы выбрали радиокнопку **sqlfluff**, вернитесь в консольный раздел (под **Редактором файлов**) и выберите выпадающее меню **Проверка** или **Исправить**:
+    - Кнопка **Проверка** &mdash; Отображает проблемы проверки в IDE в виде волнистых подчеркиваний в **Редакторе файлов**. Вы можете навести курсор на подчеркивание, чтобы отобразить детали и действия, включая опцию **Быстрое исправление** для исправления всех или конкретных проблем. После проверки вы увидите сообщение, подтверждающее результат. Проверка не запускается повторно после сохранения. Нажмите **Проверка** снова, чтобы повторно запустить проверку.
+    - Кнопка **Исправить** &mdash; Автоматически исправляет ошибки проверки в **Редакторе файлов**. Когда исправление завершено, вы увидите сообщение, подтверждающее результат.
+    - Используйте вкладку **Качество кода** для просмотра и отладки любых ошибок кода.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-lint-format-console.gif" width="90%" title="Use the Lint or Fix button in the console section to lint or auto-fix your code."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-lint-format-console.gif" width="90%" title="Используйте кнопку Проверка или Исправить в консольном разделе для проверки или автоматического исправления вашего кода."/>
 
-### Customize linting
+### Настройка проверки
 
-SQLFluff is a configurable SQL linter, which means you can configure your own linting rules instead of using the default linting settings in the IDE. You can exclude files and directories by using a standard `.sqlfluffignore` file. Learn more about the syntax in the [.sqlfluffignore syntax docs](https://docs.sqlfluff.com/en/stable/configuration.html#id2). 
+SQLFluff является настраиваемым линтером SQL, что означает, что вы можете настроить свои собственные правила проверки вместо использования настроек проверки по умолчанию в IDE. Вы можете исключить файлы и каталоги, используя стандартный файл `.sqlfluffignore`. Узнайте больше о синтаксисе в [документации по синтаксису .sqlfluffignore](https://docs.sqlfluff.com/en/stable/configuration.html#id2).
 
-To configure your own linting rules:
+Чтобы настроить свои собственные правила проверки:
 
-1. Create a new file in the root project directory (the parent or top-level directory for your files). Note: The root project directory is the directory where your `dbt_project.yml` file resides.
-2. Name the file `.sqlfluff` (make sure you add the `.` before `sqlfluff`).
-3. [Create](https://docs.sqlfluff.com/en/stable/configuration.html#new-project-configuration) and add your custom config code. 
-4. Save and commit your changes.
-5. Restart the IDE.
-6. Test it out and happy linting!
+1. Создайте новый файл в корневом каталоге проекта (родительском или верхнем уровне для ваших файлов). Примечание: Корневой каталог проекта — это каталог, в котором находится ваш файл `dbt_project.yml`.
+2. Назовите файл `.sqlfluff` (убедитесь, что вы добавили `.` перед `sqlfluff`).
+3. [Создайте](https://docs.sqlfluff.com/en/stable/configuration.html#new-project-configuration) и добавьте свой собственный код конфигурации.
+4. Сохраните и зафиксируйте ваши изменения.
+5. Перезапустите IDE.
+6. Протестируйте и удачной проверки!
 
-:::tip Configure dbtonic linting rules
+:::tip Настройка правил линтинга dbtonic
 
-Refer to the [Jaffle shop SQLFluff config file](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) for dbt-specific (or dbtonic) linting rules we use for our own projects:
+Смотрите [файл конфигурации SQLFluff Jaffle shop](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) для специфичных для dbt (или dbtonic) правил линтинга, которые мы используем для наших собственных проектов:
 
 <details>
-<summary>dbtonic config code example provided by dbt Labs</summary>
+<summary>Пример кода конфигурации dbtonic, предоставленный dbt Labs</summary>
 
 ```
 [sqlfluff]
 templater = dbt
-# This change (from jinja to dbt templater) will make linting slower
-# because linting will first compile dbt code into data warehouse code.
+# Это изменение (с jinja на dbt templater) сделает линтинг медленнее
+# потому что линтинг сначала скомпилирует код dbt в код хранилища данных.
 runaway_limit = 10
 max_line_length = 80
 indent_unit = space
@@ -123,112 +122,112 @@ capitalisation_policy = lower
 [sqlfluff:rules:capitalisation.literals]
 capitalisation_policy = lower
 
-[sqlfluff:rules:ambiguous.column_references]  # Number in group by
+[sqlfluff:rules:ambiguous.column_references]  # Номер в group by
 group_by_and_order_by_style = implicit
 ```
 </details>
 
-For more info on styling best practices, refer to [How we style our SQL](/best-practices/how-we-style/2-how-we-style-our-sql).
+Для получения дополнительной информации о лучших практиках стилизации смотрите [Как мы стилизуем наш SQL](/best-practices/how-we-style/2-how-we-style-our-sql).
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="90%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-sqlfluff-config.jpg" width="90%" title="Настройте проверку, настроив свои собственные правила кода для проверки, включая линтинг/стилизацию dbtonic."/>
 
-## Format
+## Форматирование
 
-In the dbt Cloud IDE, you can format your code to match style guides with a click of a button. The IDE integrates with formatters like sqlfmt, Prettier, and Black to automatically format code on five different file types &mdash; SQL, YAML, Markdown, Python, and JSON:
+В dbt Cloud IDE вы можете форматировать свой код в соответствии с руководствами по стилю одним нажатием кнопки. IDE интегрируется с форматировщиками, такими как sqlfmt, Prettier и Black, чтобы автоматически форматировать код для пяти различных типов файлов &mdash; SQL, YAML, Markdown, Python и JSON:
 
-- SQL &mdash; Format with [sqlfmt](http://sqlfmt.com/), which provides one way to format your dbt SQL and Jinja.
-- YAML, Markdown, and JSON &mdash; Format with [Prettier](https://prettier.io/). 
-- Python &mdash; Format with [Black](https://black.readthedocs.io/en/latest/).
+- SQL &mdash; Форматирование с помощью [sqlfmt](http://sqlfmt.com/), который предоставляет один способ форматирования вашего dbt SQL и Jinja.
+- YAML, Markdown и JSON &mdash; Форматирование с помощью [Prettier](https://prettier.io/).
+- Python &mdash; Форматирование с помощью [Black](https://black.readthedocs.io/en/latest/).
 
-The Cloud IDE formatting integrations take care of manual tasks like code formatting, enabling you to focus on creating quality data models, collaborating, and driving impactful results.
+Интеграции форматирования Cloud IDE берут на себя ручные задачи, такие как форматирование кода, позволяя вам сосредоточиться на создании качественных моделей данных, сотрудничестве и достижении значительных результатов.
 
-### Format SQL
+### Форматирование SQL
 
-To format your SQL code, dbt Cloud integrates with [sqlfmt](http://sqlfmt.com/), which is an uncompromising SQL query formatter that provides one way to format the SQL query and Jinja.
+Чтобы отформатировать ваш SQL-код, dbt Cloud интегрируется с [sqlfmt](http://sqlfmt.com/), который является строгим форматировщиком SQL-запросов и предоставляет один способ форматирования SQL-запроса и Jinja.
 
-By default, the IDE uses sqlfmt rules to format your code, making the **Format** button available and convenient to use immediately. However, if you have a file named .sqlfluff in the root directory of your dbt project, the IDE will default to SQLFluff rules instead.
+По умолчанию IDE использует правила sqlfmt для форматирования вашего кода, что делает кнопку **Форматировать** доступной и удобной для немедленного использования. Однако, если в корневом каталоге вашего проекта dbt есть файл с именем .sqlfluff, IDE будет по умолчанию использовать правила SQLFluff.
 
-Formatting is available on all branches, including your protected primary git branch. Since the dbt Cloud IDE prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Форматирование доступно на всех ветках, включая вашу защищенную основную git-ветку. Поскольку dbt Cloud IDE предотвращает коммиты в защищенную ветку, он предлагает вам зафиксировать эти изменения в новой ветке.
 
-1. Open a `.sql` file and click on the **Code Quality** tab.
-2. Click on the **`</> Config`** button on the right side of the console.
-3. In the code quality tool config pop-up, you have the option to select sqlfluff or sqlfmt.
-4. To format your code, select the **sqlfmt** radio button. (Use sqlfluff to [lint](#linting) your code).
-5. Once you've selected the **sqlfmt** radio button, go to the console section (located below the **File editor**) to select the **Format** button.
-6. The **Format** button auto-formats your code in the **File editor**. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.sql` и нажмите на вкладку **Качество кода**.
+2. Нажмите на кнопку **`</> Конфигурация`** с правой стороны консоли.
+3. В всплывающем окне конфигурации инструмента качества кода у вас есть возможность выбрать sqlfluff или sqlfmt.
+4. Чтобы отформатировать ваш код, выберите радиокнопку **sqlfmt**. (Используйте sqlfluff для [проверки](#linting) вашего кода).
+5. После того как вы выбрали радиокнопку **sqlfmt**, перейдите в консольный раздел (расположенный под **Редактором файлов**) и выберите кнопку **Форматировать**.
+6. Кнопка **Форматировать** автоматически форматирует ваш код в **Редакторе файлов**. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfmt.gif" width="90%" title="Use sqlfmt to format your SQL code."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/sqlfmt.gif" width="90%" title="Используйте sqlfmt для форматирования вашего SQL-кода."/>
 
-### Format YAML, Markdown, JSON
+### Форматирование YAML, Markdown, JSON
 
-To format your YAML, Markdown, or JSON code, dbt Cloud integrates with [Prettier](https://prettier.io/), which is an opinionated code formatter. Formatting is available on all branches, including your protected primary git branch. Since the dbt Cloud IDE prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Чтобы отформатировать ваш код YAML, Markdown или JSON, dbt Cloud интегрируется с [Prettier](https://prettier.io/), который является предвзятым форматировщиком кода. Форматирование доступно на всех ветках, включая вашу защищенную основную git-ветку. Поскольку dbt Cloud IDE предотвращает коммиты в защищенную ветку, он предлагает вам зафиксировать эти изменения в новой ветке.
 
-1. Open a `.yml`, `.md`, or `.json` file.
-2. In the console section (located below the **File editor**), select the **Format** button to auto-format your code in the **File editor**. Use the **Code Quality** tab to view code errors. 
-3. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.yml`, `.md` или `.json`.
+2. В консольном разделе (расположенном под **Редактором файлов**) выберите кнопку **Форматировать**, чтобы автоматически отформатировать ваш код в **Редакторе файлов**. Используйте вкладку **Качество кода** для просмотра ошибок кода.
+3. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="90%" title="Format YAML, Markdown, and JSON files using Prettier."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/prettier.gif" width="90%" title="Форматируйте файлы YAML, Markdown и JSON с помощью Prettier."/>
 
-You can add a configuration file to customize formatting rules for YAML, Markdown, or JSON files using Prettier. The IDE looks for the configuration file based on an order of precedence. For example, it first checks for a "prettier" key in your `package.json` file.
+Вы можете добавить файл конфигурации для настройки правил форматирования для файлов YAML, Markdown или JSON с помощью Prettier. IDE ищет файл конфигурации в порядке приоритета. Например, сначала проверяется наличие ключа "prettier" в вашем файле `package.json`.
 
-For more info on the order of precedence and how to configure files, refer to [Prettier's documentation](https://prettier.io/docs/en/configuration.html). Please note, `.prettierrc.json5`, `.prettierrc.js`, and `.prettierrc.toml` files aren't currently supported.
+Для получения дополнительной информации о порядке приоритета и о том, как настраивать файлы, смотрите [документацию Prettier](https://prettier.io/docs/en/configuration.html). Обратите внимание, что файлы `.prettierrc.json5`, `.prettierrc.js` и `.prettierrc.toml` в настоящее время не поддерживаются.
 
-### Format Python
+### Форматирование Python
 
-To format your Python code, dbt Cloud integrates with [Black](https://black.readthedocs.io/en/latest/), which is an uncompromising Python code formatter. Formatting is available on all branches, including your protected primary git branch. Since the dbt Cloud IDE prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Чтобы отформатировать ваш Python-код, dbt Cloud интегрируется с [Black](https://black.readthedocs.io/en/latest/), который является строгим форматировщиком кода Python. Форматирование доступно на всех ветках, включая вашу защищенную основную git-ветку. Поскольку dbt Cloud IDE предотвращает коммиты в защищенную ветку, он предлагает вам зафиксировать эти изменения в новой ветке.
 
-1. Open a `.py` file.
-2. In the console section (located below the **File editor**), select the **Format** button to auto-format your code in the **File editor**. 
-3. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.py`.
+2. В консольном разделе (расположенном под **Редактором файлов**) выберите кнопку **Форматировать**, чтобы автоматически отформатировать ваш код в **Редакторе файлов**.
+3. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/python-black.gif" width="80%" title="Format Python files using Black."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/python-black.gif" width="80%" title="Форматируйте файлы Python с помощью Black."/>
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="When should I use SQLFluff and when should I use sqlfmt?">
+<DetailsToggle alt_header="Когда мне использовать SQLFluff, а когда sqlfmt?">
 
-SQLFluff and sqlfmt are both tools used for formatting SQL code, but some differences may make one preferable to the other depending on your use case. <br />
+SQLFluff и sqlfmt — это оба инструмента, используемые для форматирования SQL-кода, но некоторые различия могут сделать один предпочтительнее другого в зависимости от вашего случая использования. <br />
 
-SQLFluff is a SQL code linter and formatter. This means that it analyzes your code to identify potential issues and bugs, and follows coding standards. It also formats your code according to a set of rules, which are [customizable](#customize-linting), to ensure consistent coding practices. You can also use SQLFluff to keep your SQL code well-formatted and follow styling best practices. <br />
+SQLFluff является линтером и форматировщиком SQL-кода. Это означает, что он анализирует ваш код, чтобы выявить потенциальные проблемы и ошибки, и следует стандартам кодирования. Он также форматирует ваш код в соответствии с набором правил, которые являются [настраиваемыми](#customize-linting), чтобы обеспечить последовательные практики кодирования. Вы также можете использовать SQLFluff, чтобы поддерживать ваш SQL-код в хорошем формате и следовать лучшим практикам стилизации. <br />
 
-sqlfmt is a SQL code formatter. This means it automatically formats your SQL code according to a set of formatting rules that aren't customizable. It focuses solely on the appearance and layout of the code, which helps ensure consistent indentation, line breaks, and spacing. sqlfmt doesn't analyze your code for errors or bugs and doesn't look at coding issues beyond code formatting. <br />
+sqlfmt является форматировщиком SQL-кода. Это означает, что он автоматически форматирует ваш SQL-код в соответствии с набором правил форматирования, которые не подлежат настройке. Он сосредоточен исключительно на внешнем виде и компоновке кода, что помогает обеспечить последовательное выравнивание, разбиение строк и пробелы. sqlfmt не анализирует ваш код на наличие ошибок или багов и не рассматривает проблемы кодирования, кроме форматирования кода. <br />
 
-You can use either SQLFluff or sqlfmt depending on your preference and what works best for you:
+Вы можете использовать либо SQLFluff, либо sqlfmt в зависимости от ваших предпочтений и того, что лучше всего работает для вас:
 
-- Use SQLFluff to have your code linted and formatted (meaning analyze fix your code for errors/bugs, and format your styling). It allows you the flexibility to customize your own rules.
+- Используйте SQLFluff, чтобы ваш код был проверен и отформатирован (то есть проанализирован, исправлен на наличие ошибок/багов и отформатирован по стилю). Это дает вам гибкость настраивать свои собственные правила.
 
-- Use sqlfmt to only have your code well-formatted without analyzing it for errors and bugs. You can use sqlfmt out of the box, making it convenient to use right away without having to configure it.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="Can I nest `.sqlfluff` files?">
-
-To ensure optimal code quality, consistent code, and styles &mdash; it's highly recommended you have one main `.sqlfluff` configuration file in the root folder of your project. Having multiple files can result in various different SQL styles in your project. <br /><br />
-
-However, you can customize and include an additional child `.sqlfluff` configuration file within specific subfolders of your dbt project. <br /><br />By nesting a `.sqlfluff` file in a subfolder, SQLFluff will apply the rules defined in that subfolder's configuration file to any files located within it. The rules specified in the parent `.sqlfluff` file will be used for all other files and folders outside of the subfolder. This hierarchical approach allows for tailored linting rules while maintaining consistency throughout your project. Refer to [SQLFluff documentation](https://docs.sqlfluff.com/en/stable/configuration.html#configuration-files) for more info.
+- Используйте sqlfmt, чтобы ваш код был просто хорошо отформатирован без анализа на наличие ошибок и багов. Вы можете использовать sqlfmt сразу, что делает его удобным для немедленного использования без необходимости настройки.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I run SQLFluff commands from the terminal?">
+<DetailsToggle alt_header="Могу ли я вложить файлы `.sqlfluff`?">
 
-Currently, running SQLFluff commands from the terminal isn't supported. 
-</DetailsToggle>
+Чтобы обеспечить оптимальное качество кода, последовательность кода и стили &mdash; настоятельно рекомендуется иметь один основной файл конфигурации `.sqlfluff` в корневом каталоге вашего проекта. Наличие нескольких файлов может привести к различным стилям SQL в вашем проекте. <br /><br />
 
-<DetailsToggle alt_header="Why is there inconsistent SQLFluff behavior when running outside the dbt Cloud IDE?">
-- Double-check that your SQLFluff version matches the one in dbt Cloud IDE (found in the <b>Code Quality</b> tab after a lint operation). <br /><br />
-- If your lint operation passes despite clear rule violations, confirm you're not linting models with ephemeral models. Linting doesn't support ephemeral models in dbt v1.5 and lower. 
-</DetailsToggle>
-
-<DetailsToggle alt_header="What are some considerations when using dbt Cloud linting?">
-Currently, the dbt Cloud IDE can lint or fix files up to a certain size and complexity. If you attempt to lint or fix files that are too large, taking more than 60 seconds for the dbt Cloud backend to process, you will see an 'Unable to complete linting this file' error. 
-
-To avoid this, break up your model into smaller models (files) so that they are less complex to lint or fix. Note that linting is simpler than fixing so there may be cases where a file can be linted but not fixed. 
+Тем не менее, вы можете настроить и включить дополнительный дочерний файл конфигурации `.sqlfluff` в определенные подпапки вашего проекта dbt. <br /><br />Вложив файл `.sqlfluff` в подпапку, SQLFluff применит правила, определенные в конфигурационном файле этой подпапки, ко всем файлам, находящимся в ней. Правила, указанные в родительском файле `.sqlfluff`, будут использоваться для всех остальных файлов и папок вне подпапки. Этот иерархический подход позволяет настроить правила линтинга, сохраняя при этом последовательность по всему проекту. Смотрите [документацию SQLFluff](https://docs.sqlfluff.com/en/stable/configuration.html#configuration-files) для получения дополнительной информации.
 
 </DetailsToggle>
 
-## Related docs
+<DetailsToggle alt_header="Могу ли я запускать команды SQLFluff из терминала?">
 
-- [User interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
-- [Keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)
-- [SQL linting in CI jobs](/docs/deploy/continuous-integration#sql-linting) 
+В настоящее время запуск команд SQLFluff из терминала не поддерживается.
+</DetailsToggle>
+
+<DetailsToggle alt_header="Почему наблюдается непоследовательное поведение SQLFluff при запуске вне dbt Cloud IDE?">
+- Дважды проверьте, что ваша версия SQLFluff совпадает с версией в dbt Cloud IDE (найденной на вкладке <b>Качество кода</b> после операции проверки). <br /><br />
+- Если ваша операция проверки проходит, несмотря на явные нарушения правил, убедитесь, что вы не проверяете модели с эфемерными моделями. Проверка не поддерживает эфемерные модели в dbt версии 1.5 и ниже.
+</DetailsToggle>
+
+<DetailsToggle alt_header="Какие есть соображения при использовании линтинга dbt Cloud?">
+В настоящее время dbt Cloud IDE может проверять или исправлять файлы до определенного размера и сложности. Если вы попытаетесь проверить или исправить файлы, которые слишком большие и требуют более 60 секунд для обработки на стороне dbt Cloud, вы увидите ошибку 'Не удалось завершить проверку этого файла'.
+
+Чтобы избежать этого, разбейте вашу модель на более мелкие модели (файлы), чтобы они были менее сложными для проверки или исправления. Обратите внимание, что проверка проще, чем исправление, поэтому могут быть случаи, когда файл можно проверить, но не исправить.
+
+</DetailsToggle>
+
+## Связанные документы
+
+- [Пользовательский интерфейс](/docs/cloud/dbt-cloud-ide/ide-user-interface)
+- [Горячие клавиши](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)
+- [Линтинг SQL в CI задачах](/docs/deploy/continuous-integration#sql-linting) 

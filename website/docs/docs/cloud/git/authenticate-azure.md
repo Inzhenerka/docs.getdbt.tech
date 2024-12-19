@@ -1,30 +1,29 @@
 ---
-title: "Authenticate with Azure DevOps"
+title: "Аутентификация с Azure DevOps"
 id: "authenticate-azure"
-description: "dbt Cloud developers need to authenticate with Azure DevOps."
-sidebar_label: "Authenticate with Azure DevOps"
+description: "Разработчикам dbt Cloud необходимо пройти аутентификацию с Azure DevOps."
+sidebar_label: "Аутентификация с Azure DevOps"
 pagination_next: null
 ---
 
+Если вы используете dbt Cloud IDE или dbt Cloud CLI для совместной работы над репозиторием dbt вашей команды в Azure DevOps, вам необходимо [связать ваш профиль dbt Cloud с Azure DevOps](#link-your-dbt-cloud-profile-to-azure-devops), что обеспечит дополнительный уровень аутентификации.
 
-If you use the dbt Cloud IDE or dbt Cloud CLI to collaborate on your team's Azure DevOps dbt repo, you need to [link your dbt Cloud profile to Azure DevOps](#link-your-dbt-cloud-profile-to-azure-devops), which provides an extra layer of authentication.
+## Связать ваш профиль dbt Cloud с Azure DevOps
 
-## Link your dbt Cloud profile to Azure DevOps
+Подключите ваш профиль dbt Cloud к Azure DevOps с помощью OAuth:
 
-Connect your dbt Cloud profile to Azure DevOps using OAuth:
+1. Нажмите на имя вашей учетной записи внизу левого меню и выберите **Настройки учетной записи**.
+2. Прокрутите вниз до **Ваш профиль** и выберите **Личный профиль**.
+3. Перейдите в раздел **Связанные учетные записи** в середине страницы.
+   <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/LinktoAzure.png" title="Экран авторизации Azure DevOps"/>
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**
-2. Scroll down to **Your profile** and select **Personal profile**.
-3. Go to the **Linked accounts** section in the middle of the page.
-   <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/LinktoAzure.png" title="Azure DevOps Authorization Screen"/>
+4. После перенаправления на Azure DevOps войдите в свою учетную запись.
+5. Когда вы увидите экран запроса разрешений от приложения Azure DevOps, нажмите **Принять**. 
+   <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/OAuth Acceptance.png" title="Экран авторизации Azure DevOps"/>
 
-4. Once you're redirected to Azure DevOps, sign into your account.
-5. When you see the permission request screen from Azure DevOps App, click **Accept**. 
-   <Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/OAuth Acceptance.png" title="Azure DevOps Authorization Screen"/>
+Вы будете перенаправлены обратно в dbt Cloud, и ваш профиль должен быть связан. Теперь вы готовы к разработке в dbt Cloud!
 
-You will be directed back to dbt Cloud, and your profile should be linked. You are now ready to develop in dbt Cloud!
-
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Git/gitignore"/>
 <FAQ path="Git/git-migration"/>

@@ -1,66 +1,66 @@
 ---
-title: "Add data tests to your DAG"
-sidebar_label: "Data tests"
-description: "Read this tutorial to learn how to use data tests when building in dbt."
+title: "Добавление тестов данных в ваш DAG"
+sidebar_label: "Тесты данных"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать тесты данных при разработке в dbt."
 pagination_next: "docs/build/unit-tests"
 pagination_prev: null
 search_weight: "heavy"
 id: "data-tests"
 keywords:
-  - test, tests, testing, dag
+  - тест, тесты, тестирование, dag
 ---
 
 import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
 
 <CopilotBeta resource='data tests' />
 
-## Related reference docs
-* [Test command](/reference/commands/test)
-* [Data test properties](/reference/resource-properties/data-tests)
-* [Data test configurations](/reference/data-test-configs)
-* [Test selection examples](/reference/node-selection/test-selection-examples)
+## Связанные справочные документы
+* [Команда тестирования](/reference/commands/test)
+* [Свойства тестов данных](/reference/resource-properties/data-tests)
+* [Конфигурации тестов данных](/reference/data-test-configs)
+* [Примеры выбора тестов](/reference/node-selection/test-selection-examples)
 
 <VersionBlock firstVersion="1.8">
 
 :::important
 
-From dbt v1.8, "tests" are now called "data tests" to disambiguate from [unit tests](/docs/build/unit-tests). The YAML key `tests:` is still supported as an alias for `data_tests:`. Refer to [New `data_tests:` syntax](#new-data_tests-syntax) for more information.
+Начиная с версии dbt v1.8, "тесты" теперь называются "тестами данных", чтобы избежать путаницы с [модульными тестами](/docs/build/unit-tests). Ключ YAML `tests:` по-прежнему поддерживается как псевдоним для `data_tests:`. Обратитесь к [Новой синтаксису `data_tests:`](#new-data_tests-syntax) для получения дополнительной информации.
 
 :::
 
 </VersionBlock>
 
-## Overview
+## Обзор
 
-Data tests are assertions you make about your models and other resources in your dbt project (e.g. sources, seeds and snapshots). When you run `dbt test`, dbt will tell you if each test in your project passes or fails.
+Тесты данных — это утверждения, которые вы делаете о своих моделях и других ресурсах в вашем проекте dbt (например, источниках, семенах и снимках). Когда вы запускаете `dbt test`, dbt сообщит вам, проходит ли каждый тест в вашем проекте или нет.
 
-You can use data tests to improve the integrity of the SQL in each model by making assertions about the results generated. Out of the box, you can test whether a specified column in a model only contains non-null values, unique values, or values that have a corresponding value in another model (for example, a `customer_id` for an `order` corresponds to an `id` in the `customers` model), and values from a specified list. You can extend data tests to suit business logic specific to your organization – any assertion that you can make about your model in the form of a select query can be turned into a data test.
+Вы можете использовать тесты данных для повышения целостности SQL в каждой модели, делая утверждения о сгенерированных результатах. По умолчанию вы можете проверить, содержит ли указанная колонка в модели только ненулевые значения, уникальные значения или значения, которые имеют соответствующее значение в другой модели (например, `customer_id` для `order` соответствует `id` в модели `customers`), а также значения из указанного списка. Вы можете расширить тесты данных, чтобы они соответствовали бизнес-логике, специфичной для вашей организации — любое утверждение, которое вы можете сделать о своей модели в виде запроса select, может быть преобразовано в тест данных.
 
-Data tests return a set of failing records. Generic data tests (f.k.a. schema tests) are defined using `test` blocks.
+Тесты данных возвращают набор неудачных записей. Общие тесты данных (ранее известные как схемные тесты) определяются с помощью блоков `test`.
 
-Like almost everything in dbt, data tests are SQL queries. In particular, they are `select` statements that seek to grab "failing" records, ones that disprove your assertion. If you assert that a column is unique in a model, the test query selects for duplicates; if you assert that a column is never null, the test seeks after nulls. If the data test returns zero failing rows, it passes, and your assertion has been validated.
+Как и почти все в dbt, тесты данных — это SQL-запросы. В частности, это операторы `select`, которые пытаются получить "неудачные" записи, те, которые опровергают ваше утверждение. Если вы утверждаете, что колонка уникальна в модели, тестовый запрос выбирает дубликаты; если вы утверждаете, что колонка никогда не должна быть нулевой, тест ищет нулевые значения. Если тест данных возвращает ноль неудачных строк, он проходит, и ваше утверждение было подтверждено.
 
-There are two ways of defining data tests in dbt:
-* A **singular** data test is testing in its simplest form: If you can write a SQL query that returns failing rows, you can save that query in a `.sql` file within your [test directory](/reference/project-configs/test-paths). It's now a data test, and it will be executed by the `dbt test` command.
-* A **generic** data test is a parameterized query that accepts arguments. The test query is defined in a special `test` block (like a [macro](jinja-macros)). Once defined, you can reference the generic test by name throughout your `.yml` files—define it on models, columns, sources, snapshots, and seeds. dbt ships with four generic data tests built in, and we think you should use them!
+Существует два способа определения тестов данных в dbt:
+* **Единственный** тест данных — это тест в его самой простой форме: если вы можете написать SQL-запрос, который возвращает неудачные строки, вы можете сохранить этот запрос в файле `.sql` в вашем [каталоге тестов](/reference/project-configs/test-paths). Теперь это тест данных, и он будет выполнен командой `dbt test`.
+* **Общий** тест данных — это параметризованный запрос, который принимает аргументы. Тестовый запрос определяется в специальном блоке `test` (как [макрос](jinja-macros)). После определения вы можете ссылаться на общий тест по имени в ваших `.yml` файлах — определять его для моделей, колонок, источников, снимков и семян. dbt поставляется с четырьмя встроенными общими тестами данных, и мы считаем, что вы должны их использовать!
 
-Defining data tests is a great way to confirm that your outputs and inputs are as expected, and helps prevent regressions when your code changes. Because you can use them over and over again, making similar assertions with minor variations, generic data tests tend to be much more common—they should make up the bulk of your dbt data testing suite. That said, both ways of defining data tests have their time and place.
+Определение тестов данных — отличный способ подтвердить, что ваши выходные и входные данные соответствуют ожиданиям, и помогает предотвратить регрессии, когда ваш код изменяется. Поскольку вы можете использовать их снова и снова, делая аналогичные утверждения с незначительными изменениями, общие тесты данных, как правило, гораздо более распространены — они должны составлять основную часть вашего набора тестов данных dbt. Тем не менее, оба способа определения тестов данных имеют свое время и место.
 
-:::tip Creating your first data tests
-If you're new to dbt, we recommend that you check out our [quickstart guide](/guides) to build your first dbt project with models and tests.
+:::tip Создание ваших первых тестов данных
+Если вы новичок в dbt, мы рекомендуем вам ознакомиться с нашим [руководством по быстрому старту](/guides), чтобы создать свой первый проект dbt с моделями и тестами.
 :::
 
-## Singular data tests
+## Единственные тесты данных
 
-The simplest way to define a data test is by writing the exact SQL that will return failing records. We call these "singular" data tests, because they're one-off assertions usable for a single purpose.
+Самый простой способ определить тест данных — это написать точный SQL, который вернет неудачные записи. Мы называем эти тесты "единственными", потому что это разовые утверждения, используемые для одной цели.
 
-These tests are defined in `.sql` files, typically in your `tests` directory (as defined by your [`test-paths` config](/reference/project-configs/test-paths)). You can use Jinja (including `ref` and `source`) in the test definition, just like you can when creating models. Each `.sql` file contains one `select` statement, and it defines one data test:
+Эти тесты определяются в файлах `.sql`, обычно в вашем каталоге `tests` (как определено в вашей конфигурации [`test-paths`](/reference/project-configs/test-paths)). Вы можете использовать Jinja (включая `ref` и `source`) в определении теста, так же как и при создании моделей. Каждый файл `.sql` содержит одно выражение `select` и определяет один тест данных:
 
 <File name='tests/assert_total_payment_amount_is_positive.sql'>
 
 ```sql
--- Refunds have a negative amount, so the total amount should always be >= 0.
--- Therefore return records where total_amount < 0 to make the test fail.
+-- Возвраты имеют отрицательную сумму, поэтому общая сумма всегда должна быть >= 0.
+-- Поэтому верните записи, где total_amount < 0, чтобы тест не прошел.
 select
     order_id,
     sum(amount) as total_amount
@@ -71,11 +71,11 @@ having total_amount < 0
 
 </File>
 
-The name of this test is the name of the file: `assert_total_payment_amount_is_positive`. 
+Имя этого теста — это имя файла: `assert_total_payment_amount_is_positive`. 
 
-Note, you won't need to include semicolons (;) at the end of the SQL statement in your singular test files as it can cause your test to fail.
+Обратите внимание, что вам не нужно включать точки с запятой (;) в конце SQL-запроса в ваших файлах единственных тестов, так как это может привести к сбою теста.
 
-To add a description to a singular test in your project, add a `.yml` file to your `tests` directory, for example, `tests/schema.yml` with the following content:
+Чтобы добавить описание к единственному тесту в вашем проекте, добавьте файл `.yml` в ваш каталог `tests`, например, `tests/schema.yml` с следующим содержимым:
 
 <File name='tests/schema.yml'>
 
@@ -84,17 +84,17 @@ version: 2
 data_tests:
   - name: assert_total_payment_amount_is_positive
     description: >
-      Refunds have a negative amount, so the total amount should always be >= 0.
-      Therefore return records where total amount < 0 to make the test fail.
+      Возвраты имеют отрицательную сумму, поэтому общая сумма всегда должна быть >= 0.
+      Поэтому верните записи, где общая сумма < 0, чтобы тест не прошел.
 
 ```
 
 </File>
 
-Singular data tests are so easy that you may find yourself writing the same basic structure repeatedly, only changing the name of a column or model. By that point, the test isn't so singular! In that case, we recommend generic data tests.
+Единственные тесты данных так просты, что вы можете обнаружить, что пишете одну и ту же базовую структуру многократно, меняя только имя колонки или модели. В этом случае тест уже не так единственен! В таком случае мы рекомендуем использовать общие тесты данных.
 
-## Generic data tests
-Certain data tests are generic: they can be reused over and over again. A generic data test is defined in a `test` block, which contains a parametrized query and accepts arguments. It might look like:
+## Общие тесты данных
+Некоторые тесты данных являются общими: их можно использовать снова и снова. Общий тест данных определяется в блоке `test`, который содержит параметризованный запрос и принимает аргументы. Он может выглядеть так:
 
 ```sql
 {% test not_null(model, column_name) %}
@@ -106,13 +106,13 @@ Certain data tests are generic: they can be reused over and over again. A generi
 {% endtest %}
 ```
 
-You'll notice that there are two arguments, `model` and `column_name`, which are then templated into the query. This is what makes the test "generic": it can be defined on as many columns as you like, across as many models as you like, and dbt will pass the values of `model` and `column_name` accordingly. Once that generic test has been defined, it can be added as a _property_ on any existing model (or source, seed, or snapshot). These properties are added in  `.yml` files in the same directory as your resource.
+Вы заметите, что есть два аргумента, `model` и `column_name`, которые затем подставляются в запрос. Это и делает тест "общим": его можно определить для любого количества колонок, в любом количестве моделей, и dbt передаст значения `model` и `column_name` соответственно. После того как этот общий тест был определен, его можно добавить как _свойство_ к любой существующей модели (или источнику, семени или снимку). Эти свойства добавляются в `.yml` файлы в том же каталоге, что и ваш ресурс.
 
 :::info
-If this is your first time working with adding properties to a resource, check out the docs on [declaring properties](/reference/configs-and-properties).
+Если вы впервые работаете с добавлением свойств к ресурсу, ознакомьтесь с документацией о [объявлении свойств](/reference/configs-and-properties).
 :::
 
-Out of the box, dbt ships with four generic data tests already defined: `unique`, `not_null`, `accepted_values` and `relationships`. Here's a full example using those tests on an `orders` model:
+По умолчанию dbt поставляется с четырьмя уже определенными общими тестами данных: `unique`, `not_null`, `accepted_values` и `relationships`. Вот полный пример использования этих тестов на модели `orders`:
 
 ```yml
 version: 2
@@ -135,28 +135,28 @@ models:
               field: id
 ```
 
-In plain English, these data tests translate to:
-* `unique`: the `order_id` column in the `orders` model should be unique
-* `not_null`: the `order_id` column in the `orders` model should not contain null values
-* `accepted_values`: the `status` column in the `orders` should be  one of `'placed'`, `'shipped'`, `'completed'`, or  `'returned'`
-* `relationships`: each `customer_id` in the `orders` model exists as an `id` in the `customers` <Term id="table" /> (also known as referential integrity)
+На простом языке эти тесты данных переводятся как:
+* `unique`: колонка `order_id` в модели `orders` должна быть уникальной
+* `not_null`: колонка `order_id` в модели `orders` не должна содержать нулевых значений
+* `accepted_values`: колонка `status` в модели `orders` должна быть одной из `'placed'`, `'shipped'`, `'completed'` или `'returned'`
+* `relationships`: каждый `customer_id` в модели `orders` существует как `id` в таблице `customers` (также известной как ссылочная целостность)
 
-Behind the scenes, dbt constructs a `select` query for each data test, using the parametrized query from the generic test block. These queries return the rows where your assertion is _not_ true; if the test returns zero rows, your assertion passes.
+За кулисами dbt строит запрос `select` для каждого теста данных, используя параметризованный запрос из блока общего теста. Эти запросы возвращают строки, где ваше утверждение _не_ верно; если тест возвращает ноль строк, ваше утверждение проходит.
 
-You can find more information about these data tests, and additional configurations (including [`severity`](/reference/resource-configs/severity) and [`tags`](/reference/resource-configs/tags)) in the [reference section](/reference/resource-properties/data-tests).
+Вы можете найти больше информации о этих тестах данных и дополнительных конфигурациях (включая [`severity`](/reference/resource-configs/severity) и [`tags`](/reference/resource-configs/tags)) в [разделе справки](/reference/resource-properties/data-tests).
 
-### More generic data tests
+### Больше общих тестов данных
 
-Those four tests are enough to get you started. You'll quickly find you want to use a wider variety of tests—a good thing! You can also install generic data tests from a package, or write your own, to use (and reuse) across your dbt project. Check out the [guide on custom generic tests](/best-practices/writing-custom-generic-tests) for more information.
+Эти четыре теста достаточно, чтобы начать. Вы быстро обнаружите, что хотите использовать более широкий спектр тестов — это хорошо! Вы также можете установить общие тесты данных из пакета или написать свои собственные, чтобы использовать (и повторно использовать) в вашем проекте dbt. Ознакомьтесь с [руководством по созданию пользовательских общих тестов](/best-practices/writing-custom-generic-tests) для получения дополнительной информации.
 
 :::info
-There are generic tests defined in some open-source packages, such as [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) and [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) &mdash; skip ahead to the docs on [packages](/docs/build/packages) to learn more!
+Существуют общие тесты, определенные в некоторых открытых пакетах, таких как [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) и [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) — переходите к документации о [пакетах](/docs/build/packages), чтобы узнать больше!
 :::
 
-### Example
-To add a generic (or "schema") test to your project:
+### Пример
+Чтобы добавить общий (или "схемный") тест в ваш проект:
 
-1. Add a `.yml` file to your `models` directory, e.g. `models/schema.yml`, with the following content (you may need to adjust the `name:` values for an existing model)
+1. Добавьте файл `.yml` в ваш каталог `models`, например, `models/schema.yml`, с следующим содержимым (возможно, вам нужно будет скорректировать значения `name:` для существующей модели)
 
 <File name='models/schema.yml'>
 
@@ -175,7 +175,7 @@ models:
 
 </File>
 
-2. Run the [`dbt test` command](/reference/commands/test):
+2. Запустите команду [`dbt test`](/reference/commands/test):
 
 ```
 $ dbt test
@@ -196,17 +196,17 @@ Completed successfully
 Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 
 ```
-3. Check out the SQL dbt is running by either:
-   * **dbt Cloud:** checking the Details tab.
-   * **dbt Core:** checking the `target/compiled` directory
+3. Проверьте SQL, который выполняет dbt, либо:
+   * **dbt Cloud:** проверяя вкладку Details.
+   * **dbt Core:** проверяя каталог `target/compiled`
 
 
-**Unique test**
+**Тест уникальности**
 <Tabs
   defaultValue="compiled"
   values={[
-    {label: 'Compiled SQL', value: 'compiled'},
-    {label: 'Templated SQL', value: 'templated'},
+    {label: 'Скомпилированный SQL', value: 'compiled'},
+    {label: 'Шаблонный SQL', value: 'templated'},
   ]}>
   <TabItem value="compiled">
 
@@ -246,13 +246,13 @@ from (
   </TabItem>
 </Tabs>
 
-**Not null test**
+**Тест на ненулевое значение**
 
 <Tabs
   defaultValue="compiled"
   values={[
-    {label: 'Compiled SQL', value: 'compiled'},
-    {label: 'Templated SQL', value: 'templated'},
+    {label: 'Скомпилированный SQL', value: 'compiled'},
+    {label: 'Шаблонный SQL', value: 'templated'},
   ]}>
   <TabItem value="compiled">
 
@@ -274,33 +274,33 @@ where {{ column_name }} is null
   </TabItem>
 </Tabs>
 
-## Storing test failures
+## Хранение неудач тестов
 
-Normally, a data test query will calculate failures as part of its execution. If you set the optional `--store-failures` flag,  the [`store_failures`](/reference/resource-configs/store_failures), or the [`store_failures_as`](/reference/resource-configs/store_failures_as) configs, dbt will first save the results of a test query to a table in the database, and then query that table to calculate the number of failures.
+Обычно запрос теста данных будет вычислять неудачи в процессе его выполнения. Если вы установите необязательный флаг `--store-failures`, [`store_failures`](/reference/resource-configs/store_failures) или конфигурации [`store_failures_as`](/reference/resource-configs/store_failures_as), dbt сначала сохранит результаты запроса теста в таблице в базе данных, а затем выполнит запрос к этой таблице, чтобы вычислить количество неудач.
 
-This workflow allows you to query and examine failing records much more quickly in development:
+Этот рабочий процесс позволяет вам быстрее запрашивать и проверять неудачные записи в процессе разработки:
 
-<Lightbox src="/img/docs/building-a-dbt-project/test-store-failures.gif" title="Store test failures in the database for faster development-time debugging."/>
+<Lightbox src="/img/docs/building-a-dbt-project/test-store-failures.gif" title="Сохраните неудачи тестов в базе данных для более быстрого отладки во время разработки."/>
 
-Note that, if you select to store test failures:
-* Test result tables are created in a schema suffixed or named `dbt_test__audit`, by default. It is possible to change this value by setting a `schema` config. (For more details on schema naming, see [using custom schemas](/docs/build/custom-schemas).)
-- A test's results will always **replace** previous failures for the same test.
+Обратите внимание, что если вы выберете хранение неудач тестов:
+* Таблицы результатов тестов создаются в схеме с суффиксом или названием `dbt_test__audit` по умолчанию. Это значение можно изменить, установив конфигурацию `schema`. (Для получения дополнительной информации о наименовании схемы см. [использование пользовательских схем](/docs/build/custom-schemas).)
+- Результаты теста всегда **заменяют** предыдущие неудачи для того же теста.
 
 
 
-## New `data_tests:` syntax
+## Новый синтаксис `data_tests:`
 
 <VersionBlock lastVersion="1.7">
 
-In dbt version 1.8, we updated the `tests` configuration to `data_tests`. For detailed information, select version v1.8 from the documentation navigation menu.
+В версии dbt 1.8 мы обновили конфигурацию `tests` на `data_tests`. Для получения подробной информации выберите версию v1.8 в меню навигации документации.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.8">
   
-Data tests were historically called "tests" in dbt as the only form of testing available. With the introduction of unit tests in v1.8, the key was renamed from `tests:` to `data_tests:`. 
+Тесты данных исторически назывались "тестами" в dbt как единственная форма тестирования, доступная. С введением модульных тестов в v1.8 ключ был переименован с `tests:` на `data_tests:`. 
 
-dbt still supports `tests:` in your YML configuration files for backwards-compatibility purposes, and you might see it used throughout our documentation. However, you can't have a `tests` and a `data_tests` key associated with the same resource (e.g. a single model) at the same time.
+dbt по-прежнему поддерживает `tests:` в ваших YML конфигурационных файлах для целей обратной совместимости, и вы можете увидеть его использование в нашей документации. Однако вы не можете иметь ключ `tests` и ключ `data_tests`, связанные с одним и тем же ресурсом (например, одной моделью) одновременно.
 
 <File name='models/schema.yml'>
 
@@ -328,7 +328,7 @@ data_tests:
 
 </VersionBlock>
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Tests/available-tests" />
 <FAQ path="Tests/test-one-model" />

@@ -1,40 +1,34 @@
 ---
-title: "Packages"
+title: "Пакеты"
 id: "packages"
-description:  "Discover how dbt packages help modularize code and transform data efficiently. Learn about git packages, hub packages, private packages, and advanced package configurations."
-keywords: [dbt package, private package, dbt private package, dbt data transformation, dbt clone, add dbt package]
+description:  "Узнайте, как пакеты dbt помогают модульно организовать код и эффективно преобразовывать данные. Узнайте о git-пакетах, пакетах из хаба, частных пакетах и расширенных конфигурациях пакетов."
+keywords: [dbt пакет, частный пакет, частный пакет dbt, преобразование данных dbt, клонирование dbt, добавление пакета dbt]
 ---
 
+Программисты часто модульно организуют код в библиотеки. Эти библиотеки помогают разработчикам работать более эффективно: они могут уделять больше времени своей уникальной бизнес-логике и меньше времени на реализацию кода, который кто-то другой уже потратил время на совершенствование.
 
-Software engineers frequently modularize code into libraries. These libraries help programmers operate with leverage: they can spend more time focusing on their unique business logic, and less time implementing code that someone else has already spent the time perfecting.
+В dbt такие библиотеки называются _пакетами_. Пакеты dbt настолько мощны, потому что многие аналитические проблемы, с которыми мы сталкиваемся, общие для организаций, например:
+* преобразование данных из последовательно структурированных наборов данных SaaS, например:
+  * преобразование [Snowplow](https://hub.getdbt.com/dbt-labs/snowplow/latest/) или [Segment](https://hub.getdbt.com/dbt-labs/segment/latest/) просмотров страниц в сессии
+  * преобразование данных о расходах [AdWords](https://hub.getdbt.com/dbt-labs/adwords/latest/) или [Facebook Ads](https://hub.getdbt.com/dbt-labs/facebook_ads/latest/) в единый формат.
+* написание макросов dbt, которые выполняют аналогичные функции, например:
+  * [генерация SQL](https://github.com/dbt-labs/dbt-utils#sql-helpers) для объединения двух отношений, поворота столбцов или построения <Term id="surrogate-key" />
+  * создание [пользовательских тестов схемы](https://github.com/dbt-labs/dbt-utils#schema-tests)
+  * написание [аудиторских запросов](https://hub.getdbt.com/dbt-labs/audit_helper/latest/)
+* создание моделей и макросов для конкретного инструмента, используемого в вашем стеке данных, например:
+  * Модели для понимания привилегий [Redshift](https://hub.getdbt.com/dbt-labs/redshift/latest/).
+  * Макросы для работы с данными, загруженными с помощью [Stitch](https://hub.getdbt.com/dbt-labs/stitch_utils/latest/).
 
-In dbt, libraries like these are called _packages_. dbt's packages are so powerful because so many of the analytic problems we encountered are shared across organizations, for example:
-* transforming data from a consistently structured SaaS dataset, for example:
-  * turning [Snowplow](https://hub.getdbt.com/dbt-labs/snowplow/latest/) or [Segment](https://hub.getdbt.com/dbt-labs/segment/latest/) pageviews into sessions
-  * transforming [AdWords](https://hub.getdbt.com/dbt-labs/adwords/latest/) or [Facebook Ads](https://hub.getdbt.com/dbt-labs/facebook_ads/latest/) spend data into a consistent format.
-* writing dbt macros that perform similar functions, for example:
-  * [generating SQL](https://github.com/dbt-labs/dbt-utils#sql-helpers) to union together two relations, pivot columns, or construct a <Term id="surrogate-key" />
-  * creating [custom schema tests](https://github.com/dbt-labs/dbt-utils#schema-tests)
-  * writing [audit queries](https://hub.getdbt.com/dbt-labs/audit_helper/latest/)
-* building models and macros for a particular tool used in your data stack, for example:
-  * Models to understand [Redshift](https://hub.getdbt.com/dbt-labs/redshift/latest/) privileges.
-  * Macros to work with data loaded by [Stitch](https://hub.getdbt.com/dbt-labs/stitch_utils/latest/).
+Пакеты dbt на самом деле являются самостоятельными проектами dbt, с моделями, макросами и другими ресурсами, которые решают конкретную проблему. Как пользователь dbt, добавляя пакет в свой проект, все ресурсы пакета станут частью вашего собственного проекта. Это означает:
+* Модели в пакете будут материализованы, когда вы выполните `dbt run`.
+* Вы можете использовать `ref` в своих моделях для ссылки на модели из пакета.
+* Вы можете использовать `source` для ссылки на источники в пакете.
+* Вы можете использовать макросы из пакета в своем собственном проекте.
+* Важно отметить, что определение и установка пакетов dbt отличается от [определения и установки пакетов Python](/docs/build/python-models#using-pypi-packages).
 
-dbt _packages_ are in fact standalone dbt projects, with models, macros, and other resources that tackle a specific problem area. As a dbt user, by adding a package to your project, all of the package's resources will become part of your own project. This means:
-* Models in the package will be materialized when you `dbt run`.
-* You can use `ref` in your own models to refer to models from the package.
-* You can use `source` to refer to sources in the package.
-* You can use macros in the package in your own project.
-* It's important to note that defining and installing dbt packages is different from [defining and installing Python packages](/docs/build/python-models#using-pypi-packages)
-
-
-import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
-
-<UseCaseInfo/>
-
-## How do I add a package to my project?
-1. Add a file named `dependencies.yml` or `packages.yml` to your dbt project. This should be at the same level as your `dbt_project.yml` file.
-2. Specify the package(s) you wish to add using one of the supported syntaxes, for example:
+## Как добавить пакет в мой проект?
+1. Добавьте файл с именем `dependencies.yml` или `packages.yml` в ваш проект dbt. Он должен находиться на том же уровне, что и ваш файл `dbt_project.yml`.
+2. Укажите пакет(ы), которые вы хотите добавить, используя один из поддерживаемых синтаксисов, например:
 
 <File>
 
@@ -51,31 +45,30 @@ packages:
 
 </File>
 
-The default [`packages-install-path`](/reference/project-configs/packages-install-path) is `dbt_packages`.
+Путь установки по умолчанию [`packages-install-path`](/reference/project-configs/packages-install-path) — `dbt_packages`.
 
-3. Run `dbt deps` to install the package(s). Packages get installed in the `dbt_packages` directory – by default this directory is ignored by git, to avoid duplicating the source code for the package.
+3. Выполните `dbt deps`, чтобы установить пакет(ы). Пакеты устанавливаются в директории `dbt_packages` — по умолчанию эта директория игнорируется git, чтобы избежать дублирования исходного кода пакета.
 
-## How do I specify a package?
-You can specify a package using one of the following methods, depending on where your package is stored.
+## Как указать пакет?
+Вы можете указать пакет, используя один из следующих методов, в зависимости от того, где хранится ваш пакет.
 
-### Hub packages (recommended)
+### Пакеты из хаба (рекомендуется)
 
-dbt Labs hosts the [Package hub](https://hub.getdbt.com), registry for dbt packages, as a courtesy to the dbt Community, but does not certify or confirm the integrity, operability, effectiveness, or security of any Packages. Please read the [dbt Labs Package Disclaimer](https://hub.getdbt.com/disclaimer/) before installing Hub packages.
+dbt Labs предоставляет [Пакетный хаб](https://hub.getdbt.com), реестр пакетов dbt, как услугу для сообщества dbt, но не сертифицирует и не подтверждает целостность, работоспособность, эффективность или безопасность любых пакетов. Пожалуйста, прочитайте [Отказ от ответственности по пакетам dbt Labs](https://hub.getdbt.com/disclaimer/) перед установкой пакетов из хаба.
 
-You can install available hub packages in the following way:
+Вы можете установить доступные пакеты из хаба следующим образом:
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
   - package: dbt-labs/snowplow
-    version: 0.7.3 # version number
+    version: 0.7.3 # номер версии
 ```
 
 </File>
 
-Hub packages require a version to be specified – you can find the latest release number on dbt Hub. Since Hub packages use [semantic versioning](https://semver.org/), we recommend pinning your package to the latest patch version from a specific minor release, like so:
-
+Пакеты из хаба требуют указания версии — вы можете найти последний номер релиза на dbt Hub. Поскольку пакеты из хаба используют [семантическое версионирование](https://semver.org/), мы рекомендуем фиксировать ваш пакет на последней патч-версии из конкретного минорного релиза, например:
 
 ```yaml
 packages:
@@ -83,25 +76,25 @@ packages:
     version: [">=0.7.0", "<0.8.0"]
 ```
 
-`dbt deps` "pins" each package by default. See ["Pinning packages"](#pinning-packages) for details.
+`dbt deps` по умолчанию "фиксирует" каждый пакет. См. раздел ["Фиксация пакетов"](#pinning-packages) для получения подробной информации.
 
-Where possible, we recommend installing packages via dbt Hub, since this allows dbt to handle duplicate dependencies. This is helpful in situations such as:
-* Your project uses both the dbt-utils and Snowplow packages, and the Snowplow package _also_ uses the dbt-utils package.
-* Your project uses both the Snowplow and Stripe packages, both of which use the dbt-utils package.
+Где это возможно, мы рекомендуем устанавливать пакеты через dbt Hub, так как это позволяет dbt обрабатывать дублирующиеся зависимости. Это полезно в ситуациях, таких как:
+* Ваш проект использует как пакеты dbt-utils, так и Snowplow, и пакет Snowplow _также_ использует пакет dbt-utils.
+* Ваш проект использует как пакеты Snowplow, так и Stripe, оба из которых используют пакет dbt-utils.
 
-In comparison, other package installation methods are unable to handle the duplicate dbt-utils package. 
+В сравнении, другие методы установки пакетов не могут обрабатывать дублирующийся пакет dbt-utils.
 
-Advanced users can choose to host an internal version of the package hub based on [this repository](https://github.com/dbt-labs/hub.getdbt.com) and setting the `DBT_PACKAGE_HUB_URL` environment variable.
+Расширенные пользователи могут выбрать хостинг внутренней версии хаба пакетов на основе [этого репозитория](https://github.com/dbt-labs/hub.getdbt.com) и установить переменную окружения `DBT_PACKAGE_HUB_URL`.
 
-#### Prerelease versions
+#### Предрелизные версии
 
-Some package maintainers may wish to push prerelease versions of packages to the dbt Hub, in order to test out new functionality or compatibility with a new version of dbt. A prerelease version is demarcated by a suffix, such as `a1` (first alpha), `b2` (second beta), or `rc3` (third release candidate).
+Некоторые разработчики пакетов могут захотеть выпустить предрелизные версии пакетов в dbt Hub, чтобы протестировать новую функциональность или совместимость с новой версией dbt. Предрелизная версия обозначается суффиксом, таким как `a1` (первая альфа), `b2` (вторая бета) или `rc3` (третий кандидат на релиз).
 
-By default, `dbt deps` will not include prerelease versions when resolving package dependencies. You can enable the installation of prereleases in one of two ways:
-- Explicitly specifying a prerelease version in your `version` criteria
-- Setting `install_prerelease` to `true`, and providing a compatible version range
+По умолчанию `dbt deps` не будет включать предрелизные версии при разрешении зависимостей пакетов. Вы можете включить установку предрелизов одним из двух способов:
+- Явно указав предрелизную версию в ваших критериях `version`
+- Установив `install_prerelease` в `true` и предоставив совместимый диапазон версий
 
-For example, both of the following configurations would successfully install `0.4.5-a2` for the [`dbt_artifacts` package](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/):
+Например, обе из следующих конфигураций успешно установят `0.4.5-a2` для пакета [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest/):
 
 ```yaml
 packages:
@@ -116,25 +109,25 @@ packages:
     install_prerelease: true
 ```
 
-### Git packages
-Packages stored on a Git server can be installed using the `git` syntax, like so:
+### Git-пакеты
+Пакеты, хранящиеся на Git-сервере, можно установить, используя синтаксис `git`, следующим образом:
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
   - git: "https://github.com/dbt-labs/dbt-utils.git" # git URL
-    revision: 0.9.2 # tag or branch name
+    revision: 0.9.2 # имя тега или ветки
 ```
 
 </File>
 
-Add the Git URL for the package, and optionally specify a revision. The revision can be:
-- a branch name
-- a tagged release
-- a specific commit (full 40-character hash)
+Добавьте URL Git для пакета и, при необходимости, укажите ревизию. Ревизия может быть:
+- именем ветки
+- отмеченным релизом
+- конкретным коммитом (полный 40-символьный хэш)
 
-Example of a revision specifying a 40-character hash:
+Пример ревизии, указывающей 40-символьный хэш:
 
 ```yaml
 packages:
@@ -142,12 +135,11 @@ packages:
     revision: 4e28d6da126e2940d17f697de783a717f2503188
 ```
 
-By default, `dbt deps` "pins" each package. See ["Pinning packages"](#pinning-packages) for details.
+По умолчанию `dbt deps` "фиксирует" каждый пакет. См. раздел ["Фиксация пакетов"](#pinning-packages) для получения подробной информации.
 
-### Internally hosted tarball URL
+### URL tarball, размещенный внутри организации
 
-Some organizations have security requirements to pull resources only from internal services. To address the need to install packages from hosted environments such as Artifactory or cloud storage buckets, dbt Core enables you to install packages from internally-hosted tarball URLs. 
-
+Некоторые организации имеют требования безопасности, чтобы получать ресурсы только из внутренних сервисов. Чтобы удовлетворить необходимость установки пакетов из размещенных сред, таких как Artifactory или облачные хранилища, dbt Core позволяет устанавливать пакеты из URL tarball, размещенных внутри организации.
 
 ```yaml
 packages:
@@ -155,63 +147,59 @@ packages:
     name: 'dbt_utils'
 ```
 
-Where `name: 'dbt_utils'` specifies the subfolder of `dbt_packages` that's created for the package source code to be installed within.
+Где `name: 'dbt_utils'` указывает на подпапку `dbt_packages`, в которую будет установлен исходный код пакета.
 
-## Private packages
+## Частные пакеты
 
-### Native private packages <Lifecycle status='beta'/> 
+### Нативные частные пакеты <Lifecycle status='beta'/>
 
-dbt Cloud supports private packages from [supported](#prerequisites) Git repos leveraging an exisiting [configuration](/docs/cloud/git/git-configuration-in-dbt-cloud) in your environment. Previously, you had to configure a [token](#git-token-method) to retrieve packages from your private repos.  
+dbt Cloud поддерживает частные пакеты из [поддерживаемых](#prerequisites) Git-репозиториев, используя существующую [конфигурацию](/docs/cloud/git/git-configuration-in-dbt-cloud) в вашей среде. Ранее вам нужно было настроить [токен](#git-token-method) для получения пакетов из ваших частных репозиториев.
 
-#### Prerequisites
+#### Предварительные требования
 
-To use native private packages, you must have one of the following Git providers configured in the **Integrations** section of your **Account settings**:
+Чтобы использовать нативные частные пакеты, вы должны иметь одного из следующих поставщиков Git, настроенных в разделе **Интеграции** в настройках вашей учетной записи:
 - [GitHub](/docs/cloud/git/connect-github)
 - [Azure DevOps](/docs/cloud/git/connect-azure-devops)
-- Support for GitLab is coming soon.
+- Поддержка GitLab скоро появится.
 
+#### Конфигурация
 
-#### Configuration
-
-Use the `private` key in your `packages.yml` or `dependencies.yml` to clone package repos using your existing dbt Cloud Git integration without having to provision an access token or create a dbt Cloud environment variable:
+Используйте ключ `private` в вашем `packages.yml` или `dependencies.yml`, чтобы клонировать репозитории пакетов, используя вашу существующую интеграцию Git dbt Cloud без необходимости предоставлять токен доступа или создавать переменную окружения dbt Cloud:
 
 <File name="packages.yml">
 
 ```yaml
 packages:
   - private: dbt-labs/awesome_repo
-  - package: normal packages
+  - package: обычные пакеты
 
 	[...]
 ```
 
 </File>
 
-You can pin private packages similar to regular dbt packages:
+Вы можете фиксировать частные пакеты аналогично обычным пакетам dbt:
 
 ```yaml
 packages:
   - private: dbt-labs/awesome_repo
-    revision: "0.9.5" # Pin to a tag, branch, or complete 40-character commit hash
-  
+    revision: "0.9.5" # Фиксация на теге, ветке или полном 40-символьном хэше коммита
 ```
 
-If you are using multiple Git integrations, disambiguate by adding the provider key:
+Если вы используете несколько интеграций Git, уточните, добавив ключ поставщика:
 
 ```yaml
 packages:
   - private: dbt-labs/awesome_repo
-    provider: "github" # GitHub and Azure are currently supported. GitLab is coming soon.
-
+    provider: "github" # В настоящее время поддерживаются GitHub и Azure. GitLab скоро появится.
 ```
 
-With this method, you can retrieve private packages from an integrated Git provider without any additional steps to connect. 
+С помощью этого метода вы можете получать частные пакеты от интегрированного поставщика Git без дополнительных шагов для подключения.
 
-### SSH key method (command line only)
-If you're using the Command Line, private packages can be cloned via SSH and an SSH key.
+### Метод SSH-ключа (только командная строка)
+Если вы используете командную строку, частные пакеты можно клонировать через SSH и SSH-ключ.
 
-When you use SSH keys to authenticate to your git remote server, you don’t need to supply your username and password each time. Read more about SSH keys, how to generate them, and how to add them to your git provider here: [Github](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) and [GitLab](https://docs.gitlab.com/ee/user/ssh.html).
-
+Когда вы используете SSH-ключи для аутентификации на вашем удаленном сервере git, вам не нужно каждый раз вводить свое имя пользователя и пароль. Узнайте больше о SSH-ключах, как их генерировать и как добавлять их к вашему поставщику git здесь: [Github](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) и [GitLab](https://docs.gitlab.com/ee/user/ssh.html).
 
 <File name='packages.yml'>
 
@@ -222,45 +210,43 @@ packages:
 
 </File>
 
-If you're using dbt Cloud, the SSH key method will not work, but you can use the [HTTPS Git Token Method](https://docs.getdbt.com/docs/build/packages#git-token-method).
+Если вы используете dbt Cloud, метод SSH-ключа не будет работать, но вы можете использовать [Метод токена HTTPS Git](https://docs.getdbt.com/docs/build/packages#git-token-method).
 
-
-### Git token method
+### Метод токена Git
 
 :::note
 
-dbt Cloud has [native support](#native-private-packages) for Git hosted private packages with GitHub and Azure DevOps (GitLab coming soon). If you are using a supported [integrated Git environment](/docs/cloud/git/git-configuration-in-dbt-cloud), you no longer need to configure Git tokens to retrieve private packages. 
+dbt Cloud имеет [нативную поддержку](#native-private-packages) для частных пакетов, размещенных в Git, с GitHub и Azure DevOps (поддержка GitLab скоро появится). Если вы используете поддерживаемую [интегрированную Git-среду](/docs/cloud/git/git-configuration-in-dbt-cloud), вам больше не нужно настраивать токены Git для получения частных пакетов.
 
 :::
 
-This method allows the user to clone via HTTPS by passing in a git token via an environment variable. Be careful of the expiration date of any token you use, as an expired token could cause a scheduled run to fail. Additionally, user tokens can create a challenge if the user ever loses access to a specific repo.
+Этот метод позволяет пользователю клонировать через HTTPS, передавая токен git через переменную окружения. Будьте осторожны с датой истечения любого токена, который вы используете, так как истекший токен может привести к сбою запланированного выполнения. Кроме того, токены пользователей могут создать проблему, если пользователь когда-либо потеряет доступ к конкретному репозиторию.
 
-
-:::info dbt Cloud usage
-If you are using dbt Cloud, you must adhere to the naming conventions for environment variables. Environment variables in dbt Cloud must be prefixed with either `DBT_` or `DBT_ENV_SECRET`. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
+:::info Использование dbt Cloud
+Если вы используете dbt Cloud, вы должны соблюдать правила именования для переменных окружения. Переменные окружения в dbt Cloud должны начинаться с `DBT_` или `DBT_ENV_SECRET`. Ключи переменных окружения записываются в верхнем регистре и чувствительны к регистру. При ссылке на `{{env_var('DBT_KEY')}}` в коде вашего проекта ключ должен точно соответствовать переменной, определенной в интерфейсе dbt Cloud.
 :::
 
-In GitHub:
+В GitHub:
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
-  # use this format when accessing your repository via a github application token
+  # используйте этот формат при доступе к вашему репозиторию через токен приложения github
   - git: "https://{{env_var('DBT_ENV_SECRET_GIT_CREDENTIAL')}}@github.com/dbt-labs/awesome_repo.git" # git HTTPS URL
 
-  # use this format when accessing your repository via a classical personal access token
+  # используйте этот формат при доступе к вашему репозиторию через классический токен доступа
   - git: "https://{{env_var('DBT_ENV_SECRET_GIT_CREDENTIAL')}}@github.com/dbt-labs/awesome_repo.git" # git HTTPS URL
  
-   # use this format when accessing your repository via a fine-grained personal access token (username sometimes required)
+   # используйте этот формат при доступе к вашему репозиторию через токен доступа с тонкой настройкой (иногда требуется имя пользователя)
   - git: "https://GITHUB_USERNAME:{{env_var('DBT_ENV_SECRET_GIT_CREDENTIAL')}}@github.com/dbt-labs/awesome_repo.git" # git HTTPS URL
 ```
 
 </File>
 
-Read more about creating a GitHub Personal Access token [here](https://docs.github.com/en/enterprise-server@3.1/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token). You can also use a GitHub  App installation [token](https://docs.github.com/en/rest/reference/apps#create-an-installation-access-token-for-an-app).
+Узнайте больше о создании токена доступа GitHub [здесь](https://docs.github.com/en/enterprise-server@3.1/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token). Вы также можете использовать токен установки [GitHub App](https://docs.github.com/en/rest/reference/apps#create-an-installation-access-token-for-an-app).
 
-In GitLab:
+В GitLab:
 
 <File name='packages.yml'>
 
@@ -271,9 +257,9 @@ packages:
 
 </File>
 
-Read more about creating a GitLab Deploy Token [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#creating-a-deploy-token) and how to properly construct your HTTPS URL [here](https://docs.gitlab.com/ee/user/project/deploy_tokens/#git-clone-a-repository). Deploy tokens can be managed by Maintainers only.
+Узнайте больше о создании токена развертывания GitLab [здесь](https://docs.gitlab.com/ee/user/project/deploy_tokens/#creating-a-deploy-token) и о том, как правильно составить ваш HTTPS URL [здесь](https://docs.gitlab.com/ee/user/project/deploy_tokens/#git-clone-a-repository). Токены развертывания могут управляться только сопровождающими.
 
-In Azure DevOps:
+В Azure DevOps:
 
 <File name='packages.yml'>
 
@@ -284,39 +270,37 @@ packages:
 
 </File>
 
-Read more about creating a Personal Access Token [here](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-a-pat).
+Узнайте больше о создании токена доступа [здесь](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-a-pat).
 
-In Bitbucket:
+В Bitbucket:
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
-  - git: "https://{{env_var('DBT_USER_NAME')}}:{{env_var('DBT_ENV_SECRET_PERSONAL_ACCESS_TOKEN')}}@bitbucketserver.com/scm/awesome_project/awesome_repo.git" # for Bitbucket Server
+  - git: "https://{{env_var('DBT_USER_NAME')}}:{{env_var('DBT_ENV_SECRET_PERSONAL_ACCESS_TOKEN')}}@bitbucketserver.com/scm/awesome_project/awesome_repo.git" # для Bitbucket Server
 ```
 
 </File>
 
-Read more about creating a Personal Access Token [here](https://confluence.atlassian.com/bitbucketserver/personal-access-tokens-939515499.html).
+Узнайте больше о создании токена доступа [здесь](https://confluence.atlassian.com/bitbucketserver/personal-access-tokens-939515499.html).
 
+## Настройка подпапки для упакованных проектов
 
-
-## Configure subdirectory for packaged projects
-
-In general, dbt expects `dbt_project.yml` to be located as a top-level file in a package. If the packaged project is instead nested in a subdirectory—perhaps within a much larger mono repo—you can optionally specify the folder path as `subdirectory`. dbt will attempt a [sparse checkout](https://git-scm.com/docs/git-sparse-checkout) of just the files located within that subdirectory. Note that you must be using a recent version of `git` (`>=2.26.0`).
+В общем, dbt ожидает, что `dbt_project.yml` будет находиться в корневом каталоге пакета. Если упакованный проект находится в подпапке — возможно, в гораздо большем монорепозитории — вы можете опционально указать путь к папке как `subdirectory`. dbt попытается выполнить [разреженную проверку](https://git-scm.com/docs/git-sparse-checkout) только для файлов, находящихся в этой подпапке. Обратите внимание, что вы должны использовать недавнюю версию `git` (`>=2.26.0`).
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
   - git: "https://github.com/dbt-labs/dbt-labs-experimental-features" # git URL
-    subdirectory: "materialized-views" # name of subdirectory containing `dbt_project.yml`
+    subdirectory: "materialized-views" # имя подпапки, содержащей `dbt_project.yml`
 ```
 
 </File>
 
-### Local packages
-A "local" package is a dbt project accessible from your local file system. You can install it by specifying the project's path. It works best when you nest the project within a subdirectory relative to your current project's directory.
+### Локальные пакеты
+"Локальный" пакет — это проект dbt, доступный из вашей локальной файловой системы. Вы можете установить его, указав путь к проекту. Он лучше всего работает, когда вы помещаете проект в подпапку относительно каталога вашего текущего проекта.
 
 <File name='packages.yml'>
 
@@ -327,50 +311,49 @@ packages:
 
 </File>
 
-Other patterns may work in some cases, but not always. For example, if you install this project as a package elsewhere, or try running it on a different system, the relative and absolute paths will yield the same results.
+Другие шаблоны могут работать в некоторых случаях, но не всегда. Например, если вы установите этот проект как пакет в другом месте или попытаетесь запустить его на другой системе, относительные и абсолютные пути дадут одинаковые результаты.
 
 <File name='packages.yml'>
 
 ```yaml
 packages:
-  # not recommended - support for these patterns vary
-  - local: /../../redshift   # relative path to a parent directory
-  - local: /opt/dbt/redshift # absolute path on the system
+  # не рекомендуется - поддержка этих шаблонов варьируется
+  - local: /../../redshift   # относительный путь к родительскому каталогу
+  - local: /opt/dbt/redshift # абсолютный путь на системе
 ```
 
 </File>
 
-There are a few specific use cases where we recommend using a "local" package:
-1. **Monorepo** &mdash; When you have multiple projects, each nested in a subdirectory, within a monorepo. "Local" packages allow you to combine projects for coordinated development and deployment.
-2. **Testing changes** &mdash; To test changes in one project or package within the context of a downstream project or package that uses it. By temporarily switching the installation to a "local" package, you can make changes to the former and immediately test them in the latter for quicker iteration. This is similar to [editable installs](https://pip.pypa.io/en/stable/topics/local-project-installs/) in Python.
-3. **Nested project** &mdash; When you have a nested project that defines fixtures and tests for a project of utility macros, like [the integration tests within the `dbt-utils` package](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests).
+Существуют несколько конкретных случаев, когда мы рекомендуем использовать "локальный" пакет:
+1. **Монорепозиторий** &mdash; Когда у вас есть несколько проектов, каждый из которых вложен в подпапку, в монорепозитории. "Локальные" пакеты позволяют вам объединять проекты для согласованной разработки и развертывания.
+2. **Тестирование изменений** &mdash; Чтобы протестировать изменения в одном проекте или пакете в контексте последующего проекта или пакета, который его использует. Временно переключив установку на "локальный" пакет, вы можете вносить изменения в первый и немедленно тестировать их во втором для более быстрой итерации. Это похоже на [редактируемые установки](https://pip.pypa.io/en/stable/topics/local-project-installs/) в Python.
+3. **Вложенный проект** &mdash; Когда у вас есть вложенный проект, который определяет фикстуры и тесты для проекта полезных макросов, как [интеграционные тесты в пакете `dbt-utils`](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests).
 
+## Какие пакеты доступны?
+Посмотрите [dbt Hub](https://hub.getdbt.com), чтобы увидеть библиотеку опубликованных пакетов dbt!
 
-## What packages are available?
-Check out [dbt Hub](https://hub.getdbt.com) to see the library of published dbt packages!
+## Расширенная конфигурация пакетов
+### Обновление пакета
+Когда вы обновляете версию или ревизию в вашем файле `packages.yml`, она не обновляется автоматически в вашем проекте dbt. Вам следует выполнить `dbt deps`, чтобы обновить пакет. Вам также может потребоваться выполнить [полное обновление](/reference/commands/run) моделей в этом пакете.
 
-## Advanced package configuration
-### Updating a package
-When you update a version or revision in your `packages.yml` file, it isn't automatically updated in your dbt project. You should run `dbt deps` to update the package. You may also need to run a [full refresh](/reference/commands/run) of the models in this package.
+### Удаление пакета
+Когда вы удаляете пакет из вашего файла `packages.yml`, он не удаляется автоматически из вашего проекта dbt, так как он все еще существует в вашей директории `dbt_packages/`. Если вы хотите полностью удалить пакет, вам следует либо:
+* удалить директорию пакета в `dbt_packages/`;  или
+* выполнить `dbt clean`, чтобы удалить _все_ пакеты (и любые скомпилированные модели), а затем выполнить `dbt deps`.
 
-### Uninstalling a package
-When you remove a package from your `packages.yml` file, it isn't automatically deleted from your dbt project, as it still exists in your `dbt_packages/` directory. If you want to completely uninstall a package, you should either:
-* delete the package directory in `dbt_packages/`;  or
-* run `dbt clean` to delete _all_ packages (and any compiled models), followed by `dbt deps`.
+### Фиксация пакетов
 
-### Pinning packages
+Начиная с версии 1.7, выполнение [`dbt deps`](/reference/commands/deps) "фиксирует" каждый пакет, создавая или обновляя файл `package-lock.yml` в _корне проекта_, где записан `packages.yml`.
 
-Beginning with v1.7, running [`dbt deps`](/reference/commands/deps) "pins" each package by creating or updating the `package-lock.yml` file in the _project_root_ where `packages.yml` is recorded. 
+- Файл `package-lock.yml` содержит запись обо всех установленных пакетах.
+- Если последующие запуски `dbt deps` не содержат изменений в `dependencies.yml` или `packages.yml`, dbt-core устанавливает из `package-lock.yml`. 
 
-- The `package-lock.yml` file contains a record of all packages installed.
-- If subsequent `dbt deps` runs contain no changes to `dependencies.yml` or `packages.yml`, dbt-core installs from `package-lock.yml`. 
+Например, если вы используете имя ветки, файл `package-lock.yml` фиксирует на последнем коммите. Если вы используете диапазон версий, он фиксирует на последнем релизе. В любом случае последующие коммиты или версии **не** будут установлены. Чтобы получить новые коммиты или версии, выполните `dbt deps --upgrade` или добавьте `package-lock.yml` в ваш .gitignore.
 
-For example, if you use a branch name, the `package-lock.yml` file pins to the head commit. If you use a version range, it pins to the latest release. In either case, subsequent commits or versions will **not** be installed. To get new commits or versions, run `dbt deps --upgrade` or add `package-lock.yml` to your .gitignore file.
+Начиная с версии 0.14.0, dbt будет предупреждать вас, если вы установите пакет, используя синтаксис `git`, не указав ревизию (см. ниже).
 
-As of v0.14.0, dbt will warn you if you install a package using the `git` syntax without specifying a revision (see below).
-
-### Configuring packages
-You can configure the models and seeds in a package from the `dbt_project.yml` file, like so:
+### Конфигурирование пакетов
+Вы можете настроить модели и семена в пакете из файла `dbt_project.yml`, следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -397,18 +380,18 @@ seeds:
 
 </File>
 
-For example, when using a dataset specific package, you may need to configure variables for the names of the tables that contain your raw data.
+Например, при использовании пакета, специфичного для набора данных, вам может потребоваться настроить переменные для имен таблиц, содержащих ваши сырые данные.
 
-Configurations made in your `dbt_project.yml` file will override any configurations in a package (either in the `dbt_project.yml` file of the package, or in config blocks).
+Конфигурации, сделанные в вашем файле `dbt_project.yml`, будут переопределять любые конфигурации в пакете (либо в файле `dbt_project.yml` пакета, либо в блоках конфигурации).
 
-### Specifying unpinned Git packages
-If your project specifies an "unpinned" Git package, you may see a warning like:
+### Указание неприжатых Git-пакетов
+Если ваш проект указывает "неприжатый" Git-пакет, вы можете увидеть предупреждение, например:
 ```
-The git package "https://github.com/dbt-labs/dbt-utils.git" is not pinned.
-This can introduce breaking changes into your project without warning!
+Git-пакет "https://github.com/dbt-labs/dbt-utils.git" не зафиксирован.
+Это может привести к внесению разрушающих изменений в ваш проект без предупреждения!
 ```
 
-This warning can be silenced by setting `warn-unpinned: false` in the package specification. **Note:** This is not recommended.
+Это предупреждение можно отключить, установив `warn-unpinned: false` в спецификации пакета. **Примечание:** Это не рекомендуется.
 
 <File name='packages.yml'>
 
@@ -420,8 +403,8 @@ packages:
 
 </File>
 
-### Setting two-part versions
-In dbt v0.17.0 _only_, if the package version you want is only specified as `major`.`minor`, as opposed to `major.minor.patch`, you may get an error that `1.0 is not of type 'string'`. In that case you will have to tell dbt that your version number is a string. This issue was resolved in v0.17.1 and all subsequent versions.
+### Установка версий с двумя частями
+В dbt v0.17.0 _только_, если версия пакета, которую вы хотите, указана только как `major`.`minor`, а не `major.minor.patch`, вы можете получить ошибку, что `1.0 не является типом 'строка'`. В этом случае вам нужно будет сообщить dbt, что ваш номер версии является строкой. Эта проблема была решена в v0.17.1 и всех последующих версиях.
 
 <File name='packages.yml'>
 
@@ -432,4 +415,3 @@ packages:
 ```
 
 </File>
-

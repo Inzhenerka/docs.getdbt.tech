@@ -1,27 +1,27 @@
 ---
-title: "Advanced data modeling"
-description: "Learn about advanced topics for dbt Semantic Layer and MetricFlow, such as modeling workflows and more."
+title: "Расширенное моделирование данных"
+description: "Узнайте о продвинутых темах для dbt Semantic Layer и MetricFlow, таких как моделирование рабочих процессов и многое другое."
 pagination_prev: null
 ---
 
-The dbt Semantic Layer and MetricFlow are powerful tools that allow you to define metrics and semantic models in your dbt project. 
+dbt Semantic Layer и MetricFlow — это мощные инструменты, которые позволяют вам определять метрики и семантические модели в вашем проекте dbt.
 
-This section covers advanced topics for the dbt Semantic Layer and MetricFlow, such as data modeling workflows, and more.
+В этом разделе рассматриваются продвинутые темы для dbt Semantic Layer и MetricFlow, такие как рабочие процессы моделирования данных и многое другое.
 <!--
-- [Fill null values for simple and derived or ratio metrics](/docs/build/fill-nulls-advanced) &mdash; Use `fill_nulls_with` to set null metric values to zero, ensuring numeric values for every data row, even with derived metrics.
+- [Заполнение нулевых значений для простых и производных или расчетных метрик](/docs/build/fill-nulls-advanced) &mdash; Используйте `fill_nulls_with`, чтобы установить нулевые значения метрик в ноль, обеспечивая числовые значения для каждой строки данных, даже с производными метриками.
 -->
 
 <div className="grid--2-col">
 
 <Card
-    title="Fill null values for metrics"
-    body="Use <code>fill_nulls_with</code> to set null metric values to zero, ensuring numeric values for every data row."
+    title="Заполнение нулевых значений для метрик"
+    body="Используйте <code>fill_nulls_with</code>, чтобы установить нулевые значения метрик в ноль, обеспечивая числовые значения для каждой строки данных."
     link="/docs/build/fill-nulls-advanced"
     icon="dbt-bit"/>
 
 <Card
-    title="Metrics as dimensions with metric filters"
-    body="Add metrics as dimensions to your metric filters to create more complex metrics and gain more insights."
+    title="Метрики как измерения с фильтрами метрик"
+    body="Добавьте метрики в качестве измерений к вашим фильтрам метрик, чтобы создать более сложные метрики и получить больше информации."
     link="/docs/build/ref-metrics-in-filters"
     icon="dbt-bit"/>
 

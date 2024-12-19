@@ -1,40 +1,39 @@
 ---
-title: "Connect Databricks"
+title: "Подключение Databricks"
 id: connect-databricks
-description: "Setup instructions for connecting Databricks to dbt Cloud"
-sidebar_label: "Connect Databricks"
+description: "Инструкции по настройке подключения Databricks к dbt Cloud"
+sidebar_label: "Подключение Databricks"
 ---
 
-The dbt-databricks adapter is maintained by the Databricks team. The Databricks team is committed to supporting and improving the adapter over time, so you can be sure the integrated experience will provide the best of dbt and the best of Databricks. Connecting to Databricks via dbt-spark has been deprecated.
+Адаптер dbt-databricks поддерживается командой Databricks. Команда Databricks стремится поддерживать и улучшать адаптер со временем, поэтому вы можете быть уверены, что интегрированный опыт предоставит лучшее из dbt и лучшее из Databricks. Подключение к Databricks через dbt-spark было устаревшим.
 
-## About the dbt-databricks adapter
+## Об адаптере dbt-databricks
 
-dbt-databricks is compatible with the following versions of dbt Core in dbt Cloud with varying degrees of functionality. 
+dbt-databricks совместим с следующими версиями dbt Core в dbt Cloud с различной степенью функциональности.
 
-| Feature | dbt Versions |
+| Функция | Версии dbt |
 | ----- | ----------- | 
-| dbt-databricks | Available starting with dbt 1.0 in dbt Cloud|
-| Unity Catalog | Available starting with dbt 1.1 | 
-| Python models | Available starting with dbt 1.3 |
+| dbt-databricks | Доступен начиная с dbt 1.0 в dbt Cloud |
+| Unity Catalog | Доступен начиная с dbt 1.1 | 
+| Модели на Python | Доступны начиная с dbt 1.3 |
 
-The dbt-databricks adapter offers:
-- **Easier set up**
-- **Better defaults:**
-The dbt-databricks adapter is more opinionated, guiding users to an improved experience with less effort. Design choices of this adapter include defaulting to Delta format, using merge for incremental models, and running expensive queries with Photon.
-- **Support for Unity Catalog:**
-Unity Catalog allows Databricks users to centrally manage all data assets, simplifying access management and improving search and query performance. Databricks users can now get three-part data hierarchies – catalog, schema, model name – which solves a longstanding friction point in data organization and governance.
+Адаптер dbt-databricks предлагает:
+- **Упрощенную настройку**
+- **Лучшие настройки по умолчанию:**
+Адаптер dbt-databricks более предсказуем, направляя пользователей к улучшенному опыту с меньшими усилиями. Дизайнерские решения этого адаптера включают использование формата Delta по умолчанию, применение слияния для инкрементальных моделей и выполнение затратных запросов с помощью Photon.
+- **Поддержка Unity Catalog:**
+Unity Catalog позволяет пользователям Databricks централизованно управлять всеми данными, упрощая управление доступом и улучшая производительность поиска и запросов. Теперь пользователи Databricks могут получать трехуровневые иерархии данных – каталог, схема, имя модели – что решает давнюю проблему в организации и управлении данными.
 
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Databricks-specific configuration](/reference/resource-configs/databricks-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Databricks](/reference/resource-configs/databricks-configs).
 
-To grant users or roles database permissions (access rights and privileges), refer to the [example permissions](/reference/database-permissions/databricks-permissions) page.
+Чтобы предоставить пользователям или ролям разрешения на базу данных (права доступа и привилегии), обратитесь к странице [примеров разрешений](/reference/database-permissions/databricks-permissions).
 
+Чтобы настроить подключение к Databricks, укажите следующие поля:
 
-To set up the Databricks connection, supply the following fields:
-
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | ----- | ----------- | -------- |
-| Server Hostname | The hostname of the Databricks account to connect to | dbc-a2c61234-1234.cloud.databricks.com |
-| HTTP Path | The HTTP path of the Databricks cluster or SQL warehouse | /sql/1.0/warehouses/1a23b4596cd7e8fg |
-| Catalog | Name of Databricks Catalog (optional) | Production |
+| Имя хоста сервера | Имя хоста учетной записи Databricks, к которой нужно подключиться | dbc-a2c61234-1234.cloud.databricks.com |
+| HTTP путь | HTTP путь к кластеру Databricks или SQL-складу | /sql/1.0/warehouses/1a23b4596cd7e8fg |
+| Каталог | Имя каталога Databricks (необязательно) | Production |
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dbt-databricks.png" title="Configuring a Databricks connection using the dbt-databricks adapter"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/dbt-databricks.png" title="Настройка подключения к Databricks с использованием адаптера dbt-databricks"/>

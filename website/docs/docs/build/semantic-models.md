@@ -1,11 +1,11 @@
 ---
-title: "Semantic models"
+title: "Семантические модели"
 id: "semantic-models"
-description: "Semantic models are yml abstractions on top of a dbt mode, connected via joining keys as edges"
+description: "Семантические модели — это абстракции yml, построенные на основе модели dbt, соединенные через ключи соединения в качестве рёбер"
 keywords:
-  - dbt metrics layer
-sidebar_label: Semantic models
-tags: [Metrics, Semantic Layer]
+  - слой метрик dbt
+sidebar_label: Семантические модели
+tags: [Метрики, Семантический слой]
 pagination_next: "docs/build/dimensions"
 ---
 
@@ -13,70 +13,70 @@ import CopilotBeta from '/snippets/_dbt-copilot-avail.md';
 
 <CopilotBeta resource='semantic models' />
 
-Semantic models are the foundation for data definition in MetricFlow, which powers the dbt Semantic Layer:
+Семантические модели являются основой для определения данных в MetricFlow, который поддерживает семантический слой dbt:
 
-- Think of semantic models as nodes connected by entities in a semantic graph.
-- MetricFlow uses YAML configuration files to create this graph for querying metrics.
-- Each semantic model corresponds to a dbt model in your DAG, requiring a unique YAML configuration for each semantic model.
-- You can create multiple semantic models from a single dbt model (SQL or Python), as long as you give each semantic model a unique name.
-- Configure semantic models in a YAML file within your dbt project directory. Refer to the [best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) for more info on project structuring.
-- Organize them under a `metrics:` folder or within project sources as needed.
+- Рассматривайте семантические модели как узлы, соединенные сущностями в семантическом графе.
+- MetricFlow использует файлы конфигурации YAML для создания этого графа для запроса метрик.
+- Каждая семантическая модель соответствует модели dbt в вашем DAG и требует уникальной конфигурации YAML для каждой семантической модели.
+- Вы можете создать несколько семантических моделей из одной модели dbt (SQL или Python), при условии, что каждой семантической модели будет дано уникальное имя.
+- Настройте семантические модели в файле YAML в каталоге вашего проекта dbt. Обратитесь к [руководству по лучшим практикам](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) для получения дополнительной информации о структуре проекта.
+- Организуйте их в папке `metrics:` или в источниках проекта по мере необходимости.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/semantic_foundation.jpg" width="70%" title="A semantic model is made up of different components: Entities, Measures, and Dimensions."/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/semantic_foundation.jpg" width="70%" title="Семантическая модель состоит из различных компонентов: Сущности, Меры и Измерения."/>
 
 import SLCourses from '/snippets/\_sl-course.md';
 
 <SLCourses/>
 
-Here we describe the Semantic model components with examples:
+Здесь мы описываем компоненты семантической модели с примерами:
 
-| Component    | Description      | Required     |  Type     | 
+| Компонент    | Описание      | Обязательный     |  Тип     | 
 | ------------ | ---------------- | -------- | -------- | 
-| [Name](#name)     | Choose a unique name for the semantic model. Avoid using double underscores (\_\_) in the name as they're not supported.   | Required | String |
-| [Description](#description)    | 	Includes important details in the description.   | Optional | String |
-| [Model](#model)     | Specifies the dbt model for the semantic model using the `ref` function.    | Required | String |
-| [Defaults](#defaults)      | The defaults for the model, currently only `agg_time_dimension` is supported.    | Required |  Dict |
-| [Entities](#entities)         | Uses the columns from entities as join keys and indicate their type as primary, foreign, or unique keys with the `type` parameter.  | Required | List | 
-| [Primary Entity](#primary-entity) | If a primary entity exists, this component is Optional. If the semantic model has no primary entity, then this property is required.    | Optional | String | 
-| [Dimensions](#dimensions)     | Different ways to group or slice data for a metric, they can be `time` or `categorical`.  | Required | List |
-| [Measures](#measures)     | Aggregations applied to columns in your data model. They can be the final metric or used as building blocks for more complex metrics.  | Optional | List |
-| [Label](#label)     | The display name for your semantic model `node`, `dimension`, `entity`, and/or `measures`.   | Optional | String |
-| `config`   | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configs. | Optional | Dict |
+| [Имя](#name)     | Выберите уникальное имя для семантической модели. Избегайте использования двойных подчеркиваний (\_\_) в имени, так как они не поддерживаются.   | Обязательный | Строка |
+| [Описание](#description)    |  Включает важные детали в описание.   | Необязательный | Строка |
+| [Модель](#model)     | Указывает модель dbt для семантической модели, используя функцию `ref`.    | Обязательный | Строка |
+| [По умолчанию](#defaults)      | Значения по умолчанию для модели, в настоящее время поддерживается только `agg_time_dimension`.    | Обязательный |  Словарь |
+| [Сущности](#entities)         | Использует столбцы из сущностей в качестве ключей соединения и указывает их тип как первичный, внешний или уникальный ключи с параметром `type`.  | Обязательный | Список | 
+| [Первичная сущность](#primary-entity) | Если существует первичная сущность, этот компонент является необязательным. Если семантическая модель не имеет первичной сущности, то это свойство обязательно.    | Необязательный | Строка | 
+| [Измерения](#dimensions)     | Разные способы группировки или разбиения данных для метрики, они могут быть `временными` или `категориальными`.  | Обязательный | Список |
+| [Меры](#measures)     | Агрегации, применяемые к столбцам в вашей модели данных. Они могут быть конечной метрикой или использоваться как строительные блоки для более сложных метрик.  | Необязательный | Список |
+| [Метка](#label)     | Отображаемое имя для вашего семантического узла, измерения, сущности и/или мер.   | Необязательный | Строка |
+| `config`   | Используйте свойство [`config`](/reference/resource-properties/config) для указания конфигураций для вашей метрики. Поддерживает конфигурации [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group) и [`enabled`](/reference/resource-configs/enabled). | Необязательный | Словарь |
 
-## Semantic models components
+## Компоненты семантических моделей
 
-The complete spec for semantic models is below:
+Полная спецификация для семантических моделей представлена ниже:
 
 ```yaml
 semantic_models:
-  - name: the_name_of_the_semantic_model ## Required
-    description: same as always ## Optional
-    model: ref('some_model') ## Required
-    defaults: ## Required
-      agg_time_dimension: dimension_name ## Required if the model contains measures
-    entities: ## Required
+  - name: the_name_of_the_semantic_model ## Обязательный
+    description: same as always ## Необязательный
+    model: ref('some_model') ## Обязательный
+    defaults: ## Обязательный
+      agg_time_dimension: dimension_name ## Обязательный, если модель содержит меры
+    entities: ## Обязательный
       - see more information in entities
-    measures: ## Optional
+    measures: ## Необязательный
       - see more information in the measures section
-    dimensions: ## Required
+    dimensions: ## Обязательный
       - see more information in the dimensions section
     primary_entity: >-
-      if the semantic model has no primary entity, then this property is required. #Optional if a primary entity exists, otherwise Required
+      if the semantic model has no primary entity, then this property is required. #Необязательный, если существует первичная сущность, иначе Обязательный
 ```
 
-You can refer to the [best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) for more info on project structuring.
+Вы можете обратиться к [руководству по лучшим практикам](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) для получения дополнительной информации о структуре проекта.
 
-The following example displays a complete configuration and detailed descriptions of each field:
+Следующий пример демонстрирует полную конфигурацию и подробные описания каждого поля:
 
 ```yaml
 semantic_models:
-  - name: transaction # A semantic model with the name Transactions
-    model: ref('fact_transactions') # References the dbt model named `fact_transactions`
-    description: "Transaction fact table at the transaction level. This table contains one row per transaction and includes the transaction timestamp."
+  - name: transaction # Семантическая модель с именем Transactions
+    model: ref('fact_transactions') # Ссылается на модель dbt с именем `fact_transactions`
+    description: "Фактическая таблица транзакций на уровне транзакций. Эта таблица содержит одну строку на каждую транзакцию и включает временную метку транзакции."
     defaults:
       agg_time_dimension: transaction_date
 
-    entities: # Entities included in the table are defined here. MetricFlow will use these columns as join keys.
+    entities: # Сущности, включенные в таблицу, определяются здесь. MetricFlow будет использовать эти столбцы в качестве ключей соединения.
       - name: transaction
         type: primary
         expr: transaction_id
@@ -84,7 +84,7 @@ semantic_models:
         type: foreign
         expr: customer_id
 
-    dimensions: # dimensions are qualitative values such as names, dates, or geographical data. They provide context to metrics and allow "metric by group" data slicing.
+    dimensions: # Измерения — это качественные значения, такие как имена, даты или географические данные. Они предоставляют контекст для метрик и позволяют "разбивать метрики по группам".
       - name: transaction_date
         type: time
         type_params:
@@ -94,24 +94,24 @@ semantic_models:
         type: categorical
         expr: order_country
 
-    measures: # Measures are columns we perform an aggregation over. Measures are inputs to metrics.
+    measures: # Меры — это столбцы, по которым мы выполняем агрегацию. Меры являются входными данными для метрик.
       - name: transaction_total
-        description: "The total value of the transaction."
+        description: "Общая стоимость транзакции."
         agg: sum
 
       - name: sales
-        description: "The total sale of the transaction."
+        description: "Общая продажа транзакции."
         agg: sum
         expr: transaction_total
 
       - name: median_sales
-        description: "The median sale of the transaction."
+        description: "Медианная продажа транзакции."
         agg: median
         expr: transaction_total
 
-  - name: customers # Another semantic model called customers.
+  - name: customers # Другая семантическая модель с именем customers.
     model: ref('dim_customers')
-    description: "A customer dimension table."
+    description: "Таблица измерений клиентов."
 
     entities:
       - name: customer
@@ -123,9 +123,9 @@ semantic_models:
         type: categorical
 ```
 
-Semantic models support [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) [`config`](/reference/resource-properties/config) property in either the schema file or at the project level:
+Семантические модели поддерживают свойства [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group) и [`enabled`](/reference/resource-configs/enabled) [`config`](/reference/resource-properties/config) как в файле схемы, так и на уровне проекта:
 
-- Semantic model config in `models/semantic.yml`:
+- Конфигурация семантической модели в `models/semantic.yml`:
 
   ```yml
   semantic_models:
@@ -137,7 +137,7 @@ Semantic models support [`meta`](/reference/resource-configs/meta), [`group`](/r
           some_key: some_value
   ```
 
-- Semantic model config in `dbt_project.yml`:
+- Конфигурация семантической модели в `dbt_project.yml`:
 
   ```yml
   semantic-models:
@@ -148,33 +148,33 @@ Semantic models support [`meta`](/reference/resource-configs/meta), [`group`](/r
         some_key: some_value
   ```
 
-For more information on `dbt_project.yml` and config naming conventions, see the [dbt_project.yml reference page](/reference/dbt_project.yml#naming-convention).
+Для получения дополнительной информации о `dbt_project.yml` и соглашениях о наименовании конфигураций смотрите [страницу справки по dbt_project.yml](/reference/dbt_project.yml#naming-convention).
 
-### Name
+### Имя
 
-Define the name of the semantic model. You must define a unique name for the semantic model. The semantic graph will use this name to identify the model, and you can update it at any time. Avoid using double underscores (\_\_) in the name as they're not supported.
+Определите имя семантической модели. Вы должны определить уникальное имя для семантической модели. Семантический граф будет использовать это имя для идентификации модели, и вы можете обновить его в любое время. Избегайте использования двойных подчеркиваний (\_\_) в имени, так как они не поддерживаются.
 
-### Description
+### Описание
 
-Includes important details in the description of the semantic model. This description will primarily be used by other configuration contributors. You can use the pipe operator `(|)` to include multiple lines in the description.
+Включает важные детали в описание семантической модели. Это описание будет в первую очередь использоваться другими участниками конфигурации. Вы можете использовать оператор пайпа `(|)` для включения нескольких строк в описание.
 
-### Model
+### Модель
 
-Specify the dbt model for the semantic model using the [`ref` function](/reference/dbt-jinja-functions/ref).
+Укажите модель dbt для семантической модели, используя функцию [`ref`](/reference/dbt-jinja-functions/ref).
 
-### Defaults
+### По умолчанию
 
-Defaults for the semantic model. Currently only `agg_time_dimension`. `agg_time_dimension` represents the default time dimensions for measures. This can be overridden by adding the `agg_time_dimension` key directly to a measure - see [Dimensions](/docs/build/dimensions) for examples.
+Значения по умолчанию для семантической модели. В настоящее время поддерживается только `agg_time_dimension`. `agg_time_dimension` представляет собой стандартные временные измерения для мер. Это можно переопределить, добавив ключ `agg_time_dimension` непосредственно к мере - смотрите [Измерения](/docs/build/dimensions) для примеров.
 
-### Entities
+### Сущности
 
-To specify the [entities](/docs/build/entities) in your model, use their columns as join keys and indicate their `type` as primary, foreign, or unique keys with the type parameter.
+Чтобы указать [сущности](/docs/build/entities) в вашей модели, используйте их столбцы в качестве ключей соединения и укажите их `type` как первичные, внешние или уникальные ключи с параметром типа.
 
-### Primary entity
+### Первичная сущность
 
-MetricFlow requires that all dimensions be tied to an entity. This is to guarantee unique dimension names. If your data source doesn't have a primary entity, you need to assign the entity a name using the `primary_entity: entity_name` key. It doesn't necessarily have to map to a column in that table and assigning the name doesn't affect query generation.
+MetricFlow требует, чтобы все измерения были связаны с сущностью. Это необходимо для гарантии уникальных имен измерений. Если ваш источник данных не имеет первичной сущности, вам нужно назначить сущности имя, используя ключ `primary_entity: entity_name`. Это не обязательно должно соответствовать столбцу в этой таблице, и назначение имени не влияет на генерацию запросов.
 
-You can define a primary entity using the following configs:
+Вы можете определить первичную сущность, используя следующие конфигурации:
 
 ```yaml
 semantic_model:
@@ -192,21 +192,21 @@ semantic_model:
 
 <Tabs>
 
-<TabItem value="entitytypes" value="Entity types">
+<TabItem value="entitytypes" value="Типы сущностей">
 
-Here are the types of keys:
+Вот типы ключей:
 
-- **Primary** &mdash; Only one record per row in the table, and it includes every record in the data platform.
-- **Unique** &mdash; Only one record per row in the table, but it may have a subset of records in the data platform. Null values may also be present.
-- **Foreign** &mdash; Can have zero, one, or multiple instances of the same record. Null values may also be present.
-- **Natural** &mdash; A column or combination of columns in a table that uniquely identifies a record based on real-world data. For example, the `sales_person_id` can serve as a natural key in a `sales_person_department` dimension table.
+- **Первичный** &mdash; Только одна запись на строку в таблице, и она включает каждую запись в платформе данных.
+- **Уникальный** &mdash; Только одна запись на строку в таблице, но может иметь подмножество записей в платформе данных. Также могут присутствовать нулевые значения.
+- **Внешний** &mdash; Может иметь ноль, одну или несколько экземпляров одной и той же записи. Также могут присутствовать нулевые значения.
+- **Естественный** &mdash; Столбец или комбинация столбцов в таблице, которые уникально идентифицируют запись на основе реальных данных. Например, `sales_person_id` может служить естественным ключом в таблице измерений `sales_person_department`.
 
 </TabItem>
-<TabItem value="sample" label="Sample config">
+<TabItem value="sample" label="Пример конфигурации">
 
-This example shows a semantic model with three entities and their entity types: `transaction` (primary), `order` (foreign), and `user` (foreign).
+Этот пример показывает семантическую модель с тремя сущностями и их типами сущностей: `transaction` (первичная), `order` (внешняя) и `user` (внешняя).
 
-To reference a desired column, use the actual column name from the model in the `name` parameter. You can also use `name` as an alias to rename the column, and the `expr` parameter to refer to the original column name or a SQL expression of the column.
+Чтобы сослаться на нужный столбец, используйте фактическое имя столбца из модели в параметре `name`. Вы также можете использовать `name` в качестве псевдонима для переименования столбца, а параметр `expr` для ссылки на оригинальное имя столбца или SQL-выражение столбца.
 
 ```yaml
 entity:
@@ -220,34 +220,33 @@ entity:
     expr: substring(id_order FROM 2)
 ```
 
-You can refer to entities (join keys) in a semantic model using the `name` parameter. Entity names must be unique within a semantic model, and identifier names can be non-unique across semantic models since MetricFlow uses them for [joins](/docs/build/join-logic). <!--You can also create [composite keys](/docs/build/entities#composite-keys), like in event logs where a unique ID is a combination of timestamp, event type keys, and machine IDs.-->
+Вы можете ссылаться на сущности (ключи соединения) в семантической модели, используя параметр `name`. Имена сущностей должны быть уникальными в пределах семантической модели, а имена идентификаторов могут быть не уникальными между семантическими моделями, так как MetricFlow использует их для [соединений](/docs/build/join-logic). <!--Вы также можете создать [составные ключи](/docs/build/entities#composite-keys), как в журналах событий, где уникальный идентификатор является комбинацией временной метки, ключей типа события и идентификаторов машин.-->
 
 </TabItem>
 </Tabs>
 
-### Dimensions
+### Измерения
 
-[Dimensions](/docs/build/dimensions) are different ways to organize or look at data. They are effectively the group by parameters for metrics. For example, you might group data by things like region, country, or job title.
+[Измерения](/docs/build/dimensions) — это разные способы организации или просмотра данных. Они фактически являются параметрами группировки для метрик. Например, вы можете группировать данные по таким параметрам, как регион, страна или должность.
 
-MetricFlow takes a dynamic approach when making dimensions available for metrics. Instead of trying to figure out all the possible groupings ahead of time, MetricFlow lets you ask for the dimensions you need and constructs any joins necessary to reach the requested dimensions at query time. The advantage of this approach is that you don't need to set up a system that pre-materializes every possible way to group data, which can be time-consuming and prone to errors. Instead, you define the dimensions (group by parameters) you're interested in within the semantic model, and they will automatically be made available for valid metrics.
+MetricFlow использует динамический подход при предоставлении измерений для метрик. Вместо того чтобы пытаться заранее определить все возможные группировки, MetricFlow позволяет вам запрашивать необходимые измерения и строит любые необходимые соединения для достижения запрашиваемых измерений во время запроса. Преимущество этого подхода заключается в том, что вам не нужно настраивать систему, которая предварительно материализует каждый возможный способ группировки данных, что может занять много времени и быть подверженным ошибкам. Вместо этого вы определяете измерения (параметры группировки), которые вас интересуют, в семантической модели, и они автоматически становятся доступными для действительных метрик.
 
-Dimensions have the following characteristics:
+Измерения имеют следующие характеристики:
 
-- There are two types of dimensions: categorical and time. Categorical dimensions are for things you can't measure in numbers, while time dimensions represent dates and timestamps.
-- Dimensions are bound to the primary entity of the semantic model in which they are defined. For example, if a dimension called `full_name` is defined in a model with `user` as a primary entity, then `full_name` is scoped to the `user` entity. To reference this dimension, you would use the fully qualified dimension name `user__full_name`.
-- The naming of dimensions must be unique in each semantic model with the same primary entity. Dimension names can be repeated if defined in semantic models with a different primary entity.
+- Существует два типа измерений: категориальные и временные. Категориальные измерения предназначены для вещей, которые нельзя измерить в числах, в то время как временные измерения представляют даты и временные метки.
+- Измерения связаны с первичной сущностью семантической модели, в которой они определены. Например, если измерение с именем `full_name` определено в модели с `user` в качестве первичной сущности, то `full_name` относится к сущности `user`. Чтобы сослаться на это измерение, вы должны использовать полностью квалифицированное имя измерения `user__full_name`.
+- Имена измерений должны быть уникальными в каждой семантической модели с одной и той же первичной сущностью. Имена измерений могут повторяться, если они определены в семантических моделях с другой первичной сущностью.
 
+:::info Для временных групп
 
-:::info For time groups
-
-For semantic models with a measure, you must have a [primary time group](/docs/build/dimensions#time).
+Для семантических моделей с мерой вы должны иметь [первичную временную группу](/docs/build/dimensions#time).
 :::
 
-### Measures
+### Меры
 
-[Measures](/docs/build/measures) are aggregations applied to columns in your data model. They can be used as the foundational building blocks for more complex metrics, or be the final metric itself.
+[Меры](/docs/build/measures) — это агрегации, применяемые к столбцам в вашей модели данных. Они могут использоваться как основные строительные блоки для более сложных метрик или быть самой конечной метрикой.
 
-Measures have various parameters which are listed in a table along with their descriptions and types.
+Меры имеют различные параметры, которые перечислены в таблице вместе с их описаниями и типами.
 
 import MeasuresParameters from '/snippets/\_sl-measures-parameters.md';
 
@@ -257,10 +256,10 @@ import SetUpPages from '/snippets/\_metrics-dependencies.md';
 
 <SetUpPages />
 
-## Related docs
+## Связанные документы
 
-- [About MetricFlow](/docs/build/about-metricflow)
-- [Dimensions](/docs/build/dimensions)
-- [Entities](/docs/build/entities)
-- [Measures](/docs/build/measures)
-- [Semantic Layer best practices guide](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)
+- [О MetricFlow](/docs/build/about-metricflow)
+- [Измерения](/docs/build/dimensions)
+- [Сущности](/docs/build/entities)
+- [Меры](/docs/build/measures)
+- [Руководство по лучшим практикам семантического слоя](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro)

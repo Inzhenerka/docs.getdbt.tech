@@ -1,29 +1,29 @@
 --- 
-title: "dbt Copilot privacy and data" 
-sidebar_label: "dbt Copilot privacy" 
-description: "dbt Copilot is a powerful AI engine to help you deliver data that works." 
+title: "Конфиденциальность и данные dbt Copilot" 
+sidebar_label: "Конфиденциальность dbt Copilot" 
+description: "dbt Copilot — это мощный ИИ-движок, который поможет вам предоставлять работающие данные." 
 ---
 
-# dbt Copilot privacy and data <Lifecycle status='beta'/>
+# Конфиденциальность и данные dbt Copilot <Lifecycle status='beta'/>
 
-dbt Labs is committed to protecting your privacy and data. This page provides information about how the dbt Copilot AI engine handles your data.
+dbt Labs стремится защищать вашу конфиденциальность и данные. Эта страница содержит информацию о том, как ИИ-движок dbt Copilot обрабатывает ваши данные.
 
-#### Is my data used by dbt Labs to train AI models?
-  
-No, dbt Copilot does not use client warehouse data to train any AI models. It uses API calls to an AI provider.
+#### Используются ли мои данные dbt Labs для обучения ИИ-моделей?
 
-#### Does dbt Labs share my personal data with third parties
+Нет, dbt Copilot не использует данные клиентского хранилища для обучения каких-либо ИИ-моделей. Он использует API-вызовы к поставщику ИИ.
 
-dbt Labs only shares client personal information as needed to perform the services, under client instructions, or for legal, tax, or compliance reasons.
+#### Делится ли dbt Labs моей личной информацией с третьими сторонами?
 
-#### Does dbt Copilot store or use personal data?
+dbt Labs делится личной информацией клиентов только в случае необходимости для выполнения услуг, по указанию клиента или по юридическим, налоговым или комплаенс-причинам.
 
-The user clicks the dbt Copilot button, and the user does not otherwise enter data. 
+#### Хранит ли или использует dbt Copilot личные данные?
 
-#### Does dbt Copilot access my warehouse data?
+Пользователь нажимает кнопку dbt Copilot, и пользователь не вводит данные иным образом.
 
-dbt Copilot utilizes metadata, including column names, model SQL, the model's name, and model documentation. The row-level data from the warehouse is never used or sent to a third-party provider. Such output must be double-checked by the user for completeness and accuracy.
+#### Имеет ли dbt Copilot доступ к данным моего хранилища?
 
-#### Can dbt Copilot data be deleted upon client written request?
+dbt Copilot использует метаданные, включая имена столбцов, SQL моделей, имя модели и документацию модели. Данные на уровне строк из хранилища никогда не используются и не отправляются третьим лицам. Такой вывод должен быть проверен пользователем на полноту и точность.
 
-The data from using dbt Copilot, aside from usage data, _doesn't_ persist on dbt Labs systems. Usage data is retained by dbt Labs. dbt Labs doesn't have possession of any personal or sensitive data. To the extent client identifies personal or sensitive information uploaded by or on behalf of client to dbt Labs systems, such data can be deleted within 30 days of written request.
+#### Могут ли данные dbt Copilot быть удалены по письменному запросу клиента?
+
+Данные, полученные при использовании dbt Copilot, за исключением данных об использовании, _не_ сохраняются в системах dbt Labs. Данные об использовании хранятся в dbt Labs. dbt Labs не обладает никакими личными или чувствительными данными. В той мере, в какой клиент указывает личную или чувствительную информацию, загруженную клиентом или от его имени в системы dbt Labs, такие данные могут быть удалены в течение 30 дней с момента письменного запроса.

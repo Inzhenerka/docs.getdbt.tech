@@ -1,16 +1,16 @@
 ---
-title: "Add Exposures to your DAG"
-sidebar_label: "Exposures"
+title: "Добавление экспозиций в ваш DAG"
+sidebar_label: "Экспозиции"
 id: "exposures"
 ---
 
-Exposures make it possible to define and describe a downstream use of your dbt project, such as in a dashboard, application, or data science pipeline. By defining exposures, you can then:
-- run, test, and list resources that feed into your exposure
-- populate a dedicated page in the auto-generated [documentation](/docs/build/documentation) site with context relevant to data consumers
+Экспозиции позволяют определить и описать использование вашего проекта dbt downstream, например, в панели мониторинга, приложении или в процессе работы с данными. Определив экспозиции, вы сможете:
+- запускать, тестировать и перечислять ресурсы, которые питают вашу экспозицию
+- заполнять специальную страницу на автоматически сгенерированном [документационном](/docs/build/documentation) сайте контекстом, актуальным для потребителей данных
 
-### Declaring an exposure
+### Объявление экспозиции
 
-Exposures are defined in `.yml` files nested under an `exposures:` key.
+Экспозиции определяются в `.yml` файлах, вложенных под ключом `exposures:`.
 
 <File name='models/<filename>.yml'>
 
@@ -40,42 +40,42 @@ exposures:
 
 </File>
 
-### Available properties
+### Доступные свойства
 
-_Required:_
-- **name**: a unique exposure name written in [snake case](https://en.wikipedia.org/wiki/Snake_case)
-- **type**: one of `dashboard`, `notebook`, `analysis`, `ml`, `application` (used to organize in docs site)
-- **owner**: `name` or `email` required; additional properties allowed
+_Обязательные:_
+- **name**: уникальное имя экспозиции, написанное в [snake case](https://en.wikipedia.org/wiki/Snake_case)
+- **type**: одно из значений `dashboard`, `notebook`, `analysis`, `ml`, `application` (используется для организации на сайте документации)
+- **owner**: требуется `name` или `email`; допускаются дополнительные свойства
 
-_Expected:_
-- **depends_on**: list of refable nodes, including `metric`, `ref`, and `source`. While possible, it is highly unlikely you will ever need an `exposure` to depend on a `source` directly.
+_Ожидаемые:_
+- **depends_on**: список ссылочных узлов, включая `metric`, `ref` и `source`. Хотя это возможно, маловероятно, что вам когда-либо потребуется, чтобы экспозиция зависела от источника напрямую.
 
-_Optional:_
-- **label**:  May contain spaces, capital letters, or special characters.
-- **url**:  Activates and populates the link to **View this exposure** in the upper right corner of the generated documentation site
-- **maturity**: Indicates the level of confidence or stability in the exposure. One of `high`, `medium`, or `low`. For example, you could use `high` maturity for a well-established dashboard, widely used and trusted within your organization. Use `low` maturity for a new or experimental analysis.
+_Необязательные:_
+- **label**: может содержать пробелы, заглавные буквы или специальные символы.
+- **url**: активирует и заполняет ссылку на **Просмотреть эту экспозицию** в правом верхнем углу сгенерированного сайта документации
+- **maturity**: указывает уровень уверенности или стабильности в экспозиции. Одно из значений `high`, `medium` или `low`. Например, вы можете использовать `high` для хорошо зарекомендовавшей себя панели мониторинга, широко используемой и доверяемой в вашей организации. Используйте `low` для нового или экспериментального анализа.
 
-_General properties (optional)_
+_Общие свойства (необязательные)_
 - **description**
 - **tags**
 - **meta**
 
-### Referencing exposures
+### Ссылки на экспозиции
 
-Once an exposure is defined, you can run commands that reference it:
+После определения экспозиции вы можете выполнять команды, которые ссылаются на нее:
 ```
 dbt run -s +exposure:weekly_jaffle_report
 dbt test -s +exposure:weekly_jaffle_report
 
 ```
 
-When we generate the [dbt Explorer site](/docs/collaborate/explore-projects), you'll see the exposure appear:
+Когда мы сгенерируем [сайт dbt Explorer](/docs/collaborate/explore-projects), вы увидите экспозицию в списке:
 
-<Lightbox src="/img/docs/building-a-dbt-project/dbt-explorer-exposures.jpg" title="Exposures has a dedicated section, under the 'Resources' tab in dbt Explorer,  which lists each exposure in your project."/>
-<Lightbox src="/img/docs/building-a-dbt-project/dag-exposures.png" title="Exposures appear as nodes in the dbt Explorer DAG. It displays an orange 'EXP' indicator within the node. "/>
+<Lightbox src="/img/docs/building-a-dbt-project/dbt-explorer-exposures.jpg" title="Экспозиции имеют специальный раздел на вкладке 'Ресурсы' в dbt Explorer, который перечисляет каждую экспозицию в вашем проекте."/>
+<Lightbox src="/img/docs/building-a-dbt-project/dag-exposures.png" title="Экспозиции отображаются как узлы в DAG dbt Explorer. Внутри узла отображается оранжевый индикатор 'EXP'."/>
 
-## Related docs
+## Связанные документы
 
-* [Exposure properties](/reference/exposure-properties)
-* [`exposure:` selection method](/reference/node-selection/methods#exposure)
-* [Data health tiles](/docs/collaborate/data-tile)
+* [Свойства экспозиции](/reference/exposure-properties)
+* [`exposure:` метод выбора](/reference/node-selection/methods#exposure)
+* [Плитки состояния данных](/docs/collaborate/data-tile)

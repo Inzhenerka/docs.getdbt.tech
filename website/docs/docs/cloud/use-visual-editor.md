@@ -1,83 +1,71 @@
 ---
-title: "Edit and create dbt models" 
+title: "Редактирование и создание моделей dbt" 
 id: use-visual-editor      
-sidebar_label: "Edit and create dbt models" 
-description: "Access and use the visual editor to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+sidebar_label: "Редактирование и создание моделей dbt" 
+description: "Доступ к визуальному редактору для создания или редактирования моделей dbt с помощью визуального интерфейса перетаскивания в dbt Cloud." 
 pagination_prev: "docs/cloud/visual-editor-interface"
 ---
 
-# Edit and create dbt models <Lifecycle status='beta'/> 
+# Редактирование и создание моделей dbt <Lifecycle status='beta'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-Access and use the dbt Cloud visual editor to create or edit dbt models through a visual, drag-and-drop experience. Use the built-in AI for custom code generation in your development experience.
+Получите доступ к визуальному редактору dbt Cloud для создания или редактирования моделей dbt с помощью визуального интерфейса перетаскивания. Используйте встроенный ИИ для генерации пользовательского кода в процессе разработки.
 </p>
 
-:::tip Beta feature
-The visual editor provides users with a seamless and drag-and-drop experience inside of dbt Cloud. It's available in private beta for [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). 
+:::tip Бета-функция
+Визуальный редактор предоставляет пользователям бесшовный опыт работы с перетаскиванием в dbt Cloud. Он доступен в частном бета-тестировании для [аккаунтов dbt Cloud Enterprise](https://www.getdbt.com/pricing). 
 
-To join the private beta, [register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to your account team to begin this process.
+Чтобы присоединиться к частному бета-тестированию, [зарегистрируйте свой интерес](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) или свяжитесь с вашей командой аккаунта, чтобы начать этот процесс.
 :::
 
-## Prerequisites
-- You have a [dbt Cloud Enterprise](https://www.getdbt.com/pricing) account
-- You have a [developer license](/docs/cloud/manage-access/seats-and-users) with developer credentials set up
-- You have an existing dbt Cloud project already created
-- Your Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
-- Have AI-powered features toggle enabled
+## Предварительные требования
+- У вас есть аккаунт [dbt Cloud Enterprise](https://www.getdbt.com/pricing)
+- У вас есть [лицензия разработчика](/docs/cloud/manage-access/seats-and-users) с установленными учетными данными разработчика
+- У вас уже создан проект dbt Cloud
+- Ваша среда разработки находится на поддерживаемом [релизном треке](/docs/dbt-versions/cloud-release-tracks) для получения обновлений.
+- Включен переключатель функций на основе ИИ
 
-## Access visual editor
+## Доступ к визуальному редактору
 
-Before accessing the editor, you should have a dbt Cloud project already set up. This includes a Git repository, data platform connection, environments, and developer credentials. If you don't have this set up, please contact your dbt Cloud Admin.
+Перед доступом к редактору у вас должен быть уже настроен проект dbt Cloud. Это включает в себя репозиторий Git, подключение к платформе данных, среды и учетные данные разработчика. Если у вас это не настроено, пожалуйста, свяжитесь с администратором вашего dbt Cloud.
 
-To access the visual editor:
-- Type in the following URL, replacing the ACCOUNT_ID and ENVIRONMENT_ID with your own account and environment ID: `https://ACCESS_URL/visual-editor/ACCOUNT_ID/env/ENVIRONMENT_ID/`
-  - The environment ID must have had runs that generated catalogs in it.
+Чтобы получить доступ к визуальному редактору:
+- Введите следующий URL, заменив ACCOUNT_ID и ENVIRONMENT_ID на свои собственные идентификаторы аккаунта и среды: `https://ACCESS_URL/visual-editor/ACCOUNT_ID/env/ENVIRONMENT_ID/`
+  - Идентификатор среды должен иметь запуски, которые сгенерировали каталоги.
 
-- For example, if my region is North America multi-tenant, account ID is 10, environment ID with a generated catalog run is 100, my URL should be:
+- Например, если мой регион - Северная Америка, многопользовательский, идентификатор аккаунта 10, идентификатор среды с сгенерированным каталогом 100, мой URL должен быть:
 
   - `https://cloud.getdbt.com/visual-editor/10/env/100/`
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Visual editor interface that contains a node toolbar and canvas." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Интерфейс визуального редактора, содержащий панель инструментов узлов и холст." />
 
-## Create a model
-To create a dbt SQL model, click on **Create a new model** and perform the following steps. Note that you can't create source models in the visual editor. This is because you need to have production run with sources already created.
+## Создание модели
+Чтобы создать модель dbt SQL, нажмите на **Создать новую модель** и выполните следующие шаги. Обратите внимание, что вы не можете создавать исходные модели в визуальном редакторе. Это связано с тем, что вам необходимо иметь производственный запуск с уже созданными источниками.
 
-1. Drag an operator from the operator toolbar and drop it onto the canvas.
-2. Click on the operator to open its configuration panel:
-	- **Model**: Select the model and columns you want to use.
-	- **Join**: Define the join conditions and choose columns from both tables.
-	- **Select**: Pick the columns you need from the model.
-	- **Aggregate**: Specify the aggregation functions and the columns they apply to.
-	- **Formula**: Add the formula to create a new column. Use the built-AI code generator to help generate SQL code by clicking on the question mark (?) icon. Enter your prompt and wait to see the results.
-	- **Filter**: Set the conditions to filter data.
-	- **Order**: Select the columns to sort by and the sort order.
-	- **Limit**: Set the maximum number of rows you want to return.
-3. View the **Output** and **SQL Code** tabs. 
-	- Each operator has an Output tab that allows you to preview the data from that configured node.
-	- The Code tab displays the SQL code generated by the node's configuration. Use this to see the SQL for your visual model config.
-4. Connect the operators by using the connector by dragging your cursor between the operator's "+" start point and linking it to the other operators you want to connect to. This should create a connector line. 
-	- Doing this allows the data to flow from the source table through various transformations you configured, to the final output.
-5. Keep building your dbt model and ensure you confirm the out through the **Output** tab.
+1. Перетащите оператор из панели инструментов операторов и отпустите его на холсте.
+2. Нажмите на оператор, чтобы открыть его панель конфигурации:
+	- **Модель**: Выберите модель и столбцы, которые хотите использовать.
+	- **Соединение**: Определите условия соединения и выберите столбцы из обеих таблиц.
+	- **Выбор**: Выберите необходимые столбцы из модели.
+	- **Агрегация**: Укажите функции агрегации и столбцы, к которым они применяются.
+	- **Формула**: Добавьте формулу для создания нового столбца. Используйте встроенный генератор кода ИИ, чтобы помочь с генерацией SQL-кода, нажав на значок вопросительного знака (?). Введите свой запрос и дождитесь результатов.
+	- **Фильтр**: Установите условия для фильтрации данных.
+	- **Сортировка**: Выберите столбцы для сортировки и порядок сортировки.
+	- **Ограничение**: Установите максимальное количество строк, которые хотите вернуть.
+3. Просмотрите вкладки **Вывод** и **SQL-код**. 
+	- У каждого оператора есть вкладка Вывод, которая позволяет вам предварительно просмотреть данные из этого настроенного узла.
+	- Вкладка Код отображает SQL-код, сгенерированный конфигурацией узла. Используйте это, чтобы увидеть SQL для вашей визуальной конфигурации модели.
+4. Соедините операторы, используя соединитель, перетаскивая курсор между начальной точкой "+" оператора и связывая его с другими операторами, которые вы хотите соединить. Это должно создать линию соединения. 
+	- Это позволяет данным течь от исходной таблицы через различные трансформации, которые вы настроили, к конечному выводу.
+5. Продолжайте строить свою модель dbt и убедитесь, что вы подтвердили вывод через вкладку **Вывод**.
 
-<!-- 
-### Configure nodes
-- Built-in AI code generator
+## Редактирование существующей модели
+Чтобы отредактировать существующую модель, перейдите в Визуальный редактор, нажмите кнопку **Начать** в правом верхнем углу и выберите **Редактировать существующую модель**. Это позволит вам выбрать модель, которую вы хотите отредактировать.
 
-### View output
--->
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/edit-model.png" width="90%" title="Редактирование модели в визуальном редакторе с помощью кнопки 'Редактировать модель'." />
 
-## Edit an existing model
-To edit an existing model, navigate to the Visual Editor, click on the **Get Started** button on the upper right, and click **Edit existing model**. This will allow you to select the model you'd like to edit.
+## Контроль версий
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/edit-model.png" width="90%" title="Edit a model in the visual editor using the 'Edit a model' button." />
+Тестирование и документирование ваших моделей является важной частью процесса разработки.  
 
-## Version control
-
-Testing and documenting your models is an important part of the development process.  
-
-Stay tuned! Coming very soon, you'll be able to version control your dbt modes in the visual editor. This ensures you can track changes and revert to previous versions if needed.
-
-<!-- leaving this section here in case there's more to add later if needed
-## Limitations
-Are there limitations here?
--->
+Следите за новостями! Совсем скоро вы сможете контролировать версии своих моделей dbt в визуальном редакторе. Это обеспечит возможность отслеживания изменений и возврата к предыдущим версиям при необходимости.

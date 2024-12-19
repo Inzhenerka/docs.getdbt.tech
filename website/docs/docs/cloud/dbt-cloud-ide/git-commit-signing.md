@@ -1,80 +1,75 @@
 ---
-title: "Git commit signing"
-description: "Learn how to sign your Git commits when using the IDE for development."
-sidebar_label: Git commit signing
+title: "Подпись коммитов Git"
+description: "Узнайте, как подписывать свои коммиты Git при использовании IDE для разработки."
+sidebar_label: Подпись коммитов Git
 ---
 
-# Git commit signing <Lifecycle status="Enterprise" />
+# Подпись коммитов Git <Lifecycle status="Enterprise" />
 
-To prevent impersonation and enhance security, you can sign your Git commits before pushing them to your repository. Using your signature, a Git provider can cryptographically verify a commit and mark it as "verified", providing increased confidence about its origin.
+Чтобы предотвратить подмену личности и повысить безопасность, вы можете подписывать свои коммиты Git перед их отправкой в репозиторий. С помощью вашей подписи провайдер Git может криптографически проверить коммит и пометить его как "подтвержденный", что повышает уверенность в его происхождении.
 
-You can configure dbt Cloud to sign your Git commits when using the IDE for development. To set up, enable the feature in dbt Cloud, follow the flow to generate a keypair, and upload the public key to your Git provider to use for signature verification.  
+Вы можете настроить dbt Cloud для подписи ваших коммитов Git при использовании IDE для разработки. Для этого включите функцию в dbt Cloud, следуйте инструкциям для генерации пары ключей и загрузите открытый ключ к вашему провайдеру Git для использования верификации подписи.
 
+## Предварительные требования
 
-## Prerequisites 
+- GitHub или GitLab является вашим провайдером Git. В настоящее время Azure DevOps не поддерживается.
+- У вас есть аккаунт dbt Cloud на [Enterprise плане](https://www.getdbt.com/pricing/).
 
-- GitHub or GitLab is your Git provider. Currently, Azure DevOps is not supported.
-- You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
+## Генерация пары ключей GPG в dbt Cloud
 
-## Generate GPG keypair in dbt Cloud
+Чтобы сгенерировать пару ключей GPG в dbt Cloud, выполните следующие шаги:
+1. Перейдите на страницу **Личный профиль** в dbt Cloud.
+2. Перейдите в раздел **Подписанные коммиты**.
+3. Включите переключатель **Подписывать коммиты, исходящие от этого пользователя**.
+4. Это сгенерирует пару ключей GPG. Закрытый ключ будет использоваться для подписи всех будущих коммитов Git. Открытый ключ будет отображен, что позволит вам загрузить его к вашему провайдеру Git.
 
-To generate a GPG keypair in dbt Cloud, follow these steps:
-1. Go to your **Personal profile** page in dbt Cloud.
-2. Navigate to **Signed Commits** section.
-3. Enable the **Sign commits originating from this user** toggle.
-4. This will generate a GPG keypair. The private key will be used to sign all future Git commits. The public key will be displayed, allowing you to upload it to your Git provider.
+<Lightbox src="/img/docs/dbt-cloud/example-git-signed-commits-setting.png" width="95%" title="Пример настройки профиля Подписанные коммиты" />
 
-<Lightbox src="/img/docs/dbt-cloud/example-git-signed-commits-setting.png" width="95%" title="Example of profile setting Signed commits" />
+## Загрузка открытого ключа к провайдеру Git
 
-## Upload public key to Git provider 
+Чтобы загрузить открытый ключ к вашему провайдеру Git, следуйте подробной документации, предоставленной поддерживаемым провайдером Git:
 
-To upload the public key to your Git provider, follow the detailed documentation provided by the supported Git provider:
+- [Инструкции для GitHub](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account) 
+- [Инструкции для GitLab](https://docs.gitlab.com/ee/user/project/repository/signed_commits/gpg.html) 
 
-- [GitHub instructions](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account) 
-- [GitLab instructions](https://docs.gitlab.com/ee/user/project/repository/signed_commits/gpg.html) 
+После того как вы загрузите открытый ключ к вашему провайдеру Git, ваши коммиты Git будут помечены как "Подтвержденные" после того, как вы отправите изменения в репозиторий.
 
-Once you have uploaded the public key to your Git provider, your Git commits will be marked as "Verified" after you push the changes to the repository.
+<Lightbox src="/img/docs/dbt-cloud/git-sign-verified.jpg" width="95%" title="Пример подтвержденного коммита Git у провайдера Git." />
 
-<Lightbox src="/img/docs/dbt-cloud/git-sign-verified.jpg" width="95%" title="Example of a verified Git commit in a Git provider." />
+## Учитывайте
 
-## Considerations
-
-- The GPG keypair is tied to the user, not a specific account. There is a 1:1 relationship between the user and keypair. The same key will be used for signing commits on any accounts the user is a member of.
-- The GPG keypair generated in dbt Cloud is linked to the email address associated with your account at the time of keypair creation. This email identifies the author of signed commits.
-- For your Git commits to be marked as "verified", your dbt Cloud email address must be a verified email address with your Git provider. The Git provider (such as, GitHub, GitLab) checks that the commit's signed email matches a verified email in your Git provider account. If they don’t match, the commit won't be marked as "verified."
-- Keep your dbt Cloud email and Git provider's verified email in sync to avoid verification issues. If you change your dbt Cloud email address:
-  - Generate a new GPG keypair with the updated email, following the [steps mentioned earlier](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
-  - Add and verify the new email in your Git provider.
+- Пара ключей GPG привязана к пользователю, а не к конкретному аккаунту. Существует отношение 1:1 между пользователем и парой ключей. Один и тот же ключ будет использоваться для подписи коммитов на любых аккаунтах, в которых является членом пользователь.
+- Пара ключей GPG, сгенерированная в dbt Cloud, связана с адресом электронной почты, ассоциированным с вашим аккаунтом на момент создания пары ключей. Этот адрес электронной почты идентифицирует автора подписанных коммитов.
+- Чтобы ваши коммиты Git были помечены как "подтвержденные", адрес электронной почты в dbt Cloud должен быть подтвержденным адресом электронной почты у вашего провайдера Git. Провайдер Git (например, GitHub, GitLab) проверяет, совпадает ли подписанный адрес электронной почты коммита с подтвержденным адресом электронной почты в вашем аккаунте провайдера Git. Если они не совпадают, коммит не будет помечен как "подтвержденный".
+- Держите адрес электронной почты в dbt Cloud и подтвержденный адрес электронной почты провайдера Git в синхронизации, чтобы избежать проблем с верификацией. Если вы измените адрес электронной почты в dbt Cloud:
+  - Сгенерируйте новую пару ключей GPG с обновленным адресом электронной почты, следуя [ранее упомянутым шагам](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
+  - Добавьте и подтвердите новый адрес электронной почты у вашего провайдера Git.
 
 <!-- vale off -->
 
-## FAQs
+## Часто задаваемые вопросы
 
 <!-- vale on -->
 
-<DetailsToggle alt_header="What happens if I delete my GPG keypair in dbt Cloud?">
+<DetailsToggle alt_header="Что произойдет, если я удалю свою пару ключей GPG в dbt Cloud?">
 
-If you delete your GPG keypair in dbt Cloud, your Git commits will no longer be signed. You can generate a new GPG keypair by following the [steps mentioned earlier](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
+Если вы удалите свою пару ключей GPG в dbt Cloud, ваши коммиты Git больше не будут подписаны. Вы можете сгенерировать новую пару ключей GPG, следуя [ранее упомянутым шагам](/docs/cloud/dbt-cloud-ide/git-commit-signing#generate-gpg-keypair-in-dbt-cloud).
 </DetailsToggle>
 
-<DetailsToggle alt_header="What Git providers support GPG keys?">
+<DetailsToggle alt_header="Какие провайдеры Git поддерживают ключи GPG?">
 
-GitHub and GitLab support commit signing, while Azure DevOps does not. Commit signing is a [git feature](https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work), and is independent of any specific provider. However, not all providers support the upload of public keys, or the display of verification badges on commits.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="What if my Git provider doesn't support GPG keys?">
-
-If your Git Provider does not explicitly support the uploading of public GPG keys, then
-commits will still be signed using the private key, but no verification information will
-be displayed by the provider.
+GitHub и GitLab поддерживают подпись коммитов, в то время как Azure DevOps не поддерживает. Подпись коммитов является [функцией git](https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work) и не зависит от конкретного провайдера. Однако не все провайдеры поддерживают загрузку открытых ключей или отображение значков верификации на коммитах.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="What if my Git provider requires that all commits are signed?">
+<DetailsToggle alt_header="Что делать, если мой провайдер Git не поддерживает ключи GPG?">
 
-If your Git provider is configured to enforce commit verification, then unsigned commits
-will be rejected. To avoid this, ensure that you have followed all previous steps to generate
-a keypair, and uploaded the public key to the provider.
+Если ваш провайдер Git явно не поддерживает загрузку открытых ключей GPG, то коммиты все равно будут подписаны с использованием закрытого ключа, но никакая информация о верификации не будет отображаться провайдером.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Что делать, если мой провайдер Git требует, чтобы все коммиты были подписаны?">
+
+Если ваш провайдер Git настроен на обязательную верификацию коммитов, то неподписанные коммиты будут отклонены. Чтобы избежать этого, убедитесь, что вы выполнили все предыдущие шаги для генерации пары ключей и загрузили открытый ключ к провайдеру.
 
 </DetailsToggle>

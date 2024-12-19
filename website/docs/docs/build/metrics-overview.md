@@ -1,46 +1,46 @@
 ---
-title: Creating metrics
+title: Создание метрик
 id: metrics-overview
-description: "Metrics can be defined in the same or separate YAML files from semantic models within the same dbt project repo."
-sidebar_label: "Creating metrics"
-tags: [Metrics, Semantic Layer]
+description: "Метрики могут быть определены в тех же или отдельных YAML файлах от семантических моделей в рамках одного репозитория проекта dbt."
+sidebar_label: "Создание метрик"
+tags: [Метрики, Семантический уровень]
 pagination_next: "docs/build/cumulative"
 ---
-  
-Once you've created your semantic models, it's time to start adding metrics. Metrics can be defined in the same YAML files as your semantic models, or split into separate YAML files into any other subdirectories (provided that these subdirectories are also within the same dbt project repo).
 
-This article explains the different supported metric types you can add to your dbt project. The keys for metrics definitions are:
+После того как вы создали свои семантические модели, пришло время начать добавлять метрики. Метрики могут быть определены в тех же YAML файлах, что и ваши семантические модели, или разделены на отдельные YAML файлы в любых других подкаталогах (при условии, что эти подкаталоги также находятся в одном репозитории проекта dbt).
 
-<!-- for v1.8 and higher -->
+В этой статье объясняются различные поддерживаемые типы метрик, которые вы можете добавить в свой проект dbt. Ключи для определения метрик:
+
+<!-- для v1.8 и выше -->
 
 <VersionBlock firstVersion="1.8">
 
-| Parameter | Description | Required | Type |
+| Параметр | Описание | Обязательный | Тип |
 | --------- | ----------- | ---- | ---- |
-| `name` | Provide the reference name for the metric. This name must be a unique metric name and can consist of lowercase letters, numbers, and underscores.  | Required | String |
-| `description` | Describe your metric.   | Optional | String |
-| `type` | Define the type of metric, which can be `conversion`, `cumulative`, `derived`, `ratio`, or `simple`. | Required | String |
-| `type_params` | Additional parameters used to configure metrics. `type_params` are different for each metric type. | Required | Dict |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).  | Required | String |
-| `config` | Use the [`config`](/reference/resource-properties/config) property to specify configurations for your metric. Supports [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group), and [`enabled`](/reference/resource-configs/enabled) configurations.  | Optional | Dict |
-| `filter` | You can optionally add a [filter](#filters) string to any metric type, applying filters to dimensions, entities, time dimensions, or other metrics during metric computation. Consider it as your WHERE clause.   | Optional | String |
+| `name` | Укажите референсное имя для метрики. Это имя должно быть уникальным и может состоять из строчных букв, цифр и подчеркиваний.  | Обязательный | Строка |
+| `description` | Опишите вашу метрику.   | Необязательный | Строка |
+| `type` | Определите тип метрики, который может быть `conversion`, `cumulative`, `derived`, `ratio` или `simple`. | Обязательный | Строка |
+| `type_params` | Дополнительные параметры, используемые для настройки метрик. `type_params` различаются для каждого типа метрики. | Обязательный | Словарь |
+| `label` | Обязательная строка, определяющая отображаемое значение в инструментах на выходе. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`).  | Обязательный | Строка |
+| `config` | Используйте свойство [`config`](/reference/resource-properties/config), чтобы указать настройки для вашей метрики. Поддерживает конфигурации [`meta`](/reference/resource-configs/meta), [`group`](/reference/resource-configs/group) и [`enabled`](/reference/resource-configs/enabled).  | Необязательный | Словарь |
+| `filter` | Вы можете дополнительно добавить строку [фильтра](#filters) к любому типу метрики, применяя фильтры к измерениям, сущностям, временным измерениям или другим метрикам во время вычисления метрики. Рассматривайте это как ваш оператор WHERE.   | Необязательный | Строка |
 
-Here's a complete example of the metrics spec configuration:
+Вот полный пример конфигурации спецификации метрик:
 
 <File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
-  - name: metric name                     ## Required
-    description: description               ## Optional
-    type: the type of the metric          ## Required
-    type_params:                          ## Required
+  - name: metric name                     ## Обязательный
+    description: description               ## Необязательный
+    type: the type of the metric          ## Обязательный
+    type_params:                          ## Обязательный
       - specific properties for the metric type
-    config:                               ## Optional
+    config:                               ## Необязательный
       meta:
-        my_meta_config:  'config'         ## Optional
-    label: The display name for your metric. This value will be shown in downstream tools. ## Required
-    filter: |                             ## Optional            
+        my_meta_config:  'config'         ## Необязательный
+    label: The display name for your metric. This value will be shown in downstream tools. ## Обязательный
+    filter: |                             ## Необязательный            
       {{  Dimension('entity__name') }} > 0 and {{ Dimension(' entity__another_name') }} is not
       null and {{ Metric('metric_name', group_by=['entity_name']) }} > 5
 ```
@@ -48,37 +48,37 @@ metrics:
 </File>
 </VersionBlock>
 
-<!-- for v1.7 and lower -->
+<!-- для v1.7 и ниже -->
 
 <VersionBlock lastVersion="1.7">
 
-| Parameter | Description | Required | Type  |
+| Параметр | Описание | Обязательный | Тип  |
 | --------- | ----------- | ---- | ---- |
-| `name` | Provide the reference name for the metric. This name must be unique amongst all metrics.   | Required | String |
-| `description` | Describe your metric.   | Optional | String |
-| `type` | Define the type of metric, which can be `simple`, `ratio`, `cumulative`, or `derived`.  | Required | String |
-| `type_params` | Additional parameters used to configure metrics. `type_params` are different for each metric type. | Required | Dict |
-| `config` | Provide the specific configurations for your metric.   | Optional | Dict |
-| `meta` | Use the [`meta` config](/reference/resource-configs/meta) to set metadata for a resource.  | Optional | String |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).   | Required | String |
-| `filter` | You can optionally add a filter string to any metric type, applying filters to dimensions, entities, or time dimensions during metric computation. Consider it as your WHERE clause.   | Optional | String |
+| `name` | Укажите референсное имя для метрики. Это имя должно быть уникальным среди всех метрик.   | Обязательный | Строка |
+| `description` | Опишите вашу метрику.   | Необязательный | Строка |
+| `type` | Определите тип метрики, который может быть `simple`, `ratio`, `cumulative` или `derived`.  | Обязательный | Строка |
+| `type_params` | Дополнительные параметры, используемые для настройки метрик. `type_params` различаются для каждого типа метрики. | Обязательный | Словарь |
+| `config` | Укажите конкретные настройки для вашей метрики.   | Необязательный | Словарь |
+| `meta` | Используйте [`meta` config](/reference/resource-configs/meta), чтобы установить метаданные для ресурса.  | Необязательный | Строка |
+| `label` | Обязательная строка, определяющая отображаемое значение в инструментах на выходе. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`).   | Обязательный | Строка |
+| `filter` | Вы можете дополнительно добавить строку фильтра к любому типу метрики, применяя фильтры к измерениям, сущностям или временным измерениям во время вычисления метрики. Рассматривайте это как ваш оператор WHERE.   | Необязательный | Строка |
 
-Here's a complete example of the metrics spec configuration:
+Вот полный пример конфигурации спецификации метрик:
 
 <File name="models/metrics/file_name.yml" >
 
 ```yaml
 metrics:
-  - name: metric name                     ## Required
-    description: same as always           ## Optional
-    type: the type of the metric          ## Required
-    type_params:                          ## Required
+  - name: metric name                     ## Обязательный
+    description: same as always           ## Необязательный
+    type: the type of the metric          ## Обязательный
+    type_params:                          ## Обязательный
       - specific properties for the metric type
-    config: here for `enabled`            ## Optional
+    config: here for `enabled`            ## Необязательный
     meta:
-        my_meta_direct: 'direct'           ## Optional
-    label: The display name for your metric. This value will be shown in downstream tools. ## Required
-    filter: |                             ## Optional            
+        my_meta_direct: 'direct'           ## Необязательный
+    label: The display name for your metric. This value will be shown in downstream tools. ## Обязательный
+    filter: |                             ## Необязательный            
       {{  Dimension('entity__name') }} > 0 and {{ Dimension(' entity__another_name') }} is not
       null and {{ Metric('metric_name', group_by=['entity_name']) }} > 5
 ```
@@ -90,24 +90,23 @@ import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Default granularity for metrics
+## Стандартная гранулярность для метрик
 
 <VersionBlock lastVersion="1.8">
-Default time granularity for metrics is useful if your time dimension has a very fine grain, like second or hour, but you typically query metrics rolled up at a coarser grain. 
+Стандартная временная гранулярность для метрик полезна, если ваше временное измерение имеет очень мелкую гранулярность, например, секунды или часы, но вы обычно запрашиваете метрики, агрегированные на более грубой гранулярности.
 
-Default time granularity for metrics is available now in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), and it will be available in [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
-
+Стандартная временная гранулярность для метрик доступна сейчас в [последнем релизе в dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и будет доступна в [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-It's possible to define a default time granularity for metrics if it's different from the granularity of the default aggregation time dimensions (`metric_time`). This is useful if your time dimension has a very fine grain, like second or hour, but you typically query metrics rolled up at a coarser grain. 
+Возможно определить стандартную временную гранулярность для метрик, если она отличается от гранулярности стандартных временных измерений агрегации (`metric_time`). Это полезно, если ваше временное измерение имеет очень мелкую гранулярность, например, секунды или часы, но вы обычно запрашиваете метрики, агрегированные на более грубой гранулярности.
 
-The granularity can be set using the `time_granularity` parameter on the metric, and defaults to `day`. If day is not available because the dimension is defined at a coarser granularity, it will default to the defined granularity for the dimension.
+Гранулярность можно установить с помощью параметра `time_granularity` в метрике, и по умолчанию она равна `day`. Если день недоступен, потому что измерение определено на более грубой гранулярности, оно будет по умолчанию соответствовать определенной гранулярности для измерения.
 
-### Example
-You have a semantic model called `orders` with a time dimension called `order_time`. You want the `orders` metric to roll up to `monthly` by default; however, you want the option to look at these metrics hourly. You can set the `time_granularity` parameter on the `order_time` dimension to `hour`, and then set the `time_granularity` parameter in the metric to `month`.
+### Пример
+У вас есть семантическая модель под названием `orders` с временным измерением под названием `order_time`. Вы хотите, чтобы метрика `orders` по умолчанию агрегировалась по `monthly`; однако вы хотите иметь возможность просматривать эти метрики по часам. Вы можете установить параметр `time_granularity` в измерении `order_time` на `hour`, а затем установить параметр `time_granularity` в метрике на `month`.
 ```yaml
 semantic_models:
   ...
@@ -127,13 +126,13 @@ semantic_models:
       type_params:
         measure:
           name: orders
-      time_granularity: month -- Optional, defaults to day
+      time_granularity: month -- Необязательный, по умолчанию day
 ```
 </VersionBlock>
 
-## Conversion metrics
+## Метрики конверсии
 
-[Conversion metrics](/docs/build/conversion) help you track when a base event and a subsequent conversion event occur for an entity within a set time period.
+[Метрики конверсии](/docs/build/conversion) помогают отслеживать, когда базовое событие и последующее событие конверсии происходят для сущности в заданный период времени.
 
 <File name="models/metrics/file_name.yml" >
 
@@ -162,14 +161,14 @@ metrics:
 ```
 </File>
 
-## Cumulative metrics
+## Кумулятивные метрики
 
-[Cumulative metrics](/docs/build/cumulative) aggregate a measure over a given window. If no window is specified, the window will accumulate the measure over all of the recorded time period. Note that you will need to create the [time spine model](/docs/build/metricflow-time-spine) before you add cumulative metrics.
+[Кумулятивные метрики](/docs/build/cumulative) агрегируют измерение за заданный период. Если окно не указано, окно будет накапливать измерение за весь записанный период времени. Обратите внимание, что вам нужно будет создать [модель временной спины](/docs/build/metricflow-time-spine) перед добавлением кумулятивных метрик.
 
 <File name="models/metrics/file_name.yml" >
 
 ```yaml
-# Cumulative metrics aggregate a measure over a given window. The window is considered infinite if no window parameter is passed (accumulate the measure over all of time)
+# Кумулятивные метрики агрегируют измерение за заданный период. Окно считается бесконечным, если параметр окна не передан (накапливает измерение за все время)
 metrics:
   - name: wau_rolling_7
     type: cumulative
@@ -183,9 +182,9 @@ metrics:
 ```
 </File>
 
-## Derived metrics
+## Производные метрики
 
-[Derived metrics](/docs/build/derived) are defined as an expression of other metrics. Derived metrics allow you to do calculations on top of metrics. 
+[Производные метрики](/docs/build/derived) определяются как выражение других метрик. Производные метрики позволяют выполнять вычисления на основе метрик.
 
 <File name="models/metrics/file_name.yml" >
 
@@ -205,27 +204,27 @@ metrics:
 ```
 </File>
 
-<!-- not supported
-### Expression metrics
-Use [expression metrics](/docs/build/expr) when you're building a metric that involves a SQL expression of multiple measures.
+<!-- не поддерживается
+### Метрики выражений
+Используйте [метрики выражений](/docs/build/expr), когда вы создаете метрику, которая включает SQL-выражение из нескольких измерений.
 
 ```yaml
-# Expression metric
+# Метрика выражения
 metrics:
   name: revenue_usd
-  type: expr # Expression metrics allow you to pass in any valid SQL expression.
+  type: expr # Метрики выражений позволяют передавать любое допустимое SQL-выражение.
   type_params:
-    expr: transaction_amount_usd - cancellations_usd + alterations_usd # Define the SQL expression 
-    measures: # Define all the measures that are to be used in this expression metric 
+    expr: transaction_amount_usd - cancellations_usd + alterations_usd # Определите SQL-выражение 
+    measures: # Определите все измерения, которые будут использоваться в этой метрике выражения 
       - transaction_amount_usd
       - cancellations_usd
       - alterations_usd
 ```
 -->
 
-## Ratio metrics 
+## Метрики отношения 
 
-[Ratio metrics](/docs/build/ratio) involve a numerator metric and a denominator metric. A  `filter` string  can be applied to both the numerator and denominator or separately to the numerator or denominator.
+[Метрики отношения](/docs/build/ratio) включают метрику числителя и метрику знаменателя. Строка `filter` может быть применена как к числителю, так и к знаменателю или отдельно к числителю или знаменателю.
 
 <File name="models/metrics/file_name.yml" >
 
@@ -251,13 +250,13 @@ metrics:
 ```
 </File>
 
-## Simple metrics
+## Простые метрики
 
-[Simple metrics](/docs/build/simple) point directly to a measure. You may think of it as a function that takes only one measure as the input.
+[Простые метрики](/docs/build/simple) указывают непосредственно на измерение. Вы можете рассматривать это как функцию, которая принимает только одно измерение в качестве входных данных.
 
-- `name` &mdash; Use this parameter to define the reference name of the metric. The name must be unique amongst metrics and can include lowercase letters, numbers, and underscores. You can use this name to call the metric from the dbt Semantic Layer API.
+- `name` &mdash; Используйте этот параметр для определения референсного имени метрики. Имя должно быть уникальным среди метрик и может включать строчные буквы, цифры и подчеркивания. Вы можете использовать это имя для вызова метрики из API семантического уровня dbt.
 
-**Note:** If you've already defined the measure using the `create_metric: True` parameter, you don't need to create simple metrics.  However, if you would like to include a constraint on top of the measure, you will need to create a simple type metric.
+**Примечание:** Если вы уже определили измерение, используя параметр `create_metric: True`, вам не нужно создавать простые метрики. Однако, если вы хотите включить ограничение на основе измерения, вам нужно будет создать метрику простого типа.
 
 <File name="models/metrics/file_name.yml" >
 
@@ -269,19 +268,19 @@ metrics:
     label: Cancellations
     type_params:
       measure:
-        name: cancellations_usd  # Specify the measure you are creating a proxy for.
+        name: cancellations_usd  # Укажите измерение, для которого вы создаете прокси.
         fill_nulls_with: 0
-        join_to_timespine: true
     filter: |
       {{ Dimension('order__value')}} > 100 and {{Dimension('user__acquisition')}} is not null
+    join_to_timespine: true
 ```
 </File>
 
-## Filters
+## Фильтры
 
-A filter is configured using Jinja templating. Use the following syntax to reference entities, dimensions, time dimensions, or metrics in filters. 
+Фильтр настраивается с использованием шаблонизации Jinja. Используйте следующий синтаксис для ссылки на сущности, измерения, временные измерения или метрики в фильтрах.
 
-Refer to [Metrics as dimensions](/docs/build/ref-metrics-in-filters) for details on how to use metrics as dimensions with metric filters:
+Смотрите [Метрики как измерения](/docs/build/ref-metrics-in-filters) для получения подробной информации о том, как использовать метрики в качестве измерений с фильтрами метрик:
 
 <VersionBlock firstVersion="1.8">
 
@@ -306,7 +305,6 @@ filter: |
 
 <VersionBlock lastVersion="1.7">
 
-
 <File name="models/metrics/file_name.yml" >
 
 ```yaml
@@ -323,7 +321,7 @@ filter: |
 </File>
 </VersionBlock>
 
-For example, if you want to filter for the order date dimension grouped by month, use the following syntax:
+Например, если вы хотите отфильтровать по измерению даты заказа, сгруппированному по месяцам, используйте следующий синтаксис:
 
 ```yaml
 filter: |  
@@ -331,14 +329,14 @@ filter: |
 
 ```
 
-## Further configuration
+## Дополнительная конфигурация
 
-You can set more metadata for your metrics, which can be used by other tools later on. The way this metadata is used will vary based on the specific integration partner
+Вы можете установить больше метаданных для ваших метрик, которые могут быть использованы другими инструментами позже. Способ использования этих метаданных будет варьироваться в зависимости от конкретного интеграционного партнера.
 
-- **Description** &mdash;  Write a detailed description of the metric.
+- **Описание** &mdash;  Напишите подробное описание метрики.
 
-## Related docs
+## Связанные документы
 
-- [Semantic models](/docs/build/semantic-models)
-- [Fill null values for metrics](/docs/build/fill-nulls-advanced)
-- [Metrics as dimensions with metric filters](/docs/build/ref-metrics-in-filters)
+- [Семантические модели](/docs/build/semantic-models)
+- [Заполнение нулевых значений для метрик](/docs/build/fill-nulls-advanced)
+- [Метрики как измерения с фильтрами метрик](/docs/build/ref-metrics-in-filters)

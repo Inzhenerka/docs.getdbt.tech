@@ -1,56 +1,55 @@
 ---
-title: "dbt tips and tricks"
-description: "Check out any dbt-related tips and tricks to help you work faster and be more productive."
-sidebar_label: "dbt tips and tricks"
+title: "Советы и хитрости dbt"
+description: "Посмотрите любые советы и хитрости, связанные с dbt, чтобы помочь вам работать быстрее и быть более продуктивным."
+sidebar_label: "Советы и хитрости dbt"
 pagination_next: null
 ---
 
-Use this page for valuable insights and practical advice to enhance your dbt experience. Whether you're new to dbt or an experienced user, these tips are designed to help you work more efficiently and effectively.
+Используйте эту страницу для получения ценных идей и практических советов, которые улучшат ваш опыт работы с dbt. Независимо от того, новичок вы в dbt или опытный пользователь, эти советы помогут вам работать более эффективно и результативно.
 
-The following tips are organized into the following categories:
+Следующие советы организованы по следующим категориям:
 
-- [Package tips](#package-tips) to help you streamline your workflow.
-- [Advanced tips and techniques](#advanced-tips-and-techniques) to help you get the most out of dbt.
+- [Советы по пакетам](#package-tips), которые помогут вам оптимизировать ваш рабочий процесс.
+- [Расширенные советы и техники](#advanced-tips-and-techniques), которые помогут вам максимально использовать возможности dbt.
 
+Если вы разрабатываете с помощью dbt Cloud IDE, вы можете обратиться к странице [горячих клавиш](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts), чтобы сделать разработку более продуктивной и удобной для всех.
 
-If you're developing with the dbt Cloud IDE, you can refer to the [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) page to help make development more productive and easier for everyone.
+## Советы по пакетам
 
-## Package tips
+Используйте эти пакеты dbt для оптимизации вашего рабочего процесса:
 
-Leverage these dbt packages to streamline your workflow:
+| Пакет | Описание |
+|-------|----------|
+| [`dbt_codegen`](https://hub.getdbt.com/dbt-labs/codegen/latest/) | Используйте пакет для генерации YML файлов для ваших моделей и источников, а также SQL файлов для ваших промежуточных моделей. |
+| [`dbt_utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) | Пакет содержит макросы, полезные для повседневной разработки. Например, `date_spine` генерирует таблицу со всеми датами между указанными параметрами. |
+| [`dbt_project_evaluator`](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest) | Пакет сравнивает ваш проект dbt с нашим списком лучших практик и предоставляет рекомендации и указания по обновлению ваших моделей. |
+| [`dbt_expectations`](https://hub.getdbt.com/calogica/dbt_expectations/latest) | Пакет содержит множество тестов, помимо тех, что встроены в dbt. |
+| [`dbt_audit_helper`](https://hub.getdbt.com/#:~:text=adwords-,audit_helper,-codegen) | Пакет позволяет сравнивать результаты двух запросов. Используйте его при рефакторинге существующей логики, чтобы убедиться, что новые результаты идентичны. |
+| [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest) | Пакет сохраняет информацию о ваших запусках dbt непосредственно на вашей платформе данных, чтобы вы могли отслеживать производительность моделей с течением времени. |
+| [`dbt_meta_testing`](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest) | Этот пакет проверяет, что ваш проект dbt достаточно протестирован и документирован. |
 
-| Package | Description |
-|---------|-------------|
-| [`dbt_codegen`](https://hub.getdbt.com/dbt-labs/codegen/latest/) |Use the package to help you generate YML files for your models and sources and SQL files for your staging models. |
-| [`dbt_utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) | The package contains macros useful for daily development. For example, `date_spine` generates a table with all dates between the ones provided as parameters. |
-| [`dbt_project_evaluator`](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest) | The package compares your dbt project against a list of our best practices and provides suggestions and guidelines on how to update your models. |
-| [`dbt_expectations`](https://hub.getdbt.com/calogica/dbt_expectations/latest) | The package contains many tests beyond those built into dbt. |
-| [`dbt_audit_helper`](https://hub.getdbt.com/#:~:text=adwords-,audit_helper,-codegen) | The package lets you compare the output of 2 queries. Use it when refactoring existing logic to ensure that the new results are identical. |
-| [`dbt_artifacts`](https://hub.getdbt.com/brooklyn-data/dbt_artifacts/latest) | The package saves information about your dbt runs directly to your data platform so that you can track the performance of models over time. |
-| [`dbt_meta_testing`](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest) | This package checks that your dbt project is sufficiently tested and documented. |
+## Расширенные советы и техники
 
-## Advanced tips and techniques
+- Используйте структуру папок в качестве основного метода выбора. `dbt build --select marts.marketing` проще и более устойчиво, чем полагаться на тегирование каждой модели.
+- Рассматривайте задачи с точки зрения частоты сборки и SLA. Запускайте модели с почасовой, ежедневной или еженедельной частотой сборки вместе.
+- Используйте [конфигурацию where](/reference/resource-configs/where) для тестов, чтобы протестировать утверждение на подмножестве записей.
+- [store_failures](/reference/resource-configs/store_failures) позволяет вам исследовать записи, которые вызывают сбои тестов, чтобы вы могли либо исправить данные, либо изменить тест по мере необходимости.
+- Используйте [пороговые значения severity](/reference/resource-configs/severity), чтобы установить допустимое количество сбоев для теста.
+- Используйте [incremental_strategy](/docs/build/incremental-strategy) в конфигурации вашей инкрементной модели, чтобы реализовать наиболее эффективное поведение в зависимости от объема ваших данных и надежности ваших уникальных ключей.
+- Установите `vars` в вашем `dbt_project.yml`, чтобы определить глобальные значения по умолчанию для определенных условий, которые вы затем можете переопределить с помощью флага `--vars` в ваших командах.
+- Используйте [for loops](/guides/using-jinja?step=3) в Jinja, чтобы <Term id="dry">сократить</Term> повторяющуюся логику, такую как выбор серии столбцов, для которых необходимо применить одни и те же преобразования и шаблоны именования.
+- Вместо того чтобы полагаться на post-hooks, используйте [конфигурацию grants](/reference/resource-configs/grants) для применения разрешений в хранилище устойчиво.
+- Определите [пороговые значения source-freshness](/docs/build/sources#source-data-freshness) для ваших источников, чтобы избежать выполнения преобразований на данных, которые уже были обработаны.
+- Используйте оператор `+` слева от имени модели `dbt build --select +model_name`, чтобы запустить модель и все ее зависимости вверх по потоку. Используйте оператор `+` справа от модели `dbt build --select model_name+`, чтобы запустить модель и все, что зависит от нее вниз по потоку.
+- Используйте `dir_name`, чтобы запустить все модели в пакете или директории.
+- Используйте оператор `@` слева от модели в настройках CI, не учитывающих состояние, чтобы протестировать ее. Этот оператор запускает всех родителей и детей выбранного элемента, а также запускает родителей его детей, которые в новой схеме CI, вероятно, еще не существуют.
+- Используйте [флаг --exclude](/reference/node-selection/exclude), чтобы исключить подмножество моделей из выбора.
+- Используйте [флаг --full-refresh](/reference/commands/run#refresh-incremental-models), чтобы заново построить инкрементную модель с нуля.
+- Используйте [seeds](/docs/build/seeds) для создания ручных таблиц поиска, таких как почтовые индексы для штатов или маркетинговые UTM для кампаний. `dbt seed` создаст их из CSV в вашем хранилище и сделает их доступными для `ref` в ваших моделях.
+- Используйте [target.name](/docs/build/custom-schemas#an-alternative-pattern-for-generating-schema-names), чтобы изменить логику в зависимости от используемой среды. Например, чтобы строить в одну схему разработки во время разработки, но использовать несколько схем в производстве.
 
-- Use your folder structure as your primary selector method. `dbt build --select marts.marketing` is simpler and more resilient than relying on tagging every model.
-- Think about jobs in terms of build cadences and SLAs. Run models that have hourly, daily, or weekly build cadences together.
-- Use the [where config](/reference/resource-configs/where) for tests to test an assertion on a subset of records.
-- [store_failures](/reference/resource-configs/store_failures) lets you examine records that cause tests to fail, so you can either repair the data or change the test as needed.
-- Use [severity](/reference/resource-configs/severity) thresholds to set an acceptable number of failures for a test.
-- Use [incremental_strategy](/docs/build/incremental-strategy) in your incremental model config to implement the most effective behavior depending on the volume of your data and reliability of your unique keys.
-- Set `vars` in your `dbt_project.yml` to define global defaults for certain conditions, which you can then override using the `--vars` flag in your commands.
-- Use [for loops](/guides/using-jinja?step=3) in Jinja to <Term id="dry">DRY</Term> up repetitive logic, such as selecting a series of columns that all require the same transformations and naming patterns to be applied.
-- Instead of relying on post-hooks, use the [grants config](/reference/resource-configs/grants) to apply permission grants in the warehouse resiliently.
-- Define [source-freshness](/docs/build/sources#source-data-freshness) thresholds on your sources to avoid running transformations on data that has already been processed.
-- Use the `+` operator on the left of a model `dbt build --select +model_name` to run a model and all of its upstream dependencies. Use the `+` operator on the right of the model `dbt build --select model_name+` to run a model and everything downstream that depends on it.
-- Use `dir_name` to run all models in a package or directory.
-- Use the `@` operator on the left of a model in a non-state-aware CI setup to test it. This operator runs all of a selection’s parents and children, and also runs the parents of its children, which in a fresh CI schema will likely not exist yet.
-- Use the [--exclude flag](/reference/node-selection/exclude) to remove a subset of models out of a selection.
-- Use the [--full-refresh](/reference/commands/run#refresh-incremental-models) flag to rebuild an incremental model from scratch.
-- Use [seeds](/docs/build/seeds) to create manual lookup tables, like zip codes to states or marketing UTMs to campaigns. `dbt seed` will build these from CSVs into your warehouse and make them `ref` able in your models.
-- Use [target.name](/docs/build/custom-schemas#an-alternative-pattern-for-generating-schema-names) to pivot logic based on what environment you’re using. For example, to build into a single development schema while developing, but use multiple schemas in production.
+## Связанные документы
 
-## Related docs
-
-- [Quickstart guide](/guides)
-- [About dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features)
-- [Develop in the Cloud](/docs/cloud/about-develop-dbt)
+- [Руководство по быстрому старту](/guides)
+- [О dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features)
+- [Разработка в облаке](/docs/cloud/about-develop-dbt)

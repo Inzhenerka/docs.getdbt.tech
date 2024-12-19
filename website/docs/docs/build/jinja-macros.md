@@ -1,41 +1,41 @@
 ---
-title: "Jinja and macros"
-description: "Read this tutorial to learn how to use jinja and macros when building in dbt."
+title: "Jinja и макросы"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать Jinja и макросы при работе с dbt."
 id: "jinja-macros"
 ---
 
-## Related reference docs
-* [Jinja Template Designer Documentation](https://jinja.palletsprojects.com/page/templates/) (external link)
-* [dbt Jinja context](/reference/dbt-jinja-functions)
-* [Macro properties](/reference/macro-properties)
+## Связанные справочные документы
+* [Документация по проектированию шаблонов Jinja](https://jinja.palletsprojects.com/page/templates/) (внешняя ссылка)
+* [Контекст Jinja в dbt](/reference/dbt-jinja-functions)
+* [Свойства макросов](/reference/macro-properties)
 
-## Overview
-In dbt, you can combine SQL with [Jinja](https://jinja.palletsprojects.com), a templating language.
+## Обзор
+В dbt вы можете комбинировать SQL с [Jinja](https://jinja.palletsprojects.com), языком шаблонов.
 
-Using Jinja turns your dbt project into a programming environment for SQL, giving you the ability to do things that aren't normally possible in SQL. It's important to note that Jinja itself isn't a programming language; instead, it acts as a tool to enhance and extend the capabilities of SQL within your dbt projects.
+Использование Jinja превращает ваш проект dbt в программную среду для SQL, предоставляя вам возможность делать вещи, которые обычно невозможны в SQL. Важно отметить, что Jinja сама по себе не является языком программирования; вместо этого она служит инструментом для улучшения и расширения возможностей SQL в ваших проектах dbt.
 
-For example, with Jinja, you can:
-* Use control structures (e.g. `if` statements and `for` loops) in SQL
-* Use [environment variables](/reference/dbt-jinja-functions/env_var) in your dbt project for production deployments
-* Change the way your project builds based on the current target.
-* Operate on the results of one query to generate another query, for example:
-  * Return a list of payment methods, to create a subtotal column per payment method (pivot)
-  * Return a list of columns in two relations, and select them in the same order to make it easier to union them together
-* Abstract snippets of SQL into reusable [**macros**](#macros) — these are analogous to functions in most programming languages.
+Например, с помощью Jinja вы можете:
+* Использовать управляющие структуры (например, операторы `if` и циклы `for`) в SQL
+* Использовать [переменные окружения](/reference/dbt-jinja-functions/env_var) в вашем проекте dbt для производственных развертываний
+* Изменять способ сборки вашего проекта в зависимости от текущей цели.
+* Оперировать результатами одного запроса для генерации другого запроса, например:
+  * Вернуть список методов оплаты, чтобы создать столбец с промежуточной суммой для каждого метода оплаты (сводная таблица)
+  * Вернуть список столбцов в двух отношениях и выбрать их в одном и том же порядке, чтобы упростить объединение
+* Абстрагировать фрагменты SQL в повторно используемые [**макросы**](#macros) — они аналогичны функциям в большинстве языков программирования.
 
-If you've used the [`{{ ref() }}` function](/reference/dbt-jinja-functions/ref), you're already using Jinja!
+Если вы использовали [`{{ ref() }}` функцию](/reference/dbt-jinja-functions/ref), вы уже используете Jinja!
 
-Jinja can be used in any SQL in a dbt project, including [models](/docs/build/sql-models), [analyses](/docs/build/analyses), [tests](/docs/build/data-tests), and even [hooks](/docs/build/hooks-operations).
+Jinja может использоваться в любом SQL в проекте dbt, включая [модели](/docs/build/sql-models), [анализы](/docs/build/analyses), [тесты](/docs/build/data-tests) и даже [хуки](/docs/build/hooks-operations).
 
-:::info Ready to get started with Jinja and macros?
+:::info Готовы начать работать с Jinja и макросами?
 
-Check out the [tutorial on using Jinja](/guides/using-jinja) for a step-by-step example of using Jinja in a model, and turning it into a macro!
+Посмотрите [учебник по использованию Jinja](/guides/using-jinja) для пошагового примера использования Jinja в модели и превращения ее в макрос!
 
 :::
 
-## Getting started
+## Начало работы
 ### Jinja
-Here's an example of a dbt model that leverages Jinja:
+Вот пример модели dbt, которая использует Jinja:
 
 <File name='/models/order_payment_method_amounts.sql'>
 
@@ -54,7 +54,7 @@ group by 1
 
 </File>
 
-This query will get compiled to:
+Этот запрос будет скомпилирован в:
 
 <File name='/models/order_payment_method_amounts.sql'>
 
@@ -71,19 +71,19 @@ group by 1
 
 </File>
 
-You can recognize Jinja based on the delimiters the language uses, which we refer to as "curlies":
-- **Expressions `{{ ... }}`**: Expressions are used when you want to output a string. You can use expressions to reference [variables](/reference/dbt-jinja-functions/var) and call [macros](/docs/build/jinja-macros#macros).
-- **Statements `{% ... %}`**: Statements don't output a string. They are used for control flow, for example, to set up `for` loops and `if` statements, to [set](https://jinja.palletsprojects.com/en/3.1.x/templates/#assignments) or [modify](https://jinja.palletsprojects.com/en/3.1.x/templates/#expression-statement) variables, or to define macros.
--  **Comments `{# ... #}`**: Jinja comments are used to prevent the text within the comment from executing or outputing a string. Don't use `--` for comment.
+Вы можете распознать Jinja по разделителям, которые использует язык, которые мы называем "фигурные скобки":
+- **Выражения `{{ ... }}`**: Выражения используются, когда вы хотите вывести строку. Вы можете использовать выражения для ссылки на [переменные](/reference/dbt-jinja-functions/var) и вызова [макросов](/docs/build/jinja-macros#macros).
+- **Утверждения `{% ... %}`**: Утверждения не выводят строку. Они используются для управления потоком, например, для настройки циклов `for` и операторов `if`, для [установки](https://jinja.palletsprojects.com/en/3.1.x/templates/#assignments) или [изменения](https://jinja.palletsprojects.com/en/3.1.x/templates/#expression-statement) переменных или для определения макросов.
+- **Комментарии `{# ... #}`**: Комментарии Jinja используются для предотвращения выполнения текста внутри комментария или вывода строки. Не используйте `--` для комментариев.
 
-When used in a dbt model, your Jinja needs to compile to a valid query. To check what SQL your Jinja compiles to:
-* **Using dbt Cloud:** Click the compile button to see the compiled SQL in the Compiled SQL pane
-* **Using dbt Core:** Run `dbt compile` from the command line. Then open the compiled SQL file in the `target/compiled/{project name}/` directory. Use a split screen in your code editor to keep both files open at once.
+Когда Jinja используется в модели dbt, она должна компилироваться в действительный запрос. Чтобы проверить, в какой SQL компилируется ваша Jinja:
+* **Используя dbt Cloud:** Нажмите кнопку компиляции, чтобы увидеть скомпилированный SQL в панели скомпилированного SQL
+* **Используя dbt Core:** Запустите `dbt compile` из командной строки. Затем откройте скомпилированный SQL файл в директории `target/compiled/{project name}/`. Используйте разделенный экран в вашем редакторе кода, чтобы одновременно открывать оба файла.
 
-### Macros
-[Macros](/docs/build/jinja-macros) in Jinja are pieces of code that can be reused multiple times – they are analogous to "functions" in other programming languages, and are extremely useful if you find yourself repeating code across multiple models. Macros are defined in `.sql` files, typically in your `macros` directory ([docs](/reference/project-configs/macro-paths)).
+### Макросы
+[Макросы](/docs/build/jinja-macros) в Jinja — это фрагменты кода, которые могут быть повторно использованы несколько раз — они аналогичны "функциям" в других языках программирования и чрезвычайно полезны, если вы часто повторяете код в нескольких моделях. Макросы определяются в `.sql` файлах, обычно в вашей директории `macros` ([документация](/reference/project-configs/macro-paths)).
 
-Macro files can contain one or more macros — here's an example:
+Файлы макросов могут содержать один или несколько макросов — вот пример:
 
 <File name='macros/cents_to_dollars.sql'>
 
@@ -97,7 +97,7 @@ Macro files can contain one or more macros — here's an example:
 
 </File>
 
-A model which uses this macro might look like:
+Модель, которая использует этот макрос, может выглядеть так:
 
 <File name='models/stg_payments.sql'>
 
@@ -112,7 +112,7 @@ from app_data.payments
 
 </File>
 
-This would be _compiled_ to:
+Это будет _скомпилировано_ в:
 
 <File name='target/compiled/models/stg_payments.sql'>
 
@@ -130,10 +130,10 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-### Using a macro from a package
-A number of useful macros have also been grouped together into [packages](/docs/build/packages) — our most popular package is [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/).
+### Использование макроса из пакета
+Некоторые полезные макросы также были сгруппированы в [пакеты](/docs/build/packages) — наш самый популярный пакет — [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/).
 
-After installing a package into your project, you can use any of the macros in your own project — make sure you qualify the macro by prefixing it with the [package name](/reference/dbt-jinja-functions/project_name):
+После установки пакета в ваш проект вы можете использовать любой из макросов в своем собственном проекте — убедитесь, что вы квалифицируете макрос, добавив префикс с [именем пакета](/reference/dbt-jinja-functions/project_name):
 
 ```sql
 
@@ -149,9 +149,9 @@ from my_table
 
 ```
 
-You can also qualify a macro in your own project by prefixing it with your [package name](/reference/dbt-jinja-functions/project_name) (this is mainly useful for package authors).
+Вы также можете квалифицировать макрос в своем собственном проекте, добавив префикс с вашим [именем пакета](/reference/dbt-jinja-functions/project_name) (это в основном полезно для авторов пакетов).
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Accounts/dbt-specific-jinja" />
 <FAQ path="Jinja/which-jinja-docs" />
@@ -163,27 +163,26 @@ You can also qualify a macro in your own project by prefixing it with your [pack
 
 ## dbtonic Jinja
 
-Just like well-written python is pythonic, well-written dbt code is dbtonic.
+Так же как хорошо написанный Python является питоническим, хорошо написанный код dbt является дбтоническим.
 
-### Favor readability over <Term id="dry" />-ness {#favor-readability-over-dry-ness}
+### Предпочитайте читаемость перед <Term id="dry" />-ностью {#favor-readability-over-dry-ness}
 
-Once you learn the power of Jinja, it's common to want to abstract every repeated line into a macro! Remember that using Jinja can make your models harder for other users to interpret — we recommend favoring readability when mixing Jinja with SQL, even if it means repeating some lines of SQL in a few places. If all your models are macros, it might be worth re-assessing.
+Как только вы узнаете о мощи Jinja, становится обычным желанием абстрагировать каждую повторяющуюся строку в макрос! Помните, что использование Jinja может усложнить интерпретацию ваших моделей другими пользователями — мы рекомендуем предпочитать читаемость при смешивании Jinja с SQL, даже если это означает повторение некоторых строк SQL в нескольких местах. Если все ваши модели являются макросами, возможно, стоит переоценить это.
 
-### Leverage package macros
-Writing a macro for the first time? Check whether we've open sourced one in [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) that you can use, and save yourself some time!
+### Используйте макросы пакетов
+Пишете макрос в первый раз? Проверьте, не открыли ли мы один в [dbt-utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), который вы можете использовать, и сэкономьте себе время!
 
-### Set variables at the top of a model
-`{% set ... %}` can be used to create a new variable, or update an existing one. We recommend setting variables at the top of a model, rather than hardcoding it inline. This is a practice borrowed from many other coding languages, since it helps with readability, and comes in handy if you need to reference the variable in two places:
-
+### Устанавливайте переменные в верхней части модели
+`{% set ... %}` можно использовать для создания новой переменной или обновления существующей. Мы рекомендуем устанавливать переменные в верхней части модели, а не жестко кодировать их в строке. Это практика, заимствованная из многих других языков программирования, поскольку она помогает с читаемостью и полезна, если вам нужно ссылаться на переменную в двух местах:
 
 ```sql
--- 🙅 This works, but can be hard to maintain as your code grows
+-- 🙅 Это работает, но может быть сложно поддерживать по мере роста вашего кода
 {% for payment_method in ["bank_transfer", "credit_card", "gift_card"] %}
 ...
 {% endfor %}
 
 
--- ✅ This is our preferred method of setting variables
+-- ✅ Это наш предпочтительный метод установки переменных
 {% set payment_methods = ["bank_transfer", "credit_card", "gift_card"] %}
 
 {% for payment_method in payment_methods %}

@@ -1,166 +1,166 @@
 ---
-title: "About the dbt Cloud IDE"
+title: "О dbt Cloud IDE"
 id: develop-in-the-cloud
-description: "Develop, test, run, and build in the Cloud IDE. With the Cloud IDE, you can compile dbt code into SQL and run it against your database directly"
-sidebar_label: About the IDE
+description: "Разработка, тестирование, выполнение и сборка в Cloud IDE. С помощью Cloud IDE вы можете компилировать код dbt в SQL и выполнять его непосредственно в вашей базе данных."
+sidebar_label: О IDE
 tags: [IDE]
 pagination_next: "docs/cloud/dbt-cloud-ide/ide-user-interface"
 pagination_prev: null
 ---
 
-The dbt Cloud integrated development environment (IDE) is a single web-based interface for building, testing, running, and version-controlling dbt projects. It compiles dbt code into SQL and executes it directly on your database. 
+Интегрированная среда разработки (IDE) dbt Cloud представляет собой единый веб-интерфейс для создания, тестирования, выполнения и управления версиями проектов dbt. Она компилирует код dbt в SQL и выполняет его непосредственно в вашей базе данных.
 
-The dbt Cloud IDE offers several [keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) and [editing features](/docs/cloud/dbt-cloud-ide/ide-user-interface#editing-features) for faster and efficient development and governance:
+dbt Cloud IDE предлагает несколько [горячих клавиш](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) и [функций редактирования](/docs/cloud/dbt-cloud-ide/ide-user-interface#editing-features) для более быстрой и эффективной разработки и управления:
 
-- Syntax highlighting for SQL &mdash; Makes it easy to distinguish different parts of your code, reducing syntax errors and enhancing readability.
-- AI copilot &mdash; Use [dbt Copilot](/docs/cloud/dbt-copilot), a powerful AI engine that can [generate code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), and [semantic models](/docs/build/semantic-models) for you with the click of a button.
-- Auto-completion &mdash; Suggests table names, arguments, and column names as you type, saving time and reducing typos.
-- Code [formatting and linting](/docs/cloud/dbt-cloud-ide/lint-format) &mdash; Helps standardize and fix your SQL code effortlessly.
-- Navigation tools &mdash; Easily move around your code, jump to specific lines, find and replace text, and navigate between project files.
-- Version control &mdash; Manage code versions with a few clicks.
-- Project documentation &mdash; Generate and view your [project documentation](#build-and-document-your-projects) for your dbt project in real-time.
-- Build, test, and run button &mdash; Build, test, and run your project with a button click or by using the Cloud IDE command bar.  
+- Подсветка синтаксиса для SQL &mdash; Упрощает различение различных частей вашего кода, снижая количество синтаксических ошибок и повышая читаемость.
+- AI помощник &mdash; Используйте [dbt Copilot](/docs/cloud/dbt-copilot), мощный AI-движок, который может [генерировать код](/docs/cloud/use-dbt-copilot#generate-and-edit-code) с использованием естественного языка, а также [генерировать документацию](/docs/build/documentation), [тесты](/docs/build/data-tests) и [семантические модели](/docs/build/semantic-models) одним нажатием кнопки.
+- Автозаполнение &mdash; Предлагает имена таблиц, аргументы и имена столбцов по мере ввода, экономя время и уменьшая количество опечаток.
+- [Форматирование и линтинг кода](/docs/cloud/dbt-cloud-ide/lint-format) &mdash; Помогает стандартизировать и исправлять ваш SQL-код без усилий.
+- Инструменты навигации &mdash; Легко перемещайтесь по вашему коду, переходите к конкретным строкам, ищите и заменяйте текст, а также перемещайтесь между файлами проекта.
+- Управление версиями &mdash; Управляйте версиями кода всего за несколько кликов.
+- Документация проекта &mdash; Генерируйте и просматривайте вашу [документацию проекта](#build-and-document-your-projects) для вашего проекта dbt в реальном времени.
+- Кнопка сборки, тестирования и выполнения &mdash; Собирайте, тестируйте и выполняйте ваш проект одним нажатием кнопки или с помощью командной строки Cloud IDE.
 
-These [features](#dbt-cloud-ide-features) create a powerful editing environment for efficient SQL coding, suitable for both experienced and beginner developers.
+Эти [функции](#dbt-cloud-ide-features) создают мощную среду редактирования для эффективного написания SQL-кода, подходящую как для опытных, так и для начинающих разработчиков.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="85%" title="The dbt Cloud IDE includes version control,files/folders, an editor, a command/console, and more."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-basic-layout.jpg" width="85%" title="dbt Cloud IDE включает управление версиями, файлы/папки, редактор, командную строку/консоль и многое другое."/>
 
-<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="Enable dark mode for a great viewing experience in low-light environments."/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="Включите темный режим для отличного просмотра в условиях низкой освещенности."/>
 </DocCarousel>
 
-:::tip Disable ad blockers
+:::tip Отключите блокировщики рекламы
 
-To improve your experience using dbt Cloud, we suggest that you turn off ad blockers. This is because some project file names, such as `google_adwords.sql`, might resemble ad traffic and trigger ad blockers.
+Чтобы улучшить ваш опыт использования dbt Cloud, мы рекомендуем отключить блокировщики рекламы. Это связано с тем, что некоторые имена файлов проектов, такие как `google_adwords.sql`, могут напоминать рекламный трафик и вызывать срабатывание блокировщиков рекламы.
 
 :::
 
-## Prerequisites
+## Предварительные требования
 
-- A [dbt Cloud account](https://www.getdbt.com/signup) and [Developer seat license](/docs/cloud/manage-access/seats-and-users)
-- A git repository set up and git provider must have `write` access enabled. See [Connecting your GitHub Account](/docs/cloud/git/connect-github) or [Importing a project by git URL](/docs/cloud/git/import-a-project-by-git-url) for detailed setup instructions
-- A dbt project connected to a [data platform](/docs/cloud/connect-data-platform/about-connections)
-- A [development environment and development credentials](#get-started-with-the-cloud-ide) set up
-- The environment must be on dbt version 1.0 or higher
+- У вас должен быть [аккаунт dbt Cloud](https://www.getdbt.com/signup) и [лицензия на разработчика](/docs/cloud/manage-access/seats-and-users)
+- Настроенный git-репозиторий с включенным доступом `write`. См. [Подключение вашего аккаунта GitHub](/docs/cloud/git/connect-github) или [Импорт проекта по URL git](/docs/cloud/git/import-a-project-by-git-url) для получения подробных инструкций по настройке
+- Проект dbt, подключенный к [платформе данных](/docs/cloud/connect-data-platform/about-connections)
+- Настроенная [разработческая среда и учетные данные разработчика](#get-started-with-the-cloud-ide)
+- Среда должна быть на версии dbt 1.0 или выше
 
-## dbt Cloud IDE features
+## Функции dbt Cloud IDE
 
-The dbt Cloud IDE comes with features that make it easier for you to develop, build, compile, run, and test data models. 
+dbt Cloud IDE включает функции, которые упрощают разработку, сборку, компиляцию, выполнение и тестирование моделей данных.
 
-To understand how to navigate the IDE and its user interface elements, refer to the [IDE user interface](/docs/cloud/dbt-cloud-ide/ide-user-interface) page.
+Чтобы понять, как навигировать по IDE и ее элементам пользовательского интерфейса, обратитесь к странице [Пользовательский интерфейс IDE](/docs/cloud/dbt-cloud-ide/ide-user-interface).
 
-| Feature  |  Description |
+| Функция  |  Описание |
 |---|---|
-| [**Keyboard shortcuts**](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) | You can access a variety of [commands and actions](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) in the IDE by choosing the appropriate keyboard shortcut. Use the shortcuts for common tasks like building modified models or resuming builds from the last failure. |
-| **IDE version control** | The IDE version control section and git button allow you to apply the concept of [version control](/docs/collaborate/git/version-control-basics) to your project directly into the IDE. <br /><br /> - Create or change branches, execute git commands using the git button.<br /> - Commit or revert individual files by right-clicking the edited file<br /> - [Resolve merge conflicts](/docs/collaborate/git/merge-conflicts)<br /> - Link to the repo directly by clicking the branch name <br /> - Edit, format, or lint files and execute dbt commands in your primary protected branch, and commit to a new branch.<br /> - Use Git diff view to view what has been changed in a file before you make a pull request.<br /> - Use the **Prune branches** [button](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) (dbt v1.6 and higher) to delete local branches that have been deleted from the remote repository, keeping your branch management tidy.<br /> - Sign your [git commits](/docs/cloud/dbt-cloud-ide/git-commit-signing) to mark them as 'Verified'. <Lifecycle status="enterprise" /> |
-| **Preview and Compile button** | You can [compile or preview](/docs/cloud/dbt-cloud-ide/ide-user-interface#console-section) code, a snippet of dbt code, or one of your dbt models after editing and saving. |
-| [**dbt Copilot**](/docs/cloud/dbt-copilot) <Lifecycle status='beta' />| A powerful AI engine that can generate documentation, tests, and semantic models for your dbt SQL models. Available for dbt Cloud Enterprise plans. |
-| **Build, test, and run button**  | Build, test, and run your project with a button click or by using the Cloud IDE command bar.  
-| **Command bar** | You can enter and run commands from the command bar at the bottom of the IDE. Use the [rich model selection syntax](/reference/node-selection/syntax) to execute [dbt commands](/reference/dbt-commands) directly within dbt Cloud. You can also view the history, status, and logs of previous runs by clicking History on the left of the bar.
-| **Drag and drop**  | Drag and drop files located in the file explorer, and use the file breadcrumb on the top of the IDE for quick, linear navigation. Access adjacent files in the same file by right-clicking on the breadcrumb file.  
-| **Organize tabs and files**  | - Move your tabs around to reorganize your work in the IDE <br /> - Right-click on a tab to view and select a list of actions, including duplicate files  <br /> - Close multiple, unsaved tabs to batch save your work <br /> - Double click files to rename files |
-| **Find and replace** | - Press Command-F or Control-F to open the find-and-replace bar in the upper right corner of the current file in the IDE. The IDE highlights your search results in the current file and code outline<br /> - You can use the up and down arrows to see the match highlighted in the current file when there are multiple matches<br /> - Use the left arrow to replace the text with something else |
-| **Multiple selections**  | You can make multiple selections for small and simultaneous edits. The below commands are a common way to add more cursors and allow you to insert cursors below or above with ease.<br /><br /> - Option-Command-Down arrow or Ctrl-Alt-Down arrow<br /> - Option-Command-Up arrow or Ctrl-Alt-Up arrow<br /> - Press Option and click on an area or Press Ctrl-Alt and click on an area<br /> 
-| **Lint and Format** | [Lint and format](/docs/cloud/dbt-cloud-ide/lint-format) your files with a click of a button, powered by SQLFluff, sqlfmt, Prettier, and Black.
-| **dbt autocomplete**  |  Autocomplete features to help you develop faster:<br /><br />  - Use `ref` to autocomplete your model names<br /> - Use `source` to autocomplete your source name + table name<br /> - Use `macro` to autocomplete your arguments<br /> - Use `env var` to autocomplete env var<br /> - Start typing a hyphen (-) to use in-line autocomplete in a YAML filebr /> - Automatically create models from dbt sources with a click of a button.  |
-| **<Term id="dag" /> in the IDE** | You can see how models are used as building blocks from left to right to transform your data from raw sources into cleaned-up modular derived pieces and final outputs on the far right of the DAG. The default view is 2+model+2 (defaults to display 2 nodes away), however, you can change it to +model+ (full  <Term id="dag" />). Note the `--exclude` flag isn't supported. |
-| **Status bar** | This area provides you with useful information about your IDE and project status. You also have additional options like enabling light or dark mode, restarting the IDE, or [recloning your repo](/docs/collaborate/git/version-control-basics).
-| **Dark mode**  | From the status bar in the Cloud IDE, enable dark mode for a great viewing experience in low-light environments. 
+| [**Горячие клавиши**](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) | Вы можете получить доступ к различным [командам и действиям](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts) в IDE, выбрав соответствующую горячую клавишу. Используйте горячие клавиши для выполнения общих задач, таких как сборка измененных моделей или возобновление сборок с последнего сбоя. |
+| **Управление версиями IDE** | Раздел управления версиями IDE и кнопка git позволяют вам применять концепцию [управления версиями](/docs/collaborate/git/version-control-basics) непосредственно в IDE. <br /><br /> - Создавайте или изменяйте ветки, выполняйте команды git с помощью кнопки git.<br /> - Коммитите или отменяйте изменения отдельных файлов, щелкнув правой кнопкой мыши на редактируемом файле<br /> - [Разрешайте конфликты слияния](/docs/collaborate/git/merge-conflicts)<br /> - Прямо переходите к репозиторию, щелкнув по имени ветки <br /> - Редактируйте, форматируйте или линтуйте файлы и выполняйте команды dbt в вашей основной защищенной ветке, и коммитите в новую ветку.<br /> - Используйте представление Git diff, чтобы увидеть, что было изменено в файле перед тем, как сделать pull request.<br /> - Используйте кнопку **Обрезать ветки** [кнопка](/docs/cloud/dbt-cloud-ide/ide-user-interface#prune-branches-modal) (dbt v1.6 и выше), чтобы удалить локальные ветки, которые были удалены из удаленного репозитория, поддерживая порядок в управлении ветками.<br /> - Подписывайте свои [git-коммиты](/docs/cloud/dbt-cloud-ide/git-commit-signing), чтобы пометить их как 'Проверенные'. <Lifecycle status="enterprise" /> |
+| **Кнопка предварительного просмотра и компиляции** | Вы можете [скомпилировать или предварительно просмотреть](/docs/cloud/dbt-cloud-ide/ide-user-interface#console-section) код, фрагмент кода dbt или одну из ваших моделей dbt после редактирования и сохранения. |
+| [**dbt Copilot**](/docs/cloud/dbt-copilot) <Lifecycle status='beta' />| Мощный AI-движок, который может генерировать документацию, тесты и семантические модели для ваших SQL-моделей dbt. Доступен для планов dbt Cloud Enterprise. |
+| **Кнопка сборки, тестирования и выполнения**  | Собирайте, тестируйте и выполняйте ваш проект одним нажатием кнопки или с помощью командной строки Cloud IDE.  
+| **Командная строка** | Вы можете вводить и выполнять команды из командной строки внизу IDE. Используйте [богатый синтаксис выбора моделей](/reference/node-selection/syntax), чтобы выполнять [команды dbt](/reference/dbt-commands) непосредственно в dbt Cloud. Вы также можете просмотреть историю, статус и журналы предыдущих запусков, щелкнув История слева от строки.
+| **Перетаскивание**  | Перетаскивайте файлы, расположенные в проводнике файлов, и используйте хлебные крошки в верхней части IDE для быстрой линейной навигации. Получите доступ к соседним файлам в том же файле, щелкнув правой кнопкой мыши на хлебной крошке файла.  
+| **Организация вкладок и файлов**  | - Перемещайте свои вкладки, чтобы реорганизовать свою работу в IDE <br /> - Щелкните правой кнопкой мыши на вкладке, чтобы просмотреть и выбрать список действий, включая дублирование файлов  <br /> - Закрывайте несколько несохраненных вкладок, чтобы сохранить вашу работу пакетно <br /> - Дважды щелкните на файлах, чтобы переименовать файлы |
+| **Поиск и замена** | - Нажмите Command-F или Control-F, чтобы открыть панель поиска и замены в правом верхнем углу текущего файла в IDE. IDE выделяет ваши результаты поиска в текущем файле и в структуре кода<br /> - Вы можете использовать стрелки вверх и вниз, чтобы увидеть совпадение, выделенное в текущем файле, когда есть несколько совпадений<br /> - Используйте левую стрелку, чтобы заменить текст на что-то другое |
+| **Множественные выборы**  | Вы можете делать множественные выборы для небольших и одновременных правок. Ниже приведены команды, которые являются общим способом добавления дополнительных курсоров и позволяют вам легко вставлять курсоры ниже или выше.<br /><br /> - Option-Command-Down arrow или Ctrl-Alt-Down arrow<br /> - Option-Command-Up arrow или Ctrl-Alt-Up arrow<br /> - Нажмите Option и щелкните в области или нажмите Ctrl-Alt и щелкните в области<br /> 
+| **Линтинг и форматирование** | [Линтинг и форматирование](/docs/cloud/dbt-cloud-ide/lint-format) ваших файлов одним нажатием кнопки, с использованием SQLFluff, sqlfmt, Prettier и Black.
+| **Автозаполнение dbt**  |  Функции автозаполнения, которые помогут вам разрабатывать быстрее:<br /><br />  - Используйте `ref`, чтобы автозаполнить имена ваших моделей<br /> - Используйте `source`, чтобы автозаполнить имя источника + имя таблицы<br /> - Используйте `macro`, чтобы автозаполнить ваши аргументы<br /> - Используйте `env var`, чтобы автозаполнить переменные окружения<br /> - Начните вводить дефис (-), чтобы использовать встроенное автозаполнение в YAML-файле<br /> - Автоматически создавайте модели из источников dbt одним нажатием кнопки.  |
+| **<Term id="dag" /> в IDE** | Вы можете увидеть, как модели используются в качестве строительных блоков слева направо для преобразования ваших данных из сырых источников в очищенные модульные производные части и конечные выходы справа от DAG. По умолчанию отображается 2+model+2 (по умолчанию отображает 2 узла в стороне), однако вы можете изменить это на +model+ (полный <Term id="dag" />). Обратите внимание, что флаг `--exclude` не поддерживается. |
+| **Строка состояния** | Эта область предоставляет вам полезную информацию о состоянии вашей IDE и проекта. У вас также есть дополнительные опции, такие как включение светлого или темного режима, перезапуск IDE или [повторное клонирование вашего репозитория](/docs/collaborate/git/version-control-basics).
+| **Темный режим**  | В строке состояния в Cloud IDE включите темный режим для отличного просмотра в условиях низкой освещенности. 
 
 
-### Code generation
+### Генерация кода
 
-The dbt Cloud IDE comes with **CodeGenCodeLens**, a powerful feature that simplifies creating models from your sources with a click of a button. To use this feature, click on the  **Generate model** action next to each table in the source YAML file(s). It automatically creates a basic starting staging model for you to expand on. This feature helps streamline your workflow by automating the first steps of model generation.
+dbt Cloud IDE включает **CodeGenCodeLens**, мощную функцию, которая упрощает создание моделей из ваших источников одним нажатием кнопки. Чтобы использовать эту функцию, нажмите на действие **Сгенерировать модель** рядом с каждой таблицей в файле YAML источника. Она автоматически создает базовую начальную модель для вас, чтобы вы могли ее расширить. Эта функция помогает оптимизировать ваш рабочий процесс, автоматизируя первые шаги генерации модели.
 
-### dbt YAML validation
+### Валидация YAML dbt
 
-Use dbt-jsonschema to validate dbt YAML files, helping you leverage the autocomplete and assistance capabilities of the dbt Cloud IDE. This also provides immediate feedback on YAML file structure and syntax, helping you make sure your project configurations meet the required standards.
+Используйте dbt-jsonschema для валидации файлов YAML dbt, что поможет вам использовать функции автозаполнения и помощи в dbt Cloud IDE. Это также предоставляет немедленную обратную связь о структуре и синтаксисе файлов YAML, помогая вам убедиться, что конфигурации вашего проекта соответствуют необходимым стандартам.
 
-## Get started with the Cloud IDE
+## Начало работы с Cloud IDE
 
-In order to start experiencing the great features of the Cloud IDE, you need to first set up a [dbt Cloud development environment](/docs/dbt-cloud-environments). In the following steps, we outline how to set up developer credentials and access the IDE. If you're creating a new project, you will automatically configure this during the project setup. 
+Чтобы начать использовать отличные функции Cloud IDE, вам сначала нужно настроить [разработческую среду dbt Cloud](/docs/dbt-cloud-environments). В следующих шагах мы опишем, как настроить учетные данные разработчика и получить доступ к IDE. Если вы создаете новый проект, вы автоматически настроите это во время настройки проекта.
 
-The IDE uses developer credentials to connect to your data platform. These developer credentials should be specific to your user and they should *not* be super user credentials or the same credentials that you use for your production deployment of dbt.
+IDE использует учетные данные разработчика для подключения к вашей платформе данных. Эти учетные данные разработчика должны быть специфичными для вашего пользователя и *не должны* быть учетными данными суперпользователя или теми же учетными данными, которые вы используете для развертывания dbt в производственной среде.
 
-Set up your developer credentials:
+Настройте свои учетные данные разработчика:
 
-1. Navigate to your **Credentials** under **Your Profile** settings, which you can access at `https://YOUR_ACCESS_URL/settings/profile#credentials`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.
-2. Select the relevant project in the list.
-3. Click **Edit** on the bottom right of the page.
-4. Enter the details under **Development Credentials**.
-5. Click **Save.**
+1. Перейдите в раздел **Учетные данные** в настройках **Вашего профиля**, который вы можете получить по адресу `https://YOUR_ACCESS_URL/settings/profile#credentials`, заменив `YOUR_ACCESS_URL` на [соответствующий URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана.
+2. Выберите соответствующий проект в списке.
+3. Нажмите **Редактировать** в правом нижнем углу страницы.
+4. Введите данные в разделе **Учетные данные разработчика**.
+5. Нажмите **Сохранить.**
 
-<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.jpg" width="85%" height="100" title="Configure developer credentials in your Profile"/>
+<Lightbox src="/img/docs/dbt-cloud/refresh-ide/dev-credentials.jpg" width="85%" height="100" title="Настройте учетные данные разработчика в вашем профиле"/>
 
-6. Access the Cloud IDE by clicking **Develop** at the top of the page.
-7. Initialize your project and familiarize yourself with the IDE and its delightful [features](#cloud-ide-features).
+6. Получите доступ к Cloud IDE, нажав **Разработка** в верхней части страницы.
+7. Инициализируйте ваш проект и ознакомьтесь с IDE и ее замечательными [функциями](#cloud-ide-features).
 
-Nice job, you're ready to start developing and building models 🎉!  
+Отличная работа, вы готовы начать разработку и создание моделей 🎉!  
 
-### Considerations
-- To improve your experience using dbt Cloud, we suggest that you turn off ad blockers. This is because some project file names, such as `google_adwords.sql`, might resemble ad traffic and trigger ad blockers.
-- To preserve performance, there's a file size limitation for repositories over 6 GB. If you have a repo over 6 GB, please contact [dbt Support](mailto:support@getdbt.com) before running dbt Cloud.
-- The IDE's idle session timeout is one hour.
-- <Expandable alt_header="About the start up process and work retention">
+### Учитывайте
+- Чтобы улучшить ваш опыт использования dbt Cloud, мы рекомендуем отключить блокировщики рекламы. Это связано с тем, что некоторые имена файлов проектов, такие как `google_adwords.sql`, могут напоминать рекламный трафик и вызывать срабатывание блокировщиков рекламы.
+- Для сохранения производительности существует ограничение на размер файлов для репозиториев более 6 ГБ. Если у вас есть репозиторий более 6 ГБ, пожалуйста, свяжитесь с [поддержкой dbt](mailto:support@getdbt.com) перед запуском dbt Cloud.
+- Время ожидания неактивной сессии IDE составляет один час.
+- <Expandable alt_header="О процессе запуска и сохранении работы">
   
-  ### Start-up process
-  There are three start-up states when using or launching the Cloud IDE:
-  - **Creation start &mdash;** This is the state where you are starting the IDE for the first time. You can also view this as a *cold start* (see below), and you can expect this state to take longer because the git repository is being cloned.
-  - **Cold start &mdash;** This is the process of starting a new develop session, which will be available for you for one hour. The environment automatically turns off one hour after the last activity. This includes compile, preview, or any dbt invocation, however, it *does not* include editing and saving a file.
-  - **Hot start &mdash;** This is the state of resuming an existing or active develop session within one hour of the last activity.
+  ### Процесс запуска
+  Существует три состояния запуска при использовании или запуске Cloud IDE:
+  - **Начало создания &mdash;** Это состояние, когда вы запускаете IDE в первый раз. Вы также можете рассматривать это как *холодный старт* (см. ниже), и вы можете ожидать, что это состояние займет больше времени, поскольку git-репозиторий клонируется.
+  - **Холодный старт &mdash;** Это процесс начала новой сессии разработки, которая будет доступна вам в течение одного часа. Среда автоматически отключается через час после последней активности. Это включает компиляцию, предварительный просмотр или любое вызов dbt, однако это *не включает* редактирование и сохранение файла.
+  - **Горячий старт &mdash;** Это состояние возобновления существующей или активной сессии разработки в течение одного часа после последней активности.
 
-  ### Work retention
-  The Cloud IDE needs explicit action to save your changes. There are three ways your work is stored:
+  ### Сохранение работы
+  Cloud IDE требует явного действия для сохранения ваших изменений. Существует три способа хранения вашей работы:
 
-  - **Unsaved, local code &mdash;** The browser stores your code only in its local storage. In this state, you might need to commit any unsaved changes in order to switch branches or browsers. If you have saved and committed changes, you can access the "Change branch" option even if there are unsaved changes. But if you attempt to switch branches without saving changes, a warning message will appear, notifying you that you will lose any unsaved changes.
+  - **Несохраненный, локальный код &mdash;** Браузер хранит ваш код только в своем локальном хранилище. В этом состоянии вам может потребоваться зафиксировать любые несохраненные изменения, чтобы переключиться между ветками или браузерами. Если вы сохранили и зафиксировали изменения, вы можете получить доступ к опции "Сменить ветку", даже если есть несохраненные изменения. Но если вы попытаетесь переключить ветки без сохранения изменений, появится предупреждающее сообщение, уведомляющее вас о том, что вы потеряете любые несохраненные изменения.
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.jpg" width="85%" title="If you attempt to switch branches without saving changes, a warning message will appear, telling you that you will lose your changes."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-unsaved-modal.jpg" width="85%" title="Если вы попытаетесь переключить ветки без сохранения изменений, появится предупреждающее сообщение, сообщающее вам, что вы потеряете ваши изменения."/>
 
-  - **Saved but uncommitted code &mdash;** When you save a file, the data gets stored in durable, long-term storage, but isn't synced back to git. To switch branches using the **Change branch** option, you must "Commit and sync" or "Revert" changes. Changing branches isn't available for saved-but-uncommitted code. This is to ensure your uncommitted changes don't get lost.
-  - **Committed code &mdash;** This is stored in the branch with your git provider and you can check out other (remote) branches.
+  - **Сохраненный, но не зафиксированный код &mdash;** Когда вы сохраняете файл, данные хранятся в долговременном хранилище, но не синхронизируются обратно в git. Чтобы переключить ветки, используя опцию **Сменить ветку**, вы должны "Зафиксировать и синхронизировать" или "Отменить" изменения. Смена веток недоступна для сохраненного, но не зафиксированного кода. Это сделано для того, чтобы гарантировать, что ваши незакрепленные изменения не потеряются.
+  - **Зафиксированный код &mdash;** Это хранится в ветке с вашим git-провайдером, и вы можете проверить другие (удаленные) ветки.
 
   </Expandable>
 
-## Build and document your projects
+## Создание и документирование ваших проектов
 
-- **Build, compile, and run projects** &mdash; You can *build*, *compile*, *run*, and *test* dbt projects using the command bar or **Build** button. Use the **Build** button to quickly build, run, or test the model you're working on. The Cloud IDE will update in real time when you run models, tests, seeds, and operations.
-  - If a model or test fails, dbt Cloud makes it easy for you to view and download the run logs for your dbt invocations to fix the issue.
-  - Use dbt's [rich model selection syntax](/reference/node-selection/syntax) to [run dbt commands](/reference/dbt-commands) directly within dbt Cloud.
-  - Starting from dbt v1.6, leverage [environments variables](/docs/build/environment-variables#special-environment-variables) to dynamically use the Git branch name. For example, using the branch name as a prefix for a development schema.
-  - Run [MetricFlow commands](/docs/build/metricflow-commands) to create and manage metrics in your project with the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl).
+- **Сборка, компиляция и выполнение проектов** &mdash; Вы можете *собирать*, *компилировать*, *выполнять* и *тестировать* проекты dbt с помощью командной строки или кнопки **Сборка**. Используйте кнопку **Сборка**, чтобы быстро собрать, запустить или протестировать модель, над которой вы работаете. Cloud IDE будет обновляться в реальном времени, когда вы запускаете модели, тесты, семена и операции.
+  - Если модель или тест не проходят, dbt Cloud упрощает просмотр и загрузку журналов выполнения для ваших вызовов dbt, чтобы исправить проблему.
+  - Используйте [богатый синтаксис выбора моделей](/reference/node-selection/syntax), чтобы [выполнять команды dbt](/reference/dbt-commands) непосредственно в dbt Cloud.
+  - Начиная с dbt v1.6, используйте [переменные окружения](/docs/build/environment-variables#special-environment-variables), чтобы динамически использовать имя ветки Git. Например, используя имя ветки в качестве префикса для схемы разработки.
+  - Выполняйте [команды MetricFlow](/docs/build/metricflow-commands), чтобы создавать и управлять метриками в вашем проекте с помощью [семантического слоя dbt](/docs/use-dbt-semantic-layer/dbt-sl).
 
-- **Generate your YAML configurations with dbt Copilot** <Lifecycle status="beta"/>  &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence (AI) feature that helps automate development in dbt Cloud. It can generate documentation, tests, and semantic models for your dbt SQL models directly in the dbt Cloud IDE, with a click of a button, and helps you accomplish more in less time. Available for dbt Cloud Enterprise plans.
+- **Генерируйте ваши YAML-конфигурации с помощью dbt Copilot** <Lifecycle status="beta"/>  &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) — это мощная функция искусственного интеллекта (AI), которая помогает автоматизировать разработку в dbt Cloud. Она может генерировать документацию, тесты и семантические модели для ваших SQL-моделей dbt непосредственно в dbt Cloud IDE одним нажатием кнопки и помогает вам достичь большего за меньшее время. Доступно для планов dbt Cloud Enterprise.
 
-- **Build and view your project's docs** &mdash; The dbt Cloud IDE makes it possible to [build and view](/docs/collaborate/build-and-view-your-docs) documentation for your dbt project while your code is still in development. With this workflow, you can inspect and verify what your project's generated documentation will look like before your changes are released to production.
+- **Создавайте и просматривайте документацию вашего проекта** &mdash; dbt Cloud IDE позволяет [создавать и просматривать](/docs/collaborate/build-and-view-your-docs) документацию для вашего проекта dbt, пока ваш код все еще находится в разработке. С помощью этого рабочего процесса вы можете проверить и убедиться, как будет выглядеть сгенерированная документация вашего проекта, прежде чем ваши изменения будут выпущены в производственную среду.
 
 
-## Related docs
+## Связанные документы
 
-- [How we style our dbt projects](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
-- [User interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
-- [Version control basics](/docs/collaborate/git/version-control-basics)
-- [dbt Commands](/reference/dbt-commands)
+- [Как мы оформляем наши проекты dbt](/best-practices/how-we-style/0-how-we-style-our-dbt-projects)
+- [Пользовательский интерфейс](/docs/cloud/dbt-cloud-ide/ide-user-interface)
+- [Основы управления версиями](/docs/collaborate/git/version-control-basics)
+- [Команды dbt](/reference/dbt-commands)
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="Is there a cost to using the Cloud IDE?">
-Not at all! You can use dbt Cloud when you sign up for the <a href="https://www.getdbt.com/pricing/">Free Developer plan</a>, which comes with one developer seat. If you’d like to access more features or have more developer seats, you can upgrade your account to the Team or Enterprise plan.<br />
+<DetailsToggle alt_header="Есть ли стоимость за использование Cloud IDE?">
+Совсем нет! Вы можете использовать dbt Cloud, когда подписываетесь на <a href="https://www.getdbt.com/pricing/">Бесплатный план разработчика</a>, который включает одно место для разработчика. Если вы хотите получить доступ к большему количеству функций или иметь больше мест для разработчиков, вы можете обновить свой аккаунт до плана Team или Enterprise.<br />
 
-Refer to <a href="https://www.getdbt.com/pricing/">dbt pricing plans</a> for more details.
+Смотрите <a href="https://www.getdbt.com/pricing/">планы цен dbt</a> для получения дополнительных сведений.
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I be a contributor to dbt Cloud?">
-As a proprietary product, dbt Cloud's source code isn't available for community contributions. If you want to build something in the dbt ecosystem, we encourage you to review [this article](/community/contributing/contributing-coding) about contributing to a dbt package, a plugin, dbt-core, or this documentation site. Participation in open-source is a great way to level yourself up as a developer, and give back to the community.
+<DetailsToggle alt_header="Могу ли я быть участником dbt Cloud?">
+Как проприетарный продукт, исходный код dbt Cloud недоступен для общественных вкладов. Если вы хотите создать что-то в экосистеме dbt, мы рекомендуем вам ознакомиться с [этой статьей](/community/contributing/contributing-coding) о внесении вклада в пакет dbt, плагин, dbt-core или этот сайт документации. Участие в открытом исходном коде — отличный способ повысить свои навыки как разработчика и вернуть долг сообществу.
 </DetailsToggle>
 
-<DetailsToggle alt_header="What is the difference between developing on the dbt Cloud IDE, the dbt Cloud CLI, and dbt Core?">
-You can develop dbt using the web-based IDE in dbt Cloud or on the command line interface using the dbt Cloud CLI or open-source dbt Core, all of which enable you to execute dbt commands. The key distinction between the dbt Cloud CLI and dbt Core is the dbt Cloud CLI is tailored for dbt Cloud's infrastructure and integrates with all its features:
+<DetailsToggle alt_header="В чем разница между разработкой в dbt Cloud IDE, dbt Cloud CLI и dbt Core?">
+Вы можете разрабатывать dbt, используя веб-IDE в dbt Cloud или через интерфейс командной строки с помощью dbt Cloud CLI или open-source dbt Core, все из которых позволяют вам выполнять команды dbt. Ключевое различие между dbt Cloud CLI и dbt Core заключается в том, что dbt Cloud CLI предназначен для инфраструктуры dbt Cloud и интегрируется со всеми его функциями:
 
-- dbt Cloud IDE: <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">dbt Cloud</a> is a web-based application that allows you to develop dbt projects with the IDE, includes a purpose-built scheduler, and provides an easier way to share your dbt documentation with your team. The IDE is a faster and more reliable way to deploy your dbt models and provides a real-time editing and execution environment for your dbt project.
+- dbt Cloud IDE: <a href="https://docs.getdbt.com/docs/cloud/about-cloud/dbt-cloud-features">dbt Cloud</a> — это веб-приложение, которое позволяет вам разрабатывать проекты dbt с помощью IDE, включает специально разработанный планировщик и предоставляет более простой способ делиться вашей документацией dbt с вашей командой. IDE — это более быстрый и надежный способ развертывания ваших моделей dbt и предоставляет среду редактирования и выполнения в реальном времени для вашего проекта dbt.
 
-- dbt Cloud CLI: <a href="https://docs.getdbt.com/docs/cloud/cloud-cli-installation">The dbt Cloud CLI</a> allows you to run dbt commands against your dbt Cloud development environment from your local command line or code editor. It supports cross-project ref, speedier, lower-cost builds, automatic deferral of build artifacts, and more.
+- dbt Cloud CLI: <a href="https://docs.getdbt.com/docs/cloud/cloud-cli-installation">dbt Cloud CLI</a> позволяет вам выполнять команды dbt против вашей среды разработки dbt Cloud из вашего локального командного интерфейса или редактора кода. Он поддерживает кросс-проектные ссылки, более быстрые и менее затратные сборки, автоматическую отсрочку артефактов сборки и многое другое.
 
-- dbt Core: dbt Core is an <a href="https://github.com/dbt-labs/dbt">open-sourced</a> software that’s freely available. You can build your dbt project in a code editor, and run dbt commands from the command line
+- dbt Core: dbt Core — это <a href="https://github.com/dbt-labs/dbt">программное обеспечение с открытым исходным кодом</a>, которое доступно бесплатно. Вы можете создать свой проект dbt в редакторе кода и выполнять команды dbt из командной строки.
 
 </DetailsToggle>

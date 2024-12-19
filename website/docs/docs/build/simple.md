@@ -1,86 +1,79 @@
 ---
-title: "Simple metrics"
+title: "Простые метрики"
 id: simple
-description: "Use simple metrics to directly reference a single measure."
-sidebar_label: Simple
-tags: [Metrics, Semantic Layer]
+description: "Используйте простые метрики для прямой ссылки на одну меру."
+sidebar_label: Простые
+tags: [Метрики, Семантический уровень]
 pagination_next: null
 ---
 
-Simple metrics are metrics that directly reference a single measure, without any additional measures involved. They are aggregations over a column in your data platform and can be filtered by one or multiple dimensions.
+Простые метрики — это метрики, которые напрямую ссылаются на одну меру, без участия дополнительных мер. Они представляют собой агрегаты по столбцу в вашей платформе данных и могут фильтроваться по одному или нескольким измерениям.
 
- The parameters, description, and type for simple metrics are:
+Параметры, описание и тип для простых метрик:
 
 :::tip
-Note that we use the double colon (::) to indicate whether a parameter is nested within another parameter. So for example, `query_params::metrics` means the `metrics` parameter is nested under `query_params`.
+Обратите внимание, что мы используем двойной двоеточие (::) для указания, является ли параметр вложенным в другой параметр. Например, `query_params::metrics` означает, что параметр `metrics` вложен в `query_params`.
 :::
 
-| Parameter | Description | Required | Type |
+| Параметр | Описание | Обязательный | Тип |
 | --------- | ----------- | ---- | ---- |
-| `name` | The name of the metric. | Required | String |
-| `description` | The description of the metric. | Optional | String |
-| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required | String |
-| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Required | String |
-| `type_params` | The type parameters of the metric. | Required | Dict |
-| `measure` | A list of measure inputs. | Required | List |
-| `measure:name` | The measure you're referencing. | Required | String |
-| `measure:alias` | Optional [`alias`](/reference/resource-configs/alias) to rename the measure. | Optional | String |
-| `measure:filter` | Optional `filter` applied to the measure. | Optional | String |
-| `measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
-| `measure:join_to_timespine` | Indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |
+| `name` | Имя метрики. | Обязательный | Строка |
+| `description` | Описание метрики. | Необязательный | Строка |
+| `type` | Тип метрики (накопительная, производная, отношение или простая). | Обязательный | Строка |
+| `label` | Определяет отображаемое значение в downstream-инструментах. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). | Обязательный | Строка |
+| `type_params` | Параметры типа метрики. | Обязательный | Словарь |
+| `measure` | Список входных мер. | Обязательный | Список |
+| `measure:name` | Мера, на которую вы ссылаетесь. | Обязательный | Строка |
+| `measure:alias` | Необязательный [`alias`](/reference/resource-configs/alias) для переименования меры. | Необязательный | Строка |
+| `measure:filter` | Необязательный `filter`, применяемый к мере. | Необязательный | Строка |
+| `measure:fill_nulls_with` | Установите значение в определении вашей метрики вместо null (например, ноль). | Необязательный | Строка |
+| `measure:join_to_timespine` | Указывает, следует ли объединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. По умолчанию `false`. | Необязательный | Логическое |
 
-The following displays the complete specification for simple metrics, along with an example.
+Следующий раздел показывает полную спецификацию для простых метрик, вместе с примером.
 
 ```yaml
 metrics:
-  - name: The metric name # Required
-    description: the metric description # Optional
-    type: simple # Required
-    label: The value that will be displayed in downstream tools # Required
-    type_params: # Required
+  - name: Имя метрики # Обязательный
+    description: описание метрики # Необязательный
+    type: simple # Обязательный
+    label: Значение, которое будет отображаться в downstream-инструментах # Обязательный
+    type_params: # Обязательный
       measure: 
-        name: The name of your measure # Required
-        alias: The alias applied to the measure. # Optional
-        filter: The filter applied to the measure. # Optional
-        fill_nulls_with: Set value instead of null  (such as zero) # Optional
-        join_to_timespine: true/false # Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. # Optional
+        name: Имя вашей меры # Обязательный
+        alias: Псевдоним, применяемый к мере. # Необязательный
+        filter: Фильтр, применяемый к мере. # Необязательный
+        fill_nulls_with: Установить значение вместо null (например, ноль) # Необязательный
+        join_to_timespine: true/false # Логическое значение, указывающее, следует ли объединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. # Необязательный
 
 ```
 
-For advanced data modeling, you can use `fill_nulls_with` and `join_to_timespine` to [set null metric values to zero](/docs/build/fill-nulls-advanced), ensuring numeric values for every data row.
+Для продвинутого моделирования данных вы можете использовать `fill_nulls_with` и `join_to_timespine`, чтобы [установить значения метрик null в ноль](/docs/build/fill-nulls-advanced), обеспечивая числовые значения для каждой строки данных.
 
-<!-- create_metric not supported yet
-:::tip
-
-If you've already defined the measure using the `create_metric: true` parameter, you don't need to create simple metrics. However, if you want to include a filter in the final metric, you'll need to define and create a simple metric.
-:::
--->
-
-## Simple metrics example
+## Пример простых метрик
 
 ```yaml
   metrics: 
     - name: customers
-      description: Count of customers
-      type: simple # Pointers to a measure you created in a semantic model
-      label: Count of customers
+      description: Количество клиентов
+      type: simple # Указатели на меру, которую вы создали в семантической модели
+      label: Количество клиентов
       type_params:
         measure: 
-          name: customers # The measure you are creating a proxy of.
+          name: customers # Мера, для которой вы создаете прокси.
           fill_nulls_with: 0 
           join_to_timespine: true
           alias: customer_count
           filter: {{ Dimension('customer__customer_total') }} >= 20
     - name: large_orders
-      description: "Order with order values over 20."
+      description: "Заказы с суммой заказа более 20."
       type: simple
-      label: Large orders
+      label: Крупные заказы
       type_params:
         measure: 
           name: orders
-      filter: | # For any metric you can optionally include a filter on dimension values
+      filter: | # Для любой метрики вы можете необязательным образом включить фильтр по значениям измерений
         {{Dimension('customer__order_total_dim')}} >= 20
 ```
 
-## Related docs
-- [Fill null values for simple, derived, or ratio metrics](/docs/build/fill-nulls-advanced)
+## Связанные документы
+- [Заполнение значений null для простых, производных или отношенческих метрик](/docs/build/fill-nulls-advanced)

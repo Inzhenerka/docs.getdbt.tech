@@ -1,26 +1,26 @@
 ---
-title: "Add sources to your DAG"
-sidebar_label: "Sources"
-description: "Read this tutorial to learn how to use sources when building in dbt."
+title: "Добавление источников в ваш DAG"
+sidebar_label: "Источники"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать источники при работе с dbt."
 id: "sources"
 search_weight: "heavy"
 ---
 
-## Related reference docs
-* [Source properties](/reference/source-properties)
-* [Source configurations](/reference/source-configs)
-* [`{{ source() }}` jinja function](/reference/dbt-jinja-functions/source)
-* [`source freshness` command](/reference/commands/source)
+## Связанные справочные документы
+* [Свойства источников](/reference/source-properties)
+* [Конфигурации источников](/reference/source-configs)
+* [`{{ source() }}` функция jinja](/reference/dbt-jinja-functions/source)
+* [`команда source freshness`](/reference/commands/source)
 
-## Using sources
-Sources make it possible to name and describe the data loaded into your warehouse by your Extract and Load tools. By declaring these tables as sources in dbt, you can then
-- select from source tables in your models using the `{{ source() }}` function, helping define the lineage of your data
-- test your assumptions about your source data
-- calculate the freshness of your source data
+## Использование источников
+Источники позволяют называть и описывать данные, загруженные в ваш хранилище с помощью инструментов извлечения и загрузки. Объявив эти таблицы как источники в dbt, вы можете:
+- выбирать данные из таблиц источников в ваших моделях, используя функцию `{{ source() }}`, что помогает определить происхождение ваших данных
+- проверять свои предположения о данных источников
+- вычислять свежесть ваших данных источников
 
-### Declaring a source
+### Объявление источника
 
-Sources are defined in `.yml` files nested under a `sources:` key.
+Источники определяются в `.yml` файлах, вложенных под ключом `sources:`.
 
 <File name='models/<filename>.yml'>
 
@@ -42,14 +42,13 @@ sources:
 
 </File>
 
-*By default, `schema` will be the same as `name`. Add `schema` only if you want to use a source name that differs from the existing schema.
+*По умолчанию `schema` будет таким же, как и `name`. Добавьте `schema`, только если вы хотите использовать имя источника, отличное от существующей схемы.
 
-If you're not already familiar with these files, be sure to check out [the documentation on properties.yml files](/reference/configs-and-properties) before proceeding.
+Если вы еще не знакомы с этими файлами, обязательно ознакомьтесь с [документацией по файлам properties.yml](/reference/configs-and-properties) перед тем, как продолжить.
 
-### Selecting from a source
+### Выбор из источника
 
-Once a source has been defined, it can be referenced from a model using the [`{{ source()}}` function](/reference/dbt-jinja-functions/source).
-
+После того как источник был определен, его можно использовать в модели с помощью функции [`{{ source()}}` ](/reference/dbt-jinja-functions/source).
 
 <File name='models/orders.sql'>
 
@@ -65,7 +64,7 @@ left join {{ source('jaffle_shop', 'customers') }} using (customer_id)
 
 </File>
 
-dbt will compile this to the full <Term id="table" /> name:
+dbt скомпилирует это в полное <Term id="table" /> имя:
 
 <File name='target/compiled/jaffle_shop/models/my_model.sql'>
 
@@ -82,16 +81,16 @@ left join raw.jaffle_shop.customers using (customer_id)
 
 </File>
 
-Using the `{{ source () }}` function also creates a dependency between the model and the source table.
+Использование функции `{{ source () }}` также создает зависимость между моделью и таблицей источника.
 
-<Lightbox src="/img/docs/building-a-dbt-project/sources-dag.png" title="The source function tells dbt a model is dependent on a source "/>
+<Lightbox src="/img/docs/building-a-dbt-project/sources-dag.png" title="Функция source сообщает dbt, что модель зависит от источника"/>
 
-### Testing and documenting sources
-You can also:
-- Add data tests to sources
-- Add descriptions to sources, that get rendered as part of your documentation site
+### Тестирование и документирование источников
+Вы также можете:
+- Добавлять тесты данных к источникам
+- Добавлять описания к источникам, которые будут отображаться как часть вашего сайта документации
 
-These should be familiar concepts if you've already added tests and descriptions to your models (if not check out the guides on [testing](/docs/build/data-tests) and [documentation](/docs/build/documentation)).
+Эти концепции должны быть вам знакомы, если вы уже добавляли тесты и описания к вашим моделям (если нет, ознакомьтесь с руководствами по [тестированию](/docs/build/data-tests) и [документации](/docs/build/documentation)).
 
 <File name='models/<filename>.yml'>
 
@@ -100,19 +99,19 @@ version: 2
 
 sources:
   - name: jaffle_shop
-    description: This is a replica of the Postgres database used by our app
+    description: Это реплика базы данных Postgres, используемой нашим приложением
     tables:
       - name: orders
         description: >
-          One record per order. Includes cancelled and deleted orders.
+          Один запись на заказ. Включает отмененные и удаленные заказы.
         columns:
           - name: id
-            description: Primary key of the orders table
+            description: Первичный ключ таблицы заказов
             tests:
               - unique
               - not_null
           - name: status
-            description: Note that the status can change over time
+            description: Обратите внимание, что статус может изменяться со временем
 
       - name: ...
 
@@ -121,20 +120,20 @@ sources:
 
 </File>
 
-You can find more details on the available properties for sources in the [reference section](/reference/source-properties).
+Вы можете найти больше деталей о доступных свойствах для источников в [разделе справки](/reference/source-properties).
 
-### FAQs
+### Часто задаваемые вопросы
 <FAQ path="Project/source-has-bad-name" />
 <FAQ path="Project/source-in-different-database" />
 <FAQ path="Models/source-quotes" />
 <FAQ path="Tests/testing-sources" />
 <FAQ path="Runs/running-models-downstream-of-source" />
 
-## Source data freshness
-With a couple of extra configs, dbt can optionally capture the "freshness" of the data in your source tables. This is useful for understanding if your data pipelines are in a healthy state, and is a critical component of defining SLAs for your warehouse.
+## Свежесть данных источника
+С помощью нескольких дополнительных конфигураций dbt может опционально захватывать "свежесть" данных в ваших таблицах источников. Это полезно для понимания, находятся ли ваши конвейеры данных в здоровом состоянии, и является критически важным компонентом определения SLA для вашего хранилища.
 
-### Declaring source freshness
-To configure source freshness information, add a `freshness` block to your source and `loaded_at_field` to your table declaration:
+### Объявление свежести источника
+Чтобы настроить информацию о свежести источника, добавьте блок `freshness` к вашему источнику и `loaded_at_field` к объявлению вашей таблицы:
 
 <File name='models/<filename>.yml'>
 
@@ -144,40 +143,40 @@ version: 2
 sources:
   - name: jaffle_shop
     database: raw
-    freshness: # default freshness
+    freshness: # свежесть по умолчанию
       warn_after: {count: 12, period: hour}
       error_after: {count: 24, period: hour}
     loaded_at_field: _etl_loaded_at
 
     tables:
       - name: orders
-        freshness: # make this a little more strict
+        freshness: # сделаем это немного строже
           warn_after: {count: 6, period: hour}
           error_after: {count: 12, period: hour}
 
-      - name: customers # this inherits the default freshness defined in the jaffle_shop source block at the beginning
+      - name: customers # это наследует свежесть по умолчанию, определенную в блоке источника jaffle_shop в начале
 
 
       - name: product_skus
-        freshness: null # do not check freshness for this table
+        freshness: null # не проверять свежесть для этой таблицы
 ```
 
 </File>
 
-In the `freshness` block, one or both of `warn_after` and `error_after` can be provided. If neither is provided, then dbt will not calculate freshness for the tables in this source.
+В блоке `freshness` можно указать один или оба параметра `warn_after` и `error_after`. Если ни один из них не указан, dbt не будет вычислять свежесть для таблиц в этом источнике.
 
-Additionally, the `loaded_at_field` is required to calculate freshness for a table. If a `loaded_at_field` is not provided, then dbt will not calculate freshness for the table.
+Кроме того, `loaded_at_field` необходим для вычисления свежести для таблицы. Если `loaded_at_field` не указан, dbt не будет вычислять свежесть для таблицы.
 
-These configs are applied hierarchically, so `freshness` and `loaded_at_field` values specified for a `source` will flow through to all of the `tables` defined in that source. This is useful when all of the tables in a source have the same `loaded_at_field`, as the config can just be specified once in the top-level source definition.
+Эти конфигурации применяются иерархически, поэтому значения `freshness` и `loaded_at_field`, указанные для `source`, будут переданы всем `tables`, определенным в этом источнике. Это полезно, когда все таблицы в источнике имеют одно и то же `loaded_at_field`, так как конфигурацию можно указать один раз в определении верхнего уровня источника.
 
-### Checking source freshness
-To obtain freshness information for your sources, use the `dbt source freshness` command ([reference docs](/reference/commands/source)):
+### Проверка свежести источника
+Чтобы получить информацию о свежести ваших источников, используйте команду `dbt source freshness` ([справочные документы](/reference/commands/source)):
 
 ```
 $ dbt source freshness
 ```
 
-Behind the scenes, dbt uses the freshness properties to construct a `select` query, shown below. You can find this query in the [query logs](/faqs/Runs/checking-logs).
+Внутри dbt использует свойства свежести для построения запроса `select`, показанного ниже. Вы можете найти этот запрос в [логах запросов](/faqs/Runs/checking-logs).
 
 ```sql
 select
@@ -187,13 +186,13 @@ from raw.jaffle_shop.orders
 
 ```
 
-The results of this query are used to determine whether the source is fresh or not:
+Результаты этого запроса используются для определения, свеж ли источник или нет:
 
-<Lightbox src="/img/docs/building-a-dbt-project/snapshot-freshness.png" title="Uh oh! Not everything is as fresh as we'd like!"/>
+<Lightbox src="/img/docs/building-a-dbt-project/snapshot-freshness.png" title="Ой! Не все так свежо, как нам хотелось бы!"/>
 
-### Filter
+### Фильтр
 
-Some databases can have tables where a filter over certain columns are required, in order prevent a full scan of the table, which could be costly. In order to do a freshness check on such tables a `filter` argument can be added to the configuration, e.g. `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. For the example above, the resulting query would look like
+Некоторые базы данных могут иметь таблицы, для которых требуется фильтр по определенным столбцам, чтобы предотвратить полное сканирование таблицы, что может быть дорого. Чтобы выполнить проверку свежести для таких таблиц, можно добавить аргумент `filter` к конфигурации, например `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. Для приведенного выше примера результирующий запрос будет выглядеть так:
 
 ```sql
 select
@@ -203,7 +202,7 @@ from raw.jaffle_shop.orders
 where _etl_loaded_at >= date_sub(current_date(), interval 1 day)
 ```
 
-### FAQs
+### Часто задаваемые вопросы
 <FAQ path="Project/exclude-table-from-freshness" />
 <FAQ path="Snapshots/snapshotting-freshness-for-one-source" />
 <FAQ path="Project/dbt-source-freshness" />

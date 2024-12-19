@@ -1,91 +1,91 @@
 ---
-title: "Conversion metrics"
+title: "Метрики конверсии"
 id: conversion
-description: "Use Conversion metrics to measure conversion events."
-sidebar_label: Conversion
-tags: [Metrics, Semantic Layer]
+description: "Используйте метрики конверсии для измерения событий конверсии."
+sidebar_label: Конверсия
+tags: [Метрики, Семантический уровень]
 ---
 
-Conversion metrics allow you to define when a base event and a subsequent conversion event happen for a specific entity within some time range.
+Метрики конверсии позволяют вам определить, когда происходит базовое событие и последующее событие конверсии для конкретной сущности в определенном временном диапазоне.
 
-For example, using conversion metrics allows you to track how often a user (entity) completes a visit (base event) and then makes a purchase (conversion event) within 7 days (time window). You would need to add a time range and an entity to join. 
+Например, использование метрик конверсии позволяет отслеживать, как часто пользователь (сущность) завершает визит (базовое событие), а затем совершает покупку (событие конверсии) в течение 7 дней (временной интервал). Вам нужно будет добавить временной диапазон и сущность для соединения.
 
-Conversion metrics are different from [ratio metrics](/docs/build/ratio) because you need to include an entity in the pre-aggregated join.
+Метрики конверсии отличаются от [метрик соотношения](/docs/build/ratio), потому что вам нужно включить сущность в предварительно агрегированное соединение.
 
-## Parameters
+## Параметры
 
-The specification for conversion metrics is as follows:
+Спецификация для метрик конверсии выглядит следующим образом:
 
 :::tip
-Note that we use the double colon (::) to indicate whether a parameter is nested within another parameter. So for example, `query_params::metrics` means the `metrics` parameter is nested under `query_params`.
+Обратите внимание, что мы используем двойной двоеточие (::) для указания, является ли параметр вложенным в другой параметр. Например, `query_params::metrics` означает, что параметр `metrics` вложен под `query_params`.
 :::
 
-| Parameter | Description | Required | Type |
+| Параметр | Описание | Обязательный | Тип |
 | --- | --- | --- | --- |
-| `name` | The name of the metric. |  Required | String |
-| `description` | The description of the metric. | Optional | String |
-| `type` | The type of metric (such as derived, ratio, and so on.). In this case, set as 'conversion'. | Required | String |
-| `label` | Required string that defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Required | String |
-| `type_params` | Specific configurations for each metric type. |  Required | Dict |
-| `conversion_type_params` | Additional configuration specific to conversion metrics. | Required | Dict |
-| `entity` | The entity for each conversion event. | Required | String |  
-| `calculation` | Method of calculation. Either `conversion_rate` or `conversions`. Defaults to `conversion_rate`.  | Optional | String |
-| `base_measure` | A list of base measure inputs. | Required | Dict |
-| `base_measure:name` | The base conversion event measure. |  Required | String |
-| `base_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
-| `base_measure:join_to_timespine` | Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |
-| `base_measure:filter` | Optional `filter` used to apply to the base measure. | Optional | String |
-| `conversion_measure` | A list of conversion measure inputs. | Required | Dict |
-| `conversion_measure:name` | The base conversion event measure.| Required | String |
-| `conversion_measure:fill_nulls_with` | Set the value in your metric definition instead of null (such as zero). | Optional | String |
-| `conversion_measure:join_to_timespine` | Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. | Optional | Boolean |  
-| `window` | The time window for the conversion event, such as 7 days, 1 week, 3 months. Defaults to infinity. | Optional | String |
-| `constant_properties` | List of constant properties.  | Optional | List |
-| `base_property` | The property from the base semantic model that you want to hold constant.  |  Optional | String |
-| `conversion_property` | The property from the conversion semantic model that you want to hold constant.  | Optional | String |
+| `name` | Название метрики. | Обязательный | Строка |
+| `description` | Описание метрики. | Необязательный | Строка |
+| `type` | Тип метрики (например, производная, соотношение и т.д.). В этом случае устанавливается как 'conversion'. | Обязательный | Строка |
+| `label` | Обязательная строка, определяющая отображаемое значение в инструментах нижнего уровня. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). | Обязательный | Строка |
+| `type_params` | Специфические настройки для каждого типа метрики. | Обязательный | Словарь |
+| `conversion_type_params` | Дополнительная конфигурация, специфичная для метрик конверсии. | Обязательный | Словарь |
+| `entity` | Сущность для каждого события конверсии. | Обязательный | Строка |  
+| `calculation` | Метод расчета. Либо `conversion_rate`, либо `conversions`. По умолчанию `conversion_rate`.  | Необязательный | Строка |
+| `base_measure` | Список входных данных базовой меры. | Обязательный | Словарь |
+| `base_measure:name` | Мера базового события конверсии. | Обязательный | Строка |
+| `base_measure:fill_nulls_with` | Установите значение в определении вашей метрики вместо null (например, ноль). | Необязательный | Строка |
+| `base_measure:join_to_timespine` | Булевый параметр, указывающий, следует ли соединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. По умолчанию `false`. | Необязательный | Булевый |
+| `base_measure:filter` | Необязательный `filter`, используемый для применения к базовой мере. | Необязательный | Строка |
+| `conversion_measure` | Список входных данных меры конверсии. | Обязательный | Словарь |
+| `conversion_measure:name` | Мера базового события конверсии. | Обязательный | Строка |
+| `conversion_measure:fill_nulls_with` | Установите значение в определении вашей метрики вместо null (например, ноль). | Необязательный | Строка |
+| `conversion_measure:join_to_timespine` | Булевый параметр, указывающий, следует ли соединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. По умолчанию `false`. | Необязательный | Булевый |  
+| `window` | Временной интервал для события конверсии, например, 7 дней, 1 неделя, 3 месяца. По умолчанию бесконечность. | Необязательный | Строка |
+| `constant_properties` | Список постоянных свойств.  | Необязательный | Список |
+| `base_property` | Свойство из базовой семантической модели, которое вы хотите сохранить постоянным.  |  Необязательный | Строка |
+| `conversion_property` | Свойство из семантической модели конверсии, которое вы хотите сохранить постоянным.  | Необязательный | Строка |
 
-Refer to [additional settings](#additional-settings) to learn how to customize conversion metrics with settings for null values, calculation type, and constant properties.
+Обратитесь к [дополнительным настройкам](#additional-settings), чтобы узнать, как настроить метрики конверсии с помощью настроек для значений null, типа расчета и постоянных свойств.
 
-The following code example displays the complete specification for conversion metrics and details how they're applied:
+Следующий пример кода демонстрирует полную спецификацию для метрик конверсии и детали их применения:
 
 ```yaml
 metrics:
-  - name: The metric name # Required
-    description: The metric description # Optional
-    type: conversion # Required
-    label: YOUR_LABEL # Required
-    type_params: # Required
-      conversion_type_params: # Required
-        entity: ENTITY # Required
-        calculation: CALCULATION_TYPE # Optional. default: conversion_rate. options: conversions(buys) or conversion_rate (buys/visits), and more to come.
+  - name: The metric name # Обязательный
+    description: The metric description # Необязательный
+    type: conversion # Обязательный
+    label: YOUR_LABEL # Обязательный
+    type_params: # Обязательный
+      conversion_type_params: # Обязательный
+        entity: ENTITY # Обязательный
+        calculation: CALCULATION_TYPE # Необязательный. по умолчанию: conversion_rate. варианты: conversions(buys) или conversion_rate (buys/visits), и многое другое.
         base_measure: 
-          name: The name of the measure # Required
-          fill_nulls_with: Set the value in your metric definition instead of null (such as zero) # Optional
-          join_to_timespine: true/false # Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. # Optional
-          filter: The filter used to apply to the base measure. # Optional
+          name: The name of the measure # Обязательный
+          fill_nulls_with: Set the value in your metric definition instead of null (such as zero) # Необязательный
+          join_to_timespine: true/false # Булевый параметр, указывающий, следует ли соединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. По умолчанию `false`. # Необязательный
+          filter: The filter used to apply to the base measure. # Необязательный
         conversion_measure:
-          name: The name of the measure # Required
-          fill_nulls_with: Set the value in your metric definition instead of null (such as zero) # Optional
-          join_to_timespine: true/false # Boolean that indicates if the aggregated measure should be joined to the time spine table to fill in missing dates. Default `false`. # Optional
-        window: TIME_WINDOW # Optional. default: infinity. window to join the two events. Follows a similar format as time windows elsewhere (such as 7 days)
-        constant_properties: # Optional. List of constant properties default: None
-          - base_property: DIMENSION or ENTITY # Required. A reference to a dimension/entity of the semantic model linked to the base_measure
-            conversion_property: DIMENSION or ENTITY # Same as base above, but to the semantic model of the conversion_measure
+          name: The name of the measure # Обязательный
+          fill_nulls_with: Set the value in your metric definition instead of null (such as zero) # Необязательный
+          join_to_timespine: true/false # Булевый параметр, указывающий, следует ли соединять агрегированную меру с таблицей временной оси для заполнения пропущенных дат. По умолчанию `false`. # Необязательный
+        window: TIME_WINDOW # Необязательный. по умолчанию: бесконечность. окно для соединения двух событий. Следует аналогичному формату, как временные окна в других местах (например, 7 дней)
+        constant_properties: # Необязательный. Список постоянных свойств по умолчанию: None
+          - base_property: DIMENSION or ENTITY # Обязательный. Ссылка на измерение/сущность семантической модели, связанной с базовой мерой
+            conversion_property: DIMENSION or ENTITY # То же самое, что и выше, но для семантической модели меры конверсии
 ```
 
-## Conversion metric example
+## Пример метрики конверсии
 
-The following example will measure conversions from website visits (`VISITS` table) to order completions (`BUYS` table) and calculate a conversion metric for this scenario step by step.
+Следующий пример будет измерять конверсии с веб-визитов (`VISITS` таблица) до завершения заказов (`BUYS` таблица) и шаг за шагом рассчитывать метрику конверсии для этого сценария.
 
-Suppose you have two semantic models, `VISITS` and `BUYS`:
+Предположим, у вас есть две семантические модели, `VISITS` и `BUYS`:
 
-- The `VISITS` table represents visits to an e-commerce site.
-- The `BUYS` table represents someone completing an order on that site.  
+- Таблица `VISITS` представляет визиты на сайт электронной коммерции.
+- Таблица `BUYS` представляет собой завершение заказа на этом сайте.  
 
-The underlying tables look like the following:
+Основные таблицы выглядят следующим образом:
 
 `VISITS`<br />
-Contains user visits with `USER_ID` and `REFERRER_ID`.
+Содержит визиты пользователей с `USER_ID` и `REFERRER_ID`.
 
 | DS | USER_ID | REFERRER_ID |
 | --- | --- | --- |
@@ -94,20 +94,20 @@ Contains user visits with `USER_ID` and `REFERRER_ID`.
 | 2020-01-07 | bob | amazon |
 
 `BUYS`<br />
-Records completed orders with `USER_ID` and `REFERRER_ID`.
+Записывает завершенные заказы с `USER_ID` и `REFERRER_ID`.
 
 | DS | USER_ID | REFERRER_ID |
 | --- | --- | --- |
 | 2020-01-02 | bob | facebook |
 | 2020-01-07 | bob | amazon |
 
-Next, define a conversion metric as follows:
+Далее определите метрику конверсии следующим образом:
 
 ```yaml
 - name: visit_to_buy_conversion_rate_7d
-  description: "Conversion rate from visiting to transaction in 7 days"
+  description: "Коэффициент конверсии от визита к транзакции за 7 дней"
   type: conversion
-  label: Visit to buy conversion rate (7-day window)
+  label: Коэффициент конверсии визита в покупку (7-дневное окно)
   type_params:
     conversion_type_params:
       base_measure:
@@ -120,13 +120,13 @@ Next, define a conversion metric as follows:
       window: 7 days
 ```
 
-To calculate the conversion, link the `BUYS` event to the nearest `VISITS` event (or closest base event). The following steps explain this process in more detail:
+Чтобы рассчитать конверсию, свяжите событие `BUYS` с ближайшим событием `VISITS` (или ближайшим базовым событием). Следующие шаги объясняют этот процесс более подробно:
 
-### Step 1: Join `VISITS` and `BUYS`
+### Шаг 1: Соедините `VISITS` и `BUYS`
 
-This step joins the `BUYS` table to the `VISITS` table and gets all combinations of visits-buys events that match the join condition where buys occur within 7 days of the visit (any rows that have the same user and a buy happened at most 7 days after the visit).
+Этот шаг соединяет таблицу `BUYS` с таблицей `VISITS` и получает все комбинации событий визитов-покупок, которые соответствуют условию соединения, где покупки происходят в течение 7 дней после визита (любые строки, где у одного и того же пользователя покупка произошла не более чем через 7 дней после визита).
 
-The SQL generated in these steps looks like the following:
+Сгенерированный SQL на этих шагах выглядит следующим образом:
 
 ```sql
 select
@@ -138,13 +138,13 @@ select
   1 as buys
 from visits v
 inner join (
-    select *, uuid_string() as uuid from buys -- Adds a uuid column to uniquely identify the different rows
+    select *, uuid_string() as uuid from buys -- Добавляет столбец uuid для уникальной идентификации различных строк
 ) b
 on
 v.user_id = b.user_id and v.ds <= b.ds and v.ds > b.ds - interval '7 days'
 ```
 
-The dataset returns the following (note that there are two potential conversion events for the first visit):
+Набор данных возвращает следующее (обратите внимание, что для первого визита есть два потенциальных события конверсии):
 
 | V.DS | V.USER_ID | V.REFERRER_ID | B.DS | UUID | BUYS |
 | --- | --- | --- | --- | --- | --- |
@@ -153,9 +153,9 @@ The dataset returns the following (note that there are two potential conversion 
 | 2020-01-04 | bob | google | 2020-01-07 | uuid2 | 1 |
 | 2020-01-07 | bob | amazon | 2020-01-07 | uuid2 | 1 |
 
-### Step 2: Refine with window function
+### Шаг 2: Уточните с помощью оконной функции
 
-Instead of returning the raw visit values, use window functions to link conversions to the closest base event. You can partition by the conversion source and get the `first_value` ordered by `visit ds`, descending to get the closest base event from the conversion event:
+Вместо возврата сырых значений визитов используйте оконные функции, чтобы связать конверсии с ближайшим базовым событием. Вы можете разделить по источнику конверсии и получить `first_value`, упорядоченный по `visit ds`, по убыванию, чтобы получить ближайшее базовое событие от события конверсии:
 
 ```sql
 select
@@ -173,7 +173,7 @@ on
 v.user_id = b.user_id and v.ds <= b.ds and v.ds > b.ds - interval '7 day'
 ```
 
-The dataset returns the following:
+Набор данных возвращает следующее:
 
 | V.DS | V.USER_ID | V.REFERRER_ID | B.DS | UUID | BUYS |
 | --- | --- | --- | --- | --- | --- |
@@ -182,13 +182,13 @@ The dataset returns the following:
 | 2020-01-07 | bob | amazon | 2020-01-07 | uuid2 | 1 |
 | 2020-01-07 | bob | amazon | 2020-01-07 | uuid2 | 1 |
 
-This workflow links the two conversions to the correct visit events. Due to the join, you end up with multiple combinations, leading to fanout results. After applying the window function, duplicates appear. 
+Этот рабочий процесс связывает две конверсии с правильными событиями визитов. Из-за соединения вы получаете несколько комбинаций, что приводит к результатам с разветвлением. После применения оконной функции появляются дубликаты.
 
-To resolve this and eliminate duplicates, use a distinct select. The UUID also helps identify which conversion is unique. The next steps provide more detail on how to do this.
+Чтобы разрешить это и устранить дубликаты, используйте выборку distinct. UUID также помогает идентифицировать, какая конверсия уникальна. Следующие шаги предоставляют более подробную информацию о том, как это сделать.
 
-### Step 3: Remove duplicates
+### Шаг 3: Удалите дубликаты
 
-Instead of regular select used in the [Step 2](#step-2-refine-with-window-function), use a distinct select to remove the duplicates:
+Вместо обычного выбора, используемого в [Шаге 2](#step-2-refine-with-window-function), используйте выборку distinct, чтобы удалить дубликаты:
 
 ```sql
 select distinct
@@ -206,28 +206,28 @@ on
 v.user_id = b.user_id and v.ds <= b.ds and v.ds > b.ds - interval '7 day';
 ```
 
-The dataset returns the following:
+Набор данных возвращает следующее:
 
 | V.DS | V.USER_ID | V.REFERRER_ID | B.DS | UUID | BUYS |
 | --- | --- | --- | --- | --- | --- |
 | 2020-01-01 | bob | facebook | 2020-01-02 | uuid1 | 1 |
 | 2020-01-07 | bob | amazon | 2020-01-07 | uuid2 | 1 |
 
-You now have a dataset where every conversion is connected to a visit event. To proceed:
+Теперь у вас есть набор данных, в котором каждое событие конверсии связано с событием визита. Чтобы продолжить:
 
-1. Sum up the total conversions in the "conversions" table.
-2. Combine this table with the "opportunities" table, matching them based on group keys.
-3. Calculate the conversion rate.
+1. Суммируйте общее количество конверсий в таблице "conversions".
+2. Объедините эту таблицу с таблицей "opportunities", сопоставив их по ключам группировки.
+3. Рассчитайте коэффициент конверсии.
 
-### Step 4: Aggregate and calculate
+### Шаг 4: Агрегируйте и рассчитывайте
 
-Now that you’ve tied each conversion event to a visit, you can calculate the aggregated conversions and opportunities measures. Then, you can join them to calculate the actual conversion rate. The SQL to calculate the conversion rate is as follows:
+Теперь, когда вы связали каждое событие конверсии с визитом, вы можете рассчитать агрегированные меры конверсий и возможностей. Затем вы можете объединить их, чтобы рассчитать фактический коэффициент конверсии. SQL для расчета коэффициента конверсии выглядит следующим образом:
 
 ```sql
 select
   coalesce(subq_3.metric_time__day, subq_13.metric_time__day) as metric_time__day,
   cast(max(subq_13.buys) as double) / cast(nullif(max(subq_3.visits), 0) as double) as visit_to_buy_conversion_rate_7d
-from ( -- base measure
+from ( -- базовая мера
   select
     metric_time__day,
     sum(visits) as mqls
@@ -240,14 +240,14 @@ from ( -- base measure
   group by
     metric_time__day
 ) subq_3
-full outer join ( -- conversion measure
+full outer join ( -- мера конверсии
   select
     metric_time__day,
     sum(buys) as sellers
   from (
     -- ...
-    -- The output of this subquery is the table produced in Step 3. The SQL is hidden for legibility.
-    -- To see the full SQL output, add --explain to your conversion metric query. 
+    -- Выходные данные этого подзапроса - таблица, созданная на Шаге 3. SQL скрыт для удобочитаемости.
+    -- Чтобы увидеть полный вывод SQL, добавьте --explain к вашему запросу метрики конверсии. 
   ) subq_10
   group by
     metric_time__day
@@ -258,24 +258,24 @@ group by
   metric_time__day
 ```
 
-### Additional settings
+### Дополнительные настройки
 
-Use the following additional settings to customize your conversion metrics:
+Используйте следующие дополнительные настройки, чтобы настроить свои метрики конверсии:
 
-- **Null conversion values:** Set null conversions to zero using `fill_nulls_with`. Refer to [Fill null values for metrics](/docs/build/fill-nulls-advanced) for more info.
-- **Calculation type:** Choose between showing raw conversions or conversion rate.
-- **Constant property:** Add conditions for specific scenarios to join conversions on constant properties.
+- **Значения конверсии null:** Установите нулевые конверсии в ноль, используя `fill_nulls_with`. Обратитесь к [Заполнить значения null для метрик](/docs/build/fill-nulls-advanced) для получения дополнительной информации.
+- **Тип расчета:** Выберите между отображением сырых конверсий или коэффициента конверсии.
+- **Постоянное свойство:** Добавьте условия для конкретных сценариев, чтобы соединить конверсии по постоянным свойствам.
 
 <Tabs>
-<TabItem value="null" label="Set null conversion events to zero">
+<TabItem value="null" label="Установить нулевые события конверсии в ноль">
 
-To return zero in the final data set, you can set the value of a null conversion event to zero instead of null. You can add the `fill_nulls_with` parameter to your conversion metric definition like this:
+Чтобы вернуть ноль в конечном наборе данных, вы можете установить значение нулевого события конверсии в ноль вместо null. Вы можете добавить параметр `fill_nulls_with` в определение вашей метрики конверсии следующим образом:
 
 ```yaml
 - name: visit_to_buy_conversion_rate_7_day_window
-  description: "Conversion rate from viewing a page to making a purchase"
+  description: "Коэффициент конверсии от просмотра страницы до совершения покупки"
   type: conversion
-  label: Visit to Seller Conversion Rate (7 day window)
+  label: Коэффициент конверсии визита в продавца (7-дневное окно)
   type_params:
     conversion_type_params:
       calculation: conversions
@@ -289,25 +289,25 @@ To return zero in the final data set, you can set the value of a null conversion
 
 ```
 
-This will return the following results:
+Это вернет следующие результаты:
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/conversion-metrics-fill-null.png" width="75%" title="Conversion metric with fill nulls with parameter"/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/conversion-metrics-fill-null.png" width="75%" title="Метрика конверсии с параметром заполнения нулей"/>
 
-Refer to [Fill null values for metrics](/docs/build/fill-nulls-advanced) for more info.
+Обратитесь к [Заполнить значения null для метрик](/docs/build/fill-nulls-advanced) для получения дополнительной информации.
 
 </TabItem>
 
-<TabItem value="calctype" label="Set calculation type parameter">
+<TabItem value="calctype" label="Установить параметр типа расчета">
 
-Use the conversion calculation parameter to either show the raw number of conversions or the conversion rate. The default value is the conversion rate.
+Используйте параметр расчета конверсии, чтобы показать либо общее количество конверсий, либо коэффициент конверсии. Значение по умолчанию - коэффициент конверсии.
 
-You can change the default to display the number of conversions by setting the `calculation: conversion` parameter:
+Вы можете изменить значение по умолчанию, чтобы отобразить количество конверсий, установив параметр `calculation: conversion`:
 
 ```yaml
 - name: visit_to_buy_conversions_1_week_window
-    description: "Visit to Buy Conversions"
+    description: "Конверсии визита в покупку"
     type: conversion
-    label: Visit to Buy Conversions (1 week window)
+    label: Конверсии визита в покупку (1 неделя)
     type_params:
       conversion_type_params:
         calculation: conversions
@@ -322,25 +322,25 @@ You can change the default to display the number of conversions by setting the `
 
 </TabItem>
 
-<TabItem value="constproperty" label="Set constant property">
+<TabItem value="constproperty" label="Установить постоянное свойство">
 
-*Refer to [Amplitude's blog posts on constant properties](https://amplitude.com/blog/holding-constant) to learn about this concept.*
+*Обратитесь к [блогам Amplitude о постоянных свойствах](https://amplitude.com/blog/holding-constant), чтобы узнать об этой концепции.*
 
-You can add a constant property to a conversion metric to count only those conversions where a specific dimension or entity matches in both the base and conversion events. 
+Вы можете добавить постоянное свойство к метрике конверсии, чтобы учитывать только те конверсии, где конкретное измерение или сущность совпадают в обоих событиях базовой и конверсии. 
 
-For example, if you're at an e-commerce company and want to answer the following question:
-- _How often did visitors convert from `View Item Details` to `Complete Purchase` with the same product in each step?_<br />
-  - This question is tricky to answer because users could have completed these two conversion milestones across many products. For example, they may have viewed a pair of shoes, then a T-shirt, and eventually checked out with a bow tie. This would still count as a conversion, even though the conversion event only happened for the bow tie.
+Например, если вы работаете в компании электронной коммерции и хотите ответить на следующий вопрос:
+- _Как часто посетители конвертировались из `Просмотр деталей товара` в `Завершение покупки` с тем же продуктом на каждом этапе?_<br />
+  - Этот вопрос сложно ответить, потому что пользователи могли завершить эти два этапа конверсии по многим продуктам. Например, они могли просмотреть пару обуви, затем футболку и в конечном итоге оформить заказ с бабочкой. Это все равно будет считаться конверсией, даже если событие конверсии произошло только для бабочки.
 
-Back to the initial questions, you want to see how many customers viewed an item detail page and then completed a purchase for the _same_ product.
+Возвращаясь к первоначальным вопросам, вы хотите увидеть, сколько клиентов просмотрели страницу деталей товара и затем завершили покупку для _того же_ продукта.
 
-In this case, you want to set `product_id` as the constant property. You can specify this in the configs as follows:
+В этом случае вы хотите установить `product_id` в качестве постоянного свойства. Вы можете указать это в конфигурациях следующим образом:
 
 ```yaml
 - name: view_item_detail_to_purchase_with_same_item
-  description: "Conversion rate for users who viewed the item detail page and purchased the item"
+  description: "Коэффициент конверсии для пользователей, которые просмотрели страницу деталей товара и купили товар"
   type: Conversion
-  label: View Item Detail > Purchase
+  label: Просмотр деталей товара > Покупка
   type_params:
     conversion_type_params:
       calculation: conversions
@@ -354,7 +354,7 @@ In this case, you want to set `product_id` as the constant property. You can spe
           conversion_property: product
 ```
 
-You will add an additional condition to the join to make sure the constant property is the same across conversions.
+Вы добавите дополнительное условие к соединению, чтобы убедиться, что постоянное свойство одинаково для конверсий.
 
 ```sql
 select distinct
@@ -372,11 +372,11 @@ on
   v.user_id = buy_source.user_id
   and v.ds <= buy_source.ds
   and v.ds > buy_source.ds - interval '7 day'
-  and buy_source.product_id = v.product_id --Joining on the constant property product_id
+  and buy_source.product_id = v.product_id -- Соединение по постоянному свойству product_id
 ```
 
 </TabItem>
 </Tabs>
 
-## Related docs
-- [Fill null values for metrics](/docs/build/fill-nulls-advanced)
+## Связанные документы
+- [Заполнить значения null для метрик](/docs/build/fill-nulls-advanced)

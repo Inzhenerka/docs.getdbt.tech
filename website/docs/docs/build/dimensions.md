@@ -1,64 +1,60 @@
 ---
-title: Dimensions
+title: Размерности
 id: dimensions
-description: "Dimensions determine the level of aggregation for a metric, and are non-aggregatable expressions."
-sidebar_label: "Dimensions"
-tags: [Metrics, Semantic Layer]
+description: "Размерности определяют уровень агрегации для метрики и являются неагрегируемыми выражениями."
+sidebar_label: "Размерности"
+tags: [Метрики, Семантический уровень]
 ---
 
-Dimensions represent the non-aggregatable columns in your data set, which are the attributes, features, or characteristics that describe or categorize data. In the context of the dbt Semantic Layer, dimensions are part of a larger structure called a semantic model. They are created along with other elements like [entities](/docs/build/entities) and [measures](/docs/build/measures) and used to add more details to your data. In SQL, dimensions are typically included in the `group by` clause of your SQL query.
+Размерности представляют собой неагрегируемые столбцы в вашем наборе данных, которые являются атрибутами, характеристиками или признаками, описывающими или классифицирующими данные. В контексте семантического уровня dbt размерности являются частью более крупной структуры, называемой семантической моделью. Они создаются вместе с другими элементами, такими как [сущности](/docs/build/entities) и [меры](/docs/build/measures), и используются для добавления дополнительных деталей к вашим данным. В SQL размерности обычно включаются в оператор `group by` вашего SQL-запроса.
 
-<!--dimensions are non-aggregatable expressions that define the level of aggregation for a metric used to define how data is sliced or grouped in a metric. Since groups can't be aggregated, they're considered to be a property of the primary or unique entity of the table.
+Все размерности требуют указания `name`, `type`, и могут дополнительно включать параметр `expr`. `name` для вашей размерности должен быть уникальным в пределах одной семантической модели.
 
-Groups are defined within semantic models, alongside entities and measures, and correspond to non-aggregatable columns in your dbt model that provides categorical or time-based context. In SQL, dimensions  is typically included in the GROUP BY clause.-->
-
-All dimensions require a `name`, `type`, and can optionally include an `expr` parameter. The `name` for your Dimension must be unique within the same semantic model.
-
-| Parameter | Description | Required | Type |
+| Параметр | Описание | Обязательный | Тип |
 | --------- | ----------- | ---- | ---- |
-| `name` |  Refers to the name of the group that will be visible to the user in downstream tools. It can also serve as an alias if the column name or SQL query reference is different and provided in the `expr` parameter. <br /><br /> Dimension names should be unique within a semantic model, but they can be non-unique across different models as MetricFlow uses [joins](/docs/build/join-logic) to identify the right dimension. | Required | String |
-| `type` | Specifies the type of group created in the semantic model. There are two types:<br /><br />- **Categorical**: Describe attributes or features like geography or sales region. <br />- **Time**: Time-based dimensions like timestamps or dates. | Required | String |  
-| `type_params` | Specific type params such as if the time is primary or used as a partition. | Required | Dict |
-| `description` | A clear description of the dimension. | Optional | String |  
-| `expr` | Defines the underlying column or SQL query for a dimension. If no `expr` is specified, MetricFlow will use the column with the same name as the group. You can use the column name itself to input a SQL expression. | Optional | String |
-| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`).  | Optional | String |
+| `name` |  Относится к имени группы, которое будет видно пользователю в инструментах на выходе. Оно также может служить псевдонимом, если имя столбца или ссылка на SQL-запрос отличается и указана в параметре `expr`. <br /><br /> Имена размерностей должны быть уникальными в семантической модели, но они могут быть не уникальными в разных моделях, так как MetricFlow использует [соединения](/docs/build/join-logic) для идентификации правильной размерности. | Обязательный | Строка |
+| `type` | Указывает тип группы, создаваемой в семантической модели. Существует два типа:<br /><br />- **Категориальный**: Описывает атрибуты или характеристики, такие как география или регион продаж. <br />- **Время**: Размерности, основанные на времени, такие как временные метки или даты. | Обязательный | Строка |  
+| `type_params` | Специфические параметры типа, такие как то, является ли время основным или используется как раздел. | Обязательный | Словарь |
+| `description` | Четкое описание размерности. | Необязательный | Строка |  
+| `expr` | Определяет основной столбец или SQL-запрос для размерности. Если `expr` не указан, MetricFlow будет использовать столбец с тем же именем, что и группа. Вы можете использовать само имя столбца для ввода SQL-выражения. | Необязательный | Строка |
+| `label` | Определяет отображаемое значение в инструментах на выходе. Принимает обычный текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`).  | Необязательный | Строка |
 
-Refer to the following for the complete specification for dimensions:
+Смотрите полную спецификацию для размерностей:
 
 ```yaml
 dimensions:
-  - name: Name of the group that will be visible to the user in downstream tools # Required
-    type: Categorical or Time # Required
-    label: Recommended adding a string that defines the display value in downstream tools. # Optional
-    type_params: Specific type params such as if the time is primary or used as a partition # Required
-    description: Same as always # Optional
-    expr: The column name or expression. If not provided the default is the dimension name # Optional
+  - name: Имя группы, которое будет видно пользователю в инструментах на выходе # Обязательный
+    type: Категориальный или Время # Обязательный
+    label: Рекомендуется добавить строку, которая определяет отображаемое значение в инструментах на выходе. # Необязательный
+    type_params: Специфические параметры типа, такие как то, является ли время основным или используется как раздел # Обязательный
+    description: То же, что и всегда # Необязательный
+    expr: Имя столбца или выражение. Если не указано, по умолчанию используется имя размерности # Необязательный
 ```
 
-Refer to the following example to see how dimensions are used in a semantic model:
+Смотрите следующий пример, чтобы увидеть, как размерности используются в семантической модели:
 
 ```yaml
 semantic_models:
   - name: transactions
-    description: A record for every transaction that takes place. Carts are considered multiple transactions for each SKU. 
+    description: Запись каждой транзакции, которая происходит. Корзины считаются несколькими транзакциями для каждого SKU. 
     model: {{ ref('fact_transactions') }}
     defaults:
       agg_time_dimension: order_date
-# --- entities --- 
+# --- сущности --- 
   entities: 
     - name: transaction
       type: primary
       ...
-# --- measures --- 
+# --- меры --- 
   measures: 
       ... 
-# --- dimensions ---
+# --- размерности ---
   dimensions:
     - name: order_date
       type: time
       type_params:
         time_granularity: day
-      label: "Date of transaction" # Recommend adding a label to provide more context to users consuming the data
+      label: "Дата транзакции" # Рекомендуется добавить метку для предоставления большего контекста пользователям, использующим данные
       expr: ts
     - name: is_bulk
       type: categorical
@@ -67,9 +63,9 @@ semantic_models:
       type: categorical
 ```
 
-Dimensions are bound to the primary entity of the semantic model they are defined in. For example the dimension `type` is defined in a model that has `transaction` as a primary entity. `type` is scoped to the `transaction` entity, and to reference this dimension you would use the fully qualified dimension name i.e `transaction__type`. 
+Размерности связаны с основной сущностью семантической модели, в которой они определены. Например, размерность `type` определена в модели, где `transaction` является основной сущностью. `type` ограничена сущностью `transaction`, и для ссылки на эту размерность вы должны использовать полное имя размерности, т.е. `transaction__type`. 
 
-MetricFlow requires that all semantic models have a primary entity. This is to guarantee unique dimension names. If your data source doesn't have a primary entity, you need to assign the entity a name using the `primary_entity` key. It doesn't necessarily have to map to a column in that table and assigning the name doesn't affect query generation. We recommend making these "virtual primary entities" unique across your semantic model. An example of defining a primary entity for a data source that doesn't have a primary entity column is below:
+MetricFlow требует, чтобы все семантические модели имели основную сущность. Это необходимо для гарантии уникальности имен размерностей. Если ваш источник данных не имеет основной сущности, вам нужно назначить сущности имя, используя ключ `primary_entity`. Это не обязательно должно соответствовать столбцу в этой таблице, и назначение имени не влияет на генерацию запросов. Мы рекомендуем делать эти "виртуальные основные сущности" уникальными в вашей семантической модели. Пример определения основной сущности для источника данных, который не имеет столбца основной сущности, приведен ниже:
 
 ```yaml
 semantic_model:
@@ -85,21 +81,21 @@ semantic_model:
   primary_entity: booking_id
 ```
 
-## Dimensions types
-This section further explains the dimension definitions, along with examples. Dimensions have the following types:
+## Типы размерностей
+Этот раздел дополнительно объясняет определения размерностей, а также примеры. Размерности имеют следующие типы:
 
-- [Dimensions types](#dimensions-types)
-- [Categorical](#categorical)
-- [Time](#time)
-  - [SCD Type II](#scd-type-ii)
-    - [Basic structure](#basic-structure)
-    - [Semantic model parameters and keys](#semantic-model-parameters-and-keys)
-    - [Implementation](#implementation)
-    - [SCD examples](#scd-examples)
+- [Типы размерностей](#dimensions-types)
+- [Категориальные](#categorical)
+- [Время](#time)
+  - [SCD Тип II](#scd-type-ii)
+    - [Основная структура](#basic-structure)
+    - [Параметры и ключи семантической модели](#semantic-model-parameters-and-keys)
+    - [Реализация](#implementation)
+    - [Примеры SCD](#scd-examples)
 
-## Categorical
+## Категориальные
 
-Categorical dimensions are used to group metrics by different attributes, features, or characteristics such as product type. They can refer to existing columns in your dbt model or be calculated using a SQL expression with the `expr` parameter. An example of a categorical dimension is `is_bulk_transaction`, which is a group created by applying a case statement to the underlying column `quantity`. This allows users to group or filter the data based on bulk transactions.
+Категориальные размерности используются для группировки метрик по различным атрибутам, характеристикам или признакам, таким как тип продукта. Они могут ссылаться на существующие столбцы в вашей модели dbt или вычисляться с использованием SQL-выражения с параметром `expr`. Пример категориальной размерности — `is_bulk_transaction`, которая является группой, созданной путем применения оператора case к основному столбцу `quantity`. Это позволяет пользователям группировать или фильтровать данные на основе оптовых транзакций.
 
 ```yaml
 dimensions: 
@@ -108,41 +104,41 @@ dimensions:
     expr: case when quantity > 10 then true else false end
 ```
 
-## Time
+## Время
 
-Time has additional parameters specified under the `type_params` section. When you query one or more metrics, the default time dimension for each metric is the aggregation time dimension, which you can refer to as `metric_time` or use the dimension's name. 
+Время имеет дополнительные параметры, указанные в разделе `type_params`. Когда вы запрашиваете одну или несколько метрик, размерность времени по умолчанию для каждой метрики — это размерность агрегации времени, которую вы можете обозначить как `metric_time` или использовать имя размерности. 
 
-You can use multiple time groups in separate metrics. For example, the `users_created` metric uses `created_at`, and the `users_deleted` metric uses `deleted_at`:
+Вы можете использовать несколько временных групп в отдельных метриках. Например, метрика `users_created` использует `created_at`, а метрика `users_deleted` использует `deleted_at`:
 
 ```bash
-# dbt Cloud users
+# пользователи dbt Cloud
 dbt sl query --metrics users_created,users_deleted --group-by metric_time__year --order-by metric_time__year
 
-# dbt Core users
+# пользователи dbt Core
 mf query --metrics users_created,users_deleted --group-by metric_time__year --order-by metric_time__year
 ```
 
-You can set `is_partition` for time to define specific time spans. Additionally, use the `type_params` section to set `time_granularity` to adjust aggregation details (daily, weekly, and so on).
+Вы можете установить `is_partition` для времени, чтобы определить конкретные временные интервалы. Кроме того, используйте раздел `type_params`, чтобы установить `time_granularity`, чтобы настроить детали агрегации (ежедневно, еженедельно и т.д.).
 
 <Tabs queryString="dimension">
 
 <TabItem value="is_partition" label="is_partition">
 
-Use `is_partition: True` to show that a dimension exists over a specific time window. For example, a date-partitioned dimensional table. When you query metrics from different tables, the dbt Semantic Layer uses this parameter to ensure that the correct dimensional values are joined to measures. 
+Используйте `is_partition: True`, чтобы показать, что размерность существует в течение определенного временного окна. Например, таблица размерностей, разделенная по датам. Когда вы запрашиваете метрики из разных таблиц, семантический уровень dbt использует этот параметр, чтобы гарантировать, что правильные размерные значения соединяются с мерами. 
 
 ```yaml
 dimensions: 
   - name: created_at
     type: time
-    label: "Date of creation"
-    expr: ts_created # ts_created is the underlying column name from the table 
+    label: "Дата создания"
+    expr: ts_created # ts_created — это имя основного столбца из таблицы 
     is_partition: True
     type_params:
       time_granularity: day
   - name: deleted_at
     type: time
-    label: "Date of deletion"
-    expr: ts_deleted # ts_deleted is the underlying column name from the table
+    label: "Дата удаления"
+    expr: ts_deleted # ts_deleted — это имя основного столбца из таблицы
     is_partition: True 
     type_params:
       time_granularity: day
@@ -163,36 +159,36 @@ measures:
 
 <VersionBlock firstVersion="1.9">
 
-`time_granularity` specifies the grain of a time dimension. MetricFlow will transform the underlying column to the specified granularity. For example, if you add hourly granularity to a time dimension column, MetricFlow will run a `date_trunc` function to convert the timestamp to hourly. You can easily change the time grain at query time and aggregate it to a coarser grain, for example, from hourly to monthly. However, you can't go from a coarser grain to a finer grain (monthly to hourly).
+`time_granularity` указывает на зерно временной размерности. MetricFlow преобразует основной столбец в указанную гранулярность. Например, если вы добавите почасовую гранулярность к столбцу временной размерности, MetricFlow выполнит функцию `date_trunc`, чтобы преобразовать временную метку в почасовую. Вы можете легко изменить временное зерно во время запроса и агрегировать его до более грубой гранулярности, например, с почасовой до месячной. Однако вы не можете перейти от более грубой гранулярности к более тонкой (с месячной на почасовую).
 
-Our supported granularities are:
-* nanosecond (Snowflake only)
-* microsecond 
-* millisecond
-* second
-* minute
-* hour
-* day
-* week
-* month
-* quarter
-* year
+Наши поддерживаемые гранулярности:
+* наносекунда (только Snowflake)
+* микросекунда 
+* миллисекунда
+* секунда
+* минута
+* час
+* день
+* неделя
+* месяц
+* квартал
+* год
 
-Aggregation between metrics with different granularities is possible, with the Semantic Layer returning results at the coarsest granularity by default. For example, when querying two metrics with daily and monthly granularity, the resulting aggregation will be at the monthly level.
+Агрегация между метриками с различными гранулярностями возможна, при этом семантический уровень по умолчанию возвращает результаты на самой грубой гранулярности. Например, при запросе двух метрик с ежедневной и месячной гранулярностью результирующая агрегация будет на уровне месяца.
 
 ```yaml
 dimensions: 
   - name: created_at
     type: time
-    label: "Date of creation"
-    expr: ts_created # ts_created is the underlying column name from the table 
+    label: "Дата создания"
+    expr: ts_created # ts_created — это имя основного столбца из таблицы 
     is_partition: True 
     type_params:
       time_granularity: hour 
   - name: deleted_at
     type: time
-    label: "Date of deletion"
-    expr: ts_deleted # ts_deleted is the underlying column name from the table 
+    label: "Дата удаления"
+    expr: ts_deleted # ts_deleted — это имя основного столбца из таблицы 
     is_partition: True 
     type_params:
       time_granularity: day 
@@ -211,30 +207,30 @@ measures:
 
 <VersionBlock lastVersion="1.8">
 
-`time_granularity` specifies the grain of a time dimension. MetricFlow will transform the underlying column to the specified granularity. For example, if you add daily granularity to a time dimension column, MetricFlow will run a `date_trunc` function to convert the timestamp to daily. You can easily change the time grain at query time and aggregate it to a coarser grain, for example, from daily to monthly. However, you can't go from a coarser grain to a finer grain (monthly to daily).
+`time_granularity` указывает на зерно временной размерности. MetricFlow преобразует основной столбец в указанную гранулярность. Например, если вы добавите ежедневную гранулярность к столбцу временной размерности, MetricFlow выполнит функцию `date_trunc`, чтобы преобразовать временную метку в ежедневную. Вы можете легко изменить временное зерно во время запроса и агрегировать его до более грубой гранулярности, например, с ежедневной до месячной. Однако вы не можете перейти от более грубой гранулярности к более тонкой (с месячной на ежедневную).
 
-Our supported granularities are:
-* day
-* week
-* month
-* quarter
-* year
+Наши поддерживаемые гранулярности:
+* день
+* неделя
+* месяц
+* квартал
+* год
 
-Aggregation between metrics with different granularities is possible, with the Semantic Layer returning results at the coarsest granularity by default. For example, when querying two metrics with daily and monthly granularity, the resulting aggregation will be at the monthly level.
+Агрегация между метриками с различными гранулярностями возможна, при этом семантический уровень по умолчанию возвращает результаты на самой грубой гранулярности. Например, при запросе двух метрик с ежедневной и месячной гранулярностью результирующая агрегация будет на уровне месяца.
 
 ```yaml
 dimensions: 
   - name: created_at
     type: time
-    label: "Date of creation"
-    expr: ts_created # ts_created is the underlying column name from the table 
+    label: "Дата создания"
+    expr: ts_created # ts_created — это имя основного столбца из таблицы 
     is_partition: True 
     type_params:
       time_granularity: day 
   - name: deleted_at
     type: time
-    label: "Date of deletion"
-    expr: ts_deleted # ts_deleted is the underlying column name from the table 
+    label: "Дата удаления"
+    expr: ts_deleted # ts_deleted — это имя основного столбца из таблицы 
     is_partition: True 
     type_params:
       time_granularity: day 
@@ -255,73 +251,73 @@ measures:
 
 </Tabs>
 
-### SCD Type II
+### SCD Тип II
 
 :::caution
-Currently, semantic models with SCD Type II dimensions cannot contain measures.
+В настоящее время семантические модели с размерностями SCD Тип II не могут содержать меры.
 :::
 
-MetricFlow supports joins against dimensions values in a semantic model built on top of a slowly changing dimension (SCD) Type II table. This is useful when you need a particular metric sliced by a group that changes over time, such as the historical trends of sales by a customer's country.
+MetricFlow поддерживает соединения с значениями размерностей в семантической модели, построенной на основе таблицы медленно изменяющейся размерности (SCD) Тип II. Это полезно, когда вам нужно получить определенную метрику, разбитую по группе, которая изменяется со временем, например, исторические тенденции продаж по стране клиента.
 
-#### Basic structure
+#### Основная структура
 
-SCD Type II are groups that change values at a coarser time granularity. SCD Type II tables typically have two time columns that indicate the validity period of a dimension: `valid_from` (or `tier_start`) and `valid_to` (or `tier_end`). This creates a range of valid rows with different dimension values for a metric or measure.
+SCD Тип II — это группы, которые изменяют значения на более грубой временной гранулярности. Таблицы SCD Тип II обычно имеют два временных столбца, которые указывают на период действия размерности: `valid_from` (или `tier_start`) и `valid_to` (или `tier_end`). Это создает диапазон действительных строк с различными значениями размерности для метрики или меры.
 
-MetricFlow associates the metric with the earliest available dimension value within a coarser time window, such as a month. By default, it uses the group valid at the start of this time granularity.
+MetricFlow связывает метрику с самой ранней доступной размерностью в пределах более грубого временного окна, например, месяца. По умолчанию используется группа, действительная в начале этой временной гранулярности.
 
-MetricFlow supports the following basic structure of an SCD Type II data platform table:
+MetricFlow поддерживает следующую основную структуру таблицы платформы данных SCD Тип II:
 
 | entity_key | dimensions_1 | dimensions_2 | ... | dimensions_x | valid_from | valid_to |
 |------------|-------------|-------------|-----|-------------|------------|----------|  
 
-* `entity_key` (required): A unique identifier for each row in the table, such as a primary key or another unique identifier specific to the entity.
-* `valid_from`  (required): Start date timestamp for when the dimension is valid. Use `validity_params: is_start: True` in the semantic model to specify this.
-* `valid_to`  (required): End date timestamp for when the dimension is valid. Use `validity_params: is_end: True` in the semantic model to specify this.
+* `entity_key` (обязательный): Уникальный идентификатор для каждой строки в таблице, такой как первичный ключ или другой уникальный идентификатор, специфичный для сущности.
+* `valid_from`  (обязательный): Дата начала, когда размерность действительна. Используйте `validity_params: is_start: True` в семантической модели, чтобы указать это.
+* `valid_to`  (обязательный): Дата окончания, когда размерность действительна. Используйте `validity_params: is_end: True` в семантической модели, чтобы указать это.
 
-#### Semantic model parameters and keys
-When configuring an SCD Type II table in a semantic model, use `validity_params` to specify the start (`valid_from`) and end (`valid_to`) of the validity window for each dimension. 
+#### Параметры и ключи семантической модели
+При настройке таблицы SCD Тип II в семантической модели используйте `validity_params`, чтобы указать начало (`valid_from`) и конец (`valid_to`) периода действия для каждой размерности. 
 
-- `validity_params`: Parameters that define the validity window.
-  - `is_start: True`: Indicates the start of the validity period. Displayed as `valid_from` in the SCD table.
-  - `is_end: True`: Indicates the end of the validity period. Displayed as `valid_to` in the SCD table.
+- `validity_params`: Параметры, которые определяют период действия.
+  - `is_start: True`: Указывает на начало периода действия. Отображается как `valid_from` в таблице SCD.
+  - `is_end: True`: Указывает на конец периода действия. Отображается как `valid_to` в таблице SCD.
 
-Here’s an example configuration:
+Вот пример конфигурации:
 
 ```yaml
-- name: tier_start #  The name of the dimension.
-  type: time # The type of dimension (such as time)
-  label: "Start date of tier" # A readable label for the dimension
-  expr: start_date # Expression or column name the dimension represents
-  type_params: # Additional parameters for the dimension type
-    time_granularity: day # Specifies the granularity of the time dimension (such as day)
-    validity_params: # Defines the validity window
-      is_start: True # Indicates the start of the validity period. 
+- name: tier_start #  Имя размерности.
+  type: time # Тип размерности (например, время)
+  label: "Дата начала уровня" # Читаемая метка для размерности
+  expr: start_date # Выражение или имя столбца, которое представляет размерность
+  type_params: # Дополнительные параметры для типа размерности
+    time_granularity: day # Указывает гранулярность временной размерности (например, день)
+    validity_params: # Определяет период действия
+      is_start: True # Указывает на начало периода действия. 
 - name: tier_end 
   type: time
-  label: "End date of tier"
+  label: "Дата окончания уровня"
   expr: end_date
   type_params:
     time_granularity: day
     validity_params:
-      is_end: True # Indicates the end of the validity period.
+      is_end: True # Указывает на конец периода действия.
 ```
 
-SCD Type II tables have a specific dimension with a start and end date. To join tables:
-- Set the additional [entity `type`](/docs/build/entities#entity-types) parameter to the `natural` key. 
-- Use a `natural` key as an [entity `type`](/docs/build/entities#entity-types), which means you don't need a `primary` key.
-- In most instances, SCD tables don't have a logically usable `primary` key because `natural` keys map to multiple rows.
+Таблицы SCD Тип II имеют конкретную размерность с датой начала и окончания. Для соединения таблиц:
+- Установите дополнительный [параметр `type` сущности](/docs/build/entities#entity-types) в ключ `natural`. 
+- Используйте ключ `natural` в качестве [параметра `type` сущности](/docs/build/entities#entity-types), что означает, что вам не нужен `primary` ключ.
+- В большинстве случаев таблицы SCD не имеют логически используемого `primary` ключа, так как `natural` ключи сопоставляются с несколькими строками.
 
-#### Implementation
+#### Реализация
 
-Here are some guidelines to follow when implementing SCD Type II tables:
+Вот некоторые рекомендации, которые следует учитывать при реализации таблиц SCD Тип II:
 
-- The SCD table must have `valid_to` and `valid_from` time dimensions, which are logical constructs.
-- The `valid_from` and `valid_to` properties must be specified exactly once per SCD table configuration.
-- The `valid_from` and `valid_to` properties shouldn't be used or specified on the same time dimension.
-- The `valid_from` and `valid_to` time dimensions must cover a non-overlapping period where one row matches each natural key value (meaning they must not overlap and should be distinct).
-- We recommend defining the underlying dbt model with [dbt snapshots](/docs/build/snapshots). This supports the SCD Type II table layout and ensures that the table is updated with the latest data.
+- Таблица SCD должна иметь временные размерности `valid_to` и `valid_from`, которые являются логическими конструкциями.
+- Свойства `valid_from` и `valid_to` должны быть указаны ровно один раз для каждой конфигурации таблицы SCD.
+- Свойства `valid_from` и `valid_to` не должны использоваться или указываться в одной и той же временной размерности.
+- Временные размерности `valid_from` и `valid_to` должны охватывать неперекрывающийся период, в котором одна строка соответствует каждому значению естественного ключа (то есть они не должны перекрываться и должны быть различными).
+- Мы рекомендуем определять основную модель dbt с помощью [снимков dbt](/docs/build/snapshots). Это поддерживает макет таблицы SCD Тип II и гарантирует, что таблица обновляется с последними данными.
 
-This is an example of SQL code that shows how a sample metric called `num_events` is joined with versioned dimensions data (stored in a table called `scd_dimensions`) using a primary key made up of the `entity_key` and `timestamp` columns. 
+Вот пример SQL-кода, который показывает, как метрика под названием `num_events` соединяется с данными размерностей с версиями (хранящимися в таблице `scd_dimensions`) с использованием первичного ключа, состоящего из столбцов `entity_key` и `timestamp`. 
 
 ```sql
 select metric_time, dimensions_1, sum(1) as num_events
@@ -330,17 +326,17 @@ left outer join scd_dimensions b
 on 
   a.entity_key = b.entity_key 
   and a.metric_time >= b.valid_from 
-  and (a.metric_time < b. valid_to or b.valid_to is null)
+  and (a.metric_time < b.valid_to or b.valid_to is null)
 group by 1, 2
 ```
 
-#### SCD examples
+#### Примеры SCD
 
-The following are examples of how to use SCD Type II tables in a semantic model:
+Следующие примеры показывают, как использовать таблицы SCD Тип II в семантической модели:
 
-<Expandable alt_header="SCD dimensions for sales tiers and the time length of that tier.">
+<Expandable alt_header="Размерности SCD для уровней продаж и временной длины этого уровня.">
 
-This example shows how to create slowly changing dimensions (SCD) using a semantic model. The SCD table contains information about salespersons' tier and the time length of that tier. Suppose you have the underlying SCD table:
+Этот пример показывает, как создать медленно изменяющиеся размерности (SCD) с использованием семантической модели. Таблица SCD содержит информацию о уровнях продажников и временной длине этого уровня. Предположим, у вас есть основная таблица SCD:
 
 | sales_person_id | tier | start_date | end_date | 
 |-----------------|------|------------|----------|
@@ -350,16 +346,16 @@ This example shows how to create slowly changing dimensions (SCD) using a semant
 | 333             | 2    | 2020-08-19 | 2021-10-22| 
 | 333             | 3    | 2021-10-22 | 2048-01-01|  
 
-As mentioned earlier, the `validity_params` include two important arguments that specify the columns in the SCD table that mark the start and end dates (or timestamps) for each tier or dimension:
+Как уже упоминалось, `validity_params` включает два важных аргумента, которые указывают на столбцы в таблице SCD, которые отмечают даты начала и окончания (или временные метки) для каждого уровня или размерности:
 - `is_start`
 - `is_end`
 
-Additionally, the entity is tagged as `natural` to differentiate it from a `primary` entity. In a `primary` entity, each entity value has one row. In contrast, a `natural` entity has one row for each combination of entity value and its validity period.
+Кроме того, сущность помечена как `natural`, чтобы отличать ее от `primary` сущности. В `primary` сущности каждое значение сущности имеет одну строку. В отличие от этого, `natural` сущность имеет одну строку для каждой комбинации значения сущности и его периода действия.
 
 ```yaml 
 semantic_models:
   - name: sales_person_tiers
-    description: SCD Type II table of tiers for salespeople 
+    description: Таблица SCD Тип II уровней для продавцов 
     model: {{ ref('sales_person_tiers') }}
     defaults:
       agg_time_dimension: tier_start
@@ -367,7 +363,7 @@ semantic_models:
     dimensions:
       - name: tier_start
         type: time
-        label: "Start date of tier"
+        label: "Дата начала уровня"
         expr: start_date
         type_params:
           time_granularity: day
@@ -375,7 +371,7 @@ semantic_models:
             is_start: True
       - name: tier_end 
         type: time
-        label: "End date of tier"
+        label: "Дата окончания уровня"
         expr: end_date
         type_params:
           time_granularity: day
@@ -392,16 +388,16 @@ semantic_models:
         expr: sales_person_id
 ```
 
-The following code represents a separate semantic model that holds a fact table for `transactions`:  
+Следующий код представляет собой отдельную семантическую модель, которая содержит фактическую таблицу для `transactions`:  
 
 ```yaml
 semantic_models: 
   - name: transactions 
     description: |
-      Each row represents one transaction.
-      There is a transaction, product, sales_person, and customer id for 
-      every transaction. There is only one transaction id per 
-      transaction. The `metric_time` or date is reflected in UTC.
+      Каждая строка представляет одну транзакцию.
+      Для каждой транзакции есть идентификатор транзакции, продукта, продавца и клиента. 
+      Для каждой транзакции существует только один идентификатор транзакции. Дата `metric_time` 
+      отражается в UTC.
     model: {{ ref('fact_transactions') }}
     defaults:
       agg_time_dimension: metric_time
@@ -433,7 +429,7 @@ semantic_models:
     dimensions:
       - name: metric_time
         type: time
-        label: "Date of transaction"
+        label: "Дата транзакции"
         is_partition: true
         type_params:
           time_granularity: day
@@ -441,15 +437,15 @@ semantic_models:
         type: categorical
 ```
 
-You can now access the metrics in the `transactions` semantic model organized by the slowly changing dimension of `tier`. 
+Теперь вы можете получить доступ к метрикам в семантической модели `transactions`, организованным по медленно изменяющейся размерности `tier`. 
 
-In the sales tier example,  For instance, if a salesperson was Tier 1 from 2022-03-01 to 2022-03-12, and gets promoted to Tier 2 from 2022-03-12 onwards, all transactions from March would be categorized under Tier 1 since the dimensions value of Tier 1 comes earlier (and is the default starting point), even though the salesperson was promoted to Tier 2 on 2022-03-12.
+В примере уровня продаж, например, если продавец находился на уровне 1 с 2022-03-01 по 2022-03-12 и был повышен до уровня 2 с 2022-03-12, все транзакции за март будут классифицированы под уровнем 1, так как значение размерности уровня 1 приходит раньше (и является начальной точкой по умолчанию), даже если продавец был повышен до уровня 2 12 марта 2022 года.
 
 </Expandable>
 
-<Expandable alt_header="SCD dimensions with sales tiers and group transactions by month when tiers are missing">
+<Expandable alt_header="Размерности SCD с уровнями продаж и группировка транзакций по месяцам, когда уровни отсутствуют">
 
-This example shows how to create slowly changing dimensions (SCD) using a semantic model. The SCD table contains information about salespersons' tier and the time length of that tier. Suppose you have the underlying SCD table:
+Этот пример показывает, как создать медленно изменяющиеся размерности (SCD) с использованием семантической модели. Таблица SCD содержит информацию о уровнях продажников и временной длине этого уровня. Предположим, у вас есть основная таблица SCD:
 
 | sales_person_id | tier | start_date | end_date | 
 |-----------------|------|------------|----------|
@@ -459,15 +455,15 @@ This example shows how to create slowly changing dimensions (SCD) using a semant
 | 333             | 2    | 2020-08-19 | 2021-10-22| 
 | 333             | 3    | 2021-10-22 | 2048-01-01|  
 
-In the sales tier example, if sales_person_id 456 is Tier 2 from 2022-03-08 onwards, but there is no associated tier level dimension for this person from 2022-03-01 to 2022-03-08, then all transactions associated with sales_person_id 456 for the month of March will be grouped under 'NA' since no tier is present prior to Tier 2.
+В примере уровня продаж, если sales_person_id 456 находится на уровне 2 с 2022-03-08, но для этого человека нет связанного уровня размерности с 2022-03-01 по 2022-03-08, тогда все транзакции, связанные с sales_person_id 456 за март, будут сгруппированы под 'NA', так как до уровня 2 не было представлено ни одного уровня.
 
-The following command or code represents how to return the count of transactions generated by each sales tier per month:
+Следующая команда или код представляют, как вернуть количество транзакций, сгенерированных каждым уровнем продаж в месяц:
 
 ```bash
-# dbt Cloud users
+# пользователи dbt Cloud
 dbt sl query --metrics transactions --group-by metric_time__month,sales_person__tier --order-by metric_time__month,sales_person__tier
 
-# dbt Core users
+# пользователи dbt Core
 mf query --metrics transactions --group-by metric_time__month,sales_person__tier --order-by metric_time__month,sales_person__tier
 
 ```

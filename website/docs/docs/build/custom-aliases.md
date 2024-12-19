@@ -1,36 +1,36 @@
 ---
-title: "Custom aliases"
-description: "Read this tutorial to learn how to use custom aliases when building in dbt."
+title: "Пользовательские псевдонимы"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать пользовательские псевдонимы при работе с dbt."
 id: "custom-aliases"
 ---
 
-## Overview
+## Обзор
 
-When dbt runs a model, it will generally create a relation (either a <Term id="table" /> or a <Term id="view" /> ) in the database, except in the case of an [ephemeral model](/docs/build/materializations), when it will create a <Term id="cte" /> for use in another model. By default, dbt uses the model's filename as the identifier for the relation or CTE it creates. This identifier can be overridden using the [`alias`](/reference/resource-configs/alias) model configuration.
+Когда dbt выполняет модель, он обычно создает отношение (либо <Term id="table" />, либо <Term id="view" />) в базе данных, за исключением случая [эпhemeral model](/docs/build/materializations), когда он создает <Term id="cte" /> для использования в другой модели. По умолчанию dbt использует имя файла модели в качестве идентификатора для создаваемого отношения или CTE. Этот идентификатор можно переопределить с помощью конфигурации модели [`alias`](/reference/resource-configs/alias).
 
-### Why alias model names?
-The names of schemas and tables are effectively the "user interface" of your <Term id="data-warehouse" />. Well-named schemas and tables can help provide clarity and direction for consumers of this data. In combination with [custom schemas](/docs/build/custom-schemas), model aliasing is a powerful mechanism for designing your warehouse.
+### Зачем использовать псевдонимы для имен моделей?
+Имена схем и таблиц фактически являются "пользовательским интерфейсом" вашего <Term id="data-warehouse" />. Хорошо названные схемы и таблицы могут помочь обеспечить ясность и направление для потребителей этих данных. В сочетании с [пользовательскими схемами](/docs/build/custom-schemas) псевдонимизация моделей является мощным механизмом для проектирования вашего хранилища данных.
 
-The file naming scheme that you use to organize your models may also interfere with your data platform's requirements for identifiers. For example, you might wish to namespace your files using a period (`.`), but your data platform's SQL dialect may interpret periods to indicate a separation between schema names and table names in identifiers, or it may forbid periods from being used at all in CTE identifiers. In cases like these, model aliasing can allow you to retain flexibility in the way you name your model files without violating your data platform's identifier requirements.
+Схема именования файлов, которую вы используете для организации своих моделей, также может противоречить требованиям вашей платформы данных к идентификаторам. Например, вы можете захотеть использовать точку (`.`) для пространственного именования ваших файлов, но SQL-диалект вашей платформы данных может интерпретировать точки как разделители между именами схем и таблиц в идентификаторах или вообще запрещать использование точек в идентификаторах CTE. В таких случаях псевдонимизация моделей может позволить вам сохранить гибкость в именовании файлов моделей, не нарушая требований вашей платформы данных к идентификаторам.
 
-### Usage
-The `alias` config can be used to change the name of a model's identifier in the database. The following table shows examples of database identifiers for models both with and without a supplied `alias`, and with different materializations.
+### Использование
+Конфигурация `alias` может быть использована для изменения имени идентификатора модели в базе данных. В следующей таблице показаны примеры идентификаторов базы данных для моделей как с предоставленным `alias`, так и без него, а также с различными материализациями.
 
-| Model | Config | Relation Type | Database Identifier |
+| Модель | Конфигурация | Тип отношения | Идентификатор базы данных |
 | ----- | ------ | --------------| ------------------- |
 | ga_sessions.sql | \{\{ config(materialization='view') \}\} | <Term id="view" /> | "analytics"."ga_sessions" |
 | ga_sessions.sql | \{\{ config(materialization='view', alias='sessions') \}\} | <Term id="view" /> | "analytics"."sessions" |
 | ga_sessions.sql | \{\{ config(materialization='ephemeral') \}\} | <Term id="cte" /> | "\__dbt\__cte\__ga_sessions" |
 | ga_sessions.sql | \{\{ config(materialization='ephemeral', alias='sessions') \}\} | <Term id="cte" /> | "\__dbt\__cte\__sessions" |
 
-To configure an alias for a model, supply a value for the model's `alias` configuration parameter. For example:
+Чтобы настроить псевдоним для модели, укажите значение для параметра конфигурации `alias` модели. Например:
 
 <File name='models/google_analytics/ga_sessions.sql'>
 
 ```sql
 
--- This model will be created in the database with the identifier `sessions`
--- Note that in this example, `alias` is used along with a custom schema
+-- Эта модель будет создана в базе данных с идентификатором `sessions`
+-- Обратите внимание, что в этом примере `alias` используется вместе с пользовательской схемой
 {{ config(alias='sessions', schema='google_analytics') }}
 
 select * from ...
@@ -38,7 +38,7 @@ select * from ...
 
 </File>
 
-Or in a `schema.yml` file.
+Или в файле `schema.yml`.
 
 <File name='models/google_analytics/schema.yml'>
 
@@ -51,13 +51,13 @@ models:
 
 </File>
 
-When referencing the `ga_sessions` model above from a different model, use the `ref()` function with the model's _filename_ as usual. For example:
+При обращении к модели `ga_sessions` выше из другой модели используйте функцию `ref()`, как обычно, с _именем файла_ модели. Например:
 
 <File name='models/combined_sessions.sql'>
 
 ```sql
 
--- Use the model's filename in ref's, regardless of any aliasing configs
+-- Используйте имя файла модели в ref, независимо от любых конфигураций псевдонимов
 
 select * from {{ ref('ga_sessions') }}
 union all
@@ -68,14 +68,14 @@ select * from {{ ref('snowplow_sessions') }}
 
 ### generate_alias_name
 
-The alias generated for a model is controlled by a macro called `generate_alias_name`. This macro can be overridden in a dbt project to change how dbt aliases models. This macro works similarly to the [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration) macro.
+Псевдоним, сгенерированный для модели, контролируется макросом под названием `generate_alias_name`. Этот макрос можно переопределить в проекте dbt, чтобы изменить способ, которым dbt создает псевдонимы для моделей. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration).
 
-To override dbt's alias name generation, create a macro named `generate_alias_name` in your own dbt project. The `generate_alias_name` macro accepts two arguments:
+Чтобы переопределить генерацию имен псевдонимов в dbt, создайте макрос с именем `generate_alias_name` в своем проекте dbt. Макрос `generate_alias_name` принимает два аргумента:
 
-1. The custom alias supplied in the model config
-2. The node that a custom alias is being generated for
+1. Пользовательский псевдоним, указанный в конфигурации модели
+2. Узел, для которого генерируется пользовательский псевдоним
 
-The default implementation of `generate_alias_name` simply uses the supplied `alias` config (if present) as the model alias, otherwise falling back to the model name. This implementation looks like this:
+Стандартная реализация `generate_alias_name` просто использует указанный конфигурационный параметр `alias` (если он присутствует) в качестве псевдонима модели, в противном случае возвращается имя модели. Эта реализация выглядит следующим образом:
 
 <File name='get_custom_alias.sql'>
 
@@ -106,16 +106,15 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-### Dispatch macro - SQL alias management for databases and dbt packages
+### Макрос диспетчеризации - управление SQL-псевдонимами для баз данных и пакетов dbt
 
-See docs on macro `dispatch`: ["Managing different global overrides across packages"](/reference/dbt-jinja-functions/dispatch#managing-different-global-overrides-across-packages)
+Смотрите документацию по макросу `dispatch`: ["Управление различными глобальными переопределениями в пакетах"](/reference/dbt-jinja-functions/dispatch#managing-different-global-overrides-across-packages)
 
+### Предостережения
 
-### Caveats
+#### Неоднозначные идентификаторы базы данных
 
-#### Ambiguous database identifiers
-
-Using aliases, it's possible to accidentally create models with ambiguous identifiers. Given the following two models, dbt would attempt to create two <Term id="view">views</Term> with _exactly_ the same names in the database (ie. `sessions`):
+Используя псевдонимы, можно случайно создать модели с неоднозначными идентификаторами. Учитывая следующие две модели, dbt попытается создать два <Term id="view">представления</Term> с _точно_ такими же именами в базе данных (т.е. `sessions`):
 
 <File name='models/snowplow_sessions.sql'>
 
@@ -134,26 +133,25 @@ select * from ...
 
 </File>
 
-Whichever one of these models runs second would "win", and generally, the output of dbt would not be what you would expect. To avoid this failure mode, dbt will check if your model names and aliases are ambiguous in nature. If they are, you will be presented with an error message like this:
+Модель, которая выполнится второй, "выиграет", и, как правило, вывод dbt не будет таким, как вы ожидали. Чтобы избежать этого режима сбоя, dbt проверит, являются ли ваши имена моделей и псевдонимы по своей природе неоднозначными. Если это так, вы получите сообщение об ошибке, подобное этому:
 
 ```
 $ dbt compile
-Encountered an error:
-Compilation Error
-  dbt found two resources with the database representation "analytics.sessions".
-  dbt cannot create two resources with identical database representations. To fix this,
-  change the "schema" or "alias" configuration of one of these resources:
+Обнаружена ошибка:
+Ошибка компиляции
+  dbt нашел два ресурса с представлением базы данных "analytics.sessions".
+  dbt не может создать два ресурса с идентичными представлениями базы данных. Чтобы исправить это,
+  измените конфигурацию "schema" или "alias" одного из этих ресурсов:
   - model.my_project.snowplow_sessions (models/snowplow_sessions.sql)
   - model.my_project.sessions (models/sessions.sql)
 ```
 
-If these models should indeed have the same database identifier, you can work around this error by configuring a [custom schema](/docs/build/custom-schemas) for one of the models.
+Если эти модели действительно должны иметь одинаковый идентификатор базы данных, вы можете обойти эту ошибку, настроив [пользовательскую схему](/docs/build/custom-schemas) для одной из моделей.
 
-#### Model versions
+#### Версии моделей
 
-**Related documentation:**
-- [Model versions](/docs/collaborate/govern/model-versions)
+**Связанная документация:**
+- [Версии моделей](/docs/collaborate/govern/model-versions)
 - [`versions`](/reference/resource-properties/versions#alias)
 
-By default, dbt will create versioned models with the alias `<model_name>_v<v>`, where `<v>` is that version's unique identifier. You can customize this behavior just like for non-versioned models by configuring a custom `alias` or re-implementing the `generate_alias_name` macro.
-
+По умолчанию dbt будет создавать версии моделей с псевдонимом `<model_name>_v<v>`, где `<v>` - это уникальный идентификатор этой версии. Вы можете настроить это поведение так же, как и для неверсированных моделей, настроив пользовательский `alias` или переопределив макрос `generate_alias_name`.

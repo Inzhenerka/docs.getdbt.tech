@@ -1,218 +1,218 @@
 ---
-title: "About user access in dbt Cloud"
-description: "Learn how dbt Cloud administrators can use dbt Cloud's permissioning model to control user-level access in a dbt Cloud account."
+title: "О доступе пользователей в dbt Cloud"
+description: "Узнайте, как администраторы dbt Cloud могут использовать модель разрешений dbt Cloud для управления доступом на уровне пользователей в учетной записи dbt Cloud."
 id: "about-user-access"
 pagination_next: "docs/cloud/manage-access/seats-and-users"
 pagination_prev: null
 ---
 
-:::info "User access" is not "Model access"
+:::info "Доступ пользователей" не равен "Доступу к моделям"
 
-This page is specific to user groups and access, which includes:
-- User licenses, permissions, and group memberships
-- Role-based access controls for projects and environments
-- Single sign-on and secure authentication
+Эта страница посвящена группам пользователей и доступу, который включает в себя:
+- Лицензии пользователей, разрешения и членство в группах
+- Контроль доступа на основе ролей для проектов и окружений
+- Единый вход и безопасную аутентификацию
 
-"Model groups and access" is a feature specific to models and their availability across projects. Refer to [Model access](/docs/collaborate/govern/model-access) for more info on what it means for your dbt projects.
+"Группы моделей и доступ" — это функция, специфичная для моделей и их доступности в различных проектах. Обратитесь к [Доступу к моделям](/docs/collaborate/govern/model-access) для получения дополнительной информации о том, что это означает для ваших проектов dbt.
 
 :::
 
-# About user access
+# О доступе пользователей
 
-You can regulate access to dbt Cloud by various measures, including licenses, groups, permissions, and role-based access control (RBAC). To understand the possible approaches to user access to dbt Cloud features and functionality, you should first know how we approach users and groups.
+Вы можете регулировать доступ к dbt Cloud различными мерами, включая лицензии, группы, разрешения и контроль доступа на основе ролей (RBAC). Чтобы понять возможные подходы к доступу пользователей к функциям и функциональности dbt Cloud, вам следует сначала узнать, как мы подходим к пользователям и группам.
 
-### Users
+### Пользователи
 
-Individual users in dbt Cloud can be people you [manually invite](/docs/cloud/manage-access/invite-users) or grant access via an external identity provider (IdP), such as Microsoft Entra ID, Okta, or Google Workspace.
+Отдельные пользователи в dbt Cloud могут быть людьми, которых вы [приглашаете вручную](/docs/cloud/manage-access/invite-users) или предоставляете доступ через внешний поставщик идентификации (IdP), такой как Microsoft Entra ID, Okta или Google Workspace.
 
-In either scenario, when you add a user to dbt Cloud, they are assigned a [license](#licenses). You assign licenses at the individual user or group levels. When you manually invite a user, you will assign the license in the invitation window.
+В любом случае, когда вы добавляете пользователя в dbt Cloud, ему назначается [лицензия](#licenses). Вы назначаете лицензии на уровне отдельных пользователей или групп. Когда вы приглашаете пользователя вручную, вы назначаете лицензию в окне приглашения.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/license-dropdown.png" width="60%" title="Example of the license dropdown in the user invitation window." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/license-dropdown.png" width="60%" title="Пример выпадающего списка лицензий в окне приглашения пользователя." />
 
-You can edit an existing user's license by navigating to the **Users** section of the **Account settings**, clicking on a user, and clicking **Edit** on the user pane. Delete users from this same window to free up licenses for new users.
+Вы можете редактировать лицензию существующего пользователя, перейдя в раздел **Пользователи** в **Настройках учетной записи**, кликнув на пользователя и нажав **Редактировать** в панели пользователя. Удаляйте пользователей из этого же окна, чтобы освободить лицензии для новых пользователей.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/edit-user.png" width="60%" title="Example of the user information window in the user directory" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/edit-user.png" width="60%" title="Пример окна информации о пользователе в каталоге пользователей" />
 
 
-### Groups
+### Группы
 
-Groups in dbt Cloud serve much of the same purpose as they do in traditional directory tools &mdash; to gather individual users together to make bulk assignment of permissions easier. Admins use groups in dbt Cloud to assign [licenses](#licenses) and [permissions](#permissions). The permissions are more granular than licenses, and you only assign them at the group level; _you can’t assign permissions at the user level._ Every user in dbt Cloud must be assigned to at least one group.
+Группы в dbt Cloud выполняют ту же функцию, что и в традиционных инструментах каталогов — объединять отдельных пользователей, чтобы упростить массовое назначение разрешений. Администраторы используют группы в dbt Cloud для назначения [лицензий](#licenses) и [разрешений](#permissions). Разрешения более детализированы, чем лицензии, и вы назначаете их только на уровне группы; _вы не можете назначать разрешения на уровне пользователя._ Каждый пользователь в dbt Cloud должен быть назначен хотя бы в одну группу.
 
-There are three default groups available as soon as you create your dbt Cloud account (the person who created the account is added to all three automatically):
+Сразу после создания вашей учетной записи dbt Cloud доступны три группы по умолчанию (человек, создавший учетную запись, автоматически добавляется во все три):
 
-- **Owner:** This group is for individuals responsible for the entire account and will give them elevated account admin privileges. You cannot change the permissions. 
-- **Member:** This group is for the general members of your organization, who will also have full access to the account. You cannot change the permissions. By default, dbt Cloud adds new users to this group.
-- **Everyone:** A general group for all members of your organization. Customize the permissions to fit your organizational needs. By default, dbt Cloud adds new users to this group.
+- **Владелец:** Эта группа предназначена для лиц, ответственных за всю учетную запись, и предоставляет им повышенные привилегии администратора учетной записи. Вы не можете изменить разрешения. 
+- **Участник:** Эта группа предназначена для общих членов вашей организации, которые также будут иметь полный доступ к учетной записи. Вы не можете изменить разрешения. По умолчанию dbt Cloud добавляет новых пользователей в эту группу.
+- **Все:** Общая группа для всех членов вашей организации. Настройте разрешения в соответствии с потребностями вашей организации. По умолчанию dbt Cloud добавляет новых пользователей в эту группу.
 
-We recommend deleting the default `Owner`, `Member`, and `Everyone` groups before deploying and replacing them with your organizational groups. This prevents users from receiving more elevated privileges than they should and helps admins ensure they are properly placed.
+Мы рекомендуем удалить группы по умолчанию `Owner`, `Member` и `Everyone` перед развертыванием и заменить их на ваши организационные группы. Это предотвращает получение пользователями более высоких привилегий, чем они должны иметь, и помогает администраторам убедиться, что они правильно размещены.
 
-Create new groups from the **Groups & Licenses** section of the **Account settings**. If you use an external IdP for SSO, you can sync those SSO groups to dbt Cloud from the **Group details** pane when creating or editing existing groups.
+Создайте новые группы в разделе **Группы и лицензии** в **Настройках учетной записи**. Если вы используете внешний IdP для SSO, вы можете синхронизировать эти группы SSO с dbt Cloud из панели **Детали группы** при создании или редактировании существующих групп.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/new-group.png" width="60%" title="Example the new group pane in the account settings." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/new-group.png" width="60%" title="Пример панели новой группы в настройках учетной записи." />
 
 :::important
 
-If a user is assigned licenses and permissions from multiple groups, the group that grants the most access will take precedence. You must assign a permission set to any groups created beyond the three defaults, or users assigned will not have access to features beyond their user profile.
+Если пользователю назначены лицензии и разрешения из нескольких групп, группа, предоставляющая наибольший доступ, будет иметь приоритет. Вы должны назначить набор разрешений для любых групп, созданных помимо трех по умолчанию, иначе пользователи, назначенные в эти группы, не будут иметь доступа к функциям, выходящим за рамки их профиля пользователя.
 
 :::
 
-#### SSO mappings
+#### SSO сопоставления
 
-SSO Mappings connect an identity provider (IdP) group membership to a dbt Cloud group. When users log into dbt Cloud via a supported identity provider, their IdP group memberships sync with dbt Cloud. Upon logging in successfully, the user's group memberships (and permissions) will automatically adjust within dbt Cloud.
+Сопоставления SSO связывают членство группы поставщика идентификации (IdP) с группой dbt Cloud. Когда пользователи входят в dbt Cloud через поддерживаемый поставщик идентификации, их членство в группах IdP синхронизируется с dbt Cloud. После успешного входа членство группы пользователя (и разрешения) автоматически корректируется в dbt Cloud.
 
-:::tip Creating SSO Mappings
+:::tip Создание сопоставлений SSO
 
-While dbt Cloud supports mapping multiple IdP groups to a single dbt Cloud group, we recommend using a 1:1 mapping to make administration as simple as possible. Use the same names for your dbt Cloud groups and your IdP groups.
+Хотя dbt Cloud поддерживает сопоставление нескольких групп IdP с одной группой dbt Cloud, мы рекомендуем использовать сопоставление 1:1, чтобы сделать администрирование как можно проще. Используйте одни и те же названия для ваших групп dbt Cloud и групп IdP.
 
 :::
 
-Create an SSO mapping in the group view:
+Создайте сопоставление SSO в представлении группы:
 
-1. Open an existing group to edit or create a new group.
-2. In the **SSO** portion of the group screen, enter the name of the SSO group exactly as it appears in the IdP. If the name is not the same, the users will not be properly placed into the group. 
-3. In the **Users** section, ensure the **Add all users by default** option is disabled.
-4. Save the group configuration. New SSO users will be added to the group upon login, and existing users will be added to the group upon their next login. 
+1. Откройте существующую группу для редактирования или создайте новую группу.
+2. В разделе **SSO** на экране группы введите название группы SSO точно так, как оно указано в IdP. Если название не совпадает, пользователи не будут правильно размещены в группе. 
+3. В разделе **Пользователи** убедитесь, что опция **Добавить всех пользователей по умолчанию** отключена.
+4. Сохраните конфигурацию группы. Новые пользователи SSO будут добавлены в группу при входе, а существующие пользователи будут добавлены в группу при следующем входе. 
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-mapping.png" width="60%" title="Example of an SSO group mapped to a dbt Cloud group." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-mapping.png" width="60%" title="Пример группы SSO, сопоставленной с группой dbt Cloud." />
 
-Refer to [role-based access control](#role-based-access-control) for more information about mapping SSO groups for user assignment to dbt Cloud groups.
+Обратитесь к [контролю доступа на основе ролей](#role-based-access-control) для получения дополнительной информации о сопоставлении групп SSO для назначения пользователей в группы dbt Cloud.
 
-## Grant access
+## Предоставление доступа
 
-dbt Cloud users have both a license (assigned to an individual user or by group membership) and permissions (by group membership only) that determine what actions they can take. Licenses are account-wide, and permissions provide more granular access or restrictions to specific features.
+Пользователи dbt Cloud имеют как лицензию (назначенную отдельному пользователю или по членству в группе), так и разрешения (только по членству в группе), которые определяют, какие действия они могут выполнять. Лицензии действуют на уровне всей учетной записи, а разрешения предоставляют более детализированный доступ или ограничения к конкретным функциям.
 
-### Licenses
+### Лицензии
 
-Every user in dbt Cloud will have a license assigned. Licenses consume "seats" which impact how your account is [billed](/docs/cloud/billing), depending on your [service plan](https://www.getdbt.com/pricing).
+Каждому пользователю в dbt Cloud будет назначена лицензия. Лицензии потребляют "места", что влияет на то, как ваша учетная запись [биллируется](/docs/cloud/billing), в зависимости от вашего [плана обслуживания](https://www.getdbt.com/pricing).
 
-There are three license types in dbt Cloud:
+В dbt Cloud есть три типа лицензий:
 
-- **Developer** &mdash; User can be granted _any_ permissions.
-- **Read-Only** &mdash; User has read-only permissions applied to all dbt Cloud resources regardless of the role-based permissions that the user is assigned.
-- **IT** &mdash; User has Security Admin and Billing Admin [permissions](/docs/cloud/manage-access/enterprise-permissions) applied, regardless of the group permissions assigned.
+- **Разработчик** — пользователю могут быть предоставлены _любые_ разрешения.
+- **Только для чтения** — пользователю предоставляются разрешения только для чтения, применяемые ко всем ресурсам dbt Cloud, независимо от разрешений на основе ролей, которые назначены пользователю.
+- **IT** — пользователю предоставляются разрешения администратора безопасности и администратора биллинга [разрешения](/docs/cloud/manage-access/enterprise-permissions), независимо от назначенных разрешений группы.
 
-Developer licenses will make up a majority of the users in your environment and have the highest impact on billing, so it's important to monitor how many you have at any given time.
+Лицензии разработчиков составляют большинство пользователей в вашей среде и имеют наибольшее влияние на биллинг, поэтому важно следить за тем, сколько их у вас есть в любой момент времени.
 
-For more information on these license types, see [Seats & Users](/docs/cloud/manage-access/seats-and-users)
+Для получения дополнительной информации о этих типах лицензий смотрите [Места и пользователи](/docs/cloud/manage-access/seats-and-users)
 
-### Permissions
+### Разрешения
 
-Permissions determine what a developer-licensed user can do in your dbt Cloud account. By default, members of the `Owner` and `Member` groups have full access to all areas and features. When you want to restrict access to features, assign users to groups with stricter permission sets. Keep in mind that if a user belongs to multiple groups, the most permissive group will take precedence.
+Разрешения определяют, что может делать пользователь с лицензией разработчика в вашей учетной записи dbt Cloud. По умолчанию члены групп `Owner` и `Member` имеют полный доступ ко всем областям и функциям. Когда вы хотите ограничить доступ к функциям, назначайте пользователей в группы с более строгими наборами разрешений. Имейте в виду, что если пользователь принадлежит к нескольким группам, наиболее разрешительная группа будет иметь приоритет.
 
-The permissions available depends on whether you're on an [Enterprise](/docs/cloud/manage-access/enterprise-permissions) or [self-service Team](/docs/cloud/manage-access/self-service-permissions) plan. Developer accounts only have a single user, so permissions aren't applicable.
+Доступные разрешения зависят от того, находитесь ли вы на [Enterprise](/docs/cloud/manage-access/enterprise-permissions) или [плане самообслуживания Team](/docs/cloud/manage-access/self-service-permissions). Учетные записи разработчиков имеют только одного пользователя, поэтому разрешения не применимы.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/assign-group-permissions.png" width="60%" title="Example permissions dropdown while editing an existing group." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/assign-group-permissions.png" width="60%" title="Пример выпадающего списка разрешений при редактировании существующей группы." />
 
-Some permissions (those that don't grant full access, like admins) allow groups to be "assigned" to specific projects and environments only. Read about [environment-level permissions](/docs/cloud/manage-access/environment-permissions-setup) for more information on restricting environment access.
+Некоторые разрешения (те, которые не предоставляют полный доступ, как администраторы) позволяют группам "назначаться" только для конкретных проектов и окружений. Ознакомьтесь с [разрешениями на уровне окружения](/docs/cloud/manage-access/environment-permissions-setup) для получения дополнительной информации о том, как ограничить доступ к окружению.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-access-control.png" width="60%" title="Example environment access control for a group with Git admin assigned." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/environment-access-control.png" width="60%" title="Пример контроля доступа к окружению для группы с назначенным администратором Git." />
 
-## Role-based access control <Lifecycle status='enterprise' />
+## Контроль доступа на основе ролей <Lifecycle status='enterprise' />
 
-Role-based access control (RBAC) allows you to grant users access to features and functionality based on their group membership. With this method, you can grant users varying access levels to different projects and environments. You can take access and security to the next level by integrating dbt Cloud with a third-party identity provider (IdP) to grant users access when they authenticate with your SSO or OAuth service.
+Контроль доступа на основе ролей (RBAC) позволяет предоставлять пользователям доступ к функциям и функциональности на основе их членства в группах. С помощью этого метода вы можете предоставлять пользователям различные уровни доступа к различным проектам и окружениям. Вы можете поднять уровень доступа и безопасности на новый уровень, интегрировав dbt Cloud с третьим поставщиком идентификации (IdP), чтобы предоставлять пользователям доступ, когда они аутентифицируются с помощью вашего SSO или OAuth-сервиса.
 
-There are a few things you need to know before you configure RBAC for SSO users:
-- New SSO users join any groups with the **Add all new users by default** option enabled. By default, the `Everyone` and `Member` groups have this option enabled. Disable this option across all groups for the best RBAC experience.
-- You must have the appropriate SSO groups configured in the group details SSO section. If the SSO group name does not match _exactly_, users will not be placed in the group correctly. 
-  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-window-details.png" width="60%" title="The Group details SSO section with a group configured." />
-- dbt Labs recommends that your dbt Cloud group names match the IdP group names.
+Есть несколько вещей, которые вам нужно знать, прежде чем настраивать RBAC для пользователей SSO:
+- Новые пользователи SSO присоединяются к любым группам с включенной опцией **Добавить всех новых пользователей по умолчанию**. По умолчанию группы `Everyone` и `Member` имеют эту опцию включенной. Отключите эту опцию для всех групп для наилучшего опыта RBAC.
+- Вы должны иметь соответствующие группы SSO, настроенные в разделе деталей группы SSO. Если название группы SSO не совпадает _точно_, пользователи не будут правильно размещены в группе. 
+  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-window-details.png" width="60%" title="Раздел деталей группы SSO с настроенной группой." />
+- dbt Labs рекомендует, чтобы названия ваших групп dbt Cloud совпадали с названиями групп IdP.
 
-Let's say you have a new employee being onboarded into your organization using [Okta](/docs/cloud/manage-access/set-up-sso-okta) as the IdP and dbt Cloud groups with SSO mappings. In this scenario, users are working on `The Big Project` and a new analyst named `Euclid Ean` is joining the group.
+Предположим, у вас новый сотрудник, который проходит обучение в вашей организации, используя [Okta](/docs/cloud/manage-access/set-up-sso-okta) в качестве IdP и группы dbt Cloud с сопоставлениями SSO. В этом сценарии пользователи работают над `The Big Project`, и новый аналитик по имени `Euclid Ean` присоединяется к группе.
 
-Check out the following example configurations for an idea of how you can implement RBAC for your organization (these examples assume you have already configured [SSO](/docs/cloud/manage-access/sso-overview)):
+Посмотрите следующие примеры конфигураций, чтобы получить представление о том, как вы можете реализовать RBAC для вашей организации (эти примеры предполагают, что вы уже настроили [SSO](/docs/cloud/manage-access/sso-overview)):
 
-<Expandable alt_header="Okta configuration"> 
+<Expandable alt_header="Конфигурация Okta"> 
 
-You and your IdP team add `Euclid Ean` to your Okta environment and assign them to the `dbt Cloud` SSO app via a group called `The Big Project`. 
+Вы и ваша команда IdP добавляете `Euclid Ean` в вашу среду Okta и назначаете его в приложение SSO `dbt Cloud` через группу под названием `The Big Project`. 
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/okta-group-config.png" width="60%" title="The user in the group in Okta." />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/okta-group-config.png" width="60%" title="Пользователь в группе в Okta." />
 
-Configure the group attribute statements the `dbt Cloud` application in Okta. The group statements in the following example are set to the group name exactly (`The Big Project`), but yours will likely be a much broader configuration. Companies often use the same prefix across all dbt groups in their IdP. For example `DBT_GROUP_`
+Настройте атрибуты группы в приложении `dbt Cloud` в Okta. Атрибуты группы в следующем примере установлены на название группы точно (`The Big Project`), но ваша конфигурация, вероятно, будет гораздо шире. Компании часто используют один и тот же префикс для всех групп dbt в своем IdP. Например, `DBT_GROUP_`
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/group-attributes.png" width="60%" title="Group attributes set in the dbt Cloud SAML 2.0 app in Okta." />
-
-</Expandable>
-
-<Expandable alt_header="dbt Cloud configuration"> 
-
-You and your dbt Cloud admin team configure the groups in your account's settings: 
-1. Navigate to the **Account settings** and click **Groups & Licenses** on the left-side menu. 
-2. Click **Create group** or select an existing group and click **Edit**.
-3. Enter the group name in the **SSO** field.
-4. Configure the **Access and permissions** fields to your needs. Select a [permission set](/docs/cloud/manage-access/enterprise-permissions), the project they can access, and [environment-level access](/docs/cloud/manage-access/environment-permissions).
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="The group configuration with SSO field filled out in dbt Cloud." />
-
-Euclid is limited to the `Analyst` role, the `Jaffle Shop` project, and the `Development`, `Staging`, and `General` environments of that project. Euclid has no access to the `Production` environment in their role. 
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/group-attributes.png" width="60%" title="Атрибуты группы, установленные в приложении dbt Cloud SAML 2.0 в Okta." />
 
 </Expandable>
 
-<Expandable alt_header="The user journey">
+<Expandable alt_header="Конфигурация dbt Cloud"> 
 
-Euclid takes the following steps to log in: 
+Вы и ваша команда администраторов dbt Cloud настраиваете группы в настройках вашей учетной записи: 
+1. Перейдите в **Настройки учетной записи** и нажмите **Группы и лицензии** в левом меню. 
+2. Нажмите **Создать группу** или выберите существующую группу и нажмите **Редактировать**.
+3. Введите название группы в поле **SSO**.
+4. Настройте поля **Доступ и разрешения** в соответствии с вашими потребностями. Выберите [набор разрешений](/docs/cloud/manage-access/enterprise-permissions), проект, к которому они могут получить доступ, и [доступ на уровне окружения](/docs/cloud/manage-access/environment-permissions).
 
-1. Access the SSO URL or the dbt Cloud app in their Okta account. The URL can be found on the **Single sign-on** configuration page in the **Account settings**. 
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="Конфигурация группы с заполненным полем SSO в dbt Cloud." />
 
-  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login-url.png" width="60%" title="The SSO login URL in the account settings." />
-
-2. Login with their Okta credentials.
-
-  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login.png" width="60%" title="The SSO login screen when using Okta as the identity provider." />
-
-3. Since it's their first time logging in with SSO, Euclid Ean is presented with a message and no option to move forward until they check the email address associated with their Okta account. 
-
-  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/post-login-screen.png" width="60%" title="The screen users see after their first SSO login." />
-
-4. They now open their email and click the link to join dbt Labs, which completes the process.
-
-  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-email.png" width="60%" title="The email the user receives on first SSO login." />
-
-Euclid is now logged in to their account. They only have access to the `Jaffle Shop` pr, and the project selection option is removed from their UI entirely. 
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/rbac-account-home.png" width="60%" title="The home screen with access restricted." />
-
-They can now configure development credentials. The `Production` environment is visible, but it is `read-only`, and they have full access in the `Staging` environment. 
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/production-restricted.png" width="60%" title="The Production environment landing page with read-only access." />
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/staging-access.png" width="60%" title="The Staging environment landing page with full access." />
+Euclid ограничен ролью `Аналитик`, проектом `Jaffle Shop` и окружениями `Development`, `Staging` и `General` этого проекта. Euclid не имеет доступа к окружению `Production` в своей роли. 
 
 </Expandable>
 
-With RBAC configured, you now have granular control over user access to features across dbt Cloud.
+<Expandable alt_header="Путь пользователя">
 
-## FAQs
+Euclid выполняет следующие шаги для входа: 
 
-<Expandable alt_header="When are IdP group memberships updated for SSO Mapped groups?">
+1. Получает доступ к URL SSO или приложению dbt Cloud в своей учетной записи Okta. URL можно найти на странице конфигурации **Единый вход** в **Настройках учетной записи**. 
 
-Group memberships are updated whenever a user logs into dbt Cloud via a supported SSO provider. If you've changed group memberships in your identity provider or dbt Cloud, ask your users to log back into dbt Cloud to synchronize these group memberships.
+  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login-url.png" width="60%" title="URL входа SSO в настройках учетной записи." />
+
+2. Входит с помощью своих учетных данных Okta.
+
+  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sso-login.png" width="60%" title="Экран входа SSO при использовании Okta в качестве поставщика идентификации." />
+
+3. Поскольку это его первый вход с помощью SSO, Euclid Ean получает сообщение и не может продолжить, пока не проверит адрес электронной почты, связанный с его учетной записью Okta. 
+
+  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/post-login-screen.png" width="60%" title="Экран, который видят пользователи после первого входа SSO." />
+
+4. Теперь он открывает свою электронную почту и нажимает на ссылку, чтобы присоединиться к dbt Labs, что завершает процесс.
+
+  <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/sample-email.png" width="60%" title="Электронное письмо, которое пользователь получает при первом входе SSO." />
+
+Теперь Euclid вошел в свою учетную запись. У него есть доступ только к проекту `Jaffle Shop`, и опция выбора проекта полностью удалена из его интерфейса. 
+
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/rbac-account-home.png" width="60%" title="Главный экран с ограниченным доступом." />
+
+Теперь он может настроить учетные данные для разработки. Окружение `Production` видно, но оно `только для чтения`, и у него есть полный доступ в окружении `Staging`. 
+
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/production-restricted.png" width="60%" title="Страница окружения Production с доступом только для чтения." />
+
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/staging-access.png" width="60%" title="Страница окружения Staging с полным доступом." />
 
 </Expandable>
 
-<Expandable alt_header="Can I set up SSO without RBAC?">
+С настроенным RBAC у вас теперь есть детализированный контроль над доступом пользователей к функциям в dbt Cloud.
 
-Yes, see the documentation on [Manual Assignment](#manual-assignment) above for more information on using SSO without RBAC.
+## Часто задаваемые вопросы
 
-</Expandable>
+<Expandable alt_header="Когда обновляются членства групп IdP для сопоставленных групп SSO?">
 
-<Expandable alt_header="Can I configure a user's license type based on IdP attributes?">
-
-Yes, see the docs on [managing license types](/docs/cloud/manage-access/seats-and-users#managing-license-types) for more information.
+Членства в группах обновляются каждый раз, когда пользователь входит в dbt Cloud через поддерживаемого поставщика SSO. Если вы изменили членства в группах в вашем поставщике идентификации или dbt Cloud, попросите ваших пользователей снова войти в dbt Cloud, чтобы синхронизировать эти членства групп.
 
 </Expandable>
 
-<Expandable alt_header="Why can't I edit a user's group membership?">
+<Expandable alt_header="Могу ли я настроить SSO без RBAC?">
 
-Don't try to edit your own user, as this isn't allowed for security reasons. You'll need a different user to make changes to your own user's group membership.
+Да, смотрите документацию о [Ручном назначении](#manual-assignment) выше для получения дополнительной информации о использовании SSO без RBAC.
 
 </Expandable>
 
-<Expandable alt_header="How do I add or remove users?">
+<Expandable alt_header="Могу ли я настроить тип лицензии пользователя на основе атрибутов IdP?">
 
-Each dbt Cloud plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
-  - If you're on an Enterprise plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
-  - If you're on a Team plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers by making two changes: adjust your developer user seat count AND your developer billing seat count in **Account settings** -> **Users** and then in **Account settings** -> **Billing**.
+Да, смотрите документацию о [управлении типами лицензий](/docs/cloud/manage-access/seats-and-users#managing-license-types) для получения дополнительной информации.
 
-For detailed steps, refer to [Users and licenses](/docs/cloud/manage-access/seats-and-users#licenses).
+</Expandable>
+
+<Expandable alt_header="Почему я не могу редактировать членство группы пользователя?">
+
+Не пытайтесь редактировать своего пользователя, так как это не разрешено по соображениям безопасности. Вам нужно, чтобы другой пользователь внес изменения в членство вашей группы.
+
+</Expandable>
+
+<Expandable alt_header="Как добавить или удалить пользователей?">
+
+Каждый план dbt Cloud имеет базовое количество лицензий для разработчиков и только для чтения. Вы можете добавлять или удалять лицензии, изменяя количество пользователей в настройках вашей учетной записи. 
+  - Если вы находитесь на Enterprise-плане и имеете соответствующие [разрешения](/docs/cloud/manage-access/enterprise-permissions), вы можете добавлять или удалять разработчиков, изменяя количество мест для пользователей-разработчиков в **Настройках учетной записи** -> **Пользователи**.
+  - Если вы находитесь на Team-плане и имеете соответствующие [разрешения](/docs/cloud/manage-access/self-service-permissions), вы можете добавлять или удалять разработчиков, внося два изменения: измените количество мест для пользователей-разработчиков И количество мест для биллинга разработчиков в **Настройках учетной записи** -> **Пользователи**, а затем в **Настройках учетной записи** -> **Биллинг**.
+
+Для получения подробных шагов смотрите [Пользователи и лицензии](/docs/cloud/manage-access/seats-and-users#licenses).
 
 </Expandable>

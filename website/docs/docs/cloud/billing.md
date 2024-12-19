@@ -1,200 +1,195 @@
 ---
-title: "Billing"
+title: "Биллинг"
 id: billing 
-description: "dbt Cloud billing information." 
-sidebar_label: Billing
+description: "Информация о биллинге dbt Cloud." 
+sidebar_label: Биллинг
 pagination_next: null
 pagination_prev: null
 ---
 
-dbt Cloud offers a variety of [plans and pricing](https://www.getdbt.com/pricing/) to fit your organization’s needs. With flexible billing options that appeal to large enterprises and small businesses and [server availability](/docs/cloud/about-cloud/access-regions-ip-addresses) worldwide, dbt Cloud is the fastest and easiest way to begin transforming your data.
+dbt Cloud предлагает различные [планы и цены](https://www.getdbt.com/pricing/), чтобы соответствовать потребностям вашей организации. С гибкими вариантами биллинга, которые подходят как для крупных предприятий, так и для малых бизнесов, а также с [доступностью серверов](/docs/cloud/about-cloud/access-regions-ip-addresses) по всему миру, dbt Cloud является самым быстрым и простым способом начать трансформацию ваших данных.
 
-## How does dbt Cloud pricing work?
+## Как работает ценообразование dbt Cloud?
 
-As a customer, you pay for the number of seats you have and the amount of usage consumed each month.  Seats are billed primarily on the amount of Developer and Read licenses purchased. 
+Как клиент, вы платите за количество мест, которые у вас есть, и за объем потребления каждый месяц. Места в основном выставляются на основе количества приобретенных лицензий для разработчиков и для чтения.
 
-Usage is based on the number of [Successful Models Built](#what-counts-as-a-successful-model-built) and, if purchased and used, Semantic Layer [Queried Metrics](#what-counts-as-a-queried-metric) subject to reasonable usage. All billing computations are conducted in Coordinated Universal Time (UTC).
+Потребление основано на количестве [Успешно построенных моделей](#what-counts-as-a-successful-model-built) и, если они были куплены и использованы, на [Запрашиваемых метриках](#what-counts-as-a-queried-metric) семантического слоя, при условии разумного использования. Все расчеты биллинга проводятся по всемирному координированному времени (UTC).
 
-### What counts as a seat license?
+### Что считается лицензией на место?
 
-There are three types of possible seat licenses:
+Существует три типа возможных лицензий на место:
 
-* **Developer** &mdash; for roles and permissions that require interaction with the dbt Cloud environment day-to-day.
-* **Read-Only** &mdash; for access to view certain documents and reports. 
-* **IT** &mdash; for access to specific features related to account management (for example, configuring git integration). 
+* **Разработчик** &mdash; для ролей и разрешений, которые требуют взаимодействия с окружением dbt Cloud на ежедневной основе.
+* **Только для чтения** &mdash; для доступа к просмотру определенных документов и отчетов. 
+* **IT** &mdash; для доступа к определенным функциям, связанным с управлением учетной записью (например, настройка интеграции с git). 
 
-### What counts as a Successful Model Built?
+### Что считается Успешно построенной моделью?
 
-dbt Cloud considers a Successful Model Built as any <Term id="model">model</Term> that is successfully built via a run through dbt Cloud’s orchestration functionality in a dbt Cloud deployment environment. Models are counted when built and run. This includes any jobs run via dbt Cloud's scheduler, CI builds (jobs triggered by pull requests), runs kicked off via the dbt Cloud API, and any successor dbt Cloud tools with similar functionality. This also includes models that are successfully built even when a run may fail to complete. For example, you may have a job that contains 100 models and on one of its runs, 51 models are successfully built and then the job fails. In this situation, only 51 models would be counted.
+dbt Cloud считает Успешно построенной моделью любую <Term id="model">модель</Term>, которая успешно построена через запуск с использованием функциональности оркестрации dbt Cloud в окружении развертывания dbt Cloud. Модели учитываются при их построении и запуске. Это включает любые задания, запущенные через планировщик dbt Cloud, CI сборки (задания, инициированные запросами на слияние), запуски, инициированные через API dbt Cloud, и любые последующие инструменты dbt Cloud с аналогичной функциональностью. Это также включает модели, которые успешно построены, даже если запуск может не завершиться. Например, у вас может быть задание, содержащее 100 моделей, и в одном из его запусков 51 модель успешно построена, а затем задание завершилось с ошибкой. В этой ситуации будет учтено только 51 модель.
 
-Any models built in a dbt Cloud development environment (for example, via the IDE) do not count towards your usage. Tests, seeds, ephemeral models, and snapshots also do not count. 
+Любые модели, построенные в окружении разработки dbt Cloud (например, через IDE), не учитываются в вашем потреблении. Тесты, семена, эфемерные модели и снимки также не учитываются. 
 
-| What counts towards Successful Models Built |                     |
+| Что учитывается в Успешно построенных моделях |                     |
 |---------------------------------------------|---------------------|
-| View                                        | ✅                  |
-| Table                                       | ✅                  |
-| Incremental                                 | ✅                  |
-| Ephemeral Models                            | ❌                  |
-| Tests                                       | ❌                  |
-| Seeds                                       | ❌                  |
-| Snapshots                                   | ❌                  |
+| Просмотр                                    | ✅                  |
+| Таблица                                     | ✅                  |
+| Инкрементальная                             | ✅                  |
+| Эфемерные модели                            | ❌                  |
+| Тесты                                       | ❌                  |
+| Семена                                      | ❌                  |
+| Снимки                                      | ❌                  |
 
-### What counts as a Queried Metric?
+### Что считается Запрашиваемой метрикой?
 
-The dbt Semantic Layer, powered by MetricFlow, measures usage in distinct Queried Metrics.
+Семантический слой dbt, работающий на базе MetricFlow, измеряет использование в виде отдельных Запрашиваемых метрик.
 
-- Every successful request you make to render or run SQL to the Semantic Layer API counts as at least one queried metric, even if no data is returned. 
-- If the query calculates or renders SQL for multiple metrics, each calculated metric will be counted as a queried metric.
-- If a request to run a query is not executed successfully in the data platform or if a query results in an error without completion, it is not counted as a queried metric. 
-- Requests for metadata from the Semantic Layer are also not counted as queried metrics.
+- Каждый успешный запрос, который вы делаете для рендеринга или выполнения SQL к API семантического слоя, считается как минимум одной запрашиваемой метрикой, даже если данные не возвращаются. 
+- Если запрос вычисляет или рендерит SQL для нескольких метрик, каждая вычисленная метрика будет считаться запрашиваемой метрикой.
+- Если запрос на выполнение запроса не выполняется успешно на платформе данных или если запрос приводит к ошибке без завершения, он не учитывается как запрашиваемая метрика. 
+- Запросы на метаданные из семантического слоя также не учитываются как запрашиваемые метрики.
 
-Examples of queried metrics include:
+Примеры запрашиваемых метрик включают:
 
-- Querying one metric, grouping by one dimension → 1 queried metric 
+- Запрос одной метрики, группировка по одному измерению → 1 запрашиваемая метрика 
 
   ```shell
   dbt sl query --metrics revenue --group-by metric_time
   ```
 
-- Querying one metric, grouping by two dimensions → 1 queried metric 
+- Запрос одной метрики, группировка по двум измерениям → 1 запрашиваемая метрика 
 
   ```shell
   dbt sl query --metrics revenue --group-by metric_time,user__country
   ```
 
-- Querying two metrics, grouping by two dimensions → 2 queried metrics 
+- Запрос двух метрик, группировка по двум измерениям → 2 запрашиваемые метрики 
 
   ```shell
   dbt sl query --metrics revenue,gross_sales --group-by metric_time,user__country
   ```
 
-- Running an explain for one metric → 1 queried metric
+- Выполнение объяснения для одной метрики → 1 запрашиваемая метрика
 
   ```shell
   dbt sl query --metrics revenue --group-by metric_time --explain
   ```
 
-- Running an explain for two metrics → 2 queried metrics
+- Выполнение объяснения для двух метрик → 2 запрашиваемые метрики
 
   ```shell
   dbt sl query --metrics revenue,gross_sales --group-by metric_time --explain
   ```
 
-### Viewing usage in the product 
+### Просмотр использования в продукте 
 
-Viewing usage in the product is restricted to specific roles:
+Просмотр использования в продукте ограничен определенными ролями:
 
-* Team plan &mdash; Owner group
-* Enterprise plan &mdash; Account and billing admin roles
+* Командный план &mdash; группа владельцев
+* Корпоративный план &mdash; роли администратора учетной записи и биллинга
 
-For an account-level view of usage, if you have access to the **Billing** and **Usage** pages, you can see an estimate of the usage for the month. In the Billing page of the **Account Settings**, you can see how your account tracks against its usage. You can also see which projects are building the most models.
+Для просмотра использования на уровне учетной записи, если у вас есть доступ к страницам **Биллинг** и **Использование**, вы можете увидеть оценку использования за месяц. На странице Биллинга в **Настройках учетной записи** вы можете увидеть, как ваша учетная запись отслеживает свое использование. Вы также можете увидеть, какие проекты строят больше всего моделей.
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-usage-page.jpg" width="80%" title="To view account-level estimated usage, go to 'Account settings' and then select 'Billing'."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-usage-page.jpg" width="80%" title="Чтобы увидеть оценку использования на уровне учетной записи, перейдите в 'Настройки учетной записи', а затем выберите 'Биллинг'."/>
 
-As a Team and Developer plan user, you can see how the account is tracking against the included models built. As an Enterprise plan user, you can see how much you have drawn down from your annual commit and how much remains.
+Как пользователь Командного и Разработчика плана, вы можете видеть, как учетная запись отслеживает включенные построенные модели. Как пользователь Корпоративного плана, вы можете видеть, сколько вы использовали из вашего годового обязательства и сколько осталось.
 
-On each **Project Home** page, any user with access to that project can see how many models are built each month. From there, additional details on top jobs by models built can be found on each **Environment** page.
+На каждой странице **Домашняя страница проекта** любой пользователь с доступом к этому проекту может видеть, сколько моделей строится каждый месяц. Оттуда можно найти дополнительные детали о лучших заданиях по построенным моделям на каждой странице **Окружение**.
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-project-page.jpg" width="80%" title="Your Project home page displays how many models are built each month."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-project-page.jpg" width="80%" title="Ваша домашняя страница проекта отображает, сколько моделей строится каждый месяц."/>
 
-In addition, you can look at the **Job Details** page's **Insights** tab to show how many models are being built per month for that particular job and which models are taking the longest to build. 
+Кроме того, вы можете посмотреть на вкладке **Инсайты** на странице **Детали задания**, чтобы увидеть, сколько моделей строится в месяц для этого конкретного задания и какие модели требуют больше всего времени на построение. 
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-job-page.jpg" width="80%" title="View how many models are being built per month for a particular job by going to the 'Insights' tab in the 'Job details' page."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-job-page.jpg" width="80%" title="Посмотрите, сколько моделей строится в месяц для конкретного задания, перейдя на вкладку 'Инсайты' на странице 'Детали задания'."/>
 
-Usage information is available to customers on consumption-based plans, and some usage visualizations might not be visible to customers on legacy plans. Any usage data shown in dbt Cloud is only an estimate of your usage, and there could be a delay in showing usage data in the product. Your final usage for the month will be visible on your monthly statements (statements applicable to Team and Enterprise plans).
+Информация о потреблении доступна клиентам на планах, основанных на потреблении, и некоторые визуализации использования могут быть недоступны для клиентов на устаревших планах. Любые данные о потреблении, отображаемые в dbt Cloud, являются лишь оценкой вашего использования, и может быть задержка в отображении данных о потреблении в продукте. Ваше окончательное использование за месяц будет видно в ваших ежемесячных отчетах (отчеты применимы к Командным и Корпоративным планам).
 
+## Планы и биллинг
 
-## Plans and Billing
+dbt Cloud предлагает несколько [планов](https://www.getdbt.com/pricing) с различными функциями, которые соответствуют вашим потребностям. Мы можем время от времени вносить изменения в детали наших планов. Мы всегда будем сообщать вам об этом заранее, чтобы вы могли подготовиться. В следующем разделе объясняется, как работает биллинг в каждом плане.
 
-dbt Cloud offers several [plans](https://www.getdbt.com/pricing) with different features that meet your needs. We may make changes to our plan details from time to time. We'll always let you know in advance, so you can be prepared. The following section explains how billing works in each plan.
+### Биллинг плана Разработчика
 
-### Developer plan billing
+Планы разработчиков бесплатны и включают одну лицензию разработчика и 3,000 моделей каждый месяц. Модели обновляются в начале каждого календарного месяца. Если вы превысите 3,000 моделей, любые последующие запуски будут отменены до тех пор, пока модели не будут обновлены или пока вы не перейдете на платный план. Остальная часть платформы dbt Cloud по-прежнему доступна, и никакая работа не будет потеряна.
 
-Developer plans are free and include one Developer license and 3,000 models each month. Models are refreshed at the beginning of each calendar month. If you exceed 3,000 models, any subsequent runs will be canceled until models are refreshed or until you upgrade to a paid plan. The rest of the dbt Cloud platform is still accessible, and no work will be lost.
+Все включенные успешные модели, построенные выше, отражают наши самые актуальные цены и упаковку. В зависимости от условий использования, когда вы подписались на план Разработчика, включенные права на модели могут отличаться от указанных выше.
 
-All included successful models built numbers above reflect our most current pricing and packaging. Based on your usage terms when you signed up for the Developer Plan, the included model entitlements may be different from what’s reflected above.
+### Биллинг плана Команды 
 
+Клиенты команды платят ежемесячно с помощью кредитной карты за места и использование, а учетные записи включают 15,000 моделей в месяц. Места оплачиваются заранее в начале месяца. Если вы добавите места в течение месяца, они будут пропорционально рассчитаны и выставлены к оплате в тот же день. Удаленные места в течение месяца будут отражены в следующем счете и не подлежат возврату. Вы можете изменить информацию о кредитной карте и количество мест в разделе биллинга в любое время. Учетные записи будут получать один ежемесячный счет, который включает предварительный платеж за места и использование, выставленное в заднем порядке за предыдущий месяц.
 
-### Team plan billing 
+Использование рассчитывается и выставляется в заднем порядке за предыдущий месяц. Если вы превысите 15,000 моделей в любом месяце, вам будет выставлен счет за дополнительное использование в следующем счете. Дополнительное использование выставляется по тарифам на нашей [странице цен](https://www.getdbt.com/pricing). 
 
-Team customers pay monthly via credit card for seats and usage, and accounts include 15,000 models monthly. Seats are charged upfront at the beginning of the month. If you add seats during the month, seats will be prorated and charged on the same day. Seats removed during the month will be reflected on the next invoice and are not eligible for refunds. You can change the credit card information and the number of seats from the billings section anytime. Accounts will receive one monthly invoice that includes the upfront charge for the seats and the usage charged in arrears from the previous month.
+Включенные модели, которые не были использованы, не переносятся на будущие месяцы. Вы можете оценить свой счет с помощью простой формулы:
 
-Usage is calculated and charged in arrears for the previous month. If you exceed 15,000 models in any month, you will be billed for additional usage on your next invoice. Additional usage is billed at the rates on our [pricing page](https://www.getdbt.com/pricing). 
+`($100 x количество мест для разработчиков) + ((построенные модели - 15,000) x $0.01)`
 
+Все включенные успешные модели, построенные выше, отражают наши самые актуальные цены и упаковку. В зависимости от условий использования, когда вы подписались на план Команды, включенные права на модели могут отличаться от указанных выше.
 
-Included models that are not consumed do not roll over to future months. You can estimate your bill with a simple formula:
+### Биллинг плана Корпорации
 
-`($100 x number of developer seats) + ((models built - 15,000) x $0.01)`
+Как корпоративный клиент, вы платите ежегодно по счету, ежемесячно в заднем порядке за дополнительное использование (если применимо) и можете воспользоваться согласованными тарифами на использование. Пожалуйста, обратитесь к вашему заказу или контракту для получения конкретных деталей о ценах, или [свяжитесь с командой по работе с клиентами](https://www.getdbt.com/contact-demo) с любыми вопросами. 
 
-All included successful models built numbers above reflect our most current pricing and packaging. Based on your usage terms when you signed up for the Team Plan, the included model entitlements may be different from what’s reflected above.
+Информация о биллинге корпоративного плана недоступна в интерфейсе dbt Cloud. Изменения обрабатываются через вашего архитектора решений dbt Labs или менеджера команды по работе с клиентами.
 
-### Enterprise plan billing
+### Устаревшие планы
 
-As an Enterprise customer, you pay annually via invoice, monthly in arrears for additional usage (if applicable), and may benefit from negotiated usage rates. Please refer to your order form or contract for your specific pricing details, or [contact the account team](https://www.getdbt.com/contact-demo) with any questions. 
+Клиенты, которые приобрели план dbt Cloud Команды до 11 августа 2023 года, остаются на устаревшем ценовом плане, пока ваша учетная запись находится в хорошем состоянии. Устаревший ценовой план основан на местах и включает неограниченные модели, при условии разумного использования. 
 
-Enterprise plan billing information is not available in the dbt Cloud UI.  Changes are handled through your dbt Labs Solutions Architect or account team manager.
+:::note Устаревший семантический слой
 
-### Legacy plans
-
-Customers who purchased the dbt Cloud Team plan before August 11, 2023, remain on a legacy pricing plan as long as your account is in good standing. The legacy pricing plan is based on seats and includes unlimited models, subject to reasonable use. 
-
-:::note Legacy Semantic Layer
-
-For customers using the legacy Semantic Layer with dbt_metrics package, this product will be deprecated in December 2023. Legacy users may choose to upgrade at any time to the revamped version, Semantic Layer powered by MetricFlow. The revamped version is available to most customers (see [prerequisites](/guides/sl-snowflake-qs#prerequisites)) for a limited time on a free trial basis, subject to reasonable use.
+Для клиентов, использующих устаревший семантический слой с пакетом dbt_metrics, этот продукт будет снят с поддержки в декабре 2023 года. Устаревшие пользователи могут в любое время выбрать обновление до обновленной версии, семантического слоя, работающего на базе MetricFlow. Обновленная версия доступна для большинства клиентов (см. [предварительные условия](/guides/sl-snowflake-qs#prerequisites)) на ограниченный срок на бесплатной пробной основе, при условии разумного использования.
 
 :::
 
-dbt Labs may institute use limits if reasonable use is exceeded. Additional features, upgrades, or updates may be subject to separate charges. Any changes to your current plan pricing will be communicated in advance according to our Terms of Use.
+dbt Labs может установить ограничения на использование, если разумное использование превышено. Дополнительные функции, обновления или обновления могут подлежать отдельным сборам. Любые изменения в текущих ценах вашего плана будут сообщены заранее в соответствии с нашими Условиями использования.
 
+## Управление использованием
 
-## Managing usage
+В dbt Cloud нажмите на имя вашей учетной записи в левом боковом меню и выберите **Настройки учетной записи**. Опция **Биллинг** будет находиться в левом боковом меню под заголовком **Настройки**. Здесь вы можете просмотреть доступные планы и функции, предоставляемые для каждого из них. 
 
-From dbt Cloud, click on your account name in the left side menu and select **Account settings**. The **Billing** option will be on the left side menu under the **Settings** heading. Here, you can view individual available plans and the features provided for each. 
+### Уведомления об использовании 
 
-### Usage notifications 
+Каждый план автоматически отправляет уведомления по электронной почте, когда достигнуто 75%, 90% и 100% оценок использования. В плане Команды все пользователи в группе владельцев получат уведомления. В корпоративных планах все пользователи с правами администратора учетной записи и администратора биллинга получат уведомления. Пользователи не могут отказаться от этих электронных писем. Если вы хотите, чтобы дополнительные пользователи получали эти уведомления по электронной почте, пожалуйста, предоставьте им соответствующие права, упомянутые выше. Обратите внимание, что ваше использование может уже превышать процент, указанный в уведомлении, из-за вашего шаблона использования и небольших задержек. 
 
-Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached. In the Team plan, all users within the Owner group will receive alerts. In Enterprise plans, all users with the Account Admin and Billing Admin permission sets will receive alerts. Users cannot opt out of these emails. If you would like additional users to receive these alert emails, please provide them with the applicable permissions mentioned above. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times. 
+### Как остановить накопление использования?
 
-### How do I stop usage from accruing?
+Существует 2 варианта отключения построения моделей и выставления счетов:
 
-There are 2 options to disable models from being built and charged:
+1. Откройте **Настройки задания** каждого задания и перейдите в раздел **Триггеры**. Отключите **Запуск по расписанию** и установите функцию **Непрерывная интеграция** **Запуск по запросам на слияние?** на **Нет**. Проверьте свои рабочие процессы, чтобы убедиться, что вы не инициируете никаких запусков через API dbt Cloud. Этот вариант позволит вам сохранить ваши задания dbt Cloud без построения дополнительных моделей. 
+2. В качестве альтернативы вы можете удалить некоторые или все ваши задания dbt Cloud. Это гарантирует, что никакие запуски не будут инициированы, но вы навсегда потеряете свои задания. 
 
-1. Open the **Job Settings** of every job and navigate to the **Triggers** section. Disable the **Run on Schedule** and set the **Continuous Integration** feature **Run on Pull Requests?**  to **No**. Check your workflows to ensure that you are not triggering any runs via the dbt Cloud API. This option will enable you to keep your dbt Cloud jobs without building more models. 
-2. Alternatively, you can delete some or all of your dbt Cloud jobs. This will ensure that no runs are kicked off, but you will permanently lose your job(s). 
+## Оптимизация затрат в dbt Cloud
 
+dbt Cloud предлагает способы оптимизации использования построенных моделей и затрат на хранилище. 
 
-## Optimize costs in dbt Cloud
+### Лучшие практики для оптимизации успешных моделей
 
-dbt Cloud offers ways to optimize your model’s built usage and warehouse costs. 
+При поиске способов оптимизации ваших затрат на успешные модели есть методы, позволяющие снизить эти затраты, соблюдая при этом лучшие практики. Чтобы убедиться, что вы по-прежнему используете тесты и обновляете представления при изменении логики, рекомендуется реализовать комбинацию лучших практик, которые соответствуют вашим потребностям. Более конкретно, если вы решите исключить представления из ваших регулярно запланированных запусков dbt Cloud, крайне важно настроить задание слияния (с ссылкой на раздел), чтобы развернуть обновленную логику представления, когда изменения будут обнаружены.
 
-### Best practices for optimizing successful models built
+#### Исключение представлений в задании dbt Cloud
 
-When thinking of ways to optimize your costs from successful models built, there are methods to reduce those costs while still adhering to best practices. To ensure that you are still utilizing tests and rebuilding views when logic is changed, it's recommended to implement a combination of the best practices that fit your needs. More specifically, if you decide to exclude views from your regularly scheduled dbt Cloud job runs, it's imperative that you set up a merge job (with a link to the section) to deploy updated view logic when changes are detected.
+Многие пользователи dbt Cloud используют представления, которые не всегда нужно перестраивать каждый раз, когда вы запускаете задание. Для любых заданий, которые содержат представления, которые _не_ включают макросы, динамически генерирующие код (например, операторы case) на основе верхних таблиц и также _не_ имеют тестов, вы можете выполнить следующие шаги:
 
-#### Exclude views in a dbt Cloud job
+1. Перейдите к вашему текущему заданию развертывания в dbt Cloud.
+2. Измените вашу команду, чтобы включить: `--exclude config.materialized:view`.
+3. Сохраните изменения в вашем задании.
 
-Many dbt Cloud users utilize views, which don’t always need to be rebuilt every time you run a job. For any jobs that contain views that _do not_ include macros that dynamically generate code (for example, case statements) based on upstream tables and also _do not_ have tests, you can implement these steps:
+Если у вас есть представления, которые содержат макросы с операторами case на основе верхних таблиц, их необходимо запускать каждый раз, чтобы учесть новые значения. Если вам все еще нужно тестировать ваши представления с каждым запуском, следуйте лучшей практике [Исключение представлений при запуске тестов](#exclude-views-while-running-tests), чтобы создать пользовательский селектор. 
 
-1. Go to your current production deployment job in dbt Cloud.
-2. Modify your command to include: `--exclude config.materialized:view`.
-3. Save your job changes.
+#### Исключение представлений при запуске тестов
 
-If you have views that contain macros with case statements based on upstream tables, these will need to be run each time to account for new values. If you still need to test your views with each run, follow the [Exclude views while still running tests](#exclude-views-while-running-tests) best practice to create a custom selector. 
+Запуск тестов для представлений в каждом запуске задания может помочь сохранить качество данных и избавить вас от необходимости повторно запускать неудачные задания. Чтобы исключить представления из вашего запуска задания при запуске тестов, вы можете выполнить следующие шаги, чтобы создать пользовательский [селектор](https://docs.getdbt.com/reference/node-selection/yaml-selectors) для вашей команды задания. 
 
-#### Exclude views while running tests
-
-Running tests for views in every job run can help keep data quality intact and save you from the need to rerun failed jobs. To exclude views from your job run while running tests, you can follow these steps to create a custom [selector](https://docs.getdbt.com/reference/node-selection/yaml-selectors) for your job command. 
-
-1. Open your dbt project in the dbt Cloud IDE.
-2. Add a file called `selectors.yml` in your top-level project folder.
-3. In the file, add the following code:
+1. Откройте ваш проект dbt в IDE dbt Cloud.
+2. Добавьте файл с именем `selectors.yml` в вашу верхнюю папку проекта.
+3. В файле добавьте следующий код:
 
    ```yaml 
     selectors:
       - name: skip_views_but_test_views
         description: >
-          A default selector that will exclude materializing views
-          without skipping tests on views.
+          Селектор по умолчанию, который исключит материализованные представления
+          без пропуска тестов на представления.
         default: true
         definition:
           union:
@@ -209,60 +204,60 @@ Running tests for views in every job run can help keep data quality intact and s
 
     ```
     
-4. Save the file and commit it to your project.
-5. Modify your dbt Cloud jobs to include `--selector skip_views_but_test_views`.
+4. Сохраните файл и зафиксируйте его в вашем проекте.
+5. Измените ваши задания dbt Cloud, чтобы включить `--selector skip_views_but_test_views`.
 
-#### Build only changed views
+#### Построение только измененных представлений
 
-If you want to ensure that you're building views whenever the logic is changed, create a merge job that gets triggered when code is merged into main: 
+Если вы хотите убедиться, что вы строите представления всякий раз, когда логика изменяется, создайте задание слияния, которое будет инициироваться при слиянии кода в основную ветку: 
 
-1. Ensure you have a [CI job setup](/docs/deploy/ci-jobs) in your environment.
-2. Create a new [deploy job](/docs/deploy/deploy-jobs#create-and-schedule-jobs) and call it “Merge Job".
-3. Set the  **Environment** to your CI environment. Refer to [Types of environments](/docs/deploy/deploy-environments#types-of-environments) for more details.
-4. Set **Commands** to: `dbt run -s state:modified+`.
-    Executing `dbt build` in this context is unnecessary because the CI job was used to both run and test the code that just got merged into main.
-5. Under the **Execution Settings**, select the default production job to compare changes against:
-    - **Defer to a previous run state** &mdash; Select the “Merge Job” you created so the job compares and identifies what has changed since the last merge.
-6. In your dbt project, follow the steps in Run a dbt Cloud job on merge in the [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines) guide to create a script to trigger the dbt Cloud API to run your job after a merge happens within your git repository or watch this [video](https://www.loom.com/share/e7035c61dbed47d2b9b36b5effd5ee78?sid=bcf4dd2e-b249-4e5d-b173-8ca204d9becb).
+1. Убедитесь, что у вас настроено [CI задание](/docs/deploy/ci-jobs) в вашем окружении.
+2. Создайте новое [задание развертывания](/docs/deploy/deploy-jobs#create-and-schedule-jobs) и назовите его "Задание слияния".
+3. Установите **Окружение** на ваше CI окружение. Смотрите [Типы окружений](/docs/deploy/deploy-environments#types-of-environments) для получения дополнительных деталей.
+4. Установите **Команды** на: `dbt run -s state:modified+`.
+    Выполнение `dbt build` в этом контексте не требуется, так как CI задание использовалось для запуска и тестирования кода, который только что был слит в основную ветку.
+5. В разделе **Настройки выполнения** выберите задание по умолчанию для сравнения изменений:
+    - **Отложить до состояния предыдущего запуска** &mdash; Выберите "Задание слияния", которое вы создали, чтобы задание сравнивало и определяло, что изменилось с момента последнего слияния.
+6. В вашем проекте dbt выполните шаги в разделе Запуск задания dbt Cloud при слиянии в руководстве [Настройка CI/CD с помощью пользовательских конвейеров](/guides/custom-cicd-pipelines), чтобы создать скрипт для вызова API dbt Cloud для запуска вашего задания после слияния в вашем репозитории git или посмотрите это [видео](https://www.loom.com/share/e7035c61dbed47d2b9b36b5effd5ee78?sid=bcf4dd2e-b249-4e5d-b173-8ca204d9becb).
 
-The purpose of the merge job is to:
+Цель задания слияния заключается в том, чтобы:
 
-- Immediately deploy any changes from PRs to production.
-- Ensure your production views remain up-to-date with how they’re defined in your codebase while remaining cost-efficient when running jobs in production.
+- Немедленно развернуть любые изменения из PR в продакшн.
+- Обеспечить актуальность ваших производственных представлений в соответствии с тем, как они определены в вашем коде, оставаясь при этом экономически эффективными при запуске заданий в продакшн.
 
-The merge action will optimize your cloud data platform spend and shorten job times, but you’ll need to decide if making the change is right for your dbt project.
+Действие слияния оптимизирует ваши расходы на облачную платформу данных и сокращает время выполнения заданий, но вам нужно решить, подходит ли это изменение для вашего проекта dbt.
 
-### Rework inefficient models
+### Переработка неэффективных моделей
 
-#### Job Insights tab
+#### Вкладка Инсайты задания
 
-To reduce your warehouse spend, you can identify what models, on average, are taking the longest to build in the **Job** page under the **Insights** tab. This chart looks at the average run time for each model based on its last 20 runs. Any models that are taking longer than anticipated to build might be prime candidates for optimization, which will ultimately reduce cloud warehouse spending. 
+Чтобы сократить ваши расходы на хранилище, вы можете определить, какие модели в среднем требуют больше всего времени на построение на странице **Задание** в разделе **Инсайты**. Этот график показывает среднее время выполнения для каждой модели на основе ее последних 20 запусков. Любые модели, которые требуют больше времени на построение, чем ожидалось, могут быть первыми кандидатами на оптимизацию, что в конечном итоге снизит расходы на облачное хранилище. 
 
-#### Model Timing tab
+#### Вкладка Время модели
 
-To understand better how long each model takes to run within the context of a specific run, you can look at the **Model Timing** tab. Select the run of interest on the **Run History** page to find the tab. On that **Run** page, click **Model Timing**. 
+Чтобы лучше понять, сколько времени занимает выполнение каждой модели в контексте конкретного запуска, вы можете посмотреть на вкладку **Время модели**. Выберите интересующий запуск на странице **История запусков**, чтобы найти вкладку. На этой странице **Запуск** нажмите **Время модели**. 
 
-Once you've identified which models could be optimized, check out these other resources that walk through how to optimize your work: 
-* [Build scalable and trustworthy data pipelines with dbt and BigQuery](https://services.google.com/fh/files/misc/dbt_bigquery_whitepaper.pdf) 
-* [Best Practices for Optimizing Your dbt and Snowflake Deployment](https://www.snowflake.com/wp-content/uploads/2021/10/Best-Practices-for-Optimizing-Your-dbt-and-Snowflake-Deployment.pdf) 
-* [How to optimize and troubleshoot dbt models on Databricks](/guides/optimize-dbt-models-on-databricks)
+Как только вы определите, какие модели могут быть оптимизированы, ознакомьтесь с другими ресурсами, которые объясняют, как оптимизировать вашу работу: 
+* [Создание масштабируемых и надежных конвейеров данных с помощью dbt и BigQuery](https://services.google.com/fh/files/misc/dbt_bigquery_whitepaper.pdf) 
+* [Лучшие практики для оптимизации вашего развертывания dbt и Snowflake](https://www.snowflake.com/wp-content/uploads/2021/10/Best-Practices-for-Optimizing-Your-dbt-and-Snowflake-Deployment.pdf) 
+* [Как оптимизировать и устранять неполадки моделей dbt на Databricks](/guides/optimize-dbt-models-on-databricks)
 
-## FAQs
+## Часто задаваемые вопросы
 
-* What happens if I need more than 8 seats on the Team plan? 
-_If you need more than 8 developer seats, select the Contact Sales option from the billing settings to talk to our sales team about an Enterprise plan._  
+* Что произойдет, если мне нужно больше 8 мест на плане Команды? 
+_Если вам нужно больше 8 мест для разработчиков, выберите опцию Связаться с отделом продаж в настройках биллинга, чтобы обсудить с нашей командой продаж возможность перехода на корпоративный план._  
 
-* What if I go significantly over my included free models on the Team or Developer plan?
-_Consider upgrading to a Team or Enterprise plan. Team plans include more models and allow you to exceed the monthly usage limit. Enterprise accounts are supported by a dedicated account management team and offer annual plans, custom configurations, and negotiated usage rates._ 
+* Что, если я значительно превышу свои включенные бесплатные модели на плане Команды или Разработчика?
+_Рассмотрите возможность перехода на план Команды или Корпоративный план. Планы Команды включают больше моделей и позволяют вам превышать месячный лимит использования. Корпоративные аккаунты поддерживаются выделенной командой управления учетными записями и предлагают годовые планы, индивидуальные конфигурации и согласованные тарифы на использование._ 
 
-* I want to upgrade my plan. Will all of my work carry over?
-_Yes. Your dbt Cloud account will be upgraded without impacting your existing projects and account settings._
+* Я хочу перейти на другой план. Перенесется ли вся моя работа?
+_Да. Ваша учетная запись dbt Cloud будет обновлена без влияния на ваши существующие проекты и настройки учетной записи._
 
-* How do I determine the right plan for me?
- _The best option is to consult with our sales team. They'll help you figure out what is right for your needs. We also offer a free two-week trial on the Team plan._
+* Как мне определить, какой план подходит мне?
+ _Лучший вариант — проконсультироваться с нашей командой продаж. Они помогут вам определить, что подходит для ваших нужд. Мы также предлагаем бесплатную двухнедельную пробную версию на плане Команды._
 
-* What are the Semantic Layer trial terms?
-_Team and Enterprise customers can sign up for a free trial of the dbt Semantic Layer, powered by MetricFlow, for use of up to 1,000 Queried Metrics per month. The trial will be available at least through January 2024. dbt Labs may extend the trial period in its sole discretion. During the trial period, we may reach out to discuss pricing options or ask for feedback. At the end of the trial, free access may be removed and a purchase may be required to continue use. dbt Labs reserves the right to change limits in a free trial or institute pricing when required or at any time in its sole discretion._
+* Каковы условия пробной версии семантического слоя?
+_Клиенты команды и корпоративные клиенты могут подписаться на бесплатную пробную версию семантического слоя dbt, работающего на базе MetricFlow, для использования до 1,000 запрашиваемых метрик в месяц. Пробная версия будет доступна как минимум до января 2024 года. dbt Labs может продлить пробный период по своему усмотрению. В течение пробного периода мы можем связаться с вами, чтобы обсудить варианты ценообразования или запросить обратную связь. По окончании пробного периода бесплатный доступ может быть отменен, и может потребоваться покупка для продолжения использования. dbt Labs оставляет за собой право изменять лимиты в бесплатной пробной версии или вводить ценообразование, когда это необходимо или в любое время по своему усмотрению._
 
-* What is the reasonable use limitation for the dbt Semantic Layer powered by MetricFlow during the trial? 
-_Each account will be limited to 1,000 Queried Metrics per month during the trial period and may be changed at the sole discretion of dbt Labs._
+* Каково разумное ограничение использования для семантического слоя, работающего на базе MetricFlow, в течение пробного периода? 
+_Каждая учетная запись будет ограничена 1,000 запрашиваемых метрик в месяц в течение пробного периода и может быть изменена по усмотрению dbt Labs._

@@ -1,6 +1,6 @@
 ---
-title: "Organize your outputs"
-description: "Learn how you can organize your outputs"
+title: "Организация ваших выходных данных"
+description: "Узнайте, как вы можете организовать свои выходные данные"
 pagination_next: "docs/build/custom-schemas"
 pagination_prev: null
 ---
@@ -8,14 +8,14 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Custom schemas"
-    body="Learn how to use the <code>schema</code> configuration key to specify a custom schema."
+    title="Пользовательские схемы"
+    body="Узнайте, как использовать ключ конфигурации <code>schema</code> для указания пользовательской схемы."
     link="/docs/build/custom-schemas"
     icon="dbt-bit"/>
 
 <Card
-    title="Custom databases"
-    body="Learn how to use the <code>database</code> configuration key to specify a custom database."
+    title="Пользовательские базы данных"
+    body="Узнайте, как использовать ключ конфигурации <code>database</code> для указания пользовательской базы данных."
     link="/docs/build/custom-databases"
     icon="dbt-bit"/>
 
@@ -24,14 +24,14 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Custom aliases"
-    body="Learn how to use the <code>alias</code> model configuration to change the name of a model's identifier in the database."
+    title="Пользовательские псевдонимы"
+    body="Узнайте, как использовать конфигурацию модели <code>alias</code> для изменения имени идентификатора модели в базе данных."
     link="/docs/build/custom-aliases"
     icon="dbt-bit"/>
 
 <Card
-    title="Custom target names"
-    body="Learn how to define a custom target name for a dbt Cloud job."
+    title="Пользовательские имена целей"
+    body="Узнайте, как определить пользовательское имя цели для задания dbt Cloud."
     link="/docs/build/custom-target-names"
     icon="dbt-bit"/>
 

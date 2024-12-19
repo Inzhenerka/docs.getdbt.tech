@@ -1,27 +1,27 @@
 ---
-title: Tenancy
+title: Аренда
 id: tenancy
-description: "Information about single tenant and multi-tenant dbt Cloud instances"
+description: "Информация о экземплярах dbt Cloud с одним и несколькими арендаторами"
 ---
 
 import AboutCloud from '/snippets/_test-tenancy.md';
 
 <AboutCloud tenancy={'/snippets/_test-tenancy.md'}/>
 
-### Multi-tenant
+### Мультиаренда
 
-The Multi Tenant (SaaS) deployment environment refers to the SaaS dbt Cloud application hosted by dbt Labs. This is the most commonly used deployment and is completely managed and maintained by dbt Labs, the makers of dbt. As a SaaS product, a user can quickly [create an account](https://www.getdbt.com/signup/) on our North American servers and get started using the dbt and related services immediately. _If your organization requires cloud services hosted on EMEA or APAC regions_, please [contact us](https://www.getdbt.com/contact/). The deployments are hosted on AWS or Azure ([Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud)) and are always kept up to date with the currently supported dbt versions, software updates, and bug fixes.
+Среда развертывания Multi Tenant (SaaS) относится к приложению SaaS dbt Cloud, размещенному компанией dbt Labs. Это наиболее часто используемое развертывание, которое полностью управляется и поддерживается dbt Labs, создателями dbt. Как продукт SaaS, пользователь может быстро [создать учетную запись](https://www.getdbt.com/signup/) на наших североамериканских серверах и сразу начать использовать dbt и сопутствующие услуги. _Если вашей организации требуются облачные услуги, размещенные в регионах EMEA или APAC_, пожалуйста, [свяжитесь с нами](https://www.getdbt.com/contact/). Развертывания размещаются на AWS или Azure ([Предварительный просмотр](/docs/dbt-versions/product-lifecycles#dbt-cloud)) и всегда обновляются до текущих поддерживаемых версий dbt, программных обновлений и исправлений ошибок.
 
-### Single tenant
+### Один арендатор
 
-The single tenant deployment environment provides a hosted alternative to the multi-tenant (SaaS) dbt Cloud environment. While still managed and maintained by dbt Labs, single tenant dbt Cloud instances provide dedicated infrastructure in a virtual private cloud (VPC) environment. This is accomplished by spinning up all the necessary infrastructure with a re-usable Infrastructure as Code (IaC) deployment built with [Terraform](https://www.terraform.io/). The single tenant infrastructure lives in a dedicated AWS or Azure account and can be customized with certain configurations, such as firewall rules, to limit inbound traffic or hosting in a specific regions.
+Среда развертывания с одним арендатором предоставляет размещенную альтернативу мультиарендной (SaaS) среде dbt Cloud. Хотя она также управляется и поддерживается dbt Labs, экземпляры dbt Cloud с одним арендатором обеспечивают выделенную инфраструктуру в среде виртуального частного облака (VPC). Это достигается путем развертывания всей необходимой инфраструктуры с помощью повторно используемого развертывания Инфраструктуры как Код (IaC), созданного с использованием [Terraform](https://www.terraform.io/). Инфраструктура с одним арендатором располагается в выделенной учетной записи AWS или Azure и может быть настроена с определенными конфигурациями, такими как правила брандмауэра, для ограничения входящего трафика или размещения в определенных регионах.
 
-A few common reasons for choosing a single tenant deployment over the Production SaaS product include:
-- A requirement that the dbt Cloud application be hosted in a dedicated VPC that is logically separated from other customer infrastructure
-- A desire for multiple isolated dbt Cloud instances for testing, development, etc
+Некоторые распространенные причины выбора развертывания с одним арендатором вместо продукта SaaS в производственной среде включают:
+- Требование, чтобы приложение dbt Cloud размещалось в выделенном VPC, который логически отделен от инфраструктуры других клиентов
+- Желание иметь несколько изолированных экземпляров dbt Cloud для тестирования, разработки и т.д.
 
-_To learn more about setting up a dbt Cloud single tenant deployment, [please contact our sales team](mailto:sales@getdbt.com)._
+_Чтобы узнать больше о настройке развертывания dbt Cloud с одним арендатором, [пожалуйста, свяжитесь с нашей командой продаж](mailto:sales@getdbt.com)._
 
-### Available features
+### Доступные функции
 
 <Snippet path="cloud-feature-parity" />

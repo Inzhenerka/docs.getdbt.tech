@@ -1,66 +1,66 @@
 ---
-title: "Unit tests"
-sidebar_label: "Unit tests"
-description: "Learn how to use unit tests on your SQL models."
+title: "Модульные тесты"
+sidebar_label: "Модульные тесты"
+description: "Узнайте, как использовать модульные тесты для ваших SQL моделей."
 search_weight: "heavy"
 id: "unit-tests"
 keywords:
-  - unit test, unit tests, unit testing, dag
+  - модульный тест, модульные тесты, модульное тестирование, dag
 ---
 
 :::note 
 
-Unit testing functionality is available in [dbt Cloud Release Tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.8+
+Функциональность модульного тестирования доступна в [dbt Cloud Release Tracks](/docs/dbt-versions/cloud-release-tracks) или dbt Core v1.8+
 
 :::
 
-Historically, dbt's test coverage was confined to [“data” tests](/docs/build/data-tests), assessing the quality of input data or resulting datasets' structure. However, these tests could only be executed _after_ building a model. 
+Исторически, тестирование в dbt ограничивалось [“данными” тестами](/docs/build/data-tests), которые оценивали качество входных данных или структуру результирующих наборов данных. Однако эти тесты могли выполняться _только после_ построения модели.
 
-Starting in dbt Core v1.8, we have introduced an additional type of test to dbt - unit tests. In software programming, unit tests validate small portions of your functional code, and they work much the same way here. Unit tests allow you to validate your SQL modeling logic on a small set of static inputs _before_ you materialize your full model in production. Unit tests enable test-driven development, benefiting developer efficiency and code reliability. 
+Начиная с dbt Core v1.8, мы ввели дополнительный тип теста в dbt - модульные тесты. В программировании модульные тесты проверяют небольшие части вашего функционального кода, и они работают аналогичным образом здесь. Модульные тесты позволяют вам проверять логику моделирования SQL на небольшом наборе статических входных данных _до_ того, как вы материализуете вашу полную модель в производственной среде. Модульные тесты способствуют разработке, ориентированной на тестирование, что повышает эффективность разработчиков и надежность кода.
 
-## Before you begin
+## Перед началом
 
-- We currently only support unit testing SQL models.
-- We currently only support adding unit tests to models in your _current_ project.
-- We currently _don't_ support unit testing models that use the [`materialized view`](/docs/build/materializations#materialized-view) materialization.
-- We currently _don't_ support unit testing models that use recursive SQL.
-- We currently _don't_ support unit testing models that use introspective queries.
-- If your model has multiple versions, by default the unit test will run on *all* versions of your model. Read [unit testing versioned models](/reference/resource-properties/unit-testing-versions) for more information.
-- Unit tests must be defined in a YML file in your [`models/` directory](/reference/project-configs/model-paths).
-- Table names must be aliased in order to unit test `join` logic.
-- Include all [`ref`](/reference/dbt-jinja-functions/ref) or [`source`](/reference/dbt-jinja-functions/source) model references in the unit test configuration as `input`s to avoid "node not found" errors during compilation.
+- В настоящее время мы поддерживаем только модульное тестирование SQL моделей.
+- В настоящее время мы поддерживаем добавление модульных тестов только к моделям в вашем _текущем_ проекте.
+- В настоящее время мы _не_ поддерживаем модульное тестирование моделей, использующих материализацию [`materialized view`](/docs/build/materializations#materialized-view).
+- В настоящее время мы _не_ поддерживаем модульное тестирование моделей, использующих рекурсивный SQL.
+- В настоящее время мы _не_ поддерживаем модульное тестирование моделей, использующих интроспективные запросы.
+- Если у вашей модели есть несколько версий, по умолчанию модульный тест будет выполняться на *всех* версиях вашей модели. Читайте [модульное тестирование версионированных моделей](/reference/resource-properties/unit-testing-versions) для получения дополнительной информации.
+- Модульные тесты должны быть определены в YML файле в вашем [`models/` каталоге](/reference/project-configs/model-paths).
+- Имена таблиц должны быть алиасированы для тестирования логики `join`.
+- Включите все ссылки на [`ref`](/reference/dbt-jinja-functions/ref) или [`source`](/reference/dbt-jinja-functions/source) модели в конфигурацию модульного теста как `input`, чтобы избежать ошибок "узел не найден" во время компиляции.
 
-#### Adapter-specific caveats
-- You must specify all fields in a BigQuery `STRUCT` in a unit test. You cannot use only a subset of fields in a `STRUCT`.
-- Redshift customers need to be aware of a [limitation when building unit tests](/reference/resource-configs/redshift-configs#unit-test-limitations) that requires a workaround.
+#### Специфические ограничения адаптера
+- Вы должны указать все поля в `STRUCT` BigQuery в модульном тесте. Нельзя использовать только подмножество полей в `STRUCT`.
+- Клиенты Redshift должны быть в курсе [ограничения при создании модульных тестов](/reference/resource-configs/redshift-configs#unit-test-limitations), которое требует обходного пути.
 
-Read the [reference doc](/reference/resource-properties/unit-tests) for more details about formatting your unit tests.
+Читать [документацию по ссылкам](/reference/resource-properties/unit-tests) для получения более подробной информации о форматировании ваших модульных тестов.
 
-### When to add a unit test to your model
+### Когда добавлять модульный тест к вашей модели
 
-You should unit test a model:
-- When your SQL contains complex logic:
+Вы должны проводить модульное тестирование модели:
+- Когда ваш SQL содержит сложную логику:
     - Regex
-    - Date math
-    - Window functions
-    - `case when` statements when there are many `when`s
-    - Truncation
-- When you're writing custom logic to process input data, similar to creating a function.
-- We don't recommend conducting unit testing for functions like `min()` since these functions are tested extensively by the warehouse. If an unexpected issue arises, it's more likely a result of issues in the underlying data rather than the function itself. Therefore, fixture data in the unit test won't provide valuable information.
-- Logic for which you had bugs reported before.
-- Edge cases not yet seen in your actual data that you want to handle.
-- Prior to refactoring the transformation logic (especially if the refactor is significant).
-- Models with high "criticality" (public, contracted models or models directly upstream of an exposure).
+    - Математика дат
+    - Оконные функции
+    - `case when` выражения, когда много `when`
+    - Урезание
+- Когда вы пишете пользовательскую логику для обработки входных данных, аналогично созданию функции.
+- Мы не рекомендуем проводить модульное тестирование для таких функций, как `min()`, так как эти функции тестируются обширно хранилищем данных. Если возникает неожиданная проблема, скорее всего, это результат проблем в исходных данных, а не самой функции. Поэтому фиктивные данные в модульном тесте не предоставят ценной информации.
+- Логика, по которой ранее были сообщены ошибки.
+- Краевые случаи, которые еще не встречались в ваших фактических данных и которые вы хотите обработать.
+- Перед рефакторингом логики трансформации (особенно если рефакторинг значительный).
+- Модели с высокой "критичностью" (публичные, контрактные модели или модели, находящиеся непосредственно выше в цепочке поставок).
 
-### When to run unit tests
+### Когда запускать модульные тесты
 
-dbt Labs strongly recommends only running unit tests in development or CI environments. Since the inputs of the unit tests are static, there's no need to use additional compute cycles running them in production. Use them in development for a test-driven approach and CI to ensure changes don't break them. 
+dbt Labs настоятельно рекомендует запускать модульные тесты только в средах разработки или CI. Поскольку входные данные модульных тестов статичны, нет необходимости использовать дополнительные вычислительные циклы для их выполнения в производственной среде. Используйте их в разработке для подхода, ориентированного на тестирование, и в CI, чтобы убедиться, что изменения не нарушают их.
 
-Use the [resource type](/reference/global-configs/resource-type) flag `--exclude-resource-type` or the `DBT_EXCLUDE_RESOURCE_TYPES` environment variable to exclude unit tests from your production builds and save compute. 
+Используйте флаг [типа ресурса](/reference/global-configs/resource-type) `--exclude-resource-type` или переменную окружения `DBT_EXCLUDE_RESOURCE_TYPES`, чтобы исключить модульные тесты из ваших производственных сборок и сэкономить вычислительные ресурсы.
 
-## Unit testing a model
+## Модульное тестирование модели
 
-This example creates a new `dim_customers` model with a field `is_valid_email_address` that calculates whether or not the customer’s email is valid: 
+Этот пример создает новую модель `dim_customers` с полем `is_valid_email_address`, которое вычисляет, является ли электронная почта клиента действительной: 
 
 <file name='dim_customers.sql'>
 
@@ -100,14 +100,14 @@ select * from check_valid_emails
 ```
 </file>
 
-The logic posed in this example can be challenging to validate. You can add a unit test to this model to ensure the `is_valid_email_address` logic captures all known edge cases: emails without `.`, emails without `@`, and emails from invalid domains.
+Логику, представленную в этом примере, может быть сложно проверить. Вы можете добавить модульный тест к этой модели, чтобы убедиться, что логика `is_valid_email_address` охватывает все известные крайние случаи: электронные письма без `.`, электронные письма без `@` и электронные письма из недействительных доменов.
 
 <file name='dbt_project.yml'> 
 
 ```yaml
 unit_tests:
   - name: test_is_valid_email_address
-    description: "Check my is_valid_email_address logic captures all known edge cases - emails without ., emails without @, and emails from invalid domains."
+    description: "Проверка логики is_valid_email_address на наличие всех известных крайних случаев - электронные письма без ., электронные письма без @ и электронные письма из недействительных доменов."
     model: dim_customers
     given:
       - input: ref('stg_customers')
@@ -130,15 +130,15 @@ unit_tests:
 ```
 </file>
 
-The previous example defines the mock data using the inline `dict` format, but you can also use `csv` or `sql` either inline or in a separate fixture file. Store your fixture files in a `fixtures` subdirectory in any of your [test paths](/reference/project-configs/test-paths). For example, `tests/fixtures/my_unit_test_fixture.sql`. 
+В предыдущем примере фиктивные данные определяются с использованием встроенного формата `dict`, но вы также можете использовать `csv` или `sql`, как встроенные, так и в отдельном файле фикстуры. Храните ваши файлы фикстур в подкаталоге `fixtures` в любом из ваших [путей тестирования](/reference/project-configs/test-paths). Например, `tests/fixtures/my_unit_test_fixture.sql`. 
 
-When using the `dict` or `csv` format, you only have to define the mock data for the columns relevant to you. This enables you to write succinct and _specific_ unit tests.
+При использовании формата `dict` или `csv` вам нужно определить фиктивные данные только для столбцов, которые вам важны. Это позволяет вам писать лаконичные и _специфические_ модульные тесты.
 
 :::note
 
-The direct parents of the model that you’re unit testing (in this example, `stg_customers` and `top_level_email_domains`) need to exist in the warehouse before you can execute the unit test.
+Прямые родительские модели, которые вы тестируете (в этом примере, `stg_customers` и `top_level_email_domains`), должны существовать в хранилище данных, прежде чем вы сможете выполнить модульный тест.
 
-Use the [`--empty`](/reference/commands/build#the---empty-flag) flag to build an empty version of the models to save warehouse spend. 
+Используйте флаг [`--empty`](/reference/commands/build#the---empty-flag), чтобы построить пустую версию моделей и сэкономить затраты на хранилище данных. 
 
 ```bash
 
@@ -146,40 +146,40 @@ dbt run --select "stg_customers top_level_email_domains" --empty
 
 ```
 
-Alternatively, use `dbt build` to, in lineage order:
+Или используйте `dbt build`, чтобы, в порядке наследования:
 
-- Run the unit tests on your model.
-- Materialize your model in the warehouse.
-- Run the data tests on your model.
+- Запустить модульные тесты на вашей модели.
+- Материализовать вашу модель в хранилище данных.
+- Запустить тесты данных на вашей модели.
 
 :::
 
-Now you’re ready to run this unit test. You have a couple of options for commands depending on how specific you want to be: 
+Теперь вы готовы запустить этот модульный тест. У вас есть несколько вариантов команд в зависимости от того, насколько конкретным вы хотите быть: 
 
-- `dbt test --select dim_customers` runs _all_ of the tests on `dim_customers`.
-- `dbt test --select "dim_customers,test_type:unit"` runs all of the _unit_ tests on `dim_customers`.
-- `dbt test --select test_is_valid_email_address` runs the test named `test_is_valid_email_address`.
+- `dbt test --select dim_customers` запускает _все_ тесты на `dim_customers`.
+- `dbt test --select "dim_customers,test_type:unit"` запускает все _модульные_ тесты на `dim_customers`.
+- `dbt test --select test_is_valid_email_address` запускает тест с именем `test_is_valid_email_address`.
 
 ```shell
 
 dbt test --select test_is_valid_email_address
-16:03:49  Running with dbt=1.8.0-a1
-16:03:49  Registered adapter: postgres=1.8.0-a1
-16:03:50  Found 6 models, 5 seeds, 4 data tests, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models, 1 unit test
+16:03:49  Запуск с dbt=1.8.0-a1
+16:03:49  Зарегистрированный адаптер: postgres=1.8.0-a1
+16:03:50  Найдено 6 моделей, 5 семян, 4 теста данных, 0 источников, 0 экспозиций, 0 метрик, 410 макросов, 0 групп, 0 семантических моделей, 1 модульный тест
 16:03:50  
-16:03:50  Concurrency: 5 threads (target='postgres')
+16:03:50  Параллелизм: 5 потоков (target='postgres')
 16:03:50  
-16:03:50  1 of 1 START unit_test dim_customers::test_is_valid_email_address ................... [RUN]
-16:03:51  1 of 1 FAIL 1 dim_customers::test_is_valid_email_address ............................ [FAIL 1 in 0.26s]
+16:03:50  1 из 1 НАЧАЛО модульного теста dim_customers::test_is_valid_email_address ................... [RUN]
+16:03:51  1 из 1 НЕУДАЧА 1 dim_customers::test_is_valid_email_address ............................ [FAIL 1 за 0.26s]
 16:03:51  
-16:03:51  Finished running 1 unit_test in 0 hours 0 minutes and 0.67 seconds (0.67s).
+16:03:51  Завершено выполнение 1 модульного теста за 0 часов 0 минут и 0.67 секунд (0.67s).
 16:03:51  
-16:03:51  Completed with 1 error and 0 warnings:
+16:03:51  Завершено с 1 ошибкой и 0 предупреждениями:
 16:03:51  
-16:03:51  Failure in unit_test test_is_valid_email_address (models/marts/unit_tests.yml)
+16:03:51  Ошибка в модульном тесте test_is_valid_email_address (models/marts/unit_tests.yml)
 16:03:51    
 
-actual differs from expected:
+фактическое значение отличается от ожидаемого:
 
 @@ ,email           ,is_valid_email_address
 →  ,cool@example.com,True→False
@@ -188,46 +188,45 @@ actual differs from expected:
 
 
 16:03:51  
-16:03:51    compiled Code at models/marts/unit_tests.yml
+16:03:51    скомпилированный код в models/marts/unit_tests.yml
 16:03:51  
-16:03:51  Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
+16:03:51  Готово. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1
 
 ```
 
-The clever regex statement wasn’t as clever as initially thought, as the model incorrectly flagged `cool@example.com` as an invalid email address.
+Умное выражение regex оказалось не таким умным, как предполагалось изначально, так как модель неверно отметила `cool@example.com` как недействительный адрес электронной почты.
 
-Updating the regex logic to `'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'` (those pesky escape characters) and rerunning the unit test solves the problem:
+Обновление логики regex на `'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'` (эти надоедливые символы экранирования) и повторный запуск модульного теста решает проблему:
 
 ```shell
 
 dbt test --select test_is_valid_email_address
-16:09:11  Running with dbt=1.8.0-a1
-16:09:12  Registered adapter: postgres=1.8.0-a1
-16:09:12  Found 6 models, 5 seeds, 4 data tests, 0 sources, 0 exposures, 0 metrics, 410 macros, 0 groups, 0 semantic models, 1 unit test
+16:09:11  Запуск с dbt=1.8.0-a1
+16:09:12  Зарегистрированный адаптер: postgres=1.8.0-a1
+16:09:12  Найдено 6 моделей, 5 семян, 4 теста данных, 0 источников, 0 экспозиций, 0 метрик, 410 макросов, 0 групп, 0 семантических моделей, 1 модульный тест
 16:09:12  
-16:09:13  Concurrency: 5 threads (target='postgres')
+16:09:13  Параллелизм: 5 потоков (target='postgres')
 16:09:13  
-16:09:13  1 of 1 START unit_test dim_customers::test_is_valid_email_address ................... [RUN]
-16:09:13  1 of 1 PASS dim_customers::test_is_valid_email_address .............................. [PASS in 0.26s]
+16:09:13  1 из 1 НАЧАЛО модульного теста dim_customers::test_is_valid_email_address ................... [RUN]
+16:09:13  1 из 1 УСПЕХ dim_customers::test_is_valid_email_address .............................. [PASS за 0.26s]
 16:09:13  
-16:09:13  Finished running 1 unit_test in 0 hours 0 minutes and 0.75 seconds (0.75s).
+16:09:13  Завершено выполнение 1 модульного теста за 0 часов 0 минут и 0.75 секунд (0.75s).
 16:09:13  
-16:09:13  Completed successfully
+16:09:13  Завершено успешно
 16:09:13  
-16:09:13  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+16:09:13  Готово. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 
 ```
 
-Your model is now ready for production! Adding this unit test helped catch an issue with the SQL logic _before_ you materialized `dim_customers` in your warehouse and will better ensure the reliability of this model in the future. 
+Ваша модель теперь готова к производству! Добавление этого модульного теста помогло выявить проблему с логикой SQL _до_ того, как вы материализовали `dim_customers` в вашем хранилище данных и лучше обеспечит надежность этой модели в будущем. 
 
+## Модульное тестирование инкрементальных моделей
 
-## Unit testing incremental models
+При настройке вашего модульного теста вы можете переопределить вывод макросов, переменных или переменных окружения. Это позволяет вам модульно тестировать ваши инкрементальные модели в режимах "полного обновления" и "инкрементального".
 
-When configuring your unit test, you can override the output of macros, vars, or environment variables. This enables you to unit test your incremental models in "full refresh" and "incremental" modes. 
+При тестировании инкрементальной модели ожидаемый вывод - это __результат материализации__ (что будет объединено/вставлено), а не сама результирующая модель (как будет выглядеть финальная таблица после объединения/вставки).
 
-When testing an incremental model, the expected output is the __result of the materialization__ (what will be merged/inserted), not the resulting model itself (what the final table will look like after the merge/insert).
-
-For example, say you have an incremental model in your project:
+Например, предположим, у вас есть инкрементальная модель в вашем проекте:
 
 <File name='my_incremental_model.sql'>
 
@@ -248,7 +247,7 @@ where event_time > (select max(event_time) from {{ this }})
 
 </File>
 
-You can define unit tests on `my_incremental_model` to ensure your incremental logic is working as expected:
+Вы можете определить модульные тесты для `my_incremental_model`, чтобы убедиться, что ваша инкрементальная логика работает как ожидалось:
 
 ```yml
 
@@ -257,7 +256,7 @@ unit_tests:
     model: my_incremental_model
     overrides:
       macros:
-        # unit test this model in "full refresh" mode
+        # модульный тест этой модели в режиме "полного обновления"
         is_incremental: false 
     given:
       - input: ref('events')
@@ -271,7 +270,7 @@ unit_tests:
     model: my_incremental_model
     overrides:
       macros:
-        # unit test this model in "incremental" mode
+        # модульный тест этой модели в режиме "инкрементального"
         is_incremental: true 
     given:
       - input: ref('events')
@@ -280,22 +279,22 @@ unit_tests:
           - {event_id: 2, event_time: 2020-01-02}
           - {event_id: 3, event_time: 2020-01-03}
       - input: this 
-        # contents of current my_incremental_model
+        # содержимое текущей my_incremental_model
         rows:
           - {event_id: 1, event_time: 2020-01-01}
     expect:
-      # what will be inserted/merged into my_incremental_model
+      # что будет вставлено/объединено в my_incremental_model
       rows:
         - {event_id: 2, event_time: 2020-01-02}
         - {event_id: 3, event_time: 2020-01-03}
 
 ```
 
-There is currently no way to unit test whether the dbt framework inserted/merged the records into your existing model correctly, but [we're investigating support for this in the future](https://github.com/dbt-labs/dbt-core/issues/8664).
+В настоящее время нет способа модульно тестировать, правильно ли dbt вставил/объединил записи в вашу существующую модель, но [мы исследуем поддержку этого в будущем](https://github.com/dbt-labs/dbt-core/issues/8664).
 
-## Unit testing a model that depend on ephemeral model(s)
+## Модульное тестирование модели, зависящей от эфемерных моделей
 
-If you want to unit test a model that depends on an ephemeral model, you must use `format: sql` for that input.
+Если вы хотите модульно протестировать модель, которая зависит от эфемерной модели, вы должны использовать `format: sql` для этого входа.
 
 ```yml
 unit_tests:
@@ -311,23 +310,21 @@ unit_tests:
         - {id: 1, first_name: emily}
 ```
 
+## Код выхода модульного теста
 
-## Unit test exit codes
+Успехи и неудачи модульных тестов представлены двумя кодами выхода:
+- Успех (0)
+- Неудача (1)
 
-Unit test successes and failures are represented by two exit codes:
-- Pass (0)
-- Fail (1)
+Коды выхода отличаются от успехов и неудач тестов данных, поскольку они не отражают напрямую неудачные тесты данных. Тесты данных - это запросы, предназначенные для проверки конкретных условий в ваших данных, и они возвращают одну строку на каждый случай неудачи теста (например, количество значений с дубликатами для теста `unique`). dbt сообщает количество неудачных записей как неудачи. В то время как каждый модульный тест представляет собой один 'тестовый случай', поэтому результаты всегда 0 (успех) или 1 (неудача), независимо от того, сколько записей не удалось в этом тестовом случае.
 
-Exit codes differ from data test success and failure outputs because they don't directly reflect failing data tests. Data tests are queries designed to check specific conditions in your data, and they return one row per failed test case (for example, the number of values with duplicates for the `unique` test). dbt reports the number of failing records as failures. Whereas, each unit test represents one 'test case', so results are always 0 (pass) or 1 (fail) regardless of how many records failed within that test case.
+Узнайте о [кодах выхода](/reference/exit-codes) для получения дополнительной информации.
 
-Learn about [exit codes](/reference/exit-codes) for more information.
+## Дополнительные ресурсы
 
-
-## Additional resources
-
-- [Unit testing reference page](/reference/resource-properties/unit-tests)
-- [Supported data formats for mock data](/reference/resource-properties/data-formats)
-- [Unit testing versioned models](/reference/resource-properties/unit-testing-versions)
-- [Unit test inputs](/reference/resource-properties/unit-test-input)
-- [Unit test overrides](/reference/resource-properties/unit-test-overrides)
-- [Platform-specific data types](/reference/resource-properties/data-types)
+- [Страница справки по модульному тестированию](/reference/resource-properties/unit-tests)
+- [Поддерживаемые форматы данных для фиктивных данных](/reference/resource-properties/data-formats)
+- [Модульное тестирование версионированных моделей](/reference/resource-properties/unit-testing-versions)
+- [Входные данные модульного теста](/reference/resource-properties/unit-test-input)
+- [Переопределения модульного теста](/reference/resource-properties/unit-test-overrides)
+- [Специфические типы данных платформы](/reference/resource-properties/data-types)

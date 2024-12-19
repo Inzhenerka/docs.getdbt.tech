@@ -1,54 +1,53 @@
 ---
-title: Using defer in dbt Cloud
+title: Использование defer в dbt Cloud
 id: about-cloud-develop-defer
-description: "Learn how to leverage defer to prod when developing with dbt Cloud."
-sidebar_label: "Using defer in dbt Cloud"
+description: "Узнайте, как использовать defer для продакшена при разработке с dbt Cloud."
+sidebar_label: "Использование defer в dbt Cloud"
 pagination_next: "docs/cloud/cloud-cli-installation"
 ---
 
+[Defer](/reference/node-selection/defer) — это мощная функция, которая позволяет разработчикам строить, запускать и тестировать только те модели, которые они редактировали, без необходимости сначала запускать и строить все модели, которые идут перед ними (родительские модели). dbt реализует это, используя манифест продакшена для сравнения и разрешая функцию `{{ ref() }}` с помощью артефактов продакшена.
 
-[Defer](/reference/node-selection/defer) is a powerful feature that allows developers to only build and run and test models they've edited without having to first run and build all the models that come before them (upstream parents). dbt powers this by using a production manifest for comparison, and resolves the `{{ ref() }}` function with upstream production artifacts. 
+Как dbt Cloud IDE, так и dbt Cloud CLI позволяют пользователям нативно использовать метаданные продакшена непосредственно в их рабочих процессах разработки.
 
-Both the dbt Cloud IDE and the dbt Cloud CLI enable users to natively defer to production metadata directly in their development workflows. 
+<Lightbox src="/img/docs/reference/defer-diagram.png" width="50%" title="Используйте 'defer', чтобы модифицировать модели в конце конвейера, указывая на модели продакшена, вместо того чтобы запускать все родительские модели." />
 
-<Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Use 'defer' to modify end-of-pipeline models by pointing to production models, instead of running everything upstream." />
+При использовании `--defer` dbt Cloud будет следовать этому порядку выполнения для разрешения функций `{{ ref() }}`.
 
-When using `--defer`, dbt Cloud will follow this order of execution for resolving the `{{ ref() }}` functions.
+1. Если существует версия отложенной связи в среде разработки, dbt предпочитает использовать местоположение базы данных разработки при разрешении ссылки.
+2. Если версия разработки не существует, dbt использует промежуточные местоположения родительских связей на основе метаданных из промежуточной среды.
+3. Если ни версия разработки, ни промежуточная версия не существуют, dbt использует производственные местоположения родительских связей на основе метаданных из производственной среды.
 
-1. If a development version of a deferred relation exists, dbt preferentially uses the development database location when resolving the reference.
-2. If a development version doesn't exist, dbt uses the staging locations of parent relations based on metadata from the staging environment.
-3. If both a development and staging version doesn't exist, dbt uses the production locations of parent relations based on metadata from the production environment.
+**Примечание:** Передача флага `--favor-state` всегда будет разрешать ссылки, используя промежуточные метаданные, если они доступны; в противном случае по умолчанию используются производственные метаданные, независимо от наличия версии разработки, пропуская шаг #1.
 
-**Note:** Passing the `--favor-state` flag will always resolve refs using staging metadata if available; otherwise, it defaults to production metadata regardless of the presence of a development relation, skipping step #1.
+Для чистого начала хорошей практикой является удаление схемы разработки в начале и в конце вашего цикла разработки.
 
-For a clean slate, it's a good practice to drop the development schema at the start and end of your development cycle.
+Если вам требуется дополнительный контроль над данными продакшена, создайте [Промежуточную среду](/docs/deploy/deploy-environments#staging-environment), и dbt будет использовать ее вместо производственной среды для разрешения функций `{{ ref() }}`.
 
-If you require additional controls over production data, create a [Staging environment](/docs/deploy/deploy-environments#staging-environment) and dbt will use that, rather than the Production environment, to resolve `{{ ref() }}` functions.
+## Необходимая настройка
 
-## Required setup
+- Вы должны выбрать флажок **[Производственная среда](/docs/deploy/deploy-environments#set-as-production-environment)** на странице **Настройки среды**. 
+  - Это можно установить для одной среды развертывания на проект dbt Cloud.
+- Сначала у вас должен быть успешный запуск задания.
 
-- You must select the **[Production environment](/docs/deploy/deploy-environments#set-as-production-environment)** checkbox in the **Environment Settings** page. 
-  - This can be set for one deployment environment per dbt Cloud project.
-- You must have a successful job run first.
+При использовании defer он сравнивает артефакты из последнего успешного задания в продакшене, исключая CI задания.
 
-When using defer, it compares artifacts from the most recent successful production job, excluding CI jobs.
+### Defer в dbt Cloud IDE
 
-### Defer in the dbt Cloud IDE
+Чтобы включить defer в dbt Cloud IDE, переключите кнопку **Defer to production** на панели команд. После включения dbt Cloud будет:
 
-To enable defer in the dbt Cloud IDE, toggle the **Defer to production** button on the command bar. Once enabled, dbt Cloud will:
+1. Загружать самый последний манифест из производственной среды для сравнения
+2. Передавать флаг `--defer` в команду (для любой команды, которая принимает этот флаг)
 
-1. Pull down the most recent manifest from the Production environment for comparison
-2. Pass the `--defer` flag to the command (for any command that accepts the flag)
+Например, если вы начнете разработку на новой ветке с [пустой схемой разработки](/reference/node-selection/defer#usage), отредактируете одну модель и выполните `dbt build -s state:modified` &mdash; только отредактированная модель будет запущена. Все функции `{{ ref() }}` будут указывать на производственное местоположение ссылочных моделей.
 
-For example, if you were to start developing on a new branch with [nothing in your development schema](/reference/node-selection/defer#usage), edit a single model, and run `dbt build -s state:modified` &mdash;  only the edited model would run. Any `{{ ref() }}` functions will point to the production location of the referenced models.
+<Lightbox src="/img/docs/dbt-cloud/defer-toggle.jpg" width="100%" title="Выберите переключатель 'Defer to production' в правом нижнем углу панели команд, чтобы включить defer в dbt Cloud IDE." />
 
-<Lightbox src="/img/docs/dbt-cloud/defer-toggle.jpg" width="100%" title="Select the 'Defer to production' toggle on the bottom right of the command bar to enable defer in the dbt Cloud IDE."/>
+### Defer в dbt Cloud CLI
 
-### Defer in dbt Cloud CLI
+Одно из ключевых отличий между использованием `--defer` в dbt Cloud CLI и dbt Cloud IDE заключается в том, что `--defer` *автоматически* включен в dbt Cloud CLI для всех вызовов, по сравнению с артефактами продакшена. Вы можете отключить его с помощью флага `--no-defer`.
 
-One key difference between using `--defer` in the dbt Cloud CLI and the dbt Cloud IDE is that `--defer` is *automatically* enabled in the dbt Cloud CLI for all invocations, compared with production artifacts. You can disable it with the `--no-defer` flag.
-
-The dbt Cloud CLI offers additional flexibility by letting you choose the source environment for deferral artifacts. You can manually set a `defer-env-id` key in either your `dbt_project.yml` or `dbt_cloud.yml` file. By default, the dbt Cloud CLI will prefer metadata from the project's "Staging" environment (if defined), otherwise "Production."
+dbt Cloud CLI предлагает дополнительную гибкость, позволяя вам выбирать исходную среду для артефактов отложенного выполнения. Вы можете вручную установить ключ `defer-env-id` в вашем файле `dbt_project.yml` или `dbt_cloud.yml`. По умолчанию dbt Cloud CLI будет предпочитать метаданные из "Промежуточной" среды проекта (если она определена), в противном случае — "Производственной".
 
 <File name="dbt_cloud.yml">
 
@@ -60,7 +59,6 @@ context:
 ```
 
 </File>
-
 
 <File name="dbt_project.yml"> 
 

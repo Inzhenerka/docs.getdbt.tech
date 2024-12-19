@@ -1,180 +1,171 @@
 ---
-title: Environment variables
+title: Переменные окружения
 id: "environment-variables"
-description: "Use environment variables to customize the behavior of your dbt project."
+description: "Используйте переменные окружения для настройки поведения вашего проекта dbt."
 ---
 
-Environment variables can be used to customize the behavior of a dbt project depending on where the project is running. See the docs on
-[env_var](/reference/dbt-jinja-functions/env_var) for more information on how to call the jinja function `{{env_var('DBT_KEY','OPTIONAL_DEFAULT')}}` in your project code.
+Переменные окружения могут использоваться для настройки поведения проекта dbt в зависимости от того, где проект выполняется. См. документацию по
+[env_var](/reference/dbt-jinja-functions/env_var) для получения дополнительной информации о том, как вызывать функцию jinja `{{env_var('DBT_KEY','OPTIONAL_DEFAULT')}}` в коде вашего проекта.
 
-:::info Environment Variable Naming and Prefixing
+:::info Именование и префиксы переменных окружения
 
-Environment variables in dbt Cloud must be prefixed with either `DBT_` or `DBT_ENV_SECRET` or `DBT_ENV_CUSTOM_ENV_`. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
+Переменные окружения в dbt Cloud должны иметь префикс `DBT_`, `DBT_ENV_SECRET` или `DBT_ENV_CUSTOM_ENV_`. Ключи переменных окружения записываются в верхнем регистре и чувствительны к регистру. При ссылке на `{{env_var('DBT_KEY')}}` в коде вашего проекта ключ должен точно соответствовать переменной, определенной в интерфейсе dbt Cloud.
 
 :::
 
-### Setting and overriding environment variables
+### Установка и переопределение переменных окружения
 
-**Order of precedence**
+**Порядок приоритета**
 
-Environment variable values can be set in multiple places within dbt Cloud. As a result, dbt Cloud will interpret environment variables according to the following order of precedence (lowest to highest):
+Значения переменных окружения могут быть установлены в нескольких местах в dbt Cloud. В результате dbt Cloud будет интерпретировать переменные окружения в соответствии со следующим порядком приоритета (от низшего к высшему):
 
- <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/env-var-precdence.png" title="Environment variables order of precedence"/>
+ <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/env-var-precdence.png" title="Порядок приоритета переменных окружения"/>
 
-There are four levels of environment variables:
+Существует четыре уровня переменных окружения:
 
- 1. The optional default argument supplied to the `env_var` Jinja function in code, which can be overridden at (_lowest precedence_)
- 2. The project-wide level by its default value, which can be overridden at
- 3. The environment level, which can in turn be overridden again at
- 4. The job level (job override) or in the IDE for an individual dev (personal override). (_highest precedence_)
+ 1. Необязательный аргумент по умолчанию, переданный функции `env_var` в коде, который может быть переопределен (наименьший приоритет)
+ 2. Уровень проекта по его значению по умолчанию, который может быть переопределен
+ 3. Уровень окружения, который, в свою очередь, может быть переопределен
+ 4. Уровень задания (переопределение задания) или в IDE для отдельного разработчика (личное переопределение). (наивысший приоритет)
 
-**Setting environment variables at the project and environment level**
+**Установка переменных окружения на уровне проекта и окружения**
 
-To set environment variables at the project and environment level, click **Deploy** in the top left, then select **Environments**.  Click **Environments Variables** to add and update your environment variables.
+Чтобы установить переменные окружения на уровне проекта и окружения, нажмите **Deploy** в верхнем левом углу, затем выберите **Environments**. Нажмите **Environments Variables**, чтобы добавить и обновить ваши переменные окружения.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/navigate-to-env-vars.png" title="Environment variables tab"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/navigate-to-env-vars.png" title="Вкладка переменных окружения"/>
 
+Вы заметите, что есть столбец `Project Default`. Это отличное место для установки значения, которое будет сохраняться на протяжении всего вашего проекта, независимо от того, где выполняется код. Мы рекомендуем устанавливать это значение, когда вы хотите предоставить универсальное значение по умолчанию или добавить токен или секрет на уровне проекта.
 
+Справа от столбца `Project Default` находятся все ваши окружения. Значения, установленные на уровне окружения, имеют приоритет над значением по умолчанию на уровне проекта. Здесь вы можете указать dbt Cloud интерпретировать значение окружения по-разному в вашем Staging и Production окружениях, например.
 
-You'll notice there is a `Project Default` column. This is a great place to set a value that will persist across your whole project, independent of where the code is run. We recommend setting this value when you want to supply a catch-all default or add a project-wide token or secret.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/project-environment-view.png" title="Установка значений на уровне проекта и окружения"/>
 
+**Переопределение переменных окружения на уровне задания**
 
-To the right of the `Project Default` column are all your environments. Values set at the environmental level take priority over the project-level default value. This is where you can tell dbt Cloud to interpret an environment value differently in your Staging vs. Production environment, as an example.
+У вас может быть несколько заданий, которые выполняются в одном и том же окружении, и вы хотите, чтобы переменная окружения интерпретировалась по-разному в зависимости от задания.
 
+При настройке или редактировании задания вы увидите раздел, где можете переопределить значения переменных окружения, определенные на уровне окружения или проекта.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/project-environment-view.png" title="Setting project level and environment level values"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/job-override.gif" title="Настройка переопределения переменных окружения для задания"/>
 
+Каждое задание выполняется в конкретном окружении развертывания, и по умолчанию задание унаследует значения, установленные на уровне окружения (или наивысшем уровне приоритета) для окружения, в котором оно выполняется. Если вы хотите установить другое значение на уровне задания, отредактируйте значение, чтобы переопределить его.
 
-**Overriding environment variables at the job level**
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/job-override.png" title="Установка значения переопределения для задания"/>
 
-You may have multiple jobs that run in the same environment, and you'd like the environment variable to be interpreted differently depending on the job.
+**Переопределение переменных окружения на личном уровне**
 
-When setting up or editing a job, you will see a section where you can override environment variable values defined at the environment or project level.
+Вы также можете установить личное значение переопределения для переменной окружения, когда разрабатываете в интегрированной среде разработки dbt (IDE). По умолчанию dbt Cloud использует значения переменных окружения, установленные в среде разработки проекта. Чтобы увидеть и переопределить эти значения, в dbt Cloud:
+- Нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**. 
+- В разделе **Your profile** нажмите **Credentials** и затем выберите ваш проект. 
+- Прокрутите до раздела **Environment variables** и нажмите **Edit**, чтобы внести необходимые изменения.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/job-override.gif" title="Navigating to environment variables job override settings"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/personal-override.gif" title="Настройка личного переопределения переменных окружения"/>
 
+Чтобы предоставить переопределение, разработчики могут отредактировать и указать другое значение для использования. Эти значения будут учитываться в IDE как для вкладок Results, так и для Compiled SQL.
 
-Every job runs in a specific, deployment environment, and by default, a job will inherit the values set at the environment level (or the highest precedence level set) for the environment in which it runs. If you'd like to set a different value at the job level, edit the value to override it.
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/personal-override.png" title="Установка личного значения переопределения"/>
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/job-override.png" title="Setting a job override value"/>
-
-
-**Overriding environment variables at the personal level**
-
-
-You can also set a personal value override for an environment variable when you develop in the dbt-integrated developer environment (IDE). By default, dbt Cloud uses environment variable values set in the project's development environment. To see and override these values, from dbt Cloud:
-- Click on your account name in the left side menu and select **Account settings**. 
-- Under the **Your profile** section, click **Credentials** and then select your project. 
-- Scroll to the **Environment variables** section and click **Edit** to make the necessary changes.
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/personal-override.gif" title="Navigating to environment variables personal override settings"/>
-
-To supply an override, developers can edit and specify a different value to use. These values will be respected in the IDE both for the Results and Compiled SQL tabs.
-
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/personal-override.png" title="Setting a personal override value"/>
-
-:::info Appropriate coverage
-If you have not set a project level default value for every environment variable, it may be possible that dbt Cloud does not know how to interpret the value of an environment variable in all contexts. In such cases, dbt will throw a compilation error: "Env var required but not provided".
+:::info Соответствующее покрытие
+Если вы не установили значение по умолчанию на уровне проекта для каждой переменной окружения, возможно, что dbt Cloud не знает, как интерпретировать значение переменной окружения во всех контекстах. В таких случаях dbt выдаст ошибку компиляции: "Env var required but not provided".
 :::
 
-:::info Changing environment variables mid-session in the IDE
-If you change the value of an environment variable mid-session while using the IDE, you may have to refresh the IDE for the change to take effect.
+:::info Изменение переменных окружения в середине сессии в IDE
+Если вы измените значение переменной окружения в середине сессии, используя IDE, вам может потребоваться обновить IDE, чтобы изменения вступили в силу.
 :::
 
-To refresh the IDE mid-development, click on either the green 'ready' signal or the red 'compilation error' message at the bottom right corner of the IDE. A new modal will pop up, and you should select the Refresh IDE button. This will load your environment variables values into your development environment.
+Чтобы обновить IDE в процессе разработки, нажмите на зеленый сигнал 'готово' или красное сообщение 'ошибка компиляции' в правом нижнем углу IDE. Появится новое модальное окно, и вам следует выбрать кнопку Refresh IDE. Это загрузит значения ваших переменных окружения в вашу среду разработки.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/refresh-ide.png" title="Refreshing IDE mid-session"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/refresh-ide.png" title="Обновление IDE в середине сессии"/>
 
-There are some known issues with partial parsing of a project and changing environment variables mid-session in the IDE. If you find that your dbt project is not compiling to the values you've set, try deleting the `target/partial_parse.msgpack` file in your dbt project which will force dbt to re-compile your whole project.
+Существуют известные проблемы с частичным парсингом проекта и изменением переменных окружения в середине сессии в IDE. Если вы обнаружите, что ваш проект dbt не компилируется с установленными вами значениями, попробуйте удалить файл `target/partial_parse.msgpack` в вашем проекте dbt, что заставит dbt перекомпилировать весь ваш проект.
 
-### Handling secrets
+### Обработка секретов
 
-While all environment variables are encrypted at rest in dbt Cloud, dbt Cloud has additional capabilities for managing environment variables with secret or otherwise sensitive values. If you want a particular environment variable to be scrubbed from all logs and error messages, in addition to obfuscating the value in the UI, you can prefix the key with `DBT_ENV_SECRET`. This functionality is supported from `dbt v1.0` and on.
+Хотя все переменные окружения шифруются в состоянии покоя в dbt Cloud, dbt Cloud имеет дополнительные возможности для управления переменными окружения с секретными или иными чувствительными значениями. Если вы хотите, чтобы конкретная переменная окружения была скрыта во всех журналах и сообщениях об ошибках, помимо сокрытия значения в интерфейсе, вы можете префиксировать ключ `DBT_ENV_SECRET`. Эта функция поддерживается с `dbt v1.0` и выше.
+
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/DBT_ENV_SECRET.png" title="Сокрытие префикса DBT_ENV_SECRET"/>
+
+**Примечание**: Переменная окружения может использоваться для хранения [git токена для клонирования репозиториев](/docs/build/environment-variables#clone-private-packages). Мы рекомендуем сделать разрешения git токена только для чтения и рассмотреть возможность использования учетной записи машины или PAT сервисного пользователя с ограниченным доступом к репозиторию для соблюдения хорошей безопасности.
+
+### Специальные переменные окружения
+
+dbt Cloud имеет ряд предопределенных переменных. Переменные устанавливаются автоматически и не могут быть изменены.
+
+#### Подробности IDE dbt Cloud
+
+Следующая переменная окружения устанавливается автоматически для IDE dbt Cloud:
+
+- `DBT_CLOUD_GIT_BRANCH` &mdash; Предоставляет имя ветки разработки Git в [IDE dbt Cloud](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+  - Доступно в dbt v1.6 и позже.
+  - Переменная изменяется при изменении ветки.
+  - Не требует перезапуска IDE после изменения ветки.
+  - В настоящее время недоступна в [dbt Cloud CLI](/docs/cloud/cloud-cli-installation).
+
+Случай использования &mdash; Это полезно в случаях, когда вы хотите динамически использовать имя ветки Git в качестве префикса для [разработческой схемы](/docs/build/custom-schemas) ( `{{ env_var ('DBT_CLOUD_GIT_BRANCH') }}` ).
+
+#### Контекст dbt Cloud
+
+Следующие переменные окружения устанавливаются автоматически: 
+
+- `DBT_ENV` &mdash; Этот ключ зарезервирован для приложения dbt Cloud и всегда будет равен 'prod'. Только для развертываний.
+- `DBT_CLOUD_ENVIRONMENT_NAME` &mdash; Имя окружения dbt Cloud, в котором выполняется `dbt`. 
+- `DBT_CLOUD_ENVIRONMENT_TYPE` &mdash; Тип окружения dbt Cloud, в котором выполняется `dbt`. Допустимые значения: `dev`, `staging` или `prod`. Может быть не установлен, поэтому используйте значение по умолчанию, например `{{env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '')}}`.
+
+#### Подробности выполнения
+
+- `DBT_CLOUD_PROJECT_ID` &mdash; ID проекта dbt Cloud для этого выполнения
+- `DBT_CLOUD_JOB_ID` &mdash; ID задания dbt Cloud для этого выполнения
+- `DBT_CLOUD_RUN_ID` &mdash; ID этого конкретного выполнения
+- `DBT_CLOUD_RUN_REASON_CATEGORY` &mdash; "категория" триггера для этого выполнения (один из: `scheduled`, `github_pull_request`, `gitlab_merge_request`, `azure_pull_request`, `other`)
+- `DBT_CLOUD_RUN_REASON` &mdash; Конкретный триггер для этого выполнения (например, `Scheduled`, `Kicked off by <email>`, или пользовательский через `API`)
+- `DBT_CLOUD_ENVIRONMENT_ID` &mdash; ID окружения для этого выполнения
+- `DBT_CLOUD_ACCOUNT_ID` &mdash; ID учетной записи dbt Cloud для этого выполнения
+
+#### Подробности Git
+
+_Следующие переменные в настоящее время доступны только для сборок PR GitHub, GitLab и Azure DevOps, инициированных через вебхук_
+
+- `DBT_CLOUD_PR_ID` &mdash; ID Pull Request в подключенной системе управления версиями
+- `DBT_CLOUD_GIT_SHA` &mdash; SHA коммита git, который выполняется для этой сборки Pull Request
 
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/DBT_ENV_SECRET.png" title="DBT_ENV_SECRET prefix obfuscation"/>
+### Пример использования
 
-**Note**: An environment variable can be used to store a [git token for repo cloning](/docs/build/environment-variables#clone-private-packages). We recommend you make the git token's permissions read only and consider using a machine account or service user's PAT with limited repo access in order to practice good security hygiene.
+Переменные окружения могут использоваться многими способами, и они дают вам возможность и гибкость делать то, что вы хотите, более легко в dbt Cloud.
 
-### Special environment variables
+<Expandable alt_header="Клонирование частных пакетов">
 
-dbt Cloud has a number of pre-defined variables built in. Variables are set automatically and cannot be changed.
-
-#### dbt Cloud IDE details
-
-The following environment variable is set automatically for the dbt Cloud IDE:
-
-- `DBT_CLOUD_GIT_BRANCH` &mdash; Provides the development Git branch name in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
-  - Available in dbt v1.6 and later.
-  - The variable changes when the branch is changed.
-  - Doesn't require restarting the IDE after a branch change.
-  - Currently not available in the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation).
-
-Use case &mdash; This is useful in cases where you want to dynamically use the Git branch name as a prefix for a [development schema](/docs/build/custom-schemas) ( `{{ env_var ('DBT_CLOUD_GIT_BRANCH') }}` ).
-
-#### dbt Cloud context
-
-The following environment variables are set automatically: 
-
-- `DBT_ENV` &mdash; This key is reserved for the dbt Cloud application and will always resolve to 'prod'. For deployment runs only.
-- `DBT_CLOUD_ENVIRONMENT_NAME` &mdash; The name of the dbt Cloud environment in which `dbt` is running. 
-- `DBT_CLOUD_ENVIRONMENT_TYPE` &mdash; The type of dbt Cloud environment in which `dbt` is running. The valid values are `dev`, `staging`, or `prod`. It can be unset, so use a default like `{{env_var('DBT_CLOUD_ENVIRONMENT_TYPE', '')}}`.
-
-#### Run details
-
-- `DBT_CLOUD_PROJECT_ID` &mdash; The ID of the dbt Cloud Project for this run
-- `DBT_CLOUD_JOB_ID` &mdash; The ID of the dbt Cloud Job for this run
-- `DBT_CLOUD_RUN_ID` &mdash; The ID of this particular run
-- `DBT_CLOUD_RUN_REASON_CATEGORY` &mdash; The "category" of the trigger for this run (one of: `scheduled`, `github_pull_request`, `gitlab_merge_request`, `azure_pull_request`, `other`)
-- `DBT_CLOUD_RUN_REASON` &mdash; The specific trigger for this run (eg. `Scheduled`, `Kicked off by <email>`, or custom via `API`)
-- `DBT_CLOUD_ENVIRONMENT_ID` &mdash; The ID of the environment for this run
-- `DBT_CLOUD_ACCOUNT_ID` &mdash; The ID of the dbt Cloud account for this run
-
-#### Git details
-
-_The following variables are currently only available for GitHub, GitLab, and Azure DevOps PR builds triggered via a webhook_
-
-- `DBT_CLOUD_PR_ID` &mdash; The Pull Request ID in the connected version control system
-- `DBT_CLOUD_GIT_SHA` &mdash; The git commit SHA which is being run for this Pull Request build
-
-
-### Example usage
-
-Environment variables can be used in many ways, and they give you the power and flexibility to do what you want to do more easily in dbt Cloud.
-
-<Expandable alt_header="Clone private packages">
-
-Now that you can set secrets as environment variables, you can pass git tokens into your package HTTPS URLs to allow for on-the-fly cloning of private repositories. Read more about enabling [private package cloning](/docs/build/packages#private-packages).
+Теперь, когда вы можете устанавливать секреты в качестве переменных окружения, вы можете передавать git токены в ваши HTTPS URL пакетов, чтобы позволить клонирование частных репозиториев на лету. Узнайте больше о включении [клонирования частных пакетов](/docs/build/packages#private-packages).
 
 </Expandable>
 
-<Expandable alt_header="Dynamically set your warehouse in your Snowflake connection">
+<Expandable alt_header="Динамическая установка вашего склада в соединении Snowflake">
 
-Environment variables make it possible to dynamically change the Snowflake virtual warehouse size depending on the job. Instead of calling the warehouse name directly in your project connection, you can reference an environment variable which will get set to a specific virtual warehouse at runtime. 
+Переменные окружения позволяют динамически изменять размер виртуального склада Snowflake в зависимости от задания. Вместо того чтобы напрямую указывать имя склада в вашем соединении проекта, вы можете сослаться на переменную окружения, которая будет установлена на конкретный виртуальный склад во время выполнения. 
 
-For example, suppose you'd like to run a full-refresh job in an XL warehouse, but your incremental job only needs to run in a medium-sized warehouse. Both jobs are configured in the same dbt Cloud environment. In your connection configuration, you can use an environment variable to set the warehouse name to `{{env_var('DBT_WAREHOUSE')}}`. Then in the job settings, you can set a different value for the `DBT_WAREHOUSE` environment variable depending on the job's workload.
+Например, предположим, что вы хотите запустить задание полного обновления в XL складе, но ваше инкрементальное задание должно выполняться только в складе среднего размера. Оба задания настроены в одном и том же окружении dbt Cloud. В вашей конфигурации соединения вы можете использовать переменную окружения, чтобы установить имя склада на `{{env_var('DBT_WAREHOUSE')}}`. Затем в настройках задания вы можете установить другое значение для переменной окружения `DBT_WAREHOUSE` в зависимости от нагрузки задания.
 
-Currently, it's not possible to dynamically set environment variables across models within a single run. This is because each env_var can only have a single set value for the entire duration of the run.
+В настоящее время невозможно динамически устанавливать переменные окружения для моделей в рамках одного выполнения. Это связано с тем, что каждая переменная env_var может иметь только одно установленное значение на протяжении всего выполнения.
 
-**Note** &mdash; You can also use this method with Databricks SQL Warehouse.
+**Примечание** &mdash; Вы также можете использовать этот метод с Databricks SQL Warehouse.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/warehouse-override.png" title="Adding environment variables to your connection credentials"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/Environment Variables/warehouse-override.png" title="Добавление переменных окружения в ваши учетные данные соединения"/>
 
-:::info Environment variables and Snowflake OAuth limitations
-Env vars works fine with username/password and keypair, including scheduled jobs, because dbt Core consumes the Jinja inserted into the autogenerated `profiles.yml` and resolves it to do an `env_var` lookup. 
+:::info Ограничения переменных окружения и Snowflake OAuth
+Переменные окружения работают нормально с именем пользователя/паролем и ключевой парой, включая запланированные задания, поскольку dbt Core использует Jinja, вставленный в автоматически сгенерированный `profiles.yml`, и разрешает его для выполнения поиска `env_var`. 
 
-However, there are some limitations when using env vars with Snowflake OAuth Connection settings:
+Однако существуют некоторые ограничения при использовании переменных окружения с настройками соединения Snowflake OAuth:
 
-- You can't use them in the account/host field, but they can be used for database, warehouse, and role. For these fields, [use extended attributes](/docs/deploy/deploy-environments#deployment-connection).
+- Вы не можете использовать их в поле учетной записи/хоста, но они могут использоваться для базы данных, склада и роли. Для этих полей используйте [расширенные атрибуты](/docs/deploy/deploy-environments#deployment-connection).
 
-Something to note, if you supply an environment variable in the account/host field, Snowflake OAuth Connection will **fail** to connect. This happens because the field doesn't pass through Jinja rendering, so dbt Cloud simply passes the literal `env_var` code into a URL string like `{{ env_var("DBT_ACCOUNT_HOST_NAME") }}.snowflakecomputing.com`, which is an invalid hostname. Use [extended attributes](/docs/deploy/deploy-environments#deployment-credentials) instead.
+Важно отметить, что если вы укажете переменную окружения в поле учетной записи/хоста, соединение Snowflake OAuth **не сможет** подключиться. Это происходит потому, что поле не проходит через рендеринг Jinja, поэтому dbt Cloud просто передает буквальный код `env_var` в строку URL, например `{{ env_var("DBT_ACCOUNT_HOST_NAME") }}.snowflakecomputing.com`, что является недопустимым именем хоста. Используйте [расширенные атрибуты](/docs/deploy/deploy-environments#deployment-credentials) вместо этого.
 :::
 
 </Expandable>
 
-<Expandable alt_header="Audit your run metadata">
+<Expandable alt_header="Аудит метаданных выполнения">
 
-Here's another motivating example that uses the dbt Cloud run ID, which is set automatically at each run. This additional data field can be used for auditing and debugging:
+Вот еще один мотивирующий пример, который использует ID выполнения dbt Cloud, который устанавливается автоматически при каждом выполнении. Это дополнительное поле данных может использоваться для аудита и отладки:
 
 ```sql
 
@@ -194,7 +185,7 @@ with users_aggregated as (
 )
 
 select *,
-    -- Inject the run id if present, otherwise use "manual"
+    -- Вставьте ID выполнения, если он присутствует, в противном случае используйте "manual"
     '{{ env_var("DBT_CLOUD_RUN_ID", "manual") }}' as _audit_run_id
 
 from users_aggregated
@@ -202,7 +193,7 @@ from users_aggregated
 
 </Expandable>
 
-<Expandable alt_header="Configure Semantic Layer credentials">
+<Expandable alt_header="Настройка учетных данных Semantic Layer">
 
 import SLEnvVars from '/snippets/_sl-env-vars.md';
 

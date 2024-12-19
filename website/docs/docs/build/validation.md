@@ -1,53 +1,53 @@
 ---
-title: Validations
+title: Валидации
 id: validation
-description: "The Semantic Layer, powered by MetricFlow, has three types of built-in validations, including Parsing Validation, Semantic Validation, and Data Warehouse validation, which are performed in a sequential and blocking manner."
-sidebar_label: "Validations"
-tags: [Metrics, Semantic Layer]
+description: "Семантический уровень, поддерживаемый MetricFlow, имеет три типа встроенных валидаций, включая валидацию разбора, семантическую валидацию и валидацию платформы данных, которые выполняются последовательно и блокирующим образом."
+sidebar_label: "Валидации"
+tags: [Метрики, Семантический уровень]
 ---
 
-Validations refer to the process of checking whether a system or configuration meets the expected requirements or constraints. In the case of the Semantic Layer, powered by MetricFlow, there are three built-in validations &mdash; [parsing](#parsing), [semantic](#semantic), and [data platform](#data-platform).
+Валидации относятся к процессу проверки того, соответствует ли система или конфигурация ожидаемым требованиям или ограничениям. В случае семантического уровня, поддерживаемого MetricFlow, существуют три встроенные валидации — [валидация разбора](#parsing), [семантическая](#semantic) и [валидация платформы данных](#data-platform).
 
-These validations ensure that configuration files follow the expected schema, the semantic graph doesn't violate any constraints, and semantic definitions in the graph exist in the physical table - providing effective data governance support. These three validation steps occur sequentially and must succeed before proceeding to the next step.
+Эти валидации обеспечивают соответствие файлов конфигурации ожидаемой схеме, семантическая графовая структура не нарушает никаких ограничений, а семантические определения в графе существуют в физической таблице — обеспечивая эффективную поддержку управления данными. Эти три шага валидации происходят последовательно и должны быть успешными, прежде чем перейти к следующему шагу.
 
-The code that handles validation [can be found here](https://github.com/dbt-labs/dbt-semantic-interfaces/tree/main/dbt_semantic_interfaces/validations) for those who want to dive deeper into this topic. 
+Код, который обрабатывает валидацию, [можно найти здесь](https://github.com/dbt-labs/dbt-semantic-interfaces/tree/main/dbt_semantic_interfaces/validations) для тех, кто хочет углубиться в эту тему.
 
-## Validations command
+## Команда валидаций
 
-You can run validations from dbt Cloud or the command line with the following [MetricFlow commands](/docs/build/metricflow-commands). In dbt Cloud, you need developer credentials to run `dbt sl validate-configs` in the IDE or CLI, and deployment credentials to run it in CI.
+Вы можете запускать валидации из dbt Cloud или командной строки с помощью следующих [команд MetricFlow](/docs/build/metricflow-commands). В dbt Cloud вам нужны учетные данные разработчика для выполнения `dbt sl validate-configs` в IDE или CLI, а также учетные данные развертывания для выполнения этого в CI.
 
 ```bash
-dbt sl validate # dbt Cloud users
-mf validate-configs # dbt Core users
+dbt sl validate # пользователи dbt Cloud
+mf validate-configs # пользователи dbt Core
 ```
 
-## Parsing
+## Валидация разбора
 
-In this validation step, we ensure your config files follow the defined schema for each semantic graph object and can be parsed successfully. It validates the schema for the following core objects:
+На этом этапе валидации мы проверяем, чтобы ваши файлы конфигурации соответствовали определенной схеме для каждого объекта семантического графа и могли быть успешно разобраны. Она проверяет схему для следующих основных объектов:
 
-* Semantic models
-* Identifiers
-* Measures
-* Dimensions
-* Metrics
+* Семантические модели
+* Идентификаторы
+* Меры
+* Измерения
+* Метрики
 
-## Semantic syntax
+## Семантический синтаксис
 
-This syntactic validation step occurs after we've built your semantic graph. The Semantic Layer, powered by MetricFlow, runs a suite of tests to ensure that your semantic graph doesn't violate any constraints. For example, we check to see if measure names are unique, or if metrics referenced in materialization exist. The current semantic rules we check for are:
+Этот этап синтаксической валидации происходит после того, как мы построили ваш семантический граф. Семантический уровень, поддерживаемый MetricFlow, запускает набор тестов, чтобы убедиться, что ваш семантический граф не нарушает никаких ограничений. Например, мы проверяем, уникальны ли имена мер или существуют ли метрики, на которые ссылаются в материализации. Текущие семантические правила, которые мы проверяем:
 
-1. Check those semantic models with measures have a valid time dimension
-2. Check that there is only one primary identifier defined in each semantic model
-3. Dimension consistency
-4. Unique measures in semantic models
-5. Measures in metrics are valid
-7. Cumulative metrics are configured properly
+1. Проверка, что семантические модели с мерами имеют действительное временное измерение
+2. Проверка, что в каждой семантической модели определен только один основной идентификатор
+3. Согласованность измерений
+4. Уникальные меры в семантических моделях
+5. Меры в метриках действительны
+6. Кумулятивные метрики настроены правильно
 
-## Data platform
+## Платформа данных
 
-This type of validation checks to see if the semantic definitions in your semantic graph exist in the underlying physical table. To test this, we run queries against your data platform to ensure the generated SQL for semantic models, dimensions, and metrics will execute. We run the following checks:
+Этот тип валидации проверяет, существуют ли семантические определения в вашем семантическом графе в подлежащей физической таблице. Для этого мы выполняем запросы к вашей платформе данных, чтобы убедиться, что сгенерированный SQL для семантических моделей, измерений и метрик будет выполняться. Мы выполняем следующие проверки:
 
-* Measures and dimensions exist
-* Underlying tables for data sources exist
-* Generated SQL for metrics will execute
+* Меры и измерения существуют
+* Подлежащие таблицы для источников данных существуют
+* Сгенерированный SQL для метрик будет выполняться
 
-You can run semantic validations (against your semantic layer) in a CI job to guarantee any code changes made to dbt models don't break these metrics. For more information, refer to [semantic validation in CI](/docs/deploy/ci-jobs#semantic-validations-in-ci).
+Вы можете запускать семантические валидации (против вашего семантического уровня) в CI-задаче, чтобы гарантировать, что любые изменения кода, внесенные в модели dbt, не нарушают эти метрики. Для получения дополнительной информации обратитесь к [семантической валидации в CI](/docs/deploy/ci-jobs#semantic-validations-in-ci).

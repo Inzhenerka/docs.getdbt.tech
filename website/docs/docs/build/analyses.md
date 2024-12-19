@@ -1,17 +1,17 @@
 ---
-title: "Analyses"
-description: "Read this tutorial to learn how to use custom analyses when building in dbt."
+title: "Анализы"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать пользовательские анализы при работе с dbt."
 id: "analyses"
 pagination_next: null
 ---
 
-## Overview
+## Обзор
 
-dbt's notion of `models` makes it easy for data teams to version control and collaborate on data transformations. Sometimes though, a certain SQL statement doesn't quite fit into the mold of a dbt model. These more "analytical" SQL files can be versioned inside of your dbt project using the `analysis` functionality of dbt.
+Понятие `models` в dbt упрощает командам по работе с данными контроль версий и совместную работу над преобразованиями данных. Однако иногда определенное SQL-выражение не совсем подходит под определение модели dbt. Эти более "аналитические" SQL-файлы могут быть версионированы внутри вашего проекта dbt с помощью функциональности `analysis`.
 
-Any `.sql` files found in the `analyses/` directory of a dbt project will be compiled, but not executed. This means that analysts can use dbt functionality like `{{ ref(...) }}` to select from models in an environment-agnostic way.
+Любые `.sql` файлы, найденные в директории `analyses/` проекта dbt, будут скомпилированы, но не выполнены. Это означает, что аналитики могут использовать функциональность dbt, такую как `{{ ref(...) }}`, для выбора из моделей независимо от среды.
 
-In practice, an analysis file might look like this (via the [open source Quickbooks models](https://github.com/dbt-labs/quickbooks)):
+На практике файл анализа может выглядеть следующим образом (по материалам [open source моделей Quickbooks](https://github.com/dbt-labs/quickbooks)):
 
 <File name='analyses/running_total_by_account.sql'>
 
@@ -43,9 +43,9 @@ order by account_id, id
 
 </File>
 
-To compile this analysis into runnable sql, run:
+Чтобы скомпилировать этот анализ в исполняемый SQL, выполните:
 ```
 dbt compile
 ```
 
-Then, look for the compiled SQL file in `target/compiled/{project name}/analyses/running_total_by_account.sql`. This sql can then be pasted into a data visualization tool, for instance. Note that no `running_total_by_account` relation will be materialized in the database as this is an `analysis`, not a `model`.
+Затем найдите скомпилированный SQL-файл в `target/compiled/{project name}/analyses/running_total_by_account.sql`. Этот SQL затем можно вставить в инструмент визуализации данных, например. Обратите внимание, что никакая связь `running_total_by_account` не будет материализована в базе данных, так как это `analysis`, а не `model`.

@@ -1,227 +1,220 @@
 ---
-title: "The audit log for dbt Cloud Enterprise"
+title: "Журнал аудита для dbt Cloud Enterprise"
 id: audit-log
-description: "You can troubleshoot possible issues and provide security audits by reviewing event activity in your organization."
-sidebar_label: "Audit log"
+description: "Вы можете устранять возможные проблемы и проводить аудиты безопасности, просматривая активность событий в вашей организации."
+sidebar_label: "Журнал аудита"
 pagination_next: null
 pagination_prev: "docs/cloud/manage-access/about-user-access"
 ---
 
-To review actions performed by people in your organization, dbt provides logs of audited user and system events in real time. The audit log appears as events happen and includes details such as who performed the action, what the action was, and when it was performed. You can use these details to troubleshoot access issues, perform security audits, or analyze specific events. 
+Чтобы просмотреть действия, выполненные людьми в вашей организации, dbt предоставляет журналы аудируемых пользовательских и системных событий в реальном времени. Журнал аудита отображается по мере возникновения событий и включает такие детали, как кто выполнил действие, что это было за действие и когда оно было выполнено. Вы можете использовать эти детали для устранения проблем с доступом, проведения аудитов безопасности или анализа конкретных событий.
 
-You must be an **Account Admin** or an **Account Viewer** to access the audit log and this feature is only available on Enterprise plans.
+Вы должны быть **Администратором аккаунта** или **Просмотрщиком аккаунта**, чтобы получить доступ к журналу аудита, и эта функция доступна только на корпоративных планах.
 
-The dbt Cloud audit log stores all the events that occurred in your organization in real-time, including:
+Журнал аудита dbt Cloud хранит все события, произошедшие в вашей организации в реальном времени, включая:
 
-- For events within 90 days, the dbt Cloud audit log has a selectable date range that lists events triggered.
-- For events beyond 90 days, **Account Admins** and **Account Viewers** can [export all events](#exporting-logs) by using **Export All**.
+- Для событий в пределах 90 дней журнал аудита dbt Cloud имеет выбираемый диапазон дат, который перечисляет вызванные события.
+- Для событий, превышающих 90 дней, **Администраторы аккаунта** и **Просмотрщики аккаунта** могут [экспортировать все события](#exporting-logs), используя **Экспорт всех**.
 
-## Accessing the audit log
+## Доступ к журналу аудита
 
-To access the audit log, click on your account name in the left side menu and select **Account settings**.
+Чтобы получить доступ к журналу аудита, нажмите на имя вашего аккаунта в левом боковом меню и выберите **Настройки аккаунта**.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-menu.png" width="30%" title="Audit log menu"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-menu.png" width="30%" title="Меню журнала аудита"/>
 
-## Understanding the audit log
+## Понимание журнала аудита
 
-On the audit log page, you will see a list of various events and their associated event data. Each of these events show the following information in dbt:
+На странице журнала аудита вы увидите список различных событий и связанных с ними данных. Каждое из этих событий показывает следующую информацию в dbt:
 
-* **Event name**: Action that was triggered
-* **Agent**: User who triggered that action/event
-* **Timestamp**: Local timestamp of when the event occurred
+* **Название события**: Действие, которое было вызвано
+* **Агент**: Пользователь, который вызвал это действие/событие
+* **Метка времени**: Локальная метка времени, когда событие произошло
 
-### Event details
+### Подробности события
 
-Click the event card to see the details about the activity that triggered the event. This view provides important details, including when it happened and what type of event was triggered. For example, if someone changes the settings for a job, you can use the event details to see which job was changed (type of event: `job_definition.Changed`), by whom (person who triggered the event: `actor`), and when (time it was triggered: `created_at_utc`). For types of events and their descriptions, see [Events in audit log](#audit-log-events).
+Нажмите на карточку события, чтобы увидеть детали активности, вызвавшей событие. Этот вид предоставляет важные детали, включая, когда это произошло и какой тип события был вызван. Например, если кто-то изменяет настройки задания, вы можете использовать детали события, чтобы увидеть, какое задание было изменено (тип события: `job_definition.Changed`), кем (человек, вызвавший событие: `actor`), и когда (время, когда оно было вызвано: `created_at_utc`). Для типов событий и их описаний смотрите [События в журнале аудита](#audit-log-events).
 
-The event details provide the key factors of an event:
+Подробности события предоставляют ключевые факторы события:
 
-| Name                 | Description                                   |
-| -------------------- | --------------------------------------------- |
-| account_id           | Account ID of where the event occurred        |
-| actor                | Actor that carried out the event - User or Service    |
-| actor_id             | Unique ID of the actor                        |
-| actor_ip             | IP address of the actor                       |
-| actor_name           | Identifying name of the actor                 |
-| actor_type           | Whether the action was done by a user or an API request |
-| created_at           | UTC timestamp of when the event occurred      |
-| event_type           | Unique key identifying the event              |
-| event_context        | This key will be different for each event and will match the event_type. This data will include all the details about the object(s) that was changed. |
-| id                   | Unique ID of the event                        |
-| service              | Service that carried out the action           |
-| source               | Source of the event - dbt Cloud UI or API     |
+| Название              | Описание                                   |
+| --------------------- | ------------------------------------------ |
+| account_id            | Идентификатор аккаунта, в котором произошло событие |
+| actor                 | Актор, который выполнил событие - Пользователь или Сервис |
+| actor_id              | Уникальный идентификатор актера           |
+| actor_ip              | IP-адрес актера                           |
+| actor_name            | Идентифицирующее имя актера               |
+| actor_type            | Выполнено ли действие пользователем или запросом API |
+| created_at            | UTC-метка времени, когда событие произошло |
+| event_type            | Уникальный ключ, идентифицирующий событие |
+| event_context         | Этот ключ будет отличаться для каждого события и будет соответствовать event_type. Эти данные будут включать все детали об объекте(ах), которые были изменены. |
+| id                    | Уникальный идентификатор события           |
+| service               | Сервис, который выполнил действие         |
+| source                | Источник события - интерфейс dbt Cloud или API |
 
-## Audit log events
+## События журнала аудита
 
-The audit log supports various events for different objects in dbt Cloud. You will find events for authentication, environment, jobs, service tokens, groups, user, project, permissions, license, connection, repository, and credentials.
+Журнал аудита поддерживает различные события для различных объектов в dbt Cloud. Вы найдете события для аутентификации, окружения, заданий, токенов сервисов, групп, пользователей, проектов, разрешений, лицензий, соединений, репозиториев и учетных данных.
 
-### Authentication
+### Аутентификация
 
-| Event Name                 | Event Type                               | Description                                            |
-| -------------------------- | ---------------------------------------- | ------------------------------------------------------ |
-| Auth Provider Changed      | auth_provider.Changed          | Authentication provider settings changed               |
-| Credential Login Succeeded | auth.CredentialsLoginSucceeded | User successfully logged in with username and password |
-| SSO Login Failed           | auth.SsoLoginFailed            | User login via SSO failed                              |
-| SSO Login Succeeded        | auth.SsoLoginSucceeded         | User successfully logged in via SSO                    |
+| Название события                 | Тип события                               | Описание                                            |
+| -------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| Изменение провайдера аутентификации | auth_provider.Changed          | Изменены настройки провайдера аутентификации       |
+| Успешный вход с учетными данными  | auth.CredentialsLoginSucceeded | Пользователь успешно вошел с именем пользователя и паролем |
+| Ошибка входа через SSO           | auth.SsoLoginFailed            | Вход пользователя через SSO не удался               |
+| Успешный вход через SSO          | auth.SsoLoginSucceeded         | Пользователь успешно вошел через SSO                 |
 
-### Environment
+### Окружение
 
-| Event Name          | Event Type                    | Description                          |
-| ------------------- | ----------------------------- | ------------------------------------ |
-| Environment Added   | environment.Added   | New environment successfully created |
-| Environment Changed | environment.Changed | Environment settings changed         |
-| Environment Removed | environment.Removed | Environment successfully removed     |
+| Название события          | Тип события                    | Описание                          |
+| ------------------------- | ----------------------------- | --------------------------------- |
+| Окружение добавлено       | environment.Added   | Новое окружение успешно создано   |
+| Окружение изменено       | environment.Changed | Изменены настройки окружения      |
+| Окружение удалено        | environment.Removed | Окружение успешно удалено         |
 
-### Jobs
+### Задания
 
-| Event Name  | Event Type                        | Description                  |
-| ----------- | --------------------------------- | ---------------------------- |
-| Job Added   | job_definition.Added   | New Job successfully created |
-| Job Changed | job_definition.Changed | Job settings changed         |
-| Job Removed | job_definition.Removed | Job definition removed       |
+| Название события  | Тип события                        | Описание                  |
+| ----------------- | --------------------------------- | ------------------------- |
+| Задание добавлено  | job_definition.Added   | Новое задание успешно создано |
+| Задание изменено   | job_definition.Changed | Изменены настройки задания  |
+| Задание удалено    | job_definition.Removed | Определение задания удалено  |
 
-### Service Token
+### Токен сервиса
 
-| Event Name            | Event Type                       | Description                                |
-| --------------------- | -------------------------------- | ------------------------------------------ |
-| Service Token Created | service_token.Created | New Service Token was successfully created |
-| Service Token Revoked | service_token.Revoked | Service Token was revoked                  |
+| Название события            | Тип события                       | Описание                                |
+| --------------------------- | -------------------------------- | ---------------------------------------- |
+| Токен сервиса создан        | service_token.Created | Новый токен сервиса успешно создан      |
+| Токен сервиса отозван      | service_token.Revoked | Токен сервиса был отозван              |
 
-### Group
+### Группа
 
-| Event Name    | Event Type                    | Description                    |
-| ------------- | ----------------------------- | ------------------------------ |
-| Group Added   | user_group.Added   | New Group successfully created |
-| Group Changed | user_group.Changed | Group settings changed         |
-| Group Removed | user_group.Removed | Group successfully removed     |
+| Название события    | Тип события                    | Описание                    |
+| ------------------- | ----------------------------- | --------------------------- |
+| Группа добавлена    | user_group.Added   | Новая группа успешно создана |
+| Группа изменена     | user_group.Changed | Изменены настройки группы    |
+| Группа удалена      | user_group.Removed | Группа успешно удалена       |
 
-### User
+### Пользователь
 
-| Event Name                   | Event Type                          | Description                                     |
-| ---------------------------- | ----------------------------------- | ----------------------------------------------- |
-| Invite Added                 | invite.Added              | User invitation added and sent to the user      |
-| Invite Redeemed              | invite.Redeemed           | User redeemed invitation                        |
-| User Added to Account        | account.UserAdded         | New user added to the account                   |
-| User Added to Group          | user_group_user.Added     | An existing user is added to a group            |
-| User Removed from Account    | account.UserRemoved       | User removed from the account
-| User Removed from Group      | user_group_user.Removed   | An existing user is removed from a group        |
-| Verification Email Confirmed | user.jit.email.Confirmed  | Email verification confirmed by user            |
-| Verification Email Sent      | user.jit.email.Sent       | Email verification sent to user created via JIT |
+| Название события                   | Тип события                          | Описание                                     |
+| ---------------------------------- | ----------------------------------- | -------------------------------------------- |
+| Приглашение добавлено              | invite.Added              | Приглашение пользователя добавлено и отправлено пользователю |
+| Приглашение использовано            | invite.Redeemed           | Пользователь использовал приглашение         |
+| Пользователь добавлен в аккаунт     | account.UserAdded         | Новый пользователь добавлен в аккаунт        |
+| Пользователь добавлен в группу       | user_group_user.Added     | Существующий пользователь добавлен в группу   |
+| Пользователь удален из аккаунта     | account.UserRemoved       | Пользователь удален из аккаунта               |
+| Пользователь удален из группы       | user_group_user.Removed   | Существующий пользователь удален из группы    |
+| Подтвержден адрес электронной почты | user.jit.email.Confirmed  | Подтверждение адреса электронной почты пользователем |
+| Отправлено письмо для подтверждения | user.jit.email.Sent       | Письмо для подтверждения адреса электронной почты отправлено пользователю, созданному через JIT |
 
-### Project
+### Проект
 
-| Event Name      | Event Type                | Description              |
-| --------------- | ------------------------- | ------------------------ |
-| Project Added   | project.Added   | New project added        |
-| Project Changed | project.Changed | Project settings changed |
-| Project Removed | project.Removed | Project is removed       |
+| Название события      | Тип события                | Описание              |
+| --------------------- | ------------------------- | --------------------- |
+| Проект добавлен       | project.Added   | Новый проект добавлен  |
+| Проект изменен        | project.Changed | Изменены настройки проекта |
+| Проект удален         | project.Removed | Проект удален         |
 
-### Permissions
+### Разрешения
 
-| Event Name              | Event Type                   | Description                    |
-| ----------------------- | ---------------------------- | ------------------------------ |
-| User Permission Added   | permission.Added   | New user permissions are added |
-| User Permission Removed | permission.Removed | User permissions are removed   |
+| Название события              | Тип события                   | Описание                    |
+| ----------------------------- | ---------------------------- | --------------------------- |
+| Разрешение пользователя добавлено | permission.Added   | Новые разрешения пользователя добавлены |
+| Разрешение пользователя удалено | permission.Removed | Разрешения пользователя удалены |
 
-### License
+### Лицензия
 
-| Event Name              | Event Type                     | Description                               |
-| ----------------------- | ------------------------------ | ----------------------------------------- |
-| License Mapping Added   | license\_map.Added   | New user license mapping is added         |
-| License Mapping Changed | license\_map.Changed | User license mapping settings are changed |
-| License Mapping Removed | license\_map.Removed | User license mapping is removed           |
+| Название события              | Тип события                     | Описание                               |
+| ----------------------------- | ------------------------------ | -------------------------------------- |
+| Добавлено сопоставление лицензий | license_map.Added   | Новое сопоставление лицензий пользователя добавлено |
+| Изменено сопоставление лицензий | license_map.Changed | Изменены настройки сопоставления лицензий пользователя |
+| Удалено сопоставление лицензий | license_map.Removed | Сопоставление лицензий пользователя удалено |
 
-### Connection
+### Соединение
 
-| Event Name         | Event Type                   | Description                                |
-| ------------------ | ---------------------------- | ------------------------------------------ |
-| Connection Added   | connection.Added   | New Data Warehouse connection added        |
-| Connection Changed | connection.Changed | Data Warehouse Connection settings changed |
-| Connection Removed | connection.Removed | Data Warehouse connection removed          |
+| Название события         | Тип события                   | Описание                                |
+| ------------------------ | ---------------------------- | ---------------------------------------- |
+| Соединение добавлено     | connection.Added   | Новое соединение с хранилищем данных добавлено |
+| Соединение изменено      | connection.Changed | Изменены настройки соединения с хранилищем данных |
+| Соединение удалено       | connection.Removed | Соединение с хранилищем данных удалено  |
 
-### Repository
+### Репозиторий
 
-| Event Name         | Event Type                   | Description                 |
-| ------------------ | ---------------------------- | --------------------------- |
-| Repository Added   | repository.Added   | New repository added        |
-| Repository Changed | repository.Changed | Repository settings changed |
-| Repository Removed | repository.Removed | Repository removed          |
+| Название события         | Тип события                   | Описание                 |
+| ------------------------ | ---------------------------- | ------------------------ |
+| Репозиторий добавлен     | repository.Added   | Новый репозиторий добавлен |
+| Репозиторий изменен      | repository.Changed | Изменены настройки репозитория |
+| Репозиторий удален       | repository.Removed | Репозиторий удален      |
 
-### Credentials
+### Учетные данные
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| Credentials Added to Project     | credentials.Added   | Project credentials added        |
-| Credentials Changed in Project   | credentials.Changed | Credentials changed in project   |
-| Credentials Removed from Project | credentials.Removed | Credentials removed from project |
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Учетные данные добавлены в проект     | credentials.Added   | Учетные данные проекта добавлены |
+| Учетные данные изменены в проект      | credentials.Changed | Учетные данные изменены в проекте |
+| Учетные данные удалены из проекта      | credentials.Removed | Учетные данные удалены из проекта |
 
+### Интеграция с Git
 
-### Git integration
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Изменение приложения GitLab            | gitlab_application.changed    | Изменение конфигурации GitLab в dbt Cloud |
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| GitLab Application Changed        | gitlab_application.changed    | GitLab configuration in dbt Cloud changed |
+### Вебхуки
 
-### Webhooks
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Добавлены подписки на вебхуки         | webhook_subscription.added    | Новый вебхук настроен в настройках |
+| Изменены подписки на вебхуки          | webhook_subscription.changed  | Изменена конфигурация существующего вебхука |
+| Удалены подписки на вебхуки           | webhook_subscription.removed  | Существующий вебхук удален |
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| Webhook Subscriptions Added      | webhook_subscription.added    | New webhook configured in settings |
-| Webhook Subscriptions Changed    | webhook_subscription.changed  | Existing webhook configuration altered |
-| Webhook Subscriptions Removed    | webhook_subscription.removed  | Existing webhook deleted  |
+### Семантический слой
 
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Добавлена конфигурация семантического слоя | semantic_layer_config.added   | Конфигурация семантического слоя добавлена |
+| Изменена конфигурация семантического слоя | semantic_layer_config.changed  | Изменена конфигурация семантического слоя (не связанная с учетными данными) |
+| Удалена конфигурация семантического слоя | semantic_layer_config.removed   | Конфигурация семантического слоя удалена |
+| Добавлены учетные данные семантического слоя | semantic_layer_credentials.added   | Учетные данные семантического слоя добавлены |
+| Изменены учетные данные семантического слоя | semantic_layer_credentials.changed   | Учетные данные семантического слоя изменены. Не вызывает semantic_layer_config.changed |
+| Удалены учетные данные семантического слоя | semantic_layer_credentials.removed   | Учетные данные семантического слоя удалены |
 
-### Semantic Layer
+### Расширенные атрибуты
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| Semantic Layer Config Added      | semantic_layer_config.added   | Semantic Layer config added |
-| Semantic Layer Config Changed      | semantic_layer_config.changed  | Semantic Layer config (not related to credentials) changed |
-| Semantic Layer Config Removed    | semantic_layer_config.removed   | Semantic Layer config removed |
-| Semantic Layer Credentials Added | semantic_layer_credentials.added   | Semantic Layer credentials added |
-| Semantic Layer Credentials Changed| semantic_layer_credentials.changed   | Semantic Layer credentials changed. Does not trigger semantic_layer_config.changed|
-| Semantic Layer Credentials Removed| semantic_layer_credentials.removed   | Semantic Layer credentials removed |
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Добавлен расширенный атрибут          | extended_attributes.added     | Расширенный атрибут добавлен в проект |
+| Изменен расширенный атрибут           | extended_attributes.changed   | Расширенный атрибут изменен или удален |
 
-### Extended attributes
+### Личный токен доступа, ограниченный аккаунтом
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| Extended Attribute Added         | extended_attributes.added     | Extended attribute added to a project |
-| Extended Attribute Changed       | extended_attributes.changed   | Extended attribute changed or removed |
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Создан личный токен доступа, ограниченный аккаунтом | account_scoped_pat.created | Личный токен доступа, ограниченный аккаунтом, был создан |
+| Удален личный токен доступа, ограниченный аккаунтом | account_scoped_pat.deleted | Личный токен доступа, ограниченный аккаунтом, был удален |
 
+### Ограничения IP
 
-### Account-scoped personal access token
+| Название события                       | Тип события                    | Описание            |
+| -------------------------------------- | ----------------------------- | ------------------- |
+| Переключение ограничений IP            | ip_restrictions.toggled       | Функция ограничений IP включена или отключена |
+| Добавлено правило ограничений IP       | ip_restrictions.rule.added    | Правило ограничения IP создано |
+| Изменено правило ограничений IP        | ip_restrictions.rule.changed   | Правило ограничения IP изменено |
+| Удалено правило ограничений IP         | ip_restrictions.rule.removed   | Правило ограничения IP удалено |
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| Account Scoped Personal Access Token Created | account_scoped_pat.created | An account-scoped PAT was created |
-| Account Scoped Personal Access Token Deleted | account_scoped_pat.deleted | An account-scoped PAT was deleted | 
+## Поиск в журнале аудита
 
-### IP restrictions
+Вы можете искать в журнале аудита, чтобы найти конкретное событие или актера, что ограничивается теми, которые перечислены в [События в журнале аудита](#events-in-audit-log). Журнал аудита успешно перечисляет исторические события за последние 90 дней. Вы можете искать актера или событие, используя строку поиска, а затем уточнить результаты, используя временной диапазон.
 
-| Event Name                       | Event Type                    | Description            |
-| -------------------------------- | ----------------------------- | -----------------------|
-| IP Restrictions Toggled          | ip_restrictions.toggled       | IP restrictions feature enabled or disabled |
-| IP Restrictions Rule Added       | ip_restrictions.rule.added    | IP restriction rule created |
-| IP Restrictions Rule Changed     | ip_restrictions.rule.changed   | IP restriction rule edited |
-| IP Restrictions Rule Removed     | ip_restrictions.rule.removed   | IP restriction rule deleted |
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-search.png" width="95%" title="Используйте строку поиска, чтобы найти содержимое в журнале аудита"/>
 
+## Экспорт журналов
 
+Вы можете использовать журнал аудита для экспорта всех исторических результатов аудита для целей безопасности, соблюдения норм и анализа:
 
-## Searching the audit log
+- **Для событий в пределах 90 дней** &mdash; dbt Cloud автоматически отобразит выбираемый диапазон дат на 90 дней. Выберите **Экспорт выбора**, чтобы скачать CSV-файл всех событий, произошедших в вашей организации в течение 90 дней.
 
-You can search the audit log to find a specific event or actor, which is limited to the ones listed in [Events in audit log](#events-in-audit-log). The audit log successfully lists historical events spanning the last 90 days. You can search for an actor or event using the search bar, and then narrow your results using the time window.
+- **Для событий, превышающих 90 дней** &mdash; выберите **Экспорт всех**. Администратор аккаунта или просмотрщик аккаунта получит электронное письмо со ссылкой для скачивания CSV-файла всех событий, произошедших в вашей организации.
 
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-search.png" width="95%" title="Use search bar to find content in the audit log"/>
-
-
-## Exporting logs
-
-You can use the audit log to export all historical audit results for security, compliance, and analysis purposes:
-
-- **For events within 90 days** &mdash; dbt Cloud will automatically display the 90-day selectable date range. Select **Export Selection** to download a CSV file of all the events that occurred in your organization within 90 days.
-
-- **For events beyond 90 days** &mdash; Select **Export All**. The Account Admin or Account Viewer will receive an email link to download a CSV file of all the events that occurred in your organization.
-
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.jpg" width="95%" title="View audit log export options"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.jpg" width="95%" title="Просмотр параметров экспорта журнала аудита"/>

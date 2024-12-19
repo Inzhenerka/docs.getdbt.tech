@@ -1,49 +1,49 @@
 ---
-title: Joins
+title: Соединения
 id: join-logic
-description: "Joins allow you to combine data from different tables and create new metrics"
-sidebar_label: "Joins"
-tags: [Metrics, Semantic Layer]
+description: "Соединения позволяют объединять данные из разных таблиц и создавать новые метрики"
+sidebar_label: "Соединения"
+tags: [Метрики, Семантический уровень]
 ---
 
-Joins are a powerful part of MetricFlow and simplify the process of making all valid dimensions available for your metrics at query time, regardless of where they are defined in different semantic models. With Joins, you can also create metrics using measures from different semantic models.
+Соединения являются мощной частью MetricFlow и упрощают процесс предоставления всех допустимых измерений для ваших метрик во время запроса, независимо от того, где они определены в различных семантических моделях. С помощью соединений вы также можете создавать метрики, используя меры из разных семантических моделей.
 
-Joins use `entities` defined in your semantic model configs as the join keys between tables. Assuming entities are defined in the semantic model, MetricFlow creates a graph using the semantic models as nodes and the join paths as edges to perform joins automatically. MetricFlow chooses the appropriate join type and avoids fan-out or chasm joins with other tables based on the entity types.
+Соединения используют `entities`, определенные в ваших конфигурациях семантической модели, в качестве ключей соединения между таблицами. Предполагая, что сущности определены в семантической модели, MetricFlow создает граф, используя семантические модели в качестве узлов и пути соединений в качестве рёбер для автоматического выполнения соединений. MetricFlow выбирает подходящий тип соединения и избегает соединений с разветвлением или соединений с пропусками с другими таблицами на основе типов сущностей.
 
 <details>
-  <summary>What are fan-out or chasm joins?</summary>
+  <summary>Что такое соединения с разветвлением или соединения с пропусками?</summary>
   <div>
-    <div>&mdash; Fan-out joins are when one row in a table is joined to multiple rows in another table, resulting in more output rows than input rows.<br /><br />
-    &mdash; Chasm joins are when two tables have a many-to-many relationship through an intermediate table, and the join results in duplicate or missing data. </div>
+    <div>&mdash; Соединения с разветвлением происходят, когда одна строка в таблице соединяется с несколькими строками в другой таблице, в результате чего количество выходных строк превышает количество входных строк.<br /><br />
+    &mdash; Соединения с пропусками происходят, когда две таблицы имеют отношение многие-ко-многим через промежуточную таблицу, и результат соединения приводит к дублированию или отсутствию данных. </div>
   </div>
 </details>
 
 
-## Types of joins
+## Типы соединений
 
-:::tip Joins are auto-generated
-MetricFlow automatically generates the necessary joins to the defined semantic objects, eliminating the need for you to create new semantic models or configuration files.
+:::tip Соединения создаются автоматически
+MetricFlow автоматически генерирует необходимые соединения к определенным семантическим объектам, устраняя необходимость в создании новых семантических моделей или конфигурационных файлов.
 
-This document explains the different types of joins that can be used with entities and how to query them using the CLI.
+В этом документе объясняются различные типы соединений, которые могут использоваться с сущностями, и как их запрашивать с помощью CLI.
 :::
 
-MetricFlow primarily uses left joins for joins, and restricts the use of fan-out and chasm joins. Refer to the table below to identify which joins are or aren't allowed based on specific entity types to prevent the creation of risky joins.
+MetricFlow в основном использует левое соединение и ограничивает использование соединений с разветвлением и соединений с пропусками. Обратитесь к таблице ниже, чтобы определить, какие соединения разрешены, а какие нет, в зависимости от конкретных типов сущностей, чтобы предотвратить создание рискованных соединений.
 
-| entity type - Table A | entity type - Table B | Join type            |
+| тип сущности - Таблица A | тип сущности - Таблица B | Тип соединения        |
 |---------------------------|---------------------------|----------------------|
-| Primary                   | Primary                   | ✅ Left                 |
-| Primary                   | Unique                    | ✅ Left                 |
-| Primary                   | Foreign                   | ❌ Fan-out (Not allowed) |
-| Unique                    | Primary                   | ✅ Left                 |
-| Unique                    | Unique                    | ✅ Left                 |
-| Unique                    | Foreign                   | ❌ Fan-out (Not allowed) |
-| Foreign                   | Primary                   | ✅ Left                 |
-| Foreign                   | Unique                    | ✅ Left                 |
-| Foreign                   | Foreign                   | ❌ Fan-out (Not allowed) |   
+| Первичный                 | Первичный                 | ✅ Левое              |
+| Первичный                 | Уникальный                | ✅ Левое              |
+| Первичный                 | Внешний                   | ❌ Разветвление (Не разрешено) |
+| Уникальный                | Первичный                 | ✅ Левое              |
+| Уникальный                | Уникальный                | ✅ Левое              |
+| Уникальный                | Внешний                   | ❌ Разветвление (Не разрешено) |
+| Внешний                   | Первичный                 | ✅ Левое              |
+| Внешний                   | Уникальный                | ✅ Левое              |
+| Внешний                   | Внешний                   | ❌ Разветвление (Не разрешено) |   
 
-### Example
+### Пример
 
-The following example uses two semantic models with a common entity and shows a MetricFlow query that requires a join between the two semantic models. The two semantic models are:
+Следующий пример использует две семантические модели с общей сущностью и показывает запрос MetricFlow, который требует соединения между двумя семантическими моделями. Две семантические модели:
 - `transactions`
 - `user_signup`
 
@@ -70,34 +70,34 @@ semantic_models:
         type: categorical
 ```
 
-- MetricFlow uses `user_id` as the join key to link two semantic models, `transactions` and `user_signup`. This allows you to query the `average_purchase_price` metric in the `transactions` semantic model, grouped by the `type` dimension in the `user_signup` semantic model.
-  - Note that the `average_purchase_price` measure is defined in `transactions`, where `user_id` is a foreign entity. However, `user_signup` has `user_id` as a primary entity. 
-- Since `user_id` is a foreign key in `transactions` and a primary key in `user_signup`, MetricFlow performs a left join where `transactions` joins `user_signup` to access the `average_purchase_price` measure defined in `transactions`.
-- To query dimensions from different semantic models, add a double underscore (or dunder) to the dimension name after joining the entity in your editing tool. The following query, `user_id__type` is included as a dimension using the `--group-by` flag (`type` is the dimension).
+- MetricFlow использует `user_id` в качестве ключа соединения для связывания двух семантических моделей, `transactions` и `user_signup`. Это позволяет вам запрашивать метрику `average_purchase_price` в семантической модели `transactions`, сгруппировав по измерению `type` в семантической модели `user_signup`.
+  - Обратите внимание, что мера `average_purchase_price` определена в `transactions`, где `user_id` является внешней сущностью. Однако в `user_signup` `user_id` является первичной сущностью. 
+- Поскольку `user_id` является внешним ключом в `transactions` и первичным ключом в `user_signup`, MetricFlow выполняет левое соединение, где `transactions` соединяется с `user_signup`, чтобы получить доступ к мере `average_purchase_price`, определенной в `transactions`.
+- Чтобы запрашивать измерения из разных семантических моделей, добавьте двойное подчеркивание (или dunder) к имени измерения после соединения сущности в вашем инструменте редактирования. Следующий запрос, `user_id__type`, включен как измерение с использованием флага `--group-by` (`type` является измерением).
 
 ```yaml 
-dbt sl query --metrics average_purchase_price --group-by metric_time,user_id__type # In dbt Cloud
+dbt sl query --metrics average_purchase_price --group-by metric_time,user_id__type # В dbt Cloud
 ```
 
 ```yaml 
-mf query --metrics average_purchase_price --group-by metric_time,user_id__type # In dbt Core
+mf query --metrics average_purchase_price --group-by metric_time,user_id__type # В dbt Core
 ```
 
-## Multi-hop joins
+## Многоуровневые соединения
 
-MetricFlow allows users to join measures and dimensions across a graph of entities by moving from one table to another within a graph. This is referred to as "multi-hop join". 
+MetricFlow позволяет пользователям соединять меры и измерения через граф сущностей, перемещаясь от одной таблицы к другой в пределах графа. Это называется "многоуровневое соединение". 
 
-MetricFlow can join up to three tables, supporting multi-hop joins with a limit of two hops. This does the following:
-- Enables complex data analysis without ambiguous paths.
-- Supports navigating through data models, like moving from `orders` to `customers` to `country` tables.
+MetricFlow может соединять до трех таблиц, поддерживая многоуровневые соединения с ограничением в два уровня. Это позволяет:
+- Выполнять сложный анализ данных без неоднозначных путей.
+- Поддерживать навигацию по моделям данных, например, перемещаясь от таблиц `orders` к `customers`, а затем к `country`.
 
-While direct three-hop paths are limited to prevent confusion from multiple routes to the same data, MetricFlow does allow joining more than three tables if the joins don’t exceed two hops to reach a dimension. 
+Хотя прямые трехуровневые пути ограничены, чтобы предотвратить путаницу из-за нескольких маршрутов к одним и тем же данным, MetricFlow позволяет соединять более трех таблиц, если соединения не превышают два уровня для достижения измерения. 
 
-For example, if you have two models, `country` and `region`, where customers are linked to countries, which in turn are linked to regions, you can join all of them in a single SQL query and can dissect `orders` by `customer__country_country_name` but not by `customer__country__region_name`.
+Например, если у вас есть две модели, `country` и `region`, где клиенты связаны с странами, которые, в свою очередь, связаны с регионами, вы можете соединить все их в одном SQL-запросе и анализировать `orders` по `customer__country_country_name`, но не по `customer__country__region_name`.
 
-![Multi-Hop-Join](/img/docs/building-a-dbt-project/multihop-diagram.png "Example schema for reference")
+![Многоуровневое соединение](/img/docs/building-a-dbt-project/multihop-diagram.png "Пример схемы для справки")
 
-Notice how the schema can be translated into the following three MetricFlow semantic models to create the metric 'Average purchase price by country' using the `purchase_price` measure from the sales table and the `country_name` dimension from the `country_dim` table.
+Обратите внимание, как схема может быть переведена в следующие три семантические модели MetricFlow для создания метрики 'Средняя цена покупки по стране', используя меру `purchase_price` из таблицы продаж и измерение `country_name` из таблицы `country_dim`.
 
 ```yaml
 semantic_models:
@@ -137,10 +137,8 @@ semantic_models:
         type: categorical
 ```
 
-### Query multi-hop joins
+### Запрос многоуровневых соединений
 
+Чтобы запрашивать измерения _без_ участия многоуровневого соединения, вы можете использовать полное имя измерения с синтаксисом сущность двойное подчеркивание (dunder) измерение, например, `entity__dimension`. 
 
-To query dimensions _without_ a multi-hop join involved, you can use the fully qualified dimension name with the syntax entity double underscore (dunder) dimension, like `entity__dimension`. 
-
-For dimensions retrieved by a multi-hop join, you need to additionally provide the entity path as a list, like `user_id`.
-
+Для измерений, полученных с помощью многоуровневого соединения, вам необходимо дополнительно указать путь сущности в виде списка, например, `user_id`.

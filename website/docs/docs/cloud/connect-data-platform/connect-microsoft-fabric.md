@@ -1,43 +1,42 @@
 ---
-title: "Connect Microsoft Fabric"
-description: "Configure Microsoft Fabric connection."
-sidebar_label: "Connect Microsoft Fabric"
+title: "Подключение к Microsoft Fabric"
+description: "Настройка подключения к Microsoft Fabric."
+sidebar_label: "Подключение к Microsoft Fabric"
 ---
 
-## Supported authentication methods
-The supported authentication methods are: 
-- Microsoft Entra service principal
-- Microsoft Entra password
+## Поддерживаемые методы аутентификации
+Поддерживаемые методы аутентификации:
+- Сервисный принципал Microsoft Entra
+- Пароль Microsoft Entra
 
-SQL password (LDAP) is not supported in Microsoft Fabric Synapse Data Warehouse so you must use Microsoft Entra ID. This means that to use [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric) in dbt Cloud, you will need at least one Microsoft Entra service principal to connect dbt Cloud to Fabric, ideally one service principal for each user.
+Пароль SQL (LDAP) не поддерживается в Microsoft Fabric Synapse Data Warehouse, поэтому необходимо использовать Microsoft Entra ID. Это означает, что для использования [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric) в dbt Cloud вам потребуется как минимум один сервисный принципал Microsoft Entra для подключения dbt Cloud к Fabric, желательно по одному сервисному принципалу для каждого пользователя.
 
-### Microsoft Entra service principal 
-The following are the required fields for setting up a connection with a Microsoft Fabric using Microsoft Entra service principal authentication. 
+### Сервисный принципал Microsoft Entra
+Следующие поля обязательны для настройки подключения к Microsoft Fabric с использованием аутентификации сервисного принципала Microsoft Entra.
 
-| Field | Description |
+| Поле | Описание |
 | --- | --- |
-| **Server** | The service principal's **host** value for the Fabric test endpoint. |
-| **Port** | The port to connect to Microsoft Fabric. You can use `1433` (the default), which is the standard SQL server port number. |
-| **Database** | The service principal's **database** value for the Fabric test endpoint. |
-| **Authentication** | Choose **Service Principal** from the dropdown. | 
-| **Tenant ID** | The service principal's **Directory (tenant) ID**. |
-| **Client ID** | The service principal's **application (client) ID id**. |
-| **Client secret** | The service principal's **client secret** (not the **client secret id**). |  
+| **Сервер** | Значение **host** сервисного принципала для тестовой конечной точки Fabric. |
+| **Порт** | Порт для подключения к Microsoft Fabric. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL-сервера. |
+| **База данных** | Значение **database** сервисного принципала для тестовой конечной точки Fabric. |
+| **Аутентификация** | Выберите **Service Principal** из выпадающего списка. | 
+| **Tenant ID** | **Directory (tenant) ID** сервисного принципала. |
+| **Client ID** | **Application (client) ID** сервисного принципала. |
+| **Client secret** | **Client secret** сервисного принципала (не **client secret id**). |  
 
+### Пароль Microsoft Entra
 
-### Microsoft Entra password 
+Следующие поля обязательны для настройки подключения к Microsoft Fabric с использованием аутентификации по паролю Microsoft Entra.
 
-The following are the required fields for setting up a connection with a Microsoft Fabric using Microsoft Entra password authentication. 
-
-| Field | Description |
+| Поле | Описание |
 | --- | --- |
-| **Server** | The server hostname to connect to Microsoft Fabric. |
-| **Port** | The server port. You can use `1433` (the default), which is the standard SQL server port number. |
-| **Database** | The database name. |
-| **Authentication** | Choose **Active Directory Password** from the dropdown. | 
-| **User** | The Microsoft Entra username. |
-| **Password** | The Microsoft Entra password. |
+| **Сервер** | Имя хоста сервера для подключения к Microsoft Fabric. |
+| **Порт** | Порт сервера. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL-сервера. |
+| **База данных** | Имя базы данных. |
+| **Аутентификация** | Выберите **Active Directory Password** из выпадающего списка. | 
+| **Пользователь** | Имя пользователя Microsoft Entra. |
+| **Пароль** | Пароль Microsoft Entra. |
 
-## Configuration 
+## Конфигурация
 
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Microsoft Fabric DWH configurations](/reference/resource-configs/fabric-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурациям Microsoft Fabric DWH](/reference/resource-configs/fabric-configs).

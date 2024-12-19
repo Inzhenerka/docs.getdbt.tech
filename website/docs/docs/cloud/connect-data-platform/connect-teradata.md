@@ -1,29 +1,29 @@
 ---
-title: "Connect Teradata"
+title: "Подключение к Teradata"
 id: connect-teradata
-description: "Configure the Teradata platform connection in dbt Cloud."
-sidebar_label: "Connect Teradata"
+description: "Настройка подключения к платформе Teradata в dbt Cloud."
+sidebar_label: "Подключение к Teradata"
 ---
 
-# Connect Teradata <Lifecycle status="preview" />
+# Подключение к Teradata <Lifecycle status="preview" />
 
-Your environment(s) must be on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to use the Teradata connection.
+Ваши окружения должны находиться на поддерживаемом [релизном треке](/docs/dbt-versions/cloud-release-tracks), чтобы использовать подключение к Teradata.
 
-| Field                         | Description                                                                                   | Type           | Required? | Example |
-| ----------------------------- | --------------------------------------------------------------------------------------------- | -------------- | --------- | ------- |
-| Host                          | Host name of your Teradata environment.                                                        | String         | Required  | host-name.env.clearscape.teradata.com |
-| Port                          | The database port number. Equivalent to the Teradata JDBC Driver DBS_PORT connection parameter.| Quoted integer | Optional  | 1025 |
-| Retries                       | Number of times to retry to connect to database upon error.                                   | Integer        | optional  | 10 |
-| Request timeout               | The waiting period between connections attempts in seconds. Default is "1" second.            | Quoted integer | Optional  | 3 |
+| Поле                          | Описание                                                                                     | Тип            | Обязательно? | Пример |
+| ----------------------------- | ------------------------------------------------------------------------------------------- | -------------- | ------------ | ------- |
+| Host                          | Имя хоста вашего окружения Teradata.                                                       | Строка         | Обязательно   | host-name.env.clearscape.teradata.com |
+| Port                          | Номер порта базы данных. Соответствует параметру подключения DBS_PORT драйвера Teradata JDBC. | Целое число в кавычках | Необязательно | 1025 |
+| Retries                       | Количество попыток повторного подключения к базе данных в случае ошибки.                    | Целое число    | Необязательно | 10 |
+| Request timeout               | Период ожидания между попытками подключения в секундах. По умолчанию "1" секунда.          | Целое число в кавычках | Необязательно | 3 |
 
-<Lightbox src="/img/docs/dbt-cloud/teradata-connection.png" title="Example of the Teradata connection fields." />
+<Lightbox src="/img/docs/dbt-cloud/teradata-connection.png" title="Пример полей подключения к Teradata." />
 
-### Development and deployment credentials
+### Учетные данные для разработки и развертывания
 
-| Field                         | Description                                                                                   | Type           | Required? | Example            |
-| ------------------------------|-----------------------------------------------------------------------------------------------|----------------|-----------|--------------------|
-| Username                      | The database username. Equivalent to the Teradata JDBC Driver USER connection parameter.      | String         | Required  | database_username |
-| Password                      | The database password. Equivalent to the Teradata JDBC Driver PASSWORD connection parameter.  | String         | Required  | DatabasePassword123 |
-| Schema                        | Specifies the initial database to use after login, rather than the user's default database.   | String         | Required  | dbtlabsdocstest |
+| Поле                          | Описание                                                                                     | Тип            | Обязательно? | Пример            |
+| ----------------------------- | ------------------------------------------------------------------------------------------- | -------------- | ------------ | ------------------ |
+| Username                      | Имя пользователя базы данных. Соответствует параметру USER драйвера Teradata JDBC.        | Строка         | Обязательно   | database_username   |
+| Password                      | Пароль базы данных. Соответствует параметру PASSWORD драйвера Teradata JDBC.              | Строка         | Обязательно   | DatabasePassword123 |
+| Schema                        | Указывает начальную базу данных для использования после входа, а не базу данных по умолчанию пользователя. | Строка         | Обязательно   | dbtlabsdocstest     |
 
-<Lightbox src="/img/docs/dbt-cloud/teradata-deployment.png" title="Example of the developer credential fields." />
+<Lightbox src="/img/docs/dbt-cloud/teradata-deployment.png" title="Пример полей учетных данных разработчика." />

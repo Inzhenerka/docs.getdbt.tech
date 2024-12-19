@@ -1,31 +1,31 @@
 ---
-title: "Fill null values for metrics"
+title: "Заполнение нулевых значений для метрик"
 id: fill-nulls-advanced
-description: "Learn about advanced topics for dbt Semantic Layer and MetricFlow, such as modeling workflows and more."
-sidebar_label: Fill null values for metrics
+description: "Узнайте о продвинутых темах для dbt Semantic Layer и MetricFlow, таких как моделирование рабочих процессов и многое другое."
+sidebar_label: Заполнение нулевых значений для метрик
 ---
 
-Understanding and implementing strategies to fill null values in metrics is key for accurate analytics. This guide explains `fill_nulls_with` and `join_to_timespine` to ensure data completeness, helping end users make more informed decisions and enhancing your dbt workflows.
+Понимание и реализация стратегий заполнения нулевых значений в метриках являются ключевыми для точной аналитики. Этот гид объясняет `fill_nulls_with` и `join_to_timespine`, чтобы обеспечить полноту данных, помогая конечным пользователям принимать более обоснованные решения и улучшая ваши рабочие процессы dbt.
 
-### About null values
+### О нулевых значениях
 
-You can use `fill_nulls_with` to replace null values in metrics with a value like zero (or your chosen integer). This ensures every data row shows a numeric value.
+Вы можете использовать `fill_nulls_with`, чтобы заменить нулевые значения в метриках на значение, например, ноль (или выбранное вами целое число). Это гарантирует, что каждая строка данных показывает числовое значение.
 
-This guide explains how to ensure there are no null values in your metrics:
+Этот гид объясняет, как гарантировать отсутствие нулевых значений в ваших метриках:
 
-- Use `fill_nulls_with` for `simple`, `cumulative`, and `conversion` metrics
-- Use `join_to_timespine` and `fill_nulls_with` together for derived and ratio metrics to avoid null values appearing.
+- Используйте `fill_nulls_with` для `simple`, `cumulative` и `conversion` метрик
+- Используйте `join_to_timespine` и `fill_nulls_with` вместе для производных и коэффициентных метрик, чтобы избежать появления нулевых значений.
 
-### Fill null values for simple metrics
+### Заполнение нулевых значений для простых метрик
 
-For example, if you'd like to handle days with site visits but no leads, you can use `fill_nulls_with` to set the value for leads to zero on days when there are no conversions.
+Например, если вы хотите обработать дни с посещениями сайта, но без лидов, вы можете использовать `fill_nulls_with`, чтобы установить значение для лидов на ноль в дни, когда не было конверсий.
 
-Let's say you have three metrics:
+Предположим, у вас есть три метрики:
 
-- `website_visits` and `leads`
-- and a derived metric called `leads_to_website_visit` that calculates the ratio of leads to site visits.
+- `website_visits` и `leads`
+- и производная метрика под названием `leads_to_website_visit`, которая вычисляет отношение лидов к посещениям сайта.
 
-On the days when there are no conversions, you can set the value for leads to zero by adding the `fill_nulls_with` parameter to the measure input on the leads metric:
+В дни, когда не было конверсий, вы можете установить значение для лидов на ноль, добавив параметр `fill_nulls_with` к входным данным измерения в метрике лидов:
 
 <File name='models/metrics/website_vists.yml'>
 
@@ -41,7 +41,7 @@ metrics:
     type_params:
       measure:
         name: bookings
-        fill_nulls_with: 0 # This fills null values with zero
+        fill_nulls_with: 0 # Это заполняет нулевые значения нулем
   - name: leads_to_website_visit
     type: derived
     type_params:
@@ -53,7 +53,7 @@ metrics:
 
 </File>
 
-The `website_visits` and `leads` metrics have the following data:
+Метрики `website_visits` и `leads` имеют следующие данные:
 
 | metric_time | website_visits |
 | --- | --- |
@@ -66,9 +66,9 @@ The `website_visits` and `leads` metrics have the following data:
 | --- | --- |
 | 2024-01-01 | 5 |
 | 2024-01-03 | 8 |
-* Note that there is no data for `2024-01-02` in the `leads` metric.
+* Обратите внимание, что для `2024-01-02` нет данных в метрике `leads`.
 
-Although there are no days without visits, there are days without leads. After applying `fill_nulls_with: 0` to the `leads` metric, querying these metrics together shows zero for leads on days with no conversions:
+Хотя нет дней без посещений, есть дни без лидов. После применения `fill_nulls_with: 0` к метрике `leads`, запрос этих метрик вместе показывает ноль для лидов в дни без конверсий:
 
 | metric_time | website_visits | leads |
 | --- | --- | --- |
@@ -76,22 +76,22 @@ Although there are no days without visits, there are days without leads. After a
 | 2024-01-02 | 37 | 0 |
 | 2024-01-03 | 79 | 8 |
 
-### Use join_to_timespine for derived and ratio metrics
+### Используйте join_to_timespine для производных и коэффициентных метрик
 
-To ensure you have a complete set of data for every and daily coverage for metrics calculated from other metrics, you can use `join_to_timespine` to fill null values for `derived` and `ratio` metrics. These metrics are built from other metrics (other calculations), not direct measures (raw data), requiring MetricFlow to have an extra subquery layer to render the metric. The subquery nesting is as follows:
+Чтобы гарантировать наличие полного набора данных для ежедневного покрытия метрик, рассчитанных на основе других метрик, вы можете использовать `join_to_timespine`, чтобы заполнить нулевые значения для `derived` и `ratio` метрик. Эти метрики строятся на основе других метрик (других расчетов), а не прямых измерений (сырых данных), что требует от MetricFlow наличия дополнительного уровня подзапроса для рендеринга метрики. Вложенность подзапросов следующая:
 
-- For `derived` and `ratio` metrics, there are three levels of subquery nesting &mdash; derived or ratio metric → input metrics → input measures.
-- For `simple` and `cumulative` metrics, there are only two levels of subquery nesting &mdash; simple or cumulative metric → input measure.
+- Для `derived` и `ratio` метрик существует три уровня вложенности подзапросов — производная или коэффициентная метрика → входные метрики → входные измерения.
+- Для `simple` и `cumulative` метрик существует только два уровня вложенности подзапросов — простая или кумулятивная метрика → входное измерение.
 
-Because `coalesce` isn't applied to the third, subquery layer for `derived` or `ratio` metrics, this means you could still have nulls in the final result set. 
+Поскольку `coalesce` не применяется к третьему уровню подзапроса для `derived` или `ratio` метрик, это означает, что в конечном наборе результатов все еще могут быть нулевые значения.
 
-* Note you can use `join_to_timespine` with metrics that take measure inputs as well if you want to include a row for every date, even if there is no data.
+* Обратите внимание, что вы можете использовать `join_to_timespine` с метриками, которые принимают входные измерения, если вы хотите включить строку для каждой даты, даже если данных нет.
 
-### Fill null values for derived and ratio metrics
+### Заполнение нулевых значений для производных и коэффициентных метрик
 
-To fill null values for derived and ratio metrics, you can link them with a time spine to ensure daily data coverage. As mentioned in [the previous section](#use-join_to_timespine-for-derived-and-ratio-metrics), this is because `derived` and `ratio` metrics take *metrics* as inputs instead of *measures*.
+Чтобы заполнить нулевые значения для производных и коэффициентных метрик, вы можете связать их с временной моделью, чтобы обеспечить ежедневное покрытие данных. Как упоминалось в [предыдущем разделе](#use-join_to_timespine-for-derived-and-ratio-metrics), это связано с тем, что `derived` и `ratio` метрики принимают *метрики* в качестве входных данных, а не *измерения*.
 
-For example, the following structure leaves nulls in the final results (`leads_to_website_visit` column) because `COALESCE` isn't applied at the third outer rendering layer for the final metric calculation in `derived` metrics:
+Например, следующая структура оставляет нули в конечных результатах (в колонке `leads_to_website_visit`), потому что `COALESCE` не применяется на третьем внешнем уровне рендеринга для окончательного расчета метрики в `derived` метриках:
 
 | metric_time | bookings | leads | leads_to_website_visit |
 | --- | --- | --- | --- |
@@ -99,7 +99,7 @@ For example, the following structure leaves nulls in the final results (`leads_t
 | 2024-01-02 | 37 | 0 | null |
 | 2024-01-03 | 79 | 8 | .1 |
 
-To display a zero value for `leads_to_website_visit` for `2024-01-02`, you would join the `leads` metric to a time spine model to ensure a value for each day. This can be done by adding `join_to_timespine` to the `measure` parameter in the `leads` metric configuration:
+Чтобы отобразить нулевое значение для `leads_to_website_visit` для `2024-01-02`, вам нужно присоединить метрику `leads` к модели временной оси, чтобы обеспечить значение для каждого дня. Это можно сделать, добавив `join_to_timespine` к параметру `measure` в конфигурации метрики `leads`:
 
 <File name='models/metrics/leads.yml'>
 
@@ -114,7 +114,7 @@ To display a zero value for `leads_to_website_visit` for `2024-01-02`, you would
 ```
 </File>
 
-Once you do this, if you query the `leads` metric after the timespine join, there will be a record for each day and any null values will get filled with zero.
+После этого, если вы запросите метрику `leads` после присоединения временной оси, будет запись для каждого дня, и любые нулевые значения будут заполнены нулем.
 
 | metric_time |  leads | leads_to_website_visit |
 | --- | --- | --- |
@@ -122,13 +122,12 @@ Once you do this, if you query the `leads` metric after the timespine join, ther
 | 2024-01-02 | 0 | 0 |
 | 2024-01-03 |  8 | .1 |
 
-Now, if you combine the metrics in a `derived` metric, there will be a zero value for `leads_to_website_visit` on `2024-01-02` and the final result set will not have any null values.
+Теперь, если вы объедините метрики в `derived` метрике, будет нулевое значение для `leads_to_website_visit` на `2024-01-02`, и в конечном наборе результатов не будет нулевых значений.
 
-## FAQs
+## Часто задаваемые вопросы
 
-<Expandable alt_header="How to handle null values in derived metrics defined on top of multiple tables">
+<Expandable alt_header="Как обрабатывать нулевые значения в производных метриках, определенных на основе нескольких таблиц">
 
-For additional examples and discussion on how to handle null values in derived metrics that use data from multiple tables, check out [MetricFlow issue #1031](https://github.com/dbt-labs/metricflow/issues/1031).
+Для дополнительных примеров и обсуждений о том, как обрабатывать нулевые значения в производных метриках, которые используют данные из нескольких таблиц, ознакомьтесь с [MetricFlow issue #1031](https://github.com/dbt-labs/metricflow/issues/1031).
 
 </Expandable>
-

@@ -1,39 +1,33 @@
 ---
-title: "Connect Apache Spark"
+title: "Подключение Apache Spark"
 id: connect-apache-spark
-description: "Setup instructions for connecting Apache Spark to dbt Cloud"
-sidebar_label: "Connect Apache Spark"
+description: "Инструкции по настройке подключения Apache Spark к dbt Cloud"
+sidebar_label: "Подключение Apache Spark"
 pagination_next: null
 ---
 
 <Snippet path="dbt-databricks-for-databricks" />
 
 :::note
-See [Connect Databricks](#connect-databricks) for the Databricks version of this page.
+Смотрите [Подключение Databricks](#connect-databricks) для версии этой страницы, относящейся к Databricks.
 :::
 
-dbt Cloud supports connecting to an Apache Spark cluster using the HTTP method
-or the Thrift method. Note: While the HTTP method can be used to connect to
-an all-purpose Databricks cluster, the ODBC method is recommended for all
-Databricks connections. For further details on configuring these connection
-parameters, please see the [dbt-spark documentation](https://github.com/dbt-labs/dbt-spark#configuring-your-profile).
+dbt Cloud поддерживает подключение к кластеру Apache Spark с использованием метода HTTP или метода Thrift. Примечание: хотя метод HTTP можно использовать для подключения к универсальному кластеру Databricks, рекомендуется использовать метод ODBC для всех подключений к Databricks. Для получения дополнительных сведений о настройке этих параметров подключения, пожалуйста, смотрите [документацию dbt-spark](https://github.com/dbt-labs/dbt-spark#configuring-your-profile).
 
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Apache Spark-specific configuration](/reference/resource-configs/spark-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Apache Spark](/reference/resource-configs/spark-configs).
 
+Следующие поля доступны при создании подключения Apache Spark с использованием методов подключения HTTP и Thrift:
 
-The following fields are available when creating an Apache Spark connection using the
-HTTP and Thrift connection methods:
-
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | ----- | ----------- | -------- |
-| Host Name | The hostname of the Spark cluster to connect to | `yourorg.sparkhost.com` |
-| Port | The port to connect to Spark on | 443 |
-| Organization | Optional (default: 0) | 0123456789 |
-| Cluster | The ID of the cluster to connect to | 1234-567890-abc12345 |
-| Connection Timeout | Number of seconds after which to timeout a connection | 10 |
-| Connection Retries | Number of times to attempt connecting to cluster before failing | 10 |
-| User | Optional | dbt_cloud_user |
-| Auth | Optional, supply if using Kerberos | `KERBEROS` |
-| Kerberos Service Name | Optional, supply if using Kerberos | `hive` |
+| Host Name | Имя хоста кластера Spark, к которому нужно подключиться | `yourorg.sparkhost.com` |
+| Port | Порт для подключения к Spark | 443 |
+| Organization | Необязательно (по умолчанию: 0) | 0123456789 |
+| Cluster | Идентификатор кластера, к которому нужно подключиться | 1234-567890-abc12345 |
+| Connection Timeout | Количество секунд, после которых соединение будет прервано | 10 |
+| Connection Retries | Количество попыток подключения к кластеру перед неудачей | 10 |
+| User | Необязательно | dbt_cloud_user |
+| Auth | Необязательно, укажите, если используете Kerberos | `KERBEROS` |
+| Kerberos Service Name | Необязательно, укажите, если используете Kerberos | `hive` |
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/spark-connection.png" title="Configuring a Spark connection"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/spark-connection.png" title="Настройка подключения Spark"/>

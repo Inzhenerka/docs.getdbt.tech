@@ -1,59 +1,56 @@
 ---
-title: "Connect Azure Synapse Analytics"
-description: "Configure Azure Synapse Analytics connection."
-sidebar_label: "Connect Azure Synapse Analytics"
+title: "Подключение к Azure Synapse Analytics"
+description: "Настройка подключения к Azure Synapse Analytics."
+sidebar_label: "Подключение к Azure Synapse Analytics"
 ---
 
-# Connect Azure Synapse Analytics
+# Подключение к Azure Synapse Analytics
 
-## Supported authentication methods
-The supported authentication methods are: 
-- Microsoft Entra ID service principal
-- Active Directory password
-- SQL server authentication
+## Поддерживаемые методы аутентификации
+Поддерживаемые методы аутентификации:
+- Служебный принципал Microsoft Entra ID
+- Пароль Active Directory
+- Аутентификация SQL сервера
 
-### Microsoft Entra ID service principal 
-The following are the required fields for setting up a connection with Azure Synapse Analytics using Microsoft Entra ID service principal authentication. 
+### Служебный принципал Microsoft Entra ID
+Следующие поля обязательны для настройки подключения к Azure Synapse Analytics с использованием аутентификации служебного принципала Microsoft Entra ID.
 
-| Field | Description |
+| Поле | Описание |
 | --- | --- |
-| **Server** | The service principal's **Synapse host name** value (without the trailing string `, 1433`) for the Synapse test endpoint. |
-| **Port** | The port to connect to Azure Synapse Analytics. You can use `1433` (the default), which is the standard SQL server port number. |
-| **Database** | The service principal's **database** value for the Synapse test endpoint. |
-| **Authentication** | Choose **Service Principal** from the dropdown. | 
-| **Tenant ID** | The service principal's **Directory (tenant) ID**. |
-| **Client ID** | The service principal's **application (client) ID id**. |
-| **Client secret** | The service principal's **client secret** (not the **client secret id**). |  
+| **Сервер** | Значение **имени хоста Synapse** служебного принципала (без завершающей строки `, 1433`) для тестовой конечной точки Synapse. |
+| **Порт** | Порт для подключения к Azure Synapse Analytics. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL сервера. |
+| **База данных** | Значение **базы данных** служебного принципала для тестовой конечной точки Synapse. |
+| **Аутентификация** | Выберите **Service Principal** из выпадающего списка. | 
+| **Tenant ID** | **Идентификатор каталога (тенанта)** служебного принципала. |
+| **Client ID** | **Идентификатор приложения (клиента)** служебного принципала. |
+| **Client secret** | **Секрет клиента** служебного принципала (не **идентификатор секрета клиента**). |  
 
+### Пароль Active Directory
 
-### Active Directory password 
+Следующие поля обязательны для настройки подключения к Azure Synapse Analytics с использованием аутентификации по паролю Active Directory.
 
-The following are the required fields for setting up a connection with Azure Synapse Analytics using Active Directory password authentication. 
-
-| Field | Description |
+| Поле | Описание |
 | --- | --- |
-| **Server** | The server hostname to connect to Azure Synapse Analytics. |
-| **Port** | The server port. You can use `1433` (the default), which is the standard SQL server port number. |
-| **Database** | The database name. |
-| **Authentication** | Choose **Active Directory Password** from the dropdown. | 
-| **User** | The AD username. |
-| **Password** | The AD username's password. |
+| **Сервер** | Имя хоста сервера для подключения к Azure Synapse Analytics. |
+| **Порт** | Порт сервера. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL сервера. |
+| **База данных** | Имя базы данных. |
+| **Аутентификация** | Выберите **Active Directory Password** из выпадающего списка. | 
+| **Пользователь** | Имя пользователя AD. |
+| **Пароль** | Пароль имени пользователя AD. |
 
+### Аутентификация SQL сервера
 
-### SQL server authentication
+Следующие поля обязательны для настройки подключения к Azure Synapse Analytics с использованием аутентификации SQL сервера.
 
-The following are the required fields for setting up a connection with Azure Synapse Analytics using SQL server authentication. 
-
-| Field | Description |
+| Поле | Описание |
 | --- | --- |
-| **Server** | The server hostname or IP to connect to Azure Synapse Analytics. |
-| **Port** | The server port. You can use `1433` (the default), which is the standard SQL server port number. |
-| **Database** | The database name. |
-| **Authentication** | Choose **SQL** from the dropdown. | 
-| **User** | The username. |
-| **Password** | The username's password. |
+| **Сервер** | Имя хоста или IP сервера для подключения к Azure Synapse Analytics. |
+| **Порт** | Порт сервера. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL сервера. |
+| **База данных** | Имя базы данных. |
+| **Аутентификация** | Выберите **SQL** из выпадающего списка. | 
+| **Пользователь** | Имя пользователя. |
+| **Пароль** | Пароль имени пользователя. |
 
+## Конфигурация
 
-## Configuration 
-
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Microsoft Azure Synapse DWH configurations](/reference/resource-configs/azuresynapse-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурациям Microsoft Azure Synapse DWH](/reference/resource-configs/azuresynapse-configs).

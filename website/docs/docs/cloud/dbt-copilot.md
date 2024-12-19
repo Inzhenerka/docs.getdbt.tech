@@ -1,27 +1,27 @@
 --- 
-title: "About dbt Copilot" 
-sidebar_label: "About dbt Copilot" 
-description: "dbt Copilot is a powerful AI engine designed to accelerate your analytics workflows throughout your entire ADLC." 
+title: "О dbt Copilot" 
+sidebar_label: "О dbt Copilot" 
+description: "dbt Copilot — это мощный AI-движок, предназначенный для ускорения ваших аналитических рабочих процессов на протяжении всего жизненного цикла разработки аналитики (ADLC)." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
 pagination_prev: null
 ---
 
-# About dbt Copilot <Lifecycle status='beta'/> 
+# О dbt Copilot <Lifecycle status='beta'/> 
 
-dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. dbt Copilot embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
+dbt Copilot — это мощный искусственный интеллект (AI), который полностью интегрирован в ваш опыт работы с dbt Cloud и предназначен для ускорения ваших аналитических рабочих процессов. dbt Copilot встраивает AI-поддержку на каждом этапе жизненного цикла разработки аналитики (ADLC), позволяя специалистам по данным быстрее предоставлять продукты данных, улучшать качество данных и повышать доступность данных.
 
-With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), and [semantic models](/docs/build/semantic-models) for you with the click of a button.
+С помощью автоматической генерации кода dbt Copilot может [генерировать код](/docs/cloud/use-dbt-copilot#generate-and-edit-code) на естественном языке, а также [генерировать документацию](/docs/build/documentation), [тесты](/docs/build/data-tests) и [семантические модели](/docs/build/semantic-models) одним нажатием кнопки.
 
-:::tip Beta feature
-dbt Copilot is designed to _help_ developers generate documentation, tests, and semantic models, as well as [code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, in dbt Cloud. It's available in beta, in the dbt Cloud IDE only.
+:::tip Бета-функция
+dbt Copilot предназначен для _помощи_ разработчикам в генерации документации, тестов и семантических моделей, а также [кода](/docs/cloud/use-dbt-copilot#generate-and-edit-code) на естественном языке в dbt Cloud. Он доступен в бета-версии только в IDE dbt Cloud.
 
-To use dbt Copilot, you must have an active [dbt Cloud Enterprise account](https://www.getdbt.com/pricing) and either agree to use dbt Labs' OpenAI key or provide your own Open AI API key. [Register here](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to the Account Team if you're interested in joining the private beta.
+Чтобы использовать dbt Copilot, у вас должен быть активный [аккаунт dbt Cloud Enterprise](https://www.getdbt.com/pricing) и вы должны согласиться использовать ключ OpenAI от dbt Labs или предоставить свой собственный ключ API OpenAI. [Зарегистрируйтесь здесь](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) или свяжитесь с командой аккаунтов, если вы заинтересованы в участии в закрытой бета-версии.
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Пример использования dbt Copilot для генерации документации в IDE" />
 
-## Feedback
+## Обратная связь
 
-Please note: Always review AI-generated code and content as it may produce incorrect results. The features and/or functionality of dbt Copilot may be added or eliminated as part of the beta trial.
+Пожалуйста, обратите внимание: всегда проверяйте сгенерированный AI код и контент, так как он может давать неверные результаты. Функции и/или функциональность dbt Copilot могут быть добавлены или удалены в рамках бета-тестирования.
 
-To give feedback, please contact your dbt Labs account team. We appreciate your feedback and suggestions as we improve dbt Copilot.
+Чтобы оставить отзыв, пожалуйста, свяжитесь с вашей командой аккаунтов dbt Labs. Мы ценим ваши отзывы и предложения по улучшению dbt Copilot.

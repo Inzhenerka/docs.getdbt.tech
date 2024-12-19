@@ -1,110 +1,109 @@
 ---
-title: Entities
+title: Сущности
 id: entities
-description: "Entities are real-world concepts that correspond to key parts of your business, such as customers, transactions, and ad campaigns."
-sidebar_label: "Entities"
-tags: [Metrics, Semantic Layer]
+description: "Сущности — это реальные концепции, которые соответствуют ключевым частям вашего бизнеса, таким как клиенты, транзакции и рекламные кампании."
+sidebar_label: "Сущности"
+tags: [Метрики, Семантический уровень]
 ---
 
-Entities are real-world concepts in a business such as customers, transactions, and ad campaigns. We often focus our analyses around specific entities, such as customer churn or annual recurring revenue modeling. We represent entities in our semantic models using id columns that serve as join keys to other semantic models in your semantic graph.
+Сущности — это реальные концепции в бизнесе, такие как клиенты, транзакции и рекламные кампании. Мы часто сосредотачиваем наши анализы вокруг конкретных сущностей, таких как отток клиентов или моделирование ежегодного повторяющегося дохода. Мы представляем сущности в наших семантических моделях, используя столбцы id, которые служат ключами для соединения с другими семантическими моделями в вашей семантической графе.
 
-Within a semantic graph, the required parameters for an entity are `name` and `type`. The `name` refers to either the key column name from the underlying data table, or it may serve as an alias with the column name referenced in the `expr` parameter. The `name` for your entity must be unique to the semantic model and can not be the same as an existing `measure` or `dimension` within that same model.
+В семантической графе обязательными параметрами для сущности являются `name` и `type`. `name` относится либо к имени ключевого столбца из базовой таблицы данных, либо может служить псевдонимом с именем столбца, указанным в параметре `expr`. `name` вашей сущности должно быть уникальным для семантической модели и не может совпадать с существующими `measure` или `dimension` в той же модели.
 
-Entities can be specified with a single column or multiple columns. Entities (join keys) in a semantic model are identified by their name. Each entity name must be unique within a semantic model, but it doesn't have to be unique across different semantic models. 
+Сущности могут быть указаны с одним или несколькими столбцами. Сущности (ключи соединения) в семантической модели идентифицируются по их имени. Каждое имя сущности должно быть уникальным в пределах семантической модели, но не обязательно уникальным между различными семантическими моделями.
 
-There are four entity types: 
-- [Primary](#primary) &mdash; Has only one record for each row in the table and includes every record in the data platform. This key uniquely identifies each record in the table.
-- [Unique](#unique) &mdash;  Contains only one record per row in the table and allows for null values. May have a subset of records in the data warehouse. 
-- [Foreign](#foreign) &mdash; A field (or a set of fields) in one table that uniquely identifies a row in another table. This key establishes a link between tables.
-- [Natural](#natural) &mdash; Columns or combinations of columns in a table that uniquely identify a record based on real-world data. This key is derived from actual data attributes.
+Существует четыре типа сущностей:
+- [Первичный](#primary) &mdash; Имеет только одну запись для каждой строки в таблице и включает каждую запись в платформе данных. Этот ключ уникально идентифицирует каждую запись в таблице.
+- [Уникальный](#unique) &mdash; Содержит только одну запись на строку в таблице и допускает нулевые значения. Может содержать подмножество записей в хранилище данных.
+- [Внешний](#foreign) &mdash; Поле (или набор полей) в одной таблице, которое уникально идентифицирует строку в другой таблице. Этот ключ устанавливает связь между таблицами.
+- [Естественный](#natural) &mdash; Столбцы или комбинации столбцов в таблице, которые уникально идентифицируют запись на основе реальных данных. Этот ключ выводится из фактических атрибутов данных.
 
-:::tip Use entities as dimensions
-You can also use entities as dimensions, which allows you to aggregate a metric to the granularity of that entity.
+:::tip Используйте сущности как измерения
+Вы также можете использовать сущности в качестве измерений, что позволяет агрегировать метрику до уровня детализации этой сущности.
 :::
 
-## Entity types
+## Типы сущностей
 
-MetricFlow's join logic depends on the entity `type` you use and determines how to join semantic models. Refer to [Joins](/docs/build/join-logic) for more info on how to construct joins.
+Логика соединения MetricFlow зависит от типа сущности `type`, который вы используете, и определяет, как соединять семантические модели. Обратитесь к [Соединениям](/docs/build/join-logic) для получения дополнительной информации о том, как строить соединения.
 
-### Primary
-A primary key has _only one_ record for each row in the table and includes every record in the data platform. It must contain unique values and can't contain null values. Use the primary key to ensure that each record in the table is distinct and identifiable.
+### Первичный
+Первичный ключ имеет _только одну_ запись для каждой строки в таблице и включает каждую запись в платформе данных. Он должен содержать уникальные значения и не может содержать нулевые значения. Используйте первичный ключ, чтобы гарантировать, что каждая запись в таблице является уникальной и идентифицируемой.
 
-<Expandable alt_header="Primary key example">
+<Expandable alt_header="Пример первичного ключа">
 
-For example, consider a table of employees with the following columns:
+Например, рассмотрим таблицу сотрудников со следующими столбцами:
 
 ```sql
-employee_id (primary key)
+employee_id (первичный ключ)
 first_name
 last_name
 ```
-In this case, `employee_id` is the primary key. Each `employee_id` is unique and represents one specific employee. There can be no duplicate `employee_id` and can't be null.
+В этом случае `employee_id` является первичным ключом. Каждый `employee_id` уникален и представляет собой одного конкретного сотрудника. Дубликатов `employee_id` быть не должно, и он не может быть нулевым.
 
 </Expandable>
 
-### Unique
-A unique key contains _only one_ record per row in the table but may have a subset of records in the data warehouse. However, unlike the primary key, a unique key allows for null values. The unique key ensures that the column's values are distinct, except for null values.
+### Уникальный
+Уникальный ключ содержит _только одну_ запись на строку в таблице, но может иметь подмножество записей в хранилище данных. Однако, в отличие от первичного ключа, уникальный ключ допускает нулевые значения. Уникальный ключ гарантирует, что значения в столбце различны, за исключением нулевых значений.
 
-<Expandable alt_header="Unique key example">
+<Expandable alt_header="Пример уникального ключа">
 
-For example, consider a table of students with the following columns:
+Например, рассмотрим таблицу студентов со следующими столбцами:
 
 ```sql
-student_id (primary key)
-email (unique key)
+student_id (первичный ключ)
+email (уникальный ключ)
 first_name
 last_name
 ```
 
-In this example, `email` is defined as a unique key. Each email address must be unique; however, multiple students can have null email addresses. This is because the unique key constraint allows for one or more null values, but non-null values must be unique. This then creates a set of records with unique emails (non-null) that could be a subset of the entire table, which includes all students.
+В этом примере `email` определен как уникальный ключ. Каждый адрес электронной почты должен быть уникальным; однако несколько студентов могут иметь нулевые адреса электронной почты. Это связано с тем, что ограничение уникального ключа допускает одно или несколько нулевых значений, но ненулевые значения должны быть уникальными. Это создает набор записей с уникальными адресами электронной почты (ненулевыми), которые могут быть подмножеством всей таблицы, включающей всех студентов.
 
 </Expandable>
 
-### Foreign
-A foreign key is a field (or a set of fields) in one table that uniquely identifies a row in another table. The foreign key establishes a link between the data in two tables.
-It can include zero, one, or multiple instances of the same record. It can also contain null values.
+### Внешний
+Внешний ключ — это поле (или набор полей) в одной таблице, которое уникально идентифицирует строку в другой таблице. Внешний ключ устанавливает связь между данными в двух таблицах. Он может включать ноль, одну или несколько экземпляров одной и той же записи. Он также может содержать нулевые значения.
 
-<Expandable alt_header="Foreign key example">
+<Expandable alt_header="Пример внешнего ключа">
 
-For example, consider you have two tables, `customers` and `orders`:
+Например, предположим, что у вас есть две таблицы: `customers` и `orders`:
 
-customers table:
+таблица customers:
 
 ```sql
-customer_id (primary key)
+customer_id (первичный ключ)
 customer_name
 ```
 
-orders table:
+таблица orders:
 
 ```sql
-order_id (primary key)
+order_id (первичный ключ)
 order_date
-customer_id (foreign key)
+customer_id (внешний ключ)
 ```
 
-In this example, the `customer_id` in the `orders` table is a foreign key that references the `customer_id` in the `customers` table. This link means each order is associated with a specific customer. However, not every order must have a customer; the `customer_id` in the orders table can be null or have the same `customer_id` for multiple orders.
+В этом примере `customer_id` в таблице `orders` является внешним ключом, который ссылается на `customer_id` в таблице `customers`. Эта связь означает, что каждый заказ связан с конкретным клиентом. Однако не каждый заказ должен иметь клиента; `customer_id` в таблице заказов может быть нулевым или иметь одно и то же `customer_id` для нескольких заказов.
 
 </Expandable>
 
-### Natural
+### Естественный
 
-Natural keys are columns or combinations of columns in a table that uniquely identify a record based on real-world data. For instance, if you have a `sales_person_department` dimension table, the `sales_person_id` can serve as a natural key. You can only use natural keys for [SCD type II dimensions](/docs/build/dimensions#scd-type-ii).
+Естественные ключи — это столбцы или комбинации столбцов в таблице, которые уникально идентифицируют запись на основе реальных данных. Например, если у вас есть таблица измерений `sales_person_department`, `sales_person_id` может служить естественным ключом. Вы можете использовать естественные ключи только для [измерений типа SCD II](/docs/build/dimensions#scd-type-ii).
 
-## Entities configuration
+## Конфигурация сущностей
 
-The following is the complete spec for entities:
+Следующее — это полная спецификация для сущностей:
 
 ```yaml
 entities:
-  - name: transaction     ## Required
-    type: Primary or natural or foreign or unique ## Required
-    description: A description of the field or role the entity takes in this table ## Optional
-    expr: The field that denotes that entity (transaction_id).  ## Optional
-          Defaults to name if unspecified.
+  - name: transaction     ## Обязательно
+    type: Primary or natural or foreign or unique ## Обязательно
+    description: Описание поля или роли, которую сущность занимает в этой таблице ## Необязательно
+    expr: Поле, которое обозначает эту сущность (transaction_id).  ## Необязательно
+          По умолчанию используется name, если не указано.
 ```
 
-Here's an example of how to define entities in a semantic model:
+Вот пример того, как определить сущности в семантической модели:
   
 ```yaml
 entities:
@@ -119,14 +118,14 @@ entities:
     expr: substring(id_order from 2)
 ```
 
-## Combine columns with a key
+## Объединение столбцов с ключом
 
-If a table doesn't have any key (like a primary key), use _surrogate combination_ to form a key that will help you identify a record by combining two columns. This applies to any [entity type](/docs/build/entities#entity-types). For example, you can combine `date_key` and `brand_code` from the `raw_brand_target_weekly` table to form a _surrogate key_. The following example creates a surrogate key by joining `date_key` and `brand_code` using a pipe (`|`) as a separator. 
+Если таблица не имеет никакого ключа (например, первичного ключа), используйте _суррогатное объединение_, чтобы сформировать ключ, который поможет вам идентифицировать запись, комбинируя два столбца. Это применимо к любому [типу сущности](/docs/build/entities#entity-types). Например, вы можете объединить `date_key` и `brand_code` из таблицы `raw_brand_target_weekly`, чтобы сформировать _суррогатный ключ_. Следующий пример создает суррогатный ключ, объединяя `date_key` и `brand_code`, используя символ вертикальной черты (`|`) в качестве разделителя. 
 
 ```yaml
 
 entities:
-  - name: brand_target_key # Entity name or identified.
-    type: foreign # This can be any entity type key. 
-    expr: date_key || '|' || brand_code # Defines the expression for linking fields to form the surrogate key.
+  - name: brand_target_key # Имя сущности или идентификатор.
+    type: foreign # Это может быть любой тип сущности. 
+    expr: date_key || '|' || brand_code # Определяет выражение для связывания полей для формирования суррогатного ключа.
 ```

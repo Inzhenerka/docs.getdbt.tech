@@ -1,6 +1,6 @@
 ---
-title: "Git configuration in dbt Cloud"
-description: "Learn about the Git providers supported in dbt Cloud"
+title: "Конфигурация Git в dbt Cloud"
+description: "Узнайте о поддерживаемых провайдерах Git в dbt Cloud"
 pagination_next: "docs/cloud/git/import-a-project-by-git-url"
 pagination_prev: null
 ---
@@ -8,14 +8,14 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Import a project by git URL"
-    body="Learn how to import a project by using a git URL."
+    title="Импорт проекта по git URL"
+    body="Узнайте, как импортировать проект, используя git URL."
     link="/docs/cloud/git/import-a-project-by-git-url"
     icon="dbt-bit"/>
 
 <Card
-    title="Connect to GitHub"
-    body="Learn how to connect to GitHub."
+    title="Подключение к GitHub"
+    body="Узнайте, как подключиться к GitHub."
     link="/docs/cloud/git/connect-github"
     icon="dbt-bit"/>
 
@@ -23,14 +23,14 @@ pagination_prev: null
 <br />
 <div className="grid--2-col">
 <Card
-    title="Connect to GitLab"
-    body="Learn how to connect to GitLab."
+    title="Подключение к GitLab"
+    body="Узнайте, как подключиться к GitLab."
     link="/docs/cloud/git/connect-gitlab"
     icon="dbt-bit"/>
 
 <Card
-    title="Connect to Azure DevOps"
-    body="Learn how to connect to Azure DevOps."
+    title="Подключение к Azure DevOps"
+    body="Узнайте, как подключиться к Azure DevOps."
     link="/docs/cloud/git/connect-azure-devops"
     icon="dbt-bit"/>
 

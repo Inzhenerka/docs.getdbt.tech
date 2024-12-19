@@ -1,37 +1,36 @@
 ---
-title: "SQL models"
-description: "Read this tutorial to learn how to use SQL models when building in dbt."
+title: "SQL модели"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать SQL модели при работе с dbt."
 id: "sql-models"
 ---
 
-## Related reference docs
-* [Model configurations](/reference/model-configs)
-* [Model properties](/reference/model-properties)
-* [`run` command](/reference/commands/run)
-* [`ref` function](/reference/dbt-jinja-functions/ref)
+## Связанные справочные документы
+* [Конфигурации моделей](/reference/model-configs)
+* [Свойства моделей](/reference/model-properties)
+* [`run` команда](/reference/commands/run)
+* [`ref` функция](/reference/dbt-jinja-functions/ref)
 
-## Getting started
+## Начало работы
 
-:::info Building your first models
+:::info Создание ваших первых моделей
 
-If you're new to dbt, we recommend that you read a [quickstart guide](/guides) to build your first dbt project with models.
+Если вы новичок в dbt, мы рекомендуем вам прочитать [руководство по быстрому старту](/guides), чтобы создать ваш первый проект dbt с моделями.
 
 :::
 
-dbt's Python capabilities are an extension of its capabilities with SQL models. If you're new to dbt, we recommend that you read this page first, before reading: ["Python Models"](/docs/build/python-models)
+Возможности Python в dbt являются расширением его возможностей с SQL моделями. Если вы новичок в dbt, мы рекомендуем вам сначала прочитать эту страницу, прежде чем переходить к: ["Python Модели"](/docs/build/python-models)
 
+SQL модель — это оператор `select`. Модели определяются в `.sql` файлах (обычно в директории `models`):
+- Каждый `.sql` файл содержит одну модель / оператор `select`
+- Имя модели наследуется от имени файла.
+- Мы настоятельно рекомендуем использовать подчеркивания для имен моделей, а не точки. Например, используйте `models/my_model.sql`, а не `models/my.model.sql`.
+- Модели могут быть вложены в подкаталоги внутри директории `models`.
 
-A SQL model is a `select` statement. Models are defined in `.sql` files (typically in your `models` directory):
-- Each `.sql` file contains one model / `select` statement
-- The model name is inherited from the filename.
-- We strongly recommend using underscores for model names, not dots. For example, use `models/my_model.sql` instead of `models/my.model.sql`.
-- Models can be nested in subdirectories within the `models` directory.
+Смотрите [Как мы стилизуем наши dbt модели](/best-practices/how-we-style/1-how-we-style-our-dbt-models) для получения подробной информации о том, как мы рекомендуем называть ваши модели.
 
-Refer to [How we style our dbt models](/best-practices/how-we-style/1-how-we-style-our-dbt-models) for details on how we recommend you name your models.
+Когда вы выполняете [`dbt run` команду](/reference/commands/run), dbt создаст эту модель <Term id="data-warehouse" /> обернув её в оператор `create view as` или `create table as`.
 
-When you execute the [`dbt run` command](/reference/commands/run), dbt will build this model <Term id="data-warehouse" /> by wrapping it in a `create view as` or `create table as` statement.
-
-For example, consider this `customers` model:
+Например, рассмотрим эту модель `customers`:
 
 <File name='models/customers.sql'>
 
@@ -63,7 +62,7 @@ left join customer_orders using (customer_id)
 
 </File>
 
-When you execute `dbt run`, dbt will build this as a _view_ named `customers` in your target schema:
+Когда вы выполняете `dbt run`, dbt создаст это как _представление_ с именем `customers` в вашей целевой схеме:
 
 ```sql
 create view dbt_alice.customers as (
@@ -93,28 +92,28 @@ create view dbt_alice.customers as (
 )
 ```
 
-Why a _view_ named `dbt_alice.customers`? By default dbt will:
-* Create models as <Term id="view">views</Term>
-* Build models in a target schema you define
-* Use your file name as the view or <Term id="table" /> name in the database
+Почему _представление_ с именем `dbt_alice.customers`? По умолчанию dbt будет:
+* Создавать модели как <Term id="view">представления</Term>
+* Строить модели в целевой схеме, которую вы определяете
+* Использовать ваше имя файла в качестве имени представления или <Term id="table" /> в базе данных
 
-You can use _configurations_ to change any of these behaviors — more on that later.
+Вы можете использовать _конфигурации_, чтобы изменить любое из этих поведений — подробнее об этом позже.
 
-### FAQs
+### Часто задаваемые вопросы
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Models/create-a-schema" />
 <FAQ path="Models/run-downtime" />
 <FAQ path="Troubleshooting/sql-errors" />
 <FAQ path="Models/sql-dialect" />
 
-## Configuring models
-Configurations are "model settings"  that can be set in your `dbt_project.yml` file, _and_ in your model file using a `config` block. Some example configurations include:
+## Конфигурирование моделей
+Конфигурации — это "настройки модели", которые могут быть установлены в вашем файле `dbt_project.yml`, _и_ в вашем файле модели с использованием блока `config`. Некоторые примеры конфигураций включают:
 
-* Changing the <Term id="materialization" /> that a model uses &mdash; a [materialization](/docs/build/materializations) determines the SQL that dbt uses to create the model in your warehouse.
-* Build models into separate [schemas](/docs/build/custom-schemas).
-* Apply [tags](/reference/resource-configs/tags) to a model.
+* Изменение <Term id="materialization" /> модели — [материализация](/docs/build/materializations) определяет SQL, который dbt использует для создания модели в вашем хранилище данных.
+* Создание моделей в отдельных [схемах](/docs/build/custom-schemas).
+* Применение [тегов](/reference/resource-configs/tags) к модели.
 
-Here's an example of model configuration:
+Вот пример конфигурации модели:
 
 <File name='dbt_project.yml'>
 
@@ -124,12 +123,12 @@ config-version: 2
 ...
 
 models:
-  jaffle_shop: # this matches the `name:`` config
-    +materialized: view # this applies to all models in the current project
+  jaffle_shop: # это соответствует конфигурации `name:`
+    +materialized: view # это применяется ко всем моделям в текущем проекте
     marts:
-      +materialized: table # this applies to all models in the `marts/` directory
+      +materialized: table # это применяется ко всем моделям в директории `marts/`
       marketing:
-        +schema: marketing # this applies to all models in the `marts/marketing/`` directory
+        +schema: marketing # это применяется ко всем моделям в директории `marts/marketing/`
 
 ```
 
@@ -151,24 +150,24 @@ with customer_orders as ...
 
 </File>
 
-It is important to note that configurations are applied hierarchically — a configuration applied to a subdirectory will override any general configurations.
+Важно отметить, что конфигурации применяются иерархически — конфигурация, примененная к подкаталогу, переопределит любые общие конфигурации.
 
-You can learn more about configurations in the [reference docs](/reference/model-configs).
+Вы можете узнать больше о конфигурациях в [справочных документах](/reference/model-configs).
 
-### FAQs
+### Часто задаваемые вопросы
 <FAQ path="Models/available-materializations" />
 <FAQ path="Models/available-configurations" />
 
 
-## Building dependencies between models
-You can build dependencies between models by using the [`ref` function](/reference/dbt-jinja-functions/ref) in place of table names in a query. Use the name of another model as the argument for `ref`.
+## Создание зависимостей между моделями
+Вы можете создавать зависимости между моделями, используя [`ref` функцию](/reference/dbt-jinja-functions/ref) вместо имен таблиц в запросе. Используйте имя другой модели в качестве аргумента для `ref`.
 
 <Tabs
   defaultValue="model"
   values={[
-    {label: 'Model', value: 'model'},
-    {label: 'Compiled code in dev', value: 'dev'},
-    {label: 'Compiled code in prod', value: 'prod'},
+    {label: 'Модель', value: 'model'},
+    {label: 'Скомпилированный код в dev', value: 'dev'},
+    {label: 'Скомпилированный код в prod', value: 'prod'},
   ]}>
   <TabItem value="model">
 
@@ -250,25 +249,25 @@ create view analytics.customers as (
 </Tabs>
 
 
-dbt uses the `ref` function to:
-* Determine the order to run the models by creating a dependent acyclic graph (DAG).
-<Lightbox src="/img/dbt-dag.png" title="The DAG for our dbt project" />
+dbt использует функцию `ref`, чтобы:
+* Определить порядок выполнения моделей, создавая ациклический граф зависимостей (DAG).
+<Lightbox src="/img/dbt-dag.png" title="DAG для нашего проекта dbt" />
 
-* Manage separate environments &mdash; dbt will replace the model specified in the `ref` function with the database name for the <Term id="table" /> (or view). Importantly, this is environment-aware &mdash; if you're running dbt with a target schema named `dbt_alice`, it will select from an upstream table in the same schema. Check out the tabs above to see this in action.
+* Управлять отдельными средами — dbt заменит модель, указанную в функции `ref`, на имя базы данных для <Term id="table" /> (или представления). Важно, что это учитывает среду — если вы запускаете dbt с целевой схемой, названной `dbt_alice`, он будет выбирать из таблицы верхнего уровня в той же схеме. Ознакомьтесь с вкладками выше, чтобы увидеть это в действии.
 
-Additionally, the `ref` function encourages you to write modular transformations, so that you can re-use models, and reduce repeated code.
+Кроме того, функция `ref` побуждает вас писать модульные преобразования, чтобы вы могли повторно использовать модели и уменьшать повторяющийся код.
 
-## Testing and documenting models
+## Тестирование и документирование моделей
 
-You can also document and test models &mdash; skip ahead to the section on [testing](/docs/build/data-tests) and [documentation](/docs/build/documentation) for more information.
+Вы также можете документировать и тестировать модели — перейдите к разделу о [тестировании](/docs/build/data-tests) и [документации](/docs/build/documentation) для получения дополнительной информации.
 
-## Additional FAQs
-<FAQ path="Project/example-projects" alt_header="Are there any example dbt models?" />
+## Дополнительные часто задаваемые вопросы
+<FAQ path="Project/example-projects" alt_header="Есть ли примеры моделей dbt?" />
 <FAQ path="Models/configurable-model-path" />
 <FAQ path="Models/model-custom-schemas" />
 <FAQ path="Project/unique-resource-names" />
 <FAQ path="Models/removing-deleted-models" />
-<FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
+<FAQ path="Project/structure-a-project" alt_header="Как мне организовать свой проект по мере создания большего количества моделей? Как мне называть свои модели?" />
 <FAQ path="Models/insert-records" />
 <FAQ path="Project/why-not-write-dml" />
 <FAQ path="Models/specifying-column-types" />

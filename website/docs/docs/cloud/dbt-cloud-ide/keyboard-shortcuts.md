@@ -1,29 +1,28 @@
 ---
-title: "dbt Cloud IDE keyboard shortcuts"
-description: "Learn about the keyboard shortcuts available in the Cloud IDE."
-sidebar_label: "Keyboard shortcuts"
+title: "Сочетания клавиш в dbt Cloud IDE"
+description: "Узнайте о сочетаниях клавиш, доступных в Cloud IDE."
+sidebar_label: "Сочетания клавиш"
 ---
 
+Cloud IDE предоставляет сочетания клавиш, функции и советы по разработке, которые помогут вам работать быстрее и быть более продуктивным.
 
-The Cloud IDE provides keyboard shortcuts, features, and development tips to help you work faster and be more productive. 
+Используйте эту страницу dbt Cloud IDE, чтобы быстро ссылаться на некоторые общие операции.
 
-Use this dbt Cloud IDE  page to help you quickly reference some common operations.
-
-| Shortcut description | macOS | Windows |
+| Описание сочетания клавиш | macOS | Windows |
 |--------|----------------|------------------|
-| View the full list of editor shortcuts to help your development, such as adding a line comment, changing tab display size, building modified models, changing editor font size, and more.  | Fn-F1 | Fn-F1 |
-| Select a file to open. | Command-O | Control-O |
-| Close the currently active editor tab. | Option-W | Alt-W |
-| Preview code. | Command-Enter | Control-Enter |
-| Compile code. | Command-Shift-Enter | Control-Shift-Enter |
-| Reveal a list of dbt functions in the editor. | Enter two underscores `__` | Enter two underscores  `__` |
-| Open the command palette to invoke dbt commands and actions.  | Command-P / Command-Shift-P | Control-P / Control-Shift-P |
-| Multi-edit in the editor by selecting multiple lines. | Option-Click / Shift-Option-Command / Shift-Option-Click  | Hold Alt and Click |
-| Open the [**Invocation History Drawer**](/docs/cloud/dbt-cloud-ide/ide-user-interface#invocation-history) located at the bottom of the IDE.  | Control-backtick (or Control + `)  | Control-backtick (or Ctrl + `) | 
-| Add a block comment to the selected code. SQL files will use the Jinja syntax `({# #})` rather than the SQL one `(/* */)`.<br /> <br /> Markdown files will use the Markdown syntax `(<!-- -->)`. | Command-Option-/ | Control-Alt-/ |
+| Просмотреть полный список сочетаний клавиш редактора, которые помогут в разработке, таких как добавление комментария к строке, изменение размера отображения вкладок, сборка измененных моделей, изменение размера шрифта редактора и многое другое.  | Fn-F1 | Fn-F1 |
+| Выбрать файл для открытия. | Command-O | Control-O |
+| Закрыть текущую активную вкладку редактора. | Option-W | Alt-W |
+| Предварительный просмотр кода. | Command-Enter | Control-Enter |
+| Компиляция кода. | Command-Shift-Enter | Control-Shift-Enter |
+| Показать список функций dbt в редакторе. | Введите два подчеркивания `__` | Введите два подчеркивания `__` |
+| Открыть палитру команд для вызова команд и действий dbt.  | Command-P / Command-Shift-P | Control-P / Control-Shift-P |
+| Множественное редактирование в редакторе, выбрав несколько строк. | Option-Click / Shift-Option-Command / Shift-Option-Click  | Удерживайте Alt и щелкайте |
+| Открыть [**Историю вызовов**](/docs/cloud/dbt-cloud-ide/ide-user-interface#invocation-history), расположенную внизу IDE.  | Control-backtick (или Control + `)  | Control-backtick (или Ctrl + `) | 
+| Добавить блочный комментарий к выделенному коду. Файлы SQL будут использовать синтаксис Jinja `({# #})`, а не SQL `(/* */)`.<br /> <br /> Файлы Markdown будут использовать синтаксис Markdown `(<!-- -->)`. | Command-Option-/ | Control-Alt-/ |
 
-## Related docs
+## Связанные документы
 
-- [Quickstart guide](/guides)
-- [About dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features)
-- [Develop in the Cloud](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)
+- [Руководство по быстрому старту](/guides)
+- [О dbt Cloud](/docs/cloud/about-cloud/dbt-cloud-features)
+- [Разработка в облаке](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)

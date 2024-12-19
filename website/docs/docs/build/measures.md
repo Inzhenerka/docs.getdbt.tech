@@ -1,105 +1,104 @@
 ---
-title: Measures
+title: Меры
 id: measures
-description: "Measures are aggregations performed on columns in your model."
-sidebar_label: "Measures"
-tags: [Metrics, Semantic Layer]
+description: "Меры — это агрегирования, выполняемые по столбцам в вашей модели."
+sidebar_label: "Меры"
+tags: [Метрики, Семантический уровень]
 ---
 
-Measures are aggregations performed on columns in your model. They can be used as final metrics or as building blocks for more complex metrics. 
+Меры — это агрегирования, выполняемые по столбцам в вашей модели. Они могут использоваться как окончательные метрики или как строительные блоки для более сложных метрик.
 
-Measures have several inputs, which are described in the following table along with their field types.
+У мер есть несколько входных параметров, которые описаны в следующей таблице вместе с их типами полей.
 
 import MeasuresParameters from '/snippets/_sl-measures-parameters.md';
 
 <MeasuresParameters />
 
-## Measure spec
+## Спецификация меры
 
-An example of the complete YAML measures spec is below. The actual configuration of your measures will depend on the aggregation you're using.
+Пример полной спецификации мер в формате YAML приведен ниже. Фактическая конфигурация ваших мер будет зависеть от используемого агрегирования.
 
 ```yaml
 measures:
-  - name: The name of the measure
-    description: 'same as always' ## Optional
-    agg: the aggregation type.
-    expr: the field
-    agg_params: 'specific aggregation properties such as a percentile'  ## Optional
-    agg_time_dimension: The time field. Defaults to the default agg time dimension for the semantic model. ##  Optional
-    non_additive_dimension: 'Use these configs when you need non-additive dimensions.' ## Optional
+  - name: Имя меры
+    description: 'так же, как всегда' ## Необязательно
+    agg: тип агрегирования.
+    expr: поле
+    agg_params: 'специфические свойства агрегирования, такие как процентиль'  ## Необязательно
+    agg_time_dimension: Временное поле. По умолчанию используется стандартное временное измерение для семантической модели. ##  Необязательно
+    non_additive_dimension: 'Используйте эти настройки, когда вам нужны неаддитивные измерения.' ## Необязательно
 ```
 
-### Name
+### Имя
 
-When you create a measure, you can either give it a custom name or use the `name` of the data platform column directly. If the measure's `name` differs from the column name, you need to add an `expr` to specify the column name. The `name` of the measure is used when creating a metric. 
+Когда вы создаете меру, вы можете либо дать ей собственное имя, либо использовать `name` столбца платформы данных напрямую. Если `name` меры отличается от имени столбца, вам нужно добавить `expr`, чтобы указать имя столбца. `name` меры используется при создании метрики.
 
-Measure names must be unique across all semantic models in a project and can not be the same as an existing `entity` or `dimension` within that same model.
+Имена мер должны быть уникальными для всех семантических моделей в проекте и не могут совпадать с существующими `entity` или `dimension` в той же модели.
 
-### Description
+### Описание
 
-The description describes the calculated measure. It's strongly recommended you create verbose and human-readable descriptions in this field.
+Описание описывает вычисляемую меру. Настоятельно рекомендуется создавать подробные и читаемые описания в этом поле.
 
-### Aggregation
+### Агрегирование
 
-The aggregation determines how the field will be aggregated. For example, a `sum` aggregation type over a granularity of `day` would sum the values across a given day.
+Агрегирование определяет, как поле будет агрегироваться. Например, тип агрегирования `sum` с гранулярностью `day` будет суммировать значения за определенный день.
 
-Supported aggregations include:
+Поддерживаемые агрегирования включают:
 
-| Aggregation types | Description              |
+| Типы агрегирования | Описание              |
 |-------------------|--------------------------|
-| sum               | Sum across the values    |
-| min               | Minimum across the values|
-| max               | Maximum across the values|
-| average           | Average across the values |
-| sum_boolean       | A sum for a boolean type |
-| count_distinct    | Distinct count of values |
-| median           | Median (p50) calculation across the values |
-| percentile        | Percentile calculation across the values. |
+| sum               | Сумма значений    |
+| min               | Минимум значений|
+| max               | Максимум значений|
+| average           | Среднее значение |
+| sum_boolean       | Сумма для булевого типа |
+| count_distinct    | Уникальный подсчет значений |
+| median            | Вычисление медианы (p50) |
+| percentile        | Вычисление процентиля. |
 
-#### Percentile aggregation example
-If you're using the `percentile` aggregation, you must use the `agg_params` field to specify details for the percentile aggregation (such as what percentile to calculate and whether to use discrete or continuous calculations).
+#### Пример агрегирования по процентилю
+Если вы используете агрегирование `percentile`, вы должны использовать поле `agg_params`, чтобы указать детали для агрегирования по процентилю (например, какой процентиль вычислять и использовать ли дискретные или непрерывные вычисления).
 
 ```yaml
 name: p99_transaction_value
-description: The 99th percentile transaction value
+description: Значение транзакции на 99-м процентиле
 expr: transaction_amount_usd
 agg: percentile
 agg_params:
   percentile: .99
-  use_discrete_percentile: False  # False calculates the continuous percentile, True calculates the discrete percentile.
+  use_discrete_percentile: False  # False вычисляет непрерывный процентиль, True вычисляет дискретный процентиль.
 ```
 
-#### Percentile across supported engine types
-The following table lists which SQL engine supports continuous, discrete, approximate, continuous, and approximate discrete percentiles.
+#### Процентиль по поддерживаемым типам движков
+Следующая таблица показывает, какие SQL-движки поддерживают непрерывные, дискретные, приближенные, непрерывные и приближенные дискретные процентильные вычисления.
 
-|  | Cont. | Disc. | Approx. cont | Approx. disc |
+|  | Непр. | Дискр. | Прибл. непр. | Прибл. дискр. |
 | -- | -- | -- | -- | -- |
-|Snowflake | [Yes](https://docs.snowflake.com/en/sql-reference/functions/percentile_cont.html) | [Yes](https://docs.snowflake.com/en/sql-reference/functions/percentile_disc.html) | [Yes](https://docs.snowflake.com/en/sql-reference/functions/approx_percentile.html) (t-digest) | No |
-| Bigquery | No (window) | No (window) | [Yes](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approx_quantiles) | No |
-| Databricks | [Yes](https://docs.databricks.com/sql/language-manual/functions/percentile_cont.html) | [No](https://docs.databricks.com/sql/language-manual/functions/percentile_disc.html) | No | [Yes](https://docs.databricks.com/sql/language-manual/functions/approx_percentile.html) |
-| Redshift | [Yes](https://docs.aws.amazon.com/redshift/latest/dg/r_PERCENTILE_CONT.html) | No (window) | No | [Yes](https://docs.aws.amazon.com/redshift/latest/dg/r_APPROXIMATE_PERCENTILE_DISC.html) |
-| [Postgres](https://www.postgresql.org/docs/9.4/functions-aggregate.html) | Yes | Yes | No | No |
-| [DuckDB](https://duckdb.org/docs/sql/aggregates.html) | Yes | Yes | Yes (t-digest) | No |
+|Snowflake | [Да](https://docs.snowflake.com/en/sql-reference/functions/percentile_cont.html) | [Да](https://docs.snowflake.com/en/sql-reference/functions/percentile_disc.html) | [Да](https://docs.snowflake.com/en/sql-reference/functions/approx_percentile.html) (t-digest) | Нет |
+| Bigquery | Нет (окно) | Нет (окно) | [Да](https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#approx_quantiles) | Нет |
+| Databricks | [Да](https://docs.databricks.com/sql/language-manual/functions/percentile_cont.html) | [Нет](https://docs.databricks.com/sql/language-manual/functions/percentile_disc.html) | Нет | [Да](https://docs.databricks.com/sql/language-manual/functions/approx_percentile.html) |
+| Redshift | [Да](https://docs.aws.amazon.com/redshift/latest/dg/r_PERCENTILE_CONT.html) | Нет (окно) | Нет | [Да](https://docs.aws.amazon.com/redshift/latest/dg/r_APPROXIMATE_PERCENTILE_DISC.html) |
+| [Postgres](https://www.postgresql.org/docs/9.4/functions-aggregate.html) | Да | Да | Нет | Нет |
+| [DuckDB](https://duckdb.org/docs/sql/aggregates.html) | Да | Да | Да (t-digest) | Нет |
 
 ### Expr
 
-If the `name` you specified for a measure doesn't match a column name in your model, you can use the `expr` parameter instead. This allows you to use any valid SQL to manipulate an underlying column name into a specific output. The `name` parameter then serves as an alias for your measure.
+Если `name`, который вы указали для меры, не совпадает с именем столбца в вашей модели, вы можете использовать параметр `expr` вместо этого. Это позволяет вам использовать любой допустимый SQL для преобразования имени базового столбца в конкретный вывод. Параметр `name` затем служит псевдонимом для вашей меры.
 
-**Notes**: When using SQL functions in the `expr` parameter, **always use data platform-specific SQL**. This is because outputs may differ depending on your specific data platform.
+**Примечания**: При использовании SQL-функций в параметре `expr` **всегда используйте специфичный для платформы данных SQL**. Это связано с тем, что результаты могут различаться в зависимости от вашей конкретной платформы данных.
 
-:::tip For Snowflake users
-For Snowflake users, if you use a week-level function in the `expr` parameter, it'll now return Monday as the default week start day based on ISO standards. If you have any account or session level overrides for the `WEEK_START` parameter that fixes it to a value other than 0 or 1, you will still see Monday as the week starts. 
+:::tip Для пользователей Snowflake
+Для пользователей Snowflake, если вы используете функцию уровня недели в параметре `expr`, она теперь будет возвращать понедельник как день начала недели по умолчанию в соответствии со стандартами ISO. Если у вас есть какие-либо настройки на уровне учетной записи или сессии для параметра `WEEK_START`, которые фиксируют его на значение, отличное от 0 или 1, вы все равно увидите понедельник как начало недели.
 
-If you use the `dayofweek` function in the `expr` parameter with the legacy Snowflake default of `WEEK_START = 0`, it will now return ISO-standard values of 1 (Monday) through 7 (Sunday) instead of Snowflake's legacy default values of 0 (Monday) through 6 (Sunday).
+Если вы используете функцию `dayofweek` в параметре `expr` с устаревшим значением по умолчанию Snowflake `WEEK_START = 0`, она теперь будет возвращать значения стандартов ISO от 1 (понедельник) до 7 (воскресенье) вместо устаревших значений Snowflake от 0 (понедельник) до 6 (воскресенье).
 :::
 
-
-### Model with different aggregations
+### Модель с различными агрегированиями
 
 ```yaml
 semantic_models:
   - name: transactions
-    description: A record of every transaction that takes place. Carts are considered  multiple transactions for each SKU.
+    description: Запись каждой транзакции, которая происходит. Корзины считаются несколькими транзакциями для каждого SKU.
     model: ref('schema.transactions')
     defaults:
       agg_time_dimension: transaction_date
@@ -118,50 +117,50 @@ semantic_models:
 # --- measures ---
     measures:
       - name: transaction_amount_usd
-        description: Total USD value of transactions
+        description: Общая сумма транзакций в USD
         expr: transaction_amount_usd
         agg: sum
       - name: transaction_amount_usd_avg
-        description: Average USD value of transactions
+        description: Средняя сумма транзакций в USD
         expr: transaction_amount_usd
         agg: average
       - name: transaction_amount_usd_max
-        description: Maximum USD value of transactions
+        description: Максимальная сумма транзакций в USD
         expr: transaction_amount_usd
         agg: max
       - name: transaction_amount_usd_min
-        description: Minimum USD value of transactions
+        description: Минимальная сумма транзакций в USD
         expr: transaction_amount_usd
         agg: min
       - name: quick_buy_transactions 
-        description: The total transactions bought as quick buy
+        description: Общее количество транзакций, купленных как быстрые покупки
         expr: quick_buy_flag 
         agg: sum_boolean 
       - name: distinct_transactions_count
-        description: Distinct count of transactions 
+        description: Уникальный подсчет транзакций 
         expr: transaction_id
         agg: count_distinct
       - name: transaction_amount_avg 
-        description: The average value of transactions 
+        description: Средняя сумма транзакций 
         expr: transaction_amount_usd
         agg: average 
-      - name: transactions_amount_usd_valid # Notice here how we use expr to compute the aggregation based on a condition
-        description: The total USD value of valid transactions only
+      - name: transactions_amount_usd_valid # Обратите внимание, как мы используем expr для вычисления агрегирования на основе условия
+        description: Общая сумма транзакций в USD только для действительных транзакций
         expr: CASE WHEN is_valid = True then transaction_amount_usd else 0 end 
         agg: sum
       - name: transactions
-        description: The average value of transactions.
+        description: Средняя сумма транзакций.
         expr: transaction_amount_usd
         agg: average
       - name: p99_transaction_value
-        description: The 99th percentile transaction value
+        description: Значение транзакции на 99-м процентиле
         expr: transaction_amount_usd
         agg: percentile
         agg_params:
           percentile: .99
-          use_discrete_percentile: False # False calculates the continuous percentile, True calculates the discrete percentile.
+          use_discrete_percentile: False # False вычисляет непрерывный процентиль, True вычисляет дискретный процентиль.
       - name: median_transaction_value
-        description: The median transaction value
+        description: Медианная сумма транзакции
         expr: transaction_amount_usd
         agg: median
         
@@ -169,7 +168,7 @@ semantic_models:
     dimensions:
       - name: transaction_date
         type: time
-        expr: date_trunc('day', ts) # expr refers to underlying column ts
+        expr: date_trunc('day', ts) # expr ссылается на базовый столбец ts
         type_params:
           time_granularity: day
       - name: is_bulk_transaction
@@ -178,30 +177,30 @@ semantic_models:
 
 ```
 
-### Non-additive dimensions
+### Неаддитивные измерения
 
-Some measures cannot be aggregated over certain dimensions, like time, because it could result in incorrect outcomes. Examples include bank account balances where it does not make sense to carry over balances month-to-month, and monthly recurring revenue where daily recurring revenue cannot be summed up to achieve monthly recurring revenue. You can specify non-additive dimensions to handle this, where certain dimensions are excluded from aggregation.
+Некоторые меры не могут быть агрегированы по определенным измерениям, таким как время, поскольку это может привести к неправильным результатам. Примеры включают балансы банковских счетов, где не имеет смысла переносить балансы из месяца в месяц, и ежемесячные повторяющиеся доходы, где ежедневные повторяющиеся доходы не могут быть суммированы для достижения ежемесячных повторяющихся доходов. Вы можете указать неаддитивные измерения, чтобы справиться с этим, исключив определенные измерения из агрегирования.
 
-To demonstrate the configuration for non-additive measures, consider a subscription table that includes one row per date of the registered user, the user's active subscription plan(s), and the plan's subscription value (revenue) with the following columns:
+Чтобы продемонстрировать конфигурацию для неаддитивных мер, рассмотрим таблицу подписок, которая включает одну строку на каждую дату зарегистрированного пользователя, активные подписочные планы пользователя и значение подписки плана (доход) с следующими столбцами:
 
-- `date_transaction`: The daily date-spine.
-- `user_id`: The ID of the registered user.
-- `subscription_plan`: A column to indicate the subscription plan ID.
-- `subscription_value`: A column to indicate the monthly subscription value (revenue) of a particular subscription plan ID.
+- `date_transaction`: Ежедневная дата.
+- `user_id`: Идентификатор зарегистрированного пользователя.
+- `subscription_plan`: Столбец для указания идентификатора подписочного плана.
+- `subscription_value`: Столбец для указания ежемесячного значения подписки (дохода) для конкретного идентификатора подписочного плана.
 
-Parameters under the `non_additive_dimension` will specify dimensions that the measure should not be aggregated over.
+Параметры в `non_additive_dimension` будут указывать измерения, по которым мера не должна агрегироваться.
 
-| Parameter | Description | Field type |
+| Параметр | Описание | Тип поля |
 | --- | --- | --- |
-| `name`| This will be the name of the time dimension (that has already been defined in the data source) that the measure should not be aggregated over. | Required |
-| `window_choice` | Choose either `min` or `max`, where `min` reflects the beginning of the time period and `max` reflects the end of the time period. | Required |
-| `window_groupings` | Provide the entities that you would like to group by. | Optional |
+| `name`| Это будет имя временного измерения (которое уже было определено в источнике данных), по которому мера не должна агрегироваться. | Обязательно |
+| `window_choice` | Выберите либо `min`, либо `max`, где `min` отражает начало временного периода, а `max` отражает конец временного периода. | Обязательно |
+| `window_groupings` | Укажите сущности, по которым вы хотите сгруппировать. | Необязательно |
 
 
 ```yaml
 semantic_models:
   - name: subscriptions
-    description: A subscription table with one row per date for each active user and their subscription plans. 
+    description: Таблица подписок с одной строкой на каждую дату для каждого активного пользователя и их подписочных планов. 
     model: ref('your_schema.subscription_table')
     defaults:
       agg_time_dimension: subscription_date
@@ -220,21 +219,21 @@ semantic_models:
 
     measures: 
       - name: count_users
-        description: Count of users at the end of the month 
+        description: Подсчет пользователей на конец месяца 
         expr: user_id
         agg: count_distinct
         non_additive_dimension: 
           name: subscription_date
           window_choice: max 
       - name: mrr
-        description: Aggregate by summing all users' active subscription plans
+        description: Агрегирование путем суммирования всех активных подписочных планов пользователей
         expr: subscription_value
         agg: sum 
         non_additive_dimension: 
           name: subscription_date
           window_choice: max
       - name: user_mrr
-        description: Group by user_id to achieve each user's MRR
+        description: Группировка по user_id для достижения MRR каждого пользователя
         expr: subscription_value
         agg: sum  
         non_additive_dimension: 
@@ -250,16 +249,16 @@ metrics:
         measure: mrr
 ```
 
-We can query the semi-additive metrics using the following syntax:
+Мы можем запрашивать полунадитивные метрики, используя следующий синтаксис:
 
-For dbt Cloud:
+Для dbt Cloud:
 
 ```bash
 dbt sl query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__month --order subscription__subscription_date__month 
 dbt sl query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__week --order subscription__subscription_date__week 
 ```
 
-For dbt Core:
+Для dbt Core:
 
 ```bash
 mf query --metrics mrr_by_end_of_month --group-by subscription__subscription_date__month --order subscription__subscription_date__month 

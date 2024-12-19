@@ -1,171 +1,154 @@
 ---
-title: "Users and licenses"
-description: "Learn how dbt Cloud administrators can use licenses and seats to control access in a dbt Cloud account."
+title: "Пользователи и лицензии"
+description: "Узнайте, как администраторы dbt Cloud могут использовать лицензии и места для управления доступом в учетной записи dbt Cloud."
 id: "seats-and-users"
-sidebar: "Users and licenses"
+sidebar: "Пользователи и лицензии"
 pagination_next: "docs/cloud/manage-access/enterprise-permissions"
 pagination_prev: null
 ---
 
-In dbt Cloud, _licenses_ are used to allocate users to your account. There are three different types of licenses in dbt Cloud:
+В dbt Cloud _лицензии_ используются для распределения пользователей в вашей учетной записи. Существует три различных типа лицензий в dbt Cloud:
 
-- **Developer** &mdash; Granted access to the Deployment and [Development](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) functionality in dbt Cloud.
-- **Read-Only** &mdash; Intended to view the [artifacts](/docs/deploy/artifacts) created in a dbt Cloud account. Read-Only users can receive job notifications but not configure them.
-- **IT** &mdash; Can manage users, groups, and licenses, among other permissions. IT users can receive job notifications but not configure them. Available on Enterprise and Team plans only.  In Enterprise plans, the IT license type grants access equivalent to the ['Security admin' and 'Billing admin' roles](/docs/cloud/manage-access/enterprise-permissions#account-permissions-for-account-roles). 
+- **Разработчик** &mdash; Предоставляет доступ к функциональности Развертывания и [Разработки](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) в dbt Cloud.
+- **Только для чтения** &mdash; Предназначена для просмотра [артефактов](/docs/deploy/artifacts), созданных в учетной записи dbt Cloud. Пользователи с лицензией "Только для чтения" могут получать уведомления о заданиях, но не могут их настраивать.
+- **IT** &mdash; Может управлять пользователями, группами и лицензиями, среди прочих разрешений. Пользователи IT могут получать уведомления о заданиях, но не могут их настраивать. Доступно только в планах Enterprise и Team. В планах Enterprise тип лицензии IT предоставляет доступ, эквивалентный ролям ['Администратор безопасности' и 'Администратор выставления счетов'](/docs/cloud/manage-access/enterprise-permissions#account-permissions-for-account-roles).
 
-The user's assigned license determines the specific capabilities they can access in dbt Cloud.
+Назначенная пользователю лицензия определяет конкретные возможности, к которым он может получить доступ в dbt Cloud.
 
-| Functionality | Developer User | Read-Only Users | IT Users* |
+| Функциональность | Пользователь-разработчик | Пользователи только для чтения | Пользователи IT* |
 | ------------- | -------------- | --------------- | -------- |
-| Use the dbt Cloud IDE | ✅ | ❌ | ❌ |
-| Use the dbt Cloud CLI | ✅ | ❌ | ❌ |
-| Use Jobs | ✅ | ❌ | ❌ |
-| Manage Account | ✅ | ❌ | ✅ |
-| API Access | ✅ | ❌ | ❌ |
-| Use [dbt Explorer](/docs/collaborate/explore-projects) | ✅  | ✅ | ❌  |
-| Use [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
-| Use [Docs](/docs/collaborate/build-and-view-your-docs) | ✅ | ✅ | ❌ |
-| Receive [Job notifications](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
+| Использовать dbt Cloud IDE | ✅ | ❌ | ❌ |
+| Использовать dbt Cloud CLI | ✅ | ❌ | ❌ |
+| Использовать задания | ✅ | ❌ | ❌ |
+| Управлять учетной записью | ✅ | ❌ | ✅ |
+| Доступ к API | ✅ | ❌ | ❌ |
+| Использовать [dbt Explorer](/docs/collaborate/explore-projects) | ✅  | ✅ | ❌  |
+| Использовать [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
+| Использовать [Docs](/docs/collaborate/build-and-view-your-docs) | ✅ | ✅ | ❌ |
+| Получать [уведомления о заданиях](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ | 
 
-*Available on Enterprise and Team plans only and doesn't count toward seat usage. Please note, that IT seats are limited to 1 seat per Team or Enterprise account.
+*Доступно только в планах Enterprise и Team и не учитывается при использовании мест. Обратите внимание, что места IT ограничены 1 местом на учетную запись Team или Enterprise.
 
-## Licenses
+## Лицензии
 
-:::tip Licenses or Permission sets
+:::tip Лицензии или наборы разрешений
 
-The user's license type always overrides their assigned [Enterprise permission](/docs/cloud/manage-access/enterprise-permissions) set. This means that even if a user belongs to a dbt Cloud group with 'Account Admin' permissions, having a 'Read-Only' license would still prevent them from performing administrative actions on the account.
+Тип лицензии пользователя всегда имеет приоритет над назначенным ему [разрешением Enterprise](/docs/cloud/manage-access/enterprise-permissions). Это означает, что даже если пользователь принадлежит к группе dbt Cloud с разрешениями 'Администратор учетной записи', наличие лицензии 'Только для чтения' все равно помешает ему выполнять административные действия в учетной записи.
 
 :::
 
-Each dbt Cloud plan comes with a base number of Developer, IT, and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
+Каждый план dbt Cloud включает базовое количество лицензий для Разработчиков, IT и Только для чтения. Вы можете добавлять или удалять лицензии, изменяя количество пользователей в настройках вашей учетной записи.
 
-If you have a Developer plan account and want to add more people to your team, you'll need to upgrade to the Team plan. Refer to [dbt Pricing Plans](https://www.getdbt.com/pricing/) for more information about licenses available with each plan.
+Если у вас есть учетная запись на плане Разработчика и вы хотите добавить больше людей в свою команду, вам нужно будет перейти на план Team. Обратитесь к [Планам ценообразования dbt](https://www.getdbt.com/pricing/) для получения дополнительной информации о лицензиях, доступных с каждым планом.
 
-The following tabs detail steps on how to modify your user license count:
+Следующие вкладки содержат шаги по изменению количества лицензий пользователей:
 
 <Tabs>
 
-<TabItem value="enterprise" label="Enterprise plans">
+<TabItem value="enterprise" label="Планы Enterprise">
 
-If you're on an Enterprise plan and have the correct [permissions](/docs/cloud/manage-access/enterprise-permissions), you can add or remove licenses by adjusting your user seat count. Note, an IT license does not count toward seat usage.
+Если вы находитесь на плане Enterprise и имеете соответствующие [разрешения](/docs/cloud/manage-access/enterprise-permissions), вы можете добавлять или удалять лицензии, изменяя количество мест для пользователей. Обратите внимание, что лицензия IT не учитывается при использовании мест.
 
-- To remove a user, click on your account name in the left side menu, click **Account settings** and select **Users**.
-  - Select the user you want to remove, click **Edit**, and then **Delete**. 
-  - This action cannot be undone. However, you can re-invite the user with the same info if you deleted the user in error.<br />
+- Чтобы удалить пользователя, нажмите на имя вашей учетной записи в левом меню, выберите **Настройки учетной записи** и затем **Пользователи**.
+  - Выберите пользователя, которого хотите удалить, нажмите **Изменить**, а затем **Удалить**. 
+  - Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с той же информацией, если удалили его по ошибке.<br />
 
-- To add a user, go to **Account Settings** and select **Users**. 
-  - Click the [**Invite Users**](/docs/cloud/manage-access/invite-users) button. 
-  - For fine-grained permission configuration, refer to [Role based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
+- Чтобы добавить пользователя, перейдите в **Настройки учетной записи** и выберите **Пользователи**. 
+  - Нажмите кнопку [**Пригласить пользователей**](/docs/cloud/manage-access/invite-users). 
+  - Для настройки разрешений с высокой степенью детализации обратитесь к [Управлению доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
 
 
 </TabItem>
 
-<TabItem value="team" label="Team plans">
+<TabItem value="team" label="Планы Team">
 
-If you're on a Team plan and have the correct [permissions](/docs/cloud/manage-access/self-service-permissions), you can add or remove developers. You'll need to make two changes:
+Если вы находитесь на плане Team и имеете соответствующие [разрешения](/docs/cloud/manage-access/self-service-permissions), вы можете добавлять или удалять разработчиков. Вам нужно будет внести два изменения:
 
-- Adjust your developer user seat count, which manages the users invited to your dbt Cloud project. 
-- Adjust your developer billing seat count, which manages the number of billable seats. 
+- Изменить количество мест для пользователей-разработчиков, что управляет пользователями, приглашенными в ваш проект dbt Cloud. 
+- Изменить количество мест для выставления счетов разработчиков, что управляет количеством платных мест. 
 
-
-You can add or remove developers by increasing or decreasing the number of users and billable seats in your account settings:
+Вы можете добавлять или удалять разработчиков, увеличивая или уменьшая количество пользователей и платных мест в настройках вашей учетной записи:
 
 <Tabs>
-<TabItem value="addusers" label="Adding users">
+<TabItem value="addusers" label="Добавление пользователей">
 
-To add a user in dbt Cloud, you must be an account owner or have admin privileges. 
+Чтобы добавить пользователя в dbt Cloud, вы должны быть владельцем учетной записи или иметь административные привилегии. 
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" width="75%" title="Navigate to Account Settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" width="75%" title="Перейти к настройкам учетной записи" />
 
-2. In **Account Settings**, select **Billing**. 
-3. Enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing Address** section. Leaving these blank won't allow you to save your changes.
-4. Press **Update Payment Information** to save your changes.
+2. В **Настройках учетной записи** выберите **Выставление счетов**. 
+3. Введите количество мест для разработчиков, которые вы хотите, и убедитесь, что вы заполнили все данные для оплаты, включая раздел **Почтовый адрес для выставления счетов**. Если оставить эти поля пустыми, вы не сможете сохранить изменения.
+4. Нажмите **Обновить платежную информацию**, чтобы сохранить изменения.
 
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="75%" title="Navigate to Account Settings -> Billing to modify billing seat count" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="75%" title="Перейти к настройкам учетной записи -> Выставление счетов для изменения количества мест" />
 
 
-Now that you've updated your billing, you can now [invite users](/docs/cloud/manage-access/invite-users) to join your dbt Cloud account:
+Теперь, когда вы обновили выставление счетов, вы можете [пригласить пользователей](/docs/cloud/manage-access/invite-users) присоединиться к вашей учетной записи dbt Cloud:
 
-Great work! After completing those these steps, your dbt Cloud user count and billing count should now be the same.
+Отличная работа! После выполнения этих шагов количество пользователей dbt Cloud и количество мест для выставления счетов теперь должно совпадать.
 </TabItem>
 
-<TabItem value="deleteusers" label="Deleting users">
+<TabItem value="deleteusers" label="Удаление пользователей">
 
-To delete a user in dbt Cloud, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
+Чтобы удалить пользователя в dbt Cloud, вы должны быть владельцем учетной записи или иметь административные привилегии. Если у пользователя тип лицензии `разработчик`, это освободит его место для другого пользователя или позволит администраторам уменьшить общее количество мест. 
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
 
-<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" width="85%" title="Navigate to Account Settings" />
+<Lightbox src="/img/docs/dbt-cloud/Navigate To Account Settings.png" width="85%" title="Перейти к настройкам учетной записи" />
 
-2. In **Account Settings**, select **Users**.
-3. Select the user you want to delete, then click **Edit**. 
-4. Click **Delete** in the bottom left. Click **Confirm Delete** to immediately delete the user without additional password prompts. This action cannot be undone. However, you can re-invite the user with the same information if the deletion was made in error. 
+2. В **Настройках учетной записи** выберите **Пользователи**.
+3. Выберите пользователя, которого хотите удалить, затем нажмите **Изменить**. 
+4. Нажмите **Удалить** в нижнем левом углу. Нажмите **Подтвердить удаление**, чтобы немедленно удалить пользователя без дополнительных запросов пароля. Это действие нельзя отменить. Однако вы можете повторно пригласить пользователя с той же информацией, если удаление было выполнено по ошибке. 
 
-<Lightbox src="/img/docs/dbt-cloud/delete_user_20221023.gif" width="75%" title="Deleting a user" />
+<Lightbox src="/img/docs/dbt-cloud/delete_user_20221023.gif" width="75%" title="Удаление пользователя" />
 
 
-If you are on a **Teams** plan and you're deleting users to reduce the number of billable seats, follow these steps to lower the license count to avoid being overcharged:
+Если вы находитесь на плане **Teams** и удаляете пользователей, чтобы уменьшить количество платных мест, выполните следующие шаги, чтобы снизить количество лицензий и избежать переплаты:
 
-1. In **Account Settings**, select **Billing**. 
-2. Enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing Address** section. If you leave any field blank, you won't be able to save your changes.
-3. Click **Update Payment Information** to save your changes. 
+1. В **Настройках учетной записи** выберите **Выставление счетов**. 
+2. Введите количество мест для разработчиков, которые вы хотите, и убедитесь, что вы заполнили все данные для оплаты, включая раздел **Почтовый адрес для выставления счетов**. Если оставить любое поле пустым, вы не сможете сохранить изменения.
+3. Нажмите **Обновить платежную информацию**, чтобы сохранить изменения. 
         
-<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="75%" title="The Billing** page in your **Account Settings" />
+<Lightbox src="/img/docs/dbt-cloud/faq-account-settings-billing.jpg" width="75%" title="Страница Выставление счетов в ваших Настройках учетной записи" />
 
-Great work! After completing these steps, your dbt Cloud user count and billing count should now be the same.
-
-</TabItem>
-</Tabs>
+Отличная работа! После выполнения этих шагов количество пользователей dbt Cloud и количество мест для выставления счетов теперь должно совпадать.
 
 </TabItem>
 </Tabs>
 
-## Managing license types
+</TabItem>
+</Tabs>
 
-Licenses can be assigned to users individually or through group membership. To assign a license via group membership, you can manually add a user to a group during the invitation process or assign them to a group after they’ve enrolled in dbt Cloud. Alternatively, with [SSO configuration](/docs/cloud/manage-access/sso-overview) and [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-) (Enterprise only), users can be automatically assigned to groups. By default, new users in an account are assigned a Developer license.
+## Управление типами лицензий
 
-### Manual configuration
+Лицензии могут быть назначены пользователям индивидуально или через членство в группе. Чтобы назначить лицензию через членство в группе, вы можете вручную добавить пользователя в группу во время процесса приглашения или назначить его в группу после того, как он зарегистрировался в dbt Cloud. Кроме того, с помощью [конфигурации SSO](/docs/cloud/manage-access/sso-overview) и [управления доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control-) (только для Enterprise) пользователи могут автоматически назначаться в группы. По умолчанию новым пользователям в учетной записи назначается лицензия Разработчика.
 
-To manually assign a specific type of license to a user on your team, navigate
-to the Team page in your Account Settings and click the "edit" button for the user
-you want to manage. From this page, you can select the license type and relevant
-groups for the user.
+### Ручная настройка
 
-**Note:** You will need to have an available license ready
-to allocate for the user. If your account does not have an available license to
-allocate, you will need to add more licenses to your plan to complete the license
-change.
+Чтобы вручную назначить конкретный тип лицензии пользователю в вашей команде, перейдите на страницу Команда в Настройках вашей учетной записи и нажмите кнопку "изменить" для пользователя, которого вы хотите управлять. С этой страницы вы можете выбрать тип лицензии и соответствующие группы для пользователя.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/license-manual.png" width="55%" title="Manually assigning licenses"/>
+**Примечание:** Вам нужно будет иметь доступную лицензию, готовую для назначения пользователю. Если в вашей учетной записи нет доступной лицензии для назначения, вам нужно будет добавить больше лицензий в ваш план, чтобы завершить изменение лицензии.
 
-### Mapped configuration <Lifecycle status="enterprise"/> 
+<Lightbox src="/img/docs/dbt-cloud/access-control/license-manual.png" width="55%" title="Ручное назначение лицензий"/>
 
-If your account is connected to an Identity Provider (IdP) for [Single Sign On](/docs/cloud/manage-access/sso-overview), you can automatically map IdP user groups to specific groups in dbt Cloud and assign license types to those groups. To configure license mappings, navigate to the **Account Settings** > **Groups & Licenses** > **License Mappings** page. From here, you can create or edit SSO mappings for both Read-Only and Developer license types.
+### Настройка сопоставления <Lifecycle status="enterprise"/> 
 
-By default, all new members of a dbt Cloud account will be assigned a Developer
-license. To assign Read-Only licenses to certain groups of users, create a new
-License Mapping for the Read-Only license type and include a comma separated
-list of IdP group names that should receive a Read-Only license at sign-in time.
+Если ваша учетная запись подключена к поставщику удостоверений (IdP) для [Единого входа](/docs/cloud/manage-access/sso-overview), вы можете автоматически сопоставить группы пользователей IdP с конкретными группами в dbt Cloud и назначить типы лицензий этим группам. Чтобы настроить сопоставления лицензий, перейдите на страницу **Настройки учетной записи** > **Группы и лицензии** > **Сопоставления лицензий**. Отсюда вы можете создать или изменить сопоставления SSO для типов лицензий Только для чтения и Разработчика.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/license-mapping.png" width="65%" title="Configuring IdP group license mapping"/>
+По умолчанию всем новым членам учетной записи dbt Cloud будет назначена лицензия Разработчика. Чтобы назначить лицензии Только для чтения определенным группам пользователей, создайте новое Сопоставление лицензий для типа лицензии Только для чтения и включите список имен групп IdP, разделенных запятыми, которые должны получать лицензию Только для чтения при входе.
 
-Usage notes:
-- If a user's IdP groups match both a Developer and Read-Only license type
-  mapping, a Developer license type will be assigned
-- If a user's IdP groups do not match _any_ license type mappings, a Developer
-  license will be assigned
-- License types are adjusted when users sign into dbt Cloud via Single Sign On.
-  Changes made to license type mappings will take effect the next time users
-  sign in to dbt Cloud.
-- License type mappings are based on _IdP Groups_, not _dbt Cloud groups_, so be
-  sure to check group memberships in your identity provider when configuring
-  this feature.
+<Lightbox src="/img/docs/dbt-cloud/access-control/license-mapping.png" width="65%" title="Настройка сопоставления лицензий группы IdP"/>
+
+Примечания по использованию:
+- Если группы IdP пользователя соответствуют как сопоставлению типа лицензии Разработчика, так и сопоставлению типа лицензии Только для чтения, будет назначен тип лицензии Разработчика.
+- Если группы IdP пользователя не соответствуют _никаким_ сопоставлениям типов лицензий, будет назначена лицензия Разработчика.
+- Типы лицензий корректируются, когда пользователи входят в dbt Cloud через Единый вход.
+  Изменения, внесенные в сопоставления типов лицензий, вступят в силу при следующем входе пользователей в dbt Cloud.
+- Сопоставления типов лицензий основаны на _группах IdP_, а не на _группах dbt Cloud_, поэтому обязательно проверьте членство в группах в вашем поставщике удостоверений при настройке этой функции.
 
 
-## Granular permissioning
+## Детализированное управление разрешениями
 
-The dbt Cloud Enterprise plan supports role-based access controls for
-configuring granular in-app permissions. See [access control](/docs/cloud/manage-access/about-user-access)
-for more information on Enterprise permissioning.
+План dbt Cloud Enterprise поддерживает управление доступом на основе ролей для настройки детализированных разрешений в приложении. См. [управление доступом](/docs/cloud/manage-access/about-user-access) для получения дополнительной информации о разрешениях Enterprise.

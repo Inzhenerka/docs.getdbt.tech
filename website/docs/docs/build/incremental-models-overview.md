@@ -1,46 +1,46 @@
 ---
-title: "About incremental models"
-description: "This is an introduction on incremental models, when to use them, and how they work in dbt."
+title: "О инкрементных моделях"
+description: "Это введение в инкрементные модели, когда их использовать и как они работают в dbt."
 id: "incremental-models-overview"
 pagination_next: "docs/build/incremental-models"
 pagination_prev: null
 ---
 
-# Introduction to incremental models
+# Введение в инкрементные модели
 
-Incremental models in dbt is a [materialization](/docs/build/materializations) strategy designed to efficiently update your data warehouse tables by only transforming and loading new or changed data since the last run. Instead of processing your entire dataset every time, incremental models append or update only the new rows, significantly reducing the time and resources required for your data transformations.
+Инкрементные модели в dbt — это стратегия [материализации](/docs/build/materializations), предназначенная для эффективного обновления таблиц вашего хранилища данных, путем трансформации и загрузки только новых или измененных данных с момента последнего запуска. Вместо обработки всего набора данных каждый раз, инкрементные модели добавляют или обновляют только новые строки, что значительно сокращает время и ресурсы, необходимые для ваших трансформаций данных.
 
-This page will provide you with a brief overview of incremental models, their importance in data transformations, and the core concepts of incremental materializations in dbt.
+Эта страница предоставит вам краткий обзор инкрементных моделей, их важности в трансформациях данных и основных концепций инкрементных материализаций в dbt.
 
-<Lightbox src="/img/docs/building-a-dbt-project/incremental-diagram.jpg" width="60%" title="A visual representation of how incremental models work. Source: Materialization best practices guide (https://docs.getdbt.com/best-practices/materializations/1-guide-overview)" />
+<Lightbox src="/img/docs/building-a-dbt-project/incremental-diagram.jpg" width="60%" title="Визуальное представление того, как работают инкрементные модели. Источник: Руководство по лучшим практикам материализации (https://docs.getdbt.com/best-practices/materializations/1-guide-overview)" />
 
-## Understand incremental models
+## Понимание инкрементных моделей
 
-Incremental models enable you to significantly reduce the build time by just transforming new records. This is particularly useful for large datasets, where the cost of processing the entire dataset is high.
+Инкрементные модели позволяют значительно сократить время сборки, трансформируя только новые записи. Это особенно полезно для больших наборов данных, где стоимость обработки всего набора данных высока.
 
-Incremental models [require extra configuration](/docs/build/incremental-models) and are an advanced usage of dbt. We recommend using them when your dbt runs are becoming too slow.
+Инкрементные модели [требуют дополнительной настройки](/docs/build/incremental-models) и являются продвинутым использованием dbt. Мы рекомендуем использовать их, когда ваши запуски dbt становятся слишком медленными.
 
-### When to use an incremental model
+### Когда использовать инкрементную модель
 
-Building models as tables in your data warehouse is often preferred for better query performance. However, using `table` materialization can be computationally intensive, especially when:
+Создание моделей в виде таблиц в вашем хранилище данных часто предпочтительно для лучшей производительности запросов. Однако использование материализации `table` может быть вычислительно затратным, особенно когда:
 
-- Source data has millions or billions of rows.
-- Data transformations on the source data are computationally expensive (take a long time to execute) and complex, like when using Regex or UDFs.
+- Исходные данные содержат миллионы или миллиарды строк.
+- Трансформации данных над исходными данными являются вычислительно затратными (занимают много времени для выполнения) и сложными, например, при использовании Regex или UDF.
 
-Incremental models offer a balance between complexity and improved performance compared to `view` and `table` materializations and offer better performance of your dbt runs.
+Инкрементные модели предлагают баланс между сложностью и улучшенной производительностью по сравнению с материализациями `view` и `table`, а также обеспечивают лучшую производительность ваших запусков dbt.
 
-In addition to these considerations for incremental models, it's important to understand their limitations and challenges, particularly with large datasets. For more insights into efficient strategies, performance considerations, and the handling of late-arriving data in incremental models, refer to the [On the Limits of Incrementality](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303) discourse discussion or to our [Materialization best practices](/best-practices/materializations/2-available-materializations) page.
+Кроме этих соображений для инкрементных моделей, важно понимать их ограничения и проблемы, особенно с большими наборами данных. Для получения дополнительных сведений о эффективных стратегиях, соображениях по производительности и обработке данных, поступающих с опозданием в инкрементных моделях, обратитесь к обсуждению [О границах инкрементальности](https://discourse.getdbt.com/t/on-the-limits-of-incrementality/303) или к нашей странице [Лучшие практики материализаций](/best-practices/materializations/2-available-materializations).
 
-### How incremental models work in dbt
+### Как работают инкрементные модели в dbt
 
-dbt's [incremental materialization strategy](/docs/build/incremental-strategy) works differently on different databases. Where supported, a `merge` statement is used to insert new records and update existing records.
+Стратегия [инкрементной материализации](/docs/build/incremental-strategy) в dbt работает по-разному на разных базах данных. Где это поддерживается, используется оператор `merge` для вставки новых записей и обновления существующих.
 
-On warehouses that do not support `merge` statements, a merge is implemented by first using a `delete` statement to delete records in the target table that are to be updated, and then an `insert` statement.
+На хранилищах, которые не поддерживают операторы `merge`, слияние реализуется путем сначала использования оператора `delete` для удаления записей в целевой таблице, которые необходимо обновить, а затем оператора `insert`.
 
-Transaction management, a process used in certain data platforms, ensures that a set of actions is treated as a single unit of work (or task). If any part of the unit of work fails, dbt will roll back open transactions and restore the database to a good state.
+Управление транзакциями, процесс, используемый на определенных платформах данных, обеспечивает обработку набора действий как единого рабочего элемента (или задачи). Если любая часть рабочего элемента не удается, dbt откатит открытые транзакции и восстановит базу данных в хорошее состояние.
 
-## Related docs
-- [Incremental models](/docs/build/incremental-models) to learn how to configure incremental models in dbt.
-- [Incremental strategies](/docs/build/incremental-strategy) to understand how dbt implements incremental models on different databases.
-- [Microbatch](/docs/build/incremental-strategy) <Lifecycle status="beta" /> to understand a new incremental strategy intended for efficient and resilient processing of very large time-series datasets.
-- [Materializations best practices](/best-practices/materializations/1-guide-overview) to learn about the best practices for using materializations in dbt.
+## Связанные документы
+- [Инкрементные модели](/docs/build/incremental-models), чтобы узнать, как настроить инкрементные модели в dbt.
+- [Инкрементные стратегии](/docs/build/incremental-strategy), чтобы понять, как dbt реализует инкрементные модели на разных базах данных.
+- [Микропартия](/docs/build/incremental-strategy) <Lifecycle status="beta" /> для понимания новой инкрементной стратегии, предназначенной для эффективной и устойчивой обработки очень больших временных рядов данных.
+- [Лучшие практики материализаций](/best-practices/materializations/1-guide-overview), чтобы узнать о лучших практиках использования материализаций в dbt.

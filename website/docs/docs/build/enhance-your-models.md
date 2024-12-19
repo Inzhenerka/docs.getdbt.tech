@@ -1,6 +1,6 @@
 ---
-title: "Enhance your models"
-description: "Learn how you can enhance your models"
+title: "Улучшите свои модели"
+description: "Узнайте, как вы можете улучшить свои модели"
 pagination_next: "docs/build/materializations"
 pagination_prev: null
 ---
@@ -8,14 +8,14 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Materializations"
-    body="Learn how to use materializations to make dbt models persist in a data platform."
+    title="Материализации"
+    body="Узнайте, как использовать материализации, чтобы модели dbt сохранялись в платформе данных."
     link="/docs/build/materializations"
     icon="dbt-bit"/>
 
 <Card
-    title="Incremental models"
-    body="Learn how to use incremental models so you can limit the amount of data that needs to be transformed."
+    title="Инкрементные модели"
+    body="Узнайте, как использовать инкрементные модели, чтобы ограничить объем данных, которые необходимо преобразовать."
     link="/docs/build/incremental-models"
     icon="dbt-bit"/>
 

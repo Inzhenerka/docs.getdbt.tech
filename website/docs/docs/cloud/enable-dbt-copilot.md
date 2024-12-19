@@ -1,46 +1,46 @@
 --- 
-title: "Enable dbt Copilot" 
-sidebar_label: "Enable dbt Copilot" 
-description: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your development." 
+title: "Включение dbt Copilot" 
+sidebar_label: "Включение dbt Copilot" 
+description: "Включите AI-движок dbt Copilot в dbt Cloud, чтобы ускорить вашу разработку." 
 ---
 
-# Enable dbt Copilot <Lifecycle status='beta'/>
+# Включение dbt Copilot <Lifecycle status='beta'/>
 
-This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging AI to speed up your development and allowing you to focus on delivering quality data.
+На этой странице объясняется, как включить движок dbt Copilot в dbt Cloud, используя ИИ для ускорения вашей разработки и позволяя вам сосредоточиться на предоставлении качественных данных.
 
-## Prerequisites
+## Предварительные требования
 
-- Available in the dbt Cloud IDE only.
-- Must have an active [dbt Cloud Enterprise account](https://www.getdbt.com/pricing).
-- Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
-- By default, dbt Copilot deployments use a central OpenAI API key managed by dbt Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
-- Accept and sign legal agreements. Reach out to your Account team to begin this process.
+- Доступно только в dbt Cloud IDE.
+- Необходима активная [учетная запись dbt Cloud Enterprise](https://www.getdbt.com/pricing).
+- Среда разработки должна находиться на поддерживаемом [релизном треке](/docs/dbt-versions/cloud-release-tracks) для получения обновлений.
+- По умолчанию развертывания dbt Copilot используют центральный API-ключ OpenAI, управляемый dbt Labs. В качестве альтернативы вы можете [предоставить свой собственный API-ключ OpenAI](#bringing-your-own-openai-api-key-byok).
+- Принять и подписать юридические соглашения. Свяжитесь с вашей командой по работе с клиентами, чтобы начать этот процесс.
 
-## Enable dbt Copilot
+## Включение dbt Copilot
 
-dbt Copilot is only available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
+dbt Copilot доступен вашей учетной записи только после того, как ваша организация подписала необходимые юридические документы. По умолчанию он отключен. Администратор dbt Cloud может включить его, следуя этим шагам:
 
-1. Navigate to **Account settings** in the navigation menu.
+1. Перейдите в **Настройки учетной записи** в навигационном меню.
 
-2. Under **Settings**, confirm the account you're enabling.
+2. В разделе **Настройки** подтвердите учетную запись, которую вы включаете.
 
-3. Click **Edit** in the top right corner.
+3. Нажмите **Изменить** в правом верхнем углу.
 
-4. Enable the **Enable account access to AI-powered features** option.
+4. Включите опцию **Включить доступ к функциям с поддержкой ИИ для учетной записи**.
 
-5. Click **Save**. You should now have the dbt Copilot AI engine enabled for use.
+5. Нажмите **Сохранить**. Теперь у вас должен быть включен AI-движок dbt Copilot.
 
-Note: To disable (only after enabled), repeat steps 1 to 3, toggle off in step 4, and repeat step 5.
+Примечание: Чтобы отключить (только после включения), повторите шаги 1-3, отключите в шаге 4 и повторите шаг 5.
 
-<Lightbox src="/img/docs/deploy/example-account-settings.png" width="90%" title="Example of the 'Enable account access to AI-powered feature' option in Account settings" />
+<Lightbox src="/img/docs/deploy/example-account-settings.png" width="90%" title="Пример опции 'Включить доступ к функциям с поддержкой ИИ для учетной записи' в настройках учетной записи" />
 
-## Bringing your own OpenAI API key (BYOK)
+## Использование собственного API-ключа OpenAI (BYOK)
 
-Once AI features have been enabled, you can provide your organization's OpenAI API key. dbt Cloud will then leverage your OpenAI account and terms to power dbt Copilot. This will incur billing charges to your organization from OpenAI for requests made by dbt Copilot.
+После включения функций ИИ вы можете предоставить API-ключ OpenAI вашей организации. dbt Cloud будет использовать вашу учетную запись OpenAI и условия для работы dbt Copilot. Это приведет к начислению вашей организации расходов от OpenAI за запросы, сделанные dbt Copilot.
 
-Configure AI keys using:
-- [dbt Labs-managed OpenAI API key](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations)
-- Your own [OpenAI API key](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations)
+Настройте ключи ИИ с помощью:
+- [API-ключа OpenAI, управляемого dbt Labs](/docs/cloud/account-integrations?ai-integration=dbtlabs#ai-integrations)
+- Вашего собственного [API-ключа OpenAI](/docs/cloud/account-integrations?ai-integration=openai#ai-integrations)
 - [Azure OpenAI](/docs/cloud/account-integrations?ai-integration=azure#ai-integrations) <Lifecycle status="beta" />
 
-For configuration details, see [Account integrations](/docs/cloud/account-integrations#ai-integrations).
+Для получения деталей конфигурации смотрите [Интеграции учетной записи](/docs/cloud/account-integrations#ai-integrations).

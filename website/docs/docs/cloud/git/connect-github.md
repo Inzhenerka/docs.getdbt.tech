@@ -1,88 +1,88 @@
 ---
-title: "Connect to GitHub"
-description: "Learn how connecting your GitHub account provides convenience and another layer of security to dbt Cloud."
+title: "Подключение к GitHub"
+description: "Узнайте, как подключение вашей учетной записи GitHub обеспечивает удобство и дополнительный уровень безопасности для dbt Cloud."
 id: "connect-github"
-sidebar_label: "Connect to GitHub"
+sidebar_label: "Подключение к GitHub"
 ---
 
 
-Connecting your GitHub account to dbt Cloud provides convenience and another layer of security to dbt Cloud:
-- Import new GitHub repositories with a couple clicks during dbt Cloud project setup.
-- Clone repos using HTTPS rather than SSH.
-- Trigger [Continuous integration](/docs/deploy/continuous-integration)(CI) builds when pull requests are opened in GitHub.
+Подключение вашей учетной записи GitHub к dbt Cloud обеспечивает удобство и дополнительный уровень безопасности для dbt Cloud:
+- Импортируйте новые репозитории GitHub всего за несколько кликов во время настройки проекта dbt Cloud.
+- Клонируйте репозитории с использованием HTTPS вместо SSH.
+- Запускайте [непрерывную интеграцию](/docs/deploy/continuous-integration) (CI) при открытии запросов на слияние в GitHub.
 
-## Prerequisites
+## Предварительные требования
 
-- For On-Premises GitHub deployment, reference [importing a project by git URL](/docs/cloud/git/import-a-project-by-git-url) to set up your connection instead. Some git features are [limited](/docs/cloud/git/import-a-project-by-git-url#limited-integration) with this setup.
-  * **Note** &mdash; [Single tenant](/docs/cloud/about-cloud/tenancy#single-tenant) accounts offer enhanced connection options for integrating with an On-Premises GitHub deployment setup using the native integration.  This integration allows you to use all the features of the integration, such as triggering CI builds. The dbt Labs infrastructure team will coordinate with you to ensure any additional networking configuration requirements are met and completed. To discuss details, contact dbt Labs support or your dbt Cloud account team.
-- You _must_ be a **GitHub organization owner** in order to [install the dbt Cloud application](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) in your GitHub organization. To learn about GitHub organization roles, see the [GitHub documentation](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization). 
-- The GitHub organization owner requires [_Owner_](/docs/cloud/manage-access/self-service-permissions) or [_Account Admin_](/docs/cloud/manage-access/enterprise-permissions) permissions when they log into dbt Cloud to integrate with a GitHub environment using organizations.
-- You may need to temporarily provide an extra dbt Cloud user account with _Owner_ or _Account Admin_ [permissions](/docs/cloud/manage-access/enterprise-permissions) for your GitHub organization owner until they complete the installation.
+- Для развертывания GitHub на месте обратитесь к разделу [импорт проекта по URL git](/docs/cloud/git/import-a-project-by-git-url), чтобы настроить ваше подключение. Некоторые функции git [ограничены](/docs/cloud/git/import-a-project-by-git-url#limited-integration) с этой настройкой.
+  * **Примечание** &mdash; Учетные записи [с одним арендатором](/docs/cloud/about-cloud/tenancy#single-tenant) предлагают расширенные варианты подключения для интеграции с развертыванием GitHub на месте с использованием нативной интеграции. Эта интеграция позволяет использовать все функции интеграции, такие как запуск CI сборок. Команда инфраструктуры dbt Labs будет координировать с вами, чтобы убедиться, что все дополнительные требования к сетевой конфигурации выполнены. Для обсуждения деталей свяжитесь с поддержкой dbt Labs или вашей командой по работе с учетными записями dbt Cloud.
+- Вы _должны_ быть **владельцем организации GitHub**, чтобы [установить приложение dbt Cloud](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) в вашей организации GitHub. Чтобы узнать о ролях в организации GitHub, смотрите [документацию GitHub](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization). 
+- Владельцу организации GitHub требуются [_права владельца_](/docs/cloud/manage-access/self-service-permissions) или [_права администратора учетной записи_](/docs/cloud/manage-access/enterprise-permissions) при входе в dbt Cloud для интеграции с окружением GitHub, используя организации.
+- Вам может потребоваться временно предоставить дополнительной учетной записи пользователя dbt Cloud права _владельца_ или _администратора учетной записи_ [права](/docs/cloud/manage-access/enterprise-permissions) для вашего владельца организации GitHub, пока он не завершит установку.
 
 
-## Installing dbt Cloud in your GitHub account
+## Установка dbt Cloud в вашей учетной записи GitHub
 
-You can connect your dbt Cloud account to GitHub by installing the dbt Cloud application in your GitHub organization and providing access to the appropriate repositories. 
-To connect your dbt Cloud account to your GitHub account: 
+Вы можете подключить свою учетную запись dbt Cloud к GitHub, установив приложение dbt Cloud в вашей организации GitHub и предоставив доступ к соответствующим репозиториям. 
+Чтобы подключить свою учетную запись dbt Cloud к вашей учетной записи GitHub: 
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**. 
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**. 
 
-2. Select **Personal profile** under the **Your profile** section.
+2. Выберите **Личный профиль** в разделе **Ваш профиль**.
 
-3. Scroll down to **Linked accounts**.
+3. Прокрутите вниз до **Связанные учетные записи**.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect-1.png" title="Navigated to Linked Accounts under your profile"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect-1.png" title="Перейдите в Связанные учетные записи в вашем профиле"/>
 
-4. In the **Linked accounts** section, set up your GitHub account connection to dbt Cloud by clicking **Link** to the right of GitHub. This redirects you to your account on GitHub where you will be asked to install and configure the dbt Cloud application. 
+4. В разделе **Связанные учетные записи** настройте подключение вашей учетной записи GitHub к dbt Cloud, нажав **Связать** справа от GitHub. Это перенаправит вас на вашу учетную запись на GitHub, где вам будет предложено установить и настроить приложение dbt Cloud. 
 
-5. Select the GitHub organization and repositories dbt Cloud should access.
+5. Выберите организацию GitHub и репозитории, к которым dbt Cloud должен получить доступ.
 
-   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-app-install.png" title="Installing the dbt Cloud application into a GitHub organization"/>
+   <Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-app-install.png" title="Установка приложения dbt Cloud в организацию GitHub"/>
 
-6. Assign the dbt Cloud GitHub App the following permissions:
-   - Read access to metadata
-   - Read and write access to Checks
-   - Read and write access to Commit statuses
-   - Read and write access to Contents (Code)
-   - Read and write access to Pull requests
-   - Read and write access to Webhooks
-   - Read and write access to Workflows
+6. Назначьте приложению dbt Cloud GitHub следующие права:
+   - Доступ на чтение метаданных
+   - Доступ на чтение и запись для Проверок
+   - Доступ на чтение и запись для Статусов коммитов
+   - Доступ на чтение и запись для Содержимого (Код)
+   - Доступ на чтение и запись для Запросов на слияние
+   - Доступ на чтение и запись для Вебхуков
+   - Доступ на чтение и запись для Рабочих процессов
 
-7. Once you grant access to the app, you will be redirected back to dbt Cloud and shown a linked account success state. You are now personally authenticated. 
-8. Ask your team members to individually authenticate by connecting their [personal GitHub profiles](#authenticate-your-personal-github-account).
+7. После того как вы предоставите доступ к приложению, вы будете перенаправлены обратно в dbt Cloud и увидите состояние успешного связывания учетной записи. Теперь вы аутентифицированы. 
+8. Попросите членов вашей команды индивидуально аутентифицироваться, подключив свои [личные профили GitHub](#authenticate-your-personal-github-account).
 
-## Limiting repository access in GitHub
-If you are your GitHub organization owner, you can also configure the dbt Cloud GitHub application to have access to only select repositories. This configuration must be done in GitHub, but we provide an easy link in dbt Cloud to start this process.
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/configure-github.png" title="Configuring the dbt Cloud app"/>
+## Ограничение доступа к репозиториям в GitHub
+Если вы являетесь владельцем своей организации GitHub, вы также можете настроить приложение dbt Cloud GitHub так, чтобы оно имело доступ только к определенным репозиториям. Эта настройка должна быть выполнена в GitHub, но мы предоставляем легкую ссылку в dbt Cloud, чтобы начать этот процесс.
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/configure-github.png" title="Настройка приложения dbt Cloud"/>
 
-## Authenticate your personal GitHub account
+## Аутентификация вашей личной учетной записи GitHub
 
-After the dbt Cloud administrator [sets up a connection](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) to your organization's GitHub account, you need to authenticate using your personal account. You must connect your personal GitHub profile to dbt Cloud to use the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) and [CLI](/docs/cloud/cloud-cli-installation) and verify your read and write access to the repository.
+После того как администратор dbt Cloud [настроит подключение](/docs/cloud/git/connect-github#installing-dbt-cloud-in-your-github-account) к учетной записи GitHub вашей организации, вам необходимо аутентифицироваться, используя свою личную учетную запись. Вы должны подключить свой личный профиль GitHub к dbt Cloud, чтобы использовать [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) и [CLI](/docs/cloud/cloud-cli-installation) и проверить свои права на чтение и запись в репозитории.
 
-:::info GitHub profile connection
+:::info Подключение профиля GitHub
 
-- dbt Cloud developers on the [Enterprise plan](https://www.getdbt.com/pricing/) must each connect their GitHub profiles to dbt Cloud. This is because the dbt Cloud IDE verifies every developer's read / write access for the dbt repo. 
+- Разработчики dbt Cloud на [Enterprise плане](https://www.getdbt.com/pricing/) должны каждый подключить свои профили GitHub к dbt Cloud. Это необходимо, потому что dbt Cloud IDE проверяет права на чтение / запись каждого разработчика для репозитория dbt. 
 
-- dbt Cloud developers on the [Team plan](https://www.getdbt.com/pricing/) don't need to each connect their profiles to GitHub, however, it's still recommended to do so.
+- Разработчики dbt Cloud на [Team плане](https://www.getdbt.com/pricing/) не обязаны подключать свои профили к GitHub, однако это все равно рекомендуется.
 
 :::
 
-To connect a personal GitHub account:
+Чтобы подключить личную учетную запись GitHub:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
 
-2. Select **Personal profile** under the **Your profile** section.
+2. Выберите **Личный профиль** в разделе **Ваш профиль**.
 
-3. Scroll down to **Linked accounts**. If your GitHub account is not connected, you’ll see "No connected account". 
+3. Прокрутите вниз до **Связанные учетные записи**. Если ваша учетная запись GitHub не подключена, вы увидите "Нет подключенной учетной записи". 
 
-4. Select **Link** to begin the setup process. You’ll be redirected to GitHub, and asked to authorize dbt Cloud in a grant screen.
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-auth.png" title="Authorizing the dbt Cloud app for developers"/>
+4. Выберите **Связать**, чтобы начать процесс настройки. Вы будете перенаправлены на GitHub и попросят авторизовать dbt Cloud на экране предоставления прав.
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-auth.png" title="Авторизация приложения dbt Cloud для разработчиков"/>
 
-5. Once you approve authorization, you will be redirected to dbt Cloud, and you should now see your connected account. 
+5. После того как вы одобрите авторизацию, вы будете перенаправлены обратно в dbt Cloud, и теперь вы должны увидеть свою подключенную учетную запись. 
 
-You can now use the dbt Cloud IDE or dbt Cloud CLI.
+Теперь вы можете использовать dbt Cloud IDE или dbt Cloud CLI.
 
 
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Git/gitignore"/>
 <FAQ path="Git/git-migration"/>

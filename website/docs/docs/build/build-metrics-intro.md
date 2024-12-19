@@ -1,71 +1,71 @@
 ---
-title: "Build your metrics"
+title: "Создание ваших метрик"
 id: build-metrics-intro
-description: "Learn about MetricFlow and build your metrics with semantic models"
-sidebar_label: Build your metrics
-tags: [Metrics, Semantic Layer, Governance]
+description: "Узнайте о MetricFlow и создайте свои метрики с помощью семантических моделей"
+sidebar_label: Создание ваших метрик
+tags: [Метрики, Семантический уровень, Управление]
 hide_table_of_contents: true
 pagination_next: "guides/sl-snowflake-qs"
 pagination_prev: null
 ---
 
-Use MetricFlow in dbt to centrally define your metrics. As a key component of the [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl), MetricFlow is responsible for SQL query construction and defining specifications for dbt semantic models and metrics. It uses familiar constructs like semantic models and metrics to avoid duplicative coding, optimize your development workflow, ensure data governance for company metrics, and guarantee consistency for data consumers.
+Используйте MetricFlow в dbt для централизованного определения ваших метрик. Являясь ключевым компонентом [Семантического уровня dbt](/docs/use-dbt-semantic-layer/dbt-sl), MetricFlow отвечает за построение SQL-запросов и определение спецификаций для семантических моделей и метрик dbt. Он использует знакомые конструкции, такие как семантические модели и метрики, чтобы избежать дублирования кода, оптимизировать ваш рабочий процесс разработки, обеспечить управление данными для корпоративных метрик и гарантировать согласованность для потребителей данных.
 
-MetricFlow allows you to:
-- Intuitively define metrics in your dbt project
-- Develop from your preferred environment, whether that's the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation), [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), or [dbt Core](/docs/core/installation-overview)
-- Use [MetricFlow commands](/docs/build/metricflow-commands) to query and test those metrics in your development environment 
-- Harness the true magic of the universal dbt Semantic Layer and dynamically query these metrics in downstream tools (Available for dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing/) accounts only).
+MetricFlow позволяет вам:
+- Интуитивно определять метрики в вашем проекте dbt
+- Разрабатывать в вашем предпочтительном окружении, будь то [dbt Cloud CLI](/docs/cloud/cloud-cli-installation), [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) или [dbt Core](/docs/core/installation-overview)
+- Использовать [команды MetricFlow](/docs/build/metricflow-commands) для запроса и тестирования этих метрик в вашем рабочем окружении
+- Использовать истинную магию универсального семантического уровня dbt и динамически запрашивать эти метрики в downstream-инструментах (доступно только для аккаунтов dbt Cloud [Team или Enterprise](https://www.getdbt.com/pricing/)).
 
 <div className="grid--3-col">
 
  <Card
-    title="Quickstart for the dbt Cloud Semantic Layer"
-    body="Use this guide to build and define metrics, set up the dbt Semantic Layer, and query them using downstream tools."
+    title="Быстрый старт для семантического уровня dbt Cloud"
+    body="Используйте это руководство для создания и определения метрик, настройки семантического уровня dbt и их запроса с помощью downstream-инструментов."
     link="/guides/sl-snowflake-qs"
     icon="dbt-bit"/>
 
 <Card
-    title="About MetricFlow"
-    body="Understand MetricFlow's core concepts, how to use joins, how to save commonly used queries, and what commands are available."
+    title="О MetricFlow"
+    body="Поймите основные концепции MetricFlow, как использовать соединения, как сохранять часто используемые запросы и какие команды доступны."
     link="/docs/build/about-metricflow"
     icon="dbt-bit"/>
 
   <Card
-    title="Semantic model"
-    body="Use semantic models as the basis for defining data. They act as nodes in the semantic graph, with entities connecting them."
+    title="Семантическая модель"
+    body="Используйте семантические модели в качестве основы для определения данных. Они действуют как узлы в семантическом графе, соединяясь с сущностями."
     link="/docs/build/semantic-models"
     icon="dbt-bit"/>
 
   <Card
-    title="Metrics"
-    body="Define metrics through the powerful combination of measures, constraints, or functions, effortlessly organized in either YAML files or separate files."
+    title="Метрики"
+    body="Определяйте метрики с помощью мощного сочетания измерений, ограничений или функций, легко организованных в YAML-файлах или отдельных файлах."
     link="/docs/build/metrics-overview"
     icon="dbt-bit"/>
   
   <Card
-    title="Advanced topics"
-    body="Learn about advanced topics for dbt Semantic Layer and MetricFlow, such as data modeling workflows, and more."
+    title="Расширенные темы"
+    body="Узнайте о расширенных темах для семантического уровня dbt и MetricFlow, таких как рабочие процессы моделирования данных и многое другое."
     link="/docs/build/advanced-topics"
     icon="dbt-bit"/>
 
   <Card
-    title="About the dbt Semantic Layer"
-    body="Introducing the dbt Semantic Layer, the universal process that allows data teams to centrally define and query metrics"
+    title="О семантическом уровне dbt"
+    body="Представляем семантический уровень dbt, универсальный процесс, который позволяет командам данных централизованно определять и запрашивать метрики."
     link="/docs/use-dbt-semantic-layer/dbt-sl"
     icon="dbt-bit"/>
 
   <Card
-    title="Available integrations"
-    body="Discover the diverse range of partners that seamlessly integrate with the powerful dbt Semantic Layer, allowing you to query and unlock valuable insights from your data ecosystem."
+    title="Доступные интеграции"
+    body="Откройте для себя разнообразие партнеров, которые бесшовно интегрируются с мощным семантическим уровнем dbt, позволяя вам запрашивать и извлекать ценные инсайты из вашей экосистемы данных."
     link="/docs/cloud-integrations/avail-sl-integrations"
     icon="dbt-bit"/>
 
 </div> <br />
 
-## Related docs
+## Связанные документы
 
-- [Quickstart guide with the dbt Semantic Layer](/guides/sl-snowflake-qs)
-- [The dbt Semantic Layer: what's next](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/) blog
-- [dbt Semantic Layer on-demand course](https://learn.getdbt.com/courses/semantic-layer)
-- [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs)
+- [Руководство по быстрому старту с семантическим уровнем dbt](/guides/sl-snowflake-qs)
+- [Семантический уровень dbt: что дальше](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/) блог
+- [Курс по семантическому уровню dbt по запросу](https://learn.getdbt.com/courses/semantic-layer)
+- [Часто задаваемые вопросы о семантическом уровне dbt](/docs/use-dbt-semantic-layer/sl-faqs)

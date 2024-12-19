@@ -1,37 +1,36 @@
---- 
-title: "About the visual editor" 
+---
+title: "О визуальном редакторе"
 id: visual-editor       
-sidebar_label: "About the visual editor" 
-description: "The visual editor enables analysts to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+sidebar_label: "О визуальном редакторе"
+description: "Визуальный редактор позволяет аналитикам быстро создавать и визуализировать модели dbt через визуальный интерфейс с функцией перетаскивания в dbt Cloud."
 pagination_next: "docs/cloud/visual-editor-interface"
 pagination_prev: null
 ---
 
-# About the visual editor <Lifecycle status='beta'/> 
+# О визуальном редакторе <Lifecycle status='beta'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-The dbt Cloud visual editor helps analysts quickly create, edit, and visualize dbt models through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
+Визуальный редактор dbt Cloud помогает аналитикам быстро создавать, редактировать и визуализировать модели dbt через визуальный интерфейс с функцией перетаскивания и встроенным ИИ для генерации пользовательского кода.
 </p>
 
-:::tip Beta feature
-The visual editor in dbt Cloud provides users with a seamless and visual, drag-and-drop experience inside dbt Cloud. It's available in private beta for [dbt Cloud Enterprise accounts](https://www.getdbt.com/pricing). 
+:::tip Бета-функция
+Визуальный редактор в dbt Cloud предоставляет пользователям бесшовный и визуальный интерфейс с функцией перетаскивания. Он доступен в частной бета-версии для [учетных записей dbt Cloud Enterprise](https://www.getdbt.com/pricing). 
 
-To join the private beta, [register your interest](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to your account team to begin this process.
+Чтобы присоединиться к частной бета-версии, [зарегистрируйте свой интерес](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) или свяжитесь с вашей командой по работе с клиентами, чтобы начать этот процесс.
 :::
 
-The visual editor allows organizations to enjoy the many benefits of code-driven development—such as increased precision, ease of debugging, and ease of validation &mdash; while retaining the flexibility to have different contributors develop wherever they are most comfortable. Users can also take advantage of built-in AI for custom code generation, making it an end-to-end frictionless experience.
+Визуальный редактор позволяет организациям наслаждаться многими преимуществами разработки на основе кода — такими как повышенная точность, простота отладки и легкость валидации — при этом сохраняя гибкость, позволяя различным участникам разрабатывать в наиболее удобной для них среде. Пользователи также могут воспользоваться встроенным ИИ для генерации пользовательского кода, что делает процесс бесшовным от начала до конца.
 
-These models compile directly to SQL and are indistinguishable from other dbt models in your projects:
-- Visual models are version-controlled in your backing Git provider.
-- All models are accessible across projects in [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro).
-- Models can be materialized into production through [dbt Cloud orchestration](/docs/deploy/deployments), or be built directly into a user's development schema.
-- Integrate with [dbt Explorer](/docs/collaborate/explore-projects) and the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+Эти модели компилируются непосредственно в SQL и неотличимы от других моделей dbt в ваших проектах:
+- Визуальные модели находятся под контролем версий в вашем Git-провайдере.
+- Все модели доступны в разных проектах в [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro).
+- Модели могут быть материализованы в производственной среде через [оркестрацию dbt Cloud](/docs/deploy/deployments) или быть построены непосредственно в схеме разработки пользователя.
+- Интеграция с [dbt Explorer](/docs/collaborate/explore-projects) и [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="90%" title="Create or edit dbt models with the Visual editor, enabling everyone to develop with dbt through a drag-and-drop experience inside of dbt Cloud." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="90%" title="Создавайте или редактируйте модели dbt с помощью визуального редактора, позволяя всем разрабатывать с dbt через интерфейс перетаскивания в dbt Cloud." />
 
-## Feedback
+## Обратная связь
 
-Please note, always review AI-generated code and content as it may produce incorrect results. The visual editor features and/or functionality may be added or eliminated as part of the beta trial.
+Обратите внимание, что всегда следует проверять сгенерированный ИИ код и контент, так как он может давать некорректные результаты. Функции и/или функциональность визуального редактора могут быть добавлены или удалены в рамках бета-тестирования.
 
-To give feedback, please reach out to your dbt Labs account team. We appreciate your feedback and suggestions as we improve the visual editor.
-
+Чтобы оставить отзыв, пожалуйста, свяжитесь с вашей командой dbt Labs. Мы ценим ваши отзывы и предложения по улучшению визуального редактора.

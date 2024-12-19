@@ -1,24 +1,23 @@
 ---
-title: "Materializations"
-description: "Read this tutorial to learn how to use materializations when building in dbt."
+title: "Материализации"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать материализации при работе с dbt."
 id: "materializations"
 pagination_next: "docs/build/incremental-models"
 ---
 
-## Overview
-<Term id="materialization">Materializations</Term> are strategies for persisting dbt models in a warehouse. There are five types of materializations built into dbt. They are:
+## Обзор
+<Term id="materialization">Материализации</Term> — это стратегии для сохранения моделей dbt в хранилище данных. В dbt встроено пять типов материализаций. Это:
 
 - <Term id="table" />
 - <Term id="view" />
-- incremental
-- ephemeral
-- materialized view
+- инкрементальная
+- эфемерная
+- материализованное представление
 
-You can also configure [custom materializations](/guides/create-new-materializations?step=1) in dbt. Custom materializations are a powerful way to extend dbt's functionality to meet your specific needs. 
+Вы также можете настроить [пользовательские материализации](/guides/create-new-materializations?step=1) в dbt. Пользовательские материализации — это мощный способ расширить функциональность dbt в соответствии с вашими конкретными потребностями. 
 
-
-## Configuring materializations
-By default, dbt models are materialized as "views". Models can be configured with a different materialization by supplying the [`materialized` configuration](/reference/resource-configs/materialized) parameter as shown in the following tabs.
+## Настройка материализаций
+По умолчанию модели dbt материализуются как "представления". Модели можно настроить с другой материализацией, указав параметр [`materialized` configuration](/reference/resource-configs/materialized), как показано в следующих вкладках.
 
 <Tabs>
 
@@ -27,7 +26,7 @@ By default, dbt models are materialized as "views". Models can be configured wit
 <File name='dbt_project.yml'>
 
 ```yaml
-# The following dbt_project.yml configures a project that looks like this:
+# Следующий dbt_project.yml настраивает проект, который выглядит так:
 # .
 # └── models
 #     ├── csvs
@@ -44,10 +43,10 @@ config-version: 2
 models:
   my_project:
     events:
-      # materialize all models in models/events as tables
+      # материализовать все модели в models/events как таблицы
       +materialized: table
     csvs:
-      # this is redundant, and does not need to be set
+      # это избыточно и не нужно настраивать
       +materialized: view
 ```
 
@@ -57,7 +56,7 @@ models:
 
 <TabItem value="Model file">
 
-Alternatively, materializations can be configured directly inside of the model sql files. This can be useful if you are also setting [Performance Optimization] configs for specific models (for example, [Redshift specific configurations](/reference/resource-configs/redshift-configs) or [BigQuery specific configurations](/reference/resource-configs/bigquery-configs)).
+Кроме того, материализации можно настраивать непосредственно внутри файлов sql модели. Это может быть полезно, если вы также настраиваете [оптимизацию производительности] для конкретных моделей (например, [конфигурации для Redshift](/reference/resource-configs/redshift-configs) или [конфигурации для BigQuery](/reference/resource-configs/bigquery-configs)).
 
 <File name='models/events/stg_event_log.sql'>
 
@@ -75,7 +74,7 @@ from ...
 
 <TabItem value="Property file">
 
-Materializations can also be configured in the model's `properties.yml` file.  The following example shows the `table` materialization type. For a complete list of materialization types, refer to [materializations](/docs/build/materializations#materializations).
+Материализации также можно настраивать в файле `properties.yml` модели. Следующий пример показывает тип материализации `table`. Для полного списка типов материализаций обратитесь к [материализациям](/docs/build/materializations#materializations).
 
 <File name='models/properties.yml'>
 
@@ -94,106 +93,95 @@ models:
 
 </Tabs>
 
-## Materializations
+## Материализации
 
+### Представление
+При использовании материализации `view` ваша модель пересоздается как представление при каждом запуске с помощью оператора `create view as`.
+* **Плюсы:** Не хранится дополнительная информация, представления на основе исходных данных всегда будут содержать последние записи.
+* **Минусы:** Представления, которые выполняют значительные преобразования или основаны на других представлениях, медленно запрашиваются.
+* **Советы:**
+    * Обычно начинайте с представлений для ваших моделей и меняйте на другую материализацию только тогда, когда заметите проблемы с производительностью.
+    * Представления лучше всего подходят для моделей, которые не выполняют значительных преобразований, например, переименования или изменения типов столбцов.
 
-### View
-When using the `view` materialization, your model is rebuilt as a view on each run, via a `create view as` statement.
-* **Pros:** No additional data is stored, views on top of source data will always have the latest records in them.
-* **Cons:** Views that perform a significant transformation, or are stacked on top of other views, are slow to query.
-* **Advice:**
-    * Generally start with views for your models, and only change to another materialization when you notice performance problems.
-    * Views are best suited for models that do not do significant transformation, e.g. renaming, or recasting columns.
+### Таблица
+При использовании материализации `table` ваша модель пересоздается как <Term id="table" /> при каждом запуске с помощью оператора `create table as`.
+* **Плюсы:** Таблицы быстро запрашиваются.
+* **Минусы:**
+    * Таблицы могут занять много времени для пересоздания, особенно при сложных преобразованиях.
+    * Новые записи в исходных данных не добавляются автоматически в таблицу.
+* **Советы:**
+  * Используйте материализацию таблицы для любых моделей, которые запрашиваются BI-инструментами, чтобы обеспечить более быстрый опыт для конечного пользователя.
+  * Также используйте материализацию таблицы для любых медленных преобразований, которые используются многими последующими моделями.
 
-### Table
-When using the `table` materialization, your model is rebuilt as a <Term id="table" /> on each run, via a `create table as` statement.
-* **Pros:** Tables are fast to query
-* **Cons:**
-    * Tables can take a long time to rebuild, especially for complex transformations
-    * New records in underlying source data are not automatically added to the table
-* **Advice:**
-  * Use the table materialization for any models being queried by BI tools, to give your end user a faster experience
-  * Also use the table materialization for any slower transformations that are used by many downstream models
+### Инкрементальная
+Инкрементальные модели позволяют dbt вставлять или обновлять записи в таблице с момента последнего запуска этой модели.
+* **Плюсы:** Вы можете значительно сократить время сборки, преобразовывая только новые записи.
+* **Минусы:** Инкрементальные модели требуют дополнительной настройки и являются продвинутым использованием dbt. Узнайте больше о использовании инкрементальных моделей [здесь](/docs/build/incremental-models).
+* **Советы:**
+    * Инкрементальные модели лучше всего подходят для данных в стиле событий.
+    * Используйте инкрементальные модели, когда ваши `dbt run` становятся слишком медленными (т.е. не начинайте с инкрементальных моделей).
 
+### Эфемерная
+Эфемерные модели не создаются непосредственно в базе данных. Вместо этого dbt интерполирует код из эфемерной модели в зависимые модели, используя общее выражение таблицы (<Term id="cte" />). Вы можете контролировать идентификатор для этого CTE, используя [псевдоним модели](/docs/build/custom-aliases), но dbt всегда будет добавлять префикс `__dbt__cte__` к идентификатору модели.
 
-### Incremental
-`incremental` models allow dbt to insert or update records into a table since the last time that model was run.
-* **Pros:** You can significantly reduce the build time by just transforming new records
-* **Cons:** Incremental models require extra configuration and are an advanced usage of dbt. Read more about using incremental models [here](/docs/build/incremental-models).
-* **Advice:**
-    * Incremental models are best for event-style data
-    * Use incremental models when your `dbt run`s are becoming too slow (i.e. don't start with incremental models)
+* **Плюсы:**
+    * Вы все равно можете писать повторно используемую логику.
+    * Эфемерные модели могут помочь поддерживать ваш <Term id="data-warehouse" /> в чистоте, уменьшая беспорядок (также рассмотрите возможность разделения ваших моделей по нескольким схемам, используя [пользовательские схемы](/docs/build/custom-schemas)).
+* **Минусы:**
+    * Вы не можете напрямую выбирать из этой модели.
+    * [Операции](/docs/build/hooks-operations#about-operations) (например, макросы, вызываемые с помощью [`dbt run-operation`](/reference/commands/run-operation), не могут `ref()` эфемерные узлы).
+    * Чрезмерное использование эфемерной материализации также может усложнить отладку запросов.
+    * Эфемерная материализация не поддерживает [контракты моделей](/docs/collaborate/govern/model-contracts#where-are-contracts-supported).
+* **Советы:** Используйте эфемерную материализацию для:
+    * очень легких преобразований, которые находятся на ранних этапах вашего DAG,
+    * которые используются только в одной или двух последующих моделях, и
+    * которые не нужно запрашивать напрямую.
 
-### Ephemeral
-`ephemeral` models are not directly built into the database. Instead, dbt will interpolate the code from an ephemeral model into its dependent models using a common table expression (<Term id="cte" />). You can control the identifier for this CTE using a [model alias](/docs/build/custom-aliases), but dbt will always prefix the model identifier with `__dbt__cte__`.
+### Материализованное представление
 
-* **Pros:**
-    * You can still write reusable logic
-  - Ephemeral models can help keep your <Term id="data-warehouse" /> clean by reducing clutter (also consider splitting your models across multiple schemas by [using custom schemas](/docs/build/custom-schemas)).
-* **Cons:**
-    * You cannot select directly from this model.
-    * [Operations](/docs/build/hooks-operations#about-operations) (for example, macros called using [`dbt run-operation`](/reference/commands/run-operation) cannot `ref()` ephemeral nodes)
-    * Overuse of ephemeral materialization can also make queries harder to debug.
-    * Ephemeral materialization doesn't support [model contracts](/docs/collaborate/govern/model-contracts#where-are-contracts-supported).
-* **Advice:**  Use the ephemeral materialization for:
-    * very light-weight transformations that are early on in your DAG
-    * are only used in one or two downstream models, and
-    * do not need to be queried directly
+Материализация `materialized_view` позволяет создавать и поддерживать материализованные представления в целевой базе данных.
+Материализованные представления представляют собой комбинацию представления и таблицы и служат для случаев использования, аналогичных инкрементальным моделям.
 
-### Materialized View
+* **Плюсы:**
+  * Материализованные представления объединяют производительность запросов таблицы с актуальностью данных представления.
+  * Материализованные представления работают аналогично инкрементальным материализациям, однако их обычно можно обновлять без ручного вмешательства с регулярной периодичностью (в зависимости от базы данных), избегая регулярного пакетного обновления dbt, необходимого для инкрементальных материализаций.
+  * `dbt run` для материализованных представлений соответствует развертыванию кода, как и для представлений.
+* **Минусы:**
+  * Из-за того, что материализованные представления являются более сложными объектами базы данных, платформы баз данных, как правило, имеют меньше доступных параметров конфигурации; смотрите документацию вашей платформы базы данных для получения дополнительных сведений.
+  * Материализованные представления могут не поддерживаться каждой платформой базы данных.
+* **Советы:**
+  * Рассмотрите возможность использования материализованных представлений для случаев, когда инкрементальные модели достаточны, но вы хотите, чтобы платформа данных управляла инкрементальной логикой и обновлением.
 
-The `materialized_view` materialization allows the creation and maintenance of materialized views in the target database.
-Materialized views are a combination of a view and a table, and serve use cases similar to incremental models.
+#### Мониторинг изменений конфигурации
 
-* **Pros:**
-  * Materialized views combine the query performance of a table with the data freshness of a view
-  * Materialized views operate much like incremental materializations, however they are usually
-able to be refreshed without manual interference on a regular cadence (depending on the database), forgoing the regular dbt batch refresh
-required with incremental materializations
-  * `dbt run` on materialized views corresponds to a code deployment, just like views
-* **Cons:**
-  * Due to the fact that materialized views are more complex database objects, database platforms tend to have
-fewer configuration options available; see your database platform's docs for more details
-  * Materialized views may not be supported by every database platform
-* **Advice:**
-  * Consider materialized views for use cases where incremental models are sufficient, but you would like the data platform to manage the incremental logic and refresh.
+Эта материализация использует конфигурацию [`on_configuration_change`](/reference/resource-configs/on_configuration_change), которая соответствует инкрементальному характеру одноименного объекта базы данных. Эта настройка сообщает dbt о том, чтобы пытаться вносить изменения конфигурации непосредственно в объект, когда это возможно, а не полностью пересоздавать объект для реализации обновленной конфигурации. Используя `dbt-postgres` в качестве примера, индексы могут быть удалены и созданы на материализованном представлении без необходимости пересоздавать само материализованное представление.
 
-#### Configuration Change Monitoring
+#### Запланированные обновления
 
-This materialization makes use of the [`on_configuration_change`](/reference/resource-configs/on_configuration_change)
-config, which aligns with the incremental nature of the namesake database object. This setting tells dbt to attempt to
-make configuration changes directly to the object when possible, as opposed to completely recreating
-the object to implement the updated configuration. Using `dbt-postgres` as an example, indexes can
-be dropped and created on the materialized view without the need to recreate the materialized view itself.
-
-#### Scheduled Refreshes
-
-In the context of a `dbt run` command, materialized views should be thought of as similar to views.
-For example, a `dbt run` command is only needed if there is the potential for a change in configuration or sql;
-it's effectively a deploy action.
-By contrast, a `dbt run` command is needed for a table in the same scenarios *AND when the data in the table needs to be updated*.
-This also holds true for incremental and snapshot models, whose underlying relations are tables.
-In the table cases, the scheduling mechanism is either dbt Cloud or your local scheduler;
-there is no built-in functionality to automatically refresh the data behind a table.
-However, most platforms (Postgres excluded) provide functionality to configure automatically refreshing a materialized view.
-Hence, materialized views work similarly to incremental models with the benefit of not needing to run dbt to refresh the data.
-This assumes, of course, that auto refresh is turned on and configured in the model.
+В контексте команды `dbt run` материализованные представления следует рассматривать как аналогичные представлениям.
+Например, команда `dbt run` требуется только в том случае, если есть вероятность изменения конфигурации или sql; это фактически действие развертывания.
+В отличие от этого, команда `dbt run` требуется для таблицы в тех же сценариях *И когда данные в таблице необходимо обновить*.
+Это также верно для инкрементальных и снимковых моделей, у которых подлежащие отношения — это таблицы.
+В случае таблиц механизм планирования — это либо dbt Cloud, либо ваш локальный планировщик; нет встроенной функциональности для автоматического обновления данных в таблице.
+Тем не менее, большинство платформ (за исключением Postgres) предоставляют функциональность для настройки автоматического обновления материализованного представления.
+Таким образом, материализованные представления работают аналогично инкрементальным моделям с преимуществом, что не нужно запускать dbt для обновления данных.
+Это предполагает, конечно, что автоматическое обновление включено и настроено в модели.
 
 :::info
-`dbt-snowflake` _does not_ support materialized views, it uses Dynamic Tables instead. For details, refer to [Snowflake specific configurations](/reference/resource-configs/snowflake-configs#dynamic-tables).
+`dbt-snowflake` _не поддерживает_ материализованные представления, вместо этого он использует динамические таблицы. Для получения подробной информации смотрите [конфигурации для Snowflake](/reference/resource-configs/snowflake-configs#dynamic-tables).
 :::
 
-## Python materializations
+## Материализации на Python
 
-Python models support two materializations:
+Модели на Python поддерживают две материализации:
 - `table`
 - `incremental`
 
-Incremental Python models support all the same [incremental strategies](/docs/build/incremental-strategy) as their SQL counterparts. The specific strategies supported depend on your adapter.
+Инкрементальные модели на Python поддерживают все те же [инкрементальные стратегии](/docs/build/incremental-strategy), что и их SQL-аналоги. Конкретные поддерживаемые стратегии зависят от вашего адаптера.
 
-Python models can't be materialized as `view` or `ephemeral`. Python isn't supported for non-model resource types (like tests and snapshots).
+Модели на Python не могут быть материализированы как `view` или `ephemeral`. Python не поддерживается для ресурсов, не относящихся к моделям (таких как тесты и снимки).
 
-For incremental models, like SQL models, you will need to filter incoming tables to only new rows of data:
+Для инкрементальных моделей, как и для SQL-моделей, вам нужно будет фильтровать входные таблицы, чтобы оставить только новые строки данных:
 
 <WHCode>
 
@@ -210,11 +198,11 @@ def model(dbt, session):
 
     if dbt.is_incremental:
 
-        # only new rows compared to max in current table
+        # только новые строки по сравнению с максимальным значением в текущей таблице
         max_from_this = f"select max(updated_at) from {dbt.this}"
         df = df.filter(df.updated_at >= session.sql(max_from_this).collect()[0][0])
 
-        # or only rows from the past 3 days
+        # или только строки за последние 3 дня
         df = df.filter(df.updated_at >= F.dateadd("day", F.lit(-3), F.current_timestamp()))
 
     ...
@@ -239,11 +227,11 @@ def model(dbt, session):
 
     if dbt.is_incremental:
 
-        # only new rows compared to max in current table
+        # только новые строки по сравнению с максимальным значением в текущей таблице
         max_from_this = f"select max(updated_at) from {dbt.this}"
         df = df.filter(df.updated_at >= session.sql(max_from_this).collect()[0][0])
 
-        # or only rows from the past 3 days
+        # или только строки за последние 3 дня
         df = df.filter(df.updated_at >= F.date_add(F.current_timestamp(), F.lit(-3)))
 
     ...
@@ -257,8 +245,7 @@ def model(dbt, session):
 
 </WHCode>
 
-**Note:** Incremental models are supported on BigQuery/Dataproc for the `merge` incremental strategy. The `insert_overwrite` strategy is not yet supported.
+**Примечание:** Инкрементальные модели поддерживаются на BigQuery/Dataproc для стратегии инкремента `merge`. Стратегия `insert_overwrite` пока не поддерживается.
 
 <Snippet path="discourse-help-feed-header" />
 <DiscourseHelpFeed tags="materialization"/>
-

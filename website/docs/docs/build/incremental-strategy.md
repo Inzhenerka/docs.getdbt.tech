@@ -1,31 +1,31 @@
 ---
-title: "About incremental strategy"
-description: "Learn about the various ways (strategies) to implement incremental materializations."
+title: "О стратегии инкрементного обновления"
+description: "Узнайте о различных способах (стратегиях) реализации инкрементных материализаций."
 id: "incremental-strategy"
 ---
 
-There are various strategies to implement the concept of incremental materializations. The value of each strategy depends on:
+Существует несколько стратегий для реализации концепции инкрементных материализаций. Ценность каждой стратегии зависит от:
 
-* The volume of data.
-* The reliability of your `unique_key`.
-* The support of certain features in your data platform.
+* Объема данных.
+* Надежности вашего `unique_key`.
+* Поддержки определенных функций в вашей платформе данных.
 
-An optional `incremental_strategy` config is provided in some adapters that controls the code that dbt uses to build incremental models.
+Некоторые адаптеры предоставляют необязательную конфигурацию `incremental_strategy`, которая контролирует код, используемый dbt для построения инкрементных моделей.
 
-:::info Microbatch <Lifecycle status="beta" />
+:::info Микропакеты <Статус жизненного цикла="бета" />
 
-The [`microbatch` incremental strategy](/docs/build/incremental-microbatch) is intended for large time-series datasets. dbt will process the incremental model in multiple queries (or "batches") based on a configured `event_time` column. Depending on the volume and nature of your data, this can be more efficient and resilient than using a single query for adding new data.
+[`микропакетная` инкрементная стратегия](/docs/build/incremental-microbatch) предназначена для больших временных рядов данных. dbt будет обрабатывать инкрементную модель в нескольких запросах (или "пакетах") на основе настроенного столбца `event_time`. В зависимости от объема и характера ваших данных это может быть более эффективно и устойчиво, чем использование одного запроса для добавления новых данных.
 
 :::
 
-### Supported incremental strategies by adapter
+### Поддерживаемые инкрементные стратегии по адаптерам
 
-This table represents the availability of each incremental strategy, based on the latest version of dbt Core and each adapter.
+Эта таблица представляет доступность каждой инкрементной стратегии на основе последней версии dbt Core и каждого адаптера.
 
-Click the name of the adapter in the below table for more information about supported incremental strategies.
+Нажмите на название адаптера в таблице ниже для получения дополнительной информации о поддерживаемых инкрементных стратегиях.
 
-| Data platform adapter | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` <Lifecycle status="beta"/> |
-|-----------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
+| Адаптер платформы данных | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` <Статус жизненного цикла="бета"/> |
+|--------------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
 | [dbt-postgres](/reference/resource-configs/postgres-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅            |
 | [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |        ✅        |                    |      ✅        |
 | [dbt-bigquery](/reference/resource-configs/bigquery-configs#merge-behavior-incremental-models)      |           |    ✅   |                 |          ✅         |      ✅            |
@@ -36,10 +36,9 @@ Click the name of the adapter in the below table for more information about supp
 | [dbt-fabric](/reference/resource-configs/fabric-configs#incremental)                                |     ✅    |         |        ✅          |                    |                    |
 | [dbt-athena](/reference/resource-configs/athena-configs#incremental-models)                         |     ✅    |    ✅   |                 |          ✅         |                    |
 
-### Configuring incremental strategy
+### Настройка инкрементной стратегии
 
-The `incremental_strategy` config can either be defined in specific models or
-for all models in your `dbt_project.yml` file:
+Конфигурация `incremental_strategy` может быть определена как в конкретных моделях, так и для всех моделей в вашем файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -50,7 +49,7 @@ models:
 
 </File>
 
-or:
+или:
 
 <File name='models/my_model.sql'>
 
@@ -69,11 +68,11 @@ select ...
 
 </File>
 
-### Strategy-specific configs
+### Конфигурации, специфичные для стратегии
 
-If you use the `merge` strategy and specify a `unique_key`, by default, dbt will entirely overwrite matched rows with new values.
+Если вы используете стратегию `merge` и указываете `unique_key`, по умолчанию dbt полностью перезапишет совпадающие строки новыми значениями.
 
-On adapters which support the `merge` strategy (including Snowflake, BigQuery, Apache Spark, and Databricks), you may optionally pass a list of column names to a `merge_update_columns` config. In that case, dbt will update _only_ the columns specified by the config, and keep the previous values of other columns.
+На адаптерах, которые поддерживают стратегию `merge` (включая Snowflake, BigQuery, Apache Spark и Databricks), вы можете дополнительно передать список имен столбцов в конфигурацию `merge_update_columns`. В этом случае dbt обновит _только_ столбцы, указанные в конфигурации, и сохранит предыдущие значения других столбцов.
 
 <File name='models/my_model.sql'>
 
@@ -92,7 +91,7 @@ select ...
 
 </File>
 
-Alternatively, you can specify a list of columns to exclude from being updated by passing a list of column names to a `merge_exclude_columns` config.
+В качестве альтернативы вы можете указать список столбцов, которые следует исключить из обновления, передав список имен столбцов в конфигурацию `merge_exclude_columns`.
 
 <File name='models/my_model.sql'>
 
@@ -111,11 +110,11 @@ select ...
 
 </File>
 
-### About incremental_predicates
+### О `incremental_predicates`
 
-`incremental_predicates` is an advanced use of incremental models, where data volume is large enough to justify additional investments in performance. This config accepts a list of any valid SQL expression(s). dbt does not check the syntax of the SQL statements. 
+`incremental_predicates` — это продвинутое использование инкрементных моделей, когда объем данных достаточно велик, чтобы оправдать дополнительные инвестиции в производительность. Эта конфигурация принимает список любых допустимых SQL выражений. dbt не проверяет синтаксис SQL операторов.
 
-This an example of a model configuration in a `yml` file you might expect to see on Snowflake:
+Вот пример конфигурации модели в файле `yml`, который вы могли бы ожидать увидеть на Snowflake:
 
 ```yml
 
@@ -124,19 +123,19 @@ models:
     config:
       materialized: incremental
       unique_key: id
-      # this will affect how the data is stored on disk, and indexed to limit scans
+      # это повлияет на то, как данные хранятся на диске и индексируются для ограничения сканирования
       cluster_by: ['session_start']  
       incremental_strategy: merge
-      # this limits the scan of the existing table to the last 7 days of data
+      # это ограничивает сканирование существующей таблицы до последних 7 дней данных
       incremental_predicates: ["DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)"]
-      # `incremental_predicates` accepts a list of SQL statements. 
-      # `DBT_INTERNAL_DEST` and `DBT_INTERNAL_SOURCE` are the standard aliases for the target table and temporary table, respectively, during an incremental run using the merge strategy. 
+      # `incremental_predicates` принимает список SQL операторов. 
+      # `DBT_INTERNAL_DEST` и `DBT_INTERNAL_SOURCE` — это стандартные псевдонимы для целевой таблицы и временной таблицы соответственно во время инкрементного выполнения с использованием стратегии слияния. 
 ```
 
-Alternatively, here are the same configurations configured within a model file:
+В качестве альтернативы, вот те же конфигурации, настроенные в файле модели:
 
 ```sql
--- in models/my_incremental_model.sql
+-- в models/my_incremental_model.sql
 
 {{
   config(
@@ -154,21 +153,21 @@ Alternatively, here are the same configurations configured within a model file:
 
 ```
 
-This will template (in the `dbt.log` file) a `merge` statement like:
+Это создаст (в файле `dbt.log`) оператор `merge`, подобный следующему:
 ```sql
 merge into <existing_table> DBT_INTERNAL_DEST
     from <temp_table_with_new_records> DBT_INTERNAL_SOURCE
     on
-        -- unique key
+        -- уникальный ключ
         DBT_INTERNAL_DEST.id = DBT_INTERNAL_SOURCE.id
         and
-        -- custom predicate: limits data scan in the "old" data / existing table
+        -- пользовательский предикат: ограничивает сканирование данных в "старых" данных / существующей таблице
         DBT_INTERNAL_DEST.session_start > dateadd(day, -7, current_date)
     when matched then update ...
     when not matched then insert ...
 ```
 
-Limit the data scan of _upstream_ tables within the body of their incremental model SQL, which will limit the amount of "new" data processed/transformed.
+Ограничьте сканирование данных _вверх по потоку_ в теле SQL инкрементной модели, что ограничит количество "новых" данных, обрабатываемых/трансформируемых.
 
 ```sql
 with large_source_table as (
@@ -184,25 +183,25 @@ with large_source_table as (
 ```
 
 :::info
-The syntax depends on how you configure your `incremental_strategy`:
-- If using the `merge` strategy, you may need to explicitly alias any columns with either `DBT_INTERNAL_DEST` ("old" data) or `DBT_INTERNAL_SOURCE` ("new" data). 
-- There's a decent amount of conceptual overlap with the `insert_overwrite` incremental strategy.
+Синтаксис зависит от того, как вы настраиваете свою `incremental_strategy`:
+- Если используется стратегия `merge`, вам может потребоваться явно указать псевдонимы для любых столбцов с помощью `DBT_INTERNAL_DEST` ("старые" данные) или `DBT_INTERNAL_SOURCE` ("новые" данные). 
+- Существует значительное концептуальное пересечение со стратегией инкрементного обновления `insert_overwrite`.
 :::
 
-### Built-in strategies
+### Встроенные стратегии
 
-Before diving into [custom strategies](#custom-strategies), it's important to understand the built-in incremental strategies in dbt and their corresponding macros:
+Перед тем как углубиться в [пользовательские стратегии](#custom-strategies), важно понять встроенные инкрементные стратегии в dbt и соответствующие им макросы:
 
-| `incremental_strategy` | Corresponding macro                    |
-|------------------------|----------------------------------------|
-| `append`               | `get_incremental_append_sql`           |
-| `delete+insert`        | `get_incremental_delete_insert_sql`    |
-| `merge`                | `get_incremental_merge_sql`            |
-| `insert_overwrite`     | `get_incremental_insert_overwrite_sql` |
-| `microbatch`  <Lifecycle status="beta"/>         | `get_incremental_microbatch_sql`       |
+| `incremental_strategy` | Соответствующий макрос                    |
+|------------------------|-------------------------------------------|
+| `append`               | `get_incremental_append_sql`              |
+| `delete+insert`        | `get_incremental_delete_insert_sql`       |
+| `merge`                | `get_incremental_merge_sql`               |
+| `insert_overwrite`     | `get_incremental_insert_overwrite_sql`    |
+| `microbatch`  <Статус жизненного цикла="бета"/>         | `get_incremental_microbatch_sql`          |
 
 
-For example, a built-in strategy for the `append` can be defined and used with the following files:
+Например, встроенная стратегия для `append` может быть определена и использована с помощью следующих файлов:
 
 <File name='macros/append.sql'>
 
@@ -228,7 +227,7 @@ For example, a built-in strategy for the `append` can be defined and used with t
 ```
 </File>
 
-Define a model models/my_model.sql:
+Определите модель models/my_model.sql:
 
 ```sql
 {{ config(
@@ -239,22 +238,22 @@ Define a model models/my_model.sql:
 select * from {{ ref("some_model") }}
 ```
 
-### Custom strategies
+### Пользовательские стратегии
 
-:::note limited support
+:::note ограниченная поддержка
 
-Custom strategies are not currently supported on the BigQuery and Spark adapters.
+Пользовательские стратегии в настоящее время не поддерживаются на адаптерах BigQuery и Spark.
 
 :::
 
-From dbt v1.2 and onwards, users have an easier alternative to [creating an entirely new materialization](/guides/create-new-materializations). They define and use their own "custom" incremental strategies by:
+Начиная с версии dbt 1.2, пользователи имеют более простой способ [создания совершенно новой материализации](/guides/create-new-materializations). Они могут определить и использовать свои собственные "пользовательские" инкрементные стратегии, следуя этим шагам:
 
-1. Defining a macro named `get_incremental_STRATEGY_sql`. Note that `STRATEGY` is a placeholder and you should replace it with the name of your custom incremental strategy.
-2. Configuring `incremental_strategy: STRATEGY` within an incremental model.
+1. Определите макрос с именем `get_incremental_STRATEGY_sql`. Обратите внимание, что `STRATEGY` является заполнительным текстом, и вы должны заменить его на название вашей пользовательской инкрементной стратегии.
+2. Настройте `incremental_strategy: STRATEGY` в рамках инкрементной модели.
 
-dbt won't validate user-defined strategies, it will just look for the macro by that name, and raise an error if it can't find one.
+dbt не будет проверять пользовательские стратегии, он просто будет искать макрос с таким именем и выдаст ошибку, если не сможет его найти.
 
-For example, a user-defined strategy named `insert_only` can be defined and used with the following files:
+Например, пользовательская стратегия с именем `insert_only` может быть определена и использована с помощью следующих файлов:
 
 <File name='macros/my_custom_strategies.sql'>
 
@@ -295,13 +294,13 @@ For example, a user-defined strategy named `insert_only` can be defined and used
 
 </File>
 
-If you use a custom microbatch macro, set a [`require_batched_execution_for_custom_microbatch_strategy` behavior flag](/reference/global-configs/behavior-changes#custom-microbatch-strategy) in your `dbt_project.yml` to enable batched execution of your custom strategy. 
+Если вы используете пользовательский макрос микропакетов, установите флаг поведения [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy) в вашем `dbt_project.yml`, чтобы включить пакетное выполнение вашей пользовательской стратегии. 
 
-### Custom strategies from a package
+### Пользовательские стратегии из пакета
 
-To use the `merge_null_safe` custom incremental strategy from the `example` package:
-- [Install the package](/docs/build/packages#how-do-i-add-a-package-to-my-project)
-- Add the following macro to your project:
+Чтобы использовать пользовательскую инкрементную стратегию `merge_null_safe` из пакета `example`:
+- [Установите пакет](/docs/build/packages#how-do-i-add-a-package-to-my-project)
+- Добавьте следующий макрос в ваш проект:
 
 <File name='macros/my_custom_strategies.sql'>
 

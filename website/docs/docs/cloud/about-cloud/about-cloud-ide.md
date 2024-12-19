@@ -1,30 +1,30 @@
 ---
-title: "About dbt Cloud IDE"
+title: "О dbt Cloud IDE"
 id: about-cloud-ide
-description: "about dbt Cloud Integrated Development Environment"
-sidebar_label: About dbt Cloud IDE
+description: "о интегрированной среде разработки dbt Cloud"
+sidebar_label: О dbt Cloud IDE
 ---
 
-The dbt Cloud integrated development environment (IDE) is a single interface for building, testing, running, and version-controlling dbt projects from your browser. With the Cloud IDE, you can compile dbt code into SQL and run it against your database directly.
+Интегрированная среда разработки (IDE) dbt Cloud представляет собой единый интерфейс для создания, тестирования, выполнения и контроля версий проектов dbt из вашего браузера. С помощью Cloud IDE вы можете компилировать код dbt в SQL и выполнять его непосредственно в вашей базе данных.
 
-With the Cloud IDE, you can:
+С помощью Cloud IDE вы можете:
 
-- Write modular SQL models with select statements and the ref() function,
-- Compile dbt code into SQL and execute it against your database directly,
-- Test every model before deploying them to production,
-- Generate and view documentation of your dbt project,
-- Leverage git and version-control your code from your browser with a couple of clicks,
-- Create and test Python models:
-    * Compile Python models to see the full function that gets executed in your data platform
-    * See Python models in DAG in dbt version 1.3 and higher
-    * Currently, you can't preview python models
-- Visualize a directed acyclic graph (DAG), and more.
+- Писать модульные SQL модели с операторами select и функцией ref(),
+- Компилировать код dbt в SQL и выполнять его непосредственно в вашей базе данных,
+- Тестировать каждую модель перед развертыванием в производственной среде,
+- Генерировать и просматривать документацию вашего проекта dbt,
+- Использовать git и контролировать версии вашего кода из браузера всего за несколько кликов,
+- Создавать и тестировать Python модели:
+    * Компилировать Python модели, чтобы увидеть полную функцию, которая выполняется в вашей платформе данных
+    * Просматривать Python модели в DAG в dbt версии 1.3 и выше
+    * В настоящее время вы не можете предварительно просмотреть Python модели
+- Визуализировать направленный ациклический граф (DAG) и многое другое.
 
-<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="The dbt Cloud IDE in dark mode"/>
+<Lightbox src src="/img/docs/dbt-cloud/cloud-ide/cloud-ide-v2.jpg" width="85%" title="Интерфейс dbt Cloud IDE в темном режиме"/>
 
-For more information, read the complete [Cloud IDE guide](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+Для получения дополнительной информации прочитайте полный [руководство по Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
 
-## Related docs
+## Связанные документы
 
-- [IDE user interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
-- [Keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)
+- [Интерфейс пользователя IDE](/docs/cloud/dbt-cloud-ide/ide-user-interface)
+- [Сочетания клавиш](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)

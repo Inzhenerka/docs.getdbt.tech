@@ -1,29 +1,26 @@
 ---
-title: About dbt Cloud setup
+title: О настройке dbt Cloud
 id: about-cloud-setup
-description: "Configuration settings for dbt Cloud."
-sidebar_label: "About dbt Cloud setup"
+description: "Настройки конфигурации для dbt Cloud."
+sidebar_label: "О настройке dbt Cloud"
 pagination_next: "docs/dbt-cloud-environments"
 pagination_prev: null
 ---
 
-dbt Cloud is the fastest and most reliable way to deploy your dbt jobs. It contains a myriad of settings that can be configured by admins, from the necessities (data platform integration) to security enhancements (SSO) and quality-of-life features (RBAC).
+dbt Cloud — это самый быстрый и надежный способ развертывания ваших dbt задач. Он содержит множество настроек, которые могут быть сконфигурированы администраторами, от необходимых (интеграция с платформой данных) до улучшений безопасности (SSO) и удобных функций (RBAC).
 
-This portion of our documentation will take you through the various settings in the dbt Cloud UI, including:
+Эта часть нашей документации проведет вас через различные настройки в интерфейсе dbt Cloud, включая:
 
-- [Connecting to a data platform](/docs/cloud/connect-data-platform/about-connections)
-- Configuring access to [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab), or your own [git repo URL](/docs/cloud/git/import-a-project-by-git-url).
-- [Managing users and licenses](/docs/cloud/manage-access/seats-and-users)
-- [Configuring secure access](/docs/cloud/manage-access/about-user-access)
+- [Подключение к платформе данных](/docs/cloud/connect-data-platform/about-connections)
+- Настройку доступа к [GitHub](/docs/cloud/git/connect-github), [GitLab](/docs/cloud/git/connect-gitlab) или вашему собственному [URL репозитория git](/docs/cloud/git/import-a-project-by-git-url).
+- [Управление пользователями и лицензиями](/docs/cloud/manage-access/seats-and-users)
+- [Настройку безопасного доступа](/docs/cloud/manage-access/about-user-access)
 
-For steps on installing dbt Cloud development tools, refer to the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) or the [dbt Cloud IDE (browser-based)](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+Для получения инструкций по установке инструментов разработки dbt Cloud, обратитесь к [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [dbt Cloud IDE (веб-версия)](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
 
-These settings are intended for dbt Cloud administrators. If you need a more detailed first-time setup guide for specific data platforms, read our [quickstart guides](/guides). If you want a more in-depth learning experience, we recommend taking the dbt Fundamentals on our [dbt Learn site](https://learn.getdbt.com/).
+Эти настройки предназначены для администраторов dbt Cloud. Если вам нужен более подробный справочник по первичной настройке для конкретных платформ данных, прочитайте наши [руководства по быстрому старту](/guides). Если вы хотите получить более глубокий опыт обучения, мы рекомендуем пройти курс dbt Fundamentals на нашем [сайте dbt Learn](https://learn.getdbt.com/).
 
-## Prerequisites
+## Предварительные требования
 
-- To set up dbt Cloud, you'll need to have a dbt Cloud account with administrator access. If you still need to create a dbt Cloud account, [sign up today](https://getdbt.com) on our North American servers or [contact us](https://getdbt.com/contact) for international options.
-- To have the best experience using dbt Cloud, we recommend you use modern and up-to-date web browsers like Chrome, Safari, Edge, and Firefox.
-
-
-
+- Для настройки dbt Cloud вам потребуется учетная запись dbt Cloud с правами администратора. Если вам еще нужно создать учетную запись dbt Cloud, [зарегистрируйтесь сегодня](https://getdbt.com) на наших североамериканских серверах или [свяжитесь с нами](https://getdbt.com/contact) для международных вариантов.
+- Для наилучшего использования dbt Cloud мы рекомендуем использовать современные и обновленные веб-браузеры, такие как Chrome, Safari, Edge и Firefox.

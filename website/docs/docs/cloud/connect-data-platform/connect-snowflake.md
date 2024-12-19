@@ -1,144 +1,140 @@
 ---
-title: "Connect Snowflake"
+title: "Подключение к Snowflake"
 id: connect-snowflake
-description: "Configure Snowflake connection."
-sidebar_label: "Connect Snowflake"
+description: "Настройка подключения к Snowflake."
+sidebar_label: "Подключение к Snowflake"
 ---
 
 :::note
 
-dbt Cloud connections and credentials inherit the permissions of the accounts configured. You can customize roles and associated permissions in Snowflake to fit your company's requirements and fine-tune access to database objects in your account. See [Snowflake permissions](/reference/database-permissions/snowflake-permissions) for more information about customizing roles in Snowflake.
+Подключения и учетные данные dbt Cloud наследуют разрешения настроенных учетных записей. Вы можете настроить роли и связанные с ними разрешения в Snowflake в соответствии с требованиями вашей компании и уточнить доступ к объектам базы данных в вашей учетной записи. См. [Разрешения Snowflake](/reference/database-permissions/snowflake-permissions) для получения дополнительной информации о настройке ролей в Snowflake.
 
-Refer to [Snowflake permissions](/reference/database-permissions/snowflake-permissions) for more information about customizing roles in Snowflake.
+Смотрите [Разрешения Snowflake](/reference/database-permissions/snowflake-permissions) для получения дополнительной информации о настройке ролей в Snowflake.
 
 :::
 
-The following fields are required when creating a Snowflake connection
+Следующие поля обязательны при создании подключения к Snowflake
 
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | ----- | ----------- | -------- |
-| Account | The Snowflake account to connect to. Take a look [here](/docs/core/connect-data-platform/snowflake-setup#account) to determine what the account field should look like based on your region.| <Snippet path="snowflake-acct-name" /> |
-| Role | A mandatory field indicating what role should be assumed after connecting to Snowflake | `transformer` |
-| Database | The logical database to connect to and run queries against. | `analytics` |
-| Warehouse | The virtual warehouse to use for running queries. | `transforming` |
+| Account | Учетная запись Snowflake, к которой нужно подключиться. Посмотрите [здесь](/docs/core/connect-data-platform/snowflake-setup#account), чтобы определить, как должно выглядеть поле учетной записи в зависимости от вашего региона. | <Snippet path="snowflake-acct-name" /> |
+| Role | Обязательное поле, указывающее, какую роль следует принять после подключения к Snowflake | `transformer` |
+| Database | Логическая база данных, к которой нужно подключиться и выполнять запросы. | `analytics` |
+| Warehouse | Виртуальный склад, который будет использоваться для выполнения запросов. | `transforming` |
 
-## Authentication methods
+## Методы аутентификации
 
-This section describes the different authentication methods for connecting dbt Cloud to Snowflake. Configure Deployment environment (Production, Staging, General) credentials globally in the [**Connections**](/docs/deploy/deploy-environments#deployment-connection) area of **Account settings**. Individual users configure their development credentials in the [**Credentials**](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) area of their user profile. 
+В этом разделе описаны различные методы аутентификации для подключения dbt Cloud к Snowflake. Настройте учетные данные для среды развертывания (Production, Staging, General) глобально в области [**Подключения**](/docs/deploy/deploy-environments#deployment-connection) в **Настройках учетной записи**. Отдельные пользователи настраивают свои учетные данные для разработки в области [**Учетные данные**](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud#get-started-with-the-cloud-ide) своего профиля пользователя.
 
-### Username / Password
+### Имя пользователя / Пароль
 
-**Available in:** Development environments, Deployment environments
+**Доступно в:** Средах разработки, Средах развертывания
 
-The `Username / Password` auth method is the simplest way to authenticate
-Development or Deployment credentials in a dbt project. Simply enter your Snowflake
-username (specifically, the `login_name`) and the corresponding user's Snowflake `password`
-to authenticate dbt Cloud to run queries against Snowflake on behalf of a Snowflake user.
+Метод аутентификации `Имя пользователя / Пароль` является самым простым способом аутентификации учетных данных разработки или развертывания в проекте dbt. Просто введите ваше имя пользователя Snowflake (в частности, `login_name`) и соответствующий пароль пользователя Snowflake, чтобы аутентифицировать dbt Cloud для выполнения запросов от имени пользователя Snowflake.
 
-**Note**: The schema field in the **Developer Credentials** section is a required field.
-<Lightbox src="/img/docs/dbt-cloud/snowflake-userpass-auth.png" width="70%" title="Snowflake username/password authentication"/>
+**Примечание**: Поле схемы в разделе **Учетные данные разработчика** является обязательным полем.
+<Lightbox src="/img/docs/dbt-cloud/snowflake-userpass-auth.png" width="70%" title="Аутентификация по имени пользователя/паролю Snowflake"/>
 
 ### Snowflake MFA
 
-**Prerequisites:**
-- A development environment in a dbt Cloud project
-- The Duo authentication app
-- Admin access to Snowflake (if MFA settings haven't already been applied to the account)
-- [Admin (write) access](/docs/cloud/manage-access/seats-and-users) to dbt Cloud environments
+**Предварительные условия:**
+- Среда разработки в проекте dbt Cloud
+- Приложение аутентификации Duo
+- Административный доступ к Snowflake (если настройки MFA еще не были применены к учетной записи)
+- [Административный (запись) доступ](/docs/cloud/manage-access/seats-and-users) к средам dbt Cloud
 
-dbt Cloud supports Snowflake's [multi-factor authentication (MFA)](https://docs.snowflake.com/en/user-guide/security-mfa) as another username and password option for increased login security. Snowflake's MFA support is powered by the Duo Security service.
+dbt Cloud поддерживает [многофакторную аутентификацию (MFA)](https://docs.snowflake.com/en/user-guide/security-mfa) Snowflake в качестве еще одного варианта имени пользователя и пароля для повышения безопасности входа. Поддержка MFA в Snowflake осуществляется с помощью сервиса Duo Security.
 
-- In dbt Cloud, set the following [extended attribute](/docs/dbt-cloud-environments#extended-attributes) in the development environment **General settings** page, under the **Extended attributes** section:
+- В dbt Cloud установите следующий [расширенный атрибут](/docs/dbt-cloud-environments#extended-attributes) на странице **Общие настройки** среды разработки, в разделе **Расширенные атрибуты**:
 
    ```yaml
   authenticator: username_password_mfa
    ```
 
-- To reduce the number of user prompts when connecting to Snowflake with MFA, [enable token caching](https://docs.snowflake.com/en/user-guide/security-mfa#using-mfa-token-caching-to-minimize-the-number-of-prompts-during-authentication-optional) in Snowflake.
-- Optionally, if users miss prompts and their Snowflake accounts get locked, you can prevent automatic retries by adding the following in the same **Extended attributes** section:
+- Чтобы уменьшить количество запросов к пользователю при подключении к Snowflake с MFA, [включите кэширование токенов](https://docs.snowflake.com/en/user-guide/security-mfa#using-mfa-token-caching-to-minimize-the-number-of-prompts-during-authentication-optional) в Snowflake.
+- При желании, если пользователи пропускают запросы и их учетные записи Snowflake блокируются, вы можете предотвратить автоматические повторные попытки, добавив следующее в тот же раздел **Расширенные атрибуты**:
 
   ```yaml
   connect_retries: 0
   ```
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/extended-attributes-mfa.jpg" width="70%" title="Configure the MFA username and password, and connect_retries in the development environment settings." />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/extended-attributes-mfa.jpg" width="70%" title="Настройка имени пользователя и пароля MFA, а также connect_retries в настройках среды разработки." />
 
-### Key pair
+### Пара ключей
 
-**Available in:** Development environments,  Deployment environments
+**Доступно в:** Средах разработки, Средах развертывания
 
-The `Keypair` auth method uses Snowflake's [Key Pair Authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth) to authenticate Development or Deployment credentials for a dbt Cloud project.
+Метод аутентификации `Пара ключей` использует [Аутентификацию по паре ключей](https://docs.snowflake.com/en/user-guide/key-pair-auth) Snowflake для аутентификации учетных данных разработки или развертывания для проекта dbt Cloud.
 
-1. After [generating an encrypted key pair](https://docs.snowflake.com/en/user-guide/key-pair-auth.html#configuring-key-pair-authentication), be sure to set the `rsa_public_key` for the Snowflake user to authenticate in dbt Cloud:
+1. После [генерации зашифрованной пары ключей](https://docs.snowflake.com/en/user-guide/key-pair-auth.html#configuring-key-pair-authentication) убедитесь, что вы установили `rsa_public_key` для пользователя Snowflake для аутентификации в dbt Cloud:
 
    ```sql
    alter user jsmith set rsa_public_key='MIIBIjANBgkqh...';   
    ```
 
-2. Finally, set the **Private Key** and **Private Key Passphrase** fields in the **Credentials** page to finish configuring dbt Cloud to authenticate with Snowflake using a key pair.
-   - **Note:** Unencrypted private keys are permitted. Use a passphrase only if needed. Starting from [dbt version 1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7), dbt introduced the ability to specify a `private_key` directly as a string instead of a `private_key_path`. This `private_key` string can be in either Base64-encoded DER format, representing the key bytes, or in plain-text PEM format. Refer to [Snowflake documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for more info on how they generate the key.
+2. Наконец, заполните поля **Частный ключ** и **Пароль частного ключа** на странице **Учетные данные**, чтобы завершить настройку dbt Cloud для аутентификации с помощью пары ключей.
+   - **Примечание:** Не зашифрованные частные ключи разрешены. Используйте пароль только в случае необходимости. Начиная с [версии dbt 1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7), dbt представил возможность указывать `private_key` непосредственно как строку вместо `private_key_path`. Эта строка `private_key` может быть в формате DER, закодированном в Base64, представляющем байты ключа, или в формате PEM в открытом виде. Обратитесь к [документации Snowflake](https://docs.snowflake.com/en/user-guide/key-pair-auth) для получения дополнительной информации о том, как они генерируют ключ.
 
-3. To successfully fill in the Private Key field, you _must_ include commented lines. If you receive a `Could not deserialize key data` or `JWT token` error, refer to [Troubleshooting](#troubleshooting) for more info. 
+3. Чтобы успешно заполнить поле Частный ключ, вы _должны_ включить закомментированные строки. Если вы получаете ошибку `Не удалось десериализовать данные ключа` или `JWT токен`, обратитесь к разделу [Устранение неполадок](#troubleshooting) для получения дополнительной информации.
 
-**Example:**
+**Пример:**
 
 ```sql
 -----BEGIN ENCRYPTED PRIVATE KEY-----
-< encrypted private key contents here - line 1 >
-< encrypted private key contents here - line 2 >
+< содержимое зашифрованного частного ключа здесь - строка 1 >
+< содержимое зашифрованного частного ключа здесь - строка 2 >
 < ... >
 -----END ENCRYPTED PRIVATE KEY-----
 ```
 
-   <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Snowflake keypair authentication"/>
+   <Lightbox src="/img/docs/dbt-cloud/snowflake-keypair-auth.png" width="60%" title="Аутентификация по паре ключей Snowflake"/>
 
 ### Snowflake OAuth
 
-**Available in:** Development environments, Enterprise plans only
+**Доступно в:** Средах разработки, только для корпоративных планов
 
-The OAuth auth method permits dbt Cloud to run development queries on behalf of
-a Snowflake user without the configuration of Snowflake password in dbt Cloud. 
+Метод аутентификации OAuth позволяет dbt Cloud выполнять запросы разработки от имени пользователя Snowflake без настройки пароля Snowflake в dbt Cloud.
 
-For more information on configuring a Snowflake OAuth connection in dbt Cloud, please see [the docs on setting up Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth).
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" width="55%" title="Configuring Snowflake OAuth connection"/>
+Для получения дополнительной информации о настройке подключения Snowflake OAuth в dbt Cloud, пожалуйста, смотрите [документацию по настройке Snowflake OAuth](/docs/cloud/manage-access/set-up-snowflake-oauth).
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" width="55%" title="Настройка подключения Snowflake OAuth"/>
 
-## Configuration
+## Настройка
 
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Snowflake-specific configuration](/reference/resource-configs/snowflake-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Snowflake](/reference/resource-configs/snowflake-configs).
 
-### Custom domain URL
+### URL пользовательского домена
 
-To connect to Snowflake through a custom domain (vanity URL) instead of the account locator, use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to configure the `host` parameter with the custom domain:
+Чтобы подключиться к Snowflake через пользовательский домен (vanity URL) вместо локатора учетной записи, используйте [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes) для настройки параметра `host` с пользовательским доменом:
 
 ```yaml
 host: https://custom_domain_to_snowflake.com
 ```
 
-This configuration may conflict with Snowflake OAuth when used with PrivateLink. IF users can't reach Snowflake authentication servers from a networking standpoint, please [contact dbt Support](mailto:support@getdbt.com) to find a workaround with this architecture.
+Эта конфигурация может конфликтовать с Snowflake OAuth при использовании PrivateLink. Если пользователи не могут достучаться до серверов аутентификации Snowflake с сетевой точки зрения, пожалуйста, [свяжитесь с поддержкой dbt](mailto:support@getdbt.com), чтобы найти обходной путь с этой архитектурой.
 
-## Troubleshooting
-<!--might need to turn this into details toggle if more troubleshooting items arise -->
+## Устранение неполадок
+<!--может потребоваться превратить это в переключатель деталей, если появится больше элементов для устранения неполадок -->
 
-If you're receiving a `Could not deserialize key data` or `JWT token` error, refer to the following causes and solutions:
+Если вы получаете ошибку `Не удалось десериализовать данные ключа` или `JWT токен`, обратитесь к следующим причинам и решениям:
 
-<DetailsToggle alt_header="Error: `Could not deserialize key data`">
+<DetailsToggle alt_header="Ошибка: `Не удалось десериализовать данные ключа`">
 
-Possible cause and solution for the error "Could not deserialize key data" in dbt Cloud.
-- This could be because of mistakes like not copying correctly, missing dashes, or leaving out commented lines.
+Возможная причина и решение для ошибки "Не удалось десериализовать данные ключа" в dbt Cloud.
+- Это может быть связано с ошибками, такими как неправильное копирование, отсутствие дефисов или пропуск закомментированных строк.
 
-**Solution**:
-- You can copy the key from its source and paste it into a text editor to verify it before using it in dbt Cloud.
+**Решение**:
+- Вы можете скопировать ключ из его источника и вставить его в текстовый редактор, чтобы проверить его перед использованием в dbt Cloud.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Error: `JWT token`">
+<DetailsToggle alt_header="Ошибка: `JWT токен`">
 
-Possible cause and solution for the error "JWT token" in dbt Cloud.
-- This could be a transient issue between Snowflake and dbt Cloud. When connecting to Snowflake, dbt gets a JWT token valid for only 60 seconds. If there's no response from Snowflake within this time, you might see a `JWT token is invalid` error in dbt Cloud.
-- The public key was not entered correctly in Snowflake.
+Возможная причина и решение для ошибки "JWT токен" в dbt Cloud.
+- Это может быть временная проблема между Snowflake и dbt Cloud. При подключении к Snowflake dbt получает JWT токен, действительный только 60 секунд. Если в течение этого времени нет ответа от Snowflake, вы можете увидеть ошибку `JWT токен недействителен` в dbt Cloud.
+- Публичный ключ был введен неправильно в Snowflake.
 
-**Solutions**
-- dbt needs to retry connections to Snowflake.
-- Confirm and enter Snowflake's public key correctly. Additionally, you can reach out to Snowflake for help or refer to this Snowflake doc for more info: [Key-Based Authentication Failed with JWT token is invalid Error](https://community.snowflake.com/s/article/Key-Based-Authentication-Failed-with-JWT-token-is-invalid-Error).
+**Решения**
+- dbt необходимо повторить попытки подключения к Snowflake.
+- Подтвердите и введите публичный ключ Snowflake правильно. Кроме того, вы можете обратиться в Snowflake за помощью или обратиться к этой документации Snowflake для получения дополнительной информации: [Ошибка аутентификации на основе ключей с недействительным JWT токеном](https://community.snowflake.com/s/article/Key-Based-Authentication-Failed-with-JWT-token-is-invalid-Error).
 
 </DetailsToggle>

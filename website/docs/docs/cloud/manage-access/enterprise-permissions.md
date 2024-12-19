@@ -1,8 +1,8 @@
 ---
-title: "Enterprise permissions"
+title: "Предоставление прав в Enterprise"
 id: "enterprise-permissions"
-description: "Permission sets for Enterprise plans."
-hide_table_of_contents: true #For the sake of the tables on this page
+description: "Наборы прав для Enterprise-планов."
+hide_table_of_contents: true # Для удобства таблиц на этой странице
 pagination_next: null
 ---
 
@@ -11,25 +11,21 @@ import SetUpPages from '/snippets/_available-enterprise-only.md';
 
 <SetUpPages features={'/snippets/_available-enterprise-only.md'}/>
 
-The dbt Cloud Enterprise plan supports a number of pre-built permission sets to
-help manage access controls within a dbt Cloud account. See the docs on [access
-control](/docs/cloud/manage-access/about-user-access) for more information on Role-Based access
-control (RBAC).
+План dbt Cloud Enterprise поддерживает ряд предустановленных наборов прав, которые помогают управлять контролем доступа в учетной записи dbt Cloud. Дополнительную информацию о контроле доступа на основе ролей (RBAC) можно найти в документации по [контролю доступа](/docs/cloud/manage-access/about-user-access).
 
-## Roles and permissions
+## Роли и права
 
-The following roles and permission sets are available for assignment in dbt Cloud Enterprise accounts. They can be granted to dbt Cloud groups which are then in turn granted to users. A dbt Cloud group can be associated with more than one role and permission set. Roles with more access take precedence. 
+Следующие роли и наборы прав доступны для назначения в учетных записях dbt Cloud Enterprise. Они могут быть предоставлены группам dbt Cloud, которые затем назначаются пользователям. Группа dbt Cloud может быть связана с более чем одной ролью и набором прав. Роли с большим доступом имеют приоритет.
 
-:::tip Licenses or Permission sets
+:::tip Лицензии или наборы прав
 
-The user's [license](/docs/cloud/manage-access/about-user-access) type always overrides their assigned permission set. This means that even if a user belongs to a dbt Cloud group with 'Account Admin' permissions, having a 'Read-Only' license would still prevent them from performing administrative actions on the account.
+Тип [лицензии](/docs/cloud/manage-access/about-user-access) пользователя всегда переопределяет назначенный ему набор прав. Это означает, что даже если пользователь принадлежит к группе dbt Cloud с правами 'Администратор учетной записи', наличие лицензии 'Только для чтения' все равно помешает ему выполнять административные действия в учетной записи.
 :::
 
 <Permissions feature={'/snippets/_enterprise-permissions-table.md'} />
 
-## Additional resources
+## Дополнительные ресурсы
 
-- [Grant users access](/docs/cloud/manage-access/about-user-access#grant-access)
-- [Role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control-)
-- [Environment-level permissions](/docs/cloud/manage-access/environment-permissions)
-
+- [Предоставление доступа пользователям](/docs/cloud/manage-access/about-user-access#grant-access)
+- [Контроль доступа на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control-)
+- [Права на уровне окружения](/docs/cloud/manage-access/environment-permissions)

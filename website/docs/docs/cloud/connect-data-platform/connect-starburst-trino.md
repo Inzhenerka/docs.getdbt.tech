@@ -1,28 +1,28 @@
 ---
-title: "Connect Starburst or Trino"
-description: "Configure Starburst or Trino connection."
-sidebar_label: "Connect Starburst or Trino"
+title: "Подключение к Starburst или Trino"
+description: "Настройка подключения к Starburst или Trino."
+sidebar_label: "Подключение к Starburst или Trino"
 ---
 
-The following are the required fields for setting up a connection with a [Starburst Enterprise](https://docs.starburst.io/starburst-enterprise/index.html), [Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/index.html), or [Trino](https://trino.io/) cluster. Unless specified, "cluster" means any of these products' clusters.
+Ниже приведены обязательные поля для настройки подключения к кластеру [Starburst Enterprise](https://docs.starburst.io/starburst-enterprise/index.html), [Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/index.html) или [Trino](https://trino.io/). Если не указано иное, "кластер" означает любой из кластеров этих продуктов.
 
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | --- | --- | --- |
-| **Host** | The hostname of your cluster. Don't include the HTTP protocol prefix. | `mycluster.mydomain.com` |
-| **Port** | The port to connect to your cluster. By default, it's 443 for TLS enabled clusters. | `443` |
-| **User** | The username (of the account) to log in to your cluster. When connecting to Starburst Galaxy clusters, you must include the role of the user as a suffix to the username.<br/><br/> | Format for Starburst Enterprise or Trino depends on your configured authentication method. <br/>Format for Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> |
-| **Password** | The user's password. |  -  |
-| **Database** | The name of a catalog in your cluster. | `example_catalog` |
-| **Schema** | The name of a schema that exists within the specified catalog.  | `example_schema` |
+| **Host** | Имя хоста вашего кластера. Не включайте префикс протокола HTTP. | `mycluster.mydomain.com` |
+| **Port** | Порт для подключения к вашему кластеру. По умолчанию это 443 для кластеров с включенным TLS. | `443` |
+| **User** | Имя пользователя (учетной записи) для входа в ваш кластер. При подключении к кластерам Starburst Galaxy необходимо указать роль пользователя в качестве суффикса к имени пользователя.<br/><br/> | Формат для Starburst Enterprise или Trino зависит от вашей настроенной методики аутентификации. <br/>Формат для Starburst Galaxy:<br/> <ul><li>`user.name@mydomain.com/role`</li></ul> |
+| **Password** | Пароль пользователя. |  -  |
+| **Database** | Название каталога в вашем кластере. | `example_catalog` |
+| **Schema** | Название схемы, которая существует в указанном каталоге. | `example_schema` |
 
-## Roles in Starburst Enterprise
+## Роли в Starburst Enterprise
 
 <Snippet path="connect-starburst-trino/roles-starburst-enterprise" />
 
-## Catalogs and schemas
+## Каталоги и схемы
 
 <Snippet path="connect-starburst-trino/schema-db-fields" />
 
-## Configuration
+## Конфигурация
 
-To learn how to optimize performance with data platform-specific configurations in dbt Cloud, refer to [Starburst/Trino-specific configuration](/reference/resource-configs/trino-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Starburst/Trino](/reference/resource-configs/trino-configs).

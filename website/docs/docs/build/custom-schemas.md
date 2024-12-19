@@ -1,20 +1,20 @@
 ---
-title: "Custom schemas"
+title: "Пользовательские схемы"
 id: "custom-schemas"
 pagination_next: "docs/build/custom-databases"
 ---
 
-By default, all dbt models are built in the schema specified in your [environment](/docs/dbt-cloud-environments) (dbt Cloud) or [profile's target](/docs/core/dbt-core-environments) (dbt Core). This default schema is called your _target schema_.
+По умолчанию все модели dbt создаются в схеме, указанной в вашем [окружении](/docs/dbt-cloud-environments) (dbt Cloud) или [целевом профиле](/docs/core/dbt-core-environments) (dbt Core). Эта схема по умолчанию называется _целевой схемой_.
 
-For dbt projects with lots of models, it's common to build models across multiple schemas and group similar models together. For example, you might want to:
+Для проектов dbt с большим количеством моделей часто бывает удобно создавать модели в нескольких схемах и группировать похожие модели вместе. Например, вы можете захотеть:
 
-* Group models based on the business unit using the model, creating schemas such as `core`, `marketing`, `finance` and `support`.
-* Hide intermediate models in a `staging` schema, and only present models that should be queried by an end user in an `analytics` schema.
+* Группировать модели по бизнес-единицам, использующим модель, создавая схемы, такие как `core`, `marketing`, `finance` и `support`.
+* Скрыть промежуточные модели в схеме `staging` и представлять только модели, которые должны запрашиваться конечным пользователем, в схеме `analytics`.
 
-To do this, specify a custom schema. dbt generates the schema name for a model by appending the custom schema to the target schema. For example, `<target_schema>_<custom_schema>`.
+Для этого укажите пользовательскую схему. dbt генерирует имя схемы для модели, добавляя пользовательскую схему к целевой схеме. Например, `<target_schema>_<custom_schema>`.
 
-| Target schema | Custom schema | Resulting schema |
-| ------------- | ------------- | ---------------- |
+| Целевая схема | Пользовательская схема | Результирующая схема |
+| ------------- | ---------------------- | --------------------- |
 | analytics_prod | None | analytics_prod |
 | alice_dev | None | alice_dev |
 | dbt_cloud_pr_123_456 | None | dbt_cloud_pr_123_456 |
@@ -22,12 +22,12 @@ To do this, specify a custom schema. dbt generates the schema name for a model b
 | alice_dev | marketing | alice_dev_marketing |
 | dbt_cloud_pr_123_456 | marketing | dbt_cloud_pr_123_456_marketing |
 
-## How do I use custom schemas?
+## Как использовать пользовательские схемы?
 
-To specify a custom schema for a model, use the `schema` configuration key. As with any configuration, you can do one of the following:
+Чтобы указать пользовательскую схему для модели, используйте ключ конфигурации `schema`. Как и с любой конфигурацией, вы можете сделать одно из следующего:
 
-* apply this configuration to a specific model by using a config block within a model
-* apply it to a subdirectory of models by specifying it in your `dbt_project.yml` file
+* применить эту конфигурацию к конкретной модели, используя блок конфигурации внутри модели
+* применить ее к подкаталогу моделей, указав это в вашем файле `dbt_project.yml`
 
 <File name='orders.sql'>
 
@@ -42,7 +42,7 @@ select ...
 <File name='dbt_project.yml'>
 
 ```yaml
-# models in `models/marketing/ will be built in the "*_marketing" schema
+# модели в `models/marketing/ будут созданы в схеме "*_marketing"
 models:
   my_project:
     marketing:
@@ -51,21 +51,21 @@ models:
 
 </File>
 
-## Understanding custom schemas
+## Понимание пользовательских схем
 
-When first using custom schemas, it's a common misunderstanding to assume that a model _only_ uses the new `schema` configuration; for example, a model that has the configuration `schema: marketing` would be built in the `marketing` schema. However, dbt puts it in a schema like `<target_schema>_marketing`.
+При первом использовании пользовательских схем часто возникает недопонимание, что модель _только_ использует новую конфигурацию `schema`; например, модель с конфигурацией `schema: marketing` будет создана в схеме `marketing`. Однако dbt помещает ее в схему, такую как `<target_schema>_marketing`.
 
-There's a good reason for this deviation. Each dbt user has their own target schema for development (refer to [Managing Environments](#managing-environments)). If dbt ignored the target schema and only used the model's custom schema, every dbt user would create models in the same schema and would overwrite each other's work.
+На это есть веская причина. У каждого пользователя dbt есть своя целевая схема для разработки (см. [Управление окружениями](#managing-environments)). Если dbt игнорировал бы целевую схему и использовал только пользовательскую схему модели, каждый пользователь dbt создавал бы модели в одной и той же схеме и перезаписывал бы работу друг друга.
 
-By combining the target schema and the custom schema, dbt ensures that objects it creates in your data warehouse don't collide with one another.
+Комбинируя целевую схему и пользовательскую схему, dbt гарантирует, что объекты, которые он создает в вашем хранилище данных, не будут конфликтовать друг с другом.
 
-If you prefer to use different logic for generating a schema name, you can change the way dbt generates a schema name (see below).
+Если вы предпочитаете использовать другую логику для генерации имени схемы, вы можете изменить способ, которым dbt генерирует имя схемы (см. ниже).
 
-### How does dbt generate a model's schema name?
+### Как dbt генерирует имя схемы модели?
 
-dbt uses a default macro called `generate_schema_name` to determine the name of the schema that a model should be built in.
+dbt использует макрос по умолчанию под названием `generate_schema_name`, чтобы определить имя схемы, в которой должна быть создана модель.
 
-The following code represents the default macro's logic:
+Следующий код представляет логику макроса по умолчанию:
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) -%}
@@ -89,22 +89,21 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
+## Изменение способа генерации имени схемы dbt
 
-## Changing the way dbt generates a schema name
+Если в вашем проекте dbt есть пользовательский макрос под названием `generate_schema_name`, dbt будет использовать его вместо макроса по умолчанию. Это позволяет вам настраивать генерацию имен в соответствии с вашими потребностями.
 
-If your dbt project has a custom macro called `generate_schema_name`, dbt will use it instead of the default macro. This allows you to customize the name generation according to your needs.
+Чтобы настроить этот макрос, скопируйте пример кода из раздела [Как dbt генерирует имя схемы модели](#how-does-dbt-generate-a-models-schema-name) в файл с именем `macros/generate_schema_name.sql` и внесите необходимые изменения.
 
-To customize this macro, copy the example code in the section [How does dbt generate a model's schema name](#how-does-dbt-generate-a-models-schema-name) into a file named `macros/generate_schema_name.sql` and make changes as necessary.
+Будьте осторожны. dbt проигнорирует любые пользовательские макросы `generate_schema_name`, включенные в установленные пакеты.
 
-Be careful. dbt will ignore any custom `generate_schema_name` macros included in installed packages.
+<Expandable alt_header="Предупреждение: Не заменяйте `default_schema` в макросе">
 
-<Expandable alt_header="Warning: Don't replace `default_schema` in the macro">
+Если вы изменяете способ генерации имен схем, не просто заменяйте ```{{ default_schema }}_{{ custom_schema_name | trim }}``` на ```{{ custom_schema_name | trim }}``` в макросе ```generate_schema_name```.
 
-If you're modifying how dbt generates schema names, don't just replace ```{{ default_schema }}_{{ custom_schema_name | trim }}``` with ```{{ custom_schema_name | trim }}``` in the ```generate_schema_name``` macro.
+Если вы удалите ```{{ default_schema }}```, это приведет к тому, что разработчики будут перезаписывать модели друг друга, если они создадут свои собственные пользовательские схемы. Это также может вызвать проблемы во время разработки и непрерывной интеграции (CI).
 
-If you remove ```{{ default_schema }}```, it causes developers to override each other's models if they create their own custom schemas. This can also cause issues during development and continuous integration (CI).
-
-❌ The following code block is an example of what your code _should not_ look like:
+❌ Следующий блок кода является примером того, как ваш код _не должен_ выглядеть:
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) -%}
@@ -115,7 +114,7 @@ If you remove ```{{ default_schema }}```, it causes developers to override each 
         {{ default_schema }}
 
     {%- else -%}
-    # The following is incorrect as it omits {{ default_schema }} before {{ custom_schema_name | trim }}. 
+    # Следующее неверно, так как опускает {{ default_schema }} перед {{ custom_schema_name | trim }}. 
         {{ custom_schema_name | trim }} 
 
     {%- endif -%}
@@ -126,66 +125,66 @@ If you remove ```{{ default_schema }}```, it causes developers to override each 
 
 </Expandable>
 
-### generate_schema_name arguments
+### Аргументы generate_schema_name
 
-| Argument | Description | Example |
+| Аргумент | Описание | Пример |
 | -------- | ----------- | ------- |
-| custom_schema_name | The configured value of `schema` in the specified node, or `none` if a value is not supplied | `marketing` |
-| node | The `node` that is currently being processed by dbt | `{"name": "my_model", "resource_type": "model",...}` |
+| custom_schema_name | Настроенное значение `schema` в указанном узле или `none`, если значение не указано | `marketing` |
+| node | `node`, который в данный момент обрабатывается dbt | `{"name": "my_model", "resource_type": "model",...}` |
 
-### Jinja context available in generate_schema_name
+### Контекст Jinja, доступный в generate_schema_name
 
-If you choose to write custom logic to generate a schema name, it's worth noting that not all variables and methods are available to you when defining this logic. In other words: the `generate_schema_name` macro is compiled with a limited Jinja context.
+Если вы решите написать пользовательскую логику для генерации имени схемы, стоит отметить, что не все переменные и методы доступны вам при определении этой логики. Другими словами: макрос `generate_schema_name` компилируется с ограниченным контекстом Jinja.
 
-The following context methods _are_ available in the `generate_schema_name` macro:
+Следующие методы контекста _доступны_ в макросе `generate_schema_name`:
 
-| Jinja context | Type | Available |
+| Контекст Jinja | Тип | Доступно |
 | ------------- | ---- | --------- |
-| [target](/reference/dbt-jinja-functions/target) | Variable | ✅ |
-| [env_var](/reference/dbt-jinja-functions/env_var) | Variable | ✅ |
-| [var](/reference/dbt-jinja-functions/var) | Variable | Limited, see below |
-| [exceptions](/reference/dbt-jinja-functions/exceptions) | Macro | ✅ |
-| [log](/reference/dbt-jinja-functions/log) | Macro | ✅ |
-| Other macros in your project | Macro | ✅ |
-| Other macros in your packages | Macro | ✅ |
+| [target](/reference/dbt-jinja-functions/target) | Переменная | ✅ |
+| [env_var](/reference/dbt-jinja-functions/env_var) | Переменная | ✅ |
+| [var](/reference/dbt-jinja-functions/var) | Переменная | Ограничено, см. ниже |
+| [exceptions](/reference/dbt-jinja-functions/exceptions) | Макрос | ✅ |
+| [log](/reference/dbt-jinja-functions/log) | Макрос | ✅ |
+| Другие макросы в вашем проекте | Макрос | ✅ |
+| Другие макросы в ваших пакетах | Макрос | ✅ |
 
-### Which vars are available in generate_schema_name?
+### Какие переменные доступны в generate_schema_name?
 
-Globally-scoped variables and variables defined on the command line with
-[--vars](/docs/build/project-variables) are accessible in the `generate_schema_name` context.
+Глобально-области переменные и переменные, определенные в командной строке с помощью
+[--vars](/docs/build/project-variables), доступны в контексте `generate_schema_name`.
 
-### Managing different behaviors across packages
+### Управление различными поведениями между пакетами
 
-See docs on macro `dispatch`: ["Managing different global overrides across packages"](/reference/dbt-jinja-functions/dispatch)
+Смотрите документацию по макросу `dispatch`: ["Управление различными глобальными переопределениями между пакетами"](/reference/dbt-jinja-functions/dispatch)
 
-## A built-in alternative pattern for generating schema names
+## Встроенный альтернативный шаблон для генерации имен схем
 
-A common customization is to ignore the target schema in production environments, and ignore the custom schema configurations in other environments (such as development and CI).
+Распространенной настройкой является игнорирование целевой схемы в производственных окружениях и игнорирование пользовательских конфигураций схем в других окружениях (таких как разработка и CI).
 
-Production Environment (`target.name == 'prod'`)
+Производственная среда (`target.name == 'prod'`)
 
-| Target schema | Custom schema | Resulting schema |
-| ------------- | ------------- | ---------------- |
+| Целевая схема | Пользовательская схема | Результирующая схема |
+| ------------- | ---------------------- | --------------------- |
 | analytics_prod | None | analytics_prod |
 | analytics_prod | marketing | marketing |
 
-Development/CI Environment (`target.name != 'prod'`)
+Среда разработки/CI (`target.name != 'prod'`)
 
-| Target schema | Custom schema | Resulting schema |
-| ------------- | ------------- | ---------------- |
+| Целевая схема | Пользовательская схема | Результирующая схема |
+| ------------- | ---------------------- | --------------------- |
 | alice_dev | None | alice_dev |
 | alice_dev | marketing | alice_dev |
 | dbt_cloud_pr_123_456 | None | dbt_cloud_pr_123_456 |
 | dbt_cloud_pr_123_456 | marketing | dbt_cloud_pr_123_456 |
 
-Similar to the regular macro, this approach guarantees that schemas from different environments will not collide.
+Аналогично обычному макросу, этот подход гарантирует, что схемы из разных окружений не будут конфликтовать.
 
-dbt ships with a macro for this use case &mdash; called `generate_schema_name_for_env` &mdash; which is disabled by default. To enable it, add a custom `generate_schema_name` macro to your project that contains the following code:
+dbt поставляется с макросом для этого случая использования — под названием `generate_schema_name_for_env` — который по умолчанию отключен. Чтобы включить его, добавьте пользовательский макрос `generate_schema_name` в ваш проект, который содержит следующий код:
 
 <File name='macros/get_custom_schema.sql'>
 
 ```sql
--- put this in macros/get_custom_schema.sql
+-- поместите это в macros/get_custom_schema.sql
 
 {% macro generate_schema_name(custom_schema_name, node) -%}
     {{ generate_schema_name_for_env(custom_schema_name, node) }}
@@ -194,16 +193,16 @@ dbt ships with a macro for this use case &mdash; called `generate_schema_name_fo
 
 </File>
 
-When using this macro, you'll need to set the target name in your production job to `prod`.
+При использовании этого макроса вам нужно будет установить целевое имя в вашей производственной задаче на `prod`.
 
-## Managing environments
+## Управление окружениями
 
-In the `generate_schema_name` macro examples shown in the [built-in alternative pattern](#a-built-in-alternative-pattern-for-generating-schema-names) section, the `target.name` context variable is used to change the schema name that dbt generates for models. If the `generate_schema_name` macro in your project uses the `target.name` context variable, you must ensure that your different dbt environments are configured accordingly. While you can use any naming scheme you'd like, we typically recommend:
+В примерах макроса `generate_schema_name`, показанных в разделе [встроенный альтернативный шаблон](#a-built-in-alternative-pattern-for-generating-schema-names), используется переменная контекста `target.name`, чтобы изменить имя схемы, которое dbt генерирует для моделей. Если макрос `generate_schema_name` в вашем проекте использует переменную контекста `target.name`, вы должны убедиться, что ваши различные окружения dbt настроены соответствующим образом. Хотя вы можете использовать любую схему именования, которую хотите, мы обычно рекомендуем:
 
-* **dev** &mdash; Your local development environment; configured in a `profiles.yml` file on your computer.
-* **ci** &mdash; A [continuous integration](/docs/cloud/git/connect-github) environment running on pull requests in GitHub, GitLab, and so on.
-* **prod** &mdash; The production deployment of your dbt project, like in dbt Cloud, Airflow, or [similar](/docs/deploy/deployments).
+* **dev** — ваша локальная среда разработки; настроенная в файле `profiles.yml` на вашем компьютере.
+* **ci** — среда [непрерывной интеграции](/docs/cloud/git/connect-github), работающая на запросах на вытягивание в GitHub, GitLab и т. д.
+* **prod** — производственное развертывание вашего проекта dbt, например, в dbt Cloud, Airflow или [аналогичных](/docs/deploy/deployments).
 
-If your schema names are being generated incorrectly, double-check your target name in the relevant environment.
+Если ваши имена схем генерируются неправильно, дважды проверьте ваше целевое имя в соответствующем окружении.
 
-For more information, consult the [managing environments in dbt Core](/docs/core/dbt-core-environments) guide.
+Для получения дополнительной информации обратитесь к руководству [управления окружениями в dbt Core](/docs/core/dbt-core-environments).

@@ -1,31 +1,28 @@
 ---
-title: "Connect to Azure DevOps"
+title: "Подключение к Azure DevOps"
 id: "connect-azure-devops"
 pagination_next: "docs/cloud/git/setup-azure"
 ---
 
-# Connect to Azure DevOps <Lifecycle status="enterprise" />
+# Подключение к Azure DevOps <Lifecycle status="enterprise" />
 
 <Snippet path="available-enterprise-tier-only" />
 
+## О Azure DevOps и dbt Cloud
 
-## About Azure DevOps and dbt Cloud
+Подключите свою учетную запись Azure DevOps в dbt Cloud, чтобы открыть новые возможности продукта:
 
-Connect your Azure DevOps cloud account in dbt Cloud to unlock new product experiences:
+- Импортируйте новые репозитории Azure DevOps всего за несколько кликов во время настройки проекта dbt Cloud.
+- Клонируйте репозитории с использованием HTTPS вместо SSH.
+- Обеспечьте авторизацию пользователей с помощью OAuth 2.0.
+- Перенесите разрешения на репозитории пользователей Azure DevOps (доступ на чтение / запись) в git-действия dbt Cloud IDE или dbt Cloud CLI.
+- Запускайте сборки непрерывной интеграции (CI), когда в Azure DevOps открываются запросы на слияние.
 
-- Import new Azure DevOps repos with a couple clicks during dbt Cloud project setup.
-- Clone repos using HTTPS rather than SSH
-- Enforce user authorization with OAuth 2.0.
-- Carry Azure DevOps user repository permissions (read / write access) through to dbt Cloud IDE or dbt Cloud CLI's git actions.
-- Trigger Continuous integration (CI) builds when pull requests are opened in Azure DevOps.
+Чтобы подключить Azure DevOps в dbt Cloud:
 
+1. Администратор роли Entra ID (или роль с соответствующими правами) должен [настроить приложение Active Directory](/docs/cloud/git/setup-azure#register-an-azure-ad-app).
+2. Администратор Azure DevOps должен [подключить учетные записи](/docs/cloud/git/setup-azure#connect-azure-devops-to-your-new-app).
+3. Администратор учетной записи dbt Cloud должен [добавить приложение в dbt Cloud](/docs/cloud/git/setup-azure#add-your-azure-ad-app-to-dbt-cloud).
+4. Разработчики dbt Cloud должны [лично аутентифицироваться в Azure DevOps](/docs/cloud/git/authenticate-azure) из dbt Cloud.
 
-To connect Azure DevOps in dbt Cloud:
-
-1. An Entra ID admin role (or role with proper permissions) needs to [set up an Active Directory application](/docs/cloud/git/setup-azure#register-an-azure-ad-app).
-2. An Azure DevOps admin needs to [connect the accounts](/docs/cloud/git/setup-azure#connect-azure-devops-to-your-new-app). 
-3. A dbt Cloud account admin needs to [add the app to dbt Cloud](/docs/cloud/git/setup-azure#add-your-azure-ad-app-to-dbt-cloud).    
-4. dbt Cloud developers need to [personally authenticate with Azure DevOps](/docs/cloud/git/authenticate-azure) from dbt Cloud.
-
-
-If you're a Business Critical customer using [IP restrictions](/docs/cloud/secure/ip-restrictions), ensure you've added the appropriate Azure DevOps CIDRs to your IP restriction rules, or else the Azure DevOps connection will fail.
+Если вы являетесь клиентом Business Critical, использующим [ограничения IP](/docs/cloud/secure/ip-restrictions), убедитесь, что вы добавили соответствующие CIDR-адреса Azure DevOps в свои правила ограничения IP, иначе подключение к Azure DevOps не будет успешным.

@@ -1,50 +1,50 @@
 ---
-title: "Account settings in dbt Cloud"
-sidebar_label: "Account settings" 
-description: "Learn how to enable account settings for your dbt Cloud users."
+title: "Настройки аккаунта в dbt Cloud"
+sidebar_label: "Настройки аккаунта" 
+description: "Узнайте, как включить настройки аккаунта для пользователей dbt Cloud."
 ---
 
-The following sections describe the different **Account settings** available from your dbt Cloud account in the sidebar (under your account name on the lower left-hand side). 
+В следующих разделах описаны различные **Настройки аккаунта**, доступные из вашего аккаунта dbt Cloud в боковой панели (под вашим именем аккаунта в нижнем левом углу). 
 
-<Lightbox src="/img/docs/dbt-cloud/example-sidebar-account-settings.png" title="Example of Account settings from the sidebar" /> 
+<Lightbox src="/img/docs/dbt-cloud/example-sidebar-account-settings.png" title="Пример настроек аккаунта из боковой панели" /> 
 
-## Git repository caching <Lifecycle status="enterprise" />
+## Кэширование Git-репозитория <Lifecycle status="enterprise" />
 
-At the start of every job run, dbt Cloud clones the project's Git repository so it has the latest versions of your project's code and runs `dbt deps` to install your dependencies. 
+В начале каждого запуска задания dbt Cloud клонирует Git-репозиторий проекта, чтобы получить последние версии кода вашего проекта, и выполняет `dbt deps` для установки зависимостей. 
 
-For improved reliability and performance on your job runs, you can enable dbt Cloud to keep a cache of the project's Git repository. So, if there's a third-party outage that causes the cloning operation to fail, dbt Cloud will instead use the cached copy of the repo so your jobs can continue running as scheduled. 
+Для повышения надежности и производительности ваших запусков заданий вы можете включить кэширование Git-репозитория проекта в dbt Cloud. Таким образом, если произойдет сбой стороннего сервиса, который приведет к неудаче операции клонирования, dbt Cloud будет использовать кэшированную копию репозитория, чтобы ваши задания могли продолжать выполняться по расписанию. 
 
-dbt Cloud caches your project's Git repo after each successful run and retains it for 8 days if there are no repo updates. It caches all packages regardless of installation method and does not fetch code outside of the job runs. 
+dbt Cloud кэширует Git-репозиторий вашего проекта после каждого успешного запуска и сохраняет его в течение 8 дней, если не было обновлений репозитория. Он кэширует все пакеты независимо от метода установки и не загружает код вне запусков заданий. 
 
-dbt Cloud will use the cached copy of your project's Git repo under these circumstances:
+dbt Cloud будет использовать кэшированную копию Git-репозитория вашего проекта в следующих случаях:
 
-- Outages from third-party services (for example, the [dbt package hub](https://hub.getdbt.com/)).
-- Git authentication fails.
-- There are syntax errors in the `packages.yml` file. You can set up and use [continuous integration (CI)](/docs/deploy/continuous-integration) to find these errors sooner.
-- If a package doesn't work with the current dbt version. You can set up and use [continuous integration (CI)](/docs/deploy/continuous-integration) to identify this issue sooner.
+- Сбои сторонних сервисов (например, [dbt package hub](https://hub.getdbt.com/)).
+- Ошибка аутентификации Git.
+- Ошибки синтаксиса в файле `packages.yml`. Вы можете настроить и использовать [непрерывную интеграцию (CI)](/docs/deploy/continuous-integration), чтобы обнаружить эти ошибки раньше.
+- Если пакет не работает с текущей версией dbt. Вы можете настроить и использовать [непрерывную интеграцию (CI)](/docs/deploy/continuous-integration), чтобы выявить эту проблему раньше.
 
-To use, select the **Enable repository caching** option from your account settings. 
+Чтобы использовать, выберите опцию **Включить кэширование репозитория** в настройках вашего аккаунта. 
 
-<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable repository caching option" />
+<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Пример опции Включить кэширование репозитория" />
 
-## Partial parsing
+## Частичный парсинг
 
-At the start of every dbt invocation, dbt reads all the files in your project, extracts information, and constructs an internal manifest containing every object (model, source, macro, and so on). Among other things, it uses the `ref()`, `source()`, and `config()` macro calls within models to set properties, infer dependencies, and construct your project's DAG. When dbt finishes parsing your project, it stores the internal manifest in a file called `partial_parse.msgpack`. 
+В начале каждого вызова dbt он читает все файлы в вашем проекте, извлекает информацию и создает внутренний манифест, содержащий каждый объект (модель, источник, макрос и т. д.). Среди прочего, он использует вызовы макросов `ref()`, `source()` и `config()` внутри моделей для установки свойств, вывода зависимостей и построения DAG вашего проекта. Когда dbt завершает парсинг вашего проекта, он сохраняет внутренний манифест в файл с именем `partial_parse.msgpack`. 
 
-Parsing projects can be time-consuming, especially for large projects with hundreds of models and thousands of files. To reduce the time it takes dbt to parse your project, use the partial parsing feature in dbt Cloud for your environment. When enabled, dbt Cloud uses the `partial_parse.msgpack` file to determine which files have changed (if any) since the project was last parsed, and then it parses _only_ the changed files and the files related to those changes.
+Парсинг проектов может занимать много времени, особенно для крупных проектов с сотнями моделей и тысячами файлов. Чтобы сократить время, необходимое dbt для парсинга вашего проекта, используйте функцию частичного парсинга в dbt Cloud для вашей среды. Когда она включена, dbt Cloud использует файл `partial_parse.msgpack`, чтобы определить, какие файлы изменились (если такие есть) с момента последнего парсинга проекта, и затем парсит _только_ измененные файлы и файлы, связанные с этими изменениями.
 
-Partial parsing in dbt Cloud requires dbt version 1.4 or newer. The feature does have some known limitations. Refer to [Known limitations](/reference/parsing#known-limitations) to learn more about them.
+Частичный парсинг в dbt Cloud требует версии dbt 1.4 или новее. У этой функции есть некоторые известные ограничения. Ознакомьтесь с [Известными ограничениями](/reference/parsing#known-limitations), чтобы узнать о них больше.
 
-To use, select the **Enable partial parsing between deployment runs** option from your account settings.
+Чтобы использовать, выберите опцию **Включить частичный парсинг между запусками развертывания** в настройках вашего аккаунта.
 
-<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable partial parsing between deployment runs option" />
+<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Пример опции Включить частичный парсинг между запусками развертывания" />
 
-## Account access to Advanced CI features <Lifecycle status="enterprise" />
+## Доступ к расширенным функциям CI для аккаунта <Lifecycle status="enterprise" />
 
-[Advanced CI](/docs/deploy/advanced-ci) features, such as [compare changes](/docs/deploy/advanced-ci#compare-changes), allow dbt Cloud account members to view details about the changes between what's in the production environment and the pull request.
+[Расширенные функции CI](/docs/deploy/advanced-ci), такие как [сравнение изменений](/docs/deploy/advanced-ci#compare-changes), позволяют участникам аккаунта dbt Cloud просматривать детали изменений между тем, что находится в производственной среде, и запросом на слияние.
 
-To use Advanced CI features, your dbt Cloud account must have access to them. Ask your dbt Cloud administrator to enable Advanced CI features on your account, which they can do by choosing the **Enable account access to Advanced CI** option from the account settings.
+Чтобы использовать расширенные функции CI, ваш аккаунт dbt Cloud должен иметь к ним доступ. Попросите администратора вашего аккаунта dbt Cloud включить расширенные функции CI, что он может сделать, выбрав опцию **Включить доступ аккаунта к расширенным функциям CI** в настройках аккаунта.
 
-Once enabled, the **dbt compare** option becomes available in the CI job settings for you to select.
+После включения опция **dbt compare** станет доступной в настройках CI задания для выбора.
 
-<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Example of the Enable account access to Advanced CI option" />
+<Lightbox src="/img/docs/deploy/example-account-settings.png" width="85%" title="Пример опции Включить доступ аккаунта к расширенным функциям CI" />

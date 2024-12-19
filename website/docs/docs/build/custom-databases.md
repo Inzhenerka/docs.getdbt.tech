@@ -1,26 +1,25 @@
 ---
-title: "Custom databases"
+title: "Пользовательские базы данных"
 id: "custom-databases"
 ---
 
+:::info Слово о наименовании
 
-:::info A word on naming
+Разные хранилища имеют разные названия для _логических баз данных_. Информация в этом документе охватывает "базы данных" в Snowflake, Redshift и Postgres; "проекты" в BigQuery; и "каталоги" в Databricks Unity Catalog.
 
-Different warehouses have different names for _logical databases_. The information in this document covers "databases" on Snowflake, Redshift, and Postgres; "projects" on BigQuery; and "catalogs" on Databricks Unity Catalog.
-
-The values `project` and `database` are interchangeable in BigQuery project configurations.
+Значения `project` и `database` взаимозаменяемы в конфигурациях проектов BigQuery.
 
 :::
 
-## Configuring custom databases
+## Настройка пользовательских баз данных
 
-The logical database that dbt models are built into can be configured using the `database` model configuration. If this configuration is not supplied to a model, then dbt will use the database configured in the active target from your `profiles.yml` file. If the `database` configuration *is* supplied for a model, then dbt will build the model into the configured  database.
+Логическая база данных, в которую строятся модели dbt, может быть настроена с помощью конфигурации модели `database`. Если эта конфигурация не указана для модели, dbt будет использовать базу данных, настроенную в активной цели из вашего файла `profiles.yml`. Если конфигурация `database` *указана* для модели, dbt построит модель в указанную базу данных.
 
-The `database` configuration can be supplied for groups of models in the `dbt_project.yml` file, or for individual models in model SQL files.
+Конфигурация `database` может быть указана для групп моделей в файле `dbt_project.yml` или для отдельных моделей в SQL-файлах моделей.
 
-### Configuring database overrides in `dbt_project.yml`:
+### Настройка переопределений базы данных в `dbt_project.yml`:
 
-This config changes all models in the `jaffle_shop` project to be built into a database called `jaffle_shop`.
+Эта конфигурация изменяет все модели в проекте `jaffle_shop`, чтобы они строились в базу данных с названием `jaffle_shop`.
 
 <File name='dbt_project.yml'>
 
@@ -31,15 +30,15 @@ models:
   jaffle_shop:
     +database: jaffle_shop
 
-    # For BigQuery users:
+    # Для пользователей BigQuery:
     # project: jaffle_shop
 ```
 
 </File>
 
-### Configuring database overrides in a model file
+### Настройка переопределений базы данных в файле модели
 
-This config changes a specific model to be built into a database called `jaffle_shop`.
+Эта конфигурация изменяет конкретную модель, чтобы она строилась в базу данных с названием `jaffle_shop`.
 
 <File name='models/my_model.sql'>
 
@@ -54,14 +53,14 @@ select * from ...
 
 ### generate_database_name
 
-The database name generated for a model is controlled by a macro called `generate_database_name`. This macro can be overridden in a dbt project to change how dbt generates model database names. This macro works similarly to the [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration) macro.
+Имя базы данных, генерируемое для модели, контролируется макросом под названием `generate_database_name`. Этот макрос может быть переопределен в проекте dbt, чтобы изменить способ, которым dbt генерирует имена баз данных моделей. Этот макрос работает аналогично макросу [generate_schema_name](/docs/build/custom-schemas#advanced-custom-schema-configuration).
 
-To override dbt's database name generation, create a macro named `generate_database_name` in your own dbt project. The `generate_database_name` macro accepts two arguments:
+Чтобы переопределить генерацию имен баз данных в dbt, создайте макрос с именем `generate_database_name` в вашем собственном проекте dbt. Макрос `generate_database_name` принимает два аргумента:
 
-1. The custom database supplied in the model config
-2. The node that a custom database is being generated for
+1. Пользовательская база данных, указанная в конфигурации модели
+2. Узел, для которого генерируется пользовательская база данных
 
-The default implementation of `generate_database_name` simply uses the supplied `database` config if one is present, otherwise the database configured in the active `target` is used. This implementation looks like this:
+Стандартная реализация `generate_database_name` просто использует указанную конфигурацию `database`, если она присутствует, в противном случае используется база данных, настроенная в активной `target`. Эта реализация выглядит следующим образом:
 
 <File name='get_custom_database.sql'>
 
@@ -89,12 +88,12 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-### Managing different behaviors across packages
+### Управление различными поведениями между пакетами
 
-See docs on macro `dispatch`: ["Managing different global overrides across packages"](/reference/dbt-jinja-functions/dispatch)
+Смотрите документацию по макросу `dispatch`: ["Управление различными глобальными переопределениями между пакетами"](/reference/dbt-jinja-functions/dispatch)
 
-## Considerations
+## Учитываемые моменты
 
 ### BigQuery
 
-When dbt opens a BigQuery connection, it will do so using the `project_id` defined in your active `profiles.yml` target. This `project_id` will be billed for the queries that are executed in the dbt run, even if some models are configured to be built in other projects.
+Когда dbt открывает соединение с BigQuery, он делает это, используя `project_id`, определенный в вашей активной цели `profiles.yml`. Этот `project_id` будет выставлен в счет за запросы, которые выполняются в ходе выполнения dbt, даже если некоторые модели настроены на построение в других проектах.

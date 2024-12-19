@@ -1,19 +1,19 @@
 ---
-title: "Add groups to your DAG"
-sidebar_label: "Groups"
+title: "Добавление групп в ваш DAG"
+sidebar_label: "Группы"
 id: "groups"
-description: "When you define groups in dbt projects, you turn implicit relationships into an explicit grouping."
+description: "Когда вы определяете группы в проектах dbt, вы превращаете неявные отношения в явную группировку."
 keywords:
-  - groups access mesh
+  - группы доступ сетка
 ---
 
-A group is a collection of nodes within a dbt DAG. Groups are named, and every group has an `owner`. They enable intentional collaboration within and across teams by restricting [access to private](/reference/resource-configs/access) models.
+Группа — это коллекция узлов в DAG dbt. Группы имеют имена, и у каждой группы есть `owner`. Они позволяют целенаправленно сотрудничать внутри и между командами, ограничивая [доступ к приватным](/reference/resource-configs/access) моделям.
 
-Group members may include models, tests, seeds, snapshots, analyses, and metrics. (Not included: sources and exposures.) Each node may belong to only one group.
+Членами группы могут быть модели, тесты, семена, снимки, анализы и метрики. (Не включены: источники и экспозиции.) Каждый узел может принадлежать только одной группе.
 
-### Declaring a group
+### Объявление группы
 
-Groups are defined in `.yml` files, nested under a `groups:` key.
+Группы определяются в `.yml` файлах, вложенных под ключом `groups:`.
 
 <File name='models/marts/finance/finance.yml'>
 
@@ -21,7 +21,7 @@ Groups are defined in `.yml` files, nested under a `groups:` key.
 groups:
   - name: finance
     owner:
-      # 'name' or 'email' is required; additional properties allowed
+      # 'name' или 'email' обязательны; дополнительные свойства разрешены
       email: finance@jaffleshop.com
       slack: finance-data
       github: finance-data-team
@@ -29,12 +29,12 @@ groups:
 
 </File>
 
-### Adding a model to a group
+### Добавление модели в группу
 
-Use the `group` configuration to add one or more models to a group.
+Используйте конфигурацию `group`, чтобы добавить одну или несколько моделей в группу.
 
 <Tabs>
-<TabItem value="project" label="Project-level">
+<TabItem value="project" label="Уровень проекта">
 
 <File name='dbt_project.yml'>
 
@@ -49,7 +49,7 @@ models:
 
 </TabItem>
 
-<TabItem value="model-yaml" label="Model-level">
+<TabItem value="model-yaml" label="Уровень модели">
 
 <File name='models/schema.yml'>
 
@@ -64,7 +64,7 @@ models:
 
 </TabItem>
 
-<TabItem value="model-file" label="In-file">
+<TabItem value="model-file" label="В файле">
 
 <File name='models/model_name.sql'>
 
@@ -80,9 +80,9 @@ select ...
 
 </Tabs>
 
-### Referencing a model in a group
+### Ссылка на модель в группе
 
-By default, all models within a group have the `protected` [access modifier](/reference/resource-configs/access). This means they can be referenced by downstream resources in _any_ group in the same project, using the [`ref`](/reference/dbt-jinja-functions/ref) function. If a grouped model's `access` property is set to `private`, only resources within its group can reference it. 
+По умолчанию все модели в группе имеют модификатор доступа `protected` [access modifier](/reference/resource-configs/access). Это означает, что на них могут ссылаться ресурсы ниже по потоку в _любой_ группе в том же проекте, используя функцию [`ref`](/reference/dbt-jinja-functions/ref). Если свойство `access` модели в группе установлено на `private`, только ресурсы внутри этой группы могут на нее ссылаться.
 
 <File name='models/schema.yml'>
 
@@ -93,7 +93,7 @@ models:
     config:
       group: finance
 
-  # in a different group!
+  # в другой группе!
   - name: marketing_model
     config:
       group: marketing
@@ -110,13 +110,13 @@ select * from {{ ref('finance_private_model') }}
 ```shell
 $ dbt run -s marketing_model
 ...
-dbt.exceptions.DbtReferenceError: Parsing Error
-  Node model.jaffle_shop.marketing_model attempted to reference node model.jaffle_shop.finance_private_model, 
-  which is not allowed because the referenced node is private to the finance group.
+dbt.exceptions.DbtReferenceError: Ошибка разбора
+  Узел model.jaffle_shop.marketing_model попытался сослаться на узел model.jaffle_shop.finance_private_model, 
+  что не разрешено, поскольку ссылающийся узел является приватным для группы finance.
 ```
 
-## Related docs
+## Связанные документы
 
-* [Model Access](/docs/collaborate/govern/model-access#groups)
-* [Group configuration](/reference/resource-configs/group)
-* [Group selection](/reference/node-selection/methods#group)
+* [Доступ к моделям](/docs/collaborate/govern/model-access#groups)
+* [Конфигурация группы](/reference/resource-configs/group)
+* [Выбор группы](/reference/node-selection/methods#group)

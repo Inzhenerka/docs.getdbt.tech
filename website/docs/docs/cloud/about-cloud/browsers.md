@@ -1,30 +1,30 @@
 ---
-title: "Supported browsers"
+title: "Поддерживаемые браузеры"
 id: "browsers"
-description: "dbt Cloud supports the latest browsers like Chrome and Firefox."
+description: "dbt Cloud поддерживает последние версии браузеров, таких как Chrome и Firefox."
 pagination_next: null
 ---
 
-To have the best experience with dbt Cloud, we recommend using the latest versions of the following browsers:
+Для наилучшего использования dbt Cloud мы рекомендуем использовать последние версии следующих браузеров:
 
-- [Google Chrome](https://www.google.com/chrome/) &mdash; Latest version is fully supported in dbt Cloud
-- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/) &mdash; Latest version is fully supported in dbt Cloud
-- [Apple Safari](https://www.apple.com/safari/) &mdash; Latest version support provided on a best-effort basis
-- [Microsoft Edge](https://www.microsoft.com/en-us/edge?form=MA13FJ&exp=e00) &mdash; Latest version support provided on a best-effort basis
+- [Google Chrome](https://www.google.com/chrome/) &mdash; Последняя версия полностью поддерживается в dbt Cloud
+- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/) &mdash; Последняя версия полностью поддерживается в dbt Cloud
+- [Apple Safari](https://www.apple.com/safari/) &mdash; Поддержка последней версии предоставляется на основе лучших усилий
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge?form=MA13FJ&exp=e00) &mdash; Поддержка последней версии предоставляется на основе лучших усилий
 
-dbt Cloud provides two types of browser support:
+dbt Cloud предоставляет два типа поддержки браузеров:
 
-- Fully supported &mdash; dbt Cloud is fully tested and supported on these browsers. Features display and work as intended.
-- Best effort &mdash; You can access dbt Cloud on these browsers. Features may not display or work as intended.
+- Полная поддержка &mdash; dbt Cloud полностью протестирован и поддерживается в этих браузерах. Функции отображаются и работают как задумано.
+- Поддержка на основе лучших усилий &mdash; Вы можете получить доступ к dbt Cloud в этих браузерах. Функции могут не отображаться или не работать как задумано.
 
-You may still be able to access and use dbt Cloud even without using the latest recommended browser or an unlisted browser. However, some features might not display as intended.
+Вы все равно сможете получить доступ и использовать dbt Cloud, даже если не используете последний рекомендованный браузер или браузер, не указанный в списке. Однако некоторые функции могут не отображаться как задумано.
 
 :::note
-To improve your experience using dbt Cloud, we suggest that you turn off ad blockers.
+Чтобы улучшить ваш опыт использования dbt Cloud, мы рекомендуем отключить блокировщики рекламы.
 :::
 
-### Browser sessions
+### Сессии браузера
 
-A session is a period of time during which you’re signed in to a dbt Cloud account from a browser. If you close your browser, it will end your session and log you out. You'll need to log in again the next time you try to access dbt Cloud. 
+Сессия — это период времени, в течение которого вы вошли в учетную запись dbt Cloud из браузера. Если вы закроете браузер, ваша сессия завершится, и вы выйдете из системы. Вам нужно будет войти в систему снова в следующий раз, когда вы попытаетесь получить доступ к dbt Cloud.
 
-If you've logged in using [SSO](/docs/cloud/manage-access/sso-overview), you can customize your maximum session duration, which might vary depending on your identity provider (IdP).
+Если вы вошли в систему с помощью [SSO](/docs/cloud/manage-access/sso-overview), вы можете настроить максимальную продолжительность своей сессии, которая может варьироваться в зависимости от вашего поставщика удостоверений (IdP).

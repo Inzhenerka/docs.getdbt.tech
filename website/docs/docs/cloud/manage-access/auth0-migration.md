@@ -1,115 +1,115 @@
 ---
-title: "Migrating to Auth0 for SSO"
+title: "Миграция на Auth0 для SSO"
 id: "auth0-migration"
-sidebar: "SSO Auth0 Migration"
-description: "Required actions for migrating to Auth0 for SSO services on dbt Cloud."
+sidebar: "Миграция SSO Auth0"
+description: "Необходимые действия для миграции на Auth0 для SSO-сервисов в dbt Cloud."
 ---
 
-dbt Labs is partnering with Auth0 to bring enhanced features to dbt Cloud's single sign-on (SSO) capabilities. Auth0 is an identity and access management (IAM) platform with advanced security features, and it will be leveraged by dbt Cloud. These changes will require some action from customers with SSO configured in dbt Cloud today, and this guide will outline the necessary changes for each environment. 
+dbt Labs сотрудничает с Auth0 для улучшения возможностей единого входа (SSO) в dbt Cloud. Auth0 — это платформа управления идентификацией и доступом (IAM) с расширенными функциями безопасности, которая будет использоваться в dbt Cloud. Эти изменения потребуют некоторых действий от клиентов, у которых уже настроен SSO в dbt Cloud, и в этом руководстве будут описаны необходимые изменения для каждой среды.
 
-If you have not yet configured SSO in dbt Cloud, refer instead to our setup guides for [SAML](/docs/cloud/manage-access/set-up-sso-saml-2.0), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace), or [Microsoft Entra ID (formerly Azure AD)](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) single sign-on services.
+Если вы еще не настроили SSO в dbt Cloud, вместо этого обратитесь к нашим руководствам по настройке для [SAML](/docs/cloud/manage-access/set-up-sso-saml-2.0), [Okta](/docs/cloud/manage-access/set-up-sso-okta), [Google Workspace](/docs/cloud/manage-access/set-up-sso-google-workspace) или [Microsoft Entra ID (ранее Azure AD)](/docs/cloud/manage-access/set-up-sso-microsoft-entra-id) для сервисов единого входа.
 
-## Start the migration
+## Начало миграции
 
-The Auth0 migration feature is being rolled out incrementally to customers who have SSO features already enabled. When the migration option has been enabled on your account, you will see **SSO Updates Available** on the right side of the menu bar, near the settings icon. 
+Функция миграции на Auth0 постепенно внедряется для клиентов, у которых уже включены функции SSO. Когда опция миграции будет активирована на вашем аккаунте, вы увидите **Доступны обновления SSO** на правой стороне панели меню, рядом с иконкой настроек.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/sso-migration-available.png" title="SSO migration available"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/sso-migration-available.png" title="Доступна миграция SSO"/>
 
-Alternatively, you can start the process from the **Settings** page in the **Single Sign-on** pane. Click the **Begin Migration** button to start. 
+В качестве альтернативы вы можете начать процесс с страницы **Настройки** в панели **Единый вход**. Нажмите кнопку **Начать миграцию**, чтобы начать.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/begin-migration.png" title="Begin Migration"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/begin-migration.png" title="Начать миграцию"/>
 
-Once you have opted to begin the migration process, the following steps will vary depending on the configured identity provider. You can just skip to the section that's right for your environment. These steps only apply to customers going through the migration; new setups will use the existing [setup instructions](/docs/cloud/manage-access/sso-overview).
+После того как вы решили начать процесс миграции, следующие шаги будут различаться в зависимости от настроенного поставщика идентификации. Вы можете сразу перейти к разделу, который соответствует вашей среде. Эти шаги применимы только к клиентам, проходящим миграцию; новые настройки будут использовать существующие [инструкции по настройке](/docs/cloud/manage-access/sso-overview).
 
-:::warning Login \{slug\}
+:::warning Логин \{slug\}
 
-Slugs should contain only letters, numbers, and dashes. Make sure to remove underscores (if they exist) from login slugs: 
-* before migrating on the **Account Settings** page, or 
-* while migrating (before enabling), as shown in the Migrate authentication screenshots for your respective setup. 
-After changing the slug, admins must share the new login URL with their dbt Cloud users.
+Слаги должны содержать только буквы, цифры и дефисы. Убедитесь, что вы удалили подчеркивания (если они есть) из логинов слагов:
+* перед миграцией на странице **Настройки аккаунта**, или
+* во время миграции (перед активацией), как показано на скриншотах Migrate authentication для вашей настройки.
+После изменения слага администраторы должны поделиться новым URL-адресом для входа с пользователями dbt Cloud.
 
 :::
 
-## SAML 2.0 and Okta
+## SAML 2.0 и Okta
 
-SAML 2.0 users must update a few fields in the SSO app configuration to match the new Auth0 URL and URI.  You can approach this by editing the existing SSO app settings or creating a new one to accommodate the Auth0 settings. One approach isn't inherently better, so you can choose whichever works best for your organization.
+Пользователи SAML 2.0 должны обновить несколько полей в конфигурации приложения SSO, чтобы соответствовать новому URL и URI Auth0. Вы можете подойти к этому, редактируя существующие настройки приложения SSO или создавая новое, чтобы учесть настройки Auth0. Один из подходов не является по сути лучше другого, поэтому вы можете выбрать тот, который лучше всего подходит для вашей организации.
 
-The fields that will be updated are:
-- Single sign-on URL &mdash; `https://<YOUR_AUTH0_URI>/login/callback?connection={slug}`
-- Audience URI (SP Entity ID) &mdash; `urn:auth0:<YOUR_AUTH0_ENTITYID>:{slug}`
+Поля, которые будут обновлены:
+- URL единого входа — `https://<YOUR_AUTH0_URI>/login/callback?connection={slug}`
+- URI аудитории (SP Entity ID) — `urn:auth0:<YOUR_AUTH0_ENTITYID>:{slug}`
 
-Below are sample steps to update. You must complete all of them to ensure uninterrupted access to dbt Cloud and you should coordinate with your identity provider admin when making these changes.
+Ниже приведены примерные шаги для обновления. Вы должны выполнить все из них, чтобы обеспечить непрерывный доступ к dbt Cloud, и вам следует координировать свои действия с администратором вашего поставщика идентификации при внесении этих изменений.
 
-1. Replace `{slug}` with your organization’s login slug. It must be unique across all dbt Cloud instances and is usually something like your company name separated by dashes (for example, `dbt-labs`).
+1. Замените `{slug}` на логин вашего организации. Он должен быть уникальным для всех экземпляров dbt Cloud и обычно представляет собой название вашей компании, разделенное дефисами (например, `dbt-labs`).
 
-Here is an example of an updated SAML 2.0 setup in Okta.
+Вот пример обновленной настройки SAML 2.0 в Okta.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/new-okta-config.png" title="Okta configuration with new URL"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/new-okta-config.png" title="Конфигурация Okta с новым URL"/>
 
-2. Save the configuration, and your SAML settings will look something like this:
+2. Сохраните конфигурацию, и ваши настройки SAML будут выглядеть примерно так:
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/new-okta-completed.png" title="New Okta configuration completed"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/new-okta-completed.png" title="Новая конфигурация Okta завершена"/>
 
-3. Toggle the `Enable new SSO authentication` option to ensure the traffic is routed correctly. _The new SSO migration action is final and cannot be undone_
+3. Переключите опцию `Включить новую аутентификацию SSO`, чтобы обеспечить правильную маршрутизацию трафика. _Действие по миграции SSO является окончательным и не может быть отменено._
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/saml-enable.png" title="Enable new SSO for SAML/Okta"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/saml-enable.png" title="Включить новое SSO для SAML/Okta"/>
 
-4. Save the settings and test the new configuration using the SSO login URL provided on the settings page. 
+4. Сохраните настройки и протестируйте новую конфигурацию, используя URL для входа SSO, предоставленный на странице настроек.
 
 ## Google Workspace
 
-Google Workspace admins updating their SSO APIs with the Auth0 URL won't have to do much if it is an existing setup. This can be done as a new project or by editing an existing SSO setup. No additional scopes are needed since this is migrating from an existing setup. All scopes were defined during the initial configuration. 
+Администраторы Google Workspace, обновляющие свои API SSO с URL Auth0, не должны делать много, если это существующая настройка. Это можно сделать как в рамках нового проекта, так и редактируя существующую настройку SSO. Дополнительные области не требуются, так как это миграция с существующей настройки. Все области были определены во время первоначальной конфигурации.
 
-Below are steps to update. You must complete all of them to ensure uninterrupted access to dbt Cloud and you should coordinate with your identity provider admin when making these changes.
+Ниже приведены шаги для обновления. Вы должны выполнить все из них, чтобы обеспечить непрерывный доступ к dbt Cloud, и вам следует координировать свои действия с администратором вашего поставщика идентификации при внесении этих изменений.
 
-1. Open the [Google Cloud console](https://console.cloud.google.com/) and select the project with your dbt Cloud single sign-on settings. From the project page **Quick Access**, select **APIs and Services**
+1. Откройте [консоль Google Cloud](https://console.cloud.google.com/) и выберите проект с настройками единого входа dbt Cloud. На странице проекта в разделе **Быстрый доступ** выберите **API и сервисы**.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/google-cloud-sso.png" title="Google Cloud Console"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/google-cloud-sso.png" title="Консоль Google Cloud"/>
 
-2. Click **Credentials** from the left side pane and click the appropriate name from **OAuth 2.0 Client IDs**
+2. Нажмите **Учетные данные** в левом боковом меню и выберите соответствующее имя из **Идентификаторы клиентов OAuth 2.0**.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/sso-project.png" title="Select the OAuth 2.0 Client ID"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/sso-project.png" title="Выберите идентификатор клиента OAuth 2.0"/>
 
-3. In the **Client ID for Web application** window, find the **Authorized Redirect URIs** field and click **Add URI** and enter `https://<YOUR_AUTH0_URI>/login/callback`.
+3. В окне **Идентификатор клиента для веб-приложения** найдите поле **Авторизованные URI перенаправления** и нажмите **Добавить URI**, затем введите `https://<YOUR_AUTH0_URI>/login/callback`.
 
-Click **Save** once you are done. 
+Нажмите **Сохранить**, когда закончите.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/google-uri.png" title="Add Redirect URI"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/google-uri.png" title="Добавить URI перенаправления"/>
 
-4. _You will need a person with Google Workspace admin privileges to complete these steps in dbt Cloud_. In dbt Cloud, navigate to the **Account Settings**, click on **Single Sign-on**, and then click **Edit** on the right side of the SSO pane. Toggle the **Enable New SSO Authentication** option and select **Save**. This will trigger an authorization window from Google that will require admin credentials. _The migration action is final and cannot be undone_. Once the authentication has gone through, test the new configuration using the SSO login URL provided on the settings page.
+4. _Вам потребуется человек с правами администратора Google Workspace, чтобы завершить эти шаги в dbt Cloud_. В dbt Cloud перейдите в **Настройки аккаунта**, нажмите на **Единый вход**, а затем нажмите **Редактировать** в правой части панели SSO. Переключите опцию **Включить новую аутентификацию SSO** и выберите **Сохранить**. Это вызовет окно авторизации от Google, которое потребует учетные данные администратора. _Действие по миграции является окончательным и не может быть отменено_. После успешной аутентификации протестируйте новую конфигурацию, используя URL для входа SSO, предоставленный на странице настроек.
 
-:::warning Domain authorization
+:::warning Авторизация домена
 
-You must complete the domain authorization before you toggle `Enable New SSO Authentication`, or the migration will not complete successfully.
+Вы должны завершить авторизацию домена перед тем, как переключить `Включить новую аутентификацию SSO`, иначе миграция не завершится успешно.
 
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/google-enable.png" title="Enable new SSO for Google Workspace"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/google-enable.png" title="Включить новое SSO для Google Workspace"/>
 
 ## Microsoft Entra ID
 
-Microsoft Entra ID admins will need to make a slight adjustment to the existing authentication app in the Azure portal. This migration does not require that the entire app be deleted or recreated; you can edit the existing app. Start by opening the Azure portal and navigating to the Microsoft Entra ID overview.
+Администраторы Microsoft Entra ID должны внести небольшие изменения в существующее приложение аутентификации в портале Azure. Эта миграция не требует удаления или воссоздания всего приложения; вы можете редактировать существующее приложение. Начните с открытия портала Azure и перехода к обзору Microsoft Entra ID.
 
-Below are steps to update. You must complete all of them to ensure uninterrupted access to dbt Cloud and you should coordinate with your identity provider admin when making these changes.
+Ниже приведены шаги для обновления. Вы должны выполнить все из них, чтобы обеспечить непрерывный доступ к dbt Cloud, и вам следует координировать свои действия с администратором вашего поставщика идентификации при внесении этих изменений.
 
-1. Click **App Registrations** on the left side menu. 
+1. Нажмите **Регистрация приложений** в левом боковом меню.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/aad-app-registration.png" title="Select App Registrations"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/aad-app-registration.png" title="Выберите регистрацию приложений"/>
 
-2. Select the proper **dbt Cloud** app (name may vary) from the list. From the app overview, click on the hyperlink next to **Redirect URI**
+2. Выберите соответствующее приложение **dbt Cloud** (название может варьироваться) из списка. На странице обзора приложения нажмите на гиперссылку рядом с **URI перенаправления**.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/app-overview.png" title="Click the Redirect URI hyperlink"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/app-overview.png" title="Нажмите на гиперссылку URI перенаправления"/>
 
-3. In the **Web** pane with **Redirect URIs**, click **Add URI** and enter the appropriate `https://<YOUR_AUTH0_URI>/login/callback`. Save the settings and verify it is counted in the updated app overview.
+3. В панели **Web** с **URI перенаправления** нажмите **Добавить URI** и введите соответствующий `https://<YOUR_AUTH0_URI>/login/callback`. Сохраните настройки и убедитесь, что он отображается в обновленном обзоре приложения.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/redirect-URI.png" title="Enter new redirect URI"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/redirect-URI.png" title="Введите новый URI перенаправления"/>
 
-4. Navigate to the dbt Cloud environment and open the **Account Settings**. Click the **Single Sign-on** option from the left side menu and click the **Edit** option from the right side of the SSO pane. The **domain** field is the domain your organization uses to login to Microsoft Entra ID. Toggle the **Enable New SSO Authentication** option and **Save**. _Once this option is enabled, it cannot be undone._
+4. Перейдите в среду dbt Cloud и откройте **Настройки аккаунта**. Нажмите на опцию **Единый вход** в левом боковом меню и нажмите на опцию **Редактировать** в правой части панели SSO. Поле **домен** — это домен, который ваша организация использует для входа в Microsoft Entra ID. Переключите опцию **Включить новую аутентификацию SSO** и **Сохранить**. _После включения этой опции ее нельзя отменить._
 
-:::warning Domain authorization
+:::warning Авторизация домена
 
-You must complete the domain authorization before you toggle `Enable New SSO Authentication`, or the migration will not complete successfully.
+Вы должны завершить авторизацию домена перед тем, как переключить `Включить новую аутентификацию SSO`, иначе миграция не завершится успешно.
 
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/azure-enable.png" title="Enable new SSO"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/azure-enable.png" title="Включить новое SSO"/>

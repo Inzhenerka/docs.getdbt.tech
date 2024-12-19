@@ -1,57 +1,57 @@
---- 
-title: "Multi-cell migration checklist"
+---
+title: "Контрольный список миграции на многоклеточную архитектуру"
 id: migration 
-sidebar_label: "Multi-cell migration checklist"
-description: "Prepare for account migration to AWS cell-based architecture." 
+sidebar_label: "Контрольный список миграции на многоклеточную архитектуру"
+description: "Подготовьтесь к миграции аккаунта на архитектуру AWS с использованием клеток." 
 pagination_next: null
 pagination_prev: null
 ---
 
-dbt Labs is in the process of rolling out a new cell-based architecture for dbt Cloud. This architecture provides the foundation of dbt Cloud for years to come, and brings improved reliability, performance, and consistency to users of dbt Cloud.
+dbt Labs в настоящее время осуществляет внедрение новой клеточной архитектуры для dbt Cloud. Эта архитектура станет основой dbt Cloud на многие годы вперед и обеспечит пользователям dbt Cloud улучшенную надежность, производительность и согласованность.
 
-We're scheduling migrations by account. When we're ready to migrate your account, you will receive a banner or email communication with your migration date. If you have not received this communication, then you don't need to take action at this time. dbt Labs will share information about your migration with you, with appropriate advance notice, when applicable to your account.
+Мы планируем миграции по аккаунтам. Когда мы будем готовы к миграции вашего аккаунта, вы получите баннер или электронное сообщение с датой миграции. Если вы не получили это сообщение, вам не нужно предпринимать никаких действий в данный момент. dbt Labs предоставит информацию о вашей миграции с соответствующим предварительным уведомлением, когда это будет актуально для вашего аккаунта.
 
-Your account will be automatically migrated on or after its scheduled date. However, if you use certain features, you must take action before that date to avoid service disruptions.
+Ваш аккаунт будет автоматически мигрирован в запланированную дату или после нее. Однако, если вы используете определенные функции, вам необходимо предпринять действия до этой даты, чтобы избежать перебоев в обслуживании.
 
-## Recommended actions
+## Рекомендуемые действия
 
-:::info Rescheduling your migration
+:::info Перенос вашей миграции
 
-If you're on the dbt Cloud Enterprise tier, you can postpone your account migration by up to 45 days. To reschedule your migration, navigate to **Account Settings** → **Migration guide**.
+Если вы находитесь на уровне dbt Cloud Enterprise, вы можете отложить миграцию вашего аккаунта на срок до 45 дней. Чтобы перенести миграцию, перейдите в **Настройки аккаунта** → **Руководство по миграции**.
 
-For help, contact the dbt Support Team at [support@getdbt.com](mailto:support@getdbt.com).
+Для получения помощи свяжитесь с командой поддержки dbt по адресу [support@getdbt.com](mailto:support@getdbt.com).
 :::
 
-We highly recommended you take these actions:
+Мы настоятельно рекомендуем вам выполнить следующие действия:
 
-- Ensure pending user invitations are accepted or note outstanding invitations. Pending user invitations might be voided during the migration. You can resend user invitations after the migration is complete.
-- Commit unsaved changes in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).  Unsaved changes might be lost during migration.
-- Export and download [audit logs](/docs/cloud/manage-access/audit-log) older than 90 days, as they will be unavailable from dbt Cloud after the migration is complete. Logs older than 90 days while within the data retention period are not deleted, but you will have to work with the dbt Labs Customer Support team to recover.
+- Убедитесь, что ожидаемые приглашения пользователей приняты, или отметьте незавершенные приглашения. Ожидаемые приглашения пользователей могут быть аннулированы во время миграции. Вы можете повторно отправить приглашения пользователям после завершения миграции.
+- Зафиксируйте несохраненные изменения в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). Несохраненные изменения могут быть потеряны во время миграции.
+- Экспортируйте и загрузите [журналы аудита](/docs/cloud/manage-access/audit-log), старше 90 дней, так как они будут недоступны в dbt Cloud после завершения миграции. Журналы старше 90 дней в пределах периода хранения данных не удаляются, но вам придется работать с командой поддержки клиентов dbt Labs для их восстановления.
 
-## Required actions
+## Обязательные действия
 
-These actions are required to prevent users from losing access dbt Cloud:
+Эти действия необходимы для предотвращения потери доступа пользователей к dbt Cloud:
 
-- If you still need to, complete [Auth0 migration for SSO](/docs/cloud/manage-access/auth0-migration) before your scheduled migration date to avoid service disruptions. If you've completed the Auth0 migration, your account SSO configurations will be transferred automatically. 
-- Update your IP allow lists. dbt Cloud will be using new IPs to access your warehouse post-migration. Allow inbound traffic from all of the following new IPs in your firewall and include them in any database grants:
+- Если это еще не сделано, завершите [миграцию Auth0 для SSO](/docs/cloud/manage-access/auth0-migration) до запланированной даты миграции, чтобы избежать перебоев в обслуживании. Если вы завершили миграцию Auth0, конфигурации SSO вашего аккаунта будут автоматически перенесены.
+- Обновите свои списки разрешенных IP-адресов. dbt Cloud будет использовать новые IP-адреса для доступа к вашему хранилищу после миграции. Разрешите входящий трафик от всех следующих новых IP-адресов в вашем файрволе и включите их в любые разрешения базы данных:
 
     - `52.3.77.232` 
     - `3.214.191.130`
     - `34.233.79.135`
 
-    Keep the old dbt Cloud IPs listed until the migration is complete.
+    Сохраняйте старые IP-адреса dbt Cloud в списке до завершения миграции.
 
-## Post-migration​
+## После миграции
 
-Complete all of these items to ensure your dbt Cloud resources and jobs will continue working without interruption.
+Завершите все эти пункты, чтобы гарантировать, что ваши ресурсы и задания dbt Cloud будут продолжать работать без перебоев.
 
-Use one of these two URL login options:
+Используйте один из этих двух вариантов URL для входа:
 
-- `us1.dbt.com.` If you were previously logging in at `cloud.getdbt.com`, you should instead plan to log in at us1.dbt.com. The original URL will still work, but you’ll have to click through to be redirected upon login.
-- `ACCOUNT_PREFIX.us1.dbt.com`: A unique URL specifically for your account. If you belong to multiple accounts, each will have a unique URL available as long as they have been migrated to multi-cell. 
-Check out [access, regions, and IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for more information.
+- `us1.dbt.com.` Если вы ранее входили по адресу `cloud.getdbt.com`, теперь вам следует планировать вход по адресу us1.dbt.com. Исходный URL по-прежнему будет работать, но вам придется пройти через перенаправление при входе.
+- `ACCOUNT_PREFIX.us1.dbt.com`: Уникальный URL, специально для вашего аккаунта. Если вы принадлежите к нескольким аккаунтам, каждый из них будет иметь уникальный URL, доступный, пока они были мигрированы на многоклеточную архитектуру. 
+Посмотрите [доступ, регионы и IP-адреса](/docs/cloud/about-cloud/access-regions-ip-addresses) для получения дополнительной информации.
 
-Remove the following old IP addresses from your firewall and database grants: 
+Удалите следующие старые IP-адреса из вашего файрвола и разрешений базы данных: 
 
 - `52.45.144.63` 
 - `54.81.134.249`

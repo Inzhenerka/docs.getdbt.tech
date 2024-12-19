@@ -1,68 +1,65 @@
 ---
-title: "dbt Cloud Architecture"
+title: "Архитектура dbt Cloud"
 id: "architecture"
-description: "Information about the architecture, communication, and security of dbt Cloud"
+description: "Информация об архитектуре, коммуникации и безопасности dbt Cloud"
 ---
 
-This page helps practitioners and those interested in dbt Cloud's architecture and data flow.
+Эта страница помогает практикам и тем, кто интересуется архитектурой и потоками данных dbt Cloud.
 
-## About dbt Cloud architecture
+## Об архитектуре dbt Cloud
 
-The dbt Cloud application has two types of components: static and dynamic. The static components are always running to serve highly available dbt Cloud functions, like the dbt Cloud web application. On the other hand, the dynamic components are created ad-hoc to handle tasks such as background jobs or requests to use the IDE.
+Приложение dbt Cloud состоит из двух типов компонентов: статических и динамических. Статические компоненты всегда работают, чтобы обеспечивать высокую доступность функций dbt Cloud, таких как веб-приложение dbt Cloud. С другой стороны, динамические компоненты создаются по мере необходимости для выполнения задач, таких как фоновые задания или запросы на использование IDE.
 
-dbt Cloud is available in most regions around the world in both [single tenant](/docs/cloud/about-cloud/tenancy#single-tenant) (AWS and Azure) and [multi-tenant](/docs/cloud/about-cloud/tenancy#multi-tenant) configurations.  
+dbt Cloud доступен в большинстве регионов мира как в [одиночной аренде](/docs/cloud/about-cloud/tenancy#single-tenant) (AWS и Azure), так и в [мультиарендной](/docs/cloud/about-cloud/tenancy#multi-tenant) конфигурации.
 
-dbt Cloud uses PostgreSQL for its backend, S3-compatible Object Storage systems for logs and artifacts, and a Kubernetes storage solution for creating dynamic, persistent volumes. 
+dbt Cloud использует PostgreSQL в качестве бэкенда, совместимые с S3 системы объектного хранения для логов и артефактов, а также решение для хранения на базе Kubernetes для создания динамических, постоянных томов.
 
-All data at rest on dbt Cloud servers is protected using AES-256 encryption. 
+Все данные, находящиеся в покое на серверах dbt Cloud, защищены с использованием шифрования AES-256.
 
 <img src="/img/docs/dbt-cloud/on-premises/data-flows.png" />
 
-For a more detailed breakdown of the dbt Cloud apps, [download the advanced architecture guide PDF](https://drive.google.com/uc?export=download&id=1lktNuMZybXfqFtr24J8zAssEfoL9r51S).
+Для более детального разбора приложений dbt Cloud, [скачайте PDF с расширенным руководством по архитектуре](https://drive.google.com/uc?export=download&id=1lktNuMZybXfqFtr24J8zAssEfoL9r51S).
 
-## Communication
+## Коммуникация
 
-dbt Cloud can communicate with several external services, including data platforms, git repositories, authentication services, and directories. All communications occur over HTTPS (attempts to connect via HTTP are redirected to HTTPS). dbt Cloud encrypts in transit using the TLS 1.2 cryptographic protocol. 
+dbt Cloud может взаимодействовать с несколькими внешними сервисами, включая платформы данных, git-репозитории, службы аутентификации и каталоги. Все коммуникации происходят по протоколу HTTPS (попытки подключения через HTTP перенаправляются на HTTPS). dbt Cloud шифрует данные в процессе передачи с использованием криптографического протокола TLS 1.2.
 
-TLS (Transport Layer Security) 1.2 is an industry-standard protocol for encrypting sensitive data while it travels over the public internet (which does not offer native encryption).
+TLS (Transport Layer Security) 1.2 является отраслевым стандартом для шифрования конфиденциальных данных во время их передачи по общедоступному интернету (который не предлагает нативного шифрования).
 
-A typical scenario that might be seen frequently is an employee working in a public space, such as an airport or café. The user might be connected to an unsecured public network offered by a facility to which many others are also connected. What if there is a bad actor amongst them running a program that can "capture" network packets and analyze them over the air?
+Типичный сценарий, который может часто встречаться, — это сотрудник, работающий в общественном месте, таком как аэропорт или кафе. Пользователь может быть подключен к небезопасной публичной сети, предоставляемой учреждением, к которой также подключены многие другие. Что если среди них есть злоумышленник, который запускает программу, способную "захватывать" сетевые пакеты и анализировать их по воздуху?
 
-When that user is accessing dbt Cloud and running models that interact with the data platform, the information sent to and from their computer and the services is encrypted with TLS 1.2.
+Когда этот пользователь получает доступ к dbt Cloud и запускает модели, которые взаимодействуют с платформой данных, информация, отправляемая и получаемая с их компьютера и сервисов, шифруется с помощью TLS 1.2.
 
-If that user runs a command that initializes communication between dbt Cloud and the data warehouse (or a git repo or an auth service) over the internet, that communication is also encrypted.  This means that while the bad actor can technically see the traffic moving over that unsecured network, they can't read or otherwise parse any information. They will not be able to eavesdrop on or hack the information in any way whatsoever. They would see a nonsensical set of characters that nobody can decrypt.
+Если этот пользователь выполняет команду, которая инициализирует связь между dbt Cloud и хранилищем данных (или git-репозиторием, или службой аутентификации) через интернет, эта связь также шифруется. Это означает, что хотя злоумышленник технически может видеть трафик, проходящий по этой небезопасной сети, он не может прочитать или иным образом расшифровать какую-либо информацию. Он увидит бессмысленный набор символов, который никто не может расшифровать.
 
-For more detailed information on our security practices, read our [Security page](https://getdbt.com/security).
+Для получения более подробной информации о наших практиках безопасности, прочитайте нашу [страницу безопасности](https://getdbt.com/security).
 
-### Data warehouse interaction
+### Взаимодействие с хранилищем данных
 
-dbt Cloud's primary role is as a data processor, not a data store. The dbt Cloud application enables users to dispatch SQL to the warehouse for transformation. However, users can post SQL that returns customer data into the dbt Cloud application. This data never persists and will only exist in memory on the instance for the duration of the session. To lock down customer data correctly, proper <Term id="data-warehouse" /> permissions must be applied to prevent improper access or storage of sensitive data.
+Основная роль dbt Cloud заключается в обработке данных, а не в их хранении. Приложение dbt Cloud позволяет пользователям отправлять SQL в хранилище для трансформации. Однако пользователи могут отправлять SQL, который возвращает данные клиентов, в приложение dbt Cloud. Эти данные никогда не сохраняются и будут существовать только в памяти экземпляра в течение сессии. Чтобы правильно ограничить доступ к данным клиентов, необходимо применить соответствующие <Term id="data-warehouse" /> разрешения, чтобы предотвратить неправильный доступ или хранение конфиденциальных данных.
 
-Some data warehouse providers offer advanced security features that can be leveraged in dbt Cloud. [PrivateLink](/docs/cloud/secure/about-privatelink) allows supported data platforms on AWS to communicate with dbt Cloud without the traffic traversing the public internet. [Snowflake](/docs/cloud/manage-access/set-up-snowflake-oauth) and [BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth) offer Oauth integration which adds a layer of security for the data platforms (Enterprise plan only).
+Некоторые поставщики хранилищ данных предлагают расширенные функции безопасности, которые можно использовать в dbt Cloud. [PrivateLink](/docs/cloud/secure/about-privatelink) позволяет поддерживаемым платформам данных на AWS взаимодействовать с dbt Cloud без прохождения трафика через общедоступный интернет. [Snowflake](/docs/cloud/manage-access/set-up-snowflake-oauth) и [BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth) предлагают интеграцию Oauth, что добавляет уровень безопасности для платформ данных (только для корпоративного плана).
 
-### Git sync
+### Синхронизация с Git
 
-dbt Cloud can sync with a variety of git providers, including [Github](/docs/cloud/git/connect-github), [Gitlab](/docs/cloud/git/connect-gitlab), and [Azure DevOps](/docs/cloud/git/connect-azure-devops) within its integrated development environment ([IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)). Communication takes place over HTTPS rather than SSH and is protected using the TLS 1.2 protocol for data in transit.
+dbt Cloud может синхронизироваться с различными поставщиками git, включая [Github](/docs/cloud/git/connect-github), [Gitlab](/docs/cloud/git/connect-gitlab) и [Azure DevOps](/docs/cloud/git/connect-azure-devops) в рамках своей интегрированной среды разработки ([IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)). Коммуникация происходит по протоколу HTTPS, а не SSH, и защищена с использованием протокола TLS 1.2 для передачи данных.
 
-The git repo information is stored on dbt Cloud servers to make it accessible during the IDE sessions. When the git sync is disabled, you must [contact support](mailto:support@getdbt.com) to request the deletion of the synced data. 
+Информация о git-репозитории хранится на серверах dbt Cloud, чтобы сделать ее доступной во время сессий IDE. Когда синхронизация с git отключена, вам необходимо [связаться с поддержкой](mailto:support@getdbt.com), чтобы запросить удаление синхронизированных данных.
 
-### Authentication services
+### Службы аутентификации
 
-The default settings of dbt Cloud enable local users with credentials stored in dbt Cloud. Still, integrations with various authentication services are offered as an alternative, including [single sign-on services](/docs/cloud/manage-access/sso-overview). Access to features can be granted/restricted by role using [RBAC](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
+Настройки по умолчанию dbt Cloud позволяют локальным пользователям с учетными данными, хранящимися в dbt Cloud. Тем не менее, предлагаются интеграции с различными службами аутентификации в качестве альтернативы, включая [службы единого входа](/docs/cloud/manage-access/sso-overview). Доступ к функциям может быть предоставлен/ограничен по ролям с использованием [RBAC](/docs/cloud/manage-access/about-user-access#role-based-access-control-).
 
-SSO features are essential because they reduce the number of credentials a user must maintain. Users sign in once and the authentication token is shared among integrated services (such as dbt Cloud). The token expires and must be refreshed at predetermined intervals, requiring the user to go through the authentication process again. If the user is disabled in the SSO provider service, their access to dbt Cloud is disabled, and they cannot override this with local auth credentials. 
+Функции SSO важны, поскольку они уменьшают количество учетных данных, которые пользователь должен поддерживать. Пользователи входят в систему один раз, и токен аутентификации делится между интегрированными сервисами (такими как dbt Cloud). Токен истекает и должен быть обновлен через заранее определенные интервалы, что требует от пользователя повторного прохождения процесса аутентификации. Если пользователь отключен в службе поставщика SSO, его доступ к dbt Cloud отключается, и он не может переопределить это с помощью локальных учетных данных аутентификации.
 
-[Snowflake](/docs/cloud/manage-access/set-up-snowflake-oauth) and [BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth) offer OAuth (JSON to pass info and API calls for auth) services as an alternative to SAML (XML to pass info and session cookies for auth). Users can authenticate against the data platform for secure access to dbt Cloud and prevent access when credentials are revoked. 
+[Snowflake](/docs/cloud/manage-access/set-up-snowflake-oauth) и [BigQuery](/docs/cloud/manage-access/set-up-bigquery-oauth) предлагают услуги OAuth (JSON для передачи информации и API-вызовов для аутентификации) в качестве альтернативы SAML (XML для передачи информации и сеансовых куки для аутентификации). Пользователи могут аутентифицироваться на платформе данных для безопасного доступа к dbt Cloud и предотвращать доступ, когда учетные данные отзываются.
 
-## Security
+## Безопасность
 
-dbt Labs is dedicated to upholding industry standards for Cloud security and GDPR compliance. Our compliance certifications include the following:
+dbt Labs стремится поддерживать отраслевые стандарты безопасности облака и соблюдения GDPR. Наши сертификаты соответствия включают следующее:
 
-- SOC2 Type II &mdash; assesses a service provider’s security control environment against the trust services principles and criteria set forth by the American Institute of Certified Public Accountants (AICPA).
-- ISO27001:2013 &mdash; a globally recognized standard for establishing and certifying an information security management system (ISMS).
-- GDPR - dbt Labs is committed to maintaining GDPR compliance standards. Read more about our [Data Processing Addendum](https://www.getdbt.com/cloud/dpa).
+- SOC2 Type II — оценивает среду контроля безопасности поставщика услуг в соответствии с принципами и критериями доверительных услуг, установленными Американским институтом сертифицированных бухгалтеров (AICPA).
+- ISO27001:2013 — международный стандарт для создания и сертификации системы управления информационной безопасностью (ISMS).
+- GDPR - dbt Labs стремится поддерживать стандарты соблюдения GDPR. Узнайте больше о нашем [Дополнении к обработке данных](https://www.getdbt.com/cloud/dpa).
 
-
-For more detailed information about our security practices, read our [Security page](https://www.getdbt.com/security/).
-
-
+Для получения более подробной информации о наших практиках безопасности, прочитайте нашу [страницу безопасности](https://www.getdbt.com/security/).

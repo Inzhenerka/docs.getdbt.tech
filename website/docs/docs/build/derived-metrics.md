@@ -1,56 +1,55 @@
 ---
-title: "Derived metrics"
+title: "Производные метрики"
 id: derived
-description: "Derived metrics is defined as an expression of other metrics.."
-sidebar_label: Derived
-tags: [Metrics, Semantic Layer]
+description: "Производные метрики определяются как выражение других метрик."
+sidebar_label: Производные
+tags: [Метрики, Семантический уровень]
 ---
 
-In MetricFlow, derived metrics are metrics created by defining an expression using other metrics. They enable you to perform calculations with existing metrics. This is helpful for combining metrics and doing math functions on aggregated columns, like creating a profit metric. 
+В MetricFlow производные метрики создаются путем определения выражения с использованием других метрик. Они позволяют выполнять вычисления с существующими метриками. Это полезно для комбинирования метрик и выполнения математических функций над агрегированными столбцами, например, для создания метрики прибыли.
 
- The parameters, description, and type for derived metrics are: 
+Параметры, описание и тип для производных метрик:
 
-| Parameter | Description | Required | Type | 
+| Параметр | Описание | Обязательный | Тип | 
 | --------- | ----------- | ---- | ---- |
-| `name` | The name of the metric. | Required | String |  
-| `description` | The description of the metric. | Optional | String |
-| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required | String |  
-| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Required | String |
-| `type_params` | The type parameters of the metric. | Required | Dict |  
-| `expr` | The derived expression. You'll see validation warnings when the derived metric is missing an `expr` or  the `expr` does not use all the input metrics. | Required | String |
-| `metrics` |  The list of metrics used in the derived metrics. Each entry can include optional fields like `alias`, `filter`, or `offset_window`. | Required  | List |  
-| `alias` | Optional alias for the metric that you can use in the `expr`. | Optional | String |
-| `filter` | Optional filter to apply to the metric. | Optional | String |  
-| `offset_window` | Set the period for the offset window, such as 1 month. This will return the value of the metric one month from the metric time.  | Optional | String |
+| `name` | Название метрики. | Обязательный | Строка |  
+| `description` | Описание метрики. | Необязательный | Строка |
+| `type` | Тип метрики (накопительная, производная, отношение или простая). | Обязательный | Строка |  
+| `label` | Определяет отображаемое значение в downstream инструментах. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). | Обязательный | Строка |
+| `type_params` | Параметры типа метрики. | Обязательный | Словарь |  
+| `expr` | Производное выражение. Вы увидите предупреждения о валидации, если производная метрика не содержит `expr` или если `expr` не использует все входные метрики. | Обязательный | Строка |
+| `metrics` | Список метрик, используемых в производных метриках. Каждая запись может включать необязательные поля, такие как `alias`, `filter` или `offset_window`. | Обязательный | Список |  
+| `alias` | Необязательный псевдоним для метрики, который вы можете использовать в `expr`. | Необязательный | Строка |
+| `filter` | Необязательный фильтр для применения к метрике. | Необязательный | Строка |  
+| `offset_window` | Установите период для смещения, например, 1 месяц. Это вернет значение метрики через месяц от времени метрики. | Необязательный | Строка |
 
-
-The following displays the complete specification for derived metrics, along with an example.
+Следующий раздел показывает полную спецификацию для производных метрик, вместе с примером.
 
 ```yaml
 metrics:
-  - name: the metric name # Required
-    description: the metric description # Optional
-    type: derived # Required
-    label: The value that will be displayed in downstream tools #Required
-    type_params: # Required
-      expr: the derived expression # Required
-      metrics: # The list of metrics used in the derived metrics # Required
-        - name: the name of the metrics. must reference a metric you have already defined # Required
-          alias: optional alias for the metric that you can use in the expr # Optional
-          filter: optional filter to apply to the metric # Optional
-          offset_window: set the period for the offset window, such as 1 month. This will return the value of the metric one month from the metric time. # Optional
+  - name: the metric name # Обязательный
+    description: the metric description # Необязательный
+    type: derived # Обязательный
+    label: The value that will be displayed in downstream tools # Обязательный
+    type_params: # Обязательный
+      expr: the derived expression # Обязательный
+      metrics: # Список метрик, используемых в производных метриках # Обязательный
+        - name: the name of the metrics. must reference a metric you have already defined # Обязательный
+          alias: optional alias for the metric that you can use in the expr # Необязательный
+          filter: optional filter to apply to the metric # Необязательный
+          offset_window: set the period for the offset window, such as 1 month. This will return the value of the metric one month from the metric time. # Необязательный
 ```
 
-For advanced data modeling, you can use `fill_nulls_with` and `join_to_timespine` to [set null metric values to zero](/docs/build/fill-nulls-advanced), ensuring numeric values for every data row.
+Для продвинутого моделирования данных вы можете использовать `fill_nulls_with` и `join_to_timespine`, чтобы [установить значения метрик null в ноль](/docs/build/fill-nulls-advanced), обеспечивая числовые значения для каждой строки данных.
 
-## Derived metrics example
+## Пример производных метрик
 
 ```yaml
 metrics:
   - name: order_gross_profit
-    description: Gross profit from each order.
+    description: Валовая прибыль от каждого заказа.
     type: derived
-    label: Order gross profit
+    label: Валовая прибыль по заказам
     type_params:
       expr: revenue - cost
       metrics:
@@ -59,8 +58,8 @@ metrics:
         - name: order_cost
           alias: cost
   - name: food_order_gross_profit
-    label: Food order gross profit
-    description: "The gross profit for each food order."
+    label: Валовая прибыль по заказам на еду
+    description: "Валовая прибыль от каждого заказа на еду."
     type: derived
     type_params:
       expr: revenue - cost
@@ -74,9 +73,9 @@ metrics:
           filter: |
             {{ Dimension('order__is_food_order') }} = True
   - name: order_total_growth_mom
-    description: "Percentage growth of orders total completed to 1 month ago"
+    description: "Процентный рост общего числа заказов по сравнению с 1 месяцем назад"
     type: derived
-    label: Order total growth % M/M
+    label: Процент роста общего числа заказов М/М
     type_params:
       expr: (order_total - order_total_prev_month)*100/order_total_prev_month
       metrics: 
@@ -86,18 +85,18 @@ metrics:
           alias: order_total_prev_month
 ```
 
-## Derived metric offset
+## Смещение производной метрики
 
-To perform calculations using a metric's value from a previous time period, you can add an offset parameter to a derived metric. For example, if you want to calculate period-over-period growth or track user retention, you can use this metric offset.
+Чтобы выполнять вычисления, используя значение метрики из предыдущего временного периода, вы можете добавить параметр смещения к производной метрике. Например, если вы хотите рассчитать рост по периодам или отслеживать удержание пользователей, вы можете использовать это смещение метрики.
 
-**Note:** You must include the [`metric_time` dimension](/docs/build/dimensions#time) when querying a derived metric with an offset window.
+**Примечание:** Вы должны включить [`metric_time` dimension](/docs/build/dimensions#time) при запросе производной метрики с окном смещения.
 
-The following example displays how you can calculate monthly revenue growth using a 1-month offset window:
+Следующий пример показывает, как вы можете рассчитать рост выручки за месяц, используя окно смещения в 1 месяц:
 
 ```yaml
 - name: customer_retention
-  description: Percentage of customers that are active now and those active 1 month ago
-  label: customer_retention
+  description: Процент клиентов, которые активны сейчас и были активны 1 месяц назад
+  label: удержание клиентов
   type_params:
     expr: (active_customers/ active_customers_prev_month)
     metrics:
@@ -108,15 +107,15 @@ The following example displays how you can calculate monthly revenue growth usin
         alias: active_customers_prev_month
 ```
 
-### Offset windows and granularity
+### Окна смещения и гранулярность
 
-You can query any granularity and offset window combination. The following example queries a metric with a 7-day offset and a monthly grain:
+Вы можете запрашивать любую комбинацию гранулярности и окна смещения. Следующий пример запрашивает метрику с 7-дневным смещением и месячной гранулярностью:
 
 ```yaml
 - name: d7_booking_change
-  description: Difference between bookings now and 7 days ago
+  description: Разница между бронированиями сейчас и 7 дней назад
   type: derived
-  label: d7 bookings change
+  label: Изменение бронирований за 7 дней
   type_params:
     expr: bookings - bookings_7_days_ago
     metrics:
@@ -127,40 +126,39 @@ You can query any granularity and offset window combination. The following examp
         alias: bookings_7_days_ago
 ```
 
-When you run the query  `dbt sl query --metrics d7_booking_change --group-by metric_time__month` for the metric, here's how it's calculated. For dbt Core, you can use the `mf query` prefix. 
+Когда вы выполняете запрос `dbt sl query --metrics d7_booking_change --group-by metric_time__month` для метрики, вот как она рассчитывается. Для dbt Core вы можете использовать префикс `mf query`.
 
-1. Retrieve the raw, unaggregated dataset with the specified measures and dimensions at the smallest level of detail, which is currently 'day'.
-2. Then, perform an offset join on the daily dataset, followed by performing a date trunc and aggregation to the requested granularity.
-   For example, to calculate `d7_booking_change` for July 2017: 
-   - First, sum up all the booking values for each day in July to calculate the bookings metric.
-   - The following table displays the range of days that make up this monthly aggregation.
+1. Извлеките необработанный, неагрегированный набор данных с указанными мерами и измерениями на самом мелком уровне детализации, который в настоящее время составляет 'день'.
+2. Затем выполните соединение с смещением на ежедневном наборе данных, после чего выполните обрезку даты и агрегацию до запрашиваемой гранулярности.
+   Например, чтобы рассчитать `d7_booking_change` для июля 2017 года: 
+   - Сначала суммируйте все значения бронирований за каждый день в июле, чтобы рассчитать метрику бронирований.
+   - Следующая таблица показывает диапазон дней, которые составляют эту месячную агрегацию.
 
-|   | Orders | Metric_time |
+|   | Заказы | Metric_time |
 | - | ---- | -------- |
 |   | 330 | 2017-07-31 |
-|   | 7030 | 2017-07-30 to 2017-07-02 |
+|   | 7030 | 2017-07-30 по 2017-07-02 |
 |   | 78 | 2017-07-01 |
-| Total  | 7438 | 2017-07-01 |
+| Всего  | 7438 | 2017-07-01 |
 
-3. Calculate July's bookings with a 7-day offset. The following table displays the range of days that make up this monthly aggregation. Note that the month begins 7 days later (offset by 7 days) on 2017-07-24.
+3. Рассчитайте бронирования за июль с 7-дневным смещением. Следующая таблица показывает диапазон дней, которые составляют эту месячную агрегацию. Обратите внимание, что месяц начинается на 7 дней позже (с учетом смещения на 7 дней) 2017-07-24.
 
-|   | Orders | Metric_time |
+|   | Заказы | Metric_time |
 | - | ---- | -------- |
 |   | 329 | 2017-07-24 |
-|   | 6840 | 2017-07-23  to 2017-06-30 |
+|   | 6840 | 2017-07-23 по 2017-06-30 |
 |   | 83 | 2017-06-24 |
-| Total  | 7252 | 2017-07-01 |
+| Всего  | 7252 | 2017-07-01 |
 
-4. Lastly, calculate the derived metric and return the final result set:
+4. Наконец, рассчитайте производную метрику и верните окончательный набор результатов:
 
 ```bash
-bookings - bookings_7_days_ago would be compile as 7438 - 7252 = 186. 
+bookings - bookings_7_days_ago будет вычислено как 7438 - 7252 = 186. 
 ```
 
 | d7_booking_change | metric_time__month |
 | ----------------- | ------------------ |
 | 186 | 2017-07-01 |
 
-## Related docs
-- [Fill null values for simple, derived, or ratio metrics](/docs/build/fill-nulls-advanced)
-
+## Связанные документы
+- [Заполнение пустых значений для простых, производных или относительных метрик](/docs/build/fill-nulls-advanced)

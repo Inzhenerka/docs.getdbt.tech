@@ -1,65 +1,65 @@
 ---
 id: ratio
-title: "Ratio metrics"
-description: "Use ratio metrics to create a ratio out of two measures. "
-sidebar_label: Ratio
-tags: [Metrics, Semantic Layer]
+title: "Метрики отношения"
+description: "Используйте метрики отношения для создания отношения из двух показателей."
+sidebar_label: Отношение
+tags: [Метрики, Семантический уровень]
 ---
 
-Ratio allows you to create a ratio between two metrics. You simply specify a numerator and a denominator metric. Additionally, you can apply a dimensional filter to both the numerator and denominator using a constraint string when computing the metric. 
+Метрика отношения позволяет создать отношение между двумя показателями. Вы просто указываете метрику числителя и метрику знаменателя. Кроме того, вы можете применить размерный фильтр как к числителю, так и к знаменателю, используя строку ограничения при вычислении метрики.
 
- The parameters, description, and type for ratio metrics are:
+Параметры, описание и тип для метрик отношения:
 
-| Parameter | Description | Required | Type | 
+| Параметр | Описание | Обязательный | Тип | 
 | --------- | ----------- | ---- | ---- |
-| `name` | The name of the metric. | Required | String |
-| `description` | The description of the metric. | Optional | String |
-| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required | String |
-| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Required | String |
-| `type_params` | The type parameters of the metric. | Required | Dict |
-| `numerator` | The name of the metric used for the numerator, or structure of properties. | Required | String or dict |
-| `denominator` |  The name of the metric used for the denominator, or structure of properties. | Required  | String  or dict |
-| `filter` | Optional filter for the numerator or denominator. | Optional | String |
-| `alias` | Optional alias for the numerator or denominator. | Optional | String |
+| `name` | Название метрики. | Обязательный | Строка |
+| `description` | Описание метрики. | Необязательный | Строка |
+| `type` | Тип метрики (накопительная, производная, отношение или простая). | Обязательный | Строка |
+| `label` | Определяет отображаемое значение в инструментах на выходе. Принимает простой текст, пробелы и кавычки (например, `orders_total` или `"orders_total"`). | Обязательный | Строка |
+| `type_params` | Параметры типа метрики. | Обязательный | Словарь |
+| `numerator` | Название метрики, используемой для числителя, или структура свойств. | Обязательный | Строка или словарь |
+| `denominator` | Название метрики, используемой для знаменателя, или структура свойств. | Обязательный | Строка или словарь |
+| `filter` | Необязательный фильтр для числителя или знаменателя. | Необязательный | Строка |
+| `alias` | Необязательный псевдоним для числителя или знаменателя. | Необязательный | Строка |
 
-The following displays the complete specification for ratio metrics, along with an example.
+Ниже представлена полная спецификация для метрик отношения, а также пример.
 
 <File name="models/metrics/file_name.yml">
  
 ```yaml
 metrics:
-  - name: The metric name # Required
-    description: the metric description # Optional
-    type: ratio # Required
-    label: String that defines the display value in downstream tools. (such as orders_total or "orders_total") #Required
-    type_params: # Required
-      numerator: The name of the metric used for the numerator, or structure of properties # Required
-        name: Name of metric used for the numerator # Required
-        filter: Filter for the numerator # Optional
-        alias: Alias for the numerator # Optional
-      denominator: The name of the metric used for the denominator, or structure of properties # Required
-        name: Name of metric used for the denominator # Required
-        filter: Filter for the denominator # Optional
-        alias: Alias for the denominator # Optional
+  - name: Название метрики # Обязательный
+    description: Описание метрики # Необязательный
+    type: ratio # Обязательный
+    label: Строка, определяющая отображаемое значение в инструментах на выходе. (например, orders_total или "orders_total") # Обязательный
+    type_params: # Обязательный
+      numerator: Название метрики, используемой для числителя, или структура свойств # Обязательный
+        name: Название метрики, используемой для числителя # Обязательный
+        filter: Фильтр для числителя # Необязательный
+        alias: Псевдоним для числителя # Необязательный
+      denominator: Название метрики, используемой для знаменателя, или структура свойств # Обязательный
+        name: Название метрики, используемой для знаменателя # Обязательный
+        filter: Фильтр для знаменателя # Необязательный
+        alias: Псевдоним для знаменателя # Необязательный
 ```
 </File>
 
-For advanced data modeling, you can use `fill_nulls_with` and `join_to_timespine` to [set null metric values to zero](/docs/build/fill-nulls-advanced), ensuring numeric values for every data row.
+Для продвинутого моделирования данных вы можете использовать `fill_nulls_with` и `join_to_timespine`, чтобы [установить значения метрик, равные нулю](/docs/build/fill-nulls-advanced), обеспечивая числовые значения для каждой строки данных.
 
-## Ratio metrics example
+## Пример метрик отношения
 
-These examples demonstrate how to create ratio metrics in your model. They cover basic and advanced use cases, including applying filters to the numerator and denominator metrics.
+Эти примеры демонстрируют, как создать метрики отношения в вашей модели. Они охватывают основные и продвинутые случаи использования, включая применение фильтров к метрикам числителя и знаменателя.
 
-#### Example 1 
-This example is a basic ratio metric that calculates the ratio of food orders to total orders:
+#### Пример 1 
+Этот пример представляет собой базовую метрику отношения, которая вычисляет отношение заказов еды к общему количеству заказов:
 
 <File name="models/metrics/file_name.yml">
  
 ```yaml
 metrics:
   - name: food_order_pct
-    description: "The food order count as a ratio of the total order count"
-    label: Food order ratio
+    description: "Количество заказов еды как отношение к общему количеству заказов"
+    label: Отношение заказов еды
     type: ratio
     type_params: 
       numerator: food_orders
@@ -67,16 +67,16 @@ metrics:
 ```
 </File>
 
-#### Example 2 
-This example is a ratio metric that calculates the ratio of food orders to total orders, with a filter and alias applied to the numerator. Note that in order to add these attributes, you'll need to use an explicit key for the name attribute too.
+#### Пример 2 
+Этот пример представляет собой метрику отношения, которая вычисляет отношение заказов еды к общему количеству заказов с применением фильтра и псевдонима к числителю. Обратите внимание, что для добавления этих атрибутов вам также потребуется использовать явный ключ для атрибута имени.
 
 <File name="models/metrics/file_name.yml">
  
 ```yaml
 metrics:
   - name: food_order_pct
-    description: "The food order count as a ratio of the total order count, filtered by location"
-    label: Food order ratio by location
+    description: "Количество заказов еды как отношение к общему количеству заказов, отфильтрованное по местоположению"
+    label: Отношение заказов еды по местоположению
     type: ratio
     type_params:
       numerator:
@@ -90,10 +90,9 @@ metrics:
 ```
 </File>
 
-## Ratio metrics using different semantic models
+## Метрики отношения с использованием различных семантических моделей
 
-The system will simplify and turn the numerator and denominator into a ratio metric from different semantic models by computing their values in sub-queries. It will then join the result set based on common dimensions to calculate the final ratio. Here's an example of the SQL generated for such a ratio metric.
-
+Система упростит и превратит числитель и знаменатель в метрику отношения из различных семантических моделей, вычисляя их значения в подзапросах. Затем она объединит результирующий набор на основе общих измерений для расчета окончательного отношения. Вот пример SQL, сгенерированного для такой метрики отношения.
 
 ```sql
 select
@@ -139,16 +138,16 @@ on
   )
 ```
 
-## Add filter
+## Добавить фильтр
 
-Users can define constraints on input metrics for a ratio metric by applying a filter directly to the input metric, like so:
+Пользователи могут определить ограничения для входных метрик для метрики отношения, применив фильтр непосредственно к входной метрике, как показано ниже:
 
 <File name="models/metrics/file_name.yml">
  
 ```yaml
 metrics:
   - name: frequent_purchaser_ratio
-    description: Fraction of active users who qualify as frequent purchasers
+    description: Доля активных пользователей, которые квалифицируются как частые покупатели
     type: ratio
     type_params:
       numerator:
@@ -161,10 +160,10 @@ metrics:
 ```
 </File>
 
-Note the `filter` and `alias` parameters for the metric referenced in the numerator. 
-- Use the `filter` parameter to apply a filter to the metric it's attached to. 
-- The `alias` parameter is used to avoid naming conflicts in the rendered SQL queries when the same metric is used with different filters. 
-- If there are no naming conflicts, the `alias` parameter can be left out.
+Обратите внимание на параметры `filter` и `alias` для метрики, упомянутой в числителе. 
+- Используйте параметр `filter`, чтобы применить фильтр к метрике, к которой он прикреплен. 
+- Параметр `alias` используется для избежания конфликтов имен в сгенерированных SQL-запросах, когда одна и та же метрика используется с разными фильтрами. 
+- Если конфликтов имен нет, параметр `alias` можно опустить.
 
-## Related docs
-- [Fill null values for simple, derived, or ratio metrics](/docs/build/fill-nulls-advanced)
+## Связанные документы
+- [Заполнение пустых значений для простых, производных или метрик отношения](/docs/build/fill-nulls-advanced)

@@ -1,121 +1,118 @@
 ---
-title: "Connect to GitLab"
-description: "Learn how connecting your GitLab account provides convenience and another layer of security to dbt Cloud."
+title: "Подключение к GitLab"
+description: "Узнайте, как подключение вашей учетной записи GitLab обеспечивает удобство и дополнительный уровень безопасности для dbt Cloud."
 id: "connect-gitlab"
 ---
 
+Подключение вашей учетной записи GitLab к dbt Cloud обеспечивает удобство и дополнительный уровень безопасности для dbt Cloud:
+- Импортируйте новые репозитории GitLab всего за несколько кликов во время настройки проекта dbt Cloud.
+- Клонируйте репозитории с использованием HTTPS вместо SSH.
+- Переносите разрешения пользователей GitLab в действия git dbt Cloud или dbt Cloud CLI.
+- Запускайте сборки [непрерывной интеграции](/docs/deploy/continuous-integration) при открытии запросов на слияние в GitLab.
+  - GitLab автоматически регистрирует веб-хук в вашем репозитории GitLab для обеспечения бесшовной интеграции с dbt Cloud.
 
-Connecting your GitLab account to dbt Cloud provides convenience and another layer of security to dbt Cloud:
-- Import new GitLab repos with a couple clicks during dbt Cloud project setup.
-- Clone repos using HTTPS rather than SSH.
-- Carry GitLab user permissions through to dbt Cloud or dbt Cloud CLI's git actions.
-- Trigger [Continuous integration](/docs/deploy/continuous-integration) builds when merge requests are opened in GitLab.
-  - GitLab automatically registers a webhook in your GitLab repository to enable seamless integration with dbt Cloud.
+Шаги для интеграции GitLab в dbt Cloud зависят от вашего тарифного плана. Если вы находитесь на:
+- тарифе Developer или Team, прочитайте эти [инструкции](#for-dbt-cloud-developer-and-team-tiers).
+- тарифе Enterprise, перейдите к этим [инструкциям](#for-the-dbt-cloud-enterprise-tier).
 
-The steps to integrate GitLab in dbt Cloud depend on your plan. If you are on:
-- the Developer or Team plan, read these [instructions](#for-dbt-cloud-developer-and-team-tiers).
-- the Enterprise plan, jump ahead to these [instructions](#for-the-dbt-cloud-enterprise-tier).
+## Для тарифов dbt Cloud Developer и Team
 
-## For dbt Cloud Developer and Team tiers
+Чтобы подключить вашу учетную запись GitLab:
+1. В dbt Cloud нажмите на ваше имя учетной записи в левом меню и выберите **Настройки учетной записи**.
+2. Выберите **Личный профиль** в разделе **Ваш профиль**.
+3. Прокрутите вниз до **Связанные учетные записи**.
+4. Нажмите **Связать** справа от вашей учетной записи GitLab.
 
-To connect your GitLab account:
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**. 
-2. Select **Personal profile** under the **Your profile** section.
-3. Scroll down to **Linked accounts**.
-4. Click **Link** to the right of your GitLab account.
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect.png" title="Настройки личного профиля с разделом Связанные учетные записи"/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-github/github-connect.png" title="The Personal profile settings with the Linked Accounts section of the user profile"/>
+Когда вы нажмете **Связать**, вы будете перенаправлены на GitLab и предложено войти в свою учетную запись. GitLab затем запросит ваше явное разрешение:
 
-When you click **Link**, you will be redirected to GitLab and prompted to sign into your account. GitLab will then ask for your explicit authorization:
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Экран авторизации GitLab" />
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="GitLab Authorization Screen" />
+После того как вы примете, вы должны быть перенаправлены обратно в dbt Cloud, и вы увидите, что ваша учетная запись была связана с вашим профилем.
 
-Once you've accepted, you should be redirected back to dbt Cloud, and you'll see that your account has been linked to your profile.
+## Для тарифа dbt Cloud Enterprise
 
+Клиенты dbt Cloud Enterprise имеют дополнительное преимущество использования собственного OAuth-приложения GitLab в dbt Cloud. Этот тариф обеспечивает дополнительную безопасность, так как dbt Cloud будет:
+- Принуждать к авторизации пользователей с помощью OAuth.
+- Переносить разрешения пользователей репозитория GitLab (доступ на чтение / запись) в действия git dbt Cloud или dbt Cloud CLI.
 
-## For the dbt Cloud Enterprise tier
+Чтобы подключить GitLab в dbt Cloud, администратор учетной записи GitLab должен:
+1. [Настроить OAuth-приложение GitLab](#setting-up-a-gitlab-oauth-application).
+2. [Добавить приложение GitLab в dbt Cloud](#adding-the-gitlab-oauth-application-to-dbt-cloud).
 
-dbt Cloud enterprise customers have the added benefit of bringing their own GitLab OAuth application to dbt Cloud. This tier benefits from extra security, as dbt Cloud will:
-- Enforce user authorization with OAuth.
-- Carry GitLab's user repository permissions (read / write access) through to dbt Cloud or dbt Cloud CLI's git actions.
+После того как администратор завершит эти шаги, разработчики dbt Cloud должны:
+1. [Лично аутентифицироваться в GitLab](#personally-authenticating-with-gitlab) из dbt Cloud.
 
-In order to connect GitLab in dbt Cloud, a GitLab account admin must:
-1. [Set up a GitLab OAuth application](#setting-up-a-gitlab-oauth-application).
-2. [Add the GitLab app to dbt Cloud](#adding-the-gitlab-oauth-application-to-dbt-cloud).
+### Настройка OAuth-приложения GitLab
+Рекомендуем, чтобы перед настройкой проекта в dbt Cloud администратор учетной записи GitLab настроил OAuth-приложение в GitLab для использования в dbt Cloud.
 
-Once the admin completes those steps, dbt Cloud developers need to:
-1. [Personally authenticate with GitLab](#personally-authenticating-with-gitlab) from dbt Cloud.
+Для получения более подробной информации GitLab предлагает [руководство по созданию группового приложения](https://docs.gitlab.com/ee/integration/oauth_provider.html#group-owned-applications).
 
+В GitLab перейдите в настройки вашей группы и выберите **Приложения**. Здесь вы увидите форму для создания нового приложения.
 
-### Setting up a GitLab OAuth application
-We recommend that before you set up a project in dbt Cloud, a GitLab account admin set up an OAuth application in GitLab for use in dbt Cloud.
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/gitlab nav.gif" title="Навигация по приложениям GitLab"/>
 
-For more detail, GitLab has a [guide for creating a Group Application](https://docs.gitlab.com/ee/integration/oauth_provider.html#group-owned-applications).
+В GitLab, создавая ваше групповое приложение, введите следующее:
 
-In GitLab, navigate to your group settings and select **Applications**. Here you'll see a form to create a new application.
-
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/gitlab nav.gif" title="GitLab application navigation"/>
-
-In GitLab, when creating your Group Application, input the following:
-
-| Field | Value |
+| Поле | Значение |
 | ------ | ----- |
-| **Name** | dbt Cloud |
-| **Redirect URI** | `https://YOUR_ACCESS_URL/complete/gitlab` |
-| **Confidential** | ✅ |
-| **Scopes** | ✅ api |
+| **Имя** | dbt Cloud |
+| **URI перенаправления** | `https://YOUR_ACCESS_URL/complete/gitlab` |
+| **Конфиденциальное** | ✅ |
+| **Области** | ✅ api |
 
-Replace `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan.
+Замените `YOUR_ACCESS_URL` на [соответствующий URL-адрес доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана.
 
-The application form in GitLab should look as follows when completed:
+Форма приложения в GitLab должна выглядеть следующим образом после заполнения:
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/gitlab app.png" title="GitLab group owned application form"/>
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/gitlab app.png" title="Форма группового приложения GitLab"/>
 
-Click **Save application** in GitLab, and GitLab will then generate an **Application ID** and **Secret**. These values will be available even if you close the app screen, so this is not the only chance you have to save them.
+Нажмите **Сохранить приложение** в GitLab, и GitLab сгенерирует **ID приложения** и **Секрет**. Эти значения будут доступны даже если вы закроете экран приложения, так что это не единственный шанс их сохранить.
 
-If you're a Business Critical customer using [IP restrictions](/docs/cloud/secure/ip-restrictions), ensure you've added the appropriate Gitlab CIDRs to your IP restriction rules, or else the Gitlab connection will fail.
+Если вы являетесь клиентом Business Critical, использующим [ограничения IP](/docs/cloud/secure/ip-restrictions), убедитесь, что вы добавили соответствующие CIDR GitLab в ваши правила ограничения IP, иначе соединение с GitLab не будет успешным.
 
-### Adding the GitLab OAuth application to dbt Cloud
-After you've created your GitLab application, you need to provide dbt Cloud information about the app. In dbt Cloud, account admins should navigate to **Account Settings**, click on the **Integrations** tab, and expand the GitLab section.
+### Добавление OAuth-приложения GitLab в dbt Cloud
+После создания вашего приложения GitLab вам нужно предоставить dbt Cloud информацию о приложении. В dbt Cloud администраторы учетных записей должны перейти в **Настройки учетной записи**, нажать на вкладку **Интеграции** и развернуть раздел GitLab.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Navigation.gif" title="Navigating to the GitLab Integration in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Navigation.gif" title="Навигация к интеграции GitLab в dbt Cloud"/>
 
-In dbt Cloud, input the following values:
+В dbt Cloud введите следующие значения:
 
-| Field | Value |
+| Поле | Значение |
 | ------ | ----- |
-| **GitLab Instance** | https://gitlab.com |
-| **Application ID** | *copy value from GitLab app* |
-| **Secret** | *copy value from GitLab app* |
+| **Экземпляр GitLab** | https://gitlab.com |
+| **ID приложения** | *скопируйте значение из приложения GitLab* |
+| **Секрет** | *скопируйте значение из приложения GitLab* |
 
-Note, if you have a special hosted version of GitLab, modify the **GitLab Instance** to use the hostname provided for your organization instead - for example `https://gitlab.yourgreatcompany.com/`.
+Обратите внимание, если у вас есть специальная хостинговая версия GitLab, измените **Экземпляр GitLab**, чтобы использовать предоставленный для вашей организации хостнейм, например `https://gitlab.yourgreatcompany.com/`.
 
-Once the form is complete in dbt Cloud, click **Save**.
+После завершения формы в dbt Cloud нажмите **Сохранить**.
 
-You will then be redirected to GitLab and prompted to sign into your account. GitLab will ask for your explicit authorization:
+Затем вы будете перенаправлены на GitLab и предложено войти в свою учетную запись. GitLab запросит ваше явное разрешение:
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="GitLab Authorization Screen" />
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Экран авторизации GitLab" />
 
-Once you've accepted, you should be redirected back to dbt Cloud, and your integration is ready for developers on your team to [personally authenticate with](#personally-authenticating-with-gitlab).
+После того как вы примете, вы должны быть перенаправлены обратно в dbt Cloud, и ваша интеграция готова для разработчиков вашей команды, чтобы [лично аутентифицироваться с](#personally-authenticating-with-gitlab).
 
-### Personally authenticating with GitLab
-dbt Cloud developers on the Enterprise plan must each connect their GitLab profiles to dbt Cloud, as every developer's read / write access for the dbt repo is checked in the dbt Cloud IDE or dbt Cloud CLI.
+### Личная аутентификация в GitLab
+Разработчики dbt Cloud на тарифе Enterprise должны каждый подключить свои профили GitLab к dbt Cloud, так как доступ на чтение / запись каждого разработчика к репозиторию dbt проверяется в IDE dbt Cloud или dbt Cloud CLI.
 
-To connect a personal GitLab account:
+Чтобы подключить личную учетную запись GitLab:
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+1. В dbt Cloud нажмите на ваше имя учетной записи в левом меню и выберите **Настройки учетной записи**.
 
-2. Select **Personal profile** under the **Your profile** section.
+2. Выберите **Личный профиль** в разделе **Ваш профиль**.
 
-3. Scroll down to **Linked accounts**.
+3. Прокрутите вниз до **Связанные учетные записи**.
 
-If your GitLab account is not connected, you’ll see "No connected account". Select **Link** to begin the setup process. You’ll be redirected to GitLab, and asked to authorize dbt Cloud in a grant screen.
+Если ваша учетная запись GitLab не подключена, вы увидите "Нет подключенной учетной записи". Выберите **Связать**, чтобы начать процесс настройки. Вы будете перенаправлены на GitLab и предложено авторизовать dbt Cloud на экране разрешений.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Authorizing the dbt Cloud app for developers" />
+<Lightbox src="/img/docs/dbt-cloud/connecting-gitlab/GitLab-Auth.png" title="Авторизация приложения dbt Cloud для разработчиков" />
 
-Once you approve authorization, you will be redirected to dbt Cloud, and you should see your connected account. You're now ready to start developing in the dbt Cloud IDE or dbt Cloud CLI.
+После того как вы одобрите авторизацию, вы будете перенаправлены в dbt Cloud, и вы должны увидеть свою подключенную учетную запись. Теперь вы готовы начать разработку в IDE dbt Cloud или dbt Cloud CLI.
 
-## Troubleshooting
+## Устранение неполадок
 
 <FAQ path="Troubleshooting/gitlab-webhook"/>
 <FAQ path="Troubleshooting/error-importing-repo"/>

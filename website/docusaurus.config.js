@@ -168,19 +168,19 @@ var siteSettings = {
           position: "right",
           items: [
             {
-              label: "Join the dbt Community",
-              to: "/community/join",
+              label: "⭐ Русскоязычное сообщество",
+              to: "https://t.me/dbt_users",
             },
             {
               label: "Become a contributor",
               to: "/community/contribute",
             },
             {
-              label: "Community forum",
+              label: "Официальный форум",
               to: "/community/forum",
             },
             {
-              label: "Events",
+              label: "Мероприятия",
               to: "/community/events",
             },
             {

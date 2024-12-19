@@ -1,35 +1,33 @@
 ---
-title: "Add Seeds to your DAG"
-sidebar_label: "Seeds"
-description: "Read this tutorial to learn how to use seeds when building in dbt."
+title: "Добавление семян в ваш DAG"
+sidebar_label: "Семена"
+description: "Прочитайте этот учебник, чтобы узнать, как использовать семена при работе с dbt."
 id: "seeds"
 ---
-## Related reference docs
-* [Seed configurations](/reference/seed-configs)
-* [Seed properties](/reference/seed-properties)
-* [`seed` command](/reference/commands/seed)
+## Связанные справочные документы
+* [Конфигурации семян](/reference/seed-configs)
+* [Свойства семян](/reference/seed-properties)
+* [`seed` команда](/reference/commands/seed)
 
-## Overview
-Seeds are CSV files in your dbt project (typically in your `seeds` directory), that dbt can load into your <Term id="data-warehouse" /> using the `dbt seed` command.
+## Обзор
+Семена — это CSV-файлы в вашем проекте dbt (обычно в директории `seeds`), которые dbt может загрузить в ваш <Term id="data-warehouse" /> с помощью команды `dbt seed`.
 
-Seeds can be referenced in downstream models the same way as referencing models — by using the [`ref` function](/reference/dbt-jinja-functions/ref).
+Семена могут быть использованы в последующих моделях так же, как и модели — с помощью функции [`ref` ](/reference/dbt-jinja-functions/ref).
 
-Because these CSV files are located in your dbt repository, they are version controlled and code reviewable. Seeds are best suited to static data which changes infrequently.
+Поскольку эти CSV-файлы находятся в вашем репозитории dbt, они находятся под контролем версий и могут быть подвергнуты код-ревью. Семена лучше всего подходят для статических данных, которые меняются редко.
 
-Good use-cases for seeds:
-* A list of mappings of country codes to country names
-* A list of test emails to exclude from analysis
-* A list of employee account IDs
+Хорошие примеры использования семян:
+* Список соответствий кодов стран и названий стран
+* Список тестовых электронных адресов, которые следует исключить из анализа
+* Список идентификаторов учетных записей сотрудников
 
-Poor use-cases of dbt seeds:
-* Loading raw data that has been exported to CSVs
-* Any kind of production data containing sensitive information. For example
-personal identifiable information (PII) and passwords.
+Плохие примеры использования семян dbt:
+* Загрузка необработанных данных, экспортированных в CSV
+* Любые производственные данные, содержащие конфиденциальную информацию. Например, личные данные (PII) и пароли.
 
-
-## Example
-To load a seed file in your dbt project:
-1. Add the file to your `seeds` directory, with a `.csv` file extension, e.g. `seeds/country_codes.csv`
+## Пример
+Чтобы загрузить файл семян в ваш проект dbt:
+1. Добавьте файл в директорию `seeds`, с расширением `.csv`, например, `seeds/country_codes.csv`
 
 <File name='seeds/country_codes.csv'>
 
@@ -43,7 +41,7 @@ GB,United Kingdom
 
 </File>
 
-2. Run the `dbt seed` [command](/reference/commands/seed) — a new <Term id="table" /> will be created in your warehouse in your target schema, named `country_codes`
+2. Запустите команду `dbt seed` — новая <Term id="table" /> будет создана в вашем хранилище в целевой схеме с именем `country_codes`
 ```
 $ dbt seed
 
@@ -61,25 +59,24 @@ Completed successfully
 Done. PASS=1 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-3. Refer to seeds in downstream models using the `ref` function.
+3. Ссылайтесь на семена в последующих моделях, используя функцию `ref`.
 
 <File name='models/orders.sql'>
 
 ```sql
--- This refers to the table created from seeds/country_codes.csv
+-- Это ссылается на таблицу, созданную из seeds/country_codes.csv
 select * from {{ ref('country_codes') }}
 ```
 
 </File>
 
-## Configuring seeds
-Seeds are configured in your `dbt_project.yml`, check out the [seed configurations](reference/seed-configs.md) docs for a full list of available configurations.
+## Конфигурирование семян
+Семена настраиваются в вашем `dbt_project.yml`, ознакомьтесь с документацией по [конфигурациям семян](reference/seed-configs.md) для получения полного списка доступных конфигураций.
 
+## Документирование и тестирование семян
+Вы можете документировать и тестировать семена в YAML, объявляя свойства — ознакомьтесь с документацией по [свойствам семян](/reference/seed-properties) для получения дополнительной информации.
 
-## Documenting and testing seeds
-You can document and test seeds in YAML by declaring properties — check out the docs on [seed properties](/reference/seed-properties) for more information.
-
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Seeds/load-raw-data-with-seed" />
 <FAQ path="Seeds/configurable-data-path" /> 
 <FAQ path="Seeds/full-refresh-seed" />

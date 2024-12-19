@@ -1,79 +1,79 @@
 ---
-title: Saved queries
+title: Сохраненные запросы
 id: saved-queries
-description: "Saved queries are a way to save commonly used queries in MetricFlow. They can be used to save time and avoid writing the same query over and over again."
-sidebar_label: "Saved queries"
-tags: [Metrics, Semantic Layer]
+description: "Сохраненные запросы — это способ сохранить часто используемые запросы в MetricFlow. Они могут быть использованы для экономии времени и избежания повторного написания одного и того же запроса."
+sidebar_label: "Сохраненные запросы"
+tags: [Метрики, Семантический уровень]
 ---
 
-Saved queries are a way to save commonly used queries in MetricFlow. You can group metrics, dimensions, and filters that are logically related into a saved query. Saved queries are nodes and visible in the dbt <Term id="dag" />.
+Сохраненные запросы — это способ сохранить часто используемые запросы в MetricFlow. Вы можете сгруппировать метрики, измерения и фильтры, которые логически связаны, в сохраненный запрос. Сохраненные запросы являются узлами и видны в dbt <Term id="dag" />.
 
-Saved queries serve as the foundational building block, allowing you to [configure exports](#configure-exports) in your saved query configuration. Exports takes this functionality a step further by enabling you to [schedule and write saved queries](/docs/use-dbt-semantic-layer/exports) directly within your data platform using [dbt Cloud's job scheduler](/docs/deploy/job-scheduler).
+Сохраненные запросы служат основным строительным блоком, позволяя вам [настраивать экспорты](#configure-exports) в конфигурации вашего сохраненного запроса. Экспорты расширяют эту функциональность, позволяя вам [планировать и записывать сохраненные запросы](/docs/use-dbt-semantic-layer/exports) непосредственно в вашей платформе данных с использованием [планировщика заданий dbt Cloud](/docs/deploy/job-scheduler).
 
-## Parameters
+## Параметры
 
-To create a saved query, refer to the following table parameters.
+Чтобы создать сохраненный запрос, обратитесь к следующей таблице параметров.
 
 :::tip
-Note that we use the double colon (::) to indicate whether a parameter is nested within another parameter. So for example, `query_params::metrics` means the `metrics` parameter is nested under `query_params`.
+Обратите внимание, что мы используем двойной двоеточие (::), чтобы указать, вложен ли параметр в другой параметр. Например, `query_params::metrics` означает, что параметр `metrics` вложен в `query_params`.
 :::
-<!-- For versions 1.8 and higher -->
+<!-- Для версий 1.8 и выше -->
 <VersionBlock firstVersion="1.8">
 
-| Parameter | Type    | Required | Description    |
+| Параметр | Тип    | Обязательный | Описание    |
 |-------|---------|----------|----------------|
-| `name`       | String    | Required     | Name of the saved query object.          |
-| `description`     | String      | Required     | A description of the saved query.     |
-| `label`     | String      | Required     | The display name for your saved query. This value will be shown in downstream tools.    |
-| `config`     | String      |  Optional     |  Use the [`config`](/reference/resource-properties/config) property to specify configurations for your saved query. Supports `cache`, [`enabled`](/reference/resource-configs/enabled), `export_as`, [`group`](/reference/resource-configs/group), [`meta`](/reference/resource-configs/meta), and [`schema`](/reference/resource-configs/schema)  configurations.   |
-| `config::cache::enabled`     | Object      | Optional     |  An object with a sub-key used to specify if a saved query should populate the [cache](/docs/use-dbt-semantic-layer/sl-cache). Accepts sub-key `true` or `false`. Defaults to `false` |
-| `query_params`       | Structure   | Required     | Contains the query parameters. |
-| `query_params::metrics`   | List or String   | Optional    | A list of the metrics to be used in the query as specified in the command line interface. |
-| `query_params::group_by`    | List or String          | Optional    | A list of the Entities and Dimensions to be used in the query, which include the `Dimension` or `TimeDimension`. |
-| `query_params::where`        | List or String | Optional  | A list of strings that may include the `Dimension` or `TimeDimension` objects. |
-| `exports`     | List or Structure | Optional    | A list of exports to be specified within the exports structure.     |
-| `exports::name`       | String               | Required     | Name of the export object.      |
-| `exports::config`     | List or Structure     | Required     | A config section for any parameters specifying the export.  |
-| `exports::config::export_as` | String    | Required     | The type of export to run. Options include table or view currently and cache in the near future.   |
-| `exports::config::schema`   | String   | Optional    | The schema for creating the table or view. This option cannot be used for caching.   |
-| `exports::config::alias`  | String     | Optional    | The table alias used to write to the table or view.  This option cannot be used for caching.  |
+| `name`       | String    | Обязательный     | Имя объекта сохраненного запроса.          |
+| `description`     | String      | Обязательный     | Описание сохраненного запроса.     |
+| `label`     | String      | Обязательный     | Отображаемое имя для вашего сохраненного запроса. Это значение будет показано в downstream инструментах.    |
+| `config`     | String      |  Необязательный     |  Используйте свойство [`config`](/reference/resource-properties/config), чтобы указать конфигурации для вашего сохраненного запроса. Поддерживает конфигурации `cache`, [`enabled`](/reference/resource-configs/enabled), `export_as`, [`group`](/reference/resource-configs/group), [`meta`](/reference/resource-configs/meta) и [`schema`](/reference/resource-configs/schema).   |
+| `config::cache::enabled`     | Object      | Необязательный     |  Объект с подключом, используемым для указания, должен ли сохраненный запрос заполнять [кэш](/docs/use-dbt-semantic-layer/sl-cache). Принимает подключ `true` или `false`. По умолчанию `false`. |
+| `query_params`       | Structure   | Обязательный     | Содержит параметры запроса. |
+| `query_params::metrics`   | List or String   | Необязательный    | Список метрик, которые будут использоваться в запросе, как указано в интерфейсе командной строки. |
+| `query_params::group_by`    | List or String          | Необязательный    | Список сущностей и измерений, которые будут использоваться в запросе, включая `Dimension` или `TimeDimension`. |
+| `query_params::where`        | List or String | Необязательный  | Список строк, которые могут включать объекты `Dimension` или `TimeDimension`. |
+| `exports`     | List or Structure | Необязательный    | Список экспортов, которые должны быть указаны в структуре экспортов.     |
+| `exports::name`       | String               | Обязательный     | Имя объекта экспорта.      |
+| `exports::config`     | List or Structure     | Обязательный     | Раздел конфигурации для любых параметров, указывающих экспорт.  |
+| `exports::config::export_as` | String    | Обязательный     | Тип экспорта для выполнения. Варианты включают таблицу или представление в настоящее время и кэш в ближайшем будущем.   |
+| `exports::config::schema`   | String   | Необязательный    | Схема для создания таблицы или представления. Этот параметр не может быть использован для кэширования.   |
+| `exports::config::alias`  | String     | Необязательный    | Псевдоним таблицы, используемый для записи в таблицу или представление. Этот параметр не может быть использован для кэширования.  |
 
 </VersionBlock> 
 
-<!-- For versions 1.7 and lower-->
+<!-- Для версий 1.7 и ниже-->
 <VersionBlock lastVersion="1.7">
 
-| Parameter | Type    | Required | Description    |
+| Параметр | Тип    | Обязательный | Описание    |
 |-------|---------|----------|----------------|
-| `name`       | String    | Required     | Name of the saved query object.          |
-| `description`     | String      | Required     | A description of the saved query.     |
-| `label`     | String      | Required     | The display name for your saved query. This value will be shown in downstream tools.    |
-| `query_params`       | Structure   | Required     | Contains the query parameters. |
-| `query_params::metrics`   | List or String   | Optional    | Metrics nested with the `query_params`: a list of the metrics to be used in the query as specified in the command line interface. |
-| `query_params::group_by`    | List or String          | Optional    | Grouping nested with the `query_params`: a list of the Entities and Dimensions to be used in the query, which include the `Dimension` or `TimeDimension`. |
-| `query_params::where`        | List or String | Optional  | Conditions nested with the `query_params`: a list of strings that may include the `Dimension` or `TimeDimension` objects. |
-| `exports`     | List or Structure | Optional    | A list of exports to be specified within the exports structure.     |
-| `exports::name`       | String               | Required     | Name of export object, nested within `exports`.   |
-| `exports::config`     | List or Structure     | Required     | A config section for any parameters specifying the export, nested within `exports`.  |
-| `exports::config::export_as` | String    | Required     |  Specifies the type of export: table, view, or upcoming cache options. Nested within `exports` and `config`.   |
-| `exports::config::schema`   | String   | Optional    | Schema for creating the table or view, not applicable for caching. Nested within `exports` and `config`.   |
-| `exports::config::alias`  | String     | Optional    | Table alias used to write to the table or view.  This option can't be used for caching. Nested within `exports` and `config`.  |
+| `name`       | String    | Обязательный     | Имя объекта сохраненного запроса.          |
+| `description`     | String      | Обязательный     | Описание сохраненного запроса.     |
+| `label`     | String      | Обязательный     | Отображаемое имя для вашего сохраненного запроса. Это значение будет показано в downstream инструментах.    |
+| `query_params`       | Structure   | Обязательный     | Содержит параметры запроса. |
+| `query_params::metrics`   | List or String   | Необязательный    | Метрики, вложенные в `query_params`: список метрик, которые будут использоваться в запросе, как указано в интерфейсе командной строки. |
+| `query_params::group_by`    | List or String          | Необязательный    | Группировка, вложенная в `query_params`: список сущностей и измерений, которые будут использоваться в запросе, включая `Dimension` или `TimeDimension`. |
+| `query_params::where`        | List or String | Необязательный  | Условия, вложенные в `query_params`: список строк, которые могут включать объекты `Dimension` или `TimeDimension`. |
+| `exports`     | List or Structure | Необязательный    | Список экспортов, которые должны быть указаны в структуре экспортов.     |
+| `exports::name`       | String               | Обязательный     | Имя объекта экспорта, вложенное в `exports`.   |
+| `exports::config`     | List or Structure     | Обязательный     | Раздел конфигурации для любых параметров, указывающих экспорт, вложенный в `exports`.  |
+| `exports::config::export_as` | String    | Обязательный     |  Указывает тип экспорта: таблица, представление или предстоящие параметры кэширования. Вложенный в `exports` и `config`.   |
+| `exports::config::schema`   | String   | Необязательный    | Схема для создания таблицы или представления, не применимая для кэширования. Вложенный в `exports` и `config`.   |
+| `exports::config::alias`  | String     | Необязательный    | Псевдоним таблицы, используемый для записи в таблицу или представление. Этот параметр не может быть использован для кэширования. Вложенный в `exports` и `config`.  |
 
 </VersionBlock>
 
-If you use multiple metrics in a saved query, then you will only be able to reference the common dimensions these metrics share in the `group_by` or `where` clauses. Use the entity name prefix with the Dimension object, like `Dimension('user__ds')`.
+Если вы используете несколько метрик в сохраненном запросе, вы сможете ссылаться только на общие измерения, которые эти метрики разделяют, в предложениях `group_by` или `where`. Используйте префикс имени сущности с объектом Dimension, например, `Dimension('user__ds')`.
 
-## Configure saved query
+## Настройка сохраненного запроса
 
-Use saved queries to define and manage common Semantic Layer queries in YAML, including metrics and dimensions. Saved queries enable you to organize and reuse common MetricFlow queries within dbt projects. For example, you can group related metrics together for better organization, and include commonly used dimensions and filters.
+Используйте сохраненные запросы для определения и управления общими запросами семантического уровня в YAML, включая метрики и измерения. Сохраненные запросы позволяют вам организовывать и повторно использовать общие запросы MetricFlow в проектах dbt. Например, вы можете сгруппировать связанные метрики вместе для лучшей организации и включить часто используемые измерения и фильтры.
 
-In your saved query config, you can also leverage [caching](/docs/use-dbt-semantic-layer/sl-cache) with the dbt Cloud job scheduler to cache common queries, speed up performance, and reduce compute costs.
+В вашей конфигурации сохраненного запроса вы также можете использовать [кэширование](/docs/use-dbt-semantic-layer/sl-cache) с планировщиком заданий dbt Cloud для кэширования общих запросов, ускорения производительности и снижения затрат на вычисления.
 
-<!-- For versions 1.8 and higher -->
+<!-- Для версий 1.8 и выше -->
 
 <VersionBlock firstVersion="1.8">
 
-In the following example, you can set the saved query in the `semantic_model.yml` file:
+В следующем примере вы можете установить сохраненный запрос в файле `semantic_model.yml`:
 
 <File name='semantic_model.yml'>
 
@@ -81,10 +81,10 @@ In the following example, you can set the saved query in the `semantic_model.yml
 saved_queries:
   - name: test_saved_query
     description: "{{ doc('saved_query_description') }}"
-    label: Test saved query
+    label: Тестовый сохраненный запрос
     config:
       cache:
-        enabled: true  # Or false if you want it disabled by default
+        enabled: true  # Или false, если вы хотите отключить по умолчанию
     query_params:
       metrics:
         - simple_metric
@@ -102,11 +102,11 @@ saved_queries:
 ```
 </File>
 
-Note, that you can set `export_as` to both the saved query and the exports [config](/reference/resource-properties/config), with the exports config value taking precedence. If a key isn't set in the exports config, it will inherit the saved query config value.
+Обратите внимание, что вы можете установить `export_as` как для сохраненного запроса, так и для конфигурации экспортов [config](/reference/resource-properties/config), при этом значение конфигурации экспортов имеет приоритет. Если ключ не установлен в конфигурации экспортов, он унаследует значение конфигурации сохраненного запроса.
 
-#### Where clause
+#### Условие Where
 
-Use the following syntax to reference entities, dimensions, time dimensions, or metrics in filters and refer to [Metrics as dimensions](/docs/build/ref-metrics-in-filters) for details on how to use metrics as dimensions with metric filters:
+Используйте следующий синтаксис для ссылки на сущности, измерения, временные измерения или метрики в фильтрах и обратитесь к [Метрикам как измерениям](/docs/build/ref-metrics-in-filters) для получения подробной информации о том, как использовать метрики в качестве измерений с фильтрами метрик:
 
 ```yaml
 filter: | 
@@ -124,10 +124,10 @@ filter: |
 
 </VersionBlock>
 
-<!-- For versions 1.7 and lower-->
+<!-- Для версий 1.7 и ниже-->
 <VersionBlock lastVersion="1.7">
 
-In the following example, you can set the saved query in the `semantic_model.yml` file:
+В следующем примере вы можете установить сохраненный запрос в файле `semantic_model.yml`:
 
 <File name='semantic_model.yml'>
 
@@ -135,7 +135,7 @@ In the following example, you can set the saved query in the `semantic_model.yml
 saved_queries:
   - name: test_saved_query
     description: "{{ doc('saved_query_description') }}"
-    label: Test saved query
+    label: Тестовый сохраненный запрос
     query_params:
       metrics:
         - simple_metric
@@ -154,9 +154,9 @@ saved_queries:
 </File>
 </VersionBlock>
 
-#### Project-level saved queries
+#### Сохраненные запросы на уровне проекта
 
-To enable saved queries at the project level, you can set the `saved-queries` configuration in the [`dbt_project.yml` file](/reference/dbt_project.yml). This saves you time in configuring saved queries in each file:
+Чтобы включить сохраненные запросы на уровне проекта, вы можете установить конфигурацию `saved-queries` в файле [`dbt_project.yml`](/reference/dbt_project.yml). Это сэкономит вам время на настройку сохраненных запросов в каждом файле:
 
 <File name='dbt_project.yml'>
 
@@ -168,24 +168,24 @@ saved-queries:
 ```
 </File>
 
-For more information on `dbt_project.yml` and config naming conventions, see the [dbt_project.yml reference page](/reference/dbt_project.yml#naming-convention).
+Для получения дополнительной информации о `dbt_project.yml` и соглашениях о наименовании конфигураций смотрите [страницу справки по dbt_project.yml](/reference/dbt_project.yml#naming-convention).
 
-To build `saved_queries`, use the [`--resource-type` flag](/reference/global-configs/resource-type) and run the command `dbt build --resource-type saved_query`.
+Чтобы создать `saved_queries`, используйте флаг [`--resource-type`](/reference/global-configs/resource-type) и выполните команду `dbt build --resource-type saved_query`.
 
-## Configure exports
+## Настройка экспортов
 
-Exports are an additional configuration added to a saved query. They define _how_ to write a saved query, along with the schema and table name.
+Экспорты — это дополнительная конфигурация, добавленная к сохраненному запросу. Они определяют, _как_ записать сохраненный запрос, а также схему и имя таблицы.
 
-Once you've configured your saved query and set the foundation block, you can now configure exports in the `saved_queries` YAML configuration file (the same file as your metric definitions). This will also allow you to [run exports](#run-exports) automatically within your data platform using [dbt Cloud's job scheduler](/docs/deploy/job-scheduler).
+После того как вы настроили свой сохраненный запрос и установили основной блок, вы можете теперь настроить экспорты в файле конфигурации YAML `saved_queries` (в том же файле, что и ваши определения метрик). Это также позволит вам [автоматически выполнять экспорты](#run-exports) в вашей платформе данных с использованием [планировщика заданий dbt Cloud](/docs/deploy/job-scheduler).
 
-The following is an example of a saved query with an export:
+Следующий пример показывает сохраненный запрос с экспортом:
 
 <File name='semantic_model.yml'>
 
 ```yaml
 saved_queries:
   - name: order_metrics
-    description: Relevant order metrics
+    description: Соответствующие метрики заказов
     query_params:
       metrics:
         - orders
@@ -196,38 +196,38 @@ saved_queries:
         - Entity('order_id')
         - TimeDimension('metric_time', 'day')
         - Dimension('customer__customer_name')
-        - ... # Additional group_by
+        - ... # Дополнительные group_by
       where:
         - "{{TimeDimension('metric_time')}} > current_timestamp - interval '1 week'"
-         - ... # Additional where clauses
+        - ... # Дополнительные условия where
     exports:
       - name: order_metrics
         config:
-          export_as: table # Options available: table, view
-          schema: YOUR_SCHEMA # Optional - defaults to deployment schema
-          alias: SOME_TABLE_NAME # Optional - defaults to Export name
+          export_as: table # Доступные варианты: table, view
+          schema: YOUR_SCHEMA # Необязательный - по умолчанию используется схема развертывания
+          alias: SOME_TABLE_NAME # Необязательный - по умолчанию используется имя экспорта
 ```
 </File>
 
-## Run exports
+## Выполнение экспортов
 
-Once you've configured exports, you can now take things a step further by running exports to automatically write saved queries within your data platform using [dbt Cloud's job scheduler](/docs/deploy/job-scheduler). This feature is only available with the [dbt Cloud's Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl).
+После того как вы настроили экспорты, вы можете сделать шаг вперед, запустив экспорты, чтобы автоматически записывать сохраненные запросы в вашей платформе данных с использованием [планировщика заданий dbt Cloud](/docs/deploy/job-scheduler). Эта функция доступна только с [Семантическим уровнем dbt Cloud](/docs/use-dbt-semantic-layer/dbt-sl).
 
-For more information on how to run exports, refer to the [Exports](/docs/use-dbt-semantic-layer/exports) documentation.
+Для получения дополнительной информации о том, как выполнять экспорты, обратитесь к документации по [Экспортам](/docs/use-dbt-semantic-layer/exports).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="Can I have multiple exports in a single saved query?">
+<DetailsToggle alt_header="Могу ли я иметь несколько экспортов в одном сохраненном запросе?">
 
-Yes, this is possible. However, the difference would be the name, schema, and materialization strategy of the export.
+Да, это возможно. Однако различия будут заключаться в имени, схеме и стратегии материализации экспорта.
 </DetailsToggle>
 
-<DetailsToggle alt_header="How can I select saved_queries by their resource type?">
+<DetailsToggle alt_header="Как я могу выбрать saved_queries по их типу ресурса?">
 
-To include all saved queries in the dbt build run, use the [`--resource-type` flag](/reference/global-configs/resource-type) and run the command `dbt build --resource-type saved_query`.
+Чтобы включить все сохраненные запросы в выполнение сборки dbt, используйте флаг [`--resource-type`](/reference/global-configs/resource-type) и выполните команду `dbt build --resource-type saved_query`.
 
 </DetailsToggle>
 
-## Related docs
-- [Validate semantic nodes in a CI job](/docs/deploy/ci-jobs#semantic-validations-in-ci)
-- Configure [caching](/docs/use-dbt-semantic-layer/sl-cache)
+## Связанные документы
+- [Проверка семантических узлов в CI-задании](/docs/deploy/ci-jobs#semantic-validations-in-ci)
+- Настройка [кэширования](/docs/use-dbt-semantic-layer/sl-cache)

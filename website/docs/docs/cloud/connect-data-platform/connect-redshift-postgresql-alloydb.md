@@ -1,43 +1,42 @@
 ---
-title: "Connect Redshift, PostgreSQL, and AlloyDB"
+title: "Подключение к Redshift, PostgreSQL и AlloyDB"
 id: connect-redshift-postgresql-alloydb
-description: "Setup instructions for connecting Redshift, PostgreSQL, and AlloyDBnpm to dbt Cloud"
-sidebar_label: "Connect Redshift, PostgreSQL, and AlloyDB"
+description: "Инструкции по настройке подключения Redshift, PostgreSQL и AlloyDB к dbt Cloud"
+sidebar_label: "Подключение к Redshift, PostgreSQL и AlloyDB"
 ---
 
-The following fields are required when creating a Postgres, Redshift, or AlloyDB connection:
+При создании подключения к базе данных Postgres, Redshift или AlloyDB требуются следующие поля:
 
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | ----- | ----------- | -------- |
-| Host Name | The hostname of the Postgres, Redshift, or AlloyDB database to connect to. This can either be a hostname or an IP address. | `xxx.us-east-1.amazonaws.com` or `hostname.us-east-1.redshift.amazonaws.com` or `workgroup-name.123456789.us-east-1.redshift-serverless.amazonaws.com` |
-| Port | Usually 5432 (Postgres) or 5439 (Redshift) | `5439` |
-| Database | The logical database to connect to and run queries against. | `analytics` |
+| Host Name | Имя хоста базы данных Postgres, Redshift или AlloyDB, к которой нужно подключиться. Это может быть как имя хоста, так и IP-адрес. | `xxx.us-east-1.amazonaws.com` или `hostname.us-east-1.redshift.amazonaws.com` или `workgroup-name.123456789.us-east-1.redshift-serverless.amazonaws.com` |
+| Port | Обычно 5432 (Postgres) или 5439 (Redshift) | `5439` |
+| Database | Логическая база данных, к которой нужно подключиться и выполнять запросы. | `analytics` |
 
-**Note**: When you set up a Redshift or Postgres connection in dbt Cloud, SSL-related parameters aren't available as inputs. 
+**Примечание**: При настройке подключения Redshift или Postgres в dbt Cloud параметры, связанные с SSL, недоступны для ввода.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Configuring a Redshift connection"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-connection.png" width="70%" title="Настройка подключения к Redshift"/>
 
-### Authentication Parameters
+### Параметры аутентификации
 
-For authentication, dbt Cloud users can use either a **Database username and password**, or they can now use **IAM User authentication** to Redshift via [extended attributes](/docs/dbt-cloud-environments#extended-attributes).
+Для аутентификации пользователи dbt Cloud могут использовать либо **имя пользователя и пароль базы данных**, либо теперь могут использовать **аутентификацию IAM User** для Redshift через [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes).
 
 <Tabs
   defaultValue="database"
   values={[
-    {label: 'Database', value: 'database'},
+    {label: 'База данных', value: 'database'},
     {label: 'IAM User', value: 'iam-user-inline'},
   ]}
 >
 
 <TabItem value="database">
 
-The following table contains the parameters for the database (password-based) connection method.
+Следующая таблица содержит параметры для метода подключения к базе данных (на основе пароля).
 
-
-| Field | Description | Examples |
+| Поле | Описание | Примеры |
 | ------------- | ------- | ------------ |
-| `user`   | Account username to log into your cluster | myuser |
-| `password`  | Password for authentication  | _password1! |
+| `user`   | Имя пользователя для входа в ваш кластер | myuser |
+| `password`  | Пароль для аутентификации  | _password1! |
 
 <br/>
 
@@ -45,28 +44,27 @@ The following table contains the parameters for the database (password-based) co
 
 <TabItem value="iam-user-inline">
 
-On Cloud, the IAM user authentication is currently only supported via [extended attributes](/docs/dbt-cloud-environments#extended-attributes). Once the project is created, development and deployment environments can be updated to use extended attributes to pass the fields described below, as some are not supported via textbox.
+В Cloud аутентификация IAM User в настоящее время поддерживается только через [расширенные атрибуты](/docs/dbt-cloud-environments#extended-attributes). После создания проекта среды разработки и развертывания могут быть обновлены для использования расширенных атрибутов для передачи полей, описанных ниже, так как некоторые из них не поддерживаются через текстовое поле.
 
-You will need to create an IAM User, generate an [access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey), and either:
-- on a cluster, a database user is expected in the `user` field. The IAM user is only leveraged for authentication, the database user for authorization
-- on Serverless, grant permission to the IAM user in Redshift. The `user` field is ignored (but still required)
-- For both, the `password` field will be ignored.
+Вам нужно будет создать IAM User, сгенерировать [ключ доступа](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) и либо:
+- в кластере ожидается, что имя пользователя базы данных будет в поле `user`. IAM User используется только для аутентификации, а пользователь базы данных — для авторизации
+- в Serverless предоставьте разрешение IAM User в Redshift. Поле `user` игнорируется (но все равно требуется)
+- Для обоих случаев поле `password` будет игнорироваться.
 
-
-| Profile field | Example | Description |
+| Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
-| `method` |IAM| use IAM to authenticate via IAM User authentication |
-| `cluster_id` | CLUSTER_ID| Required for IAM authentication only for provisoned cluster, not for Serverless |
-| `user`   | username | User querying the database, ignored for Serverless (but still required) |
-| `region`  | us-east-1 | Region of your Redshift instance | 
-| `access_key_id` | ACCESS_KEY_ID | IAM user [access key id](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) |
-| `secret_access_key` | SECRET_ACCESS_KEY | IAM user secret access key |
+| `method` |IAM| использовать IAM для аутентификации через IAM User |
+| `cluster_id` | CLUSTER_ID| Обязательно для аутентификации IAM только для выделенного кластера, не для Serverless |
+| `user`   | username | Пользователь, выполняющий запросы к базе данных, игнорируется для Serverless (но все равно требуется) |
+| `region`  | us-east-1 | Регион вашего экземпляра Redshift | 
+| `access_key_id` | ACCESS_KEY_ID | IAM user [идентификатор ключа доступа](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) |
+| `secret_access_key` | SECRET_ACCESS_KEY | Секретный ключ доступа IAM user |
 
 <br/>
 
-#### Example Extended Attributes for IAM User on Redshift Serverless
+#### Пример расширенных атрибутов для IAM User на Redshift Serverless
 
-To avoid pasting secrets in extended attributes, leverage [environment variables](/docs/build/environment-variables#handling-secrets):
+Чтобы избежать вставки секретов в расширенные атрибуты, используйте [переменные окружения](/docs/build/environment-variables#handling-secrets):
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -80,45 +78,45 @@ secret_access_key: '{{ env_var(''DBT_ENV_SECRET_ACCESS_KEY'') }}'
 
 </File>
 
-Both `DBT_ENV_ACCESS_KEY_ID` and `DBT_ENV_SECRET_ACCESS_KEY` will need [to be assigned](/docs/build/environment-variables) for every environment leveraging extended attributes as such.
+Обе переменные `DBT_ENV_ACCESS_KEY_ID` и `DBT_ENV_SECRET_ACCESS_KEY` должны быть [назначены](/docs/build/environment-variables) для каждой среды, использующей расширенные атрибуты.
 
 </TabItem>
 
 </Tabs>
 
 
-### Connecting via an SSH Tunnel
+### Подключение через SSH-туннель
 
-To connect to a Postgres, Redshift, or AlloyDB instance via an SSH tunnel, select the **Use SSH Tunnel** option when creating your connection. When configuring the tunnel, you must supply the hostname, username, and port for the [bastion server](#about-the-bastion-server-in-aws).
+Чтобы подключиться к экземпляру Postgres, Redshift или AlloyDB через SSH-туннель, выберите опцию **Использовать SSH-туннель** при создании вашего подключения. При настройке туннеля необходимо указать имя хоста, имя пользователя и порт для [bastion server](#about-the-bastion-server-in-aws).
 
-Once the connection is saved, a public key will be generated and displayed for the Connection. You can copy this public key to the bastion server to authorize dbt Cloud to connect to your database via the bastion server.
+После сохранения подключения будет сгенерирован и отображен открытый ключ для подключения. Вы можете скопировать этот открытый ключ на bastion server, чтобы авторизовать dbt Cloud для подключения к вашей базе данных через bastion server.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="A generated public key for a Redshift connection"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/postgres-redshift-ssh-tunnel.png" width="70%" title="Сгенерированный открытый ключ для подключения к Redshift"/>
 
-#### About the Bastion server in AWS
+#### О bastion server в AWS
 
 <details>
-  <summary>What is a Bastion server?</summary>
+  <summary>Что такое bastion server?</summary>
   <div>
     <div>
-      A bastion server in <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> is a host that allows dbt Cloud to open an SSH connection. 
+      Bastion server в <a href="https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/">Amazon Web Services (AWS)</a> — это хост, который позволяет dbt Cloud открывать SSH-соединение. 
       
       <br></br>
     
-      dbt Cloud only sends queries and doesn't transmit large data volumes. This means the bastion server can run on an AWS instance of any size, like a t2.small instance or t2.micro.<br></br><br></br>
+      dbt Cloud отправляет только запросы и не передает большие объемы данных. Это означает, что bastion server может работать на экземпляре AWS любого размера, например, t2.small или t2.micro.<br></br><br></br>
     
-      Make sure the location of the instance is the same Virtual Private Cloud (VPC) as the Redshift instance, and configure the security group for the bastion server to ensure that it's able to connect to the warehouse port.
+      Убедитесь, что местоположение экземпляра находится в той же виртуальной частной сети (VPC), что и экземпляр Redshift, и настройте группу безопасности для bastion server, чтобы обеспечить возможность подключения к порту хранилища данных.
     </div>
   </div>
 </details>
 
 
-### Configuring the Bastion Server in AWS
+### Настройка Bastion Server в AWS
 
-To configure the SSH tunnel in dbt Cloud, you'll need to provide the hostname/IP of your bastion server, username, and port, of your choosing, that dbt Cloud will connect to. Review the following steps:
+Чтобы настроить SSH-туннель в dbt Cloud, вам нужно будет предоставить имя хоста/IP вашего bastion server, имя пользователя и порт, который вы выберете, к которому dbt Cloud будет подключаться. Ознакомьтесь со следующими шагами:
 
-- Verify the bastion server has its network security rules set up to accept connections from the [dbt Cloud IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) on whatever port you configured.
-- Set up the user account by using the bastion servers instance's CLI, The following example uses the username `dbtcloud`:
+- Убедитесь, что bastion server настроен с сетевыми правилами безопасности для принятия подключений от [IP-адресов dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) на любом порту, который вы настроили.
+- Настройте учетную запись пользователя, используя CLI экземпляра bastion server. Следующий пример использует имя пользователя `dbtcloud`:
     
 ```shell
 sudo groupadd dbtcloud
@@ -130,40 +128,40 @@ touch ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```  
 
-- Copy and paste the dbt Cloud generated public key, into the authorized_keys file.
+- Скопируйте и вставьте сгенерированный dbt Cloud открытый ключ в файл authorized_keys.
 
-The Bastion server should now be ready for dbt Cloud to use as a tunnel into the Redshift environment.
+Теперь bastion server должен быть готов к использованию dbt Cloud в качестве туннеля в среду Redshift.
 
 
-## Configuration
+## Конфигурация
 
-To optimize performance with data platform-specific configurations in dbt Cloud, refer to [Redshift-specific configuration](/reference/resource-configs/redshift-configs).
+Чтобы оптимизировать производительность с учетом специфических конфигураций платформы данных в dbt Cloud, обратитесь к [конфигурации, специфичной для Redshift](/reference/resource-configs/redshift-configs).
 
-To grant users or roles database permissions (access rights and privileges), refer to the [Redshift permissions](/reference/database-permissions/redshift-permissions) page or [Postgres permissions](/reference/database-permissions/postgres-permissions) page.
+Чтобы предоставить пользователям или ролям разрешения базы данных (права доступа и привилегии), обратитесь к странице [разрешений Redshift](/reference/database-permissions/redshift-permissions) или странице [разрешений Postgres](/reference/database-permissions/postgres-permissions).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="Database Error - could not connect to server: Connection timed out">
-When setting up a database connection using an SSH tunnel, you need the following components:
+<DetailsToggle alt_header="Ошибка базы данных - не удалось подключиться к серверу: время ожидания соединения">
+При настройке подключения к базе данных с использованием SSH-туннеля вам понадобятся следующие компоненты:
 
-- A load balancer (like ELB or NLB) to manage traffic.
-- A bastion host (or jump server) that runs the SSH protocol, acting as a secure entry point.
-- The database itself (such as a Redshift cluster).
+- Балансировщик нагрузки (например, ELB или NLB) для управления трафиком.
+- Bastion host (или jump server), который использует протокол SSH и служит безопасной точкой входа.
+- Сама база данных (например, кластер Redshift).
 
-dbt Cloud uses an SSH tunnel to connect through the load balancer to the database. This connection is established at the start of any dbt job run. If the tunnel connection drops, the job fails.
+dbt Cloud использует SSH-туннель для подключения через балансировщик нагрузки к базе данных. Это соединение устанавливается в начале любого запуска задания dbt. Если соединение туннеля разрывается, задание завершается с ошибкой.
 
-Tunnel failures usually happen because:
+Сбои туннеля обычно происходят по следующим причинам:
 
-- The SSH daemon times out if it's idle for too long.
-- The load balancer cuts off the connection if it's idle.
-- dbt Cloud tries to keep the connection alive by checking in every 30 seconds, and the system will end the connection if there's no response from the SSH service after 300 seconds. This helps avoid drops due to inactivity unless the Load Balancer's timeout is less than 30 seconds.
+- Демон SSH завершает работу, если он неактивен слишком долго.
+- Балансировщик нагрузки разрывает соединение, если оно неактивно.
+- dbt Cloud пытается поддерживать соединение активным, проверяя его каждые 30 секунд, и система завершит соединение, если не будет ответа от службы SSH через 300 секунд. Это помогает избежать разрывов из-за неактивности, если только тайм-аут балансировщика нагрузки не меньше 30 секунд.
 
-Bastion hosts might have additional SSH settings to disconnect inactive clients after several checks without a response. By default, it checks three times.
+Bastion hosts могут иметь дополнительные настройки SSH для отключения неактивных клиентов после нескольких проверок без ответа. По умолчанию он проверяет три раза.
 
-To prevent premature disconnections, you can adjust the settings on the bastion host:
+Чтобы предотвратить преждевременные отключения, вы можете настроить параметры на bastion host:
 
-- `ClientAliveCountMax ` &mdash; Configures the number of checks before deciding the client is inactive. For example, `ClientAliveCountMax 10` checks 10 times.
-- `ClientAliveInterval` &mdash; Configures when to check for client activity. For example, `ClientAliveInterval 30` checks every 30 seconds.
-The example adjustments ensure that inactive SSH clients are disconnected after about 300 seconds, reducing the chance of tunnel failures.
+- `ClientAliveCountMax ` &mdash; Настраивает количество проверок перед тем, как решить, что клиент неактивен. Например, `ClientAliveCountMax 10` проверяет 10 раз.
+- `ClientAliveInterval` &mdash; Настраивает, когда проверять активность клиента. Например, `ClientAliveInterval 30` проверяет каждые 30 секунд.
+Примерные настройки обеспечивают отключение неактивных SSH-клиентов примерно через 300 секунд, что снижает вероятность сбоев туннеля.
 
 </DetailsToggle>
