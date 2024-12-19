@@ -6,14 +6,14 @@ id: "group"
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Tests', value: 'tests', },
-    { label: 'Analyses', value: 'analyses', },
-    { label: 'Metrics', value: 'metrics', },
-    { label: 'Semantic models', value: 'semantic models', },
-    { label: 'Saved queries', value: 'saved queries',} ,
+    { label: 'Модели', value: 'models', },
+    { label: 'Семена', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Анализы', value: 'analyses', },
+    { label: 'Метрики', value: 'metrics', },
+    { label: 'Семантические модели', value: 'semantic models', },
+    { label: 'Сохраненные запросы', value: 'saved queries',} ,
   ]
 }>
 <TabItem value="models">
@@ -268,14 +268,14 @@ saved_queries:
 
 </Tabs>
 
-## Definition
-An optional configuration for assigning a group to a resource. When a resource is grouped, dbt will allow it to reference private models within the same group.
+## Определение
+Необязательная конфигурация для назначения группы ресурсу. Когда ресурс сгруппирован, dbt позволит ему ссылаться на приватные модели в той же группе.
 
-For more details on reference access between resources in groups, check out [model access](/docs/collaborate/govern/model-access#groups).
+Для получения дополнительной информации о доступе к ссылкам между ресурсами в группах, ознакомьтесь с [доступом к моделям](/docs/collaborate/govern/model-access#groups).
 
-## Examples
-### Prevent a 'marketing' group model from referencing a private 'finance' group model
-This is useful if you want to prevent other groups from building on top of models that are rapidly changing, experimental, or otherwise internal to a group or team. 
+## Примеры
+### Запретить модели группы 'маркетинг' ссылаться на приватную модель группы 'финансы'
+Это полезно, если вы хотите предотвратить возможность другим группам строить на основе моделей, которые быстро меняются, являются экспериментальными или иначе внутренними для группы или команды. 
 
 <File name='models/schema.yml'>
 
@@ -299,12 +299,12 @@ select * from {{ ref('finance_model') }}
 ```shell
 $ dbt run -s marketing_model
 ...
-dbt.exceptions.DbtReferenceError: Parsing Error
-  Node model.jaffle_shop.marketing_model attempted to reference node model.jaffle_shop.finance_model, 
-  which is not allowed because the referenced node is private to the finance group.
+dbt.exceptions.DbtReferenceError: Ошибка разбора
+  Узел model.jaffle_shop.marketing_model попытался сослаться на узел model.jaffle_shop.finance_model, 
+  что не разрешено, поскольку ссылающийся узел является приватным для группы финансов.
 ```
 
-## Related docs
+## Связанные документы
 
-* [Model Access](/docs/collaborate/govern/model-access#groups)
-* [Defining groups](/docs/build/groups)
+* [Доступ к моделям](/docs/collaborate/govern/model-access#groups)
+* [Определение групп](/docs/build/groups)

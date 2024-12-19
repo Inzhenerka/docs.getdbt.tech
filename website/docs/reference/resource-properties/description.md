@@ -1,19 +1,19 @@
 ---
 resource_types: all
 datatype: markdown_string
-description: "This guide explains how to use the description key to add YAML descriptions to dbt resources (models, sources, seeds) using markdown and Jinja for better documentation."
+description: "Этот гид объясняет, как использовать ключ description для добавления YAML описаний к ресурсам dbt (моделям, источникам, семенам) с использованием markdown и Jinja для улучшения документации."
 ---
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Analyses', value: 'analyses', },
-    { label: 'Macros', value: 'macros', },
-    { label: 'Data tests', value: 'data_tests', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Семена', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Анализы', value: 'analyses', },
+    { label: 'Макросы', value: 'macros', },
+    { label: 'Тесты данных', value: 'data_tests', },
   ]
 }>
 <TabItem value="models">
@@ -167,7 +167,7 @@ data_tests:
 
 <VersionBlock lastVersion="1.8">
 
-The `description` property is available for generic and singular data tests beginning in dbt v1.9.
+Свойство `description` доступно для общих и единичных тестов данных, начиная с версии dbt v1.9.
 
 </VersionBlock>
 
@@ -175,28 +175,28 @@ The `description` property is available for generic and singular data tests begi
 
 </Tabs>
 
-## Definition
-A user-defined description. Can be used to document:
-- a model, and model columns
-- sources, source tables, and source columns
-- seeds, and seed columns
-- snapshots, and snapshot columns
-- analyses, and analysis columns
-- macros, and macro arguments
+## Определение
+Описание, заданное пользователем. Может использоваться для документирования:
+- модели и столбцов модели
+- источников, таблиц источников и столбцов источников
+- семян и столбцов семян
+- снимков и столбцов снимков
+- анализов и столбцов анализа
+- макросов и аргументов макросов
 
-These descriptions are used in the documentation website rendered by dbt (refer to [the documentation guide](/docs/build/documentation) or [dbt Explorer](/docs/collaborate/explore-projects)). 
+Эти описания используются на сайте документации, создаваемом dbt (см. [гид по документации](/docs/build/documentation) или [dbt Explorer](/docs/collaborate/explore-projects)). 
 
-Descriptions can include markdown, as well as the [`doc` jinja function](/reference/dbt-jinja-functions/doc).
+Описания могут включать markdown, а также [`doc` функцию jinja](/reference/dbt-jinja-functions/doc).
 
-:::caution You may need to quote your YAML
+:::caution Вам может понадобиться заключить ваше YAML в кавычки
 
-Be mindful of YAML semantics when providing a description. If your description contains special YAML characters like curly brackets, colons, or square brackets, you may need to quote your description. An example of a quoted description is shown [below](#use-some-markdown-in-a-description).
+Обратите внимание на семантику YAML при предоставлении описания. Если ваше описание содержит специальные символы YAML, такие как фигурные скобки, двоеточия или квадратные скобки, вам может понадобиться заключить ваше описание в кавычки. Пример заключенного в кавычки описания показан [ниже](#use-some-markdown-in-a-description).
 
 :::
 
-## Examples
+## Примеры
 
-### Add a simple description to a model and column
+### Добавление простого описания к модели и столбцу
 
 <File name='models/schema.yml'>
 
@@ -205,19 +205,19 @@ version: 2
 
 models:
   - name: dim_customers
-    description: One record per customer
+    description: Один запись на клиента
 
     columns:
       - name: customer_id
-        description: Primary key
+        description: Первичный ключ
 
 ```
 
 </File>
 
-### Add a multiline description to a model
+### Добавление многострочного описания к модели
 
-You can use YAML [block notation](https://yaml-multiline.info/) to split a longer description over multiple lines:
+Вы можете использовать [блочную нотацию YAML](https://yaml-multiline.info/), чтобы разбить более длинное описание на несколько строк:
 
 <File name='models/schema.yml'>
 
@@ -227,21 +227,21 @@ version: 2
 models:
   - name: dim_customers
     description: >
-      One record per customer. Note that a customer must have made a purchase to
-      be included in this <Term id="table" /> — customer accounts that were created but never
-      used have been filtered out.
+      Один запись на клиента. Обратите внимание, что клиент должен совершить покупку, чтобы
+      быть включенным в эту <Term id="table" /> — учетные записи клиентов, которые были созданы, но никогда
+      не использовались, были отфильтрованы.
 
     columns:
       - name: customer_id
-        description: Primary key.
+        description: Первичный ключ.
 
 ```
 
 </File>
 
-### Use some markdown in a description
+### Использование markdown в описании
 
-You can use markdown in your descriptions, but you may need to quote your description to ensure the YAML parser doesn't get confused by special characters!
+Вы можете использовать markdown в ваших описаниях, но вам может понадобиться заключить ваше описание в кавычки, чтобы гарантировать, что парсер YAML не запутается из-за специальных символов!
 
 <File name='models/schema.yml'>
 
@@ -250,19 +250,19 @@ version: 2
 
 models:
   - name: dim_customers
-    description: "**\[Read more](https://www.google.com/)**"
+    description: "**\[Читать далее](https://www.google.com/)**"
 
     columns:
       - name: customer_id
-        description: Primary key.
+        description: Первичный ключ.
 
 ```
 
 </File>
 
-### Use a docs block in a description
+### Использование блока docs в описании
 
-If you have a long description, especially if it contains markdown, it may make more sense to leverage a [`docs` block](/reference/dbt-jinja-functions/doc). A benefit of this approach is that code editors will correctly highlight markdown, making it easier to debug as you write.
+Если у вас длинное описание, особенно если оно содержит markdown, может быть более целесообразно использовать [`docs` блок](/reference/dbt-jinja-functions/doc). Преимущество этого подхода заключается в том, что редакторы кода правильно выделяют markdown, что упрощает отладку во время написания.
 
 <File name='models/schema.yml'>
 
@@ -271,7 +271,7 @@ version: 2
 
 models:
   - name: fct_orders
-    description: This table has basic information about orders, as well as some derived facts based on payments
+    description: Эта таблица содержит основную информацию о заказах, а также некоторые производные факты на основе платежей
 
     columns:
       - name: status
@@ -287,14 +287,14 @@ models:
 
 {% docs orders_status %}
 
-Orders can be one of the following statuses:
+Заказы могут иметь один из следующих статусов:
 
-| status         | description                                                               |
+| статус         | описание                                                               |
 |----------------|---------------------------------------------------------------------------|
-| placed         | The order has been placed but has not yet left the warehouse              |
-| shipped        | The order has been shipped to the customer and is currently in transit     |
-| completed      | The order has been received by the customer                               |
-| returned       | The order has been returned by the customer and received at the warehouse |
+| placed         | Заказ был размещен, но еще не покинул склад                              |
+| shipped        | Заказ был отправлен клиенту и в настоящее время находится в пути         |
+| completed      | Заказ был получен клиентом                                               |
+| returned       | Заказ был возвращен клиентом и получен на складе                        |
 
 
 {% enddocs %}
@@ -304,14 +304,14 @@ Orders can be one of the following statuses:
 </File>
 
 
-### Link to another model in a description
+### Ссылка на другую модель в описании
 
-You can use relative links to link to another model. It's a little hacky — but to do this:
+Вы можете использовать относительные ссылки для ссылки на другую модель. Это немного хитро — но для этого:
 
-1. Serve your docs site.
-2. Navigate to the model you want to link to, e.g. `http://127.0.0.1:8080/#!/model/model.jaffle_shop.stg_stripe__payments`
-3. Copy the url_path, i.e. everything after `http://127.0.0.1:8080/`, so in this case `#!/model/model.jaffle_shop.stg_stripe__payments`
-4. Paste it as the link
+1. Запустите ваш сайт документации.
+2. Перейдите к модели, на которую хотите сослаться, например, `http://127.0.0.1:8080/#!/model/model.jaffle_shop.stg_stripe__payments`
+3. Скопируйте url_path, т.е. все после `http://127.0.0.1:8080/`, в данном случае `#!/model/model.jaffle_shop.stg_stripe__payments`
+4. Вставьте это как ссылку
 
 <File name='models/schema.yml'>
 
@@ -320,27 +320,27 @@ version: 2
 
 models:
   - name: customers
-    description: "Filtering done based on \[stg_stripe__payments](#!/model/model.jaffle_shop.stg_stripe__payments)"
+    description: "Фильтрация выполнена на основе \[stg_stripe__payments](#!/model/model.jaffle_shop.stg_stripe__payments)"
 
     columns:
       - name: customer_id
-        description: Primary key
+        description: Первичный ключ
 
 ```
 
 </File>
 
 
-### Include an image from your repo in your descriptions
+### Включение изображения из вашего репозитория в ваши описания
 
-This section applies to dbt Core users only. Including an image from your repository ensures your images are version-controlled. 
+Этот раздел применим только к пользователям dbt Core. Включение изображения из вашего репозитория гарантирует, что ваши изображения находятся под контролем версий. 
 
-Both dbt Cloud and dbt Core users can [include an image from the web](#include-an-image-from-the-web-in-your-descriptions), which offers dynamic content, reduced repository size, accessibility, and ease of collaboration.
+Как пользователи dbt Cloud, так и dbt Core могут [включать изображение из интернета](#include-an-image-from-the-web-in-your-descriptions), что предлагает динамический контент, уменьшение размера репозитория, доступность и легкость сотрудничества.
 
-To include an image in your model's `description` field:
+Чтобы включить изображение в поле `description` вашей модели:
 
-1. Add the file in a subdirectory, e.g. `assets/dbt-logo.svg`
-2. Set the [`asset-paths` config](/reference/project-configs/asset-paths) in your `dbt_project.yml` file so that this directory gets copied to the `target/` directory as part of `dbt docs generate`
+1. Добавьте файл в подкаталог, например, `assets/dbt-logo.svg`
+2. Установите конфигурацию [`asset-paths`](/reference/project-configs/asset-paths) в вашем файле `dbt_project.yml`, чтобы этот каталог копировался в каталог `target/` в рамках `dbt docs generate`
 
 <File name='dbt_project.yml'>
 
@@ -350,7 +350,7 @@ asset-paths: ["assets"]
 
 </File>
 
-2. Use a Markdown link to the image in your `description:`
+2. Используйте Markdown-ссылку на изображение в вашем `description:` 
 
 <File name='models/schema.yml'>
 
@@ -359,27 +359,27 @@ version: 2
 
 models:
   - name: customers
-    description: "!\[dbt Logo](assets/dbt-logo.svg)"
+    description: "!\[Логотип dbt](assets/dbt-logo.svg)"
 
     columns:
       - name: customer_id
-        description: Primary key
+        description: Первичный ключ
 
 ```
 
 </File>
 
-3. Run `dbt docs generate` — the `assets` directory will be copied to the `target` directory
+3. Запустите `dbt docs generate` — каталог `assets` будет скопирован в каталог `target`
 
-4. Run `dbt docs serve` — the image will be rendered as part of your project documentation:
+4. Запустите `dbt docs serve` — изображение будет отображено как часть вашей документации проекта:
 
-If mixing images and text, also consider using a docs block.
+Если вы смешиваете изображения и текст, также рассмотрите возможность использования блока docs.
 
-### Include an image from the web in your descriptions
+### Включение изображения из интернета в ваши описания
 
-This section applies to dbt Cloud and dbt Core users. Including an image from the web offers dynamic content, reduced repository size, accessibility, and ease of collaboration.
+Этот раздел применим как к пользователям dbt Cloud, так и к пользователям dbt Core. Включение изображения из интернета предлагает динамический контент, уменьшение размера репозитория, доступность и легкость сотрудничества.
 
-To include images from the web, specify the image URL in your model's `description` field:
+Чтобы включить изображения из интернета, укажите URL изображения в поле `description` вашей модели:
 
 <File name='models/schema.yml'>
 
@@ -388,15 +388,14 @@ version: 2
 
 models:
   - name: customers
-    description: "!\[dbt Logo](https://github.com/dbt-labs/dbt-core/blob/main/etc/dbt-core.svg)"
+    description: "!\[Логотип dbt](https://github.com/dbt-labs/dbt-core/blob/main/etc/dbt-core.svg)"
 
     columns:
       - name: customer_id
-        description: Primary key
+        description: Первичный ключ
 
 ```
 
 </File>
 
-If mixing images and text, also consider using a docs block.
-
+Если вы смешиваете изображения и текст, также рассмотрите возможность использования блока docs.

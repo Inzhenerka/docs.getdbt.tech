@@ -18,12 +18,10 @@ sources:
 
 </File>
 
-## Definition
-Override a source defined in an included package. The properties defined
-in the overriding source will be applied on top of the base properties of the
-overridden source.
+## Определение
+Переопределите источник, определенный в подключенном пакете. Свойства, определенные в переопределенном источнике, будут применены поверх базовых свойств переопределяемого источника.
 
-The following source properties can be overridden:
+Следующие свойства источника могут быть переопределены:
  - [description](/reference/resource-properties/description)
  - [meta](/reference/resource-configs/meta)
  - [database](/reference/resource-properties/database)
@@ -34,12 +32,11 @@ The following source properties can be overridden:
  - [loaded_at_field](/reference/resource-properties/freshness#loaded_at_field)
  - [tags](/reference/resource-configs/tags)
 
-## Examples
-### Supply your database and schema name for a source defined in a package
+## Примеры
+### Укажите имя вашей базы данных и схемы для источника, определенного в пакете
 
-This example is based on the [Fivetran GitHub Source package](https://github.com/fivetran/dbt_github_source/blob/830ba43ac2948e4853a3c167ab7ee88b8b425fa0/models/src_github.yml#L3-L29).
-Here, the database and schema is overridden in the parent dbt project which
-includes the `github_source` package.
+Этот пример основан на [пакете источника Fivetran GitHub](https://github.com/fivetran/dbt_github_source/blob/830ba43ac2948e4853a3c167ab7ee88b8b425fa0/models/src_github.yml#L3-L29).
+Здесь база данных и схема переопределяются в родительском проекте dbt, который включает пакет `github_source`.
 
 <File name='models/src_github.yml'>
 
@@ -57,9 +54,9 @@ sources:
 
 </File>
 
-### Configure your own source freshness for a source table in a package
+### Настройте свою собственную свежесть источника для таблицы источника в пакете
 
-You can override configurations at both the source and the <Term id="table" /> level
+Вы можете переопределить настройки как на уровне источника, так и на уровне <Term id="table" />.
 
 <File name='models/src_github.yml'>
 

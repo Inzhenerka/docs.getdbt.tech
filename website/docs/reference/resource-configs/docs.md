@@ -1,7 +1,7 @@
 ---
-sidebar_label: "docs"
+sidebar_label: "документация"
 resource_types: models
-description: "Docs - Read this in-depth guide to learn about configurations in dbt."
+description: "Документация - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: "{dictionary}"
 default_value: {show: true}
 ---
@@ -9,19 +9,18 @@ default_value: {show: true}
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Analyses', value: 'analyses', },
-    { label: 'Macros', value: 'macros', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Семена', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Анализы', value: 'analyses', },
+    { label: 'Макросы', value: 'macros', },
   ]
 }>
 
 <TabItem value="models">
 
-You can configure `docs` behavior for many resources at once by setting in `dbt_project.yml`. You can also use the `docs` config in `properties.yaml` files, to set or override documentation behaviors for specific resources:
-
+Вы можете настроить поведение `docs` для многих ресурсов одновременно, установив это в `dbt_project.yml`. Вы также можете использовать конфигурацию `docs` в файлах `properties.yaml`, чтобы установить или переопределить поведение документации для конкретных ресурсов:
 
 <File name='dbt_project.yml'>
 
@@ -30,7 +29,7 @@ models:
   [<resource-path>](/reference/resource-configs/resource-path):
     +docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 
 ```
 
@@ -38,14 +37,14 @@ models:
 
 <File name='models/schema.yml'>
 
-  ```yml
+```yml
 version: 2
 
 models:
   - name: model_name
     docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -53,13 +52,13 @@ models:
 
 <TabItem value="sources">
 
-This property is not implemented for sources.
+Это свойство не реализовано для источников.
 
 </TabItem>
 
 <TabItem value="seeds">
 
-You can use the docs property in YAML files, including the `dbt_project.yml`:
+Вы можете использовать свойство docs в YAML файлах, включая `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -68,7 +67,7 @@ seeds:
   [<resource-path>](/reference/resource-configs/resource-path):
     +docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 ```
 
 </File>
@@ -82,7 +81,7 @@ seeds:
   - name: seed_name
     docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -90,7 +89,7 @@ seeds:
 
 <TabItem value="snapshots">
 
-You can use the docs property in YAML files, including the `dbt_project.yml`:
+Вы можете использовать свойство docs в YAML файлах, включая `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -99,7 +98,7 @@ snapshots:
   [<resource-path>](/reference/resource-configs/resource-path):
     +docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 
 ```
 
@@ -114,7 +113,7 @@ snapshots:
   - name: snapshot_name
     docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -122,8 +121,7 @@ snapshots:
 
 <TabItem value="analyses">
 
-You can use the docs property in YAML files, _except_ in `dbt_project.yml`. Refer to [Analysis properties](/reference/analysis-properties) for more info.
-
+Вы можете использовать свойство docs в YAML файлах, _за исключением_ `dbt_project.yml`. Обратитесь к [Свойствам анализа](/reference/analysis-properties) для получения дополнительной информации.
 
 <File name='analysis/schema.yml'>
 
@@ -134,7 +132,7 @@ analyses:
   - name: analysis_name
     docs:
       show: true | false
-      node_color: color_id # Use name (such as node_color: purple) or hex code with quotes (such as node_color: "#cd7f32")
+      node_color: color_id # Используйте имя (например, node_color: purple) или шестнадцатеричный код в кавычках (например, node_color: "#cd7f32")
 ```
 </File>
 
@@ -142,7 +140,7 @@ analyses:
 
 <TabItem value="macros">
 
-You can use the docs property in YAML files, _except_ in `dbt_project.yml`. Refer to [Macro properties](/reference/macro-properties) for more info.
+Вы можете использовать свойство docs в YAML файлах, _за исключением_ `dbt_project.yml`. Обратитесь к [Свойствам макросов](/reference/macro-properties) для получения дополнительной информации.
 
 <File name='macros/schema.yml'>
 
@@ -160,16 +158,16 @@ macros:
 
 </Tabs>
 
-## Definition
-The `docs` property can be used to provide documentation-specific configuration to models. It supports the attribute `show`, which controls whether or not nodes are shown in the auto-generated documentation website. It also supports `node_color` for models, seeds, snapshots, and analyses. Other node types are not supported.
+## Определение
+Свойство `docs` может использоваться для предоставления конфигурации, специфичной для документации, для моделей. Оно поддерживает атрибут `show`, который управляет тем, отображаются ли узлы на автоматически сгенерированном веб-сайте документации. Оно также поддерживает `node_color` для моделей, семян, снимков и анализов. Другие типы узлов не поддерживаются.
 
-**Note:** Hidden models will still appear in the dbt DAG visualization but will be identified as "hidden.”
+**Примечание:** Скрытые модели все равно будут отображаться в визуализации DAG dbt, но будут обозначены как "скрытые".
 
-## Default
-The default value for `show` is `true`.
+## Значение по умолчанию
+Значение по умолчанию для `show` равно `true`.
 
-## Examples
-### Mark a model as hidden
+## Примеры
+### Обозначение модели как скрытой
 
 ```yml
 models:
@@ -178,22 +176,22 @@ models:
       show: false
 ```
 
-### Mark a subfolder of models as hidden
+### Обозначение подпапки моделей как скрытой
 
-**Note:** This can also hide dbt packages.
+**Примечание:** Это также может скрыть пакеты dbt.
 
 <File name='dbt_project.yml'>
 
 ```yml
 models:
-  # hiding models within the staging subfolder
+  # скрытие моделей в подпапке staging
   tpch:
     staging:
       +materialized: view
       +docs:
         show: false
   
-  # hiding a dbt package
+  # скрытие пакета dbt
   dbt_artifacts:
     +docs:
       show: false
@@ -201,24 +199,23 @@ models:
 
 </File>
 
-## Custom node colors
+## Пользовательские цвета узлов
 
-The `docs` attribute now supports `node_color` to customize the display color of some node types in the DAG within dbt docs. You can define node colors in the following files and apply overrides where needed. Note, you need to run or re-run the command `dbt docs generate`.
+Атрибут `docs` теперь поддерживает `node_color`, чтобы настроить цвет отображения некоторых типов узлов в DAG в документации dbt. Вы можете определить цвета узлов в следующих файлах и применить переопределения, где это необходимо. Обратите внимание, что вам нужно выполнить или повторно выполнить команду `dbt docs generate`.
 
-`node_color` hierarchy:
+Иерархия `node_color`:
 
-`<example-sql-file.sql>` overrides `schema.yml` overrides `dbt_project.yml`
+`<example-sql-file.sql>` переопределяет `schema.yml`, который переопределяет `dbt_project.yml`
 
+## Примеры
 
-## Examples
+Добавьте пользовательские `node_colors` к моделям, которые это поддерживают, в подпапках на основе шестнадцатеричных кодов или простых названий цветов.
 
-Add custom `node_colors` to models that support it within subdirectories based on hex codes or a plain color name.
+![Пример](../../../../website/static/img/node_color_example.png)
 
-![Example](../../../../website/static/img/node_color_example.png)
+`marts/core/fct_orders.sql` с `node_color: red` переопределяет `dbt_project.yml` с `node_color: gold`
 
-`marts/core/fct_orders.sql` with `node_color: red` overrides `dbt_project.yml` with `node_color: gold`
-
-`marts/core/schema.yml` with `node_color: #000000` overrides `dbt_project.yml` with `node_color: gold`
+`marts/core/schema.yml` с `node_color: #000000` переопределяет `dbt_project.yml` с `node_color: gold`
 <File name='dbt_project.yml'>
 
 ```yml
@@ -243,7 +240,7 @@ models:
 ```yml
 models:
   - name: dim_customers
-    description: Customer dimensions table
+    description: Таблица измерений клиентов
     docs:
       node_color: '#000000'
 ```
@@ -317,7 +314,7 @@ order by
 
 </File>
 
-If a `node_color` is incompatible with dbt docs, you will see a compile error, as in the example below.
+Если `node_color` несовместим с документацией dbt, вы увидите ошибку компиляции, как в следующем примере.
 
 ```shell
 Invalid color name for docs.node_color: aweioohafio23f. It is neither a valid HTML color name nor a valid HEX code.

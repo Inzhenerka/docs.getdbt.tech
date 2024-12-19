@@ -4,33 +4,32 @@ datatype: <string>
 default_value: ","
 ---
 
-Supported in v1.7 and higher.
+Поддерживается в версии 1.7 и выше.
 
-## Definition
+## Определение
 
-You can use this optional seed configuration to customize how you separate values in a [seed](/docs/build/seeds) by providing the one-character string.
+Вы можете использовать эту необязательную конфигурацию семян для настройки того, как вы разделяете значения в [seed](/docs/build/seeds), предоставив строку из одного символа.
 
-* The delimiter defaults to a comma when not specified.
-* Explicitly set the `delimiter` configuration value if you want seed files to use a different delimiter, such as "|" or ";".
-  
-## Usage
+* Разделитель по умолчанию - запятая, если не указано иное.
+* Явно установите значение конфигурации `delimiter`, если вы хотите, чтобы файлы семян использовали другой разделитель, например "|" или ";".
 
-Specify a delimiter in your `dbt_project.yml` file to customize the global separator for all seed values:
+## Использование
+
+Укажите разделитель в вашем файле `dbt_project.yml`, чтобы настроить глобальный разделитель для всех значений семян:
 
 <File name='dbt_project.yml'>
 
 ```yml
 seeds:
   <project_name>:
-     +delimiter: "|" # default project delimiter for seeds will be "|"
+     +delimiter: "|" # разделитель по умолчанию для семян проекта будет "|"
     <seed_subdirectory>:
-      +delimiter: "," # delimiter for seeds in seed_subdirectory will be ","
+      +delimiter: "," # разделитель для семян в seed_subdirectory будет ","
 ```
 
 </File>
 
-
-Or use a custom delimiter to override the values for a specific seed:
+Или используйте пользовательский разделитель, чтобы переопределить значения для конкретного семени:
 
 <File name='seeds/properties.yml'>
 
@@ -45,29 +44,29 @@ seeds:
 
 </File>
 
-## Examples
-For a project with:
+## Примеры
+Для проекта с:
 
-* `name: jaffle_shop` in the `dbt_project.yml` file
-* `seed-paths: ["seeds"]` in the `dbt_project.yml` file
+* `name: jaffle_shop` в файле `dbt_project.yml`
+* `seed-paths: ["seeds"]` в файле `dbt_project.yml`
 
-### Use a custom delimiter to override global values
+### Используйте пользовательский разделитель для переопределения глобальных значений
 
-You can set a default behavior for all seeds with an exception for one seed, `seed_a`, which uses a comma:
+Вы можете установить поведение по умолчанию для всех семян с исключением для одного семени, `seed_a`, которое использует запятую:
 
 <File name='dbt_project.yml'>
 
 ```yml
 seeds:
   jaffle_shop: 
-    +delimiter: "|" # default delimiter for seeds in jaffle_shop project will be "|"
+    +delimiter: "|" # разделитель по умолчанию для семян в проекте jaffle_shop будет "|"
     seed_a:
-      +delimiter: "," # delimiter for seed_a will be ","
+      +delimiter: "," # разделитель для seed_a будет ","
 ```
 
 </File>
 
-Your corresponding seed files would be formatted like this:
+Ваши соответствующие файлы семян будут отформатированы следующим образом:
 
 <File name='seeds/my_seed.csv'>
 
@@ -91,7 +90,7 @@ doug,2
 
 </File>
 
-Or you can configure custom behavior for one seed. The `country_codes` uses the ";" delimiter:
+Или вы можете настроить пользовательское поведение для одного семени. `country_codes` использует разделитель ";":
 
 <File name='seeds/properties.yml'>
 
@@ -106,7 +105,7 @@ seeds:
 
 </File>
 
-The `country_codes` seed file would be formatted like this:
+Файл семени `country_codes` будет отформатирован следующим образом:
 
 <File name='seeds/country_codes.csv'>
 

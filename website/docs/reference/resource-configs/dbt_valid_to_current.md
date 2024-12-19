@@ -1,12 +1,12 @@
 ---
 resource_types: [snapshots]
-description: "Use the `dbt_valid_to_current` config to set a custom indicator for the value of `dbt_valid_to` in current snapshot records"
-datatype: "{<dictionary>}"
+description: "Используйте конфигурацию `dbt_valid_to_current`, чтобы установить пользовательский индикатор для значения `dbt_valid_to` в текущих записях снимков"
+datatype: "{<словарь>}"
 default_value: {NULL}
 id: "dbt_valid_to_current"
 ---
 
-Available from dbt v1.9 or with [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) dbt Cloud.
+Доступно с версии dbt v1.9 или с [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 <File name='snapshots/schema.yml'>
 
@@ -44,48 +44,47 @@ snapshots:
 
 </File>
 
-## Description
+## Описание
 
-Use the `dbt_valid_to_current` config to set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date). By default, this value is `NULL`. When set, dbt will use this specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table.
+Используйте конфигурацию `dbt_valid_to_current`, чтобы установить пользовательский индикатор для значения `dbt_valid_to` в текущих записях снимков (например, дату в будущем). По умолчанию это значение равно `NULL`. Когда оно установлено, dbt будет использовать это указанное значение вместо `NULL` для `dbt_valid_to` для текущих записей в таблице снимков.
 
-This approach makes it easier to assign a custom date, work in a join, or perform range-based filtering that requires an end date.
+Этот подход упрощает назначение пользовательской даты, работу в объединении или выполнение фильтрации по диапазону, которая требует конечной даты.
 
 :::warning
 
-To avoid any unintentional data modification, dbt will _not_ automatically adjust the current value in the existing `dbt_valid_to` column. Existing current records will still have `dbt_valid_to` set to `NULL`.
+Чтобы избежать непреднамеренного изменения данных, dbt _не_ будет автоматически изменять текущее значение в существующем столбце `dbt_valid_to`. Существующие текущие записи по-прежнему будут иметь `dbt_valid_to`, установленное в `NULL`.
 
-Any new records inserted _after_ applying the `dbt_valid_to_current` configuration will have `dbt_valid_to` set to the specified value (like '9999-12-31'), instead of the default `NULL` value.
+Любые новые записи, вставленные _после_ применения конфигурации `dbt_valid_to_current`, будут иметь `dbt_valid_to`, установленное на указанное значение (например, '9999-12-31'), вместо значения по умолчанию `NULL`.
 
 :::
 
-### Considerations
+### Условия
 
-- **Date expressions** &mdash; Provide a hardcoded date expression compatible with your data platform, such as to_date`('9999-12-31')`. Note that syntax may vary by warehouse (for example, `to_date('YYYY-MM-DD'`) or `date(YYYY, MM, DD)`).
+- **Дата выражения** &mdash; Укажите жестко закодированное выражение даты, совместимое с вашей платформой данных, например `to_date('9999-12-31')`. Обратите внимание, что синтаксис может различаться в зависимости от хранилища (например, `to_date('YYYY-MM-DD'`) или `date(YYYY, MM, DD)`).
 
-- **Jinja limitation** &mdash; `dbt_valid_to_current` only accepts static SQL expressions. Jinja expressions (like `{{ var('my_future_date') }}`) are not supported.
+- **Ограничение Jinja** &mdash; `dbt_valid_to_current` принимает только статические SQL выражения. Выражения Jinja (например, `{{ var('my_future_date') }}`) не поддерживаются.
 
-- **Deferral and `state:modified`** &mdash; Changes to `dbt_valid_to_current` are compatible with deferral and `--select state:modified`. When this configuration changes, it'll appear in `state:modified` selections, raising a warning to manually make the necessary snapshot updates.
+- **Отложение и `state:modified`** &mdash; Изменения в `dbt_valid_to_current` совместимы с отложением и `--select state:modified`. Когда эта конфигурация изменяется, она появится в выборах `state:modified`, вызывая предупреждение о необходимости вручную внести необходимые обновления снимков.
 
-## Default
+## По умолчанию
 
-By default, `dbt_valid_to` is set to `NULL` for current (most recent) records in your snapshot table. This means that these records are still valid and have no defined end date.
+По умолчанию `dbt_valid_to` устанавливается в `NULL` для текущих (самых последних) записей в вашей таблице снимков. Это означает, что эти записи все еще действительны и не имеют определенной конечной даты.
 
-If you prefer to use a specific value instead of `NULL` for `dbt_valid_to` in current and future records, you can use the `dbt_valid_to_current` configuration option. For example, setting a date in the far future, `9999-12-31`.
+Если вы предпочитаете использовать конкретное значение вместо `NULL` для `dbt_valid_to` в текущих и будущих записях, вы можете использовать опцию конфигурации `dbt_valid_to_current`. Например, установив дату в далеком будущем, `9999-12-31`.
 
-The value assigned to `dbt_valid_to_current` should be a string representing a valid date or timestamp, depending on your database's requirements. Use expressions that work within the data platform.
+Значение, присвоенное `dbt_valid_to_current`, должно быть строкой, представляющей допустимую дату или временную метку, в зависимости от требований вашей базы данных. Используйте выражения, которые работают в рамках платформы данных.
 
+## Влияние на записи снимков
 
-## Impact on snapshot records
+Когда вы устанавливаете `dbt_valid_to_current`, это влияет на то, как dbt управляет столбцом `dbt_valid_to` в вашей таблице снимков:
 
-When you set `dbt_valid_to_current`, it affects how dbt manages the `dbt_valid_to` column in your snapshot table:
+- **Для существующих записей** &mdash; Чтобы избежать непреднамеренного изменения данных, dbt _не_ будет автоматически изменять текущее значение в существующем столбце `dbt_valid_to`. Существующие текущие записи по-прежнему будут иметь `dbt_valid_to`, установленное в `NULL`.
 
-- **For existing records** &mdash; To avoid any unintentional data modification, dbt will _not_ automatically adjust the current value in the existing `dbt_valid_to` column. Existing current records will still have `dbt_valid_to` set to `NULL`.
+- **Для новых записей** &mdash; Любые новые записи, вставленные после применения конфигурации `dbt_valid_to_current`, будут иметь `dbt_valid_to`, установленное на указанное значение (например, '9999-12-31'), вместо `NULL`.
 
-- **For new records** &mdash;  Any new records inserted after applying the `dbt_valid_to_current` configuration will have `dbt_valid_to` set to the specified value (for example, '9999-12-31'), instead of `NULL`.
+Это означает, что ваша таблица снимков будет содержать текущие записи со значениями `dbt_valid_to` как `NULL` (из существующих данных), так и новым указанным значением (из новых данных). Если вы хотите, чтобы значения `dbt_valid_to` для текущих записей были согласованными, вы можете вручную обновить существующие записи в вашей таблице снимков (где `dbt_valid_to` равно `NULL`), чтобы они соответствовали вашему значению `dbt_valid_to_current`.
 
-This means your snapshot table will have current records with `dbt_valid_to` values of both `NULL` (from existing data) and the new specified value (from new data). If you'd rather have consistent `dbt_valid_to` values for current records, you can manually update existing records in your snapshot table (where `dbt_valid_to` is `NULL`) to match your `dbt_valid_to_current` value.
-
-## Example
+## Пример
 
 <File name='snapshots/schema.yml'>
 
@@ -98,17 +97,17 @@ snapshots:
       dbt_valid_to_current: "to_date('9999-12-31')"
     columns:
       - name: dbt_valid_from
-        description: The timestamp when the record became valid.
+        description: Временная метка, когда запись стала действительной.
       - name: dbt_valid_to
         description: >
-          The timestamp when the record ceased to be valid. For current records,
-          this is either `NULL` or the value specified in `dbt_valid_to_current`
-          (like `'9999-12-31'`).
+          Временная метка, когда запись перестала быть действительной. Для текущих записей
+          это либо `NULL`, либо значение, указанное в `dbt_valid_to_current`
+          (например, `'9999-12-31'`).
 ```
 
 </File>
 
-The resulting snapshot table contains the configured dbt_valid_to column value:
+В результате таблица снимков содержит настроенное значение столбца dbt_valid_to:
 
 | id | dbt_scd_id           |    dbt_updated_at    |       dbt_valid_from |     dbt_valid_to     |
 | -- | -------------------- | -------------------- | -------------------- | -------------------- |

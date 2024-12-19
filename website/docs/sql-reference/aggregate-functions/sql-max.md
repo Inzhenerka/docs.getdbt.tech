@@ -1,41 +1,41 @@
 ---
 id: max
 title: SQL MAX
-description: The SQL MAX aggregate function allows you to compute the maximum value from a column.
+description: Функция агрегирования SQL MAX позволяет вычислить максимальное значение из столбца.
 slug: /sql-reference/max
 ---
 
 <head>
-    <title>Working with the SQL MAX function</title>
+    <title>Работа с функцией SQL MAX</title>
 </head>
 
-The SQL MAX aggregate function allows you to compute the maximum value from a column. This kind of measure is useful for understanding the distribution of column values, determining the most recent timestamps of key events, and creating booleans from CASE WHEN statements to flatten semi-structured data.
+Функция агрегирования SQL MAX позволяет вычислить максимальное значение из столбца. Этот тип измерения полезен для понимания распределения значений столбца, определения самых последних временных меток ключевых событий и создания булевых значений из операторов CASE WHEN для упрощения полуструктурированных данных.
 
-## How to use the SQL MAX function in a query
+## Как использовать функцию SQL MAX в запросе
 
-Use the following syntax to find the maximum value of a field:
+Используйте следующий синтаксис, чтобы найти максимальное значение поля:
 
 `max(<field_name>)`
 
-Since MAX is an aggregate function, you’ll need a GROUP BY statement in your query if you’re looking at counts broken out by dimension(s). If you’re calculating the standalone maximum of fields without the need to break them down by another field, you don’t need a GROUP BY statement.
+Поскольку MAX является агрегатной функцией, вам потребуется оператор GROUP BY в вашем запросе, если вы хотите получить количество, разбитое по измерениям. Если вы вычисляете отдельное максимальное значение полей без необходимости разбивать их по другому полю, оператор GROUP BY не нужен.
 
-MAX can also be used as a window function to operate across specified or partitioned rows.
+MAX также может использоваться как оконная функция для работы с указанными или разделенными строками.
 
-Let’s take a look at a practical example using MAX and GROUP BY below.
+Давайте рассмотрим практический пример использования MAX и GROUP BY ниже.
 
-### MAX example
+### Пример MAX
 
-The following example is querying from a sample dataset created by dbt Labs called [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
+Следующий пример запрашивает данные из образца набора данных, созданного dbt Labs, под названием [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
 
 ```sql
 select
 	date_part('month', order_date) as order_month,
-	max(amount) as max_amaount
+	max(amount) as max_amount
 from {{ ref('orders') }}
 group by 1
 ```
 
-This simple query is something you may do while doing initial exploration of your data; it will return the maximum order `amount` per order month that appear in the Jaffle Shop’s `orders` table:
+Этот простой запрос может быть выполнен во время начального изучения ваших данных; он вернет максимальный заказ `amount` за каждый месяц заказа, который появляется в таблице `orders` Jaffle Shop:
 
 | order_month | max_amount |
 |:---:|:---:|
@@ -44,17 +44,17 @@ This simple query is something you may do while doing initial exploration of you
 | 3 | 56 |
 | 4 | 26 |
 
-## SQL MAX function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL MAX в Snowflake, Databricks, BigQuery и Redshift
 
-All modern data warehouses support the ability to use the MAX function (and follow the same syntax!).
+Все современные хранилища данных поддерживают возможность использования функции MAX (и следуют тому же синтаксису!).
 
-## MAX function use cases
+## Сценарии использования функции MAX
 
-We most commonly see queries using MAX to:
+Чаще всего мы видим запросы, использующие MAX для:
 
-- Perform initial data exploration on a dataset to understand the distribution of column values.
-- Identify the most recent timestamp for key events (ex. `max(login_timestamp_utc) as last_login`).
-- Create descriptive boolean values from case when statements (ex. `max(case when status = 'complete' then 1 else 0 end) as has_complete_order`).
-- Establish the most recent timestamp from a table to filter on rows appropriately for [incremental model builds](https://docs.getdbt.com/docs/build/incremental-models).
+- Проведения начального изучения данных в наборе данных для понимания распределения значений столбца.
+- Определения самой последней временной метки для ключевых событий (например, `max(login_timestamp_utc) as last_login`).
+- Создания описательных булевых значений из операторов case when (например, `max(case when status = 'complete' then 1 else 0 end) as has_complete_order`).
+- Установления самой последней временной метки из таблицы для соответствующей фильтрации строк для [инкрементных сборок моделей](https://docs.getdbt.com/docs/build/incremental-models).
 
-This isn’t an extensive list of where your team may be using MAX throughout your development work, dbt models, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать MAX в ходе вашей разработки, моделей dbt и логики BI инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

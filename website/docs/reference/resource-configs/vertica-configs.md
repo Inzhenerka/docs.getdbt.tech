@@ -1,20 +1,20 @@
 ---
-title: "Vertica configurations"
+title: "Конфигурации Vertica"
 id: "vertica-configs"
 ---
-## Configuration of Incremental Models
+## Конфигурация инкрементальных моделей
 
-### Using the on_schema_change config parameter
+### Использование параметра конфигурации on_schema_change
 
-You can use `on_schema_change` parameter with values `ignore`, `fail` and `append_new_columns`.  Value  `sync_all_columns` is not supported at this time.
+Вы можете использовать параметр `on_schema_change` со значениями `ignore`, `fail` и `append_new_columns`. Значение `sync_all_columns` в настоящее время не поддерживается.
 
-#### Configuring the `ignore` (default) parameter
+#### Конфигурация параметра `ignore` (по умолчанию)
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', }
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', }
   ]
 }>
 
@@ -51,13 +51,13 @@ You can use `on_schema_change` parameter with values `ignore`, `fail` and `appen
 </Tabs>
 
 
-#### Configuring the `fail` parameter
+#### Конфигурация параметра `fail`
 
  <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -83,30 +83,29 @@ You can use `on_schema_change` parameter with values `ignore`, `fail` and `appen
 
 ```text
     
-            The source and target schemas on this incremental model are out of sync!
-              They can be reconciled in several ways:
-                - set the `on_schema_change` config to either append_new_columns or sync_all_columns, depending on your situation.
-                - Re-run the incremental model with `full_refresh: True` to update the target schema.
-                - update the schema manually and re-run the process.
+            Исходные и целевые схемы этой инкрементальной модели не синхронизированы!
+              Их можно согласовать несколькими способами:
+                - установите параметр конфигурации `on_schema_change` на append_new_columns или sync_all_columns, в зависимости от вашей ситуации.
+                - Повторно выполните инкрементальную модель с `full_refresh: True`, чтобы обновить целевую схему.
+                - обновите схему вручную и повторно выполните процесс.
 
-              Additional troubleshooting context:
-                 Source columns not in target: {{ schema_changes_dict['source_not_in_target'] }}
-                 Target columns not in source: {{ schema_changes_dict['target_not_in_source'] }}
-                 New column types: {{ schema_changes_dict['new_target_types'] }}
+              Дополнительный контекст для устранения неполадок:
+                 Исходные столбцы, отсутствующие в целевом: {{ schema_changes_dict['source_not_in_target'] }}
+                 Целевые столбцы, отсутствующие в исходном: {{ schema_changes_dict['target_not_in_source'] }}
+                 Новые типы столбцов: {{ schema_changes_dict['new_target_types'] }}
 ```
 </File>
 </TabItem>
 </Tabs>
 
 
-#### Configuring the `append_new_columns` parameter
-
+#### Конфигурация параметра `append_new_columns`
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -147,17 +146,17 @@ You can use `on_schema_change` parameter with values `ignore`, `fail` and `appen
 </TabItem>
 </Tabs>
 
-### Using the `incremental_strategy` config ​parameter
+### Использование параметра конфигурации `incremental_strategy`
 
-**The `append` strategy (default)**:
+**Стратегия `append` (по умолчанию)**:
 
-Insert new records without updating or overwriting any existing data. append only adds the new records based on the condition specified in the `is_incremental()` conditional block.
+Вставка новых записей без обновления или перезаписи существующих данных. append добавляет только новые записи на основе условия, указанного в условном блоке `is_incremental()`.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -210,15 +209,15 @@ Insert new records without updating or overwriting any existing data. append onl
 
 
 
-**The `merge` strategy**:
+**Стратегия `merge`**:
 
-Match records based on a unique_key; update old records, insert new ones. (If no unique_key is specified, all new data is inserted, similar to append.) The unique_key config parameter is required for using the merge strategy, the value accepted by this parameter is a single table column.
+Сопоставление записей на основе `unique_key`; обновление старых записей, вставка новых. (Если `unique_key` не указан, все новые данные вставляются, аналогично append.) Параметр конфигурации unique_key обязателен для использования стратегии merge, принимаемое значение этого параметра — это один столбец таблицы.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -267,17 +266,17 @@ Match records based on a unique_key; update old records, insert new ones. (If n
 
 
 
-###### Using the `merge_update_columns` config parameter
+###### Использование параметра конфигурации `merge_update_columns`
 
-The `merge_update_columns` config parameter is passed to only update the columns specified and it accepts a list of table columns.
+Параметр конфигурации `merge_update_columns` передается только для обновления указанных столбцов и принимает список столбцов таблицы.
 
  
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -317,18 +316,15 @@ The `merge_update_columns` config parameter is passed to only update the columns
 </Tabs>
 
 
-**`delete+insert` strategy**: 
+**Стратегия `delete+insert`**: 
 
-Through the `delete+insert` incremental strategy, you can instruct dbt to use a two-step incremental approach. It will first delete the records detected through the configured `is_incremental()` block and then re-insert them. The `unique_key` is  a required parameter for using `delete+instert` strategy which specifies how to update the records when there is duplicate data. The value accepted by this parameter is a single table column.
-
-
-
+С помощью инкрементальной стратегии `delete+insert` вы можете указать dbt использовать двухэтапный инкрементальный подход. Сначала будут удалены записи, обнаруженные через настроенный блок `is_incremental()`, а затем они будут повторно вставлены. Параметр `unique_key` является обязательным для использования стратегии `delete+insert`, который указывает, как обновлять записи при наличии дублирующихся данных. Принимаемое значение этого параметра — это один столбец таблицы.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -371,35 +367,35 @@ Through the `delete+insert` incremental strategy, you can instruct dbt to use 
 </TabItem>
 </Tabs>
 
-**`insert_overwrite` strategy**:
+**Стратегия `insert_overwrite`**:
 
-The `insert_overwrite` strategy does not use a full-table scan to delete records. Instead of deleting records it drops entire partitions. This strategy may accept `partition_by_string` and `partitions` parameters. You provide these parameters when you want to overwrite a part of the table.
+Стратегия `insert_overwrite` не использует полное сканирование таблицы для удаления записей. Вместо удаления записей она удаляет целые разделы. Эта стратегия может принимать параметры `partition_by_string` и `partitions`. Вы предоставляете эти параметры, когда хотите перезаписать часть таблицы.
 
-`partition_by_string` accepts an expression based on which partitioning of the table takes place. This is the PARTITION BY clause in Vertica.
+`partition_by_string` принимает выражение, на основе которого происходит разбиение таблицы. Это оператор PARTITION BY в Vertica.
 
-`partitions` accepts a list of values in the partition column.
+`partitions` принимает список значений в столбце раздела.
 
-The config parameter `partitions` must be used carefully. Two situations to consider:  
--	Fewer partitions in the `partitions` parameter than in the where clause: destination table ends up with duplicates.
--	More partitions in the `partitions` parameter than in the where clause: destination table ends up missing rows. Less rows in destination than in source.
+Параметр конфигурации `partitions` должен использоваться с осторожностью. Две ситуации, которые следует учитывать:  
+- Меньше разделов в параметре `partitions`, чем в операторе where: целевая таблица оказывается с дубликатами.
+- Больше разделов в параметре `partitions`, чем в операторе where: целевая таблица оказывается без строк. Меньше строк в целевой таблице, чем в исходной.
 
-To understand more about PARTITION BY clause check [here](https://www.vertica.com/docs/9.2.x/HTML/Content/Authoring/SQLReferenceManual/Statements/partition-clause.htm)
+Чтобы узнать больше о операторе PARTITION BY, смотрите [здесь](https://www.vertica.com/docs/9.2.x/HTML/Content/Authoring/SQLReferenceManual/Statements/partition-clause.htm)
  
-:::info Note:
+:::info Примечание:
 
-The `partitions` parameter is optional, if the `partitions` parameter is not provided, the partitions in the where clause will be dropped from destination and inserted back from source. If you use a where clause, you might not need the `partitions` parameter.
+Параметр `partitions` является необязательным, если параметр `partitions` не предоставлен, разделы в операторе where будут удалены из назначения и вставлены обратно из источника. Если вы используете оператор where, вам может не понадобиться параметр `partitions`.
 
-The where clause condition is also optional, but if not provided then all data in source is inserted in destination. 
+Условие оператора where также является необязательным, но если оно не предоставлено, то все данные из источника вставляются в назначение. 
 
-If no where clause condition and no `partitions` parameter are provided, then it drops all partitions from the table and inserts all of them again.
+Если ни условие оператора where, ни параметр `partitions` не предоставлены, то удаляются все разделы из таблицы и вставляются все они снова.
 
-If the `partitions` parameter is provided but not where clause is provided, the destination table ends up with duplicates because the partitions in the `partitions` parameter are dropped but all data in the source table (no where clause) is inserted in destination.
+Если параметр `partitions` предоставлен, но условие оператора where не предоставлено, целевая таблица оказывается с дубликатами, потому что разделы в параметре `partitions` удаляются, но все данные в исходной таблице (без оператора where) вставляются в назначение.
 
-The `partition_by_string` config parameter is also optional. If no `partition_by_string` parameter is provided, then it behaves like `delete+insert`. It deletes all records from destination and then it inserts all records from source. It won’t use or drop partitions.
+Параметр конфигурации `partition_by_string` также является необязательным. Если параметр `partition_by_string` не предоставлен, то он ведет себя как `delete+insert`. Он удаляет все записи из назначения, а затем вставляет все записи из источника. Он не будет использовать или удалять разделы.
 
-If both the `partition_by_string` and `partitions` parameters are not provided then `insert_overwrite` strategy truncates the target table and insert the source table data into target.
+Если оба параметра `partition_by_string` и `partitions` не предоставлены, то стратегия `insert_overwrite` очищает целевую таблицу и вставляет данные из таблицы источника в целевую.
 
-If you want to use `partitions` parameter then you have to partition the table by passing `partition_by_string` parameter.
+Если вы хотите использовать параметр `partitions`, то вам нужно разбить таблицу, передав параметр `partition_by_string`.
 
 :::
 
@@ -407,8 +403,8 @@ If you want to use `partitions` parameter then you have to partition the table b
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -461,25 +457,25 @@ If you want to use `partitions` parameter then you have to partition the table b
 
 
 
-## Optimization options for table materialization
+## Опции оптимизации для материализации таблиц
 
-There are multiple optimizations that can be used when materializing models as tables. Each config parameter applies a Vertica specific clause in the generated `CREATE TABLE` DDL. 
+Существует множество оптимизаций, которые можно использовать при материализации моделей в виде таблиц. Каждый параметр конфигурации применяет специфичный для Vertica оператор в сгенерированном DDL `CREATE TABLE`. 
 
-For more information see [Vertica](https://www.vertica.com/docs/12.0.x/HTML/Content/Authoring/SQLReferenceManual/Statements/CREATETABLE.htm) options for table optimization.
+Для получения дополнительной информации смотрите [Vertica](https://www.vertica.com/docs/12.0.x/HTML/Content/Authoring/SQLReferenceManual/Statements/CREATETABLE.htm) опции для оптимизации таблиц.
 
-You can configure these optimizations in your model SQL file as described in the examples below: 
+Вы можете настроить эти оптимизации в вашем SQL-файле модели, как описано в следующих примерах: 
 
- ### Configuring the `ORDER BY` clause
+ ### Конфигурация оператора `ORDER BY`
 
- To leverage the `ORDER BY` clause of the `CREATE TABLE` statement use the `order_by` config param in your model. 
+ Чтобы использовать оператор `ORDER BY` в операторе `CREATE TABLE`, используйте параметр конфигурации `order_by` в вашей модели. 
 
- #### Using the `order_by` config parameter
+ #### Использование параметра конфигурации `order_by`
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -513,24 +509,24 @@ You can configure these optimizations in your model SQL file as described in the
 </TabItem>
 </Tabs>
 
-### Configuring the `SEGMENTED BY` clause
+### Конфигурация оператора `SEGMENTED BY`
 
-To leverage the `SEGMENTED BY` clause of the `CREATE TABLE` statement, use the `segmented_by_string` or `segmented_by_all_nodes` config parameters in your model. By default  ALL NODES are used to segment tables, so the ALL NODES clause in the  SQL  statement will be added when using `segmented_by_string` config parameter. You can disable ALL NODES using `no_segmentation` parameter.
+Чтобы использовать оператор `SEGMENTED BY` в операторе `CREATE TABLE`, используйте параметры конфигурации `segmented_by_string` или `segmented_by_all_nodes` в вашей модели. По умолчанию для сегментации таблиц используются ВСЕ УЗЛЫ, поэтому оператор ALL NODES будет добавлен в SQL-оператор при использовании параметра конфигурации `segmented_by_string`. Вы можете отключить ALL NODES, используя параметр `no_segmentation`.
 
-To learn more about segmented by clause check [here](https://www.vertica.com/docs/12.0.x/HTML/Content/Authoring/SQLReferenceManual/Statements/hash-segmentation-clause.htm).
+Чтобы узнать больше о операторе segmented by, смотрите [здесь](https://www.vertica.com/docs/12.0.x/HTML/Content/Authoring/SQLReferenceManual/Statements/hash-segmentation-clause.htm).
 
 
-#### Using the `segmented_by_string` config parameter
+#### Использование параметра конфигурации `segmented_by_string`
 
-`segmented_by_string` config parameter  can be used to segment projection data using a SQL expression like hash segmentation.
+Параметр конфигурации `segmented_by_string` может использоваться для сегментации данных проекции с использованием SQL-выражения, например, хеш-сегментации.
 
 
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -568,21 +564,21 @@ To learn more about segmented by clause check [here](https://www.vertica.com/doc
 </TabItem>
 </Tabs>
 
-#### Using the `segmented_by_all_nodes` config  parameter
+#### Использование параметра конфигурации `segmented_by_all_nodes`
 
-`segmented_by_all_nodes` config parameter  can be used to segment projection data for distribution across all cluster nodes.
+Параметр конфигурации `segmented_by_all_nodes` может использоваться для сегментации данных проекции для распределения по всем узлам кластера.
 
-:::info Note:
+:::info Примечание:
 
- If you want to pass `segmented_by_all_nodes` parameter then you have to segment  the table by passing `segmented_by_string` parameter.
+ Если вы хотите передать параметр `segmented_by_all_nodes`, то вам нужно сегментировать таблицу, передав параметр `segmented_by_string`.
 
 :::
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -617,18 +613,18 @@ To learn more about segmented by clause check [here](https://www.vertica.com/doc
 </TabItem>
 </Tabs>
 
-### Configuring the UNSEGMENTED ALL NODES clause
+### Конфигурация оператора UNSEGMENTED ALL NODES
 
-To leverage the`UNSEGMENTED ALL NODES` clause of the `CREATE TABLE` statement, use the `no_segmentation` config parameters in your model.
+Чтобы использовать оператор `UNSEGMENTED ALL NODES` в операторе `CREATE TABLE`, используйте параметры конфигурации `no_segmentation` в вашей модели.
 
-#### Using the `no_segmentation` config parameter
+#### Использование параметра конфигурации `no_segmentation`
 
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -670,21 +666,21 @@ To leverage the`UNSEGMENTED ALL NODES` clause of the `CREATE TABLE` statement, u
 </Tabs>
 
 
-### Configuring the `PARTITION BY` clause
+### Конфигурация оператора `PARTITION BY`
 
-To leverage the `PARTITION BY` clause of the `CREATE TABLE` statement, use the `partition_by_string`, `partition_by_active_count` or the `partition_by_group_by_string` config parameters in your model. 
+Чтобы использовать оператор `PARTITION BY` в операторе `CREATE TABLE`, используйте параметры конфигурации `partition_by_string`, `partition_by_active_count` или `partition_by_group_by_string` в вашей модели. 
 
-To learn more about partition by clause check [here](https://www.vertica.com/docs/9.2.x/HTML/Content/Authoring/SQLReferenceManual/Statements/partition-clause.htm)
+Чтобы узнать больше о операторе partition by, смотрите [здесь](https://www.vertica.com/docs/9.2.x/HTML/Content/Authoring/SQLReferenceManual/Statements/partition-clause.htm)
 
-#### Using the `partition_by_string` config parameter
+#### Использование параметра конфигурации `partition_by_string`
 
-`partition_by_string` (optinal) accepts a string value of a any one specific `column_name` based on which partitioning of the table data takes place.
+`partition_by_string` (необязательный) принимает строковое значение любого одного конкретного `column_name`, на основе которого происходит разбиение данных таблицы.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -723,13 +719,13 @@ To learn more about partition by clause check [here](https://www.vertica.com/doc
 </TabItem>
 </Tabs>
 
-#### Using the `partition_by_active_count` config parameter
+#### Использование параметра конфигурации `partition_by_active_count`
 
-`partition_by_active_count` (optional) specifies how many partitions are active for this table. It accepts an integer value.
+`partition_by_active_count` (необязательный) указывает, сколько разделов активны для этой таблицы. Он принимает целочисленное значение.
 
-:::info Note:
+:::info Примечание:
 
- If you want to pass `partition_by_active_count` parameter then you have to partition the table by passing `partition_by_string` parameter.
+ Если вы хотите передать параметр `partition_by_active_count`, то вам нужно разбить таблицу, передав параметр `partition_by_string`.
 
 :::
 
@@ -737,8 +733,8 @@ To learn more about partition by clause check [here](https://www.vertica.com/doc
 <Tabs
   defaultValue="source"
   values= {[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -788,18 +784,18 @@ To learn more about partition by clause check [here](https://www.vertica.com/doc
 </TabItem>
 </Tabs>
 
-#### Using the `partition_by_group_by_string` config parameter
+#### Использование параметра конфигурации `partition_by_group_by_string`
 
-`partition_by_group_by_string` parameter(optional) accepts  a string, in which user should specify  each group cases as a single string.
+Параметр `partition_by_group_by_string` (необязательный) принимает строку, в которой пользователь должен указать каждую группу случаев в виде одной строки.
 
- This is derived from the `partition_by_string` value.
+ Это происходит от значения `partition_by_string`.
  
- `partition_by_group_by_string` parameter is used to merge partitions into separate partition groups. 
+ Параметр `partition_by_group_by_string` используется для объединения разделов в отдельные группы разделов. 
 
  
-:::info Note:
+:::info Примечание:
 
- If you want to pass `partition_by_group_by_string` parameter then you have to partition the table by passing `partition_by_string` parameter.
+ Если вы хотите передать параметр `partition_by_group_by_string`, то вам нужно разбить таблицу, передав параметр `partition_by_string`.
 
 :::
 
@@ -808,8 +804,8 @@ To learn more about partition by clause check [here](https://www.vertica.com/doc
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 
@@ -848,15 +844,15 @@ select * from public.customer_dimension
 </TabItem>
 </Tabs>
 
-### Configuring the KSAFE clause
+### Конфигурация оператора KSAFE
 
-To leverage the `KSAFE` clause of the `CREATE TABLE` statement, use the `ksafe` config parameter in your model.
+Чтобы использовать оператор `KSAFE` в операторе `CREATE TABLE`, используйте параметр конфигурации `ksafe` в вашей модели.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Код выполнения', value: 'run', },
   ]
 }>
 

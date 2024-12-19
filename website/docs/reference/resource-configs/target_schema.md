@@ -1,14 +1,14 @@
 ---
 resource_types: [snapshots]
-description: "Target_schema - Read this in-depth guide to learn about configurations in dbt."
+description: "Target_schema - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: string
 ---
 
 :::info
 
-Starting in dbt Core v1.9+, this functionality is no longer utilized. Use the [database](/reference/resource-configs/database) config as an alternative to define a custom database while still respecting the `generate_database_name` macro. 
+Начиная с dbt Core v1.9+, эта функциональность больше не используется. Используйте конфигурацию [database](/reference/resource-configs/database) в качестве альтернативы для определения пользовательской базы данных, при этом уважая макрос `generate_database_name`. 
 
-Try it now in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+Попробуйте это сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 :::
 
@@ -34,18 +34,18 @@ snapshots:
 
 </File>
 
-## Description
-The schema that dbt should build a [snapshot](/docs/build/snapshots) <Term id="table" /> into. When `target_schema` is provided, snapshots build into the same `target_schema`, no matter who is running them.
+## Описание
+Схема, в которую dbt должен создать [snapshot](/docs/build/snapshots) <Term id="table" />. Когда указано `target_schema`, snapshots создаются в одной и той же `target_schema`, независимо от того, кто их запускает.
 
-On **BigQuery**, this is analogous to a `dataset`.
+На **BigQuery** это аналогично `dataset`.
 
-## Default
+## По умолчанию
 
-<VersionBlock lastVersion="1.8" >This is a required parameter, no default is provided. </VersionBlock>
-<VersionBlock firstVersion="1.9.1">In dbt Core v1.9+ and dbt Cloud "Latest" release track, this is not a required parameter. </VersionBlock>
+<VersionBlock lastVersion="1.8" >Это обязательный параметр, значение по умолчанию не предоставляется. </VersionBlock>
+<VersionBlock firstVersion="1.9.1">В dbt Core v1.9+ и в последнем релизе dbt Cloud это не обязательный параметр. </VersionBlock>
 
-## Examples
-### Build all snapshots in a schema named `snapshots`
+## Примеры
+### Создание всех snapshots в схеме с именем `snapshots`
 
 <File name='dbt_project.yml'>
 
@@ -59,8 +59,8 @@ snapshots:
 
 <VersionBlock lastVersion="1.8" >
 
-### Use the same schema-naming behavior as models
+### Используйте такое же поведение именования схем, как и для моделей
 
-For native support of environment-aware snapshots, upgrade to dbt Core version 1.9+ and remove any existing `target_schema` configuration. 
+Для нативной поддержки snapshots, учитывающих окружение, обновите до версии dbt Core 1.9+ и удалите любую существующую конфигурацию `target_schema`. 
 
 </VersionBlock>

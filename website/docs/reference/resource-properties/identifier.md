@@ -19,16 +19,16 @@ sources:
 
 </File>
 
-## Definition
-The <Term id="table" /> name as stored in the database.
+## Определение
+Имя <Term id="table" /> как оно хранится в базе данных.
 
-This parameter is useful if you want to use a source table name that differs from the table name in the database.
+Этот параметр полезен, если вы хотите использовать имя таблицы источника, которое отличается от имени таблицы в базе данных.
 
-## Default
-By default, dbt will use the table's `name` parameter as the identifier.
+## По умолчанию
+По умолчанию dbt будет использовать параметр `name` таблицы в качестве идентификатора.
 
-## Examples
-### Use a simpler name for a source table than the one in your database
+## Примеры
+### Использование более простого имени для таблицы источника, чем то, что в вашей базе данных
 
 <File name='models/<filename>.yml'>
 
@@ -46,17 +46,17 @@ sources:
 </File>
 
 
-In a downstream model:
+В последующей модели:
 ```sql
 select * from {{ source('jaffle_shop', 'orders') }}
 ```
 
-Will get compiled to:
+Будет скомпилировано в:
 ```sql
 select * from jaffle_shop.api_orders
 ```
 
-### Reference sharded tables as a source in BigQuery
+### Ссылка на шардированные таблицы как источник в BigQuery
 
 <File name='models/<filename>.yml'>
 
@@ -74,18 +74,18 @@ sources:
 </File>
 
 
-In a downstream model:
+В последующей модели:
 ```sql
 select * from {{ source('ga', 'events') }}
 
--- filter on shards by suffix
+-- фильтрация по шартам по суффиксу
 where _table_suffix > '20200101'
 ```
 
-Will get compiled to:
+Будет скомпилировано в:
 ```sql
 select * from `my_project`.`ga`.`events_*`
 
--- filter on shards by suffix
+-- фильтрация по шартам по суффиксу
 where _table_suffix > '20200101'
 ```

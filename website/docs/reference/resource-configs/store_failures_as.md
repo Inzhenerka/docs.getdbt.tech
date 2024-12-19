@@ -3,33 +3,33 @@ resource_types: [tests]
 id: "store_failures_as"
 ---
 
-For the `test` resource type, `store_failures_as` is an optional config that specifies how test failures should be stored in the database. If [`store_failures`](/reference/resource-configs/store_failures) is also configured, `store_failures_as` takes precedence. 
+Для типа ресурса `test`, `store_failures_as` является необязательной конфигурацией, которая определяет, как должны храниться сбои тестов в базе данных. Если также настроен [`store_failures`](/reference/resource-configs/store_failures), то `store_failures_as` имеет приоритет.
 
-The three supported values are:
+Поддерживаются три значения:
 
-- `ephemeral` &mdash; nothing stored in the database (default)
-- `table` &mdash; test failures stored as a database table
-- `view` &mdash; test failures stored as a database view
+- `ephemeral` &mdash; ничего не сохраняется в базе данных (по умолчанию)
+- `table` &mdash; сбои тестов сохраняются в виде таблицы базы данных
+- `view` &mdash; сбои тестов сохраняются в виде представления базы данных
 
-You can configure it in all the same places as `store_failures`, including singular tests (.sql files), generic tests (.yml files), and dbt_project.yml.
+Вы можете настроить это во всех тех же местах, что и `store_failures`, включая одиночные тесты (.sql файлы), общие тесты (.yml файлы) и dbt_project.yml.
 
-### Examples
+### Примеры
 
-#### Singular test
+#### Одиночный тест
 
-[Singular test](https://docs.getdbt.com/docs/build/data-tests#singular-data-tests) in `tests/singular/check_something.sql` file
+[Одиночный тест](https://docs.getdbt.com/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
 
 ```sql
 {{ config(store_failures_as="table") }}
 
--- custom singular test
+-- пользовательский одиночный тест
 select 1 as id
 where 1=0
 ```
 
-#### Generic test
+#### Общий тест
 
-[Generic tests](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) in `models/_models.yml` file
+[Общие тесты](https://docs.getdbt.com/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
 
 ```yaml
 models:
@@ -45,9 +45,9 @@ models:
                 store_failures_as: ephemeral
 ```
 
-#### Project level
+#### Уровень проекта
 
-Config in `dbt_project.yml`
+Конфигурация в `dbt_project.yml`
 
 ```yaml
 name: "my_project"
@@ -64,13 +64,13 @@ tests:
       +store_failures_as: ephemeral
 ```
 
-### "Clobbering" configs
+### Конфигурации "перекрытия"
 
-As with most other configurations, `store_failures_as` is "clobbered" when applied hierarchically. Whenever a more specific value is available, it will completely replace the less specific value.
+Как и в большинстве других конфигураций, `store_failures_as` "перекрывается" при иерархическом применении. Каждый раз, когда доступно более специфичное значение, оно полностью заменяет менее специфичное значение.
 
-Additional resources: 
+Дополнительные ресурсы:
 
-- [Data test configurations](/reference/data-test-configs#related-documentation)
-- [Data test-specific configurations](/reference/data-test-configs#test-data-specific-configurations)
-- [Configuring directories of models in dbt_project.yml](/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml)
-- [Config inheritance](/reference/configs-and-properties#config-inheritance)
+- [Конфигурации тестов данных](/reference/data-test-configs#related-documentation)
+- [Конфигурации, специфичные для тестов данных](/reference/data-test-configs#test-data-specific-configurations)
+- [Настройка директорий моделей в dbt_project.yml](/reference/model-configs#configuring-directories-of-models-in-dbt_projectyml)
+- [Наследование конфигураций](/reference/configs-and-properties#config-inheritance)

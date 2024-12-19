@@ -1,18 +1,18 @@
 ---
-title: "SingleStore configurations"
+title: "Конфигурации SingleStore"
 id: "singlestore-configs"
 ---
 
-## Incremental materialization strategies
-The [`incremental_strategy` config](/docs/build/incremental-models#about-incremental_strategy) controls how dbt builds incremental models. Currently, SingleStoreDB supports only the `delete+insert` configuration.
+## Стратегии инкрементной материализации
+Конфигурация [`incremental_strategy`](/docs/build/incremental-models#about-incremental_strategy) управляет тем, как dbt строит инкрементные модели. В настоящее время SingleStoreDB поддерживает только конфигурацию `delete+insert`.
 
-The `delete+insert` incremental strategy directs dbt to follow a two-step incremental approach. Initially, it identifies and removes the records flagged by the configured `is_incremental()` block. Subsequently, it re-inserts these records.
+Стратегия инкрементного обновления `delete+insert` указывает dbt следовать двухэтапному инкрементному подходу. Сначала она определяет и удаляет записи, помеченные в блоке `is_incremental()`. Затем эти записи повторно вставляются.
 
-## Performance Optimizations
-[SingleStore Physical Database Schema Design documentation](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design.html) is helpful if you want to use specific options (that are described below) in your dbt project.
+## Оптимизация производительности
+Документация [по проектированию физической схемы базы данных SingleStore](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design.html) полезна, если вы хотите использовать определенные параметры (описанные ниже) в вашем проекте dbt.
 
-### Storage type
-SingleStore supports two storage types: **In-Memory Rowstore** and **Disk-based Columnstore** (the latter is default). See [the docs](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design/choosing-a-table-storage-type.html) for details. The dbt-singlestore adapter allows you to specify which storage type your table materialization would rely on using `storage_type` config parameter. 
+### Тип хранения
+SingleStore поддерживает два типа хранения: **In-Memory Rowstore** и **Disk-based Columnstore** (последний является типом по умолчанию). Подробности можно найти в [документации](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design/choosing-a-table-storage-type.html). Адаптер dbt-singlestore позволяет вам указать, на каком типе хранения будет основываться материализация вашей таблицы, используя параметр конфигурации `storage_type`.
 
 <File name='rowstore_model.sql'>
 
@@ -24,13 +24,13 @@ select ...
 
 </File>
 
-### Keys
+### Ключи
 
-SingleStore tables are [sharded](https://docs.singlestore.com/managed-service/en/getting-started-with-managed-service/about-managed-service/sharding.html) and can be created with various column definitions. The following options are supported by the dbt-singlestore adapter, each of them accepts `column_list` (a list of column names) as an option value. Please refer to [Creating a Columnstore Table](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/procedures-for-physical-database-schema-design/creating-a-columnstore-table.html) for more informartion on various key types in SingleStore.
-- `primary_key` (translated to `PRIMARY KEY (column_list)`)
-- `sort_key` (translated to `KEY (column_list) USING CLUSTERED COLUMNSTORE`)
-- `shard_key` (translated to `SHARD KEY (column_list)`)
-- `unique_table_key` (translated to `UNIQUE KEY (column_list)`)
+Таблицы SingleStore являются [шардированными](https://docs.singlestore.com/managed-service/en/getting-started-with-managed-service/about-managed-service/sharding.html) и могут быть созданы с различными определениями столбцов. Следующие параметры поддерживаются адаптером dbt-singlestore, каждый из них принимает `column_list` (список имен столбцов) в качестве значения параметра. Пожалуйста, обратитесь к [Созданию таблицы Columnstore](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/procedures-for-physical-database-schema-design/creating-a-columnstore-table.html) для получения дополнительной информации о различных типах ключей в SingleStore.
+- `primary_key` (переводится как `PRIMARY KEY (column_list)`)
+- `sort_key` (переводится как `KEY (column_list) USING CLUSTERED COLUMNSTORE`)
+- `shard_key` (переводится как `SHARD KEY (column_list)`)
+- `unique_table_key` (переводится как `UNIQUE KEY (column_list)`)
 
 <File name='primary_and_shard_model.sql'>
 
@@ -63,13 +63,13 @@ select ...
 
 </File>
 
-### Indexes
-Similarly to the Postgres adapter, table models, incremental models, seeds, and snapshots may have a list of `indexes` defined. Each index can have the following components:
-- `columns` (list, required): one or more columns on which the index is defined
-- `unique` (boolean, optional): whether the index should be declared unique
-- `type` (string, optional): a supported [index type](https://docs.singlestore.com/managed-service/en/reference/sql-reference/data-definition-language-ddl/create-index.html), `hash` or `btree`
+### Индексы
+Аналогично адаптеру Postgres, модели таблиц, инкрементные модели, семена и снимки могут иметь определенный список `indexes`. Каждый индекс может иметь следующие компоненты:
+- `columns` (список, обязательный): один или несколько столбцов, на которых определяется индекс
+- `unique` (логический, необязательный): указывает, должен ли индекс быть объявлен уникальным
+- `type` (строка, необязательный): поддерживаемый [тип индекса](https://docs.singlestore.com/managed-service/en/reference/sql-reference/data-definition-language-ddl/create-index.html), `hash` или `btree`
 
-As SingleStore tables are sharded, there are certain limitations to indexes creation, see the [docs](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design/understanding-keys-and-indexes-in-singlestore.html) for more details.
+Поскольку таблицы SingleStore являются шардированными, существуют определенные ограничения на создание индексов, см. [документацию](https://docs.singlestore.com/managed-service/en/create-a-database/physical-database-schema-design/concepts-of-physical-database-schema-design/understanding-keys-and-indexes-in-singlestore.html) для получения дополнительных деталей.
 
 <File name='indexes_model.sql'>
 
@@ -87,10 +87,9 @@ select ...
 
 </File>
 
+### Другие параметры
 
-### Other options
-
-You can specify the character set and collation for the table using `charset` and/or `collation` options. Supported values for `charset` are `binary`, `utf8`, and `utf8mb4`.  Supported values for `collation` can be viewed as the output of `SHOW COLLATION` SQL query. Default collations for the corresponding charcter sets are `binary`, `utf8_general_ci`, and `utf8mb4_general_ci`.
+Вы можете указать набор символов и сортировку для таблицы, используя параметры `charset` и/или `collation`. Поддерживаемые значения для `charset` — это `binary`, `utf8` и `utf8mb4`. Поддерживаемые значения для `collation` можно просмотреть как результат SQL-запроса `SHOW COLLATION`. Значения по умолчанию для соответствующих наборов символов — это `binary`, `utf8_general_ci` и `utf8mb4_general_ci`.
 
 <File name='utf8mb4_model.sql'>
 
@@ -107,30 +106,29 @@ select ...
 
 </File>
 
-## Model contracts
+## Контракты моделей
 
-Starting from 1.5, the `dbt-singlestore` adapter supports model contracts.
+Начиная с версии 1.5, адаптер `dbt-singlestore` поддерживает контракты моделей.
 
-| Constraint type | Support         | Platform enforcement |
+| Тип ограничения | Поддержка       | Принуждение на платформе |
 |:----------------|:----------------|:------------------|
-| not_null        | ✅  Supported    | ✅ Enforced     |
-| primary_key     | ✅  Supported    | ❌ Not enforced  |
-| foreign_key     | ❌  Not supported | ❌ Not enforced  |
-| unique          | ✅  Supported    | ❌ Not enforced  |
-| check           | ❌ Not supported | ❌  Not enforced |
+| not_null        | ✅  Поддерживается | ✅ Принуждается  |
+| primary_key     | ✅  Поддерживается | ❌ Не принуждается |
+| foreign_key     | ❌  Не поддерживается | ❌ Не принуждается |
+| unique          | ✅  Поддерживается | ❌ Не принуждается |
+| check           | ❌ Не поддерживается | ❌  Не принуждается |
 
+Учитывайте следующие ограничения при использовании контрактов с адаптером `dbt-singlestore`:
 
-Consider the following restrictions while using contracts with the `dbt-singlestore` adapter:
+### Определения модели и столбцов:
+   - Ограничение `unique` может быть установлено только на уровне модели. Поэтому не устанавливайте его на уровне столбца.
+   - Повторяющиеся ограничения вызовут ошибку. Например, установка `primary_key` как в настройках столбца, так и в настройках модели вызовет ошибку.
 
-### Model and Column Definitions:
-   - The `unique` constraint can only be set at the model level. Hence, do not set it at the column level.
-   - Repeating constraints will return an error. For example, setting `primary_key` in both column and model settings returns an error.
+### Переопределение настроек:
 
-### Overwriting Settings:
+Настройка контракта переопределяет настройку конфигурации. Например, если вы определяете `primary_key` или `unique_table_key` в конфигурации, а затем также устанавливаете его в контракте, настройка контракта заменяет настройку конфигурации.
 
-The contract setting overrides the configuration setting. For example, if you define a `primary_key` or `unique_table_key` in the config and then also set it in the contract, the contract setting replaces the configuration setting.
-
-### Working with constants:
+### Работа с константами:
 
 <File name='dim_customers.yml'>
 
@@ -152,7 +150,7 @@ models:
 
 </File>
 
-Let's say your model is defined as:
+Предположим, ваша модель определена как:
 
 <File name='dim_customers.sql'>
 
@@ -164,7 +162,7 @@ select
 
 </File>
 
-When using constants, you must specify the data types directly. If not, SingleStoreDB will automatically choose what it thinks is the most appropriate data type.
+При использовании констант вы должны явно указывать типы данных. Если этого не сделать, SingleStoreDB автоматически выберет то, что считает наиболее подходящим типом данных.
 
 <File name='dim_customers.sql'>
 
@@ -176,11 +174,11 @@ select
 
 </File>
 
-### Misleading datatypes
+### Вводящие в заблуждение типы данных
 
-Using `model contracts` ensures that you don't accidentally add the wrong type of data into a column. For instance, if you expect a number in a column, but accidentally specify text to be added, the model contract catches it and returns an error.
+Использование `контрактов моделей` гарантирует, что вы случайно не добавите неправильный тип данных в столбец. Например, если вы ожидаете число в столбце, но случайно указываете текст для добавления, контракт модели поймает это и вернет ошибку.
 
-The error message may occasionally show a different data type name than expected, because of how the `singlestoredb-python` connector works. For instance,
+Сообщение об ошибке может иногда показывать другое имя типа данных, чем ожидалось, из-за того, как работает соединитель `singlestoredb-python`. Например,
 
 <File name='dim_customers.sql'>
 
@@ -192,17 +190,17 @@ select
 
 </File>
 
-will result in
+приведет к
 
 ```sql
-Please ensure the name, data_type, and number of columns in your contract match the columns in your model's definition.
+Пожалуйста, убедитесь, что имя, тип данных и количество столбцов в вашем контракте соответствуют столбцам в определении вашей модели.
 | column_name | definition_type | contract_type | mismatch_reason       |
-| customer_id | LONGBLOB        | LONG          | data type mismatch    |
+| customer_id | LONGBLOB        | LONG          | несоответствие типа данных |
 ```
 
-It's important to note that certain data type mappings might show up differently in error messages, but this doesn't affect how they work. Here's a quick list of what you might see:
+Важно отметить, что некоторые сопоставления типов данных могут отображаться иначе в сообщениях об ошибках, но это не влияет на их работу. Вот краткий список того, что вы можете увидеть:
 
-| Data type  | Data type returned by<br/>singlestoredb-python |
+| Тип данных  | Тип данных, возвращаемый<br/>singlestoredb-python |
 |:-----------|:-----------------------------------------------|
 | BOOL       | TINY                                           |
 | INT        | LONG                                           |
@@ -213,5 +211,4 @@ It's important to note that certain data type mappings might show up differently
 | MEDIUMTEXT | MEDIUMBLOB                                     |
 | LONGTEXT   | LONGBLOB                                       |
 
-
-Just keep these points in mind when setting up and using your `dbt-singlestore` adapter, and you'll avoid common pitfalls!
+Просто имейте в виду эти моменты при настройке и использовании вашего адаптера `dbt-singlestore`, и вы избежите распространенных ошибок!

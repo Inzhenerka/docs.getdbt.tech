@@ -1,19 +1,19 @@
 ---
 resource_types: [seeds]
-description: "Quote_columns - Read this in-depth guide to learn about configurations in dbt."
+description: "Quote_columns - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: boolean
 default_value: false
 ---
 
-## Definition
-An optional seed configuration, used to determine whether column names in the seed file should be quoted when the <Term id="table" /> is created.
+## Определение
+Необязательная конфигурация семени, используемая для определения того, должны ли имена столбцов в файле семени быть заключены в кавычки при создании <Term id="table" />.
 
-* When `True`, dbt will quote the column names defined in the seed file when building a table for the seed, preserving casing.
-* When `False`, dbt will not quote the column names defined in the seed file.
-* When not set, it will vary by adapter whether or not column names are quoted.
+* Когда `True`, dbt будет заключать в кавычки имена столбцов, определенные в файле семени, при создании таблицы для семени, сохраняя регистр.
+* Когда `False`, dbt не будет заключать в кавычки имена столбцов, определенные в файле семени.
+* Когда не установлено, будет зависеть от адаптера, будут ли имена столбцов заключены в кавычки.
 
-## Usage
-### Globally quote all seed columns
+## Использование
+### Глобально заключить в кавычки все столбцы семени
 
 <File name='dbt_project.yml'>
 
@@ -24,10 +24,10 @@ seeds:
 
 </File>
 
-### Only quote seeds in the `seeds/mappings` directory.
-For a project with:
-* `name: jaffle_shop` in the `dbt_project.yml` file
-* `seed-paths: ["seeds"]` in the `dbt_project.yml` file
+### Заключить в кавычки только семена в директории `seeds/mappings`.
+Для проекта с:
+* `name: jaffle_shop` в файле `dbt_project.yml`
+* `seed-paths: ["seeds"]` в файле `dbt_project.yml`
 
 <File name='dbt_project.yml'>
 
@@ -40,7 +40,7 @@ seeds:
 
 </File>
 
-Or (as of v0.21):
+Или (начиная с версии v0.21):
 
 <File name='seeds/properties.yml'>
 
@@ -55,7 +55,7 @@ seeds:
 
 </File>
 
-## Recommended configuration
-* Explicitly set this value if using seed files.
-* Apply the configuration globally rather than to individual projects/seeds.
-* Set `quote_columns: false` _unless_ your column names include a special character or casing needs to be preserved. In that case, consider renaming your seed columns (this will simplify code downstream)
+## Рекомендуемая конфигурация
+* Явно установите это значение, если используете файлы семян.
+* Применяйте конфигурацию глобально, а не для отдельных проектов/семян.
+* Установите `quote_columns: false`, _если_ имена ваших столбцов не содержат специальных символов или регистр не нужно сохранять. В этом случае рассмотрите возможность переименования ваших столбцов семян (это упростит код в дальнейшем).

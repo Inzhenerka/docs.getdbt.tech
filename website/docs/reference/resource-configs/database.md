@@ -1,16 +1,16 @@
 ---
-sidebar_label: "database"
+sidebar_label: "база данных"
 resource_types: [models, seeds, tests]
 datatype: string
-description: "Override the default database when dbt creates resources in your data platform."
+description: "Переопределите базу данных по умолчанию, когда dbt создает ресурсы в вашей платформе данных."
 ---
 
 <Tabs>
-<TabItem value="model" label="Model">
+<TabItem value="model" label="Модель">
 
-Specify a custom database for a model in your `dbt_project.yml` file. 
+Укажите пользовательскую базу данных для модели в вашем файле `dbt_project.yml`. 
 
-For example, if you have a model that you want to load into a database other than the target database, you can configure it like this:
+Например, если у вас есть модель, которую вы хотите загрузить в базу данных, отличную от целевой базы данных, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -22,14 +22,14 @@ models:
 ```
 </File>
 
-This would result in the generated relation being located in the `reporting` database, so the full relation name would be `reporting.finance.sales_metrics` instead of the default target database.
+В результате сгенерированное отношение будет находиться в базе данных `reporting`, поэтому полное имя отношения будет `reporting.finance.sales_metrics`, а не в целевой базе данных по умолчанию.
 </TabItem>
 
-<TabItem value="seeds" label="Seeds">
+<TabItem value="seeds" label="Семена">
 
-Configure a database in your `dbt_project.yml` file. 
+Настройте базу данных в вашем файле `dbt_project.yml`. 
 
-For example, to load a seed into a database called `staging` instead of the target database, you can configure it like this:
+Например, чтобы загрузить семя в базу данных под названием `staging`, а не в целевую базу данных, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -40,24 +40,24 @@ seeds:
       +database: staging
 ```
 
-This would result in the generated relation being located in the `staging` database, so the full relation name would be `staging.finance.product_categories`.
+В результате сгенерированное отношение будет находиться в базе данных `staging`, поэтому полное имя отношения будет `staging.finance.product_categories`.
 
 </File>
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
 <VersionBlock lastVersion="1.8">
 
-Available for dbt Cloud release tracks or dbt Core v1.9+. Select v1.9 or newer from the version dropdown to view the configs.
+Доступно для релизов dbt Cloud или dbt Core v1.9+. Выберите v1.9 или новее в выпадающем списке версий, чтобы просмотреть конфигурации.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-Specify a custom database for a snapshot in your `dbt_project.yml` or config file. 
+Укажите пользовательскую базу данных для снимка в вашем файле `dbt_project.yml` или конфигурационном файле. 
 
-For example, if you have a snapshot that you want to load into a database other than the target database, you can configure it like this:
+Например, если у вас есть снимок, который вы хотите загрузить в базу данных, отличную от целевой базы данных, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -69,19 +69,17 @@ snapshots:
 ```
 </File>
 
-This results in the generated relation being located in the `snapshots` database so the full relation name would be `snapshots.finance.your_snapshot` instead of the default target database.
+В результате сгенерированное отношение будет находиться в базе данных `snapshots`, поэтому полное имя отношения будет `snapshots.finance.your_snapshot`, а не в целевой базе данных по умолчанию.
 
 </VersionBlock>
 
 </TabItem>
 
+<TabItem value="test" label="Тесты">
 
+Настройте базу данных для хранения результатов тестов в вашем файле `dbt_project.yml`.
 
-<TabItem value="test" label="Tests">
-
-Customize the database for storing test results in your `dbt_project.yml` file.
-
-For example, to save test results in a specific database, you can configure it like this:
+Например, чтобы сохранить результаты тестов в конкретной базе данных, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -91,26 +89,22 @@ tests:
   +database: test_results
 ```
 
-This would result in the test results being stored in the `test_results` database.
+В результате результаты тестов будут храниться в базе данных `test_results`.
 </File>
 </TabItem>
 </Tabs>
 
+## Определение
 
-## Definition
+При желании укажите пользовательскую базу данных для [модели](/docs/build/sql-models), [семени](/docs/build/seeds) или [теста данных](/docs/build/data-tests). (Чтобы указать базу данных для [снимка](/docs/build/snapshots), используйте [`target_database` config](/reference/resource-configs/target_database)).
 
-Optionally specify a custom database for a [model](/docs/build/sql-models), [seed](/docs/build/seeds), or [data test](/docs/build/data-tests). (To specify a database for a [snapshot](/docs/build/snapshots), use the [`target_database` config](/reference/resource-configs/target_database)).
+Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
 
-When dbt creates a relation (<Term id="table" />/<Term id="view" />) in a database, it creates it as: `{{ database }}.{{ schema }}.{{ identifier }}`, e.g. `analytics.finance.payments`
+Стандартное поведение dbt:
+* Если пользовательская база данных _не_ указана, база данных отношения — это целевая база данных (`{{ target.database }}`).
+* Если указана пользовательская база данных, база данных отношения — это значение `{{ database }}`.
 
-The standard behavior of dbt is:
-* If a custom database is _not_ specified, the database of the relation is the target database (`{{ target.database }}`).
-* If a custom database is specified, the database of the relation is the `{{ database }}` value.
+Чтобы узнать больше о том, как изменить способ, которым dbt генерирует `database` для отношения, прочитайте [Использование пользовательских баз данных](/docs/build/custom-databases).
 
-To learn more about changing the way that dbt generates a relation's `database`, read [Using Custom Databases](/docs/build/custom-databases)
-
-
-
-## Warehouse specific information
-* BigQuery: `project` and `database` are interchangeable
-
+## Информация, специфичная для склада
+* BigQuery: `project` и `database` взаимозаменяемы.

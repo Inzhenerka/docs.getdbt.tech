@@ -3,38 +3,38 @@ resource_types: [tests]
 datatype: string
 ---
 
-### Definition
+### Определение
 
-Filter the resource being tested (model, source, seed, or snapshot).
+Фильтрует ресурс, который тестируется (модель, источник, сид или снимок).
 
-The `where` condition is templated into the test query by replacing the resource reference with a <Term id="subquery" />. For instance, a `not_null` test may look like:
+Условие `where` вставляется в тестовый запрос, заменяя ссылку на ресурс на <Term id="subquery" />. Например, тест `not_null` может выглядеть так:
 ```sql
 select *
 from my_model
 where my_column is null
 ```
-If the `where` config is set to `where date_column = current_date`, then the test query will be updated to:
+Если конфигурация `where` установлена на `where date_column = current_date`, то тестовый запрос будет обновлен до:
 ```sql
 select *
 from (select * from my_model where date_column = current_date) dbt_subquery
 where my_column is null
 ```
 
-### Examples
+### Примеры
 
 <Tabs
   defaultValue="specific"
   values={[
-    { label: 'Specific test', value: 'specific', },
-    { label: 'One-off test', value: 'one_off', },
-    { label: 'Generic test block', value: 'generic', },
-    { label: 'Project level', value: 'project', },
+    { label: 'Специфический тест', value: 'specific', },
+    { label: 'Одноразовый тест', value: 'one_off', },
+    { label: 'Общий тестовый блок', value: 'generic', },
+    { label: 'Уровень проекта', value: 'project', },
   ]
 }>
 
 <TabItem value="specific">
 
-Configure a specific instance of a generic (schema) test:
+Настройте конкретный экземпляр общего (схемного) теста:
 
 <File name='models/<filename>.yml'>
 
@@ -62,7 +62,7 @@ models:
 
 <TabItem value="one_off">
 
-Configure a one-off (data) test:
+Настройте одноразовый (данные) тест:
 
 <File name='tests/<filename>.sql'>
 
@@ -78,7 +78,7 @@ select ...
 
 <TabItem value="generic">
 
-Set the default for all instances of a generic (schema) test, by setting the config inside its test block (definition):
+Установите значение по умолчанию для всех экземпляров общего (схемного) теста, задав конфигурацию внутри его тестового блока (определения):
 
 <File name='macros/<filename>.sql'>
 
@@ -98,7 +98,7 @@ select ...
 
 <TabItem value="project">
 
-Set the default for all tests in a package or project:
+Установите значение по умолчанию для всех тестов в пакете или проекте:
 
 <File name='dbt_project.yml'>
 
@@ -118,23 +118,23 @@ tests:
 
 </Tabs>
 
-### Custom logic
+### Пользовательская логика
 
-The rendering context for the `where` config is the same as for all configurations defined in `.yml` files. You have access to `{{ var() }}` and `{{ env_var() }}`, but you **do not** have access to custom macros for setting this config. If you do want to use custom macros to template out the `where` filter for certain tests, there is a workaround.
+Контекст рендеринга для конфигурации `where` такой же, как и для всех конфигураций, определенных в файлах `.yml`. У вас есть доступ к `{{ var() }}` и `{{ env_var() }}`, но у вас **нет** доступа к пользовательским макросам для установки этой конфигурации. Если вы хотите использовать пользовательские макросы для шаблонизации фильтра `where` для определенных тестов, существует обходной путь.
 
-As of v0.21, dbt defines a [`get_where_subquery` macro](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/materializations/tests/where_subquery.sql).
+Начиная с версии v0.21, dbt определяет [`get_where_subquery` макрос](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt/include/global_project/macros/materializations/tests/where_subquery.sql).
 
-dbt replaces `{{ model }}` in generic test definitions with `{{ get_where_subquery(relation) }}`, where `relation` is a `ref()` or `source()` for the resource being tested. The default implementation of this macro returns:
-- `{{ relation }}` when the `where` config is not defined (`ref()` or `source()`)
-- `(select * from {{ relation }} where {{ where }}) dbt_subquery` when the `where` config is defined
+dbt заменяет `{{ model }}` в определениях общих тестов на `{{ get_where_subquery(relation) }}`, где `relation` — это `ref()` или `source()` для тестируемого ресурса. Стандартная реализация этого макроса возвращает:
+- `{{ relation }}`, когда конфигурация `where` не определена (`ref()` или `source()`)
+- `(select * from {{ relation }} where {{ where }}) dbt_subquery`, когда конфигурация `where` определена
 
-You can override this behavior by:
-- Defining a custom `get_where_subquery` in your root project
-- Defining a custom `<adapter>__get_where_subquery` [dispatch candidate](/reference/dbt-jinja-functions/dispatch) in your package or adapter plugin
+Вы можете переопределить это поведение, выполнив следующие действия:
+- Определив пользовательский `get_where_subquery` в вашем корневом проекте
+- Определив пользовательский `<adapter>__get_where_subquery` [кандидат на диспетчеризацию](/reference/dbt-jinja-functions/dispatch) в вашем пакете или адаптере
 
-Within this macro definition, you can reference whatever custom macros you want, based on static inputs from the configuration. At simplest, this enables you to DRY up code that you'd otherwise need to repeat across many different `.yml` files. Because the `get_where_subquery` macro is resolved at runtime, your custom macros can also include [fetching the results of introspective database queries](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query).
+Внутри этого определения макроса вы можете ссылаться на любые пользовательские макросы, основываясь на статических входных данных из конфигурации. В самом простом виде это позволяет вам избежать дублирования кода, который вам в противном случае пришлось бы повторять в различных файлах `.yml`. Поскольку макрос `get_where_subquery` разрешается во время выполнения, ваши пользовательские макросы также могут включать [получение результатов интроспективных запросов к базе данных](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query).
 
-**Example:** Filter your test to the past three days of data, using dbt's cross-platform [`dateadd()`](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#dateadd) utility macro.
+**Пример:** Отфильтруйте ваш тест по данным за последние три дня, используя кроссплатформенный макрос [`dateadd()`](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros#dateadd) от dbt.
 
 <File name='models/config.yml'>
 
@@ -147,7 +147,7 @@ models:
         tests:
           - unique:
               config:
-                where: "date_column > __three_days_ago__"  # placeholder string for static config
+                where: "date_column > __three_days_ago__"  # строка-заполнитель для статической конфигурации
 ```
 
 </File>
@@ -159,7 +159,7 @@ models:
     {% set where = config.get('where') %}
     {% if where %}
         {% if "__three_days_ago__" in where %}
-            {# replace placeholder string with result of custom macro #}
+            {# замените строку-заполнитель на результат пользовательского макроса #}
             {% set three_days_ago = dbt.dateadd('day', -3, current_timestamp()) %}
             {% set where = where | replace("__three_days_ago__", three_days_ago) %}
         {% endif %}

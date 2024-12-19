@@ -3,18 +3,18 @@ resource_types: [tests]
 datatype: string
 ---
 
-Test queries are written to return a set of failing records, ones not matching the expectation or assertion declared by that test: duplicate records, null values, etc.
+Тестовые запросы написаны для возврата набора неудачных записей, то есть тех, которые не соответствуют ожиданиям или утверждениям, заявленным в этом тесте: дублирующиеся записи, значения null и т.д.
 
-Most often, this is the count of rows returned by the test query: the default value of `fail_calc` is `count(*)`. But it can also be a custom calculation, whether an aggregate calculation or simply the name of a column to be selected from the test query.
+Чаще всего это количество строк, возвращаемых тестовым запросом: значение по умолчанию для `fail_calc` — `count(*)`. Однако это также может быть пользовательское вычисление, будь то агрегатное вычисление или просто имя столбца, который нужно выбрать из тестового запроса.
 
-Most tests do not use the `fail_calc` config, preferring to return a count of failing rows. For the tests that do, the most common place to set the `fail_calc` config is right within a generic test block, alongside its query definition. All the same, `fail_calc` can be set in all the same places as other configs.
+Большинство тестов не используют конфигурацию `fail_calc`, предпочитая возвращать количество неудачных строк. Для тестов, которые это делают, наиболее распространенное место для установки конфигурации `fail_calc` — это непосредственно в блоке общего теста, рядом с определением его запроса. Тем не менее, `fail_calc` можно установить во всех тех же местах, что и другие конфигурации.
 
-For instance, you can configure a `unique` test to return `sum(n_records)` instead of `count(*)` as the failure calculation: that is, the number of rows in the model containing a duplicated column value, rather than the number of distinct column values that are duplicated.
+Например, вы можете настроить тест `unique`, чтобы он возвращал `sum(n_records)` вместо `count(*)` в качестве вычисления неудачи: то есть количество строк в модели, содержащих дублированное значение столбца, а не количество уникальных значений столбца, которые дублируются.
 
-:::tip Tip
-Beware using functions like `sum()` for `fail_calc` in any test that has the potential to return no rows at all.
+:::tip Совет
+Будьте осторожны при использовании функций, таких как `sum()`, для `fail_calc` в любом тесте, который может не вернуть ни одной строки.
 
-If no rows are returned, the test won't pass or fail but will return the following error: 
+Если не будет возвращено ни одной строки, тест не пройдет и не провалится, но вернет следующую ошибку:
 
 ```
 None is not of type 'integer'
@@ -26,7 +26,7 @@ On instance['failures']:
     None
 ```
 
-To avoid this issue, use a case statement to ensure that `0` is returned when no rows exist:
+Чтобы избежать этой проблемы, используйте оператор case, чтобы гарантировать, что будет возвращено `0`, когда строк не существует:
 
 ```yaml
 fail_calc: "case when count(*) > 0 then sum(n_records) else 0 end"
@@ -37,16 +37,16 @@ fail_calc: "case when count(*) > 0 then sum(n_records) else 0 end"
 <Tabs
   defaultValue="specific"
   values={[
-    { label: 'Specific test', value: 'specific', },
-    { label: 'One-off test', value: 'one_off', },
-    { label: 'Generic test block', value: 'generic', },
-    { label: 'Project level', value: 'project', },
+    { label: 'Конкретный тест', value: 'specific', },
+    { label: 'Одноразовый тест', value: 'one_off', },
+    { label: 'Общий тестовый блок', value: 'generic', },
+    { label: 'Уровень проекта', value: 'project', },
   ]
 }>
 
 <TabItem value="specific">
 
-Configure a specific instance of a generic (schema) test:
+Настройте конкретный экземпляр общего (схемного) теста:
 
 <File name='models/<filename>.yml'>
 
@@ -69,7 +69,7 @@ models:
 
 <TabItem value="one_off">
 
-Configure a one-off (data) test:
+Настройте одноразовый (данные) тест:
 
 <File name='tests/<filename>.sql'>
 
@@ -85,7 +85,7 @@ select ...
 
 <TabItem value="generic">
 
-Set the default for all instances of a generic (schema) test, by setting the config inside its test block (definition):
+Установите значение по умолчанию для всех экземпляров общего (схемного) теста, установив конфигурацию внутри его тестового блока (определения):
 
 <File name='macros/<filename>.sql'>
 
@@ -105,16 +105,16 @@ select ...
 
 <TabItem value="project">
 
-Set the default for all tests in a package or project:
+Установите значение по умолчанию для всех тестов в пакете или проекте:
 
 <File name='dbt_project.yml'>
 
 ```yaml
 tests:
-  +fail_calc: count(*)  # all tests
+  +fail_calc: count(*)  # все тесты
   
   <package_name>:
-    +fail_calc: count(distinct id) # tests in <package_name>
+    +fail_calc: count(distinct id) # тесты в <package_name>
 ```
 
 </File>

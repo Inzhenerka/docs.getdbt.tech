@@ -1,7 +1,7 @@
 ---
 resource_types: [models]
-title: include
-required: no
+title: включить
+required: нет
 ---
 
 
@@ -12,21 +12,21 @@ version: 2
 
 models:
   
-  # top-level model properties
+  # свойства модели верхнего уровня
   - name: <model_name>
     [columns](/reference/resource-properties/columns):
-      - name: <column_name> # required
+      - name: <column_name> # обязательно
     
-    # versions of this model
+    # версии этой модели
     [versions](/reference/resource-properties/versions):
-      - v: <version_identifier> # required
+      - v: <version_identifier> # обязательно
         columns:
           - include: '*' | 'all' | [<column_name>, ...]
             exclude:
               - <column_name>
-              - ... # declare additional column names to exclude
+              - ... # укажите дополнительные имена столбцов для исключения
           
-          # declare more columns -- can be overrides from top-level, or in addition
+          # укажите дополнительные столбцы -- это могут быть переопределения из верхнего уровня или дополнения
           - name: <column_name>
             ...
 
@@ -34,24 +34,24 @@ models:
 
 </File>
 
-## Definition
-The specification of which columns are defined in a model's top-level `columns` property to include or exclude in a versioned implementation of that model.
+## Определение
+Спецификация того, какие столбцы определены в свойстве верхнего уровня `columns` модели для включения или исключения в версии этой модели.
 
-`include` is either:
-- a list of specific column names to include
-- `'*'` or `'all'`, indicating that **all** columns from the top-level `columns` property should be included in the versioned model
+`include` может быть:
+- списком конкретных имен столбцов для включения
+- `'*'` или `'all'`, что указывает на то, что **все** столбцы из свойства верхнего уровня `columns` должны быть включены в версию модели
 
-`exclude` is a list of column names to exclude. It can only be declared if `include` is set to one of `'*'` or `'all'`. 
+`exclude` — это список имен столбцов для исключения. Он может быть объявлен только в том случае, если `include` установлено на одно из значений `'*'` или `'all'`. 
 
-The `columns` list of a versioned model can have _at most one_ `include/exclude` element.
+Список `columns` версии модели может содержать _не более одного_ элемента `include/exclude`.
 
-You may declare additional columns within the version's `columns` list. If a version-specific column's `name` matches a column included from the top level, the version-specific entry will override that column for that version.
+Вы можете объявить дополнительные столбцы в списке `columns` версии. Если имя столбца, специфичного для версии, совпадает с именем столбца, включенным из верхнего уровня, запись, специфичная для версии, переопределит этот столбец для данной версии.
 
-## Default
+## По умолчанию
 
-By default, `include` is "all", and `exclude` is the empty list. This has the effect of including all columns from the base model in the versioned model.
+По умолчанию `include` равно "all", а `exclude` — пустой список. Это приводит к тому, что все столбцы из базовой модели включаются в версию модели.
 
-## Example
+## Пример
 
 <File name='models/customers.yml'>
 
@@ -60,7 +60,7 @@ models:
   - name: customers
     columns:
       - name: customer_id
-        description: Unique identifier for this table
+        description: Уникальный идентификатор для этой таблицы
         data_type: text
         constraints:
           - type: not_null
@@ -68,7 +68,7 @@ models:
           - unique
       - name: customer_country
         data_type: text
-        description: "Country where the customer currently lives"
+        description: "Страна, где в настоящее время проживает клиент"
       - name: first_purchase_date
         data_type: date
     
@@ -80,7 +80,7 @@ models:
           - include: "*"
           - name: customer_country
             data_type: text
-            description: "Country where the customer first lived at time of first purchase"
+            description: "Страна, где клиент впервые жил на момент первой покупки"
       
       - v: 2
         columns:
@@ -97,9 +97,9 @@ models:
 
 </File>
 
-Because `v4` has not specified any `columns`, it will include all of the top-level `columns`.
+Поскольку `v4` не указал никаких `columns`, он будет включать все столбцы верхнего уровня.
 
-Each other version has declared a modification from the top-level property:
-- `v3` will include all columns, but it reimplements the `customer_country` column with a different `description`
-- `v2` will include all columns *except* `customer_country`
-- `v1` doesn't include *any* of the top-level `columns`. Instead, it declares only a single integer column named `id`.
+Каждая другая версия объявила изменение по сравнению с верхним уровнем:
+- `v3` будет включать все столбцы, но переопределяет столбец `customer_country` с другим `description`
+- `v2` будет включать все столбцы, *кроме* `customer_country`
+- `v1` не включает *никаких* столбцов верхнего уровня. Вместо этого он объявляет только один целочисленный столбец с именем `id`.

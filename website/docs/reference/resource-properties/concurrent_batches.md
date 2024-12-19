@@ -2,12 +2,12 @@
 title: "concurrent_batches"
 resource_types: [models]
 datatype: model_name
-description: "Learn about concurrent_batches in dbt."
+description: "Узнайте о concurrent_batches в dbt."
 ---
 
 :::note
 
-Available in dbt Core v1.9+ or the [dbt Cloud "Latest" release tracks](/docs/dbt-versions/cloud-release-tracks).
+Доступно в dbt Core версии 1.9+ или в [последних релизах dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 :::
 
@@ -48,43 +48,16 @@ select ...
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-`concurrent_batches` is an override which allows you to decide whether or not you want to run batches in parallel or sequentially (one at a time).
+`concurrent_batches` — это переопределение, которое позволяет вам решить, хотите ли вы запускать пакеты параллельно или последовательно (по одному за раз).
 
-For more information, refer to [how batch execution works](/docs/build/incremental-microbatch#how-parallel-batch-execution-works).
-## Example
+Для получения дополнительной информации обратитесь к разделу [как работает выполнение пакетов](/docs/build/incremental-microbatch#how-parallel-batch-execution-works).
 
-By default, dbt auto-detects whether batches can run in parallel for microbatch models. However, you can override dbt's detection by setting the `concurrent_batches` config to `false` in your `dbt_project.yml` or model `.sql` file to specify parallel or sequential execution, given you meet these conditions: 
-* You've configured a microbatch incremental strategy.
-* You're working with cumulative metrics or any logic that depends on batch order.
+## Пример
 
-Set `concurrent_batches` config to `false` to ensure batches are processed sequentially. For example: 
+По умолчанию dbt автоматически определяет, могут ли пакеты выполняться параллельно для моделей микропакетов. Однако вы можете переопределить определение dbt, установив конфигурацию `concurrent_batches` в `false` в вашем файле `dbt_project.yml` или `.sql` файле модели, чтобы указать параллельное или последовательное выполнение, если вы соответствуете следующим условиям: 
+* Вы настроили стратегию инкрементного обновления микропакетов.
+* Вы работаете с кумулятивными метриками или любой логикой, которая зависит от порядка пакетов.
 
-<File name='dbt_project.yml'>
-
-```yaml
-models:
-  my_project:
-    cumulative_metrics_model:
-      +concurrent_batches: false
-```
-</File>
-
-
-<File name='models/my_model.sql'>
-
-```sql
-{{
-  config(
-    materialized='incremental',
-    incremental_strategy='microbatch'
-    concurrent_batches=false
-  )
-}}
-select ...
-
-```
-</File>
-
-
+Установите конфигурацию `concurrent_batches` в `false`, чтобы гарантировать последовательную обработку пакетов. Например

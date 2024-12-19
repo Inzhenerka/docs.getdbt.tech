@@ -1,5 +1,5 @@
 ---
-sidebar_label: "tags"
+sidebar_label: "теги"
 resource_types: all
 datatype: string | [string]
 ---
@@ -7,9 +7,9 @@ datatype: string | [string]
 <Tabs
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Config property', value: 'other-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Свойство конфигурации', value: 'other-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 <TabItem value="project-yaml">
@@ -74,19 +74,19 @@ models:
 
 </Tabs>
 
-## Definition
-Apply a tag (or list of tags) to a resource.
+## Определение
+Примените тег (или список тегов) к ресурсу.
 
-These tags can be used as part of the [resource selection syntax](/reference/node-selection/syntax), when running the following commands:
+Эти теги могут использоваться как часть [синтаксиса выбора ресурсов](/reference/node-selection/syntax) при выполнении следующих команд:
 - `dbt run --select tag:my_tag`
 - `dbt seed --select tag:my_tag`
 - `dbt snapshot --select tag:my_tag`
-- `dbt test --select tag:my_tag` (indirectly runs all tests associated with the models that are tagged)
+- `dbt test --select tag:my_tag` (косвенно запускает все тесты, связанные с моделями, которые имеют теги)
 
-## Examples
-### Use tags to run parts of your project
+## Примеры
+### Используйте теги для запуска частей вашего проекта
 
-Apply tags in your `dbt_project.yml` as a single value or a string:
+Примените теги в вашем `dbt_project.yml` как одно значение или строку:
 
 <File name='dbt_project.yml'>
 
@@ -113,7 +113,7 @@ models:
 
 </File>
 
-You can also apply tags to individual resources using a config block:
+Вы также можете применить теги к отдельным ресурсам, используя блок конфигурации:
 
 <File name='models/staging/stg_payments.sql'>
 
@@ -128,17 +128,17 @@ select ...
 
 </File>
 
-Then, run part of your project like so:
+Затем выполните часть вашего проекта следующим образом:
 
 ```
-# Run all models tagged "daily"
+# Запустите все модели с тегом "daily"
 $ dbt run --select tag:daily
 
-# Run all models tagged "daily", except those that are tagged hourly
+# Запустите все модели с тегом "daily", кроме тех, которые имеют тег hourly
 $ dbt run --select tag:daily --exclude tag:hourly
 ```
 
-### Apply tags to seeds
+### Примените теги к семенам
 
 <File name='dbt_project.yml'>
 
@@ -164,23 +164,23 @@ seeds:
 
 </File>
 
-## Usage notes
+## Примечания по использованию
 
-### Tags are additive
-Tags accumulate hierarchically. The above example would result in:
+### Теги являются аддитивными
+Теги накапливаются иерархически. Приведенный выше пример приведет к следующему:
 
-| Model                            | Tags                                  |
+| Модель                            | Теги                                  |
 | -------------------------------- | ------------------------------------- |
 | models/staging/stg_customers.sql | `contains_pii`, `hourly`              |
 | models/staging/stg_payments.sql  | `contains_pii`, `hourly`, `finance`   |
 | models/marts/dim_customers.sql   | `contains_pii`, `hourly`, `published` |
 | models/metrics/daily_metrics.sql | `contains_pii`, `daily`, `published`  |
 
-### Other resource types
+### Другие типы ресурсов
 
-Tags can also be applied to sources, exposures, and even _specific columns_ in a resource.
-These resources do not yet support the `config` property, so you'll need to specify
-the tags as a top-level key instead.
+Теги также могут применяться к источникам, экспозициям и даже _конкретным столбцам_ в ресурсе.
+Эти ресурсы пока не поддерживают свойство `config`, поэтому вам нужно будет указать
+теги как ключ верхнего уровня.
 
 <File name='models/schema.yml'>
 
@@ -210,7 +210,7 @@ sources:
 
 </File>
 
-In the example above, the `unique` test would be selected by any of these four tags:
+В приведенном выше примере тест `unique` будет выбран любым из этих четырех тегов:
 ```bash
 $ dbt test --select tag:top_level
 $ dbt test --select tag:table_level

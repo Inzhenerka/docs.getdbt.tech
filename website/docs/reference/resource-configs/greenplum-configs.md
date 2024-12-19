@@ -1,26 +1,26 @@
 ---
-title: "Greenplum configurations"
-description: "Greenplum Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Greenplum"
+description: "Конфигурации Greenplum - прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "greenplum-configs"
 ---
 
-## Performance Optimizations
-    
-Tables in Greenplum have powerful optimization configurations to improve query performance:
- 
- - distribution
- - column orientation
- - compression
- - `appendonly` toggle
- - partitions
- 
-Supplying these values as model-level configurations apply the corresponding settings in the generated `CREATE TABLE`(except partitions). Note that these settings will have no effect for models set to `view`.
+## Оптимизация производительности
 
-### Distribution
+Таблицы в Greenplum имеют мощные конфигурации оптимизации для улучшения производительности запросов:
 
-In Greenplum, you can choose a [distribution key](https://gpdb.docs.pivotal.io/6-4/admin_guide/distribution.html), that will be used to sort data by segments. Joining on the partition will become more performant after specifying distribution.
+- распределение
+- ориентация столбцов
+- сжатие
+- переключатель `appendonly`
+- разделы
 
-By default dbt-greenplum distributes data `RANDOMLY`. To implement a distribution key you need to specify the `distributed_by` parameter in model's config:
+Указание этих значений в конфигурациях на уровне модели применяет соответствующие настройки в сгенерированном `CREATE TABLE` (за исключением разделов). Обратите внимание, что эти настройки не будут иметь эффекта для моделей, установленных на `view`.
+
+### Распределение
+
+В Greenplum вы можете выбрать [ключ распределения](https://gpdb.docs.pivotal.io/6-4/admin_guide/distribution.html), который будет использоваться для сортировки данных по сегментам. Присоединение по разделу станет более производительным после указания распределения.
+
+По умолчанию dbt-greenplum распределяет данные `СЛУЧАЙНЫМ ОБРАЗОМ`. Чтобы реализовать ключ распределения, вам нужно указать параметр `distributed_by` в конфигурации модели:
 
 ```sql
 {{
@@ -31,11 +31,10 @@ By default dbt-greenplum distributes data `RANDOMLY`. To implement a distributio
     )
 }}
 
-
 select ...
 ```
 
-Also you can choose `DISTRIBUTED REPLICATED` option:
+Также вы можете выбрать опцию `DISTRIBUTED REPLICATED`:
 
 ```sql
 {{
@@ -46,13 +45,12 @@ Also you can choose `DISTRIBUTED REPLICATED` option:
     )
 }}
 
-
 select ...
 ```
 
-### Column orientation
+### Ориентация столбцов
 
-Greenpum supports two type of [orientation](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic39) row and column:
+Greenplum поддерживает два типа [ориентации](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic39): строковая и столбцовая:
 
 ```sql
 {{
@@ -63,17 +61,16 @@ Greenpum supports two type of [orientation](https://gpdb.docs.pivotal.io/6-6/adm
     )
 }}
 
-
 select ...
 ```
 
-### Compression
+### Сжатие
 
-Compression allows reducing read-write time. Greenplum suggest several [algorithms](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic40) algotihms to compress append-optimized tables:
- - RLE_TYPE(only for column oriented table)
- - ZLIB
- - ZSTD 
- - QUICKLZ
+Сжатие позволяет сократить время чтения и записи. Greenplum предлагает несколько [алгоритмов](https://gpdb.docs.pivotal.io/6-6/admin_guide/ddl/ddl-storage.html#topic40) для сжатия таблиц, оптимизированных для добавления:
+- RLE_TYPE (только для таблиц с колонной ориентацией)
+- ZLIB
+- ZSTD
+- QUICKLZ
 
 ```sql
 {{
@@ -87,29 +84,27 @@ Compression allows reducing read-write time. Greenplum suggest several [algorith
     )
 }}
 
-
 select ...
 ```
 
-As you can see, you can also specify `compresslevel` and `blocksize`.
+Как вы можете видеть, вы также можете указать `compresslevel` и `blocksize`.
 
-### Partition
+### Разделы
 
-Greenplum does not support partitions with `create table as` [construction](https://gpdb.docs.pivotal.io/6-9/ref_guide/sql_commands/CREATE_TABLE_AS.html), so you need to build model in two steps
-    
-1. create table schema
-2. insert data
+Greenplum не поддерживает разделы с помощью [конструкции](https://gpdb.docs.pivotal.io/6-9/ref_guide/sql_commands/CREATE_TABLE_AS.html) `create table as`, поэтому вам нужно построить модель в два этапа:
 
-To implement partitions into your dbt-model you need to specify the following config parameters:
- - `fields_string` - definition of columns name, type and constraints
- - `raw_partition` - partition specification 
+1. создать схему таблицы
+2. вставить данные
+
+Чтобы реализовать разделы в вашей модели dbt, вам нужно указать следующие параметры конфигурации:
+- `fields_string` - определение имен столбцов, типов и ограничений
+- `raw_partition` - спецификация раздела
 
 ```sql
 {% set fields_string %}
     some_filed int4 null,
     date_field timestamp NULL
 {% endset %}
-
 
 {% set raw_partition %}
    PARTITION BY RANGE (date_field)

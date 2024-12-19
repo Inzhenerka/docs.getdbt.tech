@@ -1,24 +1,24 @@
 ---
-title: "Input for unit tests"
-sidebar_label: "Input"
+title: "Входные данные для модульных тестов"
+sidebar_label: "Входные данные"
 ---
 
-Use inputs in your unit tests to reference a specific model or source for the test:
+Используйте входные данные в ваших модульных тестах для ссылки на конкретную модель или источник для теста:
 
--  For `input:`, use a string that represents a `ref` or `source` call:
-    - `ref('my_model')` or `ref('my_model', v='2')` or `ref('dougs_project', 'users')`
+- Для `input:` используйте строку, которая представляет вызов `ref` или `source`:
+    - `ref('my_model')` или `ref('my_model', v='2')` или `ref('dougs_project', 'users')`
     - `source('source_schema', 'source_name')`
-- Optionally use for seeds:
-    - If you don’t supply an input for a seed, we will use the seed _as_ the input.
-    - If you do supply an input for a seed, we will use that input instead.
-- Use “empty” inputs by setting rows to an empty list `rows: []`
+- При желании используйте для семян:
+    - Если вы не предоставите входные данные для семени, мы будем использовать семя _как_ входные данные.
+    - Если вы предоставите входные данные для семени, мы будем использовать эти входные данные вместо этого.
+- Используйте "пустые" входные данные, установив строки в пустой список `rows: []`
 
 ```yml
 
 unit_tests:
-  - name: test_is_valid_email_address # this is the unique name of the test
-    model: dim_customers # name of the model I'm unit testing
-    given: # the mock data for your inputs
+  - name: test_is_valid_email_address # это уникальное имя теста
+    model: dim_customers # имя модели, которую я тестирую
+    given: # макет данных для ваших входных данных
       - input: ref('stg_customers')
         rows:
          - {email: cool@example.com,     email_top_level_domain: example.com}

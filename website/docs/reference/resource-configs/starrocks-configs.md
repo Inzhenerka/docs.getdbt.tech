@@ -1,20 +1,20 @@
 ---
-title: "Starrocks configurations"
+title: "Конфигурации Starrocks"
 id: "starrocks-configs"
-description: "Starrocks Configurations - Read this in-depth guide to learn about configurations in dbt."
+description: "Конфигурации Starrocks - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
-## Model Configuration
+## Конфигурация модели
 
-A dbt model can be configured using the following syntax:
+Модель dbt может быть настроена с использованием следующего синтаксиса:
 
 <Tabs
   groupId="config-fact"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -25,15 +25,15 @@ A dbt model can be configured using the following syntax:
 ```yaml
 models:
   <resource-path>:
-    materialized: table       // table or view or materialized_view
+    materialized: table       // table или view или materialized_view
     keys: ['id', 'name', 'some_date']
-    table_type: 'PRIMARY'     // PRIMARY or DUPLICATE or UNIQUE
+    table_type: 'PRIMARY'     // PRIMARY или DUPLICATE или UNIQUE
     distributed_by: ['id']
-    buckets: 3                // default 10
+    buckets: 3                // по умолчанию 10
     partition_by: ['some_date']
     partition_by_init: ["PARTITION p1 VALUES [('1971-01-01 00:00:00'), ('1991-01-01 00:00:00')),PARTITION p1972 VALUES [('1991-01-01 00:00:00'), ('1999-01-01 00:00:00'))"]
     properties: [{"replication_num":"1", "in_memory": "true"}]
-    refresh_method: 'async' // only for materialized view default manual
+    refresh_method: 'async' // только для materialized view, по умолчанию manual
 ```
 
 </File>
@@ -46,15 +46,15 @@ models:
 models:
   - name: <model-name>
     config:
-      materialized: table       // table or view or materialized_view
+      materialized: table       // table или view или materialized_view
       keys: ['id', 'name', 'some_date']
-      table_type: 'PRIMARY'     // PRIMARY or DUPLICATE or UNIQUE
+      table_type: 'PRIMARY'     // PRIMARY или DUPLICATE или UNIQUE
       distributed_by: ['id']
-      buckets: 3                // default 10
+      buckets: 3                // по умолчанию 10
       partition_by: ['some_date']
       partition_by_init: ["PARTITION p1 VALUES [('1971-01-01 00:00:00'), ('1991-01-01 00:00:00')),PARTITION p1972 VALUES [('1991-01-01 00:00:00'), ('1999-01-01 00:00:00'))"]
       properties: [{"replication_num":"1", "in_memory": "true"}]
-      refresh_method: 'async' // only for materialized view default manual
+      refresh_method: 'async' // только для materialized view, по умолчанию manual
 ```
 
 </File>
@@ -78,22 +78,22 @@ models:
 </TabItem>
 </Tabs>
 
-### Configuration Description
+### Описание конфигурации
 
-| Option              | Description                                                                                                                                                                                  |
+| Опция               | Описание                                                                                                                                                                                  |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `materialized`      | How the model will be materialized into Starrocks. Supports view, table, incremental, ephemeral, and materialized_view.                                                                      |
-| `keys`              | Which columns serve as keys.                                                                                                                                                                 |
-| `table_type`        | Table type, supported are PRIMARY or DUPLICATE or UNIQUE.                                                                                                                                    |
-| `distributed_by`    | Specifies the column of data distribution. If not specified, it defaults to random.                                                                                                          |
-| `buckets`           | The bucket number in one partition. If not specified, it will be automatically inferred.                                                                                                     |
-| `partition_by`      | The partition column list.                                                                                                                                                                   |
-| `partition_by_init` | The partition rule or some real partitions item.                                                                                                                                             |
-| `properties`        | The table properties configuration of Starrocks. ([Starrocks table properties](https://docs.starrocks.io/en-us/latest/sql-reference/sql-statements/data-definition/CREATE_TABLE#properties)) |
-| `refresh_method`    | How to refresh materialized views.                                                                                                                                                           |
+| `materialized`      | Как модель будет материализована в Starrocks. Поддерживаются view, table, incremental, ephemeral и materialized_view.                                                                      |
+| `keys`              | Какие столбцы служат ключами.                                                                                                                                                                 |
+| `table_type`        | Тип таблицы, поддерживаемые значения: PRIMARY, DUPLICATE или UNIQUE.                                                                                                                                    |
+| `distributed_by`    | Указывает столбец для распределения данных. Если не указано, по умолчанию используется случайное распределение.                                                                                                          |
+| `buckets`           | Количество бакетов в одной партиции. Если не указано, будет автоматически определено.                                                                                                     |
+| `partition_by`      | Список столбцов для партиционирования.                                                                                                                                                                   |
+| `partition_by_init` | Правило партиционирования или некоторые реальные элементы партиционирования.                                                                                                                                             |
+| `properties`        | Конфигурация свойств таблицы Starrocks. ([Свойства таблицы Starrocks](https://docs.starrocks.io/en-us/latest/sql-reference/sql-statements/data-definition/CREATE_TABLE#properties)) |
+| `refresh_method`    | Как обновлять материализованные представления.                                                                                                                                                           |
 
-## Read From Catalog
-First you need to add this catalog to starrocks. The following is an example of hive.
+## Чтение из каталога
+Сначала вам нужно добавить этот каталог в Starrocks. Следующий пример относится к Hive.
 
 ```sql
 CREATE EXTERNAL CATALOG `hive_catalog`
@@ -102,7 +102,7 @@ PROPERTIES (
     "type"="hive"
 );
 ```
-How to add other types of catalogs can be found in the documentation. [Catalog Overview](https://docs.starrocks.io/en-us/latest/data_source/catalog/catalog_overview) Then write the sources.yaml file.
+Как добавить другие типы каталогов можно найти в документации. [Обзор каталогов](https://docs.starrocks.io/en-us/latest/data_source/catalog/catalog_overview) Затем напишите файл sources.yaml.
 ```yaml
 sources:
   - name: external_example
@@ -110,7 +110,7 @@ sources:
     tables:
       - name: hive_table_name
 ```
-Finally, you might use below marco quote
+Наконец, вы можете использовать следующий макрос:
 ```jinja
 {{ source('external_example', 'hive_table_name') }}
 ```

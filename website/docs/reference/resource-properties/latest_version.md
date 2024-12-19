@@ -17,26 +17,26 @@ models:
 
 </File>
 
-## Definition
+## Определение
 
-The latest version of this model. The "latest" version is relevant for:
-1. Resolving `ref()` calls to this model that are "unpinned" (a version is not explicitly specified)
-2. Selecting model versions using the [`version:` selection method](/reference/node-selection/methods#version), based on whether a given model version is `latest`, `prerelease`, or `old`
+Последняя версия этой модели. "Последняя" версия актуальна для:
+1. Разрешения вызовов `ref()` к этой модели, которые "не зафиксированы" (версия не указана явно)
+2. Выбора версий модели с использованием метода выбора [`version:`](/reference/node-selection/methods#version), в зависимости от того, является ли данная версия модели `latest`, `prerelease` или `old`
 
-This value can be a string or a numeric (integer or float) value. It must be one of the [version identifiers](/reference/resource-properties/versions#v) specified in this model's list of `versions`.
+Это значение может быть строковым или числовым (целым или дробным) значением. Оно должно быть одним из [идентификаторов версий](/reference/resource-properties/versions#v), указанных в списке `versions` этой модели.
 
-To run the latest version of a model, you can use the [`--select` flag](/reference/node-selection/syntax). Refer to [Model versions](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) for more information and syntax.
+Чтобы запустить последнюю версию модели, вы можете использовать флаг [`--select`](/reference/node-selection/syntax). Смотрите [Версии моделей](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) для получения дополнительной информации и синтаксиса.
 
-## Default
+## По умолчанию
 
-If not specified for a versioned model, `latest_version` defaults to the largest [version identifier](/reference/resource-properties/versions#v): numerically greatest (if all version identifiers are numeric), otherwise the alphabetically last (if they are strings).
+Если не указано для модели с версиями, `latest_version` по умолчанию устанавливается на наибольший [идентификатор версии](/reference/resource-properties/versions#v): численно наибольший (если все идентификаторы версий числовые), в противном случае - последний в алфавитном порядке (если они строковые).
 
-For a non-versioned model (no `versions` list), `latest_version` has no value.
+Для модели без версий (без списка `versions`) `latest_version` не имеет значения.
 
-If `latest_version` is not specified for a versioned model, `latest_version` defaults to the largest.
+Если `latest_version` не указано для модели с версиями, `latest_version` по умолчанию устанавливается на наибольший.
 
 
-## Example
+## Пример
 
 <File name='models/<schema>.yml'>
 
@@ -51,7 +51,7 @@ models:
 
 </File>
 
-If `latest_version` is not specified, the `latest_version` is `3`. Any unpinned references -- `ref('model_name')` -- will resolve to `model_name.v3`. Both `v1` and `v2` are considered "old" versions.
+Если `latest_version` не указано, то `latest_version` равна `3`. Любые не зафиксированные ссылки -- `ref('model_name')` -- будут разрешены в `model_name.v3`. Оба `v1` и `v2` считаются "старыми" версиями.
 
 <File name='models/<schema>.yml'>
 
@@ -67,4 +67,4 @@ models:
 
 </File>
 
-In this case, the `latest_version` is explicitly set to `2`. Any unpinned references will resolve to `model_name.v2`. `v3` is considered "prerelease", and `v1` is considered "old".
+В этом случае `latest_version` явно установлена в `2`. Любые не зафиксированные ссылки будут разрешены в `model_name.v2`. `v3` считается "предрелизной", а `v1` считается "старой".

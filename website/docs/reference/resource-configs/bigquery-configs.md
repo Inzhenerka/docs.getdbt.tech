@@ -1,37 +1,31 @@
 ---
-title: "BigQuery configurations"
-description: "Read this guide to understand BigQuery configurations in dbt."
+title: "Конфигурации BigQuery"
+description: "Прочитайте это руководство, чтобы понять конфигурации BigQuery в dbt."
 id: "bigquery-configs"
 ---
 
-<!----
-To-do:
-- use the reference doc structure for this article/split into separate articles
---->
+## Использование `project` и `dataset` в конфигурациях
 
-## Use `project` and `dataset` in configurations
+- `schema` является взаимозаменяемым с концепцией `dataset` в BigQuery.
+- `database` является взаимозаменяемым с концепцией `project` в BigQuery.
 
-- `schema` is interchangeable with the BigQuery concept `dataset`
-- `database` is interchangeable with the BigQuery concept of `project`
+В нашей справочной документации вы можете объявить `project` вместо `database`. Это позволит вам читать и записывать данные из нескольких проектов BigQuery. То же самое касается `dataset`.
 
-For our reference documentation, you can declare `project` in place of `database.` 
-This will allow you to read and write from multiple BigQuery projects. Same for `dataset`.
+## Использование партиционирования и кластеризации таблиц
 
-## Using table partitioning and clustering
+### Клаузула партиционирования
 
-### Partition clause
+BigQuery поддерживает использование [клаузулы partition by](https://cloud.google.com/bigquery/docs/data-definition-language#specifying_table_partitioning_options) для легкого партиционирования <Term id="table" /> по столбцу или выражению. Эта опция может помочь уменьшить задержку и стоимость при запросах к большим таблицам. Обратите внимание, что обрезка партиций [работает только](https://cloud.google.com/bigquery/docs/querying-partitioned-tables#use_a_constant_filter_expression) при фильтрации партиций с использованием литералов (поэтому выбор партиций с использованием <Term id="subquery" /> не улучшит производительность).
 
-BigQuery supports the use of a [partition by](https://cloud.google.com/bigquery/docs/data-definition-language#specifying_table_partitioning_options) clause to easily partition a <Term id="table" /> by a column or expression. This option can help decrease latency and cost when querying large tables. Note that partition pruning [only works](https://cloud.google.com/bigquery/docs/querying-partitioned-tables#use_a_constant_filter_expression) when partitions are filtered using literal values (so selecting partitions using a <Term id="subquery" /> won't improve performance).
-
-The `partition_by` config can be supplied as a dictionary with the following format:
+Конфигурация `partition_by` может быть предоставлена в виде словаря со следующим форматом:
 
 ```python
 {
-  "field": "<field name>",
+  "field": "<имя поля>",
   "data_type": "<timestamp | date | datetime | int64>",
   "granularity": "<hour | day | month | year>"
 
-  # Only required if data_type is "int64"
+  # Обязательно, если data_type - "int64"
   "range": {
     "start": <int>,
     "end": <int>,
@@ -40,18 +34,17 @@ The `partition_by` config can be supplied as a dictionary with the following for
 }
 ```
 
-#### Partitioning by a date or timestamp
+#### Партиционирование по дате или временной метке
 
-When using a `datetime` or `timestamp` column to partition data, you can create partitions with a granularity of hour, day, month, or year. A `date` column supports granularity of day, month and year. Daily partitioning is the default for all column types.
+При использовании столбца `datetime` или `timestamp` для партиционирования данных вы можете создавать партиции с гранулярностью в час, день, месяц или год. Столбец `date` поддерживает гранулярность в день, месяц и год. Ежедневное партиционирование является значением по умолчанию для всех типов столбцов.
 
-If the `data_type` is specified as a `date` and the granularity is day, dbt will supply the field as-is
-when configuring table partitioning.
+Если `data_type` указан как `date`, а гранулярность - день, dbt будет предоставлять поле как есть при конфигурировании партиционирования таблицы.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Compiled code', value: 'compiled', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Скомпилированный код', value: 'compiled', },
   ]
 }>
 <TabItem value="source">
@@ -103,17 +96,17 @@ as (
 </TabItem>
 </Tabs>
 
-#### Partitioning by an "ingestion" date or timestamp
+#### Партиционирование по дате или временной метке "ингеста"
 
-BigQuery supports an [older mechanism of partitioning](https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time) based on the time when each row was ingested. While we recommend using the newer and more ergonomic approach to partitioning whenever possible, for very large datasets, there can be some performance improvements to using this older, more mechanistic approach. [Read more about the `insert_overwrite` incremental strategy below](#copying-ingestion-time-partitions).
+BigQuery поддерживает [старый механизм партиционирования](https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time), основанный на времени, когда каждая строка была загружена. Хотя мы рекомендуем использовать более новый и удобный подход к партиционированию, когда это возможно, для очень больших наборов данных могут быть некоторые улучшения производительности при использовании этого старого, более механистического подхода. [Читать больше о стратегии инкрементного обновления `insert_overwrite` ниже](#copying-ingestion-time-partitions).
 
-dbt will always instruct BigQuery to partition your table by the values of the column specified in `partition_by.field`. By configuring your model with `partition_by.time_ingestion_partitioning` set to `True`, dbt will use that column as the input to a `_PARTITIONTIME` pseudocolumn. Unlike with newer column-based partitioning, you must ensure that the values of your partitioning column match exactly the time-based granularity of your partitions.
+dbt всегда будет указывать BigQuery партиционировать вашу таблицу по значениям столбца, указанного в `partition_by.field`. Настроив вашу модель с `partition_by.time_ingestion_partitioning`, установленным в `True`, dbt будет использовать этот столбец в качестве входа для псевдостолбца `_PARTITIONTIME`. В отличие от более новых подходов к партиционированию по столбцам, вы должны убедиться, что значения вашего столбца партиционирования точно соответствуют временной гранулярности ваших партиций.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Compiled code', value: 'compiled', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Скомпилированный код', value: 'compiled', },
   ]
 }>
 <TabItem value="source">
@@ -135,7 +128,7 @@ select
   user_id,
   event_name,
   created_at,
-  -- values of this column must match the data type + granularity defined above
+  -- значения этого столбца должны соответствовать типу данных + гранулярности, определенной выше
   timestamp_trunc(created_at, day) as created_date
 
 from {{ ref('events') }}
@@ -158,7 +151,7 @@ select created_date as _partitiontime, * EXCEPT(created_date) from (
       user_id,
       event_name,
       created_at,
-      -- values of this column must match granularity defined above
+      -- значения этого столбца должны соответствовать гранулярности, определенной выше
       timestamp_trunc(created_at, day) as created_date
 
     from `projectname`.`analytics`.`events`
@@ -170,17 +163,15 @@ select created_date as _partitiontime, * EXCEPT(created_date) from (
 </TabItem>
 </Tabs>
 
-#### Partitioning with integer buckets
+#### Партиционирование с помощью целочисленных бакетов
 
-If the `data_type` is specified as `int64`, then a `range` key must also
-be provided in the `partition_by` dict. dbt will use the values provided in
-the `range` dict to generate the partitioning clause for the table.
+Если `data_type` указан как `int64`, то ключ `range` также должен быть предоставлен в словаре `partition_by`. dbt будет использовать значения, предоставленные в словаре `range`, для генерации клаузулы партиционирования для таблицы.
 
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Compiled code', value: 'compiled', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Скомпилированный код', value: 'compiled', },
   ]
 }>
 <TabItem value="source">
@@ -239,13 +230,13 @@ as (
 </TabItem>
 </Tabs>
 
-#### Additional partition configs
+#### Дополнительные конфигурации партиционирования
 
-If your model has `partition_by` configured, you may optionally specify two additional configurations:
+Если ваша модель имеет настроенное `partition_by`, вы можете дополнительно указать две конфигурации:
 
-- `require_partition_filter` (boolean): If set to `true`, anyone querying this model _must_ specify a partition filter, otherwise their query will fail. This is recommended for very large tables with obvious partitioning schemes, such as event streams grouped by day. Note that this will affect other dbt models or tests that try to select from this model, too.
+- `require_partition_filter` (логическое): Если установлено в `true`, любой, кто запрашивает эту модель, _должен_ указать фильтр партиции, в противном случае их запрос завершится неудачей. Это рекомендуется для очень больших таблиц с очевидными схемами партиционирования, такими как потоки событий, сгруппированные по дням. Обратите внимание, что это повлияет и на другие модели dbt или тесты, которые пытаются выбрать из этой модели.
 
-- `partition_expiration_days` (integer): If set for date- or timestamp-type partitions, the partition will expire that many days after the date it represents. E.g. A partition representing `2021-01-01`, set to expire after 7 days, will no longer be queryable as of `2021-01-08`, its storage costs zeroed out, and its contents will eventually be deleted. Note that [table expiration](#controlling-table-expiration) will take precedence if specified.
+- `partition_expiration_days` (целое): Если установлено для партиций типа даты или временной метки, партиция истечет через указанное количество дней после даты, которую она представляет. Например, партиция, представляющая `2021-01-01`, установленная на истечение через 7 дней, больше не будет доступна для запросов с `2021-01-08`, ее стоимость хранения будет обнулена, и ее содержимое в конечном итоге будет удалено. Обратите внимание, что [истечение таблицы](#controlling-table-expiration) будет иметь приоритет, если оно указано.
 
 <File name='bigquery_table.sql'>
 
@@ -265,11 +256,11 @@ If your model has `partition_by` configured, you may optionally specify two addi
 
 </File>
 
-### Clustering clause
+### Клаузула кластеризации
 
-BigQuery tables can be [clustered](https://cloud.google.com/bigquery/docs/clustered-tables) to colocate related data.
+Таблицы BigQuery могут быть [кластеризованы](https://cloud.google.com/bigquery/docs/clustered-tables) для совместного размещения связанных данных.
 
-Clustering on a single column:
+Кластеризация по одному столбцу:
 
 <File name='bigquery_table.sql'>
 
@@ -286,7 +277,7 @@ select * from ...
 
 </File>
 
-Clustering on multiple columns:
+Кластеризация по нескольким столбцам:
 
 <File name='bigquery_table.sql'>
 
@@ -303,13 +294,13 @@ select * from ...
 
 </File>
 
-## Managing KMS encryption
+## Управление шифрованием KMS
 
-[Customer managed encryption keys](https://cloud.google.com/bigquery/docs/customer-managed-encryption) can be configured for BigQuery tables using the `kms_key_name` model configuration.
+[Управляемые клиентом ключи шифрования](https://cloud.google.com/bigquery/docs/customer-managed-encryption) могут быть настроены для таблиц BigQuery с использованием конфигурации модели `kms_key_name`.
 
-### Using KMS encryption
+### Использование шифрования KMS
 
-To specify the KMS key name for a model (or a group of models), use the `kms_key_name` model configuration. The following example sets the `kms_key_name` for all of the models in the `encrypted/` directory of your dbt project.
+Чтобы указать имя ключа KMS для модели (или группы моделей), используйте конфигурацию модели `kms_key_name`. В следующем примере устанавливается `kms_key_name` для всех моделей в каталоге `encrypted/` вашего проекта dbt.
 
 <File name='dbt_project.yml'>
 
@@ -328,17 +319,17 @@ models:
 
 </File>
 
-## Labels and tags
+## Метки и теги
 
-### Specifying labels
+### Указание меток
 
-dbt supports the specification of BigQuery labels for the tables and <Term id="view">views</Term> that it creates. These labels can be specified using the `labels` model config.
+dbt поддерживает указание меток BigQuery для таблиц и <Term id="view">представлений</Term>, которые он создает. Эти метки могут быть указаны с помощью конфигурации модели `labels`.
 
-The `labels` config can be provided in a model config, or in the `dbt_project.yml` file, as shown below.
-  
-  BigQuery key-value pair entries for labels larger than 63 characters are truncated.
+Конфигурация `labels` может быть предоставлена в конфигурации модели или в файле `dbt_project.yml`, как показано ниже.
 
-**Configuring labels in a model file**
+Метки в виде пар ключ-значение, превышающие 63 символа, будут обрезаны.
+
+**Конфигурирование меток в файле модели**
 
 <File name='model.sql'>
 
@@ -355,7 +346,7 @@ select * from {{ ref('another_model') }}
 
 </File>
 
-**Configuring labels in dbt_project.yml**
+**Конфигурирование меток в dbt_project.yml**
 
 <File name='dbt_project.yml'>
 
@@ -373,10 +364,10 @@ models:
 
 </File>
 
-<Lightbox src="/img/docs/building-a-dbt-project/building-models/73eaa8a-Screen_Shot_2020-01-20_at_12.12.54_PM.png" title="Viewing labels in the BigQuery console"/>
+<Lightbox src="/img/docs/building-a-dbt-project/building-models/73eaa8a-Screen_Shot_2020-01-20_at_12.12.54_PM.png" title="Просмотр меток в консоли BigQuery"/>
 
-### Specifying tags
-BigQuery table and view *tags* can be created by supplying an empty string for the label value.
+### Указание тегов
+Теги таблиц и представлений BigQuery могут быть созданы, предоставив пустую строку для значения метки.
 
 <File name='model.sql'>
 
@@ -393,16 +384,16 @@ select * from {{ ref('another_model') }}
 
 </File>
 
-You can create a new label with no value or remove a value from an existing label key. 
+Вы можете создать новую метку без значения или удалить значение из существующего ключа метки.
 
-A label with a key that has an empty value can also be [referred](https://cloud.google.com/bigquery/docs/adding-labels#adding_a_label_without_a_value) to as a tag in BigQuery. However, this should not be confused with a [tag resource](https://cloud.google.com/bigquery/docs/tags), which conditionally applies IAM policies to BigQuery tables and datasets. Find out more in [labels and tags](https://cloud.google.com/resource-manager/docs/tags/tags-overview). 
+Метка с ключом, имеющим пустое значение, также может быть [упомянута](https://cloud.google.com/bigquery/docs/adding-labels#adding_a_label_without_a_value) как тег в BigQuery. Однако это не следует путать с [ресурсом тегов](https://cloud.google.com/bigquery/docs/tags), который условно применяет IAM-политики к таблицам и наборам данных BigQuery. Узнайте больше в [метках и тегах](https://cloud.google.com/resource-manager/docs/tags/tags-overview).
 
-Currently, it's not possible to apply IAM tags in BigQuery, however, you can weigh in by upvoting [GitHub issue 1134](https://github.com/dbt-labs/dbt-bigquery/issues/1134).
+В настоящее время невозможно применять IAM-теги в BigQuery, однако вы можете высказать свое мнение, проголосовав за [проблему на GitHub 1134](https://github.com/dbt-labs/dbt-bigquery/issues/1134).
 
-### Policy tags
-BigQuery enables [column-level security](https://cloud.google.com/bigquery/docs/column-level-security-intro) by setting [policy tags](https://cloud.google.com/bigquery/docs/best-practices-policy-tags) on specific columns.
+### Политические теги
+BigQuery позволяет устанавливать [безопасность на уровне столбцов](https://cloud.google.com/bigquery/docs/column-level-security-intro) с помощью установки [политических тегов](https://cloud.google.com/bigquery/docs/best-practices-policy-tags) на определенные столбцы.
 
-dbt enables this feature as a column resource property, `policy_tags` (_not_ a node config).
+dbt включает эту функцию как свойство ресурса столбца `policy_tags` (не конфигурация узла).
 
 <File name='models/<filename>.yml'>
 
@@ -419,29 +410,25 @@ models:
 
 </File>
 
-Please note that in order for policy tags to take effect, [column-level `persist_docs`](/reference/resource-configs/persist_docs) must be enabled for the model, seed, or snapshot. Consider using [variables](/docs/build/project-variables) to manage taxonomies and make sure to add the required security [roles](https://cloud.google.com/bigquery/docs/column-level-security-intro#roles) to your BigQuery service account key.
+Обратите внимание, что для того чтобы политические теги вступили в силу, [документация на уровне столбцов](/reference/resource-configs/persist_docs) должна быть включена для модели, семени или снимка. Рассмотрите возможность использования [переменных](/docs/build/project-variables) для управления таксономиями и убедитесь, что вы добавили необходимые [роли](https://cloud.google.com/bigquery/docs/column-level-security-intro#roles) к ключу службы BigQuery.
 
-## Merge behavior (incremental models)
+## Поведение слияния (инкрементальные модели)
 
-The [`incremental_strategy` config](/docs/build/incremental-strategy) controls how dbt builds incremental models. dbt uses a [merge statement](https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax) on BigQuery to refresh incremental tables.
+Конфигурация [`incremental_strategy`](/docs/build/incremental-strategy) управляет тем, как dbt строит инкрементальные модели. dbt использует [оператор merge](https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax) в BigQuery для обновления инкрементальных таблиц.
 
-The `incremental_strategy` config can be set to one of the following values:
-- `merge` (default)
+Конфигурация `incremental_strategy` может быть установлена на одно из следующих значений:
+- `merge` (по умолчанию)
 - `insert_overwrite`
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-### Performance and cost
+### Производительность и стоимость
 
-The operations performed by dbt while building a BigQuery incremental model can
-be made cheaper and faster by using a [clustering clause](#clustering-clause) in your
-model configuration. See [this guide](https://discourse.getdbt.com/t/benchmarking-incremental-strategies-on-bigquery/981) for more information on performance tuning for BigQuery incremental models.
+Операции, выполняемые dbt при построении инкремальной модели BigQuery, могут быть сделаны дешевле и быстрее с помощью [клаузулы кластеризации](#clustering-clause) в конфигурации вашей модели. См. [это руководство](https://discourse.getdbt.com/t/benchmarking-incremental-strategies-on-bigquery/981) для получения дополнительной информации о настройке производительности для инкремальных моделей BigQuery.
 
-**Note:** These performance and cost benefits are applicable to incremental models
-built with either the `merge` or the `insert_overwrite` incremental strategy.
+**Примечание:** Эти преимущества производительности и стоимости применимы к инкрементальным моделям, построенным как с помощью стратегии `merge`, так и с помощью стратегии `insert_overwrite`.
 
-### The `merge` strategy
- The `merge` incremental strategy will generate a `merge` statement that looks
- something like:
+### Стратегия `merge`
+Стратегия инкрементального обновления `merge` сгенерирует оператор `merge`, который будет выглядеть примерно так:
 
 ```merge
 merge into {{ destination_table }} DEST
@@ -452,29 +439,24 @@ when matched then update ...
 when not matched then insert ...
 ```
 
-The 'merge' approach automatically updates new data in the destination incremental table but requires scanning all source tables referenced in the model SQL, as well as destination tables. This can be slow and expensive for large data volumes. [Partitioning and clustering](#using-table-partitioning-and-clustering) techniques mentioned earlier can help mitigate these issues.
+Подход "слияния" автоматически обновляет новые данные в целевой инкрементальной таблице, но требует сканирования всех исходных таблиц, упомянутых в SQL модели, а также целевых таблиц. Это может быть медленным и дорогим для больших объемов данных. Упомянутые ранее [техники партиционирования и кластеризации](#using-table-partitioning-and-clustering) могут помочь смягчить эти проблемы.
 
-**Note:** The `unique_key` configuration is required when the `merge` incremental
-strategy is selected.
+**Примечание:** Конфигурация `unique_key` обязательна при выборе стратегии инкрементального обновления `merge`.
 
-### The `insert_overwrite` strategy
+### Стратегия `insert_overwrite`
 
-The `insert_overwrite` strategy generates a merge statement that replaces entire partitions
-in the destination table. **Note:** this configuration requires that the model is configured
-with a [Partition clause](#partition-clause). The `merge` statement that dbt generates
-when the `insert_overwrite` strategy is selected looks something like:
+Стратегия `insert_overwrite` генерирует оператор merge, который заменяет целые партиции в целевой таблице. **Примечание:** эта конфигурация требует, чтобы модель была настроена с [клаузой партиционирования](#partition-clause). Оператор `merge`, который dbt генерирует при выборе стратегии `insert_overwrite`, выглядит примерно так:
 
 ```sql
 /*
-  Create a temporary table from the model SQL
+  Создание временной таблицы из SQL модели
 */
 create temporary table {{ model_name }}__dbt_tmp as (
   {{ model_sql }}
 );
 
 /*
-  If applicable, determine the partitions to overwrite by
-  querying the temp table.
+  Если применимо, определите партиции для замены, запрашивая временную таблицу.
 */
 
 declare dbt_partitions_for_replacement array<date>;
@@ -485,8 +467,8 @@ set (dbt_partitions_for_replacement) = (
 );
 
 /*
-  Overwrite partitions in the destination table which match
-  the partitions in the temporary table
+  Замените партиции в целевой таблице, которые соответствуют
+  партициям во временной таблице
 */
 merge into {{ destination_table }} DEST
 using {{ model_name }}__dbt_tmp SRC
@@ -498,20 +480,17 @@ then delete
 when not matched then insert ...
 ```
 
-For a complete writeup on the mechanics of this approach, see
-[this explainer post](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982).
+Для полного описания механики этого подхода смотрите [этот пост-объяснитель](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982).
 
-#### Determining partitions to overwrite
+#### Определение партиций для замены
 
-dbt is able to determine the partitions to overwrite dynamically from the values
-present in the temporary table, or statically using a user-supplied configuration.
+dbt может динамически определять партиции для замены из значений, присутствующих во временной таблице, или статически, используя конфигурацию, предоставленную пользователем.
 
-The "dynamic" approach is simplest (and the default), but the "static" approach
-will reduce costs by eliminating multiple queries in the model build script.
+"Динамический" подход является самым простым (и значением по умолчанию), но "статический" подход снизит затраты, устранив несколько запросов в скрипте сборки модели.
 
-#### Static partitions
+#### Статические партиции
 
-To supply a static list of partitions to overwrite, use the `partitions` configuration.
+Чтобы предоставить статический список партиций для замены, используйте конфигурацию `partitions`.
 
 <File name="models/session.sql">
 
@@ -535,39 +514,32 @@ with events as (
     select * from {{ref('events')}}
 
     {% if is_incremental() %}
-        -- recalculate yesterday + today
+        -- пересчитать вчера + сегодня
         where timestamp_trunc(event_timestamp, day) in ({{ partitions_to_replace | join(',') }})
     {% endif %}
 
 ),
 
-... rest of model ...
+... остальная часть модели ...
 ```
 
 </File>
 
-This example model serves to replace the data in the destination table for both
-_today_ and _yesterday_ every day that it is run. It is the fastest and cheapest
-way to incrementally update a table using dbt. If we wanted this to run more dynamically—
-let’s say, always for the past 3 days—we could leverage dbt’s baked-in [datetime macros](https://github.com/dbt-labs/dbt-core/blob/dev/octavius-catto/core/dbt/include/global_project/macros/etc/datetime.sql) and write a few of our own.
+Эта модель служит для замены данных в целевой таблице как для _сегодня_, так и для _вчера_ каждый раз, когда она выполняется. Это самый быстрый и дешевый способ инкрементально обновить таблицу с помощью dbt. Если бы мы хотели, чтобы это выполнялось более динамично — скажем, всегда за последние 3 дня — мы могли бы использовать встроенные [макросы datetime](https://github.com/dbt-labs/dbt-core/blob/dev/octavius-catto/core/dbt/include/global_project/macros/etc/datetime.sql) dbt и написать несколько своих.
 
-Think of this as "full control" mode. You must ensure that expressions or literal values in the the `partitions` config have proper quoting when templated, and that they match the `partition_by.data_type` (`timestamp`, `datetime`, `date`, or `int64`). Otherwise, the filter in the incremental `merge` statement will raise an error.
+Думайте об этом как о режиме "полного контроля". Вы должны убедиться, что выражения или литералы в конфигурации `partitions` имеют правильные кавычки при шаблонизации и что они соответствуют `partition_by.data_type` (`timestamp`, `datetime`, `date` или `int64`). В противном случае фильтр в инкрементальном операторе `merge` вызовет ошибку.
 
-#### Dynamic partitions
+#### Динамические партиции
 
-If no `partitions` configuration is provided, dbt will instead:
+Если конфигурация `partitions` не предоставлена, dbt вместо этого:
 
-1. Create a temporary table for your model SQL
-2. Query the temporary table to find the distinct partitions to be overwritten
-3. Query the destination table to find the _max_ partition in the database
+1. Создает временную таблицу для вашего SQL модели
+2. Запрашивает временную таблицу, чтобы найти уникальные партиции, которые нужно заменить
+3. Запрашивает целевую таблицу, чтобы найти _максимальную_ партицию в базе данных
 
-When building your model SQL, you can take advantage of the introspection performed
-by dbt to filter for only _new_ data. The maximum value in the partitioned field in the destination table
-will be available using the `_dbt_max_partition` BigQuery scripting variable. **Note:**
-this is a BigQuery SQL variable, not a dbt Jinja variable, so no jinja brackets are
-required to access this variable.
+При построении вашего SQL модели вы можете воспользоваться интроспекцией, выполняемой dbt, чтобы фильтровать только _новые_ данные. Максимальное значение в поле партиционирования в целевой таблице будет доступно с использованием переменной скрипта BigQuery `_dbt_max_partition`. **Примечание:** это переменная SQL BigQuery, а не переменная Jinja dbt, поэтому для доступа к этой переменной не требуются фигурные скобки jinja.
 
-**Example model SQL:**
+**Пример SQL модели:**
 
 ```sql
 {{
@@ -584,22 +556,22 @@ with events as (
 
   {% if is_incremental() %}
 
-    -- recalculate latest day's data + previous
-    -- NOTE: The _dbt_max_partition variable is used to introspect the destination table
+    -- пересчитать данные последнего дня + предыдущие
+    -- ПРИМЕЧАНИЕ: Переменная _dbt_max_partition используется для интроспекции целевой таблицы
     where date(event_timestamp) >= date_sub(date(_dbt_max_partition), interval 1 day)
 
 {% endif %}
 
 ),
 
-... rest of model ...
+... остальная часть модели ...
 ```
 
-#### Copying partitions
+#### Копирование партиций
 
-If you are replacing entire partitions in your incremental runs, you can opt to do so with the [copy table API](https://cloud.google.com/bigquery/docs/managing-tables#copy-table) and partition decorators rather than a `merge` statement. While this mechanism doesn't offer the same visibility and ease of debugging as the SQL `merge` statement, it can yield significant savings in time and cost for large datasets because the copy table API does not incur any costs for inserting the data - it's equivalent to the `bq cp` gcloud command line interface (CLI) command.
+Если вы заменяете целые партиции в своих инкрементальных запусках, вы можете выбрать сделать это с помощью [API копирования таблицы](https://cloud.google.com/bigquery/docs/managing-tables#copy-table) и декораторов партиций, а не с помощью оператора `merge`. Хотя этот механизм не предлагает такой же видимости и простоты отладки, как оператор SQL `merge`, он может обеспечить значительную экономию времени и затрат для больших наборов данных, поскольку API копирования таблицы не несет никаких затрат на вставку данных - это эквивалентно команде интерфейса командной строки (CLI) `bq cp`.
 
-You can enable this by switching on `copy_partitions: True` in the `partition_by` configuration. This approach works only in combination with "dynamic" partition replacement.
+Вы можете включить это, включив `copy_partitions: True` в конфигурации `partition_by`. Этот подход работает только в сочетании с "динамической" заменой партиций.
 
 <File name='bigquery_table.sql'>
 
@@ -620,7 +592,7 @@ select
   user_id,
   event_name,
   created_at,
-  -- values of this column must match the data type + granularity defined above
+  -- значения этого столбца должны соответствовать типу данных + гранулярности, определенной выше
   timestamp_trunc(created_at, day) as created_date
 
 from {{ ref('events') }}
@@ -632,19 +604,18 @@ from {{ ref('events') }}
 
 ```
 ...
-[0m16:03:13.017641 [debug] [Thread-3 (]: BigQuery adapter: Copying table(s) "/projects/projectname/datasets/analytics/tables/bigquery_table__dbt_tmp$20230112" to "/projects/projectname/datasets/analytics/tables/bigquery_table$20230112" with disposition: "WRITE_TRUNCATE"
+[0m16:03:13.017641 [debug] [Thread-3 (]: Адаптер BigQuery: Копирование таблицы(ц) "/projects/projectname/datasets/analytics/tables/bigquery_table__dbt_tmp$20230112" в "/projects/projectname/datasets/analytics/tables/bigquery_table$20230112" с условием: "WRITE_TRUNCATE"
 ...
 ```
 
 </File>
 
-## Controlling table expiration
+## Контроль истечения таблицы
 
-By default, dbt-created tables never expire. You can configure certain model(s)
-to expire after a set number of hours by setting `hours_to_expiration`.
+По умолчанию таблицы, созданные dbt, никогда не истекают. Вы можете настроить определенные модели на истечение через установленное количество часов, установив `hours_to_expiration`.
 
-:::info Note
-The `hours_to_expiration` only applies to initial creation of the underlying table. It doesn't reset for incremental models when they do another run.
+:::info Примечание
+`hours_to_expiration` применяется только к первоначальному созданию базовой таблицы. Он не сбрасывается для инкрементальных моделей, когда они выполняют другой запуск.
 :::
 
 <File name='dbt_project.yml'>
@@ -672,12 +643,9 @@ select ...
 
 </File>
 
-## Authorized views
+## Авторизованные представления
 
-If the `grant_access_to` config is specified for a model materialized as a
-view, dbt will grant the view model access to select from the list of datasets
-provided. See [BQ docs on authorized views](https://cloud.google.com/bigquery/docs/share-access-views)
-for more details.
+Если для модели, материализованной как представление, указана конфигурация `grant_access_to`, dbt предоставит модели представления доступ для выбора из предоставленного списка наборов данных. См. [документацию BQ по авторизованным представлениям](https://cloud.google.com/bigquery/docs/share-access-views) для получения дополнительных сведений.
 
 <Snippet path="grants-vs-access-to" />
 
@@ -709,33 +677,32 @@ models:
 
 </File>
 
-Views with this configuration will be able to select from objects in `project_1.dataset_1` and `project_2.dataset_2`, even when they are located elsewhere and queried by users who do not otherwise have access to `project_1.dataset_1` and `project_2.dataset_2`.
+Представления с этой конфигурацией смогут выбирать объекты в `project_1.dataset_1` и `project_2.dataset_2`, даже когда они находятся в другом месте и запрашиваются пользователями, которые в противном случае не имеют доступа к `project_1.dataset_1` и `project_2.dataset_2`.
 
-## Materialized views
+## Материализованные представления
 
-The BigQuery adapter supports [materialized views](https://cloud.google.com/bigquery/docs/materialized-views-intro)
-with the following configuration parameters:
+Адаптер BigQuery поддерживает [материализованные представления](https://cloud.google.com/bigquery/docs/materialized-views-intro) с следующими параметрами конфигурации:
 
-| Parameter                                                                        | Type                   | Required | Default | Change Monitoring Support |
+| Параметр                                                                        | Тип                   | Обязательно | По умолчанию | Поддержка мониторинга изменений |
 |----------------------------------------------------------------------------------|------------------------|----------|---------|---------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`             | no       | `apply` | n/a                       |
-| [`cluster_by`](#clustering-clause)                                               | `[<string>]`           | no       | `none`  | drop/create               |
-| [`partition_by`](#partition-clause)                                              | `{<dictionary>}`       | no       | `none`  | drop/create               |
-| [`enable_refresh`](#auto-refresh)                                                | `<boolean>`            | no       | `true`  | alter                     |
-| [`refresh_interval_minutes`](#auto-refresh)                                      | `<float>`              | no       | `30`    | alter                     |
-| [`max_staleness`](#auto-refresh) (in Preview)                                    | `<interval>`           | no       | `none`  | alter                     |
-| [`description`](/reference/resource-properties/description)                      | `<string>`             | no       | `none`  | alter                     |
-| [`labels`](#specifying-labels)                                                   | `{<string>: <string>}` | no       | `none`  | alter                     |
-| [`hours_to_expiration`](#controlling-table-expiration)                           | `<integer>`            | no       | `none`  | alter                     |
-| [`kms_key_name`](#using-kms-encryption)                                          | `<string>`             | no       | `none`  | alter                     |
+| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`             | нет       | `apply` | н/д                       |
+| [`cluster_by`](#clustering-clause)                                               | `[<string>]`           | нет       | `none`  | drop/create               |
+| [`partition_by`](#partition-clause)                                              | `{<dictionary>}`       | нет       | `none`  | drop/create               |
+| [`enable_refresh`](#auto-refresh)                                                | `<boolean>`            | нет       | `true`  | alter                     |
+| [`refresh_interval_minutes`](#auto-refresh)                                      | `<float>`              | нет       | `30`    | alter                     |
+| [`max_staleness`](#auto-refresh) (в предварительном просмотре)                   | `<interval>`           | нет       | `none`  | alter                     |
+| [`description`](/reference/resource-properties/description)                      | `<string>`             | нет       | `none`  | alter                     |
+| [`labels`](#specifying-labels)                                                   | `{<string>: <string>}` | нет       | `none`  | alter                     |
+| [`hours_to_expiration`](#controlling-table-expiration)                           | `<integer>`            | нет       | `none`  | alter                     |
+| [`kms_key_name`](#using-kms-encryption)                                          | `<string>`             | нет       | `none`  | alter                     |
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -753,9 +720,9 @@ models:
     [+](/reference/resource-configs/plus-prefix)[partition_by](#partition-clause):
       - field: <field-name>
       - data_type: timestamp | date | datetime | int64
-        # only if `data_type` is not 'int64'
+        # только если `data_type` не 'int64'
       - granularity: hour | day | month | year
-        # only if `data_type` is 'int64'
+        # только если `data_type` 'int64'
       - range:
         - start: <integer>
         - end: <integer>
@@ -765,7 +732,7 @@ models:
     [+](/reference/resource-configs/plus-prefix)[max_staleness](#auto-refresh): <interval>
     [+](/reference/resource-configs/plus-prefix)[description](/reference/resource-properties/description): <string>
     [+](/reference/resource-configs/plus-prefix)[labels](#specifying-labels): {<label-name>: <label-value>}
-    [+](/reference/resource-configs/plus-prefix)[hours_to_expiration](#acontrolling-table-expiration): <integer>
+    [+](/reference/resource-configs/plus-prefix)[hours_to_expiration](#controlling-table-expiration): <integer>
     [+](/reference/resource-configs/plus-prefix)[kms_key_name](##using-kms-encryption): <path-to-key>
 ```
 
@@ -790,9 +757,9 @@ models:
       [partition_by](#partition-clause):
         - field: <field-name>
         - data_type: timestamp | date | datetime | int64
-          # only if `data_type` is not 'int64'
+          # только если `data_type` не 'int64'
         - granularity: hour | day | month | year
-          # only if `data_type` is 'int64'
+          # только если `data_type` 'int64'
         - range:
           - start: <integer>
           - end: <integer>
@@ -802,7 +769,7 @@ models:
       [max_staleness](#auto-refresh): <interval>
       [description](/reference/resource-properties/description): <string>
       [labels](#specifying-labels): {<label-name>: <label-value>}
-      [hours_to_expiration](#acontrolling-table-expiration): <integer>
+      [hours_to_expiration](#controlling-table-expiration): <integer>
       [kms_key_name](##using-kms-encryption): <path-to-key>
 ```
 
@@ -824,10 +791,10 @@ models:
         "field": "<field-name>",
         "data_type": "timestamp" | "date" | "datetime" | "int64",
 
-        # only if `data_type` is not 'int64'
+        # только если `data_type` не 'int64'
         "granularity": "hour" | "day" | "month" | "year,
 
-        # only if `data_type` is 'int64'
+        # только если `data_type` 'int64'
         "range": {
             "start": <integer>,
             "end": <integer>,
@@ -835,17 +802,17 @@ models:
         }
     },
 
-    # auto-refresh options
+    # параметры автообновления
     [enable_refresh](#auto-refresh)= true | false,
     [refresh_interval_minutes](#auto-refresh)=<float>,
     [max_staleness](#auto-refresh)="<interval>",
 
-    # additional options
+    # дополнительные параметры
     [description](/reference/resource-properties/description)="<description>",
     [labels](#specifying-labels)={
         "<label-name>": "<label-value>",
     },
-    [hours_to_expiration](#acontrolling-table-expiration)=<integer>,
+    [hours_to_expiration](#controlling-table-expiration)=<integer>,
     [kms_key_name](##using-kms-encryption)="<path_to_key>",
 ) }}
 ```
@@ -856,63 +823,63 @@ models:
 
 </Tabs>
 
-Many of these parameters correspond to their table counterparts and have been linked above.
-The set of parameters unique to materialized views covers [auto-refresh functionality](#auto-refresh).
+Многие из этих параметров соответствуют их таблицам и были связаны выше.
+Набор параметров, уникальных для материализованных представлений, охватывает [функциональность автообновления](#auto-refresh).
 
-Learn more about these parameters in BigQuery's docs:
+Узнайте больше о этих параметрах в документации BigQuery:
 - [CREATE MATERIALIZED VIEW statement](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_materialized_view_statement)
 - [materialized_view_option_list](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#materialized_view_option_list)
 
-### Auto-refresh
+### Автообновление
 
-| Parameter                    | Type         | Required | Default | Change Monitoring Support |
+| Параметр                    | Тип         | Обязательно | По умолчанию | Поддержка мониторинга изменений |
 |------------------------------|--------------|----------|---------|---------------------------|
-| `enable_refresh`             | `<boolean>`  | no       | `true`  | alter                     |
-| `refresh_interval_minutes`   | `<float>`    | no       | `30`    | alter                     |
-| `max_staleness` (in Preview) | `<interval>` | no       | `none`  | alter                     |
+| `enable_refresh`             | `<boolean>`  | нет       | `true`  | alter                     |
+| `refresh_interval_minutes`   | `<float>`    | нет       | `30`    | alter                     |
+| `max_staleness` (в предварительном просмотре) | `<interval>` | нет       | `none`  | alter                     |
 
-BigQuery supports [automatic refresh](https://cloud.google.com/bigquery/docs/materialized-views-manage#automatic_refresh) configuration for materialized views.
-By default, a materialized view will automatically refresh within 5 minutes of changes in the base table, but not more frequently than once every 30 minutes.
-BigQuery only officially supports the configuration of the frequency (the "once every 30 minutes" frequency);
-however, there is a feature in preview that allows for the configuration of the staleness (the "5 minutes" refresh).
-dbt will monitor these parameters for changes and apply them using an `ALTER` statement.
+BigQuery поддерживает [автоматическое обновление](https://cloud.google.com/bigquery/docs/materialized-views-manage#automatic_refresh) для материализованных представлений.
+По умолчанию материализованное представление будет автоматически обновляться в течение 5 минут после изменений в базовой таблице, но не чаще одного раза каждые 30 минут.
+BigQuery официально поддерживает только настройку частоты (частота "раз в 30 минут");
+однако есть функция в предварительном просмотре, которая позволяет настраивать устаревание (обновление "раз в 5 минут").
+dbt будет отслеживать эти параметры на предмет изменений и применять их с помощью оператора `ALTER`.
 
-Learn more about these parameters in BigQuery's docs:
+Узнайте больше о этих параметрах в документации BigQuery:
 - [materialized_view_option_list](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#materialized_view_option_list)
 - [max_staleness](https://cloud.google.com/bigquery/docs/materialized-views-create#max_staleness)
 
-### Limitations
+### Ограничения
 
-As with most data platforms, there are limitations associated with materialized views. Some worth noting include:
+Как и на большинстве платформ данных, существуют ограничения, связанные с материализованными представлениями. Некоторые из них стоит отметить:
 
-- Materialized view SQL has a [limited feature set](https://cloud.google.com/bigquery/docs/materialized-views-create#supported-mvs).
-- Materialized view SQL cannot be updated; the materialized view must go through a `--full-refresh` (DROP/CREATE).
-- The `partition_by` clause on a materialized view must match that of the underlying base table.
-- While materialized views can have descriptions, materialized view *columns* cannot.
-- Recreating/dropping the base table requires recreating/dropping the materialized view.
+- SQL материализованного представления имеет [ограниченный набор функций](https://cloud.google.com/bigquery/docs/materialized-views-create#supported-mvs).
+- SQL материализованного представления не может быть обновлено; материализованное представление должно пройти через `--full-refresh` (DROP/CREATE).
+- Клаузула `partition_by` в материализованном представлении должна соответствовать таковой в базовой таблице.
+- Хотя материализованные представления могут иметь описания, *столбцы* материализованного представления не могут.
+- Воссоздание/удаление базовой таблицы требует воссоздания/удаления материализованного представления.
 
-Find more information about materialized view limitations in Google's BigQuery [docs](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations).
+Узнайте больше о ограничениях материализованных представлений в документации Google BigQuery [docs](https://cloud.google.com/bigquery/docs/materialized-views-intro#limitations).
 
-## Python models
+## Модели Python
 
-The BigQuery adapter supports Python models with the following additional configuration parameters:
+Адаптер BigQuery поддерживает модели Python с следующими дополнительными параметрами конфигурации:
 
-| Parameter               | Type        | Required | Default   | Valid values     |
+| Параметр               | Тип        | Обязательно | По умолчанию   | Допустимые значения     |
 |-------------------------|-------------|----------|-----------|------------------|
-| `enable_list_inference` | `<boolean>` | no       | `True`    | `True`, `False`  |
-| `intermediate_format`   | `<string>`  | no       | `parquet` | `parquet`, `orc` |
+| `enable_list_inference` | `<boolean>` | нет       | `True`    | `True`, `False`  |
+| `intermediate_format`   | `<string>`  | нет       | `parquet` | `parquet`, `orc` |
 
-### The `enable_list_inference` parameter
-The `enable_list_inference` parameter enables a PySpark data frame to read multiple records in the same operation.
-By default, this is set to `True` to support the default `intermediate_format` of `parquet`.
+### Параметр `enable_list_inference`
+Параметр `enable_list_inference` позволяет фрейму данных PySpark читать несколько записей в одной операции.
+По умолчанию это значение установлено в `True`, чтобы поддерживать значение по умолчанию `intermediate_format` как `parquet`.
 
-### The `intermediate_format` parameter
-The `intermediate_format` parameter specifies which file format to use when writing records to a table. The default is `parquet`.
+### Параметр `intermediate_format`
+Параметр `intermediate_format` указывает, какой формат файла использовать при записи записей в таблицу. По умолчанию используется `parquet`.
 
 <VersionBlock firstVersion="1.8">
 
-## Unit test limitations
+## Ограничения юнит-тестов
 
-You must specify all fields in a BigQuery `STRUCT` for [unit tests](/docs/build/unit-tests). You cannot use only a subset of fields in a `STRUCT`.
+Вы должны указать все поля в `STRUCT` BigQuery для [юнит-тестов](/docs/build/unit-tests). Вы не можете использовать только подмножество полей в `STRUCT`.
 
 </VersionBlock>

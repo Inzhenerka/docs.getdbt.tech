@@ -1,21 +1,21 @@
 ---
-title: "Microsoft Fabric DWH configurations"
+title: "Конфигурации DWH Microsoft Fabric"
 id: "fabric-configs"
 ---
 
-## Materializations
+## Материализации
 
-Ephemeral materialization is not supported due to T-SQL not supporting nested CTEs. It may work in some cases when you're working with very simple ephemeral models.
+Эфемерная материализация не поддерживается из-за того, что T-SQL не поддерживает вложенные CTE. Она может работать в некоторых случаях, когда вы работаете с очень простыми эфемерными моделями.
 
-### Tables
+### Таблицы
 
-Tables are default materialization.
+Таблицы являются материализацией по умолчанию.
 
 <Tabs
 defaultValue="model"
 values={[
-{label: 'Model config', value: 'model'},
-{label: 'Project config', value: 'project'}
+{label: 'Конфигурация модели', value: 'model'},
+{label: 'Конфигурация проекта', value: 'project'}
 ]}
 >
 
@@ -56,50 +56,47 @@ models:
 
 </Tabs>
 
-## Seeds
+## Семена
 
-By default, `dbt-fabric` will attempt to insert seed files in batches of 400 rows.
-If this exceeds Microsoft Fabric Synapse Data Warehouse 2100 parameter limit, the adapter will automatically limit to the highest safe value possible.
+По умолчанию `dbt-fabric` будет пытаться вставить файлы семян партиями по 400 строк. Если это превышает лимит параметра 2100 в Microsoft Fabric Synapse Data Warehouse, адаптер автоматически ограничит значение до максимально безопасного.
 
-To set a different default seed value, you can set the variable `max_batch_size` in your project configuration.
+Чтобы установить другое значение по умолчанию для семян, вы можете задать переменную `max_batch_size` в конфигурации вашего проекта.
 
 <File name="dbt_project.yml">
 
 ```yaml
 vars:
-  max_batch_size: 200 # Any integer less than or equal to 2100 will do.
+  max_batch_size: 200 # Любое целое число, меньшее или равное 2100, подойдет.
 ```
 
 </File>
 
-## Snapshots
+## Снимки
 
-Columns in source tables can not have any constraints.
-If, for example, any column has a `NOT NULL` constraint, an error will be thrown.
+Столбцы в исходных таблицах не могут иметь никаких ограничений. Если, например, какой-либо столбец имеет ограничение `NOT NULL`, будет выдана ошибка.
 
-## Indexes
+## Индексы
 
-Indexes are not supported by Microsoft Fabric Synapse Data Warehouse. Any Indexes provided as a configuration is ignored by the adapter.
+Индексы не поддерживаются Microsoft Fabric Synapse Data Warehouse. Любые индексы, указанные в конфигурации, игнорируются адаптером.
 
-## Grants with auto provisioning
+## Предоставление прав с автоматическимProvisioning
 
-Grants with auto provisioning is not supported by Microsoft Fabric Synapse Data Warehouse at this time.
+Предоставление прав с автоматическим provisioning в настоящее время не поддерживается Microsoft Fabric Synapse Data Warehouse.
 
-## Incremental
+## Инкрементальные загрузки
 
-Fabric supports both `delete+insert` and `append` strategy.
+Fabric поддерживает как стратегию `delete+insert`, так и стратегию `append`.
 
-If a unique key is not provided, it will default to the `append` strategy.
+Если уникальный ключ не предоставлен, будет использоваться стратегия `append` по умолчанию.
 
-## Permissions
+## Разрешения
 
-The Microsoft Entra identity (user or service principal) must be a Fabric Workspace admin to work on the database level at this time. Fine grain access control will be incorporated in the future.
+Идентичность Microsoft Entra (пользователь или сервисный принципал) должна быть администратором рабочей области Fabric, чтобы работать на уровне базы данных в настоящее время. Тонкая настройка контроля доступа будет внедрена в будущем.
 
-## cross-database macros
+## Макросы между базами данных
 
-Not supported at this time.
+В настоящее время не поддерживаются.
 
 ## dbt-utils
 
-Not supported at this time. However, dbt-fabric offers some utils macros. Please check out [utils macros](https://github.com/microsoft/dbt-fabric/tree/main/dbt/include/fabric/macros/utils).
-
+В настоящее время не поддерживаются. Однако dbt-fabric предлагает некоторые утилиты макросов. Пожалуйста, ознакомьтесь с [utils macros](https://github.com/microsoft/dbt-fabric/tree/main/dbt/include/fabric/macros/utils).

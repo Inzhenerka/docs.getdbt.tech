@@ -1,6 +1,6 @@
 ---
-title: "Defining a schema source property"
-sidebar_label: "schema"
+title: "Определение свойства схемы источника"
+sidebar_label: "схема"
 resource_types: sources
 datatype: schema_name
 ---
@@ -22,23 +22,22 @@ version: 2
 
 </File>
 
-## Definition
-The schema name as stored in the database.
+## Определение
+Имя схемы, как оно хранится в базе данных.
 
-This parameter is useful if you want to use a [source](/reference/source-properties) name that differs from the schema name.
+Этот параметр полезен, если вы хотите использовать имя [источника](/reference/source-properties), которое отличается от имени схемы.
 
+:::info Терминология BigQuery
 
-:::info BigQuery terminology
-
-If you're using BigQuery, use the _dataset_ name as the `schema` property.
+Если вы используете BigQuery, используйте имя _dataset_ в качестве свойства `schema`.
 
 :::
 
-## Default
-By default, dbt will use the source's `name` parameter as the schema name.
+## По умолчанию
+По умолчанию dbt будет использовать параметр `name` источника в качестве имени схемы.
 
-## Examples
-### Use a simpler name for a source schema than the one in your database
+## Примеры
+### Использование более простого имени для схемы источника, чем то, что в вашей базе данных
 
 <File name='models/<filename>.yml'>
 
@@ -55,13 +54,12 @@ sources:
 
 </File>
 
-
-In a downstream model:
+В последующей модели:
 ```sql
 select * from {{ source('jaffle_shop', 'orders') }}
 ```
 
-Will get compiled to:
+Будет скомпилировано в:
 ```sql
 select * from postgres_backend_public_schema.orders
 ```

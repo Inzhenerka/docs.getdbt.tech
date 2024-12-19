@@ -1,42 +1,41 @@
 ---
-title: "Apache Impala configurations"
-description: "Impala Configs - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Apache Impala"
+description: "Конфигурации Impala - прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "impala-configs"
 ---
 
-## Configuring tables
+## Конфигурирование таблиц
 
-When materializing a model as `table`, you may include several optional configs that are specific to the dbt-impala plugin, in addition to the standard [model configs](/reference/model-configs).
+При материализации модели как `table` вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-impala, помимо стандартных [конфигураций модели](/reference/model-configs).
 
-| Option  | Description                                        | Required?               | Example                  |
+| Опция  | Описание                                        | Обязательно?               | Пример                  |
 |---------|----------------------------------------------------|-------------------------|--------------------------|
-| partition_by | partition by a column, typically a directory per partition is created | No | partition_by=['name'] |
-| sort_by | sort by a column  | No | sort_by=['age'] |
-| row_format | format to be used when storing individual arows | No | row_format='delimited' |
-| stored_as | underlying storage format of the table | No | stored_as='PARQUET' |
-| location | storage location, typically an hdfs path | No | LOCATION='/user/etl/destination' |
-| comment | comment for the table | No | comment='this is the cleanest model' |
-| serde_properties | SerDes ([de-]serialization) prperties of table | No | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
-| tbl_properties | any metadata can be stored as key/value pair with the table | No | tbl_properties="('dbt_test'='1')" |
-| is_cached | true or false - if this table is cached | No | is_cached=false (default) |
-| cache_pool | cache pool name to use if is_cached is set to true | No |  |
-| replication_factor | cache replication factor to use if is_cached is set to true  | No | |  
-| external | is this an external table - true / false | No | external=true |
+| partition_by | разделение по столбцу, обычно создается директория для каждого раздела | Нет | partition_by=['name'] |
+| sort_by | сортировка по столбцу  | Нет | sort_by=['age'] |
+| row_format | формат, который будет использоваться при хранении отдельных строк | Нет | row_format='delimited' |
+| stored_as | базовый формат хранения таблицы | Нет | stored_as='PARQUET' |
+| location | место хранения, обычно путь hdfs | Нет | LOCATION='/user/etl/destination' |
+| comment | комментарий для таблицы | Нет | comment='это самая чистая модель' |
+| serde_properties | Свойства SerDes ([де-]сериализации) таблицы | Нет | serde_properties="('quoteChar'='\'', 'escapeChar'='\\')" |
+| tbl_properties | любые метаданные могут быть сохранены в виде пары ключ/значение с таблицей | Нет | tbl_properties="('dbt_test'='1')" |
+| is_cached | true или false - если эта таблица кэшируется | Нет | is_cached=false (по умолчанию) |
+| cache_pool | имя кэш-пула, которое будет использоваться, если is_cached установлено в true | Нет |  |
+| replication_factor | фактор репликации кэша, который будет использоваться, если is_cached установлено в true  | Нет | |  
+| external | является ли это внешней таблицей - true / false | Нет | external=true |
 
-For Cloudera specific options for above parameters see documentation of CREATE TABLE (https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_create_table.html)
+Для специфичных для Cloudera опций вышеуказанных параметров смотрите документацию CREATE TABLE (https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_create_table.html)
 
-## Incremental models
+## Инкрементальные модели
 
-Supported modes for incremental model:
- - **`append`** (default): Insert new records without updating or overwriting any existing data.
- - **`insert_overwrite`**: For new records, insert data. When used along with partition clause, update data for changed record and insert data for new records. 
+Поддерживаемые режимы для инкрементальной модели:
+ - **`append`** (по умолчанию): Вставка новых записей без обновления или перезаписи существующих данных.
+ - **`insert_overwrite`**: Для новых записей вставьте данные. При использовании вместе с клаузой разделения обновите данные для измененных записей и вставьте данные для новых записей. 
 
+Неподдерживаемые режимы:
+ - **`unique_key`**: Эта опция не поддерживается для инкрементальных моделей в dbt-impala.
+ - **`merge`**: Слияние не поддерживается подлежащим хранилищем, и, следовательно, не поддерживается dbt-impala.
 
-Unsupported modes:
- - **`unique_key`** This is not suppored option for incremental models in dbt-impala
- - **`merge`**: Merge is not supported by the underlying warehouse, and hence not supported by dbt-impala
-
-## Example: Using partition_by config option
+## Пример: Использование опции конфигурации partition_by
 
 <File name='impala_partition_by.sql'>
 
@@ -64,4 +63,4 @@ select * from source_data
 
 </File>
 
-In the above example, a sample table is created with partition_by and other config options. One thing to note when using partition_by option is that the select query should always have the column name used in partition_by option as the last one, as can be seen for the ```city``` column name used in the above query. If the partition_by clause is not the same as the last column in select statement, Impala will flag an error when trying to create the model.
+В приведенном выше примере создается образец таблицы с использованием partition_by и других опций конфигурации. Важно отметить, что при использовании опции partition_by запрос select всегда должен иметь имя столбца, использованного в опции partition_by, в качестве последнего, как видно по имени столбца ```city```, использованному в приведенном выше запросе. Если клаузула partition_by не совпадает с последним столбцом в операторе select, Impala выдаст ошибку при попытке создать модель.

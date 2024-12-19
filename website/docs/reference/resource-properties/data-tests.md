@@ -1,19 +1,19 @@
 ---
-title: "About data tests property"
-sidebar_label: "Data tests"
+title: "О свойстве тестов данных"
+sidebar_label: "Тесты данных"
 resource_types: all
 datatype: data-test
-keywords: [test, tests, custom tests, custom test name, test name]
+keywords: [тест, тесты, пользовательские тесты, имя пользовательского теста, имя теста]
 ---
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Analyses', value: 'analyses', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Анализы', value: 'analyses', },
   ]
 }>
 
@@ -144,29 +144,29 @@ snapshots:
 
 <TabItem value="analyses">
 
-This feature is not implemented for analyses.
+Эта функция не реализована для анализов.
 
 </TabItem>
 
 </Tabs>
 
-## Related documentation
+## Связанная документация
 
-* [Data testing guide](/docs/build/data-tests)
+* [Руководство по тестированию данных](/docs/build/data-tests)
 
-## Description
+## Описание
 
-The data `tests` property defines assertions about a column, <Term id="table" />, or <Term id="view" />. The property contains a list of [generic tests](/docs/build/data-tests#generic-data-tests), referenced by name, which can include the four built-in generic tests available in dbt. For example, you can add tests that ensure a column contains no duplicates and zero null values. Any arguments or [configurations](/reference/data-test-configs) passed to those tests should be nested below the test name.
+Свойство `tests` данных определяет утверждения о столбце, <Term id="table" />, или <Term id="view" />. Это свойство содержит список [общих тестов](/docs/build/data-tests#generic-data-tests), на которые ссылаются по имени, и которые могут включать четыре встроенных общих теста, доступных в dbt. Например, вы можете добавить тесты, которые гарантируют, что в столбце нет дубликатов и нулевых значений. Любые аргументы или [конфигурации](/reference/data-test-configs), переданные этим тестам, должны быть вложены под именем теста.
 
-Once these tests are defined, you can validate their correctness by running `dbt test`.
+После определения этих тестов вы можете проверить их корректность, запустив `dbt test`.
 
-## Out-of-the-box data tests
+## Тесты данных "из коробки"
 
-There are four generic data tests that are available out of the box, for everyone using dbt.
+Существует четыре общих теста данных, которые доступны "из коробки" для всех пользователей dbt.
 
 ### `not_null`
 
-This test validates that there are no `null` values present in a column.
+Этот тест проверяет, что в столбце нет значений `null`.
 
 <File name='models/<filename>.yml'>
 
@@ -185,9 +185,9 @@ models:
 
 ### `unique`
 
-This test validates that there are no duplicate values present in a field.
-                
-The config and where clause are optional.
+Этот тест проверяет, что в поле нет дублирующихся значений.
+
+Конфигурация и условие `where` являются необязательными.
 
 <File name='models/<filename>.yml'>
 
@@ -208,9 +208,9 @@ models:
 
 ### `accepted_values`
 
-This test validates that all of the values in a column are present in a supplied list of `values`. If any values other than those provided in the list are present, then the test will fail.
+Этот тест проверяет, что все значения в столбце присутствуют в предоставленном списке `values`. Если присутствуют какие-либо значения, отличные от указанных в списке, тест не пройдет.
 
-The `accepted_values` test supports an optional `quote` parameter which, by default, will single-quote the list of accepted values in the test query. To test non-strings (like integers or boolean values) explicitly set the `quote` config to `false`.
+Тест `accepted_values` поддерживает необязательный параметр `quote`, который по умолчанию будет заключать список допустимых значений в одинарные кавычки в запросе теста. Чтобы протестировать нестроковые значения (например, целые числа или логические значения), явно установите конфигурацию `quote` в `false`.
 
 <File name='schema.yml'>
 
@@ -236,9 +236,9 @@ models:
 
 ### `relationships`
 
-This test validates that all of the records in a child <Term id="table" /> have a corresponding record in a parent table. This property is referred to as "referential integrity".
+Этот тест проверяет, что все записи в дочерней <Term id="table" /> имеют соответствующую запись в родительской таблице. Это свойство называется "ссылочной целостностью".
 
-The following example tests that every order's `customer_id` maps back to a valid `customer`.
+Следующий пример проверяет, что `customer_id` каждого заказа соответствует действительному `customer`.
 
 <File name='schema.yml'>
 
@@ -257,12 +257,12 @@ models:
 
 </File>
 
-The `to` argument accepts a [Relation](/reference/dbt-classes#relation) – this means you can pass it a `ref` to a model (e.g. `ref('customers')`), or a `source` (e.g. `source('jaffle_shop', 'customers')`).
+Аргумент `to` принимает [Relation](/reference/dbt-classes#relation) – это означает, что вы можете передать ему `ref` на модель (например, `ref('customers')`), или источник (например, `source('jaffle_shop', 'customers')`).
 
-## Additional examples
+## Дополнительные примеры
 
-### Test an expression
-Some data tests require multiple columns, so it doesn't make sense to nest them under the `columns:` key. In this case, you can apply the data test to the model (or source, seed, or snapshot) instead:
+### Тестирование выражения
+Некоторые тесты данных требуют нескольких столбцов, поэтому не имеет смысла вкладывать их под ключ `columns:`. В этом случае вы можете применить тест данных к модели (или источнику, сид, или снимку) вместо:
 
 <File name='models/orders.yml'>
 
@@ -278,9 +278,9 @@ models:
 
 </File>
 
-### Use custom generic test
+### Использование пользовательского общего теста
 
-If you've defined your own custom generic test, you can use that as the `test_name`:
+Если вы определили свой собственный пользовательский общий тест, вы можете использовать его в качестве `test_name`:
 
 <File name='models/<filename>.yml'>
 
@@ -292,27 +292,27 @@ models:
     columns:
       - name: order_id
         tests:
-          - primary_key  # name of my custom generic test
+          - primary_key  # имя моего пользовательского общего теста
 
 ```
 
 </File>
 
-Check out the guide on writing a [custom generic test](/best-practices/writing-custom-generic-tests) for more information.
+Посмотрите руководство по написанию [пользовательского общего теста](/best-practices/writing-custom-generic-tests) для получения дополнительной информации.
 
-### Custom data test name
+### Пользовательское имя теста данных
 
-By default, dbt will synthesize a name for your generic test by concatenating:
-- test name (`not_null`, `unique`, etc)
-- model name (or source/seed/snapshot)
-- column name (if relevant)
-- arguments (if relevant, e.g. `values` for `accepted_values`)
+По умолчанию dbt будет синтезировать имя для вашего общего теста, объединяя:
+- имя теста (`not_null`, `unique` и т.д.)
+- имя модели (или источника/сида/снимка)
+- имя столбца (если применимо)
+- аргументы (если применимо, например, `values` для `accepted_values`)
 
-It does not include any configurations for the test. If the concatenated name is too long, dbt will use a truncated and hashed version instead. The goal is to preserve unique identifiers for all resources in your project, including tests.
+В него не включаются никакие конфигурации для теста. Если объединенное имя слишком длинное, dbt будет использовать сокращенную и хэшированную версию вместо. Цель состоит в том, чтобы сохранить уникальные идентификаторы для всех ресурсов в вашем проекте, включая тесты.
 
-You may also define your own name for a specific test, via the `name` property.
+Вы также можете определить свое собственное имя для конкретного теста с помощью свойства `name`.
 
-**When might you want this?** dbt's default approach can result in some wonky (and ugly) test names. By defining a custom name, you get full control over how the test will appear in log messages and metadata artifacts. You'll also be able to select the test by that name.
+**Когда это может понадобиться?** Подход по умолчанию dbt может привести к некоторым странным (и некрасивым) именам тестов. Определив пользовательское имя, вы получаете полный контроль над тем, как тест будет отображаться в сообщениях журнала и метаданных. Вы также сможете выбрать тест по этому имени.
 
 <File name='models/<filename>.yml'>
 
@@ -335,24 +335,24 @@ models:
 
 ```sh
 $ dbt test --select unexpected_order_status_today
-12:43:41  Running with dbt=1.1.0
-12:43:41  Found 1 model, 1 test, 0 snapshots, 0 analyses, 167 macros, 0 operations, 1 seed file, 0 sources, 0 exposures, 0 metrics
+12:43:41  Запуск с dbt=1.1.0
+12:43:41  Найдено 1 модель, 1 тест, 0 снимков, 0 анализов, 167 макросов, 0 операций, 1 файл сидов, 0 источников, 0 экспозиций, 0 метрик
 12:43:41
-12:43:41  Concurrency: 5 threads (target='dev')
+12:43:41  Параллелизм: 5 потоков (target='dev')
 12:43:41
-12:43:41  1 of 1 START test unexpected_order_status_today ................................ [RUN]
-12:43:41  1 of 1 PASS unexpected_order_status_today ...................................... [PASS in 0.03s]
+12:43:41  1 из 1 НАЧАЛО теста unexpected_order_status_today ................................ [RUN]
+12:43:41  1 из 1 УСПЕШНО unexpected_order_status_today ...................................... [PASS in 0.03s]
 12:43:41
-12:43:41  Finished running 1 test in 0.13s.
+12:43:41  Завершено выполнение 1 теста за 0.13s.
 12:43:41
-12:43:41  Completed successfully
+12:43:41  Завершено успешно
 12:43:41
-12:43:41  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+12:43:41  Готово. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-A test's name must be unique for all tests defined on a given model-column combination. If you give the same name to tests defined on several different columns, or across several different models, then `dbt test --select <repeated_custom_name>` will select them all. 
+Имя теста должно быть уникальным для всех тестов, определенных для данной комбинации модели-столбца. Если вы дадите одно и то же имя тестам, определенным на нескольких разных столбцах или в нескольких разных моделях, то `dbt test --select <repeated_custom_name>` выберет их все.
 
-**When might you need this?** In cases where you have defined the same test twice, with only a difference in configuration, dbt will consider these tests to be duplicates:
+**Когда это может понадобиться?** В случаях, когда вы определили один и тот же тест дважды, с различием только в конфигурации, dbt будет считать эти тесты дубликатами:
 
 <File name='models/<filename>.yml'>
 
@@ -371,25 +371,24 @@ models:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'returned']
               config:
-                # only difference is in the 'where' config
-                where: "order_date = (current_date - interval '1 day')" # PostgreSQL syntax
+                # единственное различие в конфигурации 'where'
+                where: "order_date = (current_date - interval '1 day')" # синтаксис PostgreSQL
 ```
 
 </File>
 
 ```sh
-Compilation Error
-  dbt found two tests with the name "accepted_values_orders_status__placed__shipped__completed__returned" defined on column "status" in "models.orders".
+Ошибка компиляции
+  dbt нашел два теста с именем "accepted_values_orders_status__placed__shipped__completed__returned", определенными для столбца "status" в "models.orders".
 
-  Since these resources have the same name, dbt will be unable to find the correct resource
-  when running tests.
+  Поскольку эти ресурсы имеют одно и то же имя, dbt не сможет найти правильный ресурс при выполнении тестов.
 
-  To fix this, change the name of one of these resources:
+  Чтобы исправить это, измените имя одного из этих ресурсов:
   - test.testy.accepted_values_orders_status__placed__shipped__completed__returned.69dce9e5d5 (models/one_file.yml)
   - test.testy.accepted_values_orders_status__placed__shipped__completed__returned.69dce9e5d5 (models/one_file.yml)
 ```
 
-By providing a custom name, you help dbt differentiate tests:
+Определив пользовательское имя, вы помогаете dbt различать тесты:
 
 <File name='models/<filename>.yml'>
 
@@ -417,30 +416,30 @@ models:
 
 ```sh
 $ dbt test
-12:48:03  Running with dbt=1.1.0-b1
-12:48:04  Found 1 model, 2 tests, 0 snapshots, 0 analyses, 167 macros, 0 operations, 1 seed file, 0 sources, 0 exposures, 0 metrics
+12:48:03  Запуск с dbt=1.1.0-b1
+12:48:04  Найдено 1 модель, 2 теста, 0 снимков, 0 анализов, 167 макросов, 0 операций, 1 файл сидов, 0 источников, 0 экспозиций, 0 метрик
 12:48:04
-12:48:04  Concurrency: 5 threads (target='dev')
+12:48:04  Параллелизм: 5 потоков (target='dev')
 12:48:04
-12:48:04  1 of 2 START test unexpected_order_status_today ................................ [RUN]
-12:48:04  2 of 2 START test unexpected_order_status_yesterday ............................ [RUN]
-12:48:04  1 of 2 PASS unexpected_order_status_today ...................................... [PASS in 0.04s]
-12:48:04  2 of 2 PASS unexpected_order_status_yesterday .................................. [PASS in 0.04s]
+12:48:04  1 из 2 НАЧАЛО теста unexpected_order_status_today ................................ [RUN]
+12:48:04  2 из 2 НАЧАЛО теста unexpected_order_status_yesterday ............................ [RUN]
+12:48:04  1 из 2 УСПЕШНО unexpected_order_status_today ...................................... [PASS in 0.04s]
+12:48:04  2 из 2 УСПЕШНО unexpected_order_status_yesterday .................................. [PASS in 0.04s]
 12:48:04
-12:48:04  Finished running 2 tests in 0.21s.
+12:48:04  Завершено выполнение 2 тестов за 0.21s.
 12:48:04
-12:48:04  Completed successfully
+12:48:04  Завершено успешно
 12:48:04
-12:48:04  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+12:48:04  Готово. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 ```
 
-**If using [`store_failures`](/reference/resource-configs/store_failures):** dbt uses each data test's name as the name of the table in which to store any failing records. If you have defined a custom name for one test, that custom name will also be used for its table of failures. You may optionally configure an [`alias`](/reference/resource-configs/alias) for the test, to separately control both the name of the test (for metadata) and the name of its database table (for storing failures).
+**Если используется [`store_failures`](/reference/resource-configs/store_failures):** dbt использует имя каждого теста данных в качестве имени таблицы, в которой будут храниться любые неудачные записи. Если вы определили пользовательское имя для одного теста, это пользовательское имя также будет использоваться для его таблицы с неудачами. Вы можете дополнительно настроить [`alias`](/reference/resource-configs/alias) для теста, чтобы отдельно контролировать как имя теста (для метаданных), так и имя его таблицы в базе данных (для хранения неудач).
 
-### Alternative format for defining tests
+### Альтернативный формат для определения тестов
 
-When defining a generic data test with several arguments and configurations, the YAML can look and feel unwieldy. If you find it easier, you can define the same test properties as top-level keys of a single dictionary, by providing the test name as `test_name` instead. It's totally up to you.
+При определении общего теста данных с несколькими аргументами и конфигурациями YAML может выглядеть и ощущаться громоздко. Если вам будет удобнее, вы можете определить те же свойства теста в качестве ключей верхнего уровня одного словаря, указав имя теста как `test_name`. Это полностью зависит от вас.
 
-This example is identical to the one above:
+Этот пример идентичен приведенному выше:
 
 <File name='models/<filename>.yml'>
 
@@ -453,7 +452,7 @@ models:
       - name: status
         tests:
           - name: unexpected_order_status_today
-            test_name: accepted_values  # name of the generic test to apply
+            test_name: accepted_values  # имя общего теста, который нужно применить
             values:
               - placed
               - shipped

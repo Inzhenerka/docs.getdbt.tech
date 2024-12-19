@@ -1,2 +1,2 @@
 #### name
-The `name` field can be used to specify both model names and column names in schema.yml files. When `name` is used to denote a model (as shown on line 4 above), dbt will look up that model by its filename. The example above will look for a model called `events.sql`, for instance.
+Поле `name` может использоваться для указания как имен моделей, так и имен столбцов в файлах schema.yml. Когда `name` используется для обозначения модели (как показано на строке 4 выше), dbt будет искать эту модель по её имени файла. Например, приведённый выше пример будет искать модель с именем `events.sql`.

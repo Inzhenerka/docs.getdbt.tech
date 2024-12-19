@@ -1,18 +1,16 @@
 ---
-title: "Materialize configurations"
-description: "Materialize Configurations- Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации материализации"
+description: "Конфигурации материализации - прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "materialize-configs"
 ---
 
-## Performance optimizations
+## Оптимизация производительности
 
-### Clusters
+### Кластеры
 
+Включите конфигурацию [кластеров](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
 
-Enable the configuration of [clusters](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
-
-
-The default [cluster](https://materialize.com/docs/overview/key-concepts/#clusters) that is used to maintain materialized views or indexes can be configured in your [profile](/docs/core/connect-data-platform/profiles.yml) using the `cluster` connection parameter. To override the cluster that is used for specific models (or groups of models), use the `cluster` configuration parameter.
+По умолчанию [кластер](https://materialize.com/docs/overview/key-concepts/#clusters), который используется для поддержания материализованных представлений или индексов, можно настроить в вашем [профиле](/docs/core/connect-data-platform/profiles.yml) с помощью параметра подключения `cluster`. Чтобы переопределить кластер, используемый для конкретных моделей (или групп моделей), используйте параметр конфигурации `cluster`.
 
 <File name='my_view_cluster.sql'>
 
@@ -35,24 +33,22 @@ models:
 
 </File>
 
+### Инкрементальные модели: Материализованные представления
 
+Materialize, по своей сути, является базой данных в реальном времени, которая предоставляет инкрементальные обновления представлений без компромиссов по задержке или корректности. Используйте [материализованные представления](https://materialize.com/docs/overview/key-concepts/#materialized-views) для вычисления и инкрементального обновления результатов вашего запроса.
 
-### Incremental models: Materialized Views
+### Индексы
 
-Materialize, at its core, is a real-time database that delivers incremental view updates without ever compromising on latency or correctness. Use [materialized views](https://materialize.com/docs/overview/key-concepts/#materialized-views) to compute and incrementally update the results of your query.
+Включите дополнительную конфигурацию для [индексов](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
 
-### Indexes
+Как и в любой стандартной реляционной базе данных, вы можете использовать [индексы](https://materialize.com/docs/overview/key-concepts/#indexes) для оптимизации производительности запросов в Materialize. Улучшения могут быть значительными, сокращая время отклика до единичных миллисекунд.
 
-Enable additional configuration for [indexes](https://github.com/MaterializeInc/materialize/blob/main/misc/dbt-materialize/CHANGELOG.md#120---2022-08-31).
+Материализованные представления (`materializedview`), представления (`view`) и источники (`source`) могут иметь определенный список `indexes`. Каждый [индекс Materialize](https://materialize.com/docs/sql/create-index/) может иметь следующие компоненты:
 
-Like in any standard relational database, you can use [indexes](https://materialize.com/docs/overview/key-concepts/#indexes) to optimize query performance in Materialize. Improvements can be significant, reducing response times down to single-digit milliseconds.
-
-Materialized views (`materializedview`), views (`view`) and sources (`source`) may have a list of `indexes` defined. Each [Materialize index](https://materialize.com/docs/sql/create-index/) can have the following components:
-
-- `columns` (list, required): one or more columns on which the index is defined. To create an index that uses _all_ columns, use the `default` component instead.
-- `name` (string, optional): the name for the index. If unspecified, Materialize will use the materialization name and column names provided.
-- `cluster` (string, optional): the cluster to use to create the index. If unspecified, indexes will be created in the cluster used to create the materialization.
-- `default` (bool, optional): Default: `False`. If set to `True`, creates a default index that uses all columns.
+- `columns` (список, обязательный): один или несколько столбцов, на которых определяется индекс. Чтобы создать индекс, использующий _все_ столбцы, используйте компонент `default`.
+- `name` (строка, необязательный): имя для индекса. Если не указано, Materialize будет использовать имя материализации и предоставленные имена столбцов.
+- `cluster` (строка, необязательный): кластер, который будет использоваться для создания индекса. Если не указано, индексы будут созданы в кластере, используемом для создания материализации.
+- `default` (логическое, необязательный): По умолчанию: `False`. Если установлено в `True`, создается индекс по умолчанию, который использует все столбцы.
 
 <File name='my_view_index.sql'>
 
@@ -77,9 +73,9 @@ select ...
 
 </File>
 
-### Tests
+### Тесты
 
-If you set the optional `--store-failures` flag or [`store_failures` config](/reference/resource-configs/store_failures), dbt will create a materialized view for each configured test that can keep track of failures over time. By default, test views are created in a schema suffixed with `dbt_test__audit`. To specify a custom suffix, use the `schema` config.
+Если вы установите необязательный флаг `--store-failures` или конфигурацию [`store_failures`](/reference/resource-configs/store_failures), dbt создаст материализованное представление для каждого настроенного теста, которое может отслеживать сбои с течением времени. По умолчанию тестовые представления создаются в схеме с суффиксом `dbt_test__audit`. Чтобы указать пользовательский суффикс, используйте конфигурацию `schema`.
 <File name='dbt_project.yml'>
 
 ```yaml

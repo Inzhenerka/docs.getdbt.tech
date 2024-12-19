@@ -1,5 +1,5 @@
 ---
-description: "Snapshot-name - Read this in-depth guide to learn about configurations in dbt."
+description: "Имя снимка - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
 <VersionBlock firstVersion="1.9">
@@ -14,7 +14,7 @@ snapshots:
       database: string
       unique_key: column_name_or_expression
       strategy: timestamp | check
-      updated_at: column_name  # Required if strategy is 'timestamp'
+      updated_at: column_name  # Обязательно, если стратегия 'timestamp'
 
 ```
 
@@ -40,16 +40,16 @@ import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
 
 </VersionBlock>
 
-## Description
+## Описание
 
-The name of a snapshot, which is used when selecting from a snapshot using the [`ref` function](/reference/dbt-jinja-functions/ref)
+Имя снимка, которое используется при выборке из снимка с помощью функции [`ref` function](/reference/dbt-jinja-functions/ref).
 
-This name must not conflict with the name of any other "refable" resource (models, seeds, other snapshots) defined in this project or package.
+Это имя не должно конфликтовать с именем любого другого "refable" ресурса (модели, семена, другие снимки), определенного в этом проекте или пакете.
 
-The name does not need to match the file name. As a result, snapshot filenames do not need to be unique.
+Имя не обязательно должно совпадать с именем файла. В результате имена файлов снимков не должны быть уникальными.
 
-## Examples
-### Name a snapshot `order_snapshot`
+## Примеры
+### Назовите снимок `order_snapshot`
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/order_snapshot.yml'>
@@ -64,7 +64,7 @@ snapshots:
       database: string
       unique_key: column_name_or_expression
       strategy: timestamp | check
-      updated_at: column_name  # Required if strategy is 'timestamp'
+      updated_at: column_name  # Обязательно, если стратегия 'timestamp'
 ```
 </File>
 
@@ -84,7 +84,7 @@ snapshots:
 
 </VersionBlock>
 
-To select from this snapshot in a downstream model:
+Чтобы выбрать из этого снимка в модели ниже по потоку:
 
 ```sql
 select * from {{ ref('orders_snapshot') }}

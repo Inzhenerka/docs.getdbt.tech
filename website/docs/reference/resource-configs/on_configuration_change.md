@@ -1,27 +1,27 @@
 ---
 resource_types: [models]
-description: "on_configuration_change - Read this in-depth guide to learn about configuration change monitoring in dbt."
+description: "on_configuration_change - Прочитайте это подробное руководство, чтобы узнать о мониторинге изменений конфигурации в dbt."
 datatype: "string"
 ---
 
 :::info
-This functionality is currently only supported for [materialized views](/docs/build/materializations#materialized-view) on a subset of adapters.
+Эта функциональность в настоящее время поддерживается только для [материализованных представлений](/docs/build/materializations#materialized-view) на ограниченном наборе адаптеров.
 :::
 
-The `on_configuration_change` config has three settings:
-- `apply` (default) &mdash; Attempt to update the existing database object if possible, avoiding a complete rebuild.
-  - *Note:* If any individual configuration change requires a full refresh, a full refresh is performed in lieu of individual alter statements.
-- `continue` &mdash; Allow runs to continue while also providing a warning that the object was left untouched.
-  - *Note:* This could result in downstream failures as those models may depend on these unimplemented changes.
-- `fail` &mdash; Force the entire run to fail if a change is detected.
+Конфигурация `on_configuration_change` имеет три настройки:
+- `apply` (по умолчанию) &mdash; Попытаться обновить существующий объект базы данных, если это возможно, избегая полной перестройки.
+  - *Примечание:* Если любое отдельное изменение конфигурации требует полной перезагрузки, выполняется полная перезагрузка вместо отдельных операторов изменения.
+- `continue` &mdash; Позволить запускам продолжаться, одновременно предоставляя предупреждение о том, что объект остался нетронутым.
+  - *Примечание:* Это может привести к сбоям на следующих этапах, так как эти модели могут зависеть от этих не реализованных изменений.
+- `fail` &mdash; Принудительно завершить весь запуск с ошибкой, если обнаружено изменение.
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -78,9 +78,9 @@ models:
 
 </Tabs>
 
-Materializations are implemented following this "drop through" life cycle:
-1. If a model does not exist with the provided path, create the new model.
-2. If a model exists, but has a different type, drop the existing model and create the new model. 
-3. If [`--full-refresh`](/reference/resource-configs/full_refresh) is supplied, replace the existing model regardless of configuration changes and the `on_configuration_change` setting.
-4. If there are no configuration changes, perform the default action for that type (e.g. apply refresh for a materialized view).
-5. Determine whether to apply the configuration changes according to the `on_configuration_change` setting.
+Материализации реализуются в соответствии с этим циклом жизни "drop through":
+1. Если модель не существует по указанному пути, создайте новую модель.
+2. Если модель существует, но имеет другой тип, удалите существующую модель и создайте новую.
+3. Если указан [`--full-refresh`](/reference/resource-configs/full_refresh), замените существующую модель независимо от изменений конфигурации и настройки `on_configuration_change`.
+4. Если изменений конфигурации нет, выполните действие по умолчанию для этого типа (например, примените обновление для материализованного представления).
+5. Определите, следует ли применять изменения конфигурации в соответствии с настройкой `on_configuration_change`.

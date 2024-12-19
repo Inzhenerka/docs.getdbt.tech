@@ -3,21 +3,21 @@ title: "lookback"
 id: "lookback"
 sidebar_label: "lookback"
 resource_types: [models]
-description: "dbt uses `lookback` to detrmine how many 'batches' of `batch_size` to reprocesses when a microbatch incremental model is running incrementally."
+description: "dbt использует `lookback`, чтобы определить, сколько 'пакетов' размером `batch_size` нужно повторно обработать, когда модель микропакетного инкрементального обновления работает инкрементально."
 datatype: int
 ---
 
-Available in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9 and higher.
+Доступно в [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
 
-## Definition
+## Определение
 
-Set the `lookback` to an integer greater than or equal to zero. The default value is `1`.  You can configure `lookback` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block.
+Установите `lookback` в целое число, большее или равное нулю. Значение по умолчанию — `1`. Вы можете настроить `lookback` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации.
 
-## Examples
+## Примеры
 
-The following examples set `2` as the `lookback` config for the `user_sessions` model.
+Следующие примеры устанавливают `2` в качестве конфигурации `lookback` для модели `user_sessions`.
 
-Example in the `dbt_project.yml` file:
+Пример в файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -29,7 +29,7 @@ models:
 ```
 </File>
 
-Example in a properties YAML file:
+Пример в файле свойств YAML:
 
 <File name='models/properties.yml'>
 
@@ -42,7 +42,7 @@ models:
 
 </File>
 
-Example in sql model config block:
+Пример в блоке конфигурации SQL модели:
 
 <File name="models/user_sessions.sql">
 
@@ -52,4 +52,4 @@ Example in sql model config block:
 ) }}
 ```
 
-</File> 
+</File>

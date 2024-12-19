@@ -1,43 +1,43 @@
 ---
-title: Resource path
-description: "Learn how to use resource paths to configure resource types in dbt."
+title: Путь к ресурсу
+description: "Узнайте, как использовать пути к ресурсам для настройки типов ресурсов в dbt."
 id: resource-path
-sidebar_label: "About resource paths"
+sidebar_label: "О путях к ресурсам"
 ---
 
-The `<resource-path>` nomenclature is used in this documentation when documenting how to configure resource types like models, seeds, snapshots, tests, sources, and others, from your `dbt_project.yml` file. 
+Номенклатура `<resource-path>` используется в этой документации для описания того, как настраивать типы ресурсов, такие как модели, семена, снимки, тесты, источники и другие, из вашего файла `dbt_project.yml`.
 
-It represents the nested dictionary keys that provide the path to a directory of that resource type, or a single instance of that resource type by name.
+Она представляет собой ключи вложенного словаря, которые предоставляют путь к директории данного типа ресурса или к единственному экземпляру этого типа ресурса по имени.
 
 ```yml
 resource_type:
   project_name:
     directory_name:
       subdirectory_name:
-        instance_of_resource_type (by name):
+        instance_of_resource_type (по имени):
           ...
 ```
 
-## Example
+## Пример
 
-The following examples are mostly for models and a source, but the same concepts apply for seeds, snapshots, tests, sources, and other resource types.
+Следующие примеры в основном касаются моделей и источника, но те же концепции применимы к семенам, снимкам, тестам, источникам и другим типам ресурсов.
 
-### Apply config to all models
+### Применить конфигурацию ко всем моделям
 
-To apply a configuration to all models, do not use a `<resource-path>`:
+Чтобы применить конфигурацию ко всем моделям, не используйте `<resource-path>`:
 
 <File name='dbt_project.yml'>
 
 ```yml
 models:
-  +enabled: false # this will disable all models (not a thing you probably want to do)
+  +enabled: false # это отключит все модели (возможно, вы не хотите этого делать)
 ```
 
 </File>
 
-### Apply config to all models in your project
+### Применить конфигурацию ко всем моделям в вашем проекте
 
-To apply a configuration to all models in _your_ project only, use your [project name](/reference/project-configs/name) as the `<resource-path>`:
+Чтобы применить конфигурацию ко всем моделям только в _вашем_ проекте, используйте ваше [имя проекта](/reference/project-configs/name) в качестве `<resource-path>`:
 
 <File name='dbt_project.yml'>
 
@@ -46,14 +46,14 @@ name: jaffle_shop
 
 models:
   jaffle_shop:
-    +enabled: false # this will apply to all models in your project, but not any installed packages
+    +enabled: false # это будет применено ко всем моделям в вашем проекте, но не к установленным пакетам
 ```
 
 </File>
 
-### Apply config to all models in a subdirectory
+### Применить конфигурацию ко всем моделям в подкаталоге
 
-To apply a configuration to all models in a subdirectory of your project, e.g. `staging`, nest the directory under the project name:
+Чтобы применить конфигурацию ко всем моделям в подкаталоге вашего проекта, например, `staging`, вложите директорию под имя проекта:
 
 <File name='dbt_project.yml'>
 
@@ -63,12 +63,12 @@ name: jaffle_shop
 models:
   jaffle_shop:
     staging:
-      +enabled: false # this will apply to all models in the `staging/` directory of your project
+      +enabled: false # это будет применено ко всем моделям в директории `staging/` вашего проекта
 ```
 
 </File>
 
-In the following project, this would apply to models in the `staging/` directory, but not the `marts/` directory:
+В следующем проекте это будет применено к моделям в директории `staging/`, но не к директории `marts/`:
 ```
 .
 ├── dbt_project.yml
@@ -78,9 +78,9 @@ In the following project, this would apply to models in the `staging/` directory
 
 ```
 
-### Apply config to a specific model
+### Применить конфигурацию к конкретной модели
 
-To apply a configuration to a specific model, nest the full path under the project name. For a model at `/staging/stripe/payments.sql`, this would look like:
+Чтобы применить конфигурацию к конкретной модели, вложите полный путь под имя проекта. Для модели по адресу `/staging/stripe/payments.sql` это будет выглядеть так:
 
 <File name='dbt_project.yml'>
 
@@ -92,12 +92,12 @@ models:
     staging:
       stripe:
         payments:
-          +enabled: false # this will apply to only one model
+          +enabled: false # это будет применено только к одной модели
 ```
 
 </File>
 
-In the following project, this would only apply to the `payments` model:
+В следующем проекте это будет применено только к модели `payments`:
 
 ```
 .
@@ -115,19 +115,19 @@ In the following project, this would only apply to the `payments` model:
             └── payments.sql
 
 ```
-### Apply config to a source nested in a subfolder 
+### Применить конфигурацию к источнику, вложенному в подпапку
 
-To disable a source table nested in a YAML file in a subfolder, you will need to supply the subfolder(s) within the path to that YAML file, as well as the source name and the table name in the `dbt_project.yml` file.<br /><br /> 
-  The following example shows how to disable a source table nested in a YAML file in a subfolder: 
+Чтобы отключить таблицу источника, вложенную в YAML-файл в подпапке, вам нужно будет указать подпапку(и) в пути к этому YAML-файлу, а также имя источника и имя таблицы в файле `dbt_project.yml`.<br /><br />
+Следующий пример показывает, как отключить таблицу источника, вложенную в YAML-файл в подпапке:
 
-  <File name='dbt_project.yml'>
+<File name='dbt_project.yml'>
 
-  ```yaml
-  sources:
-    your_project_name:
-      subdirectory_name:
-        source_name:
-          source_table_name:
-            +enabled: false
-  ```
-  </File>
+```yaml
+sources:
+  your_project_name:
+    subdirectory_name:
+      source_name:
+        source_table_name:
+          +enabled: false
+```
+</File>

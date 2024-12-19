@@ -1,15 +1,15 @@
 ---
-title: "Infer configurations"
-description: "Read this guide to understand how to configure Infer with dbt."
+title: "Настройка Infer"
+description: "Прочитайте это руководство, чтобы понять, как настроить Infer с dbt."
 id: "infer-configs"
 ---
 
 
-## Authentication
+## Аутентификация
 
-To connect to Infer from your dbt instance you need to set up a correct profile in your `profiles.yml`.
+Чтобы подключиться к Infer из вашего экземпляра dbt, вам необходимо настроить правильный профиль в вашем `profiles.yml`.
 
-The format of this should look like this:
+Формат должен выглядеть следующим образом:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -23,17 +23,17 @@ The format of this should look like this:
       username: "<infer-api-username>"
       apikey: "<infer-apikey>"
       data_config:
-        [configuration for your underlying data warehouse]  
+        [конфигурация для вашего основного хранилища данных]  
 ```
 
 </File>
 
-### Description of Infer Profile Fields
+### Описание полей профиля Infer
 
-| Field      | Required | Description                                                                                                                                       |
-|------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`     | Yes | Must be set to `infer`. This must be included either in `profiles.yml` or in the `dbt_project.yml` file.                                          |
-| `url`      | Yes | The host name of the Infer server to connect to. Typically this is `https://app.getinfer.io`.                                                     |
-| `username` | Yes | Your Infer username - the one you use to login.                                                                                                   |
-| `apikey`   | Yes | Your Infer api key.                                                                                                                               |
-| `data_config` | Yes | The configuration for your underlying data warehouse. The format of this follows the format of the configuration for your data warehouse adapter. |
+| Поле        | Обязательно | Описание                                                                                                                                       |
+|-------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`      | Да          | Должен быть установлен в `infer`. Это должно быть включено либо в `profiles.yml`, либо в файл `dbt_project.yml`.                              |
+| `url`       | Да          | Имя хоста сервера Infer, к которому нужно подключиться. Обычно это `https://app.getinfer.io`.                                                |
+| `username`  | Да          | Ваше имя пользователя Infer - то, которое вы используете для входа.                                                                           |
+| `apikey`    | Да          | Ваш API-ключ Infer.                                                                                                                           |
+| `data_config` | Да        | Конфигурация для вашего основного хранилища данных. Формат соответствует формату конфигурации для вашего адаптера хранилища данных.          |

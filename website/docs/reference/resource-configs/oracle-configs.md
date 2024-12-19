@@ -1,42 +1,41 @@
 ---
-title: "Oracle configurations"
+title: "Конфигурации Oracle"
 id: "oracle-configs"
 ---
 
 <VersionBlock firstVersion="1.3.2">
 
-## Use `parallel` hint
+## Используйте подсказку `parallel`
 
-Table materialization supports specifying the number of parallel executions as shown below
+Материализация таблиц поддерживает указание количества параллельных выполнений, как показано ниже.
 
 ```sql
--- Create a dbt model using 4 parallel executions
+-- Создайте модель dbt, используя 4 параллельных выполнения
 {{config(materialized='table', parallel=4}}
 SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-## Use `table_compression_clause`
+## Используйте `table_compression_clause`
 
-Table materialization supports different compression clauses as shown below
+Материализация таблиц поддерживает различные условия сжатия, как показано ниже.
 
-### Advanced Row Compression
+### Расширенное сжатие строк
 
-With Advanced compression enabled, Oracle Database maintains compression during all types of data manipulation operations, including conventional DML such as INSERT and UPDATE.
-`ROW STORE COMPRESS ADVANCED` is recommended in OLTP systems.
+При включенном расширенном сжатии Oracle Database поддерживает сжатие во всех типах операций манипуляции данными, включая обычные DML, такие как INSERT и UPDATE. Рекомендуется использовать `ROW STORE COMPRESS ADVANCED` в системах OLTP.
 
 ```sql
--- Advanced Row compression
+-- Расширенное сжатие строк
 {{config(materialized='table', table_compression_clause='ROW STORE COMPRESS ADVANCED')}}
 SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-### Hybrid Columnar Compression
+### Гибридное колонковое сжатие
 
-#### Querying
+#### Запросы
 
-`COLUMN STORE COMPRESS FOR QUERY` is useful in data warehouse environments. Valid values are `HIGH` or `LOW`, with `HIGH` providing a higher compression ratio. The default is `HIGH`
+`COLUMN STORE COMPRESS FOR QUERY` полезен в средах хранилищ данных. Допустимые значения: `HIGH` или `LOW`, при этом `HIGH` обеспечивает более высокий коэффициент сжатия. Значение по умолчанию — `HIGH`.
 
 ```sql
 {{config(materialized='table', table_compression_clause='COLUMN STORE COMPRESS FOR QUERY LOW')}}
@@ -44,7 +43,7 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-or
+или
 
 ```sql
 {{config(materialized='table', table_compression_clause='COLUMN STORE COMPRESS FOR QUERY HIGH')}}
@@ -52,9 +51,9 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-#### Archival
+#### Архивирование
 
-`COLUMN STORE COMPRESS FOR ARCHIVE` supports a higher compression ratio than `COLUMN STORE COMPRESS FOR QUERY` and is useful for archival. Valid values are `HIGH` or `LOW` with `HIGH` providing the highest compression ratio. The default is `LOW`
+`COLUMN STORE COMPRESS FOR ARCHIVE` поддерживает более высокий коэффициент сжатия, чем `COLUMN STORE COMPRESS FOR QUERY`, и полезен для архивирования. Допустимые значения: `HIGH` или `LOW`, при этом `HIGH` обеспечивает наивысший коэффициент сжатия. Значение по умолчанию — `LOW`.
 
 ```sql
 {{config(materialized='table', table_compression_clause='COLUMN STORE COMPRESS FOR ARCHIVE LOW')}}
@@ -62,7 +61,7 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-or
+или
 
 ```sql
 {{config(materialized='table', table_compression_clause='COLUMN STORE COMPRESS FOR ARCHIVE HIGH')}}
@@ -70,9 +69,9 @@ SELECT c.cust_id, c.cust_first_name, c.cust_last_name
 from {{ source('sh_database', 'customers') }} c
 ```
 
-## Partitioning
+## Разделение
 
-Table and Incremental materialization configuration supports adding a partitioning clause:
+Конфигурация материализации таблиц и инкрементальной материализации поддерживает добавление условия разделения:
 
 ```sql
 {
@@ -87,10 +86,9 @@ SELECT *
 FROM {{ source('sh_database', 'sales') }}
 ```
 
-## Session info in `v$session`
+## Информация о сессии в `v$session`
 
-Custom session information can be supplied under `session_info` in `profile.yml`
-
+Пользовательская информация о сессии может быть предоставлена в разделе `session_info` в `profile.yml`.
 
 ```yaml
 dbt_test:
@@ -111,7 +109,6 @@ dbt_test:
             module: "dbt-oracle-1.8.x"
 ```
 
-This helps to track dbt sessions in the Database view [V$SESSION](https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/V-SESSION.html)
-
+Это помогает отслеживать сессии dbt в представлении базы данных [V$SESSION](https://docs.oracle.com/en/database/oracle/oracle-database/19/refrn/V-SESSION.html).
 
 </VersionBlock>

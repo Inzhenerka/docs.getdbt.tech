@@ -1,27 +1,27 @@
 ---
-title: "Doris/SelectDB configurations"
-description: "Doris/SelectDB Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Doris/SelectDB"
+description: "Конфигурации Doris/SelectDB - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "doris-configs"
 ---
 
-## Models
+## Модели
 
-| Type                        | Supported? | Details                                                                                                                                             |
-|-----------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| view materialization        | YES        | Creates a [view](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-VIEW/).                            |
-| table materialization       | YES        | Creates a [table](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/).                          |
-| incremental materialization | YES        | Creates a table if it doesn't exist, and then item table model must be '[unique](https://doris.apache.org/docs/data-table/data-model#uniq-model/)'. |
+| Тип                        | Поддерживается? | Подробности                                                                                                                                             |
+|-----------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| материализация представления | ДА             | Создает [представление](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-VIEW/).                            |
+| материализация таблицы      | ДА             | Создает [таблицу](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/).                          |
+| инкрементальная материализация | ДА          | Создает таблицу, если она не существует, и затем модель таблицы должна быть '[уникальной](https://doris.apache.org/docs/data-table/data-model#uniq-model/)'. |
 
-### View Materialization
+### Материализация представления
 
-A dbt model can be created as a Doris view and configured using the following syntax:
+Модель dbt может быть создана как представление Doris и настроена с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-view"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]
 }>
 
@@ -48,16 +48,16 @@ models:
 </TabItem>
 </Tabs>
 
-### Table Materialization
+### Материализация таблицы
 
-A dbt model can be created as a [Doris table](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/) and configured using the following syntax:
+Модель dbt может быть создана как [таблица Doris](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/) и настроена с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-table"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]
 }>
 
@@ -102,29 +102,29 @@ models:
 </TabItem>
 </Tabs>
 
-#### Table Configuration
+#### Конфигурация таблицы
 
-| Option              | Description                                                                                                                                                                           | Required?                   |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| `materialized`      | How the model will be materialized into Doris. Must be `table` to create a table model.                                                                                               | Required                    |
-| `duplicate_key`     | The key list of Doris table model :'[duplicate](https://doris.apache.org/docs/data-table/data-model#duplicate-model)'.                                                                | Required                    |
-| `partition_by`      | The partition key list of Doris. ([Doris partition](https://doris.apache.org/docs/data-table/data-partition))                                                                         | Optional                    |
-| `partition_type`    | The partition type of Doris.                                                                                                                                                          | Optional (default: `RANGE`) |
-| `partition_by_init` | The partition rule or some real partitions item.                                                                                                                                      | Optional                    |
-| `distributed_by`    | The bucket key list of Doris.  ([Doris distribute](https://doris.apache.org/docs/data-table/data-partition#partitioning-and-bucket))                                                  | Required                    |
-| `buckets`           | The bucket number in one Doris partition.                                                                                                                                             | Required                    |
-| `properties`        | The other configuration of Doris. ([Doris properties](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/?&_highlight=properties)) | Required                    |
+| Опция              | Описание                                                                                                                                                                           | Обязательно?               |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| `materialized`      | Как модель будет материализована в Doris. Должно быть `table`, чтобы создать модель таблицы.                                                                                     | Обязательно                 |
+| `duplicate_key`     | Список ключей модели таблицы Doris: '[дубликаты](https://doris.apache.org/docs/data-table/data-model#duplicate-model)'.                                                            | Обязательно                 |
+| `partition_by`      | Список ключей разделения Doris. ([Разделение Doris](https://doris.apache.org/docs/data-table/data-partition))                                                                     | Необязательно               |
+| `partition_type`    | Тип разделения в Doris.                                                                                                                                                          | Необязательно (по умолчанию: `RANGE`) |
+| `partition_by_init` | Правило разделения или некоторые реальные элементы разделения.                                                                                                                  | Необязательно               |
+| `distributed_by`    | Список ключей для распределения в Doris.  ([Распределение Doris](https://doris.apache.org/docs/data-table/data-partition#partitioning-and-bucket))                                | Обязательно                 |
+| `buckets`           | Количество бакетов в одном разделе Doris.                                                                                                                                       | Обязательно                 |
+| `properties`        | Другие конфигурации Doris. ([Свойства Doris](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/?&_highlight=properties)) | Обязательно                 |
 
-### Incremental Materialization
+### Инкрементальная материализация
 
-An incremental Doris table, item table model must be 'unique' and is configured using the following syntax:
+Инкрементальная таблица Doris, модель таблицы должна быть 'уникальной' и настраивается с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-incremental"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]}
 >
 
@@ -169,18 +169,15 @@ models:
 </TabItem>
 </Tabs>
 
-#### Incremental Table Configuration
+#### Конфигурация инкрементальной таблицы
 
-| Option              | Description                                                                                                                                                                           | Required?                   |
-|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| `materialized`      | How the model will be materialized into Doris. Must be `table` to create a table model.                                                                                               | Required                    |
-| `unique_key`        | The key list of Doris table model :'[Doris unique](https://doris.apache.org/docs/data-table/data-model#uniq-model)'.                                                                  | Required                    |
-| `partition_by`      | The partition key list of Doris. ([Doris partition](https://doris.apache.org/docs/data-table/data-partition))                                                                         | Optional                    |
-| `partition_type`    | The partition type of Doris.                                                                                                                                                          | Optional (default: `RANGE`) |
-| `partition_by_init` | The partition rule or some real partitions item.                                                                                                                                      | Optional                    |
-| `distributed_by`    | The bucket key list of Doris.  ([Doris distribute](https://doris.apache.org/docs/data-table/data-partition#partitioning-and-bucket))                                                  | Required                    |
-| `buckets`           | The bucket number in one Doris partition.                                                                                                                                             | Required                    |
-| `properties`        | The other configuration of Doris. ([Doris properties](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/?&_highlight=properties)) | Required                    |
-
- 
-
+| Опция              | Описание                                                                                                                                                                           | Обязательно?               |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| `materialized`      | Как модель будет материализована в Doris. Должно быть `table`, чтобы создать модель таблицы.                                                                                     | Обязательно                 |
+| `unique_key`        | Список ключей модели таблицы Doris: '[уникальные](https://doris.apache.org/docs/data-table/data-model#uniq-model)'.                                                                | Обязательно                 |
+| `partition_by`      | Список ключей разделения Doris. ([Разделение Doris](https://doris.apache.org/docs/data-table/data-partition))                                                                     | Необязательно               |
+| `partition_type`    | Тип разделения в Doris.                                                                                                                                                          | Необязательно (по умолчанию: `RANGE`) |
+| `partition_by_init` | Правило разделения или некоторые реальные элементы разделения.                                                                                                                  | Необязательно               |
+| `distributed_by`    | Список ключей для распределения в Doris.  ([Распределение Doris](https://doris.apache.org/docs/data-table/data-partition#partitioning-and-bucket))                                | Обязательно                 |
+| `buckets`           | Количество бакетов в одном разделе Doris.                                                                                                                                       | Обязательно                 |
+| `properties`        | Другие конфигурации Doris. ([Свойства Doris](https://doris.apache.org/docs/sql-manual/sql-reference/Data-Definition-Statements/Create/CREATE-TABLE/?&_highlight=properties)) | Обязательно                 |

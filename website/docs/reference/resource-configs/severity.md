@@ -1,41 +1,41 @@
 ---
-title: "Configuring test `severity`"
+title: "Настройка `severity` тестов"
 id: "severity"
-description: "You can use error thresholds to configure the severity of test results and set when to produce an error or warning based on the number of failed tests."
+description: "Вы можете использовать пороги ошибок для настройки серьезности результатов тестов и определения, когда следует выдавать ошибку или предупреждение в зависимости от количества неудачных тестов."
 resource_types: [tests]
 datatype: string
 ---
 
-Tests return a number of failures—most often, this is the count of rows returned by the test query, but it could be a [custom calculation](/reference/resource-configs/fail_calc). Generally, if the number of failures is nonzero, the test returns an error. This makes sense, as test queries are designed to return all the rows you _don't_ want: duplicate records, null values, etc.
+Тесты возвращают количество неудач — чаще всего это количество строк, возвращаемых запросом теста, но это также может быть [пользовательский расчет](/reference/resource-configs/fail_calc). В общем случае, если количество неудач не равно нулю, тест возвращает ошибку. Это имеет смысл, так как запросы тестов предназначены для возврата всех строк, которые вы _не_ хотите: дублирующиеся записи, нулевые значения и т.д.
 
-It's possible to configure tests to return warnings instead of errors, or to make the test status conditional on the number of failures returned. Maybe 1 duplicate record can count as a warning, but 10 duplicate records should count as an error.
+Возможно настроить тесты так, чтобы они возвращали предупреждения вместо ошибок, или сделать статус теста условным в зависимости от количества возвращенных неудач. Возможно, 1 дублирующаяся запись может считаться предупреждением, но 10 дублирующихся записей должны считаться ошибкой.
 
-The relevant configs are:
-- `severity`: `error` or `warn` (default: `error`)
-- `error_if`: conditional expression (default: `!=0`)
-- `warn_if`: conditional expression (default: `!=0`)
+Соответствующие настройки:
+- `severity`: `error` или `warn` (по умолчанию: `error`)
+- `error_if`: условное выражение (по умолчанию: `!=0`)
+- `warn_if`: условное выражение (по умолчанию: `!=0`)
 
-Conditional expressions can be any comparison logic that is supported by your SQL syntax with an integer number of failures: `> 5`, `= 0`, `between 5 and 10`, and so on.
+Условные выражения могут быть любыми логическими сравнениями, поддерживаемыми вашим SQL-синтаксисом с целым числом неудач: `> 5`, `= 0`, `между 5 и 10` и так далее.
 
-Here's how those play in practice:
-- If `severity: error`, dbt will check the `error_if` condition first. If the error condition is met, the test returns an error. If it's not met, dbt will then check the `warn_if` condition (defaulted to `!=0`). If it's not specified or the warn condition is met, the test warns; if it's not met, the test passes.
-- If `severity: warn`, dbt will skip the `error_if` condition entirely and jump straight to the `warn_if` condition. If the warn condition is met, the test warns; if it's not met, the test passes.
+Вот как это работает на практике:
+- Если `severity: error`, dbt сначала проверит условие `error_if`. Если условие ошибки выполнено, тест возвращает ошибку. Если оно не выполнено, dbt затем проверит условие `warn_if` (по умолчанию `!=0`). Если оно не указано или условие предупреждения выполнено, тест выдает предупреждение; если оно не выполнено, тест проходит.
+- Если `severity: warn`, dbt полностью пропустит условие `error_if` и перейдет сразу к условию `warn_if`. Если условие предупреждения выполнено, тест выдает предупреждение; если оно не выполнено, тест проходит.
 
-Note that test warn statuses will return errors instead if the [`--warn-error`](/reference/global-configs/warnings) flag is passed. Unless dbt is told to treat warnings as errors, a test with `warn` severity will never return an error.
+Обратите внимание, что статусы предупреждений тестов будут возвращать ошибки, если передан флаг [`--warn-error`](/reference/global-configs/warnings). Если dbt не указать рассматривать предупреждения как ошибки, тест с серьезностью `warn` никогда не вернет ошибку.
 
 <Tabs
   defaultValue="generic"
   values={[
-    { label: 'Out-of-the-box generic tests', value: 'generic', },
-    { label: 'Singular tests', value: 'singular', },
-    { label: 'Custom generic tests', value: 'custom-generic', },
-    { label: 'Project level', value: 'project', },
+    { label: 'Готовые универсальные тесты', value: 'generic', },
+    { label: 'Единственные тесты', value: 'singular', },
+    { label: 'Пользовательские универсальные тесты', value: 'custom-generic', },
+    { label: 'Уровень проекта', value: 'project', },
   ]
 }>
 
 <TabItem value="generic">
 
-Configure a specific instance of a out-of-the-box generic test:
+Настройка конкретного экземпляра готового универсального теста:
 
 <File name='models/<filename>.yml'>
 
@@ -60,7 +60,7 @@ models:
 
 <TabItem value="singular">
 
-Configure a singular test:
+Настройка единственного теста:
 
 <File name='tests/<filename>.sql'>
 
@@ -76,7 +76,7 @@ select ...
 
 <TabItem value="custom-generic">
 
-Set the default for all instances of a custom generic test, by setting the config inside its test block (definition):
+Установите значение по умолчанию для всех экземпляров пользовательского универсального теста, установив конфигурацию внутри его блока теста (определения):
 
 <File name='macros/<filename>.sql'>
 
@@ -96,16 +96,16 @@ select ...
 
 <TabItem value="project">
 
-Set the default for all tests in a package or project:
+Установите значение по умолчанию для всех тестов в пакете или проекте:
 
 <File name='dbt_project.yml'>
 
 ```yaml
 tests:
-  +severity: warn  # all tests
+  +severity: warn  # все тесты
 
   <package_name>:
-    +warn_if: >10 # tests in <package_name>
+    +warn_if: >10 # тесты в <package_name>
 ```
 
 </File>

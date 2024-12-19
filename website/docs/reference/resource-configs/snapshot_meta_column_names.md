@@ -1,12 +1,12 @@
 ---
 resource_types: [snapshots]
-description: "Snapshot meta column names"
+description: "Имена мета-колонок снимков"
 datatype: "{<dictionary>}"
 default_value: {"dbt_valid_from": "dbt_valid_from", "dbt_valid_to": "dbt_valid_to", "dbt_scd_id": "dbt_scd_id", "dbt_updated_at": "dbt_updated_at"}
 id: "snapshot_meta_column_names"
 ---
 
-Available in dbt Core v1.9+. Select v1.9 or newer from the version dropdown to view the configs. Try it now in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+Доступно в dbt Core версии 1.9 и выше. Выберите версию 1.9 или новее в выпадающем списке версий, чтобы просмотреть конфигурации. Попробуйте это сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 <File name='snapshots/schema.yml'>
 
@@ -59,31 +59,31 @@ snapshots:
 
 </File>
 
-## Description
+## Описание
 
-In order to align with an organization's naming conventions, the `snapshot_meta_column_names` config can be used to customize the names of the [metadata columns](/docs/build/snapshots#snapshot-meta-fields) within each snapshot.
+Для того чтобы соответствовать наименованиям, принятым в организации, конфигурация `snapshot_meta_column_names` может быть использована для настройки имен [мета-колонок](/docs/build/snapshots#snapshot-meta-fields) в каждом снимке.
 
-## Default
+## По умолчанию
 
-By default, dbt snapshots use the following column names to track change history using [Type 2 slowly changing dimension](https://en.wikipedia.org/wiki/Slowly_changing_dimension#Type_2:_add_new_row) records:
+По умолчанию dbt снимки используют следующие имена колонок для отслеживания истории изменений с помощью записей [Типа 2 медленно изменяющейся размерности](https://en.wikipedia.org/wiki/Slowly_changing_dimension#Type_2:_add_new_row):
 
-| Field          | Meaning | Notes |
+| Поле          | Значение | Примечания |
 | -------------- | ------- | ----- |
-| `dbt_valid_from` | The timestamp when this snapshot row was first inserted and became valid. | The value is affected by the [`strategy`](/reference/resource-configs/strategy). |
-| `dbt_valid_to`   | The timestamp when this row is no longer valid. |  |
-| `dbt_scd_id`     | A unique key generated for each snapshot row. | This is used internally by dbt. |
-| `dbt_updated_at` | The `updated_at` timestamp of the source record when this snapshot row was inserted. | This is used internally by dbt. |
-| `dbt_is_deleted` | A boolean value indicating if the record has been deleted. `True` if deleted, `False` otherwise. | Added when `hard_deletes='new_record'` is configured. |
+| `dbt_valid_from` | Временная метка, когда эта строка снимка была впервые вставлена и стала действительной. | Значение зависит от [`strategy`](/reference/resource-configs/strategy). |
+| `dbt_valid_to`   | Временная метка, когда эта строка больше не действительна. |  |
+| `dbt_scd_id`     | Уникальный ключ, сгенерированный для каждой строки снимка. | Используется внутренне dbt. |
+| `dbt_updated_at` | Временная метка `updated_at` исходной записи, когда эта строка снимка была вставлена. | Используется внутренне dbt. |
+| `dbt_is_deleted` | Булевое значение, указывающее, была ли запись удалена. `True`, если удалена, `False` в противном случае. | Добавляется, когда настроено `hard_deletes='new_record'`. |
 
-However, these column names can be customized using the `snapshot_meta_column_names` config.
+Тем не менее, эти имена колонок могут быть настроены с помощью конфигурации `snapshot_meta_column_names`.
 
 :::warning
 
-To avoid any unintentional data modification, dbt will **not** automatically apply any column renames. So if a user applies `snapshot_meta_column_names` config for a snapshot without updating the pre-existing table, they will get an error. We recommend either only using these settings for net-new snapshots, or arranging an update of pre-existing tables prior to committing a column name change.
+Чтобы избежать непреднамеренного изменения данных, dbt **не** будет автоматически применять переименования колонок. Поэтому, если пользователь применяет конфигурацию `snapshot_meta_column_names` для снимка, не обновив существующую таблицу, он получит ошибку. Мы рекомендуем использовать эти настройки только для новых снимков или организовать обновление существующих таблиц перед внесением изменений в имена колонок.
 
 :::
 
-## Example
+## Пример
 
 <File name='snapshots/schema.yml'>
 
@@ -106,7 +106,7 @@ snapshots:
 
 </File>
 
-The resulting snapshot table contains the configured meta column names:
+В результате таблица снимка содержит настроенные имена мета-колонок:
 
 | id | scd_id               |        modified_date |           start_date |             end_date | is_deleted |
 | -- | -------------------- | -------------------- | -------------------- | -------------------- | ---------- |

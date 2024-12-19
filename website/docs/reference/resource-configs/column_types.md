@@ -3,13 +3,13 @@ resource_types: [seeds]
 datatype: {column_name: datatype}
 ---
 
-## Description
-Optionally specify the database type of columns in a [seed](/docs/build/seeds), by providing a dictionary where the keys are the column names, and the values are a valid datatype (this varies across databases).
+## Описание
+Опционально укажите тип базы данных для столбцов в [seed](/docs/build/seeds), предоставив словарь, где ключи — это имена столбцов, а значения — допустимые типы данных (они различаются в зависимости от баз данных).
 
-Without specifying this, dbt will infer the datatype based on the column values in your seed file.
+Если это не указано, dbt будет выводить тип данных на основе значений столбцов в вашем seed файле.
 
-## Usage
-Specify column types in your `dbt_project.yml` file:
+## Использование
+Укажите типы столбцов в вашем файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -24,9 +24,7 @@ seeds:
 
 </File>
 
-
-
-Or:
+Или:
 
 <File name='seeds/properties.yml'>
 
@@ -43,9 +41,9 @@ seeds:
 
 </File>
 
-If you have previously run `dbt seed`, you'll need to run `dbt seed --full-refresh` for the changes to take effect.
+Если вы ранее запускали `dbt seed`, вам нужно будет выполнить `dbt seed --full-refresh`, чтобы изменения вступили в силу.
 
-Note that you will need to use the fully directory path of a seed when configuring `column_types`. For example, for a seed file at `seeds/marketing/utm_mappings.csv`, you will need to configure it like so:
+Обратите внимание, что вам нужно использовать полный путь к директории seed при настройке `column_types`. Например, для seed файла по пути `seeds/marketing/utm_mappings.csv`, вам нужно будет настроить его следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -61,15 +59,15 @@ seeds:
 
 </File>
 
-## Examples
+## Примеры
 
-### Use a varchar column type to preserve leading zeros in a zipcode
-(Note: preservation of leading zeros works for v0.16.0 onwards)
+### Используйте тип столбца varchar для сохранения ведущих нулей в почтовом индексе
+(Примечание: сохранение ведущих нулей работает с версии 0.16.0 и выше)
 <File name='dbt_project.yml'>
 
 ```yml
 seeds:
-  jaffle_shop: # you must include the project name
+  jaffle_shop: # вы должны указать имя проекта
     warehouse_locations:
       +column_types:
         zipcode: varchar(5)
@@ -77,8 +75,8 @@ seeds:
 
 </File>
 
-## Recommendation
-Use this configuration only when required, i.e. when the type inference is not working as expected. Otherwise you can omit this configuration.
+## Рекомендация
+Используйте эту конфигурацию только в случае необходимости, т.е. когда вывод типа не работает так, как ожидалось. В противном случае вы можете пропустить эту конфигурацию.
 
-## Troubleshooting
-Note: The `column_types` configuration is case-sensitive, regardless of quoting configuration. If you specify a column as `Country_Name` in your Seed, you should reference it as `Country_Name`, and not `country_name`.  
+## Устранение неполадок
+Примечание: Конфигурация `column_types` чувствительна к регистру, независимо от конфигурации кавычек. Если вы указываете столбец как `Country_Name` в вашем Seed, вы должны ссылаться на него как `Country_Name`, а не `country_name`.

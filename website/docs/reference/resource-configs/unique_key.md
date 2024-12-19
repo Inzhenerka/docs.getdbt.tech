@@ -1,15 +1,15 @@
 ---
 resource_types: [snapshots, models]
-description: "Learn more about unique_key configurations in dbt."
+description: "Узнайте больше о конфигурациях unique_key в dbt."
 datatype: column_name_or_expression
 ---
 
 
 <Tabs>
 
-<TabItem value="models" label="Models">
+<TabItem value="models" label="Модели">
 
-Configure the `unique_key` in the `config` block of your [incremental model's](/docs/build/incremental-models) SQL file, in your `models/properties.yml` file, or in your `dbt_project.yml` file.
+Настройте `unique_key` в блоке `config` вашего SQL файла [инкрементальной модели](/docs/build/incremental-models), в вашем файле `models/properties.yml` или в вашем файле `dbt_project.yml`.
 
 <File name='models/my_incremental_model.sql'>
 
@@ -30,7 +30,7 @@ Configure the `unique_key` in the `config` block of your [incremental model's](/
 ```yaml
 models:
   - name: my_incremental_model
-    description: "An incremental model example with a unique key."
+    description: "Пример инкрементальной модели с уникальным ключом."
     config:
       materialized: incremental
       unique_key: id
@@ -54,11 +54,11 @@ models:
 
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
 <VersionBlock firstVersion="1.9">
 
-For [snapshots](/docs/build/snapshots), configure the `unique_key` in the your `snapshot/filename.yml` file or in your `dbt_project.yml` file.
+Для [снимков](/docs/build/snapshots) настройте `unique_key` в вашем файле `snapshot/filename.yml` или в вашем файле `dbt_project.yml`.
 
 <File name='snapshots/<filename>.yml'>
 
@@ -76,7 +76,7 @@ snapshots:
 
 <VersionBlock lastVersion="1.8">
 
-Configure the `unique_key` in the `config` block of your snapshot SQL file or in your `dbt_project.yml` file.
+Настройте `unique_key` в блоке `config` вашего SQL файла снимка или в вашем файле `dbt_project.yml`.
 
 import SnapshotYaml from '/snippets/_snapshot-yaml-spec.md';
 
@@ -107,29 +107,29 @@ snapshots:
 </TabItem>
 </Tabs>
 
-## Description
-A column name or expression that is unique for the inputs of a snapshot or incremental model. dbt uses this to match records between a result set and an existing snapshot or incremental model, so that changes can be captured correctly.
+## Описание
+Имя столбца или выражение, которое уникально для входных данных снимка или инкрементальной модели. dbt использует это для сопоставления записей между набором результатов и существующим снимком или инкрементальной моделью, чтобы изменения могли быть правильно зафиксированы.
 
-In dbt Cloud "Latest" release track and from dbt v1.9, [snapshots](/docs/build/snapshots) are defined and configured in YAML files within your `snapshots/` directory. You can specify one or multiple `unique_key` values within your snapshot YAML file's `config` key.
+В треке "Latest" dbt Cloud и начиная с версии dbt v1.9, [снимки](/docs/build/snapshots) определяются и настраиваются в YAML файлах в вашем каталоге `snapshots/`. Вы можете указать одно или несколько значений `unique_key` в ключе `config` вашего YAML файла снимка.
 
 :::caution 
 
-Providing a non-unique key will result in unexpected snapshot results. dbt **will not** test the uniqueness of this key, consider [testing](/blog/primary-key-testing#how-to-test-primary-keys-with-dbt) the source data to ensure that this key is indeed unique.
+Предоставление неуникального ключа приведет к неожиданным результатам снимка. dbt **не будет** проверять уникальность этого ключа, рассмотрите возможность [тестирования](/blog/primary-key-testing#how-to-test-primary-keys-with-dbt) исходных данных, чтобы убедиться, что этот ключ действительно уникален.
 
 :::
 
-## Default
-This is a **required parameter**. No default is provided.
+## По умолчанию
+Это **обязательный параметр**. Значение по умолчанию не предоставляется.
 
 
-## Examples
-### Use an `id` column as a unique key
+## Примеры
+### Использование столбца `id` в качестве уникального ключа
 
 <Tabs>
 
-<TabItem value="models" label="Models">
+<TabItem value="models" label="Модели">
 
-In this example, the `id` column is the unique key for an incremental model.
+В этом примере столбец `id` является уникальным ключом для инкрементальной модели.
 
 <File name='models/my_incremental_model.sql'>
 
@@ -147,9 +147,9 @@ select * from ..
 </File>
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
-In this example, the `id` column is used as a unique key for a snapshot.
+В этом примере столбец `id` используется в качестве уникального ключа для снимка.
 
 <VersionBlock firstVersion="1.9">
 
@@ -183,10 +183,10 @@ snapshots:
 
 </File>
 
-You can also write this in yaml. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a config block, as above).
+Вы также можете записать это в yaml. Это может быть хорошей идеей, если несколько снимков используют один и тот же `unique_key` (хотя мы предпочитаем применять эту конфигурацию в блоке config, как указано выше).
 </VersionBlock>
 
-You can also specify configurations in your `dbt_project.yml` file if multiple snapshots share the same `unique_key`:
+Вы также можете указать конфигурации в вашем файле `dbt_project.yml`, если несколько снимков используют один и тот же `unique_key`:
 <File name='dbt_project.yml'>
 
 ```yml
@@ -203,14 +203,14 @@ snapshots:
 
 <VersionBlock firstVersion="1.9">
 
-### Use multiple unique keys
+### Использование нескольких уникальных ключей
 
 <Tabs>
-<TabItem value="models" label="Models">
+<TabItem value="models" label="Модели">
 
-Configure multiple unique keys for an incremental model as a string representing a single column or a list of single-quoted column names that can be used together, for example, `['col1', 'col2', …]`. 
+Настройте несколько уникальных ключей для инкрементальной модели в виде строки, представляющей один столбец, или списка имен столбцов в одинарных кавычках, которые могут использоваться вместе, например, `['col1', 'col2', …]`. 
 
-Columns must not contain null values, otherwise the incremental model will fail to match rows and generate duplicate rows. Refer to [Defining a unique key](/docs/build/incremental-models#defining-a-unique-key-optional) for more information.
+Столбцы не должны содержать значения null, иначе инкрементальная модель не сможет сопоставить строки и сгенерирует дублирующиеся строки. Смотрите [Определение уникального ключа](/docs/build/incremental-models#defining-a-unique-key-optional) для получения дополнительной информации.
 
 <File name='models/my_incremental_model.sql'>
 
@@ -228,9 +228,9 @@ with...
 
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
-You can configure snapshots to use multiple unique keys for `primary_key` columns.
+Вы можете настроить снимки для использования нескольких уникальных ключей для столбцов `primary_key`.
 
 <File name='snapshots/transaction_items_snapshot.yml'>
 
@@ -255,10 +255,10 @@ snapshots:
 
 <VersionBlock lastVersion="1.8">
 
-### Use a combination of two columns as a unique key
+### Использование комбинации двух столбцов в качестве уникального ключа
 
 <Tabs>
-<TabItem value="models" label="Models">
+<TabItem value="models" label="Модели">
 
 <File name='models/my_incremental_model.sql'>
 
@@ -276,9 +276,9 @@ with...
 
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
-This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (for example, `'-'`) to ensure uniqueness.
+Эта конфигурация принимает допустимое выражение столбца. Таким образом, вы можете объединить два столбца вместе в качестве уникального ключа, если это необходимо. Хорошей идеей будет использовать разделитель (например, `'-'`), чтобы обеспечить уникальность.
 
 <File name='snapshots/transaction_items_snapshot.sql'>
 
@@ -303,7 +303,7 @@ from {{ source('erp', 'transactions') }}
 
 </File>
 
-Though, it's probably a better idea to construct this column in your query and use that as the `unique_key`:
+Тем не менее, вероятно, лучше создать этот столбец в вашем запросе и использовать его в качестве `unique_key`:
 
 <File name='models/transaction_items_ephemeral.sql'>
 
@@ -319,7 +319,7 @@ from {{ source('erp', 'transactions') }}
 
 </File>
 
-In this example, we create an ephemeral model `transaction_items_ephemeral` that creates an `id` column that can be used as the `unique_key` our snapshot configuration.
+В этом примере мы создаем эфемерную модель `transaction_items_ephemeral`, которая создает столбец `id`, который может быть использован в качестве `unique_key` в нашей конфигурации снимка.
 
 <File name='snapshots/transaction_items_snapshot.sql'>
 

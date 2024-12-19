@@ -1,34 +1,34 @@
 ---
 id: array-agg
 title: SQL ARRAY_AGG
-description: The ARRAY_AGG function allows you to create an array of multiple data values in SQL.
+description: Функция ARRAY_AGG позволяет создавать массив из нескольких значений данных в SQL.
 slug: /sql-reference/array-agg
 ---
 
 <head>
-    <title>Working with the SQL ARRAY_AGG function</title>
+    <title>Работа с функцией SQL ARRAY_AGG</title>
 </head>
 
-In any typical programming language such as Python or Javascript, arrays are typically innate and bountiful; when you’re processing data in SQL, arrays are a little less common but are a handy way to provide more structure to your data.
+В любом типичном языке программирования, таком как Python или Javascript, массивы обычно являются врожденными и обильными; когда вы обрабатываете данные в SQL, массивы встречаются немного реже, но они являются удобным способом предоставить больше структуры вашим данным.
 
-To create an array of multiple data values in SQL, you’ll likely leverage the ARRAY_AGG function (short for *array aggregation*), which puts your input column values into an array.
+Чтобы создать массив из нескольких значений данных в SQL, вы, вероятно, воспользуетесь функцией ARRAY_AGG (сокращение от *агрегация массива*), которая помещает значения вашего входного столбца в массив.
 
-## How to use SQL ARRAY_AGG
+## Как использовать SQL ARRAY_AGG
 
-The ARRAY_AGG function has the following syntax:
+Функция ARRAY_AGG имеет следующий синтаксис:
 
 `array_agg( [distinct] <field_name>) [within group (<order_by field>) over ([partition by <field>])`
 
-A few notes on the functionality of this function:
-- Most of the example syntax from above is optional, meaning the ARRAY_AGG function can be as simple as `array_agg(<field_name>)` or used as a more complex as a window function
-- [DISTINCT](/sql-reference/distinct) is an optional argument that can be passed in, so only distinct values are in the return array
-- If input column is empty, the returning array will also be empty
-- Since the ARRAY_AGG is an aggregate function (gasp!), you’ll need a GROUP BY statement at the end of your query if you’re grouping by certain field
-- ARRAY_AGG and similar aggregate functions can become inefficient or costly to compute on large datasets, so use ARRAY_AGG wisely and truly understand your use cases for having arrays in your datasets
+Несколько замечаний о функциональности этой функции:
+- Большая часть синтаксиса из приведенного выше является необязательной, что означает, что функцию ARRAY_AGG можно использовать так же просто, как `array_agg(<field_name>)`, или в более сложном виде как оконную функцию.
+- [DISTINCT](/sql-reference/distinct) является необязательным аргументом, который можно передать, чтобы в возвращаемом массиве были только уникальные значения.
+- Если входной столбец пуст, возвращаемый массив также будет пустым.
+- Поскольку ARRAY_AGG является агрегатной функцией (ах!), вам потребуется оператор GROUP BY в конце вашего запроса, если вы группируете по определенному полю.
+- ARRAY_AGG и подобные агрегатные функции могут стать неэффективными или дорогостоящими для вычисления на больших наборах данных, поэтому используйте ARRAY_AGG с умом и действительно понимайте свои случаи использования массивов в ваших наборах данных.
 
-Let’s dive into a practical example using the ARRAY_AGG function.
+Давайте углубимся в практический пример использования функции ARRAY_AGG.
 
-### SQL ARRAY_AGG example
+### Пример SQL ARRAY_AGG
 
 ```sql
 select
@@ -39,7 +39,7 @@ group by 1
 order by 1
 ```
 
-This simple query using the sample dataset [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` table is returning a new column of distinct order statuses by order month:
+Этот простой запрос, использующий образец данных из таблицы `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), возвращает новый столбец с уникальными статусами заказов по месяцам заказов:
 
 | order_month | status_array |
 |:---:|:---:|
@@ -48,15 +48,15 @@ This simple query using the sample dataset [Jaffle Shop’s](https://github.com/
 | 2018-03-01 | [ "completed", "shipped", "placed" ] |
 | 2018-04-01 | [ "placed" ] |
 
-Looking at the query results—this makes sense! We’d expect newer orders to likely not have any returns, and older orders to have completed returns.
+Смотрим на результаты запроса — это имеет смысл! Мы ожидаем, что новые заказы, вероятно, не будут иметь возвратов, а старые заказы будут иметь завершенные возвраты.
 
-## SQL ARRAY_AGG syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL ARRAY_AGG в Snowflake, Databricks, BigQuery и Redshift
 
-[Snowflake](https://docs.snowflake.com/en/sql-reference/functions/array_agg.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/array_agg.html), and [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg) all support the ARRAY_AGG function. Redshift, however, supports an out-of-the-box [LISTAGG function](https://docs.aws.amazon.com/redshift/latest/dg/r_LISTAGG.html) that can perform similar functionality to ARRAY_AGG. The primary difference is that LISTAGG allows you to explicitly choose a delimiter to separate a list whereas arrays are naturally delimited by commas.
+[Snowflake](https://docs.snowflake.com/en/sql-reference/functions/array_agg.html), [Databricks](https://docs.databricks.com/sql/language-manual/functions/array_agg.html) и [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#array_agg) все поддерживают функцию ARRAY_AGG. Однако Redshift поддерживает встроенную [функцию LISTAGG](https://docs.aws.amazon.com/redshift/latest/dg/r_LISTAGG.html), которая может выполнять аналогичную функциональность с ARRAY_AGG. Основное различие заключается в том, что LISTAGG позволяет вам явно выбрать разделитель для разделения списка, в то время как массивы естественным образом разделяются запятыми.
 
-## ARRAY_AGG use cases
+## Случаи использования ARRAY_AGG
 
-There are definitely too many use cases to list out for using the ARRAY_AGG function in your dbt models, but it’s very likely that ARRAY_AGG is used pretty downstream in your <Term id="dag" /> since you likely don’t want your data so bundled up earlier in your DAG to improve modularity and <Term id="dry">dryness</Term>. A few downstream use cases for ARRAY_AGG:
+Существует слишком много случаев использования функции ARRAY_AGG в ваших моделях dbt, чтобы перечислить их все, но очень вероятно, что ARRAY_AGG используется довольно поздно в вашем <Term id="dag" />, поскольку вы, вероятно, не хотите, чтобы ваши данные были так упакованы ранее в вашем DAG для улучшения модульности и <Term id="dry">сухости</Term>. Несколько случаев использования ARRAY_AGG:
 
-- In [`export_` models](https://www.getdbt.com/open-source-data-culture/reverse-etl-playbook) that are used to send data to platforms using a <Term id="reverse-etl" /> tool to pair down multiple rows into a single row. Some downstream platforms, for example, require certain values that we’d usually keep as separate rows to be one singular row per customer or user. ARRAY_AGG is handy to bring multiple column values together by a singular id, such as creating an array of all items a user has ever purchased and sending that array downstream to an email platform to create a custom email campaign.
-- Similar to export models, you may see ARRAY_AGG used in [mart tables](/best-practices/how-we-structure/4-marts) to create final aggregate arrays per a singular dimension; performance concerns of ARRAY_AGG in these likely larger tables can potentially be bypassed with use of [incremental models in dbt](/docs/build/incremental-models).
+- В [`export_` моделях](https://www.getdbt.com/open-source-data-culture/reverse-etl-playbook), которые используются для отправки данных на платформы с помощью инструмента <Term id="reverse-etl" />, чтобы объединить несколько строк в одну строку. Некоторые платформы на выходе, например, требуют, чтобы определенные значения, которые мы обычно храним как отдельные строки, были одной строкой на клиента или пользователя. ARRAY_AGG удобно объединяет несколько значений столбцов по единственному идентификатору, например, создавая массив всех товаров, которые пользователь когда-либо покупал, и отправляя этот массив на платформу электронной почты для создания индивидуальной email-кампании.
+- Похожим образом, как в моделях экспорта, вы можете увидеть использование ARRAY_AGG в [mart tables](/best-practices/how-we-structure/4-marts) для создания окончательных агрегатных массивов по единственной размерности; проблемы с производительностью ARRAY_AGG в этих, вероятно, более крупных таблицах могут быть потенциально обойдены с помощью [инкрементальных моделей в dbt](/docs/build/incremental-models).

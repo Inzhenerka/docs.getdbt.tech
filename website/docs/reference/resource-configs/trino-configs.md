@@ -1,19 +1,19 @@
 ---
-title: "Starburst/Trino configurations"
+title: "Конфигурации Starburst/Trino"
 id: "trino-configs"
 ---
 
-## Cluster requirements
+## Требования к кластеру
 
-The designated cluster must have an attached catalog where objects such as tables and views can be created, renamed, altered, and dropped. Any user connecting to the cluster with dbt must also have these same permissions for the target catalog.
+Назначенный кластер должен иметь прикрепленный каталог, в котором могут быть созданы, переименованы, изменены и удалены объекты, такие как таблицы и представления. Любой пользователь, подключающийся к кластеру с помощью dbt, также должен иметь те же разрешения для целевого каталога.
 
-## Session properties
+## Свойства сессии
 
-With a Starburst Enterprise, Starburst Galaxy, or Trino cluster, you can [set session properties](https://trino.io/docs/current/sql/set-session.html) to modify the current configuration for your user session.
+С помощью кластера Starburst Enterprise, Starburst Galaxy или Trino вы можете [установить свойства сессии](https://trino.io/docs/current/sql/set-session.html), чтобы изменить текущую конфигурацию для вашей пользовательской сессии.
 
-The standard way to define session properties is with the `session_properties` field of your `profiles.yml`. This ensures that all dbt connections use these settings by default.
+Стандартный способ определения свойств сессии — это использование поля `session_properties` в вашем `profiles.yml`. Это гарантирует, что все подключения dbt используют эти настройки по умолчанию.
 
-However, to temporaily adjust these session properties for a specific dbt model or group of models, you can use a [dbt hook](/reference/resource-configs/pre-hook-post-hook) to set session properties on a specific dbt model. For example:
+Однако, чтобы временно изменить эти свойства сессии для конкретной модели dbt или группы моделей, вы можете использовать [dbt hook](/reference/resource-configs/pre-hook-post-hook) для установки свойств сессии на конкретной модели dbt. Например:
 
 ```sql
 {{
@@ -23,28 +23,26 @@ However, to temporaily adjust these session properties for a specific dbt model 
 }}
 ```
 
-## Connector properties
+## Свойства соединителя
 
-You can use Starburst/Trino table properties to configure how you want your data to be represented.
+Вы можете использовать свойства таблицы Starburst/Trino для настройки того, как вы хотите, чтобы ваши данные были представлены.
 
-For details on what's supported for each supported data source, refer to either the [Trino Connectors](https://trino.io/docs/current/connector.html) or [Starburst Catalog](https://docs.starburst.io/starburst-galaxy/catalogs/).
+Для получения подробной информации о поддерживаемых свойствах для каждого поддерживаемого источника данных обратитесь к [Trino Connectors](https://trino.io/docs/current/connector.html) или [Starburst Catalog](https://docs.starburst.io/starburst-galaxy/catalogs/).
 
+### Каталоги Hive
 
-
-### Hive catalogs
-
-At target catalog that uses the Hive connector and a metastore service (HMS) is typical when working with Starburst and dbt. The following settings are recommended for working with dbt. The intent is to ensure that dbt can perform the frequently executed `DROP` and `RENAME` statements.
+Целевой каталог, который использует соединитель Hive и службу метаданных (HMS), является типичным при работе с Starburst и dbt. Рекомендуется использовать следующие настройки для работы с dbt. Цель состоит в том, чтобы гарантировать, что dbt может выполнять часто выполняемые операторы `DROP` и `RENAME`.
 
 ```java
 hive.metastore-cache-ttl=0s
 hive.metastore-refresh-interval=5s
 ```
 
-## File format configuration
+## Конфигурация формата файла
 
-When using file-based connectors such as Hive, a user can customize aspects of the connector such as the format that is used as well the type of materialization
+При использовании основанных на файлах соединителей, таких как Hive, пользователь может настроить аспекты соединителя, такие как формат, который используется, а также тип материализации.
 
-The below configures the table to be materializes as a set of partitioned [Parquet](https://spark.apache.org/docs/latest/sql-data-sources-parquet.html) files.
+Ниже настраивается таблица для материализации в виде набора партиционированных [Parquet](https://spark.apache.org/docs/latest/sql-data-sources-parquet.html) файлов.
 
 ```sql
 {{
@@ -58,52 +56,52 @@ The below configures the table to be materializes as a set of partitioned [Parqu
 }}
 ```
 
-## Seeds and prepared statements
+## Seeds и подготовленные выражения
 
-The [dbt seed](/docs/build/seeds) command makes use of prepared statements in [Starburst](https://docs.starburst.io/latest/sql/prepare.html)/[Trino](https://trino.io/docs/current/sql/prepare.html).
+Команда [dbt seed](/docs/build/seeds) использует подготовленные выражения в [Starburst](https://docs.starburst.io/latest/sql/prepare.html)/[Trino](https://trino.io/docs/current/sql/prepare.html).
 
-Prepared statements are templated SQL statements that you can execute repeatedly with high efficiency. The values are sent in a separate field rather than hard coded in the SQL string itself. This is often how application frontends structure their record `INSERT` statements in the OLTP database backend. Because of this, it's common for prepared statements to have as many placeholder variables (parameters) as there are columns in the destination table.
+Подготовленные выражения — это шаблонные SQL-выражения, которые вы можете выполнять многократно с высокой эффективностью. Значения отправляются в отдельном поле, а не жестко закодированы в строке SQL. Это часто то, как фронтенды приложений структурируют свои операторы `INSERT` в OLTP-базе данных. Из-за этого часто бывает так, что подготовленные выражения имеют столько же переменных-заполнителей (параметров), сколько столбцов в целевой таблице.
 
-Most seed files have more than one row, and often thousands of rows. This makes the size of the client request as large as there are parameters.
+Большинство seed-файлов имеют более одной строки и часто содержат тысячи строк. Это делает размер клиентского запроса таким же большим, как и количество параметров.
 
-### Header line length limit in Python HTTP client 
+### Ограничение длины заголовка в Python HTTP клиенте
 
-You might run into an error message about header line limit if your prepared statements have too many parameters. This is because the header line limit in Python's HTTP client is `65536` bytes. 
+Вы можете столкнуться с сообщением об ошибке о лимите длины заголовка, если ваши подготовленные выражения имеют слишком много параметров. Это связано с тем, что лимит длины заголовка в HTTP-клиенте Python составляет `65536` байт.
 
-You can avoid this upper limit by converting the large prepared statement into smaller statements. dbt already does this by batching an entire seed file into groups of rows &mdash; one group for a number of rows in the CSV. 
+Вы можете избежать этого верхнего предела, преобразовав большое подготовленное выражение в более мелкие выражения. dbt уже делает это, группируя весь seed-файл в группы строк — одна группа для определенного количества строк в CSV.
 
-Let's say you have a seed file with 20 columns, 600 rows, and 12,000 parameters. Instead of creating a single prepared statement for this, you can have dbt create four prepared `INSERT` statements with 150 rows and 3,000 parameters.
+Предположим, у вас есть seed-файл с 20 столбцами, 600 строками и 12,000 параметрами. Вместо того чтобы создавать одно подготовленное выражение для этого, вы можете заставить dbt создать четыре подготовленных оператора `INSERT` с 150 строками и 3,000 параметрами.
 
-There's a drawback to grouping your table rows. When there are many columns (parameters) in a seed file, the batch size needs to be very small.
+Существует недостаток группировки строк вашей таблицы. Когда в seed-файле много столбцов (параметров), размер пакета должен быть очень маленьким.
 
-For the `dbt-trino` adapter, the macro for batch size is `trino__get_batch_size()` and its default value is `1000`. To change this default behavior, you can add this macro to your dbt project:
+Для адаптера `dbt-trino` макрос для размера пакета — это `trino__get_batch_size()`, и его значение по умолчанию составляет `1000`. Чтобы изменить это поведение по умолчанию, вы можете добавить этот макрос в ваш проект dbt:
 
 <File name='macros/YOUR_MACRO_NAME.sql'>
 
 ```sql
 {% macro trino__get_batch_size() %}
-  {{ return(10000) }} -- Adjust this number as you see fit
+  {{ return(10000) }} -- Настройте это число по своему усмотрению
 {% endmacro %}
 ```
 
 </File>
 
-Another way to avoid the header line length limit is to set `prepared_statements_enabled` to `true` in your dbt profile; however, this is considered legacy behavior and can be removed in a future release.
+Другой способ избежать ограничения длины заголовка — установить `prepared_statements_enabled` в `true` в вашем профиле dbt; однако это считается устаревшим поведением и может быть удалено в будущих версиях.
 
-## Materializations
-### Table
+## Материализации
+### Таблица
 
-The `dbt-trino` adapter supports these modes in `table` materialization (and [full-refresh runs](/reference/commands/run#refresh-incremental-models) in `incremental` materialization), which you can configure with `on_table_exists`:
+Адаптер `dbt-trino` поддерживает эти режимы в материализации `table` (и [полные обновления](/reference/commands/run#refresh-incremental-models) в материализации `incremental`), которые вы можете настроить с помощью `on_table_exists`:
 
-- `rename` &mdash; Creates an intermediate table, renames the target table to the backup one, and renames the intermediate table to the target one.
-- `drop` &mdash; Drops and re-creates a table. This overcomes the table rename limitation in AWS Glue.
-- `replace` &mdash; Replaces a table using CREATE OR REPLACE clause. Support for table replacement varies across connectors. Refer to the connector documentation for details.
+- `rename` — Создает промежуточную таблицу, переименовывает целевую таблицу в резервную и переименовывает промежуточную таблицу в целевую.
+- `drop` — Удаляет и воссоздает таблицу. Это преодолевает ограничение на переименование таблиц в AWS Glue.
+- `replace` — Заменяет таблицу с использованием оператора CREATE OR REPLACE. Поддержка замены таблицы варьируется в зависимости от соединителей. Обратитесь к документации соединителя для получения подробной информации.
 
-If CREATE OR REPLACE is supported in underlying connector, `replace` is recommended option. Otherwise, the recommended `table` materialization uses `on_table_exists = 'rename'` and is also the default. You can change this default configuration by editing _one_ of these files:
-- the SQL file for your model
-- the `dbt_project.yml` configuration file
+Если CREATE OR REPLACE поддерживается в подлежащем соединителе, рекомендуется использовать `replace`. В противном случае рекомендуемая материализация `table` использует `on_table_exists = 'rename'` и также является значением по умолчанию. Вы можете изменить эту конфигурацию по умолчанию, отредактировав _один_ из этих файлов:
+- SQL-файл для вашей модели
+- конфигурационный файл `dbt_project.yml`
 
-The following examples configure `table` materialization to be `drop`: 
+Следующие примеры настраивают материализацию `table` на `drop`: 
 
 <File name='models/YOUR_MODEL_NAME.sql'>
 
@@ -111,13 +109,12 @@ The following examples configure `table` materialization to be `drop`:
 {{
   config(
     materialized = 'table',
-    on_table_exists = 'drop`
+    on_table_exists = 'drop'
   )
 }}
 ```
 
 </File>
-
 
 <File name='dbt_project.yml'>
 
@@ -129,25 +126,25 @@ models:
 ```
 </File>
 
-If you use `table` materialization and `on_table_exists = 'rename'` with AWS Glue, you might encounter this error message. You can overcome the table rename limitation by using `drop`: 
+Если вы используете материализацию `table` и `on_table_exists = 'rename'` с AWS Glue, вы можете столкнуться с сообщением об ошибке. Вы можете преодолеть ограничение на переименование таблиц, используя `drop`: 
 
 ```sh
-TrinoUserError(type=USER_ERROR, name=NOT_SUPPORTED, message="Table rename is not yet supported by Glue service")
+TrinoUserError(type=USER_ERROR, name=NOT_SUPPORTED, message="Переименование таблицы пока не поддерживается службой Glue")
 ```
 
-### View
+### Представление
 
-The `dbt-trino` adapter supports these security modes in `view` materialization, which you can configure with `view_security`:
+Адаптер `dbt-trino` поддерживает эти режимы безопасности в материализации `view`, которые вы можете настроить с помощью `view_security`:
 - `definer`
 - `invoker`
 
-For more details about security modes in views, see [Security](https://trino.io/docs/current/sql/create-view.html#security) in the Trino docs.
+Для получения дополнительной информации о режимах безопасности в представлениях смотрите [Безопасность](https://trino.io/docs/current/sql/create-view.html#security) в документации Trino.
 
-By default, `view` materialization uses `view_security = 'definer'`. You can change this default configuration by editing _one_ of these files:
-- the SQL file for your model
-- the `dbt_project.yml` configuration file
+По умолчанию материализация `view` использует `view_security = 'definer'`. Вы можете изменить эту конфигурацию по умолчанию, отредактировав _один_ из этих файлов:
+- SQL-файл для вашей модели
+- конфигурационный файл `dbt_project.yml`
 
-For example, these configure the security mode to `invoker`:  
+Например, эти настройки конфигурируют режим безопасности на `invoker`:  
 
 <File name='models/YOUR_MODEL_NAME.sql'>
 
@@ -172,17 +169,16 @@ models:
 ```
 </File>
 
+### Инкрементальная
 
-### Incremental
-
-Using an incremental model limits the amount of data that needs to be transformed, which greatly reduces the runtime of your transformations. This improves performance and reduces compute costs.
+Использование инкрементальной модели ограничивает объем данных, которые необходимо преобразовать, что значительно сокращает время выполнения ваших преобразований. Это улучшает производительность и снижает затраты на вычисления.
 
 ```sql
 {{
     config(
       materialized = 'incremental', 
-      unique_key='<optional>',
-      incremental_strategy='<optional>',)
+      unique_key='<опционально>',
+      incremental_strategy='<опционально>',)
 }}
 select * from {{ ref('events') }}
 {% if is_incremental() %}
@@ -190,15 +186,15 @@ select * from {{ ref('events') }}
 {% endif %}
 ```
 
-Use the `+on_schema_change` property to define how dbt-trino should handle column changes. For more details about this property, see [column changes](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/configuring-incremental-models#what-if-the-columns-of-my-incremental-model-change). 
+Используйте свойство `+on_schema_change`, чтобы определить, как dbt-trino должен обрабатывать изменения столбцов. Для получения дополнительной информации об этом свойстве смотрите [изменения столбцов](https://docs.getdbt.com/docs/building-a-dbt-project/building-models/configuring-incremental-models#what-if-the-columns-of-my-incremental-model-change). 
 
-If your connector doesn't support views, set the `+views_enabled` property to `false`.
+Если ваш соединитель не поддерживает представления, установите свойство `+views_enabled` в `false`.
 
-You can decide how model should be rebuilt in a `full-refresh` run by specifying `on_table_exists` config. Options are the same as described in [table materialization section](/reference/resource-configs/trino-configs#table)
+Вы можете определить, как модель должна быть перестроена в процессе `full-refresh`, указав конфигурацию `on_table_exists`. Опции такие же, как описано в разделе [материализация таблицы](/reference/resource-configs/trino-configs#table).
 
-#### append strategy
+#### Стратегия добавления
 
-The default incremental strategy is `append`. `append` only adds new records based on the condition specified in the `is_incremental()` conditional block.
+Стратегия инкремента по умолчанию — `append`. `append` только добавляет новые записи на основе условия, указанного в условном блоке `is_incremental()`.
 
 ```sql
 {{
@@ -211,9 +207,9 @@ select * from {{ ref('events') }}
 {% endif %}
 ```
 
-#### delete+insert strategy
+#### Стратегия удаления+вставки
 
-With the `delete+insert` incremental strategy, you can instruct dbt to use a two-step incremental approach. First, it deletes the records detected through the configured `is_incremental()` block, then re-inserts them.
+С помощью стратегии инкремента `delete+insert` вы можете указать dbt использовать двухэтапный инкрементный подход. Сначала он удаляет записи, обнаруженные через настроенный блок `is_incremental()`, а затем повторно вставляет их.
 
 ```sql
 {{
@@ -229,11 +225,11 @@ select * from {{ ref('users') }}
 {% endif %}
 ```
 
-#### merge strategy
+#### Стратегия слияния
 
-With the `merge` incremental strategy, dbt-trino constructs a [Trino MERGE statement](https://trino.io/docs/current/sql/merge.html) to `insert` new records and `update` existing records, based on the `unique_key` property.
+С помощью стратегии инкремента `merge` dbt-trino строит [оператор MERGE Trino](https://trino.io/docs/current/sql/merge.html), чтобы `insert` новые записи и `update` существующие записи на основе свойства `unique_key`.
 
-If `unique_key` is not unique, you can use the `delete+insert` strategy instead.
+Если `unique_key` не уникален, вы можете использовать стратегию `delete+insert`.
 
 ```sql
 {{
@@ -249,17 +245,17 @@ select * from {{ ref('users') }}
 {% endif %}
 ```
 
-Be aware that there are some Trino connectors that don't support `MERGE` or have limited support.
+Имейте в виду, что есть некоторые соединители Trino, которые не поддерживают `MERGE` или имеют ограниченную поддержку.
 
-#### Incremental overwrite on Hive models
+#### Инкрементальное перезаписывание на моделях Hive
 
-If there's a [Hive connector](https://trino.io/docs/current/connector/hive.html) accessing your target incremental model, you can simulate an `INSERT OVERWRITE` statement by using the `insert-existing-partitions-behavior` setting on the Hive connector configuration in Trino:
+Если к вашей целевой инкрементальной модели обращается [соединитель Hive](https://trino.io/docs/current/connector/hive.html), вы можете смоделировать оператор `INSERT OVERWRITE`, используя настройку `insert-existing-partitions-behavior` в конфигурации соединителя Hive в Trino:
 
 ```ini
 <hive-catalog-name>.insert-existing-partitions-behavior=OVERWRITE
 ```
 
-Below is an example Hive configuration that sets the `OVERWRITE` functionality for a Hive connector called `minio`:
+Ниже приведен пример конфигурации Hive, который устанавливает функциональность `OVERWRITE` для соединителя Hive с именем `minio`:
 
 ```yaml
 trino-incremental-hive:
@@ -280,7 +276,7 @@ trino-incremental-hive:
       threads: 1
 ```
 
-`dbt-trino` overwrites existing partitions in the target model that match the staged data. It appends the remaining partitions to the target model. This functionality works on incremental models that use partitioning. For example:  
+`dbt-trino` перезаписывает существующие партиции в целевой модели, которые соответствуют подготовленным данным. Он добавляет оставшиеся партиции в целевую модель. Эта функциональность работает на инкрементальных моделях, которые используют партиционирование. Например:  
 
 ```sql
 {{
@@ -294,20 +290,20 @@ trino-incremental-hive:
 }}
 ```
 
-### Materialized view
+### Материализованное представление
 
-The `dbt-trino` adapter supports [materialized views](https://trino.io/docs/current/sql/create-materialized-view.html) and refreshes them for every subsequent `dbt run` that you execute. For more information, see [REFRESH MATERIALIZED VIEW](https://trino.io/docs/current/sql/refresh-materialized-view.html) in the Trino docs.
+Адаптер `dbt-trino` поддерживает [материализованные представления](https://trino.io/docs/current/sql/create-materialized-view.html) и обновляет их для каждого последующего `dbt run`, который вы выполняете. Для получения дополнительной информации смотрите [REFRESH MATERIALIZED VIEW](https://trino.io/docs/current/sql/refresh-materialized-view.html) в документации Trino.
 
-You can also define custom properties for the materialized view through the `properties` config.
+Вы также можете определить пользовательские свойства для материализованного представления через конфигурацию `properties`.
 
-This materialization supports the [full_refresh](https://docs.getdbt.com/reference/resource-configs/full_refresh) config and flag.
-Whenever you want to rebuild your materialized view (for example, when changing underlying SQL query) run `dbt run --full-refresh`.
+Эта материализация поддерживает конфигурацию и флаг [full_refresh](https://docs.getdbt.com/reference/resource-configs/full_refresh).
+Когда вы хотите перестроить свое материализованное представление (например, при изменении основного SQL-запроса), выполните `dbt run --full-refresh`.
 
-You can create a materialized view by editing _one_ of these files:
-- the SQL file for your model
-- the `dbt_project.yml` configuration file
+Вы можете создать материализованное представление, отредактировав _один_ из этих файлов:
+- SQL-файл для вашей модели
+- конфигурационный файл `dbt_project.yml`
 
-The following examples create a materialized view in Parquet format: 
+Следующие примеры создают материализованное представление в формате Parquet: 
 
 <File name='models/YOUR_MODEL_NAME.sql'>
 
@@ -324,7 +320,6 @@ The following examples create a materialized view in Parquet format:
 
 </File>
 
-
 <File name='dbt_project.yml'>
 
 ```yaml 
@@ -336,11 +331,11 @@ models:
 ```
 </File>
 
-## Snapshots
+## Снимки
 
-[Snapshots in dbt](/docs/build/snapshots) depend on the `current_timestamp` macro, which returns a timestamp with millisecond precision (3 digits) by default. There are some connectors for Trino that don't support this timestamp precision (`TIMESTAMP(3) WITH TIME ZONE`), like Iceberg.
+[Снимки в dbt](/docs/build/snapshots) зависят от макроса `current_timestamp`, который по умолчанию возвращает временную метку с миллисекундной точностью (3 цифры). Существуют некоторые соединители для Trino, которые не поддерживают эту точность временной метки (`TIMESTAMP(3) WITH TIME ZONE`), такие как Iceberg.
 
-To change timestamp precision, you can define your own [macro](/docs/build/jinja-macros). For example, this defines a new `trino__current_timestamp()` macro with microsecond precision (6 digits): 
+Чтобы изменить точность временной метки, вы можете определить свой собственный [макрос](/docs/build/jinja-macros). Например, это определяет новый макрос `trino__current_timestamp()` с точностью микросекунд (6 цифр): 
 
 <File name='macros/YOUR_MACRO_NAME.sql'>
 
@@ -351,12 +346,11 @@ To change timestamp precision, you can define your own [macro](/docs/build/jinja
 ```
 </File>
 
-## Grants
+## Права
 
-Use [grants](/reference/resource-configs/grants) to manage access to the datasets you're producing with dbt. You can use grants with [Starburst Enterprise](https://docs.starburst.io/latest/security/biac-overview.html), [Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/security/access-control.html), and Hive ([sql-standard](https://trino.io/docs/current/connector/hive-security.html)).
+Используйте [права](/reference/resource-configs/grants) для управления доступом к наборам данных, которые вы создаете с помощью dbt. Вы можете использовать права с [Starburst Enterprise](https://docs.starburst.io/latest/security/biac-overview.html), [Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/security/access-control.html) и Hive ([sql-standard](https://trino.io/docs/current/connector/hive-security.html)).
 
-
-To implement access permissions, define grants as resource configs on each model, seed, and snapshot. Define the default grants that apply to the entire project in your `dbt_project.yml` and define model-specific grants within each model's SQL or YAML file.
+Чтобы реализовать разрешения доступа, определите права как конфигурации ресурсов для каждой модели, seed и снимка. Определите стандартные права, которые применяются ко всему проекту, в вашем `dbt_project.yml`, и определите специфические для модели права в каждом SQL или YAML файле модели.
 <File name='dbt_project.yml'>
 
 ```yaml
@@ -368,7 +362,7 @@ models:
 ```
 </File>
 
-## Model contracts
+## Контракты моделей
 
-The `dbt-trino` adapter supports [model contracts](/docs/collaborate/govern/model-contracts). Currently, only [constraints](/reference/resource-properties/constraints) with `type` as `not_null` are supported.
-Before using `not_null` constraints in your model, make sure the underlying connector supports `not null`, to avoid running into errors.
+Адаптер `dbt-trino` поддерживает [контракты моделей](/docs/collaborate/govern/model-contracts). В настоящее время поддерживаются только [ограничения](/reference/resource-properties/constraints) с `type` как `not_null`.
+Перед использованием ограничений `not_null` в вашей модели убедитесь, что подлежащий соединитель поддерживает `not null`, чтобы избежать возникновения ошибок.

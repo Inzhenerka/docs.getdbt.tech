@@ -1,23 +1,23 @@
 ---
-title: "Postgres configurations"
-description: "Postgres Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Postgres"
+description: "Конфигурации Postgres - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "postgres-configs"
 ---
 
-## Incremental materialization strategies
+## Стратегии инкрементальной материализации
 
-In dbt-postgres, the following incremental materialization strategies are supported:
+В dbt-postgres поддерживаются следующие стратегии инкрементальной материализации:
 
-- `append` (default when `unique_key` is not defined)
+- `append` (по умолчанию, когда `unique_key` не определен)
 - `merge`
-- `delete+insert` (default when `unique_key` is defined)
+- `delete+insert` (по умолчанию, когда `unique_key` определен)
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-## Performance optimizations
+## Оптимизация производительности
 
 ### Unlogged
 
-"Unlogged" tables can be considerably faster than ordinary tables, as they are not written to the write-ahead log nor replicated to read replicas. They are also considerably less safe than ordinary tables. See [Postgres docs](https://www.postgresql.org/docs/current/sql-createtable.html#SQL-CREATETABLE-UNLOGGED) for details.
+"Unlogged" таблицы могут быть значительно быстрее, чем обычные таблицы, так как они не записываются в журнал предварительной записи и не реплицируются на резервные реплики. Однако они также значительно менее безопасны, чем обычные таблицы. См. [документацию Postgres](https://www.postgresql.org/docs/current/sql-createtable.html#SQL-CREATETABLE-UNLOGGED) для получения подробной информации.
 
 <File name='my_table.sql'>
 
@@ -38,14 +38,14 @@ models:
 
 </File>
 
-### Indexes
+### Индексы
 
-While Postgres works reasonably well for datasets smaller than about 10m rows, database tuning is sometimes required. It's important to create indexes for columns that are commonly used in joins or where clauses.
+Хотя Postgres работает достаточно хорошо для наборов данных размером менее 10 миллионов строк, иногда требуется настройка базы данных. Важно создавать индексы для столбцов, которые часто используются в операциях соединения или в условиях where.
 
-Table models, incremental models, seeds, snapshots, and materialized views may have a list of `indexes` defined. Each Postgres index can have three components:
-- `columns` (list, required): one or more columns on which the index is defined
-- `unique` (boolean, optional): whether the index should be [declared unique](https://www.postgresql.org/docs/9.4/indexes-unique.html)
-- `type` (string, optional): a supported [index type](https://www.postgresql.org/docs/current/indexes-types.html) (B-tree, Hash, GIN, etc)
+Модели таблиц, инкрементальные модели, семена, снимки и материализованные представления могут иметь определенный список `indexes`. Каждый индекс Postgres может иметь три компонента:
+- `columns` (список, обязательный): один или несколько столбцов, по которым определяется индекс
+- `unique` (логическое, необязательное): должен ли индекс быть [объявлен уникальным](https://www.postgresql.org/docs/9.4/indexes-unique.html)
+- `type` (строка, необязательное): поддерживаемый [тип индекса](https://www.postgresql.org/docs/current/indexes-types.html) (B-tree, Hash, GIN и т.д.)
 
 <File name='my_table.sql'>
 
@@ -63,7 +63,7 @@ select ...
 
 </File>
 
-If one or more indexes are configured on a resource, dbt will run `create index` <Term id="ddl" /> statement(s) as part of that resource's <Term id="materialization" />, within the same transaction as its main `create` statement. For the index's name, dbt uses a hash of its properties and the current timestamp, in order to guarantee uniqueness and avoid namespace conflict with other indexes.
+Если для ресурса настроены один или несколько индексов, dbt выполнит оператор `create index` <Term id="ddl" /> как часть <Term id="materialization" /> этого ресурса, в рамках той же транзакции, что и основной оператор `create`. Для имени индекса dbt использует хэш его свойств и текущее время, чтобы гарантировать уникальность и избежать конфликтов пространств имен с другими индексами.
 
 ```sql
 create index if not exists
@@ -78,7 +78,7 @@ on "my_target_database"."my_target_schema"."indexed_model"
 (column_a, column_b);
 ```
 
-You can also configure indexes for a number of resources at once:
+Вы также можете настроить индексы для нескольких ресурсов одновременно:
 
 <File name='dbt_project.yml'>
 
@@ -93,23 +93,22 @@ models:
 
 </File>
 
-## Materialized views
+## Материализованные представления
 
-The Postgres adapter supports [materialized views](https://www.postgresql.org/docs/current/rules-materializedviews.html)
-with the following configuration parameters:
+Адаптер Postgres поддерживает [материализованные представления](https://www.postgresql.org/docs/current/rules-materializedviews.html) с следующими параметрами конфигурации:
 
-| Parameter                                                                        | Type               | Required | Default | Change Monitoring Support |
-|----------------------------------------------------------------------------------|--------------------|----------|---------|---------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`         | no       | `apply` | n/a                       |
-| [`indexes`](#indexes)                                                            | `[{<dictionary>}]` | no       | `none`  | alter                     |
+| Параметр                                                                        | Тип               | Обязательный | По умолчанию | Поддержка мониторинга изменений |
+|----------------------------------------------------------------------------------|--------------------|--------------|--------------|---------------------------------|
+| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>`         | нет          | `apply`      | н/д                             |
+| [`indexes`](#indexes)                                                            | `[{<dictionary>}]` | нет          | `none`       | alter                           |
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -181,8 +180,6 @@ models:
 
 </Tabs>
 
-The [`indexes`](#indexes) parameter corresponds to that of a table, as explained above.
-It's worth noting that, unlike tables, dbt monitors this parameter for changes and applies the changes without dropping the materialized view.
-This happens via a `DROP/CREATE` of the indexes, which can be thought of as an `ALTER` of the materialized view.
+Параметр [`indexes`](#indexes) соответствует параметру таблицы, как объяснялось выше. Стоит отметить, что, в отличие от таблиц, dbt отслеживает этот параметр на предмет изменений и применяет изменения без удаления материализованного представления. Это происходит через `DROP/CREATE` индексов, что можно рассматривать как `ALTER` материализованного представления.
 
-Learn more about these parameters in Postgres's [docs](https://www.postgresql.org/docs/current/sql-creatematerializedview.html).
+Узнайте больше об этих параметрах в [документации](https://www.postgresql.org/docs/current/sql-creatematerializedview.html) Postgres.

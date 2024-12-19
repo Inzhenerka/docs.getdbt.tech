@@ -1,12 +1,12 @@
 ---
-title: "No specific configurations for this adapter"
+title: "Нет специфических конфигураций для этого адаптера"
 id: "no-configs"
 ---
 
-If you were guided to this page from a data platform setup article, it most likely means:
+Если вы попали на эту страницу из статьи по настройке платформы данных, это, скорее всего, означает:
 
-- Setting up the profile is the only action the end-user needs to take on the data platform, or
-- The subsequent actions the end-user needs to take are not currently documented, or
-- Relevant information is provided on the documentation pages of the data platform vendor.
+- Настройка профиля — это единственное действие, которое конечному пользователю необходимо выполнить на платформе данных, или
+- Последующие действия, которые необходимо выполнить конечному пользователю, в настоящее время не задокументированы, или
+- Соответствующая информация предоставлена на страницах документации поставщика платформы данных.
 
-If you'd like to contribute to data platform-specific configuration information, refer to [Documenting a new adapter](/guides/adapter-creation)
+Если вы хотите внести свой вклад в информацию о конфигурации, специфичной для платформы данных, обратитесь к разделу [Документирование нового адаптера](/guides/adapter-creation)

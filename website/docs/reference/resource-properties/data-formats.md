@@ -1,19 +1,19 @@
 ---
-title: "Supported data formats for unit tests"
-sidebar_label: "Data formats"
+title: "Поддерживаемые форматы данных для модульных тестов"
+sidebar_label: "Форматы данных"
 ---
 
-Currently, mock data for unit testing in dbt supports three formats:
+В настоящее время для создания тестовых данных для модульного тестирования в dbt поддерживаются три формата:
 
-- `dict` (default): Inline dictionary values.
-- `csv`: Inline CSV values or a CSV file.
-- `sql`: Inline SQL query or a SQL file. Note: For this format you must supply mock data for _all rows_. 
+- `dict` (по умолчанию): Встроенные значения словаря.
+- `csv`: Встроенные значения CSV или файл CSV.
+- `sql`: Встроенный SQL-запрос или файл SQL. Примечание: Для этого формата необходимо предоставить тестовые данные для _всех строк_.
 
 ## dict
 
-The `dict` data format is the default if no `format` is defined.
+Формат данных `dict` является форматом по умолчанию, если не задан `format`.
 
-`dict` requires an inline dictionary for `rows`:
+`dict` требует встроенный словарь для `rows`:
 
 ```yml
 
@@ -31,7 +31,7 @@ unit_tests:
 
 ## csv
 
-When using the `csv` format, you can use either an inline CSV string for `rows`:
+При использовании формата `csv` вы можете использовать либо встроенную строку CSV для `rows`:
 
 ```yml
 
@@ -48,7 +48,7 @@ unit_tests:
 
 ```
 
-Or, you can provide the name of a CSV file in the `tests/fixtures` directory (or the configured `test-paths` location) of your project for `fixture`: 
+Или вы можете указать имя файла CSV в директории `tests/fixtures` (или в настроенной директории `test-paths`) вашего проекта для `fixture`: 
 
 ```yml
 
@@ -64,13 +64,13 @@ unit_tests:
 
 ## sql
 
-Using this format:
-- Provides more flexibility for the types of data you can unit test
-- Allows you to unit test a model that depends on an ephemeral model
+Использование этого формата:
+- Обеспечивает большую гибкость для типов данных, которые вы можете тестировать
+- Позволяет тестировать модель, которая зависит от эфемерной модели
 
-However, when using `format: sql` you must supply mock data for _all rows_.
+Однако при использовании `format: sql` необходимо предоставить тестовые данные для _всех строк_.
 
-When using the `sql` format, you can use either an inline SQL query for `rows`:
+При использовании формата `sql` вы можете использовать либо встроенный SQL-запрос для `rows`:
 
 ```yml
 
@@ -86,7 +86,7 @@ unit_tests:
 
 ```
 
-Or, you can provide the name of a SQL file in the `tests/fixtures` directory (or the configured `test-paths` location) of your project for `fixture`: 
+Или вы можете указать имя файла SQL в директории `tests/fixtures` (или в настроенной директории `test-paths`) вашего проекта для `fixture`: 
 
 ```yml
 
@@ -100,4 +100,4 @@ unit_tests:
 
 ```
 
-**Note:** Jinja is unsupported in SQL fixtures for unit tests.
+**Примечание:** Jinja не поддерживается в SQL-файлах для модульных тестов.

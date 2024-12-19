@@ -1,46 +1,46 @@
 ---
-title: "Upsolver configurations"
+title: "Конфигурации Upsolver"
 id: "upsolver-configs"
-description: "Upsolver Configurations - Read this in-depth guide to learn about configurations in dbt."
+description: "Конфигурации Upsolver - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
-## Supported Upsolver SQLake functionality
+## Поддерживаемая функциональность Upsolver SQLake
 
-| COMMAND | STATE | MATERIALIZED |
+| КОМАНДА | СОСТОЯНИЕ | МАТЕРИАЛИЗОВАНО |
 | ------ | ------ | ------ |
-| SQL compute cluster| not supported | - |
-| SQL connections| supported | connection |
-| SQL copy job | supported | incremental |
-| SQL merge job | supported | incremental |
-| SQL insert job | supported | incremental |
-| SQL materialized views | supported | materializedview |
-| Expectations | supported | incremental |
+| SQL вычислительный кластер | не поддерживается | - |
+| SQL соединения | поддерживается | connection |
+| SQL копирование данных | поддерживается | incremental |
+| SQL объединение данных | поддерживается | incremental |
+| SQL вставка данных | поддерживается | incremental |
+| SQL материализованные представления | поддерживается | materializedview |
+| Ожидания | поддерживается | incremental |
 
-## Configs materialization
+## Конфигурации материализации
 
-| Config | Required | Materialization | Description | Example |
+| Конфигурация | Обязательная | Материализация | Описание | Пример |
 | ------ | --------- | --------------- | ---------- | ------- |
-| connection_type | Yes | connection | Connection identifier: S3/GLUE_CATALOG/KINESIS | connection_type='S3' |
-| connection_options | Yes | connection | Dictionary of options supported by selected connection |           connection_options=\{ 'aws_role': 'aws_role', 'external_id': 'SAMPLES', 'read_only': True \} |
-| incremental_strategy | No | incremental | Define one of incremental strategies: merge/copy/insert. Default: copy | incremental_strategy='merge' |
-| source | No | incremental | Define source to copy from: S3/KAFKA/KINESIS | source = 'S3' |
-| target_type | No | incremental | Define target type REDSHIFT/ELASTICSEARCH/S3/SNOWFLAKE/POSTGRES. Default None for Data lake | target_type='Snowflake' |
-| target_prefix | False | incremental | Define PREFIX for ELASTICSEARCH target type | target_prefix = 'orders' |
-| target_location | False | incremental | Define LOCATION for S3 target type | target_location = 's3://your-bucket-name/path/to/folder/' |
-| schema | Yes/No | incremental | Define target schema. Required if target_type, no table created in a metastore connection | schema = 'target_schema' |
-| database | Yes/No | incremental | Define target connection. Required if target_type, no table created in a metastore connection | database = 'target_connection' |
-| alias | Yes/No | incremental | Define target table. Required if target_type, no table created in a metastore connection | alias = 'target_table' |
-| delete_condition | No | incremental | Records that match the ON condition and a delete condition can be deleted | delete_condition='nettotal > 1000' |
-| partition_by | No | incremental | List of dictionaries to define partition_by for target metastore table | partition_by=[\{'field':'$field_name'\}] |
-| primary_key | No | incremental | List of dictionaries to define partition_by for target metastore table  | primary_key=[\{'field':'customer_email', 'type':'string'\}] |
-| map_columns_by_name | No | incremental | Maps columns from the SELECT statement to the table. Boolean. Default: False | map_columns_by_name=True |
-| sync | No | incremental/materializedview | Boolean option to define if job is synchronized or non-msynchronized. Default: False | sync=True |
-| options | No | incremental/materializedview | Dictionary of job options | options=\{ 'START_FROM': 'BEGINNING', 'ADD_MISSING_COLUMNS': True \} |
+| connection_type | Да | connection | Идентификатор соединения: S3/GLUE_CATALOG/KINESIS | connection_type='S3' |
+| connection_options | Да | connection | Словарь опций, поддерживаемых выбранным соединением | connection_options=\{ 'aws_role': 'aws_role', 'external_id': 'SAMPLES', 'read_only': True \} |
+| incremental_strategy | Нет | incremental | Определите одну из стратегий инкрементного обновления: merge/copy/insert. По умолчанию: copy | incremental_strategy='merge' |
+| source | Нет | incremental | Определите источник для копирования: S3/KAFKA/KINESIS | source = 'S3' |
+| target_type | Нет | incremental | Определите тип цели REDSHIFT/ELASTICSEARCH/S3/SNOWFLAKE/POSTGRES. По умолчанию None для Data lake | target_type='Snowflake' |
+| target_prefix | Нет | incremental | Определите PREFIX для типа цели ELASTICSEARCH | target_prefix = 'orders' |
+| target_location | Нет | incremental | Определите LOCATION для типа цели S3 | target_location = 's3://your-bucket-name/path/to/folder/' |
+| schema | Да/Нет | incremental | Определите целевую схему. Обязательно, если target_type, таблица не создается в соединении метастора | schema = 'target_schema' |
+| database | Да/Нет | incremental | Определите целевое соединение. Обязательно, если target_type, таблица не создается в соединении метастора | database = 'target_connection' |
+| alias | Да/Нет | incremental | Определите целевую таблицу. Обязательно, если target_type, таблица не создается в соединении метастора | alias = 'target_table' |
+| delete_condition | Нет | incremental | Записи, которые соответствуют условию ON и условию удаления, могут быть удалены | delete_condition='nettotal > 1000' |
+| partition_by | Нет | incremental | Список словарей для определения partition_by для целевой таблицы метастора | partition_by=[\{'field':'$field_name'\}] |
+| primary_key | Нет | incremental | Список словарей для определения primary_key для целевой таблицы метастора | primary_key=[\{'field':'customer_email', 'type':'string'\}] |
+| map_columns_by_name | Нет | incremental | Соответствует столбцам из оператора SELECT таблице. Логическое значение. По умолчанию: False | map_columns_by_name=True |
+| sync | Нет | incremental/materializedview | Логическая опция для определения, является ли работа синхронизированной или не синхронизированной. По умолчанию: False | sync=True |
+| options | Нет | incremental/materializedview | Словарь опций работы | options=\{ 'START_FROM': 'BEGINNING', 'ADD_MISSING_COLUMNS': True \} |
 
-## SQL connection
+## SQL соединение
 
-Connections are used to provide Upsolver with the proper credentials to bring your data into SQLake as well as to write out your transformed data to various services. More details on ["Upsolver SQL connections"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-connections)
-As a dbt model connection is a model with materialized='connection'
+Соединения используются для предоставления Upsolver правильных учетных данных для загрузки ваших данных в SQLake, а также для записи ваших преобразованных данных в различные сервисы. Более подробная информация о ["SQL соединениях Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-connections).
+Как модель dbt, соединение является моделью с materialized='connection'.
 
 ```sql
 {{ config(
@@ -51,13 +51,13 @@ As a dbt model connection is a model with materialized='connection'
 }}
 ```
 
-Running this model will compile CREATE CONNECTION(or ALTER CONNECTION if exists) SQL and send it to Upsolver engine. Name of the connection will be name of the model.
+Запуск этой модели скомпилирует SQL для CREATE CONNECTION (или ALTER CONNECTION, если существует) и отправит его в движок Upsolver. Имя соединения будет именем модели.
 
-## SQL copy job
+## SQL копирование данных
 
-A COPY FROM job allows you to copy your data from a given source into a table created in a metastore connection. This table then serves as your staging table and can be used with SQLake transformation jobs to write to various target locations. More details on ["Upsolver SQL copy-from"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/copy-from)
+Работа COPY FROM позволяет вам копировать ваши данные из заданного источника в таблицу, созданную в соединении метастора. Эта таблица затем служит вашей промежуточной таблицей и может использоваться с работами трансформации SQLake для записи в различные целевые места. Более подробная информация о ["SQL копировании данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/copy-from).
 
-As a dbt model copy job is model with materialized='incremental'
+Как модель dbt, работа копирования данных является моделью с materialized='incremental'.
 
 ```sql
 {{ config(  materialized='incremental',
@@ -72,13 +72,13 @@ As a dbt model copy job is model with materialized='incremental'
 SELECT * FROM {{ ref(<model>) }}
 ```
 
-Running this model will  compile CREATE TABLE SQL for target type Data lake (or ALTER TABLE if exists) and CREATE COPY JOB(or ALTER COPY JOB if exists) SQL and send it to Upsolver engine. Name of the table will be name of the model. Name of the job will be name of the model plus '_job'
+Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE COPY JOB (или ALTER COPY JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
 
-## SQL insert job
+## SQL вставка данных
 
-An INSERT job defines a query that pulls in a set of data based on the given SELECT statement and inserts it into the designated target. This query is then run periodically based on the RUN_INTERVAL defined within the job. More details on ["Upsolver SQL insert"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/insert).
+Работа INSERT определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет его в назначенное место. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в работе. Более подробная информация о ["SQL вставке данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/insert).
 
-As a dbt model insert job is model with materialized='incremental' and incremental_strategy='insert'
+Как модель dbt, работа вставки данных является моделью с materialized='incremental' и incremental_strategy='insert'.
 
 ```sql
 {{ config(  materialized='incremental',
@@ -98,13 +98,13 @@ GROUP BY ...
 HAVING COUNT(DISTINCT orderid::string) ...
 ```
 
-Running this model will compile CREATE TABLE SQL for target type Data lake(or ALTER TABLE if exists) and CREATE INSERT JOB(or ALTER INSERT JOB if exists) SQL and send it to Upsolver engine. Name of the table will be name of the model. Name of the job will be name of the model plus '_job'
+Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE INSERT JOB (или ALTER INSERT JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
 
-## SQL merge job
+## SQL объединение данных
 
-A MERGE job defines a query that pulls in a set of data based on the given SELECT statement and inserts into, replaces, or deletes the data from the designated target based on the job definition. This query is then run periodically based on the RUN_INTERVAL defined within the job. More details on ["Upsolver SQL merge"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/merge).
+Работа MERGE определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет, заменяет или удаляет данные из назначенного места на основе определения работы. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в работе. Более подробная информация о ["SQL объединении данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/merge).
 
-As a dbt model merge job is model with materialized='incremental' and incremental_strategy='merge'
+Как модель dbt, работа объединения данных является моделью с materialized='incremental' и incremental_strategy='merge'.
 
 ```sql
 {{ config(  materialized='incremental',
@@ -124,14 +124,13 @@ GROUP BY ...
 HAVING COUNT ...
 ```
 
-Running this model will compile CREATE TABLE SQL for target type Data lake(or ALTER TABLE if exists) and CREATE MERGE JOB(or ALTER MERGE JOB if exists) SQL and send it to Upsolver engine. Name of the table will be name of the model. Name of the job will be name of the model plus '_job'
+Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE MERGE JOB (или ALTER MERGE JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
 
-## SQL materialized views
+## SQL материализованные представления
 
-When transforming your data, you may find that you need data from multiple source tables in order to achieve your desired result.
-In such a case, you can create a materialized view from one SQLake table in order to join it with your other table (which in this case is considered the main table). More details on ["Upsolver SQL materialized views"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/sql-materialized-views).
+При преобразовании ваших данных вы можете обнаружить, что вам нужны данные из нескольких исходных таблиц, чтобы достичь желаемого результата. В таком случае вы можете создать материализованное представление из одной таблицы SQLake, чтобы объединить его с вашей другой таблицей (которая в этом случае считается основной таблицей). Более подробная информация о ["SQL материализованных представлениях Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/sql-materialized-views).
 
-As a dbt model materialized views  is model with materialized='materializedview'.
+Как модель dbt, материализованные представления являются моделью с materialized='materializedview'.
 
 ```sql
 {{ config(  materialized='materializedview',
@@ -145,28 +144,27 @@ WHERE ...
 GROUP BY ...
 ```
 
-Running this model will compile CREATE MATERIALIZED VIEW SQL(or ALTER MATERIALIZED VIEW if exists) and send it to Upsolver engine. Name of the materializedview  will be name of the model.
+Запуск этой модели скомпилирует SQL для CREATE MATERIALIZED VIEW (или ALTER MATERIALIZED VIEW, если существует) и отправит его в движок Upsolver. Имя материализованного представления будет именем модели.
 
-## Expectations/constraints
+## Ожидания/ограничения
 
-Data quality conditions can be added to your job to drop a row or trigger a warning when a column violates a predefined condition.
+Условия качества данных могут быть добавлены к вашей работе, чтобы удалить строку или вызвать предупреждение, когда столбец нарушает предопределенное условие.
 
 ```sql
 WITH EXPECTATION <expectation_name> EXPECT <sql_predicate>
 ON VIOLATION WARN
 ```
 
-Expectations can be implemented with dbt constraints
-Supported constraints: check and not_null
+Ожидания могут быть реализованы с помощью ограничений dbt. Поддерживаемые ограничения: check и not_null.
 
 ```yaml
 models:
   - name: <model name>
-    # required
+    # обязательный
     config:
       contract:
         enforced: true
-    # model-level constraints
+    # ограничения на уровне модели
     constraints:
       - type: check
         columns: ['<column1>', '<column2>']
@@ -180,7 +178,7 @@ models:
       - name: <column3>
         data_type: string
 
-        # column-level constraints
+        # ограничения на уровне столбца
         constraints:
           - type: not_null
           - type: check
@@ -188,277 +186,273 @@ models:
             name: <constraint_name>
 ```
 
-## Projects examples
+## Примеры проектов
 
-> projects examples link: [github.com/dbt-upsolver/examples/](https://github.com/Upsolver/dbt-upsolver/tree/main/examples)
+> ссылка на примеры проектов: [github.com/dbt-upsolver/examples/](https://github.com/Upsolver/dbt-upsolver/tree/main/examples)
 
-## Connection options
+## Опции соединения
 
-| Option | Storage   | Editable | Optional | Config Syntax |
+| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
-| aws_role | s3 | True | True | 'aws_role': `'<aws_role>'` |
-| external_id | s3 | True | True | 'external_id': `'<external_id>'` |
-| aws_access_key_id | s3 | True | True | 'aws_access_key_id': `'<aws_access_key_id>'` |
-| aws_secret_access_key | s3 | True | True | 'aws_secret_access_key_id': `'<aws_secret_access_key_id>'` |
-| path_display_filter | s3 | True | True | 'path_display_filter': `'<path_display_filter>'` |
-| path_display_filters | s3 | True | True | 'path_display_filters': (`'<filter>'`, ...) |
-| read_only | s3 | True | True | 'read_only': True/False |
-| encryption_kms_key | s3 | True | True | 'encryption_kms_key': `'<encryption_kms_key>'` |
-| encryption_customer_managed_key | s3 | True | True | 'encryption_customer_kms_key': `'<encryption_customer_kms_key>'` |
-| comment | s3 | True | True | 'comment': `'<comment>'` |
-| host | kafka | False | False | 'host': `'<host>'` |
-| hosts | kafka | False | False | 'hosts': (`'<host>'`, ...) |
-| consumer_properties | kafka | True | True | 'consumer_properties': `'<consumer_properties>'` |
-| version | kafka | False | True | 'version': `'<value>'` |
-| require_static_ip | kafka | True | True | 'require_static_ip': True/False |
-| ssl | kafka | True | True | 'ssl': True/False |
-| topic_display_filter | kafka | True | True | 'topic_display_filter': `'<topic_display_filter>'` |
-| topic_display_filters | kafka | True | True | 'topic_display_filter': (`'<filter>'`, ...) |
-| comment | kafka | True | True | 'comment': `'<comment>'` |
-| aws_role | glue_catalog | True | True | 'aws_role': `'<aws_role>'` |
-| external_id | glue_catalog | True | True | 'external_id': `'<external_id>'` |
-| aws_access_key_id | glue_catalog | True | True | 'aws_access_key_id': `'<aws_access_key_id>'` |
-| aws_secret_access_key | glue_catalog | True | True | 'aws_secret_access_key': `'<aws_secret_access_key>'` |
-| default_storage_connection | glue_catalog | False | False | 'default_storage_connection': `'<default_storage_connection>'` |
-| default_storage_location | glue_catalog | False | False | 'default_storage_location': `'<default_storage_location>'` |
-| region | glue_catalog | False | True | 'region': `'<region>'` |
-| database_display_filter | glue_catalog | True | True | 'database_display_filter': `'<database_display_filter>'` |
-| database_display_filters | glue_catalog | True | True | 'database_display_filters': (`'<filter>'`, ...) |
-| comment | glue_catalog | True | True | 'comment': `'<comment>'` |
-| aws_role | kinesis | True | True | 'aws_role': `'<aws_role>'` |
-| external_id | kinesis | True | True | 'external_id': `'<external_id>'` |
-| aws_access_key_id | kinesis | True | True | 'aws_access_key_id': `'<aws_access_key_id>'` |
-| aws_secret_access_key | kinesis | True | True | 'aws_secret_access_key': `'<aws_secret_access_key>'` |
-| region | kinesis | False | False | 'region': `'<region>'` |
-| read_only | kinesis | False | True | 'read_only': True/False |
-| max_writers | kinesis | True | True | 'max_writers': `<integer>` |
-| stream_display_filter | kinesis | True | True | 'stream_display_filter': `'<stream_display_filter>'` |
-| stream_display_filters | kinesis | True | True | 'stream_display_filters': (`'<filter>'`, ...) |
-| comment | kinesis | True | True | 'comment': `'<comment>'` |
-| connection_string | snowflake | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | snowflake | True | False | 'user_name': `'<user_name>'` |
-| password | snowflake | True | False | 'password': `'<password>'` |
-| max_concurrent_connections | snowflake | True | True | 'max_concurrent_connections': `<integer>` |
-| comment | snowflake | True | True | 'comment': `'<comment>'` |
-| connection_string | redshift | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | redshift | True | False | 'user_name': `'<user_name>'` |
-| password | redshift | True | False | 'password': `'<password>'` |
-| max_concurrent_connections | redshift | True | True | 'max_concurrent_connections': `<integer>` |
-| comment | redshift | True | True | 'comment': `'<comment>'` |
-| connection_string | mysql | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | mysql | True | False | 'user_name': `'<user_name>'` |
-| password | mysql | True | False | 'password': `'<password>'` |
-| comment | mysql | True | True | 'comment': `'<comment>'` |
-| connection_string | postgres | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | postgres | True | False | 'user_name': `'<user_name>'` |
-| password | postgres | True | False | 'password': `'<password>'` |
-| comment | postgres | True | True | 'comment': `'<comment>'` |
-| connection_string | elasticsearch | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | elasticsearch | True | False | 'user_name': `'<user_name>'` |
-| password | elasticsearch | True | False | 'password': `'<password>'` |
-| comment | elasticsearch | True | True | 'comment': `'<comment>'` |
-| connection_string | mongodb | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | mongodb | True | False | 'user_name': `'<user_name>'` |
-| password | mongodb | True | False | 'password': `'<password>'` |
-| timeout | mongodb | True | True | 'timeout': "INTERVAL 'N' SECONDS" |
-| comment | mongodb | True | True | 'comment': `'<comment>'` |
-| connection_string | mssql | True | False | 'connection_string': `'<connection_string>'` |
-| user_name | mssql | True | False | 'user_name': `'<user_name>'` |
-| password | mssql | True | False | 'password': `'<password>'` |
-| comment | mssql | True | True | 'comment': `'<comment>'` |
+| aws_role | s3 | Да | Да | 'aws_role': `'<aws_role>'` |
+| external_id | s3 | Да | Да | 'external_id': `'<external_id>'` |
+| aws_access_key_id | s3 | Да | Да | 'aws_access_key_id': `'<aws_access_key_id>'` |
+| aws_secret_access_key | s3 | Да | Да | 'aws_secret_access_key_id': `'<aws_secret_access_key_id>'` |
+| path_display_filter | s3 | Да | Да | 'path_display_filter': `'<path_display_filter>'` |
+| path_display_filters | s3 | Да | Да | 'path_display_filters': (`'<filter>'`, ...) |
+| read_only | s3 | Да | Да | 'read_only': True/False |
+| encryption_kms_key | s3 | Да | Да | 'encryption_kms_key': `'<encryption_kms_key>'` |
+| encryption_customer_managed_key | s3 | Да | Да | 'encryption_customer_kms_key': `'<encryption_customer_kms_key>'` |
+| comment | s3 | Да | Да | 'comment': `'<comment>'` |
+| host | kafka | Нет | Нет | 'host': `'<host>'` |
+| hosts | kafka | Нет | Нет | 'hosts': (`'<host>'`, ...) |
+| consumer_properties | kafka | Да | Да | 'consumer_properties': `'<consumer_properties>'` |
+| version | kafka | Нет | Да | 'version': `'<value>'` |
+| require_static_ip | kafka | Да | Да | 'require_static_ip': True/False |
+| ssl | kafka | Да | Да | 'ssl': True/False |
+| topic_display_filter | kafka | Да | Да | 'topic_display_filter': `'<topic_display_filter>'` |
+| topic_display_filters | kafka | Да | Да | 'topic_display_filter': (`'<filter>'`, ...) |
+| comment | kafka | Да | Да | 'comment': `'<comment>'` |
+| aws_role | glue_catalog | Да | Да | 'aws_role': `'<aws_role>'` |
+| external_id | glue_catalog | Да | Да | 'external_id': `'<external_id>'` |
+| aws_access_key_id | glue_catalog | Да | Да | 'aws_access_key_id': `'<aws_access_key_id>'` |
+| aws_secret_access_key | glue_catalog | Да | Да | 'aws_secret_access_key': `'<aws_secret_access_key>'` |
+| default_storage_connection | glue_catalog | Нет | Нет | 'default_storage_connection': `'<default_storage_connection>'` |
+| default_storage_location | glue_catalog | Нет | Нет | 'default_storage_location': `'<default_storage_location>'` |
+| region | glue_catalog | Нет | Да | 'region': `'<region>'` |
+| database_display_filter | glue_catalog | Да | Да | 'database_display_filter': `'<database_display_filter>'` |
+| database_display_filters | glue_catalog | Да | Да | 'database_display_filters': (`'<filter>'`, ...) |
+| comment | glue_catalog | Да | Да | 'comment': `'<comment>'` |
+| aws_role | kinesis | Да | Да | 'aws_role': `'<aws_role>'` |
+| external_id | kinesis | Да | Да | 'external_id': `'<external_id>'` |
+| aws_access_key_id | kinesis | Да | Да | 'aws_access_key_id': `'<aws_access_key_id>'` |
+| aws_secret_access_key | kinesis | Да | Да | 'aws_secret_access_key': `'<aws_secret_access_key>'` |
+| region | kinesis | Нет | Нет | 'region': `'<region>'` |
+| read_only | kinesis | Нет | Да | 'read_only': True/False |
+| max_writers | kinesis | Да | Да | 'max_writers': `<integer>` |
+| stream_display_filter | kinesis | Да | Да | 'stream_display_filter': `'<stream_display_filter>'` |
+| stream_display_filters | kinesis | Да | Да | 'stream_display_filters': (`'<filter>'`, ...) |
+| comment | kinesis | Да | Да | 'comment': `'<comment>'` |
+| connection_string | snowflake | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | snowflake | Да | Нет | 'user_name': `'<user_name>'` |
+| password | snowflake | Да | Нет | 'password': `'<password>'` |
+| max_concurrent_connections | snowflake | Да | Да | 'max_concurrent_connections': `<integer>` |
+| comment | snowflake | Да | Да | 'comment': `'<comment>'` |
+| connection_string | redshift | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | redshift | Да | Нет | 'user_name': `'<user_name>'` |
+| password | redshift | Да | Нет | 'password': `'<password>'` |
+| max_concurrent_connections | redshift | Да | Да | 'max_concurrent_connections': `<integer>` |
+| comment | redshift | Да | Да | 'comment': `'<comment>'` |
+| connection_string | mysql | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | mysql | Да | Нет | 'user_name': `'<user_name>'` |
+| password | mysql | Да | Нет | 'password': `'<password>'` |
+| comment | mysql | Да | Да | 'comment': `'<comment>'` |
+| connection_string | postgres | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | postgres | Да | Нет | 'user_name': `'<user_name>'` |
+| password | postgres | Да | Нет | 'password': `'<password>'` |
+| comment | postgres | Да | Да | 'comment': `'<comment>'` |
+| connection_string | elasticsearch | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | elasticsearch | Да | Нет | 'user_name': `'<user_name>'` |
+| password | elasticsearch | Да | Нет | 'password': `'<password>'` |
+| comment | elasticsearch | Да | Да | 'comment': `'<comment>'` |
+| connection_string | mongodb | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | mongodb | Да | Нет | 'user_name': `'<user_name>'` |
+| password | mongodb | Да | Нет | 'password': `'<password>'` |
+| timeout | mongodb | Да | Да | 'timeout': "INTERVAL 'N' SECONDS" |
+| comment | mongodb | Да | Да | 'comment': `'<comment>'` |
+| connection_string | mssql | Да | Нет | 'connection_string': `'<connection_string>'` |
+| user_name | mssql | Да | Нет | 'user_name': `'<user_name>'` |
+| password | mssql | Да | Нет | 'password': `'<password>'` |
+| comment | mssql | Да | Да | 'comment': `'<comment>'` |
 
-## Target options
+## Опции цели
 
-| Option | Storage   | Editable | Optional | Config Syntax |
+| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
-| globally_unique_keys | datalake | False | True | 'globally_unique_keys': True/False |
-| storage_connection | datalake | False | True | 'storage_connection': `'<storage_connection>'` |
-| storage_location | datalake | False | True | 'storage_location': `'<storage_location>'` |
-| compute_cluster | datalake | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| compression | datalake | True | True | 'compression': 'SNAPPY/GZIP' |
-| compaction_processes | datalake | True | True | 'compaction_processes': `<integer>` |
-| disable_compaction | datalake | True | True | 'disable_compaction': True/False |
-| retention_date_partition | datalake | False | True | 'retention_date_partition': `'<column>'` |
-| table_data_retention | datalake | True | True | 'table_data_retention': `'<N DAYS>'` |
-| column_data_retention | datalake | True | True | 'column_data_retention': (\{'COLUMN' : `'<column>'`,'DURATION': `'<N DAYS>'`\}) |
-| comment | datalake | True | True | 'comment': `'<comment>'` |
-| storage_connection | materialized_view | False | True | 'storage_connection': `'<storage_connection>'` |
-| storage_location | materialized_view | False | True | 'storage_location': `'<storage_location>'` |
-| max_time_travel_duration | materialized_view | True | True | 'max_time_travel_duration': `'<N DAYS>'` |
-| compute_cluster | materialized_view | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| column_transformations | snowflake | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| deduplicate_with | snowflake | False | True | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
-| exclude_columns | snowflake | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| create_table_if_missing | snowflake | False | True | 'create_table_if_missing': True/False} |
-| run_interval | snowflake | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| globally_unique_keys | datalake | Нет | Да | 'globally_unique_keys': True/False |
+| storage_connection | datalake | Нет | Да | 'storage_connection': `'<storage_connection>'` |
+| storage_location | datalake | Нет | Да | 'storage_location': `'<storage_location>'` |
+| compute_cluster | datalake | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| compression | datalake | Да | Да | 'compression': 'SNAPPY/GZIP' |
+| compaction_processes | datalake | Да | Да | 'compaction_processes': `<integer>` |
+| disable_compaction | datalake | Да | Да | 'disable_compaction': True/False |
+| retention_date_partition | datalake | Нет | Да | 'retention_date_partition': `'<column>'` |
+| table_data_retention | datalake | Да | Да | 'table_data_retention': `'<N DAYS>'` |
+| column_data_retention | datalake | Да | Да | 'column_data_retention': (\{'COLUMN' : `'<column>'`,'DURATION': `'<N DAYS>'`\}) |
+| comment | datalake | Да | Да | 'comment': `'<comment>'` |
+| storage_connection | materialized_view | Нет | Да | 'storage_connection': `'<storage_connection>'` |
+| storage_location | materialized_view | Нет | Да | 'storage_location': `'<storage_location>'` |
+| max_time_travel_duration | materialized_view | Да | Да | 'max_time_travel_duration': `'<N DAYS>'` |
+| compute_cluster | materialized_view | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| column_transformations | snowflake | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| deduplicate_with | snowflake | Нет | Да | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
+| exclude_columns | snowflake | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| create_table_if_missing | snowflake | Нет | Да | 'create_table_if_missing': True/False} |
+| run_interval | snowflake | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
 
-## Transformation options
+## Опции трансформации
 
-| Option | Storage   | Editable | Optional | Config Syntax |
+| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
-| run_interval | s3 | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| start_from | s3 | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | s3 | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | s3 | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| comment | s3 | True | True | 'comment': `'<comment>'` |
-| skip_validations | s3 | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | s3 | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | s3 | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | s3 | True | True | 'run_parallelism': `<integer>` |
-| file_format | s3 | False | False | 'file_format': '(type = `<file_format>`)' |
-| compression | s3 | False | True | 'compression': 'SNAPPY/GZIP ...' |
-| date_pattern | s3 | False | True | 'date_pattern': `'<date_pattern>'` |
-| output_offset | s3 | False | True | 'output_offset': `'<N MINUTES/HOURS/DAYS>'` |
-| run_interval | elasticsearch | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| routing_field_name | elasticsearch | True | True | 'routing_field_name': `'<routing_field_name>'` |
-| start_from | elasticsearch | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | elasticsearch | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | elasticsearch | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| skip_validations | elasticsearch | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | elasticsearch | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | elasticsearch | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | elasticsearch | True | True | 'run_parallelism': `<integer>` |
-| bulk_max_size_bytes | elasticsearch | True | True | 'bulk_max_size_bytes': `<integer>` |
-| index_partition_size | elasticsearch | True | True | 'index_partition_size': 'HOURLY/DAILY ...' |
-| comment | elasticsearch | True | True | 'comment': `'<comment>'` |
-| custom_insert_expressions | snowflake | True | True | 'custom_insert_expressions': \{'INSERT_TIME' : 'CURRENT_TIMESTAMP()','MY_VALUE': `'<value>'`\} |
-| custom_update_expressions | snowflake | True | True | 'custom_update_expressions': \{'UPDATE_TIME' : 'CURRENT_TIMESTAMP()','MY_VALUE': `'<value>'`\} |
-| keep_existing_values_when_null | snowflake | True | True | 'keep_existing_values_when_null': True/False |
-| add_missing_columns | snowflake | False | True | 'add_missing_columns': True/False |
-| run_interval | snowflake | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| commit_interval | snowflake | True | True | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
-| start_from | snowflake | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | snowflake | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | snowflake | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| skip_validations | snowflake | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | snowflake | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | snowflake | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | snowflake | True | True | 'run_parallelism': `<integer>` |
-| comment | snowflake | True | True | 'comment': `'<comment>'` |
-| add_missing_columns | datalake | False | True | 'add_missing_columns': True/False |
-| run_interval | datalake | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| start_from | datalake | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | datalake | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | datalake | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| skip_validations | datalake | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | datalake | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | datalake | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | datalake | True | True | 'run_parallelism': `<integer>` |
-| comment | datalake | True | True | 'comment': `'<comment>'` |
-| run_interval | redshift | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| start_from | redshift | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | redshift | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | redshift | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| skip_validations | redshift | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | redshift | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | redshift | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | redshift | True | True | 'run_parallelism': `<integer>` |
-| skip_failed_files | redshift | False | True | 'skip_failed_files': True/False |
-| fail_on_write_error | redshift | False | True | 'fail_on_write_error': True/False |
-| comment | redshift | True | True | 'comment': `'<comment>'` |
-| run_interval | postgres | False | True | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
-| start_from | postgres | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | postgres | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | postgres | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| skip_validations | postgres | False | True | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
-| skip_all_validations | postgres | False | True | 'skip_all_validations': True/False |
-| aggregation_parallelism | postgres | True | True | 'aggregation_parallelism': `<integer>` |
-| run_parallelism | postgres | True | True | 'run_parallelism': `<integer>` |
-| comment | postgres | True | True | 'comment': `'<comment>'` |
+| run_interval | s3 | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| start_from | s3 | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | s3 | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | s3 | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| comment | s3 | Да | Да | 'comment': `'<comment>'` |
+| skip_validations | s3 | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | s3 | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | s3 | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | s3 | Да | Да | 'run_parallelism': `<integer>` |
+| file_format | s3 | Нет | Нет | 'file_format': '(type = `<file_format>`)' |
+| compression | s3 | Нет | Да | 'compression': 'SNAPPY/GZIP ...' |
+| date_pattern | s3 | Нет | Да | 'date_pattern': `'<date_pattern>'` |
+| output_offset | s3 | Нет | Да | 'output_offset': `'<N MINUTES/HOURS/DAYS>'` |
+| run_interval | elasticsearch | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| routing_field_name | elasticsearch | Да | Да | 'routing_field_name': `'<routing_field_name>'` |
+| start_from | elasticsearch | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | elasticsearch | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | elasticsearch | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| skip_validations | elasticsearch | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | elasticsearch | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | elasticsearch | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | elasticsearch | Да | Да | 'run_parallelism': `<integer>` |
+| bulk_max_size_bytes | elasticsearch | Да | Да | 'bulk_max_size_bytes': `<integer>` |
+| index_partition_size | elasticsearch | Да | Да | 'index_partition_size': 'HOURLY/DAILY ...' |
+| comment | elasticsearch | Да | Да | 'comment': `'<comment>'` |
+| custom_insert_expressions | snowflake | Да | Да | 'custom_insert_expressions': \{'INSERT_TIME' : 'CURRENT_TIMESTAMP()','MY_VALUE': `'<value>'`\} |
+| custom_update_expressions | snowflake | Да | Да | 'custom_update_expressions': \{'UPDATE_TIME' : 'CURRENT_TIMESTAMP()','MY_VALUE': `'<value>'`\} |
+| keep_existing_values_when_null | snowflake | Да | Да | 'keep_existing_values_when_null': True/False |
+| add_missing_columns | snowflake | Нет | Да | 'add_missing_columns': True/False |
+| run_interval | snowflake | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| commit_interval | snowflake | Да | Да | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
+| start_from | snowflake | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | snowflake | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | snowflake | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| skip_validations | snowflake | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | snowflake | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | snowflake | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | snowflake | Да | Да | 'run_parallelism': `<integer>` |
+| comment | snowflake | Да | Да | 'comment': `'<comment>'` |
+| add_missing_columns | datalake | Нет | Да | 'add_missing_columns': True/False |
+| run_interval | datalake | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| start_from | datalake | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | datalake | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | datalake | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| skip_validations | datalake | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | datalake | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | datalake | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | datalake | Да | Да | 'run_parallelism': `<integer>` |
+| comment | datalake | Да | Да | 'comment': `'<comment>'` |
+| run_interval | redshift | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| start_from | redshift | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | redshift | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | redshift | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| skip_validations | redshift | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | redshift | Нет | Да | 'skip_all_validations': True/False |
+| comment | redshift | Да | Да | 'comment': `'<comment>'` |
+| run_interval | postgres | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
+| start_from | postgres | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | postgres | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | postgres | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| skip_validations | postgres | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
+| skip_all_validations | postgres | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | postgres | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | postgres | Да | Да | 'run_parallelism': `<integer>` |
+| comment | postgres | Да | Да | 'comment': `'<comment>'` |
 
-## Copy options
+## Опции копирования
 
-| Option | Storage    | Category | Editable | Optional | Config Syntax |
+| Опция | Хранилище | Категория | Редактируемая | Необязательная | Синтаксис конфигурации |
 | -------| ---------- | -------- | -------- | -------- | ------------- |
-| topic | kafka | source_options | False | False | 'topic': `'<topic>'` |
-| exclude_columns | kafka | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| deduplicate_with | kafka | job_options | False | True | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
-| consumer_properties | kafka | job_options | True | True | 'consumer_properties': `'<consumer_properties>'` |
-| reader_shards | kafka | job_options | True | True | 'reader_shards': `<integer>` |
-| store_raw_data | kafka | job_options | False | True | 'store_raw_data': True/False |
-| start_from | kafka | job_options | False | True | 'start_from': 'BEGINNING/NOW' |
-| end_at | kafka | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | kafka | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| run_parallelism | kafka | job_options | True | True | 'run_parallelism': `<integer>` |
-| content_type | kafka | job_options | True | True | 'content_type': 'AUTO/CSV/...' |
-| compression | kafka | job_options | False | True | 'compression': 'AUTO/GZIP/...' |
-| column_transformations | kafka | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| commit_interval | kafka | job_options | True | True | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
-| skip_validations | kafka | job_options | False | True | 'skip_validations': ('MISSING_TOPIC') |
-| skip_all_validations | kafka | job_options | False | True | 'skip_all_validations': True/False |
-| comment | kafka | job_options | True | True | 'comment': `'<comment>'` |
-| table_include_list | mysql | source_options | True | True | 'table_include_list': (`'<regexFilter>'`, ...) |
-| column_exclude_list | mysql | source_options | True | True | 'column_exclude_list': (`'<regexFilter>'`, ...) |
-| exclude_columns | mysql | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| column_transformations | mysql | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| skip_snapshots | mysql | job_options | True | True | 'skip_snapshots': True/False |
-| end_at | mysql | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | mysql | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| snapshot_parallelism | mysql | job_options | True | True | 'snapshot_parallelism': `<integer>` |
-| ddl_filters | mysql | job_options | False | True | 'ddl_filters': (`'<filter>'`, ...) |
-| comment | mysql | job_options | True | True | 'comment': `'<comment>'` |
-| table_include_list | postgres | source_options | False | False | 'table_include_list': (`'<regexFilter>'`, ...) |
-| column_exclude_list | postgres | source_options | False | True | 'column_exclude_list': (`'<regexFilter>'`, ...) |
-| heartbeat_table | postgres | job_options | False | True | 'heartbeat_table': `'<heartbeat_table>'` |
-| skip_snapshots | postgres | job_options | False | True | 'skip_snapshots': True/False |
-| publication_name | postgres | job_options | False | False | 'publication_name': `'<publication_name>'` |
-| end_at | postgres | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | postgres | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| comment | postgres | job_options | True | True | 'comment': `'<comment>'` |
-| parse_json_columns | postgres | job_options | False | False | 'parse_json_columns': True/False |
-| column_transformations | postgres | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| snapshot_parallelism | postgres | job_options | True | True | 'snapshot_parallelism': `<integer>` |
-| exclude_columns | postgres | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| location | s3 | source_options | False | False | 'location': `'<location>'` |
-| date_pattern | s3 | job_options | False | True | 'date_pattern': `'<date_pattern>'` |
-| file_pattern | s3 | job_options | False | True | 'file_pattern': `'<file_pattern>'` |
-| initial_load_pattern | s3 | job_options | False | True | 'initial_load_pattern': `'<initial_load_pattern>'` |
-| initial_load_prefix | s3 | job_options | False | True | 'initial_load_prefix': `'<initial_load_prefix>'` |
-| delete_files_after_load | s3 | job_options | False | True | 'delete_files_after_load': True/False |
-| deduplicate_with | s3 | job_options | False | True | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
-| end_at | s3 | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| start_from | s3 | job_options | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| compute_cluster | s3 | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| run_parallelism | s3 | job_options | True | True | 'run_parallelism': `<integer>` |
-| content_type | s3 | job_options | True | True | 'content_type': 'AUTO/CSV...' |
-| compression | s3 | job_options | False | True | 'compression': 'AUTO/GZIP...' |
-| comment | s3 | job_options | True | True | 'comment': `'<comment>'` |
-| column_transformations | s3 | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| commit_interval | s3 | job_options | True | True | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
-| skip_validations | s3 | job_options | False | True | 'skip_validations': ('EMPTY_PATH') |
-| skip_all_validations | s3 | job_options | False | True | 'skip_all_validations': True/False |
-| exclude_columns | s3 | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| stream | kinesis | source_options | False | False | 'stream': `'<stream>'` |
-| reader_shards | kinesis | job_options | True | True | 'reader_shards': `<integer>` |
-| store_raw_data | kinesis | job_options | False | True | 'store_raw_data': True/False |
-| start_from | kinesis | job_options | False | True | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
-| end_at | kinesis | job_options | False | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | kinesis | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| run_parallelism | kinesis | job_options | False | True | 'run_parallelism': `<integer>` |
-| content_type | kinesis | job_options | True | True | 'content_type': 'AUTO/CSV...' |
-| compression | kinesis | job_options | False | True | 'compression': 'AUTO/GZIP...' |
-| comment | kinesis | job_options | True | True | 'comment': `'<comment>'` |
-| column_transformations | kinesis | job_options | True | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| deduplicate_with | kinesis | job_options | False | True | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
-| commit_interval | kinesis | job_options | True | True | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
-| skip_validations | kinesis | job_options | False | True | 'skip_validations': ('MISSING_STREAM') |
-| skip_all_validations | kinesis | job_options | False | True | 'skip_all_validations': True/False |
-| exclude_columns | kinesis | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| table_include_list | mssql | source_options | True | True | 'table_include_list': (`'<regexFilter>'`, ...) |
-| column_exclude_list | mssql | source_options | True | True | 'column_exclude_list': (`'<regexFilter>'`, ...) |
-| exclude_columns | mssql | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| column_transformations | mssql | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| skip_snapshots | mssql | job_options | True | True | 'skip_snapshots': True/False |
-| end_at | mssql | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | mssql | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| snapshot_parallelism | mssql | job_options | True | True | 'snapshot_parallelism': `<integer>` |
-| parse_json_columns | mssql | job_options | False | False | 'parse_json_columns': True/False |
-| comment | mssql | job_options | True | True | 'comment': `'<comment>'` |
-| collection_include_list | mongodb | source_options | True | True | 'collection_include_list': (`'<regexFilter>'`, ...) |
-| exclude_columns | mongodb | job_options | False | True | 'exclude_columns': (`'<exclude_column>'`, ...) |
-| column_transformations | mongodb | job_options | False | True | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
-| skip_snapshots | mongodb | job_options | True | True | 'skip_snapshots': True/False |
-| end_at | mongodb | job_options | True | True | 'end_at': `'<timestamp>/NOW'` |
-| compute_cluster | mongodb | job_options | True | True | 'compute_cluster': `'<compute_cluster>'` |
-| snapshot_parallelism | mongodb | job_options | True | True | 'snapshot_parallelism': `<integer>` |
-| comment | mongodb | job_options | True | True | 'comment': `'<comment>'` |
+| topic | kafka | source_options | Нет | Нет | 'topic': `'<topic>'` |
+| exclude_columns | kafka | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| deduplicate_with | kafka | job_options | Нет | Да | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
+| consumer_properties | kafka | job_options | Да | Да | 'consumer_properties': `'<consumer_properties>'` |
+| reader_shards | kafka | job_options | Да | Да | 'reader_shards': `<integer>` |
+| store_raw_data | kafka | job_options | Нет | Да | 'store_raw_data': True/False |
+| start_from | kafka | job_options | Нет | Да | 'start_from': 'BEGINNING/NOW' |
+| end_at | kafka | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | kafka | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| run_parallelism | kafka | job_options | Да | Да | 'run_parallelism': `<integer>` |
+| content_type | kafka | job_options | Да | Да | 'content_type': 'AUTO/CSV/...' |
+| compression | kafka | job_options | Нет | Да | 'compression': 'AUTO/GZIP/...' |
+| column_transformations | kafka | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| commit_interval | kafka | job_options | Да | Да | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
+| skip_validations | kafka | job_options | Нет | Да | 'skip_validations': ('MISSING_TOPIC') |
+| skip_all_validations | kafka | job_options | Нет | Да | 'skip_all_validations': True/False |
+| comment | kafka | job_options | Да | Да | 'comment': `'<comment>'` |
+| table_include_list | mysql | source_options | Да | Да | 'table_include_list': (`'<regexFilter>'`, ...) |
+| column_exclude_list | mysql | source_options | Да | Да | 'column_exclude_list': (`'<regexFilter>'`, ...) |
+| exclude_columns | mysql | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| column_transformations | mysql | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| skip_snapshots | mysql | job_options | Да | Да | 'skip_snapshots': True/False |
+| end_at | mysql | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | mysql | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| snapshot_parallelism | mysql | job_options | Да | Да | 'snapshot_parallelism': `<integer>` |
+| ddl_filters | mysql | job_options | Нет | Да | 'ddl_filters': (`'<filter>'`, ...) |
+| comment | mysql | job_options | Да | Да | 'comment': `'<comment>'` |
+| table_include_list | postgres | source_options | Нет | Нет | 'table_include_list': (`'<regexFilter>'`, ...) |
+| column_exclude_list | postgres | source_options | Нет | Да | 'column_exclude_list': (`'<regexFilter>'`, ...) |
+| heartbeat_table | postgres | job_options | Нет | Да | 'heartbeat_table': `'<heartbeat_table>'` |
+| skip_snapshots | postgres | job_options | Нет | Да | 'skip_snapshots': True/False |
+| publication_name | postgres | job_options | Нет | Нет | 'publication_name': `'<publication_name>'` |
+| end_at | postgres | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | postgres | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| comment | postgres | job_options | Да | Да | 'comment': `'<comment>'` |
+| parse_json_columns | postgres | job_options | Нет | Нет | 'parse_json_columns': True/False |
+| column_transformations | postgres | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| snapshot_parallelism | postgres | job_options | Да | Да | 'snapshot_parallelism': `<integer>` |
+| exclude_columns | postgres | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| location | s3 | source_options | Нет | Нет | 'location': `'<location>'` |
+| date_pattern | s3 | job_options | Нет | Да | 'date_pattern': `'<date_pattern>'` |
+| file_pattern | s3 | job_options | Нет | Да | 'file_pattern': `'<file_pattern>'` |
+| initial_load_pattern | s3 | job_options | Нет | Да | 'initial_load_pattern': `'<initial_load_pattern>'` |
+| initial_load_prefix | s3 | job_options | Нет | Да | 'initial_load_prefix': `'<initial_load_prefix>'` |
+| delete_files_after_load | s3 | job_options | Нет | Да | 'delete_files_after_load': True/False |
+| deduplicate_with | s3 | job_options | Нет | Да | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
+| end_at | s3 | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| start_from | s3 | job_options | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| compute_cluster | s3 | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| run_parallelism | s3 | job_options | Да | Да | 'run_parallelism': `<integer>` |
+| content_type | s3 | job_options | Да | Да | 'content_type': 'AUTO/CSV...' |
+| compression | s3 | job_options | Нет | Да | 'compression': 'AUTO/GZIP...' |
+| comment | s3 | job_options | Да | Да | 'comment': `'<comment>'` |
+| column_transformations | s3 | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| commit_interval | s3 | job_options | Да | Да | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
+| skip_validations | s3 | job_options | Нет | Да | 'skip_validations': ('EMPTY_PATH') |
+| skip_all_validations | s3 | job_options | Нет | Да | 'skip_all_validations': True/False |
+| exclude_columns | s3 | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| stream | kinesis | source_options | Нет | Нет | 'stream': `'<stream>'` |
+| reader_shards | kinesis | job_options | Да | Да | 'reader_shards': `<integer>` |
+| store_raw_data | kinesis | job_options | Нет | Да | 'store_raw_data': True/False |
+| start_from | kinesis | job_options | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
+| end_at | kinesis | job_options | Нет | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | kinesis | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| run_parallelism | kinesis | job_options | Нет | Да | 'run_parallelism': `<integer>` |
+| content_type | kinesis | job_options | Да | Да | 'content_type': 'AUTO/CSV...' |
+| compression | kinesis | job_options | Нет | Да | 'compression': 'AUTO/GZIP...' |
+| comment | kinesis | job_options | Да | Да | 'comment': `'<comment>'` |
+| column_transformations | kinesis | job_options | Да | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| deduplicate_with | kinesis | job_options | Нет | Да | 'deduplicate_with': \{'COLUMNS' : ['col1', 'col2'],'WINDOW': 'N HOURS'\} |
+| commit_interval | kinesis | job_options | Да | Да | 'commit_interval': `'<N MINUTE[S]/HOUR[S]/DAY[S]>'` |
+| skip_validations | kinesis | job_options | Нет | Да | 'skip_validations': ('MISSING_STREAM') |
+| skip_all_validations | kinesis | job_options | Нет | Да | 'skip_all_validations': True/False |
+| exclude_columns | kinesis | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| table_include_list | mssql | source_options | Да | Да | 'table_include_list': (`'<regexFilter>'`, ...) |
+| column_exclude_list | mssql | source_options | Да | Да | 'column_exclude_list': (`'<regexFilter>'`, ...) |
+| exclude_columns | mssql | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| column_transformations | mssql | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| skip_snapshots | mssql | job_options | Да | Да | 'skip_snapshots': True/False |
+| end_at | mssql | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | mssql | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| snapshot_parallelism | mssql | job_options | Да | Да | 'snapshot_parallelism': `<integer>` |
+| parse_json_columns | mssql | job_options | Нет | Нет | 'parse_json_columns': True/False |
+| comment | mssql | job_options | Да | Да | 'comment': `'<comment>'` |
+| collection_include_list | mongodb | source_options | Да | Да | 'collection_include_list': (`'<regexFilter>'`, ...) |
+| exclude_columns | mongodb | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
+| column_transformations | mongodb | job_options | Нет | Да | 'column_transformations': \{`'<column>'` : `'<expression>'` , ...\} |
+| skip_snapshots | mongodb | job_options | Да | Да | 'skip_snapshots': True/False |
+| end_at | mongodb | job_options | Да | Да | 'end_at': `'<timestamp>/NOW'` |
+| compute_cluster | mongodb | job_options | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
+| snapshot_parallelism | mongodb | job_options | Да | Да | 'snapshot_parallelism': `<integer>` |
+| comment | mongodb | job_options | Да | Да | 'comment': `'<comment>'` |

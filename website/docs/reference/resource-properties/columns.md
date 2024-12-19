@@ -6,11 +6,11 @@ datatype: test
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Analyses', value: 'analyses', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Семена', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Анализы', value: 'analyses', },
   ]
 }>
 
@@ -26,11 +26,11 @@ models:
     columns:
       - name: <column_name>
         data_type: <string>
-        [description](/reference/resource-properties/description): <markdown_string>
-        [quote](/reference/resource-properties/quote): true | false
-        [tests](/reference/resource-properties/data-tests): ...
-        [tags](/reference/resource-configs/tags): ...
-        [meta](/reference/resource-configs/meta): ...
+        [описание](/reference/resource-properties/description): <markdown_string>
+        [цитата](/reference/resource-properties/quote): true | false
+        [тесты](/reference/resource-properties/data-tests): ...
+        [теги](/reference/resource-configs/tags): ...
+        [мета](/reference/resource-configs/meta): ...
       - name: <another_column>
         ...
 ```
@@ -52,12 +52,12 @@ sources:
     - name: <table_name>
       columns:
         - name: <column_name>
-          [description](/reference/resource-properties/description): <markdown_string>
+          [описание](/reference/resource-properties/description): <markdown_string>
           data_type: <string>
-          [quote](/reference/resource-properties/quote): true | false
-          [tests](/reference/resource-properties/data-tests): ...
-          [tags](/reference/resource-configs/tags): ...
-          [meta](/reference/resource-configs/meta): ...
+          [цитата](/reference/resource-properties/quote): true | false
+          [тесты](/reference/resource-properties/data-tests): ...
+          [теги](/reference/resource-configs/tags): ...
+          [мета](/reference/resource-configs/meta): ...
         - name: <another_column>
           ...
 
@@ -78,12 +78,12 @@ seeds:
   - name: <seed_name>
     columns:
       - name: <column_name>
-        [description](/reference/resource-properties/description): <markdown_string>
+        [описание](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
-        [quote](/reference/resource-properties/quote): true | false
-        [tests](/reference/resource-properties/data-tests): ...
-        [tags](/reference/resource-configs/tags): ...
-        [meta](/reference/resource-configs/meta): ...
+        [цитата](/reference/resource-properties/quote): true | false
+        [тесты](/reference/resource-properties/data-tests): ...
+        [теги](/reference/resource-configs/tags): ...
+        [мета](/reference/resource-configs/meta): ...
       - name: <another_column>
             ...
 ```
@@ -103,12 +103,12 @@ snapshots:
   - name: <snapshot_name>
     columns:
       - name: <column_name>
-        [description](/reference/resource-properties/description): <markdown_string>
+        [описание](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
-        [quote](/reference/resource-properties/quote): true | false
-        [tests](/reference/resource-properties/data-tests): ...
-        [tags](/reference/resource-configs/tags): ...
-        [meta](/reference/resource-configs/meta): ...
+        [цитата](/reference/resource-properties/quote): true | false
+        [тесты](/reference/resource-properties/data-tests): ...
+        [теги](/reference/resource-configs/tags): ...
+        [мета](/reference/resource-configs/meta): ...
       - name: <another_column>
 
 ```
@@ -129,7 +129,7 @@ analyses:
   - name: <analysis_name>
     columns:
       - name: <column_name>
-        [description](/reference/resource-properties/description): <markdown_string>
+        [описание](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
       - name: <another_column>
 
@@ -141,14 +141,14 @@ analyses:
 
 </Tabs>
 
-Columns are not resources in and of themselves. Instead, they are child properties of another resource type. They can define sub-properties that are similar to properties defined at the resource level:
-- `tags`
-- `meta`
-- `tests`
-- `description`
+Столбцы не являются ресурсами сами по себе. Вместо этого они являются дочерними свойствами другого типа ресурса. Они могут определять под-свойства, которые аналогичны свойствам, определенным на уровне ресурса:
+- `теги`
+- `мета`
+- `тесты`
+- `описание`
 
-Because columns are not resources, their `tags` and `meta` properties are not true configurations. They do not inherit the `tags` or `meta` values of their parent resources. However, you can select a generic test, defined on a column, using tags applied to its column or top-level resource; see [test selection examples](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
+Поскольку столбцы не являются ресурсами, их свойства `теги` и `мета` не являются истинными конфигурациями. Они не наследуют значения `тегов` или `мета` своих родительских ресурсов. Тем не менее, вы можете выбрать общий тест, определенный на столбце, используя теги, примененные к его столбцу или ресурсу верхнего уровня; см. [примеры выбора тестов](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
 
-Columns may optionally define a `data_type`, which is necessary for:
-- Enforcing a model [contract](/reference/resource-configs/contract)
-- Use in other packages or plugins, such as the [`external`](/reference/resource-properties/external) property of sources and [`dbt-external-tables`](https://hub.getdbt.com/dbt-labs/dbt_external_tables/latest/)
+Столбцы могут дополнительно определять `data_type`, что необходимо для:
+- Принуждения модели к [контракту](/reference/resource-configs/contract)
+- Использования в других пакетах или плагинах, таких как свойство [`external`](/reference/resource-properties/external) источников и [`dbt-external-tables`](https://hub.getdbt.com/dbt-labs/dbt_external_tables/latest/)

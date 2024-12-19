@@ -1,5 +1,5 @@
 ---
-title: "About config property"
+title: "О свойстве config"
 sidebar_label: "config"
 resource_types: [models, seeds, snapshots, tests, sources, metrics, exposures]
 datatype: "{dictionary}"
@@ -10,15 +10,15 @@ hide_table_of_contents: true
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Tests', value: 'tests', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Metrics', value: 'metrics', },
-    { label: 'Exposures', value: 'exposures', },
-    { label: 'Semantic models', value: 'semantic models', },
-    { label: 'Saved queries', value: 'saved queries', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Семена', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Метрики', value: 'metrics', },
+    { label: 'Экспозиции', value: 'exposures', },
+    { label: 'Семантические модели', value: 'semantic models', },
+    { label: 'Сохраненные запросы', value: 'saved queries', },
   ]
 }>
 
@@ -212,5 +212,5 @@ saved-queries:
 
 </Tabs>
 
-## Definition
-The `config` property allows you to configure resources at the same time you're defining properties in YAML files.
+## Определение
+Свойство `config` позволяет настраивать ресурсы одновременно с определением свойств в YAML файлах.

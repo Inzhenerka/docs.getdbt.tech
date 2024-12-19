@@ -1,6 +1,6 @@
 ---
 resource_types: all
-description: "Enabled - Read this in-depth guide to learn about configurations in dbt."
+description: "Включено - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: boolean
 default_value: true
 ---
@@ -8,15 +8,15 @@ default_value: true
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Tests', value: 'tests', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Metrics', value: 'metrics', },
-    { label: 'Exposures', value: 'exposures', },
-    { label: 'Semantic models', value: 'semantic models', },
-    { label: 'Saved queries', value: 'saved queries', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Метрики', value: 'metrics', },
+    { label: 'Экспозиции', value: 'exposures', },
+    { label: 'Семантические модели', value: 'semantic models', },
+    { label: 'Сохраненные запросы', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
@@ -280,23 +280,23 @@ saved_queries:
 
 </Tabs>
 
-## Definition
+## Определение
 
-An optional configuration for enabling or disabling a resource.
+Необязательная конфигурация для включения или отключения ресурса.
 
-* Default: true
+* По умолчанию: true
 
-When a resource is disabled, dbt will not consider it as part of your project. Note that this can cause compilation errors.
+Когда ресурс отключен, dbt не будет рассматривать его как часть вашего проекта. Обратите внимание, что это может вызвать ошибки компиляции.
 
-If you instead want to exclude a model from a particular run, consider using the `--exclude` parameter as part of the [model selection syntax](/reference/node-selection/syntax)
+Если вы хотите исключить модель из конкретного запуска, рассмотрите возможность использования параметра `--exclude` в рамках [синтаксиса выбора модели](/reference/node-selection/syntax).
 
-If you are disabling models because they are no longer being used, but you want to version control their SQL, consider making them an [analysis](/docs/build/analyses) instead.
+Если вы отключаете модели, потому что они больше не используются, но хотите контролировать версию их SQL, рассмотрите возможность преобразования их в [анализ](/docs/build/analyses).
 
-## Examples
-### Disable a model in a package in order to use your own version of the model.
-This could be useful if you want to change the logic of a model in a package. For example, if you need to change the logic in the `segment_web_page_views` from the `segment` package ([original model](https://github.com/dbt-labs/segment/blob/a8ff2f892b009a69ec36c3061a87e437f0b0ea93/models/base/segment_web_page_views.sql)):
-1. Add a model named `segment_web_page_views` (the same name) to your own project.
-2. To avoid a compilation error due to duplicate models, disable the segment package's version of the model like so:
+## Примеры
+### Отключение модели в пакете, чтобы использовать свою версию модели.
+Это может быть полезно, если вы хотите изменить логику модели в пакете. Например, если вам нужно изменить логику в `segment_web_page_views` из пакета `segment` ([оригинальная модель](https://github.com/dbt-labs/segment/blob/a8ff2f892b009a69ec36c3061a87e437f0b0ea93/models/base/segment_web_page_views.sql)):
+1. Добавьте модель с именем `segment_web_page_views` (то же имя) в свой проект.
+2. Чтобы избежать ошибки компиляции из-за дублирующихся моделей, отключите версию модели из пакета segment следующим образом:
 
 <File name='dbt_project.yml'>
 

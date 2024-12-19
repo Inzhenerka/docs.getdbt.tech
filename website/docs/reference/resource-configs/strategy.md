@@ -1,6 +1,6 @@
 ---
 resource_types: [snapshots]
-description: "Strategy - Read this in-depth guide to learn about configurations in dbt."
+description: "Стратегия - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: timestamp | check
 ---
 
@@ -121,14 +121,14 @@ snapshots:
 
 </Tabs>
 
-## Description
-The snapshot strategy dbt should use to detect record changes. Read the guide to [snapshots](/docs/build/snapshots#detecting-row-changes) to understand the differences between the two.
+## Описание
+Стратегия снимка, которую dbt должен использовать для обнаружения изменений записей. Прочитайте руководство по [снимкам](/docs/build/snapshots#detecting-row-changes), чтобы понять различия между двумя стратегиями.
 
-## Default
-This is a **required configuration**. There is no default value.
+## По умолчанию
+Это **обязательная конфигурация**. Значение по умолчанию отсутствует.
 
-## Examples
-### Use the timestamp strategy
+## Примеры
+### Использование стратегии timestamp
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/timestamp_example.yml'>
@@ -172,7 +172,7 @@ snapshots:
 </VersionBlock>
 
 
-### Use the check strategy
+### Использование стратегии check
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/check_example.yml'>
@@ -213,15 +213,15 @@ snapshots:
 ```
 </VersionBlock>
 
-### Advanced: define and use custom snapshot strategy
-Behind the scenes, snapshot strategies are implemented as macros, named `snapshot_<strategy>_strategy`
-* [Source code](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L52) for the timestamp strategy
-* [Source code](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L136) for the check strategy
+### Расширенное: определение и использование пользовательской стратегии снимка
+За кулисами стратегии снимков реализованы как макросы, названные `snapshot_<strategy>_strategy`
+* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L52) для стратегии timestamp
+* [Исходный код](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/snapshots/strategies.sql#L136) для стратегии check
 
-It's possible to implement your own snapshot strategy by adding a macro with the same naming pattern to your project. For example, you might choose to create a strategy which records hard deletes, named `timestamp_with_deletes`.
+Вы можете реализовать свою собственную стратегию снимка, добавив макрос с тем же шаблоном именования в ваш проект. Например, вы можете создать стратегию, которая фиксирует жесткие удаления, названную `timestamp_with_deletes`.
 
-1. Create a macro named `snapshot_timestamp_with_deletes_strategy`. Use the existing code as a guide and adjust as needed.
-2. Use this strategy via the `strategy` configuration:
+1. Создайте макрос с именем `snapshot_timestamp_with_deletes_strategy`. Используйте существующий код в качестве руководства и при необходимости внесите изменения.
+2. Используйте эту стратегию через конфигурацию `strategy`:
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/<filename>.yml'>

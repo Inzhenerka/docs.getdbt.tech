@@ -1,23 +1,23 @@
 ---
 id: avg
 title: SQL AVG
-description: The AVG function is used to calculate the simple average of a numeric column, but you may also see it used in a window function to calculate rolling averages.
+description: Функция AVG используется для вычисления простого среднего значения числового столбца, но вы также можете увидеть ее использование в оконной функции для расчета скользящих средних.
 slug: /sql-reference/avg
 ---
 
 <head>
-    <title>Working with the SQL AVG function</title>
+    <title>Работа с функцией SQL AVG</title>
 </head>
 
-You’re a data person, so we assume you’re going to be calculating averages of some metrics \**waves hands airily*\* at some point in your career. And the way to calculate averages of a numeric column in SQL is by using the AVG function.
+Вы — специалист в области данных, поэтому мы предполагаем, что в какой-то момент вашей карьеры вам придется вычислять средние значения некоторых метрик \**размахивает руками в воздухе*\*. Способ вычисления средних значений числового столбца в SQL — это использование функции AVG.
 
-## How to use the AVG function
+## Как использовать функцию AVG
 
-The AVG function is a part of the group of mathematical or aggregate functions (ex. MIN, MAX, SUM) that are often used in SQL to summarize datasets. You’ll most likely see the AVG function used to straightforwardly calculate the average of a numeric column, but you may also see it used in a window function to calculate rolling averages.
+Функция AVG является частью группы математических или агрегатных функций (например, MIN, MAX, SUM), которые часто используются в SQL для обобщения наборов данных. Вы, скорее всего, увидите, что функция AVG используется для простого вычисления среднего значения числового столбца, но вы также можете увидеть ее использование в оконной функции для расчета скользящих средних.
 
-### AVG function example
+### Пример функции AVG
 
-The following example is querying from a sample dataset created by dbt Labs called [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
+Следующий пример запрашивает данные из образца набора данных, созданного dbt Labs, под названием [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
 
 ```sql
 select
@@ -28,7 +28,7 @@ where status not in ('returned', 'return_pending')
 group by 1
 ```
 
-This query using the Jaffle Shop’s `orders` table will return the rounded order amount per each order month:
+Этот запрос, использующий таблицу `orders` Jaffle Shop, вернет округленное среднее значение заказа для каждого месяца заказа:
 
 | order_month | avg_order_amount |
 |:---:|:---:|
@@ -37,17 +37,17 @@ This query using the Jaffle Shop’s `orders` table will return the rounded orde
 | 2018-03-01 | 18 |
 | 2018-04-01 | 17 |
 
-The AVG function, like many other mathematical functions, is an aggregate function. Aggregate functions operate across all rows, or a group of rows, to return a singular value. When calculating the average of a column across a dimension (or group of dimensions)—in our example above, `order_month`—you need a GROUP BY statement; the query above would not successfully run without it.
+Функция AVG, как и многие другие математические функции, является агрегатной функцией. Агрегатные функции работают по всем строкам или группе строк, чтобы вернуть единственное значение. При вычислении среднего значения столбца по измерению (или группе измерений) — в нашем примере выше, `order_month` — вам необходимо использовать оператор GROUP BY; приведенный выше запрос не выполнится успешно без него.
 
-## SQL AVG function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL AVG в Snowflake, Databricks, BigQuery и Redshift
 
-Snowflake, Databricks, Google BigQuery, and Amazon Redshift all support the ability to take the average of a column value and the syntax for the AVG functions is the same across all of those data platforms.
+Snowflake, Databricks, Google BigQuery и Amazon Redshift все поддерживают возможность вычисления среднего значения столбца, и синтаксис для функций AVG одинаков на всех этих платформах данных.
 
-## AVG function use cases
+## Сценарии использования функции AVG
 
-We most commonly see the AVG function used in data work to calculate:
-- The average of key metrics (ex. Average CSAT, average lead time, average order amount) in downstream [fact or dim models](/best-practices/how-we-structure/4-marts)
-- Rolling or moving averages (ex. 7-day, 30-day averages for key metrics) using window functions
-- Averages in [dbt metrics](https://docs.getdbt.com/docs/build/metrics)
+Чаще всего мы видим, что функция AVG используется в аналитической работе для вычисления:
+- Среднего значения ключевых метрик (например, средний CSAT, среднее время выполнения, средняя сумма заказа) в последующих [фактических или размерных моделях](/best-practices/how-we-structure/4-marts)
+- Скользящих или переменных средних (например, 7-дневные, 30-дневные средние для ключевых метрик) с использованием оконных функций
+- Средних значений в [метриках dbt](https://docs.getdbt.com/docs/build/metrics)
 
-This isn’t an extensive list of where your team may be using the AVG function throughout your dbt models and BI tool logic, but contains some common scenarios analytics engineers face in their day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать функцию AVG в своих моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в своей повседневной работе.

@@ -1,11 +1,11 @@
 ---
-title: "Platform-specific data types"
-sidebar_label: "Data types"
+title: "Специфические для платформ типы данных"
+sidebar_label: "Типы данных"
 ---
 
-Unit tests are designed to test for the expected _values_, not for the data types themselves. dbt takes the value you provide and attempts to cast it to the data type as inferred from the input and output models. 
+Модульные тесты предназначены для проверки ожидаемых _значений_, а не самих типов данных. dbt берет значение, которое вы предоставляете, и пытается привести его к типу данных, исходя из моделей ввода и вывода.
 
-How you specify input and expected values in your unit test YAML definitions are largely consistent across data warehouses, with some variation for more complex data types. The following are platform-specific data types:
+Способы указания входных и ожидаемых значений в ваших определениях YAML для модульных тестов в значительной степени согласованы между различными хранилищами данных, с некоторыми вариациями для более сложных типов данных. Ниже приведены специфические для платформ типы данных:
 
 <WHCode>
 
@@ -64,8 +64,8 @@ unit_tests:
            struct_field: 'struct("Isha" as name, 22 as age)'
            struct_of_struct_field: 'struct(struct(1 as id, "blue" as color) as my_struct)'
            struct_array_field: ['struct(st_geogpoint(75, 45) as my_point)', 'struct(st_geogpoint(75, 35) as my_point)']
-           # Make sure to include all the fields in a BigQuery `struct` within the unit test.
-           # It's not currently possible to use only a subset of columns in a 'struct'
+           # Убедитесь, что все поля в `struct` BigQuery включены в модульный тест.
+           # В настоящее время невозможно использовать только подмножество столбцов в 'struct'
 
 
 ```
@@ -94,7 +94,7 @@ unit_tests:
 
 ```
 
-Currently, the `array` is not supported.
+В настоящее время `array` не поддерживается.
 
 </div>
 
@@ -147,7 +147,7 @@ unit_tests:
 
 ```
 
-Currently, the `array` is not supported.
+В настоящее время `array` не поддерживается.
 
 </div>
 

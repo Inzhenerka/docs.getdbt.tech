@@ -19,11 +19,11 @@ sources:
 
 </File>
 
-## Definition
-Describe the tool that loads this source into your warehouse. Note that this property is for documentation purposes only — dbt does not meaningfully use this.
+## Определение
+Опишите инструмент, который загружает этот источник в ваш хранилище данных. Обратите внимание, что это свойство предназначено только для документирования — dbt не использует его значимо.
 
-## Examples
-### Indicate which EL tool loaded data
+## Примеры
+### Укажите, какой инструмент EL загрузил данные
 
 <File name='models/<filename>.yml'>
 

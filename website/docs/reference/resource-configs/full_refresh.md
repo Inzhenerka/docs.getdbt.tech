@@ -1,14 +1,14 @@
 ---
 resource_types: [models, seeds]
-description: "Setting the full_refresh config to false prevents a model or seed from being rebuilt, even when the `--full-refresh` flag is included in an invocation."
+description: "Установка конфигурации full_refresh в значение false предотвращает перестройку модели или семени, даже если флаг `--full-refresh` включен в вызов."
 datatype: boolean
 ---
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Seeds', value: 'seeds', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Семена', value: 'seeds', },
   ]
 }>
 
@@ -39,7 +39,7 @@ select ...
 
 </File>
 
-The configured model(s) will not full-refresh when `dbt run --full-refresh` is invoked.
+Настроенные модель(и) не будут полностью обновлены, когда будет вызван `dbt run --full-refresh`.
 
 </TabItem>
 
@@ -56,35 +56,34 @@ seeds:
 
 </File>
 
-The configured seed(s) will not full-refresh when `dbt seed --full-refresh` is invoked.
+Настроенные семена не будут полностью обновлены, когда будет вызван `dbt seed --full-refresh`.
 
 </TabItem>
 
 </Tabs>
 
-## Description
-Optionally set a resource to always or never full-refresh.
-- If specified as `true` or `false`, the
-`full_refresh` config will take precedence over the presence or absence of the `--full-refresh` flag.
-- If the `full_refresh` config is `none` or omitted, the resource will use the value of the `--full-refresh` flag.
+## Описание
+Опционально установите ресурс для всегда или никогда не обновлять полностью.
+- Если указано как `true` или `false`, конфигурация `full_refresh` будет иметь приоритет над наличием или отсутствием флага `--full-refresh`.
+- Если конфигурация `full_refresh` равна `none` или опущена, ресурс будет использовать значение флага `--full-refresh`.
 
-**Note:** The `--full-refresh` flag also supports a short name, `-f`.
+**Примечание:** Флаг `--full-refresh` также поддерживает короткое имя `-f`.
 
-This logic is encoded in the [`should_full_refresh()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql) macro.
+Эта логика закодирована в макросе [`should_full_refresh()`](https://github.com/dbt-labs/dbt-adapters/blob/60005a0a2bd33b61cb65a591bc1604b1b3fd25d5/dbt/include/global_project/macros/materializations/configs.sql).
 
-## Usage
+## Использование
 
-### Incremental models
+### Инкрементальные модели
 
-* [How do I rebuild an incremental model?](/docs/build/incremental-models#how-do-i-rebuild-an-incremental-model)
-* [What if the columns of my incremental model change?](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change)
+* [Как мне перестроить инкрементальную модель?](/docs/build/incremental-models#how-do-i-rebuild-an-incremental-model)
+* [Что если столбцы моей инкрементальной модели изменятся?](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change)
 
-### Seeds
+### Семена
 
 <FAQ path="Seeds/full-refresh-seed" />
 
-## Recommendation
-Set `full_refresh: false` for models of especially large datasets, which you would _never_ want dbt to fully drop and recreate.
+## Рекомендация
+Установите `full_refresh: false` для моделей особенно больших наборов данных, которые вы _никогда_ не хотите, чтобы dbt полностью удалял и воссоздавал.
 
-## Reference docs
+## Справочная документация
 * [on_configuration_change](/reference/resource-configs/on_configuration_change)

@@ -1,31 +1,31 @@
 ---
 resource_types: [models]
-description: "When the contract configuration is enforced, dbt will ensure that your model's returned dataset exactly matches the attributes you have defined in yaml, such as name and data_type, as well as any additional constraints supported by the data platform."
+description: "Когда конфигурация контракта применяется, dbt будет гарантировать, что возвращаемый набор данных вашего модели точно соответствует атрибутам, которые вы определили в yaml, таким как имя и тип данных, а также любым дополнительным ограничениям, поддерживаемым платформой данных."
 datatype: "{<dictionary>}"
 default_value: {enforced: false}
 id: "contract"
 ---
 
-Supported in dbt v1.5 and higher.
+Поддерживается в dbt версии 1.5 и выше.
 
-When the `contract` configuration is enforced, dbt will ensure that your model's returned dataset exactly matches the attributes you have defined in yaml:
-- `name` and `data_type` for every column
-- Additional [`constraints`](/reference/resource-properties/constraints), as supported for this materialization and data platform
+Когда конфигурация `contract` применяется, dbt будет гарантировать, что возвращаемый набор данных вашей модели точно соответствует атрибутам, которые вы определили в yaml:
+- `name` и `data_type` для каждого столбца
+- Дополнительные [`constraints`](/reference/resource-properties/constraints), поддерживаемые для этой материализации и платформы данных
 
-This is to ensure that the people querying your model downstream—both inside and outside dbt—have a predictable and consistent set of columns to use in their analyses. Even a subtle change in data type, such as from `boolean` (`true`/`false`) to `integer` (`0`/`1`), could cause queries to fail in surprising ways.
+Это необходимо для того, чтобы люди, запрашивающие вашу модель в дальнейшем — как внутри, так и вне dbt — имели предсказуемый и согласованный набор столбцов для использования в своих анализах. Даже незначительное изменение типа данных, например, с `boolean` (`true`/`false`) на `integer` (`0`/`1`), может привести к неожиданным сбоям в запросах.
 
-## Support
+## Поддержка
 
-At present, model contracts are supported for:
-- SQL models (not yet Python)
-- Models materialized as `table`, `view`, and `incremental` (with `on_schema_change: append_new_columns` or `on_schema_change: fail`)
-- The most popular data platforms — though support and enforcement of different [constraint types](/reference/resource-properties/constraints) vary by platform
+В настоящее время контракты моделей поддерживаются для:
+- SQL моделей (пока не для Python)
+- Моделей, материализованных как `table`, `view` и `incremental` (с `on_schema_change: append_new_columns` или `on_schema_change: fail`)
+- Наиболее популярных платформ данных — хотя поддержка и применение различных [типов ограничений](/reference/resource-properties/constraints) варьируются в зависимости от платформы
 
-## Data type aliasing
+## Псевдонимы типов данных
 
-dbt uses built-in type aliasing for the `data_type` defined in your YAML. For example, you can specify `string` in your contract, and on Postgres/Redshift, dbt will convert it to `text`. If dbt doesn't recognize the `data_type` name among its known aliases, it will pass it through as-is. This is enabled by default, but you can opt-out by setting `alias_types` to `false`.
+dbt использует встроенные псевдонимы типов для `data_type`, определенного в вашем YAML. Например, вы можете указать `string` в вашем контракте, и на Postgres/Redshift dbt преобразует его в `text`. Если dbt не распознает имя `data_type` среди своих известных псевдонимов, оно будет передано без изменений. Это включено по умолчанию, но вы можете отключить эту функцию, установив `alias_types` в `false`.
 
-Example for disabling: 
+Пример для отключения:
 
 <File name='FOLDER_NAME/FILE_NAME.yml'>
 
@@ -36,19 +36,19 @@ models:
     config:
       contract:
         enforced: true
-        alias_types: false  # true by default
+        alias_types: false  # по умолчанию true
 
 ```
 
 </File>
 
-## Size, precision, and scale
+## Размер, точность и масштаб
 
-When dbt compares data types, it will not compare granular details such as size, precision, or scale. We don't think you should sweat the difference between `varchar(256)` and `varchar(257)`, because it doesn't really affect the experience of downstream queriers. You can accomplish a more-precise assertion by [writing or using a custom test](/best-practices/writing-custom-generic-tests).
+Когда dbt сравнивает типы данных, он не будет сравнивать детализированные параметры, такие как размер, точность или масштаб. Мы считаем, что вам не стоит беспокоиться о разнице между `varchar(256)` и `varchar(257)`, поскольку это не влияет на опыт пользователей, запрашивающих данные. Вы можете добиться более точного утверждения, [написав или используя пользовательский тест](/best-practices/writing-custom-generic-tests).
 
-Note that you need to specify a varchar size or numeric scale, otherwise dbt relies on default values. For example, if a `numeric` type defaults to a precision of 38 and a scale of 0, then the numeric column stores 0 digits to the right of the decimal (it only stores whole numbers), which might cause it to fail contract enforcement. To avoid this implicit coercion, specify your `data_type` with a nonzero scale, like `numeric(38, 6)`. dbt Core 1.7 and higher provides a warning if you don't specify precision and scale when providing a numeric data type.
+Обратите внимание, что вам нужно указать размер varchar или масштаб чисел, в противном случае dbt будет полагаться на значения по умолчанию. Например, если тип `numeric` по умолчанию имеет точность 38 и масштаб 0, то числовой столбец будет хранить 0 цифр справа от десятичной точки (он хранит только целые числа), что может привести к сбою применения контракта. Чтобы избежать этого неявного приведения типов, укажите ваш `data_type` с ненулевым масштабом, например, `numeric(38, 6)`. dbt Core 1.7 и выше выдает предупреждение, если вы не укажете точность и масштаб при указании числового типа данных.
 
-### Example
+### Пример
 
 <File name='models/dim_customers.yml'>
 
@@ -72,7 +72,7 @@ models:
 
 </File>
 
-Let's say your model is defined as:
+Предположим, ваша модель определена как:
 
 <File name='models/dim_customers.sql'>
 
@@ -84,34 +84,33 @@ select
 
 </File>
 
-When you `dbt run` your model, _before_ dbt has materialized it as a table in the database, you will see this error:
+Когда вы выполните `dbt run` для вашей модели, _до_ того, как dbt материализует ее как таблицу в базе данных, вы увидите эту ошибку:
 ```txt
-20:53:45  Compilation Error in model dim_customers (models/dim_customers.sql)
-20:53:45    This model has an enforced contract that failed.
-20:53:45    Please ensure the name, data_type, and number of columns in your contract match the columns in your model's definition.
+20:53:45  Ошибка компиляции в модели dim_customers (models/dim_customers.sql)
+20:53:45    У этой модели есть обязательный контракт, который не выполнен.
+20:53:45    Пожалуйста, убедитесь, что имя, тип данных и количество столбцов в вашем контракте соответствуют столбцам в определении вашей модели.
 20:53:45
 20:53:45    | column_name | definition_type | contract_type | mismatch_reason    |
 20:53:45    | ----------- | --------------- | ------------- | ------------------ |
-20:53:45    | customer_id | TEXT            | INT           | data type mismatch |
+20:53:45    | customer_id | TEXT            | INT           | несоответствие типа данных |
 20:53:45
 20:53:45
-20:53:45    > in macro assert_columns_equivalent (macros/materializations/models/table/columns_spec_ddl.sql)
+20:53:45    > в макросе assert_columns_equivalent (macros/materializations/models/table/columns_spec_ddl.sql)
 ```
 
+### Инкрементальные модели и `on_schema_change`
 
-### Incremental models and `on_schema_change`
+Почему требуется, чтобы инкрементальные модели также устанавливали [`on_schema_change`](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change), и почему на `append_new_columns`?
 
-Why require that incremental models also set [`on_schema_change`](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change), and why to `append_new_columns`?
+Представьте:
+- Вы добавляете новый столбец как в SQL, так и в спецификацию YAML
+- Вы не устанавливаете `on_schema_change`, или устанавливаете `on_schema_change: 'ignore'`
+- dbt фактически не добавляет этот новый столбец в существующую таблицу — и операция upsert/merge все равно проходит успешно, потому что она выполняется на основе уже существующих "целевых" столбцов (это давно установленное поведение)
+- В результате возникает дельта между контрактом, определенным в yaml, и фактической таблицей в базе данных — что означает, что контракт теперь неверен!
 
-Imagine:
-- You add a new column to both the SQL and the YAML spec
-- You don't set `on_schema_change`, or you set `on_schema_change: 'ignore'`
-- dbt doesn't actually add that new column to the existing table — and the upsert/merge still succeeds, because it does that upsert/merge on the basis of the already-existing "destination" columns only (this is long-established behavior)
-- The result is a delta between the yaml-defined contract, and the actual table in the database - which means the contract is now incorrect!
+Почему `append_new_columns`, а не `sync_all_columns`? Потому что удаление существующих столбцов является нарушением контракта для моделей с контрактом!
 
-Why `append_new_columns`, rather than `sync_all_columns`? Because removing existing columns is a breaking change for contracted models!
-
-## Related documentation
-- [What is a model contract?](/docs/collaborate/govern/model-contracts)
-- [Defining `columns`](/reference/resource-properties/columns)
-- [Defining `constraints`](/reference/resource-properties/constraints)
+## Связанная документация
+- [Что такое контракт модели?](/docs/collaborate/govern/model-contracts)
+- [Определение `columns`](/reference/resource-properties/columns)
+- [Определение `constraints`](/reference/resource-properties/constraints)

@@ -1,16 +1,16 @@
 ---
-title: invalidate_hard_deletes (legacy)
+title: invalidate_hard_deletes (устаревший)
 resource_types: [snapshots]
-description: "Invalidate_hard_deletes - Read this in-depth guide to learn about configurations in dbt."
+description: "Invalidate_hard_deletes - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: column_name
-sidebar_label: invalidate_hard_deletes (legacy)
+sidebar_label: invalidate_hard_deletes (устаревший)
 ---
 
-:::warning This is a legacy config &mdash; Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config instead.
+:::warning Это устаревшая конфигурация &mdash; используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо нее.
 
-In Versionless and dbt Core 1.9 and higher, the [`hard_deletes`](/reference/resource-configs/hard-deletes) config replaces the `invalidate_hard_deletes` config for better control over how to handle deleted rows from the source. 
+В версиях без версии и dbt Core 1.9 и выше конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет конфигурацию `invalidate_hard_deletes`, обеспечивая лучший контроль над тем, как обрабатывать удаленные строки из источника.
 
-For new snapshots, set the config to `hard_deletes='invalidate'` instead of `invalidate_hard_deletes=true`. For existing snapshots, [arrange an update](/reference/snapshot-configs#snapshot-configuration-migration) of pre-existing tables before enabling this setting. Refer to 
+Для новых снимков установите конфигурацию на `hard_deletes='invalidate'`, а не `invalidate_hard_deletes=true`. Для существующих снимков [организуйте обновление](/reference/snapshot-configs#snapshot-configuration-migration) предварительно существующих таблиц перед включением этой настройки. Смотрите 
 :::
 
 <VersionBlock firstVersion="1.9">
@@ -27,7 +27,6 @@ snapshots:
 ```
 
 </File>
-
 
 </VersionBlock>
 
@@ -64,14 +63,13 @@ snapshots:
 
 </File>
 
-## Description
-Opt-in feature to enable invalidating hard deleted records while snapshotting the query.
+## Описание
+Функция по умолчанию для включения аннулирования жестко удаленных записей во время создания снимка запроса.
 
+## По умолчанию
+По умолчанию функция отключена.
 
-## Default
-By default the feature is disabled.
-
-## Example
+## Пример
 
 <VersionBlock firstVersion="1.9">
 <File name='snapshots/orders.yml'>

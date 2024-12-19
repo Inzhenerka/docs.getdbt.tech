@@ -1,6 +1,6 @@
 ---
 resource_types: all
-datatype: "{<dictionary>}"
+datatype: "{<словарь>}"
 default_value: {}
 hide_table_of_contents: true
 ---
@@ -8,17 +8,17 @@ hide_table_of_contents: true
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Tests', value: 'tests', },
-    { label: 'Analyses', value: 'analyses', },
-    { label: 'Macros', value: 'macros', },
-    { label: 'Exposures', value: 'exposures', },
-    { label: 'Semantic Models', value: 'semantic models', },
-    { label: 'Metrics', value: 'metrics', },
-    { label: 'Saved queries', value: 'saved queries', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Тесты', value: 'tests', },
+    { label: 'Анализы', value: 'analyses', },
+    { label: 'Макросы', value: 'macros', },
+    { label: 'Экспозиции', value: 'exposures', },
+    { label: 'Семантические модели', value: 'semantic models', },
+    { label: 'Метрики', value: 'metrics', },
+    { label: 'Сохраненные запросы', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
@@ -31,21 +31,21 @@ version: 2
 models:
   - name: model_name
     config:
-      meta: {<dictionary>}
+      meta: {<словарь>}
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        meta: {<словарь>}
 
 ```
 
 </File>
 
-The `meta` config can also be defined:
-- under the `models` config block in `dbt_project.yml`
-- in a `config()` Jinja macro within a model's SQL file
+Конфигурация `meta` также может быть определена:
+- в блоке конфигурации `models` в `dbt_project.yml`
+- в макросе `config()` Jinja внутри SQL файла модели
 
-See [configs and properties](/reference/configs-and-properties) for details.
+Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
 </TabItem>
 
@@ -56,19 +56,19 @@ See [configs and properties](/reference/configs-and-properties) for details.
 ```yml
 version: 2
 
-[sources](/reference/source-properties):
+[источники](/reference/source-properties):
   - name: model_name
     config:
-      meta: {<dictionary>}
+      meta: {<словарь>}
 
     tables:
       - name: table_name
         config:
-          meta: {<dictionary>}
+          meta: {<словарь>}
 
         columns:
           - name: column_name
-            meta: {<dictionary>}
+            meta: {<словарь>}
 
 ```
 
@@ -86,17 +86,17 @@ version: 2
 seeds:
   - name: seed_name
     config:
-      meta: {<dictionary>}
+      meta: {<словарь>}
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        meta: {<словарь>}
 
 ```
 
 </File>
 
-The `meta` config can also be defined under the `seeds` config block in `dbt_project.yml`. See [configs and properties](/reference/configs-and-properties) for details.
+Конфигурация `meta` также может быть определена в блоке конфигурации `seeds` в `dbt_project.yml`. Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
 </TabItem>
 
@@ -110,33 +110,33 @@ version: 2
 snapshots:
   - name: snapshot_name
     config:
-      [meta](/reference/snapshot-properties): {<dictionary>}
+      [meta](/reference/snapshot-properties): {<словарь>}
 
     columns:
       - name: column_name
-        meta: {<dictionary>}
+        meta: {<словарь>}
 
 ```
 
 </File>
 
-The `meta` config can also be defined:
-- under the `snapshots` config block in `dbt_project.yml`
-- in a `config()` Jinja macro within a snapshot's SQL block
+Конфигурация `meta` также может быть определена:
+- в блоке конфигурации `snapshots` в `dbt_project.yml`
+- в макросе `config()` Jinja внутри SQL блока снимка
 
-See [configs and properties](/reference/configs-and-properties) for details.
+Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
 </TabItem>
 
 <TabItem value="tests">
 
-You can't add YAML `meta` configs for [generic tests](/docs/build/data-tests#generic-data-tests). However, you can add `meta` properties to [singular tests](/docs/build/data-tests#singular-data-tests) using `config()` at the top of the test file. 
+Вы не можете добавлять YAML конфигурации `meta` для [общих тестов](/docs/build/data-tests#generic-data-tests). Однако вы можете добавлять свойства `meta` к [единичным тестам](/docs/build/data-tests#singular-data-tests) с помощью `config()` в начале файла теста. 
 
 </TabItem>
 
 <TabItem value="analyses">
 
-The `meta` config is not currently supported for analyses.
+Конфигурация `meta` в настоящее время не поддерживается для анализов.
 
 </TabItem>
 
@@ -147,9 +147,9 @@ The `meta` config is not currently supported for analyses.
 ```yml
 version: 2
 
-[macros](/reference/macro-properties):
+[макросы](/reference/macro-properties):
   - name: macro_name
-    meta: {<dictionary>}
+    meta: {<словарь>}
 
     arguments:
       - name: argument_name
@@ -169,7 +169,7 @@ version: 2
 
 exposures:
   - name: exposure_name
-    meta: {<dictionary>}
+    meta: {<словарь>}
 
 ```
 
@@ -185,13 +185,13 @@ exposures:
 semantic_models:
   - name: semantic_model_name
     config:
-      meta: {<dictionary>}
+      meta: {<словарь>}
 
 ```
 
 </File>
 
-The `meta` config can also be defined under the `semantic-models` config block in `dbt_project.yml`. See [configs and properties](/reference/configs-and-properties) for details.
+Конфигурация `meta` также может быть определена в блоке конфигурации `semantic-models` в `dbt_project.yml`. Смотрите [конфигурации и свойства](/reference/configs-and-properties) для получения подробной информации.
 
 </TabItem>
 
@@ -204,8 +204,8 @@ The `meta` config can also be defined under the `semantic-models` config block i
 ```yml
 metrics:
   - name: number_of_people
-    label: "Number of people"
-    description: Total count of people
+    label: "Количество людей"
+    description: Общее количество людей
     type: simple
     type_params:
       measure: people
@@ -222,8 +222,8 @@ metrics:
 ```yml
 metrics:
   - name: number_of_people
-    label: "Number of people"
-    description: Total count of people
+    label: "Количество людей"
+    description: Общее количество людей
     type: simple
     type_params:
       measure: people
@@ -245,7 +245,7 @@ metrics:
 saved_queries:
   - name: saved_query_name
     config:
-      meta: {<dictionary>}
+      meta: {<словарь>}
 ```
 
 </File>
@@ -254,15 +254,15 @@ saved_queries:
 
 </Tabs>
 
-## Definition
-The `meta` field can be used to set metadata for a resource. This metadata is compiled into the `manifest.json` file generated by dbt, and is viewable in the auto-generated documentation.
+## Определение
+Поле `meta` может использоваться для установки метаданных для ресурса. Эти метаданные компилируются в файл `manifest.json`, генерируемый dbt, и доступны в автоматически сгенерированной документации.
 
-Depending on the resource you're configuring, `meta` may be available within the `config` property, and/or as a top-level key. (For backwards compatibility, `meta` is often (but not always) supported as a top-level key, though without the capabilities of config inheritance.)
+В зависимости от ресурса, который вы настраиваете, `meta` может быть доступно в свойстве `config` и/или в качестве ключа верхнего уровня. (Для обратной совместимости `meta` часто (но не всегда) поддерживается в качестве ключа верхнего уровня, хотя без возможностей наследования конфигурации.)
 
 
-## Examples
-### Designate a model owner
-Additionally, indicate the maturity of a model using a `model_maturity:` key.
+## Примеры
+### Назначение владельца модели
+Кроме того, укажите зрелость модели, используя ключ `model_maturity:`.
 
 <File name='models/schema.yml'>
 
@@ -280,14 +280,14 @@ models:
 </File>
 
 
-### Designate a source column as containing PII
+### Назначение столбца источника как содержащего PII
 
 <File name='models/schema.yml'>
 
 ```yml
 version: 2
 
-[sources](/reference/source-properties):
+[источники](/reference/source-properties):
   - name: salesforce
 
     tables:
@@ -303,7 +303,7 @@ version: 2
 
 </File>
 
-### Configure one meta attribute for all seeds
+### Настройка одного атрибута meta для всех сидов
 
 <File name='dbt_project.yml'>
 
@@ -315,7 +315,7 @@ seeds:
 
 </File>
 
-### Override one meta attribute for a single model
+### Переопределение одного атрибута meta для одной модели
 
 <File name='models/my_model.sql'>
 
@@ -329,7 +329,7 @@ select 1 as id
 
 </File><br />
 
-### Assign owner and favorite_color in the dbt_project.yml as a config property
+### Назначение владельца и favorite_color в dbt_project.yml как свойства конфигурации
 
 <File name='dbt_project.yml'>
 
@@ -342,4 +342,3 @@ models:
 ```
 
 </File>
-

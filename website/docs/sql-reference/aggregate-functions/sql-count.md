@@ -1,31 +1,31 @@
 ---
 id: count
 title: SQL COUNT
-description: COUNT is an aggregate function that is used to return the count of rows of a specified field or all rows in a dataset. It is commonly used to get baseline statistical information of a dataset, help ensure primary keys are unique, and calculate business metrics.
+description: COUNT — это агрегатная функция, которая используется для возврата количества строк указанного поля или всех строк в наборе данных. Она обычно используется для получения базовой статистической информации о наборе данных, помогает обеспечить уникальность первичных ключей и вычислить бизнес-метрики.
 slug: /sql-reference/count
 ---
 
 <head>
-    <title>Working with the SQL COUNT function</title>
+    <title>Работа с функцией SQL COUNT</title>
 </head>
 
-COUNT is a SQL function you need to know how to use. Whether it’s in an ad hoc query, a data model, or in a BI tool calculation, you’ll be using the SQL COUNT function countless times (pun intended) in your data work.
+COUNT — это функция SQL, которую необходимо знать. Будь то в произвольном запросе, модели данных или в расчете BI-инструмента, вы будете использовать функцию SQL COUNT множество раз (игра слов) в своей работе с данными.
 
-To formalize it, COUNT is an aggregate function that is used to return the count of rows of a specified field (`count(<field_name>)`) or all rows in a dataset (`count(*)`). It is commonly used to get baseline statistical information of a dataset, help ensure primary keys are unique, and calculate business metrics.
+Формально, COUNT — это агрегатная функция, которая используется для возврата количества строк указанного поля (`count(<field_name>)`) или всех строк в наборе данных (`count(*)`). Она обычно используется для получения базовой статистической информации о наборе данных, помогает обеспечить уникальность первичных ключей и вычислить бизнес-метрики.
 
-## How to use SQL COUNT in a query
+## Как использовать SQL COUNT в запросе
 
-Use the following syntax to generate the aggregate count of a field:
+Используйте следующий синтаксис для генерации агрегатного количества поля:
 
 `count(<field_name>)`
 
-Since COUNT is an aggregate function, you’ll need a GROUP BY statement in your query if you’re looking at counts broken out by dimension(s). If you’re calculating the standalone counts of fields without the need to break them down by another field, you don’t need a GROUP BY statement.
+Поскольку COUNT является агрегатной функцией, вам потребуется оператор GROUP BY в вашем запросе, если вы хотите получить количество, разбитое по измерениям. Если вы вычисляете отдельные количества полей без необходимости разбивать их по другому полю, оператор GROUP BY не нужен.
 
-Let’s take a look at a practical example using COUNT, DISTINCT, and GROUP BY below.
+Давайте рассмотрим практический пример с использованием COUNT, DISTINCT и GROUP BY ниже.
 
-### COUNT example
+### Пример COUNT
 
-The following example is querying from a sample dataset created by dbt Labs called [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
+Следующий пример запрашивает данные из образца набора данных, созданного dbt Labs, под названием [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
 
 ```sql
 select
@@ -36,8 +36,7 @@ from {{ ref('orders') }}
 group by 1
 ```
 
-
-This simple query is something you may do while doing initial exploration of your data; it will return the count of `order_ids` and count of distinct `customer_ids` per order month that appear in the Jaffle Shop’s `orders` table:
+Этот простой запрос может быть выполнен вами во время начального изучения ваших данных; он вернет количество `order_ids` и количество уникальных `customer_ids` за каждый месяц заказов, которые появляются в таблице `orders` Jaffle Shop:
 
 | order_month | count_all_orders | count_distinct_customers |
 |:---:|:---:|:---:|
@@ -46,19 +45,19 @@ This simple query is something you may do while doing initial exploration of you
 | 3 | 35 | 31 |
 | 4 | 8 | 8 |
 
-An analyst or analytics engineer may want to perform a query like this to understand the ratio of orders to customers and see how it changes seasonally.
+Аналитик или инженер по аналитике может захотеть выполнить такой запрос, чтобы понять соотношение заказов к клиентам и увидеть, как оно меняется в зависимости от сезона.
 
-## SQL COUNT syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис SQL COUNT в Snowflake, Databricks, BigQuery и Redshift
 
-All modern data warehouses support the ability to use the COUNT function (and follow the same syntax!).
+Все современные хранилища данных поддерживают возможность использования функции COUNT (и следуют одному и тому же синтаксису!).
 
-Some data warehouses, such as Snowflake and Google BigQuery, additionally support a COUNT_IF/COUNTIF function that allows you to pass in a boolean expression to determine whether to count a row or not.
+Некоторые хранилища данных, такие как Snowflake и Google BigQuery, дополнительно поддерживают функцию COUNT_IF/COUNTIF, которая позволяет передавать логическое выражение для определения, следует ли считать строку или нет.
 
-## COUNT use cases
+## Сценарии использования COUNT
 
-We most commonly see queries using COUNT to:
-- Perform initial data exploration on a dataset to understand dataset volume, primary key uniqueness, distribution of column values, and more.
-- Calculate the counts of key business metrics (daily orders, customers created, etc.) in your data models or BI tool.
-- Define [metrics](/docs/build/build-metrics-intro) to aggregate key metrics.
+Чаще всего мы видим запросы с использованием COUNT для:
+- Проведения начального изучения данных в наборе данных для понимания объема набора данных, уникальности первичных ключей, распределения значений столбцов и многого другого.
+- Вычисления количеств ключевых бизнес-метрик (ежедневные заказы, созданные клиенты и т.д.) в ваших моделях данных или BI-инструментах.
+- Определения [метрик](/docs/build/build-metrics-intro) для агрегирования ключевых метрик.
 
-This isn’t an extensive list of where your team may be using COUNT throughout your development work, dbt models, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать COUNT в ходе вашей разработки, моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются инженеры по аналитике в повседневной работе.

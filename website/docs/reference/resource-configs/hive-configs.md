@@ -1,28 +1,28 @@
 ---
-title: "Apache Hive configurations"
-description: "Apache Hive Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Apache Hive"
+description: "Конфигурации Apache Hive - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "hive-configs"
 ---
 
-## Configuring tables
+## Конфигурирование таблиц
 
-When materializing a model as `table`, you may include several optional configs that are specific to the dbt-hive plugin, in addition to the standard [model configs](/reference/model-configs).
+При материализации модели как `table` вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-hive, помимо стандартных [конфигураций модели](/reference/model-configs).
 
-| Option  | Description                                        | Required?               | Example                  |
-|---------|----------------------------------------------------|-------------------------|--------------------------|
-| partition_by | partition by a column, typically a directory per partition is created | No | partition_by=['name'] |
-| clustered_by | second level division of a partitioned column  | No | clustered_by=['age'] |
-| file_format | underlying storage format of the table, see https://cwiki.apache.org/confluence/display/Hive/FileFormats for supported formats | No | file_format='PARQUET' |
-| location | storage location, typically an hdfs path | No | LOCATION='/user/etl/destination' |
-| comment | comment for the table | No | comment='this is the cleanest model' |
+| Опция         | Описание                                                                 | Обязательно?            | Пример                   |
+|---------------|--------------------------------------------------------------------------|------------------------|--------------------------|
+| partition_by  | Разделение по столбцу, обычно создается директория для каждого раздела  | Нет                    | partition_by=['name']    |
+| clustered_by  | Вторичное деление разделенного столбца                                   | Нет                    | clustered_by=['age']     |
+| file_format   | Формат хранения таблицы, см. https://cwiki.apache.org/confluence/display/Hive/FileFormats для поддерживаемых форматов | Нет                    | file_format='PARQUET'    |
+| location      | Место хранения, обычно путь hdfs                                         | Нет                    | LOCATION='/user/etl/destination' |
+| comment       | Комментарий для таблицы                                                  | Нет                    | comment='это самая чистая модель' |
 
-## Incremental models
+## Инкрементальные модели
 
-Supported modes for incremental model:
- - **`append`** (default): Insert new records without updating or overwriting any existing data.
- - **`insert_overwrite`**: For new records, insert data. When used along with partition clause, update data for changed record and insert data for new records. 
+Поддерживаемые режимы для инкрементальной модели:
+ - **`append`** (по умолчанию): Вставка новых записей без обновления или перезаписи существующих данных.
+ - **`insert_overwrite`**: Для новых записей вставка данных. При использовании вместе с клаузой раздела обновление данных для измененных записей и вставка данных для новых записей.
 
-## Example: Using partition_by config option
+## Пример: Использование опции конфигурации partition_by
 
 <File name='hive_partition_by.sql'>
 
@@ -50,4 +50,4 @@ select * from source_data
 
 </File>
 
-In the above example, a sample table is created with partition_by and other config options. One thing to note when using partition_by option is that the select query should always have the column name used in partition_by option as the last one, as can be seen for the ```city``` column name used in the above query. If the partition_by clause is not the same as the last column in select statement, Hive will flag an error when trying to create the model.
+В приведенном выше примере создается образец таблицы с использованием partition_by и других опций конфигурации. Важно отметить, что при использовании опции partition_by запрос select всегда должен иметь имя столбца, использованного в опции partition_by, в качестве последнего, как видно по имени столбца ```city``` в приведенном выше запросе. Если клаузу partition_by не совпадает с последним столбцом в операторе select, Hive выдаст ошибку при попытке создать модель.

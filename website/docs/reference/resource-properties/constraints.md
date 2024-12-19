@@ -3,33 +3,33 @@ resource_types: [models]
 datatype: "{dictionary}"
 ---
 
-Constraints are a feature of many data platforms. When specified, the platform will perform additional validation on data as it is being populated in a new table or inserted into a preexisting table. If the validation fails, the table creation or update fails, the operation is rolled back, and you will see a clear error message.
+Ограничения — это функция многих платформ данных. Когда они указаны, платформа выполняет дополнительную проверку данных по мере их заполнения в новой таблице или вставки в существующую таблицу. Если проверка не проходит, создание или обновление таблицы завершается неудачей, операция откатывается, и вы увидите четкое сообщение об ошибке.
 
-When enforced, a constraint guarantees that you will never see invalid data in the table materialized by your model. Enforcement varies significantly by data platform.
+При применении ограничение гарантирует, что вы никогда не увидите недопустимые данные в таблице, созданной вашим моделем. Применение ограничений значительно варьируется в зависимости от платформы данных.
 
-Constraints require the declaration and enforcement of a model [contract](/reference/resource-configs/contract).
+Ограничения требуют объявления и применения контракта модели [contract](/reference/resource-configs/contract).
 
-**Constraints are never applied on `ephemeral` models or those materialized as `view`**. Only `table` and `incremental` models support applying and enforcing constraints.
+**Ограничения никогда не применяются к `ephemeral` моделям или тем, которые материализованы как `view`**. Только модели `table` и `incremental` поддерживают применение и соблюдение ограничений.
 
-## Defining constraints
+## Определение ограничений
 
-Constraints may be defined for a single column, or at the model level for one or more columns. As a general rule, we recommend defining single-column constraints directly on those columns.
+Ограничения могут быть определены для одного столбца или на уровне модели для одного или нескольких столбцов. В общем, мы рекомендуем определять ограничения для отдельных столбцов непосредственно на этих столбцах.
 
-If you define multiple `primary_key` constraints for a single model, those _must_ be defined at the model level. Defining multiple `primary_key` constraints at the column level is not supported. 
+Если вы определяете несколько ограничений `primary_key` для одной модели, они _должны_ быть определены на уровне модели. Определение нескольких ограничений `primary_key` на уровне столбца не поддерживается.
 
-The structure of a constraint is:
-- `type` (required): one of `not_null`, `unique`, `primary_key`, `foreign_key`, `check`, `custom`
-- `expression`: Free text input to qualify the constraint. Required for certain constraint types, and optional for others.
-- `name` (optional): Human-friendly name for this constraint. Supported by some data platforms.
-- `columns` (model-level only): List of column names to apply the constraint over.
+Структура ограничения:
+- `type` (обязательный): одно из `not_null`, `unique`, `primary_key`, `foreign_key`, `check`, `custom`
+- `expression`: Свободный текст для уточнения ограничения. Обязателен для некоторых типов ограничений и необязателен для других.
+- `name` (необязательный): Человекопонятное имя для этого ограничения. Поддерживается некоторыми платформами данных.
+- `columns` (только на уровне модели): Список имен столбцов, к которым применяется ограничение.
 
 <VersionBlock firstVersion="1.9">
 
-Foreign key constraints accept two additional inputs:
-- `to`: A relation input, likely `ref()`, indicating the referenced table.
-- `to_columns`: A list of column(s) in that table containing the corresponding primary or unique key.
+Ограничения внешнего ключа принимают два дополнительных параметра:
+- `to`: Входное отношение, вероятно, `ref()`, указывающее на ссылочную таблицу.
+- `to_columns`: Список столбцов в этой таблице, содержащих соответствующий первичный или уникальный ключ.
 
-This syntax for defining foreign keys uses `ref`, meaning it will capture dependencies and works across different environments. It's available in [dbt Cloud "Latest""](/docs/dbt-versions/cloud-release-tracks) and [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Этот синтаксис для определения внешних ключей использует `ref`, что означает, что он будет захватывать зависимости и работать в разных средах. Он доступен в [dbt Cloud "Latest" ](/docs/dbt-versions/cloud-release-tracks) и [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
 <File name='models/schema.yml'>
 
@@ -37,15 +37,15 @@ This syntax for defining foreign keys uses `ref`, meaning it will capture depend
 models:
   - name: <model_name>
     
-    # required
+    # обязательный
     config:
       contract: {enforced: true}
     
-    # model-level constraints
+    # ограничения на уровне модели
     constraints:
       - type: primary_key
         columns: [first_column, second_column, ...]
-      - type: foreign_key # multi_column
+      - type: foreign_key # многостолбцовое
         columns: [first_column, second_column, ...]
         to: ref('other_model_name')
         to_columns: [other_model_first_column, other_model_second_columns, ...]
@@ -59,7 +59,7 @@ models:
       - name: first_column
         data_type: string
         
-        # column-level constraints
+        # ограничения на уровне столбца
         constraints:
           - type: not_null
           - type: unique
@@ -74,7 +74,7 @@ models:
 
 <VersionBlock lastVersion="1.8">
 
-In older versions of dbt Core, when defining a `foreign_key` constraint, you need to manually specify the referenced table in the `expression` field. You can use `{{ target }}` variables to make this expression environment-aware, but the dependency between this model and the referenced table is not captured. Starting in dbt Core v1.9, you can specify the referenced table using the `ref()` function.
+В более ранних версиях dbt Core, при определении ограничения `foreign_key`, вам нужно было вручную указать ссылочную таблицу в поле `expression`. Вы можете использовать переменные `{{ target }}`, чтобы сделать это выражение осведомленным о среде, но зависимость между этой моделью и ссылочной таблицей не фиксировалась. Начиная с dbt Core v1.9, вы можете указать ссылочную таблицу, используя функцию `ref()`.
 
 <File name='models/schema.yml'>
 
@@ -82,15 +82,15 @@ In older versions of dbt Core, when defining a `foreign_key` constraint, you nee
 models:
   - name: <model_name>
     
-    # required
+    # обязательный
     config:
       contract: {enforced: true}
     
-    # model-level constraints
+    # ограничения на уровне модели
     constraints:
       - type: primary_key
         columns: [first_column, second_column, ...]
-      - type: foreign_key # multi_column
+      - type: foreign_key # многостолбцовое
         columns: [first_column, second_column, ...]
         expression: "{{ target.schema }}.other_model_name (other_model_first_column, other_model_second_column, ...)"
       - type: check
@@ -103,7 +103,7 @@ models:
       - name: first_column
         data_type: string
         
-        # column-level constraints
+        # ограничения на уровне столбца
         constraints:
           - type: not_null
           - type: unique
@@ -116,21 +116,21 @@ models:
 
 </VersionBlock>
 
-## Platform-specific support
+## Поддержка, специфичная для платформы
 
-In transactional databases, it is possible to define "constraints" on the allowed values of certain columns, stricter than just the data type of those values. For example, Postgres supports and enforces all the constraints in the ANSI SQL standard (`not null`, `unique`, `primary key`, `foreign key`), plus a flexible row-level `check` constraint that evaluates to a boolean expression.
+В транзакционных базах данных возможно определение "ограничений" на допустимые значения определенных столбцов, более строгих, чем просто тип данных этих значений. Например, Postgres поддерживает и применяет все ограничения в стандарте ANSI SQL (`not null`, `unique`, `primary key`, `foreign key`), плюс гибкое ограничение уровня строки `check`, которое оценивается как логическое выражение.
 
-Most analytical data platforms support and enforce a `not null` constraint, but they either do not support or do not enforce the rest. It is sometimes still desirable to add an "informational" constraint, knowing it is _not_ enforced, for the purpose of integrating with legacy data catalog or entity-relation diagram tools ([dbt-core#3295](https://github.com/dbt-labs/dbt-core/issues/3295)). Some data platforms can optionally use primary or foreign key constraints for query optimization if you specify an additional keyword.
+Большинство аналитических платформ данных поддерживают и применяют ограничение `not null`, но они либо не поддерживают, либо не применяют остальные. Иногда все же желательно добавить "информационное" ограничение, зная, что оно _не_ применяется, с целью интеграции с устаревшими инструментами каталогов данных или диаграмм сущностей-отношений ([dbt-core#3295](https://github.com/dbt-labs/dbt-core/issues/3295)). Некоторые платформы данных могут опционально использовать первичные или внешние ключи для оптимизации запросов, если вы укажете дополнительное ключевое слово.
 
-To that end, there are two optional fields you can specify on any filter:
-- `warn_unenforced: False` to skip warning on constraints that are supported, but not enforced, by this data platform. The constraint will be included in templated DDL.
-- `warn_unsupported: False` to skip warning on constraints that aren't supported by this data platform, and therefore won't be included in templated DDL.
+В связи с этим есть два необязательных поля, которые вы можете указать для любого фильтра:
+- `warn_unenforced: False`, чтобы пропустить предупреждение о ограничениях, которые поддерживаются, но не применяются этой платформой данных. Ограничение будет включено в шаблон DDL.
+- `warn_unsupported: False`, чтобы пропустить предупреждение о ограничениях, которые не поддерживаются этой платформой данных и, следовательно, не будут включены в шаблон DDL.
 
 <WHCode>
 
 <div warehouse="Postgres">
 
-* PostgreSQL constraints documentation: [here](https://www.postgresql.org/docs/current/ddl-constraints.html#id-1.5.4.6.6)
+* Документация по ограничениям PostgreSQL: [здесь](https://www.postgresql.org/docs/current/ddl-constraints.html#id-1.5.4.6.6)
 
 <File name='models/constraints_example.sql'>
 
@@ -173,7 +173,7 @@ models:
 
 </File>
 
-Expected DDL to enforce constraints:
+Ожидаемый DDL для применения ограничений:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
@@ -204,7 +204,7 @@ select
 
 <div warehouse="Redshift">
 
-Redshift currently only enforces `not null` constraints; all other constraints are metadata only. Additionally, Redshift does not allow column checks at the time of table creation. See more in the Redshift documentation [here](https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html).
+Redshift в настоящее время применяет только ограничения `not null`; все остальные ограничения являются только метаданными. Кроме того, Redshift не позволяет выполнять проверки столбцов во время создания таблицы. Подробнее смотрите в документации Redshift [здесь](https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html).
 
 <File name='models/constraints_example.sql'>
 
@@ -236,22 +236,22 @@ models:
         data_type: integer
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include
-          - type: check       # not supported -- will warn & skip
+          - type: primary_key # не применяется  -- будет предупреждение и включено
+          - type: check       # не поддерживается -- будет предупреждение и пропущено
             expression: "id > 0"
         tests:
-          - unique            # primary_key constraint is not enforced
+          - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: varchar
       - name: first_transaction_date
         data_type: date
 ```
 
-Note that Redshift limits the maximum length of the `varchar` values to 256 characters by default (or when specified without a length). This means that any string data exceeding 256 characters might get truncated _or_ return a "value too long for character type" error. To allow the maximum length, use `varchar(max)`. For example, `data_type: varchar(max)`.  
+Обратите внимание, что Redshift ограничивает максимальную длину значений `varchar` до 256 символов по умолчанию (или когда указано без длины). Это означает, что любые строковые данные, превышающие 256 символов, могут быть обрезаны _или_ вернуть ошибку "значение слишком длинное для типа символа". Чтобы разрешить максимальную длину, используйте `varchar(max)`. Например, `data_type: varchar(max)`.  
 
 </File>
 
-Expected DDL to enforce constraints:
+Ожидаемый DDL для применения ограничений:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
@@ -277,20 +277,19 @@ select
 
 </File>
 
-
 </div>
 
 <div warehouse="Snowflake">
 
-- Snowflake constraints documentation: [here](https://docs.snowflake.com/en/sql-reference/constraints-overview.html)
-- Snowflake data types: [here](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types.html)
+- Документация по ограничениям Snowflake: [здесь](https://docs.snowflake.com/en/sql-reference/constraints-overview.html)
+- Типы данных Snowflake: [здесь](https://docs.snowflake.com/en/sql-reference/intro-summary-data-types.html)
 
-Snowflake suppports four types of constraints: `unique`, `not null`, `primary key`, and `foreign key`.
+Snowflake поддерживает четыре типа ограничений: `unique`, `not null`, `primary key` и `foreign key`.
 
-It is important to note that only the `not null` (and the `not null` property of `primary key`) are actually checked at present.
-The rest of the constraints are purely metadata, not verified when inserting data. Although Snowflake does not validate `unique`, `primary`, or `foreign_key` constraints, you may optionally instruct Snowflake to use them for query optimization by specifying [`rely`](https://docs.snowflake.com/en/user-guide/join-elimination) in the constraint `expression` field.
+Важно отметить, что только `not null` (и свойство `not null` первичного ключа) в настоящее время проверяются.
+Остальные ограничения являются чисто метаданными, не проверяются при вставке данных. Хотя Snowflake не проверяет ограничения `unique`, `primary` или `foreign_key`, вы можете опционально указать Snowflake использовать их для оптимизации запросов, указав [`rely`](https://docs.snowflake.com/en/user-guide/join-elimination) в поле `expression` ограничения.
 
-Currently, Snowflake doesn't support the `check` syntax and dbt will skip the `check` config and raise a warning message if it is set on some models in the dbt project.
+В настоящее время Snowflake не поддерживает синтаксис `check`, и dbt пропустит конфигурацию `check` и выдаст предупреждающее сообщение, если она установлена на некоторых моделях в проекте dbt.
 
 <File name='models/constraints_example.sql'>
 
@@ -323,11 +322,11 @@ models:
         description: hello
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include
-          - type: check       # not supported -- will warn & skip
+          - type: primary_key # не применяется  -- будет предупреждение и включено
+          - type: check       # не поддерживается -- будет предупреждение и пропущено
             expression: "id > 0"
         tests:
-          - unique            # need this test because primary_key constraint is not enforced
+          - unique            # необходимо это тестирование, потому что ограничение primary_key не применяется
       - name: customer_name
         data_type: text
       - name: first_transaction_date
@@ -336,7 +335,7 @@ models:
 
 </File>
 
-Expected DDL to enforce constraints:
+Ожидаемый DDL для применения ограничений:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
@@ -361,11 +360,11 @@ select
 
 <div warehouse="BigQuery">
 
-BigQuery allows defining and enforcing `not null` constraints, and defining (but _not_ enforcing) `primary key` and `foreign key` constraints (which can be used for query optimization). BigQuery does not support defining or enforcing other constraints. For more information, refer to [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support)
+BigQuery позволяет определять и применять ограничения `not null`, а также определять (но _не_ применять) ограничения `primary key` и `foreign key` (которые могут использоваться для оптимизации запросов). BigQuery не поддерживает определение или применение других ограничений. Для получения дополнительной информации смотрите [Поддержка ограничений платформы](/docs/collaborate/govern/model-contracts#platform-constraint-support)
 
-Documentation: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
+Документация: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language
 
-Data types: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types
+Типы данных: https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types
 
 <File name='models/constraints_example.sql'>
 
@@ -397,11 +396,11 @@ models:
         data_type: int
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include
-          - type: check       # not supported -- will warn & skip
+          - type: primary_key # не применяется  -- будет предупреждение и включено
+          - type: check       # не поддерживается -- будет предупреждение и пропущено
             expression: "id > 0"
         tests:
-          - unique            # primary_key constraint is not enforced
+          - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: string
       - name: first_transaction_date
@@ -410,7 +409,7 @@ models:
 
 </File>
 
-### Column-level constraint on nested column:
+### Ограничение на уровне столбца для вложенного столбца:
 
 <File name='models/nested_column_constraints_example.sql'>
 
@@ -464,7 +463,7 @@ models:
 
 </File>
 
-### Expected DDL to enforce constraints:
+### Ожидаемый DDL для применения ограничений:
 
 <File name='target/run/.../constraints_example.sql'>
 
@@ -490,19 +489,19 @@ select
 
 <div warehouse="Databricks">
 
-Databricks allows you to define:
+Databricks позволяет вам определять:
 
-- a `not null` constraint
-- and/or additional `check` constraints, with conditional expressions including one or more columns
+- ограничение `not null`
+- и/или дополнительные ограничения `check` с условными выражениями, включая один или несколько столбцов
 
-As Databricks does not support transactions nor allows using `create or replace table` with a column schema, the table is first created without a schema, and `alter` statements are then executed to add the different constraints. 
+Поскольку Databricks не поддерживает транзакции и не позволяет использовать `create or replace table` с схемой столбцов, таблица сначала создается без схемы, а затем выполняются операторы `alter`, чтобы добавить различные ограничения.
 
-This means that:
+Это означает, что:
 
-- The names and order of columns is checked but not their type
-- If the `constraints` and/or `constraint_check` fails, the table with the failing data will still exist in the Warehouse
+- Имена и порядок столбцов проверяются, но не их тип
+- Если ограничения и/или проверка ограничений не проходят, таблица с ошибочными данными все равно будет существовать в хранилище
 
-See [this page](https://docs.databricks.com/tables/constraints.html) with more details about the support of constraints on Databricks.
+Смотрите [эту страницу](https://docs.databricks.com/tables/constraints.html) для получения дополнительной информации о поддержке ограничений в Databricks.
 
 <File name='models/constraints_example.sql'>
 
@@ -534,11 +533,11 @@ models:
         data_type: int
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include
-          - type: check       # not supported -- will warn & skip
+          - type: primary_key # не применяется  -- будет предупреждение и включено
+          - type: check       # не поддерживается -- будет предупреждение и пропущено
             expression: "id > 0"
         tests:
-          - unique            # primary_key constraint is not enforced
+          - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: text
       - name: first_transaction_date
@@ -547,7 +546,7 @@ models:
 
 </File>
 
-Expected DDL to enforce constraints:
+Ожидаемый DDL для применения ограничений:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql
@@ -562,7 +561,7 @@ Expected DDL to enforce constraints:
 
 </File>
 
-Followed by the statements
+За которым следуют операторы
 
 ```sql
 alter table schema_name.my_model change column id set not null;
@@ -573,22 +572,22 @@ alter table schema_name.my_model add constraint 472394792387497234 check (id > 0
 
 </WHCode>
 
-## Custom constraints 
+## Пользовательские ограничения
 
-In dbt Cloud and dbt Core, you can use custom constraints on models for the advanced configuration of tables. Different data warehouses support different syntax and capabilities. 
+В dbt Cloud и dbt Core вы можете использовать пользовательские ограничения на моделях для расширенной конфигурации таблиц. Разные хранилища данных поддерживают различный синтаксис и возможности.
 
-Custom constraints allow you to add configuration to specific columns. For example:
+Пользовательские ограничения позволяют вам добавлять конфигурацию к конкретным столбцам. Например:
 
-  - Set [masking policies](https://docs.snowflake.com/en/user-guide/security-column-intro#what-are-masking-policies) in Snowflake when using a Create Table As Select (CTAS).
+  - Установить [политики маскирования](https://docs.snowflake.com/en/user-guide/security-column-intro#what-are-masking-policies) в Snowflake при использовании Create Table As Select (CTAS).
   
-  - Other data warehouses (such as [Databricks](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-create-table-using.html) and [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#column_name_and_column_schema) have their own set of parameters that can be set for columns in their CTAS statements.
+  - Другие хранилища данных (такие как [Databricks](https://docs.databricks.com/en/sql/language-manual/sql-ref-syntax-ddl-create-table-using.html) и [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#column_name_and_column_schema) имеют свой собственный набор параметров, которые можно установить для столбцов в их операторах CTAS.
 
 
-You can implement constraints in a couple of different ways:
+Вы можете реализовать ограничения несколькими способами:
 
-<Expandable alt_header="Custom constraints with tags">
+<Expandable alt_header="Пользовательские ограничения с тегами">
 
-Here's an example of how to implement tag-based masking policies with contracts and constraints using the following syntax:
+Вот пример того, как реализовать политики маскирования на основе тегов с контрактами и ограничениями, используя следующий синтаксис:
 
 <File name='models/constraints_example.yml'>
 
@@ -605,20 +604,20 @@ models:
         data_type: int
         constraints:
           - type: custom
-            expression: "tag (my_tag = 'my_value')" #  A custom SQL expression used to enforce a specific constraint on a column.
+            expression: "tag (my_tag = 'my_value')" #  Пользовательское SQL выражение, используемое для применения конкретного ограничения к столбцу.
 
 ```
 
 </File>
 
-Using this syntax requires configuring all the columns and their types as it’s the only way to send a create or replace `<cols_info_with_masking> mytable as ...`. It’s not possible to do it with just a partial list of columns. This means making sure the columns and constraints fields are fully defined.
+Использование этого синтаксиса требует настройки всех столбцов и их типов, так как это единственный способ отправить create or replace `<cols_info_with_masking> mytable as ...`. Невозможно сделать это только с частичным списком столбцов. Это означает, что необходимо убедиться, что поля столбцов и ограничений полностью определены.
 
-To generate a YAML with all the columns, you can use `generate_model_yaml` from [dbt-codegen](https://github.com/dbt-labs/dbt-codegen/tree/0.12.1/?tab=readme-ov-file#generate_model_yaml-source).
+Чтобы сгенерировать YAML со всеми столбцами, вы можете использовать `generate_model_yaml` из [dbt-codegen](https://github.com/dbt-labs/dbt-codegen/tree/0.12.1/?tab=readme-ov-file#generate_model_yaml-source).
 </Expandable>
 
-<Expandable alt_header="Custom constraints without tags">
+<Expandable alt_header="Пользовательские ограничения без тегов">
 
-Alternatively, you can add a masking policy without tags:
+В качестве альтернативы вы можете добавить политику маскирования без тегов:
 
 <File name='models/constraints_example.yml'>
  
@@ -641,4 +640,3 @@ models:
 
 </File>
 </Expandable>
-

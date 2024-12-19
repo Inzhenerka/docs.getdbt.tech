@@ -1,6 +1,6 @@
 ---
 id: "persist_docs"
-description: "Persist_docs - Read this in-depth guide to learn about configurations in dbt."
+description: "Persist_docs - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: Dict[Str, Bool]
 ---
 
@@ -8,10 +8,10 @@ datatype: Dict[Str, Bool]
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value:'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value:'sources', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
   ]
 }>
 
@@ -48,7 +48,7 @@ select ...
 
 <TabItem value="sources">
 
-This config is not implemented for sources.
+Эта конфигурация не реализована для источников.
 
 </TabItem>
 
@@ -105,16 +105,13 @@ select ...
 
 </Tabs>
 
-## Definition
+## Определение
 
-Optionally persist [resource descriptions](/reference/resource-properties/description) as
-column and relation comments in the database. By default, documentation
-persistence is disabled, but it can be enabled for specific resources or groups of
-resources as needed.
+Опционально сохраняйте [описания ресурсов](/reference/resource-properties/description) в виде комментариев к столбцам и отношениям в базе данных. По умолчанию сохранение документации отключено, но его можно включить для конкретных ресурсов или групп ресурсов по мере необходимости.
 
-## Support
+## Поддержка
 
-The `persist_docs` config is supported on the most widely used dbt adapters:
+Конфигурация `persist_docs` поддерживается на наиболее широко используемых адаптерах dbt:
 - Postgres
 - Redshift
 - Snowflake
@@ -122,32 +119,31 @@ The `persist_docs` config is supported on the most widely used dbt adapters:
 - Databricks 
 - Apache Spark
 
-However, some databases limit where and how descriptions can be added to database objects. Those database adapters might not support `persist_docs`, or might offer only partial support.
+Однако некоторые базы данных ограничивают, где и как описания могут быть добавлены к объектам базы данных. Эти адаптеры баз данных могут не поддерживать `persist_docs` или предлагать только частичную поддержку.
 
-Some known issues and limitations:
+Некоторые известные проблемы и ограничения:
 
 <WHCode>
 
 <div warehouse="Databricks">
 
-- Column-level comments require `file_format: delta` (or another "v2 file format")
-
+- Комментарии на уровне столбцов требуют `file_format: delta` (или другого "v2 file format")
 
 </div>
 
 <div warehouse="Snowflake">
 
-- No known issues
+- Известных проблем нет
 
 </div>
 
 </WHCode>
 
-## Usage
+## Использование
 
-### Documenting columns and relations
+### Документирование столбцов и отношений
 
-Supply a [description](/reference/resource-properties/description) for a model:
+Укажите [описание](/reference/resource-properties/description) для модели:
 
 <File name='models/schema.yml'>
 
@@ -156,16 +152,16 @@ version: 2
 
 models:
   - name: dim_customers
-    description: One record per customer
+    description: Один рекорд на клиента
     columns:
       - name: customer_id
-        description: Primary key
+        description: Первичный ключ
 
 ```
 
 </File>
 
-Enable `persist_docs` for columns and relations in your project:
+Включите `persist_docs` для столбцов и отношений в вашем проекте:
 
 <File name='dbt_project.yml'>
 
@@ -178,11 +174,10 @@ models:
 
 </File>
 
-Run dbt and observe that the created relation and columns are annotated with
-your descriptions:
+Запустите dbt и убедитесь, что созданные отношения и столбцы аннотированы вашими описаниями:
 
 <Lightbox src="/img/reference/persist_docs_relation.png"
-          title="Relation descriptions in BigQuery"/>
+          title="Описание отношений в BigQuery"/>
 
 <Lightbox src="/img/reference/persist_docs_columns.png"
-          title="Column descriptions in BigQuery"/>
+          title="Описание столбцов в BigQuery"/>

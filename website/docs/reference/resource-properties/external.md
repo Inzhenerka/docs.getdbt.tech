@@ -28,14 +28,14 @@ sources:
 
 </File>
 
-## Definition
+## Определение
 
-An extensible dictionary of metadata properties specific to sources that point to external tables.
-There are optional built-in properties, with simple type validation, that roughly correspond to 
-the Hive external <Term id="table" /> spec. You may define and use as many additional properties as you'd like.
+Расширяемый словарь свойств метаданных, специфичных для источников, которые указывают на внешние таблицы. 
+Существуют необязательные встроенные свойства с простой валидацией типов, которые примерно соответствуют 
+спецификации внешней <Term id="table" /> таблицы Hive. Вы можете определить и использовать столько дополнительных свойств, сколько захотите.
 
-You may wish to define the `external` property in order to:
-- Power macros that introspect [`graph.sources`](/reference/dbt-jinja-functions/graph)
-- Define metadata that you can later extract from the [manifest](/reference/artifacts/manifest-json)
+Вы можете захотеть определить свойство `external` для того, чтобы:
+- Поддерживать макросы, которые исследуют [`graph.sources`](/reference/dbt-jinja-functions/graph)
+- Определять метаданные, которые вы сможете позже извлечь из [манифеста](/reference/artifacts/manifest-json)
 
-For an example of how this property can be used to power custom workflows, see the [`dbt-external-tables`](https://github.com/dbt-labs/dbt-external-tables) package.
+Для примера того, как это свойство может быть использовано для поддержки пользовательских рабочих процессов, смотрите пакет [`dbt-external-tables`](https://github.com/dbt-labs/dbt-external-tables).

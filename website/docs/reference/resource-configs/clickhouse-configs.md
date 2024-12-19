@@ -1,39 +1,38 @@
 ---
-title: "ClickHouse configurations"
-description: "Read this guide to understand ClickHouse configurations in dbt."
+title: "Конфигурации ClickHouse"
+description: "Прочитайте это руководство, чтобы понять конфигурации ClickHouse в dbt."
 id: "clickhouse-configs"
 ---
 
-## Models
+## Модели
 
-| Type                        | Supported? | Details                                                                                                                          |
-|-----------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------|
-| view materialization        | YES        | Creates a [view](https://clickhouse.com/docs/en/sql-reference/table-functions/view/).                                            |
-| table materialization       | YES        | Creates a [table](https://clickhouse.com/docs/en/operations/system-tables/tables/). See below for the list of supported engines. |
-| incremental materialization | YES        | Creates a table if it doesn't exist, and then writes only updates to it.                                                         |
-| ephemeral materialized      | YES        | Creates a ephemeral/CTE materialization.  This does model is internal to dbt and does not create any database objects            |
+| Тип                          | Поддерживается? | Подробности                                                                                                                        |
+|------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------|
+| материализация представления   | ДА              | Создает [представление](https://clickhouse.com/docs/en/sql-reference/table-functions/view/).                                       |
+| материализация таблицы        | ДА              | Создает [таблицу](https://clickhouse.com/docs/en/operations/system-tables/tables/). См. ниже список поддерживаемых движков.      |
+| инкрементальная материализация | ДА              | Создает таблицу, если она не существует, и затем записывает только обновления в нее.                                            |
+| эфемерная материализация      | ДА              | Создает эфемерную/CTE материализацию. Эта модель является внутренней для dbt и не создает никаких объектов базы данных.            |
 
-## Experimental models
-The following are [experimental features](https://clickhouse.com/docs/en/beta-and-experimental-features) in Clickhouse:
+## Экспериментальные модели
+Следующие функции являются [экспериментальными](https://clickhouse.com/docs/en/beta-and-experimental-features) в ClickHouse:
 
-| Type                                    | Supported?        | Details                                                                                                                                                                                                                                         |
-|-----------------------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Materialized View materialization       | YES, Experimental | Creates a [materialized view](https://clickhouse.com/docs/en/materialized-view).                                                                                                                                                                |
-| Distributed table materialization       | YES, Experimental | Creates a [distributed table](https://clickhouse.com/docs/en/engines/table-engines/special/distributed).                                                                                                                                        |
-| Distributed incremental materialization | YES, Experimental | Incremental model based on the same idea as distributed table. Note that not all strategies are supported, visit [this](https://github.com/ClickHouse/dbt-clickhouse?tab=readme-ov-file#distributed-incremental-materialization) for more info. |
-| Dictionary materialization              | YES, Experimental | Creates a [dictionary](https://clickhouse.com/docs/en/engines/table-engines/special/dictionary).                                                                                                                                                |
+| Тип                                      | Поддерживается?        | Подробности                                                                                                                                                                                                                                         |
+|------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Материализация материализованного представления | ДА, экспериментально    | Создает [материализованное представление](https://clickhouse.com/docs/en/materialized-view).                                                                                                                                                      |
+| Материализация распределенной таблицы    | ДА, экспериментально    | Создает [распределенную таблицу](https://clickhouse.com/docs/en/engines/table-engines/special/distributed).                                                                                                                                      |
+| Инкрементальная материализация распределенной таблицы | ДА, экспериментально    | Инкрементальная модель, основанная на той же идее, что и распределенная таблица. Обратите внимание, что не все стратегии поддерживаются, посетите [это](https://github.com/ClickHouse/dbt-clickhouse?tab=readme-ov-file#distributed-incremental-materialization) для получения дополнительной информации. |
+| Материализация словаря                  | ДА, экспериментально    | Создает [словарь](https://clickhouse.com/docs/en/engines/table-engines/special/dictionary).                                                                                                                                                      |
 
-### View materialization
+### Материализация представления
 
-A dbt model can be created as a [ClickHouse view](https://clickhouse.com/docs/en/sql-reference/table-functions/view/)
-and configured using the following syntax:
+Модель dbt может быть создана как [представление ClickHouse](https://clickhouse.com/docs/en/sql-reference/table-functions/view/) и настроена с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-view"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]
 }>
 
@@ -60,17 +59,16 @@ models:
 </TabItem>
 </Tabs>
 
-### Table materialization
+### Материализация таблицы
 
-A dbt model can be created as a [ClickHouse table](https://clickhouse.com/docs/en/operations/system-tables/tables/) and
-configured using the following syntax:
+Модель dbt может быть создана как [таблица ClickHouse](https://clickhouse.com/docs/en/operations/system-tables/tables/) и настроена с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-table"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]
 }>
 
@@ -107,27 +105,25 @@ models:
 </TabItem>
 </Tabs>
 
-#### Table configuration
+#### Конфигурация таблицы
 
-| Option         | Description                                                                                                                                          | Required?                         |
-|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
-| `materialized` | How the model will be materialized into ClickHouse. Must be `table` to create a table model.                                                         | Required                          |
-| `engine`       | The table engine to use when creating tables. See list of supported engines below.                                                                   | Optional (default: `MergeTree()`) |
-| `order_by`     | A tuple of column names or arbitrary expressions. This allows you to create a small sparse index that helps find data faster.                        | Optional (default: `tuple()`)     |
-| `partition_by` | A partition is a logical combination of records in a table by a specified criterion. The partition key can be any expression from the table columns. | Optional                          |
+| Опция          | Описание                                                                                                                                          | Обязательно?                         |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| `materialized` | Как модель будет материализована в ClickHouse. Должно быть `table`, чтобы создать модель таблицы.                                              | Обязательно                          |
+| `engine`       | Движок таблицы, который будет использоваться при создании таблиц. См. список поддерживаемых движков ниже.                                       | Необязательно (по умолчанию: `MergeTree()`) |
+| `order_by`     | Кортеж имен столбцов или произвольных выражений. Это позволяет создать небольшой разреженный индекс, который помогает быстрее находить данные. | Необязательно (по умолчанию: `tuple()`)     |
+| `partition_by` | Разделение — это логическая комбинация записей в таблице по заданному критерию. Ключ разделения может быть любым выражением из столбцов таблицы. | Необязательно                        |
 
-### Incremental materialization
+### Инкрементальная материализация
 
-Table model will be reconstructed for each dbt execution. This may be infeasible and extremely costly for larger result
-sets or complex transformations. To address this challenge and reduce the build time, a dbt model can be created as an
-incremental ClickHouse table and is configured using the following syntax:
+Модель таблицы будет перестраиваться для каждого выполнения dbt. Это может быть непрактично и крайне затратно для больших наборов результатов или сложных преобразований. Чтобы решить эту проблему и сократить время сборки, модель dbt может быть создана как инкрементальная таблица ClickHouse и настроена с использованием следующего синтаксиса:
 
 <Tabs
 groupId="config-incremental"
 defaultValue="project-yaml"
 values={[
-{ label: 'Project file', value: 'project-yaml', },
-{ label: 'Config block', value: 'config', },
+{ label: 'Файл проекта', value: 'project-yaml', },
+{ label: 'Блок конфигурации', value: 'config', },
 ]}
 >
 
@@ -168,24 +164,22 @@ models:
 </TabItem>
 </Tabs>
 
-#### Incremental table configuration
+#### Конфигурация инкрементальной таблицы
 
-| Option                   | Description                                                                                                                                                                                                                                                       | Required?                                                                            |
+| Опция                   | Описание                                                                                                                                                                                                                                                       | Обязательно?                                                                            |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| `materialized`           | How the model will be materialized into ClickHouse. Must be `table` to create a table model.                                                                                                                                                                      | Required                                                                             |
-| `unique_key`             | A tuple of column names that uniquely identify rows. For more details on uniqueness constraints, see [here](/docs/build/incremental-models#defining-a-unique-key-optional).                                                                                       | Required. If not provided altered rows will be added twice to the incremental table. |
-| `engine`                 | The table engine to use when creating tables. See list of supported engines below.                                                                                                                                                                                | Optional (default: `MergeTree()`)                                                    |
-| `order_by`               | A tuple of column names or arbitrary expressions. This allows you to create a small sparse index that helps find data faster.                                                                                                                                     | Optional (default: `tuple()`)                                                        |
-| `partition_by`           | A partition is a logical combination of records in a table by a specified criterion. The partition key can be any expression from the table columns.                                                                                                              | Optional                                                                             |
-| `inserts_only`           | (Deprecated, see the `append` materialization strategy).  If True, incremental updates will be inserted directly to the target incremental table without creating an intermediate table.                                                                          | Optional (default: `False`)                                                          |
-| `incremental_strategy`   | The strategy to use for incremental materialization.  `delete+insert`, `append` and `insert_overwrite` (experimental) are supported.  For additional details on strategies, see [here](https://github.com/ClickHouse/dbt-clickhouse#incremental-model-strategies) | Optional (default: 'default')                                                        |
-| `incremental_predicates` | Incremental predicate clause to be applied to `delete+insert` materializations                                                                                                                                                                                    | Optional                                                                             |
+| `materialized`           | Как модель будет материализована в ClickHouse. Должно быть `table`, чтобы создать модель таблицы.                                                                                                                                                                      | Обязательно                                                                             |
+| `unique_key`             | Кортеж имен столбцов, которые уникально идентифицируют строки. Для получения дополнительной информации о ограничениях уникальности смотрите [здесь](/docs/build/incremental-models#defining-a-unique-key-optional).                                                                                       | Обязательно. Если не указано, измененные строки будут добавлены дважды в инкрементальную таблицу. |
+| `engine`                 | Движок таблицы, который будет использоваться при создании таблиц. См. список поддерживаемых движков ниже.                                                                                                                                                                                | Необязательно (по умолчанию: `MergeTree()`)                                                    |
+| `order_by`               | Кортеж имен столбцов или произвольных выражений. Это позволяет создать небольшой разреженный индекс, который помогает быстрее находить данные.                                                                                                                                     | Необязательно (по умолчанию: `tuple()`)                                                        |
+| `partition_by`           | Разделение — это логическая комбинация записей в таблице по заданному критерию. Ключ разделения может быть любым выражением из столбцов таблицы.                                                                                                              | Необязательно                                                                             |
+| `inserts_only`           | (Устарело, см. стратегию материализации `append`). Если True, инкрементальные обновления будут вставлены непосредственно в целевую инкрементальную таблицу без создания промежуточной таблицы.                                                                          | Необязательно (по умолчанию: `False`)                                                          |
+| `incremental_strategy`   | Стратегия, используемая для инкрементальной материализации. Поддерживаются `delete+insert`, `append` и `insert_overwrite` (экспериментально). Для получения дополнительной информации о стратегиях смотрите [здесь](https://github.com/ClickHouse/dbt-clickhouse#incremental-model-strategies) | Необязательно (по умолчанию: 'default')                                                        |
+| `incremental_predicates` | Условие инкрементального предиката, которое будет применено к материализациям `delete+insert`                                                                                                                                                                                    | Необязательно                                                                             |
 
-## Snapshot
+## Снимок
 
-dbt snapshots allow a record to be made of changes to a mutable model over time. This in turn allows point-in-time
-queries on models, where analysts can “look back in time” at the previous state of a model. This functionality is
-supported by the ClickHouse connector and is configured using the following syntax:
+Снимки dbt позволяют зафиксировать изменения в изменяемой модели с течением времени. Это, в свою очередь, позволяет выполнять запросы на модели в определенный момент времени, когда аналитики могут "ознакомиться с прошлым" с предыдущим состоянием модели. Эта функциональность поддерживается коннектором ClickHouse и настраивается с использованием следующего синтаксиса:
 
 <VersionBlock lastVersion="1.8">
 
@@ -225,46 +219,40 @@ supported by the ClickHouse connector and is configured using the following synt
 
 </VersionBlock>
 
-For more information on configuration, check out the [snapshot configs](/reference/snapshot-configs) reference page.
+Для получения дополнительной информации о конфигурации ознакомьтесь со страницей [конфигурации снимков](/reference/snapshot-configs).
 
-## Supported table engines
+## Поддерживаемые движки таблиц
 
-| Type                   | Details                                                                                   |
+| Тип                     | Подробности                                                                                   |
 |------------------------|-------------------------------------------------------------------------------------------|
-| MergeTree (default)    | https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree/.         |
+| MergeTree (по умолчанию) | https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree/.         |
 | HDFS                   | https://clickhouse.com/docs/en/engines/table-engines/integrations/hdfs                    |
 | MaterializedPostgreSQL | https://clickhouse.com/docs/en/engines/table-engines/integrations/materialized-postgresql |
 | S3                     | https://clickhouse.com/docs/en/engines/table-engines/integrations/s3                      |
 | EmbeddedRocksDB        | https://clickhouse.com/docs/en/engines/table-engines/integrations/embedded-rocksdb        |
 | Hive                   | https://clickhouse.com/docs/en/engines/table-engines/integrations/hive                    |
 
-## Experimental supported table engines
+## Экспериментально поддерживаемые движки таблиц
 
-| Type              | Details                                                                   |
-|-------------------|---------------------------------------------------------------------------|
-| Distributed Table | https://clickhouse.com/docs/en/engines/table-engines/special/distributed. |
-| Dictionary        | https://clickhouse.com/docs/en/engines/table-engines/special/dictionary   |
+| Тип                  | Подробности                                                                   |
+|----------------------|---------------------------------------------------------------------------|
+| Распределенная таблица | https://clickhouse.com/docs/en/engines/table-engines/special/distributed. |
+| Словарь              | https://clickhouse.com/docs/en/engines/table-engines/special/dictionary   |
 
-If you encounter issues connecting to ClickHouse from dbt with one of the above engines, please report an
-issue [here](https://github.com/ClickHouse/dbt-clickhouse/issues).
+Если вы столкнулись с проблемами подключения к ClickHouse из dbt с одним из вышеуказанных движков, пожалуйста, сообщите об этом [здесь](https://github.com/ClickHouse/dbt-clickhouse/issues).
 
-## Cross database macro support
+## Поддержка макросов между базами данных
 
-dbt-clickhouse supports most of the cross database macros now included in dbt-core, with the following exceptions:
+dbt-clickhouse поддерживает большинство макросов между базами данных, теперь включенных в dbt-core, с следующими исключениями:
 
-* The `split_part` SQL function is implemented in ClickHouse using the splitByChar function. This function requires
-  using a constant string for the "split" delimiter, so the `delimeter` parameter used for this macro will be
-  interpreted as a string, not a column name
-* Similarly, the `replace` SQL function in ClickHouse requires constant strings for the `old_chars` and `new_chars`
-  parameters, so those parameters will be interpreted as strings rather than column names when invoking this macro.
+* SQL-функция `split_part` реализована в ClickHouse с использованием функции splitByChar. Эта функция требует использования постоянной строки для разделителя "split", поэтому параметр `delimeter`, используемый для этого макроса, будет интерпретироваться как строка, а не как имя столбца.
+* Аналогично, SQL-функция `replace` в ClickHouse требует постоянных строк для параметров `old_chars` и `new_chars`, поэтому эти параметры будут интерпретироваться как строки, а не как имена столбцов при вызове этого макроса.
 
-## Setting `quote_columns`
+## Установка `quote_columns`
 
-To prevent a warning, make sure to explicitly set a value for `quote_columns` in your `dbt_project.yml`. See the [doc on quote_columns](https://docs.getdbt.com/reference/resource-configs/quote_columns) for more information.
+Чтобы избежать предупреждения, убедитесь, что вы явно установили значение для `quote_columns` в вашем `dbt_project.yml`. См. [документацию по quote_columns](https://docs.getdbt.com/reference/resource-configs/quote_columns) для получения дополнительной информации.
 
 ```yaml
 seeds:
-  +quote_columns: false  #or `true` if you have csv column headers with spaces
+  +quote_columns: false  #или `true`, если у вас есть заголовки столбцов csv с пробелами
 ```
-
- 

@@ -1,6 +1,6 @@
 ---
 resource_types: [models]
-description: "Materialized - Read this in-depth guide to learn about materializations in dbt."
+description: "Материализация - Прочитайте это подробное руководство, чтобы узнать о материализациях в dbt."
 datatype: "string"
 ---
 
@@ -8,9 +8,9 @@ datatype: "string"
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -69,26 +69,24 @@ select ...
 
 </Tabs>
 
-## Definition 
+## Определение 
 
-[Materializations](/docs/build/materializations#materializations) are strategies for persisting dbt models in a warehouse. These are the materialization types built into dbt:
+[Материализации](/docs/build/materializations#materializations) — это стратегии для сохранения моделей dbt в хранилище данных. Вот типы материализаций, встроенные в dbt:
 
-- `ephemeral` &mdash; [ephemeral](/docs/build/materializations#ephemeral) models are not directly built into the database
-- `table` &mdash; a model is rebuilt as a [table](/docs/build/materializations#table) on each run
-- `view` &mdash; a model is rebuilt as a [view](/docs/build/materializations#view) on each run
-- `materialized_view` &mdash; allows the creation and maintenance of [materialized views](/docs/build/materializations#materialized-view) in the target database
-- `incremental` &mdash; [incremental](/docs/build/materializations#incremental) models allow dbt to insert or update records into a table since the last time that model was run
+- `ephemeral` &mdash; [эпhemeral](/docs/build/materializations#ephemeral) модели не создаются непосредственно в базе данных
+- `table` &mdash; модель пересоздается как [таблица](/docs/build/materializations#table) при каждом запуске
+- `view` &mdash; модель пересоздается как [представление](/docs/build/materializations#view) при каждом запуске
+- `materialized_view` &mdash; позволяет создавать и поддерживать [материализованные представления](/docs/build/materializations#materialized-view) в целевой базе данных
+- `incremental` &mdash; [инкрементальные](/docs/build/materializations#incremental) модели позволяют dbt вставлять или обновлять записи в таблице с момента последнего запуска этой модели
 
-You can also configure [custom materializations](/guides/create-new-materializations?step=1) in dbt. Custom materializations are a powerful way to extend dbt's functionality to meet your specific needs.
+Вы также можете настраивать [пользовательские материализации](/guides/create-new-materializations?step=1) в dbt. Пользовательские материализации — это мощный способ расширить функциональность dbt в соответствии с вашими конкретными потребностями.
 
-## Creation Precedence
-<!-- This text is copied from /reference/resource-configs/on_configuration_change.md -->
-Materializations are implemented following this "drop through" life cycle:
+## Приоритет создания
+<!-- Этот текст скопирован из /reference/resource-configs/on_configuration_change.md -->
+Материализации реализуются в соответствии с этим жизненным циклом "drop through":
 
-1. If a model does not exist with the provided path, create the new model.
-2. If a model exists, but has a different type, drop the existing model and create the new model.
-3. If [`--full-refresh`](/reference/resource-configs/full_refresh) is supplied, replace the existing model regardless of configuration changes and the [`on_configuration_change`](/reference/resource-configs/on_configuration_change) setting.
-4. If there are no configuration changes, perform the default action for that type (e.g. apply refresh for a materialized view).
-5. Determine whether to apply the configuration changes according to the `on_configuration_change` setting.
-
-
+1. Если модель с указанным путем не существует, создайте новую модель.
+2. Если модель существует, но имеет другой тип, удалите существующую модель и создайте новую.
+3. Если указан [`--full-refresh`](/reference/resource-configs/full_refresh), замените существующую модель независимо от изменений конфигурации и настройки [`on_configuration_change`](/reference/resource-configs/on_configuration_change).
+4. Если изменений конфигурации нет, выполните действие по умолчанию для этого типа (например, примените обновление для материализованного представления).
+5. Определите, следует ли применять изменения конфигурации в соответствии с настройкой `on_configuration_change`.

@@ -1,13 +1,13 @@
 ---
-title: Using the + prefix
+title: Использование префикса +
 
 ---
 
-The `+` prefix is a dbt syntax feature, introduced in dbt v0.17.0, which helps disambiguate between [resource paths](/reference/resource-configs/resource-path) and configs in `dbt_project.yml` files.
+Префикс `+` является особенностью синтаксиса dbt, введенной в версии dbt v0.17.0, который помогает устранить неоднозначность между [путями ресурсов](/reference/resource-configs/resource-path) и конфигурациями в файлах `dbt_project.yml`.
 
-It is not compatible with `dbt_project.yml` files that use [`config-version`](/reference/project-configs/config-version) 1.
+Он несовместим с файлами `dbt_project.yml`, которые используют [`config-version`](/reference/project-configs/config-version) 1.
 
-For example:
+Например:
 
 <File name='dbt_project.yml'>
 
@@ -26,11 +26,11 @@ models:
 
 </File>
 
-Throughout this documentation, we've tried to be consistent in using the `+` prefix in `dbt_project.yml` files.
+В этой документации мы старались последовательно использовать префикс `+` в файлах `dbt_project.yml`.
 
-However, the leading `+` is in fact _only required_ when you need to disambiguate between resource paths and configs, for example when:
-- A config accepts a dictionary as its inputs, for example, the [`persist_docs` config](/reference/resource-configs/persist_docs).
-- Or, a config shares a key with part of a resource path, for example, if you had a directory of models named `tags`.
+Тем не менее, ведущий `+` на самом деле _требуется только_ в тех случаях, когда необходимо устранить неоднозначность между путями ресурсов и конфигурациями, например, когда:
+- Конфигурация принимает словарь в качестве входных данных, например, конфигурация [`persist_docs`](/reference/resource-configs/persist_docs).
+- Или конфигурация имеет ключ, совпадающий с частью пути ресурса, например, если у вас есть каталог моделей с именем `tags`.
 
 <File name='dbt_project.yml'>
 
@@ -41,27 +41,24 @@ config-version: 2
 ...
 
 models:
-  +persist_docs: # this config is a dictionary, so needs a + prefix
+  +persist_docs: # эта конфигурация является словарем, поэтому требует префикса +
     relation: true
     columns: true
 
   jaffle_shop:
-    schema: my_schema # a plus prefix is optional here
-    +tags: # this is the tag config
+    schema: my_schema # префикс плюс здесь является необязательным
+    +tags: # это конфигурация тегов
       - "hello"
-    tags: # whereas this is the tag resource path
-      # The below config applies to models in the
-      # models/tags/ directory.
-      # Note: you don't _need_ a leading + here,
-      # but it wouldn't hurt.
+    tags: # в то время как это путь ресурса тегов
+      # Нижеуказанная конфигурация применяется к моделям в
+      # каталоге models/tags/.
+      # Примечание: вам не _нужно_ использовать ведущий + здесь,
+      # но это не повредит.
       materialized: view
-
-
 ```
 
 </File>
 
-When adding configs in `dbt_project.yml`, it doesn't hurt to use the `+` prefix, so we recommend you use it always.
+При добавлении конфигураций в `dbt_project.yml` не повредит использовать префикс `+`, поэтому мы рекомендуем всегда его использовать.
 
-**Note:** This use of the `+` prefix, in `dbt_project.yml`, is distinct from the use of `+` to control config merge behavior (clobber vs. add) in other config settings (specific resource `.yml` and `.sql` files). Currently, the only config which supports `+` for controlling config merge behavior is [`grants`](/reference/resource-configs/grants#grant-config-inheritance).
-
+**Примечание:** Это использование префикса `+` в `dbt_project.yml` отличается от использования `+` для управления поведением слияния конфигураций (перезапись против добавления) в других настройках конфигурации (конкретные файлы `.yml` и `.sql` ресурсов). В настоящее время единственной конфигурацией, которая поддерживает `+` для управления поведением слияния конфигураций, является [`grants`](/reference/resource-configs/grants#grant-config-inheritance).

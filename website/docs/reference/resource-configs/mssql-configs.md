@@ -1,24 +1,24 @@
 ---
-title: "Microsoft SQL Server configurations"
+title: "Конфигурации Microsoft SQL Server"
 id: "mssql-configs"
 ---
 
-## Materializations
+## Материализации
 
-Ephemeral materialization is not supported due to T-SQL not supporting nested CTEs. It may work in some cases when you're working with very simple ephemeral models.
+Эфемерная материализация не поддерживается из-за того, что T-SQL не поддерживает вложенные CTE. В некоторых случаях это может работать, если вы работаете с очень простыми эфемерными моделями.
 
-### Tables
+### Таблицы
 
-Tables will, by default, be materialized as a columnstore tables.
-This requires SQL Server 2017 or newer for on-premise instances or service tier S2 or higher for Azure.
+По умолчанию таблицы будут материализованы как таблицы с колонками (columnstore).
+Это требует SQL Server 2017 или новее для локальных экземпляров или уровня сервиса S2 или выше для Azure.
 
-This behaviour can be disabled by setting the `as_columnstore` configuration option to `False`.
+Это поведение можно отключить, установив параметр конфигурации `as_columnstore` в значение `False`.
 
 <Tabs
 defaultValue="model"
 values={[
-{label: 'Model config', value: 'model'},
-{label: 'Project config', value: 'project'}
+{label: 'Конфигурация модели', value: 'model'},
+{label: 'Конфигурация проекта', value: 'project'}
 ]}
 >
 
@@ -60,38 +60,38 @@ models:
 
 </Tabs>
 
-## Seeds
+## Семена
 
-By default, `dbt-sqlserver` will attempt to insert seed files in batches of 400 rows.
-If this exceeds SQL Server's 2100 parameter limit, the adapter will automatically limit to the highest safe value possible.
+По умолчанию `dbt-sqlserver` будет пытаться вставлять файлы семян партиями по 400 строк.
+Если это превышает лимит параметров SQL Server в 2100, адаптер автоматически ограничит значение до максимально безопасного.
 
-To set a different default seed value, you can set the variable `max_batch_size` in your project configuration.
+Чтобы установить другое значение по умолчанию для семян, вы можете установить переменную `max_batch_size` в конфигурации вашего проекта.
 
 <File name="dbt_project.yml">
 
 ```yaml
 vars:
-  max_batch_size: 200 # Any integer less than or equal to 2100 will do.
+  max_batch_size: 200 # Любое целое число, меньшее или равное 2100, подойдет.
 ```
 
 </File>
 
-## Snapshots
+## Снимки
 
-Columns in source tables can not have any constraints.
-If, for example, any column has a `NOT NULL` constraint, an error will be thrown.
+Столбцы в исходных таблицах не могут иметь никаких ограничений.
+Если, например, какой-либо столбец имеет ограничение `NOT NULL`, будет выдана ошибка.
 
-## Indices
+## Индексы
 
-You can specify indices to be created for your table by specifying post-hooks calling purpose-built macros.
+Вы можете указать индексы, которые будут созданы для вашей таблицы, указав пост-хуки, вызывающие специально разработанные макросы.
 
-The following macros are available:
+Доступны следующие макросы:
 
-* `create_clustered_index(columns, unique=False)`: columns is a list of columns, unique is an optional boolean (defaults to False).
-* `create_nonclustered_index(columns, includes=columns)`: columns is a list of columns, includes is an optional list of columns to include in the index.
-* `drop_all_indexes_on_table()`: drops current indices on a table. Only meaningful if the model is incremental.`
+* `create_clustered_index(columns, unique=False)`: columns — это список столбцов, unique — это необязательный булевый параметр (по умолчанию False).
+* `create_nonclustered_index(columns, includes=columns)`: columns — это список столбцов, includes — это необязательный список столбцов, которые следует включить в индекс.
+* `drop_all_indexes_on_table()`: удаляет текущие индексы на таблице. Имеет смысл только если модель инкрементальная.
 
-Some examples:
+Некоторые примеры:
 
 <File name="models/example.sql">
 
@@ -115,15 +115,15 @@ from ...
 
 </File>
 
-## Grants with auto provisioning
+## Права с автоматическим предоставлением
 
-dbt 1.2 introduced the capability to grant/revoke access using the `grants` [configuration option](/reference/resource-configs/grants).
-In dbt-sqlserver, you can additionally set `auto_provision_aad_principals` to `true` in your model configuration if you are using Microsoft Entra ID authentication with an Azure SQL Database or Azure Synapse Dedicated SQL Pool.
+dbt 1.2 представил возможность предоставления/отзыва доступа с использованием параметра конфигурации `grants` [опции конфигурации](/reference/resource-configs/grants).
+В dbt-sqlserver вы также можете установить `auto_provision_aad_principals` в значение `true` в конфигурации вашей модели, если вы используете аутентификацию Microsoft Entra ID с Azure SQL Database или Azure Synapse Dedicated SQL Pool.
 
-This will automatically create the Microsoft Entra ID principal inside your database if it does not exist yet.
-Note that the principals need to exist in your Microsoft Entra ID, this just makes them available to use in your database.
+Это автоматически создаст принципал Microsoft Entra ID внутри вашей базы данных, если он еще не существует.
+Обратите внимание, что принципалы должны существовать в вашей Microsoft Entra ID, это просто делает их доступными для использования в вашей базе данных.
 
-Principals are not removed again when they are removed from the grants configuration.
+Принципы не удаляются снова, когда они удаляются из конфигурации прав.
 
 <File name="dbt_project.yml">
 
@@ -135,20 +135,20 @@ models:
 
 </File>
 
-## Permissions
+## Разрешения
 
-The following permissions are required for the user executing dbt:
+Для пользователя, выполняющего dbt, требуются следующие разрешения:
 
-* `CREATE SCHEMA` on the database level (or you can create the schema in advance)
-* `CREATE TABLE` on the database level (or on the user's own schema if the schema is already created)
-* `CREATE VIEW` on the database level (or on the user's own schema if the schema is already created
-* `SELECT` on the tables/views being used as dbt sources
+* `CREATE SCHEMA` на уровне базы данных (или вы можете создать схему заранее)
+* `CREATE TABLE` на уровне базы данных (или в собственной схеме пользователя, если схема уже создана)
+* `CREATE VIEW` на уровне базы данных (или в собственной схеме пользователя, если схема уже создана)
+* `SELECT` на таблицах/представлениях, используемых в качестве источников dbt
 
-The 3 `CREATE` permissions above are required on the database level if you want to make use of tests or snapshots in dbt. You can work around this by creating the schemas used for testing and snapshots in advance and granting the right roles.
+Три вышеуказанных разрешения `CREATE` требуются на уровне базы данных, если вы хотите использовать тесты или снимки в dbt. Вы можете обойти это, создав схемы, используемые для тестирования и снимков, заранее и предоставив соответствующие роли.
 
-## cross-database macros
+## Макросы для межбаз данных
 
-The following macros are currently not supported:
+Следующие макросы в настоящее время не поддерживаются:
 
 * `bool_or`
 * `array_construct`
@@ -157,5 +157,5 @@ The following macros are currently not supported:
 
 ## dbt-utils
 
-Many [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) are supported,
-but require the installation of the [`tsql_utils`](https://hub.getdbt.com/dbt-msft/tsql_utils/latest/) dbt package.
+Многие [`dbt-utils`](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) поддерживаются,
+но требуют установки пакета dbt [`tsql_utils`](https://hub.getdbt.com/dbt-msft/tsql_utils/latest/).

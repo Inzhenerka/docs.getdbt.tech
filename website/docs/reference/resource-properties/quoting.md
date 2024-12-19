@@ -1,7 +1,7 @@
 ---
-title: "Configuring quoting in sources"
-sidebar_label: "quoting"
-datatype: boolean # -ish, it's actually a dictionary of bools
+title: "Настройка кавычек в источниках"
+sidebar_label: "кавычки"
+datatype: boolean # -ish, это на самом деле словарь булевых значений
 default: true
 ---
 <File name='models/<filename>.yml'>
@@ -26,30 +26,30 @@ sources:
 
 </File>
 
-## Definition
-Optionally configure whether dbt should quote databases, schemas, and identifiers when resolving a `{{ source() }}` function to a direct relation reference.
+## Определение
+Опционально настройте, следует ли dbt использовать кавычки для баз данных, схем и идентификаторов при разрешении функции `{{ source() }}` в прямую ссылку на отношение.
 
-This config can be specified for all tables in a source, or for a specific source <Term id="table" />. Quoting configs defined for a specific source table override the quoting configs specified for the top-level source.
+Эта конфигурация может быть указана для всех таблиц в источнике или для конкретного источника <Term id="table" />. Конфигурации кавычек, определенные для конкретной таблицы источника, переопределяют конфигурации кавычек, указанные для верхнего уровня источника.
 
-:::info BigQuery Terminology
+:::info Терминология BigQuery
 
-Note that for BigQuery quoting configuration, `database` and `schema` should be used here, though these configs will apply to `project` and `dataset` names respectively
+Обратите внимание, что для конфигурации кавычек в BigQuery следует использовать `database` и `schema`, хотя эти конфигурации будут применяться к именам `project` и `dataset` соответственно.
 
 :::
 
 
-## Default
-The default values vary by database. 
+## Значение по умолчанию
+Значения по умолчанию различаются в зависимости от базы данных.
 
-For most adapters, quoting is set to _true_ by default.
+Для большинства адаптеров кавычки по умолчанию установлены в _true_.
 
-Why? It's equally easy to select from relations with quoted or unquoted identifiers. Quoting allows you to use reserved words and special characters in those identifiers, though we recommend avoiding this whenever possible.
+Почему? Легко выбирать из отношений с кавычками или без. Использование кавычек позволяет использовать зарезервированные слова и специальные символы в этих идентификаторах, хотя мы рекомендуем избегать этого, когда это возможно.
 
-On Snowflake, quoting is set to _false_ by default.
+В Snowflake кавычки по умолчанию установлены в _false_.
 
-Creating relations with quoted identifiers also makes those identifiers case sensitive. It's much more difficult to select from them. You can re-enable quoting for relations identifiers that are case sensitive, reserved words, or contain special characters, but we recommend you avoid this as much as possible.
+Создание отношений с идентификаторами в кавычках также делает эти идентификаторы чувствительными к регистру. Выбор из них становится гораздо более сложным. Вы можете повторно включить кавычки для идентификаторов отношений, которые чувствительны к регистру, являются зарезервированными словами или содержат специальные символы, но мы рекомендуем избегать этого, насколько это возможно.
 
-## Example
+## Пример
 
 <File name='models/<filename>.yml'>
 
@@ -67,7 +67,7 @@ sources:
     tables:
       - name: orders
       - name: customers
-        # This overrides the `jaffle_shop` quoting config
+        # Это переопределяет конфигурацию кавычек `jaffle_shop`
         quoting:
           identifier: false
 
@@ -76,7 +76,7 @@ sources:
 
 </File>
 
-In a downstream model:
+В модели ниже по течению:
 
 <File name='models/<filename>.yml'>
 
@@ -84,10 +84,10 @@ In a downstream model:
 select
   ...
 
--- this should be quoted
+-- это должно быть в кавычках
 from {{ source('jaffle_shop', 'orders') }}
 
--- here, the identifier should be unquoted
+-- здесь идентификатор не должен быть в кавычках
 left join {{ source('jaffle_shop', 'customers') }} using (order_id)
 
 ```
@@ -95,16 +95,16 @@ left join {{ source('jaffle_shop', 'customers') }} using (order_id)
 </File>
 
 
-This will get compiled to:
+Это будет скомпилировано в:
 
 ```sql
 select
   ...
 
--- this should be quoted
+-- это должно быть в кавычках
 from "raw"."jaffle_shop"."orders"
 
--- here, the identifier should be unquoted
+-- здесь идентификатор не должен быть в кавычках
 left join "raw"."jaffle_shop".customers using (order_id)
 
 ```

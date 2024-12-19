@@ -1,6 +1,6 @@
 ---
-title: "Defining a database source property"
-sidebar_label: "database"
+title: "Определение свойства источника базы данных"
+sidebar_label: "база данных"
 resource_types: sources
 datatype: database_name
 ---
@@ -21,20 +21,20 @@ sources:
 
 </File>
 
-## Definition
-The database that your source is stored in.
+## Определение
+База данных, в которой хранится ваш источник.
 
-Note that to use this parameter, your warehouse must allow cross-database queries.
+Обратите внимание, что для использования этого параметра ваш склад данных должен поддерживать запросы между базами данных.
 
-#### BigQuery terminology
+#### Терминология BigQuery
 
-If you're using BigQuery, use the _project_ name as the `database:` property.
+Если вы используете BigQuery, используйте имя _проекта_ в качестве свойства `database:`.
 
-## Default
-By default, dbt will search in your target database (i.e. the database that you are creating tables and <Term id="view">views</Term>).
+## По умолчанию
+По умолчанию dbt будет искать в вашей целевой базе данных (т.е. в базе данных, в которой вы создаете таблицы и <Term id="view">представления</Term>).
 
-## Examples
-### Define a source that is stored in the `raw` database
+## Примеры
+### Определение источника, который хранится в базе данных `raw`
 
 <File name='models/<filename>.yml'>
 

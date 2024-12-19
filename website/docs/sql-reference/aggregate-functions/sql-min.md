@@ -1,33 +1,33 @@
 ---
 id: min 
 title: SQL MIN 
-description: The MIN aggregate function allows you to compute the minimum value from a column or across a set of rows for a column.
+description: Функция агрегирования MIN позволяет вычислить минимальное значение из столбца или по набору строк для столбца.
 slug: /sql-reference/min
 ---
 
 <head>
-    <title>Working with SQL MIN</title>
+    <title>Работа с SQL MIN</title>
 </head>
 
-SQL MIN, MAX, SUM…the aggregate functions that you’ll live and die by as an analytics practitioner. In this post, we’re going to unpack the SQL MIN function, how to use it, and why it's valuable in data work.
+SQL MIN, MAX, SUM… агрегирующие функции, без которых не обойтись аналитикам. В этом посте мы разберем функцию SQL MIN, как ее использовать и почему она важна в работе с данными.
 
-The MIN aggregate function allows you to compute the minimum value from a column or across a set of rows for a column. The results from the MIN function are useful for understanding the distribution of column values and determining the first timestamps of key events.
+Функция агрегирования MIN позволяет вычислить минимальное значение из столбца или по набору строк для столбца. Результаты функции MIN полезны для понимания распределения значений столбца и определения первых временных меток ключевых событий.
 
-## How to use the MIN function in a query
+## Как использовать функцию MIN в запросе
 
-Use the following syntax in a query to find the minimum value of a field:
+Используйте следующий синтаксис в запросе, чтобы найти минимальное значение поля:
 
 `min(<field_name>)`
 
-Since MIN is an aggregate function, you’ll need a GROUP BY statement in your query if you’re looking at counts broken out by dimension(s). If you’re calculating the standalone minimum of fields without the need to break them down by another field, you don’t need a GROUP BY statement.
+Поскольку MIN является агрегирующей функцией, вам потребуется оператор GROUP BY в вашем запросе, если вы хотите получить количество, разбитое по измерениям. Если вы вычисляете отдельное минимальное значение полей без необходимости разбивать их по другому полю, оператор GROUP BY не нужен.
 
-MIN can also be used as a window function to operate across specified or partitioned rows.
+MIN также может использоваться как оконная функция для работы с указанными или разделенными строками.
 
-Let’s take a look at a practical example using MIN below.
+Давайте рассмотрим практический пример использования MIN ниже.
 
-### MIN example
+### Пример MIN
 
-The following example is querying from a sample dataset created by dbt Labs called [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
+Следующий пример выполняет запрос к образцовому набору данных, созданному dbt Labs, под названием [jaffle_shop](https://github.com/dbt-labs/jaffle_shop):
 
 ```sql
 select
@@ -39,7 +39,7 @@ group by 1
 limit 3
 ```
 
-This simple query is returning the first and last order date for a customer in the Jaffle Shop’s `orders` table:
+Этот простой запрос возвращает дату первого и последнего заказа для клиента в таблице `orders` магазина Jaffle:
 
 | customer_id | first_order_date | last_order_date |
 |:---:|:---:|:---:|
@@ -47,14 +47,14 @@ This simple query is returning the first and last order date for a customer in t
 | 3 | 2018-01-02 | 2018-03-11 |
 | 94 | 2018-01-04 | 2018-01-29 |
 
-## SQL MIN function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL MIN в Snowflake, Databricks, BigQuery и Redshift
 
-All modern data warehouses support the ability to use the MIN function (and follow the same syntax).
+Все современные хранилища данных поддерживают возможность использования функции MIN (и следуют одному и тому же синтаксису).
 
-## MIN function use cases
+## Сценарии использования функции MIN
 
-We most commonly see queries using MIN to:
-- Perform initial data exploration on a dataset to understand the distribution of column values.
-- Identify the first timestamp for key events (ex. `min(login_timestamp_utc) as first_login`).
+Чаще всего мы видим запросы с использованием MIN для:
+- Проведения первоначального анализа данных в наборе данных для понимания распределения значений столбца.
+- Определения первой временной метки для ключевых событий (например, `min(login_timestamp_utc) as first_login`).
 
-This isn’t an extensive list of where your team may be using MIN throughout your development work, dbt models, and BI tool logic, but it contains some common scenarios analytics engineers face day-to-day.
+Это не исчерпывающий список того, где ваша команда может использовать MIN в процессе разработки, моделях dbt и логике BI-инструментов, но он содержит некоторые распространенные сценарии, с которыми сталкиваются аналитические инженеры в повседневной работе.

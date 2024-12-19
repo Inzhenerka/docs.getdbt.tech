@@ -1,15 +1,15 @@
 ---
 resource_types: [models]
-description: "Sql_header - Read this in-depth guide to learn about configurations in dbt."
+description: "Sql_header - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: "string"
 ---
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
   ]
 }>
 <TabItem value="models">
@@ -46,7 +46,7 @@ models:
 
 <TabItem value="seeds">
 
-This config is not implemented for seeds
+Эта конфигурация не реализована для сидов.
 
 </TabItem>
 
@@ -85,20 +85,20 @@ snapshots:
 </Tabs>
 
 
-## Definition
-An optional configuration to inject SQL above the `create table as` and `create view as` statements that dbt executes when building models and snapshots.
+## Определение
+Необязательная конфигурация для внедрения SQL перед операциями `create table as` и `create view as`, которые dbt выполняет при создании моделей и снимков.
 
-`sql_header`s can be set using the config, or by `call`-ing the `set_sql_header` macro (example below).
+`sql_header` можно установить с помощью конфигурации или вызвав макрос `set_sql_header` (пример ниже).
 
-## Comparison to pre-hooks
-[Pre-hooks](/reference/resource-configs/pre-hook-post-hook) also provide an opportunity to execute SQL before model creation, as a _preceding_ query. In comparison, SQL in a `sql_header` is run in the same _query_ as the `create table|view as` statement.
+## Сравнение с предшествующими хуками
+[Предшествующие хуки](/reference/resource-configs/pre-hook-post-hook) также предоставляют возможность выполнить SQL перед созданием модели, как _предшествующий_ запрос. В отличие от этого, SQL в `sql_header` выполняется в том же _запросе_, что и оператор `create table|view as`.
 
-As a result, this makes it more useful for [Snowflake session parameters](https://docs.snowflake.com/en/sql-reference/parameters.html) and [BigQuery Temporary UDFs](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions#sql-udf-examples).
+В результате это делает его более полезным для [параметров сессии Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html) и [временных UDF BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions#sql-udf-examples).
 
-## Examples
+## Примеры
 
-### Set Snowflake session parameters for a particular model
-This uses the config block syntax:
+### Установка параметров сессии Snowflake для конкретной модели
+Это использует синтаксис блока конфигурации:
 <File name='models/my_model.sql'>
 
 ```sql
@@ -111,7 +111,7 @@ select * from {{ ref('other_model') }}
 
 </File>
 
-### Set Snowflake session parameters for all models
+### Установка параметров сессии Snowflake для всех моделей
 
 <File name='dbt_project.yml'>
 
@@ -124,14 +124,14 @@ models:
 
 </File>
 
-### Create a BigQuery Temporary UDF
+### Создание временной UDF BigQuery
 
-This example calls the `set_sql_header` macro. This macro is a convenience wrapper which you may choose to use if you have a multi-line SQL statement to inject. You do not need to use the `sql_header` configuration key in this case.
+Этот пример вызывает макрос `set_sql_header`. Этот макрос является удобной оберткой, которую вы можете использовать, если у вас есть многострочное SQL выражение для внедрения. В этом случае вам не нужно использовать ключ конфигурации `sql_header`.
 
 <File name='models/my_model.sql'>
 
 ```sql
--- Supply a SQL header:
+-- Укажите SQL заголовок:
 {% call set_sql_header(config) %}
   CREATE TEMPORARY FUNCTION yes_no_to_boolean(answer STRING)
   RETURNS BOOLEAN AS (
@@ -143,7 +143,7 @@ This example calls the `set_sql_header` macro. This macro is a convenience wrapp
   );
 {%- endcall %}
 
--- Supply your model code:
+-- Укажите код вашей модели:
 
 
 select yes_no_to_boolean(yes_no) from {{ ref('other_model') }}

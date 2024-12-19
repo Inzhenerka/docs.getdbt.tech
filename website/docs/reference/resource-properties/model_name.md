@@ -15,9 +15,9 @@ models:
 
 </File>
 
-## Definition
-The name of the model you are declaring properties for. Must match the _filename_ of a model.
+## Определение
+Имя модели, для которой вы объявляете свойства. Должно совпадать с _именем файла_ модели.
 
-## Default
+## По умолчанию
 
-This is a **required property**, no default exists.
+Это **обязательное свойство**, значение по умолчанию отсутствует.

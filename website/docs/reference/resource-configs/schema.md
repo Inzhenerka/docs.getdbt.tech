@@ -1,36 +1,36 @@
 ---
-sidebar_label: "schema"
+sidebar_label: "схема"
 resource_types: [models, seeds, tests]
-description: "Override the default schema when dbt creates resources in your data platform."
+description: "Переопределите схему по умолчанию, когда dbt создает ресурсы в вашей платформе данных."
 datatype: string
 ---
 
 <Tabs>
-<TabItem value="model" label="Model">
+<TabItem value="model" label="Модель">
 
-Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a group of models in your `dbt_project.yml` file or a [config block](/reference/resource-configs/schema#models). 
- 
-For example, if you have a group of marketing-related models and want to place them in a separate schema called `marketing`, you can configure it like this:
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) для группы моделей в вашем файле `dbt_project.yml` или в [блоке конфигурации](/reference/resource-configs/schema#models). 
+
+Например, если у вас есть группа моделей, связанных с маркетингом, и вы хотите поместить их в отдельную схему под названием `marketing`, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
 ```yml
 models:
   your_project:
-    marketing: #  Grouping or folder for set of models
+    marketing: # Группировка или папка для набора моделей
       +schema: marketing
 ```
 </File>
 
-This would result in the generated relations for these models being located in the  `marketing` schema, so the full relation names would be `analytics.target_schema_marketing.model_name`. This is because the schema of the relation is `{{ target.schema }}_{{ schema }}`. The [definition](#definition) section explains this in more detail.
+В результате сгенерированные отношения для этих моделей будут находиться в схеме `marketing`, поэтому полные имена отношений будут `analytics.target_schema_marketing.model_name`. Это происходит потому, что схема отношения имеет вид `{{ target.schema }}_{{ schema }}`. Раздел [определение](#definition) объясняет это более подробно.
 
 </TabItem>
 
-<TabItem value="seeds" label="Seeds">
+<TabItem value="seeds" label="Сиды">
 
-Configure a custom schema in your `dbt_project.yml` file. 
+Настройте пользовательскую схему в вашем файле `dbt_project.yml`. 
 
-For example, if you have a seed that should be placed in a separate schema called `mappings`, you can configure it like this:
+Например, если у вас есть сид, который должен быть помещен в отдельную схему под названием `mappings`, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -41,24 +41,24 @@ seeds:
       +schema: mappings
 ```
 
-This would result in the generated relation being located in the `mappings` schema, so the full relation name would be `analytics.mappings.seed_name`. 
+В результате сгенерированное отношение будет находиться в схеме `mappings`, поэтому полное имя отношения будет `analytics.mappings.seed_name`. 
 
 </File>
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
 <VersionBlock lastVersion="1.8">
 
-Available in dbt Core v1.9+. Select v1.9 or newer from the version dropdown to view the configs. Try it now in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+Доступно в dbt Core v1.9+. Выберите v1.9 или новее в выпадающем списке версий, чтобы просмотреть конфигурации. Попробуйте это сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-Specify a custom schema for a snapshot in your `dbt_project.yml` or config file. 
+Укажите пользовательскую схему для снимка в вашем `dbt_project.yml` или файле конфигурации. 
 
-For example, if you have a snapshot that you want to load into a schema other than the target schema, you can configure it like this:
+Например, если у вас есть снимок, который вы хотите загрузить в схему, отличную от целевой схемы, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -70,13 +70,13 @@ snapshots:
 ```
 </File>
 
-This results in the generated relation being located in the `snapshots` schema so the full relation name would be `analytics.snapshots.your_snapshot` instead of the default target schema.
+Это приведет к тому, что сгенерированное отношение будет находиться в схеме `snapshots`, поэтому полное имя отношения будет `analytics.snapshots.your_snapshot`, а не в целевой схеме по умолчанию.
 
 </VersionBlock>
 
 </TabItem>
 
-<TabItem value="saved-queries" label="Saved queries">
+<TabItem value="saved-queries" label="Сохраненные запросы">
 
 <File name='dbt_project.yml'>
 ```yml
@@ -85,12 +85,11 @@ saved-queries:
 ```
 </File>
 </TabItem>
-<TabItem value="tests" label="Test">
+<TabItem value="tests" label="Тест">
 
-Customize the schema for storing test results in your `dbt_project.yml` file. 
+Настройте схему для хранения результатов тестов в вашем файле `dbt_project.yml`. 
 
-For example, to save test results in a specific schema, you can configure it like this:
-
+Например, чтобы сохранить результаты тестов в определенной схеме, вы можете настроить это следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -100,44 +99,44 @@ tests:
   +schema: test_results
 ```
 
-This would result in the test results being stored in the `test_results` schema.
+В результате результаты тестов будут храниться в схеме `test_results`.
 </File>
 </TabItem>
 </Tabs>
 
-Refer to [Usage](#usage) for more examples.
+Смотрите [Использование](#usage) для получения дополнительных примеров.
 
-## Definition
-Optionally specify a custom schema for a [model](/docs/build/sql-models), [seed](/docs/build/seeds), [snapshot](/docs/build/snapshots), [saved query](/docs/build/saved-queries), or [test](/docs/build/data-tests). 
+## Определение
+При желании укажите пользовательскую схему для [модели](/docs/build/sql-models), [сида](/docs/build/seeds), [снимка](/docs/build/snapshots), [сохраненного запроса](/docs/build/saved-queries) или [теста](/docs/build/data-tests). 
 
-For users on dbt Cloud v1.8 or earlier, use the [`target_schema` config](/reference/resource-configs/target_schema) to specify a custom schema for a snapshot.
+Для пользователей dbt Cloud v1.8 или ранее используйте [`target_schema` config](/reference/resource-configs/target_schema), чтобы указать пользовательскую схему для снимка.
 
-When dbt creates a relation (<Term id="table" />/<Term id="view" />) in a database, it creates it as: `{{ database }}.{{ schema }}.{{ identifier }}`, e.g. `analytics.finance.payments`
+Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например `analytics.finance.payments`.
 
-The standard behavior of dbt is:
-* If a custom schema is _not_ specified, the schema of the relation is the target schema (`{{ target.schema }}`).
-* If a custom schema is specified, by default, the schema of the relation is `{{ target.schema }}_{{ schema }}`.
+Стандартное поведение dbt:
+* Если пользовательская схема _не_ указана, схема отношения — это целевая схема (`{{ target.schema }}`).
+* Если пользовательская схема указана, по умолчанию схема отношения будет `{{ target.schema }}_{{ schema }}`.
 
-To learn more about changing the way that dbt generates a relation's `schema`, read [Using Custom Schemas](/docs/build/custom-schemas)
+Чтобы узнать больше о том, как изменить способ, которым dbt генерирует `schema` для отношения, прочитайте [Использование пользовательских схем](/docs/build/custom-schemas).
 
-## Usage
+## Использование
 
-### Models
+### Модели
 
-Configure groups of models from the `dbt_project.yml` file.
+Настройте группы моделей из файла `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
 ```yml
 models:
-  jaffle_shop: # the name of a project
+  jaffle_shop: # имя проекта
     marketing:
       +schema: marketing
 ```
 
 </File>
 
-Configure individual models using a config block:
+Настройте отдельные модели, используя блок конфигурации:
 
 <File name='models/my_model.sql'>
 
@@ -149,7 +148,7 @@ Configure individual models using a config block:
 
 </File>
 
-### Seeds
+### Сиды
 <File name='dbt_project.yml'>
 
 ```yml
@@ -159,30 +158,30 @@ seeds:
 
 </File>
 
-### Tests
+### Тесты
 
-Customize the name of the schema in which tests [configured to store failures](/reference/resource-configs/store_failures) will save their results.
-The resulting schema is `{{ profile.schema }}_{{ tests.schema }}`, with a default suffix of `dbt_test__audit`.
-To use the same profile schema, set `+schema: null`.
+Настройте имя схемы, в которой тесты [настроены для хранения неудач](/reference/resource-configs/store_failures), чтобы сохранить свои результаты.
+Полученная схема будет `{{ profile.schema }}_{{ tests.schema }}`, с суффиксом по умолчанию `dbt_test__audit`.
+Чтобы использовать ту же схему профиля, установите `+schema: null`.
 
 <File name='dbt_project.yml'>
 
 ```yml
 tests:
   +store_failures: true
-  +schema: _sad_test_failures  # Will write tables to my_database.my_schema__sad_test_failures
+  +schema: _sad_test_failures  # Запишет таблицы в my_database.my_schema__sad_test_failures
 ```
 
 </File>
 
-Ensure you have the authorization to create or access schemas for your work. To ensure that the required schemas have the correct permissions, run a sql statement in your respective data platform environment. For example, run the following command if using Redshift (exact authorization query may differ from one data platform to another):
+Убедитесь, что у вас есть разрешения на создание или доступ к схемам для вашей работы. Чтобы убедиться, что необходимые схемы имеют правильные разрешения, выполните SQL-запрос в вашей среде платформы данных. Например, выполните следующую команду, если используете Redshift (точный запрос на авторизацию может отличаться в зависимости от платформы данных):
 
 ```sql
 create schema if not exists dev_username_dbt_test__audit authorization username;
 ```
-_Replace `dev_username` with your specific development schema name and `username` with the appropriate user who should have the permissions._
+_Замените `dev_username` на ваше конкретное имя схемы разработки и `username` на соответствующего пользователя, который должен иметь разрешения._
 
-This command grants the appropriate permissions to create and access the `dbt_test__audit` schema, which is often used with the `store_failures` configuration.
+Эта команда предоставляет соответствующие разрешения для создания и доступа к схеме `dbt_test__audit`, которая часто используется с конфигурацией `store_failures`.
 
-## Warehouse specific information
-* BigQuery: `dataset` and `schema` are interchangeable
+## Информация, специфичная для склада
+* BigQuery: `dataset` и `schema` взаимозаменяемы.

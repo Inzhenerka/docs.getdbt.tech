@@ -32,80 +32,79 @@ sources:
 
 </File>
 
-## Definition
-A freshness block is used to define the acceptable amount of time between the most recent record, and now, for a <Term id="table" /> to be considered "fresh".
+## Определение
+Блок свежести используется для определения допустимого времени между самой последней записью и текущим моментом, чтобы <Term id="table" /> считалась "свежей".
 
-In the `freshness` block, one or both of `warn_after` and `error_after` can be provided. If neither is provided, then dbt will not calculate freshness snapshots for the tables in this source.
+В блоке `freshness` можно указать один или оба параметра `warn_after` и `error_after`. Если ни один из них не указан, dbt не будет рассчитывать снимки свежести для таблиц в этом источнике.
 
-In most cases, the `loaded_at_field` is required. Some adapters support calculating source freshness from the warehouse metadata tables and can exclude the `loaded_at_field`.
+В большинстве случаев требуется указать `loaded_at_field`. Некоторые адаптеры поддерживают расчет свежести источника на основе метаданных таблиц хранилища и могут исключить `loaded_at_field`.
 
-If a source has a `freshness:` block, dbt will attempt to calculate freshness for that source:
-- If a `loaded_at_field` is provided, dbt will calculate freshness via a select query (behavior prior to v1.7).
-- If a `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible (new in v1.7 on supported adapters).
+Если у источника есть блок `freshness:`, dbt попытается рассчитать свежесть для этого источника:
+- Если указан `loaded_at_field`, dbt будет рассчитывать свежесть с помощью запроса select (поведение до версии v1.7).
+- Если `loaded_at_field` _не_ указан, dbt будет рассчитывать свежесть с помощью метаданных таблиц хранилища, когда это возможно (новое в v1.7 для поддерживаемых адаптеров).
 
-Currently, calculating freshness from warehouse metadata tables is supported on the following adapters:
+В настоящее время расчет свежести на основе метаданных таблиц хранилища поддерживается для следующих адаптеров:
 - [Snowflake](/reference/resource-configs/snowflake-configs)
 - [Redshift](/reference/resource-configs/redshift-configs)
-- [BigQuery](/reference/resource-configs/bigquery-configs) (Supported in [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery) version 1.7.3 or higher)
+- [BigQuery](/reference/resource-configs/bigquery-configs) (Поддерживается в версии [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery) 1.7.3 или выше)
 
-Support is coming soon to the [Spark](/reference/resource-configs/spark-configs) adapter.
+Поддержка скоро появится для адаптера [Spark](/reference/resource-configs/spark-configs).
 
-Freshness blocks are applied hierarchically:
-- a `freshness` and `loaded_at_field` property added to a source will be applied to all tables defined in that source
-- a `freshness` and `loaded_at_field` property added to a source _table_ will override any properties applied to the source.
+Блоки свежести применяются иерархически:
+- свойства `freshness` и `loaded_at_field`, добавленные к источнику, будут применены ко всем таблицам, определенным в этом источнике.
+- свойства `freshness` и `loaded_at_field`, добавленные к таблице источника, переопределят любые свойства, примененные к источнику.
 
-This is useful when all of the tables in a source have the same `loaded_at_field`, as is often the case.
+Это полезно, когда все таблицы в источнике имеют одно и то же значение `loaded_at_field`, что часто бывает.
 
-To exclude a source from freshness calculations, you have two options:
-- Don't add a `freshness:` block.
-- Explicitly set `freshness: null`.
+Чтобы исключить источник из расчетов свежести, у вас есть два варианта:
+- Не добавлять блок `freshness:`.
+- Явно установить `freshness: null`.
 
 ## loaded_at_field
 
-Optional on adapters that support pulling freshness from warehouse metadata tables, required otherwise.
-<br/><br/>A column name (or expression) that returns a timestamp indicating freshness.
+Необязателен для адаптеров, которые поддерживают получение свежести из метаданных таблиц хранилища, в противном случае требуется.
+<br/><br/>Имя столбца (или выражение), которое возвращает временную метку, указывающую на свежесть.
 
-If using a date field, you may have to cast it to a timestamp:
+Если используется поле даты, возможно, вам придется привести его к типу timestamp:
 ```yml
 loaded_at_field: "completed_date::timestamp"
 ```
 
-Or, depending on your SQL variant:
+Или, в зависимости от вашего варианта SQL:
 ```yml
 loaded_at_field: "CAST(completed_date AS TIMESTAMP)"
 ```
 
-If using a non-UTC timestamp, cast it to UTC first:
+Если используется временная метка, не относящаяся к UTC, сначала приведите ее к UTC:
 
 ```yml
 loaded_at_field: "convert_timezone('Australia/Sydney', 'UTC', created_at_local)"
 ```
 
 ## count
-(Required)
+(Обязательный)
 
-A positive integer for the number of periods where a data source is still considered "fresh".
+Положительное целое число, указывающее количество периодов, в течение которых источник данных все еще считается "свежим".
 
 ## period
-(Required)
+(Обязательный)
 
-The time period used in the freshness calculation. One of `minute`, `hour` or `day`
+Период времени, используемый в расчете свежести. Один из `minute`, `hour` или `day`.
 
 ## filter
-(optional)
+(необязательный)
 
-Add a where clause to the query run by `dbt source freshness` in order to limit data scanned.
+Добавьте условие where к запросу, выполняемому `dbt source freshness`, чтобы ограничить объем обрабатываемых данных.
 
-This filter *only* applies to dbt's source freshness queries - it will not impact other uses of the source table.
+Этот фильтр *применяется только* к запросам свежести источника dbt - он не повлияет на другие использования таблицы источника.
 
-This is particularly useful if:
-- You are using BigQuery and your source tables are [partitioned tables](https://cloud.google.com/bigquery/docs/partitioned-tables)
-- You are using Snowflake, Databricks, or Spark with large tables, and this results in a performance benefit
+Это особенно полезно, если:
+- Вы используете BigQuery, и ваши таблицы источников являются [разделенными таблицами](https://cloud.google.com/bigquery/docs/partitioned-tables).
+- Вы используете Snowflake, Databricks или Spark с большими таблицами, и это приводит к улучшению производительности.
 
+## Примеры
 
-## Examples
-
-### Complete example
+### Полный пример
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -116,35 +115,34 @@ sources:
   - name: jaffle_shop
     database: raw
 
-    freshness: # default freshness
+    freshness: # стандартная свежесть
       warn_after: {count: 12, period: hour}
       error_after: {count: 24, period: hour}
 
     loaded_at_field: _etl_loaded_at
 
     tables:
-      - name: customers # this will use the freshness defined above
+      - name: customers # это будет использовать свежесть, определенную выше
 
       - name: orders
-        freshness: # make this a little more strict
+        freshness: # сделаем это немного более строгим
           warn_after: {count: 6, period: hour}
           error_after: {count: 12, period: hour}
-          # Apply a where clause in the freshness query
+          # Примените условие where в запросе свежести
           filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
 
-
       - name: product_skus
-        freshness: # do not check freshness for this table
+        freshness: # не проверять свежесть для этой таблицы
 ```
 
 </File>
 
-When running `dbt source freshness`, the following query will be run:
+При выполнении `dbt source freshness` будет выполнен следующий запрос:
 
 <Tabs
   defaultValue="compiled"
   values={[
-    { label: 'Compiled SQL', value: 'compiled', },
+    { label: 'Скомпилированный SQL', value: 'compiled', },
     { label: 'Jinja SQL', value: 'jinja', },
   ]
 }>
@@ -174,7 +172,7 @@ where {{ filter }}
 {% endif %}
 ```
 
-_[Source code](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/include/global_project/macros/adapters/common.sql#L262)_
+_[Исходный код](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/include/global_project/macros/adapters/common.sql#L262)_
 
 </TabItem>
 

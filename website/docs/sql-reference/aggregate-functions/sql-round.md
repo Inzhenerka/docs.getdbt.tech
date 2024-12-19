@@ -1,31 +1,30 @@
 ---
 id: round 
 title: SQL ROUND 
-description: The ROUND aggregate function allows you to round numeric fields or values in SQL to the number of decimal places of your choosing.
+description: Функция агрегирования ROUND позволяет округлять числовые поля или значения в SQL до желаемого количества десятичных знаков.
 slug: /sql-reference/round
 ---
 
 <head>
-    <title>Working with SQL ROUND</title>
+    <title>Работа с SQL ROUND</title>
 </head>
 
-If you’re reading this, that probably means you’re a data person. And as a data person who’s likely modeling data for analytics use cases, you’re going to need to round data from time to time. For the unacquainted, "rounding" is making a number simpler so that it's easier to understand while keeping it close to its original value. In data, a common use case for rounding is to decrease the number of decimal places a numeric record has.
+Если вы читаете это, вероятно, вы работаете с данными. И как человек, работающий с данными, который, вероятно, моделирует данные для аналитических задач, вам время от времени потребуется округлять данные. Для незнакомых с этим понятием "округление" — это упрощение числа, чтобы его было легче понять, при этом сохраняя его близким к исходному значению. В данных распространенным случаем использования округления является уменьшение количества десятичных знаков у числовой записи.
 
-To round numeric fields or values in SQL, you’re going to use the handy ROUND function.
+Чтобы округлить числовые поля или значения в SQL, вам нужно использовать удобную функцию ROUND.
 
-## How to use the SQL ROUND function
+## Как использовать функцию SQL ROUND
 
-The syntax for using ROUND function looks like the following:
+Синтаксис для использования функции ROUND выглядит следующим образом:
 
 ```sql
-round(<numeric column or data>, [optional] <number of decimal places>)
+round(<числовой столбец или данные>, [необязательный] <количество десятичных знаков>)
 ```
-In this function, you’ll need to input the *numeric* field or data you want rounded and pass in an optional number to round your field by. For most data warehouses, the number of decimal places is defaulted to 0 or 1, meaning if you rounded 20.00 using `round(20.00)`, it would return 20 or 20.0 (depending on your data warehouse).
+В этой функции вам нужно ввести *числовое* поле или данные, которые вы хотите округлить, и передать необязательное число, на которое вы хотите округлить ваше поле. Для большинства хранилищ данных количество десятичных знаков по умолчанию равно 0 или 1, что означает, что если вы округлите 20.00 с помощью `round(20.00)`, это вернет 20 или 20.0 (в зависимости от вашего хранилища данных).
 
-### SQL ROUND function example
+### Пример функции SQL ROUND
 
-
-You can round some of the numeric fields of the [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop) `orders` model using the following code:
+Вы можете округлить некоторые числовые поля модели `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) с помощью следующего кода:
 
 ```sql
 select 
@@ -36,7 +35,7 @@ select
 from {{ ref('orders') }}
 ```
 
-After running this query, the resulting `orders` table will look a little something like this:
+После выполнения этого запроса результирующая таблица `orders` будет выглядеть примерно так:
 
 | order_id | order_date | amount | rounded_amount |
 |---|---|---|---|
@@ -44,19 +43,19 @@ After running this query, the resulting `orders` table will look a little someth
 | 2 | 2018-01-02 | 20.000000 | 20.0 |
 | 3 | 2018-01-04 | 1.000000 | 1.0 |
 
-The new `rounded_amount` column is the `amount` fielded rounded to 1 decimal place.
+Новый столбец `rounded_amount` — это поле `amount`, округленное до 1 десятичного знака.
 
-For most data warehouses, the returned data from the ROUND function should be the same as the input data. If you input a float type into the ROUND function, the returned rounded number should also be a float.
+Для большинства хранилищ данных возвращаемые данные из функции ROUND должны быть такими же, как и входные данные. Если вы передаете число с плавающей запятой в функцию ROUND, возвращаемое округленное число также должно быть числом с плавающей запятой.
 
-## SQL ROUND function syntax in Snowflake, Databricks, BigQuery, and Redshift
+## Синтаксис функции SQL ROUND в Snowflake, Databricks, BigQuery и Redshift
 
-Google BigQuery, Amazon Redshift, Snowflake, and Databricks all support the ability to round numeric columns and data. In addition, the syntax to round is the same across all of them using the ROUND function.
+Google BigQuery, Amazon Redshift, Snowflake и Databricks все поддерживают возможность округления числовых столбцов и данных. Кроме того, синтаксис для округления одинаков во всех этих системах с использованием функции ROUND.
 
-## ROUND function use cases
+## Сценарии использования функции ROUND
 
-If you find yourself rounding numeric data, either in data models or ad-hoc analyses, you’re probably rounding to improve the readability and usability of your data using downstream [intermediate](/best-practices/how-we-structure/3-intermediate) or [mart models](/best-practices/how-we-structure/4-marts). Specifically, you’ll likely use the ROUND function to:
+Если вы часто округляете числовые данные, как в моделях данных, так и в разовых анализах, вы, вероятно, округляете для улучшения читаемости и удобства использования ваших данных с использованием промежуточных [моделей](/best-practices/how-we-structure/3-intermediate) или [мартовских моделей](/best-practices/how-we-structure/4-marts). В частности, вы, вероятно, будете использовать функцию ROUND для:
 
-- Make numeric calculations using division or averages a little cleaner and easier to understand
-- Create concrete buckets of data for a cleaner distribution of values during ad-hoc analysis
+- Упрощения числовых расчетов с использованием деления или средних значений, чтобы их было легче понять
+- Создания четких групп данных для более чистого распределения значений во время разового анализа
 
-You’ll additionally likely see the ROUND function used in your BI tool as it generates rounded clean numbers for business users to interact with.
+Кроме того, вы, вероятно, увидите использование функции ROUND в вашем BI-инструменте, так как она генерирует округленные чистые числа для взаимодействия бизнес-пользователей.

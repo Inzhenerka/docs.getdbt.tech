@@ -1,6 +1,6 @@
 ---
 resource_types: [snapshots]
-description: "Read this guide to understand the check_cols configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию check_cols в dbt."
 datatype: "[column_name] | all"
 ---
 
@@ -53,19 +53,19 @@ snapshots:
 
 </File>
 
-## Description
-A list of columns within the results of your snapshot query to check for changes.
+## Описание
+Список столбцов в результатах вашего запроса снимка, которые необходимо проверить на изменения.
 
-Alternatively, use all columns using the `all` value (however this may be less performant).
+В качестве альтернативы можно использовать все столбцы, указав значение `all` (однако это может быть менее производительно).
 
-This parameter is **required if using the `check` [strategy](/reference/resource-configs/strategy)**.
+Этот параметр является **обязательным при использовании стратегии `check` [strategy](/reference/resource-configs/strategy)**.
 
-## Default
-No default is provided.
+## По умолчанию
+По умолчанию значение не предоставляется.
 
-## Examples
+## Примеры
 
-### Check a list of columns for changes
+### Проверка списка столбцов на изменения
 
 <VersionBlock firstVersion="1.9">
 
@@ -85,7 +85,7 @@ snapshots:
 ```
 </File>
 
-To select from this snapshot in a downstream model: `select * from {{ ref('orders_snapshot_check') }}`
+Чтобы выбрать из этого снимка в последующей модели: `select * from {{ ref('orders_snapshot_check') }}`
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
@@ -108,7 +108,7 @@ To select from this snapshot in a downstream model: `select * from {{ ref('order
 
 </VersionBlock>
 
-### Check all columns for changes
+### Проверка всех столбцов на изменения
 
 <VersionBlock firstVersion="1.9">
 
@@ -127,7 +127,7 @@ snapshots:
   ```
 </File>
 
-To select from this snapshot in a downstream model: `select * from {{{ ref('orders_snapshot_check') }}`
+Чтобы выбрать из этого снимка в последующей модели: `select * from {{{ ref('orders_snapshot_check') }}`
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">

@@ -3,21 +3,21 @@ resource_types: [tests]
 datatype: integer
 ---
 
-Limit the number of failures that will be returned by a test query. We recommend using this config when working with large datasets and [storing failures in the database](/reference/resource-configs/store_failures).
+Ограничьте количество сбоев, которые будут возвращены запросом теста. Мы рекомендуем использовать эту конфигурацию при работе с большими наборами данных и [хранении сбоев в базе данных](/reference/resource-configs/store_failures).
 
 <Tabs
   defaultValue="specific"
   values={[
-    { label: 'Specific test', value: 'specific', },
-    { label: 'One-off test', value: 'one_off', },
-    { label: 'Generic test block', value: 'generic', },
-    { label: 'Project level', value: 'project', },
+    { label: 'Конкретный тест', value: 'specific', },
+    { label: 'Одноразовый тест', value: 'one_off', },
+    { label: 'Общий блок тестов', value: 'generic', },
+    { label: 'Уровень проекта', value: 'project', },
   ]
 }>
 
 <TabItem value="specific">
 
-Configure a specific instance of a generic (schema) test:
+Настройте конкретный экземпляр общего (схемного) теста:
 
 <File name='models/<filename>.yml'>
 
@@ -32,7 +32,7 @@ models:
           - accepted_values:
               values: ["a", "b", "c"]
               config:
-                limit: 1000  # will only include the first 1000 failures
+                limit: 1000  # будет включать только первые 1000 сбоев
 ```
 
 </File>
@@ -41,7 +41,7 @@ models:
 
 <TabItem value="one_off">
 
-Configure a one-off (data) test:
+Настройте одноразовый (данные) тест:
 
 <File name='tests/<filename>.sql'>
 
@@ -57,7 +57,7 @@ select ...
 
 <TabItem value="generic">
 
-Set the default for all instances of a generic (schema) test, by setting the config inside its test block (definition):
+Установите значение по умолчанию для всех экземпляров общего (схемного) теста, задав конфигурацию внутри его блока теста (определения):
 
 <File name='macros/<filename>.sql'>
 
@@ -77,16 +77,16 @@ select ...
 
 <TabItem value="project">
 
-Set the default for all tests in a package or project:
+Установите значение по умолчанию для всех тестов в пакете или проекте:
 
 <File name='dbt_project.yml'>
 
 ```yaml
 tests:
-  +limit: 1000  # all tests
+  +limit: 1000  # все тесты
   
   <package_name>:
-    +limit: 50 # tests in <package_name>
+    +limit: 50 # тесты в <package_name>
 ```
 
 </File>

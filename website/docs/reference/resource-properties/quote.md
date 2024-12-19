@@ -6,11 +6,11 @@ datatype: boolean
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Models', value: 'models', },
-    { label: 'Sources', value: 'sources', },
-    { label: 'Seeds', value: 'seeds', },
-    { label: 'Snapshots', value: 'snapshots', },
-    { label: 'Analyses', value: 'analyses', },
+    { label: 'Модели', value: 'models', },
+    { label: 'Источники', value: 'sources', },
+    { label: 'Сиды', value: 'seeds', },
+    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Анализы', value: 'analyses', },
   ]
 }>
 <TabItem value="models">
@@ -112,30 +112,30 @@ analyses:
 
 </Tabs>
 
-## Definition
-The `quote` field can be used to enable or disable quoting for column names.
+## Определение
+Поле `quote` может использоваться для включения или отключения кавычек для имен столбцов.
 
-## Default
-The default quoting value is `false`
+## По умолчанию
+Значение по умолчанию для кавычек — `false`.
 
-## Explanation
-This is particularly relevant to those using Snowflake, where quoting can be particularly fickle.
+## Объяснение
+Это особенно актуально для пользователей Snowflake, где использование кавычек может быть довольно капризным.
 
-This property is useful when:
-- A source <Term id="table" /> has a column that needs to be quoted to be selected, for example, to preserve column casing
-- A seed was created with `quote_columns: true` ([docs](/reference/resource-configs/quote_columns)) on Snowflake
-- A model uses quotes in the SQL, potentially to work around the use of reserved words
+Это свойство полезно, когда:
+- Источник <Term id="table" /> имеет столбец, который необходимо заключить в кавычки для выбора, например, чтобы сохранить регистр столбца.
+- Сид был создан с `quote_columns: true` ([документация](/reference/resource-configs/quote_columns)) в Snowflake.
+- Модель использует кавычки в SQL, возможно, чтобы обойти использование зарезервированных слов.
 ```sql
 select user_group as "group"
 ```
 
-Without setting `quote: true`:
-- [Data tests](/docs/build/data-tests) applied to this column may fail due to invalid SQL
-- Documentation may not render correctly, e.g. `group` and `"group"` may not be matched as the same column name.
+Без установки `quote: true`:
+- [Тесты данных](/docs/build/data-tests), применяемые к этому столбцу, могут завершиться неудачей из-за недопустимого SQL.
+- Документация может отображаться некорректно, например, `group` и `"group"` могут не совпадать как одно и то же имя столбца.
 
-## Example
-### Add tests to a quoted column in a source table
-This is especially relevant if using Snowflake:
+## Пример
+### Добавление тестов к столбцу с кавычками в таблице источника
+Это особенно актуально при использовании Snowflake:
 
 ```yml
 version: 2
@@ -152,29 +152,29 @@ sources:
 
 ```
 
-Without `quote: true`, the following error will occur:
+Без `quote: true` произойдет следующая ошибка:
 
 ```
 $ dbt test -s source:stripe.*
-Running with dbt=0.16.1
-Found 7 models, 22 tests, 0 snapshots, 0 analyses, 130 macros, 0 operations, 0 seed files, 4 sources
+Запуск с dbt=0.16.1
+Найдено 7 моделей, 22 теста, 0 снимков, 0 анализов, 130 макросов, 0 операций, 0 файлов сидов, 4 источника
 
-13:33:37 | Concurrency: 4 threads (target='learn')
+13:33:37 | Параллелизм: 4 потока (target='learn')
 13:33:37 |
-13:33:37 | 1 of 1 START test source_not_null_stripe_payment_order_id............ [RUN]
-13:33:39 | 1 of 1 ERROR source_not_null_stripe_payment_order_id................. [ERROR in 1.89s]
+13:33:37 | 1 из 1 НАЧАЛ тест source_not_null_stripe_payment_order_id............ [RUN]
+13:33:39 | 1 из 1 ОШИБКА source_not_null_stripe_payment_order_id................. [ERROR in 1.89s]
 13:33:39 |
-13:33:39 | Finished running 1 tests in 6.43s.
+13:33:39 | Завершено выполнение 1 теста за 6.43s.
 
-Completed with 1 error and 0 warnings:
+Завершено с 1 ошибкой и 0 предупреждениями:
 
-Database Error in test source_not_null_stripe_payment_order_id (models/staging/stripe/src_stripe.yml)
-  000904 (42000): SQL compilation error: error line 3 at position 6
-  invalid identifier 'ORDERID'
-  compiled SQL at target/compiled/jaffle_shop/schema_test/source_not_null_stripe_payment_orderID.sql
+Ошибка базы данных в тесте source_not_null_stripe_payment_order_id (models/staging/stripe/src_stripe.yml)
+  000904 (42000): Ошибка компиляции SQL: ошибка на строке 3 в позиции 6
+  недопустимый идентификатор 'ORDERID'
+  скомпилированный SQL в target/compiled/jaffle_shop/schema_test/source_not_null_stripe_payment_orderID.sql
 ```
 
-This is because dbt is trying to run:
+Это происходит потому, что dbt пытается выполнить:
 ```sql
 select count(*)
 from raw.stripe.payment
@@ -182,7 +182,7 @@ where orderID is null
 
 ```
 
-Instead of:
+Вместо:
 ```sql
 select count(*)
 from raw.stripe.payment

@@ -1,37 +1,32 @@
 ---
-title: "Yellowbrick configurations"
-description: "Yellowbrick Configurations: Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Yellowbrick"
+description: "Конфигурации Yellowbrick: прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 id: "yellowbrick-configs"
 ---
 
-## Incremental materialization strategies
+## Стратегии инкрементной материализации
 
-The dbt-yellowbrick adapter supports the following incremental materialization strategies:
+Адаптер dbt-yellowbrick поддерживает следующие стратегии инкрементной материализации:
 
-- `append` (default when `unique_key` is not defined)
-- `delete+insert` (default when `unique_key` is defined)
+- `append` (по умолчанию, когда `unique_key` не определен)
+- `delete+insert` (по умолчанию, когда `unique_key` определен)
 
-All of these strategies are inherited from the dbt-postgres adapter.
+Все эти стратегии унаследованы от адаптера dbt-postgres.
 
-## Performance optimizations
-    
-To improve query performance, tables in Yellowbrick Data support several optimizations that can be defined 
-as model-level configurations in dbt.  These will be applied to `CREATE TABLE` <Term id="ddl" /> statements 
-generated at compile or run time. Note that these settings will have no effect on models set to `view` or `ephemeral`.
+## Оптимизация производительности
 
-dbt-yellowbrick supports the following Yellowbrick-specific features when defining tables:
-- `dist` - applies a single-column distribution key, or sets the distribution to `RANDOM` or `REPLICATE`
-- `sort_col` - applies the `SORT ON (column)` clause that names a single column to sort on before data is stored on media
-- `cluster_cols` - applies the `CLUSTER ON (column, column, ...)` clause that names up to four columns to cluster on before data is stored 
-on the media
+Для улучшения производительности запросов таблицы в Yellowbrick Data поддерживают несколько оптимизаций, которые могут быть определены как конфигурации на уровне модели в dbt. Эти настройки будут применены к операторам `CREATE TABLE` <Term id="ddl" /> , сгенерированным во время компиляции или выполнения. Обратите внимание, что эти настройки не будут иметь эффекта на модели, установленные в `view` или `ephemeral`.
 
-A table that has sorted or clustered columns facilitates the skipping of blocks when tables are scanned with 
-restrictions applied in the query.  Further details can be found in the [Yellowbrick Data Warehouse](https://docs.yellowbrick.com/latest/ybd_sqlref/clustered_tables.html#clustered-tables) 
-documentation.
+dbt-yellowbrick поддерживает следующие специфические для Yellowbrick функции при определении таблиц:
+- `dist` - применяет ключ распределения по одному столбцу или устанавливает распределение на `RANDOM` или `REPLICATE`
+- `sort_col` - применяет оператор `SORT ON (column)`, который указывает один столбец для сортировки перед сохранением данных на носителе
+- `cluster_cols` - применяет оператор `CLUSTER ON (column, column, ...)`, который указывает до четырех столбцов для кластеризации перед сохранением данных на носителе
 
-### Some example model configurations
+Таблица, имеющая отсортированные или кластеризованные столбцы, облегчает пропуск блоков при сканировании таблиц с применением ограничений в запросе. Дополнительные сведения можно найти в документации [Yellowbrick Data Warehouse](https://docs.yellowbrick.com/latest/ybd_sqlref/clustered_tables.html#clustered-tables).
 
-* ```DISTRIBUTE REPLICATE``` with a ```SORT``` column...
+### Примеры конфигураций моделей
+
+* ```DISTRIBUTE REPLICATE``` с колонкой ```SORT```...
 
 ```sql
 {{
@@ -56,7 +51,7 @@ from
 where
     stg.name is not null
 ``` 
-gives the following model output:
+дает следующий вывод модели:
 
 ```sql
 create table if not exists marts.dim_team as (
@@ -79,7 +74,7 @@ sort on (stadium_capacity);
 ```
 <br />
 
-* ```DISTRIBUTE``` on a single column and define up to four ```CLUSTER``` columns...
+* ```DISTRIBUTE``` по одному столбцу и определение до четырех колонок ```CLUSTER```...
 
 ```sql 
 {{
@@ -113,7 +108,7 @@ from
 		inner join {{ source('premdb_public','season') }} s on (m.seasonid = s.seasonid)
 ```
 
-gives the following model output:
+дает следующий вывод модели:
 
 ```sql
 create  table if not exists marts.fact_match as (
@@ -143,10 +138,10 @@ distribute on (match_key)
 cluster on (season_key, match_date_key, home_team_key, away_team_key);
 ```
 
-## Cross-database materializations
+## Материализации между базами данных
 
-Yellowbrick supports cross-database queries and the dbt-yellowbrick adapter will permit cross-database reads into a specific target on the same appliance instance.
+Yellowbrick поддерживает запросы между базами данных, и адаптер dbt-yellowbrick позволит выполнять чтение из одной базы данных в конкретную целевую базу данных на одном экземпляре устройства.
 
-## Limitations
+## Ограничения
 
-This initial implementation of the dbt adapter for Yellowbrick Data Warehouse may not support some use cases. We strongly advise validating all records or transformations resulting from the adapter output.
+Эта первоначальная реализация адаптера dbt для Yellowbrick Data Warehouse может не поддерживать некоторые сценарии использования. Мы настоятельно рекомендуем проверять все записи или преобразования, полученные в результате вывода адаптера.

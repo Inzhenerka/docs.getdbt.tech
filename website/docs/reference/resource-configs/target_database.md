@@ -1,14 +1,14 @@
 ---
 resource_types: [snapshots]
-description: "Target_database - Read this in-depth guide to learn about configurations in dbt."
+description: "Target_database - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: string
 ---
 
 :::note
 
-Starting in dbt Core v1.9+, this functionality is no longer utilized. Use the [database](/reference/resource-configs/database) config as an alternative to define a custom database while still respecting the `generate_database_name` macro. 
+Начиная с версии dbt Core v1.9+, эта функциональность больше не используется. Используйте конфигурацию [database](/reference/resource-configs/database) в качестве альтернативы для определения пользовательской базы данных, при этом уважая макрос `generate_database_name`. 
 
-Try it now in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks).
+Попробуйте это сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks).
 
 :::
 
@@ -34,25 +34,24 @@ snapshots:
 
 </File>
 
-## Description
-The database that dbt should build a [snapshot](/docs/build/snapshots) <Term id="table" /> into.
+## Описание
+База данных, в которую dbt должен создать [снимок](/docs/build/snapshots) <Term id="table" />.
 
-Notes:
-- The specified database must already exist
-- On **BigQuery**, this is analogous to a `project`.
-- On **Redshift**, cross-database queries are not possible. If you use this parameter, you will receive the following error. As such, **do not use** this parameter on Redshift:
+Примечания:
+- Указанная база данных должна уже существовать.
+- В **BigQuery** это аналогично `project`.
+- В **Redshift** кросс-базовые запросы невозможны. Если вы используете этот параметр, вы получите следующую ошибку. Поэтому **не используйте** этот параметр в Redshift:
 ```
 Encountered an error:
 Runtime Error
   Cross-db references not allowed in redshift (raw vs analytics)
 ```
 
+## По умолчанию
+По умолчанию dbt будет использовать базу данных [target](/reference/dbt-jinja-functions/target), связанную с вашим профилем/соединением.
 
-## Default
-By default, dbt will use the [target](/reference/dbt-jinja-functions/target) database associated with your profile/connection.
-
-## Examples
-### Build all snapshots in a database named `snapshots`
+## Примеры
+### Создание всех снимков в базе данных с именем `snapshots`
 
 <File name='dbt_project.yml'>
 
@@ -64,10 +63,10 @@ snapshots:
 
 </File>
 
-### Use a target-aware database
-Use the [`{{ target }}` variable](/reference/dbt-jinja-functions/target) to change which database a snapshot table is built in.
+### Использование базы данных с учетом целевого окружения
+Используйте [`{{ target }}` переменную](/reference/dbt-jinja-functions/target), чтобы изменить, в какой базе данных создается таблица снимка.
 
-Note: consider whether this use-case is right for you, as downstream `refs` will select from the `dev` version of a snapshot, which can make it hard to validate models that depend on snapshots.
+Примечание: подумайте, подходит ли вам этот случай использования, так как последующие `refs` будут выбирать из версии `dev` снимка, что может затруднить проверку моделей, которые зависят от снимков.
 
 <File name='dbt_project.yml'>
 
@@ -79,13 +78,13 @@ snapshots:
 
 </File>
 
-### Use the same database-naming behavior as models
+### Использование того же поведения именования базы данных, что и у моделей
 
-Leverage the [`generate_database_name` macro](/docs/build/custom-databases) to build snapshots in databases that follow the same naming behavior as your models.
+Используйте макрос [`generate_database_name` ](/docs/build/custom-databases), чтобы создавать снимки в базах данных, которые следуют тому же поведению именования, что и ваши модели.
 
-Notes:
-* This macro is not available when configuring from the `dbt_project.yml` file, so it must be configured in a snapshot config block.
-* Consider whether this use-case is right for you, as downstream `refs` will select from the `dev` version of a snapshot, which can make it hard to validate models that depend on snapshots.
+Примечания:
+* Этот макрос недоступен при конфигурации из файла `dbt_project.yml`, поэтому его необходимо настраивать в блоке конфигурации снимка.
+* Подумайте, подходит ли вам этот случай использования, так как последующие `refs` будут выбирать из версии `dev` снимка, что может затруднить проверку моделей, которые зависят от снимков.
 
 <File name='snapshots/orders_snaphot.sql'>
 

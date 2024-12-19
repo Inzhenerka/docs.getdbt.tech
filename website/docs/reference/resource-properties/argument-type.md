@@ -1,5 +1,5 @@
 ---
-title: type
+title: тип
 resource_types: macro_argument
 datatype: argument_type
 ---
@@ -20,11 +20,11 @@ macros:
 
 </File>
 
-## Definition
-The data type of your argument. Note that this is only used for documentation purposes — there are no restrictions on the values you can use here.
+## Определение
+Тип данных вашего аргумента. Обратите внимание, что это используется только в документационных целях — нет никаких ограничений на значения, которые вы можете использовать здесь.
 
-## Examples
-### Document a macro
+## Примеры
+### Документирование макроса
 
 <File name='macros/cents_to_dollars.sql'>
 
@@ -46,12 +46,12 @@ macros:
   - name: cents_to_dollars
     arguments:
       - name: column_name
-        type: column name or expression
-        description: "The name of a column, or an expression — anything that can be `select`-ed as a column"
+        type: имя столбца или выражение
+        description: "Имя столбца или выражение — все, что можно выбрать как столбец"
 
       - name: scale
-        type: integer
-        description: "The number of decimal places to round to. Default is 2."
+        type: целое число
+        description: "Количество знаков после запятой для округления. По умолчанию 2."
 
 ```
 
