@@ -1,26 +1,26 @@
 ---
-title: "about this"
-sidebar_label: "this"
-id: "this"
-description: "Represents the current model in the database."
+title: "об этом"
+sidebar_label: "это"
+id: "это"
+description: "Представляет текущую модель в базе данных."
 keywords: 
-  - relation, relation object, this function, this jinja, this.database, this.schema, this.identifier
+  - отношение, объект отношения, эта функция, этот jinja, this.database, this.schema, this.identifier
 meta:
-  label: 'this'
+  label: 'это'
 ---
 
-`this` is the database representation of the current model. It is useful when:
-- Defining a `where` statement within [incremental models](/docs/build/incremental-models)
-- Using [pre or post hooks](/reference/resource-configs/pre-hook-post-hook)
+`this` — это представление текущей модели в базе данных. Это полезно, когда:
+- Определяете оператор `where` в [инкрементальных моделях](/docs/build/incremental-models)
+- Используете [предварительные или последующие хуки](/reference/resource-configs/pre-hook-post-hook)
 
-`this` is a [Relation](/reference/dbt-classes#relation), and as such, properties such as `{{ this.database }}` and `{{ this.schema }}` compile as expected. 
-  - Note &mdash; Prior to dbt v1.6, the dbt Cloud IDE returns `request` as the result of `{{ ref.identifier }}`.
+`this` является [Relation](/reference/dbt-classes#relation), и, как таковой, свойства, такие как `{{ this.database }}` и `{{ this.schema }}`, компилируются как ожидается. 
+  - Примечание &mdash; До версии dbt v1.6, IDE dbt Cloud возвращает `request` в качестве результата `{{ ref.identifier }}`.
 
-`this` can be thought of as equivalent to `ref('<the_current_model>')`, and is a neat way to avoid circular dependencies.
+`this` можно рассматривать как эквивалент `ref('<текущая_модель>')`, и это удобный способ избежать циклических зависимостей.
 
-## Examples
+## Примеры
 
-### Configuring incremental models
+### Настройка инкрементальных моделей
 
 <File name='models/stg_events.sql'>
 
@@ -39,7 +39,3 @@ from raw_app_data.events
 ```
 
 </File>
-
-
-
-  

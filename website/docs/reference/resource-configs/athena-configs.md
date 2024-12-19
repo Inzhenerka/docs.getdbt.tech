@@ -1,35 +1,35 @@
 ---
-title: "Amazon Athena configurations"
-description: "Reference article for the Amazon Athena adapter for dbt Core and dbt Cloud."
+title: "Конфигурации Amazon Athena"
+description: "Справочная статья для адаптера Amazon Athena для dbt Core и dbt Cloud."
 id: "athena-configs"
 ---
 
-## Models
+## Модели
 
-### Table configuration
+### Конфигурация таблицы
 
-| Parameter | Default | Description |
+| Параметр | По умолчанию | Описание |
 |-----------|---------|-------------|
-| `external_location` | None | The full S3 path to where the table is saved. It only works with incremental models. It doesn't work with Hive tables with `ha` set to `true`. |
-| `partitioned_by` | None | An array list of columns by which the table will be partitioned. Currently limited to 100 partitions. |
-| `bucketed_by` | None | An array list of the columns to bucket data. Ignored if using Iceberg. |
-| `bucket_count` | None | The number of buckets for bucketing your data. This parameter is ignored if using Iceberg. |
-| `table_type` | Hive | The type of table. Supports `hive` or `iceberg`. |
-| `ha` | False | Build the table using the high-availability method. Only available for Hive tables. |
-| `format` | Parquet | The data format for the table. Supports `ORC`, `PARQUET`, `AVRO`, `JSON`, and `TEXTFILE`. |
-| `write_compression` | None | The compression type for any storage format that allows compressions. |
-| `field_delimeter` | None | Specify the custom field delimiter to use when the format is set to `TEXTFIRE`. |
-| `table_properties` | N/A | The table properties to add to the table. This is only for Iceberg. |
-| `native_drop` | N/A | Relation drop operations will be performed with SQL, not direct Glue API calls. No S3 calls will be made to manage data in S3. Data in S3 will only be cleared up for Iceberg tables. See the [AWS docs](https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-managing-tables.html) for more info. Iceberg DROP TABLE operations may timeout if they take longer than 60 seconds.|
-| `seed_by_insert` | False | Creates seeds using an SQL insert statement. Large seed files can't exceed the Athena 262144 bytes limit. |
-| `force_batch` | False | Run the table creation directly in batch insert mode. Useful when the standard table creation fails due to partition limitation. |
-| `unique_tmp_table_suffix` | False | Replace the "__dbt_tmp table" suffix with a unique UUID for incremental models using insert overwrite on Hive tables. |
-| `temp_schema` | None | Defines a schema to hold temporary create statements used in incremental model runs. Scheme will be created in the models target database if it does not exist. |
-| `lf_tags_config` | None | [AWS Lake Formation](#aws-lake-formation-integration) tags to associate with the table and columns. Existing tags will be removed. <br />* `enabled` (`default=False`) whether LF tags management is enabled for a model <br />* `tags` dictionary with tags and their values to assign for the model <br /> * `tags_columns` dictionary with a tag key, value and list of columns they must be assigned to |
-| `lf_inherited_tags` | None | List of the Lake Formation tag keys that are to be inherited from the database level and shouldn't be removed during the assignment of those defined in `ls_tags_config`. |
-| `lf_grants` | None | Lake Formation grants config for `data_cell` filters. |
+| `external_location` | None | Полный путь S3, где сохранена таблица. Работает только с инкрементальными моделями. Не работает с таблицами Hive, если `ha` установлено в `true`. |
+| `partitioned_by` | None | Массив столбцов, по которым будет производиться партиционирование таблицы. В настоящее время ограничено 100 партициями. |
+| `bucketed_by` | None | Массив столбцов для распределения данных по корзинам. Игнорируется при использовании Iceberg. |
+| `bucket_count` | None | Количество корзин для распределения ваших данных. Этот параметр игнорируется при использовании Iceberg. |
+| `table_type` | Hive | Тип таблицы. Поддерживает `hive` или `iceberg`. |
+| `ha` | False | Создание таблицы с использованием метода высокой доступности. Доступно только для таблиц Hive. |
+| `format` | Parquet | Формат данных для таблицы. Поддерживает `ORC`, `PARQUET`, `AVRO`, `JSON` и `TEXTFILE`. |
+| `write_compression` | None | Тип сжатия для любого формата хранения, который допускает сжатие. |
+| `field_delimeter` | None | Укажите пользовательский разделитель полей, который будет использоваться, когда формат установлен на `TEXTFILE`. |
+| `table_properties` | N/A | Свойства таблицы, которые будут добавлены к таблице. Это только для Iceberg. |
+| `native_drop` | N/A | Операции удаления отношений будут выполняться с помощью SQL, а не прямых вызовов API Glue. Не будет вызовов S3 для управления данными в S3. Данные в S3 будут очищены только для таблиц Iceberg. Дополнительную информацию см. в [документации AWS](https://docs.aws.amazon.com/athena/latest/ug/querying-iceberg-managing-tables.html). Операции DROP TABLE Iceberg могут истекать по времени, если они занимают более 60 секунд. |
+| `seed_by_insert` | False | Создает семена с использованием SQL-оператора вставки. Большие файлы семян не могут превышать лимит Athena в 262144 байта. |
+| `force_batch` | False | Запускает создание таблицы непосредственно в режиме пакетной вставки. Полезно, когда стандартное создание таблицы не удается из-за ограничения по партициям. |
+| `unique_tmp_table_suffix` | False | Заменяет суффикс "__dbt_tmp table" на уникальный UUID для инкрементальных моделей, использующих вставку с перезаписью в таблицах Hive. |
+| `temp_schema` | None | Определяет схему для хранения временных операторов создания, используемых в инкрементальных запусках модели. Схема будет создана в целевой базе данных моделей, если она не существует. |
+| `lf_tags_config` | None | Теги [AWS Lake Formation](#aws-lake-formation-integration), которые будут ассоциированы с таблицей и столбцами. Существующие теги будут удалены. <br />* `enabled` (`default=False`) - включение управления тегами LF для модели <br />* `tags` - словарь с тегами и их значениями для назначения модели <br /> * `tags_columns` - словарь с ключом тега, значением и списком столбцов, которым они должны быть назначены |
+| `lf_inherited_tags` | None | Список ключей тегов Lake Formation, которые должны наследоваться с уровня базы данных и не должны удаляться во время назначения тех, что определены в `lf_tags_config`. |
+| `lf_grants` | None | Конфигурация грантов Lake Formation для фильтров `data_cell`. |
 
-#### Configuration examples
+#### Примеры конфигурации
 
 <Tabs>
 
@@ -106,25 +106,24 @@ lf_grants={
 
 </Tabs>
 
-There are some limitations and recommendations that should be considered: 
+Существуют некоторые ограничения и рекомендации, которые следует учитывать:
 
-- `lf_tags` and `lf_tags_columns` configs support only attaching lf tags to corresponding resources.
-- We recommend managing LF Tags permissions somewhere outside dbt. For example, [terraform](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lakeformation_permissions) or [aws cdk](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lakeformation-readme.html).
-- `data_cell_filters` management can't be automated outside dbt because the filter can't be attached to the table, which doesn't exist. Once you `enable` this config, dbt will set all filters and their permissions during every dbt run. Such an approach keeps the actual state of row-level security configuration after every dbt run and applies changes if they occur: drop, create, and update filters and their permissions.
-- Any tags listed in `lf_inherited_tags` should be strictly inherited from the database level and never overridden at the table and column level.
-- Currently, `dbt-athena` does not differentiate between an inherited tag association and an override it made previously.
-   - For example,  If a `lf_tags_config` value overrides an inherited tag in one run, and that override is removed before a subsequent run, the prior override will linger and no longer be encoded anywhere (for example, Terraform where the inherited value is configured nor in the DBT project where the override previously existed but now is gone).
+- Конфигурации `lf_tags` и `lf_tags_columns` поддерживают только прикрепление тегов lf к соответствующим ресурсам.
+- Рекомендуется управлять разрешениями LF Tags где-то вне dbt. Например, с помощью [terraform](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lakeformation_permissions) или [aws cdk](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lakeformation-readme.html).
+- Управление `data_cell_filters` не может быть автоматизировано вне dbt, поскольку фильтр не может быть прикреплен к таблице, которая не существует. Как только вы `enable` эту конфигурацию, dbt установит все фильтры и их разрешения во время каждого запуска dbt. Такой подход поддерживает актуальное состояние конфигурации безопасности на уровне строк после каждого запуска dbt и применяет изменения, если они происходят: удаление, создание и обновление фильтров и их разрешений.
+- Любые теги, перечисленные в `lf_inherited_tags`, должны строго наследоваться с уровня базы данных и никогда не переопределяться на уровне таблицы и столбца.
+- В настоящее время `dbt-athena` не различает ассоциацию унаследованного тега и переопределение, которое было сделано ранее.
+   - Например, если значение `lf_tags_config` переопределяет унаследованный тег в одном запуске, и это переопределение удаляется перед последующим запуском, предыдущее переопределение останется и больше не будет закодировано нигде (например, в Terraform, где унаследованное значение настроено, или в проекте DBT, где ранее существовало переопределение, но теперь исчезло).
 
+### Местоположение таблицы
 
-### Table location
+Сохраненное местоположение таблицы определяется в порядке приоритета следующими условиями:
 
-The saved location of a table is determined in precedence by the following conditions:
+1. Если `external_location` определено, используется это значение.
+2. Если `s3_data_dir` определено, путь определяется им и `s3_data_naming`.
+3. Если `s3_data_dir` не определено, данные хранятся по адресу `s3_staging_dir/tables/`.
 
-1. If `external_location` is defined, that value is used.
-2. If `s3_data_dir` is defined, the path is determined by that and `s3_data_naming`.
-3. If `s3_data_dir` is not defined, data is stored under `s3_staging_dir/tables/`.
-
-The following options are available for `s3_data_naming`:
+Для `s3_data_naming` доступны следующие варианты:
 
 - `unique`: `{s3_data_dir}/{uuid4()}/`
 - `table`: `{s3_data_dir}/{table}/`
@@ -132,35 +131,34 @@ The following options are available for `s3_data_naming`:
 - `schema_table`: `{s3_data_dir}/{schema}/{table}/`
 - `s3_data_naming=schema_table_unique`: `{s3_data_dir}/{schema}/{table}/{uuid4()}/`
 
-To set the `s3_data_naming` globally in the target profile, overwrite the value in the table config, or set up the value for groups of the models in dbt_project.yml.
+Чтобы установить `s3_data_naming` глобально в целевом профиле, перезапишите значение в конфигурации таблицы или установите значение для групп моделей в dbt_project.yml.
 
-Note: If you're using a workgroup with a default output location configured, `s3_data_naming` ignores any configured buckets and uses the location configured in the workgroup.
+Примечание: Если вы используете рабочую группу с настроенным местоположением по умолчанию, `s3_data_naming` игнорирует любые настроенные корзины и использует местоположение, настроенное в рабочей группе.
 
-### Incremental models
+### Инкрементальные модели
 
-The following [incremental models](https://docs.getdbt.com/docs/build/incremental-models) strategies are supported:
+Поддерживаются следующие стратегии [инкрементальных моделей](https://docs.getdbt.com/docs/build/incremental-models):
 
-- `insert_overwrite` (default): The insert-overwrite strategy deletes the overlapping partitions from the destination table and then inserts the new records from the source. This strategy depends on the `partitioned_by` keyword! dbt will fall back to the `append` strategy if no partitions are defined.
-- `append`: Insert new records without updating, deleting or overwriting any existing data. There might be duplicate data (great for log or historical data).
-- `merge`: Conditionally updates, deletes, or inserts rows into an Iceberg table. Used in combination with `unique_key`.It is only available when using Iceberg.
+- `insert_overwrite` (по умолчанию): Стратегия вставки с перезаписью удаляет перекрывающиеся партиции из целевой таблицы, а затем вставляет новые записи из источника. Эта стратегия зависит от ключевого слова `partitioned_by`! dbt вернется к стратегии `append`, если партиции не определены.
+- `append`: Вставляет новые записи без обновления, удаления или перезаписи любых существующих данных. Это может привести к дублированию данных (отлично подходит для логов или исторических данных).
+- `merge`: Условно обновляет, удаляет или вставляет строки в таблицу Iceberg. Используется в сочетании с `unique_key`. Доступно только при использовании Iceberg.
 
+### При изменении схемы
 
-### On schema change
+Опция `on_schema_change` отражает изменения схемы в инкрементальных моделях. Значения, которые вы можете установить, следующие:
 
-The `on_schema_change` option reflects changes of the schema in incremental models. The values you can set this to are:
-
-- `ignore` (default)
+- `ignore` (по умолчанию)
 - `fail`
 - `append_new_columns`
 - `sync_all_columns`
 
-To learn more, refer to [What if the columns of my incremental model change](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change).
+Чтобы узнать больше, обратитесь к [Что делать, если столбцы моей инкрементальной модели изменяются](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change).
 
 ### Iceberg
 
-The adapter supports table materialization for Iceberg.
+Адаптер поддерживает материализацию таблиц для Iceberg.
 
-For example:
+Например:
 
 ```sql
 {{ config(
@@ -182,22 +180,21 @@ select 'A'          as user_id,
        current_date as my_date
 ```
 
-Iceberg supports bucketing as hidden partitions. Use the `partitioned_by` config to add specific bucketing
-conditions.
+Iceberg поддерживает распределение как скрытые партиции. Используйте конфигурацию `partitioned_by`, чтобы добавить конкретные условия распределения.
 
-Iceberg supports the `PARQUET`, `AVRO` and `ORC` table formats for data .
+Iceberg поддерживает форматы таблиц `PARQUET`, `AVRO` и `ORC` для данных.
 
-The following are the supported strategies for using Iceberg incrementally:
+Следующие стратегии поддерживаются для использования Iceberg инкрементально:
 
-- `append`: New records are appended to the table (this can lead to duplicates).
-- `merge`: Perform an update and insert (and optional delete) where new and existing records are added. This is only available with Athena engine version 3.
-  - `unique_key`(required): Columns that define a unique source and target table record.
-  - `incremental_predicates` (optional): The SQL conditions that enable custom join clauses in the merge statement. This helps improve performance via predicate pushdown on target tables. 
-  - `delete_condition` (optional): SQL condition that identifies records that should be deleted.
-  - `update_condition` (optional): SQL condition that identifies records that should be updated.
-  - `insert_condition` (optional): SQL condition that identifies records that should be inserted.
+- `append`: Новые записи добавляются в таблицу (это может привести к дублированию).
+- `merge`: Выполняет обновление и вставку (и необязательное удаление), где новые и существующие записи добавляются. Это доступно только с версией движка Athena 3.
+  - `unique_key` (обязательно): Столбцы, которые определяют уникальную запись источника и целевой таблицы.
+  - `incremental_predicates` (необязательно): SQL-условия, которые позволяют использовать пользовательские условия соединения в операторе слияния. Это помогает улучшить производительность за счет применения предикатов к целевым таблицам.
+  - `delete_condition` (необязательно): SQL-условие, которое определяет записи, которые должны быть удалены.
+  - `update_condition` (необязательно): SQL-условие, которое определяет записи, которые должны быть обновлены.
+  - `insert_condition` (необязательно): SQL-условие, которое определяет записи, которые должны быть вставлены.
 
-`incremental_predicates`, `delete_condition`, `update_condition` and `insert_condition` can include any column of the incremental table (`src`) or the final table (`target`). Column names must be prefixed by either `src` or `target` to prevent a `Column is ambiguous` error.
+`incremental_predicates`, `delete_condition`, `update_condition` и `insert_condition` могут включать любой столбец инкрементальной таблицы (`src`) или финальной таблицы (`target`). Имена столбцов должны быть префиксированы либо `src`, либо `target`, чтобы избежать ошибки `Column is ambiguous`.
 
 <Tabs>
 
@@ -284,11 +281,11 @@ select * from (
 
 </Tabs>
 
-### High availability (HA) table
+### Таблица высокой доступности (HA)
 
-The current implementation of table materialization can lead to downtime, as the target table is dropped and re-created. For less destructive behavior, you can use the `ha` config on your `table` materialized models. It leverages the table versions feature of the glue catalog, which creates a temporary table and swaps the target table to the location of the temporary table. This materialization is only available for `table_type=hive` and requires using unique locations. For Iceberg, high availability is the default.
+Текущая реализация материализации таблиц может привести к простоям, так как целевая таблица удаляется и создается заново. Для менее разрушительного поведения вы можете использовать конфигурацию `ha` в ваших моделях с материализацией `table`. Это использует функцию версий таблиц каталога Glue, которая создает временную таблицу и заменяет целевую таблицу местоположением временной таблицы. Эта материализация доступна только для `table_type=hive` и требует использования уникальных местоположений. Для Iceberg высокая доступность является значением по умолчанию.
 
-By default, the materialization keeps the last 4 table versions,but you can change it by setting `versions_to_keep`.
+По умолчанию материализация сохраняет последние 4 версии таблицы, но вы можете изменить это, установив `versions_to_keep`.
 
 ```sql
 {{ config(
@@ -309,19 +306,17 @@ select 'b'        as user_id,
        'disabled' as status
 ```
 
+#### Известные проблемы HA
 
-#### HA known issues
+- Может быть небольшой простой при переключении с таблицы с партициями на таблицу без (и наоборот). Если требуется более высокая производительность, рассмотрите возможность использования распределения вместо партиций.
+- По умолчанию Glue "дублирует" версии внутренне, поэтому последние две версии таблицы указывают на одно и то же местоположение.
+- Рекомендуется установить `versions_to_keep` >= 4, так как это поможет избежать удаления более старого местоположения.
 
-- There could be a little downtime when swapping from a table with partitions to a table without (and the other way around). If higher performance is needed, consider bucketing instead of partitions.
-- By default, Glue "duplicates" the versions internally, so the last two versions of a table point to the same location.
-- It's recommended to set `versions_to_keep` >= 4, as this will avoid having the older location removed.
+### Обновление каталога данных Glue
 
-### Update glue data catalog
+Вы можете сохранить описания ваших столбцов и моделей в каталоге данных Glue как [свойства таблицы Glue](https://docs.aws.amazon.com/glue/latest/dg/tables-described.html#table-properties) и [параметры столбцов](https://docs.aws.amazon.com/glue/latest/webapi/API_Column.html). Чтобы включить это, установите конфигурацию в `true`, как показано в следующем примере. По умолчанию сохранение документации отключено, но его можно включить для конкретных ресурсов или групп ресурсов по мере необходимости.
 
-You can persist your column and model level descriptions to the Glue Data Catalog as [glue table properties](https://docs.aws.amazon.com/glue/latest/dg/tables-described.html#table-properties) and [column parameters](https://docs.aws.amazon.com/glue/latest/webapi/API_Column.html). To enable this, set the configuration to `true` as shown in the following example. By default, documentation persistence is disabled, but it can be enabled for specific resources or groups of resources as needed.
-
-
-For example:
+Например:
 
 ```yaml
 models:
@@ -339,82 +334,78 @@ models:
           primary_key: true
 ```
 
-Refer to [persist_docs](https://docs.getdbt.com/reference/resource-configs/persist_docs) for more details.
+Смотрите [persist_docs](https://docs.getdbt.com/reference/resource-configs/persist_docs) для получения дополнительных сведений.
 
-## Snapshots
+## Снимки
 
-The adapter supports snapshot materialization. It supports both the timestamp and check strategies. To create a snapshot, create a snapshot file in the `snapshots` directory. You'll need to create this directory if it doesn't already exist.
+Адаптер поддерживает материализацию снимков. Он поддерживает как стратегию по времени, так и стратегию проверки. Чтобы создать снимок, создайте файл снимка в каталоге `snapshots`. Вам нужно будет создать этот каталог, если он еще не существует.
 
-### Timestamp strategy
+### Стратегия по времени
 
+Смотрите [Стратегия по времени](/docs/build/snapshots#timestamp-strategy-recommended) для получения подробной информации о том, как ее использовать.
 
-Refer to [Timestamp strategy](/docs/build/snapshots#timestamp-strategy-recommended) for details on how to use it. 
+### Стратегия проверки
 
+Смотрите [Стратегия проверки](/docs/build/snapshots#check-strategy) для получения подробной информации о том, как ее использовать.
 
-### Check strategy
+### Жесткие удаления
 
-Refer to [Check strategy](/docs/build/snapshots#check-strategy) for details on how to use it.
+Материализация также поддерживает аннулирование жестких удалений. Для получения подробной информации о использовании смотрите [Жесткие удаления](/docs/build/snapshots#hard-deletes-opt-in).
 
-### Hard deletes
+### Известные проблемы снимков
 
-The materialization also supports invalidating hard deletes. For usage details, refer to [Hard deletes](/docs/build/snapshots#hard-deletes-opt-in). 
+- Инкрементальные модели Iceberg - Синхронизируйте все столбцы при изменении схемы. Столбцы, используемые для партиционирования, не могут быть удалены. С точки зрения dbt единственный способ - полностью обновить инкрементальную модель.
+- Имена таблиц, схем и баз данных должны быть только строчными.
+- Чтобы избежать потенциальных конфликтов, убедитесь, что [`dbt-athena-adapter`](https://github.com/Tomme/dbt-athena) не установлен в целевой среде.
+- Снимок не поддерживает удаление столбцов из исходной таблицы. Если вы удаляете столбец, убедитесь, что вы также удаляете столбец из снимка. Другой обходной путь - установить значение NULL для столбца в определении снимка, чтобы сохранить историю.
 
-### Snapshots known issues
+## Интеграция с AWS Lake Formation
 
-- Incremental Iceberg models - Sync all columns on schema change. Columns used for partitioning can't be removed. From a dbt perspective, the only way is to fully refresh the incremental model.
-- Tables, schemas and database names should only be lowercase
-- To avoid potential conflicts, make sure [`dbt-athena-adapter`](https://github.com/Tomme/dbt-athena) is not installed in the target environment.
-- Snapshot does not support dropping columns from the source table. If you drop a column, make sure to drop the column from the snapshot as well. Another workaround is to NULL the column in the snapshot definition to preserve the history.
+Следующее описывает, как адаптер реализует управление тегами AWS Lake Formation:
 
-## AWS Lake Formation integration
+- [Включите](#table-configuration) управление тегами LF с помощью параметра `lf_tags_config`. По умолчанию оно отключено.
+- После включения теги LF обновляются при каждом запуске dbt.
+- Сначала все lf-теги для столбцов удаляются, чтобы избежать проблем с наследованием.
+- Затем все избыточные lf-теги удаляются из таблиц, и фактические теги из конфигураций таблиц применяются.
+- Наконец, lf-теги для столбцов применяются.
 
-The following describes how the adapter implements the AWS Lake Formation tag management:
+Важно понимать следующие моменты:
 
-- [Enable](#table-configuration) LF tags management with the `lf_tags_config` parameter. By default, it's disabled. 
-- Once enabled, LF tags are updated on every dbt run.
-- First, all lf-tags for columns are removed to avoid inheritance issues.
-- Then, all redundant lf-tags are removed from tables and actual tags from table configs are applied.
-- Finally, lf-tags for columns are applied.
+- dbt не управляет `lf-tags` для баз данных.
+- dbt не управляет разрешениями Lake Formation.
 
-It's important to understand the following points:
-
-- dbt doesn't manage `lf-tags` for databases
-- dbt doesn't manage Lake Formation permissions
-
-That's why it's important to take care of this yourself or use an automation tool such as terraform and AWS CDK. For more details, refer to:
+Поэтому важно позаботиться об этом самостоятельно или использовать инструмент автоматизации, такой как terraform и AWS CDK. Для получения дополнительных сведений смотрите:
 
 * [terraform aws_lakeformation_permissions](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lakeformation_permissions)
 * [terraform aws_lakeformation_resource_lf_tags](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lakeformation_resource_lf_tags)
 
-## Python models
+## Модели Python
 
-The adapter supports Python models using [`spark`](https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark.html).
+Адаптер поддерживает модели Python с использованием [`spark`](https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark.html).
 
-### Prerequisites
+### Предварительные условия
 
-- A Spark-enabled workgroup created in Athena.
-- Spark execution role granted access to Athena, Glue and S3.
-- The Spark workgroup is added to the `~/.dbt/profiles.yml` file and the profile to be used
-  is referenced in `dbt_project.yml`.
+- Создана рабочая группа с поддержкой Spark в Athena.
+- Роль выполнения Spark имеет доступ к Athena, Glue и S3.
+- Рабочая группа Spark добавлена в файл `~/.dbt/profiles.yml`, и профиль, который будет использоваться, ссылается на `dbt_project.yml`.
 
-### Spark-specific table configuration
+### Конфигурация таблицы, специфичная для Spark
 
-| Configuration | Default |  Description |
+| Конфигурация | По умолчанию | Описание |
 |---------------|---------|--------------|
-| `timeout`     | 43200   | Time out in seconds for each Python model execution. Defaults to 12 hours/43200 seconds. |
-| `spark_encryption` | False | When set to `true,` it encrypts data stored locally by Spark and in transit between Spark nodes. |
-| `spark_cross_account_catalog` | False | When using the Spark Athena workgroup, queries can only be made against catalogs on the same AWS account by default. Setting this parameter to true will enable querying external catalogs if you want to query another catalog on an external AWS account. <br></br> Use the syntax `external_catalog_id/database.table` to access the external table on the external catalog (For example, `999999999999/mydatabase.cloudfront_logs` where 999999999999 is the external catalog ID).|
-| `spark_requester_pays` | False | When set to true, if an Amazon S3 bucket is configured as `requester pays`, the user account running the query is charged for data access and data transfer fees associated with the query. | 
+| `timeout`     | 43200   | Тайм-аут в секундах для выполнения каждой модели Python. По умолчанию 12 часов/43200 секунд. |
+| `spark_encryption` | False | При установке в `true` шифрует данные, хранящиеся локально в Spark и в пути между узлами Spark. |
+| `spark_cross_account_catalog` | False | При использовании рабочей группы Spark Athena запросы могут выполняться только к каталогам в той же учетной записи AWS по умолчанию. Установка этого параметра в true позволит выполнять запросы к внешним каталогам, если вы хотите запросить другой каталог в другой учетной записи AWS. <br></br> Используйте синтаксис `external_catalog_id/database.table`, чтобы получить доступ к внешней таблице во внешнем каталоге (например, `999999999999/mydatabase.cloudfront_logs`, где 999999999999 - это идентификатор внешнего каталога). |
+| `spark_requester_pays` | False | При установке в true, если корзина Amazon S3 настроена как `requester pays`, учетная запись пользователя, выполняющего запрос, несет расходы на доступ к данным и сборы за передачу данных, связанные с запросом. |
 
+### Заметки по Spark
 
-### Spark notes
+- Сессия создается для каждой уникальной конфигурации движка, определенной в моделях, которые являются частью вызова.
+Тайм-аут простоя сессии установлен на 10 минут. В течение этого периода, если новая операция (модель Python Spark) готова к выполнению и конфигурация движка совпадает, процесс повторно использует ту же сессию.
+- Количество моделей Python, работающих одновременно, зависит от `threads`. Количество сессий, созданных для всего запуска, зависит от количества уникальных конфигураций движка и доступности сессий для поддержания параллелизма потоков.
+- Для таблиц Iceberg рекомендуется использовать конфигурацию `table_properties`, чтобы установить `format_version` на `2`. Это помогает поддерживать совместимость между таблицами Iceberg, созданными Trino, и теми, которые созданы Spark.
 
-- A session is created for each unique engine configuration defined in the models that are part of the invocation.
-A session's idle timeout is set to 10 minutes. Within the timeout period, if a new calculation (Spark Python model) is ready for execution and the engine configuration matches, the process will reuse the same session.
-- The number of Python models running simultaneously depends on the `threads`. The number of sessions created for the entire run depends on the number of unique engine configurations and the availability of sessions to maintain thread concurrency.
-- For Iceberg tables, it's recommended to use the `table_properties` configuration to set the `format_version` to `2`. This helps maintain compatibility between the Iceberg tables Trino created and those Spark created.
-
-### Example models
+### Примеры моделей
 
 <Tabs>
 
@@ -479,7 +470,7 @@ def model(dbt, spark_session):
         },
         spark_encryption=True,
         spark_cross_account_catalog=True,
-        spark_requester_pays=True
+        spark_requester_pays=True,
         polling_interval=15,
         timeout=120,
     )
@@ -495,7 +486,7 @@ def model(dbt, spark_session):
 
 <TabItem value="PySpark UDF" >
 
-Using imported external python files:
+Используя импортированные внешние файлы Python:
 
 ```python
 def model(dbt, spark_session):
@@ -529,24 +520,22 @@ def model(dbt, spark_session):
 
 </Tabs>
 
-### Known issues in Python models
+### Известные проблемы в моделях Python
 
-- Python models can't [reference Athena SQL views](https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark.html).
-- You can use third-party Python libraries; however, they must be [included in the pre-installed list][pre-installed list] or [imported manually][imported manually].
-- Python models can only reference or write to tables with names matching the regular expression: `^[0-9a-zA-Z_]+$`. Spark doesn't support dashes or special characters, even though Athena supports them.
-- Incremental models don't fully utilize Spark capabilities. They depend partially on existing SQL-based logic that runs on Trino.
-- Snapshot materializations are not supported.
-- Spark can only reference tables within the same catalog.
-- For tables created outside of the dbt tool, be sure to populate the location field, or dbt will throw an error when creating the table.
-
+- Модели Python не могут [ссылаться на представления SQL Athena](https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark.html).
+- Вы можете использовать сторонние библиотеки Python; однако они должны быть [включены в список предустановленных][pre-installed list] или [импортированы вручную][imported manually].
+- Модели Python могут ссылаться или записывать только в таблицы с именами, соответствующими регулярному выражению: `^[0-9a-zA-Z_]+$`. Spark не поддерживает дефисы или специальные символы, хотя Athena поддерживает их.
+- Инкрементальные модели не полностью используют возможности Spark. Они частично зависят от существующей логики на основе SQL, которая выполняется на Trino.
+- Материализации снимков не поддерживаются.
+- Spark может ссылаться только на таблицы в том же каталоге.
+- Для таблиц, созданных вне инструмента dbt, убедитесь, что вы заполнили поле местоположения, иначе dbt выдаст ошибку при создании таблицы.
 
 [pre-installed list]: https://docs.aws.amazon.com/athena/latest/ug/notebooks-spark-preinstalled-python-libraries.html
 [imported manually]: https://docs.aws.amazon.com/athena/latest/ug/notebooks-import-files-libraries.html
 
-## Contracts
+## Контракты
 
-The adapter partly supports contract definitions:
+Адаптер частично поддерживает определения контрактов:
 
-- `data_type` is supported but needs to be adjusted for complex types. Types must be specified entirely (for example, `array<int>`) even though they won't be checked. Indeed, as dbt recommends, we only compare the broader type (array, map, int, varchar). The complete definition is used to check that the data types defined in Athena are ok (pre-flight check).
-- The adapter does not support the constraints since Athena has no constraint concept.
-
+- `data_type` поддерживается, но требует корректировки для сложных типов. Типы должны быть указаны полностью (например, `array<int>`), даже если они не будут проверяться. Действительно, как рекомендует dbt, мы сравниваем только более широкий тип (array, map, int, varchar). Полное определение используется для проверки того, что типы данных, определенные в Athena, корректны (предварительная проверка).
+- Адаптер не поддерживает ограничения, так как в Athena нет концепции ограничений.

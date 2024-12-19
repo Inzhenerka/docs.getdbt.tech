@@ -1,12 +1,12 @@
 ---
-title: "Failing fast"
+title: "Быстрое завершение"
 id: "failing-fast"
-sidebar: "Failing fast"
+sidebar: "Быстрое завершение"
 ---
 
-Supply the `-x` or `--fail-fast` flag to `dbt run` to make dbt exit immediately if a single resource fails to build. If other models are in-progress when the first model fails, then dbt will terminate the connections for these still-running models.
+Передайте флаг `-x` или `--fail-fast` команде `dbt run`, чтобы dbt немедленно завершал работу, если один из ресурсов не удалось построить. Если другие модели находятся в процессе выполнения, когда первая модель завершилась с ошибкой, dbt прекратит соединения для этих все еще работающих моделей.
 
-For example, you can select four models to run, but if a failure occurs in the first model, the failure will prevent other models from running:
+Например, вы можете выбрать четыре модели для выполнения, но если ошибка произойдет в первой модели, это помешает выполнению других моделей:
 
 ```text
 dbt -x run --threads 1

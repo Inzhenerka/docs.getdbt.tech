@@ -1,20 +1,19 @@
 ---
-title: "About debug macro"
+title: "О макросе debug"
 sidebar_label: "debug"
 id: "debug-method"
-description: "The `{{ debug() }}` macro will open an iPython debugger."
+description: "Макрос `{{ debug() }}` откроет отладчик iPython."
 ---
 
+:::warning Только для среды разработки
 
-:::warning Development environment only
-
-The `debug` macro is only intended to be used in a development context with dbt. Do not deploy code to production that uses the `debug` macro.
+Макрос `debug` предназначен только для использования в контексте разработки с dbt. Не развертывайте код в производственной среде, который использует макрос `debug`.
 
 :::
 
-The `{{ debug() }}` macro will open an iPython debugger in the context of a compiled dbt macro. The `DBT_MACRO_DEBUGGING` environment value must be set to use the debugger.
+Макрос `{{ debug() }}` откроет отладчик iPython в контексте скомпилированного макроса dbt. Значение переменной окружения `DBT_MACRO_DEBUGGING` должно быть установлено для использования отладчика.
 
-## Usage
+## Использование
 
 <File name='my_macro.sql'>
 
@@ -31,7 +30,7 @@ The `{{ debug() }}` macro will open an iPython debugger in the context of a comp
 
 </File>
 
-When dbt hits the `debug()` line, you'll see something like:
+Когда dbt достигнет строки `debug()`, вы увидите что-то вроде:
 
 ```shell
 $ DBT_MACRO_DEBUGGING=write dbt compile

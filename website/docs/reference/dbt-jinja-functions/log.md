@@ -1,20 +1,20 @@
 ---
 title: "log"
-sibebar_label: "About log function"
+sibebar_label: "О функции log"
 id: "log"
-description: "Learn more about the log Jinja function in dbt."
+description: "Узнайте больше о функции log Jinja в dbt."
 ---
 
-__Args__:
+__Аргументы__:
 
- * `msg`: The message (string) to log
- * `info`: If False, write to the log file. If True, write to both the log file and stdout (default=False)
+ * `msg`: Сообщение (строка) для записи в лог
+ * `info`: Если False, записать в файл лога. Если True, записать как в файл лога, так и в stdout (по умолчанию=False)
 
-Logs a line to either the log file or stdout.
+Записывает строку либо в файл лога, либо в stdout.
 
 <details>
-	<summary>Code source</summary>
-	Refer to <a href="https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> or the following code as a source: <br /><br />
+	<summary>Исходный код</summary>
+	Смотрите на <a href="https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или следующий код в качестве источника: <br /><br />
 
 ```python
     def log(msg: str, info: bool = False) -> str: 
@@ -36,9 +36,6 @@ Logs a line to either the log file or stdout.
             fire_event(JinjaLogDebug(msg=msg, node_info=get_node_info()))
         return ""
 ```
-	
-
-
 </details>
 
 ```sql

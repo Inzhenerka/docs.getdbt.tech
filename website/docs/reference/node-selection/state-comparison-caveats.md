@@ -1,66 +1,66 @@
 ---
-title: "Caveats to state comparison"
+title: "Ограничения при сравнении состояний"
 ---
 
 import StateModified from '/snippets/_state-modified-compare.md';
 
-The [`state:` selection method](/reference/node-selection/methods#state) is a powerful feature, with a lot of underlying complexity. Below are a handful of considerations when setting up automated jobs that leverage state comparison.
+Метод выбора [`state:`](/reference/node-selection/methods#state) является мощной функцией, обладающей значительной внутренней сложностью. Ниже приведены несколько моментов, которые следует учитывать при настройке автоматизированных задач, использующих сравнение состояний.
 
 ### Seeds
 
-dbt stores a file hash of seed files that are &lt;1 MiB in size. If the contents of these seeds is modified, the seed will be included in `state:modified`.
+dbt хранит хэш файла seed-файлов, размер которых меньше 1 МиБ. Если содержимое этих seed-файлов изменяется, seed будет включен в `state:modified`.
 
-If a seed file is >1 MiB in size, dbt cannot compare its contents and will raise a warning as such. Instead, dbt will use only the seed's file path to detect changes. If the file path has changed, the seed will be included in `state:modified`; if it hasn't, it won't.
+Если seed-файл превышает 1 МиБ, dbt не может сравнить его содержимое и выдаст соответствующее предупреждение. Вместо этого dbt будет использовать только путь к seed-файлу для обнаружения изменений. Если путь к файлу изменился, seed будет включен в `state:modified`; если нет, то не будет.
 
 ### Macros
 
-dbt will mark modified any resource that depends on a changed macro, or on a macro that depends on a changed macro.
+dbt пометит как измененные любые ресурсы, которые зависят от измененной макроса или от макроса, который зависит от измененной макроса.
 
 ### Vars
 
-If a model uses a `var` or `env_var` in its definition, dbt is unable today to identify that lineage in such a way that it can include the model in `state:modified` because the `var` or `env_var` value has changed. It's likely that the model will be marked modified if the change in variable results in a different configuration.
+Если модель использует `var` или `env_var` в своем определении, dbt в настоящее время не может идентифицировать эту зависимость таким образом, чтобы включить модель в `state:modified`, поскольку значение `var` или `env_var` изменилось. Скорее всего, модель будет помечена как измененная, если изменение переменной приведет к другой конфигурации.
 
 ### Tests
 
-The command `dbt test -s state:modified` will include both:
-- tests that select from a new/modified resource
-- tests that are themselves new or modified
+Команда `dbt test -s state:modified` будет включать как:
+- тесты, которые выбирают из нового/измененного ресурса
+- тесты, которые сами являются новыми или измененными
 
-As long as you're adding or changing tests at the same time that you're adding or changing the resources (models, seeds, snapshots) they select from, all should work the way you expect with "simple" state selection:
+При условии, что вы добавляете или изменяете тесты одновременно с добавлением или изменением ресурсов (моделей, seed-файлов, снимков), все должно работать так, как вы ожидаете, с "простым" выбором состояния:
 
 ```shell
 dbt run -s "state:modified"
 dbt test -s "state:modified"
 ```
 
-This can get complicated, however. If you add a new test without modifying its underlying model, or add a test that selects from a new model and an old unmodified one, you may need to test a model without having first run it.
+Однако это может усложниться. Если вы добавите новый тест, не изменяя его базовую модель, или добавите тест, который выбирает из новой модели и старой неизмененной, вам может потребоваться протестировать модель, не запуская ее сначала.
 
-You can defer upstream references when testing. For example, if a test selects from a model that doesn't exist as a database object in your current environment, dbt will look to the other environment instead—the one defined in your state manifest. This enables you to use "simple" state selection without risk of query failure, but it may have some surprising consequences for tests with multiple parents. For instance, if you have a `relationships` test that depends on one modified model and one unmodified model, the test query will select from data "across" two different environments. If you limit or sample your data in development and CI, it may not make much sense to test for referential integrity, knowing there's a good chance of mismatch.
+Вы можете отложить ссылки на вышестоящие элементы при тестировании. Например, если тест выбирает из модели, которая не существует как объект базы данных в вашей текущей среде, dbt будет искать в другой среде — той, которая определена в вашем манифесте состояния. Это позволяет использовать "простой" выбор состояния без риска сбоя запроса, но может иметь некоторые неожиданные последствия для тестов с несколькими родителями. Например, если у вас есть тест `relationships`, который зависит от одной измененной модели и одной неизмененной модели, запрос теста будет выбирать данные "из" двух разных сред. Если вы ограничиваете или отбираете свои данные в разработке и CI, может не иметь смысла тестировать на референциальную целостность, зная, что существует высокая вероятность несоответствия.
 
-If you're a frequent user of `relationships` tests or data tests, or frequently find yourself adding tests without modifying their underlying models, consider tweaking the selection criteria of your CI job. For instance:
+Если вы часто используете тесты `relationships` или тесты данных, или часто добавляете тесты, не изменяя их базовые модели, подумайте о том, чтобы изменить критерии выбора вашей CI-задачи. Например:
 
 ```shell
 dbt run -s "state:modified"
 dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
 
-### False positives
+### Ложные срабатывания
 
 <VersionBlock firstVersion="1.9">
 
-To reduce false positives during `state:modified` selection due to env-aware logic, you can set the `state_modified_compare_more_unrendered_values` [behavior flag](/reference/global-configs/behavior-changes#behavior-change-flags) to `True`.
+Чтобы уменьшить количество ложных срабатываний при выборе `state:modified` из-за логики, зависящей от окружения, вы можете установить флаг поведения `state_modified_compare_more_unrendered_values` [флаг поведения](/reference/global-configs/behavior-changes#behavior-change-flags) в значение `True`.
 
 <StateModified features={'/snippets/_state-modified-compare.md'}/>
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
-State comparison works by identifying discrepancies between two manifests.  Those discrepancies could be the result of:
+Сравнение состояний работает путем выявления несоответствий между двумя манифестами. Эти несоответствия могут быть результатом:
 
-1. Changes made to a project in development
-2. Env-aware logic that causes different behavior based on the `target`, env vars, etc., which can be avoided if you upgrade to dbt Core 1.9 and set the `state_modified_compare_more_unrendered_values` [behavior flag](/reference/global-configs/behavior-changes#behavior-change-flags) to `True`.
+1. Изменений, внесенных в проект в процессе разработки
+2. Логики, зависящей от окружения, которая вызывает различное поведение в зависимости от `target`, переменных окружения и т. д., что можно избежать, если вы обновите до dbt Core 1.9 и установите флаг поведения `state_modified_compare_more_unrendered_values` [флаг поведения](/reference/global-configs/behavior-changes#behavior-change-flags) в значение `True`.
 
-State comparison detects env-aware config in `dbt_project.yml`. This target-based config won't register as a modification:
+Сравнение состояний обнаруживает конфигурацию, зависящую от окружения, в `dbt_project.yml`. Эта конфигурация, основанная на цели, не будет зарегистрирована как изменение:
 
 <File name='dbt_project.yml'>
 
@@ -71,13 +71,13 @@ models:
 
 </File>
 
-Of course, if the raw Jinja expression is modified, it will be marked as a modification.
+Конечно, если исходное выражение Jinja изменится, оно будет помечено как изменение.
 
-Note that, as of now, this improved detection is true _only_ for `dbt_project.yml` configuration. It does not apply to:
-- `.yml` resource properties (including `sources`)
-- in-file `config()`
+Обратите внимание, что на данный момент это улучшенное обнаружение действительно _только_ для конфигурации `dbt_project.yml`. Оно не применяется к:
+- свойствам ресурсов `.yml` (включая `sources`)
+- `config()` в файле
 
-That means the following config—functionally identical to the snippet above—_will_ be marked as a modification when comparing across targets:
+Это означает, что следующая конфигурация — функционально идентичная приведенному выше фрагменту — _будет_ помечена как изменение при сравнении между целями:
 
 ```sql
 {{ config(
@@ -86,6 +86,6 @@ That means the following config—functionally identical to the snippet above—
 ```
 </VersionBlock>
 
-### Final note
+### Заключительная заметка
 
-State comparison is complex. We hope to reach eventual consistency between all configuration options, as well as providing users with the control they need to reliably return all modified resources, and only the ones they expect. If you're interested in learning more, read [open issues tagged "state"](https://github.com/dbt-labs/dbt-core/issues?q=is%3Aopen+is%3Aissue+label%3Astate) in the dbt repository.
+Сравнение состояний является сложным процессом. Мы надеемся достичь окончательной согласованности между всеми параметрами конфигурации, а также предоставить пользователям контроль, необходимый для надежного возврата всех измененных ресурсов и только тех, которые они ожидают. Если вы хотите узнать больше, прочитайте [открытые проблемы с тегом "state"](https://github.com/dbt-labs/dbt-core/issues?q=is%3Aopen+is%3Aissue+label%3Astate) в репозитории dbt.

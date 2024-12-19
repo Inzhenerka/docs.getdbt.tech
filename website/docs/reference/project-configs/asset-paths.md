@@ -1,6 +1,6 @@
 ---
 datatype: [directorypath]
-description: "Read this guide to understand the asset-paths configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию asset-paths в dbt."
 default_value: []
 ---
 
@@ -12,13 +12,12 @@ asset-paths: [directorypath]
 
 </File>
 
-## Definition
-Optionally specify a custom list of directories to copy to the `target` directory as part of the `docs generate` command. This is useful for rendering images in your repository in your project documentation.
+## Определение
+Опционально укажите пользовательский список каталогов для копирования в каталог `target` в рамках команды `docs generate`. Это полезно для отображения изображений из вашего репозитория в документации проекта.
 
+## По умолчанию
 
-## Default
-
-By default, dbt will not copy any additional files as part of docs generate. For example, `asset-paths: []`.
+По умолчанию dbt не будет копировать дополнительные файлы в рамках генерации документации. Например, `asset-paths: []`.
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -27,20 +26,20 @@ path="asset-paths"
 absolute="/Users/username/project/assets"
 />
 
-- ✅ **Do**
-  - Use relative path:
+- ✅ **Делайте**
+  - Используйте относительный путь:
     ```yml
     asset-paths: ["assets"]
     ```
 
-- ❌ **Don't**
-  - Avoid absolute paths:
+- ❌ **Не делайте**
+  - Избегайте абсолютных путей:
     ```yml
     asset-paths: ["/Users/username/project/assets"]
     ```
 
-## Examples
-### Compile files in the `assets` subdirectory as part of `docs generate`
+## Примеры
+### Компиляция файлов в подкаталоге `assets` в рамках `docs generate`
 
 <File name='dbt_project.yml'>
 
@@ -50,6 +49,6 @@ asset-paths: ["assets"]
 
 </File>
 
-Any files included in this directory will be copied to the `target/` directory as part of `dbt docs generate`, making them accessible as images in your project documentation.
+Любые файлы, включенные в этот каталог, будут скопированы в каталог `target/` в рамках `dbt docs generate`, что сделает их доступными в качестве изображений в вашей документации проекта.
 
-Check out the full writeup on including images in your descriptions [here](/reference/resource-properties/description/#include-an-image-from-your-repo-in-your-descriptions).
+Посмотрите полное описание о том, как включать изображения в ваши описания [здесь](/reference/resource-properties/description/#include-an-image-from-your-repo-in-your-descriptions).

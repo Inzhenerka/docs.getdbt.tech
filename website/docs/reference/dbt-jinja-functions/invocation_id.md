@@ -1,19 +1,19 @@
 ---
-title: "About invocation_id"
+title: "О invocation_id"
 sidebar_label: "invocation_id"
 id: "invocation_id"
-description: "The `invocation_id` outputs a UUID generated for this dbt command."
+description: "Параметр `invocation_id` выводит UUID, сгенерированный для этой команды dbt."
 ---
 
-The `invocation_id` outputs a UUID generated for this dbt command. This value is useful when auditing or analyzing dbt invocation metadata.
+Параметр `invocation_id` выводит UUID, сгенерированный для этой команды dbt. Это значение полезно при аудите или анализе метаданных вызова dbt.
 
-If available, the `invocation_id` is:
-- available in the compilation context of [`query-comment`](/reference/project-configs/query-comment)
-- included in the `info` dictionary in dbt [events and logs](/reference/events-logging#info)
-- included in the `metadata` dictionary in [dbt artifacts](/reference/artifacts/dbt-artifacts#common-metadata)
-- included as a label in all BigQuery jobs that dbt originates
+Если доступно, `invocation_id`:
+- доступен в контексте компиляции [`query-comment`](/reference/project-configs/query-comment)
+- включен в словарь `info` в [событиях и логах dbt](/reference/events-logging#info)
+- включен в словарь `metadata` в [артефактах dbt](/reference/artifacts/dbt-artifacts#common-metadata)
+- включен в качестве метки во всех заданиях BigQuery, которые инициирует dbt
 
-**Example usage**:
-You can use the following example code for all data platforms. Remember to replace `TABLE_NAME` with the actual name of your target table:
+**Пример использования**:
+Вы можете использовать следующий пример кода для всех платформ данных. Не забудьте заменить `TABLE_NAME` на фактическое имя вашей целевой таблицы:
 
 `select '{{ invocation_id }}' as test_id from TABLE_NAME`

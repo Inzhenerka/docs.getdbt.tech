@@ -1,7 +1,7 @@
 ---
-title: "Project flags"
+title: "Флаги проекта"
 id: "project-flags"
-sidebar: "Project flags"
+sidebar: "Флаги проекта"
 ---
 
 <File name='dbt_project.yml'>
@@ -15,17 +15,17 @@ flags:
 
 </File>
 
-Reference the [table of all flags](/reference/global-configs/about-global-configs#available-flags) to see which global configs are available for setting in [`dbt_project.yml`](/reference/dbt_project.yml).
+Смотрите [таблицу всех флагов](/reference/global-configs/about-global-configs#available-flags), чтобы узнать, какие глобальные конфигурации доступны для установки в [`dbt_project.yml`](/reference/dbt_project.yml).
 
-The `flags` dictionary is the _only_ place you can opt out of [behavior changes](/reference/global-configs/behavior-changes), while the legacy behavior is still supported.
+Словарь `flags` является _единственным_ местом, где вы можете отказаться от [изменений поведения](/reference/global-configs/behavior-changes), в то время как устаревшее поведение все еще поддерживается.
 
 <VersionBlock lastVersion="1.7">
 
-:::warning Deprecated functionality
-In older versions of dbt, custom default values of flags (global configs) were set in `profiles.yml`. Starting in v1.8, these configs are set in `dbt_project.yml` instead.
+:::warning Устаревшая функциональность
+В более ранних версиях dbt пользовательские значения по умолчанию для флагов (глобальных конфигураций) задавались в `profiles.yml`. Начиная с версии 1.8, эти конфигурации устанавливаются в `dbt_project.yml`.
 :::
 
-For most global configurations, you can set "user profile" configurations in the `config:` block of `profiles.yml`. This style of configuration sets default values for all projects using this profile directory &mdash; usually, all projects running on your local machine.
+Для большинства глобальных конфигураций вы можете установить конфигурации "пользовательского профиля" в блоке `config:` файла `profiles.yml`. Этот стиль конфигурации устанавливает значения по умолчанию для всех проектов, использующих этот каталог профилей — обычно для всех проектов, работающих на вашем локальном компьютере.
 
 <File name='profiles.yml'>
 
@@ -42,6 +42,6 @@ config:
 
 <VersionBlock lastVersion="1.7">
 
-The exception: Some global configurations are actually set in `dbt_project.yml`, instead of `profiles.yml`, because they control where dbt places logs and artifacts. Those file paths are always relative to the location of `dbt_project.yml`. For more details, refer to [Log and target paths](/reference/global-configs/logs#log-and-target-paths).
+Исключение: некоторые глобальные конфигурации на самом деле устанавливаются в `dbt_project.yml`, а не в `profiles.yml`, потому что они контролируют, где dbt размещает журналы и артефакты. Эти пути к файлам всегда относительны к расположению `dbt_project.yml`. Для получения дополнительной информации смотрите [Пути к журналам и целям](/reference/global-configs/logs#log-and-target-paths).
 
 </VersionBlock>

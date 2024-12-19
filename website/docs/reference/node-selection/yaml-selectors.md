@@ -1,15 +1,14 @@
 ---
-title: "YAML Selectors"
+title: "YAML Селекторы"
 ---
 
-Write resource selectors in YAML, save them with a human-friendly name, and reference them using the `--selector` flag.
-By recording selectors in a top-level `selectors.yml` file:
+Записывайте селекторы ресурсов в YAML, сохраняйте их с понятным именем и ссылайтесь на них, используя флаг `--selector`. Записывая селекторы в файл верхнего уровня `selectors.yml`:
 
-* **Legibility:** complex selection criteria are composed of dictionaries and arrays
-* **Version control:** selector definitions are stored in the same git repository as the dbt project
-* **Reusability:** selectors can be referenced in multiple job definitions, and their definitions are extensible (via YAML anchors)
+* **Читаемость:** сложные критерии выбора состоят из словарей и массивов
+* **Контроль версий:** определения селекторов хранятся в том же git-репозитории, что и проект dbt
+* **Повторное использование:** селекторы могут использоваться в нескольких определениях задач, и их определения могут быть расширены (с помощью якорей YAML)
 
-Selectors live in a top-level file named `selectors.yml`. Each must have a `name` and a `definition`, and can optionally define a `description` and [`default` flag](#default).
+Селекторы находятся в файле верхнего уровня с именем `selectors.yml`. Каждый селектор должен иметь `name` и `definition`, а также может опционально определять `description` и [`default` флаг](#default).
 
 <File name='selectors.yml'>
 
@@ -18,75 +17,73 @@ selectors:
   - name: nodes_to_joy
     definition: ...
   - name: nodes_to_a_grecian_urn
-    description: Attic shape with a fair attitude
+    description: Аттическая форма с хорошим настроением
     default: true
     definition: ...
 ```
 </File>
 
-## Definitions
+## Определения
 
-Each `definition` is comprised of one or more arguments, which can be one of the following:
-* **CLI-style:** strings, representing CLI-style arguments
-* **Key-value:** pairs in the form `method: value`
-* **Full YAML:** fully specified dictionaries with items for `method`, `value`, operator-equivalent keywords, and support for `exclude`
+Каждое `definition` состоит из одного или нескольких аргументов, которые могут быть одним из следующих:
+* **CLI-стиль:** строки, представляющие аргументы в стиле CLI
+* **Ключ-значение:** пары в формате `method: value`
+* **Полный YAML:** полностью определенные словари с элементами для `method`, `value`, эквивалентными ключевыми словами операторов и поддержкой `exclude`
 
-Use the `union` and `intersection` operator-equivalent keywords to organize multiple arguments.
+Используйте ключевые слова, эквивалентные операторам `union` и `intersection`, чтобы организовать несколько аргументов.
 
-### CLI-style
+### CLI-стиль
 
 ```yml
 definition:
   'tag:nightly'
 ```
 
-This simple syntax supports use of the `+`, `@`, and `*` [graph](/reference/node-selection/graph-operators) operators, but it does not support [set](/reference/node-selection/set-operators) operators or `exclude`.
+Этот простой синтаксис поддерживает использование операторов `+`, `@` и `*` [графа](/reference/node-selection/graph-operators), но не поддерживает [множества](/reference/node-selection/set-operators) или `exclude`.
 
-### Key-value
+### Ключ-значение
 
 ```yml
 definition:
   tag: nightly
 ```
 
-This simple syntax does not support any [graph](/reference/node-selection/graph-operators) or [set](/reference/node-selection/set-operators) operators or `exclude`.
+Этот простой синтаксис не поддерживает никакие [графовые](/reference/node-selection/graph-operators) или [множества](/reference/node-selection/set-operators) операторы или `exclude`.
 
-### Full YAML
+### Полный YAML
 
-This is the most thorough syntax, which can include the operator-equivalent keywords for [graph](/reference/node-selection/graph-operators) and [set](/reference/node-selection/set-operators) operators.
+Это самый полный синтаксис, который может включать эквивалентные ключевые слова для [графовых](/reference/node-selection/graph-operators) и [множества](/reference/node-selection/set-operators) операторов.
 
-Review [methods](/reference/node-selection/methods) for the available list.
+Посмотрите [методы](/reference/node-selection/methods) для доступного списка.
 
 ```yml
 definition:
   method: tag
   value: nightly
 
-  # Optional keywords map to the `+` and `@` graph operators:
+  # Опциональные ключевые слова соответствуют операторам графа `+` и `@`:
 
   children: true | false
   parents: true | false
 
-  children_depth: 1    # if children: true, degrees to include
-  parents_depth: 1     # if parents: true, degrees to include
+  children_depth: 1    # если children: true, степени для включения
+  parents_depth: 1     # если parents: true, степени для включения
 
-  childrens_parents: true | false     # @ operator
+  childrens_parents: true | false     # оператор @
 
-  indirect_selection: eager | cautious | buildable | empty # include all tests selected indirectly? eager by default
+  indirect_selection: eager | cautious | buildable | empty # включать все тесты, выбранные косвенно? по умолчанию eager
 ```
 
-The `*` operator to select all nodes can be written as:
+Оператор `*`, чтобы выбрать все узлы, можно записать как:
 ```yml
 definition:
   method: fqn
   value: "*"
 ```
 
-#### Exclude
+#### Исключение
 
-The `exclude` keyword is only supported by fully-qualified dictionaries.
-It may be passed as an argument to each dictionary, or as
-an item in a `union`. The following are equivalent:
+Ключевое слово `exclude` поддерживается только полностью квалифицированными словарями. Оно может быть передано как аргумент каждому словарю или как элемент в `union`. Следующие примеры эквивалентны:
 
 ```yml
 - method: tag
@@ -104,53 +101,49 @@ an item in a `union`. The following are equivalent:
          value: daily
 ```
 
-Note: The `exclude` argument in YAML selectors is subtly different from
-the `--exclude` CLI argument. Here, `exclude` _always_ returns a [set difference](https://en.wikipedia.org/wiki/Complement_(set_theory)),
-and it is always applied _last_ within its scope.
+Примечание: Аргумент `exclude` в YAML селекторах немного отличается от аргумента CLI `--exclude`. Здесь `exclude` _всегда_ возвращает [разность множеств](https://en.wikipedia.org/wiki/Complement_(set_theory)), и он всегда применяется _последним_ в своем контексте.
 
-When more than one "yeslist" (`--select`) is passed, they are treated as a [union](/reference/node-selection/set-operators#unions) rather than an [intersection](/reference/node-selection/set-operators#intersections). Same thing when there is more than one "nolist" (`--exclude`).
+Когда передается более одного "yeslist" (`--select`), они обрабатываются как [объединение](/reference/node-selection/set-operators#unions), а не как [пересечение](/reference/node-selection/set-operators#intersections). То же самое происходит, когда есть более одного "nolist" (`--exclude`).
 
+#### Косвенный выбор
 
-#### Indirect selection
-
-As a general rule, dbt will indirectly select _all_ tests if they touch _any_ resource that you're selecting directly. We call this "eager" indirect selection. You can optionally switch the indirect selection mode to "cautious", "buildable", or "empty" by setting `indirect_selection` for a specific criterion:
+В общем случае dbt будет косвенно выбирать _все_ тесты, если они касаются _любого_ ресурса, который вы выбираете напрямую. Мы называем это "eager" косвенным выбором. Вы можете опционально переключить режим косвенного выбора на "cautious", "buildable" или "empty", установив `indirect_selection` для конкретного критерия:
 
 ```yml
 - union:
     - method: fqn
       value: model_a
-      indirect_selection: eager  # default: will include all tests that touch model_a
+      indirect_selection: eager  # по умолчанию: будет включать все тесты, касающиеся model_a
     - method: fqn
       value: model_b
-      indirect_selection: cautious  # will not include tests touching model_b
-                        # if they have other unselected parents
+      indirect_selection: cautious  # не будет включать тесты, касающиеся model_b
+                        # если у них есть другие невыбранные родительские узлы
     - method: fqn
       value: model_c
-      indirect_selection: buildable  # will not include tests touching model_c
-                        # if they have other unselected parents (unless they have an ancestor that is selected)
+      indirect_selection: buildable  # не будет включать тесты, касающиеся model_c
+                        # если у них есть другие невыбранные родительские узлы (если у них нет предка, который выбран)
     - method: fqn
       value: model_d
-      indirect_selection: empty  # will include tests for only the selected node and ignore all tests attached to model_d
+      indirect_selection: empty  # будет включать тесты только для выбранного узла и игнорировать все тесты, связанные с model_d
 ```
 
-If provided, a YAML selector's `indirect_selection` value will take precedence over the CLI flag `--indirect-selection`. Because `indirect_selection` is defined separately for _each_ selection criterion, it's possible to mix eager/cautious/buildable/empty modes within the same definition, to achieve the exact behavior that you need. Remember that you can always test out your critiera with `dbt ls --selector`.
+Если указано, значение `indirect_selection` селектора YAML будет иметь приоритет над флагом CLI `--indirect-selection`. Поскольку `indirect_selection` определяется отдельно для _каждого_ критерия выбора, возможно смешивать режимы eager/cautious/buildable/empty в одном определении, чтобы достичь необходимого поведения. Помните, что вы всегда можете протестировать свои критерии с помощью `dbt ls --selector`.
 
-See [test selection examples](/reference/node-selection/test-selection-examples) for more details about indirect selection.
+Смотрите [примеры выбора тестов](/reference/node-selection/test-selection-examples) для получения дополнительной информации о косвенном выборе.
 
-## Example
+## Пример
 
-Here are two ways to represent:
+Вот два способа представить:
 
-
-  ```bash
-  $ dbt run --select @source:snowplow,tag:nightly models/export --exclude package:snowplow,config.materialized:incremental export_performance_timing
-  ```
+```bash
+$ dbt run --select @source:snowplow,tag:nightly models/export --exclude package:snowplow,config.materialized:incremental export_performance_timing
+```
 
 <Tabs
   defaultValue="cli_style"
   values={[
-    { label: 'CLI-style', value: 'cli_style', },
-    { label: 'Full YML', value: 'all_yml', },
+    { label: 'CLI-стиль', value: 'cli_style', },
+    { label: 'Полный YAML', value: 'all_yml', },
   ]
 }>
 
@@ -161,10 +154,10 @@ Here are two ways to represent:
 
 selectors:
   - name: nightly_diet_snowplow
-    description: "Non-incremental Snowplow models that power nightly exports"
+    description: "Неинкрементальные модели Snowplow, которые обеспечивают ночные экспорты"
     definition:
 
-      # Optional `union` and `intersection` keywords map to the ` ` and `,` set operators:
+      # Опциональные ключевые слова `union` и `intersection` соответствуют операторам ` ` и `,` множеств:
       union:
         - intersection:
             - '@source:snowplow'
@@ -185,9 +178,9 @@ selectors:
 ```yml
 selectors:
   - name: nightly_diet_snowplow
-    description: "Non-incremental Snowplow models that power nightly exports"
+    description: "Неинкрементальные модели Snowplow, которые обеспечивают ночные экспорты"
     definition:
-      # Optional `union` and `intersection` keywords map to the ` ` and `,` set operators:
+      # Опциональные ключевые слова `union` и `intersection` соответствуют операторам ` ` и `,` множеств:
       union:
         - intersection:
             - method: source
@@ -211,30 +204,30 @@ selectors:
 
 </Tabs>
 
-Then in our job definition:
+Затем в нашем определении задачи:
 ```bash
 dbt run --selector nightly_diet_snowplow
 ```
 
-## Default
+## По умолчанию
 
-Selectors may define a boolean `default` property. If a selector has `default: true`, dbt will use this selector's criteria when tasks do not define their own selection criteria.
+Селекторы могут определять логическое свойство `default`. Если у селектора установлено `default: true`, dbt будет использовать критерии этого селектора, когда задачи не определяют свои собственные критерии выбора.
 
-Let's say we define a default selector that only selects resources defined in our root project:
+Предположим, мы определяем селектор по умолчанию, который выбирает только ресурсы, определенные в нашем корневом проекте:
 
 ```yml
 selectors:
   - name: root_project_only
     description: >
-        Only resources from the root project.
-        Excludes resources defined in installed packages.
+        Только ресурсы из корневого проекта.
+        Исключает ресурсы, определенные в установленных пакетах.
     default: true
     definition:
       method: package
       value: <my_root_project_name>
 ```
 
-If I run an "unqualified" command, dbt will use the selection criteria defined in `root_project_only`—that is, dbt will only build / freshness check / generate compiled SQL for resources defined in my root project.
+Если я выполню "неквалифицированную" команду, dbt будет использовать критерии выбора, определенные в `root_project_only` — то есть dbt будет строить / проверять свежесть / генерировать скомпилированный SQL только для ресурсов, определенных в моем корневом проекте.
 
 ```
 dbt build
@@ -242,14 +235,14 @@ dbt source freshness
 dbt docs generate
 ```
 
-If I run a command that defines its own selection criteria (via `--select`, `--exclude`, or `--selector`), dbt will ignore the default selector and use the flag criteria instead. It will not try to combine the two.
+Если я выполню команду, которая определяет свои собственные критерии выбора (через `--select`, `--exclude` или `--selector`), dbt проигнорирует селектор по умолчанию и будет использовать критерии флага вместо этого. Он не будет пытаться комбинировать оба.
 
 ```bash
 dbt run --select  "model_a"
 dbt run --exclude model_a
 ```
 
-Only one selector may set `default: true` for a given invocation; otherwise, dbt will return an error. You may use a Jinja expression to adjust the value of `default` depending on the environment, however:
+Только один селектор может установить `default: true` для данного вызова; в противном случае dbt вернет ошибку. Вы можете использовать выражение Jinja, чтобы изменить значение `default` в зависимости от окружения:
 
 ```yml
 selectors:
@@ -261,9 +254,9 @@ selectors:
     definition: ...
 ```
 
-### Selector inheritance
+### Наследование селекторов
 
-Selectors can reuse and extend definitions from other selectors, via the `selector` method.
+Селекторы могут повторно использовать и расширять определения из других селекторов с помощью метода `selector`.
 
 ```yml
 selectors:
@@ -276,15 +269,15 @@ selectors:
   - name: foo_bar_less_buzz
     definition:
       intersection:
-        # reuse the definition from above
+        # повторно используем определение из выше
         - method: selector
           value: foo_and_bar
-        # with a modification!
+        # с модификацией!
         - exclude:
             - method: tag
               value: buzz
 ```
 
-**Note:** While selector inheritance allows the logic from another selector to be _reused_, it doesn't allow the logic from that selector to be _modified_ by means of `parents`, `children`, `indirect_selection`, and so on. 
+**Примечание:** Хотя наследование селекторов позволяет _повторно использовать_ логику из другого селектора, оно не позволяет _изменять_ логику этого селектора с помощью `parents`, `children`, `indirect_selection` и т. д.
 
-The `selector` method returns the complete set of nodes returned by the named selector.
+Метод `selector` возвращает полный набор узлов, возвращаемых именованным селектором.

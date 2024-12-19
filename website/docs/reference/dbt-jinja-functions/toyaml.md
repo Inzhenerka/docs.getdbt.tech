@@ -1,17 +1,17 @@
 ---
-title: "About toyaml context method"
+title: "О методе контекста toyaml"
 sidebar_label: "toyaml"
 id: "toyaml"
-description: "Used to serialize a Python object primitive."
+description: "Используется для сериализации примитивного объекта Python."
 ---
 
-The `toyaml` context method can be used to serialize a Python object primitive, eg. a `dict` or `list` to a YAML string.
+Метод контекста `toyaml` может быть использован для сериализации примитивного объекта Python, например, `dict` или `list`, в строку YAML.
 
-__Args__:
- * `value`: The value to serialize to YAML (required)
- * `default`: A default value to return if the `value` argument cannot be serialized (optional)
+__Аргументы__:
+ * `value`: Значение, которое нужно сериализовать в YAML (обязательно)
+ * `default`: Значение по умолчанию, которое будет возвращено, если аргумент `value` не может быть сериализован (необязательно)
 
-### Usage:
+### Пример использования:
 ```
 {% set my_dict = {"abc": 123} %}
 {% set my_yaml_string = toyaml(my_dict) %}

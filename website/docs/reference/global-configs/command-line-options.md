@@ -1,39 +1,39 @@
 ---
-title: "Command line options"
+title: "Опции командной строки"
 id: "command-line-options"
-sidebar: "Command line options"
+sidebar: "Опции командной строки"
 ---
 
-For consistency, command-line interface (CLI) flags should come right after the `dbt` prefix and its subcommands. This includes "global" flags (supported for all commands). For a list of all dbt CLI flags you can set, refer to [Available flags](/reference/global-configs/about-global-configs#available-flags). When set, CLI flags override [environment variables](/reference/global-configs/environment-variable-configs) and [project flags](/reference/global-configs/project-flags).
+Для обеспечения согласованности флаги интерфейса командной строки (CLI) должны располагаться сразу после префикса `dbt` и его подкоманд. Это включает в себя "глобальные" флаги (поддерживаемые для всех команд). Для получения списка всех флагов CLI dbt, которые вы можете установить, обратитесь к разделу [Доступные флаги](/reference/global-configs/about-global-configs#available-flags). При установке флаги CLI переопределяют [переменные окружения](/reference/global-configs/environment-variable-configs) и [флаги проекта](/reference/global-configs/project-flags).
 
-Environment variables contain a `DBT_` prefix. 
+Переменные окружения содержат префикс `DBT_`.
 
-For example, instead of using:
+Например, вместо использования:
 
 ```bash
 dbt --no-populate-cache run
 ```
 
-You should use:
+Вы должны использовать:
 
 ```bash
 dbt run --no-populate-cache
 ```
 
-Historically, passing flags (such as "global flags") _before_ the subcommand is a legacy functionality that dbt Labs can remove at any time. We do not support using the same flag before and after the subcommand. 
+Исторически сложилось так, что передача флагов (таких как "глобальные флаги") _до_ подкоманды является устаревшей функциональностью, которую dbt Labs может удалить в любое время. Мы не поддерживаем использование одного и того же флага до и после подкоманды.
 
-## Using boolean and non-boolean flags
+## Использование булевых и не булевых флагов
 
-You can construct your commands with boolean flags to enable or disable or with non-boolean flags that use specific values, such as strings. 
+Вы можете строить свои команды с булевыми флагами для включения или отключения, или с не булевыми флагами, которые используют конкретные значения, такие как строки.
 
 <Tabs>
 
-<TabItem value="nonboolean" label="Non-boolean config">
+<TabItem value="nonboolean" label="Не булевая конфигурация">
 
-Use this non-boolean config structure:
-- Replacing `<SUBCOMMAND>`  with the command this config applies to.
-- `<THIS-CONFIG>` with the config you are enabling or disabling, and
-- `<SETTING>` with the new setting for the config.
+Используйте эту структуру не булевой конфигурации:
+- Замените `<SUBCOMMAND>` на команду, к которой применяется эта конфигурация.
+- `<THIS-CONFIG>` на конфигурацию, которую вы включаете или отключаете, и
+- `<SETTING>` на новое значение для конфигурации.
 
 <File name='CLI flags'>
 
@@ -46,7 +46,7 @@ Use this non-boolean config structure:
 
 </File>
 
-### Example
+### Пример
 
 <File name='CLI flags'>
 
@@ -62,12 +62,12 @@ dbt test --indirect-selection=eager
 
 </TabItem>
 
-<TabItem value="boolean" label="Boolean config">
+<TabItem value="boolean" label="Булевая конфигурация">
 
-To enable or disable boolean configs:
-- Use `<SUBCOMMAND>` this config applies to.
-- Followed by `--<THIS-CONFIG>` to turn it on, or `--no-<THIS-CONFIG>` to turn it off.
-- Replace `<THIS-CONFIG>` with the config you are enabling or disabling
+Чтобы включить или отключить булевые конфигурации:
+- Используйте `<SUBCOMMAND>`, к которой применяется эта конфигурация.
+- Затем `--<THIS-CONFIG>` для включения или `--no-<THIS-CONFIG>` для отключения.
+- Замените `<THIS-CONFIG>` на конфигурацию, которую вы включаете или отключаете.
 
 
 <File name='CLI flags'>
@@ -81,7 +81,7 @@ dbt <SUBCOMMAND> --no-<THIS-CONFIG>
 
 </File>
 
-### Example
+### Пример
 
 <File name='CLI flags'>
 

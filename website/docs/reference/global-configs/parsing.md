@@ -1,12 +1,12 @@
 ---
-title: "Parsing"
+title: "Парсинг"
 id: "parsing"
-sidebar: "Parsing"
+sidebar: "Парсинг"
 ---
 
-### Partial Parsing
+### Частичный парсинг
 
-The `PARTIAL_PARSE` config can turn partial parsing on or off in your project. See [the docs on parsing](/reference/parsing#partial-parsing) for more details.
+Конфигурация `PARTIAL_PARSE` может включать или отключать частичный парсинг в вашем проекте. См. [документацию по парсингу](/reference/parsing#partial-parsing) для получения дополнительной информации.
 
 <File name='profiles.yml'>
 
@@ -27,9 +27,9 @@ dbt --no-partial-parse run
 
 </File>
 
-### Static parser
+### Статический парсер
 
-The `STATIC_PARSER` config can enable or disable the use of the static parser. See [the docs on parsing](/reference/parsing#static-parser) for more details.
+Конфигурация `STATIC_PARSER` может включать или отключать использование статического парсера. См. [документацию по парсингу](/reference/parsing#static-parser) для получения дополнительной информации.
 
 <File name='profiles.yml'>
 
@@ -42,6 +42,6 @@ config:
 
 </File>
 
-### Experimental parser
+### Экспериментальный парсер
 
-Not currently in use.
+В настоящее время не используется.

@@ -1,6 +1,6 @@
 ---
 datatype: [directorypath]
-description: "Read this guide to understand the analysis-paths configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию analysis-paths в dbt."
 default_value: []
 ---
 
@@ -12,13 +12,13 @@ analysis-paths: [directorypath]
 
 </File>
 
-## Definition
-Specify a custom list of directories where [analyses](/docs/build/analyses) are located. 
+## Определение
+Укажите пользовательский список директорий, в которых находятся [анализы](/docs/build/analyses).
 
-## Default
-Without specifying this config, dbt will not compile any `.sql` files as analyses.
+## По умолчанию
+Если не указать эту конфигурацию, dbt не будет компилировать файлы `.sql` как анализы.
 
-However, the [`dbt init` command](/reference/commands/init) populates this value as `analyses` ([source](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml#L15)).
+Тем не менее, команда [`dbt init`](/reference/commands/init) заполняет это значение как `analyses` ([источник](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml#L15)).
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -27,21 +27,21 @@ path="analysis-paths"
 absolute="/Users/username/project/analyses"
 />
 
-- ✅ **Do** 
-  - Use relative path:
+- ✅ **Делайте** 
+  - Используйте относительный путь:
     ```yml
     analysis-paths: ["analyses"]
     ```
 
-- ❌ **Don't** 
-  - Avoid absolute paths:
+- ❌ **Не делайте** 
+  - Избегайте абсолютных путей:
     ```yml
     analysis-paths: ["/Users/username/project/analyses"]
     ```
 
-## Examples
-### Use a subdirectory named `analyses`
-This is the value populated by the [`dbt init` command](/reference/commands/init).
+## Примеры
+### Используйте подкаталог с именем `analyses`
+Это значение, заполненное командой [`dbt init`](/reference/commands/init).
 
 <File name='dbt_project.yml'>
 
@@ -51,7 +51,7 @@ analysis-paths: ["analyses"]
 
 </File>
 
-### Use a subdirectory named `custom_analyses`
+### Используйте подкаталог с именем `custom_analyses`
 
 <File name='dbt_project.yml'>
 

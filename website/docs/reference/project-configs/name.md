@@ -1,6 +1,6 @@
 ---
 datatype: string
-description: "Read this guide to understand the name configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию имени в dbt."
 required: True
 ---
 
@@ -12,30 +12,29 @@ name: string
 
 </File>
 
-## Definition
-**Required configuration**
+## Определение
+**Обязательная конфигурация**
 
-The name of a dbt project. Must be letters, digits and underscores only, and cannot start with a digit.
+Имя проекта dbt. Должно содержать только буквы, цифры и символы подчеркивания, и не может начинаться с цифры.
 
-## Recommendation
-Often an organization has one dbt project, so it is sensible to name a project with your organization's name, in `snake_case`. For example:
+## Рекомендация
+Часто у организации есть один проект dbt, поэтому разумно называть проект именем вашей организации в формате `snake_case`. Например:
 * `name: acme`
 * `name: jaffle_shop`
 * `name: evilcorp`
 
-
-## Troubleshooting
-### Invalid project name
+## Устранение неполадок
+### Неверное имя проекта
 
 ```
-Encountered an error while reading the project:
+При чтении проекта возникла ошибка:
   ERROR: Runtime Error
-  at path ['name']: 'jaffle-shop' does not match '^[^\\d\\W]\\w*$'
+  at path ['name']: 'jaffle-shop' не соответствует '^[^\\d\\W]\\w*$'
 Runtime Error
-  Could not run dbt
+  Не удалось запустить dbt
 ```
 
-This project has:
+Этот проект имеет:
 
 <File name='dbt_project.yml'>
 
@@ -45,7 +44,7 @@ name: jaffle-shop
 
 </File>
 
-In this case, change your project name to be `snake_case` instead:
+В этом случае измените имя вашего проекта на `snake_case`:
 
 <File name='dbt_project.yml'>
 

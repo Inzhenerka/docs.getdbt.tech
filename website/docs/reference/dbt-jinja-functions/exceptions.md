@@ -1,23 +1,23 @@
 ---
-title: "About exceptions namespace"
-sidebar_label: "exceptions"
-id: "exceptions"
-description: "Raise warnings/errors with the `exceptions` namespace."
+title: "О пространстве имен исключений"
+sidebar_label: "исключения"
+id: "исключения"
+description: "Вызывайте предупреждения/ошибки с помощью пространства имен `исключения`."
 ---
 
-The `exceptions` namespace can be used to raise warnings and errors in dbt userspace.
+Пространство имен `исключения` может использоваться для вызова предупреждений и ошибок в пользовательском пространстве dbt.
 
 ## raise_compiler_error
 
-The `exceptions.raise_compiler_error` method will raise a compiler error with the provided message. This is typically only useful in macros or <Term id="materialization">materializations</Term> when invalid arguments are provided by the calling model. Note that throwing an exception will cause a model to fail, so please use this variable with care!
+Метод `exceptions.raise_compiler_error` вызовет ошибку компилятора с предоставленным сообщением. Это обычно полезно только в макросах или <Term id="materialization">материализациях</Term>, когда вызывающая модель передает недопустимые аргументы. Обратите внимание, что выбрасывание исключения приведет к сбою модели, поэтому используйте эту переменную с осторожностью!
 
-__Example usage__:
+__Пример использования__:
 
 <File name='exceptions.sql'>
 
 ```sql
 {% if number < 0 or number > 100 %}
-  {{ exceptions.raise_compiler_error("Invalid `number`. Got: " ~ number) }}
+  {{ exceptions.raise_compiler_error("Недопустимое `number`. Получено: " ~ number) }}
 {% endif %}
 ```
 
@@ -25,15 +25,15 @@ __Example usage__:
 
 ## warn
 
-The `exceptions.warn` method will raise a compiler warning with the provided message, but any model will still be successful and be treated as a PASS. If the `--warn-error`  flag is provided to dbt, then this warning will be elevated to an exception, which is raised.
+Метод `exceptions.warn` вызовет предупреждение компилятора с предоставленным сообщением, но любая модель все равно будет успешной и будет считаться УСПЕШНОЙ. Если флаг `--warn-error` передан dbt, то это предупреждение будет повышено до исключения, которое будет вызвано.
 
-__Example usage__:
+__Пример использования__:
 
 <File name='warn.sql'>
 
 ```sql
 {% if number < 0 or number > 100 %}
-  {% do exceptions.warn("Invalid `number`. Got: " ~ number) %}
+  {% do exceptions.warn("Недопустимое `number`. Получено: " ~ number) %}
 {% endif %}
 ```
 

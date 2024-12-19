@@ -1,8 +1,8 @@
 ---
-title: "Configuring quoting in projects"
-sidebar_label: "quoting"
-datatype: boolean # -ish, it's actually a dictionary of bools
-description: "Read this guide to understand the quoting configuration in dbt."
+title: "Настройка кавычек в проектах"
+sidebar_label: "кавычки"
+datatype: boolean # -ish, это на самом деле словарь булевых значений
+description: "Прочитайте это руководство, чтобы понять конфигурацию кавычек в dbt."
 default: true
 ---
 <File name='dbt_project.yml'>
@@ -17,32 +17,32 @@ quoting:
 
 </File>
 
-## Definition
-Optionally configure whether dbt should quote databases, schemas, and identifiers when:
-* creating relations (tables/views)
-* resolving a `ref` function to a direct relation reference
+## Определение
+Опционально настройте, следует ли dbt использовать кавычки для баз данных, схем и идентификаторов при:
+* создании отношений (таблиц/представлений)
+* разрешении функции `ref` в прямую ссылку на отношение
 
-:::info BigQuery Terminology
+:::info Терминология BigQuery
 
-Note that for BigQuery quoting configuration, `database` and `schema` should be used here, though these configs will apply to `project` and `dataset` names respectively
+Обратите внимание, что для конфигурации кавычек в BigQuery следует использовать `database` и `schema`, хотя эти настройки будут применяться к именам `project` и `dataset` соответственно.
 
 :::
 
-## Default
+## Значение по умолчанию
 
-The default values vary by database.
+Значения по умолчанию различаются в зависимости от базы данных.
 <Tabs
   defaultValue="default"
   values={[
-    { label: 'Default', value: 'default', },
+    { label: 'По умолчанию', value: 'default', },
     { label: 'Snowflake', value: 'snowflake', },
   ]
 }>
 <TabItem value="default">
 
-For most adapters, quoting is set to `true` by default.
+Для большинства адаптеров кавычки по умолчанию установлены в `true`.
 
-Why? It's equally easy to select from relations with quoted or unquoted identifiers. Quoting allows you to use reserved words and special characters in those identifiers, though we recommend avoiding this whenever possible.
+Почему? Выбор из отношений с кавычками или без них одинаково прост. Использование кавычек позволяет использовать зарезервированные слова и специальные символы в этих идентификаторах, хотя мы рекомендуем избегать этого, когда это возможно.
 
   <File name='dbt_project.yml'>
 
@@ -58,9 +58,9 @@ quoting:
 </TabItem>
 <TabItem value="snowflake">
 
-On Snowflake, quoting is set to `false` by default.
+В Snowflake кавычки по умолчанию установлены в `false`.
 
-Creating relations with quoted identifiers also makes those identifiers case sensitive. It's much more difficult to select from them. You can re-enable quoting for relations identifiers that are case sensitive, reserved words, or contain special characters, but we recommend you avoid this as much as possible.
+Создание отношений с идентификаторами в кавычках также делает эти идентификаторы чувствительными к регистру. Выбор из них становится гораздо более сложным. Вы можете повторно включить кавычки для идентификаторов отношений, которые чувствительны к регистру, являются зарезервированными словами или содержат специальные символы, но мы рекомендуем избегать этого, насколько это возможно.
 
 <File name='dbt_project.yml'>
 
@@ -74,13 +74,12 @@ quoting:
 
 </File>
 
-
 </TabItem>
 
 </Tabs>
 
-## Examples
-Set quoting to `false` for a project:
+## Примеры
+Установите кавычки в `false` для проекта:
 <File name='dbt_project.yml'>
 
 ```yml
@@ -91,7 +90,7 @@ quoting:
 
 ```
 
-dbt will then create relations without quotes:
+dbt затем создаст отношения без кавычек:
 
 ```sql
 create table analytics.dbt_alice.dim_customers
@@ -99,29 +98,26 @@ create table analytics.dbt_alice.dim_customers
 
 </File>
 
-
-## Recommendation
+## Рекомендация
 
 ### Snowflake
-Set all quoting configs to `False`. This means that you cannot use reserved words as identifiers, however it's usually a good idea to avoid these reserved words anyway.
+Установите все настройки кавычек в `False`. Это означает, что вы не можете использовать зарезервированные слова в качестве идентификаторов, однако обычно это хорошая идея — избегать этих зарезервированных слов.
 
-If a Snowflake source table uses a quoted database, schema, or table identifier, you can configure it in the source.yml file. [Refer to configuring quoting for more info](/reference/resource-properties/quoting).
+Если таблица источника Snowflake использует идентификатор базы данных, схемы или таблицы в кавычках, вы можете настроить это в файле source.yml. [Смотрите настройку кавычек для получения дополнительной информации](/reference/resource-properties/quoting).
 
+#### Объяснение:
 
-
-#### Explanation:
-
-Whereas most databases will _lowercase_ unquoted identifiers, Snowflake will _uppercase_ unquoted identifiers. If a model name is lowercased _and quoted_, then it cannot be referred to without quotes! Check out the example below for more information.
+В то время как большинство баз данных будут _приводить к нижнему регистру_ идентификаторы без кавычек, Snowflake будет _приводить к верхнему регистру_ идентификаторы без кавычек. Если имя модели приведено к нижнему регистру _и заключено в кавычки_, то к нему нельзя будет обратиться без кавычек! Ознакомьтесь с примером ниже для получения дополнительной информации.
 
 <File name='snowflake_casing.sql'>
 
 ```sql
 /*
-    You can run the following queries against your database
-    to build an intuition for how quoting works on Snowflake.
+    Вы можете выполнить следующие запросы к вашей базе данных
+    чтобы понять, как работают кавычки в Snowflake.
 */
 
--- This is the output of an example `orders.sql` model with quoting enabled
+-- Это вывод примера модели `orders.sql` с включенными кавычками
 create table "analytics"."orders" as (
 
   select 1 as id
@@ -129,30 +125,30 @@ create table "analytics"."orders" as (
 );
 
 /*
-    These queries WILL NOT work! Since the table above was created with quotes,
-    Snowflake created the orders table with a lowercase schema and identifier.
+    Эти запросы НЕ будут работать! Поскольку таблица выше была создана с кавычками,
+    Snowflake создал таблицу orders с именем схемы и идентификатора в нижнем регистре.
 
-    Since unquoted identifiers are automatically uppercased, both of the
-    following queries are equivalent, and neither will work correctly.
+    Поскольку идентификаторы без кавычек автоматически приводятся к верхнему регистру, оба
+    следующих запроса эквивалентны, и ни один из них не будет работать правильно.
 */
 
 select * from analytics.orders;
 select * from ANALYTICS.ORDERS;
 
 /*
-    To query this table, you'll need to quote the schema and table. This
-    query should indeed complete without error.
+    Чтобы выполнить запрос к этой таблице, вам нужно будет заключить в кавычки схему и таблицу. Этот
+    запрос должен завершиться без ошибок.
 */
 
 select * from "analytics"."orders";
 
 
 /*
-    To avoid this quoting madness, you can disable quoting for schemas
-    and identifiers in your dbt_project.yml file. This means that you
-    won't be able to use reserved words as model names, but you probably
-    shouldn't be doing that anyway! Assuming schema and identifier quoting is
-    disabled, the following query would indeed work:
+    Чтобы избежать этой путаницы с кавычками, вы можете отключить кавычки для схем
+    и идентификаторов в вашем файле dbt_project.yml. Это означает, что вы
+    не сможете использовать зарезервированные слова в качестве имен моделей, но, вероятно,
+    вам не следует этого делать! Предполагая, что кавычки для схемы и идентификатора
+    отключены, следующий запрос действительно будет работать:
 */
 
 select * from analytics.orders;
@@ -160,7 +156,5 @@ select * from analytics.orders;
 
 </File>
 
-
-
-### Other warehouses
-Leave the default values for your warehouse.
+### Другие хранилища
+Оставьте значения по умолчанию для вашего хранилища.

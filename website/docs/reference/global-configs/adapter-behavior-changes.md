@@ -1,29 +1,29 @@
 ---
-title: "About adapter-specific behavior changes"
+title: "Об изменениях в поведении, специфичных для адаптеров"
 id: "adapter-behavior-changes"
-sidebar_label: "Adapter behavior changes"
-description: "Adapter-specific behavior changes"
+sidebar_label: "Изменения в поведении адаптеров"
+description: "Изменения в поведении, специфичные для адаптеров"
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 ---
 
 
-Some adapters can display behavior changes when certain flags are enabled. The following sections contain details about these adapter-specific behavior changes. 
+Некоторые адаптеры могут демонстрировать изменения в поведении при включении определенных флагов. В следующих разделах содержатся подробности об этих изменениях в поведении, специфичных для адаптеров. 
 
 
 <div className="grid--3-col">
 
 <Card
     title="Databricks"
-    body="Behavior changes for the Databricks adapter."
+    body="Изменения в поведении для адаптера Databricks."
     link="reference/global-configs/databricks-changes"
     icon="databricks"/>
 
 
 <Card
     title="Redshift"
-    body="Behavior changes for the Amazon Redshift adapter."
+    body="Изменения в поведении для адаптера Amazon Redshift."
     link="reference/global-configs/redshift-changes"
     icon="redshift"/>
 

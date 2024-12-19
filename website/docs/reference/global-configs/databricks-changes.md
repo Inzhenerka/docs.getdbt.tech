@@ -1,26 +1,26 @@
 ---
-title: "Databricks adapter behavior changes"
+title: "Изменения в поведении адаптера Databricks"
 id: "databricks-changes"
 sidebar: "Databricks"
 ---
 
-The following are the current [behavior change flags](/docs/reference/global-configs/behavior-changes.md#behavior-change-flags) that are specific to `dbt-databricks`:
+Ниже приведены текущие [флаги изменения поведения](/docs/reference/global-configs/behavior-changes.md#behavior-change-flags), специфичные для `dbt-databricks`:
 
-| Flag                          | `dbt-databricks`: Intro | `dbt-databricks`: Maturity |
-| ----------------------------- | ----------------------- | -------------------------- |
-| `use_info_schema_for_columns` | 1.9.0                   | TBD                        |
-| `use_user_folder_for_python`  | 1.9.0                   | TBD                        |
+| Флаг                          | `dbt-databricks`: Введение | `dbt-databricks`: Зрелость |
+| ----------------------------- | -------------------------- | --------------------------- |
+| `use_info_schema_for_columns` | 1.9.0                      | TBD                         |
+| `use_user_folder_for_python`  | 1.9.0                      | TBD                         |
 
-### Use information schema for columns
+### Использование схемы информации для столбцов
 
-The `use_info_schema_for_columns` flag is `False` by default.
+Флаг `use_info_schema_for_columns` по умолчанию установлен в `False`.
 
-Setting this flag to `True` will use `information_schema` rather than `describe extended` to get column metadata for Unity Catalog tables. This setting helps you avoid issues where `describe extended` truncates information when the type is a complex struct. However, this setting is not yet the default behavior, as there are performance impacts due to a Databricks metadata limitation because of the need to run `REPAIR TABLE {{relation}} SYNC METADATA` before querying to ensure the `information_schema` is complete. 
+Установка этого флага в `True` позволит использовать `information_schema` вместо `describe extended` для получения метаданных столбцов таблиц Unity Catalog. Эта настройка помогает избежать проблем, когда `describe extended` обрезает информацию, если тип является сложной структурой. Однако эта настройка пока не является поведением по умолчанию, так как существуют проблемы с производительностью из-за ограничения метаданных Databricks, связанного с необходимостью выполнения `REPAIR TABLE {{relation}} SYNC METADATA` перед запросом, чтобы гарантировать, что `information_schema` полон.
 
-This flag will become the default behavior when this additional query is no longer needed. 
+Этот флаг станет поведением по умолчанию, когда этот дополнительный запрос больше не будет необходим.
 
-### Use user's folder for Python model notebooks
+### Использование папки пользователя для ноутбуков моделей Python
 
-The `use_user_folder_for_python` flag is `False` by default and results in writing uploaded python model notebooks to `/Shared/dbt_python_models/{{schema}}/`. Setting this flag to `True` will write notebooks to `/Users/{{current user}}/{{catalog}}/{{schema}}/` Writing to the `Shared` folder is deprecated by Databricks as it does not align with governance best practices.
+Флаг `use_user_folder_for_python` по умолчанию установлен в `False` и приводит к записи загруженных ноутбуков моделей Python в `/Shared/dbt_python_models/{{schema}}/`. Установка этого флага в `True` позволит записывать ноутбуки в `/Users/{{current user}}/{{catalog}}/{{schema}}/`. Запись в папку `Shared` устарела в Databricks, так как не соответствует лучшим практикам управления.
 
-We plan to promote this flag to maturity in v1.10.0.
+Мы планируем повысить зрелость этого флага в версии v1.10.0.

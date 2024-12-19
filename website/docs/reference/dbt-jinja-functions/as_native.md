@@ -1,18 +1,14 @@
 ---
-title: "About as_native filter"
+title: "О фильтре as_native"
 sidebar_label: "as_native"
 id: "as_native"
-description: "Use this filter to coerce Jinja-compiled output into its native python."
+description: "Используйте этот фильтр для приведения вывода, скомпилированного Jinja, к его родному представлению в Python."
 ---
 
-The `as_native` Jinja filter will coerce Jinja-compiled output into its 
-Python native representation according to [`ast.literal_eval`](https://docs.python.org/3/library/ast.html#ast.literal_eval). 
-The result can be any Python native type (set, list, tuple, dict, etc).
+Фильтр `as_native` Jinja приведет вывод, скомпилированный Jinja, к его родному представлению в Python в соответствии с [`ast.literal_eval`](https://docs.python.org/3/library/ast.html#ast.literal_eval). Результат может быть любым родным типом Python (множество, список, кортеж, словарь и т.д.).
 
-To render boolean and numeric values, it is recommended to use [`as_bool`](/reference/dbt-jinja-functions/as_bool) 
-and [`as_number`](/reference/dbt-jinja-functions/as_number) instead.
+Для отображения булевых и числовых значений рекомендуется использовать [`as_bool`](/reference/dbt-jinja-functions/as_bool) и [`as_number`](/reference/dbt-jinja-functions/as_number) вместо этого.
 
-:::danger Proceed with caution
-Unlike `as_bool` and `as_number`, `as_native` will return a rendered value
-regardless of the input type. Ensure that your inputs match expectations.
+:::danger Будьте осторожны
+В отличие от `as_bool` и `as_number`, `as_native` вернет скомпилированное значение независимо от типа входных данных. Убедитесь, что ваши входные данные соответствуют ожиданиям.
 :::

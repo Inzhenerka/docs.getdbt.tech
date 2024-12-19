@@ -1,18 +1,17 @@
 ---
-title: "About as_bool filter"
+title: "О фильтре as_bool"
 sidebar_label: "as_bool"
 id: "as_bool"
-description: "Use this filter to coerce a Jinja output into boolean value."
+description: "Используйте этот фильтр для приведения вывода Jinja к булевому значению."
 ---
 
-The `as_bool` Jinja filter will coerce Jinja-compiled output into a boolean
-value (`True` or `False`), or return an error if it cannot be represented
-as a bool.
+Фильтр `as_bool` в Jinja приведет скомпилированный вывод Jinja к булевому
+значению (`True` или `False`), или вернет ошибку, если его нельзя представить
+в виде булевого значения.
 
-### Usage:
+### Использование:
 
-In the example below, the `as_bool` filter is used to coerce a Jinja 
-expression to enable or disable a set of models based on the `target`.
+В приведенном ниже примере фильтр `as_bool` используется для приведения выражения Jinja, чтобы включить или отключить набор моделей в зависимости от `target`.
 
 <File name='dbt_project.yml'>
 

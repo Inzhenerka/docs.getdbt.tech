@@ -1,31 +1,31 @@
 ---
-title: "About modules variable"
+title: "О переменной modules"
 sidebar_label: "modules"
 id: "modules"
-description: "`modules` jinja variables has useful Python modules to operate data."
+description: "Переменные jinja `modules` содержат полезные модули Python для работы с данными."
 ---
 
-The `modules` variable in the Jinja context contains useful Python modules for operating on data.
+Переменная `modules` в контексте Jinja содержит полезные модули Python для работы с данными.
 
 ## datetime
-This variable is a pointer to the Python [datetime](https://docs.python.org/3/library/datetime.html) module, which supports complex date and time logic.
+Эта переменная указывает на модуль Python [datetime](https://docs.python.org/3/library/datetime.html), который поддерживает сложную логику работы с датами и временем.
 
-It includes the modules contexts of `date`, `datetime`, `time`, `timedelta`, and `tzinfo`.
+Она включает контексты модулей `date`, `datetime`, `time`, `timedelta` и `tzinfo`.
 
-**Usage**
+**Использование**
 
 ```
 {% set now = modules.datetime.datetime.now() %}
 {% set three_days_ago_iso = (now - modules.datetime.timedelta(3)).isoformat() %}
 ```
-This module will return the current date and time on every Jinja evaluation. 
-For the date and time of the start of the run, please see
+Этот модуль будет возвращать текущую дату и время при каждой оценке Jinja. 
+Для даты и времени начала выполнения см. 
 [run_started_at](/reference/dbt-jinja-functions/run_started_at).
 
 ## pytz
-This variable is a pointer to the Python [pytz](https://pypi.org/project/pytz/) module, which supports timezone logic.
+Эта переменная указывает на модуль Python [pytz](https://pypi.org/project/pytz/), который поддерживает логику часовых поясов.
 
-**Usage**
+**Использование**
 
 ```
 {% set dt = modules.datetime.datetime(2002, 10, 27, 6, 0, 0) %}
@@ -34,9 +34,9 @@ This variable is a pointer to the Python [pytz](https://pypi.org/project/pytz/) 
 ```
 
 ## re
-This variable is a pointer to the Python [re](https://docs.python.org/3/library/re.html) module, which supports regular expressions.
+Эта переменная указывает на модуль Python [re](https://docs.python.org/3/library/re.html), который поддерживает регулярные выражения.
 
-**Usage**
+**Использование**
 
 ```
 {% set my_string = 's3://example/path' %}
@@ -46,15 +46,15 @@ This variable is a pointer to the Python [re](https://docs.python.org/3/library/
 {% set is_match = re.match(s3_path_pattern, my_string, re.IGNORECASE) %}
 {% if not is_match %}
     {%- do exceptions.raise_compiler_error(
-        my_string ~ ' is not a valid s3 path'
+        my_string ~ ' не является допустимым s3 путем'
     ) -%}
 {% endif %}
 ```
 
 ## itertools
-This variable is a pointer to the Python [itertools](https://docs.python.org/3/library/itertools.html) module, which includes useful functions for working with iterators (loops, lists, and the like).
+Эта переменная указывает на модуль Python [itertools](https://docs.python.org/3/library/itertools.html), который включает полезные функции для работы с итераторами (циклами, списками и т.д.).
 
-The supported functions are:
+Поддерживаемые функции:
 - `count`
 - `cycle`
 - `repeat`
@@ -70,7 +70,7 @@ The supported functions are:
 - `combinations`
 - `combinations_with_replacement`
 
-**Usage**
+**Использование**
 
 ```
 {%- set A = [1, 2] -%}
@@ -89,4 +89,3 @@ The supported functions are:
   (2, 'y')
   (2, 'z')
 ```
-

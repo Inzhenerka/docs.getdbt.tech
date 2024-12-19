@@ -1,24 +1,22 @@
 ---
-title: " About dbt_project.yml context"
-sidebar_label: "dbt_project.yml context"
+title: "Контекст dbt_project.yml"
+sidebar_label: "Контекст dbt_project.yml"
 id: "dbt-project-yml-context"
-description: "The context methods and variables available when configuring resources in the dbt_project.yml file."
+description: "Методы и переменные контекста, доступные при конфигурации ресурсов в файле dbt_project.yml."
 ---
 
-The following context methods and variables are available when configuring
-resources in the `dbt_project.yml` file. This applies to the `models:`, `seeds:`,
-and `snapshots:` keys in the `dbt_project.yml` file.
+Следующие методы и переменные контекста доступны при конфигурации ресурсов в файле `dbt_project.yml`. Это относится к ключам `models:`, `seeds:` и `snapshots:` в файле `dbt_project.yml`.
 
-**Available context methods:**
+**Доступные методы контекста:**
 - [env_var](/reference/dbt-jinja-functions/env_var)
-- [var](/reference/dbt-jinja-functions/var) (_Note: only variables defined with `--vars` are available_)
+- [var](/reference/dbt-jinja-functions/var) (_Примечание: доступны только переменные, определенные с помощью `--vars`_)
 
-**Available context variables:**
+**Доступные переменные контекста:**
 - [target](/reference/dbt-jinja-functions/target)
 - [builtins](/reference/dbt-jinja-functions/builtins)
 - [dbt_version](/reference/dbt-jinja-functions/dbt_version)
 
-### Example configuration
+### Пример конфигурации
 
 <File name='dbt_project.yml'>
 
@@ -26,8 +24,8 @@ and `snapshots:` keys in the `dbt_project.yml` file.
 name: my_project
 version: 1.0.0
 
-# Configure the models in models/facts/ to be materialized as views
-# in development and tables in production/CI contexts
+# Настройка моделей в models/facts/ для материализации в виде представлений
+# в контексте разработки и таблиц в контексте продакшн/CI
 
 models:
   my_project:

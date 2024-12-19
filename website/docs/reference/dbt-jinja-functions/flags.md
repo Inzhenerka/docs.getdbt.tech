@@ -1,13 +1,13 @@
 ---
-title: "About flags variable"
+title: "О переменной flags"
 sidebar_label: "flags"
 id: "flags"
-description: "The `flags` variable contains values of flags provided on the cli."
+description: "Переменная `flags` содержит значения флагов, предоставленных в командной строке."
 ---
 
-The `flags` variable contains values of flags provided on the command line.
+Переменная `flags` содержит значения флагов, предоставленных в командной строке.
 
-__Example usage:__
+__Пример использования:__
 
 <File name='flags.sql'>
 
@@ -21,18 +21,17 @@ drop table ...
 
 </File>
 
-The list of available flags is defined in the [`flags` module](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/flags.py) within `dbt-core`.
+Список доступных флагов определяется в [модуле `flags`](https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/flags.py) в `dbt-core`.
 
-Recommended use cases include:
-- different <Term id="materialization" /> logic based on "run modes," such as `flags.FULL_REFRESH` and `flags.STORE_FAILURES`
-- running hooks conditionally based on the current command / task type, via `flags.WHICH`
+Рекомендуемые случаи использования включают:
+- различная логика <Term id="materialization" /> в зависимости от "режимов выполнения", таких как `flags.FULL_REFRESH` и `flags.STORE_FAILURES`
+- условное выполнение хуков в зависимости от текущей команды / типа задачи с помощью `flags.WHICH`
 
-**Note:** It is _not_ recommended to use flags as an input to parse-time configurations, properties, or dependencies (`ref` + `source`). Flags are likely to change in every invocation of dbt, and their parsed values will become stale (and yield incorrect results) in subsequent invocations that have partial parsing enabled. For more details, see [the docs on parsing](/reference/parsing).
-
+**Примечание:** Не рекомендуется использовать флаги в качестве входных данных для конфигураций, свойств или зависимостей во время разбора (`ref` + `source`). Флаги, вероятно, будут изменяться при каждом вызове dbt, и их разобранные значения станут устаревшими (и приведут к неправильным результатам) в последующих вызовах с включенным частичным разбором. Для получения дополнительной информации смотрите [документацию по разбору](/reference/parsing).
 
 ### invocation_args_dict
 
-For the full set of information passed from the CLI—subcommand, flags, arguments—you can use `invocation_args_dict`. This is equivalent to the `args` dictionary in [`run_results.json`](/reference/artifacts/run-results-json).
+Для полного набора информации, передаваемой из CLI — подкоманда, флаги, аргументы — вы можете использовать `invocation_args_dict`. Это эквивалентно словарю `args` в [`run_results.json`](/reference/artifacts/run-results-json).
 
 <File name='models/my_model.sql'>
 
@@ -48,7 +47,7 @@ select 1 as id
 
 </File>
 
-The `invocation_command` key within `invocation_args_dict` includes the entire subcommand when it compiles:
+Ключ `invocation_command` в `invocation_args_dict` включает всю подкоманду, когда она компилируется:
 
 ```shell
 $ DBT_ENV_CUSTOM_ENV_MYVAR=myvalue dbt compile -s my_model

@@ -1,54 +1,54 @@
 ---
-title: "Test selection examples"
+title: "Примеры выбора тестов"
 ---
 
 import IndirSelect from '/snippets/_indirect-selection-definitions.md';
 
-Test selection works a little differently from other resource selection. This makes it very easy to:
-* run tests on a particular model
-* run tests on all models in a subdirectory
-* run tests on all models upstream / downstream of a model, etc.
+Выбор тестов работает немного иначе, чем выбор других ресурсов. Это позволяет легко:
+* запускать тесты на конкретной модели
+* запускать тесты на всех моделях в подкаталоге
+* запускать тесты на всех моделях, находящихся выше / ниже по потоку от модели и т.д.
 
-Like all resource types, tests can be selected **directly**, by methods and operators that capture one of their attributes: their name, properties, tags, etc.
+Как и все типы ресурсов, тесты могут быть выбраны **непосредственно** с помощью методов и операторов, которые захватывают один из их атрибутов: имя, свойства, теги и т.д.
 
-Unlike other resource types, tests can also be selected **indirectly**. If a selection method or operator includes a test's parent(s), the test will also be selected. [See below](#indirect-selection) for more details.
+В отличие от других типов ресурсов, тесты также могут быть выбраны **косвенно**. Если метод или оператор выбора включает родительские модели теста, тест также будет выбран. [Смотрите ниже](#indirect-selection) для получения более подробной информации.
 
-Test selection is powerful, and we know it can be tricky. To that end, we've included lots of examples below:
+Выбор тестов является мощным инструментом, и мы знаем, что он может быть сложным. В связи с этим мы включили множество примеров ниже:
 
-### Direct selection
+### Непосредственный выбор
 
-Run generic tests only:
+Запустите общие тесты только:
 
 
   ```bash
     dbt test --select "test_type:generic"
   ```
 
-Run singular tests only:
+Запустите только одиночные тесты:
 
 
   ```bash
     dbt test --select "test_type:singular"
   ```
 
-In both cases, `test_type` checks a property of the test itself. These are forms of "direct" test selection.
+В обоих случаях `test_type` проверяет свойство самого теста. Это формы "непосредственного" выбора тестов.
 
-### Indirect selection
+### Косвенный выбор
 
 <IndirSelect features={'/snippets/indirect-selection-definitions.md'}/>
 
-<!--tabs for eager mode, cautious mode, empty, and buildable mode -->
-<!--Tabs for 1.5+ -->
+<!--tabs для режима eager, cautious, empty и buildable -->
+<!--Tabs для 1.5+ -->
 
-### Indirect selection examples
+### Примеры косвенного выбора
 
-To visualize these methods, suppose you have `model_a`, `model_b`, and `model_c` and associated data tests. The following illustrates which tests will be run when you execute `dbt build` with the various indirect selection modes:
+Чтобы визуализировать эти методы, предположим, что у вас есть `model_a`, `model_b` и `model_c`, а также связанные с ними тесты данных. Следующее иллюстрирует, какие тесты будут запущены, когда вы выполните `dbt build` с различными режимами косвенного выбора:
 
 <DocCarousel slidesPerView={1}>
 
 <Lightbox src src="/img/docs/reference/indirect-selection-dbt-build.png" width="85%" title="dbt build" />
 
-<Lightbox src src="/img/docs/reference/indirect-selection-eager.png" width="85%" title="Eager (default)"/>
+<Lightbox src src="/img/docs/reference/indirect-selection-eager.png" width="85%" title="Eager (по умолчанию)"/>
 
 <Lightbox src src="/img/docs/reference/indirect-selection-buildable.png" width="85%" title="Buildable"/>
 
@@ -59,9 +59,9 @@ To visualize these methods, suppose you have `model_a`, `model_b`, and `model_c`
 </DocCarousel>
 
 <Tabs queryString="indirect-selection-mode">
-<TabItem value="eager" label="Eager mode (default)">
+<TabItem value="eager" label="Режим eager (по умолчанию)">
 
-In this example, during the build process, any test that depends on the selected "orders" model or its dependent models will be executed, even if it depends other models as well.
+В этом примере, в процессе сборки, любой тест, который зависит от выбранной модели "orders" или ее зависимых моделей, будет выполнен, даже если он зависит и от других моделей.
  
 ```shell
 dbt test --select "orders"
@@ -70,9 +70,9 @@ dbt build --select "orders"
 
 </TabItem>
 
-<TabItem value="buildable" label="Buildable mode">
+<TabItem value="buildable" label="Режим buildable">
 
-In this example, dbt executes tests that reference "orders" within the selected nodes (or their ancestors).
+В этом примере dbt выполняет тесты, которые ссылаются на "orders" в выбранных узлах (или их предках).
 
 
 ```shell
@@ -82,9 +82,9 @@ dbt build --select "orders" --indirect-selection=buildable
 
 </TabItem>
 
-<TabItem value="cautious" label="Cautious mode">
+<TabItem value="cautious" label="Режим cautious">
 
-In this example, only tests that depend _exclusively_ on the "orders" model will be executed:
+В этом примере будут выполнены только тесты, которые зависят _исключительно_ от модели "orders":
 
 ```shell
 dbt test --select "orders" --indirect-selection=cautious
@@ -94,9 +94,9 @@ dbt build --select "orders" --indirect-selection=cautious
 
 </TabItem>
 
-<TabItem value="empty" label="Empty mode">
+<TabItem value="empty" label="Режим empty">
 
-This mode does not execute any tests, whether they are directly attached to the selected node or not.
+Этот режим не выполняет никаких тестов, независимо от того, прикреплены ли они непосредственно к выбранному узлу или нет.
 
 ```shell
 
@@ -109,95 +109,95 @@ dbt build --select "orders" --indirect-selection=empty
 
 </Tabs>
 
-<!--End of tabs for eager mode, cautious mode, buildable mode, and empty mode -->
+<!--Конец вкладок для режима eager, cautious, buildable и empty -->
 
-### Test selection syntax examples
+### Примеры синтаксиса выбора тестов
 
-Setting `indirect_selection` can also be specified in a [yaml selector](/reference/node-selection/yaml-selectors#indirect-selection).
+Установка `indirect_selection` также может быть указана в [yaml селекторе](/reference/node-selection/yaml-selectors#indirect-selection).
 
-The following examples should feel somewhat familiar if you're used to executing `dbt run` with the `--select` option to build parts of your DAG:
+Следующие примеры должны показаться вам знакомыми, если вы привыкли выполнять `dbt run` с опцией `--select`, чтобы строить части вашего DAG:
 
 
   ```bash
-  # Run tests on a model (indirect selection)
+  # Запустите тесты на модели (косвенный выбор)
   dbt test --select "customers"
   
-  # Run tests on two or more specific models (indirect selection)
+  # Запустите тесты на двух или более конкретных моделях (косвенный выбор)
   dbt test --select "customers orders"
 
-  # Run tests on all models in the models/staging/jaffle_shop directory (indirect selection)
+  # Запустите тесты на всех моделях в директории models/staging/jaffle_shop (косвенный выбор)
   dbt test --select "staging.jaffle_shop"
 
-  # Run tests downstream of a model (note this will select those tests directly!)
+  # Запустите тесты ниже по потоку от модели (обратите внимание, что это выберет эти тесты непосредственно!)
   dbt test --select "stg_customers+"
 
-  # Run tests upstream of a model (indirect selection)
+  # Запустите тесты выше по потоку от модели (косвенный выбор)
   dbt test --select "+stg_customers"
 
-  # Run tests on all models with a particular tag (direct + indirect)
+  # Запустите тесты на всех моделях с определенным тегом (непосредственный + косвенный)
   dbt test --select "tag:my_model_tag"
 
-  # Run tests on all models with a particular materialization (indirect selection)
+  # Запустите тесты на всех моделях с определенной материализацией (косвенный выбор)
   dbt test --select "config.materialized:table"
 
   ```
 
- The same principle can be extended to tests defined on other resource types. In these cases, we will execute all tests defined on certain sources via the `source:` selection method:
+ Тот же принцип можно распространить на тесты, определенные для других типов ресурсов. В этих случаях мы будем выполнять все тесты, определенные для определенных источников, с помощью метода выбора `source:`:
 
 
   ```bash
-  # tests on all sources
+  # тесты на всех источниках
 
   dbt test --select "source:*"
 
-  # tests on one source
+  # тесты на один источник
   dbt test --select "source:jaffle_shop"
   
-  # tests on two or more specific sources
+  # тесты на два или более конкретных источника
    dbt test --select "source:jaffle_shop source:raffle_bakery"
 
-  # tests on one source table
+  # тесты на одну таблицу источника
   dbt test --select "source:jaffle_shop.customers"
 
-  # tests on everything _except_ sources
+  # тесты на все, _кроме_ источников
   dbt test --exclude "source:*"
   ```
 
- ### More complex selection
+ ### Более сложный выбор
 
-Through the combination of direct and indirect selection, there are many ways to accomplish the same outcome. Let's say we have a data test named `assert_total_payment_amount_is_positive` that depends on a model named `payments`. All of the following would manage to select and execute that test specifically:
+С помощью комбинации непосредственного и косвенного выбора существует множество способов достижения одного и того же результата. Допустим, у нас есть тест данных с именем `assert_total_payment_amount_is_positive`, который зависит от модели с именем `payments`. Все из следующих команд смогут выбрать и выполнить этот тест конкретно:
 
 
   ```bash
 
-  dbt test --select "assert_total_payment_amount_is_positive" # directly select the test by name
-  dbt test --select "payments,test_type:singular" # indirect selection, v1.2
-  dbt test --select "payments,test_type:data" # indirect selection, v0.18.0
-  dbt test --select "payments" --data  # indirect selection, earlier versions
+  dbt test --select "assert_total_payment_amount_is_positive" # непосредственный выбор теста по имени
+  dbt test --select "payments,test_type:singular" # косвенный выбор, v1.2
+  dbt test --select "payments,test_type:data" # косвенный выбор, v0.18.0
+  dbt test --select "payments" --data  # косвенный выбор, более ранние версии
 
   ```
 
 
- As long as you can select a common property of a group of resources, indirect selection allows you to execute all the tests on those resources, too. In the example above, we saw it was possible to test all table-materialized models. This principle can be extended to other resource types, too:
+ Пока вы можете выбрать общее свойство группы ресурсов, косвенный выбор позволяет вам выполнять все тесты на этих ресурсах тоже. В приведенном выше примере мы видели, что возможно протестировать все модели с материализацией в виде таблицы. Этот принцип можно распространить и на другие типы ресурсов:
 
 
   ```bash
-  # Run tests on all models with a particular materialization
+  # Запустите тесты на всех моделях с определенной материализацией
   dbt test --select "config.materialized:table"
 
-  # Run tests on all seeds, which use the 'seed' materialization
+  # Запустите тесты на всех семенах, которые используют материализацию 'seed'
   dbt test --select "config.materialized:seed"
 
-  # Run tests on all snapshots, which use the 'snapshot' materialization
+  # Запустите тесты на всех снимках, которые используют материализацию 'snapshot'
   dbt test --select "config.materialized:snapshot"
 
   ```
 
- Note that this functionality may change in future versions of dbt.
+ Обратите внимание, что эта функциональность может измениться в будущих версиях dbt.
 
-### Run tests on tagged columns
+### Запуск тестов на тегированных колонках
 
-Because the column `order_id` is tagged `my_column_tag`, the test itself also receives the tag `my_column_tag`. Because of that, this is an example of direct selection.
+Поскольку колонка `order_id` имеет тег `my_column_tag`, сам тест также получает тег `my_column_tag`. Поэтому это пример непосредственного выбора.
 
 <File name='models/<filename>.yml'>
 
@@ -222,11 +222,11 @@ models:
 
   ```
 
-Currently, tests "inherit" tags applied to columns, sources, and source tables. They do _not_ inherit tags applied to models, seeds, or snapshots. In all likelihood, those tests would still be selected indirectly, because the tag selects its parent. This is a subtle distinction, and it may change in future versions of dbt.
+В настоящее время тесты "наследуют" теги, примененные к колонкам, источникам и таблицам источников. Они _не_ наследуют теги, примененные к моделям, семенам или снимкам. Скорее всего, эти тесты все равно будут выбраны косвенно, поскольку тег выбирает его родителя. Это тонкое различие, и оно может измениться в будущих версиях dbt.
 
-### Run tagged tests only
+### Запуск только тегированных тестов
 
-This is an even clearer example of direct selection: the test itself is tagged `my_test_tag`, and selected accordingly.
+Это еще более ясный пример непосредственного выбора: сам тест имеет тег `my_test_tag` и выбирается соответственно.
 
 <File name='models/<filename>.yml'>
 

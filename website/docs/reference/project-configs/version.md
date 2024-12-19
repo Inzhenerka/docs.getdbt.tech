@@ -1,23 +1,22 @@
 ---
 datatype: version
 required: True
-keyword: project version, project versioning, dbt project versioning
+keyword: версия проекта, версионирование проекта, версионирование проекта dbt
 ---
 
 import VersionsCallout from '/snippets/_version-callout.md';
 
 <VersionsCallout />
 
+Проекты dbt имеют два различных типа тегов `version`. Это поле имеет разное значение в зависимости от его расположения.
 
-dbt projects have two distinct types of `version` tags. This field has a different meaning depending on its location.
+## Версии в `dbt_project.yml`
 
-## `dbt_project.yml` versions
+Тег версии в файле `dbt_project` представляет собой версию вашего проекта dbt.
 
-The version tag in a `dbt_project` file represents the version of your dbt project. 
+Начиная с версии dbt 1.5, `version` в `dbt_project.yml` является *необязательным параметром*. Если он используется, версия должна быть в формате [семантической версии](https://semver.org/), например `1.0.0`. Значение по умолчанию — `None`, если не указано. Для пользователей dbt версии 1.4 или ниже этот тег является обязательным, хотя в настоящее время он не используется dbt значимо.
 
-Starting in dbt version 1.5, `version` in the `dbt_project.yml` is an *optional parameter*. If used, the version must be in a [semantic version](https://semver.org/) format, such as `1.0.0`. The default value is `None` if not specified. For users on dbt version 1.4 or lower, this tag is required, though it isn't currently used meaningfully by dbt.
-
-For more on Core versions, see [About dbt Core versions](/docs/dbt-versions/core).
+Для получения дополнительной информации о версиях Core смотрите [О версиях dbt Core](/docs/dbt-versions/core).
 
 <File name='dbt_project.yml'>
 
@@ -27,20 +26,20 @@ version: version
 
 </File>
 
-## `.yml` property file versions
+## Версии в файлах свойств `.yml`
 
-A version tag in a `.yml` property file provides the control tag, which informs how dbt processes property files. 
+Тег версии в файле свойств `.yml` предоставляет управляющий тег, который информирует, как dbt обрабатывает файлы свойств.
 
-Starting from version 1.5, dbt will no longer require this configuration in your resource `.yml` files.  If you want to know more about why this tag was previously required, you can refer to the [FAQs](#faqs). For users on dbt version 1.4 or lower, this tag is required,
+Начиная с версии 1.5, dbt больше не требует этой конфигурации в ваших ресурсных файлах `.yml`. Если вы хотите узнать больше о том, почему этот тег ранее был обязательным, вы можете обратиться к [Часто задаваемым вопросам](#faqs). Для пользователей dbt версии 1.4 или ниже этот тег является обязательным.
 
-For more on property files, see their general [documentation](/reference/configs-and-properties#where-can-i-define-properties) on the same page.
+Для получения дополнительной информации о файлах свойств смотрите их общую [документацию](/reference/configs-and-properties#where-can-i-define-properties) на той же странице.
 
 <Tabs
   groupId="resource-version-configs"
   defaultValue="version-specified"
   values={[
-    { label: 'Resource property file with version specified', value: 'version-specified', },
-    { label: 'Resource property file without version specified', value: 'no-version-specified', },
+    { label: 'Файл свойств ресурса с указанной версией', value: 'version-specified', },
+    { label: 'Файл свойств ресурса без указанной версии', value: 'no-version-specified', },
   ]
 }>
 <TabItem value="version-specified">
@@ -48,7 +47,7 @@ For more on property files, see their general [documentation](/reference/configs
 <File name='<any valid filename>.yml'>
 
 ```yml
-version: 2  # Only 2 is accepted by dbt versions up to 1.4.latest.
+version: 2  # Только 2 принимается dbt версиями до 1.4.latest.
 
 models: 
     ...
@@ -74,6 +73,6 @@ models:
 
 </Tabs>
 
-## FAQS
+## Часто задаваемые вопросы
 
 <FAQ path="Project/why-version-2" />

@@ -3,21 +3,21 @@ title: "batch_size"
 id: "batch-size"
 sidebar_label: "batch_size"
 resource_types: [models]
-description: "dbt uses `batch_size` to determine how large batches are when running a microbatch incremental model."
+description: "dbt использует `batch_size` для определения размера партий при выполнении модели с микропартиями."
 datatype: hour | day | month | year
 ---
 
-Available in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9 and higher.
+Доступно в [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
 
-## Definition
+## Определение
 
-The`batch_size` config determines how large batches are when running a microbatch. Accepted values are `hour`, `day`, `month`, or `year`. You can configure `batch_size` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block.
+Конфигурация `batch_size` определяет, насколько велики партии при выполнении микропартии. Допустимые значения: `hour`, `day`, `month` или `year`. Вы можете настроить `batch_size` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации.
 
-## Examples
+## Примеры
 
-The following examples set `day` as the `batch_size` for the `user_sessions` model.
+Следующие примеры устанавливают `day` в качестве `batch_size` для модели `user_sessions`.
 
-Example of the `batch_size` config in the `dbt_project.yml` file:
+Пример конфигурации `batch_size` в файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -29,7 +29,7 @@ models:
 ```
 </File>
 
-Example in a properties YAML file:
+Пример в файле свойств YAML:
 
 <File name='models/properties.yml'>
 
@@ -42,7 +42,7 @@ models:
 
 </File>
 
-Example in sql model config block:
+Пример в блоке конфигурации SQL модели:
 
 <File name="models/user_sessions.sql">
 
@@ -53,4 +53,3 @@ Example in sql model config block:
 ```
 
 </File> 
-

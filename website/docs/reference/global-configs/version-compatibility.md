@@ -1,12 +1,12 @@
 ---
-title: "Checking version compatibility"
+title: "Проверка совместимости версий"
 id: "version-compatibility"
-sidebar: "Version compatibility"
+sidebar: "Совместимость версий"
 ---
 
-For the first several years of dbt Core's development, breaking changes were more common. For this reason, we encouraged setting [dbt version requirements](/reference/project-configs/require-dbt-version) &mdash; especially if they use features that are newer or which may break in future versions of dbt Core. By default, if you run a project with an incompatible dbt version, dbt will raise an error.
+В первые несколько лет разработки dbt Core изменения, нарушающие совместимость, были более распространены. По этой причине мы рекомендовали устанавливать [требования к версиям dbt](/reference/project-configs/require-dbt-version) &mdash; особенно если вы используете функции, которые являются новыми или могут быть нарушены в будущих версиях dbt Core. По умолчанию, если вы запускаете проект с несовместимой версией dbt, dbt выдаст ошибку.
 
-You can use the `VERSION_CHECK` config to disable this check and suppress the error message:
+Вы можете использовать конфигурацию `VERSION_CHECK`, чтобы отключить эту проверку и подавить сообщение об ошибке:
 
 ```
 dbt --no-version-check run
@@ -14,7 +14,7 @@ Running with dbt=1.0.0
 Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
 ```
 
-:::info dbt Cloud release tracks
+:::info Выпуски dbt Cloud
 <Snippet path="_config-dbt-version-check" />
 
 :::

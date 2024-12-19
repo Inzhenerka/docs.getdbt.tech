@@ -1,25 +1,25 @@
 ---
-title: "Exclude models from your run"
-sidebar_label: "Exclude"
+title: "Исключение моделей из выполнения"
+sidebar_label: "Исключить"
 ---
 
-### Excluding models
-dbt provides an `--exclude` flag with the same semantics as `--select`. Models specified with the `--exclude` flag will be removed from the set of models selected with `--select`.
+### Исключение моделей
+dbt предоставляет флаг `--exclude`, который имеет те же семантики, что и `--select`. Модели, указанные с флагом `--exclude`, будут исключены из набора моделей, выбранных с помощью `--select`.
 
 ```bash
-dbt run --select "my_package".*+ --exclude "my_package.a_big_model+"    # select all models in my_package and their children except a_big_model and its children
+dbt run --select "my_package".*+ --exclude "my_package.a_big_model+"    # выбрать все модели в my_package и их дочерние модели, кроме a_big_model и его дочерних моделей
 ```
 
-Exclude a specific resource by its name or lineage:
+Исключите конкретный ресурс по его имени или иерархии:
 
 ```bash
-# test
-dbt test --exclude "not_null_orders_order_id"   # test all models except the not_null_orders_order_id test
-dbt test --exclude "orders"                     # test all models except tests associated with the orders model
+# тест
+dbt test --exclude "not_null_orders_order_id"   # протестировать все модели, кроме теста not_null_orders_order_id
+dbt test --exclude "orders"                     # протестировать все модели, кроме тестов, связанных с моделью orders
 
-# seed
-dbt seed --exclude "account_parent_mappings"    # load all seeds except account_parent_mappings
+# загрузка
+dbt seed --exclude "account_parent_mappings"    # загрузить все семена, кроме account_parent_mappings
 
-# snapshot
-dbt snapshot --exclude "snap_order_statuses"    # execute all snapshots except snap_order_statuses
+# снимок
+dbt snapshot --exclude "snap_order_statuses"    # выполнить все снимки, кроме snap_order_statuses
 ```

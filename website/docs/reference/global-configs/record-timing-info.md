@@ -1,11 +1,11 @@
 ---
-title: "Record timing info"
+title: "Запись информации о времени выполнения"
 id: "record-timing-info"
 ---
 
-The `-r` or `--record-timing-info` flag saves performance profiling information to a file. This file can be visualized with `snakeviz` to understand the performance characteristics of a dbt invocation.
+Флаг `-r` или `--record-timing-info` сохраняет информацию о профилировании производительности в файл. Этот файл можно визуализировать с помощью `snakeviz`, чтобы понять характеристики производительности вызова dbt.
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```text
 $ dbt -r timing.txt run
@@ -16,7 +16,7 @@ $ snakeviz timing.txt
 
 </File>
 
-Alternatively, you can use [`py-spy`](https://github.com/benfred/py-spy) to collect [speedscope](https://github.com/jlfwong/speedscope) profiles of dbt commands like this:
+В качестве альтернативы вы можете использовать [`py-spy`](https://github.com/benfred/py-spy) для сбора профилей [speedscope](https://github.com/jlfwong/speedscope) команд dbt следующим образом:
 
 ```shell
 python -m pip install py-spy

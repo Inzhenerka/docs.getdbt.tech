@@ -11,15 +11,14 @@ test-paths: [directorypath]
 
 </File>
 
-## Definition
+## Определение
 
-Optionally specify a custom list of directories where [singular tests](/docs/build/data-tests#singular-data-tests) and [custom generic tests](/docs/build/data-tests#generic-data-tests) are located.
+При желании можно указать собственный список директорий, в которых находятся [сингл-тесты](/docs/build/data-tests#singular-data-tests) и [пользовательские общие тесты](/docs/build/data-tests#generic-data-tests).
 
-
-## Default
-Without specifying this config, dbt will search for tests in the `tests` directory, i.e. `test-paths: ["tests"]`. Specifically, it will look for `.sql` files containing:
-- Generic test definitions in the `tests/generic` subdirectory
-- Singular tests (all other files)
+## По умолчанию
+Если эта конфигурация не указана, dbt будет искать тесты в директории `tests`, т.е. `test-paths: ["tests"]`. В частности, он будет искать файлы с расширением `.sql`, содержащие:
+- Определения общих тестов в поддиректории `tests/generic`
+- Сингл-тесты (все остальные файлы)
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -28,20 +27,20 @@ path="test-paths"
 absolute="/Users/username/project/test"
 />
 
-- ✅ **Do**
-  - Use relative path:
+- ✅ **Делайте**
+  - Используйте относительный путь:
     ```yml
     test-paths: ["test"]
     ```
 
-- ❌ **Don't:**
-  - Avoid absolute paths:
+- ❌ **Не делайте:**
+  - Избегайте абсолютных путей:
     ```yml
     test-paths: ["/Users/username/project/test"]
     ```
 
-## Examples
-### Use a subdirectory named `custom_tests` instead of `tests` for data tests
+## Примеры
+### Используйте поддиректорию с именем `custom_tests` вместо `tests` для тестов данных
 
 <File name='dbt_project.yml'>
 

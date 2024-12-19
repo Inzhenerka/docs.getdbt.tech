@@ -1,35 +1,29 @@
 ---
-title: "Putting it together"
+title: "Собираем все вместе"
 ---
 
+```bash
+dbt run --select "my_package.*+"      # выбрать все модели в my_package и их дочерние модели
+dbt run --select "+some_model+"       # выбрать some_model и все родительские и дочерние модели
 
-  ```bash
-dbt run --select "my_package.*+"      # select all models in my_package and their children
-dbt run --select "+some_model+"       # select some_model and all parents and children
+dbt run --select "tag:nightly+"      # выбрать модели с тегом "nightly" и все дочерние модели
+dbt run --select "+tag:nightly+"      # выбрать модели с тегом "nightly" и все родительские и дочерние модели
 
-dbt run --select "tag:nightly+"      # select "nightly" models and all children
-dbt run --select "+tag:nightly+"      # select "nightly" models and all parents and children
+dbt run --select "@source:snowplow"   # построить все модели, которые выбирают из источников snowplow, плюс их родительские модели
 
-dbt run --select "@source:snowplow"   # build all models that select from snowplow sources, plus their parents
-
-dbt test --select "config.incremental_strategy:insert_overwrite,test_name:unique"   # execute all `unique` tests that select from models using the `insert_overwrite` incremental strategy
+dbt test --select "config.incremental_strategy:insert_overwrite,test_name:unique"   # выполнить все тесты `unique`, которые выбирают из моделей, использующих стратегию инкрементального обновления `insert_overwrite`
 ```
 
+Это может быть сложно! Допустим, я хочу запустить модели каждую ночь, которые строятся на основе данных snowplow и подают экспорт, при этом _исключая_ самые большие инкрементальные модели (и одну другую модель).
 
-
-This can get complex! Let's say I want a nightly run of models that build off snowplow data
-and feed exports, while _excluding_ the biggest incremental models (and one other model, to boot).
-
-
-  ```bash
+```bash
 dbt run --select "@source:snowplow,tag:nightly models/export" --exclude "package:snowplow,config.materialized:incremental export_performance_timing"
 ```
 
+Эта команда выбирает все модели, которые:
+* Выбирают из источников snowplow, плюс их родительские модели, _и_ имеют тег "nightly"
+* Определены в подпапке модели `export`
 
-This command selects all models that:
-* Select from snowplow sources, plus their parents, _and_ are tagged "nightly"
-* Are defined in the `export` model subfolder
-
-Except for models that are:
-* Defined in the snowplow package and materialized incrementally
-* Named `export_performance_timing`
+За исключением моделей, которые:
+* Определены в пакете snowplow и материализованы инкрементально
+* Называются `export_performance_timing`

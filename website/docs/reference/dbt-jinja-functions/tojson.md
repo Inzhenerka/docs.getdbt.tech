@@ -1,17 +1,17 @@
 ---
-title: "About tojson context method"
+title: "Метод контекста tojson"
 sidebar_label: "tojson"
 id: "tojson"
-description: "Use this context method to serialize a Python object primitive."
+description: "Используйте этот метод контекста для сериализации примитивного объекта Python."
 ---
 
-The `tojson` context method can be used to serialize a Python object primitive, eg. a `dict` or `list` to a JSON string.
+Метод контекста `tojson` можно использовать для сериализации примитивного объекта Python, например, `dict` или `list`, в строку JSON.
 
-__Args__:
- * `value`: The value to serialize to json (required)
- * `default`: A default value to return if the `value` argument cannot be serialized (optional)
+__Аргументы__:
+ * `value`: Значение, которое нужно сериализовать в json (обязательно)
+ * `default`: Значение по умолчанию, которое будет возвращено, если аргумент `value` не может быть сериализован (необязательно)
 
-### Usage:
+### Использование:
 ```
 {% set my_dict = {"abc": 123} %}
 {% set my_json_string = tojson(my_dict) %}

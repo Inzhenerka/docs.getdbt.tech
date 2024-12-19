@@ -1,20 +1,20 @@
 ---
-title: "About return function"
+title: "О функции return"
 sidebar_label: "return"
 id: "return"
-description: "Read this guide to understand the return Jinja function in dbt."
+description: "Прочитайте это руководство, чтобы понять функцию return Jinja в dbt."
 ---
 
-__Args__:
+__Аргументы__:
 
- * `data`: The data to return to the caller
+ * `data`: Данные, которые нужно вернуть вызывающему
 
-The `return` function can be used in macros to return data to the caller. The type of the data (dict, list, int, etc) will be preserved through the `return` call.  You can use the `return` function in the following ways within your macros: as an expression or as a statement.
+Функция `return` может использоваться в макросах для возврата данных вызывающему. Тип данных (dict, list, int и т.д.) будет сохранен при вызове `return`. Вы можете использовать функцию `return` следующими способами в ваших макросах: как выражение или как оператор.
 
-- Expression &mdash; Use an expression when the goal is to output a string from the macro.
-- Statement with a `do` tag &mdash; Use a statement with a `do` tag to execute the return function without generating an output string.  This is particularly useful when you want to perform actions without necessarily inserting their results directly into the template. 
+- Выражение &mdash; Используйте выражение, когда цель состоит в том, чтобы вывести строку из макроса.
+- Оператор с тегом `do` &mdash; Используйте оператор с тегом `do`, чтобы выполнить функцию return без генерации выходной строки. Это особенно полезно, когда вы хотите выполнить действия, не вставляя их результаты непосредственно в шаблон.
 
-In the following example, `{{ return([1,2,3]) }}` acts as an _expression_ that directly outputs a string, making it suitable for directly inserting returned values into SQL code.
+В следующем примере `{{ return([1,2,3]) }}` действует как _выражение_, которое напрямую выводит строку, что делает его подходящим для непосредственной вставки возвращаемых значений в SQL-код.
 
 <File name='macros/get_data.sql'>
 
@@ -28,9 +28,9 @@ In the following example, `{{ return([1,2,3]) }}` acts as an _expression_ that d
 
 </File>
 
-Alternatively, you can use a statement with a [do](https://jinja.palletsprojects.com/en/3.0.x/extensions/#expression-statement) tag (or expression-statements) to execute the return function without generating an output string.  
+В качестве альтернативы вы можете использовать оператор с тегом [do](https://jinja.palletsprojects.com/en/3.0.x/extensions/#expression-statement) (или выражение-операторы), чтобы выполнить функцию return без генерации выходной строки.
 
-In the following example ,`{% do return([1,2,3]) %}` acts as a _statement_ that executes the return action but does not output a string:
+В следующем примере,`{% do return([1,2,3]) %}` действует как _оператор_, который выполняет действие возврата, но не выводит строку:
 
 <File name='macros/get_data.sql'>
 
@@ -44,13 +44,12 @@ In the following example ,`{% do return([1,2,3]) %}` acts as a _statement_ that 
 
 </File>
 
-
 <File name='models/my_model.sql'>
 
 ```sql
 
 select
-  -- getdata() returns a list!
+  -- getdata() возвращает список!
   {% for i in get_data() %}
     {{ i }}
     {%- if not loop.last %},{% endif -%}

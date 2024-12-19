@@ -12,7 +12,7 @@ query-comment: string
 
 </File>
 
-The `query-comment` configuration also accepts a dictionary input, like so:
+Конфигурация `query-comment` также принимает словарный ввод, как показано ниже:
 
 <File name='dbt_project.yml'>
 
@@ -24,18 +24,18 @@ models:
 query-comment:
   comment: string
   append: true | false
-  job-label: true | false  # BigQuery only
+  job-label: true | false  # Только для BigQuery
 ```
 
 </File>
 
-## Definition
-A string to inject as a comment in each query that dbt runs against your database. This comment can attribute SQL statements to specific dbt resources like models and tests.
+## Определение
+Строка, которая будет добавлена в качестве комментария в каждый запрос, который dbt выполняет к вашей базе данных. Этот комментарий может связывать SQL-операторы с конкретными ресурсами dbt, такими как модели и тесты.
 
-The `query-comment` configuration can also call a macro that returns a string.
+Конфигурация `query-comment` также может вызывать макрос, который возвращает строку.
 
-## Default
-By default, dbt will insert a <Term id="json" /> comment at the top of your query containing the information including the dbt version, profile and target names, and node ids for the resources it runs. For example:
+## По умолчанию
+По умолчанию dbt вставит комментарий в формате <Term id="json" /> в верхней части вашего запроса, содержащий информацию, включая версию dbt, имена профиля и цели, а также идентификаторы узлов для ресурсов, которые он выполняет. Например:
 
 ```sql
 /* {"app": "dbt", "dbt_version": "0.15.0rc2", "profile_name": "debug",
@@ -46,20 +46,17 @@ create view analytics.analytics.orders as (
   );
 ```
 
+## Использование синтаксиса словаря
+Синтаксис словаря включает два ключа:
+  * `comment` (необязательный, для получения дополнительной информации см. раздел [по умолчанию](#default)): Строка, которая будет добавлена в запрос в качестве комментария.
+  * `append` (необязательный, по умолчанию=`false`): Указывает, должен ли комментарий быть добавлен (добавлен в конец запроса) или нет (т.е. добавлен в верхнюю часть запроса). По умолчанию комментарии добавляются в верхнюю часть запросов (т.е. `append: false`).
 
+Этот синтаксис полезен для баз данных, таких как Snowflake, которые [удаляют ведущие SQL-комментарии](https://docs.snowflake.com/en/release-notes/2017-04.html#queries-leading-comments-removed-during-execution).
 
+## Примеры
 
-## Using the dictionary syntax
-The dictionary syntax includes two keys:
-  * `comment` (optional, for more information, refer to the [default](#default) section): The string to be injected into a query as a comment.
-  * `append` (optional, default=`false`): Whether a comment should be appended (added to the bottom of a query) or not (i.e. added to the top of a query). By default, comments are added to the top of queries (i.e. `append: false`).
-
-This syntax is useful on databases like Snowflake which [remove leading SQL comments](https://docs.snowflake.com/en/release-notes/2017-04.html#queries-leading-comments-removed-during-execution).
-
-## Examples
-
-### Prepend a static comment
-The following example injects a comment that reads `/* executed by dbt */` into the header of the SQL queries that dbt runs.
+### Добавление статического комментария
+Следующий пример добавляет комментарий, который гласит `/* executed by dbt */`, в заголовок SQL-запросов, которые выполняет dbt.
 
 <File name='dbt_project.yml'>
 
@@ -70,7 +67,7 @@ query-comment: "executed by dbt"
 
 </File>
 
-**Example output:**
+**Пример вывода:**
 
 ```sql
 /* executed by dbt */
@@ -78,7 +75,7 @@ query-comment: "executed by dbt"
 select ...
 ```
 
-### Disable query comments
+### Отключение комментариев к запросам
 
 <File name='dbt_project.yml'>
 
@@ -89,7 +86,7 @@ query-comment:
 
 </File>
 
-Or:
+Или:
 
 <File name='dbt_project.yml'>
 
@@ -100,8 +97,8 @@ query-comment: null
 
 </File>
 
-### Prepend a dynamic comment
-The following example injects a comment that varies based on the configured `user` specified in the active dbt target.
+### Добавление динамического комментария
+Следующий пример добавляет комментарий, который варьируется в зависимости от настроенного `user`, указанного в активной цели dbt.
 
 <File name='dbt_project.yml'>
 
@@ -112,7 +109,7 @@ query-comment: "run by {{ target.user }} in dbt"
 
 </File>
 
-**Example output:**
+**Пример вывода:**
 
 ```sql
 /* run by drew in dbt */
@@ -120,10 +117,10 @@ query-comment: "run by {{ target.user }} in dbt"
 select ...
 ```
 
-### Append the default comment
-The following example uses the dictionary syntax to append (rather than prepend) the default comment.
+### Добавление комментария по умолчанию
+Следующий пример использует синтаксис словаря, чтобы добавить (вместо добавления в начало) комментарий по умолчанию.
 
-Note that the `comment:` field is omitted to allow the default to be appended.
+Обратите внимание, что поле `comment:` опущено, чтобы позволить добавление по умолчанию.
 
 <File name='dbt_project.yml'>
 
@@ -135,7 +132,7 @@ query-comment:
 
 </File>
 
-**Example output:**
+**Пример вывода:**
 
 ```sql
 select ...
@@ -143,9 +140,9 @@ select ...
 ;
 ```
 
-### BigQuery: include query comment items as job labels
+### BigQuery: включение элементов комментария к запросу в качестве меток задач
 
-If `query-comment.job-label` is set to true, dbt will include the query comment items, if a dictionary, or the comment string, as job labels on the query it executes. These will be included in addition to labels specified in the [BigQuery-specific config](/reference/project-configs/query-comment#bigquery-include-query-comment-items-as-job-labels).
+Если `query-comment.job-label` установлен в true, dbt будет включать элементы комментария к запросу, если это словарь, или строку комментария в качестве меток задач для выполняемого запроса. Эти метки будут добавлены к меткам, указанным в [конфигурации, специфичной для BigQuery](/reference/project-configs/query-comment#bigquery-include-query-comment-items-as-job-labels).
 
 <File name='dbt_project.yml'>
 
@@ -157,8 +154,8 @@ query-comment:
 
 </File>
 
-### Append a custom comment
-The following example uses the dictionary syntax to append (rather than prepend) a comment that varies based on the configured `user` specified in the active dbt target.
+### Добавление пользовательского комментария
+Следующий пример использует синтаксис словаря, чтобы добавить (вместо добавления в начало) комментарий, который варьируется в зависимости от настроенного `user`, указанного в активной цели dbt.
 
 <File name='dbt_project.yml'>
 
@@ -171,7 +168,7 @@ query-comment:
 
 </File>
 
-**Example output:**
+**Пример вывода:**
 
 ```sql
 select ...
@@ -179,11 +176,9 @@ select ...
 ;
 ```
 
+### Промежуточный: Использование макроса для генерации комментария
 
-
-### Intermediate: Use a macro to generate a comment
-
-The `query-comment` config can reference macros in your dbt project. Simply create a macro with any name (`query_comment` is a good start!) in your `macros` directory, like so:
+Конфигурация `query-comment` может ссылаться на макросы в вашем проекте dbt. Просто создайте макрос с любым именем (например, `query_comment`) в вашем каталоге `macros`, как показано ниже:
 
 <File name='macros/query_comment.sql'>
 
@@ -198,7 +193,7 @@ The `query-comment` config can reference macros in your dbt project. Simply crea
 
 </File>
 
-Then call the macro in your `dbt_project.yml` file. Make sure you quote the macro to avoid the YAML parser from trying to interpret the `{` as the start of a dictionary.
+Затем вызовите макрос в вашем файле `dbt_project.yml`. Убедитесь, что вы заключили макрос в кавычки, чтобы избежать интерпретации `{` парсером YAML как начала словаря.
 
 <File name='dbt_project.yml'>
 
@@ -209,9 +204,9 @@ query-comment: "{{ query_comment() }}"
 
 </File>
 
-### Advanced: Use a macro to generate a comment
+### Расширенный: Использование макроса для генерации комментария
 
-The following example shows a JSON query comment which can be parsed to understand the performance characteristics of your dbt project.
+Следующий пример показывает JSON-комментарий к запросу, который можно разобрать для понимания характеристик производительности вашего проекта dbt.
 
 <File name='macros/query_comment.sql'>
 
@@ -246,8 +241,7 @@ The following example shows a JSON query comment which can be parsed to understa
 
 </File>
 
-As above, call this macro as follows:
-
+Как и прежде, вызовите этот макрос следующим образом:
 
 <File name='dbt_project.yml'>
 
@@ -258,23 +252,23 @@ query-comment: "{{ query_comment(node) }}"
 
 </File>
 
-## Compilation context
+## Контекст компиляции
 
-The following context variables are available when generating a query comment:
+Следующие переменные контекста доступны при генерации комментария к запросу:
 
-| Context Variable | Description |
-| ---------------- | ----------- |
-| dbt_version      | The version of dbt being used. For details about release versioning, refer to [Versioning](/reference/commands/version#versioning). |
-| env_var          | See [env_var](/reference/dbt-jinja-functions/env_var) |
-| modules          | See [modules](/reference/dbt-jinja-functions/modules) |
-| run_started_at   | When the dbt invocation began |
-| invocation_id    | A unique ID for the dbt invocation |
-| fromjson         | See [fromjson](/reference/dbt-jinja-functions/fromjson) |
-| tojson           | See [tojson](/reference/dbt-jinja-functions/tojson) |
-| log              | See [log](/reference/dbt-jinja-functions/log) |
-| var              | See [var](/reference/dbt-jinja-functions/var) |
-| target           | See [target](/reference/dbt-jinja-functions/target) |
-| connection_name  | A string representing the internal name for the connection. This string is generated by dbt. |
-| node             | A dictionary representation of the parsed node object. Use `node.unique_id`, `node.database`, `node.schema`, and so on. |
+| Переменная контекста | Описание |
+| --------------------- | ----------- |
+| dbt_version           | Версия dbt, которая используется. Для получения информации о версионировании релизов см. [Версионирование](/reference/commands/version#versioning). |
+| env_var               | См. [env_var](/reference/dbt-jinja-functions/env_var) |
+| modules               | См. [modules](/reference/dbt-jinja-functions/modules) |
+| run_started_at        | Когда началось выполнение dbt |
+| invocation_id         | Уникальный идентификатор для выполнения dbt |
+| fromjson              | См. [fromjson](/reference/dbt-jinja-functions/fromjson) |
+| tojson                | См. [tojson](/reference/dbt-jinja-functions/tojson) |
+| log                   | См. [log](/reference/dbt-jinja-functions/log) |
+| var                   | См. [var](/reference/dbt-jinja-functions/var) |
+| target                | См. [target](/reference/dbt-jinja-functions/target) |
+| connection_name       | Строка, представляющая внутреннее имя для соединения. Эта строка генерируется dbt. |
+| node                  | Словарное представление разобранного объекта узла. Используйте `node.unique_id`, `node.database`, `node.schema` и т.д. |
 
-Note: The `var()` function in `query-comment` macros only access variables passed through the `--vars` argument in the CLI. Variables defined in the vars block of your `dbt_project.yml` are not accessible when generating query comments. 
+Примечание: Функция `var()` в макросах `query-comment` может получить доступ только к переменным, переданным через аргумент `--vars` в CLI. Переменные, определенные в блоке vars вашего файла `dbt_project.yml`, недоступны при генерации комментариев к запросам.

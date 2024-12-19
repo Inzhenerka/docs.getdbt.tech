@@ -1,18 +1,18 @@
 ---
-title: "About execute variable"
+title: "О переменной execute"
 sidebar_label: "execute"
 id: "execute"
-description: "Use `execute` to return True when dbt is in 'execute' mode."
+description: "Используйте `execute`, чтобы вернуть True, когда dbt находится в режиме 'execute'."
 ---
 
-`execute` is a Jinja variable that returns True when dbt is in "execute" mode.
+`execute` — это переменная Jinja, которая возвращает True, когда dbt находится в режиме "execute".
 
-When you execute a `dbt compile` or `dbt run` command, dbt:
+Когда вы выполняете команду `dbt compile` или `dbt run`, dbt:
 
-1. Reads all of the files in your project and generates a [manifest](/reference/artifacts/manifest-json) comprised of models, tests, and other graph nodes present in your project. During this phase, dbt uses the [`ref`](/reference/dbt-jinja-functions/ref) and [`source`](/reference/dbt-jinja-functions/source) statements it finds to generate the DAG for your project. **No SQL is run during this phase**, and `execute == False`.
-2. Compiles (and runs) each node (eg. building models, or running tests). **SQL is run during this phase**, and `execute == True`.
+1. Читает все файлы в вашем проекте и генерирует [манифест](/reference/artifacts/manifest-json), состоящий из моделей, тестов и других узлов графа, присутствующих в вашем проекте. На этом этапе dbt использует найденные инструкции [`ref`](/reference/dbt-jinja-functions/ref) и [`source`](/reference/dbt-jinja-functions/source) для генерации DAG вашего проекта. **На этом этапе SQL не выполняется**, и `execute == False`.
+2. Компилирует (и выполняет) каждый узел (например, строит модели или запускает тесты). **SQL выполняется на этом этапе**, и `execute == True`.
 
-Any Jinja that relies on a result being returned from the database will error during the parse phase. For example, this SQL will return an error:
+Любая Jinja, которая зависит от результата, возвращаемого из базы данных, вызовет ошибку на этапе разбора. Например, следующий SQL вернет ошибку:
 
 <File name='models/order_payment_methods.sql'>
 
@@ -26,23 +26,23 @@ Any Jinja that relies on a result being returned from the database will error du
 7
 8   {% set results = run_query(payment_method_query) %}
 9
-10  {# Return the first column #}
+10  {# Вернуть первый столбец #}
 11  {% set payment_methods = results.columns[0].values() %}
 
 ```
 
 </File>
 
-The error returned by dbt will look as follows:
+Ошибка, возвращаемая dbt, будет выглядеть следующим образом:
 ```
-Encountered an error:
-Compilation Error in model order_payment_methods (models/order_payment_methods.sql)
-  'None' has no attribute 'table'
+Обнаружена ошибка:
+Ошибка компиляции в модели order_payment_methods (models/order_payment_methods.sql)
+  'None' не имеет атрибута 'table'
 
 ```
-This is because line #11 in the earlier code example (`{% set payment_methods = results.columns[0].values() %}`) assumes that a <Term id="table" /> has been returned, when, during the parse phase, this query hasn't been run.
+Это происходит потому, что строка #11 в предыдущем примере кода (`{% set payment_methods = results.columns[0].values() %}`) предполагает, что был возвращен <Term id="table" />, когда на этапе разбора этот запрос еще не был выполнен.
 
-To work around this, wrap any problematic Jinja in an `{% if execute %}` statement:
+Чтобы обойти это, оберните любую проблемную Jinja в инструкцию `{% if execute %}`:
 
 <File name='models/order_payment_methods.sql'>
 
@@ -56,7 +56,7 @@ order by 1
 
 {% set results = run_query(payment_method_query) %}
 {% if execute %}
-{# Return the first column #}
+{# Вернуть первый столбец #}
 {% set payment_methods = results.columns[0].values() %}
 {% else %}
 {% set payment_methods = [] %}

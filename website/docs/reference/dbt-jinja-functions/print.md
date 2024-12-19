@@ -1,16 +1,15 @@
 ---
-title: "About print function"
+title: "О функции print"
 sidebar_label: "print"
 id: "print"
-description: "Use the `print()` to print messages to the log file and stdout."
+description: "Используйте `print()`, чтобы выводить сообщения в файл журнала и стандартный вывод."
 ---
 
+Используйте функцию `print()`, когда хотите выводить сообщения как в файл журнала, так и в стандартный вывод (stdout).
 
-Use the `print()` function when you want to print messages to both the log file and standard output (stdout).
+При использовании вместе с глобальной конфигурацией `QUIET`, которая подавляет неошибочные журналы, вы будете видеть только журналы ошибок и сообщения print в stdout. Для получения дополнительной информации смотрите [Глобальные конфигурации](/reference/global-configs/about-global-configs).
 
-When used in conjunction with the `QUIET` global config, which suppresses non-error logs, you will only see error logs and the print messages in stdout. For more information, see [Global configs](/reference/global-configs/about-global-configs).
-
-## Example 
+## Пример 
 
 ```sql
   {% macro some_macro(arg1, arg2) %}

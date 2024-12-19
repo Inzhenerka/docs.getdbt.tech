@@ -1,11 +1,11 @@
 ---
-title: "Amazon Redshift adapter behavior changes"
+title: "Изменения в поведении адаптера Amazon Redshift"
 id: "redshift-changes"
 sidebar: "Redshift"
 ---
 
-## The restrict_direct_pg_catalog_access flag
+## Флаг restrict_direct_pg_catalog_access
 
-Originally, the `dbt-redshift` adapter was built on top of the `dbt-postgres` adapter and used Postgres tables for metadata access. When this flag is enabled, the adapter uses the Redshift API (through the Python client) if available, or queries Redshift's `information_schema` tables instead of using the `pg_` tables.
+Изначально адаптер `dbt-redshift` был построен на основе адаптера `dbt-postgres` и использовал таблицы Postgres для доступа к метаданным. Когда этот флаг включен, адаптер использует API Redshift (через Python-клиент), если он доступен, или запрашивает таблицы `information_schema` Redshift вместо использования таблиц `pg_`.
 
-While you shouldn't notice any behavior changes due to this change, however, to be cautious dbt Labs is gating it behind a behavior-change flag and encouraging you to test it before it becoming the default.
+Хотя вы не должны заметить никаких изменений в поведении из-за этого изменения, тем не менее, для осторожности dbt Labs ограничивает его использованием флага изменения поведения и рекомендует вам протестировать его перед тем, как он станет значением по умолчанию.

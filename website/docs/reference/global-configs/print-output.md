@@ -1,28 +1,28 @@
 ---
-title: "Print output"
+title: "Вывод печати"
 id: "print-output"
-sidebar: "Print output"
+sidebar: "Вывод печати"
 ---
 
-### Suppress `print()` messages in stdout
+### Подавление сообщений `print()` в stdout
 
-By default, dbt includes [`print()`](/reference/dbt-jinja-functions/print) messages in standard out (stdout). You can use the `DBT_PRINT` environment variable to prevent these messages from showing up in stdout.
+По умолчанию dbt включает сообщения [`print()`](/reference/dbt-jinja-functions/print) в стандартный вывод (stdout). Вы можете использовать переменную окружения `DBT_PRINT`, чтобы предотвратить появление этих сообщений в stdout.
 
-:::warning Syntax deprecation
+:::warning Устаревание синтаксиса
 
-The original `DBT_NO_PRINT` environment variable has been deprecated, starting with dbt v1.5. Backward compatibility is supported but will be removed in an as-of-yet-undetermined future release.
+Исходная переменная окружения `DBT_NO_PRINT` устарела, начиная с версии dbt v1.5. Обеспечивается обратная совместимость, но она будет удалена в будущем релизе, дата которого пока не определена.
 
 :::
 
-Supply `--no-print` flag to `dbt run` to suppress `print()` messages from showing in stdout.
+Передайте флаг `--no-print` в команду `dbt run`, чтобы подавить сообщения `print()` в stdout.
 
 ```text
 dbt --no-print run
 ```
 
-### Printer width
+### Ширина принтера
 
-By default, dbt will print out lines padded to 80 characters wide. You can change this setting by adding the following to your `profiles.yml` file:
+По умолчанию dbt будет выводить строки, дополненные до 80 символов в ширину. Вы можете изменить эту настройку, добавив следующее в ваш файл `profiles.yml`:
 
 <File name='profiles.yml'>
 
@@ -33,9 +33,9 @@ config:
 
 </File>
 
-### Print color
+### Цвет печати
 
-By default, dbt will colorize the output it prints in your terminal. You can turn this off by adding the following to your `profiles.yml` file:
+По умолчанию dbt будет раскрашивать вывод, который он печатает в вашем терминале. Вы можете отключить это, добавив следующее в ваш файл `profiles.yml`:
 
 <File name='profiles.yml'>
 
@@ -51,7 +51,7 @@ dbt --use-colors run
 dbt --no-use-colors run
 ```
 
-You can set the color preferences for the file logs only within `profiles.yml` or using the `--use-colors-file / --no-use-colors-file` flags.
+Вы можете установить предпочтения по цвету для файловых журналов только в `profiles.yml` или с помощью флагов `--use-colors-file / --no-use-colors-file`.
 
 <File name='profiles.yml'>
 

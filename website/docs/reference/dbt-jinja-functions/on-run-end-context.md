@@ -1,22 +1,21 @@
 ---
-title: "About on-run-end context variable"
-sidebar_label: "on-run-end context"
+title: "О переменной контекста on-run-end"
+sidebar_label: "Контекст on-run-end"
 id: "on-run-end-context"
-description: "Use these variables in the context for `on-run-end` hooks."
+description: "Используйте эти переменные в контексте для хуков `on-run-end`."
 ---
 
+:::caution Внимание
 
-:::caution Caution
-
-These variables are only available in the context for `on-run-end` hooks. They will evaluate to `none` if used outside of an `on-run-end` hook!
+Эти переменные доступны только в контексте хуков `on-run-end`. Если они используются вне хука `on-run-end`, то будут иметь значение `none`!
 
 :::
 
 ## schemas
 
-The `schemas` context variable can be used to reference the schemas that dbt has built models into during a run of dbt. This variable can be used to grant usage on these schemas to certain users at the end of a dbt run.
+Переменная контекста `schemas` может использоваться для ссылки на схемы, в которые dbt создал модели во время выполнения dbt. Эта переменная может быть использована для предоставления прав на использование этих схем определенным пользователям в конце выполнения dbt.
 
-Example:
+Пример:
 
 <File name='dbt_project.yml'>
 
@@ -25,12 +24,11 @@ Example:
 on-run-end:
  - "{% for schema in schemas %}grant usage on schema {{ schema }} to db_reader;{% endfor %}"
 
-
 ```
 
 </File>
 
-In practice, it might not be a bad idea to put this code into a macro:
+На практике может быть неплохой идеей поместить этот код в макрос:
 
 <File name='macros/grants.sql'>
 
@@ -42,12 +40,9 @@ In practice, it might not be a bad idea to put this code into a macro:
   {% endfor %}
 {% endmacro %}
 
-
 ```
 
 </File>
-
-
 
 <File name='dbt_project.yml'>
 
@@ -56,16 +51,15 @@ In practice, it might not be a bad idea to put this code into a macro:
 on-run-end:
  - "{{ grant_usage_to_schemas(schemas, 'user') }}"
 
-
 ```
 
 </File>
 
 ## database_schemas
 
-The `database_schemas` context variable can be used to reference the databases _and_ schemas that dbt has built models into during a run of dbt. This variable is similar to the `schemas` variable, and should be used if a dbt run builds resources into multiple different databases.
+Переменная контекста `database_schemas` может использоваться для ссылки на базы данных _и_ схемы, в которые dbt создал модели во время выполнения dbt. Эта переменная аналогична переменной `schemas` и должна использоваться, если выполнение dbt создает ресурсы в нескольких различных базах данных.
 
-Example:
+Пример:
 
 <File name='macros/grants.sql'>
 
@@ -77,12 +71,9 @@ Example:
   {% endfor %}
 {% endmacro %}
 
-
 ```
 
 </File>
-
-
 
 <File name='dbt_project.yml'>
 
@@ -91,18 +82,15 @@ Example:
 on-run-end:
  - "{{ grant_usage_to_schemas(database_schemas, user) }}"
 
-
 ```
 
 </File>
 
-
-
 ## Results
 
-The `results` variable contains a list of [Result objects](/reference/dbt-classes#result-objects) with one element per resource that executed in the dbt job. The Result object provides access within the Jinja on-run-end context to the information that will populate the [run results JSON artifact](/reference/artifacts/run-results-json).
+Переменная `results` содержит список [объектов Result](/reference/dbt-classes#result-objects) с одним элементом для каждого ресурса, который был выполнен в задаче dbt. Объект Result предоставляет доступ в контексте Jinja on-run-end к информации, которая будет заполнять [артефакт JSON результатов выполнения](/reference/artifacts/run-results-json).
 
-Example usage:
+Пример использования:
 
 <File name='macros/log_results.sql'>
 
@@ -110,7 +98,7 @@ Example usage:
 {% macro log_results(results) %}
 
   {% if execute %}
-  {{ log("========== Begin Summary ==========", info=True) }}
+  {{ log("========== Начало сводки ==========", info=True) }}
   {% for res in results -%}
     {% set line -%}
         node: {{ res.node.unique_id }}; status: {{ res.status }} (message: {{ res.message }})
@@ -118,15 +106,13 @@ Example usage:
 
     {{ log(line, info=True) }}
   {% endfor %}
-  {{ log("========== End Summary ==========", info=True) }}
+  {{ log("========== Конец сводки ==========", info=True) }}
   {% endif %}
 
 {% endmacro %}
 ```
 
 </File>
-
-
 
 <File name='dbt_project.yml'>
 
@@ -137,25 +123,25 @@ on-run-end: "{{ log_results(results) }}"
 
 </File>
 
-Results:
+Результаты:
 ```
-12:48:17 | Concurrency: 1 threads (target='dev')
+12:48:17 | Конкуренция: 1 поток (target='dev')
 12:48:17 |
-12:48:17 | 1 of 2 START view model dbt_jcohen.abc............................... [RUN]
-12:48:17 | 1 of 2 OK created view model dbt_jcohen.abc.......................... [CREATE VIEW in 0.11s]
-12:48:17 | 2 of 2 START table model dbt_jcohen.def.............................. [RUN]
-12:48:17 | 2 of 2 ERROR creating table model dbt_jcohen.def..................... [ERROR in 0.09s]
+12:48:17 | 1 из 2 НАЧАЛО представления модели dbt_jcohen.abc............................... [RUN]
+12:48:17 | 1 из 2 ОК создано представление модели dbt_jcohen.abc.......................... [CREATE VIEW in 0.11s]
+12:48:17 | 2 из 2 НАЧАЛО таблицы модели dbt_jcohen.def.............................. [RUN]
+12:48:17 | 2 из 2 ОШИБКА при создании таблицы модели dbt_jcohen.def..................... [ERROR in 0.09s]
 12:48:17 |
-12:48:17 | Running 1 on-run-end hook
-========== Begin Summary ==========
+12:48:17 | Выполнение 1 хука on-run-end
+========== Начало сводки ==========
 node: model.testy.abc; status: success (message: CREATE VIEW)
 node: model.testy.def; status: error (message: Database Error in model def (models/def.sql)
   division by zero
   compiled SQL at target/run/testy/models/def.sql)
-========== End Summary ==========
-12:48:17 | 1 of 1 START hook: testy.on-run-end.0................................ [RUN]
-12:48:17 | 1 of 1 OK hook: testy.on-run-end.0................................... [OK in 0.00s]
+========== Конец сводки ==========
+12:48:17 | 1 из 1 НАЧАЛО хука: testy.on-run-end.0................................ [RUN]
+12:48:17 | 1 из 1 ОК хук: testy.on-run-end.0................................... [OK in 0.00s]
 12:48:17 |
 12:48:17 |
-12:48:17 | Finished running 1 view model, 1 table model, 1 hook in 1.94s.
+12:48:17 | Завершено выполнение 1 представления модели, 1 таблицы модели, 1 хука за 1.94s.
 ```

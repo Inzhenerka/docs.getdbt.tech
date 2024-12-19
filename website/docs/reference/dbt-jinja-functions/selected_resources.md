@@ -1,72 +1,65 @@
 ---
-title: "About selected_resources context variable"
+title: "О переменной контекста selected_resources"
 sidebar_label: "selected_resources"
 id: "selected_resources"
-description: "Contains a list of all the nodes selected by current dbt command."
+description: "Содержит список всех узлов, выбранных текущей командой dbt."
 ---
 
-The `selected_resources` context variable contains a list of all the _nodes_ 
-selected by the current dbt command. 
+Переменная контекста `selected_resources` содержит список всех _узлов_, выбранных текущей командой dbt.
 
-Currently, this variable is not accessible when using the command `run-operation`.
+В настоящее время эта переменная недоступна при использовании команды `run-operation`.
 
-:::danger Warning!
+:::danger Внимание!
 
-dbt actively builds the graph during the [parsing phase](/reference/dbt-jinja-functions/execute) of
-running dbt projects, so the `selected_resources` context variable will be
-empty during parsing. Please read the information on this page to effectively use this variable.
+dbt активно строит граф во время [фазы парсинга](/reference/dbt-jinja-functions/execute) выполнения проектов dbt, поэтому переменная контекста `selected_resources` будет пустой во время парсинга. Пожалуйста, ознакомьтесь с информацией на этой странице, чтобы эффективно использовать эту переменную.
 
 :::
 
-### Usage
+### Использование
 
-The `selected_resources` context variable is a list of all the resources selected by 
-the current dbt command selector. Its value depends on the usage of parameters like
-`--select`, `--exclude` and `--selector`.
+Переменная контекста `selected_resources` представляет собой список всех ресурсов, выбранных текущим селектором команды dbt. Ее значение зависит от использования параметров, таких как `--select`, `--exclude` и `--selector`.
 
-For a given run it will look like:
+Для данного выполнения это будет выглядеть так:
 
 ```json
 ["model.my_project.model1", "model.my_project.model2", "snapshot.my_project.my_snapshot"]
 ```
 
-Each value corresponds to a key in the `nodes` object within the [graph](/reference/dbt-jinja-functions/graph) context variable.
+Каждое значение соответствует ключу в объекте `nodes` внутри переменной контекста [graph](/reference/dbt-jinja-functions/graph).
 
-It can be used in macros in a `pre-hook`, `post-hook`, `on-run-start` or `on-run-end` 
-to evaluate what nodes are selected and trigger different logic whether a particular node
-is selected or not.
+Эта переменная может использоваться в макросах в `pre-hook`, `post-hook`, `on-run-start` или `on-run-end`, чтобы оценить, какие узлы выбраны, и инициировать различную логику в зависимости от того, выбран ли конкретный узел или нет.
 
 <File name='check-node-selected.sql'>
 
 ```sql
 
 /*
-  Check if a given model is selected and trigger a different action, depending on the result
+  Проверьте, выбран ли данный модель, и инициируйте другое действие в зависимости от результата
 */
 
 {% if execute %}
   {% if 'model.my_project.model1' in selected_resources %}
   
-    {% do log("model1 is included based on the current selection", info=true) %}
+    {% do log("model1 включен на основе текущего выбора", info=true) %}
   
   {% else %}
 
-    {% do log("model1 is not included based on the current selection", info=true) %}
+    {% do log("model1 не включен на основе текущего выбора", info=true) %}
 
   {% endif %}
 {% endif %}
 
 /*
-  Example output when running the code in on-run-start 
-  when doing `dbt build`, including all nodels
+  Пример вывода при выполнении кода в on-run-start 
+  при выполнении `dbt build`, включая все узлы
 ---------------------------------------------------------------
-  model1 is included based on the current selection
+  model1 включен на основе текущего выбора
 
 
-  Example output when running the code in on-run-start 
-  when doing `dbt run --select model2` 
+  Пример вывода при выполнении кода в on-run-start 
+  при выполнении `dbt run --select model2` 
 ---------------------------------------------------------------
-  model1 is not included based on the current selection
+  model1 не включен на основе текущего выбора
 */
 ```
 

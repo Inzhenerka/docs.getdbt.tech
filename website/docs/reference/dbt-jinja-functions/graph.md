@@ -1,27 +1,21 @@
 ---
-title: "About graph context variable"
+title: "О переменной контекста graph"
 sidebar_label: "graph"
 id: "graph"
-description: "The `graph` context variable contains info about nodes in your project."
+description: "Переменная контекста `graph` содержит информацию о узлах в вашем проекте."
 ---
 
-The `graph` context variable contains information about the _nodes_ in your dbt
-project. Models, sources, tests, and snapshots are all examples of nodes in dbt
-projects.
+Переменная контекста `graph` содержит информацию о _узлах_ в вашем проекте dbt. Модели, источники, тесты и снимки — все это примеры узлов в проектах dbt.
 
-:::danger Heads up
+:::danger Внимание
 
-dbt actively builds the `graph` variable during the [parsing phase](/reference/dbt-jinja-functions/execute) of
-running dbt projects, so some properties of the `graph` context variable will be
-missing or incorrect during parsing. Please read the information below carefully
-to understand how to effectively use this variable.
+dbt активно строит переменную `graph` в ходе [фазы разбора](/reference/dbt-jinja-functions/execute) выполнения проектов dbt, поэтому некоторые свойства переменной контекста `graph` могут отсутствовать или быть некорректными во время разбора. Пожалуйста, внимательно прочитайте информацию ниже, чтобы понять, как эффективно использовать эту переменную.
 
 :::
 
-### The graph context variable
+### Переменная контекста graph
 
-The `graph` context variable is a dictionary which maps node ids onto dictionary
-representations of those nodes. A simplified example might look like:
+Переменная контекста `graph` представляет собой словарь, который сопоставляет идентификаторы узлов со словарными представлениями этих узлов. Упрощенный пример может выглядеть так:
 
 ```json
 {
@@ -79,24 +73,18 @@ representations of those nodes. A simplified example might look like:
 }
 ```
 
-The exact contract for these model and source nodes is not currently documented,
-but that will change in the future.
+Точный контракт для этих узлов моделей и источников в настоящее время не задокументирован, но это изменится в будущем.
 
-### Accessing models
+### Доступ к моделям
 
-The `model` entries in the `graph` dictionary will be incomplete or incorrect
-during parsing. If accessing the models in your project via the `graph`
-variable, be sure to use the [execute](/reference/dbt-jinja-functions/execute) flag to ensure that this code
-only executes at run-time and not at parse-time. Do not use the `graph` variable
-to build your DAG, as the resulting dbt behavior will be undefined and likely
-incorrect. Example usage:
+Записи `model` в словаре `graph` будут неполными или некорректными во время разбора. Если вы обращаетесь к моделям в вашем проекте через переменную `graph`, обязательно используйте флаг [execute](/reference/dbt-jinja-functions/execute), чтобы гарантировать, что этот код выполняется только во время выполнения, а не во время разбора. Не используйте переменную `graph` для построения вашего DAG, так как поведение dbt в результате будет неопределенным и, вероятно, некорректным. Пример использования:
 
 <File name='graph-usage.sql'>
 
 ```sql
 
 /*
-  Print information about all of the models in the Snowplow package
+  Вывести информацию обо всех моделях в пакете Snowplow
 */
 
 {% if execute %}
@@ -110,7 +98,7 @@ incorrect. Example usage:
 {% endif %}
 
 /*
-  Example output
+  Пример вывода
 ---------------------------------------------------------------
 model.snowplow.snowplow_id_map, materialized: incremental
 model.snowplow.snowplow_page_views, materialized: incremental
@@ -128,19 +116,18 @@ model.snowplow.snowplow_sessions, materialized: table
 
 </File>
 
-### Accessing sources
+### Доступ к источникам
 
-To access the sources in your dbt project programmatically, use the `sources`
-attribute of the `graph` object.
+Чтобы программно получить доступ к источникам в вашем проекте dbt, используйте атрибут `sources` объекта `graph`.
 
-Example usage:
+Пример использования:
 
 <File name='models/events_unioned.sql'>
 
 ```sql
 /*
-  Union all of the Snowplow sources defined in the project
-  which begin with the string "event_"
+  Объединить все источники Snowplow, определенные в проекте,
+  которые начинаются со строки "event_"
 */
 
 {% set sources = [] -%}
@@ -157,7 +144,7 @@ select * from (
 )
 
 /*
-  Example compiled SQL
+  Пример скомпилированного SQL
 ---------------------------------------------------------------
 select * from (
   select * from raw.snowplow.event_add_to_cart union all
@@ -170,17 +157,16 @@ select * from (
 
 </File>
 
-### Accessing exposures
+### Доступ к экспозициям
 
-To access the exposures in your dbt project programmatically, use the `exposures`
-attribute of the `graph` object.
+Чтобы программно получить доступ к экспозициям в вашем проекте dbt, используйте атрибут `exposures` объекта `graph`.
 
-Example usage:
+Пример использования:
 
 <File name='models/my_important_view_model.sql'>
 
 ```sql
-{# Include a SQL comment naming all of the exposures that this model feeds into #}
+{# Включите SQL-комментарий, указывающий все экспозиции, в которые попадает эта модель #}
 
 {% set exposures = [] -%}
 {% for exposure in graph.exposures.values() -%}
@@ -189,18 +175,18 @@ Example usage:
   {%- endif -%}
 {%- endfor %}
 
--- HELLO database administrator! Before dropping this view,
--- please be aware that doing so will affect:
+-- ЗДРАВСТВУЙТЕ, администратор базы данных! Прежде чем удалить этот вид,
+-- пожалуйста, имейте в виду, что это повлияет на:
 
 {% for exposure in exposures %}
 --   * {{ exposure.name }} ({{ exposure.type }})
 {% endfor %}
 
 /*
-  Example compiled SQL
+  Пример скомпилированного SQL
 ---------------------------------------------------------------
--- HELLO database administrator! Before dropping this view,
--- please be aware that doing so will affect:
+-- ЗДРАВСТВУЙТЕ, администратор базы данных! Прежде чем удалить этот вид,
+-- пожалуйста, имейте в виду, что это повлияет на:
 
 --   * our_metrics (dashboard)
 --   * my_sync (application)
@@ -210,11 +196,11 @@ Example usage:
 
 </File>
 
-### Accessing metrics
+### Доступ к метрикам
 
-To access the metrics in your dbt project programmatically, use the `metrics` attribute of the `graph` object.
+Чтобы программно получить доступ к метрикам в вашем проекте dbt, используйте атрибут `metrics` объекта `graph`.
 
-Example usage:
+Пример использования:
 
 <File name='macros/get_metric.sql'>
 
@@ -225,8 +211,8 @@ Example usage:
   
   {% set metric = (metrics | selectattr('name', 'equalto', metric_name) | list).pop() %}
 
-  /* Elsewhere, I've defined a macro, get_metric_timeseries_sql, that will return 
-     the SQL needed to perform a time-based rollup of this metric's calculation */
+  /* В другом месте я определил макрос get_metric_timeseries_sql, который вернет 
+     SQL, необходимый для выполнения временной агрегации расчета этой метрики */
 
   {% set metric_sql = get_metric_timeseries_sql(
       relation = metric['model'],
@@ -242,11 +228,11 @@ Example usage:
 
 </File>
 
-### Accessing groups
+### Доступ к группам
 
-To access the groups in your dbt project programmatically, use the `groups` attribute of the `graph` object.
+Чтобы программно получить доступ к группам в вашем проекте dbt, используйте атрибут `groups` объекта `graph`.
 
-Example usage:
+Пример использования:
 
 <File name='macros/get_group.sql'>
 

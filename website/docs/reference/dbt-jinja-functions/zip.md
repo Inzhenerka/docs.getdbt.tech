@@ -1,19 +1,19 @@
 ---
-title: "About zip context method"
+title: "О методе контекста zip"
 id: "zip"
 sidebar_label: "zip"
-description: "Use this context method to return an iterator of tuples."
+description: "Используйте этот метод контекста для возврата итератора кортежей."
 ---
 
-The `zip` context method can be used to return an iterator of tuples, where the i-th tuple contains the i-th element from each of the argument iterables. ([Python docs](https://docs.python.org/3/library/functions.html#zip))
+Метод контекста `zip` может быть использован для возврата итератора кортежей, где i-й кортеж содержит i-й элемент из каждого из переданных итераторов. ([Документация Python](https://docs.python.org/3/library/functions.html#zip))
         :param 
         :param 
         
-__Args__:
-- `*args`: Any number of iterables
-- `default`: A default value to return if `*args` is not iterable
+__Аргументы__:
+- `*args`: Любое количество итераторов
+- `default`: Значение по умолчанию, которое будет возвращено, если `*args` не является итератором
 
-### Usage
+### Использование
 
 ```
 {% set my_list_a = [1, 2] %}
@@ -31,10 +31,10 @@ __Args__:
 
 ### zip_strict
 
-The `zip_strict` context method can be used to used to return an iterator of tuples, just like `zip`. The difference to the `zip` context method is that the `zip_strict` method will raise an exception on a `TypeError`, if one of the provided values is not a valid iterable.
+Метод контекста `zip_strict` может быть использован для возврата итератора кортежей, так же как и `zip`. Разница между методом `zip` и методом `zip_strict` заключается в том, что метод `zip_strict` вызовет исключение при `TypeError`, если одно из переданных значений не является допустимым итератором.
 
-__Args__:
-- `value`: The iterable to convert (e.g. a list)
+__Аргументы__:
+- `value`: Итератор для преобразования (например, список)
 
 ```
 {% set my_list_a = [1, 2] %}
@@ -48,6 +48,6 @@ __Args__:
 {% set my_list_b = ['alice', 'bob'] %}
 {% set my_zip = zip_strict(my_list_a, my_list_b) %}
 
-Compilation Error in ... (...)
-  'int' object is not iterable
+Ошибка компиляции в ... (...)
+  'int' объект не является итератором
 ```

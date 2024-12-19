@@ -1,23 +1,23 @@
 ---
-title: "begin"
+title: "начало"
 id: "begin"
-sidebar_label: "begin"
+sidebar_label: "начало"
 resource_types: [models]
-description: "dbt uses `begin` to determine when a microbatch incremental model should begin from. When defined on a micorbatch incremental model, `begin` is used as the lower time bound when the model is built for the first time or fully refreshed."
+description: "dbt использует `begin`, чтобы определить, с какого момента должен начинаться микропакетный инкрементальный модель. Когда он определен для микропакетной инкрементальной модели, `begin` используется как нижняя временная граница, когда модель строится в первый раз или полностью обновляется."
 datatype: string
 ---
 
-Available in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9 and higher.
+Доступно в [последней версии dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
 
-## Definition
+## Определение
 
-Set the `begin` config to the timestamp value at which your microbatch model data should begin &mdash; at the point the data becomes relevant for the microbatch model.  You can configure `begin` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block. The value for `begin` must be a string representing an ISO formatted date OR date and time.
+Установите конфигурацию `begin` на значение временной метки, с которой ваши данные микропакетной модели должны начинаться &mdash; в момент, когда данные становятся актуальными для микропакетной модели. Вы можете настроить `begin` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации. Значение для `begin` должно быть строкой, представляющей дату в формате ISO ИЛИ дату и время.
 
-## Examples
+## Примеры
 
-The following examples set `2024-01-01 00:00:00` as the `begin` config for the `user_sessions` model.
+Следующие примеры устанавливают `2024-01-01 00:00:00` в качестве конфигурации `begin` для модели `user_sessions`.
 
-Example in the `dbt_project.yml` file:
+Пример в файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -29,7 +29,7 @@ models:
 ```
 </File>
 
-Example in a properties YAML file:
+Пример в файле свойств YAML:
 
 <File name='models/properties.yml'>
 
@@ -42,7 +42,7 @@ models:
 
 </File>
 
-Example in sql model config block:
+Пример в блоке конфигурации sql модели:
 
 <File name="models/user_sessions.sql">
 
@@ -52,4 +52,4 @@ Example in sql model config block:
 ) }}
 ```
 
-</File> 
+</File>

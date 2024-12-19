@@ -11,12 +11,12 @@ seed-paths: [directorypath]
 
 </File>
 
-## Definition
-Optionally specify a custom list of directories where [seed](/docs/build/seeds) files are located.
+## Определение
+Необязательно указывать пользовательский список директорий, в которых находятся файлы [seed](/docs/build/seeds).
 
-## Default
+## По умолчанию
 
-By default, dbt expects seeds to be located in the `seeds` directory. For example, `seed-paths: ["seeds"]`. 
+По умолчанию dbt ожидает, что семена будут находиться в директории `seeds`. Например, `seed-paths: ["seeds"]`. 
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -25,20 +25,20 @@ path="seed-paths"
 absolute="/Users/username/project/seed"
 />
 
-- ✅ **Do**
-  - Use relative path:
+- ✅ **Делайте**
+  - Используйте относительный путь:
     ```yml
     seed-paths: ["seed"]
     ```
 
-- ❌ **Don't:**
-  - Avoid absolute paths:
+- ❌ **Не делайте:**
+  - Избегайте абсолютных путей:
     ```yml
     seed-paths: ["/Users/username/project/seed"]
     ```
 
-## Examples
-### Use a directory named `custom_seeds` instead of `seeds`
+## Примеры
+### Используйте директорию с именем `custom_seeds` вместо `seeds`
 
 <File name='dbt_project.yml'>
 
@@ -48,8 +48,8 @@ seed-paths: ["custom_seeds"]
 
 </File>
 
-### Co-locate your models and seeds in the `models` directory
-Note: this works because dbt is looking for different file types for seeds (`.csv` files) and models (`.sql` files).
+### Разместите ваши модели и семена в директории `models`
+Примечание: это работает, потому что dbt ищет разные типы файлов для семян (`.csv` файлы) и моделей (`.sql` файлы).
 
 <File name='dbt_project.yml'>
 
@@ -60,8 +60,8 @@ model-paths: ["models"]
 
 </File>
 
-### Split your seeds across two directories
-Note: We recommend that you instead use two subdirectories within the `seeds/` directory to achieve a similar effect.
+### Разделите ваши семена на две директории
+Примечание: Мы рекомендуем вместо этого использовать две поддиректории внутри директории `seeds/`, чтобы достичь аналогичного эффекта.
 
 <File name='dbt_project.yml'>
 

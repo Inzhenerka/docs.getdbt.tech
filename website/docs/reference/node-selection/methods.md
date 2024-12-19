@@ -1,23 +1,20 @@
 ---
-title: "Node selector methods"
-sidebar: "Node selector methods"
+title: "Методы выбора узлов"
+sidebar: "Методы выбора узлов"
 ---
 
-Selector methods return all resources that share a common property, using the
-syntax `method:value`. While it is recommended to explicitly denote the method,
-you can omit it (the default value will be one of `path`, `file` or `fqn`).
+Методы выбора возвращают все ресурсы, которые имеют общие свойства, используя синтаксис `method:value`. Хотя рекомендуется явно указывать метод, вы можете его опустить (значение по умолчанию будет одним из `path`, `file` или `fqn`).
 
+Многие из методов ниже поддерживают подстановочные знаки в стиле Unix:
 
-Many of the methods below support Unix-style wildcards:
+| Подстановочный знак | Описание                                               |
+| ------------------- | ----------------------------------------------------- |
+| \*                  | соответствует любому количеству любых символов (включая отсутствие) |
+| ?                   | соответствует любому одному символу                   |
+| [abc]               | соответствует одному символу, указанному в скобках    |
+| [a-z]              | соответствует одному символу из диапазона, указанного в скобках |
 
-| Wildcard | Description                                               |
-| -------- | --------------------------------------------------------- |
-| \*       | matches any number of any characters (including none)     |
-| ?        | matches any single character                              |
-| [abc]    | matches one character given in the bracket                |
-| [a-z]    | matches one character from the range given in the bracket |
-
-For example:
+Например:
 ```
 dbt list --select "*.folder_name.*"
 dbt list --select "package:*_source"
@@ -25,29 +22,27 @@ dbt list --select "package:*_source"
 
 ### access
 
-The `access` method selects models based on their [access](/reference/resource-configs/access) property.
+Метод `access` выбирает модели на основе их [свойства доступа](/reference/resource-configs/access).
 
 ```bash
-dbt list --select "access:public"      # list all public models
-dbt list --select "access:private"       # list all private models
-dbt list --select "access:protected"       # list all protected models
+dbt list --select "access:public"      # список всех публичных моделей
+dbt list --select "access:private"       # список всех приватных моделей
+dbt list --select "access:protected"       # список всех защищенных моделей
 ```
 
 ### config
 
-The `config` method is used to select models that match a specified [node config](/reference/configs-and-properties).
+Метод `config` используется для выбора моделей, которые соответствуют указанной [конфигурации узла](/reference/configs-and-properties).
 
-
-
-  ```bash
-dbt run --select "config.materialized:incremental"    # run all models that are materialized incrementally
-dbt run --select "config.schema:audit"              # run all models that are created in the `audit` schema
-dbt run --select "config.cluster_by:geo_country"      # run all models clustered by `geo_country`
+```bash
+dbt run --select "config.materialized:incremental"    # запустить все модели, которые материализуются инкрементально
+dbt run --select "config.schema:audit"              # запустить все модели, которые созданы в схеме `audit`
+dbt run --select "config.cluster_by:geo_country"      # запустить все модели, сгруппированные по `geo_country`
 ```
 
-While most config values are strings, you can also use the `config` method to match boolean configs, dictionary keys, and values in lists.
+Хотя большинство значений конфигурации являются строками, вы также можете использовать метод `config` для сопоставления булевых конфигураций, ключей словарей и значений в списках.
 
-For example, given a model with the following configurations:
+Например, учитывая модель с следующими конфигурациями:
 
 ```bash
 {{ config(
@@ -61,7 +56,7 @@ For example, given a model with the following configurations:
 select ...
 ```
 
- You can select using any of the following:
+Вы можете выбрать, используя любое из следующих:
 ```bash
 dbt ls -s config.materialized:incremental
 dbt ls -s config.unique_key:column_a
@@ -70,24 +65,22 @@ dbt ls -s config.meta.contains_pii:true
 dbt ls -s config.transient:true
 ```
 
-
 ### exposure
 
-The `exposure` method is used to select parent resources of a specified [exposure](/docs/build/exposures). Use in conjunction with the `+` operator.
+Метод `exposure` используется для выбора родительских ресурсов указанного [exposure](/docs/build/exposures). Используйте в сочетании с оператором `+`.
 
-
-  ```bash
-dbt run --select "+exposure:weekly_kpis"                # run all models that feed into the weekly_kpis exposure
-dbt test --select "+exposure:*"                         # test all resources upstream of all exposures
-dbt ls --select "+exposure:*" --resource-type source    # list all source tables upstream of all exposures
+```bash
+dbt run --select "+exposure:weekly_kpis"                # запустить все модели, которые питают exposure weekly_kpis
+dbt test --select "+exposure:*"                         # протестировать все ресурсы, находящиеся выше всех exposures
+dbt ls --select "+exposure:*" --resource-type source    # список всех исходных таблиц, находящихся выше всех exposures
 ```
 
 ### file
 
-The `file` method can be used to select a model by its filename, including the file extension (`.sql`).
+Метод `file` может быть использован для выбора модели по ее имени файла, включая расширение файла (`.sql`).
 
 ```bash
-# These are equivalent
+# Эти команды эквивалентны
 dbt run --select "file:some_model.sql"
 dbt run --select "some_model.sql"
 dbt run --select "some_model"
@@ -95,7 +88,7 @@ dbt run --select "some_model"
 
 ### fqn
 
-The `fqn` method is used to select nodes based off their "fully qualified names" (FQN) within the dbt graph. The default output of [`dbt list`](/reference/commands/list) is a listing of FQN. The default FQN format is composed of the project name, subdirectories within the path, and the file name (without extension) separated by periods.
+Метод `fqn` используется для выбора узлов на основе их "полных квалифицированных имен" (FQN) в графе dbt. Вывод по умолчанию команды [`dbt list`](/reference/commands/list) — это список FQN. Формат FQN по умолчанию состоит из имени проекта, подкаталогов в пути и имени файла (без расширения), разделенных точками.
 
 ```bash
 dbt run --select "fqn:some_model"
@@ -105,199 +98,187 @@ dbt run --select "fqn:some_path.some_model"
 dbt run --select "fqn:your_project.some_path.some_model"
 ```
 
-
 ### group
 
-The `group` method is used to select models defined within a [group](/reference/resource-configs/group).
-
+Метод `group` используется для выбора моделей, определенных в [группе](/reference/resource-configs/group).
 
 ```bash
-dbt run --select "group:finance" # run all models that belong to the finance group.
+dbt run --select "group:finance" # запустить все модели, которые принадлежат группе finance.
 ```
 
 ### metric
 
-The `metric` method is used to select parent resources of a specified [metric](/docs/build/build-metrics-intro). Use in conjunction with the `+` operator.
+Метод `metric` используется для выбора родительских ресурсов указанного [метрика](/docs/build/build-metrics-intro). Используйте в сочетании с оператором `+`.
 
 ```bash
-dbt build --select "+metric:weekly_active_users"       # build all resources upstream of weekly_active_users metric
-dbt ls    --select "+metric:*" --resource-type source  # list all source tables upstream of all metrics
+dbt build --select "+metric:weekly_active_users"       # построить все ресурсы, находящиеся выше метрики weekly_active_users
+dbt ls    --select "+metric:*" --resource-type source  # список всех исходных таблиц, находящихся выше всех метрик
 ```
 
 ### package
 
-The `package` method is used to select models defined within the root project
-or an installed dbt package. While the `package:` prefix is not explicitly required, it may be used to make
-selectors unambiguous.
+Метод `package` используется для выбора моделей, определенных в корневом проекте или установленном пакете dbt. Хотя префикс `package:` не является обязательным, его можно использовать для устранения неоднозначности.
 
-
-  ```bash
-  # These three selectors are equivalent
-  dbt run --select "package:snowplow"
-  dbt run --select "snowplow"
-  dbt run --select "snowplow.*"
+```bash
+# Эти три селектора эквивалентны
+dbt run --select "package:snowplow"
+dbt run --select "snowplow"
+dbt run --select "snowplow.*"
 ```
 
 ### path
-The `path` method is used to select models/sources defined at or under a specific path.
-Model definitions are in SQL/Python files (not YAML), and source definitions are in YAML files.
-While the `path` prefix is not explicitly required, it may be used to make
-selectors unambiguous.
 
+Метод `path` используется для выбора моделей/источников, определенных в или под определенным путем. Определения моделей находятся в SQL/Python файлах (не YAML), а определения источников — в YAML файлах. Хотя префикс `path` не является обязательным, его можно использовать для устранения неоднозначности.
 
-  ```bash
-  # These two selectors are equivalent
-  dbt run --select "path:models/staging/github"
-  dbt run --select "models/staging/github"
+```bash
+# Эти два селектора эквивалентны
+dbt run --select "path:models/staging/github"
+dbt run --select "models/staging/github"
 
-  # These two selectors are equivalent
-  dbt run --select "path:models/staging/github/stg_issues.sql"
-  dbt run --select "models/staging/github/stg_issues.sql"
-  ```
+# Эти два селектора эквивалентны
+dbt run --select "path:models/staging/github/stg_issues.sql"
+dbt run --select "models/staging/github/stg_issues.sql"
+```
 
 ### resource_type
-Use the `resource_type` method to select nodes of a particular type (`model`, `test`, `exposure`, and so on). This is similar to the `--resource-type` flag used by the [`dbt ls` command](/reference/commands/list).
 
-  ```bash
-dbt build --select "resource_type:exposure"    # build all resources upstream of exposures
-dbt list --select "resource_type:test"         # list all tests in your project
-dbt list --select "resource_type:source"       # list all sources in your project
+Используйте метод `resource_type`, чтобы выбрать узлы определенного типа (`model`, `test`, `exposure` и т.д.). Это похоже на флаг `--resource-type`, используемый в команде [`dbt ls`](/reference/commands/list).
+
+```bash
+dbt build --select "resource_type:exposure"    # построить все ресурсы, находящиеся выше exposures
+dbt list --select "resource_type:test"         # список всех тестов в вашем проекте
+dbt list --select "resource_type:source"       # список всех источников в вашем проекте
 ```
 
 ### result
 
-The `result` method is related to the `state` method described above and can be used to select resources based on their result status from a prior run. Note that one of the dbt commands [`run`, `test`, `build`, `seed`] must have been performed in order to create the result on which a result selector operates. You can use `result` selectors in conjunction with the `+` operator. 
+Метод `result` связан с методом `state`, описанным выше, и может быть использован для выбора ресурсов на основе их статуса результата из предыдущего запуска. Обратите внимание, что одна из команд dbt [`run`, `test`, `build`, `seed`] должна была быть выполнена, чтобы создать результат, на основе которого работает селектор результата. Вы можете использовать селекторы `result` в сочетании с оператором `+`.
 
 ```bash
-dbt run --select "result:error" --state path/to/artifacts # run all models that generated errors on the prior invocation of dbt run
-dbt test --select "result:fail" --state path/to/artifacts # run all tests that failed on the prior invocation of dbt test
-dbt build --select "1+result:fail" --state path/to/artifacts # run all the models associated with failed tests from the prior invocation of dbt build
-dbt seed --select "result:error" --state path/to/artifacts # run all seeds that generated errors on the prior invocation of dbt seed.
+dbt run --select "result:error" --state path/to/artifacts # запустить все модели, которые вызвали ошибки при предыдущем запуске dbt run
+dbt test --select "result:fail" --state path/to/artifacts # запустить все тесты, которые не прошли при предыдущем запуске dbt test
+dbt build --select "1+result:fail" --state path/to/artifacts # запустить все модели, связанные с неудачными тестами из предыдущего запуска dbt build
+dbt seed --select "result:error" --state path/to/artifacts # запустить все seed, которые вызвали ошибки при предыдущем запуске dbt seed.
 ```
 
 ### saved_query
 
-The `saved_query` method selects [saved queries](/docs/build/saved-queries).
+Метод `saved_query` выбирает [сохраненные запросы](/docs/build/saved-queries).
 
 ```bash
-dbt list --select "saved_query:*"                    # list all saved queries 
-dbt list --select "+saved_query:orders_saved_query"  # list your saved query named "orders_saved_query" and all upstream resources
+dbt list --select "saved_query:*"                    # список всех сохраненных запросов 
+dbt list --select "+saved_query:orders_saved_query"  # список вашего сохраненного запроса с именем "orders_saved_query" и всех ресурсов выше
 ```
 
 ### semantic_model
 
-The `semantic_model` method selects [semantic models](/docs/build/semantic-models).
+Метод `semantic_model` выбирает [семантические модели](/docs/build/semantic-models).
 
 ```bash
-dbt list --select "semantic_model:*"        # list all semantic models 
-dbt list --select "+semantic_model:orders"  # list your semantic model named "orders" and all upstream resources
+dbt list --select "semantic_model:*"        # список всех семантических моделей 
+dbt list --select "+semantic_model:orders"  # список вашей семантической модели с именем "orders" и всех ресурсов выше
 ```
 
 ### source
-The `source` method is used to select models that select from a specified [source](/docs/build/sources#using-sources). Use in conjunction with the `+` operator.
 
+Метод `source` используется для выбора моделей, которые выбирают из указанного [источника](/docs/build/sources#using-sources). Используйте в сочетании с оператором `+`.
 
-  ```bash
-dbt run --select "source:snowplow+"    # run all models that select from Snowplow sources
+```bash
+dbt run --select "source:snowplow+"    # запустить все модели, которые выбирают из источников Snowplow
 ```
 
 ### source_status
-  
-Another element of job state is the `source_status` of a prior dbt invocation. After executing `dbt source freshness`, for example, dbt creates the `sources.json` artifact which contains execution times and `max_loaded_at` dates for dbt sources. You can read more about `sources.json` on the ['sources'](/reference/artifacts/sources-json) page. 
 
-The following dbt commands produce `sources.json` artifacts whose results can be referenced in subsequent dbt invocations:  
+Еще одним элементом состояния задания является `source_status` предыдущего вызова dbt. После выполнения, например, `dbt source freshness`, dbt создает артефакт `sources.json`, который содержит времена выполнения и даты `max_loaded_at` для источников dbt. Вы можете узнать больше о `sources.json` на странице ['sources'](/reference/artifacts/sources-json).
+
+Следующие команды dbt создают артефакты `sources.json`, результаты которых могут быть использованы в последующих вызовах dbt:  
 - `dbt source freshness`
 
-After issuing one of the above commands, you can reference the source freshness results by adding a selector to a subsequent command as follows: 
-
+После выполнения одной из вышеуказанных команд вы можете ссылаться на результаты свежести источника, добавив селектор к следующей команде следующим образом:
 
 ```bash
-# You can also set the DBT_STATE environment variable instead of the --state flag.
-dbt source freshness # must be run again to compare current to previous state
+# Вы также можете установить переменную окружения DBT_STATE вместо флага --state.
+dbt source freshness # должен быть выполнен снова для сравнения текущего состояния с предыдущим
 dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 ```
 
 ### state
 
-**N.B.** State-based selection is a powerful, complex feature. Read about [known caveats and limitations](/reference/node-selection/state-comparison-caveats) to state comparison.
+**Примечание.** Выбор на основе состояния — это мощная, сложная функция. Ознакомьтесь с [известными проблемами и ограничениями](/reference/node-selection/state-comparison-caveats) для сравнения состояния.
 
-The `state` method is used to select nodes by comparing them against a previous version of the same project, which is represented by a [manifest](/reference/artifacts/manifest-json). The file path of the comparison manifest _must_ be specified via the `--state` flag or `DBT_STATE` environment variable.
+Метод `state` используется для выбора узлов путем их сравнения с предыдущей версией того же проекта, которая представлена [манифестом](/reference/artifacts/manifest-json). Путь к файлу манифеста для сравнения _должен_ быть указан через флаг `--state` или переменную окружения `DBT_STATE`.
 
-`state:new`: There is no node with the same `unique_id` in the comparison manifest
+`state:new`: Узел с тем же `unique_id` отсутствует в манифесте сравнения
 
-`state:modified`: All new nodes, plus any changes to existing nodes.
+`state:modified`: Все новые узлы, а также любые изменения в существующих узлах.
 
-  ```bash
-dbt test --select "state:new" --state path/to/artifacts      # run all tests on new models + and new tests on old models
-dbt run --select "state:modified" --state path/to/artifacts  # run all models that have been modified
-dbt ls --select "state:modified" --state path/to/artifacts   # list all modified nodes (not just models)
-  ```
+```bash
+dbt test --select "state:new" --state path/to/artifacts      # запустить все тесты на новых моделях + и новые тесты на старых моделях
+dbt run --select "state:modified" --state path/to/artifacts  # запустить все модели, которые были изменены
+dbt ls --select "state:modified" --state path/to/artifacts   # список всех измененных узлов (не только моделей)
+```
 
-Because state comparison is complex, and everyone's project is different, dbt supports subselectors that include a subset of the full `modified` criteria:
-- `state:modified.body`: Changes to node body (e.g. model SQL, seed values)
-- `state:modified.configs`: Changes to any node configs, excluding `database`/`schema`/`alias`
-- `state:modified.relation`: Changes to `database`/`schema`/`alias` (the database representation of this node), irrespective of `target` values or `generate_x_name` macros
-- `state:modified.persisted_descriptions`: Changes to relation- or column-level `description`, _if and only if_ `persist_docs` is enabled at each level
-- `state:modified.macros`: Changes to upstream macros (whether called directly or indirectly by another macro)
-- `state:modified.contract`: Changes to a model's [contract](/reference/resource-configs/contract), which currently include the `name` and `data_type` of `columns`. Removing or changing the type of an existing column is considered a breaking change, and will raise an error.
+Поскольку сравнение состояния является сложным, и каждый проект уникален, dbt поддерживает подселекторы, которые включают подмножество полных критериев `modified`:
+- `state:modified.body`: Изменения в теле узла (например, SQL модели, значения seed)
+- `state:modified.configs`: Изменения в любых конфигурациях узлов, исключая `database`/`schema`/`alias`
+- `state:modified.relation`: Изменения в `database`/`schema`/`alias` (представление базы данных этого узла), независимо от значений `target` или макросов `generate_x_name`
+- `state:modified.persisted_descriptions`: Изменения в `description` на уровне отношения или столбца, _если и только если_ `persist_docs` включен на каждом уровне
+- `state:modified.macros`: Изменения в верхних макросах (независимо от того, вызываются ли они напрямую или косвенно другим макросом)
+- `state:modified.contract`: Изменения в [контракте](/reference/resource-configs/contract) модели, которые в настоящее время включают `name` и `data_type` столбцов. Удаление или изменение типа существующего столбца считается нарушением, и вызовет ошибку.
 
-Remember that `state:modified` includes _all_ of the criteria above, as well as some extra resource-specific criteria, such as modifying a source's `freshness` or `quoting` rules or an exposure's `maturity` property. (View the source code for the full set of checks used when comparing [sources](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L660-L681), [exposures](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L768-L783), and [executable nodes](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L319-L330).)
+Помните, что `state:modified` включает _все_ вышеперечисленные критерии, а также некоторые дополнительные специфические для ресурса критерии, такие как изменение `freshness` или правил `quoting` источника или свойства `maturity` exposure. (Посмотрите исходный код для полного набора проверок, используемых при сравнении [источников](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L660-L681), [exposures](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L768-L783) и [выполнимых узлов](https://github.com/dbt-labs/dbt-core/blob/9e796671dd55d4781284d36c035d1db19641cd80/core/dbt/contracts/graph/parsed.py#L319-L330).)
 
-There are two additional `state` selectors that complement `state:new` and `state:modified` by representing the inverse of those functions:
-- `state:old` &mdash; A node with the same `unique_id` exists in the comparison manifest
-- `state:unmodified` &mdash; All existing nodes with no changes 
+Существуют два дополнительных селектора `state`, которые дополняют `state:new` и `state:modified`, представляя инверсии этих функций:
+- `state:old` &mdash; Узел с тем же `unique_id` существует в манифесте сравнения
+- `state:unmodified` &mdash; Все существующие узлы без изменений
 
-These selectors can help you shorten run times by excluding unchanged nodes. Currently, no subselectors are available at this time, but that might change as use cases evolve. 
+Эти селекторы могут помочь вам сократить время выполнения, исключив неизмененные узлы. В настоящее время подселекторы недоступны, но это может измениться по мере развития случаев использования.
 
 ### tag
-The `tag:` method is used to select models that match a specified [tag](/reference/resource-configs/tags).
 
+Метод `tag:` используется для выбора моделей, которые соответствуют указанному [тегу](/reference/resource-configs/tags).
 
-  ```bash
-dbt run --select "tag:nightly"    # run all models with the `nightly` tag
+```bash
+dbt run --select "tag:nightly"    # запустить все модели с тегом `nightly`
 ```
 
 ### test_name
 
-The `test_name` method is used to select tests based on the name of the generic test
-that defines it. For more information about how generic tests are defined, read about
-[tests](/docs/build/data-tests).
+Метод `test_name` используется для выбора тестов на основе имени общего теста, который его определяет. Для получения дополнительной информации о том, как определяются общие тесты, читайте о [тестах](/docs/build/data-tests).
 
-
-  ```bash
-dbt test --select "test_name:unique"            # run all instances of the `unique` test
-dbt test --select "test_name:equality"          # run all instances of the `dbt_utils.equality` test
-dbt test --select "test_name:range_min_max"     # run all instances of a custom schema test defined in the local project, `range_min_max`
+```bash
+dbt test --select "test_name:unique"            # запустить все экземпляры теста `unique`
+dbt test --select "test_name:equality"          # запустить все экземпляры теста `dbt_utils.equality`
+dbt test --select "test_name:range_min_max"     # запустить все экземпляры пользовательского схемного теста, определенного в локальном проекте, `range_min_max`
 ```
 
-### The test_type
+### test_type
 
 <VersionBlock lastVersion="1.7">
 
-The `test_type` method is used to select tests based on their type, `singular` or `generic`:
+Метод `test_type` используется для выбора тестов на основе их типа, `singular` или `generic`:
 
 ```bash
-dbt test --select "test_type:generic"        # run all generic tests
-dbt test --select "test_type:singular"       # run all singular tests
+dbt test --select "test_type:generic"        # запустить все общие тесты
+dbt test --select "test_type:singular"       # запустить все единичные тесты
 ```
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.8">
 
-The `test_type` method is used to select tests based on their type: 
+Метод `test_type` используется для выбора тестов на основе их типа:
 
-- [Unit tests](/docs/build/unit-tests)
-- [Data tests](/docs/build/data-tests):
-  - [Singular](/docs/build/data-tests#singular-data-tests)
-  - [Generic](/docs/build/data-tests#generic-data-tests)
-
+- [Единичные тесты](/docs/build/unit-tests)
+- [Данные тесты](/docs/build/data-tests):
+  - [Единичные](/docs/build/data-tests#singular-data-tests)
+  - [Общие](/docs/build/data-tests#generic-data-tests)
 
 ```bash
-dbt test --select "test_type:unit"           # run all unit tests
-dbt test --select "test_type:data"           # run all data tests
-dbt test --select "test_type:generic"        # run all generic data tests
-dbt test --select "test_type:singular"       # run all singular data tests
+dbt test --select "test_type:unit"           # запустить все единичные тесты
+dbt test --select "test_type:data"           # запустить все тесты данных
+dbt test --select "test_type:generic"        # запустить все общие тесты данных
+dbt test --select "test_type:singular"       # запустить все единичные тесты данных
 ```
 
 </VersionBlock>
@@ -305,27 +286,27 @@ dbt test --select "test_type:singular"       # run all singular data tests
 ### unit_test
 
 <VersionBlock lastVersion="1.7">
-Supported in v1.8 or newer.
+Поддерживается в версии 1.8 или новее.
 </VersionBlock>
 <VersionBlock firstVersion="1.8">
 
-The `unit_test` method selects [unit tests](/docs/build/unit-tests).
+Метод `unit_test` выбирает [единичные тесты](/docs/build/unit-tests).
 
 ```bash
-dbt list --select "unit_test:*"                        # list all unit tests 
-dbt list --select "+unit_test:orders_with_zero_items"  # list your unit test named "orders_with_zero_items" and all upstream resources
+dbt list --select "unit_test:*"                        # список всех единичных тестов 
+dbt list --select "+unit_test:orders_with_zero_items"  # список вашего единичного теста с именем "orders_with_zero_items" и всех ресурсов выше
 ```
 
 </VersionBlock>
 
 ### version
 
-The `version` method selects [versioned models](/docs/collaborate/govern/model-versions) based on their [version identifier](/reference/resource-properties/versions) and [latest version](/reference/resource-properties/latest_version).
+Метод `version` выбирает [версионированные модели](/docs/collaborate/govern/model-versions) на основе их [идентификатора версии](/reference/resource-properties/versions) и [последней версии](/reference/resource-properties/latest_version).
 
 ```bash
-dbt list --select "version:latest"      # only 'latest' versions
-dbt list --select "version:prerelease"  # versions newer than the 'latest' version
-dbt list --select "version:old"         # versions older than the 'latest' version
+dbt list --select "version:latest"      # только 'последние' версии
+dbt list --select "version:prerelease"  # версии, более новые, чем 'последняя' версия
+dbt list --select "version:old"         # версии, более старые, чем 'последняя' версия
 
-dbt list --select "version:none"        # models that are *not* versioned
+dbt list --select "version:none"        # модели, которые *не* имеют версии
 ```

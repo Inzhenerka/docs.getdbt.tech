@@ -1,6 +1,6 @@
 ---
-title: on-run-start & on-run-end
-description: "Read this guide to understand the on-run-start and on-run-end configurations in dbt."
+title: on-run-start и on-run-end
+description: "Прочитайте это руководство, чтобы понять конфигурации on-run-start и on-run-end в dbt."
 datatype: sql-statement | [sql-statement]
 ---
 
@@ -15,20 +15,19 @@ on-run-end: sql-statement | [sql-statement]
 
 </File>
 
+## Определение
 
-## Definition
+SQL-оператор (или список SQL-операторов), который будет выполнен в начале или в конце следующих команд: <OnRunCommands />
 
-A SQL statement (or list of SQL statements) to be run at the start or end of the following commands: <OnRunCommands />
+Хуки `on-run-start` и `on-run-end` также могут [вызывать макросы](#call-a-macro-to-grant-privileges), которые возвращают SQL-операторы.
 
-`on-run-start` and `on-run-end` hooks can also [call macros](#call-a-macro-to-grant-privileges) that return SQL statements.
+## Примечания по использованию
+* Хук `on-run-end` имеет дополнительные переменные jinja, доступные в контексте — ознакомьтесь с [документацией](/reference/dbt-jinja-functions/on-run-end-context).
 
-## Usage notes
-* The `on-run-end` hook has additional jinja variables available in the context — check out the [docs](/reference/dbt-jinja-functions/on-run-end-context).
+## Примеры
 
-## Examples
-
-### Grant privileges on all schemas that dbt uses at the end of a run
-This leverages the [schemas](/reference/dbt-jinja-functions/schemas) variable that is only available in an `on-run-end` hook.
+### Предоставление привилегий на все схемы, которые использует dbt, в конце выполнения
+Это использует переменную [schemas](/reference/dbt-jinja-functions/schemas), которая доступна только в хуке `on-run-end`.
 
 <File name='dbt_project.yml'>
 
@@ -40,7 +39,7 @@ on-run-end:
 
 </File>
 
-### Call a macro to grant privileges
+### Вызов макроса для предоставления привилегий
 
 <File name='dbt_project.yml'>
 
@@ -51,5 +50,5 @@ on-run-end: "{{ grant_select(schemas) }}"
 
 </File>
 
-### Additional examples
-We've compiled some more in-depth examples [here](/docs/build/hooks-operations#additional-examples).
+### Дополнительные примеры
+Мы собрали еще несколько более подробных примеров [здесь](/docs/build/hooks-operations#additional-examples).

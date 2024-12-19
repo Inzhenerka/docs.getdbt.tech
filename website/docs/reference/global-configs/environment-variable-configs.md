@@ -1,10 +1,10 @@
 ---
-title: "Environment variable configs"
+title: "Конфигурации переменных окружения"
 id: "environment-variable-configs"
-sidebar: "Environment variable configs"
+sidebar: "Конфигурации переменных окружения"
 ---
 
-Environment variables contain a `DBT_` prefix. For a list of all dbt environment variables you can set, refer to [Available flags](/reference/global-configs/about-global-configs#available-flags).
+Переменные окружения содержат префикс `DBT_`. Для получения списка всех переменных окружения dbt, которые вы можете установить, обратитесь к разделу [Доступные флаги](/reference/global-configs/about-global-configs#available-flags).
 
 <File name='Env var'>
 
@@ -17,4 +17,4 @@ dbt run
 
 </File>
 
-For more detailed information, read our [environment variables page](/docs/build/environment-variables).
+Для получения более подробной информации ознакомьтесь с нашей [страницей о переменных окружения](/docs/build/environment-variables).

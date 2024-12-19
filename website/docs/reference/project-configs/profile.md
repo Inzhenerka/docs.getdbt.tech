@@ -1,6 +1,6 @@
 ---
 datatype: string
-description: "Read this guide to understand the profile configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию профиля в dbt."
 ---
 <File name='dbt_project.yml'>
 
@@ -10,20 +10,20 @@ profile: string
 
 </File>
 
-## Definition
-The profile your dbt project should use to connect to your <Term id="data-warehouse" />.
-* If you are developing in dbt Cloud: This configuration is not applicable
-* If you are developing locally: This configuration is required, unless a command-line option (i.e. `--profile`) is supplied.
+## Определение
+Профиль, который должен использовать ваш проект dbt для подключения к вашему <Term id="data-warehouse" />.
+* Если вы разрабатываете в dbt Cloud: Эта конфигурация не применима.
+* Если вы разрабатываете локально: Эта конфигурация обязательна, если не указан параметр командной строки (т.е. `--profile`).
 
-## Related guides
-* [Connecting to your warehouse using the command line](/docs/core/connect-data-platform/connection-profiles#connecting-to-your-warehouse-using-the-command-line)
+## Связанные руководства
+* [Подключение к вашему хранилищу данных с помощью командной строки](/docs/core/connect-data-platform/connection-profiles#connecting-to-your-warehouse-using-the-command-line)
 
-## Recommendation
-Often an organization has only one <Term id="data-warehouse" />, so it is sensible to use your organization's name as a profile name, in `snake_case`. For example:
+## Рекомендация
+Часто в организации есть только одно <Term id="data-warehouse" />, поэтому разумно использовать название вашей организации в качестве имени профиля, в формате `snake_case`. Например:
 * `profile: acme`
 * `profile: jaffle_shop`
 
-It is also reasonable to include the name of your warehouse technology in your profile name, particularly if you have multiple warehouses. For example:
+Также разумно включить название технологии вашего хранилища в имя профиля, особенно если у вас несколько хранилищ. Например:
 * `profile: acme_snowflake`
 * `profile: jaffle_shop_bigquery`
 * `profile: jaffle_shop_redshift`

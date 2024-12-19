@@ -1,21 +1,20 @@
 ---
-title: "About dbt_version variable"
+title: "О переменной dbt_version"
 sidebar_label: "dbt_version"
 id: "dbt_version"
-description: "Read this guide to understand the dbt_version Jinja function in dbt."
+description: "Прочитайте это руководство, чтобы понять функцию Jinja dbt_version в dbt."
 ---
 
-The `dbt_version` variable returns the installed version of dbt that is
-currently running. It can be used for debugging or auditing purposes. For details about release versioning, refer to [Versioning](/reference/commands/version#versioning).
+Переменная `dbt_version` возвращает установленную версию dbt, которая в данный момент используется. Она может быть использована для отладки или аудита. Для получения информации о версиях релизов обратитесь к разделу [Версионирование](/reference/commands/version#versioning).
 
-## Example usages
+## Примеры использования
 
 <File name="macros/get_version.sql">
 
 ```sql
 {% macro get_version() %}
 
-  {% do log("The installed version of dbt is: " ~ dbt_version, info=true) %}
+  {% do log("Установленная версия dbt: " ~ dbt_version, info=true) %}
 
 {% endmacro %}
 ```
@@ -25,5 +24,5 @@ currently running. It can be used for debugging or auditing purposes. For detail
 
 ```
 $ dbt run-operation get_version
-The installed version of dbt is 0.16.0
+Установленная версия dbt: 0.16.0
 ```

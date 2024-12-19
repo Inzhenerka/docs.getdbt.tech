@@ -1,21 +1,21 @@
 ---
-title: "Microsoft Azure Synapse DWH configurations"
+title: "Конфигурации DWH для Microsoft Azure Synapse"
 id: "azuresynapse-configs"
 ---
 
-All [configuration options for the Microsoft SQL Server adapter](mssql-configs) also apply to this adapter.
+Все [опции конфигурации для адаптера Microsoft SQL Server](mssql-configs) также применимы к этому адаптеру.
 
-Additionally, the configuration options below are available.
+Кроме того, доступны следующие параметры конфигурации.
 
-### Indices and distributions
+### Индексы и распределения
 
-The main index and the distribution type can be set for models that are materialized to tables.
+Основной индекс и тип распределения могут быть установлены для моделей, которые материализуются в таблицы.
 
 <Tabs
     defaultValue="model"
     values={[
-        {label: 'Model config', value: 'model'},
-        {label: 'Project config', value: 'project'}
+        {label: 'Конфигурация модели', value: 'model'},
+        {label: 'Конфигурация проекта', value: 'project'}
     ]}
 >
 
@@ -58,15 +58,15 @@ models:
 
 </Tabs>
 
-The following are the supported index types:
+Следующие типы индексов поддерживаются:
 
-* `CLUSTERED COLUMNSTORE INDEX` (default)
+* `CLUSTERED COLUMNSTORE INDEX` (по умолчанию)
 * `HEAP`
 * `CLUSTERED INDEX (COLUMN_NAME)`
 * `CLUSTERED COLUMNSTORE INDEX ORDER(COLUMN_NAME)`
 
-The following are the supported distribution types:
+Следующие типы распределения поддерживаются:
 
-* `ROUND_ROBIN` (default)
+* `ROUND_ROBIN` (по умолчанию)
 * `HASH(COLUMN_NAME)`
 * `REPLICATE`

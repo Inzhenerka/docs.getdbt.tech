@@ -1,61 +1,61 @@
 ---
-title: "About target variables"
+title: "О переменных target"
 sidebar_label: "target"
 id: "target"
-description: "The `target` variable contains information about your connection to the warehouse."
+description: "Переменная `target` содержит информацию о вашем подключении к хранилищу данных."
 ---
 
-The `target` variable contains information about your connection to the warehouse.
+Переменная `target` содержит информацию о вашем подключении к хранилищу данных.
 
-- **dbt Core:** These values are based on the target defined in your [profiles.yml](/docs/core/connect-data-platform/profiles.yml) file. Please note that for certain adapters, additional configuration steps may be required. Refer to the [set up page](/docs/core/connect-data-platform/about-core-connections) for your data platform.
-- **dbt Cloud** To learn more about setting up your adapter in dbt Cloud, refer to [About data platform connections](/docs/cloud/connect-data-platform/about-connections).
-   - **[dbt Cloud Scheduler](/docs/deploy/job-scheduler)**: `target.name` is defined per job as described in [Custom target names](/docs/build/custom-target-names). For other attributes, values are defined by the deployment connection. To check these values, click **Deploy** and select **Environments**. Then, select the relevant deployment environment, and click **Settings**.
-   - **[dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)**: These values are defined by your connection and credentials. To edit these values, click on your account name in the left side menu and select **Account settings**. Then, click **Credentials**. Select and edit a project to set up the credentials and target name.
+- **dbt Core:** Эти значения основаны на целевом значении, определенном в вашем файле [profiles.yml](/docs/core/connect-data-platform/profiles.yml). Обратите внимание, что для некоторых адаптеров могут потребоваться дополнительные шаги конфигурации. Обратитесь к [странице настройки](/docs/core/connect-data-platform/about-core-connections) для вашей платформы данных.
+- **dbt Cloud:** Чтобы узнать больше о настройке вашего адаптера в dbt Cloud, обратитесь к разделу [О подключениях к платформам данных](/docs/cloud/connect-data-platform/about-connections).
+   - **[dbt Cloud Scheduler](/docs/deploy/job-scheduler)**: `target.name` определяется для каждой задачи, как описано в разделе [Пользовательские имена целей](/docs/build/custom-target-names). Для других атрибутов значения определяются подключением развертывания. Чтобы проверить эти значения, нажмите **Deploy** и выберите **Environments**. Затем выберите соответствующую среду развертывания и нажмите **Settings**.
+   - **[dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud)**: Эти значения определяются вашим подключением и учетными данными. Чтобы изменить эти значения, нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**. Затем нажмите **Credentials**. Выберите и отредактируйте проект, чтобы настроить учетные данные и имя цели.
 
-Some configurations are shared between all adapters, while others are adapter-specific.
+Некоторые конфигурации общие для всех адаптеров, в то время как другие специфичны для адаптера.
 
-## Common
-| Variable | Example | Description |
+## Общие
+| Переменная | Пример | Описание |
 | -------- | ------- | ----------- |
-| `target.profile_name` | jaffle_shop | The name of the active profile |
-| `target.name` | dev | Name of the active target |
-| `target.schema` | dbt_alice | Name of the dbt schema (or, dataset on BigQuery) |
-| `target.type` | postgres | The active adapter being used. One of "postgres", "snowflake", "bigquery", "redshift", "databricks" |
-| `target.threads` | 4 | The number of threads in use by dbt |
+| `target.profile_name` | jaffle_shop | Имя активного профиля |
+| `target.name` | dev | Имя активной цели |
+| `target.schema` | dbt_alice | Имя схемы dbt (или набора данных в BigQuery) |
+| `target.type` | postgres | Активный используемый адаптер. Один из "postgres", "snowflake", "bigquery", "redshift", "databricks" |
+| `target.threads` | 4 | Количество потоков, используемых dbt |
 
 
-## Adapter-specific
+## Специфично для адаптера
 ### Snowflake
 
-| Variable | Example | Description |
+| Переменная | Пример | Описание |
 | -------- | ------- | ----------- |
-| `target.database` | RAW | Database name specified in active target. |
-| `target.warehouse` | TRANSFORM | Name of the Snowflake virtual warehouse |
-| `target.user` | TRANSFORM_USER | The user specified in the active target |
-| `target.role` | TRANSFORM_ROLE | The role specified in the active target |
-| `target.account` | abc123 | The account specified in the active target |
+| `target.database` | RAW | Имя базы данных, указанное в активной цели. |
+| `target.warehouse` | TRANSFORM | Имя виртуального хранилища Snowflake |
+| `target.user` | TRANSFORM_USER | Пользователь, указанный в активной цели |
+| `target.role` | TRANSFORM_ROLE | Роль, указанная в активной цели |
+| `target.account` | abc123 | Учетная запись, указанная в активной цели |
 
 ### Postgres/Redshift
 
-| Variable | Example | Description |
+| Переменная | Пример | Описание |
 | -------- | ------- | ----------- |
-| `target.dbname` | analytics | Database name specified in active target. |
-| `target.host` | abc123.us-west-2.redshift.amazonaws.com | The host specified in active target |
-| `target.user` | dbt_user | The user specified in the active target |
-| `target.port` | 5439 | The port specified in the active profile |
+| `target.dbname` | analytics | Имя базы данных, указанное в активной цели. |
+| `target.host` | abc123.us-west-2.redshift.amazonaws.com | Хост, указанный в активной цели |
+| `target.user` | dbt_user | Пользователь, указанный в активной цели |
+| `target.port` | 5439 | Порт, указанный в активном профиле |
 
 ### BigQuery
 
-| Variable | Example | Description |
+| Переменная | Пример | Описание |
 | -------- | ------- | ----------- |
-| `target.project` | abc-123 | The project specified in the active profile |
-| `target.dataset` | dbt_alice | The dataset the active profile |
+| `target.project` | abc-123 | Проект, указанный в активном профиле |
+| `target.dataset` | dbt_alice | Набор данных активного профиля |
 
-## Examples
+## Примеры
 
-### Use `target.name` to limit data in dev
+### Используйте `target.name` для ограничения данных в dev
 
-As long as you use sensible target names, you can perform conditional logic to limit data when working in dev.
+Пока вы используете разумные имена целей, вы можете выполнять условную логику для ограничения данных при работе в dev.
 
 ```sql
 select
@@ -66,11 +66,9 @@ where created_at >= dateadd('day', -3, current_date)
 {% endif %}
 ```
 
-### Use `target.name` to change your source database
+### Используйте `target.name` для изменения вашей исходной базы данных
 
-If you have specific Snowflake databases configured for your dev/qa/prod environments,
-you can set up your sources to compile to different databases depending on your 
-environment. 
+Если у вас есть конкретные базы данных Snowflake, настроенные для ваших сред dev/qa/prod, вы можете настроить свои источники для компиляции в разные базы данных в зависимости от вашей среды.
 
 ```yml
 version: 2

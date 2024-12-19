@@ -1,17 +1,17 @@
 ---
-title: "About statement blocks"
-sidebar_label: "statement blocks"
+title: "О блоках операторов"
+sidebar_label: "блоки операторов"
 id: "statement-blocks"
-description: "SQL queries that hit database and return results to your jinja context."
+description: "SQL-запросы, которые обращаются к базе данных и возвращают результаты в ваш контекст Jinja."
 ---
 
-:::tip Recommendation
+:::tip Рекомендация
 
-We recommend using the [`run_query` macro](/reference/dbt-jinja-functions/run_query) instead of `statement` blocks. The `run_query` macro provides a more convenient way to run queries and fetch their results by wrapping `statement` blocks. You can use this macro to write more concise code that is easier to maintain.
+Мы рекомендуем использовать [`макрос run_query`](/reference/dbt-jinja-functions/run_query) вместо блоков `statement`. Макрос `run_query` предоставляет более удобный способ выполнения запросов и получения их результатов, оборачивая блоки `statement`. Вы можете использовать этот макрос для написания более лаконичного кода, который легче поддерживать.
 
 :::
 
-`statement`s are sql queries that hit the database and return results to your Jinja context. Here’s an example of a `statement` which gets all of the states from a users <Term id="table" />.
+`statement` — это SQL-запросы, которые обращаются к базе данных и возвращают результаты в ваш контекст Jinja. Вот пример `statement`, который получает все штаты из таблицы пользователей <Term id="table" />.
 
 <File name='get_states_statement.sql'>
 
@@ -27,15 +27,15 @@ We recommend using the [`run_query` macro](/reference/dbt-jinja-functions/run_qu
 
 </File>
 
-The signature of the `statement` block looks like this:
+Подпись блока `statement` выглядит следующим образом:
 
 ```
 statement(name=None, fetch_result=False, auto_begin=True)
 ```
 
-When executing a `statement`, dbt needs to understand how to resolve references to other dbt models or resources. If you are already `ref`ing the model outside of the statement block, the dependency will be automatically inferred, but otherwise you will need to [force the dependency](/reference/dbt-jinja-functions/ref#forcing-dependencies) with `-- depends_on`.
+При выполнении `statement` dbt необходимо понять, как разрешить ссылки на другие модели или ресурсы dbt. Если вы уже используете `ref` для модели вне блока statement, зависимость будет автоматически определена, но в противном случае вам нужно будет [принудительно установить зависимость](/reference/dbt-jinja-functions/ref#forcing-dependencies) с помощью `-- depends_on`.
 
-<Expandable alt_header="Example using -- depends_on">
+<Expandable alt_header="Пример использования -- depends_on">
 
 ```sql
 -- depends_on: {{ ref('users') }}
@@ -45,13 +45,13 @@ When executing a `statement`, dbt needs to understand how to resolve references 
     select distinct state from {{ ref('users') }}
 
     /*
-    The unique states are: {{ load_result('states')['data'] }}
+    Уникальные штаты: {{ load_result('states')['data'] }}
     */
 {%- endcall %}
 ```
 </Expandable>
 
-<Expandable alt_header="Example using ref() function">
+<Expandable alt_header="Пример использования функции ref()">
 
 ```sql
 
@@ -60,7 +60,7 @@ When executing a `statement`, dbt needs to understand how to resolve references 
     select distinct state from {{ ref('users') }}
 
     /*
-    The unique states are: {{ load_result('states')['data'] }}
+    Уникальные штаты: {{ load_result('states')['data'] }}
     */
 
 {%- endcall %}
@@ -69,17 +69,17 @@ select id * 2 from {{ ref('users') }}
 ```
 </Expandable>
 
-__Args__:
- - `name` (string): The name for the result set returned by this statement
- - `fetch_result` (bool): If True, load the results of the statement into the Jinja context
- - `auto_begin` (bool): If True, open a transaction if one does not exist. If false, do not open a transaction.
+__Аргументы__:
+ - `name` (строка): Имя для набора результатов, возвращаемого этим оператором
+ - `fetch_result` (логическое): Если True, загрузить результаты оператора в контекст Jinja
+ - `auto_begin` (логическое): Если True, открыть транзакцию, если она не существует. Если false, не открывать транзакцию.
 
-Once the statement block has executed, the result set is accessible via the `load_result` function. The result object includes three keys:
-- `response`: Structured object containing metadata returned from the database, which varies by adapter. E.g. success `code`, number of `rows_affected`, total `bytes_processed`, etc. Comparable to `adapter_response` in the [Result object](/reference/dbt-classes#result-objects).
-- `data`: Pythonic representation of data returned by query (arrays, tuples, dictionaries).
-- `table`: [Agate](https://agate.readthedocs.io/page/api/table.html) table representation of data returned by query.
+После выполнения блока оператора набор результатов доступен через функцию `load_result`. Объект результата включает три ключа:
+- `response`: Структурированный объект, содержащий метаданные, возвращенные из базы данных, которые варьируются в зависимости от адаптера. Например, код `success`, количество `rows_affected`, общее количество `bytes_processed` и т.д. Сравнимо с `adapter_response` в [Объекте результата](/reference/dbt-classes#result-objects).
+- `data`: Питоническое представление данных, возвращенных запросом (массивы, кортежи, словари).
+- `table`: [Agate](https://agate.readthedocs.io/page/api/table.html) представление данных, возвращенных запросом.
 
-For the above statement, that could look like:
+Для приведенного выше оператора это может выглядеть так:
 
 <File name='load_states.sql'>
 
@@ -91,7 +91,7 @@ For the above statement, that could look like:
 
 </File>
 
-The contents of the returned `data` field is a matrix. It contains a list rows, with each row being a list of values returned by the database. For the above example, this data structure might look like:
+Содержимое возвращаемого поля `data` представляет собой матрицу. Она содержит список строк, каждая из которых является списком значений, возвращенных базой данных. Для приведенного выше примера эта структура данных может выглядеть так:
 
 <File name='states.sql'>
 

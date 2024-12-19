@@ -1,32 +1,31 @@
 ---
-title: "About source function"
+title: "О функции source"
 sidebar_label: "source"
 id: "source"
-description: "Read this guide to understand the source Jinja function in dbt."
+description: "Прочитайте это руководство, чтобы понять функцию source Jinja в dbt."
 ---
 
 ```sql
 select * from {{ source("source_name", "table_name") }}
 ```
 
-## Definition
+## Определение
 
-This function:
-- Returns a [Relation](/reference/dbt-classes#relation) for a [source](/docs/build/sources)
-- Creates dependencies between a source and the current model, which is useful for documentation and [node selection](/reference/node-selection/syntax)
-- Compiles to the full object name in the database
+Эта функция:
+- Возвращает [Relation](/reference/dbt-classes#relation) для [source](/docs/build/sources)
+- Создает зависимости между источником и текущей моделью, что полезно для документации и [выбора узлов](/reference/node-selection/syntax)
+- Компилируется в полное имя объекта в базе данных
 
+## Связанные руководства
+- [Использование источников](/docs/build/sources)
 
-## Related guides
-- [Using sources](/docs/build/sources)
+## Аргументы
+* `source_name`: `name:`, определенное под ключом `sources:`
+* `table_name`: `name:`, определенное под ключом `tables:`
 
-## Arguments
-* `source_name`: The `name:` defined under a `sources:` key
-* `table_name`: The `name:` defined under a `tables:` key
+## Пример
 
-## Example
-
-Consider a source defined as follows:
+Рассмотрим источник, определенный следующим образом:
 
 <File name='models/<filename>.yml'>
 
@@ -34,17 +33,17 @@ Consider a source defined as follows:
 version: 2
 
 sources:
-  - name: jaffle_shop # this is the source_name
+  - name: jaffle_shop # это source_name
     database: raw
 
     tables:
-      - name: customers # this is the table_name
+      - name: customers # это table_name
       - name: orders
 ```
 
 </File>
 
-Select from the source in a model:
+Выбор из источника в модели:
 
 <File name='models/orders.sql'>
 

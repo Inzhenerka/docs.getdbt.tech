@@ -1,23 +1,23 @@
 ---
-title: "About ref function"
+title: "О функции ref"
 sidebar_label: "ref"
 id: "ref"
-description: "Read this guide to understand the ref Jinja function in dbt."
-keyword: dbt mesh, project dependencies, ref, cross project ref
+description: "Прочитайте это руководство, чтобы понять функцию Jinja ref в dbt."
+keyword: dbt mesh, зависимости проекта, ref, кросс-проектный ref
 ---
 
 ```sql
 select * from {{ ref("node_name") }}
 ```
 
-## Definition
+## Определение
 
-This function:
-- Returns a [Relation](/reference/dbt-classes#relation) for a [model](/docs/build/models), [seed](/docs/build/seeds), or [snapshot](/docs/build/snapshots)
-- Creates dependencies between the referenced node and the current model, which is useful for documentation and [node selection](/reference/node-selection/syntax)
-- Compiles to the full object name in the database
+Эта функция:
+- Возвращает [Relation](/reference/dbt-classes#relation) для [модели](/docs/build/models), [seed](/docs/build/seeds) или [snapshot](/docs/build/snapshots)
+- Создает зависимости между указанным узлом и текущей моделью, что полезно для документации и [выбора узлов](/reference/node-selection/syntax)
+- Компилируется в полное имя объекта в базе данных
 
-The most important function in dbt is `ref()`; it's impossible to build even moderately complex models without it. `ref()` is how you reference one model within another. This is a very common behavior, as typically models are built to be "stacked" on top of one another. Here is how this looks in practice:
+Самая важная функция в dbt — это `ref()`; невозможно построить даже умеренно сложные модели без нее. `ref()` — это способ ссылаться на одну модель из другой. Это очень распространенное поведение, так как обычно модели строятся так, чтобы "наслоиться" друг на друга. Вот как это выглядит на практике:
 
 <File name='model_a.sql'>
 
@@ -28,8 +28,6 @@ from public.raw_data
 
 </File>
 
-
-
 <File name='model_b.sql'>
 
 ```sql
@@ -39,23 +37,23 @@ from {{ref('model_a')}}
 
 </File>
 
-`ref()` is, under the hood, actually doing two important things. First, it is interpolating the schema into your model file to allow you to change your deployment schema via configuration. Second, it is using these references between models to automatically build the dependency graph. This will enable dbt to deploy models in the correct order when using `dbt run`.
+`ref()` на самом деле выполняет две важные задачи. Во-первых, она интерполирует схему в ваш файл модели, чтобы вы могли изменять схему развертывания через конфигурацию. Во-вторых, она использует эти ссылки между моделями для автоматического построения графа зависимостей. Это позволит dbt развертывать модели в правильном порядке при использовании `dbt run`.
 
-The `{{ ref }}` function returns a `Relation` object that has the same `table`, `schema`, and `name` attributes as the [\{\{ this \}\} variable](/reference/dbt-jinja-functions/this).
-  - Note &mdash; Prior to dbt v1.6, the dbt Cloud IDE returns `request` as the result of `{{ ref.identifier }}`.
+Функция `{{ ref }}` возвращает объект `Relation`, который имеет такие же атрибуты `table`, `schema` и `name`, как и [переменная \{\{ this \}\} ](/reference/dbt-jinja-functions/this).
+  - Примечание — До версии dbt v1.6, dbt Cloud IDE возвращает `request` в качестве результата `{{ ref.identifier }}`.
 
-## Advanced ref usage
+## Расширенное использование ref
 
-### Versioned ref
+### Версионированный ref
 
-The `ref` function supports an optional keyword argument - `version` (or `v`).
-When a version argument is provided to the `ref` function, dbt returns to the `Relation` object corresponding to the specified version of the referenced model.
+Функция `ref` поддерживает необязательный аргумент ключевого слова — `version` (или `v`).
+Когда аргумент версии передается функции `ref`, dbt возвращает объект `Relation`, соответствующий указанной версии ссылочной модели.
 
-This functionality is useful when referencing versioned models that make breaking changes by creating new versions, but guarantees no breaking changes to existing versions of the model.
+Эта функциональность полезна при ссылке на версионированные модели, которые вносят разрушающие изменения, создавая новые версии, но гарантирует отсутствие разрушающих изменений для существующих версий модели.
 
-If the `version` argument is not supplied to a `ref` of a versioned model, the latest version is. This has the benefit of automatically incorporating the latest changes of a referenced model, but there is a risk of incorporating breaking changes.
+Если аргумент `version` не указан для `ref` версионированной модели, возвращается последняя версия. Это имеет преимущество автоматического включения последних изменений ссылочной модели, но существует риск включения разрушающих изменений.
 
-#### Example:
+#### Пример:
 <File name='models/<schema>.yml'>
 
 ```yml
@@ -71,36 +69,36 @@ models:
 </File>
 
 ```sql
- -- returns the `Relation` object corresponding to version 1 of model_name
+ -- возвращает объект `Relation`, соответствующий версии 1 модели model_name
 select * from {{ ref('model_name', version=1) }}
 ```
 
 ```sql
- -- returns the `Relation` object corresponding to version 2 (the latest version) of model_name
+ -- возвращает объект `Relation`, соответствующий версии 2 (последней версии) модели model_name
 select * from {{ ref('model_name') }}
 ```
 
-### Ref project-specific models
+### Ссылки на модели конкретного проекта
 
-You can also reference models from different projects using the two-argument variant of the `ref` function. By specifying both a namespace (which could be a project or package) and a model name, you ensure clarity and avoid any ambiguity in the `ref`. This is also useful when dealing with models across various projects or packages. 
+Вы также можете ссылаться на модели из разных проектов, используя вариант функции `ref` с двумя аргументами. Указывая как пространство имен (которое может быть проектом или пакетом), так и имя модели, вы обеспечиваете ясность и избегаете двусмысленности в `ref`. Это также полезно при работе с моделями из различных проектов или пакетов.
 
-When using two arguments with projects (not packages), you also need to set [cross project dependencies](/docs/collaborate/govern/project-dependencies).
+При использовании двух аргументов с проектами (а не пакетами) вам также необходимо установить [кросс-проектные зависимости](/docs/collaborate/govern/project-dependencies).
 
-The following syntax demonstrates how to reference a model from a specific project or package:
+Следующий синтаксис демонстрирует, как ссылаться на модель из конкретного проекта или пакета:
 
 ```sql
 select * from {{ ref('project_or_package', 'model_name') }}
 ```
 
-We recommend using two-argument `ref` any time you are referencing a model defined in a different package or project. While not required in all cases, it's more explicit for you, for dbt, and future readers of your code.
+Мы рекомендуем использовать `ref` с двумя аргументами всякий раз, когда вы ссылаетесь на модель, определенную в другом пакете или проекте. Хотя это не обязательно во всех случаях, это более явно для вас, для dbt и для будущих читателей вашего кода.
 
-We especially recommend using two-argument `ref` to avoid ambiguity, in cases where a model name is duplicated across multiple projects or installed packages. If you use one-argument `ref` (just the `model_name`), dbt will look for a model by that name in the same namespace (package or project); if it finds none, it will raise an error.
+Мы особенно рекомендуем использовать `ref` с двумя аргументами, чтобы избежать двусмысленности в случаях, когда имя модели дублируется в нескольких проектах или установленных пакетах. Если вы используете `ref` с одним аргументом (только `model_name`), dbt будет искать модель с таким именем в том же пространстве имен (пакете или проекте); если он не найдет таковой, будет выдана ошибка.
 
-**Note:** The `project_or_package` should match the `name` of the project/package, as defined in its `dbt_project.yml`. This might be different from the name of the repository. It never includes the repository's organization name. For example, if you use the [`fivetran/stripe`](https://hub.getdbt.com/fivetran/stripe/latest/) package, the package name is `stripe`, not `fivetran/stripe`.
+**Примечание:** `project_or_package` должен соответствовать `name` проекта/пакета, как определено в его `dbt_project.yml`. Это может отличаться от названия репозитория. Он никогда не включает название организации репозитория. Например, если вы используете пакет [`fivetran/stripe`](https://hub.getdbt.com/fivetran/stripe/latest/), имя пакета — `stripe`, а не `fivetran/stripe`.
 
-### Forcing Dependencies
+### Принуждение зависимостей
 
-In normal usage, dbt knows the proper order to run all models based on the usage of the `ref` function. There are cases though where dbt doesn't know when a model should be run. An example of this is when a model only references a macro. In that case, dbt thinks the model can run first because no explicit references are made at compilation time. To address this, you can use a SQL comment along with the `ref` function — dbt will understand the dependency, and the compiled query will still be valid:
+В обычном использовании dbt знает правильный порядок выполнения всех моделей на основе использования функции `ref`. Однако есть случаи, когда dbt не знает, когда модель должна быть выполнена. Примером этого является ситуация, когда модель ссылается только на макрос. В этом случае dbt считает, что модель может быть выполнена первой, поскольку в момент компиляции не сделаны явные ссылки. Чтобы решить эту проблему, вы можете использовать SQL-комментарий вместе с функцией `ref` — dbt поймет зависимость, и скомпилированный запрос останется действительным:
 
 ```sql
  -- depends_on: {{ ref('upstream_parent_model') }}
@@ -108,9 +106,9 @@ In normal usage, dbt knows the proper order to run all models based on the usage
  {{ your_macro('variable') }}
 ```
 
-dbt will see the `ref` and build this model after the specified reference.
+dbt увидит `ref` и построит эту модель после указанной ссылки.
 
-Another example is when a reference appears within an [`is_incremental()`](/docs/build/incremental-models#understand-the-is_incremental-macro) conditional block. This is because the `is_incremental()` macro will always return `false` at parse time, so any references within it can't be inferred. To handle this, you can use a SQL comment outside of the `is_incremental()` conditional:
+Другим примером является ситуация, когда ссылка появляется внутри условного блока [`is_incremental()`](/docs/build/incremental-models#understand-the-is_incremental-macro). Это связано с тем, что макрос `is_incremental()` всегда возвращает `false` во время разбора, поэтому любые ссылки внутри него не могут быть выведены. Чтобы справиться с этим, вы можете использовать SQL-комментарий вне условного блока `is_incremental()`:
 
 ```sql
 -- depends_on: {{ source('raw', 'orders') }}

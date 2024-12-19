@@ -1,6 +1,6 @@
 ---
 datatype: version-range | [version-range]
-description: "Read this guide to understand the require-dbt-version configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию require-dbt-version в dbt."
 default_value: None
 ---
 
@@ -14,39 +14,38 @@ require-dbt-version: version-range | [version-range]
 
 </File>
 
-## Definition
+## Определение
 
-You can use `require-dbt-version` to restrict your project to only work with a range of dbt versions. 
+Вы можете использовать `require-dbt-version`, чтобы ограничить ваш проект работой только с определенным диапазоном версий dbt.
 
-When you set this configuration, dbt sends a helpful error message for any user who attempts to run the project with an unsupported version of dbt. This can be useful for package maintainers (such as [dbt-utils](https://github.com/dbt-labs/dbt-utils)) to ensure that users' dbt version is compatible with the package. Setting this configuration might also help your whole team remain synchronized on the same version of dbt for local development, to avoid compatibility issues from changed behaviour.
+Когда вы устанавливаете эту конфигурацию, dbt отправляет полезное сообщение об ошибке любому пользователю, который пытается запустить проект с неподдерживаемой версией dbt. Это может быть полезно для поддерживающих пакеты (таких как [dbt-utils](https://github.com/dbt-labs/dbt-utils)), чтобы гарантировать, что версия dbt у пользователей совместима с пакетом. Установка этой конфигурации также может помочь вашей команде оставаться синхронизированной на одной версии dbt для локальной разработки, чтобы избежать проблем совместимости из-за измененного поведения.
 
-If this configuration is not specified, no version check will occur.
+Если эта конфигурация не указана, проверка версии не будет производиться.
 
-:::info dbt Cloud release tracks 
+:::info Выпуски dbt Cloud 
 
 <Snippet path="_config-dbt-version-check" />
 
 :::
 
-### YAML quoting
+### Кавычки в YAML
 
-This configuration needs to be interpolated by the YAML parser as a string. As such, you should quote the value of the configuration, taking care to avoid whitespace. For example:
+Эта конфигурация должна быть интерполирована парсером YAML как строка. Поэтому вы должны заключить значение конфигурации в кавычки, избегая пробелов. Например:
 ```yml
-# ✅ These will work
-require-dbt-version: ">=1.0.0" # Double quotes are OK
-require-dbt-version: '>=1.0.0' # So are single quotes
+# ✅ Эти варианты будут работать
+require-dbt-version: ">=1.0.0" # Двойные кавычки допустимы
+require-dbt-version: '>=1.0.0' # Так же допустимы одинарные кавычки
 
-# ❌ These will not work
-require-dbt-version: >=1.0.0 # No quotes? No good
-require-dbt-version: ">= 1.0.0" # Don't put whitespace after the equality signs
+# ❌ Эти варианты не будут работать
+require-dbt-version: >=1.0.0 # Без кавычек? Не годится
+require-dbt-version: ">= 1.0.0" # Не ставьте пробелы после знаков равенства
 ```
 
 
-## Examples
+## Примеры
 
-### Specify a minimum dbt version
-Use a `>=` operator for a minimum boundary. In the following example, this project will run with any version of dbt greater than or equal to 1.0.0.
-
+### Указать минимальную версию dbt
+Используйте оператор `>=` для минимальной границы. В следующем примере этот проект будет работать с любой версией dbt, большей или равной 1.0.0.
 
 <File name='dbt_project.yml'>
 
@@ -57,8 +56,8 @@ require-dbt-version: ">=1.0.0"
 </File>
 
 
-### Pin to a range
-Use a comma separated list for an upper and lower bound. In the following example, this project will run with dbt 1.x.x.
+### Зафиксировать диапазон
+Используйте список, разделенный запятыми, для верхней и нижней границы. В следующем примере этот проект будет работать с dbt 1.x.x.
 
 <File name='dbt_project.yml'>
 
@@ -68,7 +67,7 @@ require-dbt-version: [">=1.0.0", "<2.0.0"]
 
 </File>
 
-OR
+ИЛИ
 
 <File name='dbt_project.yml'>
 
@@ -79,16 +78,16 @@ require-dbt-version: ">=1.0.0,<2.0.0"
 </File>
 
   
-### Require a specific dbt version
+### Требовать конкретную версию dbt
 
-:::info Not recommended
-Pinning to a specific dbt version is discouraged because it limits project flexibility and can cause compatibility issues, especially with dbt packages. It's recommended to [pin to a major release](#pin-to-a-range), using a version range (for example, `">=1.0.0", "<2.0.0"`) for broader compatibility and to benefit from updates.
+:::info Не рекомендуется
+Фиксация на конкретной версии dbt не рекомендуется, так как это ограничивает гибкость проекта и может вызвать проблемы совместимости, особенно с пакетами dbt. Рекомендуется [зафиксировать на мажорном релизе](#pin-to-a-range), используя диапазон версий (например, `">=1.0.0", "<2.0.0"`) для более широкой совместимости и получения обновлений.
 
-While you can restrict your project to run only with an exact version of dbt Core, we do not recommend this for dbt Core v1.0.0 and higher. 
+Хотя вы можете ограничить ваш проект работой только с точной версией dbt Core, мы не рекомендуем это для dbt Core v1.0.0 и выше.
 
 :::
 
-In the following example, the project will only run with dbt v1.5: 
+В следующем примере проект будет работать только с dbt v1.5: 
 
 <File name='dbt_project.yml'>
 
@@ -98,31 +97,31 @@ require-dbt-version: "1.5.0"
 
 </File>
 
-## Invalid dbt versions
+## Неверные версии dbt
 
-If the version of dbt used to invoke a project disagrees with the specified `require-dbt-version` in the project or _any_ of the included packages, then dbt will fail immediately with the following error:
+Если версия dbt, используемая для вызова проекта, не совпадает с указанной `require-dbt-version` в проекте или _любой_ из включенных пакетов, dbt немедленно завершит работу с следующей ошибкой:
 ```
 $ dbt compile
-Running with dbt=0.21.0
-Encountered an error while reading the project:
-Runtime Error
-  This version of dbt is not supported with the 'my_project' package.
-    Installed version of dbt: =0.21.0
-    Required version of dbt for 'my_project': ['>=1.0.0', '<2.0.0']
-  Check the requirements for the 'my_project' package, or run dbt again with --no-version-check
+Запуск с dbt=0.21.0
+Произошла ошибка при чтении проекта:
+Ошибка времени выполнения
+  Эта версия dbt не поддерживается пакетом 'my_project'.
+    Установленная версия dbt: =0.21.0
+    Требуемая версия dbt для 'my_project': ['>=1.0.0', '<2.0.0']
+  Проверьте требования для пакета 'my_project' или запустите dbt снова с --no-version-check
 ```
 
-## Disabling version checks
+## Отключение проверок версий
 
-To suppress failures to to incompatible dbt versions, supply the `--no-version-check` flag to `dbt run`.
+Чтобы подавить ошибки из-за несовместимых версий dbt, укажите флаг `--no-version-check` для `dbt run`.
 ```
 $ dbt run --no-version-check
-Running with dbt=0.21.0
-Found 13 models, 2 tests, 1 archives, 0 analyses, 204 macros, 2 operations....
+Запуск с dbt=0.21.0
+Найдено 13 моделей, 2 теста, 1 архив, 0 анализов, 204 макроса, 2 операции....
 ```
 
-See [global configs](/reference/global-configs/version-compatibility) for usage details.
+Смотрите [глобальные конфигурации](/reference/global-configs/version-compatibility) для получения подробной информации о использовании.
 
-## Recommendation
-* This is a recommended configuration
-* Before v1, you should pin your required dbt version to a minor release. After v1, you should pin to a major release (see above [example](#pin-to-a-range))
+## Рекомендация
+* Это рекомендуемая конфигурация
+* Перед версией 1 вы должны зафиксировать вашу требуемую версию dbt на минорном релизе. После версии 1 вы должны зафиксировать на мажорном релизе (см. выше [пример](#pin-to-a-range))

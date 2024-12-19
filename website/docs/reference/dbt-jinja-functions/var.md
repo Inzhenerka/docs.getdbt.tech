@@ -1,14 +1,13 @@
 ---
-title: "About var function"
+title: "О функции var"
 sidebar_label: "var"
 id: "var"
-description: "Pass variables from `dbt_project.yml` file into models."
+description: "Передача переменных из файла `dbt_project.yml` в модели."
 ---
 
-Variables can be passed from your `dbt_project.yml` file into models during compilation.
-These variables are useful for configuring packages for deployment in multiple environments, or defining values that should be used across multiple models within a package.
+Переменные могут быть переданы из вашего файла `dbt_project.yml` в модели во время компиляции. Эти переменные полезны для настройки пакетов для развертывания в нескольких средах или для определения значений, которые должны использоваться в нескольких моделях внутри пакета.
 
-To add a variable to a model, use the `var()` function:
+Чтобы добавить переменную в модель, используйте функцию `var()`:
 
 <File name='my_model.sql'>
 
@@ -18,8 +17,7 @@ select * from events where event_type = '{{ var("event_type") }}'
 
 </File>
 
-If you try to run this model without supplying an `event_type` variable, you'll receive
-a compilation error that looks like this:
+Если вы попытаетесь запустить эту модель без предоставления переменной `event_type`, вы получите ошибку компиляции, которая будет выглядеть следующим образом:
 
 ```
 Encountered an error:
@@ -29,9 +27,7 @@ Vars supplied to package_name.my_model = {
 }
 ```
 
-To define a variable in your project, add the `vars:` config to your `dbt_project.yml` file.
-See the docs on [using variables](/docs/build/project-variables) for more information on
-defining variables in your dbt project.
+Чтобы определить переменную в вашем проекте, добавьте конфигурацию `vars:` в ваш файл `dbt_project.yml`. См. документацию по [использованию переменных](/docs/build/project-variables) для получения дополнительной информации о том, как определять переменные в вашем проекте dbt.
 
 <File name='dbt_project.yml'>
 
@@ -41,23 +37,21 @@ version: 1.0.0
 
 config-version: 2
 
-# Define variables here
+# Определите переменные здесь
 vars:
   event_type: activation
 ```
 
 </File>
 
-### Variable default values
+### Значения по умолчанию для переменных
 
-The `var()` function takes an optional second argument, `default`. If this
-argument is provided, then it will be the default value for the variable if one
-is not explicitly defined.
+Функция `var()` принимает необязательный второй аргумент, `default`. Если этот аргумент указан, то он будет значением по умолчанию для переменной, если она не определена явно.
 
 <File name='my_model.sql'>
 
 ```sql
--- Use 'activation' as the event_type if the variable is not defined.
+-- Используйте 'activation' в качестве event_type, если переменная не определена.
 select * from events where event_type = '{{ var("event_type", "activation") }}'
 ```
 

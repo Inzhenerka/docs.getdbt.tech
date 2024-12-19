@@ -1,19 +1,19 @@
 ---
-title: "About set context method"
+title: "О методе set context"
 sidebar_label: "set"
 id: "set"
-description: "Converts any iterable to a sequence of iterable and unique elements."
+description: "Преобразует любой итерируемый объект в последовательность уникальных элементов."
 ---
 
-_Not to be confused with the `{% set foo = "bar" ... %}` expression in Jinja!_
+_Не путать с выражением `{% set foo = "bar" ... %}` в Jinja!_
 
-The `set` context method can be used to convert any iterable to a sequence of iterable elements that are unique (a set).
-        
-__Args__:
-- `value`: The iterable to convert (e.g. a list)
-- `default`: A default value to return if the `value` argument is not a valid iterable
+Метод `set` контекста можно использовать для преобразования любого итерируемого объекта в последовательность уникальных элементов (множество).
 
-### Usage
+__Аргументы__:
+- `value`: Итерируемый объект для преобразования (например, список)
+- `default`: Значение по умолчанию, которое будет возвращено, если аргумент `value` не является допустимым итерируемым объектом
+
+### Использование
 
 ```
 {% set my_list = [1, 2, 2, 3] %}
@@ -33,10 +33,10 @@ __Args__:
 
 ### set_strict
 
-The `set_strict` context method can be used to convert any iterable to a sequence of iterable elements that are unique (a set). The difference to the `set` context method is that the `set_strict` method will raise an exception on a `TypeError`, if the provided value is not a valid iterable and cannot be converted to a set.
+Метод `set_strict` контекста можно использовать для преобразования любого итерируемого объекта в последовательность уникальных элементов (множество). Разница между методом `set` и методом `set_strict` заключается в том, что метод `set_strict` вызовет исключение при `TypeError`, если предоставленное значение не является допустимым итерируемым объектом и не может быть преобразовано в множество.
 
-__Args__:
-- `value`: The iterable to convert (e.g. a list)
+__Аргументы__:
+- `value`: Итерируемый объект для преобразования (например, список)
 
 ```
 {% set my_list = [1, 2, 2, 3] %}

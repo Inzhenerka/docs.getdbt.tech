@@ -1,30 +1,28 @@
 ---
-title: "Indirect selection"
+title: "Косвенный отбор"
 id: "indirect-selection"
-sidebar: "Indirect selection"
+sidebar: "Косвенный отбор"
 ---
 
-import IndirSelect from '/snippets/_indirect-selection-definitions.md';
+Используйте флаг `--indirect-selection` для команд `dbt test` или `dbt build`, чтобы настроить, какие тесты запускать для указанных вами узлов. Вы можете установить это как флаг командной строки или как переменную окружения. В dbt Core вы также можете настроить пользовательские конфигурации в [YAML селекторах](/reference/node-selection/yaml-selectors) или в блоке `flags:` файла `dbt_project.yml`, который устанавливает флаги на уровне проекта.
 
-Use the `--indirect-selection` flag to `dbt test` or `dbt build` to configure which tests to run for the nodes you specify. You can set this as a CLI flag or an environment variable. In dbt Core, you can also configure user configurations in [YAML selectors](/reference/node-selection/yaml-selectors) or in the `flags:` block of `dbt_project.yml`, which sets project-level flags.
+Когда все флаги установлены, порядок приоритета следующий. Дополнительные сведения смотрите в разделе [О глобальных конфигурациях](/reference/global-configs/about-global-configs):
 
-When all flags are set, the order of precedence is as follows. Refer to [About global configs](/reference/global-configs/about-global-configs) for more details:
+1. Конфигурации CLI
+1. Переменные окружения
+1. Пользовательские конфигурации
 
-1. CLI configurations
-1. Environment variables
-1. User configurations
-
-You can set the flag to: `empty`, `buildable`, `cautious`, or `eager` (default). By default, dbt indirectly selects all tests if they touch any resource you select. Learn more about these options in [Indirect selection in Test selection examples](/reference/node-selection/test-selection-examples?indirect-selection-mode=eager#indirect-selection).
+Вы можете установить флаг на: `empty`, `buildable`, `cautious` или `eager` (по умолчанию). По умолчанию dbt косвенно выбирает все тесты, если они затрагивают любой ресурс, который вы выбрали. Узнайте больше об этих опциях в разделе [Косвенный отбор в примерах выбора тестов](/reference/node-selection/test-selection-examples?indirect-selection-mode=eager#indirect-selection).
 
 <IndirSelect features={'/snippets/indirect-selection-definitions.md'}/>
 
-The following is a visualization of the impact `--indirect-selection` and the various flags have using three models, three tests, and `dbt build` as an example:
+Ниже представлена визуализация влияния `--indirect-selection` и различных флагов с использованием трех моделей, трех тестов и `dbt build` в качестве примера:
 
 <DocCarousel slidesPerView={1}>
 
 <Lightbox src src="/img/docs/reference/indirect-selection-dbt-build.png" width="85%" title="dbt build" />
 
-<Lightbox src src="/img/docs/reference/indirect-selection-eager.png" width="85%" title="Eager (default)"/>
+<Lightbox src src="/img/docs/reference/indirect-selection-eager.png" width="85%" title="Eager (по умолчанию)"/>
 
 <Lightbox src src="/img/docs/reference/indirect-selection-buildable.png" width="85%" title="Buildable"/>
 
@@ -34,9 +32,9 @@ The following is a visualization of the impact `--indirect-selection` and the va
 
 </DocCarousel>
 
-For example, you can run tests that only refer to selected nodes using a CLI configuration:
+Например, вы можете запустить тесты, которые ссылаются только на выбранные узлы, используя конфигурацию CLI:
 
-<File name='Usage'>
+<File name='Использование'>
 
 ```shell
 dbt test --indirect-selection cautious
@@ -44,9 +42,9 @@ dbt test --indirect-selection cautious
 
 </File>
 
-Or you can run tests that only refer to selected nodes using an environment variable:
+Или вы можете запустить тесты, которые ссылаются только на выбранные узлы, используя переменную окружения:
 
-<File name='Env var'>
+<File name='Переменная окружения'>
 
 ```text
 
@@ -57,7 +55,7 @@ dbt run
 
 </File>
 
-You can also run tests that only refer to selected nodes using `dbt_project.yml` project-level flags:
+Вы также можете запустить тесты, которые ссылаются только на выбранные узлы, используя флаги на уровне проекта в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 

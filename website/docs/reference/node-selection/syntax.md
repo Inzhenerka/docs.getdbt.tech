@@ -1,97 +1,97 @@
 ---
-title: "Syntax overview"
+title: "Обзор синтаксиса"
 ---
 
-dbt's node selection syntax makes it possible to run only specific resources in a given invocation of dbt. This selection syntax is used for the following subcommands:
+Синтаксис выбора узлов в dbt позволяет запускать только определенные ресурсы в рамках одного вызова dbt. Этот синтаксис выбора используется для следующих подкоманд:
 
-| command                         | argument(s)                                                          |
+| команда                         | аргумент(ы)                                                          |
 | :------------------------------ | -------------------------------------------------------------------- |
 | [run](/reference/commands/run)             | `--select`, `--exclude`, `--selector`, `--defer`                     |
 | [test](/reference/commands/test)           | `--select`, `--exclude`, `--selector`, `--defer`                     |
 | [seed](/reference/commands/seed)           | `--select`, `--exclude`, `--selector`                                |
-| [snapshot](/reference/commands/snapshot)   | `--select`, `--exclude`  `--selector`                                |
+| [snapshot](/reference/commands/snapshot)   | `--select`, `--exclude`, `--selector`                                |
 | [ls (list)](/reference/commands/list)      | `--select`, `--exclude`, `--selector`, `--resource-type`             |
 | [compile](/reference/commands/compile)     | `--select`, `--exclude`, `--selector`, `--inline`                    |
 | [freshness](/reference/commands/source)    | `--select`, `--exclude`, `--selector`                                |
 | [build](/reference/commands/build)         | `--select`, `--exclude`, `--selector`, `--resource-type`, `--defer`  |
 | [docs generate](/reference/commands/cmd-docs) | `--select`, `--exclude`, `--selector`                  |
 
-:::info Nodes and resources
+:::info Узлы и ресурсы
 
-We use the terms <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">"nodes"</a> and "resources" interchangeably. These encompass all the models, tests, sources, seeds, snapshots, exposures, and analyses in your project. They are the objects that make up dbt's DAG (directed acyclic graph).
+Мы используем термины <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">"узлы"</a> и "ресурсы" взаимозаменяемо. Они охватывают все модели, тесты, источники, семена, снимки, экспозиции и анализы в вашем проекте. Это объекты, которые составляют DAG (ориентированный ациклический граф) dbt.
 :::
 
-## Specifying resources
+## Указание ресурсов
 
-By default, `dbt run` executes _all_ of the models in the dependency graph; `dbt seed` creates all seeds, `dbt snapshot` performs every snapshot. The `--select` flag is used to specify a subset of nodes to execute.
+По умолчанию команда `dbt run` выполняет _все_ модели в графе зависимостей; `dbt seed` создает все семена, `dbt snapshot` выполняет каждый снимок. Флаг `--select` используется для указания подмножества узлов для выполнения.
 
-To follow [POSIX standards](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html) and make things easier to understand, we recommend CLI users use quotes when passing arguments to the `--select` or `--exclude` option (including single or multiple space-delimited, or comma-delimited arguments). Not using quotes might not work reliably on all operating systems, terminals, and user interfaces. For example, `dbt run --select "my_dbt_project_name"` runs all models in your project. 
+Чтобы следовать [стандартам POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html) и сделать все более понятным, мы рекомендуем пользователям CLI использовать кавычки при передаче аргументов к опциям `--select` или `--exclude` (включая один или несколько аргументов, разделенных пробелами или запятыми). Неиспользование кавычек может не работать надежно на всех операционных системах, терминалах и пользовательских интерфейсах. Например, `dbt run --select "my_dbt_project_name"` запускает все модели в вашем проекте.
 
-### How does selection work?
+### Как работает выбор?
 
-1. dbt gathers all the resources that are matched by one or more of the `--select` criteria, in the order of [selection methods](/reference/node-selection/methods) (e.g. `tag:`), then [graph operators](/reference/node-selection/graph-operators) (e.g. `+`), then finally set operators ([unions](/reference/node-selection/set-operators#unions), [intersections](/reference/node-selection/set-operators#intersections), [exclusions](/reference/node-selection/exclude)).
+1. dbt собирает все ресурсы, которые соответствуют одному или нескольким критериям `--select`, в порядке [методов выбора](/reference/node-selection/methods) (например, `tag:`), затем [графических операторов](/reference/node-selection/graph-operators) (например, `+`), и, наконец, операторов множеств ([объединения](/reference/node-selection/set-operators#unions), [пересечения](/reference/node-selection/set-operators#intersections), [исключения](/reference/node-selection/exclude)).
 
-2. The selected resources may be models, sources, seeds, snapshots, tests. (Tests can also be selected "indirectly" via their parents; see [test selection examples](/reference/node-selection/test-selection-examples) for details.)
+2. Выбранные ресурсы могут быть моделями, источниками, семенами, снимками, тестами. (Тесты также могут быть выбраны "косвенно" через их родительские узлы; см. [примеры выбора тестов](/reference/node-selection/test-selection-examples) для подробностей.)
 
-3. dbt now has a list of still-selected resources of varying types. As a final step, it tosses away any resource that does not match the resource type of the current task. (Only seeds are kept for `dbt seed`, only models for `dbt run`, only tests for `dbt test`, and so on.)
+3. Теперь у dbt есть список все еще выбранных ресурсов различных типов. На последнем этапе он отбрасывает любые ресурсы, которые не соответствуют типу ресурса текущей задачи. (Только семена сохраняются для `dbt seed`, только модели для `dbt run`, только тесты для `dbt test` и так далее.)
 
-## Shorthand
+## Сокращения
 
-Select resources to build (run, test, seed, snapshot) or check freshness: `--select`, `-s`
+Выберите ресурсы для сборки (запуска, тестирования, семен, снимков) или проверки свежести: `--select`, `-s`
 
-### Examples
+### Примеры
 
-By default, `dbt run` will execute _all_ of the models in the dependency graph. During development (and deployment), it is useful to specify only a subset of models to run. Use the `--select` flag with `dbt run` to select a subset of models to run. Note that the following arguments (`--select`, `--exclude`, and `--selector`) also apply to other dbt tasks, such as `test` and `build`.
+По умолчанию команда `dbt run` выполнит _все_ модели в графе зависимостей. Во время разработки (и развертывания) полезно указывать только подмножество моделей для запуска. Используйте флаг `--select` с `dbt run`, чтобы выбрать подмножество моделей для выполнения. Обратите внимание, что следующие аргументы (`--select`, `--exclude` и `--selector`) также применимы к другим задачам dbt, таким как `test` и `build`.
 
 <Tabs>
-<TabItem value="select" label="Examples of select flag">
+<TabItem value="select" label="Примеры флага select">
 
-The `--select` flag accepts one or more arguments. Each argument can be one of:
+Флаг `--select` принимает один или несколько аргументов. Каждый аргумент может быть одним из:
 
-1. a package name
-2. a model name
-3. a fully-qualified path to a directory of models
-4. a selection method (`path:`, `tag:`, `config:`, `test_type:`, `test_name:`)
+1. имя пакета
+2. имя модели
+3. полностью квалифицированный путь к каталогу моделей
+4. метод выбора (`path:`, `tag:`, `config:`, `test_type:`, `test_name:`)
 
-Examples:
+Примеры:
 
 ```bash
-dbt run --select "my_dbt_project_name"   # runs all models in your project
-dbt run --select "my_dbt_model"          # runs a specific model
-dbt run --select "path/to/my/models"     # runs all models in a specific directory
-dbt run --select "my_package.some_model" # run a specific model in a specific package
-dbt run --select "tag:nightly"           # run models with the "nightly" tag
-dbt run --select "path/to/models"        # run models contained in path/to/models
-dbt run --select "path/to/my_model.sql"  # run a specific model by its path
+dbt run --select "my_dbt_project_name"   # запускает все модели в вашем проекте
+dbt run --select "my_dbt_model"          # запускает конкретную модель
+dbt run --select "path/to/my/models"     # запускает все модели в конкретном каталоге
+dbt run --select "my_package.some_model" # запускает конкретную модель в конкретном пакете
+dbt run --select "tag:nightly"           # запускает модели с тегом "nightly"
+dbt run --select "path/to/models"        # запускает модели, содержащиеся в path/to/models
+dbt run --select "path/to/my_model.sql"  # запускает конкретную модель по ее пути
 ```
 
 </TabItem>
 
-<TabItem value="subset" label="Examples of subsets of nodes">
+<TabItem value="subset" label="Примеры подмножеств узлов">
 
-dbt supports a shorthand language for defining subsets of nodes. This language uses the following characters:
+dbt поддерживает сокращенный язык для определения подмножеств узлов. Этот язык использует следующие символы:
 
-- plus operator [(`+`)](/reference/node-selection/graph-operators#the-plus-operator)
-- at operator [(`@`)](/reference/node-selection/graph-operators#the-at-operator)
-- asterisk operator (`*`)
-- comma operator (`,`)
+- оператор плюс [(`+`)](/reference/node-selection/graph-operators#the-plus-operator)
+- оператор at [(`@`)](/reference/node-selection/graph-operators#the-at-operator)
+- оператор звездочка (`*`)
+- оператор запятая (`,`)
 
-Examples:
+Примеры:
 
 ```bash
-# multiple arguments can be provided to --select
+# можно указать несколько аргументов для --select
 dbt run --select "my_first_model my_second_model"
 
-# select my_model and all of its children
+# выбрать my_model и всех его детей
 dbt run --select "my_model+"     
 
-# select my_model, its children, and the parents of its children
+# выбрать my_model, его детей и родителей его детей
 dbt run --models @my_model          
 
-# these arguments can be projects, models, directory paths, tags, or sources
+# эти аргументы могут быть проектами, моделями, путями к каталогам, тегами или источниками
 dbt run --select "tag:nightly my_model finance.base.*"
 
-# use methods and intersections for more complex selectors
+# используйте методы и пересечения для более сложных селекторов
 dbt run --select "path:marts/finance,tag:nightly,config.materialized:table"
 ```
 
@@ -99,84 +99,80 @@ dbt run --select "path:marts/finance,tag:nightly,config.materialized:table"
 
 </Tabs>
 
-As your selection logic gets more complex, and becomes unwieldly to type out as command-line arguments,
-consider using a [yaml selector](/reference/node-selection/yaml-selectors). You can use a predefined definition with the `--selector` flag.
-Note that when you're using `--selector`, most other flags (namely `--select` and `--exclude`) will be ignored.
+По мере усложнения вашей логики выбора и затруднения ее ввода в виде аргументов командной строки, рассмотрите возможность использования [yaml селектора](/reference/node-selection/yaml-selectors). Вы можете использовать предопределенное определение с флагом `--selector`. Обратите внимание, что при использовании `--selector` большинство других флагов (в частности, `--select` и `--exclude`) будут игнорироваться.
 
-### Troubleshoot with the `ls` command
+### Устранение неполадок с помощью команды `ls`
 
-Constructing and debugging your selection syntax can be challenging.  To get a "preview" of what will be selected, we recommend using the [`list` command](/reference/commands/list).  This command, when combined with your selection syntax, will output a list of the nodes that meet that selection criteria.  The `dbt ls` command supports all types of selection syntax arguments, for example:
+Создание и отладка вашего синтаксиса выбора может быть сложной задачей. Чтобы получить "предварительный просмотр" того, что будет выбрано, мы рекомендуем использовать команду [`list`](/reference/commands/list). Эта команда, в сочетании с вашим синтаксисом выбора, выведет список узлов, которые соответствуют критериям выбора. Команда `dbt ls` поддерживает все типы аргументов синтаксиса выбора, например:
 
 ```bash
-dbt ls --select "path/to/my/models" # Lists all models in a specific directory.
-dbt ls --select "source_status:fresher+" # Shows sources updated since the last dbt source freshness run.
-dbt ls --select state:modified+ # Displays nodes modified in comparison to a previous state.
-dbt ls --select "result:<status>+" state:modified+ --state ./<dbt-artifact-path> # Lists nodes that match certain [result statuses](/reference/node-selection/syntax#the-result-status) and are modified.
+dbt ls --select "path/to/my/models" # Перечисляет все модели в конкретном каталоге.
+dbt ls --select "source_status:fresher+" # Показывает источники, обновленные с момента последнего запуска свежести источников dbt.
+dbt ls --select state:modified+ # Отображает узлы, измененные по сравнению с предыдущим состоянием.
+dbt ls --select "result:<status>+" state:modified+ --state ./<dbt-artifact-path> # Перечисляет узлы, которые соответствуют определенным [статусам результата](/reference/node-selection/syntax#the-result-status) и были изменены.
 ```
 
 <Snippet path="discourse-help-feed-header" />
 <DiscourseHelpFeed tags="node-selection"/>
 
+## Выбор состояния
 
-## State selection
+Одно из основных предположений о dbt заключается в том, что его операции должны быть **без состояния** и **<Term id="idempotent" />**. То есть не имеет значения, сколько раз модель была запущена ранее, или запускалась ли она вообще. Не имеет значения, запускаете ли вы ее один раз или тысячу раз. При наличии одних и тех же исходных данных вы можете ожидать одинаковый преобразованный результат. Конкретный запуск dbt не должен "знать" о _любом другом_ запуске; ему просто нужно знать о коде в проекте и объектах в вашей базе данных, как они существуют _в данный момент_.
 
-One of the greatest underlying assumptions about dbt is that its operations should be **stateless** and **<Term id="idempotent" />**. That is, it doesn't matter how many times a model has been run before, or if it has ever been run before. It doesn't matter if you run it once or a thousand times. Given the same raw data, you can expect the same transformed result. A given run of dbt doesn't need to "know" about _any other_ run; it just needs to know about the code in the project and the objects in your database as they exist _right now_.
+Тем не менее, dbt действительно хранит "состояние" — детализированный, моментный обзор ресурсов проекта (также называемых узлами), объектов базы данных и результатов вызова — в виде своих [артефактов](/docs/deploy/artifacts). Если вы хотите, dbt может использовать эти артефакты для информирования о некоторых операциях. Критически важно, что сами операции по-прежнему без состояния и <Term id="idempotent" />: при наличии одного и того же манифеста и одних и тех же исходных данных dbt будет производить один и тот же преобразованный результат.
 
-That said, dbt does store "state" &mdash; a detailed, point-in-time view of project resources (also referred to as nodes), database objects, and invocation results &mdash; in the form of its [artifacts](/docs/deploy/artifacts). If you choose, dbt can use these artifacts to inform certain  operations. Crucially, the operations themselves are still stateless and <Term id="idempotent" />: given the same manifest and the same raw data, dbt will produce the same transformed result.
+dbt может использовать артефакты из предыдущего вызова, если их путь файла передан флагу `--state`. Это предварительное условие для:
+- [Селектора `state`](/reference/node-selection/methods#state), с помощью которого dbt может идентифицировать ресурсы, которые являются новыми или измененными, сравнивая код в текущем проекте с манифестом состояния.
+- [Отложенного выполнения](/reference/node-selection/defer) в другую среду, с помощью которого dbt может идентифицировать верхние, невыбранные ресурсы, которые не существуют в вашей текущей среде, и вместо этого "отложить" их ссылки на среду, предоставленную манифестом состояния.
+- Команды [`dbt clone`](/reference/commands/clone), с помощью которой dbt может клонировать узлы на основе их местоположения в манифесте, предоставленном флагу `--state`.
 
-dbt can leverage artifacts from a prior invocation as long as their file path is passed to the `--state` flag. This is a prerequisite for:
-- [The `state` selector](/reference/node-selection/methods#state), whereby dbt can identify resources that are new or modified
-by comparing code in the current project against the state manifest.
-- [Deferring](/reference/node-selection/defer) to another environment, whereby dbt can identify upstream, unselected resources that don't exist in your current environment and instead "defer" their references to the environment provided by the state manifest.
-- The [`dbt clone` command](/reference/commands/clone), whereby dbt can clone nodes based on their location in the manifest provided to the `--state` flag.
+Вместе селектор [`state`](/reference/node-selection/methods#state) и отложение позволяют реализовать ["тонкий CI"](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci). Мы ожидаем добавить больше функций в будущих релизах, которые смогут использовать артефакты, переданные флагу `--state`.
 
-Together, the [`state`](/reference/node-selection/methods#state) selector and deferral enable ["slim CI"](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci). We expect to add more features in future releases that can leverage artifacts passed to the `--state` flag.
+### Установление состояния
 
-### Establishing state
+Состояние и отложение могут быть установлены как переменные окружения, так и флагами CLI:
 
-State and defer can be set by environment variables as well as CLI flags:
+- `--state` или `DBT_STATE`: путь к файлу
+- `--defer` или `DBT_DEFER`: логическое значение
 
-- `--state` or `DBT_STATE`: file path
-- `--defer` or `DBT_DEFER`: boolean
+:::warning Устаревший синтаксис
 
-:::warning Syntax deprecated
-
-In dbt v1.5, we deprecated the original syntax for state (`DBT_ARTIFACT_STATE_PATH`) and defer (`DBT_DEFER_TO_STATE`). Although dbt supports backward compatibility with the old syntax, we will remove it in a future release that we have not yet determined.
+В dbt v1.5 мы устарели оригинальный синтаксис для состояния (`DBT_ARTIFACT_STATE_PATH`) и отложенного выполнения (`DBT_DEFER_TO_STATE`). Хотя dbt поддерживает обратную совместимость со старым синтаксисом, мы удалим его в будущем релизе, который еще не определен.
 
 :::
 
-- `--state` or `DBT_STATE`: file path
-- `--defer` or `DBT_DEFER`: boolean
-- `--defer-state` or `DBT_DEFER_STATE`: file path to use for deferral only (optional)
+- `--state` или `DBT_STATE`: путь к файлу
+- `--defer` или `DBT_DEFER`: логическое значение
+- `--defer-state` или `DBT_DEFER_STATE`: путь к файлу, который будет использоваться только для отложенного выполнения (необязательно)
 
-If `--defer-state` is not specified, deferral will use the artifacts supplied by `--state`. This enables more granular control in cases where you want to compare against logical state from one environment or past point in time, and defer to applied state from a different environment or point in time.
+Если `--defer-state` не указан, отложение будет использовать артефакты, предоставленные `--state`. Это позволяет более детально контролировать случаи, когда вы хотите сравнить с логическим состоянием из одной среды или прошлого момента времени и отложить к примененному состоянию из другой среды или момента времени.
 
-If both the flag and env var are provided, the flag takes precedence.
+Если указаны как флаг, так и переменная окружения, флаг имеет приоритет.
 
-#### Notes:
-- The `--state` artifacts must be of schema versions that are compatible with the currently running dbt version.
-- These are powerful, complex features. Read about [known caveats and limitations](/reference/node-selection/state-comparison-caveats) to state comparison.
+#### Примечания:
+- Артефакты `--state` должны быть совместимы с версиями схемы, которые соответствуют текущей версии dbt.
+- Это мощные, сложные функции. Ознакомьтесь с [известными ограничениями и недостатками](/reference/node-selection/state-comparison-caveats) для сравнения состояния.
 
-### The "result" status
+### Статус "результата"
 
-Another element of job state is the `result` of a prior dbt invocation. After executing a `dbt run`, for example, dbt creates the `run_results.json` artifact which contains execution times and success / error status for dbt models. You can read more about `run_results.json` on the ['run results'](/reference/artifacts/run-results-json) page. 
+Еще одним элементом состояния задания является `result` предыдущего вызова dbt. После выполнения `dbt run`, например, dbt создает артефакт `run_results.json`, который содержит время выполнения и статус успеха / ошибки для моделей dbt. Вы можете узнать больше о `run_results.json` на странице ['результаты выполнения'](/reference/artifacts/run-results-json). 
 
-The following dbt commands produce `run_results.json` artifacts whose results can be referenced in subsequent dbt invocations:  
+Следующие команды dbt создают артефакты `run_results.json`, результаты которых могут быть использованы в последующих вызовах dbt:  
 - `dbt run`
 - `dbt test`
-- `dbt build` (new in dbt version v0.21.0)
+- `dbt build` (новинка в версии dbt v0.21.0)
 - `dbt seed` 
 
-After issuing one of the above commands, you can reference the results by adding a selector to a subsequent command as follows: 
+После выполнения одной из вышеуказанных команд вы можете ссылаться на результаты, добавив селектор к следующей команде следующим образом: 
 
 ```bash
-# You can also set the DBT_STATE environment variable instead of the --state flag.
+# Вы также можете установить переменную окружения DBT_STATE вместо флага --state.
 dbt run --select "result:<status>" --defer --state path/to/prod/artifacts
 ```
 
-The available options depend on the resource (node) type: 
+Доступные опции зависят от типа ресурса (узла): 
 
-|      `result:\<status>`        | model | seed | snapshot | test |
+|      `result:\<status>`        | модель | семя | снимок | тест |
 |----------------|-------|------|------|----------|
 | `result:error`   | ✅  | ✅   | ✅   |  ✅      |
 | `result:success` | ✅  | ✅   | ✅   |          |
@@ -185,27 +181,27 @@ The available options depend on the resource (node) type:
 | `result:warn`    |     |      |      |  ✅      |
 | `result:pass`    |     |      |      |  ✅      |
 
-### Combining `state` and `result` selectors
+### Сочетание селекторов `state` и `result`
 
-The state and result selectors can also be combined in a single invocation of dbt to capture errors from a previous run OR any new or modified models.
+Селекторы состояния и результата также могут быть объединены в одном вызове dbt, чтобы захватить ошибки из предыдущего запуска ИЛИ любые новые или измененные модели.
 
 ```bash
 dbt run --select "result:<status>+" state:modified+ --defer --state ./<dbt-artifact-path>
 ```
 
-### The "source_status" status
+### Статус "source_status"
 
-Another element of job state is the `source_status` of a prior dbt invocation. After executing `dbt source freshness`, for example, dbt creates the `sources.json` artifact which contains execution times and `max_loaded_at` dates for dbt sources. You can read more about `sources.json` on the ['sources'](/reference/artifacts/sources-json) page. 
+Еще одним элементом состояния задания является `source_status` предыдущего вызова dbt. После выполнения `dbt source freshness`, например, dbt создает артефакт `sources.json`, который содержит время выполнения и даты `max_loaded_at` для источников dbt. Вы можете узнать больше о `sources.json` на странице ['источники'](/reference/artifacts/sources-json). 
 
-The `dbt source freshness` command produces a `sources.json` artifact whose results can be referenced in subsequent dbt invocations. 
+Команда `dbt source freshness` создает артефакт `sources.json`, результаты которого могут быть использованы в последующих вызовах dbt. 
 
-When a job is selected, dbt Cloud will surface the artifacts from that job's most recent successful run. dbt will then use those artifacts to determine the set of fresh sources. In your job commands, you can signal dbt to run and test only on the fresher sources and their children by including the `source_status:fresher+` argument. This requires both the previous and current states to have the `sources.json` artifact available. Or plainly said, both job states need to run `dbt source freshness`.
+Когда задание выбрано, dbt Cloud отобразит артефакты из последнего успешного выполнения этого задания. Затем dbt использует эти артефакты для определения набора свежих источников. В ваших командах задания вы можете указать dbt запускать и тестировать только на более свежих источниках и их детях, добавив аргумент `source_status:fresher+`. Это требует, чтобы как предыдущее, так и текущее состояния имели доступный артефакт `sources.json`. Или проще говоря, оба состояния задания должны запускать `dbt source freshness`.
 
-After issuing the `dbt source freshness` command, you can reference the source freshness results by adding a selector to a subsequent command:
+После выполнения команды `dbt source freshness` вы можете ссылаться на результаты свежести источников, добавив селектор к следующей команде:
 
 ```bash
-# You can also set the DBT_ARTIFACT_STATE_PATH environment variable instead of the --state flag.
-dbt source freshness # must be run again to compare current to previous state
+# Вы также можете установить переменную окружения DBT_ARTIFACT_STATE_PATH вместо флага --state.
+dbt source freshness # должен быть запущен снова для сравнения текущего и предыдущего состояния
 dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 ```
-For more example commands, refer to [Pro-tips for workflows](/best-practices/best-practice-workflows#pro-tips-for-workflows).
+Для получения дополнительных примеров команд обратитесь к [Советам по рабочим процессам](/best-practices/best-practice-workflows#pro-tips-for-workflows).

@@ -1,13 +1,13 @@
 ---
-title: " About env_var function"
+title: " О функции env_var"
 sidebar_label: "env_var"
 id: "env_var"
-description: "Incorporate environment variables using `en_var` function."
+description: "Используйте переменные окружения с помощью функции `env_var`."
 ---
 
-The `env_var` function can be used to incorporate Environment Variables from the system into your dbt project. This `env_var` function can be used in your `profiles.yml` file, the `dbt_project.yml` file, the `sources.yml` file, your `schema.yml` files, and in model `.sql` files. Essentially `env_var` is available anywhere dbt processes jinja code.
+Функция `env_var` может быть использована для интеграции переменных окружения из системы в ваш проект dbt. Эта функция `env_var` может быть использована в вашем файле `profiles.yml`, файле `dbt_project.yml`, файле `sources.yml`, ваших файлах `schema.yml` и в моделях `.sql`. По сути, `env_var` доступна везде, где dbt обрабатывает код jinja.
 
-When used in a `profiles.yml` file (to avoid putting credentials on a server), it can be used like this:
+При использовании в файле `profiles.yml` (чтобы избежать размещения учетных данных на сервере), она может быть использована следующим образом:
 
 <File name='profiles.yml'>
 
@@ -18,7 +18,7 @@ profile:
     prod:
       type: postgres
       host: 127.0.0.1
-      # IMPORTANT: Make sure to quote the entire Jinja string here
+      # ВАЖНО: Убедитесь, что вся строка Jinja заключена в кавычки
       user: "{{ env_var('DBT_USER') }}"
       password: "{{ env_var('DBT_PASSWORD') }}"
       ....
@@ -26,21 +26,21 @@ profile:
 
 </File>
 
-If the `DBT_USER` and `DBT_PASSWORD` environment variables are present when dbt is invoked, then these variables will be pulled into the profile as expected. If any environment variables are not set, then dbt will raise a compilation error.
+Если переменные окружения `DBT_USER` и `DBT_PASSWORD` присутствуют при вызове dbt, то эти переменные будут подставлены в профиль, как и ожидалось. Если какие-либо переменные окружения не установлены, dbt вызовет ошибку компиляции.
 
-:::info Integer Environment Variables
-If passing an environment variable for a property that uses an integer type (for example, `port`, `threads`), be sure to add a filter to the Jinja expression, as shown here. Otherwise, dbt will raise an `['threads']: '1' is not of type 'integer'` error.
-`{{ env_var('DBT_THREADS') | int }}` or `{{ env_var('DB_PORT') | as_number }}` 
-
-:::
-
-:::caution Quoting, Curly Brackets, & You
-
-Be sure to quote the entire jinja string (as shown above), or else the YAML parser will be confused by the Jinja curly brackets.
+:::info Целочисленные переменные окружения
+Если вы передаете переменную окружения для свойства, которое использует целочисленный тип (например, `port`, `threads`), обязательно добавьте фильтр к выражению Jinja, как показано здесь. В противном случае dbt вызовет ошибку `['threads']: '1' is not of type 'integer'`.
+`{{ env_var('DBT_THREADS') | int }}` или `{{ env_var('DB_PORT') | as_number }}` 
 
 :::
 
-`env_var` accepts a second, optional argument for default value, like so:
+:::caution Кавычки, фигурные скобки и вы
+
+Обязательно заключайте всю строку jinja в кавычки (как показано выше), иначе парсер YAML будет сбит с толку фигурными скобками Jinja.
+
+:::
+
+`env_var` принимает второй, необязательный аргумент для значения по умолчанию, как показано ниже:
 
 <File name='dbt_project.yml'>
 
@@ -53,34 +53,34 @@ models:
 
 </File>
 
- This can be useful to avoid compilation errors when the environment variable isn't available.
+Это может быть полезно для избежания ошибок компиляции, когда переменная окружения недоступна.
 
 
-### Secrets
+### Секреты
 
-For certain configurations, you can use "secret" env vars. Any env var named with the prefix `DBT_ENV_SECRET` will be:
-- Available for use in `profiles.yml` + `packages.yml`, via the same `env_var()` function
-- Disallowed everywhere else, including `dbt_project.yml` and model SQL, to prevent accidentally writing these secret values to the <Term id="data-warehouse" /> or metadata artifacts
-- Scrubbed from dbt logs and replaced with `*****`, any time its value appears in those logs (even if the env var was not called directly)
+Для определенных конфигураций вы можете использовать "секретные" переменные окружения. Любая переменная окружения с префиксом `DBT_ENV_SECRET` будет:
+- Доступна для использования в `profiles.yml` + `packages.yml` через ту же функцию `env_var()`
+- Запрещена везде, кроме этого, включая `dbt_project.yml` и SQL моделей, чтобы предотвратить случайную запись этих секретных значений в <Term id="data-warehouse" /> или метаданные
+- Удалена из логов dbt и заменена на `*****`, всякий раз, когда ее значение появляется в этих логах (даже если переменная окружения не была вызвана напрямую)
 
-The primary use case of secret env vars is git access tokens for [private packages](/docs/build/packages#private-packages).
+Основное применение секретных переменных окружения — это токены доступа git для [приватных пакетов](/docs/build/packages#private-packages).
 
-**Note:** When dbt is loading profile credentials and package configuration, secret env vars will be replaced with the string value of the environment variable. You cannot modify secrets using Jinja filters, including type-casting filters such as [`as_number`](/reference/dbt-jinja-functions/as_number) or [`as_bool`](/reference/dbt-jinja-functions/as_bool), or pass them as arguments into other Jinja macros. You can only use _one secret_ per configuration:
+**Примечание:** Когда dbt загружает учетные данные профиля и конфигурацию пакета, секретные переменные окружения будут заменены строковым значением переменной окружения. Вы не можете изменять секреты с помощью фильтров Jinja, включая фильтры приведения типов, такие как [`as_number`](/reference/dbt-jinja-functions/as_number) или [`as_bool`](/reference/dbt-jinja-functions/as_bool), или передавать их в качестве аргументов в другие макросы Jinja. Вы можете использовать _только один секрет_ на конфигурацию:
 ```yml
-# works
+# работает
 host: "{{ env_var('DBT_ENV_SECRET_HOST') }}"
 
-# does not work
+# не работает
 host: "www.{{ env_var('DBT_ENV_SECRET_HOST_DOMAIN') }}.com/{{ env_var('DBT_ENV_SECRET_HOST_PATH') }}"
 ```
 
-### Custom metadata
+### Пользовательские метаданные
 
-Any env var named with the prefix `DBT_ENV_CUSTOM_ENV_` will be included in two places, with its prefix-stripped name as the key:
-- [dbt artifacts](/reference/artifacts/dbt-artifacts#common-metadata): `metadata` -> `env`
-- [events and structured logs](/reference/events-logging#info-fields): `info` -> `extra`
+Любая переменная окружения с префиксом `DBT_ENV_CUSTOM_ENV_` будет включена в два места, с именем без префикса в качестве ключа:
+- [артефакты dbt](/reference/artifacts/dbt-artifacts#common-metadata): `metadata` -> `env`
+- [события и структурированные логи](/reference/events-logging#info-fields): `info` -> `extra`
 
-A dictionary of these prefixed env vars will also be available in a `dbt_metadata_envs` context variable:
+Словарь этих префиксированных переменных окружения также будет доступен в контекстной переменной `dbt_metadata_envs`:
 ```sql
 -- {{ dbt_metadata_envs }}
 
@@ -89,14 +89,13 @@ select 1 as id
 ```shell
 $ DBT_ENV_CUSTOM_ENV_MY_FAVORITE_COLOR=indigo DBT_ENV_CUSTOM_ENV_MY_FAVORITE_NUMBER=6 dbt compile
 ```
-Compiles to:
+Компилируется в:
 ```sql
 -- {'MY_FAVORITE_COLOR': 'indigo', 'MY_FAVORITE_NUMBER': '6'}
 
 select 1 as id
 ```
 
-### dbt Cloud usage
+### Использование dbt Cloud
 
-If you are using dbt Cloud, you must adhere to the naming conventions for environment variables. Environment variables in dbt Cloud must be prefixed with `DBT_` (including `DBT_ENV_CUSTOM_ENV_` or `DBT_ENV_SECRET`). Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
-
+Если вы используете dbt Cloud, вы должны соблюдать правила именования для переменных окружения. Переменные окружения в dbt Cloud должны начинаться с префикса `DBT_` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`). Ключи переменных окружения записываются в верхнем регистре и чувствительны к регистру. При ссылке на `{{env_var('DBT_KEY')}}` в коде вашего проекта ключ должен точно соответствовать переменной, определенной в интерфейсе dbt Cloud.

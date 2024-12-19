@@ -1,16 +1,15 @@
 ---
-title: "About schemas variable"
+title: "О переменной schemas"
 sidebar_label: "schemas"
 id: "schemas"
-description: "A list of schemas where dbt built objects during the current run."
+description: "Список схем, в которых dbt создал объекты во время текущего выполнения."
 ---
 
-`schemas` is a variable available in an `on-run-end` hook, representing a list of schemas that dbt built objects in on this run. 
+`schemas` — это переменная, доступная в хуке `on-run-end`, представляющая собой список схем, в которых dbt создал объекты в ходе этого выполнения.
 
-If you do not use [custom schemas](/docs/build/custom-schemas), `schemas` will evaluate to your target schema, e.g. `['dbt_alice']`. If you use custom schemas, it will include these as well, e.g. `['dbt_alice', 'dbt_alice_marketing', 'dbt_alice_finance']`.
+Если вы не используете [пользовательские схемы](/docs/build/custom-schemas), `schemas` будет равняться вашей целевой схеме, например, `['dbt_alice']`. Если вы используете пользовательские схемы, они также будут включены, например, `['dbt_alice', 'dbt_alice_marketing', 'dbt_alice_finance']`.
 
-The `schemas`  variable is useful for granting privileges to all schemas that dbt builds relations in, like so (note this is Redshift specific syntax):
-
+Переменная `schemas` полезна для предоставления привилегий для всех схем, в которых dbt создает отношения, следующим образом (обратите внимание, что это синтаксис, специфичный для Redshift):
 
 <File name='dbt_project.yml'>
 
@@ -25,10 +24,8 @@ on-run-end:
 
 </File>
 
+:::info Хотите более подробные инструкции о рекомендуемом способе предоставления привилегий?
 
-
-:::info Want more in-depth instructions on the recommended way to grant privileges?
-
-We've written a full discourse article [here](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
+Мы написали полную статью на эту тему [здесь](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)
 
 :::

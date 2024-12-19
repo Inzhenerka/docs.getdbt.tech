@@ -1,20 +1,20 @@
 ---
 sidebar_label: "dispatch"
-title: "About dispatch config"
+title: "О конфигурации dispatch"
 id: "dispatch"
-description: "dbt extends functionality across data platforms using multiple dispatch."
+description: "dbt расширяет функциональность на различных платформах данных с помощью множественной диспетчеризации."
 ---
 
-dbt can extend functionality across [Supported Data Platforms](/docs/supported-data-platforms) through a system of [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch). Because SQL syntax, data types, and <Term id="ddl" />/<Term id="dml" /> support vary across adapters, dbt can define and call generic functional macros, and then "dispatch" that macro to the appropriate implementation for the current adapter.
+dbt может расширять функциональность на [Поддерживаемых платформах данных](/docs/supported-data-platforms) с помощью системы [множественной диспетчеризации](https://en.wikipedia.org/wiki/Multiple_dispatch). Поскольку синтаксис SQL, типы данных и поддержка <Term id="ddl" />/<Term id="dml" /> различаются между адаптерами, dbt может определять и вызывать универсальные функциональные макросы, а затем "диспетчеризовать" этот макрос к соответствующей реализации для текущего адаптера.
 
-## Syntax
+## Синтаксис
 
-__Args__:
+__Аргументы__:
 
-  * `macro_name` [required]: Name of macro to dispatch. Must be a string literal.
-  * `macro_namespace` [optional]: Namespace (package) of macro to dispatch. Must be a string literal.
+  * `macro_name` [обязательный]: Имя макроса для диспетчеризации. Должно быть строковым литералом.
+  * `macro_namespace` [необязательный]: Пространство имен (пакет) макроса для диспетчеризации. Должно быть строковым литералом.
 
-__Usage__:
+__Использование__:
 
 ```sql
 {% macro my_macro(arg1, arg2) -%}
@@ -22,28 +22,28 @@ __Usage__:
 {%- endmacro %}
 ```
 
-dbt uses two criteria when searching for the right candidate macro:
-- Adapter prefix
-- Namespace (package)
+dbt использует два критерия при поиске подходящего макроса:
+- Префикс адаптера
+- Пространство имен (пакет)
 
-**Adapter prefix:** Adapter-specific macros are prefixed with the lowercase adapter name and two underscores. Given a macro named `my_macro`, dbt will look for:
+**Префикс адаптера:** Макросы, специфичные для адаптера, имеют префикс с именем адаптера в нижнем регистре и двумя подчеркиваниями. Для макроса с именем `my_macro` dbt будет искать:
 * Postgres: `postgres__my_macro`
 * Redshift: `redshift__my_macro`
 * Snowflake: `snowflake__my_macro`
 * BigQuery: `bigquery__my_macro`
 * OtherAdapter: `otheradapter__my_macro`
-* _default:_ `default__my_macro`
+* _по умолчанию:_ `default__my_macro`
 
-If dbt does not find an adapter-specific implementation, it will dispatch to the default implementation.
+Если dbt не находит реализацию, специфичную для адаптера, он будет диспетчеризовать к реализации по умолчанию.
 
-**Namespace:** Generally, dbt will search for implementations in the root project and internal projects (e.g. `dbt`, `dbt_postgres`). If the `macro_namespace` argument is provided, it instead searches the specified namespace (package) for viable implementations. It is also possible to dynamically route namespace searching by defining a [`dispatch` project config](/reference/project-configs/dispatch-config); see the examples below for details.
+**Пространство имен:** Обычно dbt будет искать реализации в корневом проекте и внутренних проектах (например, `dbt`, `dbt_postgres`). Если аргумент `macro_namespace` предоставлен, он будет искать в указанном пространстве имен (пакете) подходящие реализации. Также возможно динамически направлять поиск пространства имен, определив [`dispatch` конфигурацию проекта](/reference/project-configs/dispatch-config); смотрите примеры ниже для подробностей.
 
-## Examples
+## Примеры
 
-### A simple example
+### Простой пример
 
-Let's say I want to define a macro, `concat`, that compiles to the SQL function `concat()` as its
-default behavior. On Redshift and Snowflake, however, I want to use the `||` operator instead.
+Предположим, я хочу определить макрос `concat`, который компилируется в SQL-функцию `concat()` как его
+поведение по умолчанию. Однако на Redshift и Snowflake я хочу использовать оператор `||`.
 
 <File name='macros/concat.sql'>
 
@@ -70,13 +70,13 @@ default behavior. On Redshift and Snowflake, however, I want to use the `||` ope
 
 </File>
 
-The top `concat` macro follows a special, rigid formula: It is named with the macro's "primary name," `concat`, which is how the macro will be called elsewhere. It accepts one argument, named `fields`. This macro's _only_ function is to dispatch—that is, look for and return—using the primary macro name (`concat`) as its search term. It also wants to pass through, to its eventual implementation, all the keyword arguments that were passed into it. In this case, there's only one argument, named `fields`.
+Верхний макрос `concat` следует специальной, жесткой формуле: он называется по "основному имени" макроса, `concat`, что и будет использоваться для вызова макроса в других местах. Он принимает один аргумент, названный `fields`. Единственная функция этого макроса — диспетчеризация, то есть поиск и возврат — с использованием основного имени макроса (`concat`) в качестве поискового термина. Он также хочет передать все ключевые аргументы, которые были переданы ему, в его окончательную реализацию. В данном случае есть только один аргумент, названный `fields`.
 
-Below that macro, I've defined three possible implementations of the `concat` macro: one for Redshift, one for Snowflake, and one for use by default on all other adapters. Depending on the adapter I'm running against, one of these macros will be selected, it will be passed the specified arguments as inputs, it will operate on those arguments, and it will pass back the result to the original dispatching macro.
+Ниже этого макроса я определил три возможные реализации макроса `concat`: одну для Redshift, одну для Snowflake и одну для использования по умолчанию на всех других адаптерах. В зависимости от адаптера, с которым я работаю, один из этих макросов будет выбран, ему будут переданы указанные аргументы в качестве входных данных, он будет работать с этими аргументами и вернет результат в исходный диспетчеризующий макрос.
 
-### A more complex example
+### Более сложный пример
 
-I found an existing implementation of the `concat` macro in the dbt-utils package. However, I want to override its implementation of the `concat` macro on Redshift in particular. In all other cases—including the default implementation—I'm perfectly happy falling back to the implementations defined in `dbt_utils.concat`.
+Я нашел существующую реализацию макроса `concat` в пакете dbt-utils. Однако я хочу переопределить его реализацию макроса `concat` на Redshift в частности. Во всех других случаях, включая реализацию по умолчанию, я вполне доволен тем, чтобы вернуться к реализациям, определенным в `dbt_utils.concat`.
 
 <File name='macros/concat.sql'>
 
@@ -98,13 +98,13 @@ I found an existing implementation of the `concat` macro in the dbt-utils packag
 
 </File>
 
-If I'm running on Redshift, dbt will use my version; if I'm running on any other database, the `concat()` macro will shell out to the version defined in `dbt_utils`.
+Если я работаю на Redshift, dbt будет использовать мою версию; если я работаю на любой другой базе данных, макрос `concat()` будет ссылаться на версию, определенную в `dbt_utils`.
 
-## For package maintainers
+## Для поддерживающих пакетов
 
-Dispatched macros from [packages](/docs/build/packages) _must_ provide the `macro_namespace` argument, as this declares the namespace (package) where it plans to search for candidates. Most often, this is the same as the name of your package, e.g. `dbt_utils`. (It is possible, if rarely desirable, to define a dispatched macro _not_ in the `dbt_utils` package, and dispatch it into the `dbt_utils` namespace.)
+Диспетчеризованные макросы из [пакетов](/docs/build/packages) _должны_ предоставлять аргумент `macro_namespace`, так как это объявляет пространство имен (пакет), в котором он планирует искать кандидатов. Чаще всего это то же самое, что и имя вашего пакета, например, `dbt_utils`. (Возможно, хотя и редко желательно, определить диспетчеризованный макрос _не_ в пакете `dbt_utils` и диспетчеризовать его в пространство имен `dbt_utils`.)
 
-Here we have the definition of the `dbt_utils.concat` macro, which specifies both the `macro_name` and `macro_namespace` to dispatch:
+Здесь у нас есть определение макроса `dbt_utils.concat`, который указывает как `macro_name`, так и `macro_namespace` для диспетчеризации:
 
 ```sql
 {% macro concat(fields) -%}
@@ -112,13 +112,13 @@ Here we have the definition of the `dbt_utils.concat` macro, which specifies bot
 {%- endmacro %}
 ```
 
-### Overriding package macros
+### Переопределение макросов пакета
 
-Following the second example above: Whenever I call my version of the `concat` macro in my own project, it will use my special null-handling version on Redshift. But the version of the `concat` macro _within_ the dbt-utils package will not use my version.
+Следуя второму примеру выше: Каждый раз, когда я вызываю свою версию макроса `concat` в своем проекте, он будет использовать мою специальную версию обработки null на Redshift. Но версия макроса `concat` _внутри_ пакета dbt-utils не будет использовать мою версию.
 
-Why does this matter? Other macros in dbt-utils, such as `surrogate_key`, call the `dbt_utils.concat` macro directly. What if I want `dbt_utils.surrogate_key` to use _my_ version of `concat` instead, including my custom logic on Redshift?
+Почему это важно? Другие макросы в dbt-utils, такие как `surrogate_key`, вызывают макрос `dbt_utils.concat` напрямую. Что если я хочу, чтобы `dbt_utils.surrogate_key` использовал _мою_ версию `concat`, включая мою пользовательскую логику на Redshift?
 
-As a user, I can accomplish this via a [project-level `dispatch` config](/reference/project-configs/dispatch-config). When dbt goes to dispatch `dbt_utils.concat`, it knows from the `macro_namespace` argument to search in the `dbt_utils` namespace. The config below defines dynamic routing for that namespace, telling dbt to search through an ordered sequence of packages, instead of just the `dbt_utils` package.
+Как пользователь, я могу достичь этого через [конфигурацию `dispatch` на уровне проекта](/reference/project-configs/dispatch-config). Когда dbt идет диспетчеризовать `dbt_utils.concat`, он знает из аргумента `macro_namespace`, что нужно искать в пространстве имен `dbt_utils`. Конфигурация ниже определяет динамическое направление для этого пространства имен, указывая dbt искать через упорядоченную последовательность пакетов, а не только в пакете `dbt_utils`.
 
 <File name='dbt_project.yml'>
 
@@ -130,30 +130,30 @@ dispatch:
 
 </File>
 
-Note that this config _must_ be specified in the user's root `dbt_project.yml`. dbt will ignore any `dispatch` configs defined in the project files of installed packages.
+Обратите внимание, что эта конфигурация _должна_ быть указана в корневом `dbt_project.yml` пользователя. dbt проигнорирует любые конфигурации `dispatch`, определенные в файлах проектов установленных пакетов.
 
-Adapter prefixes still matter: dbt will only ever look for implementations that are compatible with the current adapter. But dbt will prioritize package specificity over adapter specificity. If I call the `concat` macro while running on Postgres, with the config above, dbt will look for the following macros in order:
+Префиксы адаптеров все еще имеют значение: dbt будет искать только реализации, которые совместимы с текущим адаптером. Но dbt будет придавать приоритет специфичности пакета над специфичностью адаптера. Если я вызываю макрос `concat`, работая на Postgres, с конфигурацией выше, dbt будет искать следующие макросы в порядке:
 
-1. `my_project.postgres__concat` (not found)
-2. `my_project.default__concat` (not found)
-3. `dbt_utils.postgres__concat` (not found)
-4. `dbt_utils.default__concat` (found! use this one)
+1. `my_project.postgres__concat` (не найден)
+2. `my_project.default__concat` (не найден)
+3. `dbt_utils.postgres__concat` (не найден)
+4. `dbt_utils.default__concat` (найден! используйте этот)
 
-As someone installing a package, this functionality makes it possible for me to change the behavior of another, more complex macro (`dbt_utils.surrogate_key`) by reimplementing and overriding one of its modular components.
+Как человек, устанавливающий пакет, эта функциональность позволяет мне изменить поведение другого, более сложного макроса (`dbt_utils.surrogate_key`), переопределив один из его модульных компонентов.
 
-As a package maintainer, this functionality enables users of my package to extend, reimplement, or override default behavior, without needing to fork the package's source code.
+Как поддерживающий пакет, эта функциональность позволяет пользователям моего пакета расширять, переопределять или изменять поведение по умолчанию, не прибегая к форку исходного кода пакета.
 
-### Overriding global macros
+### Переопределение глобальных макросов
 
 :::tip
-Certain functions like [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source), and [`config`](/reference/dbt-jinja-functions/config) can't be overridden with a package using the dispatch config. This is because `ref`, `source`, and `config` are context properties within dbt and are not dispatched as global macros. Refer to [this GitHub discussion](https://github.com/dbt-labs/dbt-core/issues/4491#issuecomment-994709916) for more context.
+Некоторые функции, такие как [`ref`](/reference/dbt-jinja-functions/ref), [`source`](/reference/dbt-jinja-functions/source) и [`config`](/reference/dbt-jinja-functions/config), не могут быть переопределены с помощью пакета, использующего конфигурацию диспетчеризации. Это связано с тем, что `ref`, `source` и `config` являются свойствами контекста внутри dbt и не диспетчеризуются как глобальные макросы. Обратитесь к [этому обсуждению на GitHub](https://github.com/dbt-labs/dbt-core/issues/4491#issuecomment-994709916) для получения дополнительной информации.
 :::
 
-I maintain an internal utility package at my organization, named `my_org_dbt_helpers`. I use this package to reimplement built-in dbt macros on behalf of all my dbt-using colleagues, who work across a number of dbt projects.
+Я поддерживаю внутренний утилитарный пакет в своей организации, названный `my_org_dbt_helpers`. Я использую этот пакет для переопределения встроенных макросов dbt от имени всех моих коллег, использующих dbt, которые работают над рядом проектов dbt.
 
-My package can define custom versions of any dispatched global macro I choose, from `generate_schema_name` to `test_unique`. I can define a new default version of that macro (e.g. `default__generate_schema_name`), or custom versions for specific <Term id="data-warehouse" /> adapters (e.g. `spark__generate_schema_name`).
+Мой пакет может определять пользовательские версии любых диспетчеризованных глобальных макросов, которые я выберу, от `generate_schema_name` до `test_unique`. Я могу определить новую версию по умолчанию этого макроса (например, `default__generate_schema_name`), или пользовательские версии для конкретных <Term id="data-warehouse" /> адаптеров (например, `spark__generate_schema_name`).
 
-Each root project installing my package simply needs to include the [project-level `dispatch` config](/reference/project-configs/dispatch-config) that searches my package ahead of `dbt` for the `dbt` global namespace:
+Каждому корневому проекту, устанавливающему мой пакет, просто нужно включить [конфигурацию `dispatch` на уровне проекта](/reference/project-configs/dispatch-config), которая ищет мой пакет перед `dbt` для глобального пространства имен `dbt`:
 
 <File name='dbt_project.yml'>
 
@@ -165,29 +165,29 @@ dispatch:
 
 </File>
 
-### Managing different global overrides across packages
+### Управление различными глобальными переопределениями в разных пакетах
 
-You can override global behaviors in different ways for each project that is installed as a package. This holds true for all global macros: `generate_schema_name`, `create_table_as`, etc. When parsing or running a resource defined in a package, the definition of the global macro within that package takes precedence over the definition in the root project because it's more specific to those resources.
+Вы можете переопределять глобальные поведения различными способами для каждого проекта, установленного в качестве пакета. Это верно для всех глобальных макросов: `generate_schema_name`, `create_table_as` и т.д. При парсинге или выполнении ресурса, определенного в пакете, определение глобального макроса в этом пакете имеет приоритет над определением в корневом проекте, поскольку оно более специфично для этих ресурсов.
 
-By combining package-level overrides and `dispatch`, it is possible to achieve three different patterns:
+Сочетая переопределения на уровне пакета и `dispatch`, можно достичь трех различных паттернов:
 
-1. **Package always wins** &mdash; As the developer of dbt models in a project that will be deployed elsewhere as a package, You want full control over the macros used to define & materialize my models. Your macros should always take precedence for your models, and there should not be any way to override them.
+1. **Пакет всегда выигрывает** &mdash; Как разработчик моделей dbt в проекте, который будет развернут в другом месте в качестве пакета, вы хотите полностью контролировать макросы, используемые для определения и материализации ваших моделей. Ваши макросы всегда должны иметь приоритет для ваших моделей, и не должно быть никакого способа их переопределить.
 
-    - _Mechanism:_ Each project/package fully overrides the macro by its name, for example, `generate_schema_name` or `create_table_as`. Do not use dispatch.
+    - _Механизм:_ Каждый проект/пакет полностью переопределяет макрос по его имени, например, `generate_schema_name` или `create_table_as`. Не используйте диспетчеризацию.
 
-2. **Conditional application (root project wins)** &mdash; As the maintainer of one dbt project in a mesh of multiple, your team wants conditional application of these rules. When running your project standalone (in development), you want to apply custom behavior; but when installed as a package and deployed alongside several other projects (in production), you want the root-level project's rules to apply.
+2. **Условное применение (выигрывает корневой проект)** &mdash; Как поддерживающий один проект dbt в сети нескольких, ваша команда хочет условного применения этих правил. Когда вы запускаете свой проект самостоятельно (в разработке), вы хотите применить пользовательское поведение; но когда он установлен в качестве пакета и развернут вместе с несколькими другими проектами (в производстве), вы хотите, чтобы правила корневого проекта применялись.
 
-    - _Mechanism:_ Each package implements its "local" override by registering a candidate for dispatch with an adapter prefix, for example, `default__generate_schema_name` or `default__create_table_as`. The root-level project can then register its own candidate for dispatch (`default__generate_schema_name`), winning the default search order or by explicitly overriding the macro by name (`generate_schema_name`).
+    - _Механизм:_ Каждый пакет реализует свое "локальное" переопределение, регистрируя кандидата для диспетчеризации с префиксом адаптера, например, `default__generate_schema_name` или `default__create_table_as`. Корневой проект может затем зарегистрировать свой собственный кандидат для диспетчеризации (`default__generate_schema_name`), выиграв порядок поиска по умолчанию или явно переопределив макрос по имени (`generate_schema_name`).
 
-3. **Same rules everywhere all the time** &mdash; As a member of the data platform team responsible for consistency across teams at your organization, you want to create a "macro package" that every team can install & use.
+3. **Одни и те же правила везде и всегда** &mdash; Как член команды платформы данных, ответственный за согласованность между командами в вашей организации, вы хотите создать "пакет макросов", который каждая команда может установить и использовать.
 
-    - _Mechanism:_ Create a standalone package of candidate macros only, for example, `default__generate_schema_name` or `default__create_table_as`. Add a [project-level `dispatch` configuration](/reference/project-configs/dispatch-config) in every project's `dbt_project.yml`.
+    - _Механизм:_ Создайте отдельный пакет только с кандидатами макросов, например, `default__generate_schema_name` или `default__create_table_as`. Добавьте [конфигурацию `dispatch` на уровне проекта](/reference/project-configs/dispatch-config) в каждом `dbt_project.yml` проекта.
 
-## For adapter plugin maintainers
+## Для поддерживающих адаптеров
 
-Most packages were initially designed to work on the four original dbt adapters. By using the `dispatch` macro and project config, it is possible to "shim" existing packages to work on other adapters, by way of third-party compatibility packages.
+Большинство пакетов изначально были разработаны для работы с четырьмя оригинальными адаптерами dbt. Используя макрос `dispatch` и конфигурацию проекта, можно "подстроить" существующие пакеты для работы с другими адаптерами с помощью пакетов совместимости третьих сторон.
 
-For instance, if I want to use `dbt_utils.concat` on Apache Spark, I can install a compatibility package, spark-utils, alongside dbt-utils:
+Например, если я хочу использовать `dbt_utils.concat` на Apache Spark, я могу установить пакет совместимости `spark-utils` вместе с `dbt-utils`:
 
 <File name='packages.yml'>
 
@@ -201,7 +201,7 @@ packages:
 
 </File>
 
-I then include `spark_utils` in the search order for dispatched macros in the `dbt_utils` namespace. (I still include my own project first, just in case I want to reimplement any macros with my own custom logic.)
+Затем я включаю `spark_utils` в порядок поиска для диспетчеризованных макросов в пространстве имен `dbt_utils`. (Я все еще включаю свой собственный проект первым, на случай, если я захочу переопределить какие-либо макросы с помощью своей пользовательской логики.)
 
 <File name='dbt_project.yml'>
 
@@ -213,26 +213,26 @@ dispatch:
 
 </File>
 
-When dispatching `dbt_utils.concat`, dbt will search for:
+При диспетчеризации `dbt_utils.concat` dbt будет искать:
 
-1. `my_project.spark__concat` (not found)
-2. `my_project.default__concat` (not found)
-3. `spark_utils.spark__concat` (found! use this one)
+1. `my_project.spark__concat` (не найден)
+2. `my_project.default__concat` (не найден)
+3. `spark_utils.spark__concat` (найден! используйте этот)
 4. `spark_utils.default__concat`
 5. `dbt_utils.postgres__concat`
 6. `dbt_utils.default__concat`
 
-As a compatibility package maintainer, I only need to reimplement the foundational building-block macros which encapsulate low-level syntactical differences. By reimplementing low-level macros, such as `spark__dateadd` and `spark__datediff`, the `spark_utils` package provides access to more complex macros (`dbt_utils.date_spine`) "for free."
+Как поддерживающий пакет совместимости, мне нужно только переопределить основные строительные блоки макросов, которые инкапсулируют низкоуровневые синтаксические различия. Переопределив низкоуровневые макросы, такие как `spark__dateadd` и `spark__datediff`, пакет `spark_utils` предоставляет доступ к более сложным макросам (`dbt_utils.date_spine`) "бесплатно".
 
-As a `dbt-spark` user, by installing `dbt_utils` and `spark_utils` together, I don't just get access to higher-level utility macros. I may even be able to install and use packages with no Spark-specific logic, and which have never been tested against Spark, so long as they rely on `dbt_utils` macros for cross-adapter compatibility.
+Как пользователь `dbt-spark`, установив `dbt_utils` и `spark_utils` вместе, я получаю не только доступ к более высоким утилитарным макросам. Я даже могу установить и использовать пакеты без логики, специфичной для Spark, и которые никогда не тестировались на Spark, если они полагаются на макросы `dbt_utils` для совместимости между адаптерами.
 
-### Adapter inheritance
+### Наследование адаптера
 
-Some adapters "inherit" from other adapters (e.g. `dbt-postgres` &rarr; `dbt-redshift`, and `dbt-spark` &rarr; `dbt-databricks`). If using a child adapter, dbt will include any parent adapter implementations in its search order, too. Instead of just looking for `redshift__` and falling back to `default__`, dbt will look for `redshift__`, `postgres__`, and `default__`, in that order.
+Некоторые адаптеры "наследуют" от других адаптеров (например, `dbt-postgres` &rarr; `dbt-redshift`, и `dbt-spark` &rarr; `dbt-databricks`). Если используется дочерний адаптер, dbt также будет включать реализации родительского адаптера в свой порядок поиска. Вместо того чтобы просто искать `redshift__` и возвращаться к `default__`, dbt будет искать `redshift__`, `postgres__` и `default__` в этом порядке.
 
-Child adapters tend to have very similar SQL syntax to their parents, so this allows them to skip reimplementing a macro that has already been reimplemented by the parent adapter.
+Дочерние адаптеры, как правило, имеют очень похожий синтаксис SQL на своих родителей, поэтому это позволяет им пропустить переопределение макроса, который уже был переопределен родительским адаптером.
 
-Following the example above with `dbt_utils.concat`, the full search order on Redshift is actually:
+Следуя примеру выше с `dbt_utils.concat`, полный порядок поиска на Redshift на самом деле будет:
 
 1. `my_project.redshift__concat`
 2. `my_project.postgres__concat`
@@ -241,7 +241,7 @@ Following the example above with `dbt_utils.concat`, the full search order on Re
 5. `dbt_utils.postgres__concat`
 6. `dbt_utils.default__concat`
 
-In rare cases, the child adapter may prefer the default implementation to its parent's adapter-specific implementation. In that case, the child adapter should define an adapter-specific macro that calls the default. For instance, the PostgreSQL syntax for adding dates ought to work on Redshift, too, but I may happen to prefer the simplicity of `dateadd`:
+В редких случаях дочерний адаптер может предпочесть реализацию по умолчанию своей реализации, специфичной для родительского адаптера. В этом случае дочерний адаптер должен определить специфичный для адаптера макрос, который вызывает реализацию по умолчанию. Например, синтаксис PostgreSQL для добавления дат должен работать и на Redshift, но я могу предпочесть простоту `dateadd`:
 
 ```sql
 {% macro dateadd(datepart, interval, from_date_or_timestamp) %}
@@ -256,12 +256,12 @@ In rare cases, the child adapter may prefer the default implementation to its pa
     {{ from_date_or_timestamp }} + ((interval '1 {{ datepart }}') * ({{ interval }}))
 {% endmacro %}
 
-{# Use default syntax instead of postgres syntax #}
+{# Используйте синтаксис по умолчанию вместо синтаксиса postgres #}
 {% macro redshift__dateadd(datepart, interval, from_date_or_timestamp) %}
-    {{ return(default__dateadd(datepart, interval, from_date_or_timestamp) }}
+    {{ return(default__dateadd(datepart, interval, from_date_or_timestamp)) }}
 {% endmacro %}
 ```
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Troubleshooting/dispatch-could-not-find-package" />

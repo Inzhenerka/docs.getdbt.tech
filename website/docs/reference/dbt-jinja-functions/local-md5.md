@@ -1,15 +1,15 @@
 ---
-title: "About local_md5 context variable"
+title: "О переменной контекста local_md5"
 sidebar_label: "local_md5"
 id: "local_md5"
-description: "Calculate an MD5 hash of a string with `local_md5` context variable."
+description: "Вычисление MD5 хеша строки с помощью переменной контекста `local_md5`."
 ---
 
-The `local_md5` context variable calculates an [MD5 hash](https://en.wikipedia.org/wiki/MD5) of the given string. The string `local_md5` emphasizes that the hash is calculated _locally_, in the dbt-Jinja context. This variable is typically useful for advanced use cases. For example, when you generate unique identifiers within custom materialization or operational logic, you can either avoid collisions between temporary relations or identify changes by comparing checksums.
+Переменная контекста `local_md5` вычисляет [MD5 хеш](https://en.wikipedia.org/wiki/MD5) заданной строки. Строка `local_md5` подчеркивает, что хеш вычисляется _локально_, в контексте dbt-Jinja. Эта переменная обычно полезна для сложных случаев использования. Например, когда вы генерируете уникальные идентификаторы в рамках пользовательской материализации или операционной логики, вы можете избежать коллизий между временными отношениями или определить изменения, сравнивая контрольные суммы.
 
-It is different than the `md5` SQL function, supported by many SQL dialects, which runs remotely in the data platform. You want to always use SQL hashing functions when generating <Term id="surrogate-key">surrogate keys</Term>.
+Это отличается от функции SQL `md5`, поддерживаемой многими SQL диалектами, которая выполняется удаленно на платформе данных. Вы всегда должны использовать SQL функции хеширования при генерации <Term id="surrogate-key">суррогатных ключей</Term>.
 
-Usage:
+Использование:
 ```sql
 -- source
 {%- set value_hash = local_md5("hello world") -%}

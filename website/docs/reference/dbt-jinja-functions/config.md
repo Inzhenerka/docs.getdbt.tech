@@ -1,20 +1,20 @@
 ---
-title: "About config variable"
-sidebar_label: "config"
-id: "config"
-description: "Read this guide to understand the config Jinja function in dbt."
+title: "О переменной конфигурации"
+sidebar_label: "конфигурация"
+id: "конфигурация"
+description: "Прочитайте это руководство, чтобы понять функцию конфигурации Jinja в dbt."
 ---
 
-The `config` variable exists to handle end-user configuration for custom <Term id="materialization">materializations</Term>. Configs like  `unique_key` can be implemented using the `config` variable in your own materializations.
+Переменная `config` существует для обработки конфигурации конечного пользователя для пользовательских <Term id="materialization">материализаций</Term>. Конфигурации, такие как `unique_key`, могут быть реализованы с использованием переменной `config` в ваших собственных материализациях.
 
-For example, code in the `incremental` materialization like this:
+Например, код в материализации `incremental`, подобный этому:
 ```
 {% materialization incremental, default -%}
   {%- set unique_key = config.get('unique_key') -%}
   ...
 ```
 
-is responsible for handling model code that looks like this:
+отвечает за обработку кода модели, который выглядит так:
 ```
 {{
   config(
@@ -24,43 +24,43 @@ is responsible for handling model code that looks like this:
 }}
 ```
 
-Review [Model configurations](/reference/model-configs) for examples and more information on valid arguments.
+Посмотрите [Конфигурации моделей](/reference/model-configs) для примеров и дополнительной информации о допустимых аргументах.
 
 ## config.get
-__Args__:
+__Аргументы__:
 
- * `name`: The name of the configuration variable (required)
- * `default`: The default value to use if this configuration is not provided (optional)
+ * `name`: Имя переменной конфигурации (обязательно)
+ * `default`: Значение по умолчанию, которое будет использоваться, если эта конфигурация не предоставлена (необязательно)
 
-The `config.get` function is used to get configurations for a model from the end-user. Configs defined in this way are optional, and a default value can be provided.
+Функция `config.get` используется для получения конфигураций для модели от конечного пользователя. Конфигурации, определенные таким образом, являются необязательными, и можно указать значение по умолчанию.
 
-There are 3 cases:
-1. The configuration variable exists, it is not `None`
-1. The configuration variable exists, it is `None`
-1. The configuration variable does not exist
+Существует 3 случая:
+1. Переменная конфигурации существует, она не равна `None`
+2. Переменная конфигурации существует, она равна `None`
+3. Переменная конфигурации не существует
 
-Example usage:
+Пример использования:
 ```sql
 {% materialization incremental, default -%}
-  -- Example w/ no default. unique_key will be None if the user does not provide this configuration
+  -- Пример без значения по умолчанию. unique_key будет равен None, если пользователь не предоставит эту конфигурацию
   {%- set unique_key = config.get('unique_key') -%}
 
-  -- Example w/ alternate value. Use alternative of 'id' if 'unique_key' config is provided, but it is None
+  -- Пример с альтернативным значением. Используйте альтернативу 'id', если конфигурация 'unique_key' предоставлена, но равна None
   {%- set unique_key = config.get('unique_key') or 'id' -%}
 
-  -- Example w/ default value. Default to 'id' if the 'unique_key' config does not exist
+  -- Пример со значением по умолчанию. По умолчанию 'id', если конфигурация 'unique_key' не существует
   {%- set unique_key = config.get('unique_key', default='id') -%}
   ...
 ```
 
 ## config.require
-__Args__:
+__Аргументы__:
 
- * `name`: The name of the configuration variable (required)
+ * `name`: Имя переменной конфигурации (обязательно)
 
-The `config.require` function is used to get configurations for a model from the end-user. Configs defined using this function are required, and failure to provide them will result in a compilation error.
+Функция `config.require` используется для получения конфигураций для модели от конечного пользователя. Конфигурации, определенные с помощью этой функции, являются обязательными, и отсутствие их предоставления приведет к ошибке компиляции.
 
-Example usage:
+Пример использования:
 ```sql
 {% materialization incremental, default -%}
   {%- set unique_key = config.require('unique_key') -%}

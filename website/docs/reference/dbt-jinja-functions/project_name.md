@@ -1,24 +1,23 @@
 ---
-title: "About project_name context variable"
+title: "О переменной контекста project_name"
 sidebar_label: "project_name"
 id: "project_name"
-description: "Read this guide to understand the project_name Jinja function in dbt."
+description: "Прочитайте это руководство, чтобы понять функцию Jinja project_name в dbt."
 ---
 
-The `project_name` context variable returns the `name` for the root-level project
-which is being run by dbt. This variable can be used to defer execution to a
-root-level project macro if one exists.
+Переменная контекста `project_name` возвращает `name` корневого проекта, который выполняется с помощью dbt. Эта переменная может быть использована для отложенного выполнения макроса корневого проекта, если таковой существует.
 
-### Example Usage
+### Пример использования
 
 <File name="redshift/macros/helper.sql">
 
 ```sql
 /*
-  This macro vacuums tables in a Redshift database. If a macro exists in the
-  root-level project called `get_tables_to_vacuum`, this macro will call _that_
-  macro to find the tables to vacuum. If the macro is not defined in the root
-  project, this macro will use a default implementation instead.
+  Этот макрос выполняет очистку таблиц в базе данных Redshift. Если в
+  корневом проекте существует макрос с именем `get_tables_to_vacuum`, этот
+  макрос вызовет _тот самый_ макрос для поиска таблиц, которые нужно очистить.
+  Если макрос не определен в корневом проекте, этот макрос будет использовать
+  реализацию по умолчанию.
 */
 
 {% macro vacuum_tables() %}

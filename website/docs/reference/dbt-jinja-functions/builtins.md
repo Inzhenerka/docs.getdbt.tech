@@ -1,31 +1,30 @@
 ---
-title: "About builtins Jinja variable"
+title: "О переменной builtins Jinja"
 sidebar_label: "builtins"
 id: "builtins"
-description: "Read this guide to understand the builtins Jinja variable in dbt."
+description: "Прочитайте это руководство, чтобы понять переменную builtins Jinja в dbt."
 ---
 
+Переменная `builtins` существует для предоставления ссылок на встроенные методы контекста dbt. Это позволяет создавать макросы с именами, которые _маскируют_ встроенные методы контекста dbt, при этом оставаясь доступными в контексте компиляции dbt.
 
-The `builtins` variable exists to provide references to builtin dbt context methods. This allows macros to be created with names that _mask_ dbt builtin context methods, while still making those methods accessible in the dbt compilation context.
-
-The `builtins` variable is a dictionary containing the following keys:
+Переменная `builtins` представляет собой словарь, содержащий следующие ключи:
 
 - [ref](/reference/dbt-jinja-functions/ref)
 - [source](/reference/dbt-jinja-functions/source)
 - [config](/reference/dbt-jinja-functions/config)
 
-## Usage
+## Использование
 
 :::important
 
-Using the `builtins` variable in this way is an advanced development workflow. Users should be ready to maintain and update these overrides when upgrading in the future.
+Использование переменной `builtins` таким образом является продвинутым рабочим процессом разработки. Пользователи должны быть готовы поддерживать и обновлять эти переопределения при будущих обновлениях.
 :::
 
-From dbt v1.5 and higher, use the following macro to override the `ref` method available in the model compilation context to return a [Relation](/reference/dbt-classes#relation) with the database name overriden to `dev`.
+Начиная с версии dbt 1.5 и выше, используйте следующий макрос для переопределения метода `ref`, доступного в контексте компиляции модели, чтобы вернуть [Relation](/reference/dbt-classes#relation) с переопределенным именем базы данных на `dev`.
 
-It includes logic to extract user-provided arguments, including <code>version</code>, and call the <code>builtins.ref()</code> function with either a single <code>modelname</code> argument or both <code>packagename</code> and <code>modelname</code> arguments, based on the number of positional arguments in <code>varargs</code>.
+Он включает логику для извлечения аргументов, предоставленных пользователем, включая <code>version</code>, и вызова функции <code>builtins.ref()</code> с одним аргументом <code>modelname</code> или с аргументами <code>packagename</code> и <code>modelname</code>, в зависимости от количества позиционных аргументов в <code>varargs</code>.
 
-Note that the `ref`, `source`, and `config` functions can't be overridden with a package. This is because `ref`, `source`, and `config` are context properties within dbt and are not dispatched as global macros. Refer to [this GitHub discussion](https://github.com/dbt-labs/dbt-core/issues/4491#issuecomment-994709916) for more context.
+Обратите внимание, что функции `ref`, `source` и `config` не могут быть переопределены с помощью пакета. Это связано с тем, что `ref`, `source` и `config` являются свойствами контекста внутри dbt и не обрабатываются как глобальные макросы. Смотрите [это обсуждение на GitHub](https://github.com/dbt-labs/dbt-core/issues/4491#issuecomment-994709916) для получения дополнительной информации.
 
 <br />
 
@@ -33,7 +32,7 @@ Note that the `ref`, `source`, and `config` functions can't be overridden with a
 ```
 {% macro ref() %}
 
--- extract user-provided positional and keyword arguments
+-- извлечение позиционных и именованных аргументов, предоставленных пользователем
 {% set version = kwargs.get('version') or kwargs.get('v') %}
 {% set packagename = none %}
 {%- if (varargs | length) == 1 -%}
@@ -43,7 +42,7 @@ Note that the `ref`, `source`, and `config` functions can't be overridden with a
     {% set modelname = varargs[1] %}
 {% endif %}
 
--- call builtins.ref based on provided positional arguments
+-- вызов builtins.ref на основе предоставленных позиционных аргументов
 {% set rel = None %}
 {% if packagename is not none %}
     {% set rel = builtins.ref(packagename, modelname, version=version) %}
@@ -51,17 +50,17 @@ Note that the `ref`, `source`, and `config` functions can't be overridden with a
     {% set rel = builtins.ref(modelname, version=version) %}
 {% endif %}
 
--- finally, override the database name with "dev"
+-- наконец, переопределите имя базы данных на "dev"
 {% set newrel = rel.replace_path(database="dev") %}
 {% do return(newrel) %}
 
 {% endmacro %}
 ```
 
-Logic within the ref macro can also be used to control which elements of the model path are rendered when run, for example the following logic renders only the schema and object identifier, but not the database reference i.e. `my_schema.my_model` rather than `my_database.my_schema.my_model`. This is especially useful when using snowflake as a warehouse, if you intend to change the name of the database post-build and wish the references to remain accurate.
+Логику внутри макроса ref также можно использовать для управления тем, какие элементы пути модели отображаются при выполнении. Например, следующая логика отображает только схему и идентификатор объекта, но не ссылку на базу данных, т.е. `my_schema.my_model`, а не `my_database.my_schema.my_model`. Это особенно полезно при использовании Snowflake в качестве хранилища, если вы намерены изменить имя базы данных после сборки и хотите, чтобы ссылки оставались точными.
 
 ```
 
-  -- render identifiers without a database
+  -- отображение идентификаторов без базы данных
   {% do return(rel.include(database=false)) %}
 ```

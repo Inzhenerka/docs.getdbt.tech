@@ -1,8 +1,8 @@
 ---
-title: "About model schema"
-sidebar_label: "schema"
-id: "schema"
-description: "The schema that the model is configured to be materialized in."
+title: "О схеме модели"
+sidebar_label: "схема"
+id: "схема"
+description: "Схема, в которой модель настроена для материализации."
 ---
 
-The schema that the model is configured to be materialized in. This is typically the same as `model['schema']`.
+Схема, в которой модель настроена для материализации. Обычно это то же самое, что и `model['schema']`.

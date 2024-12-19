@@ -1,9 +1,9 @@
 ---
 datatype: integer
-description: "Read this guide to understand the config-version configuration in dbt."
+description: "Прочитайте это руководство, чтобы понять конфигурацию config-version в dbt."
 ---
 
-The `config-version:` tag is optional.
+Тег `config-version:` является необязательным.
 
 <File name='dbt_project.yml'>
 
@@ -13,10 +13,10 @@ config-version: 2
 
 </File>
 
-## Definition
+## Определение
 
-Specify your `dbt_project.yml` as using the v2 structure.
+Укажите, что ваш `dbt_project.yml` использует структуру версии 2.
 
-## Default
+## По умолчанию
 
-Without this configuration, dbt will assume your `dbt_project.yml` uses the version 2 syntax. Version 1 was deprecated in dbt v0.19.0.
+Без этой конфигурации dbt будет считать, что ваш `dbt_project.yml` использует синтаксис версии 2. Версия 1 была устаревшей в dbt v0.19.0.

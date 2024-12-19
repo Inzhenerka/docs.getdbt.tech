@@ -1,14 +1,13 @@
 ---
-title: "About run_started_at variable"
+title: "О переменной run_started_at"
 sidebar_label: "run_started_at"
 id: "run_started_at"
-description: "Use `run_started_at` to output the timestamp the run started."
+description: "Используйте `run_started_at`, чтобы вывести временную метку начала выполнения."
 ---
 
-`run_started_at` outputs the timestamp that this run started, e.g. `2017-04-21 01:23:45.678`.
+`run_started_at` выводит временную метку, когда началось выполнение, например, `2017-04-21 01:23:45.678`.
 
-The `run_started_at` variable is a Python `datetime` object. As of 0.9.1, the timezone of this variable 
- defaults to UTC.
+Переменная `run_started_at` является объектом `datetime` в Python. Начиная с версии 0.9.1, часовой пояс этой переменной по умолчанию установлен на UTC.
 
 <File name='run_started_at_example.sql'>
 
@@ -21,7 +20,7 @@ from ...
 
 </File>
 
-To modify the timezone of this variable, use the the `pytz` module:
+Чтобы изменить часовой пояс этой переменной, используйте модуль `pytz`:
 
 <File name='run_started_at_utc.sql'>
 

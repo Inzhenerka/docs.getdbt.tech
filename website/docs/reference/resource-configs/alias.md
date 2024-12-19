@@ -1,18 +1,17 @@
 ---
 resource_types: [models, seeds, snapshots, tests]
-description: "Aliasing a resource lets you give it a custom name in the database instead of using the filename."
+description: "Псевдоним ресурса позволяет задать ему пользовательское имя в базе данных вместо использования имени файла."
 datatype: string
 ---
 
-
 <Tabs>
-<TabItem value="model" label="Models">
+<TabItem value="model" label="Модели">
 
-Specify a custom alias for a model in your `dbt_project.yml` file, `models/properties.yml` file, or config block in a SQL file. 
+Укажите пользовательский псевдоним для модели в вашем файле `dbt_project.yml`, файле `models/properties.yml` или в блоке конфигурации в SQL-файле.
 
-For example, if you have a model that calculates `sales_total` and want to give it a more user-friendly alias, you can alias it as shown in the following examples.
+Например, если у вас есть модель, которая вычисляет `sales_total`, и вы хотите дать ей более удобочитаемый псевдоним, вы можете задать псевдоним, как показано в следующих примерах.
 
-In the `dbt_project.yml` file, the following example sets a default `alias` for the `sales_total` model at the project level:
+В файле `dbt_project.yml` следующий пример устанавливает значение по умолчанию для `alias` модели `sales_total` на уровне проекта:
 
 <File name='dbt_project.yml'>
 
@@ -24,7 +23,7 @@ models:
 ```
 </File>
 
-The following specifies an `alias` as part of the `models/properties.yml` file metadata, useful for centralized configuration:
+Следующий пример задает `alias` как часть метаданных файла `models/properties.yml`, что полезно для централизованной конфигурации:
 
 <File name='models/properties.yml'>
 
@@ -38,7 +37,7 @@ models:
 ```
 </File>
 
-The following assigns the `alias` directly in the In `models/sales_total.sql` file:
+Следующий пример задает `alias` непосредственно в файле `models/sales_total.sql`:
 
 <File name='models/sales_total.sql'>
 
@@ -49,15 +48,15 @@ The following assigns the `alias` directly in the In `models/sales_total.sql` fi
 ```
 </File>
 
-This would return `analytics.finance.sales_dashboard` in the database, instead of the default `analytics.finance.sales_total`.
+Это приведет к тому, что в базе данных будет возвращено `analytics.finance.sales_dashboard`, вместо значения по умолчанию `analytics.finance.sales_total`.
 
 </TabItem>
 
-<TabItem value="seeds" label="Seeds">
+<TabItem value="seeds" label="Семена">
 
-Configure a seed's alias in your `dbt_project.yml` file or a `properties.yml` file. The following examples demonstrate how to `alias` a seed named `product_categories` to `categories_data`.
+Настройте псевдоним семени в вашем файле `dbt_project.yml` или файле `properties.yml`. Следующие примеры демонстрируют, как задать `alias` для семени с именем `product_categories` как `categories_data`.
 
-In the `dbt_project.yml` file at the project level:
+В файле `dbt_project.yml` на уровне проекта:
 
 <File name='dbt_project.yml'>
 
@@ -69,7 +68,7 @@ seeds:
 ```
 </File>
 
-In the `seeds/properties.yml` file:
+В файле `seeds/properties.yml`:
 
 <File name='seeds/properties.yml'>
 
@@ -83,9 +82,9 @@ seeds:
 ```
 </File>
 
-This would return the name `analytics.finance.categories_data` in the database.
+Это приведет к тому, что в базе данных будет возвращено имя `analytics.finance.categories_data`.
 
-In the following second example, the seed at `seeds/country_codes.csv` will be built as a <Term id="table" /> named `country_mappings`.
+В следующем примере семя в `seeds/country_codes.csv` будет создано как <Term id="table" /> с именем `country_mappings`.
 
 <File name='dbt_project.yml'>
 
@@ -99,13 +98,13 @@ seeds:
 </File>
 </TabItem>
 
-<TabItem value="snapshot" label="Snapshots">
+<TabItem value="snapshot" label="Снимки">
 
-Configure a snapshots's alias in your `dbt_project.yml` file or config block. 
+Настройте псевдоним снимка в вашем файле `dbt_project.yml` или в блоке конфигурации.
 
-The following examples demonstrate how to `alias` a snapshot named `your_snapshot` to `the_best_snapshot`.
+Следующие примеры демонстрируют, как задать `alias` для снимка с именем `your_snapshot` как `the_best_snapshot`.
 
-In the `dbt_project.yml` file at the project level:
+В файле `dbt_project.yml` на уровне проекта:
 
 <File name='dbt_project.yml'>
 
@@ -117,7 +116,7 @@ snapshots:
 ```
 </File>
 
-In the `snapshots/properties.yml` file:
+В файле `snapshots/properties.yml`:
 
 <File name='snapshots/properties.yml'>
 
@@ -131,7 +130,7 @@ snapshots:
 ```
 </File>
 
-In `snapshots/your_snapshot.sql` file:
+В файле `snapshots/your_snapshot.sql`:
 
 <File name='snapshots/your_snapshot.sql'>
 
@@ -142,17 +141,17 @@ In `snapshots/your_snapshot.sql` file:
 ```
 </File>
 
-This would build your snapshot to `analytics.finance.the_best_snapshot` in the database.
+Это создаст ваш снимок как `analytics.finance.the_best_snapshot` в базе данных.
 
 </TabItem>
 
-<TabItem value="test" label="Tests">
+<TabItem value="test" label="Тесты">
 
-Configure a data test's alias in your `dbt_project.yml` file, `properties.yml` file, or config block in the model file. 
+Настройте псевдоним теста данных в вашем файле `dbt_project.yml`, файле `properties.yml` или в блоке конфигурации в файле модели.
 
-The following examples demonstrate how to `alias` a unique data test named `order_id` to `unique_order_id_test` to identify a specific data test.
+Следующие примеры демонстрируют, как задать `alias` для уникального теста данных с именем `order_id` как `unique_order_id_test`, чтобы идентифицировать конкретный тест данных.
 
-In the `dbt_project.yml` file at the project level:
+В файле `dbt_project.yml` на уровне проекта:
 
 <File name='dbt_project.yml'>
 
@@ -163,7 +162,7 @@ tests:
 ```
 </File>
 
-In the `models/properties.yml` file:
+В файле `models/properties.yml`:
 
 <File name='models/properties.yml'>
 
@@ -178,7 +177,7 @@ models:
 ```
 </File>
 
-In `tests/unique_order_id_test.sql` file:
+В файле `tests/unique_order_id_test.sql`:
 
 <File name='tests/unique_order_id_test.sql'>
 
@@ -189,23 +188,21 @@ In `tests/unique_order_id_test.sql` file:
 ```
 </File>
 
-When using [`store_failures_as`](/reference/resource-configs/store_failures_as), this would return the name `analytics.finance.orders_order_id_unique_order_id_test` in the database.
-
+При использовании [`store_failures_as`](/reference/resource-configs/store_failures_as) это приведет к тому, что в базе данных будет возвращено имя `analytics.finance.orders_order_id_unique_order_id_test`.
 
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-Optionally specify a custom alias for a [model](/docs/build/models), [data test](/docs/build/data-tests), [snapshot](/docs/build/snapshots), or [seed](/docs/build/seeds).
+При желании укажите пользовательский псевдоним для [модели](/docs/build/models), [теста данных](/docs/build/data-tests), [снимка](/docs/build/snapshots) или [семени](/docs/build/seeds).
 
-When dbt creates a relation (<Term id="table" />/<Term id="view" />) in a database, it creates it as: `{{ database }}.{{ schema }}.{{ identifier }}`, e.g. `analytics.finance.payments`
+Когда dbt создает отношение (<Term id="table" />/<Term id="view" />) в базе данных, оно создается как: `{{ database }}.{{ schema }}.{{ identifier }}`, например, `analytics.finance.payments`.
 
-The standard behavior of dbt is:
-* If a custom alias is _not_ specified, the identifier of the relation is the resource name (i.e. the filename).
-* If a custom alias is specified, the identifier of the relation is the `{{ alias }}` value.
+Стандартное поведение dbt таково:
+* Если пользовательский псевдоним _не_ указан, идентификатор отношения будет равен имени ресурса (т.е. имени файла).
+* Если пользовательский псевдоним указан, идентификатор отношения будет равен значению `{{ alias }}`.
 
-**Note** With an [ephemeral model](/docs/build/materializations), dbt will always apply the prefix `__dbt__cte__` to the <Term id="cte" /> identifier. This means that if an alias is set on an ephemeral model, then its CTE identifier will be `__dbt__cte__{{ alias }}`, but if no alias is set then its identifier will be `__dbt__cte__{{ filename }}`.
+**Примечание**: В случае [эпhemeral model](/docs/build/materializations) dbt всегда будет применять префикс `__dbt__cte__` к идентификатору <Term id="cte" />. Это означает, что если псевдоним установлен на эпhemer model, то его идентификатор CTE будет `__dbt__cte__{{ alias }}`, но если псевдоним не установлен, то его идентификатор будет `__dbt__cte__{{ filename }}`.
 
-To learn more about changing the way that dbt generates a relation's `identifier`, read [Using Aliases](/docs/build/custom-aliases).
-
+Чтобы узнать больше о том, как изменить способ, которым dbt генерирует идентификатор отношения, прочитайте [Использование псевдонимов](/docs/build/custom-aliases).

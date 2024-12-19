@@ -1,18 +1,15 @@
 ---
-title: "About as_number filter"
+title: "Фильтр as_number"
 sidebar_label: "as_number"
 id: "as_number"
-description: "Use this filter to convert Jinja-compiled output to a numeric value.."
+description: "Используйте этот фильтр для преобразования вывода, скомпилированного Jinja, в числовое значение."
 ---
 
-The `as_number` Jinja filter will coerce Jinja-compiled output into a numeric
-value (integer or float), or return an error if it cannot be represented as
-a number.
+Фильтр `as_number` Jinja будет преобразовывать вывод, скомпилированный Jinja, в числовое значение (целое число или число с плавающей запятой) или вернет ошибку, если его нельзя представить в виде числа.
 
-### Usage
+### Использование
 
-In the example below, the `as_number` filter is used to coerce an environment
-variables into a numeric value to dynamically control the connection port.
+В приведенном ниже примере фильтр `as_number` используется для преобразования переменной окружения в числовое значение, чтобы динамически управлять портом подключения.
 
 <File name='profiles.yml'>
 

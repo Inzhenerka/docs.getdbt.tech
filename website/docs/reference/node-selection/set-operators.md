@@ -1,41 +1,33 @@
 ---
-title: "Set operators"
+title: "Операторы объединения"
 ---
 
-### Unions
-Providing multiple space-delineated arguments to the `--select` or `--exclude` flags selects
-the union of them all. If a resource is included in at least one selector, it will be
-included in the final set.
+### Объединения
+Предоставление нескольких аргументов, разделенных пробелами, для флагов `--select` или `--exclude` выбирает объединение всех из них. Если ресурс включен хотя бы в один селектор, он будет включен в окончательный набор.
 
-Run snowplow_sessions, all ancestors of snowplow_sessions, fct_orders, and all ancestors of fct_orders:
-
+Запустите snowplow_sessions, всех предков snowplow_sessions, fct_orders и всех предков fct_orders:
 
   ```bash
 dbt run --select "+snowplow_sessions +fct_orders"
   ```
 
-### Intersections
+### Пересечения
 
-If you separate multiple arguments for `--select` and `--exclude` with commas and no whitespace in between, dbt will select only resources that satisfy _all_ arguments.
+Если вы разделяете несколько аргументов для `--select` и `--exclude` запятыми без пробелов между ними, dbt выберет только те ресурсы, которые удовлетворяют _всем_ аргументам.
 
-Run all the common ancestors of snowplow_sessions and fct_orders:
-
+Запустите всех общих предков snowplow_sessions и fct_orders:
 
   ```bash
 dbt run --select "+snowplow_sessions,+fct_orders"
 ```
 
-
-Run all the common descendents of stg_invoices and stg_accounts:
-
+Запустите всех общих потомков stg_invoices и stg_accounts:
 
   ```bash
 dbt run --select "stg_invoices+,stg_accounts+"
   ```
 
-
-Run models that are in the marts/finance subdirectory *and* tagged nightly:
-
+Запустите модели, которые находятся в подкаталоге marts/finance *и* помечены как nightly:
 
   ```bash
 dbt run --select "marts.finance,tag:nightly"

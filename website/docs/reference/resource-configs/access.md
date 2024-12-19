@@ -15,11 +15,11 @@ models:
 
 </File>
 
-You can apply access modifiers in config files, including the `dbt_project.yml`, or to models one-by-one in `properties.yml`. Applying access configs to a subfolder modifies the default for all models in that subfolder, so make sure you intend for this behavior. When setting individual model access, a group or subfolder might contain a variety of access levels, so when you designate a model with `access: public` make sure you intend for this behavior.
+Вы можете применять модификаторы доступа в конфигурационных файлах, включая `dbt_project.yml`, или к моделям по отдельности в `properties.yml`. Применение конфигураций доступа к подпапке изменяет значение по умолчанию для всех моделей в этой подпапке, поэтому убедитесь, что вы хотите такого поведения. При установке индивидуального доступа модели группа или подпапка могут содержать различные уровни доступа, поэтому, когда вы назначаете модели `access: public`, убедитесь, что вы хотите такого поведения.
 
-There are multiple approaches to configuring access:
+Существует несколько подходов к настройке доступа:
 
-- In `properties.yml` using the older method: 
+- В `properties.yml` с использованием старого метода:
 
   <File name='models/properties_my_public_model.yml'>
   
@@ -28,12 +28,12 @@ There are multiple approaches to configuring access:
   
   models:
     - name: my_public_model
-      access: public # Older method, still supported
+      access: public # Старый метод, все еще поддерживается
       
   ```
   </File>
   
-- In `properties.yml` using the new method (for v1.7 or higher). Use either the older method or the new method, but not both for the same model:
+- В `properties.yml` с использованием нового метода (для v1.7 или выше). Используйте либо старый метод, либо новый метод, но не оба для одной и той же модели:
 
   <File name='models/properties_my_public_model.yml'>
   
@@ -43,13 +43,12 @@ There are multiple approaches to configuring access:
   models:
     - name: my_public_model
       config:
-        access: public # newly supported in v1.7
+        access: public # новый метод, поддерживаемый в v1.7
       
   ```
   </File>
 
-
-- In `dbt_project.yml`:
+- В `dbt_project.yml`:
 
   <File name='dbt_project.yml'>
   
@@ -58,11 +57,11 @@ There are multiple approaches to configuring access:
     my_project_name:
       subfolder_name:
         +group: my_group
-        +access: private  # sets default for all models in this subfolder
+        +access: private  # устанавливает значение по умолчанию для всех моделей в этой подпапке
   ```
   </File>
 
-- In the `my_public_model.sql` file:
+- В файле `my_public_model.sql`:
 
   <File name='models/my_public_model.sql'>
   
@@ -75,34 +74,34 @@ There are multiple approaches to configuring access:
   ```
   </File>
 
-After you define `access`, rerun a production job to apply the change. 
+После того как вы определите `access`, повторно запустите производственную задачу, чтобы применить изменения.
 
-## Definition
-The access level of the model you are declaring properties for.
+## Определение
+Уровень доступа модели, для которой вы объявляете свойства.
 
-Some models (not all) are designed to be referenced through the [ref](/reference/dbt-jinja-functions/ref) function across [groups](/docs/build/groups).
+Некоторые модели (не все) предназначены для ссылки через функцию [ref](/reference/dbt-jinja-functions/ref) в рамках [групп](/docs/build/groups).
 
-| Access    | Referenceable by              |
-|-----------|-------------------------------|
-| private   | Same group                    |
-| protected | Same project/package          |
-| public    | Any group, package, or project. When defined, rerun a production job to apply the change. |
+| Доступ    | Доступно для ссылки              |
+|-----------|----------------------------------|
+| private   | Та же группа                     |
+| protected | Тот же проект/пакет             |
+| public    | Любая группа, пакет или проект. Когда определено, повторно запустите производственную задачу, чтобы применить изменения. |
 
-If you try to reference a model outside of its supported access, you will see an error:
+Если вы попытаетесь сослаться на модель вне ее поддерживаемого доступа, вы увидите ошибку:
 
 ```shell
 dbt run -s marketing_model
 ...
-dbt.exceptions.DbtReferenceError: Parsing Error
-  Node model.jaffle_shop.marketing_model attempted to reference node model.jaffle_shop.finance_model, 
-  which is not allowed because the referenced node is private to the finance group.
+dbt.exceptions.DbtReferenceError: Ошибка разбора
+  Узел model.jaffle_shop.marketing_model попытался сослаться на узел model.jaffle_shop.finance_model, 
+  что не разрешено, поскольку ссылающийся узел является частным для группы finance.
 ```
 
-## Default
+## По умолчанию
 
-By default, all models are "protected." This means that other models in the same project can reference them.
+По умолчанию все модели имеют статус "protected". Это означает, что другие модели в том же проекте могут ссылаться на них.
 
-## Related docs
+## Связанные документы
 
-* [Model Access](/docs/collaborate/govern/model-access#groups)
-* [Group configuration](/reference/resource-configs/group)
+* [Доступ к моделям](/docs/collaborate/govern/model-access#groups)
+* [Конфигурация группы](/reference/resource-configs/group)
