@@ -1,223 +1,223 @@
 ---
-title: "Data health tile"
+title: "Плитка состояния данных"
 id: "data-tile"
-sidebar_label: "Data health tile"
-description: "Embed data health tiles in your dashboards to distill data health signals for data consumers."
+sidebar_label: "Плитка состояния данных"
+description: "Встраивайте плитки состояния данных в свои панели управления, чтобы выделить сигналы доверия для потребителей данных."
 image: /img/docs/collaborate/dbt-explorer/data-tile-pass.jpg
 ---
 
-With data health tiles, stakeholders will get an at-a-glance confirmation on whether the data they’re looking at is stale or degraded. It allows teams to immediately go back into Explorer to see more details and investigate issues.
+С помощью плиток состояния данных заинтересованные стороны получат мгновенное подтверждение того, являются ли данные, которые они просматривают, устаревшими или ухудшенными. Этот сигнал доверия позволяет командам немедленно вернуться в Explorer, чтобы увидеть больше деталей и исследовать проблемы.
 
-The data health tile:
+Плитка состояния данных:
 
-- Distills [data health signals](/docs/collaborate/data-health-signals) for data consumers.
-- Deep links you into dbt Explorer where you can further dive into upstream data issues.
-- Provides richer information and makes it easier to debug.
-- Revamps the existing, [job-based tiles](#job-based-data-health).
+- Выделяет сигналы доверия для потребителей данных.
+- Глубоко связывает вас с dbt Explorer, где вы можете подробнее изучить проблемы с данными на предыдущих этапах.
+- Предоставляет более полную информацию и упрощает отладку.
+- Обновляет существующие [плитки на основе заданий](#job-based-data-health).
 
-Data health tiles rely on [exposures](/docs/build/exposures) to surface data health signals in your dashboards. When you configure exposures in your dbt project, you are explicitly defining how specific outputs—like dashboards or reports—depend on your data models.
+Плитки состояния данных полагаются на [экспозиции](/docs/build/exposures), чтобы отображать сигналы доверия в ваших панелях управления. Когда вы настраиваете экспозиции в своем проекте dbt, вы явно определяете, как конкретные выходные данные — такие как панели управления или отчеты — зависят от ваших моделей данных.
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Example of passing Data health tile in your dashboard." />
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tiles.png" width="60%" title="Embed data health tiles in your dashboards to distill data health signals for data consumers." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Пример успешной плитки состояния данных в вашей панели управления." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tiles.png" width="60%" title="Встраивайте плитки состояния данных в свои панели управления, чтобы выделить сигналы доверия для потребителей данных." />
 </DocCarousel>
 
-## Prerequisites
+## Предварительные требования
 
-- You must have a dbt Cloud account on a [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-- You must be an account admin to set up [service tokens](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
-- You must have [develop permissions](/docs/cloud/manage-access/seats-and-users).
-- Have [exposures](/docs/build/exposures) configured in your project and [source freshness](/docs/deploy/source-freshness) enabled in the job that generates this exposure.
+- У вас должен быть аккаунт dbt Cloud на [Командном или Корпоративном плане](https://www.getdbt.com/pricing/).
+- Вы должны быть администратором аккаунта, чтобы настроить [токены службы](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens).
+- У вас должны быть [права на разработку](/docs/cloud/manage-access/seats-and-users).
+- Настройте [экспозиции](/docs/build/exposures) в вашем проекте и включите [свежесть источников](/docs/deploy/source-freshness) в задании, которое генерирует эту экспозицию.
 
-## View exposure in dbt Explorer
+## Просмотр экспозиции в dbt Explorer
 
-First, be sure to enable [source freshness](/docs/deploy/source-freshness) in the job that generates this exposure.
+Сначала убедитесь, что вы включили [свежесть источников](/docs/deploy/source-freshness) в задании, которое генерирует эту экспозицию.
 
-1. Navigate to dbt Explorer by clicking on the **Explore** link in the navigation.
-2. In the main **Overview** page, go to the left navigation.
-3. Under the **Resources** tab, click on **Exposures** to view the [exposures](/docs/build/exposures) list.
-4. Select a dashboard exposure and go to the **General** tab to view the data health information.
-5. In this tab, you’ll see:   
-   - Name of the exposure. 
-   - Data health status: Data freshness passed, Data quality passed, Data may be stale, Data quality degraded.
-   - Resource type (model, source, and so on).
-   - Dashboard status: Failure, Pass, Stale.
-   - You can also see the last check completed, the last check time, and the last check duration.
-6. You can click the **Open Dashboard** button on the upper right to immediately view this in your analytics tool.
+1. Перейдите в dbt Explorer, нажав на ссылку **Исследовать** в навигации.
+2. На главной странице **Обзор** перейдите в левую навигацию.
+3. Вкладка **Ресурсы**, нажмите на **Экспозиции**, чтобы просмотреть список [экспозиций](/docs/build/exposures).
+4. Выберите экспозицию панели управления и перейдите на вкладку **Общие**, чтобы просмотреть информацию о состоянии данных.
+5. На этой вкладке вы увидите:   
+   - Название экспозиции. 
+   - Статус состояния данных: Свежесть данных прошла, Качество данных прошло, Данные могут быть устаревшими, Качество данных ухудшено.
+   - Тип ресурса (модель, источник и т.д.).
+   - Статус панели управления: Ошибка, Успех, Устаревшие.
+   - Вы также можете увидеть время последней проверки, время последней проверки и продолжительность последней проверки.
+6. Вы можете нажать кнопку **Открыть панель управления** в правом верхнем углу, чтобы немедленно просмотреть это в вашем аналитическом инструменте.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-exposures.jpg" width="95%" title="View an exposure in dbt Explorer." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-exposures.jpg" width="95%" title="Просмотр экспозиции в dbt Explorer." />
 
-## Embed in your dashboard
+## Встраивание в вашу панель управления
 
-Once you’ve navigated to the exposure in dbt Explorer, you’ll need to set up your data health tile and [service token](/docs/dbt-cloud-apis/service-tokens). You can embed data health tile to any analytics tool that supports URL or iFrame embedding.
+После того как вы перешли к экспозиции в dbt Explorer, вам нужно будет настроить свою плитку состояния данных и [токен службы](/docs/dbt-cloud-apis/service-tokens). Вы можете встроить плитку состояния данных в любой аналитический инструмент, который поддерживает встраивание URL или iFrame.
 
-Follow these steps to set up your data health tile:
+Следуйте этим шагам, чтобы настроить свою плитку состояния данных:
 
-1. Go to **Account settings** in dbt Cloud.
-2. Select **API tokens** in the left sidebar and then **Service tokens**.
-3. Click on **Create service token** and give it a name.
-4. Select the [**Metadata Only**](/docs/dbt-cloud-apis/service-tokens) permission. This token will be used to embed the tile in your dashboard in the later steps.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-setup.jpg" width="95%" title="Set up your dashboard status tile and service token to embed a data health tile" />
+1. Перейдите в **Настройки аккаунта** в dbt Cloud.
+2. Выберите **API токены** в левой боковой панели, а затем **Токены службы**.
+3. Нажмите на **Создать токен службы** и дайте ему имя.
+4. Выберите разрешение [**Только метаданные**](/docs/dbt-cloud-apis/service-tokens). Этот токен будет использоваться для встраивания плитки в вашу панель управления на следующих этапах.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-setup.jpg" width="95%" title="Настройте свою плитку состояния панели и токен службы для встраивания плитки состояния данных" />
 
-5. Copy the **Metadata Only** token and save it in a secure location. You'll need it token in the next steps.
-6. Navigate back to dbt Explorer and select an exposure.
-7. Below the **Data health** section, expand on the toggle for instructions on how to embed the exposure tile (if you're an account admin with develop permissions). 
-8. In the expanded toggle, you'll see a text field where you can paste your **Metadata Only token**.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-example.jpg" width="85%" title="Expand the toggle to embded data health tile into your dashboard." />
+5. Скопируйте токен **Только метаданные** и сохраните его в безопасном месте. Вам понадобится этот токен на следующих этапах.
+6. Вернитесь в dbt Explorer и выберите экспозицию.
+7. В разделе **Состояние данных** разверните переключатель для получения инструкций по встраиванию плитки экспозиции (если вы администратор аккаунта с правами на разработку). 
+8. В развернутом переключателе вы увидите текстовое поле, куда вы можете вставить свой **Токен только метаданных**.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-example.jpg" width="85%" title="Разверните переключатель, чтобы встроить плитку состояния данных в вашу панель управления." />
 
-9. Once you’ve pasted your token, you can select either **URL** or **iFrame** depending on which you need to add to your dashboard.
+9. После того как вы вставили свой токен, вы можете выбрать либо **URL**, либо **iFrame**, в зависимости от того, что вам нужно добавить в вашу панель управления.
 
-If your analytics tool supports iFrames, you can embed the dashboard tile within it. 
+Если ваш аналитический инструмент поддерживает iFrames, вы можете встроить плитку панели управления в него. 
 
-### Examples
-The following examples show how to embed the data health tile in Tableau and PowerBI.
+### Примеры
+Следующие примеры показывают, как встроить плитку состояния данных в Tableau и PowerBI.
 
 <Tabs>
 
-<TabItem value="powerbi" label="PowerBI example">
+<TabItem value="powerbi" label="Пример PowerBI">
 
-You can embed the data health tile iFrame in PowerBI using PowerBI Pro Online, Fabric PowerBI, or PowerBI Desktop. 
+Вы можете встроить плитку состояния данных iFrame в PowerBI, используя PowerBI Pro Online, Fabric PowerBI или PowerBI Desktop. 
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi.png" width="80%" title="Embed data health tile iFrame in PowerBI"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi.png" width="80%" title="Встраивание iFrame плитки состояния данных в PowerBI"/>
 
-Follow these steps to embed the data health tile in PowerBI:
+Следуйте этим шагам, чтобы встроить плитку состояния данных в PowerBI:
 
-1. Create a dashboard in PowerBI and connect to your database to pull in the data.
-2. Create a new PowerBI measure by right-clicking on your **Data**, **More options**, and then **New measure**.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-measure.png" width="80%" title="Create a new PowerBI measure."/>
+1. Создайте панель управления в PowerBI и подключитесь к своей базе данных, чтобы получить данные.
+2. Создайте новую меру PowerBI, щелкнув правой кнопкой мыши на вашем **Данных**, **Дополнительные параметры**, а затем **Новая мера**.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-measure.png" width="80%" title="Создание новой меры PowerBI."/>
 
-3. Navigate to dbt Explorer, select the exposure, and expand the [**Embed data health into your dashboard**](/docs/collaborate/data-tile#embed-in-your-dashboard) toggle. 
-4. Go to the **iFrame** tab and copy the iFrame code. Make sure the Metadata Only token is already set up.
-5. In PowerBI, paste the iFrame code you copied into your measure calculation window. The iFrame code should look like this:
+3. Перейдите в dbt Explorer, выберите экспозицию и разверните переключатель [**Встроить состояние данных в вашу панель управления**](/docs/collaborate/data-tile#embed-in-your-dashboard). 
+4. Перейдите на вкладку **iFrame** и скопируйте код iFrame. Убедитесь, что токен только метаданных уже настроен.
+5. В PowerBI вставьте скопированный код iFrame в окно расчета вашей меры. Код iFrame должен выглядеть так:
 
     ```html
         Website =
-        "<iframe src='https://1234.metadata.ACCESS_URL/exposure-tile?uniqueId=exposure.EXPOSURE_NAME&environmentType=staging&environmentId=123456789&token=YOUR_METADATA_TOKEN' title='Exposure status tile' height='400'></iframe>"
+        "<iframe src='https://1234.metadata.ACCESS_URL/exposure-tile?uniqueId=exposure.EXPOSURE_NAME&environmentType=staging&environmentId=123456789&token=YOUR_METADATA_TOKEN' title='Плитка состояния экспозиции' height='400'></iframe>"
     ```
 
-    <Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-measure-tools.png" width="90%" title="In the 'Measure tools' tab, replace your values with the iFrame code."/>
+    <Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-measure-tools.png" width="90%" title="Вкладка 'Инструменты мер' замените ваши значения на код iFrame."/>
 
-6. PowerBI desktop doesn't support HTML rendering by default, so you need to install an HTML component from the PowerBI Visuals Store.
-7. To do this, go to **Build visuals** and then **Get more visuals**.
-8. Login with your PowerBI account.
-9. There are several third-party HTML visuals. The one tested for this guide is [HTML content](https://appsource.microsoft.com/en-us/product/power-bi-visuals/WA200001930?tab=Overview). Install it, but please keep in mind it's a third-party plugin not created or supported by dbt Labs.
-10. Drag the metric with the iFrame code into the HTML content widget in PowerBI. This should now display your data health tile.
+6. PowerBI Desktop по умолчанию не поддерживает рендеринг HTML, поэтому вам нужно установить компонент HTML из магазина визуализаций PowerBI.
+7. Для этого перейдите в **Создание визуализаций**, а затем **Получить больше визуализаций**.
+8. Войдите в свою учетную запись PowerBI.
+9. Существует несколько сторонних HTML визуализаций. Тот, который был протестирован для этого руководства, — [HTML content](https://appsource.microsoft.com/en-us/product/power-bi-visuals/WA200001930?tab=Overview). Установите его, но имейте в виду, что это сторонний плагин, не созданный и не поддерживаемый dbt Labs.
+10. Перетащите метрику с кодом iFrame в виджет HTML-контента в PowerBI. Теперь должна отображаться ваша плитка состояния данных.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-final.png" width="80%" title="Drag the metric with the iFrame code into the HTML content widget in PowerBI. This should now display your data health tile."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/power-bi-final.png" width="80%" title="Перетащите метрику с кодом iFrame в виджет HTML-контента в PowerBI. Теперь должна отображаться ваша плитка состояния данных."/>
 
-*Refer to [this tutorial](https://www.youtube.com/watch?v=SUm9Hnq8Th8) for additional information on embedding a website into your Power BI report.*
+*Смотрите [это руководство](https://www.youtube.com/watch?v=SUm9Hnq8Th8) для получения дополнительной информации о встраивании веб-сайта в ваш отчет Power BI.*
 
 </TabItem>
 
-<TabItem value="tableau" label="Tableau example">
+<TabItem value="tableau" label="Пример Tableau">
 
-Follow these steps to embed the data health tile in Tableau:
+Следуйте этим шагам, чтобы встроить плитку состояния данных в Tableau:
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/tableau-example.png" width="80%" title="Embed data health tile iFrame in Tableau"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/tableau-example.png" width="80%" title="Встраивание iFrame плитки состояния данных в Tableau"/>
 
-1. Create a dashboard in Tableau and connect to your database to pull in the data.
-2. Ensure you've copied the URL or iFrame snippet available in dbt Explorer's **Data health** section, under the **Embed data health into your dashboard** toggle.
-3. Insert a **Web Page** object.
-4. Insert the URL and click **Ok**.
+1. Создайте панель управления в Tableau и подключитесь к своей базе данных, чтобы получить данные.
+2. Убедитесь, что вы скопировали URL или фрагмент iFrame, доступный в разделе **Состояние данных** dbt Explorer, под переключателем **Встроить состояние данных в вашу панель управления**.
+3. Вставьте объект **Веб-страница**.
+4. Вставьте URL и нажмите **Ок**.
 
     ```html
     https://metadata.ACCESS_URL/exposure-tile?uniqueId=exposure.EXPOSURE_NAME&environmentType=production&environmentId=220370&token=<YOUR_METADATA_TOKEN>
     ```
 
-    *Note, replace the placeholders with your actual values.*
-5. You should now see the data health tile embedded in your Tableau dashboard.
+    *Примечание: замените заполнители на ваши реальные значения.*
+5. Теперь вы должны увидеть плитку состояния данных, встроенную в вашу панель управления Tableau.
 
 </TabItem>
 
-<TabItem value="sigma" label="Sigma example">
+<TabItem value="sigma" label="Пример Sigma">
 
-Follow these steps to embed the data health tile in Sigma:
+Следуйте этим шагам, чтобы встроить плитку состояния данных в Sigma:
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/sigma-example.jpg" width="90%" title="Embed data health tile in Sigma"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/sigma-example.jpg" width="90%" title="Встраивание плитки состояния данных в Sigma"/>
 
-1. Create a dashboard in Sigma and connect to your database to pull in the data.
-2. Ensure you've copied the URL or iFrame snippet available in dbt Explorer's **Data health** section, under the **Embed data health into your dashboard** toggle.
-3. Add a new embedded UI element in your Sigma Workbook in the following format:
+1. Создайте панель управления в Sigma и подключитесь к своей базе данных, чтобы получить данные.
+2. Убедитесь, что вы скопировали URL или фрагмент iFrame, доступный в разделе **Состояние данных** dbt Explorer, под переключателем **Встроить состояние данных в вашу панель управления**.
+3. Добавьте новый встроенный элемент пользовательского интерфейса в вашу рабочую книгу Sigma в следующем формате:
 
     ```html
     https://metadata.ACCESS_URL/exposure-tile?uniqueId=exposure.EXPOSURE_NAME&environmentType=production&environmentId=ENV_ID_NUMBER&token=<YOUR_METADATA_TOKEN>
     ```
 
-    *Note, replace the placeholders with your actual values.*
-4. You should now see the data health tile embedded in your Sigma dashboard.
+    *Примечание: замените заполнители на ваши реальные значения.*
+4. Теперь вы должны увидеть плитку состояния данных, встроенную в вашу панель управления Sigma.
 
 </TabItem>
 
 </Tabs>
 
-## Job-based data health <Lifecycle status="Legacy"/>
+## Плитка состояния данных на основе заданий <Lifecycle status="Legacy"/>
 
-The default experience is the [environment-based data health tile](#view-exposure-in-dbt-explorer) with dbt Explorer.
+Стандартный опыт — это [плитка состояния данных на основе окружения](#view-exposure-in-dbt-explorer) с dbt Explorer.
 
-This section is for legacy job-based data health tiles. If you're using the revamped environment-based exposure tile, refer to the previous section. Expand the following to learn more about the legacy job-based data health tile.
+Этот раздел предназначен для устаревших плиток состояния данных на основе заданий. Если вы используете обновленную плитку экспозиции на основе окружения, обратитесь к предыдущему разделу. Разверните следующее, чтобы узнать больше о старой плитке состояния данных на основе заданий.
 
-<Expandable alt_header="Job-based data health">  
-In dbt Cloud, the [Discovery API](/docs/dbt-cloud-apis/discovery-api) can power dashboard status tiles, which are job-based.  A dashboard status tile is placed on a dashboard (specifically: anywhere you can embed an iFrame) to give insight into the quality and freshness of the data feeding into that dashboard. This is done in dbt [exposures](/docs/build/exposures).
+<Expandable alt_header="Плитка состояния данных на основе заданий">  
+В dbt Cloud [Discovery API](/docs/dbt-cloud-apis/discovery-api) может управлять плитками состояния панелей, которые основаны на заданиях. Плитка состояния панели размещается на панели (в частности: в любом месте, где вы можете встроить iFrame), чтобы дать представление о качестве и свежести данных, поступающих в эту панель. Это делается в dbt [экспозициях](/docs/build/exposures).
 
-#### Functionality
-The dashboard status tile looks like this:
+#### Функциональность
+Плитка состояния панели выглядит следующим образом:
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/passing-tile.jpeg"/>
 
-The data freshness check fails if any sources feeding into the exposure are stale. The data quality check fails if any dbt tests fail. A failure state could look like this:
+Проверка свежести данных не проходит, если какие-либо источники, поступающие в экспозицию, устарели. Проверка качества данных не проходит, если какие-либо тесты dbt не прошли. Состояние ошибки может выглядеть так:
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/failing-tile.jpeg"/>
 
-Clicking into **see details** from the Dashboard Status Tile takes you to a landing page where you can learn more about the specific sources, models, and tests feeding into this exposure.
+Нажатие на **посмотреть детали** из плитки состояния панели перенаправляет вас на целевую страницу, где вы можете узнать больше о конкретных источниках, моделях и тестах, поступающих в эту экспозицию.
 
-#### Setup
-First, be sure to enable [source freshness](/docs/deploy/source-freshness) in the job that generates this exposure.
+#### Настройка
+Сначала убедитесь, что вы включили [свежесть источников](/docs/deploy/source-freshness) в задании, которое генерирует эту экспозицию.
 
-In order to set up your dashboard status tile, here is what you need:
+Чтобы настроить свою плитку состояния панели, вам нужно:
 
-1. **Metadata Only token.**  You can learn how to set up a Metadata-Only token [here](/docs/dbt-cloud-apis/service-tokens).
+1. **Токен только метаданных.** Вы можете узнать, как настроить токен только метаданных [здесь](/docs/dbt-cloud-apis/service-tokens).
 
-2. **Exposure name.** You can learn more about how to set up exposures [here](/docs/build/exposures).
+2. **Название экспозиции.** Вы можете узнать больше о том, как настроить экспозиции [здесь](/docs/build/exposures).
 
-3. **Job iD.** Remember that you can select your job ID directly from the URL when looking at the relevant job in dbt Cloud.
+3. **ID задания.** Помните, что вы можете выбрать свой ID задания непосредственно из URL, когда смотрите на соответствующее задание в dbt Cloud.
 
-You can insert these three fields into the following iFrame, and then embed it **anywhere that you can embed an iFrame**:
-
-```
-<iframe src='https://metadata.YOUR_ACCESS_URL/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>' title='Exposure Status Tile'></iframe>
-```
-
-:::tip Replace `YOUR_ACCESS_URL` with your region and plan's Access URL
-
-dbt Cloud is hosted in multiple regions in the world and each region has a different access URL. Replace `YOUR_ACCESS_URL` with the appropriate [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. For example, if your account is hosted in the EMEA region, you would use the following iFrame code:
+Вы можете вставить эти три поля в следующий iFrame, а затем встроить его **в любом месте, где вы можете встроить iFrame**:
 
 ```
-<iframe src='https://metadata.emea.dbt.com/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>' title='Exposure Status Tile'></iframe>
+<iframe src='https://metadata.YOUR_ACCESS_URL/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>' title='Плитка состояния экспозиции'></iframe>
+```
+
+:::tip Замените `YOUR_ACCESS_URL` на URL доступа вашего региона и плана
+
+dbt Cloud размещен в нескольких регионах мира, и у каждого региона есть свой URL доступа. Замените `YOUR_ACCESS_URL` на соответствующий [URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана. Например, если ваш аккаунт размещен в регионе EMEA, вы должны использовать следующий код iFrame:
+
+```
+<iframe src='https://metadata.emea.dbt.com/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>' title='Плитка состояния экспозиции'></iframe>
 ```
 
 :::
 
-#### Embedding with BI tools
-The dashboard status tile should work anywhere you can embed an iFrame. But below are some tactical tips on how to integrate with common BI tools.
+#### Встраивание с BI инструментами
+Плитка состояния панели должна работать везде, где вы можете встроить iFrame. Но ниже приведены некоторые тактические советы о том, как интегрироваться с общими BI инструментами.
 
 <Tabs>
 <TabItem value="mode" label="Mode">
 
 #### Mode
-Mode allows you to directly [edit the HTML](https://mode.com/help/articles/report-layout-and-presentation/#html-editor) of any given report, where you can embed the iFrame.
+Mode позволяет вам напрямую [редактировать HTML](https://mode.com/help/articles/report-layout-and-presentation/#html-editor) любого данного отчета, где вы можете встроить iFrame.
 
-Note that Mode has also built its own [integration](https://mode.com/get-dbt/) with the dbt Cloud Discovery API!
+Обратите внимание, что Mode также создал свою собственную [интеграцию](https://mode.com/get-dbt/) с API Discovery dbt Cloud!
 </TabItem>
 
 <TabItem value="looker" label="Looker">
 
 #### Looker
-Looker does not allow you to directly embed HTML and instead requires creating a [custom visualization](https://docs.looker.com/admin-options/platform/visualizations). One way to do this for admins is to:
-- Add a [new visualization](https://fishtown.looker.com/admin/visualizations) on the visualization page for Looker admins. You can use [this URL](https://metadata.cloud.getdbt.com/static/looker-viz.js) to configure a Looker visualization powered by the iFrame.  It will look like this:
+Looker не позволяет вам напрямую встраивать HTML и вместо этого требует создания [пользовательской визуализации](https://docs.looker.com/admin-options/platform/visualizations). Один из способов сделать это для администраторов:
+- Добавьте [новую визуализацию](https://fishtown.looker.com/admin/visualizations) на странице визуализаций для администраторов Looker. Вы можете использовать [этот URL](https://metadata.cloud.getdbt.com/static/looker-viz.js) для настройки визуализации Looker, управляемой iFrame. Она будет выглядеть так:
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/looker-visualization.jpeg" title="Configure a Looker visualization powered by the iFrame" />
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/looker-visualization.jpeg" title="Настройка визуализации Looker, управляемой iFrame" />
 
-- Once you have set up your custom visualization, you can use it on any dashboard! You can configure it with the exposure name, job ID, and token relevant to that dashboard.
+- После того как вы настроите свою пользовательскую визуализацию, вы можете использовать ее на любой панели управления! Вы можете настроить ее с именем экспозиции, ID задания и токеном, относящимися к этой панели.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/custom-looker.jpeg " width="60%"/>
 </TabItem>
@@ -225,15 +225,15 @@ Looker does not allow you to directly embed HTML and instead requires creating a
 <TabItem value="tableau" label="Tableau">
 
 #### Tableau
-Tableau does not require you to embed an iFrame. You only need to use a Web Page object on your Tableau Dashboard and a URL in the following format:
+Tableau не требует от вас встраивания iFrame. Вам нужно только использовать объект веб-страницы на вашей панели управления Tableau и URL в следующем формате:
 
 ```
 https://metadata.YOUR_ACCESS_URL/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>
 ```
 
-:::tip Replace `YOUR_ACCESS_URL` with your region and plan's Access URL
+:::tip Замените `YOUR_ACCESS_URL` на URL доступа вашего региона и плана
 
-dbt Cloud is hosted in multiple regions in the world and each region has a different access URL. Replace `YOUR_ACCESS_URL` with the appropriate [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. For example, if your account is hosted in the North American region, you would use the following code:
+dbt Cloud размещен в нескольких регионах мира, и у каждого региона есть свой URL доступа. Замените `YOUR_ACCESS_URL` на соответствующий [URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана. Например, если ваш аккаунт размещен в регионе Северной Америки, вы должны использовать следующий код:
 
 ```
 https://metadata.cloud.getdbt.com/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>
@@ -241,22 +241,22 @@ https://metadata.cloud.getdbt.com/exposure-tile?name=<exposure_name>&jobId=<job_
 ```
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/tableau-object.png" width="60%" title="Configure Tableau by using a Web page object." />
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/tableau-object.png" width="60%" title="Настройка Tableau с использованием объекта веб-страницы." />
 </TabItem>
 
 <TabItem value="sigma" label="Sigma">
 
 #### Sigma
 
-Sigma does not require you to embed an iFrame. Add a new embedded UI element in your Sigma Workbook in the following format:
+Sigma не требует от вас встраивания iFrame. Добавьте новый встроенный элемент пользовательского интерфейса в вашу рабочую книгу Sigma в следующем формате:
 
 ```
 https://metadata.YOUR_ACCESS_URL/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>
 ```
 
-:::tip Replace `YOUR_ACCESS_URL` with your region and plan's Access URL
+:::tip Замените `YOUR_ACCESS_URL` на URL доступа вашего региона и плана
 
-dbt Cloud is hosted in multiple regions in the world and each region has a different access URL. Replace `YOUR_ACCESS_URL` with the appropriate [Access URL](/docs/cloud/about-cloud/access-regions-ip-addresses) for your region and plan. For example, if your account is hosted in the APAC region, you would use the following code:
+dbt Cloud размещен в нескольких регионах мира, и у каждого региона есть свой URL доступа. Замените `YOUR_ACCESS_URL` на соответствующий [URL доступа](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона и плана. Например, если ваш аккаунт размещен в регионе APAC, вы должны использовать следующий код:
 
 ```
 https://metadata.au.dbt.com/exposure-tile?name=<exposure_name>&jobId=<job_id>&token=<metadata_only_token>
@@ -264,7 +264,7 @@ https://metadata.au.dbt.com/exposure-tile?name=<exposure_name>&jobId=<job_id>&to
 ```
 :::
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/sigma-embed.gif" width="60%" title="Configure Sigma by using an embedded UI element." />
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dashboard-status-tiles/sigma-embed.gif" width="60%" title="Настройка Sigma с использованием встроенного элемента пользовательского интерфейса." />
 </TabItem>
 </Tabs>
 

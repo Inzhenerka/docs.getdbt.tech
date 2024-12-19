@@ -1,73 +1,70 @@
 ---
-title: "Invite users to dbt Cloud"
-description: "Learn how to manually invite users to dbt Cloud"
+title: "Пригласить пользователей в dbt Cloud"
+description: "Узнайте, как вручную пригласить пользователей в dbt Cloud"
 id: "invite-users"
-sidebar: "Invite users"
+sidebar: "Пригласить пользователей"
 ---
 
-dbt Cloud makes it easy to invite new users to your environment out of the box. This feature is available to all dbt Cloud customers on Teams or Enterprise plans (Developer plans are limited to a single user).
+dbt Cloud упрощает процесс приглашения новых пользователей в вашу среду. Эта функция доступна всем клиентам dbt Cloud на тарифах Teams или Enterprise (тарифы Developer ограничены одним пользователем).
 
-## Prerequisites
+## Предварительные требования
 
-You must have proper permissions to invite new users:
+У вас должны быть соответствующие права для приглашения новых пользователей:
 
-- [**Teams accounts**](/docs/cloud/manage-access/self-service-permissions) &mdash; must have `member` or `owner` permissions.
-- [**Enterprise accounts**](/docs/cloud/manage-access/enterprise-permissions) &mdash; must have `admin`, `account admin`, `project creator`, or `security admin` permissions.
-- The admin inviting the users must have a `developer` or `IT` license.
+- [**Учетные записи Teams**](/docs/cloud/manage-access/self-service-permissions) &mdash; необходимо иметь права `member` или `owner`.
+- [**Учетные записи Enterprise**](/docs/cloud/manage-access/enterprise-permissions) &mdash; необходимо иметь права `admin`, `account admin`, `project creator` или `security admin`.
+- Администратор, приглашающий пользователей, должен иметь лицензию `developer` или `IT`.
 
-## Invite new users
+## Пригласить новых пользователей
 
-1. In your dbt Cloud account, select your account name in the bottom left corner. Then select **Account settings**.
-2. Under **Settings**, select **Users**.
-3. Click on **Invite users**.
+1. В вашей учетной записи dbt Cloud выберите имя вашей учетной записи в нижнем левом углу. Затем выберите **Настройки учетной записи**.
+2. В разделе **Настройки** выберите **Пользователи**.
+3. Нажмите на **Пригласить пользователей**.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/invite-users.png" width="60%" title="The invite users pane"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/invite-users.png" width="60%" title="Панель приглашения пользователей"/>
 
-4. In the **Email Addresses** field, enter the email addresses of the users you want to invite separated by a comma, semicolon, or a new line.
-5. Select the license type for the batch of users from the **License** dropdown.
-6. Select the group(s) you want the invitees to belong to.
-7. Click **Send invitations**.
-    - If the list of invitees exceeds the number of licenses your account has available, you will receive a warning when you click **Send Invitations** and the invitations will not be sent. 
+4. В поле **Email-адреса** введите адреса электронной почты пользователей, которых вы хотите пригласить, разделяя их запятой, точкой с запятой или новой строкой.
+5. Выберите тип лицензии для группы пользователей из выпадающего списка **Лицензия**.
+6. Выберите группу(ы), к которым вы хотите, чтобы приглашенные пользователи принадлежали.
+7. Нажмите **Отправить приглашения**.
+    - Если список приглашенных превышает количество лицензий, доступных в вашей учетной записи, вы получите предупреждение при нажатии **Отправить приглашения**, и приглашения не будут отправлены. 
 
+## Пользовательский опыт
 
-## User experience
+dbt Cloud генерирует и отправляет электронные письма с адреса `support@getdbt.com` на указанные адреса. Убедитесь, что трафик с адреса `support@getdbt.com` разрешен в ваших настройках, чтобы избежать попадания писем в спам или их блокировки. Это исходный адрес электронной почты для всех [инстанций по всему миру](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
-dbt Cloud generates and sends emails from `support@getdbt.com` to the specified addresses. Make sure traffic from the `support@getdbt.com` email is allowed in your settings to avoid emails from going to spam or being blocked. This is the originating email address for all [instances worldwide](/docs/cloud/about-cloud/access-regions-ip-addresses).
+Письмо содержит ссылку для создания учетной записи. Когда пользователь нажимает на нее, он попадает на один из двух экранов в зависимости от того, настроен ли SSO или нет.
 
-
-The email contains a link to create an account. When the user clicks on this they will be brought to one of two screens depending on whether SSO is configured or not.
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/email-invite.png" width="60%" title="Example or an email invitation"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/email-invite.png" width="60%" title="Пример электронного приглашения"/>
 
 <Tabs>
 
 <TabItem value="Local user">
 
-The default settings send the email, the user clicks the link, and is prompted to create their account:
+По умолчанию письмо отправляется, пользователь нажимает на ссылку и получает запрос на создание своей учетной записи:
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/default-user-invite.png" width="60%" title="Default user invitation"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/default-user-invite.png" width="60%" title="Приглашение для локального пользователя"/>
 
 </TabItem>
 
 <TabItem value="SSO user">
 
-If SSO is configured for the environment, the user clicks the link, is brought to a confirmation screen, and presented with a link to authenticate against the company's identity provider:
+Если SSO настроен для среды, пользователь нажимает на ссылку, попадает на экран подтверждения и получает ссылку для аутентификации через идентификационный провайдер компании:
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/sso-user-invite.png" width="60%" title="User invitation with SSO configured"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/sso-user-invite.png" width="60%" title="Приглашение пользователя с настроенным SSO"/>
 
 </TabItem>
 
 </Tabs>
 
+После завершения этого процесса информация о пользователе и его электронной почте будет отображаться на экране **Пользователи** в dbt Cloud.
 
-Once the user completes this process, their email and user information will populate in the **Users** screen in dbt Cloud.
+## Часто задаваемые вопросы
 
-## FAQ
+* Есть ли ограничение на количество пользователей, которых я могу пригласить? _Ваша возможность приглашать пользователей ограничена количеством доступных лицензий._
+* Почему пользователи, нажимая на ссылку приглашения, получают ошибку `Invalid Invitation Code`? _Мы наблюдали ситуации, когда встроенные технологии безопасных ссылок (такие как функция [Safe Link](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about?view=o365-worldwide) в корпоративных Outlook) могут вызывать ошибки при нажатии на ссылку в электронном письме. Убедитесь, что URL `getdbt.com` включен в белые списки для этих сервисов._
+* Могу ли я иметь смешанную группу пользователей с SSO и аутентификацией по имени пользователя/паролю? _После включения SSO вы больше не сможете добавлять локальных пользователей. Если у вас есть подрядчики или подобные временные работники, мы рекомендуем добавить их в вашу SSO-службу._
+* Что делать, если мне нужно повторно отправить приглашение? _На странице Пользователи нажмите на запись приглашения, и у вас появится возможность повторно отправить приглашение._
+* Что делать, если я ввел адрес электронной почты неправильно? _На странице Пользователи нажмите на запись приглашения, и у вас появится возможность отозвать его. После отзыва создайте новое приглашение на правильный адрес электронной почты._
 
-* Is there a limit to the number of users I can invite? _Your ability to invite users is limited to the number of licenses you have available._
-* Why are users are clicking the invitation link and getting an `Invalid Invitation Code` error? _We have seen scenarios where embedded secure link technology (such as enterprise Outlooks [Safe Link](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about?view=o365-worldwide) feature) can result in errors when clicking on the email link. Be sure to include the `getdbt.com` URL in the allowlists for these services._
-* Can I have a mixure of users with SSO and username/password authentication? _Once SSO is enabled, you will no longer be able to add local users. If you have contractors or similar contingent workers, we recommend you add them to your SSO service._
-* What happens if I need to resend the invitation? _From the Users page, click on the invite record, and you will be presented with the option to resend the invitation._
-* What can I do if I entered an email address incorrectly? _From the Users page, click on the invite record, and you will be presented with the option to revoke it. Once revoked, generate a new invitation to the correct email address._
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/resend-invite.png" width="60%" title="Resend or revoke the users invitation"/>
+<Lightbox src="/img/docs/dbt-cloud/access-control/resend-invite.png" width="60%" title="Повторная отправка или отзыв приглашения пользователя"/>

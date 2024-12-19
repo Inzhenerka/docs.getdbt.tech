@@ -1,6 +1,6 @@
 ---
-title: "Infer setup"
-description: "Read this guide to learn about the Infer warehouse setup in dbt."
+title: "Настройка Infer"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Infer в dbt."
 id: "infer-setup"
 meta:
   maintained_by: Infer
@@ -8,7 +8,7 @@ meta:
   github_repo: 'inferlabs/dbt-infer'
   pypi_package: 'dbt-infer'
   min_core_version: 'v1.2.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   slack_channel_name: n/a
   slack_channel_link: 
   platform_name: 'Infer'
@@ -16,9 +16,9 @@ meta:
   min_supported_version: n/a
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-Certain core functionality may vary. If you would like to report a bug, request a feature, or contribute, you can check out the linked repository and open an issue.
+Некоторые основные функции могут различаться. Если вы хотите сообщить об ошибке, запросить функцию или внести свой вклад, вы можете ознакомиться с указанным репозиторием и открыть проблему.
 
 :::
 
@@ -27,28 +27,28 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Connecting to Infer with **dbt-infer**
+## Подключение к Infer с помощью **dbt-infer**
 
-Infer allows you to perform advanced ML Analytics within SQL as if native to your data warehouse.
-To do this Infer uses a variant called SQL-inf, which defines as set of primitive ML commands from which 
-you can build advanced analysis for any business use case.
-Read more about SQL-inf and Infer in the [Infer documentation](https://docs.getinfer.io/).
+Infer позволяет вам выполнять продвинутую ML-аналитику в SQL, как если бы это было нативно для вашего хранилища данных. 
+Для этого Infer использует вариант, называемый SQL-inf, который определяет набор примитивных ML-команд, с помощью которых 
+вы можете строить продвинутый анализ для любого бизнес-кейса. 
+Узнайте больше о SQL-inf и Infer в [документации Infer](https://docs.getinfer.io/).
 
-The `dbt-infer` package allow you to use SQL-inf easily within your DBT models. 
-You can read more about the `dbt-infer` package itself and how it connects to Infer in the [dbt-infer documentation](https://dbt.getinfer.io/).
+Пакет `dbt-infer` позволяет вам легко использовать SQL-inf в ваших моделях DBT. 
+Вы можете узнать больше о самом пакете `dbt-infer` и о том, как он подключается к Infer в [документации dbt-infer](https://dbt.getinfer.io/).
 
-The dbt-infer adapter is maintained via PyPi and installed with pip.
-To install the latest dbt-infer package simply run the following within the same shell as you run dbt.
+Адаптер dbt-infer поддерживается через PyPi и устанавливается с помощью pip. 
+Чтобы установить последнюю версию пакета dbt-infer, просто выполните следующее в том же терминале, где вы запускаете dbt.
 ```python
 pip install dbt-infer
 ```
 
-Versioning of dbt-infer follows the standard dbt versioning scheme - meaning if you are using dbt 1.2 the corresponding dbt-infer will be named 1.2.x where is the latest minor version number.
+Версионирование dbt-infer следует стандартной схеме версионирования dbt, что означает, что если вы используете dbt 1.2, соответствующий dbt-infer будет называться 1.2.x, где x - это номер последней минорной версии.
 
-Before using SQL-inf in your DBT models you need to setup an Infer account and generate an API-key for the connection.
-You can read how to do that in the [Getting Started Guide](https://docs.getinfer.io/docs/reference/integrations/dbt).
+Перед использованием SQL-inf в ваших моделях DBT вам необходимо настроить учетную запись Infer и сгенерировать API-ключ для подключения. 
+Вы можете прочитать, как это сделать, в [Руководстве по началу работы](https://docs.getinfer.io/docs/reference/integrations/dbt).
 
-The profile configuration in `profiles.yml` for `dbt-infer` should look something like this:
+Конфигурация профиля в `profiles.yml` для `dbt-infer` должна выглядеть примерно так:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -62,30 +62,30 @@ The profile configuration in `profiles.yml` for `dbt-infer` should look somethin
       username: "<infer-api-username>"
       apikey: "<infer-apikey>"
       data_config:
-        [configuration for your underlying data warehouse]  
+        [конфигурация для вашего основного хранилища данных]  
 ```
 
 </File>
 
-Note that you need to also have installed the adapter package for your underlying data warehouse.
-For example, if your data warehouse is BigQuery then you need to also have installed the appropriate `dbt-bigquery` package.
-The configuration of this goes into the `data_config` field.
+Обратите внимание, что вам также необходимо установить пакет адаптера для вашего основного хранилища данных. 
+Например, если ваше хранилище данных - это BigQuery, то вам также необходимо установить соответствующий пакет `dbt-bigquery`. 
+Конфигурация этого помещается в поле `data_config`.
 
-### Description of Infer Profile Fields
+### Описание полей профиля Infer
 
-| Field      | Required | Description                                                                                                                                       |
-|------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`     | Yes | Must be set to `infer`. This must be included either in `profiles.yml` or in the `dbt_project.yml` file.                                          |
-| `url`      | Yes | The host name of the Infer server to connect to. Typically this is `https://app.getinfer.io`.                                                     |
-| `username` | Yes | Your Infer username - the one you use to login.                                                                                                   |
-| `apikey`   | Yes | Your Infer api key.                                                                                                                               |
-| `data_config` | Yes | The configuration for your underlying data warehouse. The format of this follows the format of the configuration for your data warehouse adapter. |
+| Поле        | Обязательно | Описание                                                                                                                                       |
+|-------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`      | Да          | Должен быть установлен в `infer`. Это должно быть включено либо в `profiles.yml`, либо в файл `dbt_project.yml`.                             |
+| `url`       | Да          | Имя хоста сервера Infer, к которому нужно подключиться. Обычно это `https://app.getinfer.io`.                                                |
+| `username`  | Да          | Ваше имя пользователя Infer - то, которое вы используете для входа.                                                                           |
+| `apikey`    | Да          | Ваш API-ключ Infer.                                                                                                                          |
+| `data_config` | Да        | Конфигурация для вашего основного хранилища данных. Формат этого следует формату конфигурации для вашего адаптера хранилища данных.          |
 
 
-### Example of Infer configuration
+### Пример конфигурации Infer
 
-To illustrate the above descriptions, here is an example of what a `dbt-infer` configuration might look like.
-In this case the underlying data warehouse is BigQuery, which we configure the adapter for inside the `data_config` field.
+Чтобы проиллюстрировать вышеописанные описания, вот пример того, как может выглядеть конфигурация `dbt-infer`. 
+В этом случае основное хранилище данных - это BigQuery, для которого мы настраиваем адаптер внутри поля `data_config`.
 
 ```yaml
 infer_bigquery:
@@ -106,21 +106,21 @@ infer_bigquery:
     type: bigquery
 ```
 
-## Usage
+## Использование
 
-You do not need to change anything in your existing DBT models when switching to use SQL-inf &#8211;
-they will all work the same as before &#8211; but you now have the ability to use SQL-inf commands
-as native SQL functions.
+Вам не нужно изменять что-либо в ваших существующих моделях DBT при переходе на использование SQL-inf – 
+они будут работать так же, как и раньше – но теперь у вас есть возможность использовать команды SQL-inf 
+в качестве нативных SQL-функций.
 
-Infer supports a number of SQL-inf commands, including 
-`PREDICT`, `EXPLAIN`, `CLUSTER`, `SIMILAR_TO`, `TOPICS`, `SENTIMENT`.
-You can read more about SQL-inf and the commands it supports in the [SQL-inf Reference Guide](https://docs.getinfer.io/docs/category/commands).
+Infer поддерживает ряд команд SQL-inf, включая 
+`PREDICT`, `EXPLAIN`, `CLUSTER`, `SIMILAR_TO`, `TOPICS`, `SENTIMENT`. 
+Вы можете узнать больше о SQL-inf и поддерживаемых командах в [Справочном руководстве по SQL-inf](https://docs.getinfer.io/docs/category/commands).
 
-To get you started we will give a brief example here of what such a model might look like.
-You can find other more complex examples in the [dbt-infer examples repo](https://github.com/inferlabs/dbt-infer-examples).
+Чтобы помочь вам начать, мы приведем краткий пример того, как может выглядеть такая модель. 
+Вы можете найти другие более сложные примеры в [репозитории примеров dbt-infer](https://github.com/inferlabs/dbt-infer-examples).
 
-In our simple example, we will show how to use a previous model 'user_features' to predict churn
-by predicting the column `has_churned`.
+В нашем простом примере мы покажем, как использовать предыдущую модель 'user_features' для предсказания оттока, 
+предсказывая столбец `has_churned`.
 
 ```sql title="predict_user_churn.sql"
 {{
@@ -136,6 +136,6 @@ with predict_user_churn_input as (
 SELECT * FROM predict_user_churn_input PREDICT(has_churned, ignore=user_id)
 ```
 
-Not that we ignore `user_id` from the prediction.
-This is because we think that the `user_id` might, and should, not influence our prediction of churn, so we remove it.
-We also use the convention of pulling together the inputs for our prediction in a CTE, named `predict_user_churn_input`.
+Обратите внимание, что мы игнорируем `user_id` в предсказании. 
+Это связано с тем, что мы считаем, что `user_id` может и не должен влиять на наше предсказание оттока, поэтому мы его исключаем. 
+Мы также используем соглашение о сборе входных данных для нашего предсказания в CTE, названном `predict_user_churn_input`.

@@ -1,37 +1,37 @@
 ---
-title: "Set up external OAuth"
+title: "Настройка внешнего OAuth"
 id: external-oauth
-description: "Configuration instructions for dbt Cloud and external OAuth connections"
-sidebar_label: "Set up external OAuth"
+description: "Инструкции по настройке для dbt Cloud и внешних OAuth-соединений"
+sidebar_label: "Настройка внешнего OAuth"
 pagination_next: null
 pagination_prev: null
 ---
 
-# Set up external OAuth <Lifecycle status="enteprise" />
+# Настройка внешнего OAuth <Lifecycle status="enterprise" />
 
 :::note 
 
-This feature is currently only available for the Okta and Entra ID identity providers and [Snowflake connections](/docs/cloud/connect-data-platform/connect-snowflake).
+Эта функция в настоящее время доступна только для поставщиков идентификации Okta и Entra ID, а также для [соединений с Snowflake](/docs/cloud/connect-data-platform/connect-snowflake).
 
 :::
 
 
-dbt Cloud Enterprise supports [external OAuth authentication](https://docs.snowflake.com/en/user-guide/oauth-ext-overview) with external providers. When External OAuth is enabled, users can authorize their Development credentials using single sign-on (SSO) via the identity provider (IdP).  This grants users authorization to access multiple applications, including dbt Cloud, without their credentials being shared with the service. Not only does this make the process of authenticating for development environments easier on the user, it provides an additional layer of security to your dbt Cloud account. 
+dbt Cloud Enterprise поддерживает [аутентификацию через внешний OAuth](https://docs.snowflake.com/en/user-guide/oauth-ext-overview) с внешними поставщиками. Когда внешний OAuth включен, пользователи могут авторизовать свои учетные данные для разработки с помощью единого входа (SSO) через поставщика идентификации (IdP). Это предоставляет пользователям возможность доступа к нескольким приложениям, включая dbt Cloud, без необходимости делиться своими учетными данными с сервисом. Это не только упрощает процесс аутентификации для пользователей в средах разработки, но и обеспечивает дополнительный уровень безопасности для вашей учетной записи dbt Cloud.
 
-## Getting started
+## Начало работы
 
-The process of setting up external OAuth will require a little bit of back-and-forth between your dbt Cloud, IdP, and Snowflake accounts, and having them open in multiple browser tabs will help speed up the configuration process:
+Процесс настройки внешнего OAuth потребует некоторого взаимодействия между вашими учетными записями dbt Cloud, IdP и Snowflake, поэтому открытие их в нескольких вкладках браузера поможет ускорить процесс конфигурации:
 
-- **dbt Cloud:** You’ll primarily be working in the **Account Settings** —> **Integrations** page. You will need [proper permission](/docs/cloud/manage-access/enterprise-permissions) to set up the integration and create the connections.
-- **Snowflake:** Open a worksheet in an account that has permissions to [create a security integration](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration).
-- **Okta:** You’ll be working in multiple areas of the Okta account, but you can start in the **Applications** section. You will need permissions to [create an application](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Application_permissions) and an [authorization server](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Authorization_server_permissions).
-- **Entra ID** An admin with access to create [Entra ID apps](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/custom-available-permissions) who is also a user in Snowflake is required. 
+- **dbt Cloud:** Вы будете в основном работать на странице **Настройки учетной записи** —> **Интеграции**. Вам понадобятся [соответствующие разрешения](/docs/cloud/manage-access/enterprise-permissions) для настройки интеграции и создания соединений.
+- **Snowflake:** Откройте рабочий лист в учетной записи, которая имеет разрешения на [создание интеграции безопасности](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration).
+- **Okta:** Вам нужно будет работать в нескольких областях учетной записи Okta, но вы можете начать в разделе **Приложения**. Вам понадобятся разрешения для [создания приложения](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Application_permissions) и [сервера авторизации](https://help.okta.com/en-us/content/topics/security/custom-admin-role/about-role-permissions.htm#Authorization_server_permissions).
+- **Entra ID:** Необходим администратор с доступом для создания [приложений Entra ID](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/custom-available-permissions), который также является пользователем Snowflake.
 
-If the admins that handle these products are all different people, it’s better to have them coordinating simultaneously to reduce friction.
+Если администраторы, отвечающие за эти продукты, являются разными людьми, лучше, чтобы они координировали свои действия одновременно, чтобы уменьшить трение.
 
-### Snowflake commands
+### Команды Snowflake
 
-The following is a template for creating the OAuth configurations in the Snowflake environment:
+Следующий шаблон предназначен для создания конфигураций OAuth в среде Snowflake:
 
 ```sql
 
@@ -48,73 +48,73 @@ external_oauth_any_role_mode = 'ENABLE'
 
 ```
 
-The `external_oauth_token_user_mapping_claim` and `external_oauth_snowflake_user_mapping_attribute` can be modified based on the your organizations needs. These values point to the claim in the users’ token. In the example, Snowflake will look up the Snowflake user whose `email` matches the value in the `sub` claim. 
+Параметры `external_oauth_token_user_mapping_claim` и `external_oauth_snowflake_user_mapping_attribute` могут быть изменены в зависимости от потребностей вашей организации. Эти значения указывают на утверждение в токене пользователя. В приведенном примере Snowflake будет искать пользователя Snowflake, чей `email` соответствует значению в утверждении `sub`. 
 
-**Note:** The Snowflake default roles ACCOUNTADMIN, ORGADMIN, or SECURITYADMIN, are blocked from external OAuth by default and they will likely fail to authenticate. See the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration-oauth-external) for more information. 
+**Примечание:** Роли по умолчанию Snowflake ACCOUNTADMIN, ORGADMIN или SECURITYADMIN по умолчанию заблокированы для внешнего OAuth и, вероятно, не смогут пройти аутентификацию. Дополнительную информацию см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration-oauth-external). 
 
-## Identity provider configuration
+## Конфигурация поставщика идентификации
 
-Select a supported identity provider (IdP) for instructions on configuring external OAuth in their environment and completing the integration in dbt Cloud.
+Выберите поддерживаемого поставщика идентификации (IdP) для получения инструкций по настройке внешнего OAuth в их среде и завершения интеграции в dbt Cloud.
 
 <Expandable alt_header="Okta">
 
-### 1. Initialize the dbt Cloud settings
+### 1. Инициализация настроек dbt Cloud
 
-1. In your dbt Cloud account, navigate to **Account settings** —> **Integrations**.
-2. Scroll down to **Custom integrations** and click **Add integrations**
-3. Leave this window open. You can set the **Integration type** to Okta and note the **Redirect URI** at the bottom of the page. Copy this to your clipboard for use in the next steps.
+1. В вашей учетной записи dbt Cloud перейдите в **Настройки учетной записи** —> **Интеграции**.
+2. Прокрутите вниз до **Пользовательские интеграции** и нажмите **Добавить интеграции**.
+3. Оставьте это окно открытым. Вы можете установить **Тип интеграции** на Okta и записать **URI перенаправления** внизу страницы. Скопируйте это в буфер обмена для использования на следующих шагах.
 
-<Lightbox src="/img/docs/dbt-cloud/callback-uri.png" width="60%" title="Copy the callback URI at the bottom of the integration page in dbt Cloud" />
+<Lightbox src="/img/docs/dbt-cloud/callback-uri.png" width="60%" title="Скопируйте URI обратного вызова внизу страницы интеграции в dbt Cloud" />
 
-### 2. Create the Okta app
+### 2. Создание приложения Okta
 
-1. Expand the **Applications** section from the Okta dashboard and click **Applications.** Click the **Create app integration** button.
-2. Select **OIDC** as the sign-in method and **Web applications** as the application type. Click **Next**.
+1. Разверните раздел **Приложения** на панели управления Okta и нажмите **Приложения**. Нажмите кнопку **Создать интеграцию приложения**.
+2. Выберите **OIDC** в качестве метода входа и **Веб-приложения** в качестве типа приложения. Нажмите **Далее**.
 
-<Lightbox src="/img/docs/dbt-cloud/create-okta-app.png" width="60%" title="The Okta app creation window with OIDC and Web Application selected" />
+<Lightbox src="/img/docs/dbt-cloud/create-okta-app.png" width="60%" title="Окно создания приложения Okta с выбранными OIDC и веб-приложением" />
 
-3. Give the application an appropriate name, something like “External OAuth app for dbt Cloud,” that will make it easily identifiable.
-4. In the **Grant type** section, enable the **Refresh token** option.
-5. Scroll down to the **Sign-in redirect URIs** option. You’ll need to paste the redirect URI you gathered from dbt Cloud in step 1.3.
+3. Дайте приложению подходящее имя, например, “Внешнее OAuth-приложение для dbt Cloud”, чтобы его было легко идентифицировать.
+4. В разделе **Тип предоставления** включите опцию **Токен обновления**.
+5. Прокрутите вниз до опции **URI перенаправления для входа**. Вам нужно будет вставить URI перенаправления, который вы собрали из dbt Cloud на шаге 1.3.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-okta-app.png" width="60%" title="The Okta app configuration window with the sign-in redirect URI configured to the dbt Cloud value" />
+<Lightbox src="/img/docs/dbt-cloud/configure-okta-app.png" width="60%" title="Окно конфигурации приложения Okta с URI перенаправления для входа, настроенным на значение dbt Cloud" />
 
-6. Save the app configuration. You’ll come back to it, but move on to the next steps for now.
+6. Сохраните конфигурацию приложения. Вы вернетесь к этому, но пока переходите к следующим шагам.
 
-### 3. Create the Okta API
+### 3. Создание API Okta
 
-1. Expand the **Security** section and click **API** from the Okta sidebar menu.
-2. On the API screen, click **Add authorization server**. Give the authorization server a name (a nickname for your Snowflake account would be appropriate). For the **Audience** field, copy and paste your Snowflake login URL (for example, https://abdc-ef1234.snowflakecomputing.com). Give the server an appropriate description and click **Save**.
+1. Разверните раздел **Безопасность** и нажмите **API** в боковом меню Okta.
+2. На экране API нажмите **Добавить сервер авторизации**. Дайте серверу авторизации имя (подходящее название для вашей учетной записи Snowflake будет уместным). В поле **Аудитория** скопируйте и вставьте URL-адрес входа в Snowflake (например, https://abdc-ef1234.snowflakecomputing.com). Дайте серверу подходящее описание и нажмите **Сохранить**.
 
-<Lightbox src="/img/docs/dbt-cloud/create-okta-api.png" width="60%" title="The Okta API window with the Audience value set to the Snowflake URL" />
+<Lightbox src="/img/docs/dbt-cloud/create-okta-api.png" width="60%" title="Окно API Okta с установленным значением Аудитории на URL Snowflake" />
 
-3. On the authorization server config screen, open the **Metadata URI** in a new tab. You’ll need information from this screen in later steps.
+3. На экране конфигурации сервера авторизации откройте **URI метаданных** в новой вкладке. Вам понадобится информация с этого экрана на следующих шагах.
 
-<Lightbox src="/img/docs/dbt-cloud/metadata-uri.png" width="60%" title="The Okta API settings page with the metadata URI highlighted" />
+<Lightbox src="/img/docs/dbt-cloud/metadata-uri.png" width="60%" title="Страница настроек API Okta с выделенным URI метаданных" />
 
-<Lightbox src="/img/docs/dbt-cloud/metadata-example.png" width="60%" title="Sample output of the metadata URI" />
+<Lightbox src="/img/docs/dbt-cloud/metadata-example.png" width="60%" title="Пример вывода URI метаданных" />
 
-4. Click on the **Scopes** tab and **Add scope**. In the **Name** field, add `session:role-any`. (Optional) Configure **Display phrase** and **Description** and click **Create**.
+4. Нажмите на вкладку **Области** и **Добавить область**. В поле **Имя** добавьте `session:role-any`. (По желанию) Настройте **Отображаемую фразу** и **Описание** и нажмите **Создать**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-scope.png" width="60%" title="API scope configured in the Add Scope window" />
+<Lightbox src="/img/docs/dbt-cloud/add-api-scope.png" width="60%" title="Область API, настроенная в окне Добавить область" />
 
-5. Open the **Access policies** tab and click **Add policy**. Give the policy a **Name** and **Description** and set **Assign to** as **The following clients**. Start typing the name of the app you created in step 2.3, and you’ll see it autofill. Select the app and click **Create Policy**.
+5. Откройте вкладку **Политики доступа** и нажмите **Добавить политику**. Дайте политике **Имя** и **Описание** и установите **Назначить для** как **Следующие клиенты**. Начните вводить имя приложения, которое вы создали на шаге 2.3, и вы увидите, как оно автоматически заполняется. Выберите приложение и нажмите **Создать политику**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-assignment.png" width="60%" title="Assignment field autofilling the value" />
+<Lightbox src="/img/docs/dbt-cloud/add-api-assignment.png" width="60%" title="Поле назначения, автоматически заполняющее значение" />
 
-6. On the **access policy** screen, click **Add rule**.
+6. На экране **политики доступа** нажмите **Добавить правило**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-api-rule.png" width="60%" title="API Add rule button highlighted" />
+<Lightbox src="/img/docs/dbt-cloud/add-api-rule.png" width="60%" title="Кнопка Добавить правило API выделена" />
 
-7. Give the rule a descriptive name and scroll down to **token lifetimes**. Configure the **Access token lifetime is**, **Refresh token lifetime is**, and **but will expire if not used every** settings according to your organizational policies. We recommend the defaults of 1 hour and 90 days. Stricter rules increase the odds of your users having to re-authenticate.
+7. Дайте правилу описательное имя и прокрутите вниз до **сроков действия токена**. Настройте параметры **Срок действия токена доступа**, **Срок действия токена обновления** и **но истечет, если не будет использован каждые** в соответствии с политиками вашей организации. Мы рекомендуем использовать значения по умолчанию: 1 час и 90 дней. Более строгие правила увеличивают вероятность того, что вашим пользователям придется повторно аутентифицироваться.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Toke lifetime settings in the API rule window" />
+<Lightbox src="/img/docs/dbt-cloud/configure-token-lifetime.png" width="60%" title="Настройки срока действия токена в окне правила API" />
 
-8. Navigate back to the **Settings** tab and leave it open in your browser. You’ll need some of the information in later steps.
+8. Вернитесь на вкладку **Настройки** и оставьте ее открытой в вашем браузере. Вам понадобится некоторая информация на следующих шагах.
 
-### 4. Create the OAuth settings in Snowflake
+### 4. Создание настроек OAuth в Snowflake
 
-1. Open up a Snowflake worksheet and copy/paste the following:
+1. Откройте рабочий лист Snowflake и скопируйте/вставьте следующее:
 
 ```sql
 
@@ -131,105 +131,105 @@ external_oauth_any_role_mode = 'ENABLE'
 
 ```
 
-2. Change `your_integration_name` to something appropriately descriptive. For example, `dev_OktaAccountNumber_okta`. Copy the `external_oauth_issuer` and `external_oauth_jws_keys_url` from the metadata URI in step 3.3. Use the same Snowflake URL you entered in step 3.2 as the `external_oauth_audience_list`.
+2. Измените `your_integration_name` на что-то подходящее и описательное. Например, `dev_OktaAccountNumber_okta`. Скопируйте `external_oauth_issuer` и `external_oauth_jws_keys_url` из URI метаданных на шаге 3.3. Используйте тот же URL Snowflake, который вы ввели на шаге 3.2, в качестве `external_oauth_audience_list`.
 
-Adjust the other settings as needed to meet your organization's configurations in Okta and Snowflake.
+Настройте другие параметры по мере необходимости, чтобы соответствовать конфигурациям вашей организации в Okta и Snowflake.
 
-<Lightbox src="/img/docs/dbt-cloud/gather-uris.png" width="60%" title="The issuer and jws keys URIs in the metadata URL" />
+<Lightbox src="/img/docs/dbt-cloud/gather-uris.png" width="60%" title="URI эмитента и jws ключей в URL метаданных" />
 
-3. Run the steps to create the integration in Snowflake.
+3. Выполните шаги для создания интеграции в Snowflake.
 
-### 5. Configuring the integration in dbt Cloud
+### 5. Конфигурация интеграции в dbt Cloud
 
-1. Navigate back to the dbt Cloud **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields.
-   1. `Integration name`: Give the integration a descriptive name that includes identifying information about the Okta environment so future users won’t have to guess where it belongs.
-   2. `Client ID` and `Client secrets`: Retrieve these from the Okta application page.
-   <Lightbox src="/img/docs/dbt-cloud/gather-clientid-secret.png" width="60%" title="TThe client ID and secret highlighted in the Okta app" />
-   3. Authorize URL and Token URL: Found in the metadata URI.
-   <Lightbox src="/img/docs/dbt-cloud/gather-authorization-token-endpoints.png" width="60%" title="The authorize and token URLs highlighted in the metadata URI" />
+1. Вернитесь на страницу **Настройки учетной записи** —> **Интеграции** в dbt Cloud, на которой вы были в начале. Пора начинать заполнять все поля.
+   1. `Имя интеграции`: Дайте интеграции описательное имя, которое включает идентифицирующую информацию о среде Okta, чтобы будущие пользователи не гадали, к чему она относится.
+   2. `Client ID` и `Client secrets`: Получите их со страницы приложения Okta.
+   <Lightbox src="/img/docs/dbt-cloud/gather-clientid-secret.png" width="60%" title="Client ID и секрет, выделенные в приложении Okta" />
+   3. URL авторизации и URL токена: Найдите в URI метаданных.
+   <Lightbox src="/img/docs/dbt-cloud/gather-authorization-token-endpoints.png" width="60%" title="URL авторизации и токена, выделенные в URI метаданных" />
 
-2. **Save** the configuration
-
-
-### 6. Create a new connection in dbt Cloud
+2. **Сохраните** конфигурацию
 
 
-1. Navigate the **Account settings** and click **Connections** from the menu. Click **Add connection**.
-2. Configure the `Account`, `Database`, and `Warehouse` as you normally would, and for the `OAuth method`, select the external OAuth you just created.
+### 6. Создание нового соединения в dbt Cloud
 
 
-<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="The new configuration window in dbt Cloud with the External OAuth showing as an option" />
+1. Перейдите в **Настройки учетной записи** и нажмите **Соединения** в меню. Нажмите **Добавить соединение**.
+2. Настройте `Учетную запись`, `Базу данных` и `Склад` так, как вы обычно это делаете, а для `Метода OAuth` выберите внешний OAuth, который вы только что создали.
 
 
-3. Scroll down to the **External OAuth** configurations box and select the config from the list.
+<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="Новое окно конфигурации в dbt Cloud с отображением внешнего OAuth как опции" />
 
 
-<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="The new connection displayed in the External OAuth Configurations box" />
+3. Прокрутите вниз до поля **Конфигурации внешнего OAuth** и выберите конфигурацию из списка.
 
 
-4. **Save** the connection, and you have now configured External OAuth with Okta and Snowflake!
+<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="Новое соединение, отображаемое в поле Конфигурации внешнего OAuth" />
+
+
+4. **Сохраните** соединение, и теперь вы настроили внешний OAuth с Okta и Snowflake!
 
 </Expandable>
 
 <Expandable alt_header="Entra ID">
 
-### 1. Initialize the dbt Cloud settings
+### 1. Инициализация настроек dbt Cloud
 
-1. In your dbt Cloud account, navigate to **Account settings** —> **Integrations**.
-2. Scroll down to **Custom integrations** and click **Add integrations**.
-3. Leave this window open. You can set the **Integration type** to Entra ID and note the **Redirect URI** at the bottom of the page. Copy this to your clipboard for use in the next steps.
+1. В вашей учетной записи dbt Cloud перейдите в **Настройки учетной записи** —> **Интеграции**.
+2. Прокрутите вниз до **Пользовательские интеграции** и нажмите **Добавить интеграции**.
+3. Оставьте это окно открытым. Вы можете установить **Тип интеграции** на Entra ID и записать **URI перенаправления** внизу страницы. Скопируйте это в буфер обмена для использования на следующих шагах.
 
 ### Entra ID
 
-You’ll create two apps in the Azure portal: A resource server and a client app.
+Вам нужно будет создать два приложения в портале Azure: сервер ресурсов и клиентское приложение.
 
 :::important
 
-The admin who creates the apps in the Microsoft Entra ID account must also be a user in Snowflake.
+Администратор, который создает приложения в учетной записи Microsoft Entra ID, также должен быть пользователем в Snowflake.
 
-The `value` field gathered in these steps is only displayed once. When created, record it immediately.
+Поле `value`, собранное на этих шагах, отображается только один раз. После создания запишите его немедленно.
 
 :::
 
-In your Azure portal, open the **Entra ID** and click **App registrations** from the left menu.
+В вашем портале Azure откройте **Entra ID** и нажмите **Регистрация приложений** в левом меню.
 
-### 1. Create a resource server
+### 1. Создание сервера ресурсов
 
-1. From the app registrations screen, click **New registration**.
-   1. Give the app a name.
-   2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-   3. Click **Register**to see the application’s overview.
-2. From the app overview page, click **Expose an API** from the left menu.
-3. Click **Add** next to **Application ID URI**. The field will automatically populate. Click **Save**.
-4. Record the `value` field for use in a future step. _This is only displayed once. Be sure to record it immediately. Microsoft hides the field when you leave the page and come back._
-5. From the same screen, click **Add scope**.
-   1. Give the scope a name.
-   2. Set “Who can consent?” to **Admins and users**.
-   3. Set **Admin consent display name** session:role-any and give it a description.
-   4. Ensure **State** is set to **Enabled**.
-   5. Click **Add scope**.
+1. На экране регистрации приложений нажмите **Новая регистрация**.
+   1. Дайте приложению имя.
+   2. Убедитесь, что **Поддерживаемые типы учетных записей** установлены на “Учетные записи только в этом организационном каталоге (`Имя организации` - Один арендатор).”
+   3. Нажмите **Зарегистрировать**, чтобы увидеть обзор приложения.
+2. На странице обзора приложения нажмите **Экспонировать API** в левом меню.
+3. Нажмите **Добавить** рядом с **URI идентификатора приложения**. Поле автоматически заполнится. Нажмите **Сохранить**.
+4. Запишите поле `value` для использования на следующем шаге. _Это отображается только один раз. Обязательно запишите его немедленно. Microsoft скрывает поле, когда вы покидаете страницу и возвращаетесь._
+5. На той же странице нажмите **Добавить область**.
+   1. Дайте области имя.
+   2. Установите “Кто может дать согласие?” на **Администраторы и пользователи**.
+   3. Установите **Отображаемое имя согласия администратора** на session:role-any и дайте ему описание.
+   4. Убедитесь, что **Состояние** установлено на **Включено**.
+   5. Нажмите **Добавить область**.
 
-### 2. Create a client app
+### 2. Создание клиентского приложения
 
-1. From the **App registration page**, click **New registration**.
-   1. Give the app a name that uniquely identifies it as the client app.
-   2. Ensure **Supported account types** are set to “Accounts in this organizational directory only (`Org name` - Single Tenant).”
-   3. Set the **Redirect URI** to **Web** and copy/paste the **Redirect URI** from dbt Cloud into the field.
-   4. Click **Register**.
-2. From the app overview page, click **API permissions** from the left menu, and click **Add permission**.
-3. From the pop-out screen, click **APIs my organization uses**, search for the resource server name from the previous steps, and click it.
-4. Ensure the box for the **Permissions** `session:role-any` is enabled and click **Add permissions**.
-5. Click **Grant admin consent** and from the popup modal click **Yes**.
-6. From the left menu, click **Certificates and secrets** and click **New client secret**. Name the secret, set an expiration, and click **Add**.
-**Note**: Microsoft does not allow “forever” as an expiration date. The maximum time is two years. Documenting the expiration date so you can refresh the secret before the expiration or user authorization fails is essential.
-7. Record the `value` for use in a future step and record it immediately.
-**Note**: Entra ID will not display this value again once you navigate away from this screen.
+1. На странице **Регистрация приложений** нажмите **Новая регистрация**.
+   1. Дайте приложению имя, которое уникально идентифицирует его как клиентское приложение.
+   2. Убедитесь, что **Поддерживаемые типы учетных записей** установлены на “Учетные записи только в этом организационном каталоге (`Имя организации` - Один арендатор).”
+   3. Установите **URI перенаправления** на **Веб** и скопируйте/вставьте **URI перенаправления** из dbt Cloud в поле.
+   4. Нажмите **Зарегистрировать**.
+2. На странице обзора приложения нажмите **Разрешения API** в левом меню и нажмите **Добавить разрешение**.
+3. На всплывающем экране нажмите **API, которые использует моя организация**, найдите имя сервера ресурсов из предыдущих шагов и нажмите на него.
+4. Убедитесь, что флажок для разрешения `session:role-any` включен, и нажмите **Добавить разрешения**.
+5. Нажмите **Предоставить согласие администратора** и в всплывающем окне нажмите **Да**.
+6. В левом меню нажмите **Сертификаты и секреты** и нажмите **Новый клиентский секрет**. Назовите секрет, установите срок действия и нажмите **Добавить**.
+**Примечание**: Microsoft не позволяет устанавливать “навсегда” в качестве даты истечения. Максимальный срок — два года. Важно документировать дату истечения, чтобы вы могли обновить секрет до истечения срока или до того, как авторизация пользователя не пройдет.
+7. Запишите `value` для использования на следующем шаге и запишите его немедленно.
+**Примечание**: Entra ID не отобразит это значение снова, как только вы покинете этот экран.
 
-### 3. Snowflake configuration
+### 3. Конфигурация Snowflake
 
-You'll be switching between the Entra ID site and Snowflake. Keep your Entra ID account open for this process.
+Вам нужно будет переключаться между сайтом Entra ID и Snowflake. Держите свою учетную запись Entra ID открытой для этого процесса.
 
-Copy and paste the following as a template in a Snowflake worksheet:
+Скопируйте и вставьте следующее в качестве шаблона в рабочий лист Snowflake:
 
 ```sql
 
@@ -246,28 +246,27 @@ create or replace security integration <whatever you want to name it>
 
 ```
 
-On the Entra ID site:
+На сайте Entra ID:
 
-1. From the Client ID 
-app in Entra ID, click **Endpoints** and open the **Federation metadata document** in a new tab.
-   - The **entity ID** on this page maps to the `external_oauth_issuer` field in the Snowflake config.
-2. Back on the list of endpoints, open the **OpenID Connect metadata document** in a new tab.
-   - The **jwks_uri** field maps to the `external_oauth_jws_keys_url` field in Snowflake.
-3. Navigate to the resource server in previous steps.
-   - The **Application ID URI** maps to the `external_oauth_audience_list` field in Snowflake.
-4. Run the configurations. Be sure the admin who created the Microsoft apps is also a user in Snowflake, or the configuration will fail.
+1. В приложении Client ID в Entra ID нажмите **Конечные точки** и откройте **Документ метаданных федерации** в новой вкладке.
+   - **entity ID** на этой странице соответствует полю `external_oauth_issuer` в конфигурации Snowflake.
+2. Вернитесь к списку конечных точек и откройте **Документ метаданных OpenID Connect** в новой вкладке.
+   - Поле **jwks_uri** соответствует полю `external_oauth_jws_keys_url` в Snowflake.
+3. Перейдите к серверу ресурсов из предыдущих шагов.
+   - **URI идентификатора приложения** соответствует полю `external_oauth_audience_list` в Snowflake.
+4. Выполните конфигурации. Убедитесь, что администратор, создавший приложения Microsoft, также является пользователем Snowflake, иначе конфигурация не пройдет.
 
-### 4. Configuring the integration in dbt Cloud
+### 4. Конфигурация интеграции в dbt Cloud
 
-1. Navigate back to the dbt Cloud **Account settings** —> **Integrations** page you were on at the beginning. It’s time to start filling out all of the fields. There will be some back-and-forth between the Entra ID account and dbt Cloud.
-2. `Integration name`: Give the integration a descriptive name that includes identifying information about the Entra ID environment so future users won’t have to guess where it belongs.
-3. `Client secrets`: Found in the Client ID from the **Certificates and secrets** page. `Value` is the `Client secret`. Note that it only appears when created; _Microsoft hides the secret if you return later, and you must recreate it._
-4. `Client ID`: Copy the’ Application (client) ID’ on the overview page for the client ID app.
-5. `Authorization URL` and `Token URL`: From the client ID app, open the `Endpoints` tab. These URLs map to the `OAuth 2.0 authorization endpoint (v2)` and `OAuth 2.0 token endpoint (v2)` fields. *You must use v2 of the `OAuth 2.0 authorization endpoint`. Do not use V1.* You can use either version of the `OAuth 2.0 token endpoint`.
-6. `Application ID URI`: Copy the `Application ID URI` field from the resource server’s Overview screen.
+1. Вернитесь на страницу **Настройки учетной записи** —> **Интеграции** в dbt Cloud, на которой вы были в начале. Пора начинать заполнять все поля. Вам придется немного поработать между учетной записью Entra ID и dbt Cloud.
+2. `Имя интеграции`: Дайте интеграции описательное имя, которое включает идентифицирующую информацию о среде Entra ID, чтобы будущие пользователи не гадали, к чему она относится.
+3. `Client secrets`: Найдите на странице **Сертификаты и секреты** в Client ID. `Value` — это `Client secret`. Обратите внимание, что он отображается только при создании; _Microsoft скрывает секрет, если вы вернетесь позже, и вам нужно будет создать его заново._
+4. `Client ID`: Скопируйте `Application (client) ID` на странице обзора для идентификатора клиента.
+5. `Authorization URL` и `Token URL`: На странице Client ID откройте вкладку `Конечные точки`. Эти URL соответствуют полям `OAuth 2.0 authorization endpoint (v2)` и `OAuth 2.0 token endpoint (v2)`. *Вы должны использовать v2 конечной точки `OAuth 2.0 authorization endpoint`. Не используйте V1.* Вы можете использовать любую версию конечной точки `OAuth 2.0 token endpoint`.
+6. `URI идентификатора приложения`: Скопируйте поле `Application ID URI` с экрана обзора сервера ресурсов.
 
 </Expandable>
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Troubleshooting/failed-snowflake-oauth-connection" />

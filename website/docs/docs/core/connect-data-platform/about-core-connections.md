@@ -1,14 +1,14 @@
 ---
-title: "About dbt Core data platform connections"
+title: "О подключениях к платформам данных в dbt Core"
 id: "about-core-connections"
-description: "Information about data platform connections in dbt Core"
-sidebar_label: "About data platform connections in dbt Core"
+description: "Информация о подключениях к платформам данных в dbt Core"
+sidebar_label: "О подключениях к платформам данных в dbt Core"
 hide_table_of_contents: true
 pagination_next: "docs/core/connect-data-platform/profiles.yml"
 pagination_prev: null
 ---
 
-dbt Core can connect with a variety of data platform providers including: 
+dbt Core может подключаться к различным поставщикам платформ данных, включая:
 
 - [Amazon Redshift](/docs/core/connect-data-platform/redshift-setup) 
 - [Apache Spark](/docs/core/connect-data-platform/spark-setup) 
@@ -18,38 +18,38 @@ dbt Core can connect with a variety of data platform providers including:
 - [Microsoft Fabric](/docs/core/connect-data-platform/fabric-setup)
 - [PostgreSQL](/docs/core/connect-data-platform/postgres-setup)
 - [Snowflake](/docs/core/connect-data-platform/snowflake-setup)
-- [Starburst or Trino](/docs/core/connect-data-platform/trino-setup)
+- [Starburst или Trino](/docs/core/connect-data-platform/trino-setup)
 
-dbt communicates with a number of different data platforms by using a dedicated adapter for each. When you install dbt Core, you'll also need to install the specific adapter for your data platform, connect to dbt Core, and set up a [profiles.yml file](/docs/core/connect-data-platform/profiles.yml). You can do this using the command line (CLI).
+dbt взаимодействует с рядом различных платформ данных, используя специальный адаптер для каждой из них. При установке dbt Core вам также потребуется установить конкретный адаптер для вашей платформы данных, подключиться к dbt Core и настроить файл [profiles.yml](/docs/core/connect-data-platform/profiles.yml). Это можно сделать с помощью командной строки (CLI).
 
-Data platforms supported in dbt Core may be verified by our Trusted Adapter Program, and maintained by dbt Labs, partners, or community members.
+Поддерживаемые платформы данных в dbt Core могут быть проверены нашей Программой Доверенных Адаптеров и поддерживаются dbt Labs, партнерами или членами сообщества.
 
-These connection instructions provide the basic fields required for configuring a data platform connection in dbt Cloud. For more detailed guides, which include demo project data, read our [Quickstart guides](https://docs.getdbt.com/docs/guides)
+Эти инструкции по подключению предоставляют основные поля, необходимые для настройки подключения к платформе данных в dbt Cloud. Для более подробных руководств, которые включают данные демонстрационного проекта, ознакомьтесь с нашими [Руководствами по быстрому старту](https://docs.getdbt.com/docs/guides).
 
-## Connection profiles
+## Профили подключения
 
-If you're using dbt from the command line (CLI), you'll need a profiles.yml file that contains the connection details for your data platform. When you run dbt from the CLI, it reads your dbt_project.yml file to find the profile name, and then looks for a profile with the same name in your profiles.yml file. This profile contains all the information dbt needs to connect to your data platform.
+Если вы используете dbt из командной строки (CLI), вам потребуется файл profiles.yml, который содержит данные для подключения к вашей платформе данных. Когда вы запускаете dbt из CLI, он читает ваш файл dbt_project.yml, чтобы найти имя профиля, а затем ищет профиль с тем же именем в вашем файле profiles.yml. Этот профиль содержит всю информацию, необходимую dbt для подключения к вашей платформе данных.
 
-For detailed info, you can refer to the [Connection profiles](/docs/core/connect-data-platform/connection-profiles).
+Для получения подробной информации вы можете обратиться к разделу [Профили подключения](/docs/core/connect-data-platform/connection-profiles).
 
-## Adapter features
+## Функции адаптеров
 
-The following table lists the features available for adapters:
+В следующей таблице перечислены функции, доступные для адаптеров:
 
-| Adapter | Catalog | Source freshness |
-|---------|---------|------------------|
-| dbt default configuration | full | `loaded_at_field` |
-| `dbt-bigquery` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-databricks` | full | metadata-based and `loaded_at_field` |
-| `dbt-postgres` | partial and full | `loaded_at_field` |
-| `dbt-redshift` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-snowflake` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-spark` | full | `loaded_at_field` |
+| Адаптер | Каталог | Свежесть источника |
+|---------|---------|--------------------|
+| dbt default configuration | полный | `loaded_at_field` |
+| `dbt-bigquery` | частичный и полный | на основе метаданных и `loaded_at_field` |
+| `dbt-databricks` | полный | на основе метаданных и `loaded_at_field` |
+| `dbt-postgres` | частичный и полный | `loaded_at_field` |
+| `dbt-redshift` | частичный и полный | на основе метаданных и `loaded_at_field` |
+| `dbt-snowflake` | частичный и полный | на основе метаданных и `loaded_at_field` |
+| `dbt-spark` | полный | `loaded_at_field` |
 
+### Каталог
 
-### Catalog 
+Для адаптеров, которые это поддерживают, вы можете частично построить каталог. Это позволяет строить каталог только для определенного числа моделей с помощью `dbt docs generate --select ...`. Для адаптеров, которые не поддерживают частичное создание каталога, необходимо выполнить `dbt docs generate`, чтобы построить полный каталог.
 
-For adapters that support it, you can partially build the catalog. This allows the catalog to be built for only a select number of models via `dbt docs generate --select ...`. For adapters that don't support partial catalog generation, you must run `dbt docs generate` to build the full catalog.
+### Свежесть источника
 
-### Source freshness
-You can measure source freshness using the warehouse metadata tables on supported adapters. This allows for calculating source freshness without using the [`loaded_at_field`](/reference/resource-properties/freshness#loaded_at_field) and without querying the table directly. This is faster and more flexible (though it might sometimes be inaccurate, depending on how the warehouse tracks altered tables). You can override this with the `loaded_at_field` in the [source config](/reference/source-configs). If the adapter doesn't support this, you can still use the `loaded_at_field`.
+Вы можете измерять свежесть источника, используя таблицы метаданных хранилища на поддерживаемых адаптерах. Это позволяет вычислять свежесть источника без использования [`loaded_at_field`](/reference/resource-properties/freshness#loaded_at_field) и без прямого запроса к таблице. Это быстрее и более гибко (хотя иногда может быть неточным, в зависимости от того, как хранилище отслеживает измененные таблицы). Вы можете переопределить это с помощью `loaded_at_field` в [конфигурации источника](/reference/source-configs). Если адаптер этого не поддерживает, вы все равно можете использовать `loaded_at_field`.

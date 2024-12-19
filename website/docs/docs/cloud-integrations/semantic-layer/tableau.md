@@ -1,93 +1,93 @@
 ---
 title: "Tableau"
-description: "Use Tableau worksheets to query the dbt Semantic Layer and produce dashboards with trusted date."
-tags: [Semantic Layer]
+description: "Используйте листы Tableau для запроса к семантическому слою dbt и создания панелей управления с надежными данными."
+tags: [Семантический слой]
 sidebar_label: "Tableau"
 ---
 
-The Tableau integration allows you to use worksheets to query the dbt Semantic Layer directly and produce your dashboards with trusted data. It provides a live connection to the dbt Semantic Layer through Tableau Desktop or Tableau Server.
+Интеграция Tableau позволяет вам использовать листы для прямого запроса к семантическому слою dbt и создания панелей управления с надежными данными. Она обеспечивает живое соединение с семантическим слоем dbt через Tableau Desktop или Tableau Server.
 
-## Prerequisites
+## Предварительные требования
 
-- You have [configured the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) and are using dbt v1.6 or higher.
-- You must have [Tableau Desktop](https://www.tableau.com/en-gb/products/desktop) version 2021.1 and greater or Tableau Server.
-  - Note that Tableau Online does not currently support custom connectors natively. If you use Tableau Online, you will only be able to access the connector in Tableau Desktop.
-- Log in to Tableau Desktop (with Online or Server credentials) or a license to Tableau Server
-- You need your dbt Cloud host, [Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and [service token](/docs/dbt-cloud-apis/service-tokens) to log in. This account should be set up with the dbt Semantic Layer.
-- You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment. 
-  - Single-tenant accounts should contact their account representative for necessary setup and enablement.
+- Вы [настроили семантический слой dbt](/docs/use-dbt-semantic-layer/setup-sl) и используете dbt версии 1.6 или выше.
+- У вас должна быть версия [Tableau Desktop](https://www.tableau.com/en-gb/products/desktop) 2021.1 или выше или Tableau Server.
+  - Обратите внимание, что Tableau Online в настоящее время не поддерживает пользовательские коннекторы. Если вы используете Tableau Online, вы сможете получить доступ к коннектору только в Tableau Desktop.
+- Войдите в Tableau Desktop (с учетными данными Online или Server) или получите лицензию на Tableau Server.
+- Вам нужны ваш хост dbt Cloud, [ID окружения](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) и [токен службы](/docs/dbt-cloud-apis/service-tokens) для входа. Эта учетная запись должна быть настроена с семантическим слоем dbt.
+- У вас должна быть команда или корпоративная [учетная запись dbt Cloud](https://www.getdbt.com/pricing). Подходит как для многопользовательского, так и для однопользовательского развертывания.
+  - Однопользовательские учетные записи должны связаться со своим представителем для необходимой настройки и активации.
 
 import SLCourses from '/snippets/_sl-course.md';
 
 <SLCourses/>
 
-## Installing the Connector
+## Установка коннектора
 
-The dbt Semantic Layer Tableau connector is available to download directly on [Tableau Exchange](https://exchange.tableau.com/products/1020).
+Коннектор семантического слоя dbt для Tableau доступен для загрузки непосредственно на [Tableau Exchange](https://exchange.tableau.com/products/1020).
 
-Alternatively, you can follow these steps to install the Connector:
+В качестве альтернативы вы можете следовать этим шагам для установки коннектора:
 
-1. Download the GitHub [connector file](https://github.com/dbt-labs/semantic-layer-tableau-connector/releases/latest/download/dbt_semantic_layer.taco) locally and add it to your default folder:
+1. Скачайте файл [коннектора](https://github.com/dbt-labs/semantic-layer-tableau-connector/releases/latest/download/dbt_semantic_layer.taco) с GitHub на свой компьютер и добавьте его в свою папку по умолчанию:
 
-| Operating system |Tableau Desktop | Tableau Server |
-| ---------------- | -------------- | -------------- |
-| Windows | `C:\Users\\[Windows User]\Documents\My Tableau Repository\Connectors` | `C:\Program Files\Tableau\Connectors` |
-| Mac | `/Users/[user]/Documents/My Tableau Repository/Connectors` | Not applicable |
-| Linux | `/opt/tableau/connectors` | `/opt/tableau/connectors` |
- 
-2. Install the [JDBC driver](/docs/dbt-cloud-apis/sl-jdbc) to the folder based on your operating system:
+| Операционная система | Tableau Desktop | Tableau Server |
+| -------------------- | --------------- | -------------- |
+| Windows              | `C:\Users\\[Windows User]\Documents\My Tableau Repository\Connectors` | `C:\Program Files\Tableau\Connectors` |
+| Mac                  | `/Users/[user]/Documents/My Tableau Repository/Connectors` | Не применимо |
+| Linux                | `/opt/tableau/connectors` | `/opt/tableau/connectors` |
+
+2. Установите [JDBC драйвер](/docs/dbt-cloud-apis/sl-jdbc) в папку в зависимости от вашей операционной системы:
    - Windows: `C:\Program Files\Tableau\Drivers`
-   - Mac: `~/Library/Tableau/Drivers` or `/Library/JDBC` or `~/Library/JDBC`
-   - Linux: ` /opt/tableau/tableau_driver/jdbc`
-3. Open Tableau Desktop or Tableau Server and find the **dbt Semantic Layer by dbt Labs** connector on the left-hand side. You may need to restart these applications for the connector to be available.
-4. Connect with your Host, Environment ID, and Service Token information dbt Cloud provides during [Semantic Layer configuration](/docs/use-dbt-semantic-layer/setup-sl#:~:text=After%20saving%20it%2C%20you%27ll%20be%20provided%20with%20the%20connection%20information%20that%20allows%20you%20to%20connect%20to%20downstream%20tools). 
-   - In Tableau Server, the authentication screen may show "User" & "Password" instead, in which case the User is the Environment ID and the password is the Service Token.
+   - Mac: `~/Library/Tableau/Drivers` или `/Library/JDBC` или `~/Library/JDBC`
+   - Linux: `/opt/tableau/tableau_driver/jdbc`
+3. Откройте Tableau Desktop или Tableau Server и найдите коннектор **dbt Semantic Layer by dbt Labs** на левой стороне. Возможно, вам потребуется перезапустить эти приложения, чтобы коннектор стал доступен.
+4. Подключитесь с информацией о вашем хосте, ID окружения и токене службы, которые предоставляет dbt Cloud во время [настройки семантического слоя](/docs/use-dbt-semantic-layer/setup-sl#:~:text=After%20saving%20it%2C%20you%27ll%20be%20provided%20with%20the%20connection%20information%20that%20allows%20you%20to%20connect%20to%20downstream%20tools).
+   - В Tableau Server экран аутентификации может отображать "Пользователь" и "Пароль", в этом случае Пользователь — это ID окружения, а пароль — это токен службы.
 
-## Using the integration
+## Использование интеграции
 
-1. **Authentication** &mdash; Once you authenticate, the system will direct you to the data source page.
-2. **Access all Semantic Layer Objects** &mdash; Use the "ALL" data source to access all the metrics, dimensions, and entities configured in your dbt Semantic Layer. Note that the "METRICS_AND_DIMENSIONS" data source has been deprecated and replaced by "ALL". Be sure to use a live connection since extracts are not supported at this time. 
-3. **Access saved queries** &mdash; You can optionally access individual [saved queries](/docs/build/saved-queries) that you've defined. These will also show up as unique data sources when you log in. 
-4. **Access worksheet** &mdash; From your data source selection, go directly to a worksheet in the bottom left-hand corner.
-5. **Query metrics and dimensions** &mdash; Then, you'll find all the metrics, dimensions, and entities that are available to query on the left side of your window based on your selection.
+1. **Аутентификация** &mdash; После аутентификации система перенаправит вас на страницу источника данных.
+2. **Доступ ко всем объектам семантического слоя** &mdash; Используйте источник данных "ALL" для доступа ко всем метрикам, измерениям и сущностям, настроенным в вашем семантическом слое dbt. Обратите внимание, что источник данных "METRICS_AND_DIMENSIONS" устарел и был заменен на "ALL". Обязательно используйте живое соединение, так как извлечения в настоящее время не поддерживаются.
+3. **Доступ к сохраненным запросам** &mdash; Вы можете дополнительно получить доступ к отдельным [сохраненным запросам](/docs/build/saved-queries), которые вы определили. Они также будут отображаться как уникальные источники данных при входе.
+4. **Доступ к листу** &mdash; Из вашего выбора источника данных перейдите непосредственно к листу в нижнем левом углу.
+5. **Запрос метрик и измерений** &mdash; Затем вы найдете все метрики, измерения и сущности, доступные для запроса, на левой стороне вашего окна в зависимости от вашего выбора.
 
-Visit the [Tableau documentation](https://help.tableau.com/current/pro/desktop/en-us/gettingstarted_overview.htm) to learn more about how to use Tableau worksheets and dashboards.
+Посетите [документацию Tableau](https://help.tableau.com/current/pro/desktop/en-us/gettingstarted_overview.htm), чтобы узнать больше о том, как использовать листы и панели управления Tableau.
 
-### Publish from Tableau Desktop to Tableau Server
+### Публикация из Tableau Desktop в Tableau Server
 
-- **From Desktop to Server** &mdash; Like any Tableau workflow, you can publish your workbook from Tableau Desktop to Tableau Server. For step-by-step instructions, visit Tableau's [publishing guide](https://help.tableau.com/current/pro/desktop/en-us/publish_workbooks_share.htm).
+- **Из Desktop в Server** &mdash; Как и в любом рабочем процессе Tableau, вы можете опубликовать свою книгу из Tableau Desktop в Tableau Server. Для пошаговых инструкций посетите [руководство по публикации](https://help.tableau.com/current/pro/desktop/en-us/publish_workbooks_share.htm).
 
-## Things to note
+## Важные моменты
 
-**Aggregation**<br />
-- All metrics are shown as using the "SUM" aggregation type in Tableau's UI, and this cannot be altered using Tableau's interface. 
-- The dbt Semantic Layer controls the aggregation type in code and it is intentionally fixed. Keep in mind that the underlying aggregation in the dbt Semantic Layer might not be "SUM" ("SUM" is Tableau's default).
+**Агрегация**<br />
+- Все метрики отображаются с использованием типа агрегации "SUM" в интерфейсе Tableau, и это нельзя изменить с помощью интерфейса Tableau.
+- Семантический слой dbt управляет типом агрегации в коде, и он намеренно фиксирован. Имейте в виду, что базовая агрегация в семантическом слое dbt может не быть "SUM" (по умолчанию Tableau).
 
-**Data sources and display**<br />
--  In the "ALL" data source, Tableau surfaces all metrics and dimensions from the dbt Semantic Layer on the left-hand side. Note, that not all metrics and dimensions can be combined. You will receive an error message if a particular dimension cannot be sliced with a metric (or vice versa). You can use saved queries for smaller pieces of data that you want to combine.
-- To display available metrics and dimensions, dbt Semantic Layer returns metadata for a fake table with the dimensions and metrics as 'columns' on this table. Because of this, you can't actually query this table for previews or extracts.
+**Источники данных и отображение**<br />
+- В источнике данных "ALL" Tableau отображает все метрики и измерения из семантического слоя dbt на левой стороне. Обратите внимание, что не все метрики и измерения могут быть объединены. Вы получите сообщение об ошибке, если конкретное измерение не может быть совместимо с метрикой (или наоборот). Вы можете использовать сохраненные запросы для меньших объемов данных, которые хотите объединить.
+- Для отображения доступных метрик и измерений семантический слой dbt возвращает метаданные для фиктивной таблицы с измерениями и метриками в качестве 'столбцов' этой таблицы. Из-за этого вы не можете фактически запрашивать эту таблицу для предварительного просмотра или извлечений.
 
-**Calculations and querying**<br />
-- Certain Table calculations like "Totals" and "Percent Of" may not be accurate when using metrics aggregated in a non-additive way (such as count distinct)
-- In any of our Semantic Layer interfaces (not only Tableau), you must include a [time dimension](/docs/build/cumulative#limitations) when working with any cumulative metric that has a time window or granularity.
-- We can support calculated fields for creating parameter filters or dynamically selecting metrics and dimensions. However, other uses of calculated fields are not supported. 
-  - _Note: For calculated field use cases that are not currently covered, please reach out to <a href="mailto:support@getdbt.com?subject=dbt Semantic Layer feedback">dbt Support</a> and share them so we can further understand._
-- When using saved queries that include filters, we will automatically apply any filters that the query has.
+**Расчеты и запросы**<br />
+- Некоторые вычисления Tableau, такие как "Итого" и "Процент от", могут быть неточными при использовании метрик, агрегированных неаддитивным способом (например, count distinct).
+- В любом из наших интерфейсов семантического слоя (не только Tableau) вы должны включать [временное измерение](/docs/build/cumulative#limitations) при работе с любой кумулятивной метрикой, имеющей временной интервал или гранулярность.
+- Мы можем поддерживать вычисляемые поля для создания фильтров параметров или динамического выбора метрик и измерений. Однако другие применения вычисляемых полей не поддерживаются.
+  - _Примечание: Для случаев использования вычисляемых полей, которые в настоящее время не охвачены, пожалуйста, свяжитесь с <a href="mailto:support@getdbt.com?subject=dbt Semantic Layer feedback">поддержкой dbt</a> и поделитесь ими, чтобы мы могли лучше понять._
+- При использовании сохраненных запросов, которые включают фильтры, мы автоматически применим любые фильтры, которые есть в запросе.
 
-## Unsupported functionality
+## Неподдерживаемая функциональность
 
-The following Tableau features aren't supported at this time, however, the dbt Semantic Layer may support some of this functionality in a future release:
-- Updating the data source page
-- Using "Extract" mode to view your data
-- Unioning Tables
-- Writing Custom SQL / Initial SQL
-- Table Extensions
-- Cross-Database Joins
-- Some functions in Analysis --> Create Calculated Field
-- Filtering on a Date Part time dimension for a Cumulative metric type
-- Changing your date dimension to use "Week Number"
-- Performing joins between tables that the dbt Semantic Layer creates. It handles joins for you, so there's no need to join components in the dbt Semantic Layer. Note, that you _can_ join tables from the dbt Semantic Layer to ones outside your data platform.
-- The Tableau integration doesn't currently display descriptive labels defined in your `metrics` configuration, meaning custom labels won't be visible when those metrics are imported/queried into Tableau. 
-  
-## FAQs
+Следующие функции Tableau в настоящее время не поддерживаются, однако семантический слой dbt может поддерживать некоторые из этих функций в будущих релизах:
+- Обновление страницы источника данных
+- Использование режима "Извлечение" для просмотра ваших данных
+- Объединение таблиц
+- Написание пользовательского SQL / начального SQL
+- Расширения таблиц
+- Соединения между базами данных
+- Некоторые функции в Анализ --> Создать вычисляемое поле
+- Фильтрация по временной размерности части даты для кумулятивного типа метрики
+- Изменение вашего временного измерения на "Номер недели"
+- Выполнение соединений между таблицами, которые создает семантический слой dbt. Он обрабатывает соединения за вас, поэтому нет необходимости соединять компоненты в семантическом слое dbt. Обратите внимание, что вы _можете_ соединять таблицы из семантического слоя dbt с таблицами вне вашей платформы данных.
+- Интеграция Tableau в настоящее время не отображает описательные метки, определенные в вашей конфигурации `metrics`, что означает, что пользовательские метки не будут видны, когда эти метрики импортируются/запрашиваются в Tableau.
+
+## Часто задаваемые вопросы
 <FAQ path="Troubleshooting/sl-alpn-error" />

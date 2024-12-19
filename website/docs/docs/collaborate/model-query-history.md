@@ -1,121 +1,121 @@
 ---
-title: "Model query history"
-sidebar_label: "Model query history"
-description: "Import and auto-generate exposures from dashboards and understand how models are used in downstream tools for a richer lineage."
+title: "История запросов моделей"
+sidebar_label: "История запросов моделей"
+description: "Импортируйте и автоматически генерируйте экспозиции из панелей управления и узнайте, как модели используются в инструментах нижнего уровня для более богатой линии."
 image: /img/docs/collaborate/dbt-explorer/model-query-queried-models.jpg
 ---
 
-# About model query history <Lifecycle status='preview' />
+# О истории запросов моделей <Lifecycle status='preview' />
 
-Model query history allows you to:
+История запросов моделей позволяет вам:
 
-- View the count of consumption queries for a model based on the data warehouse's query logs. 
-- Provides data teams insight, so they can focus their time and infrastructure spend on the worthwhile used data products.
-- Enable analysts to find the most popular models used by other people.
+- Просматривать количество запросов на использование модели на основе журналов запросов вашего хранилища данных.
+- Предоставлять командам данных информацию, чтобы они могли сосредоточить свое время и затраты на инфраструктуру на действительно используемых продуктах данных.
+- Позволять аналитикам находить самые популярные модели, используемые другими пользователями.
 
-Model query history is powered by a single consumption query of the query log table in your data warehouse aggregated on a daily basis. 
+История запросов моделей основана на едином запросе на использование из таблицы журналов запросов в вашем хранилище данных, агрегированном на ежедневной основе.
 
-<Expandable alt_header="What is a consumption query?">
+<Expandable alt_header="Что такое запрос на использование?">
 
-Consumption query is a metric of queries in your dbt project that has used the model in a given time. It filters down to `select` statements only to gauge model consumption and excludes dbt model build and test executions.
+Запрос на использование — это метрика запросов в вашем проекте dbt, которые использовали модель в заданный период времени. Он фильтрует только `select` операторы, чтобы оценить использование модели и исключает выполнения сборки и тестирования моделей dbt.
 
-So for example, if `model_super_santi` was queried 10 times in the past week, it would count as having 10 consumption queries for that particular time period.
+Например, если `model_super_santi` был запрошен 10 раз за последнюю неделю, это будет считаться 10 запросами на использование за этот конкретный период времени.
 </Expandable>
 
 
-:::info Support for Snowflake (Enterprise tier or higher) and BigQuery
+:::info Поддержка Snowflake (предприятие или выше) и BigQuery
 
-Model query history for Snowflake users is **only available for Enterprise tier or higher**. The feature also supports BigQuery. Additional platforms coming soon.
+История запросов моделей для пользователей Snowflake доступна **только для уровня предприятия или выше**. Функция также поддерживает BigQuery. Поддержка дополнительных платформ будет добавлена в ближайшее время.
 :::
 
-## Prerequisites
+## Предварительные условия
 
-To access the features, you should meet the following:
+Чтобы получить доступ к функциям, вы должны выполнить следующие условия:
 
-1. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/). Single-tenant accounts should contact their account representative for setup.
-2. You have set up a [production](https://docs.getdbt.com/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
-3. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
-4. Use Snowflake or BigQuery as your data warehouse and can enable query history permissions or work with an admin to do so. Support for additional data platforms coming soon.
-   - For Snowflake users: You **must** have a Snowflake Enterprise tier or higher subscription.
+1. У вас есть учетная запись dbt Cloud на [плане предприятия](https://www.getdbt.com/pricing/). Учетные записи с одним арендатором должны связаться со своим представителем для настройки.
+2. Вы настроили [производственную](https://docs.getdbt.com/docs/deploy/deploy-environments#set-as-production-environment) среду развертывания для каждого проекта, который вы хотите исследовать, с как минимум одним успешным выполнением задания.
+3. У вас есть [административные права](/docs/cloud/manage-access/enterprise-permissions) в dbt Cloud для редактирования настроек проекта или настроек производственной среды.
+4. Используйте Snowflake или BigQuery в качестве вашего хранилища данных и можете включить разрешения на историю запросов или работать с администратором для этого. Поддержка дополнительных платформ данных будет добавлена в ближайшее время.
+   - Для пользователей Snowflake: Вы **должны** иметь подписку уровня предприятия или выше.
 
-## Enable query history in dbt Cloud
+## Включение истории запросов в dbt Cloud
 
-To enable model query history in dbt Cloud, follow these steps:
+Чтобы включить историю запросов моделей в dbt Cloud, выполните следующие шаги:
 
-1. Navigate to **Deploy** and then **Environments**.
-2. Select the environment marked **PROD** and click **Settings**.
-3. Click **Edit** and scroll to the **Query History** section to enable the query history toggle. When it’s green and to the right, it's enabled.
-4. Click the **Test Permissions** button to validate the deployment credentials permissions are sufficient to support query history.
+1. Перейдите в раздел **Deploy**, затем **Environments**.
+2. Выберите среду, помеченную как **PROD**, и нажмите **Settings**.
+3. Нажмите **Edit** и прокрутите до раздела **Query History**, чтобы включить переключатель истории запросов. Когда он зеленый и справа, он включен.
+4. Нажмите кнопку **Test Permissions**, чтобы проверить, достаточно ли разрешений для учетных данных развертывания для поддержки истории запросов.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.jpg" width="95%" title="Enable query history in your environment settings." />
-<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history-success.jpg" width="95%" title="Example of permissions verified result after clicking Test Permissions." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history.jpg" width="95%" title="Включите историю запросов в настройках вашей среды." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/enable-query-history-success.jpg" width="95%" title="Пример результата проверки разрешений после нажатия на Test Permissions." />
 
 </DocCarousel>
 
-## Credential permissions
+## Разрешения учетных данных
 
-This section explains the permissions and steps you need to enable and view model query history in dbt Explorer.
+Этот раздел объясняет разрешения и шаги, необходимые для включения и просмотра истории запросов моделей в dbt Explorer.
 
-The model query history feature uses the credentials in your production environment to gather metadata from your data warehouse’s query logs. This means you may need elevated permissions with the warehouse. Before making any changes to your data platform permissions, confirm the configured permissions in dbt Cloud:
+Функция истории запросов моделей использует учетные данные в вашей производственной среде для сбора метаданных из журналов запросов вашего хранилища данных. Это означает, что вам могут понадобиться повышенные разрешения в хранилище. Прежде чем вносить какие-либо изменения в разрешения вашей платформы данных, подтвердите настроенные разрешения в dbt Cloud:
 
-1. Navigate to **Deploy** and then **Environments**.
-2. Select the Environment marked **PROD** and click **Settings**.
-3. Look at the information under **Deployment credentials**. 
-   - Note: Querying query history entails warehouse costs / uses credits.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/model-query-credentials.jpg" width="50%" title="Confirm your deployment credentials in your environment settings page." />
+1. Перейдите в раздел **Deploy**, затем **Environments**.
+2. Выберите среду, помеченную как **PROD**, и нажмите **Settings**.
+3. Посмотрите информацию в разделе **Deployment credentials**. 
+   - Примечание: Запрос истории запросов влечет за собой затраты на хранилище / использование кредитов.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-query-credentials.jpg" width="50%" title="Подтвердите свои учетные данные развертывания на странице настроек вашей среды." />
 
-4. Copy or cross reference those credential permissions with the warehouse permissions and grant your user the right permissions.
+4. Скопируйте или сопоставьте эти разрешения учетных данных с разрешениями в хранилище и предоставьте вашему пользователю необходимые разрешения.
 
-    <Expandable alt_header="For Snowflake">
+    <Expandable alt_header="Для Snowflake">
 
-    This feature makes use of metadata tables available to Snowflake Enterprise tier accounts or higher, `QUERY_HISTORY` and `ACCESS_HISTORY`. The Snowflake user used in the production environment must have `GOVERNANCE_VIEWER` permissions to view the data. 
+    Эта функция использует таблицы метаданных, доступные для учетных записей уровня предприятия Snowflake или выше, `QUERY_HISTORY` и `ACCESS_HISTORY`. Пользователь Snowflake, используемый в производственной среде, должен иметь разрешения `GOVERNANCE_VIEWER`, чтобы просматривать данные. 
 
-    This can be granted to this user by your `ACCOUNTADMIN` user in Snowflake. For more details, view the snowflake docs [here](https://docs.snowflake.com/en/sql-reference/account-usage#enabling-other-roles-to-use-schemas-in-the-snowflake-database).
+    Это может быть предоставлено этому пользователю вашим пользователем `ACCOUNTADMIN` в Snowflake. Для получения дополнительной информации смотрите документацию Snowflake [здесь](https://docs.snowflake.com/en/sql-reference/account-usage#enabling-other-roles-to-use-schemas-in-the-snowflake-database).
 
     </Expandable>
 
-    <Expandable alt_header="For BigQuery">
+    <Expandable alt_header="Для BigQuery">
 
-    This feature uses the metadata from the `INFORMATION_SCHEMA.JOBS` view in BigQuery. To access this, the user configured for your production environment must have the following [IAM roles](https://cloud.google.com/bigquery/docs/access-control) for your BigQuery project:
+    Эта функция использует метаданные из представления `INFORMATION_SCHEMA.JOBS` в BigQuery. Чтобы получить к этому доступ, пользователь, настроенный для вашей производственной среды, должен иметь следующие [IAM роли](https://cloud.google.com/bigquery/docs/access-control) для вашего проекта BigQuery:
 
     - `roles/bigquery.resourceViewer`
     - `roles/bigquery.jobs.create`
 
     </Expandable>
 
-## View query history in Explorer
+## Просмотр истории запросов в Explorer
 
-To enhance your discovery, you can view your model query history in various locations within dbt Explorer:
-- [View from Performance charts](#view-from-performance-charts)
-* [View from Project lineage](#view-from-project-lineage)
-- [View from Model list](#view-from-model-list)
+Чтобы улучшить ваше исследование, вы можете просмотреть историю запросов моделей в различных местах в dbt Explorer:
+- [Просмотр из графиков производительности](#view-from-performance-charts)
+* [Просмотр из линии проекта](#view-from-project-lineage)
+- [Просмотр из списка моделей](#view-from-model-list)
 
-### View from Performance charts
+### Просмотр из графиков производительности
 
-1. Navigate to dbt Explorer by clicking on the **Explore** link in the navigation.
-2. In the main **Overview** page, click on **Performance** under the **Project details** section. Scroll down to view the **Most consumed models**.
-3. Use the dropdown menu on the right to select the desired time period, with options available for up to the past 3 months. 
+1. Перейдите в dbt Explorer, нажав на ссылку **Explore** в навигации.
+2. На главной странице **Overview** нажмите на **Performance** в разделе **Project details**. Прокрутите вниз, чтобы увидеть **Самые потребляемые модели**.
+3. Используйте выпадающее меню справа, чтобы выбрать желаемый период времени, с вариантами на срок до последних 3 месяцев. 
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/most-consumed-models.jpg" width="85%" title="View most consumed models on the 'Performance' page in dbt Explorer." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/most-consumed-models.jpg" width="85%" title="Просмотр самых потребляемых моделей на странице 'Performance' в dbt Explorer." />
 
-4. Click on a model for more details and go to the **Performance** tab.
-5. On the **Performance** tab, scroll down to the **Model performance** section. 
-6. Select the **Consumption queries** tab to view the consumption queries over a given time for that model. 
-<Lightbox src="/img/docs/collaborate/model-consumption-queries.jpg" width="90%" title="View consumption queries over time for a given model." />
+4. Нажмите на модель для получения более подробной информации и перейдите на вкладку **Performance**.
+5. На вкладке **Performance** прокрутите вниз до раздела **Model performance**. 
+6. Выберите вкладку **Consumption queries**, чтобы просмотреть запросы на использование за определенный период для этой модели. 
+<Lightbox src="/img/docs/collaborate/model-consumption-queries.jpg" width="90%" title="Просмотр запросов на использование с течением времени для данной модели." />
 
-### View from Project lineage
+### Просмотр из линии проекта
 
-1. To view your model in your project lineage, go to the main **Overview page** and click on **Project lineage.**
-2. In the lower left of your lineage, click on **Lenses** and select **Consumption queries**. 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-lenses.jpg" width="85%" title="View model consumption queries in your lineage using the 'Lenses' feature." />
+1. Чтобы просмотреть вашу модель в линии проекта, перейдите на главную страницу **Overview** и нажмите на **Project lineage**.
+2. В нижнем левом углу вашей линии нажмите на **Lenses** и выберите **Consumption queries**. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-lenses.jpg" width="85%" title="Просмотр запросов на использование модели в вашей линии с помощью функции 'Lenses'." />
 
-3. Your lineage should display a small red box above each model, indicating the consumption query number. The number for each model represents the model consumption over the last 30 days.
+3. Ваша линия должна отображать небольшой красный квадрат над каждой моделью, указывающий количество запросов на использование. Число для каждой модели представляет собой потребление модели за последние 30 дней.
 
-### View from Model list
+### Просмотр из списка моделей
 
-1. To view a list of models, go to the main **Overview page**.
-2. In the left navigation, go to the **Resources** tab and click on **Models** to view the models list.
-3. You can view the consumption query count for the models and sort by most or least consumed. The consumption query number for each model represents the consumption over the last 30 days.
-<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-list.jpg" width="85%" title="View models consumption in the 'Models' list page under the 'Consumption' column." />
+1. Чтобы просмотреть список моделей, перейдите на главную страницу **Overview**.
+2. В левой навигации перейдите на вкладку **Resources** и нажмите на **Models**, чтобы просмотреть список моделей.
+3. Вы можете просмотреть количество запросов на использование для моделей и отсортировать по наиболее или наименее потребляемым. Число запросов на использование для каждой модели представляет собой потребление за последние 30 дней.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/model-consumption-list.jpg" width="85%" title="Просмотр потребления моделей на странице списка 'Models' в столбце 'Consumption'." />

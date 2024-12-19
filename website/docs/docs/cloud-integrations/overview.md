@@ -1,32 +1,32 @@
 ---
-title: "About dbt Cloud integrations"
-sidebar_label: "About dbt Cloud integrations"
+title: "О интеграциях dbt Cloud"
+sidebar_label: "О интеграциях dbt Cloud"
 pagination_prev: null
 pagination_next: "docs/cloud-integrations/configure-auto-exposures"
 hide_table_of_contents: true
 ---
 
-Many data applications integrate with dbt Cloud, enabling you to leverage the power of dbt for a variety of use cases and workflows.
+Многие приложения для работы с данными интегрируются с dbt Cloud, что позволяет вам использовать возможности dbt для различных случаев использования и рабочих процессов.
 
-## Integrations with dbt
+## Интеграции с dbt
 
 <div className="grid--3-col">
 
 <Card
-    title="Configure auto-exposures"
-    body="Import and auto-generate exposures from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
+    title="Настройка автоматических экспозиций (предварительный просмотр)"
+    body="Импортируйте и автоматически генерируйте экспозиции из панелей управления, чтобы понять, как модели используются в инструментах downstream для более богатой цепочки происхождения."
     link="/docs/cloud-integrations/configure-auto-exposures"
     icon="dbt-bit"/>
 
 <Card
-    title="dbt Snowflake Native App (preview)"
+    title="Нативное приложение dbt для Snowflake (предварительный просмотр)"
     link="/docs/cloud-integrations/snowflake-native-app"
-    body="Learn about the dbt Snowflake Native App and how you can access key dbt Cloud features within the Snowflake platform."
+    body="Узнайте о нативном приложении dbt для Snowflake и о том, как вы можете получить доступ к ключевым функциям dbt Cloud в платформе Snowflake."
     icon="snowflake"/>
 
 <Card
-    title="dbt Semantic layer integrations"
-    body="Review a wide range of partners you can integrate and query with the dbt Semantic Layer."
+    title="Интеграции семантического слоя dbt"
+    body="Обзор широкого спектра партнеров, с которыми вы можете интегрироваться и запрашивать данные с помощью семантического слоя dbt."
     link="/docs/cloud-integrations/avail-sl-integrations"
     icon="dbt-bit"/>
 

@@ -1,82 +1,82 @@
 ---
-title: "Auto-exposures"
+title: "Авто-экспозиции"
 id: "configure-auto-exposures"
-sidebar_label: "Configure auto-exposures"
-description: "Import and auto-generate exposures from dashboards and understand how models are used in downstream tools for a richer lineage."
+sidebar_label: "Настройка авто-экспозиций"
+description: "Импортируйте и автоматически генерируйте экспозиции из панелей инструментов и узнайте, как модели используются в downstream-инструментах для более богатой линии."
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Configure auto-exposures <Lifecycle status="enterprise" />
+# Настройка авто-экспозиций <Lifecycle status="preview,enterprise" />
 
-As a data team, it’s critical that you have context into the downstream use cases and users of your data products. [Auto-exposures](/docs/collaborate/auto-exposures) integrates natively with Tableau and [auto-generates downstream lineage](/docs/collaborate/auto-exposures#view-auto-exposures-in-dbt-explorer) in dbt Explorer for a richer experience.
+Для команды по работе с данными критически важно иметь представление о downstream-применениях и пользователях ваших продуктов данных. [Авто-экспозиции](/docs/collaborate/auto-exposures) интегрируются с Tableau и [автоматически генерируют downstream-линию](/docs/collaborate/auto-exposures#view-auto-exposures-in-dbt-explorer) в dbt Explorer для более богатого опыта.
 
-Auto-exposures help data teams optimize their efficiency and ensure data quality by:
+Авто-экспозиции помогают командам по работе с данными оптимизировать свою эффективность и обеспечивать качество данных, выполняя следующие задачи:
 
-- Helping users understand how their models are used in downstream analytics tools to inform investments and reduce incidents — ultimately building trust and confidence in data products.
-- Importing and auto-generating exposures based on Tableau dashboards, with user-defined curation.
-- Enabling the active exposure work to run models based on when exposures are updated or need to be updated, improving timeliness and reducing costs.
+- Помогают пользователям понять, как их модели используются в инструментах аналитики downstream, чтобы информировать о вложениях и снижать количество инцидентов — в конечном итоге создавая доверие и уверенность в продуктах данных.
+- Импортируют и автоматически генерируют экспозиции на основе панелей инструментов Tableau с определенной пользователем кураторской работой.
+- Позволяют активной работе с экспозициями запускать модели в зависимости от того, когда экспозиции обновляются или нуждаются в обновлении, улучшая своевременность и снижая затраты.
 
-## Prerequisites
+## Предварительные условия
 
-To access the features, you should meet the following:
+Чтобы получить доступ к функциям, вы должны выполнить следующие условия:
 
-1. Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
-2. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
-3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
-4. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
-5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled. 
-   - If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
-   - Currently, you can only connect to a single Tableau site on the same server. 
+1. Ваша среда и задания находятся на поддерживаемом [релизном треке](/docs/dbt-versions/cloud-release-tracks) dbt.
+2. У вас есть учетная запись dbt Cloud на [Enterprise плане](https://www.getdbt.com/pricing/).
+3. Вы настроили [продакшн](/docs/deploy/deploy-environments#set-as-production-environment) среду развертывания для каждого проекта, который вы хотите исследовать, с как минимум одним успешным выполнением задания.
+4. У вас есть [административные права](/docs/cloud/manage-access/enterprise-permissions) в dbt Cloud для редактирования настроек проекта или настроек продакшн-среды.
+5. Используйте Tableau в качестве вашего BI-инструмента и включите разрешения на метаданные или работайте с администратором, чтобы сделать это. Совместимо с Tableau Cloud или Tableau Server с включенным API метаданных.
+   - Если вы используете Tableau Server, вам нужно [добавить IP-адреса dbt Cloud в белый список](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона dbt Cloud.
+   - В настоящее время вы можете подключиться только к одному сайту Tableau на одном сервере.
 
-## Set up in Tableau
+## Настройка в Tableau
 
-This section of the document explains the steps you need to set up the auto-exposures integration with Tableau. Once you've set this up in Tableau and dbt Cloud, you can view the [auto-exposures](/docs/collaborate/auto-exposures#view-auto-exposures-in-dbt-explorer) in dbt Explorer.
+Этот раздел документа объясняет шаги, необходимые для настройки интеграции авто-экспозиций с Tableau. После того как вы настроите это в Tableau и dbt Cloud, вы сможете просмотреть [авто-экспозиции](/docs/collaborate/auto-exposures#view-auto-exposures-in-dbt-explorer) в dbt Explorer.
 
-To set up [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) needed for auto exposures, ask a site admin to configure it for the account.
+Чтобы настроить [персональные токены доступа (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm), необходимые для авто-экспозиций, попросите администратора сайта настроить это для учетной записи.
 
-1. Ensure you or a site admin enables PATs for the account in Tableau.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
+1. Убедитесь, что вы или администратор сайта включили PAT для учетной записи в Tableau.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Включите PAT для учетной записи в Tableau"/>
 
-2. Create a PAT that you can add to dbt Cloud to pull in Tableau metadata for auto exposures. Ensure the user creating the PAT has access to collections/folders, as the PAT only grants access matching the creator's existing privileges.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
+2. Создайте PAT, который вы можете добавить в dbt Cloud для получения метаданных Tableau для авто-экспозиций. Убедитесь, что пользователь, создающий PAT, имеет доступ к коллекциям/папкам, так как PAT предоставляет доступ только в соответствии с существующими привилегиями создателя.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Создайте PAT для учетной записи в Tableau"/>
 
-3. Copy the **Secret** and the **Token name** and enter them in dbt Cloud. The secret is only displayed once, so store it in a safe location (like a password manager).
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-copy-token.jpg" title="Copy the secret and token name to enter them in dbt Cloud"/>
+3. Скопируйте **Секрет** и **Имя токена** и введите их в dbt Cloud. Секрет отображается только один раз, поэтому сохраните его в безопасном месте (например, в менеджере паролей).
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-copy-token.jpg" title="Скопируйте секрет и имя токена, чтобы ввести их в dbt Cloud"/>
 
-4. Copy the **Server URL** and **Sitename**. You can find these in the URL while logged into Tableau.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tablueau-serverurl.jpg" title="Locate the Server URL and Sitename in Tableau"/>
+4. Скопируйте **URL сервера** и **Имя сайта**. Вы можете найти их в URL, когда вы вошли в Tableau.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tablueau-serverurl.jpg" title="Найдите URL сервера и имя сайта в Tableau"/>
 
-   For example, if the full URL is: `10az.online.tableau.com/#/site/dbtlabspartner/explore`:
-   - The **Server URL** is the first part of the URL, in this case: `10az.online.tableau.com`
-   - The **Sitename** is right after the `site` in the URL, in this case: `dbtlabspartner` 
+   Например, если полный URL: `10az.online.tableau.com/#/site/dbtlabspartner/explore`:
+   - **URL сервера** — это первая часть URL, в данном случае: `10az.online.tableau.com`
+   - **Имя сайта** — это сразу после `site` в URL, в данном случае: `dbtlabspartner` 
 
-5. You should now be ready to set up auto-exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: ServerURL, Sitename, Token name, and Secret.
+5. Теперь вы должны быть готовы настроить авто-экспозиции в dbt Cloud после копирования следующих элементов, которые вам понадобятся во время настройки dbt Cloud: ServerURL, Sitename, Token name и Secret.
 
-## Set up in dbt Cloud <Lifecycle status="enterprise"/>
+## Настройка в dbt Cloud <Lifecycle status="enterprise"/>
 
-1. In dbt Cloud, navigate to the project you want to add the auto-exposures to and then select **Settings**.
-2. Under the **Exposures** section, select **Add integration** to add the Tableau connection.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-add-integration.jpg" title="Select Add Integration to add the Tableau connection."/>
-3. Enter the details for the exposure connection you collected from Tableau in the [previous step](#set-up-in-tableau) and click **Continue**. Note that all fields are case-sensitive.
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-integration-details.jpg" title="Enter the details for the exposure connection."/>
-4. Select the collections you want to include for auto exposures. 
+1. В dbt Cloud перейдите к проекту, к которому вы хотите добавить авто-экспозиции, и выберите **Настройки**.
+2. В разделе **Экспозиции** выберите **Добавить интеграцию**, чтобы добавить соединение с Tableau.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-add-integration.jpg" title="Выберите Добавить интеграцию, чтобы добавить соединение с Tableau."/>
+3. Введите данные для соединения экспозиции, которые вы собрали из Tableau на [предыдущем шаге](#set-up-in-tableau), и нажмите **Продолжить**. Обратите внимание, что все поля чувствительны к регистру.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-integration-details.jpg" title="Введите данные для соединения экспозиции."/>
+4. Выберите коллекции, которые вы хотите включить для авто-экспозиций. 
    
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-select-collections.jpg" title="Select the collections you want to include for auto exposures."/>
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-select-collections.jpg" title="Выберите коллекции, которые вы хотите включить для авто-экспозиций."/>
 
       :::info
-      dbt Cloud automatically imports and syncs any workbook within the selected collections. New additions to the collections will be added to the lineage in dbt Cloud during the next sync (automatically once per day).
+      dbt Cloud автоматически импортирует и синхронизирует любые рабочие книги в выбранных коллекциях. Новые добавления в коллекции будут добавлены в линию в dbt Cloud во время следующей синхронизации (автоматически раз в день).
    
-      dbt Cloud immediately starts a sync when you update the selected collections list, capturing new workbooks and removing irrelevant ones.
+      dbt Cloud немедленно начинает синхронизацию, когда вы обновляете список выбранных коллекций, захватывая новые рабочие книги и удаляя нерелевантные.
       :::
 
-5. Click **Save**. 
+5. Нажмите **Сохранить**. 
 
-dbt Cloud imports everything in the collection(s) and you can continue to view them in Explorer. For more information on how to view and use auto-exposures, refer to [View auto-exposures from dbt Explorer](/docs/collaborate/auto-exposures) page.
+dbt Cloud импортирует все в коллекции, и вы сможете продолжать просматривать их в Explorer. Для получения дополнительной информации о том, как просматривать и использовать авто-экспозиции, обратитесь к странице [Просмотр авто-экспозиций из dbt Explorer](/docs/collaborate/auto-exposures).
 
-<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="100%" title="View from the dbt Explorer in your Project lineage view, displayed with the Tableau icon."/>
+<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="100%" title="Просмотр из dbt Explorer в вашем представлении линии проекта, отображаемом с иконкой Tableau."/>
 
-## Refresh auto-exposures in jobs
+## Обновление авто-экспозиций в заданиях
 
-:::info Coming soon
-Soon, you’ll also be able to use auto-exposures to trigger the refresh of the data used in your Tableau dashboards from within dbt Cloud. Stay tuned for more on this soon!
+:::info Скоро
+Скоро вы также сможете использовать авто-экспозиции для запуска обновления данных, используемых в ваших панелях инструментов Tableau, из dbt Cloud. Следите за новостями об этом в ближайшее время!
 :::

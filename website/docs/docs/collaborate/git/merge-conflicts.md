@@ -1,72 +1,69 @@
 ---
-title: "Merge conflicts"
+title: "Конфликты слияния"
 id: "merge-conflicts"
 pagination_next: null
 ---
 
-[Merge conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts) in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) often occur when multiple users are simultaneously making edits to the same section in the same file. This makes it difficult for Git to decide what changes to incorporate in the final merge.  
+[Конфликты слияния](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts) в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) часто возникают, когда несколько пользователей одновременно вносят изменения в одну и ту же секцию одного и того же файла. Это затрудняет Git определение того, какие изменения следует включить в окончательное слияние.
 
-The merge conflict process provides users the ability to choose which lines of code they'd like to preserve and commit.  This document will show you how to resolve merge conflicts in the dbt Cloud IDE.
+Процесс разрешения конфликтов слияния предоставляет пользователям возможность выбирать, какие строки кода они хотят сохранить и зафиксировать. Этот документ покажет вам, как разрешать конфликты слияния в dbt Cloud IDE.
 
-## Identify merge conflicts
+## Определение конфликтов слияния
 
-You can experience a merge conflict in two possible ways:
+Вы можете столкнуться с конфликтом слияния двумя способами:
 
-- Pulling changes from your main branch when someone else has merged a conflicting change.
-- Committing your changes to the same branch when someone else has already committed their change first.
+- При извлечении изменений из вашей основной ветки, когда кто-то другой уже объединил конфликтующее изменение.
+- При фиксации ваших изменений в ту же ветку, когда кто-то другой уже зафиксировал свои изменения первым.
 
-The way to [resolve](#resolve-merge-conflicts) either scenario will be exactly the same. 
+Способ [разрешения](#resolve-merge-conflicts) в обоих случаях будет одинаковым.
 
-For example, if you and a teammate make changes to the same file and commit, you will encounter a merge conflict as soon as you **Commit and sync**. 
+Например, если вы и ваш коллега вносите изменения в один и тот же файл и фиксируете их, вы столкнетесь с конфликтом слияния, как только нажмете **Commit and sync**.
 
-The dbt Cloud IDE will display:
+В dbt Cloud IDE будет отображаться:
 
-- **Commit and resolve** git action bar under **Version Control**  instead of **Commit** &mdash; This indicates that the Cloud IDE has detected some conflicts that you need to address.
-- A 2-split editor view &mdash; The left view includes your code changes and is read-only. The right view includes the additional changes, allows you to edit and marks the conflict with some flags:
+- **Commit and resolve** в панели действий git под **Version Control** вместо **Commit** &mdash; Это указывает на то, что Cloud IDE обнаружила некоторые конфликты, которые вам нужно решить.
+- Вид редактора с разделением на 2 части &mdash; Левая часть включает ваши изменения кода и доступна только для чтения. Правая часть включает дополнительные изменения, позволяет редактировать и помечает конфликт некоторыми флагами:
 
 ```
 <<<<<< HEAD
-    your current code
+    ваш текущий код
 ======
-    conflicting code
->>>>>> (some branch identifier)
+    конфликтующий код
+>>>>>> (идентификатор ветки)
 ```
-- The file and path colored in red in the **File Explorer**, with a warning icon to highlight files that you need to resolve.
-- The file name colored in red in the **Changes** section, with a warning icon.
-- If you press commit without resolving the conflict, the dbt Cloud IDE will prompt a pop up box with a list which files need to be resolved.
+- Файл и путь, окрашенные в красный цвет в **File Explorer**, с иконкой предупреждения, чтобы выделить файлы, которые вам нужно разрешить.
+- Имя файла, окрашенное в красный цвет в разделе **Changes**, с иконкой предупреждения.
+- Если вы нажмете на фиксацию без разрешения конфликта, dbt Cloud IDE покажет всплывающее окно со списком файлов, которые необходимо разрешить.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/merge-conflict.jpg" title="Conflicting section that needs resolution will be highlighted"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/merge-conflict.jpg" title="Конфликтующая секция, требующая разрешения, будет выделена"/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-without-resolve.jpg" title="Pop up box when you commit without resolving the conflict"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-without-resolve.jpg" title="Всплывающее окно при фиксации без разрешения конфликта"/>
 
+## Разрешение конфликтов слияния
+Вы можете без проблем разрешить конфликты слияния, которые включают конкурирующие изменения строк в Cloud IDE.
 
-## Resolve merge conflicts
-You can seamlessly resolve merge conflicts that involve competing line changes in the Cloud IDE.
+1. В dbt Cloud IDE вы можете редактировать правую часть конфликтного файла, выбирать, какие строки кода вы хотите сохранить, и удалять остальные.
+    * Примечание: Левая часть редактора доступна только для чтения, и вы не можете вносить изменения.
+3. Удалите специальные флаги или маркеры конфликта `<<<<<<<`, `=======`, `>>>>>>>`, которые выделяют конфликт слияния, и выберите, какие строки кода сохранить.
+4. Если у вас есть более одного конфликта слияния в файле, прокрутите вниз к следующему набору маркеров конфликта и повторите шаги один и два, чтобы разрешить ваш конфликт слияния.
+5. Нажмите **Save**. Вы заметите, что выделения строк исчезнут и вернутся к обычному фону. Это означает, что вы успешно разрешили конфликт.
+6. Повторите этот процесс для каждого файла, в котором есть конфликт слияния.
 
-1. In the dbt Cloud IDE, you can edit the right-side of the conflict file, choose which lines of code you'd like to preserve, and delete the rest. 
-    * Note: The left view editor is read-only and you cannot make changes.
-3. Delete the special flags or conflict markers `<<<<<<<`, `=======`, `>>>>>>>` that highlight the merge conflict and also choose which lines of code to preserve.
-4. If you have more than one merge conflict in your file, scroll down to the next set of conflict markers and repeat steps one and two to resolve your merge conflict.
-5. Press **Save**. You will notice the line highlights disappear and return to a plain background. This means that you've resolved the conflict successfully.
-6. Repeat this process for every file that has a merge conflict.
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/resolve-conflict.jpg" title="Выбор строк кода для сохранения"/>
 
-
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/resolve-conflict.jpg" title="Choosing lines of code to preserve"/>
-
-:::info Edit conflict files
-- If you open the conflict file under **Changes**, the file name will display something like `model.sql (last commit)` and is fully read-only and cannot be edited. <br />
-- If you open the conflict file under **File Explorer**, you can edit the file in the right view.
+:::info Редактирование конфликтных файлов
+- Если вы откроете конфликтный файл в разделе **Changes**, имя файла будет отображаться как `model.sql (last commit)` и будет полностью доступно только для чтения и не может быть отредактировано. <br />
+- Если вы откроете конфликтный файл в разделе **File Explorer**, вы сможете редактировать файл в правой части.
 :::
 
-## Commit changes
+## Фиксация изменений
 
-When you've resolved all the merge conflicts, the last step would be to commit the changes you've made.
+Когда вы разрешите все конфликты слияния, последним шагом будет фиксация внесенных вами изменений.
 
-1. Click the git action bar **Commit and resolve**. 
-2. The **Commit Changes** pop up box will confirm that all conflicts have been resolved. Write  your commit message and press **Commit Changes**
-3. The dbt Cloud IDE will return to its normal state and you can continue developing! 
+1. Нажмите на панель действий git **Commit and resolve**.
+2. Всплывающее окно **Commit Changes** подтвердит, что все конфликты были разрешены. Напишите ваше сообщение коммита и нажмите **Commit Changes**.
+3. dbt Cloud IDE вернется в нормальное состояние, и вы сможете продолжить разработку!
 
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-resolve.jpg" title="Конфликт был разрешен"/>
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-resolve.jpg" title="Conflict has been resolved"/>
-
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-changes.jpg" title="Commit Changes pop up box to commit your changes"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/commit-changes.jpg" title="Всплывающее окно Commit Changes для фиксации ваших изменений"/>

@@ -1,15 +1,15 @@
 ---
-title: "Model versions"
+title: "Версии моделей"
 id: model-versions
-sidebar_label: "Model versions"
-description: "Version models to help with lifecycle management"
-keyword: governance, model version, model versioning, dbt model versioning
+sidebar_label: "Версии моделей"
+description: "Версионирование моделей для управления жизненным циклом"
+keyword: управление, версия модели, версионирование модели, версионирование моделей dbt
 ---
 
 <VersionBlock lastVersion="1.8">
 
-:::info New functionality
-This functionality is new in v1.5 — if you have thoughts, participate in [the discussion on GitHub](https://github.com/dbt-labs/dbt-core/discussions/6736)!
+:::info Новая функциональность
+Эта функциональность новая в версии v1.5 — если у вас есть мысли, участвуйте в [обсуждении на GitHub](https://github.com/dbt-labs/dbt-core/discussions/6736)!
 :::
 
 </VersionBlock>
@@ -18,88 +18,88 @@ import VersionsCallout from '/snippets/_version-callout.md';
 
 <VersionsCallout />
 
-Versioning APIs is a hard problem in software engineering. The root of the challenge is that the producers and consumers of an API have competing incentives:
-- Producers of an API need the ability to modify its logic and structure. There is a real cost to maintaining legacy endpoints forever, but losing the trust of downstream users is far costlier.
-- Consumers of an API need to trust in its stability: their queries will keep working, and won't break without warning. Although migrating to a newer API version incurs an expense, an unplanned migration is far costlier.
+Версионирование API — это сложная задача в программной инженерии. Корень проблемы заключается в том, что у производителей и потребителей API есть конкурирующие интересы:
+- Производители API нуждаются в возможности изменять его логику и структуру. Существуют реальные затраты на поддержание устаревших конечных точек навсегда, но потеря доверия со стороны пользователей ниже по потоку обходится гораздо дороже.
+- Потребители API нуждаются в уверенности в его стабильности: их запросы будут продолжать работать и не сломаются без предупреждения. Хотя миграция на новую версию API влечет за собой расходы, неплановая миграция обходится гораздо дороже.
 
-When sharing a final dbt model with other teams or systems, that model is operating like an API. When the producer of that model needs to make significant changes, how can they avoid breaking the queries of its users downstream?
+При совместном использовании окончательной модели dbt с другими командами или системами эта модель функционирует как API. Когда производителю этой модели необходимо внести значительные изменения, как он может избежать поломки запросов ее пользователей ниже по потоку?
 
-Model versioning is a tool to tackle this problem, thoughtfully and head-on. The goal is not to make the problem go away entirely, nor to pretend it's easier or simpler than it is.
+Версионирование моделей — это инструмент для решения этой проблемы, продуманно и напрямую. Цель не в том, чтобы полностью устранить проблему, или притворяться, что она проще или легче, чем есть на самом деле.
 
-## Related documentation
+## Связанная документация
 - [`versions`](/reference/resource-properties/versions)
 - [`latest_version`](/reference/resource-properties/latest_version)
 - [`include` & `exclude`](/reference/resource-properties/include-exclude)
-- [`ref` with `version` argument](/reference/dbt-jinja-functions/ref#versioned-ref)
+- [`ref` с аргументом `version`](/reference/dbt-jinja-functions/ref#versioned-ref)
 
-## Why version a model?
+## Зачем версионировать модель?
 
-If a model defines a ["contract"](/docs/collaborate/govern/model-contracts) (a set of guarantees for its structure), it's also possible to change that model's structure in a way that breaks the previous set of guarantees. This could be as obvious as removing or renaming a column, or more subtle, like changing its data type or nullability.
+Если модель определяет ["контракт"](/docs/collaborate/govern/model-contracts) (набор гарантий для своей структуры), также возможно изменить структуру этой модели таким образом, что это нарушит предыдущий набор гарантий. Это может быть так же очевидно, как удаление или переименование столбца, или более тонко, например, изменение его типа данных или возможности быть нулевым.
 
-One approach is to force every model consumer to immediately handle the breaking change as soon as it's deployed to production. This is actually the appropriate answer at many smaller organizations, or while rapidly iterating on a not-yet-mature set of data models. But it doesn’t scale well beyond that.
+Один из подходов заключается в том, чтобы заставить каждого потребителя модели немедленно справляться с нарушающим изменением, как только оно будет развернуто в производственной среде. Это на самом деле подходящий ответ для многих небольших организаций или во время быстрого итерационного процесса над еще не зрелым набором моделей данных. Но это не масштабируется за пределами этого.
 
-Instead, for mature models at larger organizations, powering queries inside & outside dbt, the model owner can use **model versions** to:
-- Test "prerelease" changes (in production, in downstream systems)
-- Bump the latest version, to be used as the canonical source of truth
-- Offer a migration window off the "old" version
+Вместо этого, для зрелых моделей в крупных организациях, которые поддерживают запросы внутри и вне dbt, владелец модели может использовать **версии моделей** для:
+- Тестирования изменений "предварительного релиза" (в производственной среде, в системах ниже по потоку)
+- Увеличения последней версии, чтобы использовать ее как канонический источник правды
+- Предложения окна миграции с "старой" версии
 
-During that migration window, anywhere that model is being used downstream, it can continue to be referenced at a specific version.
+В течение этого окна миграции, где бы эта модель ни использовалась ниже по потоку, ее можно продолжать ссылаться на конкретную версию.
 
-dbt Core 1.6 introduced first-class support for **deprecating models** by specifying a [`deprecation_date`](/reference/resource-properties/deprecation_date). Taken together, model versions and deprecation offer a pathway for model producers to _sunset_ old models, and consumers the time to _migrate_ across breaking changes. It's a way of managing change across an organization: develop a new version, bump the latest, slate the old version for deprecation, update downstream references, and then remove the old version.
+dbt Core 1.6 представил первоклассную поддержку для **декларации устаревших моделей** путем указания [`deprecation_date`](/reference/resource-properties/deprecation_date). В совокупности, версии моделей и устаревание предлагают путь для производителей моделей, чтобы _закрыть_ старые модели, а для потребителей — время для _миграции_ через нарушающие изменения. Это способ управления изменениями в организации: разработать новую версию, увеличить последнюю, запланировать старую версию на устаревание, обновить ссылки ниже по потоку, а затем удалить старую версию.
 
-There is a real trade-off that exists here—the cost to frequently migrate downstream code, and the cost (and clutter) of materializing multiple versions of a model in the data warehouse. Model versions do not make that problem go away, but by setting a deprecation date, and communicating a clear window for consumers to gracefully migrate off old versions, they put a known boundary on the cost of that migration.
+Существует реальный компромисс — стоимость частой миграции кода ниже по потоку и стоимость (и беспорядок) материализации нескольких версий модели в хранилище данных. Версии моделей не устраняют эту проблему, но, установив дату устаревания и сообщив четкое окно для потребителей, чтобы они могли плавно мигрировать с устаревших версий, они устанавливают известную границу на стоимость этой миграции.
 
-## When should you version a model?
+## Когда следует версионировать модель?
 
-By enforcing a model's contract, dbt can help you catch unintended changes to column names and data types that could cause a big headache for downstream queriers. If you're making these changes intentionally, you should create a new model version. If you're making a non-breaking change, you don't need a new version—such as adding a new column, or fixing a bug in an existing column's calculation.
+Принуждая контракт модели, dbt может помочь вам поймать непреднамеренные изменения в именах столбцов и типах данных, которые могут вызвать большие проблемы для запросов ниже по потоку. Если вы вносите эти изменения намеренно, вам следует создать новую версию модели. Если вы вносите изменения, не нарушающие работу, новая версия не требуется — например, добавление нового столбца или исправление ошибки в расчете существующего столбца.
 
-Of course, it's possible to change a model's definition in other ways—recalculating a column in a way that doesn't change its name, data type, or enforceable characteristics—but would substantially change the results seen by downstream queriers.
+Конечно, возможно изменить определение модели и другими способами — пересчитывая столбец таким образом, что его имя, тип данных или обязательные характеристики не изменяются, но это существенно изменит результаты, которые видят запросы ниже по потоку.
 
-This is always a judgment call. As the maintainer of a widely-used model, you know best what's a bug fix and what's an unexpected behavior change.
+Это всегда вопрос суждения. Как поддерживающий широко используемую модель, вы лучше всего знаете, что является исправлением ошибки, а что — неожиданным изменением поведения.
 
-The process of sunsetting and migrating model versions requires real work, and likely significant coordination across teams. You should opt for non-breaking changes whenever possible. Inevitably, however, these non-breaking additions will leave your most important models with lots of unused or deprecated columns.
+Процесс закрытия и миграции версий моделей требует реальной работы и, вероятно, значительной координации между командами. Вам следует выбирать изменения, не нарушающие работу, когда это возможно. Однако неизбежно, что эти не нарушающие изменения оставят ваши самые важные модели с множеством неиспользуемых или устаревших столбцов.
 
-Rather than constantly adding a new version for each small change, you should opt for a predictable cadence (once or twice a year, communicated well in advance) where you bump the "latest" version of your model, removing columns that are no longer being used.
+Вместо того чтобы постоянно добавлять новую версию для каждого небольшого изменения, вам следует выбрать предсказуемый ритм (один или два раза в год, хорошо заранее сообщенный), когда вы увеличиваете "последнюю" версию вашей модели, удаляя столбцы, которые больше не используются.
 
-## How is this different from "version control"?
+## Как это отличается от "контроля версий"?
 
-[Version control](/docs/collaborate/git-version-control) allows your team to collaborate simultaneously on a single code repository, manage conflicts between changes, and review changes before deploying into production. In that sense, version control is an essential tool for versioning the deployment of an entire dbt project—always the latest state of the `main` branch. In general, only one version of your project code is deployed into an environment at a time. If something goes wrong, you have the ability to roll back changes by reverting a commit or pull request, or by leveraging data platform capabilities around "time travel." 
+[Контроль версий](/docs/collaborate/git-version-control) позволяет вашей команде одновременно сотрудничать над одним репозиторием кода, управлять конфликтами между изменениями и просматривать изменения перед развертыванием в производственной среде. В этом смысле контроль версий является важным инструментом для версионирования развертывания целого проекта dbt — всегда последнего состояния ветки `main`. В общем, только одна версия кода вашего проекта развертывается в среде в одно время. Если что-то пойдет не так, у вас есть возможность откатить изменения, отменив коммит или запрос на слияние, или воспользовавшись возможностями платформы данных по "путешествию во времени".
 
-When you make updates to a model's source code &mdash; its logical definition, in SQL or Python, or related configuration &mdash; dbt can [compare your project to the previous state](/reference/node-selection/syntax#about-node-selection), enabling you to rebuild only models that have changed, and models downstream of a change. In this way, it's possible to develop changes to a model, quickly test in CI, and efficiently deploy into production &mdash; all coordinated via your version control system.
+Когда вы вносите обновления в исходный код модели — ее логическое определение, на SQL или Python, или связанную конфигурацию — dbt может [сравнить ваш проект с предыдущим состоянием](/reference/node-selection/syntax#about-node-selection), позволяя вам перестраивать только измененные модели и модели ниже по потоку от изменения. Таким образом, возможно разрабатывать изменения в модели, быстро тестировать в CI и эффективно развертывать в производственной среде — все это координируется через вашу систему контроля версий.
 
-**Versioned models are different.** Defining model `versions` is appropriate when people, systems, and processes beyond your team's control, inside or outside of dbt, depend on your models. You can neither simply go migrate them all, nor break their queries on a whim. You need to offer a migration path, with clear diffs and deprecation dates.
+**Версионированные модели отличаются.** Определение `versions` модели уместно, когда люди, системы и процессы, находящиеся вне контроля вашей команды, внутри или вне dbt, зависят от ваших моделей. Вы не можете просто мигрировать их всех или сломать их запросы по прихоти. Вам нужно предложить путь миграции с четкими различиями и датами устаревания.
 
-Multiple versions of a model will live in the same code repository at the same time, and be deployed into the same data environment simultaneously. This is similar to how web APIs are versioned: Multiple versions live simultaneously, two or three, and not more). Over time, newer versions come online, and older versions are sunsetted .
+Несколько версий модели будут существовать в одном и том же репозитории кода одновременно и развертываться в одной и той же среде данных одновременно. Это похоже на то, как версии веб-API: несколько версий существуют одновременно, две или три, и не более. Со временем новые версии появляются, а старые версии закрываются.
 
-## How is this different from just creating a new model?
+## Как это отличается от простого создания новой модели?
 
-Honestly, it's only a little bit different! There isn't much magic here, and that's by design.
+Честно говоря, это немного отличается! Здесь нет никакой магии, и это сделано намеренно.
 
-You've always been able to copy-paste, create a new model file, and name it `dim_customers_v2.sql`. Why should you opt for a "real" versioned model instead?
+Вы всегда могли копировать и вставлять, создавать новый файл модели и называть его `dim_customers_v2.sql`. Почему вам следует выбрать "реальную" версионированную модель вместо этого?
 
-As the **producer** of a versioned model:
-- You keep track of all live versions in one place, rather than scattering them throughout the codebase
-- You can reuse the model's configuration, and highlight just the diffs between versions
-- You can select models to build (or not) based on whether they're a `latest`, `prerelease`, or `old` version
-- dbt will notify consumers of your versioned model when new versions become available, or when they are slated for deprecation
+Как **производитель** версионированной модели:
+- Вы отслеживаете все активные версии в одном месте, а не разбросаны по всему кодовой базе
+- Вы можете повторно использовать конфигурацию модели и выделить только различия между версиями
+- Вы можете выбирать модели для сборки (или нет) в зависимости от того, являются ли они `latest`, `prerelease` или `old` версией
+- dbt уведомит потребителей вашей версионированной модели, когда новые версии станут доступны или когда они будут запланированы на устаревание
 
-As the **consumer** of a versioned model:
-- You use a consistent `ref`, with the option of pinning to a specific live version
-- You will be notified throughout the life cycle of a versioned model
+Как **потребитель** версионированной модели:
+- Вы используете последовательный `ref`, с возможностью зафиксировать конкретную активную версию
+- Вы будете уведомлены на протяжении всего жизненного цикла версионированной модели
 
-All versions of a model preserve the model's original name. They are `ref`'d by that name, rather than the name of the file that they're defined in. By default, the `ref` resolves to the latest version (as declared by that model's maintainer), but you can also `ref` a specific version of the model, with a `version` keyword.
+Все версии модели сохраняют оригинальное имя модели. Они ссылаются на это имя, а не на имя файла, в котором они определены. По умолчанию `ref` разрешается на последнюю версию (как объявлено поддерживающим эту модель), но вы также можете `ref` конкретную версию модели с помощью ключевого слова `version`.
 
-Let's say that `dim_customers` has three versions defined: `v2` is the "latest", `v3` is "prerelease," and `v1` is an old version that's still within its deprecation window. Because `v2` is the latest version, it gets some special treatment: it can be defined in a file without a suffix, and `ref('dim_customers')` will resolve to `v2` if a version pin is not specified. The table below breaks down the standard conventions:
+Предположим, что `dim_customers` имеет три определенные версии: `v2` является "последней", `v3` — "предварительной", а `v1` — старая версия, которая все еще находится в окне устаревания. Поскольку `v2` является последней версией, она получает особое обращение: ее можно определить в файле без суффикса, и `ref('dim_customers')` разрешится на `v2`, если не указана фиксация версии. Таблица ниже разбивает стандартные соглашения:
 
-| v | version    | `ref` syntax                                          | File name                                       | Database relation                                                        |
+| v | версия    | синтаксис `ref`                                          | Имя файла                                       | Соотношение в базе данных                                                        |
 |---|------------|-------------------------------------------------------|-------------------------------------------------|--------------------------------------------------------------------------|
-| 3 | "prerelease" | `ref('dim_customers', v=3)`                           | `dim_customers_v3.sql`                          | `analytics.dim_customers_v3`                                             |
-| 2 | "latest"     | `ref('dim_customers', v=2)` **and** `ref('dim_customers')`  | `dim_customers_v2.sql` **or** `dim_customers.sql` | `analytics.dim_customers_v2` **and** `analytics.dim_customers` (recommended) |
-| 1 | "old"        |  `ref('dim_customers', v=1)`                           | `dim_customers_v1.sql`                          | `analytics.dim_customers_v1`                                             |
+| 3 | "предварительная" | `ref('dim_customers', v=3)`                           | `dim_customers_v3.sql`                          | `analytics.dim_customers_v3`                                             |
+| 2 | "последняя"     | `ref('dim_customers', v=2)` **и** `ref('dim_customers')`  | `dim_customers_v2.sql` **или** `dim_customers.sql` | `analytics.dim_customers_v2` **и** `analytics.dim_customers` (рекомендуется) |
+| 1 | "старая"        |  `ref('dim_customers', v=1)`                           | `dim_customers_v1.sql`                          | `analytics.dim_customers_v1`                                             |
 
-As you'll see in the implementation section below, a versioned model can reuse the majority of its YAML properties and configuration. Each version needs to only say how it _differs_ from the shared set of attributes. This gives you, as the producer of a versioned model, the opportunity to highlight the differences across versions—which is otherwise difficult to detect in models with dozens or hundreds of columns—and to clearly track, in one place, all versions of the model which are currently live.
+Как вы увидите в разделе реализации ниже, версионированная модель может повторно использовать большинство своих свойств YAML и конфигурации. Каждая версия должна только указать, как она _отличается_ от общего набора атрибутов. Это дает вам, как производителю версионированной модели, возможность выделить различия между версиями — что в противном случае трудно обнаружить в моделях с десятками или сотнями столбцов — и четко отслеживать в одном месте все версии модели, которые в настоящее время активны.
 
-dbt also supports [`version`-based selection](/reference/node-selection/methods#version). For example, you could define a [default YAML selector](/reference/node-selection/yaml-selectors#default) that avoids running any old model versions in development, even while you continue to run them in production through a sunset and migration period. (You could accomplish something similar by applying `tags` to these models, and cycling through those tags over time.)
+dbt также поддерживает [`version`-основанный выбор](/reference/node-selection/methods#version). Например, вы можете определить [по умолчанию YAML селектор](/reference/node-selection/yaml-selectors#default), который избегает выполнения любых старых версий модели в разработке, даже если вы продолжаете выполнять их в производственной среде в течение периода закрытия и миграции. (Вы можете достичь чего-то подобного, применив `tags` к этим моделям и циклически проходя через эти теги со временем.)
 
 <File name="selectors.yml">
 
@@ -117,26 +117,26 @@ selectors:
 
 </File>
 
-Because dbt knows that these models are _actually the same model_, it can notify downstream consumers as new versions become available, and as older versions are slated for deprecation.
+Поскольку dbt знает, что эти модели _на самом деле одна и та же модель_, он может уведомлять потребителей ниже по потоку, когда новые версии становятся доступными и когда старые версии запланированы на устаревание.
 
 ```bash
-Found an unpinned reference to versioned model 'dim_customers'.
-Resolving to latest version: my_model.v2
-A prerelease version 3 is available. It has not yet been marked 'latest' by its maintainer.
-When that happens, this reference will resolve to my_model.v3 instead.
+Найдена ссылка на версионированную модель 'dim_customers', не зафиксированная.
+Разрешение на последнюю версию: my_model.v2
+Доступна предварительная версия 3. Она еще не была помечена как 'последняя' ее поддерживающим.
+Когда это произойдет, эта ссылка разрешится на my_model.v3 вместо.
 
-  Try out v3: {{ ref('my_dbt_project', 'my_model', v='3') }}
-  Pin to  v2: {{ ref('my_dbt_project', 'my_model', v='2') }}
+  Попробуйте v3: {{ ref('my_dbt_project', 'my_model', v='3') }}
+  Зафиксируйте на v2: {{ ref('my_dbt_project', 'my_model', v='2') }}
 ```
 
-## How to create a new version of a model
+## Как создать новую версию модели
 
-Most often, you'll start with a model that is not yet versioned. Let's go back in time to when `dim_customers` was a simple standalone model, with an enforced contract. For simplicity, let's pretend it has only two columns, `customer_id` and `country_name`, though most mature models will have many more.
+Чаще всего вы начнете с модели, которая еще не имеет версии. Давайте вернемся назад во времени, когда `dim_customers` была простой самостоятельной моделью с обязательным контрактом. Для простоты предположим, что у нее всего два столбца: `customer_id` и `country_name`, хотя у большинства зрелых моделей будет гораздо больше.
 
 <File name="models/dim_customers.sql">
 
 ```sql
--- lots of sql
+-- много sql
 
 final as (
   
@@ -163,30 +163,29 @@ models:
         enforced: true
     columns:
       - name: customer_id
-        description: This is the primary key
+        description: Это первичный ключ
         data_type: int
       - name: country_name
-        description: Where this customer lives
+        description: Где живет этот клиент
         data_type: varchar
 ```
 
 </File>
 
-Let's say you need to make a breaking change to the model: Removing the `country_name` column, which is no longer reliable. First, create a new model file (SQL or Python) encompassing those breaking changes.
+Предположим, вам нужно внести нарушающее изменение в модель: удалить столбец `country_name`, который больше не является надежным. Сначала создайте новый файл модели (SQL или Python), охватывающий эти нарушающие изменения.
 
-
-The default convention is naming the new file with a `_v<version>` suffix. Let's make a new file, named `dim_customers_v2.sql`. (We don't need to rename the existing model file just yet, while it's still the "latest" version.)
+Стандартное соглашение — называть новый файл с суффиксом `_v<version>`. Давайте создадим новый файл с именем `dim_customers_v2.sql`. (Пока не нужно переименовывать существующий файл модели, пока он все еще является "последней" версией.)
 
 <File name="models/dim_customers_v2.sql">
 
 ```sql
--- lots of sql
+-- много sql
 
 final as (
   
     select
         customer_id
-        -- country_name has been removed!
+        -- country_name был удален!
     from ...
 
 )
@@ -196,10 +195,10 @@ select * from final
 
 </File>
 
-Now, you could define properties and configuration for `dim_customers_v2` as a new standalone model, with no actual relation to `dim_customers` save a striking resemblance. Instead, we're going to declare that these are versions of the same model, both named `dim_customers`. We can define their properties in common, and then **just** highlight the diffs between them. (Or, you can choose to define each model version with full specifications, and repeat the values they have in common.)
+Теперь вы могли бы определить свойства и конфигурацию для `dim_customers_v2` как новой самостоятельной модели, без фактической связи с `dim_customers`, кроме поразительного сходства. Вместо этого мы собираемся объявить, что это версии одной и той же модели, обе называются `dim_customers`. Мы можем определить их свойства в общем, а затем **только** выделить различия между ними. (Или вы можете выбрать полное определение каждой версии модели с повторением значений, которые у них общие.)
 
 <Tabs>
-<TabItem value="Diffs only (recommended)">
+<TabItem value="Только различия (рекомендуется)">
 
 <File name="models/schema.yml">
 
@@ -212,22 +211,22 @@ models:
       contract: {enforced: true}
     columns:
       - name: customer_id
-        description: This is the primary key
+        description: Это первичный ключ
         data_type: int
       - name: country_name
-        description: Where this customer lives
+        description: Где живет этот клиент
         data_type: varchar
     
-    # Declare the versions, and highlight the diffs
+    # Объявите версии и выделите различия
     versions:
     
       - v: 1
-        # Matches what's above -- nothing more needed
+        # Совпадает с тем, что выше — ничего больше не нужно
     
       - v: 2
-        # Removed a column -- this is the breaking change!
+        # Удален столбец — это нарушающее изменение!
         columns:
-          # This means: use the 'columns' list from above, but exclude country_name
+          # Это означает: используйте список 'columns' выше, но исключите country_name
           - include: all
             exclude: [country_name]
       
@@ -237,7 +236,7 @@ models:
 
 </TabItem>
 
-<TabItem value="Fully specified">
+<TabItem value="Полностью указано">
 
 <File name="models/schema.yml">
 
@@ -246,7 +245,7 @@ models:
   - name: dim_customers
     latest_version: 1
     
-    # declare the versions, and fully specify them
+    # объявите версии и полностью укажите их
     versions:
       - v: 2
         config:
@@ -254,9 +253,9 @@ models:
           contract: {enforced: true}
         columns:
           - name: customer_id
-            description: This is the primary key
+            description: Это первичный ключ
             data_type: int
-          # no country_name column
+          # нет столбца country_name
       
       - v: 1
         config:
@@ -264,10 +263,10 @@ models:
           contract: {enforced: true}
         columns:
           - name: customer_id
-            description: This is the primary key
+            description: Это первичный ключ
             data_type: int
           - name: country_name
-            description: Where this customer lives
+            description: Где живет этот клиент
             data_type: varchar
 ```
 
@@ -277,17 +276,17 @@ models:
 
 </Tabs>
 
-The configuration above says: Instead of two unrelated models, I have two versioned definitions of the same model: `dim_customers_v1` and `dim_customers_v2`.
+Конфигурация выше говорит: вместо двух несвязанных моделей у меня есть две версионированные определения одной и той же модели: `dim_customers_v1` и `dim_customers_v2`.
 
-**Where are they defined?** dbt expects each model version to be defined in a file named `<model_name>_v<v>`. In this case: `dim_customers_v1.sql` and `dim_customers_v2.sql`. It's also possible to define the "latest" version in `dim_customers.sql` (no suffix), without additional configuration. Finally, you can override this convention by setting [`defined_in: any_file_name_you_want`](/reference/resource-properties/versions#defined_in)—but we strongly encourage you to follow the convention, unless you have a very good reason.
+**Где они определены?** dbt ожидает, что каждая версия модели будет определена в файле с именем `<model_name>_v<v>`. В этом случае: `dim_customers_v1.sql` и `dim_customers_v2.sql`. Также возможно определить "последнюю" версию в `dim_customers.sql` (без суффикса), без дополнительной конфигурации. Наконец, вы можете переопределить это соглашение, установив [`defined_in: любое_имя_файла_которое_вы_хотите`](/reference/resource-properties/versions#defined_in) — но мы настоятельно рекомендуем следовать соглашению, если у вас нет очень веской причины.
 
-**Where will they be materialized?** Each model version will create a database relation with alias `<model_name>_v<v>`. In this case: `dim_customers_v1` and `dim_customers_v2`. See [the section below](#configuring-database-location-with-alias) for more details on configuring aliases.
+**Где они будут материализованы?** Каждая версия модели создаст соотношение базы данных с псевдонимом `<model_name>_v<v>`. В этом случае: `dim_customers_v1` и `dim_customers_v2`. См. [раздел ниже](#configuring-database-location-with-alias) для получения дополнительных сведений о конфигурации псевдонимов.
 
-**Which version is "latest"?** If not specified explicitly, the `latest_version` would be `2`, because it's numerically greatest. In this case, we've explicitly specified that `latest_version: 1`. That means `v2` is a "prerelease," in early development and testing. When we're ready to roll out `v2` to everyone by default, we would bump `latest_version: 2`, or remove `latest_version` from the specification.
+**Какая версия является "последней"?** Если не указано явно, `latest_version` будет `2`, потому что она численно больше. В этом случае мы явно указали, что `latest_version: 1`. Это означает, что `v2` является "предварительной", на ранней стадии разработки и тестирования. Когда мы будем готовы развернуть `v2` для всех по умолчанию, мы увеличим `latest_version: 2` или удалим `latest_version` из спецификации.
 
-### Configuring versioned models
+### Конфигурирование версионированных моделей
 
-You can reconfigure each version independently. For example, you could materialize `v2` as a table and `v1` as a view:
+Вы можете перенастроить каждую версию независимо. Например, вы можете материализовать `v2` как таблицу, а `v1` как представление:
 
 <File name="models/schema.yml">
 
@@ -303,35 +302,35 @@ versions:
 
 </File>
 
-Like with all config inheritance, any configs set _within_ the versioned model's definition (`.sql` or `.py` file) will take precedence over the configs set in YAML.
+Как и с любой наследуемой конфигурацией, любые конфигурации, установленные _внутри_ определения версионированной модели (`.sql` или `.py` файл), будут иметь приоритет над конфигурациями, установленными в YAML.
 
-### Configuring database location with `alias`
+### Конфигурирование местоположения базы данных с помощью `alias`
 
-Following the example, let's say you wanted `dim_customers_v1` to continue populating the database table named `dim_customers`. That's what the table was named previously, and you may have several other dashboards or tools expecting to read its data from `<dbname>.<schemaname>.dim_customers`.
+Следуя примеру, предположим, вы хотите, чтобы `dim_customers_v1` продолжала заполнять таблицу базы данных с именем `dim_customers`. Так называлась таблица ранее, и у вас могут быть несколько других панелей или инструментов, ожидающих чтения ее данных из `<dbname>.<schemaname>.dim_customers`.
 
-You could use the `alias` configuration:
+Вы можете использовать конфигурацию `alias`:
 
 <File name="models/schema.yml">
 
 ```yml
       - v: 1
         config:
-          alias: dim_customers   # keep v1 in its original database location
+          alias: dim_customers   # сохранить v1 в его оригинальном местоположении в базе данных
 ```
 
 </File>
 
-**The pattern we recommend:** Create a view or table clone with the model's canonical name that always points to the latest version. By following this pattern, you can offer the same flexibility as `ref`, even if someone is querying outside of dbt. Want a specific version? Pin to version X by adding the `_vX` suffix. Want the latest version? No suffix, and the view will redirect you.
+**Рекомендуемый шаблон:** Создайте представление или клон таблицы с каноническим именем модели, который всегда указывает на последнюю версию. Следуя этому шаблону, вы можете предложить ту же гибкость, что и `ref`, даже если кто-то запрашивает вне dbt. Хотите конкретную версию? Зафиксируйте на версии X, добавив суффикс `_vX`. Хотите последнюю версию? Без суффикса, и представление перенаправит вас.
 
-We intend to build this into `dbt-core` as out-of-the-box functionality. (Upvote or comment on [dbt-core#7442](https://github.com/dbt-labs/dbt-core/issues/7442).) In the meantime, you can implement this pattern yourself with a custom macro and post-hook:
+Мы намерены встроить это в `dbt-core` как функциональность "из коробки". (Поддержите или прокомментируйте [dbt-core#7442](https://github.com/dbt-labs/dbt-core/issues/7442).) Тем временем вы можете реализовать этот шаблон самостоятельно с помощью пользовательского макроса и пост-хука:
 
 <File name="macros/create_latest_version_view.sql">
 
 ```sql
 {% macro create_latest_version_view() %}
 
-    -- this hook will run only if the model is versioned, and only if it's the latest version
-    -- otherwise, it's a no-op
+    -- этот хук будет выполняться только если модель версионирована и только если это последняя версия
+    -- в противном случае это no-op
     {% if model.get('version') and model.get('version') == model.get('latest_version') %}
 
         {% set new_relation = this.incorporate(path={"identifier": model['name']}) %}
@@ -343,12 +342,12 @@ We intend to build this into `dbt-core` as out-of-the-box functionality. (Upvote
         {% endif %}
         
         {% set create_view_sql -%}
-            -- this syntax may vary by data platform
+            -- этот синтаксис может варьироваться в зависимости от платформы данных
             create or replace view {{ new_relation }}
               as select * from {{ this }}
         {%- endset %}
         
-        {% do log("Creating view " ~ new_relation ~ " pointing to " ~ this, info = true) if execute %}
+        {% do log("Создание представления " ~ new_relation ~ " указывающего на " ~ this, info = true) if execute %}
         
         {{ return(create_view_sql) }}
         
@@ -377,53 +376,53 @@ models:
 </File>
 
 :::info
-If your project has historically implemented [custom aliases](/docs/build/custom-aliases) by reimplementing the `generate_alias_name` macro, and you'd like to start using model versions, you should update your custom implementation to account for model versions. Specifically, we'd encourage you to add [a condition like this one](https://github.com/dbt-labs/dbt-core/blob/ada8860e48b32ac712d92e8b0977b2c3c9749981/core/dbt/include/global_project/macros/get_custom_name/get_custom_alias.sql#L26-L30).
+Если ваш проект исторически реализовывал [пользовательские псевдонимы](/docs/build/custom-aliases), повторно реализуя макрос `generate_alias_name`, и вы хотите начать использовать версии моделей, вам следует обновить вашу пользовательскую реализацию, чтобы учесть версии моделей. В частности, мы рекомендуем вам добавить [условие, подобное этому](https://github.com/dbt-labs/dbt-core/blob/ada8860e48b32ac712d92e8b0977b2c3c9749981/core/dbt/include/global_project/macros/get_custom_name/get_custom_alias.sql#L26-L30).
 
-Your existing implementation of `generate_alias_name` should not encounter any errors upon first upgrading to v1.5. It's only when you create your first versioned model, that you may see an error like:
+Ваша существующая реализация `generate_alias_name` не должна сталкиваться с ошибками при первом обновлении до v1.5. Только когда вы создадите свою первую версионированную модель, вы можете увидеть ошибку, подобную:
 
 ```sh
-dbt.exceptions.AmbiguousAliasError: Compilation Error
-  dbt found two resources with the database representation "database.schema.model_name".
-  dbt cannot create two resources with identical database representations. To fix this,
-  change the configuration of one of these resources:
+dbt.exceptions.AmbiguousAliasError: Ошибка компиляции
+  dbt нашел два ресурса с представлением базы данных "database.schema.model_name".
+  dbt не может создать два ресурса с идентичными представлениями базы данных. Чтобы исправить это,
+  измените конфигурацию одного из этих ресурсов:
   - model.project_name.model_name.v1 (models/.../model_name.sql)
   - model.project_name.model_name.v2 (models/.../model_name_v2.sql)
 ```
 
-We opted to use `generate_alias_name` for this functionality so that the logic remains accessible to end users, and could be reimplemented with custom logic.
+Мы выбрали использовать `generate_alias_name` для этой функциональности, чтобы логика оставалась доступной конечным пользователям и могла быть повторно реализована с пользовательской логикой.
 :::
 
-### Run a model with multiple versions
+### Запуск модели с несколькими версиями
 
-To run a model with multiple versions, you can use the [`--select` flag](/reference/node-selection/syntax). For example:
+Чтобы запустить модель с несколькими версиями, вы можете использовать флаг [`--select`](/reference/node-selection/syntax). Например:
 
-- Run all versions of `dim_customers`:
-
-  ```bash
-  dbt run --select dim_customers # Run all versions of the model
-  ```
-- Run only version 2 of `dim_customers`:
-
-  You can use either of the following commands (both achieve the same result):
+- Запустите все версии `dim_customers`:
 
   ```bash
-    dbt run --select dim_customers.v2 # Run a specific version of the model
-    dbt run --select dim_customers_v2 # Alternative syntax for the specific version
+  dbt run --select dim_customers # Запустите все версии модели
   ```
+- Запустите только версию 2 `dim_customers`:
 
-- Run the latest version of `dim_customers` using the `--select` flag shorthand:
+  Вы можете использовать любую из следующих команд (обе достигают одного и того же результата):
 
   ```bash
-  dbt run -s dim_customers,version:latest # Run the latest version of the model
+    dbt run --select dim_customers.v2 # Запустите конкретную версию модели
+    dbt run --select dim_customers_v2 # Альтернативный синтаксис для конкретной версии
   ```
 
-These commands provide flexibility in managing and executing different versions of a dbt model.
+- Запустите последнюю версию `dim_customers`, используя сокращенный флаг `--select`:
 
-### Optimizing model versions
+  ```bash
+  dbt run -s dim_customers,version:latest # Запустите последнюю версию модели
+  ```
 
-How you define each model version is completely up to you. While it's easy to start by copy-pasting from one model's SQL definition into another, you should think about _what actually is changing_ from one version to another.
+Эти команды обеспечивают гибкость в управлении и выполнении различных версий модели dbt.
 
-For example, if your new model version is only renaming or removing certain columns, you could define one version as a view on top of the other one:
+### Оптимизация версий моделей
+
+Как вы определяете каждую версию модели, полностью зависит от вас. Хотя легко начать с копирования и вставки из одного определения SQL модели в другое, вам следует подумать о _том, что на самом деле меняется_ от одной версии к другой.
+
+Например, если ваша новая версия модели только переименовывает или удаляет определенные столбцы, вы можете определить одну версию как представление на основе другой:
 
 <File name="models/dim_customers_v2.sql">
 
@@ -439,11 +438,11 @@ from {{ dim_customers_v1 }}
 
 </File>
 
-Of course, if one model version makes meaningful and substantive changes to logic in another, it may not be possible to optimize it in this way. At that point, the cost of human intuition and legibility is more important than the cost of recomputing similar transformations.
+Конечно, если одна версия модели вносит значительные и существенные изменения в логику другой, может быть невозможно оптимизировать это таким образом. В этот момент стоимость человеческой интуиции и читаемости важнее, чем стоимость пересчета аналогичных преобразований.
 
-We expect to develop more opinionated recommendations as teams start adopting model versions in practice. One recommended pattern we can envision: Prioritize the definition of the `latest_version`, and define other versions (old and prerelease) based on their diffs from the latest. How?
-- Define the properties and configuration for the latest version in the top-level model YAML, and the diffs for other versions below (via `include`/`exclude`)
-- Where possible, define other versions as `select` transformations, which take the latest version as their starting point
-- When bumping the `latest_version`, migrate the SQL and YAML accordingly.
+Мы ожидаем, что разработаем более целенаправленные рекомендации, когда команды начнут применять версии моделей на практике. Один рекомендуемый шаблон, который мы можем представить: приоритизируйте определение `latest_version` и определяйте другие версии (старые и предварительные) на основе их различий от последней. Как?
+- Определите свойства и конфигурацию для последней версии на верхнем уровне модели YAML, а различия для других версий ниже (через `include`/`exclude`)
+- Где это возможно, определяйте другие версии как `select` преобразования, которые берут последнюю версию в качестве отправной точки
+- При увеличении `latest_version` мигрируйте SQL и YAML соответственно.
 
-In the example above, the third point might be tricky. It's easier to _exclude_ `country_name`, than it is to add it back in. Instead, we might need to keep around the full original logic for `dim_customers_v1`—but materialize it as a `view`, to minimize the data warehouse cost of building it. If downstream queriers see slightly degraded performance, it's still significantly better than broken queries, and all the more reason to migrate to the new "latest" version.
+В приведенном выше примере третий пункт может быть сложным. Проще _исключить_ `country_name`, чем добавить его обратно. Вместо этого нам может потребоваться сохранить полную оригинальную логику для `dim_customers_v1` — но материализовать ее как `view`, чтобы минимизировать затраты на хранилище данных для ее построения. Если запросы ниже по потоку видят немного ухудшенную производительность, это все равно значительно лучше, чем сломанные запросы, и тем более причина мигрировать на новую "последнюю" версию.

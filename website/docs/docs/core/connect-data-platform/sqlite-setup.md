@@ -1,24 +1,24 @@
 ---
-title: "SQLite setup"
-description: "Read this guide to learn about the SQLite warehouse setup in dbt."
+title: "Настройка SQLite"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища SQLite в dbt."
 id: "sqlite-setup"
 meta:
-  maintained_by: Community
-  authors: 'Jeff Chiu (https://github.com/codeforkjeff)'
+  maintained_by: Сообщество
+  authors: 'Джефф Чиу (https://github.com/codeforkjeff)'
   github_repo: 'codeforkjeff/dbt-sqlite'
   pypi_package: 'dbt-sqlite'
   min_core_version: 'v1.1.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'SQlite Version 3.0'
-  slack_channel_name: 'n/a'
+  slack_channel_name: 'н/д'
   slack_channel_link: 'https://www.getdbt.com/community'
   platform_name: 'SQLite'
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for each repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом каждого из перечисленных ниже репозиториев.
 
 :::
 
@@ -26,18 +26,18 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta}/>
 
-Starting with the release of dbt-core 1.0.0, versions of dbt-sqlite are aligned to the same major+minor [version](https://semver.org/) of dbt-core.
-- versions 1.1.x of this adapter work with dbt-core 1.1.x
-- versions 1.0.x of this adapter work with dbt-core 1.0.x
-- versions 0.2.x of this adapter work with dbt 0.20.x and 0.21.x
-- versions 0.1.x of this adapter work with dbt 0.19.x
-- versions 0.0.x of this adapter work with dbt 0.18.x
+Начиная с выпуска dbt-core 1.0.0, версии dbt-sqlite согласованы с той же основной и минорной [версией](https://semver.org/) dbt-core.
+- версии 1.1.x этого адаптера работают с dbt-core 1.1.x
+- версии 1.0.x этого адаптера работают с dbt-core 1.0.x
+- версии 0.2.x этого адаптера работают с dbt 0.20.x и 0.21.x
+- версии 0.1.x этого адаптера работают с dbt 0.19.x
+- версии 0.0.x этого адаптера работают с dbt 0.18.x
 
-## Connecting to SQLite with dbt-sqlite
+## Подключение к SQLite с помощью dbt-sqlite
 
-SQLite targets should be set up using the following configuration in your `profiles.yml` file.
+Цели SQLite должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`.
 
-Example:
+Пример:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -53,46 +53,45 @@ your_profile_name:
       schemas_and_paths:
         main: 'file_path/database_name.db'
       schema_directory: 'file_path'
-      #optional fields
+      #опциональные поля
       extensions:
         - "/path/to/sqlean/crypto.so"
 ```
 
 </File>
 
-#### Description of SQLite Profile Fields
+#### Описание полей профиля SQLite
 
-| Field                    | Description |
+| Поле                     | Описание |
 |--------------------------|--------------------------------------------------------------------------------------------------------|
-| `type`                   | Required. Must be set to `sqlite`. |
-| `threads`                | Required. Must be set to `1`. SQLite locks the whole db on writes so anything > 1 won't help. |
-| `database`               | Required but the value is arbitrary because there is no 'database' portion of relation names in SQLite so it gets stripped from the output of ref() and from SQL everywhere. It still needs to be set in the configuration and is used by dbt internally.|
-| `schema`                 | Value of 'schema' must be defined in schema_paths below. in most cases, this should be main. |
-| `schemas_and_paths`      | Connect schemas to paths: at least one of these must be 'main' |
-| `schema_directory`	     | Directory where all *.db files are attached as schema, using base filename as schema name, and where new schemas are created. This can overlap with the dirs of files in schemas_and_paths as long as there's no conflicts. |
-| `extensions`             | Optional. List of file paths of SQLite extensions to load. crypto.so is needed for snapshots to work; see SQLlite Extensions below. |
+| `type`                   | Обязательно. Должно быть установлено в `sqlite`. |
+| `threads`                | Обязательно. Должно быть установлено в `1`. SQLite блокирует всю базу данных при записи, поэтому значение больше 1 не поможет. |
+| `database`               | Обязательно, но значение произвольно, так как в SQLite нет 'базы данных' в именах отношений, поэтому оно удаляется из вывода ref() и из SQL везде. Тем не менее, оно должно быть установлено в конфигурации и используется dbt внутренне.|
+| `schema`                 | Значение 'schema' должно быть определено в schema_paths ниже. В большинстве случаев это должно быть main. |
+| `schemas_and_paths`      | Соединяет схемы с путями: хотя бы одна из них должна быть 'main' |
+| `schema_directory`	     | Директория, где все *.db файлы прикрепляются как схемы, используя базовое имя файла в качестве имени схемы, и где создаются новые схемы. Это может пересекаться с директориями файлов в schemas_and_paths, если нет конфликтов. |
+| `extensions`             | Опционально. Список файловых путей к расширениям SQLite для загрузки. crypto.so необходим для работы снимков; см. ниже раздел "Расширения SQLite". |
 
-## Caveats 
+## Предостережения 
 
-- Schemas are implemented as attached database files. (SQLite conflates databases and schemas.)
+- Схемы реализованы как прикрепленные файлы баз данных. (SQLite объединяет базы данных и схемы.)
 
-  - SQLite automatically assigns 'main' to the file you initially connect to, so this must be defined in your profile. Other schemas defined in your profile
-  get attached when database connection is created.
+  - SQLite автоматически назначает 'main' файлу, к которому вы изначально подключаетесь, поэтому это должно быть определено в вашем профиле. Другие схемы, определенные в вашем профиле, прикрепляются при создании соединения с базой данных.
 
-  - If dbt needs to create a new schema, it will be created in `schema_directory` as `schema_name.db`. Dropping a schema results in dropping all its relations and detaching the database file from the session.
+  - Если dbt необходимо создать новую схему, она будет создана в `schema_directory` как `schema_name.db`. Удаление схемы приводит к удалению всех ее отношений и отсоединению файла базы данных от сессии.
 
-  - Schema names are stored in view definitions, so when you access a non-'main' database file outside dbt, you'll need to attach it using the same name, or the views won't work.
+  - Имена схем хранятся в определениях представлений, поэтому, когда вы обращаетесь к файлу базы данных, отличному от 'main', вне dbt, вам нужно будет прикрепить его, используя то же имя, иначе представления не будут работать.
 
-  - SQLite does not allow views in one schema (i.e. database file) to reference objects in another schema. You'll get this error from SQLite: "view [someview] cannot reference objects in database [somedatabase]". You must set `materialized='table'` in models that reference other schemas.
+  - SQLite не позволяет представлениям в одной схеме (т.е. файле базы данных) ссылаться на объекты в другой схеме. Вы получите эту ошибку от SQLite: "view [someview] cannot reference objects in database [somedatabase]". Вы должны установить `materialized='table'` в моделях, которые ссылаются на другие схемы.
 
-- Materializations are simplified: they drop and re-create the model, instead of doing the backup-and-swap-in new model that the other dbt database adapters support. This choice was made because SQLite doesn't support `DROP ... CASCADE` or `ALTER VIEW` or provide information about relation dependencies in something information_schema-like. These limitations make it really difficult to make the backup-and-swap-in functionality work properly. Given how SQLite aggressively [locks](https://sqlite.org/lockingv3.html) the database anyway, it's probably not worth the effort.
+- Материализации упрощены: они удаляют и заново создают модель, вместо того чтобы делать резервное копирование и замену новой модели, что поддерживают другие адаптеры баз данных dbt. Этот выбор был сделан, потому что SQLite не поддерживает `DROP ... CASCADE` или `ALTER VIEW` и не предоставляет информацию о зависимостях отношений в чем-то подобном information_schema. Эти ограничения делают действительно сложным правильную работу функции резервного копирования и замены. Учитывая, как SQLite агрессивно [блокирует](https://sqlite.org/lockingv3.html) базу данных, это, вероятно, не стоит усилий.
 
-## SQLite Extensions
+## Расширения SQLite
 
-For snapshots to work, you'll need the `crypto` module from SQLean to get an `md5()` function. It's recommended that you install all the SQLean modules, as they provide many common SQL functions missing from SQLite.
+Для работы снимков вам потребуется модуль `crypto` из SQLean для получения функции `md5()`. Рекомендуется установить все модули SQLean, так как они предоставляют многие общие SQL функции, отсутствующие в SQLite.
 
-Precompiled binaries are available for download from the [SQLean github repository page](https://github.com/nalgeon/sqlean). You can also compile them yourself if you want.
+Предварительно скомпилированные бинарные файлы доступны для загрузки со страницы [репозитория SQLean на GitHub](https://github.com/nalgeon/sqlean). Вы также можете скомпилировать их самостоятельно, если хотите.
 
-Point to these module files in your profile config as shown in the example above.
+Укажите эти файлы модулей в конфигурации вашего профиля, как показано в примере выше.
 
-Mac OS seems to ship with [SQLite libraries that do not have support for loading extensions compiled in](https://docs.python.org/3/library/sqlite3.html#f1), so this won't work "out of the box." Accordingly, snapshots won't work. If you need snapshot functionality, you'll need to compile SQLite/python or find a python distribution for Mac OS with this support.
+Mac OS, похоже, поставляется с [библиотеками SQLite, которые не поддерживают загрузку скомпилированных расширений](https://docs.python.org/3/library/sqlite3.html#f1), поэтому это не будет работать "из коробки". Соответственно, снимки не будут работать. Если вам нужна функциональность снимков, вам нужно будет скомпилировать SQLite/python или найти дистрибутив python для Mac OS с этой поддержкой.

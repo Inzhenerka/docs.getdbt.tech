@@ -1,32 +1,32 @@
 ---
-title: "Model access"
+title: "Доступ к моделям"
 id: model-access
-sidebar_label: "Model access"
-description: "Define model access with group capabilities"
+sidebar_label: "Доступ к моделям"
+description: "Определите доступ к моделям с возможностями групп"
 ---
 
-:::info "Model access" is not "User access"
+:::info "Доступ к моделям" не является "Доступом пользователей"
 
-**Model groups and access** and **user groups and access** mean two different things. "User groups and access" is a specific term used in dbt Cloud to manage permissions. Refer to [User access](/docs/cloud/manage-access/about-user-access) for more info.
+**Группы моделей и доступ** и **группы пользователей и доступ** означают две разные вещи. "Группы пользователей и доступ" — это специфический термин, используемый в dbt Cloud для управления разрешениями. Для получения дополнительной информации обратитесь к [Доступу пользователей](/docs/cloud/manage-access/about-user-access).
 
-The two concepts will be closely related, as we develop multi-project collaboration workflows this year:
-- Users with access to develop in a dbt project can view and modify **all** models in that project, including private models.
-- Users in the same dbt Cloud account _without_ access to develop in a project cannot view that project's private models, and they can take a dependency on its public models only.
+Эти два понятия будут тесно связаны, поскольку мы разрабатываем рабочие процессы многопроектного сотрудничества в этом году:
+- Пользователи, имеющие доступ к разработке в проекте dbt, могут просматривать и изменять **все** модели в этом проекте, включая частные модели.
+- Пользователи в той же учетной записи dbt Cloud, _не имеющие_ доступа к разработке в проекте, не могут просматривать частные модели этого проекта и могут зависеть только от его публичных моделей.
 :::
 
-## Related documentation
+## Связанная документация
 * [`groups`](/docs/build/groups)
 * [`access`](/reference/resource-configs/access)
 
-## Groups
+## Группы
 
-Models can be grouped under a common designation with a shared owner. For example, you could group together all models owned by a particular team, or related to modeling a specific data source (`github`).
+Модели могут быть сгруппированы под общим обозначением с общим владельцем. Например, вы можете сгруппировать все модели, принадлежащие определенной команде, или связанные с моделированием конкретного источника данных (`github`).
 
-Why define model `groups`? There are two reasons:
-- It turns implicit relationships into an explicit grouping, with a defined owner. By thinking about the interface boundaries _between_ groups, you can have a cleaner (less entangled) DAG. In the future, those interface boundaries could be appropriate as the interfaces between separate projects.
-- It enables you to designate certain models as having "private" access—for use exclusively within that group. Other models will be restricted from referencing (taking a dependency on) those models. In the future, they won't be visible to other teams taking a dependency on your project—only "public" models will be.
+Зачем определять группы моделей? Есть две причины:
+- Это превращает неявные отношения в явную группировку с определенным владельцем. Размышляя о границах интерфейса _между_ группами, вы можете получить более чистый (менее запутанный) DAG. В будущем эти границы интерфейса могут быть уместны как интерфейсы между отдельными проектами.
+- Это позволяет вам обозначить определенные модели как имеющие "частный" доступ — для использования исключительно в этой группе. Другие модели будут ограничены в возможности ссылаться (зависеть) на эти модели. В будущем они не будут видны другим командам, зависящим от вашего проекта — только "публичные" модели будут видимы.
 
-If you follow our [best practices for structuring a dbt project](/best-practices/how-we-structure/1-guide-overview), you're probably already using subdirectories to organize your dbt project. It's easy to apply a `group` label to an entire subdirectory at once:
+Если вы следуете нашим [рекомендациям по структурированию проекта dbt](/best-practices/how-we-structure/1-guide-overview), вы, вероятно, уже используете подкаталоги для организации вашего проекта dbt. Легко применить метку `group` ко всему подкаталогу сразу:
 
 <File name="dbt_project.yml">
 
@@ -42,19 +42,19 @@ models:
 
 </File>
 
-Each model can only belong to one `group`, and groups cannot be nested. If you set a different `group` in that model's YAML or in-file config, it will override the `group` applied at the project level.
+Каждая модель может принадлежать только одной `group`, и группы не могут быть вложенными. Если вы установите другую `group` в YAML этой модели или в конфигурации файла, она переопределит `group`, примененную на уровне проекта.
 
-## Access modifiers
+## Модификаторы доступа
 
-Some models are implementation details, meant for reference only within their group of related models. Other models should be accessible through the [ref](/reference/dbt-jinja-functions/ref) function across groups and projects. Models can set an [access modifier](https://en.wikipedia.org/wiki/Access_modifiers) to indicate their intended level of accessibility.
+Некоторые модели являются деталями реализации, предназначенными для справки только в пределах их группы связанных моделей. Другие модели должны быть доступны через функцию [ref](/reference/dbt-jinja-functions/ref) между группами и проектами. Модели могут установить [модификатор доступа](https://en.wikipedia.org/wiki/Access_modifiers), чтобы указать свой предполагаемый уровень доступности.
 
-| Access    | Referenceable by                       |
-|-----------|----------------------------------------|
-| private   | Same group                             |
-| protected | Same project (or installed as a package) |
-| public    | Any group, package, or project. When defined, rerun a production job to apply the change |
+| Доступ    | Ссылается на                       |
+|-----------|-------------------------------------|
+| private   | Та же группа                       |
+| protected | Тот же проект (или установлен как пакет) |
+| public    | Любая группа, пакет или проект. При определении повторно запустите производственную задачу, чтобы применить изменение |
 
-If you try to reference a model outside of its supported access, you will see an error:
+Если вы попытаетесь сослаться на модель вне ее поддерживаемого доступа, вы увидите ошибку:
 
 ```shell
 dbt run -s marketing_model
@@ -64,34 +64,34 @@ dbt.exceptions.DbtReferenceError: Parsing Error
   which is not allowed because the referenced node is private to the finance group.
 ```
 
-By default, all models are `protected`. This means that other models in the same project can reference them, regardless of their group. This is largely for backward compatibility when assigning groups to an existing set of models, as there may already be existing references across group assignments.
+По умолчанию все модели являются `protected`. Это означает, что другие модели в том же проекте могут ссылаться на них, независимо от их группы. Это в значительной степени для обратной совместимости при назначении групп уже существующему набору моделей, так как могут уже существовать ссылки между назначениями групп.
 
-However, it is recommended to set the access modifier of a new model to `private` to prevent other project resources from taking dependencies on models not intentionally designed for sharing across groups.
+Тем не менее, рекомендуется устанавливать модификатор доступа новой модели на `private`, чтобы предотвратить зависимость других ресурсов проекта от моделей, не предназначенных для совместного использования между группами.
 
 <File name="models/marts/customers.yml">
 
 ```yaml
-# First, define the group and owner
+# Сначала определите группу и владельца
 groups:
   - name: customer_success
     owner:
       name: Customer Success Team
       email: cx@jaffle.shop
 
-# Then, add 'group' + 'access' modifier to specific models
+# Затем добавьте 'group' + 'access' модификатор к конкретным моделям
 models:
-  # This is a public model -- it's a stable & mature interface for other teams/projects
+  # Это публичная модель — это стабильный и зрелый интерфейс для других команд/проектов
   - name: dim_customers
     group: customer_success
     access: public
     
-  # This is a private model -- it's an intermediate transformation intended for use in this context *only*
+  # Это частная модель — это промежуточная трансформация, предназначенная для использования только в этом контексте
   - name: int_customer_history_rollup
     group: customer_success
     access: private
     
-  # This is a protected model -- it might be useful elsewhere in *this* project,
-  # but it shouldn't be exposed elsewhere
+  # Это защищенная модель — она может быть полезна в *этом* проекте,
+  # но не должна быть доступна в других
   - name: stg_customer__survey_results
     group: customer_success
     access: protected
@@ -99,9 +99,9 @@ models:
 
 </File>
 
-Models with `materialized` set to `ephemeral` cannot have the access property set to public.
+Модели с `materialized`, установленным на `ephemeral`, не могут иметь свойство доступа, установленное на публичное.
 
-For example, if you have a model config set as:
+Например, если у вас есть конфигурация модели, установленная как:
 
 <File name="models/my_model.sql">
 
@@ -113,12 +113,11 @@ For example, if you have a model config set as:
 
 </File>
 
-And the model access is defined:
+И доступ к модели определен:
 
 <File name="models/my_project.yml">
 
 ```yaml
-
 models:
   - name: my_model
     access: public
@@ -127,7 +126,7 @@ models:
 
 </File>
 
-It will lead to the following error:
+Это приведет к следующей ошибке:
 
 ```
 ❯ dbt parse
@@ -136,47 +135,46 @@ Parsing Error
   Node model.jaffle_shop.my_model with 'ephemeral' materialization has an invalid value (public) for the access field
 ```
 
-## FAQs
+## Часто задаваемые вопросы
 
-### How does model access relate to database permissions?
+### Как доступ к моделям соотносится с разрешениями базы данных?
 
-These are different!
+Это разные вещи!
 
-Specifying `access: public` on a model does not trigger dbt to automagically grant `select` on that model to every user or role in your data platform when you materialize it. You have complete control over managing database permissions on every model/schema, as makes sense to you & your organization.
+Указание `access: public` для модели не приводит к тому, что dbt автоматически предоставляет `select` на эту модель каждому пользователю или роли в вашей платформе данных при ее материализации. У вас есть полный контроль над управлением разрешениями базы данных для каждой модели/схемы, как это имеет смысл для вас и вашей организации.
 
-Of course, dbt can facilitate this by means of [the `grants` config](/reference/resource-configs/grants), and other flexible mechanisms. For example:
-- Grant access to downstream queriers on public models
-- Restrict access to private models, by revoking default/future grants, or by landing them in a different schema
+Конечно, dbt может облегчить это с помощью [конфигурации `grants`](/reference/resource-configs/grants) и других гибких механизмов. Например:
+- Предоставить доступ к моделям для последующих запросов на публичные модели
+- Ограничить доступ к частным моделям, отозвав стандартные/будущие гранты или разместив их в другой схеме
 
-As we continue to develop multi-project collaboration, `access: public` will mean that other teams are allowed to start taking a dependency on that model. This assumes that they've requested, and you've granted them access, to select from the underlying dataset.
+По мере того как мы продолжаем развивать многопроектное сотрудничество, `access: public` будет означать, что другим командам разрешено начинать зависеть от этой модели. Это предполагает, что они запросили, и вы предоставили им доступ к выборке из основного набора данных.
 
-### How do I ref a model from another project?
+### Как мне сослаться на модель из другого проекта?
 
-You can `ref` a model from another project in two ways:
-1. [Project dependency](/docs/collaborate/govern/project-dependencies): In dbt Cloud Enterprise, you can use project dependencies to `ref`  a model. dbt Cloud uses a behind-the-scenes metadata service to resolve the reference, enabling efficient collaboration across teams and at scale.
-2. ["Package" dependency](/docs/build/packages): Another way to `ref` a model from another project is to treat the other project as a package dependency. This requires installing the other project as a package, including its full source code, as well as its upstream dependencies.
+Вы можете `ref` модель из другого проекта двумя способами:
+1. [Зависимость проекта](/docs/collaborate/govern/project-dependencies): В dbt Cloud Enterprise вы можете использовать зависимости проекта, чтобы `ref` модель. dbt Cloud использует служебный метаданных для разрешения ссылки, что позволяет эффективно сотрудничать между командами и в масштабах.
+2. ["Пакет" зависимость](/docs/build/packages): Другой способ `ref` модели из другого проекта — рассматривать другой проект как зависимость пакета. Это требует установки другого проекта как пакета, включая его полный исходный код, а также его верхние зависимости.
 
-### How do I restrict access to models defined in a package?
+### Как мне ограничить доступ к моделям, определенным в пакете?
 
-Source code installed from a package becomes part of your runtime environment. You can call macros and run models as if they were macros and models that you had defined in your own project.
+Исходный код, установленный из пакета, становится частью вашей рабочей среды. Вы можете вызывать макросы и запускать модели так, как если бы они были макросами и моделями, которые вы определили в своем собственном проекте.
 
-For this reason, model access restrictions are "off" by default for models defined in packages. You can reference models from that package regardless of their `access` modifier.
+По этой причине ограничения доступа к моделям по умолчанию "выключены" для моделей, определенных в пакетах. Вы можете ссылаться на модели из этого пакета независимо от их модификатора `access`.
 
-The project is installed as a package can optionally restrict external `ref` access to just its public models. The package maintainer does this by setting a `restrict-access` config to `True` in `dbt_project.yml`.
+Проект, установленный как пакет, может дополнительно ограничить внешний доступ `ref` только к своим публичным моделям. Поддерживающий пакет делает это, установив конфигурацию `restrict-access` в `True` в `dbt_project.yml`.
 
-By default, the value of this config is `False`. This means that:
-- Models in the package with `access: protected` may be referenced by models in the root project, as if they were defined in the same project
-- Models in the package with `access: private` may be referenced by models in the root project, so long as they also have the same `group` config
+По умолчанию значение этой конфигурации равно `False`. Это означает, что:
+- Модели в пакете с `access: protected` могут быть ссылками на модели в корневом проекте, как если бы они были определены в том же проекте
+- Модели в пакете с `access: private` могут быть ссылками на модели в корневом проекте, при условии, что они также имеют ту же конфигурацию `group`
 
-When `restrict-access: True`:
-- Any `ref` from outside the package to a protected or private model in that package will fail.
-- Only models with `access: public` can be referenced outside the package.
+Когда `restrict-access: True`:
+- Любая `ref` снаружи пакета на защищенную или частную модель в этом пакете завершится неудачей.
+- Только модели с `access: public` могут быть ссылками снаружи пакета.
 
 <File name="dbt_project.yml">
 
 ```yml
-restrict-access: True  # default is False
+restrict-access: True  # по умолчанию False
 ```
 
 </File>
-

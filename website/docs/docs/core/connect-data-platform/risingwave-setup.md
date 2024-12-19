@@ -1,24 +1,24 @@
 ---
-title: "RisingWave setup"
+title: "Настройка RisingWave"
 id: "risingwave-setup"
-description: "Read this guide to learn about how to set up RisingWave in dbt."
+description: "Прочитайте это руководство, чтобы узнать, как настроить RisingWave в dbt."
 meta:
   maintained_by: RisingWave
   pypi_package: 'dbt-risingwave'
-  authors: 'Dylan Chen'
+  authors: 'Дилан Чен'
   github_repo: 'risingwavelabs/dbt-risingwave'
   min_core_version: 'v1.6.1'
   min_supported_version: ''
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   slack_channel_name: 'N/A'
   slack_channel_link: 'https://www.risingwave.com/slack'
   platform_name: 'RisingWave'
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Поддерживаемый поставщиком плагин
 
-Certain core functionality may vary. If you would like to report a bug, request a feature, or contribute, you can check out the linked repository and open an issue.
+Некоторые основные функции могут различаться. Если вы хотите сообщить об ошибке, запросить функцию или внести свой вклад, вы можете ознакомиться с указанным репозиторием и открыть проблему.
 
 :::
 
@@ -26,11 +26,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to RisingWave with dbt-risingwave
+## Подключение к RisingWave с помощью dbt-risingwave
 
-Before connecting to RisingWave, ensure that RisingWave is installed and running. For more information about how to get RisingWave up and running, see the [RisingWave quick start guide](https://docs.risingwave.com/get-started/quickstart).
+Перед подключением к RisingWave убедитесь, что RisingWave установлен и запущен. Для получения дополнительной информации о том, как запустить RisingWave, смотрите [руководство по быстрому старту RisingWave](https://docs.risingwave.com/get-started/quickstart).
 
-To connect to RisingWave with dbt, you need to add a RisingWave profile to your dbt profile file (`~/.dbt/profiles.yml`). Below is an example RisingWave profile. Revise the field values when necessary.
+Чтобы подключиться к RisingWave с помощью dbt, вам нужно добавить профиль RisingWave в файл профиля dbt (`~/.dbt/profiles.yml`). Ниже приведен пример профиля RisingWave. При необходимости измените значения полей.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -39,49 +39,49 @@ default:
   outputs:
     dev:
       type: risingwave
-      host: [host name] 
-      user: [user name]
-      pass: [password]
-      dbname: [database name]
-      port: [port]
-      schema: [dbt schema]
+      host: [имя хоста] 
+      user: [имя пользователя]
+      pass: [пароль]
+      dbname: [имя базы данных]
+      port: [порт]
+      schema: [схема dbt]
   target: dev
 ```
 
 </File>
 
-|Field|Description|
+|Поле|Описание|
 |---|---|
-|`host`| The host name or IP address of the RisingWave instance|
-|`user`|The RisingWave database user you want to use|
-|`pass`| The password of the database user|
-|`dbname` | The RisingWave database name|
-|`port` | The port number that RisingWave listens on|
-|`schema`| The schema of the RisingWave database|
+|`host`| Имя хоста или IP-адрес экземпляра RisingWave|
+|`user`|Имя пользователя базы данных RisingWave, которое вы хотите использовать|
+|`pass`| Пароль пользователя базы данных|
+|`dbname` | Имя базы данных RisingWave|
+|`port` | Номер порта, на котором слушает RisingWave|
+|`schema`| Схема базы данных RisingWave|
 
-To test the connection to RisingWave, run:
+Чтобы протестировать подключение к RisingWave, выполните:
 
 ```bash
 dbt debug
 ```
 
-## Materializations
+## Материализации
 
-The dbt models for managing data transformations in RisingWave are similar to typical dbt SQL models. In the `dbt-risingwave` adapter, we have customized some of the materializations to align with the streaming data processing model of RisingWave.
+Модели dbt для управления преобразованиями данных в RisingWave аналогичны типичным SQL моделям dbt. В адаптере `dbt-risingwave` мы настроили некоторые материализации, чтобы они соответствовали модели обработки потоковых данных RisingWave.
 
-|Materializations| Supported|Notes|
+|Материализации| Поддерживается|Примечания|
 |----|----|----|
-|`table` |Yes |Creates a [table](https://docs.risingwave.com/sql/commands/sql-create-table). To use this materialization, add `{{ config(materialized='table') }}` to your model SQL files. |
-|`view`|Yes | Creates a [view](https://docs.risingwave.com/sql/commands/sql-create-view). To use this materialization, add `{{ config(materialized='view') }}` to your model SQL files. |
-|`ephemeral`|Yes| This materialization uses [common table expressions](https://docs.risingwave.com/sql/query-syntax/with-clause) in RisingWave under the hood. To use this materialization, add `{{ config(materialized='ephemeral') }}` to your model SQL files.|
-|`materializedview`| To be deprecated. |It is available only for backward compatibility purposes (for v1.5.1 of the dbt-risingwave adapter plugin). If you are using v1.6.0 and later versions of the dbt-risingwave adapter plugin, use `materialized_view` instead.|
-|`materialized_view`| Yes| Creates a [materialized view](https://docs.risingwave.com/sql/commands/sql-create-mv). This materialization corresponds the `incremental` one in dbt. To use this materialization, add `{{ config(materialized='materialized_view') }}` to your model SQL files.|
-| `incremental`|No|Please use `materialized_view` instead. Since RisingWave is designed to use materialized view to manage data transformation in an incremental way, you can just use the `materialized_view` materialization.|
-|`source`| Yes| Creates a [source](https://docs.risingwave.com/sql/commands/sql-create-source). To use this materialization, add \{\{ config(materialized='source') \}\} to your model SQL files. You need to provide your create source statement as a whole in this model. See [Example model files](https://docs.risingwave.com/integrations/other/dbt#example-model-files) for details.|
-|`table_with_connector`| Yes| Creates a table with connector settings. In RisingWave, a table with connector settings is similar to a source. The difference is that a table object with connector settings persists raw streaming data in the source, while a source object does not. To use this materialization, add `{{ config(materialized='table_with_connector') }}` to your model SQL files. You need to provide your create table with connector statement as a whole in this model (see [Example model files](https://docs.risingwave.com/integrations/other/dbt#example-model-files) for details). Because dbt tables have their own semantics, RisingWave use `table_with_connector` to distinguish itself from a dbt table.|
-|`sink`| Yes| Creates a [sink](https://docs.risingwave.com/sql/commands/sql-create-sink). To use this materialization, add `{{ config(materialized='sink') }}` to your SQL files. You need to provide your create sink statement as a whole in this model. See [Example model files](https://docs.risingwave.com/integrations/other/dbt#example-model-files) for details.|
+|`table` |Да |Создает [таблицу](https://docs.risingwave.com/sql/commands/sql-create-table). Чтобы использовать эту материализацию, добавьте `{{ config(materialized='table') }}` в ваши SQL файлы модели. |
+|`view`|Да | Создает [представление](https://docs.risingwave.com/sql/commands/sql-create-view). Чтобы использовать эту материализацию, добавьте `{{ config(materialized='view') }}` в ваши SQL файлы модели. |
+|`ephemeral`|Да| Эта материализация использует [общие таблицы выражений](https://docs.risingwave.com/sql/query-syntax/with-clause) в RisingWave под капотом. Чтобы использовать эту материализацию, добавьте `{{ config(materialized='ephemeral') }}` в ваши SQL файлы модели.|
+|`materializedview`| Будет устаревать. |Доступно только для обратной совместимости (для v1.5.1 плагина адаптера dbt-risingwave). Если вы используете версии v1.6.0 и более поздние версии плагина адаптера dbt-risingwave, используйте `materialized_view` вместо этого.|
+|`materialized_view`| Да| Создает [материализованное представление](https://docs.risingwave.com/sql/commands/sql-create-mv). Эта материализация соответствует `incremental` в dbt. Чтобы использовать эту материализацию, добавьте `{{ config(materialized='materialized_view') }}` в ваши SQL файлы модели.|
+| `incremental`|Нет|Пожалуйста, используйте `materialized_view` вместо этого. Поскольку RisingWave предназначен для использования материализованного представления для управления преобразованием данных инкрементально, вы можете просто использовать материализацию `materialized_view`.|
+|`source`| Да| Создает [источник](https://docs.risingwave.com/sql/commands/sql-create-source). Чтобы использовать эту материализацию, добавьте \{\{ config(materialized='source') \}\} в ваши SQL файлы модели. Вам нужно предоставить ваше полное выражение создания источника в этой модели. Смотрите [Примеры файлов моделей](https://docs.risingwave.com/integrations/other/dbt#example-model-files) для получения подробной информации.|
+|`table_with_connector`| Да| Создает таблицу с настройками соединителя. В RisingWave таблица с настройками соединителя аналогична источнику. Разница в том, что объект таблицы с настройками соединителя сохраняет необработанные потоковые данные в источнике, в то время как объект источника этого не делает. Чтобы использовать эту материализацию, добавьте `{{ config(materialized='table_with_connector') }}` в ваши SQL файлы модели. Вам нужно предоставить ваше полное выражение создания таблицы с настройками соединителя в этой модели (см. [Примеры файлов моделей](https://docs.risingwave.com/integrations/other/dbt#example-model-files) для получения подробной информации). Поскольку таблицы dbt имеют свою собственную семантику, RisingWave использует `table_with_connector` для отличия от таблицы dbt.|
+|`sink`| Да| Создает [синк](https://docs.risingwave.com/sql/commands/sql-create-sink). Чтобы использовать эту материализацию, добавьте `{{ config(materialized='sink') }}` в ваши SQL файлы. Вам нужно предоставить ваше полное выражение создания синка в этой модели. Смотрите [Примеры файлов моделей](https://docs.risingwave.com/integrations/other/dbt#example-model-files) для получения подробной информации.|
 
-## Resources
+## Ресурсы
 
-- [RisingWave's guide about using dbt for data transformations](https://docs.risingwave.com/integrations/other/dbt)
-- [A demo project using dbt to manage Nexmark benchmark queries in RisingWave](https://github.com/risingwavelabs/dbt_rw_nexmark)
+- [Руководство RisingWave о использовании dbt для преобразования данных](https://docs.risingwave.com/integrations/other/dbt)
+- [Демо-проект, использующий dbt для управления запросами бенчмарка Nexmark в RisingWave](https://github.com/risingwavelabs/dbt_rw_nexmark)

@@ -1,157 +1,154 @@
 ---
-title: "Set up SSO with Microsoft Entra ID (formerly Azure AD)"
-description: "Learn how dbt Cloud administrators can use Microsoft Entra ID to control access in a dbt Cloud account."
+title: "Настройка SSO с Microsoft Entra ID (ранее Azure AD)"
+description: "Узнайте, как администраторы dbt Cloud могут использовать Microsoft Entra ID для управления доступом в учетной записи dbt Cloud."
 id: "set-up-sso-microsoft-entra-id"
-sidebar_label: "Set up SSO with Microsoft Entra ID"
+sidebar_label: "Настройка SSO с Microsoft Entra ID"
 ---
 
 import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
-dbt Cloud Enterprise supports single-sign on via Microsoft Entra ID (formerly Azure AD).
-You will need permissions to create and manage a new Entra ID application.
-Currently supported features include:
+dbt Cloud Enterprise поддерживает единую точку входа (SSO) через Microsoft Entra ID (ранее Azure AD). Вам потребуются права для создания и управления новым приложением Entra ID. В настоящее время поддерживаемые функции включают:
 
-* IdP-initiated SSO
-* SP-initiated SSO
-* Just-in-time provisioning
+* Инициированное IdP SSO
+* Инициированное SP SSO
+* ПрProvisioning по запросу
 
-## Configuration
+## Конфигурация
 
-dbt Cloud supports both single tenant and multi-tenant Microsoft Entra ID (formerly Azure AD) SSO Connections. For most Enterprise purposes, you will want to use the single-tenant flow when creating a Microsoft Entra ID Application.
+dbt Cloud поддерживает как одноарендные, так и многоарендные соединения SSO с Microsoft Entra ID (ранее Azure AD). Для большинства корпоративных целей вы захотите использовать одноарендный поток при создании приложения Microsoft Entra ID.
 
-### Creating an application
+### Создание приложения
 
-Log into the Azure portal for your organization. Using the [**Microsoft Entra ID**](https://portal.azure.com/#home) page, you will need to select the appropriate directory and then register a new application.
+Войдите в портал Azure вашей организации. На странице [**Microsoft Entra ID**](https://portal.azure.com/#home) вам нужно будет выбрать соответствующий каталог, а затем зарегистрировать новое приложение.
 
-1. Under **Manage**, select **App registrations**.
-2. Click **+ New Registration** to begin creating a new application registration.
+1. В разделе **Управление** выберите **Регистрация приложений**.
+2. Нажмите **+ Новая регистрация**, чтобы начать создание новой регистрации приложения.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-app-registration-empty.png" width="80%" title="Creating a new app registration"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-app-registration-empty.png" width="80%" title="Создание новой регистрации приложения"/>
 
-3. Supply configurations for the **Name** and **Supported account types** fields as shown in the following table:
+3. Укажите настройки для полей **Имя** и **Поддерживаемые типы учетных записей**, как показано в следующей таблице:
 
-| Field | Value |
+| Поле | Значение |
 | ----- | ----- |
-| **Name** | dbt Cloud |
-| **Supported account types** | Accounts in this organizational directory only _(single tenant)_ |
+| **Имя** | dbt Cloud |
+| **Поддерживаемые типы учетных записей** | Учетные записи только в этом организационном каталоге _(одноарендный)_ |
 
-4. Configure the **Redirect URI**. The table below shows the appropriate Redirect URI values for single-tenant and multi-tenant deployments. For most enterprise use-cases, you will want to use the single-tenant Redirect URI. Replace `YOUR_AUTH0_URI` with the [appropriate Auth0 URI](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) for your region and plan.
+4. Настройте **URI перенаправления**. В таблице ниже показаны соответствующие значения URI перенаправления для одноарендных и многоарендных развертываний. Для большинства корпоративных случаев использования вы захотите использовать одноарендный URI перенаправления. Замените `YOUR_AUTH0_URI` на [соответствующий URI Auth0](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) для вашего региона и плана.
 
-| Application Type | Redirect URI |
+| Тип приложения | URI перенаправления |
 | ----- | ----- |
-| Single-tenant _(recommended)_ | `https://YOUR_AUTH0_URI/login/callback` |
-| Multi-tenant | `https://YOUR_AUTH0_URI/login/callback` |
+| Одноарендный _(рекомендуется)_ | `https://YOUR_AUTH0_URI/login/callback` |
+| Многоарендный | `https://YOUR_AUTH0_URI/login/callback` |
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-new-application-alternative.png" width="70%" title="Configuring a new app registration"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-new-application-alternative.png" width="70%" title="Настройка новой регистрации приложения"/>
 
-5. Save the App registration to continue setting up Microsoft Entra ID SSO
+5. Сохраните регистрацию приложения, чтобы продолжить настройку SSO с Microsoft Entra ID.
 
-:::info Configuration with the new Microsoft Entra ID interface (optional)
+:::info Конфигурация с новым интерфейсом Microsoft Entra ID (необязательно)
 
-Depending on your Microsoft Entra ID settings, your App Registration page might look different than the screenshots shown earlier. If you are _not_ prompted to configure a Redirect URI on the **New Registration** page, then follow steps 6 - 7 below after creating your App Registration. If you were able to set up the Redirect URI in the steps above, then skip ahead to [step 8](#adding-users-to-an-enterprise-application).
+В зависимости от ваших настроек Microsoft Entra ID, ваша страница регистрации приложения может выглядеть иначе, чем показано на предыдущих скриншотах. Если вам _не_ предложено настроить URI перенаправления на странице **Новая регистрация**, следуйте шагам 6 - 7 ниже после создания вашей регистрации приложения. Если вы смогли настроить URI перенаправления на предыдущих шагах, пропустите вперед к [шагу 8](#adding-users-to-an-enterprise-application).
 :::
 
-6. After registering the new application without specifying a Redirect URI, click on **App registration** and then navigate to the **Authentication** tab for the new application.
+6. После регистрации нового приложения без указания URI перенаправления нажмите на **Регистрация приложений**, а затем перейдите на вкладку **Аутентификация** для нового приложения.
 
-7. Click **+ Add platform** and enter a Redirect URI for your application. See step 4 above for more information on the correct Redirect URI value for your dbt Cloud application.
+7. Нажмите **+ Добавить платформу** и введите URI перенаправления для вашего приложения. См. шаг 4 выше для получения дополнительной информации о правильном значении URI перенаправления для вашего приложения dbt Cloud.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-redirect-uri.png" title="Configuring a Redirect URI"/>
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-redirect-uri.png" title="Настройка URI перенаправления"/>
 
-### Azure &lt;-&gt; dbt Cloud User and Group mapping
+### Сопоставление пользователей и групп Azure &lt;-&gt; dbt Cloud
 
 :::important
 
-There is a [limitation](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#important-caveats-for-this-functionality) on the number of groups Azure will emit (capped at 150) via the SSO token, meaning if a user belongs to more than 150 groups, it will appear as though they belong to none. To prevent this, configure [group assignments](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal?pivots=portal) with the dbt Cloud app in Azure and set a [group claim](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#add-group-claims-to-tokens-for-saml-applications-using-sso-configuration) so Azure emits only the relevant groups.
+Существует [ограничение](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#important-caveats-for-this-functionality) на количество групп, которые Azure будет передавать (ограничено 150) через токен SSO, что означает, что если пользователь принадлежит более чем 150 группам, будет казаться, что он не принадлежит ни одной. Чтобы предотвратить это, настройте [назначения групп](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal?pivots=portal) с приложением dbt Cloud в Azure и установите [групповой токен](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#add-group-claims-to-tokens-for-saml-applications-using-sso-configuration), чтобы Azure передавал только соответствующие группы.
 
 :::
 
+Пользователи и группы Azure, которые вы создадите на следующих шагах, сопоставляются с группами, созданными в dbt Cloud, на основе имени группы. Смотрите документацию по [корпоративным разрешениям](enterprise-permissions) для получения дополнительной информации о том, как пользователи, группы и наборы разрешений настраиваются в dbt Cloud.
 
-The Azure users and groups you will create in the following steps are mapped to groups created in dbt Cloud based on the group name. Reference the docs on [enterprise permissions](enterprise-permissions) for additional information on how users, groups, and permission sets are configured in dbt Cloud.
+### Добавление пользователей в корпоративное приложение
 
-### Adding users to an Enterprise application
+После регистрации приложения следующим шагом будет назначение пользователей. Добавьте пользователей, которых вы хотите сделать видимыми в dbt, с помощью следующих шагов:
 
-Once you've registered the application, the next step is to assign users to it. Add the users you want to be viewable to dbt with the following steps:
+8. Вернитесь к [**Основному каталогу**](https://portal.azure.com/#home) (или **Главная**) и нажмите **Корпоративные приложения**.
+9. Нажмите на имя приложения, которое вы создали ранее.
+10. Нажмите **Назначить пользователей и группы**.
+11. Нажмите **Добавить пользователя/группу**.
+12. Назначьте дополнительные пользователей и группы по мере необходимости.
 
-8. Navigate back to the [**Default Directory**](https://portal.azure.com/#home) (or **Home**) and click **Enterprise Applications**
-9. Click the name of the application you created earlier
-10. Click **Assign Users and Groups**
-11. Click **Add User/Group**
-12. Assign additional users and groups as-needed
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-enterprise-app-users.png" title="Добавление пользователей в корпоративное приложение"/>
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-enterprise-app-users.png" title="Adding Users to an Enterprise Application a Redirect URI"/>
-
-:::info User assignment required?
-Under **Properties** check the toggle setting for **User assignment required?** and confirm it aligns to your requirements. Most customers will want this toggled to **Yes** so that only users/groups explicitly assigned to dbt Cloud will be able to sign in. If this setting is toggled to **No** any user will be able to access the application if they have a direct link to the application per [Microsoft Entra ID Documentation](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal#configure-an-application-to-require-user-assignment)
+:::info Требуется назначение пользователя?
+В разделе **Свойства** проверьте переключатель для **Требуется назначение пользователя?** и подтвердите, что он соответствует вашим требованиям. Большинство клиентов захотят, чтобы этот переключатель был установлен на **Да**, чтобы только пользователи/группы, явно назначенные dbt Cloud, могли войти в систему. Если этот параметр установлен на **Нет**, любой пользователь сможет получить доступ к приложению, если у него есть прямая ссылка на приложение согласно [документации Microsoft Entra ID](https://docs.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal#configure-an-application-to-require-user-assignment)
 :::
 
-### Configuring permissions
+### Настройка разрешений
 
-13. Navigate back to [**Default Directory**](https://portal.azure.com/#home) (or **Home**) and then **App registration**.
-14. Select your application and then select **API Permissions**
-15. Click **+Add a permission** and add the permissions shown below
+13. Вернитесь к [**Основному каталогу**](https://portal.azure.com/#home) (или **Главная**) и затем **Регистрация приложений**.
+14. Выберите ваше приложение, а затем выберите **Разрешения API**.
+15. Нажмите **+Добавить разрешение** и добавьте разрешения, показанные ниже.
 
-| API Name | Type | Permission |
+| Имя API | Тип | Разрешение |
 | -------- | ---- | ---------- |
-| Microsoft Graph | Delegated | `Directory.AccessAsUser.All` |
-| Microsoft Graph | Delegated | `Directory.Read.All` |
-| Microsoft Graph | Delegated | `User.Read` |
+| Microsoft Graph | Делегированное | `Directory.AccessAsUser.All` |
+| Microsoft Graph | Делегированное | `Directory.Read.All` |
+| Microsoft Graph | Делегированное | `User.Read` |
 
-16. Save these permissions, then click **Grant admin consent** to grant admin consent for this directory on behalf of all of your users.
+16. Сохраните эти разрешения, затем нажмите **Предоставить согласие администратора**, чтобы предоставить согласие администратора для этого каталога от имени всех ваших пользователей.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-permissions-overview.png" title="Configuring application permissions" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-permissions-overview.png" title="Настройка разрешений приложения" />
 
-### Creating a client secret
+### Создание клиентского секрета
 
-17. Under **Manage**, click **Certificates & secrets**
-18. Click **+New client secret**
-19. Name the client secret "dbt Cloud" (or similar) to identify the secret
-20. Select **730 days (24 months)** as the expiration value for this secret (recommended)
-21. Click **Add** to finish creating the client secret value (not the client secret ID)
-22. Record the generated client secret somewhere safe. Later in the setup process, we'll use this client secret in dbt Cloud to finish configuring the integration.
+17. В разделе **Управление** нажмите **Сертификаты и секреты**.
+18. Нажмите **+Новый клиентский секрет**.
+19. Назовите клиентский секрет "dbt Cloud" (или аналогично), чтобы идентифицировать секрет.
+20. Выберите **730 дней (24 месяца)** в качестве значения истечения срока действия для этого секрета (рекомендуется).
+21. Нажмите **Добавить**, чтобы завершить создание значения клиентского секрета (не идентификатора клиентского секрета).
+22. Запишите сгенерированный клиентский секрет в безопасное место. Позже в процессе настройки мы будем использовать этот клиентский секрет в dbt Cloud для завершения настройки интеграции.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-config.png" title="Configuring certificates & secrets" />
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-saved.png" title="Recording the client secret" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-config.png" title="Настройка сертификатов и секретов" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-secret-saved.png" title="Запись клиентского секрета" />
 
-### Collect client credentials
+### Сбор клиентских учетных данных
 
-23. Navigate to the **Overview** page for the app registration
-24. Note the **Application (client) ID** and **Directory (tenant) ID** shown in this form and record them along with your client secret. We'll use these keys in the steps below to finish configuring the integration in dbt Cloud.
+23. Перейдите на страницу **Обзор** для регистрации приложения.
+24. Обратите внимание на **Идентификатор приложения (клиента)** и **Идентификатор каталога (арендатора)**, показанные в этой форме, и запишите их вместе с вашим клиентским секретом. Мы будем использовать эти ключи на следующих шагах, чтобы завершить настройку интеграции в dbt Cloud.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-overview.png" title="Collecting credentials. Store these somewhere safe" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-overview.png" title="Сбор учетных данных. Храните их в безопасном месте" />
 
-## Configuring dbt Cloud
+## Настройка dbt Cloud
 
-To complete setup, follow the steps below in the dbt Cloud application.
+Чтобы завершить настройку, выполните следующие шаги в приложении dbt Cloud.
 
-### Supplying credentials
+### Указание учетных данных
 
-25. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
-26. Click **Single sign-on** from the menu.
-27. Click the **Edit** button and supply the following SSO details:
+25. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
+26. Нажмите **Единая точка входа** в меню.
+27. Нажмите кнопку **Изменить** и укажите следующие данные SSO:
 
-| Field | Value |
+| Поле | Значение |
 | ----- | ----- |
-| **Log&nbsp;in&nbsp;with** | Microsoft Entra ID Single Tenant |
-| **Client&nbsp;ID** | Paste the **Application (client) ID** recorded in the steps above |
-| **Client&nbsp;Secret** | Paste the **Client Secret** (remember to use the Secret Value instead of the Secret ID) from the steps above; <br />**Note:** When the client secret expires, an Entra ID admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
-| **Tenant&nbsp;ID** | Paste the **Directory (tenant ID)** recorded in the steps above |
-| **Domain** | Enter the domain name for your Azure directory (such as `fishtownanalytics.com`). Only use the primary domain; this won't block access for other domains. |
-| **Slug** | Enter your desired login slug. Users will be able to log into dbt Cloud by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) for your region and plan. Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company. |
+| **Вход&nbsp;с&nbsp;помощью** | Microsoft Entra ID Одноарендный |
+| **Идентификатор&nbsp;клиента** | Вставьте **Идентификатор приложения (клиента)**, записанный на предыдущих шагах |
+| **Клиентский&nbsp;секрет** | Вставьте **Клиентский секрет** (не забудьте использовать значение секрета вместо идентификатора секрета) из предыдущих шагов; <br />**Примечание:** Когда клиентский секрет истечет, администратору Entra ID придется сгенерировать новый, который нужно будет вставить в dbt Cloud для непрерывного доступа к приложению. |
+| **Идентификатор&nbsp;арендатора** | Вставьте **Идентификатор каталога (арендатора)**, записанный на предыдущих шагах |
+| **Домен** | Введите имя домена для вашего каталога Azure (например, `fishtownanalytics.com`). Используйте только основной домен; это не заблокирует доступ для других доменов. |
+| **Slug** | Введите желаемый slug для входа. Пользователи смогут войти в dbt Cloud, перейдя по адресу `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, заменив `YOUR_ACCESS_URL` на [соответствующий URL-адрес доступа](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) для вашего региона и плана. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию. |
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-cloud-sso.png" title="Configuring Entra ID AD SSO in dbt Cloud" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-cloud-sso.png" title="Настройка SSO Entra ID AD в dbt Cloud" />
 
-1.  Click **Save** to complete setup for the Microsoft Entra ID SSO integration. From here, you can navigate to the login URL generated for your account's _slug_ to test logging in with Entra ID.
+1. Нажмите **Сохранить**, чтобы завершить настройку интеграции SSO с Microsoft Entra ID. С этого момента вы можете перейти по URL-адресу входа, сгенерированному для slug вашей учетной записи, чтобы протестировать вход с помощью Entra ID.
 
 <Snippet path="login_url_note" />
 
-## Setting up RBAC
-Now you have completed setting up SSO with Entra ID, the next steps will be to set up
-[RBAC groups](/docs/cloud/manage-access/enterprise-permissions) to complete your access control configuration.
+## Настройка RBAC
+Теперь, когда вы завершили настройку SSO с Entra ID, следующие шаги будут заключаться в настройке
+[групп RBAC](/docs/cloud/manage-access/enterprise-permissions) для завершения конфигурации контроля доступа.
 
-## Troubleshooting Tips
+## Советы по устранению неполадок
 
-Ensure that the domain name under which user accounts exist in Azure matches the domain you supplied in [Supplying credentials](#supplying-credentials) when you configured SSO.
+Убедитесь, что имя домена, под которым существуют учетные записи пользователей в Azure, совпадает с доменом, который вы указали в [Указание учетных данных](#supplying-credentials) при настройке SSO.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-get-domain.png" title="Obtaining the user domain from Azure" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-get-domain.png" title="Получение домена пользователя из Azure" />

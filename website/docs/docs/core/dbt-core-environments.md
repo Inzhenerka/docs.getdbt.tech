@@ -1,17 +1,17 @@
 ---
-title: "dbt Core environments"
+title: "Среды dbt Core"
 id: "dbt-core-environments"
 pagination_next: "docs/running-a-dbt-project/run-your-dbt-projects"
 ---
 
-dbt makes it easy to maintain separate production and development environments through the use of [targets](/reference/dbt-jinja-functions/target.md) within a [profile](/docs/core/connect-data-platform/profiles.yml). A typical profile, when using dbt locally (for example, running from your command line), will have a target named `dev` and have this set as the default. This means that while making changes, your objects will be built in your _development_ target without affecting production queries made by your end users. Once you are confident in your changes, you can deploy the code to _production_, by running your dbt project with a _prod_ target.
+dbt упрощает поддержку отдельных производственных и развивающихся сред с помощью [targets](/reference/dbt-jinja-functions/target.md) в рамках [профиля](/docs/core/connect-data-platform/profiles.yml). Типичный профиль при использовании dbt локально (например, при запуске из командной строки) будет иметь целевой объект с именем `dev` и будет установлен по умолчанию. Это означает, что в процессе внесения изменений ваши объекты будут создаваться в вашем _развивающемся_ целевом объекте, не затрагивая производственные запросы, выполняемые вашими конечными пользователями. Как только вы будете уверены в своих изменениях, вы можете развернуть код в _производственную_ среду, запустив ваш проект dbt с целевым объектом _prod_.
 
-:::info Running dbt in production
+:::info Запуск dbt в производственной среде
 
-You can learn more about different ways to run dbt in production in [this article](/docs/deploy/deployments).
+Вы можете узнать больше о различных способах запуска dbt в производственной среде в [этой статье](/docs/deploy/deployments).
 
 :::
 
-Targets offer the flexibility to decide how to implement your separate environments – whether you want to use separate schemas, databases, or entirely different clusters altogether! We recommend using _different schemas within one database_ to separate your environments. This is the easiest to set up and is the most cost-effective solution in a modern cloud-based data stack.
+Целевые объекты предлагают гибкость в решении вопроса о том, как реализовать ваши отдельные среды – хотите ли вы использовать отдельные схемы, базы данных или совершенно разные кластеры! Мы рекомендуем использовать _разные схемы в одной базе данных_ для разделения ваших сред. Это проще всего настроить и является наиболее экономически эффективным решением в современном облачном стекe данных.
 
-In practice, this means that most of the details in a target will be consistent across all targets, except for the `schema` and user credentials. If you have multiple dbt users writing code, it often makes sense for _each user_ to have their own _development_ environment. A pattern we've found useful is to set your dev target schema to be `dbt_<username>`. User credentials should also differ across targets so that each dbt user is using their own data warehouse user.
+На практике это означает, что большинство деталей в целевом объекте будут одинаковыми для всех целевых объектов, за исключением `schema` и учетных данных пользователя. Если у вас есть несколько пользователей dbt, пишущих код, часто имеет смысл, чтобы _каждый пользователь_ имел свою собственную _развивающуюся_ среду. Полезным шаблоном, который мы нашли, является установка схемы вашего целевого объекта dev как `dbt_<username>`. Учетные данные пользователей также должны различаться между целевыми объектами, чтобы каждый пользователь dbt использовал своего собственного пользователя в хранилище данных.

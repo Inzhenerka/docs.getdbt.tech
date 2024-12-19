@@ -1,46 +1,45 @@
 ---
 title: "Microsoft Excel"
 id: excel
-description: "Integrate with Excel to query your metrics in a spreadsheet."
-tags: [Semantic Layer]
+description: "Интеграция с Excel для запроса ваших метрик в таблице."
+tags: [Семантический уровень]
 sidebar_label: "Microsoft Excel"
 ---
 
-The dbt Semantic Layer offers a seamless integration with Excel Online and Desktop through a custom menu. This add-on allows you to build dbt Semantic Layer queries and return data on your metrics directly within Excel.
+Семантический уровень dbt предлагает бесшовную интеграцию с Excel Online и Desktop через пользовательское меню. Этот аддон позволяет вам создавать запросы к семантическому уровню dbt и возвращать данные о ваших метриках непосредственно в Excel.
 
-## Prerequisites
+## Предварительные требования
 
-- You have [configured the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) and are using dbt v1.6 or higher.
-- You need a Microsoft Excel account with access to install add-ons.
-- You have a [dbt Cloud Environment ID](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) and a [service token](/docs/dbt-cloud-apis/service-tokens) to authenticate with from a dbt Cloud account.
-- You must have a dbt Cloud Team or Enterprise [account](https://www.getdbt.com/pricing). Suitable for both Multi-tenant and Single-tenant deployment.
-  - Single-tenant accounts should contact their account representative for necessary setup and enablement.
+- Вы [настроили семантический уровень dbt](/docs/use-dbt-semantic-layer/setup-sl) и используете dbt версии 1.6 или выше.
+- У вас есть учетная запись Microsoft Excel с доступом для установки аддонов.
+- У вас есть [ID окружения dbt Cloud](/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer) и [токен сервиса](/docs/dbt-cloud-apis/service-tokens) для аутентификации из учетной записи dbt Cloud.
+- У вас должна быть учетная запись dbt Cloud Team или Enterprise [аккаунт](https://www.getdbt.com/pricing). Подходит как для многопользовательского, так и для однопользовательского развертывания.
+  - Учетные записи с однопользовательским доступом должны связаться со своим представителем для необходимой настройки и активации.
 
 :::tip
 
-📹 For on-demand video learning, explore the [Querying the Semantic Layer with Excel](https://learn.getdbt.com/courses/querying-the-semantic-layer-with-excel) course to learn how to query metrics with Excel.
+📹 Для обучения по запросу видео, изучите курс [Запросы к семантическому уровню с помощью Excel](https://learn.getdbt.com/courses/querying-the-semantic-layer-with-excel), чтобы узнать, как запрашивать метрики с помощью Excel.
 
 :::
 
-## Installing the add-on
+## Установка аддона
 
-The dbt Semantic Layer Microsoft Excel integration is available to download directly on [Microsoft AppSource](https://appsource.microsoft.com/en-us/product/office/WA200007100?tab=Overview). You can choose to download this add-on in for both [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26) and [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True)
+Интеграция семантического уровня dbt с Microsoft Excel доступна для загрузки непосредственно на [Microsoft AppSource](https://appsource.microsoft.com/en-us/product/office/WA200007100?tab=Overview). Вы можете выбрать загрузку этого аддона как для [Excel Desktop](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationId=4132ecd1-425d-982d-efb4-de94ebc83f26), так и для [Excel Online](https://pages.store.office.com/addinsinstallpage.aspx?assetid=WA200007100&rs=en-US&correlationid=4132ecd1-425d-982d-efb4-de94ebc83f26&isWac=True).
 
-1. In Excel, authenticate with your host, dbt Cloud environment ID, and service token.
-   - Access your Environment ID, Host, and URLs in your dbt Cloud Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings
-   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.jpg" width="70%" title="Access your Environment ID, Host, and URLs in your dbt Cloud Semantic Layer settings. Generate a service token in the Semantic Layer settings or API tokens settings" />
+1. В Excel выполните аутентификацию с вашим хостом, ID окружения dbt Cloud и токеном сервиса.
+   - Получите ваш ID окружения, хост и URL в настройках семантического уровня dbt Cloud. Сгенерируйте токен сервиса в настройках семантического уровня или настройках API токенов.
+   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-and-gsheets.jpg" width="70%" title="Получите ваш ID окружения, хост и URL в настройках семантического уровня dbt Cloud. Сгенерируйте токен сервиса в настройках семантического уровня или настройках API токенов." />
 
-2. Start querying your metrics using the **Query Builder**. For more info on the menu functions, refer to [Query Builder functions](#query-builder-functions). To cancel a query while running, press the **Cancel** button.
+2. Начните запрашивать ваши метрики, используя **Конструктор запросов**. Для получения дополнительной информации о функциях меню обратитесь к [функциям конструктора запросов](#query-builder-functions). Чтобы отменить запрос во время выполнения, нажмите кнопку **Отмена**.
 
 import Tools from '/snippets/_sl-excel-gsheets.md';
 
 <Tools 
 type="Microsoft Excel"
-bullet_1="There's a timeout of 1 minute for queries."
-bullet_2="If you're using this extension, make sure you're signed into Microsoft with the same Excel profile you used to set up the Add-In. Log in with one profile at a time as using multiple  profiles at once might cause issues."
+bullet_1="Существует тайм-аут в 1 минуту для запросов."
+bullet_2="Если вы используете это расширение, убедитесь, что вы вошли в Microsoft с тем же профилем Excel, который вы использовали для настройки аддона. Входите с одним профилем за раз, так как использование нескольких профилей одновременно может вызвать проблемы."
 queryBuilder="/img/docs/dbt-cloud/semantic-layer/query-builder.png"
 />
 
-
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Troubleshooting/sl-alpn-error" />

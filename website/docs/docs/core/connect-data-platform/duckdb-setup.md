@@ -1,13 +1,13 @@
 ---
-title: "DuckDB setup"
-description: "Read this guide to learn about the DuckDB warehouse setup in dbt."
+title: "Настройка DuckDB"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища DuckDB в dbt."
 meta:
-  maintained_by: Community
+  maintained_by: Сообщество
   authors: 'Josh Wills (https://github.com/jwills)'
   github_repo: 'duckdb/dbt-duckdb'
   pypi_package: 'dbt-duckdb'
   min_core_version: 'v1.0.1'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'DuckDB 0.3.2'
   slack_channel_name: '#db-duckdb'
   slack_channel_link: 'https://getdbt.slack.com/archives/C039D1J1LA2'
@@ -15,9 +15,9 @@ meta:
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for each repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом для каждого из перечисленных ниже репозиториев.
 
 :::
 
@@ -26,15 +26,15 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Connecting to DuckDB with dbt-duckdb
+## Подключение к DuckDB с помощью dbt-duckdb
 
-[DuckDB](http://duckdb.org) is an embedded database, similar to SQLite, but designed for OLAP-style analytics instead of OLTP. The only configuration parameter that is required in your profile (in addition to `type: duckdb`) is the `path` field, which should refer to a path on your local filesystem where you would like the DuckDB database file (and it's associated write-ahead log) to be written. You can also specify the `schema` parameter if you would like to use a schema besides the default (which is called `main`).
+[DuckDB](http://duckdb.org) — это встроенная база данных, аналогичная SQLite, но предназначенная для аналитики в стиле OLAP, а не OLTP. Единственный параметр конфигурации, который требуется в вашем профиле (в дополнение к `type: duckdb`), — это поле `path`, которое должно указывать на путь в вашей локальной файловой системе, где вы хотите, чтобы файл базы данных DuckDB (и связанный с ним журнал предварительной записи) был записан. Вы также можете указать параметр `schema`, если хотите использовать схему, отличную от стандартной (которая называется `main`).
 
-There is also a `database` field defined in the `DuckDBCredentials` class for consistency with the parent `Credentials` class, but it defaults to `main` and setting it to be something else will likely cause strange things to happen that cannot be fully predicted, so please avoid changing it.
+В классе `DuckDBCredentials` также определено поле `database` для согласованности с родительским классом `Credentials`, но по умолчанию оно равно `main`, и установка его на что-то другое, вероятно, приведет к странным последствиям, которые нельзя будет полностью предсказать, поэтому, пожалуйста, избегайте изменения этого параметра.
 
-As of version 1.2.3, you can load any supported [DuckDB extensions](https://duckdb.org/docs/extensions/overview) by listing them in the `extensions` field in your profile. You can also set any additional [DuckDB configuration options](https://duckdb.org/docs/sql/configuration) via the `settings` field, including options that are supported in any loaded extensions. 
+Начиная с версии 1.2.3, вы можете загружать любые поддерживаемые [расширения DuckDB](https://duckdb.org/docs/extensions/overview), перечислив их в поле `extensions` в вашем профиле. Вы также можете установить любые дополнительные [параметры конфигурации DuckDB](https://duckdb.org/docs/sql/configuration) через поле `settings`, включая параметры, которые поддерживаются в любых загруженных расширениях.
 
-For example, to be able to connect to `s3` and read/write `parquet` files using an AWS access key and secret, your profile would look something like this:
+Например, чтобы иметь возможность подключаться к `s3` и читать/записывать файлы `parquet`, используя ключ доступа и секрет AWS, ваш профиль будет выглядеть примерно так:
 
 <File name='profiles.yml'>
 
@@ -55,5 +55,3 @@ your_profile_name:
 ```
 
 </File>
-
-

@@ -1,6 +1,6 @@
 ---
-title: "Redshift setup"
-description: "Read this guide to learn about the Redshift warehouse setup in dbt."
+title: "Настройка Redshift"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Redshift в dbt."
 id: "redshift-setup"
 meta:
   maintained_by: dbt Labs
@@ -8,7 +8,7 @@ meta:
   github_repo: 'dbt-labs/dbt-redshift'
   pypi_package: 'dbt-redshift'
   min_core_version: 'v0.10.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-redshift'
   slack_channel_link: 'https://getdbt.slack.com/archives/C01DRQ178LQ'
@@ -22,33 +22,32 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Configurations
+## Конфигурации
 
-| Profile field | Example | Description |
+| Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
-| `type` | redshift | The type of data warehouse you are connecting to|
-| `host` | hostname.region.redshift.amazonaws.com or workgroup.account.region.redshift-serverless.amazonaws.com | Host of cluster |
-| `port`  | 5439 |  |
-| `dbname`  | my_db | Database name|
-| `schema`  | my_schema | Schema name|
-| `connect_timeout`  | 30 | Number of seconds before connection times out. Default is `None`|
-| `sslmode`  | prefer | optional, set the sslmode to connect to the database. Default prefer, which will use 'verify-ca' to connect. For more information on `sslmode`, see Redshift note below|
-| `role`  | None | Optional, user identifier of the current session|
-| `autocreate`  | false | Optional, default false. Creates user if they do not exist |
-| `db_groups`  | ['ANALYSTS'] | Optional. A list of existing database group names that the DbUser joins for the current session |
-| `ra3_node`  | true | Optional, default False. Enables cross-database sources|
-| `autocommit`  | true | Optional, default True. Enables autocommit after each statement|
-| `retries`  | 1 | Number of retries |
+| `type` | redshift | Тип хранилища данных, к которому вы подключаетесь |
+| `host` | hostname.region.redshift.amazonaws.com или workgroup.account.region.redshift-serverless.amazonaws.com | Хост кластера |
+| `port` | 5439 |  |
+| `dbname` | my_db | Имя базы данных |
+| `schema` | my_schema | Имя схемы |
+| `connect_timeout` | 30 | Количество секунд до истечения времени подключения. По умолчанию `None` |
+| `sslmode` | prefer | необязательный, устанавливает sslmode для подключения к базе данных. По умолчанию prefer, который будет использовать 'verify-ca' для подключения. Для получения дополнительной информации о `sslmode` смотрите примечание Redshift ниже |
+| `role` | None | Необязательный, идентификатор пользователя текущей сессии |
+| `autocreate` | false | Необязательный, по умолчанию false. Создает пользователя, если он не существует |
+| `db_groups` | ['ANALYSTS'] | Необязательный. Список существующих имен групп базы данных, к которым присоединяется DbUser для текущей сессии |
+| `ra3_node` | true | Необязательный, по умолчанию False. Включает источники из разных баз данных |
+| `autocommit` | true | Необязательный, по умолчанию True. Включает автокоммит после каждого оператора |
+| `retries` | 1 | Количество попыток |
 
-## Authentication Parameters
+## Параметры аутентификации
 
+Методы аутентификации, которые поддерживает dbt Core на Redshift:
 
-The authentication methods that dbt Core supports on Redshift are: 
+- `Database` &mdash; Аутентификация на основе пароля (по умолчанию, будет использоваться, если `method` не указан)
+- `IAM User` &mdash; Аутентификация IAM User через AWS Profile
 
-- `Database` &mdash; Password-based authentication (default, will be used if `method` is not provided)
-- `IAM User` &mdash; IAM User authentication via AWS Profile
-
-Click on one of these authentication methods for further details on how to configure your connection profile. Each tab also includes an example `profiles.yml` configuration file for you to review.
+Нажмите на один из этих методов аутентификации для получения дополнительных сведений о том, как настроить ваш профиль подключения. Каждая вкладка также включает пример файла конфигурации `profiles.yml` для вашего ознакомления.
 
 <Tabs
   defaultValue="database"
@@ -59,17 +58,17 @@ Click on one of these authentication methods for further details on how to confi
 
 <TabItem value="database">
 
-The following table contains the parameters for the database (password-based) connection method.
+Следующая таблица содержит параметры для метода подключения к базе данных (на основе пароля).
 
-| Profile field | Example | Description |
+| Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
-| `method` | database| Leave this parameter unconfigured, or set this to database |
-| `user`   | username | Account username to log into your cluster |
-| `password`  | password1 | Password for authentication  |
+| `method` | database | Оставьте этот параметр не настроенным или установите его в database |
+| `user` | username | Имя пользователя для входа в ваш кластер |
+| `password` | password1 | Пароль для аутентификации |
 
 <br/>
 
-#### Example profiles.yml for database authentication
+#### Пример profiles.yml для аутентификации базы данных
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -86,7 +85,7 @@ company-name:
       schema: analytics
       port: 5439
 
-      # Optional Redshift configs:
+      # Необязательные конфигурации Redshift:
       sslmode: prefer
       role: None
       ra3_node: true 
@@ -102,24 +101,23 @@ company-name:
 
 <TabItem value="iam-user-profile">
 
-The following table lists the authentication parameters to use IAM authentication.
-  
-To set up a Redshift profile using IAM Authentication, set the `method` parameter to `iam` as shown below. Note that a password is not required when using IAM Authentication. For more information on this type of authentication, consult the [Redshift Documentation](https://docs.aws.amazon.com/redshift/latest/mgmt/generating-user-credentials.html) and [boto3 docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/redshift.html#Redshift.Client.get_cluster_credentials) on generating user credentials with IAM Auth.
+Следующая таблица перечисляет параметры аутентификации для использования IAM аутентификации.
 
-If you receive the "You must specify a region" error when using IAM Authentication, then your aws credentials are likely misconfigured. Try running `aws configure` to set up AWS access keys, and pick a default region. If you have any questions, please refer to the official AWS documentation on [Configuration and credential file settings](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+Чтобы настроить профиль Redshift с использованием IAM аутентификации, установите параметр `method` в `iam`, как показано ниже. Обратите внимание, что пароль не требуется при использовании IAM аутентификации. Для получения дополнительной информации об этом типе аутентификации обратитесь к [документации Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/generating-user-credentials.html) и [документации boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/redshift.html#Redshift.Client.get_cluster_credentials) по созданию учетных данных пользователя с помощью IAM Auth.
 
-| Profile field | Example | Description |
+Если вы получаете ошибку "Вы должны указать регион" при использовании IAM аутентификации, вероятно, ваши учетные данные AWS неправильно настроены. Попробуйте выполнить `aws configure`, чтобы настроить ключи доступа AWS и выбрать регион по умолчанию. Если у вас есть вопросы, пожалуйста, обратитесь к официальной документации AWS по [настройкам конфигурации и файлов учетных данных](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+
+| Поле профиля | Пример | Описание |
 | ------------- | ------- | ------------ |
-| `method` |IAM| use IAM to authenticate via IAM User authentication |
-| `iam_profile` | analyst | dbt will use the specified profile from your ~/.aws/config file |
-| `cluster_id` | CLUSTER_ID| Required for IAM authentication only for provisoned cluster, not for Serverless |
-| `user`   | username | User querying the database, ignored for Serverless (but field still required) |
-| `region`  | us-east-1 | Region of your Redshift instance | 
-
+| `method` | IAM | используйте IAM для аутентификации через IAM User аутентификацию |
+| `iam_profile` | analyst | dbt будет использовать указанный профиль из вашего файла ~/.aws/config |
+| `cluster_id` | CLUSTER_ID | Обязательно для IAM аутентификации только для выделенного кластера, не для Serverless |
+| `user` | username | Пользователь, выполняющий запрос к базе данных, игнорируется для Serverless (но поле все равно требуется) |
+| `region` | us-east-1 | Регион вашего экземпляра Redshift | 
 
 <br/>
 
-#### Example profiles.yml for IAM
+#### Пример profiles.yml для IAM
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -139,7 +137,7 @@ If you receive the "You must specify a region" error when using IAM Authenticati
       schema: analytics
       port: 5439
 
-      # Optional Redshift configs:
+      # Необязательные конфигурации Redshift:
       threads: 4
       connect_timeout: None 
       [retries](#retries): 1 
@@ -154,45 +152,44 @@ If you receive the "You must specify a region" error when using IAM Authenticati
 
 </File>
 
-#### Specifying an IAM Profile
+#### Указание IAM профиля
 
-When the `iam_profile` configuration is set, dbt will use the specified profile from your `~/.aws/config` file instead of using the profile name `default`
+Когда конфигурация `iam_profile` установлена, dbt будет использовать указанный профиль из вашего файла `~/.aws/config`, а не использовать имя профиля `default`.
 
 </TabItem>
 
-
 </Tabs>
 
-## Redshift notes
+## Примечания Redshift
 
-### `sslmode` change
+### Изменение `sslmode`
 
-Before dbt-redshift 1.5, `psycopg2` was used as the driver. `psycopg2` accepts `disable`, `prefer`, `allow`, `require`, `verify-ca`, `verify-full` as valid inputs of `sslmode`, and does not have an `ssl` parameter, as indicated in PostgreSQL [doc](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING:~:text=%2Dencrypted%20connection.-,sslmode,-This%20option%20determines).
+До версии dbt-redshift 1.5 использовался драйвер `psycopg2`. `psycopg2` принимает `disable`, `prefer`, `allow`, `require`, `verify-ca`, `verify-full` в качестве допустимых значений для `sslmode` и не имеет параметра `ssl`, как указано в [документации PostgreSQL](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING:~:text=%2Dencrypted%20connection.-,sslmode,-This%20option%20determines).
 
-In dbt-redshift 1.5, we switched to using `redshift_connector`, which accepts `verify-ca`, and `verify-full` as valid `sslmode` inputs, and has a `ssl` parameter of `True` or `False`, according to redshift [doc](https://docs.aws.amazon.com/redshift/latest/mgmt/python-configuration-options.html#:~:text=parameter%20is%20optional.-,sslmode,-Default%20value%20%E2%80%93%20verify).
+В dbt-redshift 1.5 мы перешли на использование `redshift_connector`, который принимает `verify-ca` и `verify-full` в качестве допустимых значений `sslmode` и имеет параметр `ssl` со значением True или False, согласно [документации redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/python-configuration-options.html#:~:text=parameter%20is%20optional.-,sslmode,-Default%20value%20%E2%80%93%20verify).
 
-For backward compatibility, dbt-redshift now supports valid inputs for `sslmode` in `psycopg2`. We've added conversion logic mapping each of `psycopg2`'s accepted `sslmode` values to the corresponding `ssl` and `sslmode` parameters in `redshift_connector`.
+Для обеспечения обратной совместимости dbt-redshift теперь поддерживает допустимые значения для `sslmode` в `psycopg2`. Мы добавили логику преобразования, сопоставляющую каждое из допустимых значений `sslmode` в `psycopg2` с соответствующими параметрами `ssl` и `sslmode` в `redshift_connector`.
 
-The table below details accepted `sslmode` parameters and how the connection will be made according to each option:
+Таблица ниже описывает допустимые параметры `sslmode` и то, как будет установлено соединение в зависимости от каждого варианта:
 
-`sslmode` parameter | Expected behavior in dbt-redshift | Actions behind the scenes
+`sslmode` параметр | Ожидаемое поведение в dbt-redshift | Действия за кулисами
 -- | -- | --
-disable | Connection will be made without using ssl | Set `ssl` = False
-allow | Connection will be made using verify-ca | Set `ssl` = True &  `sslmode` = verify-ca
-prefer | Connection will be made using verify-ca | Set `ssl` = True &  `sslmode` = verify-ca
-require | Connection will be made using verify-ca | Set `ssl` = True &  `sslmode` = verify-ca
-verify-ca | Connection will be made using verify-ca | Set `ssl` = True &  `sslmode` = verify-ca
-verify-full | Connection will be made using verify-full | Set `ssl` = True &  `sslmode` = verify-full
+disable | Соединение будет установлено без использования ssl | Установить `ssl` = False
+allow | Соединение будет установлено с использованием verify-ca | Установить `ssl` = True &  `sslmode` = verify-ca
+prefer | Соединение будет установлено с использованием verify-ca | Установить `ssl` = True &  `sslmode` = verify-ca
+require | Соединение будет установлено с использованием verify-ca | Установить `ssl` = True &  `sslmode` = verify-ca
+verify-ca | Соединение будет установлено с использованием verify-ca | Установить `ssl` = True &  `sslmode` = verify-ca
+verify-full | Соединение будет установлено с использованием verify-full | Установить `ssl` = True &  `sslmode` = verify-full
 
-When a connection is made using `verify-ca`, will look for the CA certificate in `~/redshift-ca-bundle.crt`.
+Когда соединение устанавливается с использованием `verify-ca`, будет искаться сертификат CA в `~/redshift-ca-bundle.crt`.
 
-For more details on sslmode changes, our design choices, and reasoning &mdash; please refer to the [PR pertaining to this change](https://github.com/dbt-labs/dbt-redshift/pull/439).
+Для получения дополнительной информации об изменениях sslmode, наших дизайнерских решениях и обоснованиях &mdash; пожалуйста, обратитесь к [PR, касающемуся этого изменения](https://github.com/dbt-labs/dbt-redshift/pull/439).
 
-### `autocommit` parameter
+### Параметр `autocommit`
 
-The [autocommit mode](https://www.psycopg.org/docs/connection.html#connection.autocommit) is useful to execute commands that run outside a transaction. Connection objects used in Python must have `autocommit = True` to run operations such as `CREATE DATABASE`, and `VACUUM`. `autocommit` is off by default in `redshift_connector`, but we've changed this default to `True` to ensure certain macros run successfully in your dbt project.
+Режим [автокоммита](https://www.psycopg.org/docs/connection.html#connection.autocommit) полезен для выполнения команд, которые выполняются вне транзакции. Объекты соединения, используемые в Python, должны иметь `autocommit = True`, чтобы выполнять операции, такие как `CREATE DATABASE` и `VACUUM`. `autocommit` отключен по умолчанию в `redshift_connector`, но мы изменили этот параметр по умолчанию на `True`, чтобы гарантировать успешное выполнение определенных макросов в вашем проекте dbt.
 
-If desired, you can define a separate target with `autocommit=True` as such:
+Если необходимо, вы можете определить отдельную цель с `autocommit=True`, как показано ниже:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -206,29 +203,29 @@ profile-to-my-RS-target:
       autocommit: False
       
   
-  profile-to-my-RS-target-with-autocommit-enabled:
+profile-to-my-RS-target-with-autocommit-enabled:
   target: dev
   outputs:
     dev:
       type: redshift
       ...
       autocommit: True
-  ```
+```
 
 </File>
 
-To run certain macros with autocommit, load the profile with autocommit using the `--profile` flag. For more context, please refer to this [PR](https://github.com/dbt-labs/dbt-redshift/pull/475/files).
+Чтобы запустить определенные макросы с автокоммитом, загрузите профиль с автокоммитом, используя флаг `--profile`. Для получения дополнительной информации, пожалуйста, обратитесь к этому [PR](https://github.com/dbt-labs/dbt-redshift/pull/475/files).
 
-### Deprecated `profile` parameters in 1.5
+### Устаревшие параметры `profile` в 1.5
 
 - `iam_duration_seconds`
 
 - `keepalives_idle`
 
-### `sort` and `dist` keys
+### Ключи `sort` и `dist`
 
-Where possible, dbt enables the use of `sort` and `dist` keys. See the section on [Redshift specific configurations](/reference/resource-configs/redshift-configs).
+Где это возможно, dbt позволяет использовать ключи `sort` и `dist`. См. раздел о [конфигурациях, специфичных для Redshift](/reference/resource-configs/redshift-configs).
 
 #### retries
 
-If `dbt-redshift` encounters an operational error or timeout when opening a new connection, it will retry up to the number of times configured by `retries`. If set to 2+ retries, dbt will wait 1 second before retrying. The default value is 1 retry. If set to 0, dbt will not retry at all.
+Если `dbt-redshift` сталкивается с операционной ошибкой или тайм-аутом при открытии нового соединения, он повторит попытку до количества раз, указанного в `retries`. Если установлено 2 или более попыток, dbt будет ждать 1 секунду перед повторной попыткой. Значение по умолчанию — 1 попытка. Если установлено 0, dbt не будет повторять попытки вообще.

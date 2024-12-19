@@ -1,6 +1,6 @@
 ---
-title: "Databend Cloud setup"
-description: "Read this guide to learn about the Databend warehouse setup in dbt."
+title: "Настройка Databend Cloud"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Databend в dbt."
 id: "databend-setup"
 meta:
   maintained_by: Databend Cloud
@@ -8,17 +8,17 @@ meta:
   github_repo: 'databendcloud/dbt-databend'
   pypi_package: 'dbt-databend-cloud'
   min_core_version: 'v1.0.0'
-  core_version: 'v1.0.0 and newer'
-  cloud_support: Not Supported
+  core_version: 'v1.0.0 и новее'
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   platform_name: 'Databend Cloud'
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-Some [core functionality](https://github.com/databendcloud/dbt-databend#supported-features) may be limited. 
-If you're interested in contributing, check out the source code repository listed below.
+Некоторые [основные функции](https://github.com/databendcloud/dbt-databend#supported-features) могут быть ограничены. 
+Если вы заинтересованы в внесении вклада, ознакомьтесь с репозиторием исходного кода, указанным ниже.
 
 :::
 
@@ -26,13 +26,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Databend Cloud with **dbt-databend-cloud**
+## Подключение к Databend Cloud с помощью **dbt-databend-cloud**
 
-### User / Password Authentication
+### Аутентификация пользователя / пароля
 
-Configure your dbt profile for using Databend Cloud:
+Настройте свой профиль dbt для использования Databend Cloud:
 
-#### Databend Cloud connection profile
+#### Профиль подключения Databend Cloud
 <File name='profiles.yml'>
 
 ```yaml
@@ -50,49 +50,49 @@ dbt-databend-cloud:
 
 </File>
 
-#### Description of Profile Fields
+#### Описание полей профиля
 
-| Option   | Description                                          | Required? | Example             |
-|----------|------------------------------------------------------|-----------|---------------------|
-| type     | The specific adapter to use                          | Required  | `databend`              |
-| host   | The host (hostname) to connect to                  | Required  | `yourorg.datafusecloud.com`  |
-| port     | The port to use                                      | Required  | `443`              |
-| schema   | Specify the schema (database) to build models into   | Required  | `default`         |
-| user | The username to use to connect to the host         | Required  | `dbt_admin`         |
-| pass | The password to use for authenticating to the host | Required  | `awesome_password`  |
+| Опция   | Описание                                          | Обязательно? | Пример             |
+|----------|--------------------------------------------------|--------------|---------------------|
+| type     | Конкретный адаптер для использования             | Обязательно   | `databend`              |
+| host     | Хост (имя хоста) для подключения                | Обязательно   | `yourorg.datafusecloud.com`  |
+| port     | Порт для использования                            | Обязательно   | `443`              |
+| schema   | Укажите схему (базу данных) для создания моделей | Обязательно   | `default`         |
+| user     | Имя пользователя для подключения к хосту        | Обязательно   | `dbt_admin`         |
+| pass     | Пароль для аутентификации на хосте              | Обязательно   | `awesome_password`  |
 
-## Database User Privileges
+## Привилегии пользователя базы данных
 
-Your database user would be able to have some abilities to read or write, such as `SELECT`, `CREATE`, and so on.
-You can find some help [here](https://docs.databend.com/using-databend-cloud/warehouses/connecting-a-warehouse) with Databend Cloud privileges management.
+Ваш пользователь базы данных будет иметь возможность выполнять некоторые операции чтения или записи, такие как `SELECT`, `CREATE` и так далее.
+Вы можете найти дополнительную информацию [здесь](https://docs.databend.com/using-databend-cloud/warehouses/connecting-a-warehouse) о управлении привилегиями в Databend Cloud.
 
-| Required Privilege     |
-|------------------------|
-| SELECT                 |
-| CREATE                 |
-| CREATE TEMPORARY TABLE |
-| CREATE VIEW            |
-| INSERT                 |
-| DROP                   |
-| SHOW DATABASE          |
-| SHOW VIEW              |
-| SUPER                  |
+| Обязательная привилегия     |
+|-----------------------------|
+| SELECT                      |
+| CREATE                      |
+| CREATE TEMPORARY TABLE      |
+| CREATE VIEW                 |
+| INSERT                      |
+| DROP                        |
+| SHOW DATABASE               |
+| SHOW VIEW                   |
+| SUPER                       |
 
-## Supported features
+## Поддерживаемые функции
 
- | ok |           Feature           |
+ | ok |           Функция           |
 |:--:|:---------------------------:|
-|  ✅ |    Table materialization    |
-|  ✅ |    View materialization     |
-|  ✅ | Incremental materialization |
-|  ❌  |  Ephemeral materialization  |
+|  ✅ |    Материализация таблиц    |
+|  ✅ |    Материализация представлений     |
+|  ✅ | Инкрементальная материализация |
+|  ❌  |  Эфемерная материализация  |
 |  ✅ |            Seeds            |
 |  ✅ |           Sources           |
-|  ✅ |      Custom data tests      |
-|  ✅ |        Docs generate        |
-|  ❌ |          Snapshots          |
-|  ✅ |      Connection retry       |
+|  ✅ |      Пользовательские тесты данных      |
+|  ✅ |        Генерация документации        |
+|  ❌ |          Снимки          |
+|  ✅ |      Повторное подключение       |
 
-**Note:**
+**Примечание:**
 
-* Databend does not support `Ephemeral` and `SnapShot`. You can find more detail [here](https://github.com/datafuselabs/databend/issues/8685)
+* Databend не поддерживает `Эфемерные` и `Снимки`. Вы можете найти более подробную информацию [здесь](https://github.com/datafuselabs/databend/issues/8685)

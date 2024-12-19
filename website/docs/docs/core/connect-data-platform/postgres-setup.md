@@ -1,14 +1,14 @@
 ---
-title: "Postgres setup"
-description: "Read this guide to learn about the Postgres warehouse setup in dbt."
+title: "Настройка Postgres"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Postgres в dbt."
 id: "postgres-setup"
 meta:
   maintained_by: dbt Labs
-  authors: 'core dbt maintainers'
+  authors: 'основные разработчики dbt'
   github_repo: 'dbt-labs/dbt-postgres'
   pypi_package: 'dbt-postgres'
   min_core_version: 'v0.4.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-postgres'
   slack_channel_link: 'https://getdbt.slack.com/archives/C0172G2E273'
@@ -23,9 +23,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Profile Configuration
+## Конфигурация профиля
 
-Postgres targets should be set up using the following configuration in your `profiles.yml` file.
+Цели Postgres должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -39,74 +39,71 @@ company-name:
       user: [username]
       password: [password]
       port: [port]
-      dbname: [database name] # or database instead of dbname
+      dbname: [database name] # или database вместо dbname
       schema: [dbt schema]
-      threads: [optional, 1 or more]
-      [keepalives_idle](#keepalives_idle): 0 # default 0, indicating the system default. See below
-      connect_timeout: 10 # default 10 seconds
-      [retries](#retries): 1  # default 1 retry on error/timeout when opening connections
-      [search_path](#search_path): [optional, override the default postgres search_path]
-      [role](#role): [optional, set the role dbt assumes when executing queries]
-      [sslmode](#sslmode): [optional, set the sslmode used to connect to the database]
-      [sslcert](#sslcert): [optional, set the sslcert to control the certifcate file location]
-      [sslkey](#sslkey): [optional, set the sslkey to control the location of the private key]
-      [sslrootcert](#sslrootcert): [optional, set the sslrootcert config value to a new file path in order to customize the file location that contain root certificates]
+      threads: [опционально, 1 или более]
+      [keepalives_idle](#keepalives_idle): 0 # по умолчанию 0, указывая на системное значение по умолчанию. См. ниже
+      connect_timeout: 10 # по умолчанию 10 секунд
+      [retries](#retries): 1  # по умолчанию 1 повторная попытка при ошибке/тайм-ауте при открытии соединений
+      [search_path](#search_path): [опционально, переопределите значение по умолчанию для postgres search_path]
+      [role](#role): [опционально, установите роль, которую dbt предполагает при выполнении запросов]
+      [sslmode](#sslmode): [опционально, установите sslmode, используемый для подключения к базе данных]
+      [sslcert](#sslcert): [опционально, установите sslcert для управления расположением файла сертификата]
+      [sslkey](#sslkey): [опционально, установите sslkey для управления расположением закрытого ключа]
+      [sslrootcert](#sslrootcert): [опционально, установите значение конфигурации sslrootcert на новый путь к файлу, чтобы настроить расположение файла, содержащего корневые сертификаты]
   
 ```
 
 </File>
 
-### Configurations
+### Конфигурации
 
 #### search_path
 
-The `search_path` config controls the Postgres "search path" that dbt configures when opening new connections to the database. By default, the Postgres search path is `"$user, public"`, meaning that unqualified <Term id="table" /> names will be searched for in the `public` schema, or a schema with the same name as the logged-in user. **Note:** Setting the `search_path` to a custom value is not necessary or recommended for typical usage of dbt.
+Конфигурация `search_path` управляет "поисковым путем" Postgres, который dbt настраивает при открытии новых соединений с базой данных. По умолчанию поисковый путь Postgres равен `"$user, public"`, что означает, что неквалифицированные <Term id="table" /> имена будут искаться в схеме `public` или в схеме с тем же именем, что и вошедший в систему пользователь. **Примечание:** Установка `search_path` на пользовательское значение не является необходимой или рекомендуемой для типичного использования dbt.
 
 #### role
 
-The `role` config controls the Postgres role that dbt assumes when opening new connections to the database.
+Конфигурация `role` управляет ролью Postgres, которую dbt предполагает при открытии новых соединений с базой данных.
 
 #### sslmode
 
-The `sslmode` config controls how dbt connectes to Postgres databases using SSL. See [the Postgres docs](https://www.postgresql.org/docs/9.1/libpq-ssl.html) on `sslmode` for usage information. When unset, dbt will connect to databases using the Postgres default, `prefer`, as the `sslmode`.
-
+Конфигурация `sslmode` управляет тем, как dbt подключается к базам данных Postgres с использованием SSL. См. [документацию Postgres](https://www.postgresql.org/docs/9.1/libpq-ssl.html) по `sslmode` для получения информации о его использовании. Если не установлено, dbt будет подключаться к базам данных, используя значение по умолчанию Postgres, `prefer`, в качестве `sslmode`.
 
 #### sslcert
 
-The `sslcert` config controls the location of the certificate file used to connect to Postgres when using client SSL connections. To use a certificate file that is not in the default location, set that file path using this value. Without this config set, dbt uses the Postgres default locations. See [Client Certificates](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT) in the Postgres SSL docs for the default paths.
+Конфигурация `sslcert` управляет расположением файла сертификата, используемого для подключения к Postgres при использовании клиентских SSL-соединений. Чтобы использовать файл сертификата, который не находится в расположении по умолчанию, установите этот путь к файлу с помощью этого значения. Если эта конфигурация не установлена, dbt использует расположения по умолчанию Postgres. См. [Клиентские сертификаты](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT) в документации Postgres по SSL для получения путей по умолчанию.
 
 #### sslkey
 
-The `sslkey` config controls the location of the private key for connecting to Postgres using client SSL connections. If this config is omitted, dbt uses the default key location for Postgres. See [Client Certificates](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT) in the Postgres SSL docs for the default locations.
+Конфигурация `sslkey` управляет расположением закрытого ключа для подключения к Postgres с использованием клиентских SSL-соединений. Если эта конфигурация опущена, dbt использует расположение ключа по умолчанию для Postgres. См. [Клиентские сертификаты](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-CLIENTCERT) в документации Postgres по SSL для получения расположений по умолчанию.
 
 #### sslrootcert
 
-When connecting to a Postgres server using a client SSL connection, dbt verifies that the server provides an SSL certificate signed by a trusted root certificate. These root certificates are in the `~/.postgresql/root.crt` file by default. To customize the location of this file, set the `sslrootcert` config value to a new file path.
+При подключении к серверу Postgres с использованием клиентского SSL-соединения dbt проверяет, что сервер предоставляет SSL-сертификат, подписанный доверенным корневым сертификатом. Эти корневые сертификаты по умолчанию находятся в файле `~/.postgresql/root.crt`. Чтобы настроить расположение этого файла, установите значение конфигурации `sslrootcert` на новый путь к файлу.
 
 ### `keepalives_idle`
-If the database closes its connection while dbt is waiting for data, you may see the error `SSL SYSCALL error: EOF detected`. Lowering the [`keepalives_idle` value](https://www.postgresql.org/docs/9.3/libpq-connect.html) may prevent this, because the server will send a ping to keep the connection active more frequently. 
+Если база данных закрывает соединение, пока dbt ожидает данные, вы можете увидеть ошибку `SSL SYSCALL error: EOF detected`. Понижение значения [`keepalives_idle`](https://www.postgresql.org/docs/9.3/libpq-connect.html) может предотвратить это, поскольку сервер будет чаще отправлять пинг, чтобы поддерживать соединение активным.
 
-[dbt's default setting](https://github.com/dbt-labs/dbt-core/blob/main/plugins/postgres/dbt/adapters/postgres/connections.py#L28) is 0 (the server's default value), but can be configured lower (perhaps 120 or 60 seconds), at the cost of a chattier network connection.
-
+[Настройка по умолчанию dbt](https://github.com/dbt-labs/dbt-core/blob/main/plugins/postgres/dbt/adapters/postgres/connections.py#L28) равна 0 (значение по умолчанию сервера), но может быть настроена на более низкое значение (возможно, 120 или 60 секунд), за счет более активного сетевого соединения.
 
 #### retries
 
-If `dbt-postgres` encounters an operational error or timeout when opening a new connection, it will retry up to the number of times configured by `retries`. The default value is 1 retry. If set to 2+ retries, dbt will wait 1 second before retrying. If set to 0, dbt will not retry at all.
+Если `dbt-postgres` сталкивается с операционной ошибкой или тайм-аутом при открытии нового соединения, он повторит попытку до количества раз, указанного в `retries`. Значение по умолчанию — 1 повторная попытка. Если установлено 2 или более повторных попыток, dbt будет ждать 1 секунду перед повторной попыткой. Если установлено 0, dbt не будет повторять попытки вообще.
 
+### `psycopg2` против `psycopg2-binary`
 
-### `psycopg2` vs `psycopg2-binary`
-
-`psycopg2-binary` is installed by default when installing `dbt-postgres`.
-Installing `psycopg2-binary` uses a pre-built version of `psycopg2` which may not be optimized for your particular machine.
-This is ideal for development and testing workflows where performance is less of a concern and speed and ease of install is more important.
-However, production environments will benefit from a version of `psycopg2` which is built from source for your particular operating system and archtecture. In this scenario, speed and ease of install is less important as the on-going usage is the focus.
+`psycopg2-binary` устанавливается по умолчанию при установке `dbt-postgres`.
+Установка `psycopg2-binary` использует предварительно собранную версию `psycopg2`, которая может не быть оптимизирована для вашего конкретного компьютера.
+Это идеально подходит для рабочих процессов разработки и тестирования, где производительность менее важна, а скорость и простота установки имеют большее значение.
+Однако производственные среды получат выгоду от версии `psycopg2`, которая собрана из исходного кода для вашей конкретной операционной системы и архитектуры. В этом сценарии скорость и простота установки менее важны, так как основное внимание уделяется текущему использованию.
 
 <VersionBlock firstVersion="1.8">
 
-To use `psycopg2`:
-1. Install `dbt-postgres`
-2. Uninstall `psycopg2-binary`
-3. Install the equivalent version of `psycopg2`
+Чтобы использовать `psycopg2`:
+1. Установите `dbt-postgres`
+2. Удалите `psycopg2-binary`
+3. Установите эквивалентную версию `psycopg2`
 
 ```bash
 pip install dbt-postgres
@@ -120,35 +117,35 @@ fi
 
 <VersionBlock lastVersion="1.7">
 
-To ensure your dbt installation uses `psycopg2`, prefix all `dbt-postgres` installation commands with `DBT_PSYCOPG2_NAME=psycopg2`.
-For example:
+Чтобы убедиться, что ваша установка dbt использует `psycopg2`, добавьте префикс ко всем командам установки `dbt-postgres` с `DBT_PSYCOPG2_NAME=psycopg2`.
+Например:
 ```bash
 DBT_PSYCOPG2_NAME=psycopg2 pip install dbt-postgres
 ```
 
 </VersionBlock>
 
-Installing `psycopg2` often requires OS level dependencies.
-These dependencies may vary across operating systems and architectures.
+Установка `psycopg2` часто требует зависимостей на уровне ОС.
+Эти зависимости могут различаться в зависимости от операционных систем и архитектур.
 
-For example, on Ubuntu, you need to install `libpq-dev` and `python-dev`:
+Например, на Ubuntu вам нужно установить `libpq-dev` и `python-dev`:
 ```bash
 sudo apt-get update
 sudo apt-get install libpq-dev python-dev
 ```
-whereas on Mac, you need to install `postgresql`:
+в то время как на Mac вам нужно установить `postgresql`:
 ```bash
 brew install postgresql
 pip install psycopg2
 ```
-Your OS may have its own dependencies based on your particular scenario.
+Ваша ОС может иметь свои собственные зависимости в зависимости от вашей конкретной ситуации.
 
 <VersionBlock firstVersion="1.8">
 
-#### Limitations
+#### Ограничения
 
-In versions 1.8.0 and 1.8.1, `psycopg2-binary` is installed on MacOS and Windows operating systems and `psycopg2` is installed on Linux operating systems.
-This has the side effect of requiring the OS dependencies identified above to install `dbt-postgres` on Linux.
-Users will either need to update their workflows to install these dependencies, or upgrade to 1.8.2.
+В версиях 1.8.0 и 1.8.1 `psycopg2-binary` устанавливается на операционных системах MacOS и Windows, а `psycopg2` устанавливается на операционных системах Linux.
+Это имеет побочный эффект, требующий вышеуказанных зависимостей ОС для установки `dbt-postgres` на Linux.
+Пользователям необходимо будет обновить свои рабочие процессы для установки этих зависимостей или обновиться до версии 1.8.2.
 
 </VersionBlock>

@@ -1,80 +1,79 @@
 ---
-title: "About environment-level permissions"
+title: "О разрешениях на уровне окружения"
 id: environment-permissions
-description: "About environment-level permissions to protect your information"
-sidebar_label: "Environment-level permissions"
+description: "О разрешениях на уровне окружения для защиты вашей информации"
+sidebar_label: "Разрешения на уровне окружения"
 pagination_next: null
 pagination_prev: null
 ---
 
-Environment-level permissions give dbt Cloud admins the ability to grant write permission to groups and service tokens for specific [environment types](/docs/dbt-cloud-environments) within a project. Granting access to an environment give users access to all environment-level write actions and resources associated with their assigned roles. For example, users with a Developer role can create and run jobs within the environment(s) they have access to. For all other environments, those same users will have read-only access. 
+Разрешения на уровне окружения предоставляют администраторам dbt Cloud возможность предоставлять права на запись группам и сервисным токенам для конкретных [типов окружений](/docs/dbt-cloud-environments) в рамках проекта. Предоставление доступа к окружению дает пользователям доступ ко всем действиям и ресурсам на уровне окружения, связанным с их назначенными ролями. Например, пользователи с ролью Разработчика могут создавать и запускать задания в тех окружениях, к которым у них есть доступ. Для всех остальных окружений эти же пользователи будут иметь доступ только для чтения.
 
-For configuration instructions, check out the [setup page](/docs/cloud/manage-access/environment-permissions-setup).
+Для инструкций по настройке ознакомьтесь со [страницей настройки](/docs/cloud/manage-access/environment-permissions-setup).
 
-## Current limitations
+## Текущие ограничения
 
-Environment-level permissions give dbt Cloud admins more flexibility to protect their environments, but it's important to understand that there are some limitations to this feature, so those admins can make informed decisions about granting access.
+Разрешения на уровне окружения предоставляют администраторам dbt Cloud большую гибкость в защите своих окружений, но важно понимать, что у этой функции есть некоторые ограничения, чтобы администраторы могли принимать обоснованные решения о предоставлении доступа.
 
-- Environment-level permissions do not allow you to create custom roles and permissions for each resource type in dbt Cloud.
-- You can only select environment types, and can’t specify a particular environment within a project.
-- You can't select specific resources within environments. dbt Cloud jobs and runs are environment resources.
-    - For example, you can't specify that a user only has access to jobs but not runs. Access to a given environment gives the user access to everything within that environment.
+- Разрешения на уровне окружения не позволяют создавать пользовательские роли и разрешения для каждого типа ресурса в dbt Cloud.
+- Вы можете выбирать только типы окружений и не можете указывать конкретное окружение в рамках проекта.
+- Вы не можете выбирать конкретные ресурсы в окружениях. Задания и запуски dbt Cloud являются ресурсами окружения.
+    - Например, вы не можете указать, что у пользователя есть доступ только к заданиям, но не к запускам. Доступ к данному окружению дает пользователю доступ ко всему внутри этого окружения.
 
-## Environments and roles
+## Окружения и роли
 
-dbt Cloud has four different environment types per project: 
+В dbt Cloud есть четыре различных типа окружений для каждого проекта:
 
-- **Production** &mdash; Primary deployment environment. Only one unique Production env per project.
-- **Development** &mdash; Developer testing environment. Only one unique Development env per project.
-- **Staging** &mdash; Pre-prod environment that sits between development and production. Only one unique Staging env per project.
-- **General** &mdash; Mixed use environments. No limit on the number per project. 
+- **Производственное** &mdash; Основное окружение развертывания. Только одно уникальное производственное окружение на проект.
+- **Разработка** &mdash; Окружение для тестирования разработчиков. Только одно уникальное окружение разработки на проект.
+- **Тестирование** &mdash; Предпроизводственное окружение, которое находится между разработкой и производством. Только одно уникальное окружение тестирования на проект.
+- **Общее** &mdash; Окружения общего назначения. Нет ограничений на количество на проект.
 
-Environment write permissions can be specified for the following roles:
+Разрешения на запись в окружении могут быть указаны для следующих ролей:
 
-- Analyst
-- Database admin
-- Developer (Previous default write access for all environments. The new default is read access for environments unless access is specified)
-- Git admin
-- Team admin
+- Аналитик
+- Администратор базы данных
+- Разработчик (Ранее доступ на запись по умолчанию для всех окружений. Новый стандарт — доступ только для чтения для окружений, если доступ не указан)
+- Администратор Git
+- Администратор команды
 
-Depending on your current group mappings, you may have to update roles to ensure users have the correct access level to environments. 
+В зависимости от ваших текущих сопоставлений групп, вам может потребоваться обновить роли, чтобы обеспечить пользователям правильный уровень доступа к окружениям.
 
-Determine what personas need updated environment access and the roles they should be mapped to. The personas below highlight a few scenarios for environment permissions: 
+Определите, какие персонажи нуждаются в обновленном доступе к окружению и к каким ролям они должны быть сопоставлены. Персонажи ниже подчеркивают несколько сценариев для разрешений на уровне окружения:
 
-- **Developer** &mdash; Write access to create/run jobs in development environment
-- **Testing/QA** &mdash; Write access to staging and development environments to test
-- **Production deployment** &mdash; Write access to all environments, including production, for deploying
-- **Analyst** &mdash; Doesn't need environmental write access but read-only access for discovery and troubleshooting
-- **Other admins** &mdash; These admins may need write access to create/run jobs or configure integrations for any number of environments
+- **Разработчик** &mdash; Доступ на запись для создания/запуска заданий в окружении разработки
+- **Тестирование/QA** &mdash; Доступ на запись к окружениям тестирования и разработки для тестирования
+- **Развертывание в производственной среде** &mdash; Доступ на запись ко всем окружениям, включая производственное, для развертывания
+- **Аналитик** &mdash; Не нуждается в доступе на запись к окружению, но имеет доступ только для чтения для исследования и устранения неполадок
+- **Другие администраторы** &mdash; Эти администраторы могут нуждаться в доступе на запись для создания/запуска заданий или настройки интеграций для любого количества окружений
 
-## Projects and environments
+## Проекты и окружения
 
-Environment-level permissions can be enforced over one or multiple projects with mixed access to the environments themselves.
+Разрешения на уровне окружения могут применяться к одному или нескольким проектам с смешанным доступом к самим окружениям.
 
-### Single project environments
+### Окружения одного проекта
 
-If you’re working with a single project, we recommend restricting access to the Production environment and ensuring groups have access to Development, Staging, or General environments where they can safely create and run jobs. The following is an example of how the personas could be mapped to roles:
+Если вы работаете с одним проектом, мы рекомендуем ограничить доступ к производственному окружению и обеспечить группам доступ к окружениям разработки, тестирования или общего назначения, где они могут безопасно создавать и запускать задания. Вот пример того, как персонажи могут быть сопоставлены с ролями:
 
-- **Developer:** Developer role with write access to Development and General environments
-- **Testing/QA:** Developer role with write access to Development, Staging, and General environments
-- **Production Deployment:** Developer role with write access to all environments or Job Admin which has access to all environments by default.
-- **Analyst:** Analyst role with no write access and read-only access to environments.
-- **Other Admins:** Depends on the admin needs. For example, if they are managing the production deployment grant access to all environments.
+- **Разработчик:** Роль разработчика с доступом на запись к окружениям разработки и общего назначения
+- **Тестирование/QA:** Роль разработчика с доступом на запись к окружениям разработки, тестирования и общего назначения
+- **Развертывание в производственной среде:** Роль разработчика с доступом на запись ко всем окружениям или администратор заданий, который по умолчанию имеет доступ ко всем окружениям.
+- **Аналитик:** Роль аналитика без доступа на запись и с доступом только для чтения к окружениям.
+- **Другие администраторы:** Зависит от потребностей администратора. Например, если они управляют развертыванием в производственной среде, предоставьте доступ ко всем окружениям.
 
-### Multiple projects
+### Несколько проектов
 
-Let's say Acme corp has 12 projects and 3 of them belong to Finance, 3 belong to Marketing, 4 belong to Manufacturing, and 2 belong to Technology. 
+Предположим, что в компании Acme corp есть 12 проектов, и 3 из них принадлежат Финансам, 3 — Маркетингу, 4 — Производству, а 2 — Технологиям.
 
-With mixed access across projects:
+Смешанный доступ по проектам:
 
-- **Developer:** If the user has the Developer role and has access to Projects A, B, C, then they only need access to Dev and General environments.
-- **Testing/QA:** If they have the Developer role and they have access to Projects A, B, C, then they only need access to Development, Staging, and General environments.
-- **Production Deployment:** If the user has the Admin _or_ Developer role _and_ they have access to Projects A, B, C, then they need access to all Environments.
-- **Analyst:** If the user has the Analyst role, then the need _no_ write access to _any environment_.
-- **Other Admins:** A user (non-Admin) can have access to multiple projects depending on the requirements.
+- **Разработчик:** Если у пользователя есть роль разработчика и доступ к проектам A, B, C, то ему нужен доступ только к окружениям разработки и общего назначения.
+- **Тестирование/QA:** Если у них есть роль разработчика и доступ к проектам A, B, C, то им нужен доступ только к окружениям разработки, тестирования и общего назначения.
+- **Развертывание в производственной среде:** Если у пользователя есть роль администратора _или_ разработчика _и_ доступ к проектам A, B, C, то ему нужен доступ ко всем окружениям.
+- **Аналитик:** Если у пользователя есть роль аналитика, то ему не нужен доступ на запись к _любому окружению_.
+- **Другие администраторы:** Пользователь (не администратор) может иметь доступ к нескольким проектам в зависимости от требований.
 
-If the user has the same roles across projects, you can apply environment access across all projects.
+Если у пользователя одинаковые роли по проектам, вы можете применить доступ к окружению ко всем проектам.
 
-
-## Related docs
-- [Environment-level permissions setup](/docs/cloud/manage-access/environment-permissions-setup)
+## Связанные документы
+- [Настройка разрешений на уровне окружения](/docs/cloud/manage-access/environment-permissions-setup)

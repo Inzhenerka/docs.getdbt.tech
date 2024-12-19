@@ -1,14 +1,14 @@
 ---
-title: "Decodable setup"
+title: "Настройка Decodable"
 id: "decodable-setup"
 meta:
   maintained_by: Decodable
-  authors: "Decodable Team"
+  authors: "Команда Decodable"
   github_repo: 'decodableco/dbt-decodable'
   pypi_package: 'dbt-decodable'
   min_core_version: '1.3.1'
   core_version: ''
-  cloud_support: Not supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#general'
   slack_channel_link: 'https://decodablecommunity.slack.com'
@@ -16,23 +16,23 @@ meta:
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, see the source code for the repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, посмотрите исходный код в репозитории, указанном ниже.
 :::
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Decodable with **dbt-decodable**
-Do the following steps to connect to Decodable with dbt. 
+## Подключение к Decodable с помощью **dbt-decodable**
+Выполните следующие шаги, чтобы подключиться к Decodable с помощью dbt.
 
-### Prerequisites
-In order to properly connect to Decodable, you must have the Decodable CLI installed and have used it to login to Decodable at least once. See <a href="https://docs.decodable.co/docs/setup#install-the-cli-command-line-interface">Install the Decodable CLI</a> for more information. 
+### Предварительные условия
+Чтобы правильно подключиться к Decodable, вы должны установить Decodable CLI и хотя бы один раз войти в Decodable с его помощью. См. <a href="https://docs.decodable.co/docs/setup#install-the-cli-command-line-interface">Установка Decodable CLI</a> для получения дополнительной информации.
 
-### Steps 
-To connect to Decodable with dbt, you'll need to add a Decodable profile to your `profiles.yml` file. A Decodable profile has the following fields. 
+### Шаги
+Чтобы подключиться к Decodable с помощью dbt, вам нужно добавить профиль Decodable в файл `profiles.yml`. Профиль Decodable имеет следующие поля.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -44,89 +44,83 @@ dbt-decodable:
       type: decodable
       database: None  
       schema: None    
-      account_name: [your account]          
-      profile_name: [name of the profile]   
+      account_name: [ваш аккаунт]          
+      profile_name: [имя профиля]   
       materialize_tests: [true | false]     
       timeout: [ms]                         
       preview_start: [earliest | latest]    
-      local_namespace: [namespace prefix]   
+      local_namespace: [префикс пространства имен]   
 
 ```
 
 </File>
 
-#### Description of Profile Fields
+#### Описание полей профиля
 
-| Option   | Description                                          | Required? | Example             |
+| Опция   | Описание                                          | Обязательно? | Пример             |
 |----------|------------------------------------------------------|-----------|---------------------|
-| type     | The specific adapter to use                          | Required  | `decodable`              |
-| database | Required but unused by this adapter.                 | Required  |    |
-| schema   | Required but unused by this adapter.                                   | Required  |               |
-| account_name | The name of your Decodable account.        | Required  | `my_awesome_decodable_account`         |
-| profile_name | The name of your Decodable profile. | Required  | `my_awesome_decodable_profile`  |
-| materialize_tests  | Specify whether to materialize tests as a pipeline/stream pair. Defaults to false.     | Optional  | `false`         |
-| timeout  | The amount of time, in milliseconds, that a preview request runs. Defaults to 60000.   | Optional  | `60000`         |
-| preview_start  | Specify where preview should start reading data from. If set to `earliest`, then preview will start reading from the earliest record possible. If set to `latest`, preview will start reading from the latest record. Defaults to `earliest`.     | Optional  | `latest`         |
-| local_namespace  | Specify a prefix to add to all entities created on Decodable. Defaults to `none`, meaning that no prefix is added.    | Optional  | `none`         |
+| type     | Конкретный адаптер для использования                          | Обязательно  | `decodable`              |
+| database | Обязательно, но не используется этим адаптером.                 | Обязательно  |    |
+| schema   | Обязательно, но не используется этим адаптером.                                   | Обязательно  |               |
+| account_name | Имя вашего аккаунта Decodable.        | Обязательно  | `my_awesome_decodable_account`         |
+| profile_name | Имя вашего профиля Decodable. | Обязательно  | `my_awesome_decodable_profile`  |
+| materialize_tests  | Укажите, следует ли материализовать тесты как пару конвейер/поток. По умолчанию - false.     | Необязательно  | `false`         |
+| timeout  | Время, в миллисекундах, в течение которого выполняется запрос на предварительный просмотр. По умолчанию - 60000.   | Необязательно  | `60000`         |
+| preview_start  | Укажите, с какого места должен начинаться предварительный просмотр данных. Если установлено на `earliest`, то предварительный просмотр начнется с самой ранней записи. Если установлено на `latest`, предварительный просмотр начнется с самой последней записи. По умолчанию - `earliest`.     | Необязательно  | `latest`         |
+| local_namespace  | Укажите префикс, который будет добавлен ко всем сущностям, созданным в Decodable. По умолчанию - `none`, что означает, что префикс не добавляется.    | Необязательно  | `none`         |
 
 
-## Supported features
+## Поддерживаемые функции
 
-| Name | Supported | Notes |
+| Название | Поддерживается | Примечания |
 |---|---|---|
-| Table materialization | Yes | Only table materialization are supported. A dbt table model translates to a pipeline/stream pair in Decodable, both sharing the same name. Pipelines for models are automatically activated upon materialization.   To materialize your models, run the `dbt run` command which does the following:  <ol> <li>Create a stream with the model's name and schema inferred by Decodable from the model's SQL. </li> <li>Create a pipeline that inserts the SQL's results into the newly created stream. </li> <li>Activate the pipeline.</li> </ol> By default, the adapter does not tear down and recreate the model on Decodable if no changes to the model have been detected. Invoking dbt with the `--full-refresh` flag or setting that configuration option for a specific model causes the corresponding resources on Decodable to be destroyed and built from scratch. |
-| View materialization | No |  |
-| Incremental materialization | No |  |
-| Ephemeral materialization | No |  |
-| Seeds | Yes | Running the `dbt seed` command performs the following steps for each specified seed:   <ol> <li> Create a REST connection and an associated stream with the same name as the seed. </li> <li> Activate the connection. </li> <li> Send the data stored in the seed’s `.csv` file to the connection as events.</li> <li> Deactivate the connection. </li> </ol> After the `dbt seed` command has finished running, you can access the seed's data on the newly created stream.  |
-| Tests | Yes | The `dbt test` command behaves differently depending on the `materialize_tests` option set for the specified target.  <br/><br/> If `materialize_tests = false`, then tests are only run after the preview job has completed and returned results. How long a preview job takes as well as what records are returned are defined by the `timeout` and `preview_start` configurations respectively.  <br/><br/> If `materialize_tests = true`, then dbt persists the specified tests as pipeline/stream pairs in Decodable. Use this configuration to allow for continuous testing of your models. You can run a preview on the created stream with the Decodable CLI or web interface to monitor the results.  |
-| Sources | No | Sources in dbt correspond to Decodable source connections. However, the `dbt source` command is not supported.  |
-| Docs generate | No | For details about your models, check your Decodable account.  |
-| Snapshots | No | Snapshots and the `dbt snapshot` command are not supported.  |
+| Материализация таблиц | Да | Поддерживается только материализация таблиц. Модель таблицы dbt переводится в пару конвейер/поток в Decodable, оба имеют одно и то же имя. Конвейеры для моделей автоматически активируются при материализации. Чтобы материализовать ваши модели, выполните команду `dbt run`, которая выполняет следующие действия:  <ol> <li>Создает поток с именем модели и схемой, определенной Decodable на основе SQL модели.</li> <li>Создает конвейер, который вставляет результаты SQL в только что созданный поток.</li> <li>Активирует конвейер.</li> </ol> По умолчанию адаптер не разрушает и не воссоздает модель в Decodable, если изменения в модели не были обнаружены. Вызов dbt с флагом `--full-refresh` или установка этой конфигурационной опции для конкретной модели приводит к уничтожению соответствующих ресурсов в Decodable и их созданию с нуля. |
+| Материализация представлений | Нет |  |
+| Инкрементальная материализация | Нет |  |
+| Эфемерная материализация | Нет |  |
+| Seeds | Да | Выполнение команды `dbt seed` выполняет следующие шаги для каждого указанного seed:   <ol> <li> Создает REST-соединение и связанный поток с тем же именем, что и seed. </li> <li> Активирует соединение. </li> <li> Отправляет данные, хранящиеся в `.csv` файле seed, в соединение как события.</li> <li> Деактивирует соединение. </li> </ol> После завершения выполнения команды `dbt seed` вы можете получить доступ к данным seed в только что созданном потоке.  |
+| Тесты | Да | Команда `dbt test` ведет себя по-разному в зависимости от установленной опции `materialize_tests` для указанной цели.  <br/><br/> Если `materialize_tests = false`, то тесты выполняются только после завершения работы предварительной задачи и получения результатов. Время выполнения предварительной задачи, а также какие записи возвращаются, определяются соответственно конфигурациями `timeout` и `preview_start`.  <br/><br/> Если `materialize_tests = true`, то dbt сохраняет указанные тесты как пары конвейер/поток в Decodable. Используйте эту конфигурацию для обеспечения непрерывного тестирования ваших моделей. Вы можете запустить предварительный просмотр на созданном потоке с помощью Decodable CLI или веб-интерфейса, чтобы отслеживать результаты.  |
+| Источники | Нет | Источники в dbt соответствуют соединениям источников Decodable. Однако команда `dbt source` не поддерживается.  |
+| Генерация документации | Нет | Для получения информации о ваших моделях проверьте свой аккаунт Decodable.  |
+| Снимки | Нет | Снимки и команда `dbt snapshot` не поддерживаются.  |
 
-## Additional operations 
+## Дополнительные операции
 
-`dbt-decodable` provides a set of commands for managing the project’s resources on Decodable. Those commands can be run using `dbt run-operation {name} --args {args}`.
+`dbt-decodable` предоставляет набор команд для управления ресурсами проекта в Decodable. Эти команды можно выполнять с помощью `dbt run-operation {name} --args {args}`.
 
-For example, the following command runs the `delete_streams` operation  
+Например, следующая команда выполняет операцию `delete_streams`  
 ```
 dbt run-operation delete_streams --args '{streams: [stream1, stream2], skip_errors: True}'
 ```
 
 <b>stop_pipelines(pipelines)</b>
 <ul>
-  <li>pipelines: An optional list of pipeline names to deactivate. Defaults to none.</li>
+  <li>pipelines: Необязательный список имен конвейеров для деактивации. По умолчанию - none.</li>
 </ul>
-Deactivate all pipelines for resources defined within the project. If the pipelines argument is provided, then only the specified pipelines are deactivated.
+Деактивирует все конвейеры для ресурсов, определенных в проекте. Если аргумент pipelines указан, то деактивируются только указанные конвейеры.
 <br/><br/>
-
 
 <b>delete_pipelines(pipelines)</b>
 <ul>
-  <li>pipelines: An optional list of pipeline names to delete. Defaults to none.</li>
+  <li>pipelines: Необязательный список имен конвейеров для удаления. По умолчанию - none.</li>
 </ul>
-Delete all pipelines for resources defined within the project. If the pipelines argument is provided, then only the specified pipelines are deleted.
+Удаляет все конвейеры для ресурсов, определенных в проекте. Если аргумент pipelines указан, то удаляются только указанные конвейеры.
 <br/><br/>
-
 
 <b>delete_streams(streams, skip_errors)</b>
 <ul>
-  <li>streams: An optional list of stream names to delete. Defaults to none.</li>
-  <li>skip_errors: Specify whether to treat errors as warnings. When set to true, any stream deletion failures are reported as warnings. When set to false, the operation stops when a stream cannot be deleted. Defaults to true.</li>
+  <li>streams: Необязательный список имен потоков для удаления. По умолчанию - none.</li>
+  <li>skip_errors: Укажите, следует ли рассматривать ошибки как предупреждения. Если установлено на true, любые ошибки удаления потоков будут сообщаться как предупреждения. Если установлено на false, операция останавливается, когда поток не может быть удален. По умолчанию - true.</li>
 </ul>
-Delete all streams for resources defined within the project. If a pipeline is associated with a stream, then neither the pipeline nor stream are deleted. See the cleanup operation for a complete removal of stream/pipeline pairs. <br/><br/>
-
+Удаляет все потоки для ресурсов, определенных в проекте. Если конвейер связан с потоком, то ни конвейер, ни поток не удаляются. См. операцию очистки для полного удаления пар поток/конвейер. <br/><br/>
 
 <b>cleanup(list, models, seeds, tests)</b>
 <ul>
-<li>list: An optional list of resource entity names to delete. Defaults to none.</li>
-<li>models: Specify whether to include models during cleanup. Defaults to true.</li>
-<li>seeds: Specify whether to include seeds during cleanup. Defaults to true.</li>
-<li>tests: Specify whether to include tests during cleanup. Defaults to true.</li>
+<li>list: Необязательный список имен сущностей ресурсов для удаления. По умолчанию - none.</li>
+<li>models: Укажите, следует ли включать модели во время очистки. По умолчанию - true.</li>
+<li>seeds: Укажите, следует ли включать seeds во время очистки. По умолчанию - true.</li>
+<li>tests: Укажите, следует ли включать тесты во время очистки. По умолчанию - true.</li>
 </ul>
-<br /><br />Delete all Decodable entities resulting from the materialization of the project’s resources, i.e. connections, streams, and pipelines.
-If the list argument is provided, then only the specified resource entities are deleted.
-If the models, seeds, or test arguments are provided, then those resource types are also included in the cleanup. Tests that have not been materialized are not included in the cleanup. 
-
-
-
+<br /><br />Удаляет все сущности Decodable, возникающие в результате материализации ресурсов проекта, т.е. соединения, потоки и конвейеры.
+Если аргумент list указан, то удаляются только указанные сущности ресурсов.
+Если указаны аргументы models, seeds или tests, то эти типы ресурсов также включаются в очистку. Тесты, которые не были материализированы, не включаются в очистку.

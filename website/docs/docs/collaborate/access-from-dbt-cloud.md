@@ -1,38 +1,38 @@
 ---
-title: "Access dbt Explorer from dbt Cloud features"
-sidebar_label: "Access from dbt Cloud"
-description: "Learn where and how to directly access and interact with dbt Explorer from dbt Cloud features and products."
+title: "Доступ к dbt Explorer из функций dbt Cloud"
+sidebar_label: "Доступ из dbt Cloud"
+description: "Узнайте, где и как напрямую получить доступ и взаимодействовать с dbt Explorer из функций и продуктов dbt Cloud."
 ---
 
-Access dbt Explorer from other features and products inside dbt Cloud, ensuring you have a seamless experience navigating between resources and lineage in your project. 
+Получите доступ к dbt Explorer из других функций и продуктов внутри dbt Cloud, обеспечивая бесшовный опыт навигации между ресурсами и зависимостями в вашем проекте.
 
-This page explains how to access dbt Explorer from various dbt Cloud features, including the dbt Cloud IDE and jobs. While the primary way to navigate to dbt Explorer is through the **Explore** link in the navigation, you can also access it from other dbt Cloud features.
+Эта страница объясняет, как получить доступ к dbt Explorer из различных функций dbt Cloud, включая dbt Cloud IDE и задания. Хотя основной способ навигации к dbt Explorer — это ссылка **Explore** в навигации, вы также можете получить к нему доступ из других функций dbt Cloud.
 
-### dbt Cloud IDE 
-You can enhance your project navigation and editing experience by directly accessing resources from the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) to dbt Explorer for model, seed, or snapshot files. This workflow offers a seamless transition between the IDE and Explorer, allowing you to quickly navigate between viewing project metadata and making updates to your models or other resources without switching contexts.
+### dbt Cloud IDE
+Вы можете улучшить навигацию по проекту и опыт редактирования, получая прямой доступ к ресурсам из [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) к dbt Explorer для файлов моделей, семян или снимков. Этот рабочий процесс предлагает бесшовный переход между IDE и Explorer, позволяя вам быстро перемещаться между просмотром метаданных проекта и внесением изменений в ваши модели или другие ресурсы без переключения контекста.
 
-#### Access dbt Explorer from the IDE
-- In your model, seed, or snapshot file, click the **View in Explorer** icon to the right of your file breadcrumb (under the file name tab). 
-- This opens the model, seed, or snapshot file in a new tab, allowing you to view resources/lineage directly in Explorer. 
+#### Доступ к dbt Explorer из IDE
+- В вашем файле модели, семени или снимка нажмите на значок **View in Explorer** справа от вашей навигационной цепочки (под вкладкой с именем файла).
+- Это откроет файл модели, семени или снимка в новой вкладке, позволяя вам просматривать ресурсы/зависимости непосредственно в Explorer.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Access dbt Explorer from the IDE by clicking on the 'View in Explorer' icon next to the file breadcrumbs. " />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-ide.jpg" title="Доступ к dbt Explorer из IDE, нажав на значок 'View in Explorer' рядом с навигационной цепочкой файла." />
 
-### Lineage tab in jobs
-The **Lineage tab** in dbt Cloud jobs displays the lineage associated with the [job run](/docs/deploy/jobs). Access dbt Explorer directly from this tab, allowing you understand dependencies/relationships of resources in your project.
+### Вкладка зависимостей в заданиях
+Вкладка **Lineage** в заданиях dbt Cloud отображает зависимости, связанные с [выполнением задания](/docs/deploy/jobs). Получите доступ к dbt Explorer непосредственно из этой вкладки, что позволяет вам понять зависимости/отношения ресурсов в вашем проекте.
 
-#### Access dbt Explorer from the lineage tab
-- From a job, select the **Lineage tab**. 
-- Double-click the node in the lineage to open a new tab and view its metadata directly in dbt Explorer.
+#### Доступ к dbt Explorer из вкладки зависимостей
+- В задании выберите вкладку **Lineage**.
+- Дважды щелкните по узлу в зависимости, чтобы открыть новую вкладку и просмотреть его метаданные непосредственно в dbt Explorer.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Access dbt Explorer from the lineage tab by double-clicking on the lineage node." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Доступ к dbt Explorer из вкладки зависимостей, дважды щелкнув по узлу зависимости." />
 
-### Model timing tab in jobs <Lifecycle status="enterprise,team"/>
-The [model timing tab](/docs/deploy/run-visibility#model-timing) in dbt Cloud jobs displays the composition, order, and time taken by each model in a job run. 
+### Вкладка времени модели в заданиях <Lifecycle status="enterprise,team"/>
+Вкладка [model timing](/docs/deploy/run-visibility#model-timing) в заданиях dbt Cloud отображает состав, порядок и время, затраченное на каждую модель в выполнении задания.
 
-Access dbt Explorer directly from the **modeling timing tab**, which helps you investigate resources, diagnose performance bottlenecks, understand dependencies/relationships of slow-running models, and potentially make changes to improve their performance.
+Получите доступ к dbt Explorer непосредственно из **вкладки времени модели**, что поможет вам исследовать ресурсы, диагностировать узкие места в производительности, понимать зависимости/отношения медленно работающих моделей и потенциально вносить изменения для улучшения их производительности.
 
-#### Access dbt Explorer from the model timing tab
-- From a job, select the **model timing tab**.
-- Hover over a resource and click on **View on Explorer** to view the resource metadata directly in dbt Explorer. 
+#### Доступ к dbt Explorer из вкладки времени модели
+- В задании выберите вкладку **model timing**.
+- Наведите курсор на ресурс и нажмите **View on Explorer**, чтобы просмотреть метаданные ресурса непосредственно в dbt Explorer.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.jpg" title="Access dbt Explorer from the model timing tab by hovering over the resource and clicking 'View in Explorer'." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.jpg" title="Доступ к dbt Explorer из вкладки времени модели, наведя курсор на ресурс и нажав 'View in Explorer'." />

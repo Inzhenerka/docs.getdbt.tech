@@ -1,51 +1,49 @@
 ---
-title: "About dbt Core and installation"
-description: "You can install dbt Core using a few different tested methods."
+title: "О dbt Core и установке"
+description: "Вы можете установить dbt Core несколькими проверенными способами."
 pagination_next: "docs/core/pip-install"
 pagination_prev: null
 ---
 
-[dbt Core](https://github.com/dbt-labs/dbt-core) is an open sourced project where you can develop from the command line and run your dbt project.
+[dbt Core](https://github.com/dbt-labs/dbt-core) — это проект с открытым исходным кодом, который позволяет вам разрабатывать из командной строки и запускать ваш проект dbt.
 
-To use dbt Core, your workflow generally looks like:
+Чтобы использовать dbt Core, ваш рабочий процесс обычно выглядит следующим образом:
 
-1. **Build your dbt project in a code editor &mdash;** popular choices include VSCode and Atom.
+1. **Создайте ваш проект dbt в текстовом редакторе &mdash;** популярные варианты включают VSCode и Atom.
 
-2. **Run your project from the command line &mdash;** macOS ships with a default Terminal program, however you can also use iTerm or the command line prompt within a code editor to execute dbt commands.
+2. **Запустите ваш проект из командной строки &mdash;** macOS поставляется с предустановленной программой Terminal, однако вы также можете использовать iTerm или командную строку внутри текстового редактора для выполнения команд dbt.
 
-:::info How we set up our computers for working on dbt projects
+:::info Как мы настраиваем наши компьютеры для работы над проектами dbt
 
-We've written a [guide](https://discourse.getdbt.com/t/how-we-set-up-our-computers-for-working-on-dbt-projects/243) for our recommended setup when running dbt projects using dbt Core.
-
-:::
-
-If you're using the command line, we recommend learning some basics of your terminal to help you work more effectively. In particular, it's important to understand `cd`, `ls` and `pwd` to be able to navigate through the directory structure of your computer easily.
-
-## Install dbt Core
-
-You can install dbt Core on the command line by using one of these methods:
-
-- [Use pip to install dbt](/docs/core/pip-install) (recommended)
-- [Use a Docker image to install dbt](/docs/core/docker-install)
-- [Install dbt from source](/docs/core/source-install)
-- You can also develop locally using the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). The dbt Cloud CLI and dbt Core are both command line tools that let you run dbt commands. The key distinction is the dbt Cloud CLI is tailored for dbt Cloud's infrastructure and integrates with all its [features](/docs/cloud/about-cloud/dbt-cloud-features).
-
-## Upgrading dbt Core
-
-dbt provides a number of resources for understanding [general best practices](/blog/upgrade-dbt-without-fear) while upgrading your dbt project as well as detailed [migration guides](/docs/dbt-versions/core-upgrade) highlighting the changes required for each [minor and major release](/docs/dbt-versions/core).
-
-- [Upgrade `pip`](/docs/core/pip-install#change-dbt-core-versions)
-
-## About dbt data platforms and adapters
-
-dbt works with a number of different data platforms (databases, query engines, and other SQL-speaking technologies). It does this by using a dedicated _adapter_ for each. When you install dbt Core, you'll also want to install the specific adapter for your database. For more details, see [Supported Data Platforms](/docs/supported-data-platforms).
-
-:::tip Pro tip: Using the --help flag
-
-Most command-line tools, including dbt, have a `--help` flag that you can use to show available commands and arguments. For example, you can use the `--help` flag with dbt in two ways:<br /><br />
-&mdash; `dbt --help`: Lists the commands available for dbt<br />
-&mdash; `dbt run --help`: Lists the flags available for the `run` command
+Мы написали [руководство](https://discourse.getdbt.com/t/how-we-set-up-our-computers-for-working-on-dbt-projects/243) с нашими рекомендациями по настройке при запуске проектов dbt с использованием dbt Core.
 
 :::
 
+Если вы используете командную строку, мы рекомендуем изучить некоторые основы вашего терминала, чтобы помочь вам работать более эффективно. В частности, важно понимать команды `cd`, `ls` и `pwd`, чтобы легко перемещаться по структуре каталогов вашего компьютера.
 
+## Установка dbt Core
+
+Вы можете установить dbt Core из командной строки, используя один из следующих методов:
+
+- [Используйте pip для установки dbt](/docs/core/pip-install) (рекомендуется)
+- [Используйте образ Docker для установки dbt](/docs/core/docker-install)
+- [Установите dbt из исходников](/docs/core/source-install)
+- Вы также можете разрабатывать локально, используя [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). dbt Cloud CLI и dbt Core — это оба инструмента командной строки, которые позволяют вам выполнять команды dbt. Ключевое отличие заключается в том, что dbt Cloud CLI предназначен для инфраструктуры dbt Cloud и интегрируется со всеми его [функциями](/docs/cloud/about-cloud/dbt-cloud-features).
+
+## Обновление dbt Core
+
+dbt предоставляет ряд ресурсов для понимания [общих лучших практик](/blog/upgrade-dbt-without-fear) при обновлении вашего проекта dbt, а также подробные [руководства по миграции](/docs/dbt-versions/core-upgrade), подчеркивающие изменения, необходимые для каждого [небольшого и крупного релиза](/docs/dbt-versions/core).
+
+- [Обновите `pip`](/docs/core/pip-install#change-dbt-core-versions)
+
+## О платформах данных dbt и адаптерах
+
+dbt работает с рядом различных платформ данных (базами данных, движками запросов и другими технологиями, использующими SQL). Это достигается с помощью специального _адаптера_ для каждой из них. Когда вы устанавливаете dbt Core, вам также нужно установить конкретный адаптер для вашей базы данных. Для получения дополнительной информации смотрите [Поддерживаемые платформы данных](/docs/supported-data-platforms).
+
+:::tip Полезный совет: Использование флага --help
+
+Большинство инструментов командной строки, включая dbt, имеют флаг `--help`, который вы можете использовать для отображения доступных команд и аргументов. Например, вы можете использовать флаг `--help` с dbt двумя способами:<br /><br />
+&mdash; `dbt --help`: Перечисляет доступные команды для dbt<br />
+&mdash; `dbt run --help`: Перечисляет флаги, доступные для команды `run`
+
+:::

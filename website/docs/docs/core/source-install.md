@@ -1,22 +1,22 @@
 ---
-title: "Install from source"
-description: "You can install dbt Core from its GitHub code source."
+title: "Установка из исходного кода"
+description: "Вы можете установить dbt Core из исходного кода на GitHub."
 pagination_next: null
 ---
 
-dbt Core and almost all of its adapter plugins are open source software. As such, the codebases are freely available to download and build from source. You might install from source if you want the latest code or want to install dbt from a specific commit. This might be helpful when you are contributing changes, or if you want to debug a past change.
+dbt Core и почти все его адаптеры являются программным обеспечением с открытым исходным кодом. Таким образом, кодовые базы доступны для свободного скачивания и сборки из исходного кода. Вы можете установить из исходного кода, если хотите получить последнюю версию или установить dbt из конкретного коммита. Это может быть полезно, когда вы вносите изменения или хотите отладить ранее внесенные изменения.
 
-To download from source, you would clone the repositories from GitHub, making a local copy, and then install the local version using `pip`.
+Чтобы скачать из исходного кода, вам нужно клонировать репозитории с GitHub, создав локальную копию, а затем установить локальную версию с помощью `pip`.
 
-Downloading and building dbt Core will enable you to contribute to the project by fixing a bug or implementing a sought-after feature. For more details, read the [contributing guidelines](https://github.com/dbt-labs/dbt-core/blob/HEAD/CONTRIBUTING.md).
+Скачивание и сборка dbt Core позволит вам внести свой вклад в проект, исправив ошибку или реализовав востребованную функцию. Для получения более подробной информации прочитайте [руководство по внесению изменений](https://github.com/dbt-labs/dbt-core/blob/HEAD/CONTRIBUTING.md).
 
-### Installing dbt Core
+### Установка dbt Core
 
-Beginning in v1.8, installing an adapter does not automatically install `dbt-core`. This is because adapters and dbt Core versions have been decoupled from each other so we no longer want to overwrite existing dbt-core installations
+Начиная с версии 1.8, установка адаптера не приводит к автоматической установке `dbt-core`. Это связано с тем, что версии адаптеров и dbt Core были разъединены, и мы больше не хотим перезаписывать существующие установки dbt-core.
 
 <VersionBlock firstVersion="1.8">
 
-To install `dbt-core` only from the GitHub code source:
+Чтобы установить `dbt-core` только из исходного кода на GitHub:
 
 ```shell
 git clone https://github.com/dbt-labs/dbt-core.git
@@ -28,7 +28,7 @@ python -m pip install -r requirements.txt
 
 <VersionBlock lastVersion="1.7">
 
-To install `dbt-core` and `dbt-postgres` from the GitHub code source:
+Чтобы установить `dbt-core` и `dbt-postgres` из исходного кода на GitHub:
 
 ```shell
 git clone https://github.com/dbt-labs/dbt-core.git
@@ -37,26 +37,26 @@ python -m pip install -r requirements.txt
 ```
 </VersionBlock>
 
-To install in editable mode, which includes your local changes as you make them:
+Чтобы установить в редактируемом режиме, который включает ваши локальные изменения по мере их внесения:
 
 ```shell
 python -m pip install -e editable-requirements.txt` 
 ```
-instead.
+вместо этого.
 
-### Installing adapter plugins
+### Установка адаптеров
 
-To install an adapter plugin from source, you will need to first locate its source repository. For instance, the `dbt-redshift` adapter is located at https://github.com/dbt-labs/dbt-redshift.git, so you can clone it and install from there:
+Чтобы установить адаптер из исходного кода, вам сначала нужно найти его исходный репозиторий. Например, адаптер `dbt-redshift` находится по адресу https://github.com/dbt-labs/dbt-redshift.git, поэтому вы можете клонировать его и установить оттуда:
 
 <VersionBlock firstVersion="1.8">
 
-You will also need to install `dbt-core` before installing an adapter plugin.
+Вам также нужно будет установить `dbt-core` перед установкой адаптера.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.7">
 
-You do _not_ need to install `dbt-core` before installing an adapter plugin -- the plugin includes `dbt-core` among its dependencies, and it will install the latest compatible version automatically.
+Вам _не_ нужно устанавливать `dbt-core` перед установкой адаптера — плагин включает `dbt-core` среди своих зависимостей, и он автоматически установит последнюю совместимую версию.
 </VersionBlock>
 
 ```shell
@@ -65,7 +65,7 @@ cd dbt-redshift
 python -m pip install .
 ```
 
-To install in editable mode, such as while contributing, use `python -m pip install -e .` instead.
+Чтобы установить в редактируемом режиме, например, во время внесения изменений, используйте `python -m pip install -e .` вместо этого.
 
 <FAQ path="Core/install-pip-os-prereqs" />
 <FAQ path="Core/install-python-compatibility" />

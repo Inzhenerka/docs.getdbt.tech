@@ -1,6 +1,6 @@
 ---
-title: "Teradata setup"
-description: "Read this guide to learn about the Teradata warehouse setup in dbt."
+title: "Настройка Teradata"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Teradata в dbt."
 id: "teradata-setup"
 meta:
   maintained_by: Teradata
@@ -8,7 +8,7 @@ meta:
   github_repo: 'Teradata/dbt-teradata'
   pypi_package: 'dbt-teradata'
   min_core_version: 'v0.21.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-teradata'
   slack_channel_link: 'https://getdbt.slack.com/archives/C027B6BHMT3'
@@ -16,7 +16,7 @@ meta:
   config_page: '/reference/resource-configs/teradata-configs'
 ---
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code in the repository listed in the next section.
+Некоторые основные функции могут быть ограничены. Если вы заинтересованы в внесении вклада, ознакомьтесь с исходным кодом в репозитории, указанном в следующем разделе.
 
 <Snippet path="warehouse-setups-cloud-callout" />
 
@@ -25,9 +25,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta}/>
 
 
-## Python compatibility
+## Совместимость с Python
 
-| Plugin version | Python 3.9 | Python 3.10 | Python 3.11 | Python 3.12 |
+| Версия плагина | Python 3.9 | Python 3.10 | Python 3.11 | Python 3.12 |
 |----------------|------------|-------------|-------------|-------------|
 | 1.0.0.x        | ✅          | ❌           | ❌           | ❌           |
 | 1.1.x.x        | ✅          | ✅           | ❌           | ❌           |
@@ -39,11 +39,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | 1.7.x          | ✅          | ✅           | ✅           | ❌           |
 | 1.8.x          | ✅          | ✅           | ✅           | ✅           |
 
-## dbt dependent packages version compatibility
+## Совместимость версий зависимых пакетов dbt
 
 | dbt-teradata |  dbt-core  | dbt-teradata-util |  dbt-util      |
 |--------------|------------|-------------------|----------------|
-| 1.2.x        | 1.2.x      | 0.1.0             | 0.9.x or below |
+| 1.2.x        | 1.2.x      | 0.1.0             | 0.9.x или ниже |
 | 1.6.7        | 1.6.7      | 1.1.1             | 1.1.1          |
 | 1.7.x        | 1.7.x      | 1.1.1             | 1.1.1          |
 | 1.8.x        | 1.8.x      | 1.1.1             | 1.1.1          |
@@ -51,9 +51,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 | 1.8.x        | 1.8.x      | 1.3.0             | 1.3.0          |
 
 
-### Connecting to Teradata
+### Подключение к Teradata
 
-To connect to Teradata Vantage from dbt, you'll need to add a [profile](https://docs.getdbt.com/docs/core/connection-profiles) to your `profiles.yml` file. A Teradata profile conforms to the following syntax:
+Чтобы подключиться к Teradata Vantage из dbt, вам нужно добавить [профиль](https://docs.getdbt.com/docs/core/connection-profiles) в ваш файл `profiles.yml`. Профиль Teradata соответствует следующему синтаксису:
 
 <File name='profiles.yml'>
 
@@ -67,136 +67,136 @@ To connect to Teradata Vantage from dbt, you'll need to add a [profile](https://
       password: <password>
       schema: <database-name>
       tmode: ANSI
-      threads: [optional, 1 or more]
-      #optional fields
+      threads: [опционально, 1 или более]
+      #опциональные поля
       <field-name: <field-value>
 ```
 
 </File>
 
-#### Description of Teradata Profile Fields
+#### Описание полей профиля Teradata
 
-The following fields are required:
+Следующие поля являются обязательными:
 
-Parameter               | Default     | Type           | Description
------------------------ | ----------- | -------------- | ---
-`user`                  |             | string         | Specifies the database username. Equivalent to the Teradata JDBC Driver `USER` connection parameter.
-`password`              |             | string         | Specifies the database password. Equivalent to the Teradata JDBC Driver `PASSWORD` connection parameter.
-`schema`              |             | string         | Specifies the initial database to use after logon, instead of the user's default database.
-`tmode`                 | `"ANSI"` | string         | Specifies the transaction mode. Only `ANSI` mode is currently supported.
+Параметр               | Значение по умолчанию | Тип           | Описание
+----------------------- | --------------------- | -------------- | ---
+`user`                  |                       | строка        | Указывает имя пользователя базы данных. Соответствует параметру подключения `USER` драйвера Teradata JDBC.
+`password`              |                       | строка        | Указывает пароль базы данных. Соответствует параметру подключения `PASSWORD` драйвера Teradata JDBC.
+`schema`                |                       | строка        | Указывает начальную базу данных для использования после входа в систему, вместо базы данных по умолчанию пользователя.
+`tmode`                 | `"ANSI"`              | строка        | Указывает режим транзакции. В настоящее время поддерживается только режим `ANSI`.
 
 
-The plugin also supports the following optional connection parameters:
+Плагин также поддерживает следующие опциональные параметры подключения:
 
-Parameter               | Default     | Type           | Description
------------------------ | ----------- | -------------- | ---
-`account`               |             | string         | Specifies the database account. Equivalent to the Teradata JDBC Driver `ACCOUNT` connection parameter.
-`browser`               |             | string         | Specifies the command to open the browser for Browser Authentication, when logmech is BROWSER. Browser Authentication is supported for Windows and macOS. Equivalent to the Teradata JDBC Driver BROWSER connection parameter.
-`browser_tab_timeout`   |   `"5"`     | quoted integer | Specifies the number of seconds to wait before closing the browser tab after Browser Authentication is completed. The default is 5 seconds. The behavior is under the browser's control, and not all browsers support automatic closing of browser tabs.
-`browser_timeout`       |   `"180"`   | quoted integer | Specifies the number of seconds that the driver will wait for Browser Authentication to complete. The default is 180 seconds (3 minutes).
-`column_name`           | `"false"`   | quoted boolean | Controls the behavior of cursor `.description` sequence `name` items. Equivalent to the Teradata JDBC Driver `COLUMN_NAME` connection parameter. False specifies that a cursor `.description` sequence `name` item provides the AS-clause name if available, or the column name if available, or the column title. True specifies that a cursor `.description` sequence `name` item provides the column name if available, but has no effect when StatementInfo parcel support is unavailable.
-`connect_failure_ttl`   | `"0"`       | quoted integer | Specifies the time-to-live in seconds to remember the most recent connection failure for each IP address/port combination. The driver subsequently skips connection attempts to that IP address/port for the duration of the time-to-live. The default value of zero disables this feature. The recommended value is half the database restart time. Equivalent to the Teradata JDBC Driver `CONNECT_FAILURE_TTL` connection parameter.
-`connect_timeout`       |  `"10000"`  | quoted integer | Specifies the timeout in milliseconds for establishing a TCP socket connection. Specify 0 for no timeout. The default is 10 seconds (10000 milliseconds).
-`cop`                   | `"true"`    | quoted boolean | Specifies whether COP Discovery is performed. Equivalent to the Teradata JDBC Driver `COP` connection parameter.
-`coplast`               | `"false"`   | quoted boolean | Specifies how COP Discovery determines the last COP hostname. Equivalent to the Teradata JDBC Driver `COPLAST` connection parameter. When `coplast` is `false` or omitted, or COP Discovery is turned off, then no DNS lookup occurs for the coplast hostname. When `coplast` is `true`, and COP Discovery is turned on, then a DNS lookup occurs for a coplast hostname.
-`port`                  | `"1025"`    | quoted integer | Specifies the database port number. Equivalent to the Teradata JDBC Driver `DBS_PORT` connection parameter.
-`encryptdata`           | `"false"`   | quoted boolean | Controls encryption of data exchanged between the driver and the database. Equivalent to the Teradata JDBC Driver `ENCRYPTDATA` connection parameter.
-`fake_result_sets`      | `"false"`   | quoted boolean | Controls whether a fake result set containing statement metadata precedes each real result set.
-`field_quote`           | `"\""`      | string         | Specifies a single character string used to quote fields in a CSV file.
-`field_sep`             | `","`       | string         | Specifies a single character string used to separate fields in a CSV file. Equivalent to the Teradata JDBC Driver `FIELD_SEP` connection parameter.
-`host`                  |             | string         | Specifies the database hostname.
-`https_port`            | `"443"`     | quoted integer | Specifies the database port number for HTTPS/TLS connections. Equivalent to the Teradata JDBC Driver `HTTPS_PORT` connection parameter.
-`lob_support`           | `"true"`    | quoted boolean | Controls LOB support. Equivalent to the Teradata JDBC Driver `LOB_SUPPORT` connection parameter.
-`log`                   | `"0"`       | quoted integer | Controls debug logging. Somewhat equivalent to the Teradata JDBC Driver `LOG` connection parameter. This parameter's behavior is subject to change in the future. This parameter's value is currently defined as an integer in which the 1-bit governs function and method tracing, the 2-bit governs debug logging, the 4-bit governs transmit and receive message hex dumps, and the 8-bit governs timing. Compose the value by adding together 1, 2, 4, and/or 8.
-`logdata`               |             | string         | Specifies extra data for the chosen logon authentication method. Equivalent to the Teradata JDBC Driver `LOGDATA` connection parameter.
-`logon_timeout`         | `"0"`       | quoted integer | Specifies the logon timeout in seconds. Zero means no timeout.
-`logmech`               | `"TD2"`     | string         | Specifies the logon authentication method. Equivalent to the Teradata JDBC Driver `LOGMECH` connection parameter. Possible values are `TD2` (the default), `JWT`, `LDAP`, `KRB5` for Kerberos, or `TDNEGO`.
-`max_message_body`      | `"2097000"` | quoted integer | Specifies the maximum Response Message size in bytes. Equivalent to the Teradata JDBC Driver `MAX_MESSAGE_BODY` connection parameter.
-`partition`             | `"DBC/SQL"` | string         | Specifies the database partition. Equivalent to the Teradata JDBC Driver `PARTITION` connection parameter.
-`request_timeout`       |   `"0"`     | quoted integer | Specifies the timeout for executing each SQL request. Zero means no timeout.
-`retries`               |   `0`       | integer        | Allows an adapter to automatically try again when the attempt to open a new connection on the database has a transient, infrequent error. This option can be set using the retries configuration. Default value is 0. The default wait period between connection attempts is one second. retry_timeout (seconds) option allows us to adjust this waiting period.
-`runstartup`            |  "false"    | quoted boolean | Controls whether the user's STARTUP SQL request is executed after logon. For more information, refer to User STARTUP SQL Request. Equivalent to the Teradata JDBC Driver RUNSTARTUP connection parameter. If retries is set to 3, the adapter will try to establish a new connection three times if an error occurs.
-`sessions`              |             | quoted integer | Specifies the number of data transfer connections for FastLoad or FastExport. The default (recommended) lets the database choose the appropriate number of connections. Equivalent to the Teradata JDBC Driver SESSIONS connection parameter.
-`sip_support`           | `"true"`    | quoted boolean | Controls whether StatementInfo parcel is used. Equivalent to the Teradata JDBC Driver `SIP_SUPPORT` connection parameter.
-`sp_spl`                | `"true"`    | quoted boolean | Controls whether stored procedure source code is saved in the database when a SQL stored procedure is created. Equivalent to the Teradata JDBC Driver SP_SPL connection parameter.
-`sslca`                 |             | string         | Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with `sslmode` values `VERIFY-CA` or `VERIFY-FULL`. Equivalent to the Teradata JDBC Driver `SSLCA` connection parameter.
-`sslcrc`                | `"ALLOW"`   | string         | Equivalent to the Teradata JDBC Driver SSLCRC connection parameter. Values are case-insensitive.<br/>&bull; ALLOW provides "soft fail" behavior such that communication failures are ignored during certificate revocation checking. <br/>&bull; REQUIRE mandates that certificate revocation checking must succeed.
-`sslcapath`             |             | string         | Specifies a directory of PEM files that contain Certificate Authority (CA) certificates for use with `sslmode` values `VERIFY-CA` or `VERIFY-FULL`. Only files with an extension of `.pem` are used. Other files in the specified directory are not used. Equivalent to the Teradata JDBC Driver `SSLCAPATH` connection parameter.
-`sslcipher`             |             | string         | Specifies the TLS cipher for HTTPS/TLS connections. Equivalent to the Teradata JDBC Driver `SSLCIPHER` connection parameter.
-`sslmode`               | `"PREFER"`  | string         | Specifies the mode for connections to the database. Equivalent to the Teradata JDBC Driver `SSLMODE` connection parameter.<br/>&bull; `DISABLE` disables HTTPS/TLS connections and uses only non-TLS connections.<br/>&bull; `ALLOW` uses non-TLS connections unless the database requires HTTPS/TLS connections.<br/>&bull; `PREFER` uses HTTPS/TLS connections unless the database does not offer HTTPS/TLS connections.<br/>&bull; `REQUIRE` uses only HTTPS/TLS connections.<br/>&bull; `VERIFY-CA` uses only HTTPS/TLS connections and verifies that the server certificate is valid and trusted.<br/>&bull; `VERIFY-FULL` uses only HTTPS/TLS connections, verifies that the server certificate is valid and trusted, and verifies that the server certificate matches the database hostname.
-`sslprotocol`           | `"TLSv1.2"` | string         | Specifies the TLS protocol for HTTPS/TLS connections. Equivalent to the Teradata JDBC Driver `SSLPROTOCOL` connection parameter.
-`teradata_values`       | `"true"`    | quoted boolean | Controls whether `str` or a more specific Python data type is used for certain result set column value types.
-`query_band`            | `"org=teradata-internal-telem;appname=dbt;"`    | string | Specifies the Query Band string to be set for each SQL request.
+Параметр               | Значение по умолчанию | Тип           | Описание
+----------------------- | --------------------- | -------------- | ---
+`account`               |                       | строка        | Указывает учетную запись базы данных. Соответствует параметру подключения `ACCOUNT` драйвера Teradata JDBC.
+`browser`               |                       | строка        | Указывает команду для открытия браузера для аутентификации через браузер, когда logmech равен BROWSER. Аутентификация через браузер поддерживается для Windows и macOS. Соответствует параметру подключения BROWSER драйвера Teradata JDBC.
+`browser_tab_timeout`   |   `"5"`               | строка-число  | Указывает количество секунд, которые нужно подождать перед закрытием вкладки браузера после завершения аутентификации через браузер. Значение по умолчанию - 5 секунд. Поведение контролируется браузером, и не все браузеры поддерживают автоматическое закрытие вкладок.
+`browser_timeout`       |   `"180"`             | строка-число  | Указывает количество секунд, которые драйвер будет ждать завершения аутентификации через браузер. Значение по умолчанию - 180 секунд (3 минуты).
+`column_name`           | `"false"`             | строка-логическое | Управляет поведением элементов последовательности `.description` курсора `name`. Соответствует параметру подключения `COLUMN_NAME` драйвера Teradata JDBC. Значение false указывает, что элемент последовательности `name` курсора `.description` предоставляет имя AS-клаузы, если оно доступно, или имя столбца, если оно доступно, или заголовок столбца. Значение true указывает, что элемент последовательности `name` курсора `.description` предоставляет имя столбца, если оно доступно, но не имеет эффекта, когда поддержка пакета StatementInfo недоступна.
+`connect_failure_ttl`   | `"0"`                 | строка-число  | Указывает время жизни в секундах для запоминания последней ошибки подключения для каждой комбинации IP-адреса/порта. Драйвер затем пропускает попытки подключения к этому IP-адресу/порту в течение времени жизни. Значение по умолчанию - ноль, что отключает эту функцию. Рекомендуемое значение - половина времени перезапуска базы данных. Соответствует параметру подключения `CONNECT_FAILURE_TTL` драйвера Teradata JDBC.
+`connect_timeout`       |  `"10000"`            | строка-число  | Указывает тайм-аут в миллисекундах для установления TCP-соединения. Укажите 0 для отсутствия тайм-аута. Значение по умолчанию - 10 секунд (10000 миллисекунд).
+`cop`                   | `"true"`              | строка-логическое | Указывает, выполняется ли обнаружение COP. Соответствует параметру подключения `COP` драйвера Teradata JDBC.
+`coplast`               | `"false"`             | строка-логическое | Указывает, как обнаружение COP определяет последний хост COP. Соответствует параметру подключения `COPLAST` драйвера Teradata JDBC. Когда `coplast` равно `false` или опущено, или обнаружение COP отключено, то DNS-запрос для имени хоста coplast не выполняется. Когда `coplast` равно `true`, и обнаружение COP включено, то выполняется DNS-запрос для имени хоста coplast.
+`port`                  | `"1025"`              | строка-число  | Указывает номер порта базы данных. Соответствует параметру подключения `DBS_PORT` драйвера Teradata JDBC.
+`encryptdata`           | `"false"`             | строка-логическое | Управляет шифрованием данных, передаваемых между драйвером и базой данных. Соответствует параметру подключения `ENCRYPTDATA` драйвера Teradata JDBC.
+`fake_result_sets`      | `"false"`             | строка-логическое | Управляет тем, будет ли фальшивый набор результатов, содержащий метаданные запроса, предшествовать каждому реальному набору результатов.
+`field_quote`           | `"\""`                | строка         | Указывает строку из одного символа, используемую для кавычек полей в CSV-файле.
+`field_sep`             | `","`                 | строка         | Указывает строку из одного символа, используемую для разделения полей в CSV-файле. Соответствует параметру подключения `FIELD_SEP` драйвера Teradata JDBC.
+`host`                  |                       | строка         | Указывает имя хоста базы данных.
+`https_port`            | `"443"`               | строка-число  | Указывает номер порта базы данных для HTTPS/TLS соединений. Соответствует параметру подключения `HTTPS_PORT` драйвера Teradata JDBC.
+`lob_support`           | `"true"`              | строка-логическое | Управляет поддержкой LOB. Соответствует параметру подключения `LOB_SUPPORT` драйвера Teradata JDBC.
+`log`                   | `"0"`                 | строка-число  | Управляет отладочным логированием. В некоторой степени соответствует параметру подключения `LOG` драйвера Teradata JDBC. Поведение этого параметра может измениться в будущем. Значение этого параметра в настоящее время определяется как целое число, в котором 1-бит управляет трассировкой функций и методов, 2-бит управляет отладочным логированием, 4-бит управляет шестнадцатеричными дампами сообщений передачи и получения, а 8-бит управляет временем. Составьте значение, складывая 1, 2, 4 и/или 8.
+`logdata`               |                       | строка         | Указывает дополнительные данные для выбранного метода аутентификации при входе. Соответствует параметру подключения `LOGDATA` драйвера Teradata JDBC.
+`logon_timeout`         | `"0"`                 | строка-число  | Указывает тайм-аут входа в систему в секундах. Ноль означает отсутствие тайм-аута.
+`logmech`               | `"TD2"`               | строка         | Указывает метод аутентификации при входе. Соответствует параметру подключения `LOGMECH` драйвера Teradata JDBC. Возможные значения: `TD2` (по умолчанию), `JWT`, `LDAP`, `KRB5` для Kerberos или `TDNEGO`.
+`max_message_body`      | `"2097000"`           | строка-число  | Указывает максимальный размер сообщения ответа в байтах. Соответствует параметру подключения `MAX_MESSAGE_BODY` драйвера Teradata JDBC.
+`partition`             | `"DBC/SQL"`           | строка         | Указывает раздел базы данных. Соответствует параметру подключения `PARTITION` драйвера Teradata JDBC.
+`request_timeout`       |   `"0"`               | строка-число  | Указывает тайм-аут для выполнения каждого SQL-запроса. Ноль означает отсутствие тайм-аута.
+`retries`               |   `0`                 | целое число    | Позволяет адаптеру автоматически повторить попытку, когда попытка открыть новое соединение с базой данных завершилась временной, редкой ошибкой. Эта опция может быть установлена с помощью конфигурации повторных попыток. Значение по умолчанию - 0. Рекомендуемый период ожидания между попытками подключения - одна секунда. Опция retry_timeout (в секундах) позволяет нам настроить этот период ожидания.
+`runstartup`            |  "false"              | строка-логическое | Управляет тем, будет ли выполняться SQL-запрос STARTUP пользователя после входа в систему. Для получения дополнительной информации обратитесь к запросу SQL STARTUP пользователя. Соответствует параметру подключения RUNSTARTUP драйвера Teradata JDBC. Если количество повторных попыток установлено на 3, адаптер попытается установить новое соединение трижды, если произойдет ошибка.
+`sessions`              |                       | строка-число  | Указывает количество соединений для передачи данных для FastLoad или FastExport. Значение по умолчанию (рекомендуемое) позволяет базе данных выбрать подходящее количество соединений. Соответствует параметру подключения SESSIONS драйвера Teradata JDBC.
+`sip_support`           | `"true"`              | строка-логическое | Управляет тем, используется ли пакет StatementInfo. Соответствует параметру подключения `SIP_SUPPORT` драйвера Teradata JDBC.
+`sp_spl`                | `"true"`              | строка-логическое | Управляет тем, сохраняется ли исходный код хранимой процедуры в базе данных при создании SQL-хранимой процедуры. Соответствует параметру подключения `SP_SPL` драйвера Teradata JDBC.
+`sslca`                 |                       | строка         | Указывает имя файла PEM, который содержит сертификаты удостоверяющего центра (CA) для использования с значениями `sslmode` `VERIFY-CA` или `VERIFY-FULL`. Соответствует параметру подключения `SSLCA` драйвера Teradata JDBC.
+`sslcrc`                | `"ALLOW"`             | строка         | Соответствует параметру подключения SSLCRC драйвера Teradata JDBC. Значения нечувствительны к регистру.<br/>&bull; ALLOW обеспечивает поведение "мягкого сбоя", при котором сбои связи игнорируются во время проверки отзыва сертификата. <br/>&bull; REQUIRE требует, чтобы проверка отзыва сертификата была успешной.
+`sslcapath`             |                       | строка         | Указывает каталог PEM-файлов, которые содержат сертификаты удостоверяющего центра (CA) для использования с значениями `sslmode` `VERIFY-CA` или `VERIFY-FULL`. Используются только файлы с расширением `.pem`. Другие файлы в указанном каталоге не используются. Соответствует параметру подключения `SSLCAPATH` драйвера Teradata JDBC.
+`sslcipher`             |                       | строка         | Указывает шифр TLS для HTTPS/TLS соединений. Соответствует параметру подключения `SSLCIPHER` драйвера Teradata JDBC.
+`sslmode`               | `"PREFER"`            | строка         | Указывает режим для соединений с базой данных. Соответствует параметру подключения `SSLMODE` драйвера Teradata JDBC.<br/>&bull; `DISABLE` отключает HTTPS/TLS соединения и использует только не-TLS соединения.<br/>&bull; `ALLOW` использует не-TLS соединения, если база данных не требует HTTPS/TLS соединений.<br/>&bull; `PREFER` использует HTTPS/TLS соединения, если база данных предлагает HTTPS/TLS соединения.<br/>&bull; `REQUIRE` использует только HTTPS/TLS соединения.<br/>&bull; `VERIFY-CA` использует только HTTPS/TLS соединения и проверяет, что сертификат сервера действителен и доверен.<br/>&bull; `VERIFY-FULL` использует только HTTPS/TLS соединения, проверяет, что сертификат сервера действителен и доверен, и проверяет, что сертификат сервера соответствует имени хоста базы данных.
+`sslprotocol`           | `"TLSv1.2"`           | строка         | Указывает протокол TLS для HTTPS/TLS соединений. Соответствует параметру подключения `SSLPROTOCOL` драйвера Teradata JDBC.
+`teradata_values`       | `"true"`              | строка-логическое | Управляет тем, используется ли `str` или более специфичный тип данных Python для определенных типов значений столбцов набора результатов.
+`query_band`            | `"org=teradata-internal-telem;appname=dbt;"` | строка | Указывает строку Query Band, которая будет установлена для каждого SQL-запроса.
 
-Refer to [connection parameters](https://github.com/Teradata/python-driver#connection-parameters) for the full description of the connection parameters.
+Обратитесь к [параметрам подключения](https://github.com/Teradata/python-driver#connection-parameters) для полного описания параметров подключения.
 
-## Supported features
+## Поддерживаемые функции
 
-### Materializations
+### Материализации
 
 * `view`
 * `table`
 * `ephemeral`
 * `incremental`
 
-#### Incremental Materialization
-The following incremental materialization strategies are supported:
-* `append` (default)
+#### Инкрементальная материализация
+Поддерживаются следующие стратегии инкрементальной материализации:
+* `append` (по умолчанию)
 * `delete+insert`
 * `merge`
-* `valid_history` (early access)
+* `valid_history` (доступ на раннем этапе)
 
 :::info
-- To learn more about dbt incremental strategies, refer to [the dbt incremental strategy documentation](/docs/build/incremental-strategy).
-- To learn more about `valid_history` incremental strategy, refer to [Teradata configs](/reference/resource-configs/teradata-configs).
+- Чтобы узнать больше о стратегиях инкрементального обновления dbt, обратитесь к [документации по инкрементальным стратегиям dbt](/docs/build/incremental-strategy).
+- Чтобы узнать больше о стратегии инкрементального обновления `valid_history`, обратитесь к [конфигурациям Teradata](/reference/resource-configs/teradata-configs).
 :::
 
-### Commands
+### Команды
 
-All dbt commands are supported.
+Все команды dbt поддерживаются.
 
-## Support for model contracts
-Model contracts are supported with dbt-teradata v1.7.1 and onwards.
-Constraint support and enforcement in dbt-teradata:
+## Поддержка контрактов моделей
+Контракты моделей поддерживаются с версии dbt-teradata v1.7.1 и выше.
+Поддержка и соблюдение ограничений в dbt-teradata:
 
-| Constraint type |	Support	Platform | enforcement |
+| Тип ограничения |	Поддержка	Платформа | соблюдение |
 |-----------------|------------------|-------------|
-| not_null	      | ✅ Supported	 | ✅ Enforced |
-| primary_key	  | ✅ Supported	 | ✅ Enforced |
-| foreign_key	  | ✅ Supported	 | ✅ Enforced |
-| unique	      | ✅ Supported	 | ✅ Enforced |
-| check	          | ✅ Supported	 | ✅ Enforced |
+| not_null	      | ✅ Поддерживается	 | ✅ Соблюдается |
+| primary_key	  | ✅ Поддерживается	 | ✅ Соблюдается |
+| foreign_key	  | ✅ Поддерживается	 | ✅ Соблюдается |
+| unique	      | ✅ Поддерживается	 | ✅ Соблюдается |
+| check	          | ✅ Поддерживается	 | ✅ Соблюдается |
 
-Refer to [Model contracts](/docs/collaborate/govern/model-contracts) for more info.
+Обратитесь к [контрактам моделей](/docs/collaborate/govern/model-contracts) для получения дополнительной информации.
 
-## Support for `dbt-utils` package
-`dbt-utils` package is supported through `teradata/teradata_utils` dbt package. The package provides a compatibility layer between `dbt_utils` and `dbt-teradata`. See [teradata_utils](https://hub.getdbt.com/teradata/teradata_utils/latest/) package for install instructions.
+## Поддержка пакета `dbt-utils`
+Пакет `dbt-utils` поддерживается через пакет dbt `teradata/teradata_utils`. Пакет предоставляет уровень совместимости между `dbt_utils` и `dbt-teradata`. См. [teradata_utils](https://hub.getdbt.com/teradata/teradata_utils/latest/) для инструкций по установке.
 
-### Cross DB macros
-Starting with release 1.3, some macros were migrated from [teradata-dbt-utils](https://github.com/Teradata/dbt-teradata-utils) dbt package to the connector. Refer the following table for the macros supported by the connector.
+### Макросы Cross DB
+Начиная с версии 1.3, некоторые макросы были перенесены из пакета [teradata-dbt-utils](https://github.com/Teradata/dbt-teradata-utils) в коннектор. Обратитесь к следующей таблице для макросов, поддерживаемых коннектором.
 
-For using cross-DB macros, teradata-utils as a macro namespace will not be used, as cross-DB macros have been migrated from teradata-utils to Dbt-Teradata.
-
-
-#### Compatibility
-
-|     Macro Group       |           Macro Name          |         Status        |                                 Comment                                |
-|:---------------------:|:-----------------------------:|:---------------------:|:----------------------------------------------------------------------:|
-| Cross-database macros | current_timestamp             | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | dateadd                       | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | datediff                      | :white_check_mark:    | custom macro provided, see [compatibility note](#datediff)             |
-| Cross-database macros | split_part                    | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | date_trunc                    | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | hash                          | :white_check_mark:    | custom macro provided, see [compatibility note](#hash)                 |
-| Cross-database macros | replace                       | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | type_string                   | :white_check_mark:    | custom macro provided                                                  |
-| Cross-database macros | last_day                      | :white_check_mark:    | no customization needed, see [compatibility note](#last_day)           |
-| Cross-database macros | width_bucket                  | :white_check_mark:    | no customization
-| Cross-database macros | generate_series               | :white_check_mark:    | custom macro provided
-| Cross-database macros | date_spine                    | :white_check_mark:    | no customization
+Для использования макросов cross-DB пространство имен teradata-utils не будет использоваться, так как макросы cross-DB были перенесены из teradata-utils в Dbt-Teradata.
 
 
-#### examples for cross DB macros
+#### Совместимость
+
+|     Группа макросов       |           Имя макроса          |         Статус        |                                 Комментарий                                |
+|:--------------------------:|:-------------------------------:|:---------------------:|:----------------------------------------------------------------------:|
+| Макросы Cross-database     | current_timestamp               | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | dateadd                         | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | datediff                        | :white_check_mark:    | предоставлен пользовательский макрос, см. [замечание о совместимости](#datediff) |
+| Макросы Cross-database     | split_part                      | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | date_trunc                      | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | hash                            | :white_check_mark:    | предоставлен пользовательский макрос, см. [замечание о совместимости](#hash) |
+| Макросы Cross-database     | replace                         | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | type_string                     | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | last_day                        | :white_check_mark:    | не требуется настройка, см. [замечание о совместимости](#last_day)     |
+| Макросы Cross-database     | width_bucket                    | :white_check_mark:    | не требуется настройка                                                |
+| Макросы Cross-database     | generate_series                 | :white_check_mark:    | предоставлен пользовательский макрос                                   |
+| Макросы Cross-database     | date_spine                      | :white_check_mark:    | не требуется настройка                                                |
+
+
+#### Примеры макросов Cross DB
   ##### <a name="replace"></a>replace
   \{\{ dbt.replace("string_text_column", "old_chars", "new_chars") \}\}
   \{\{ replace('abcgef', 'g', 'd') \}\}
@@ -206,52 +206,51 @@ For using cross-DB macros, teradata-utils as a macro namespace will not be used,
   \{\{ dbt.date_trunc("DD", "'2018-01-05 12:00:00'") \}\}
 
   ##### <a name="datediff"></a>datediff
-  `datediff` macro in teradata supports difference between dates. Differece between timestamps is not supported.
+  Макрос `datediff` в teradata поддерживает разницу между датами. Разница между временными метками не поддерживается.
 
   ##### <a name="hash"></a>hash
 
-  `Hash` macro needs an `md5` function implementation. Teradata doesn't support `md5` natively. You need to install a User Defined Function (UDF):
-  1. Download the md5 UDF implementation from Teradata (registration required): https://downloads.teradata.com/download/extensibility/md5-message-digest-udf.
-  1. Unzip the package and go to `src` directory.
-  1. Start up `bteq` and connect to your database.
-  1. Create database `GLOBAL_FUNCTIONS` that will host the UDF. You can't change the database name as it's hardcoded in the macro:
+  Макрос `Hash` требует реализации функции `md5`. Teradata не поддерживает `md5` нативно. Вам нужно установить пользовательскую определяемую функцию (UDF):
+  1. Скачайте реализацию UDF md5 от Teradata (требуется регистрация): https://downloads.teradata.com/download/extensibility/md5-message-digest-udf.
+  1. Распакуйте пакет и перейдите в каталог `src`.
+  1. Запустите `bteq` и подключитесь к вашей базе данных.
+  1. Создайте базу данных `GLOBAL_FUNCTIONS`, которая будет размещать UDF. Вы не можете изменить имя базы данных, так как оно жестко закодировано в макросе:
       ```sql
       CREATE DATABASE GLOBAL_FUNCTIONS AS PERMANENT = 60e6, SPOOL = 120e6;
       ```
-  1. Create the UDF. Replace `<CURRENT_USER>` with your current database user:
+  1. Создайте UDF. Замените `<CURRENT_USER>` на вашего текущего пользователя базы данных:
       ```sql
       GRANT CREATE FUNCTION ON GLOBAL_FUNCTIONS TO <CURRENT_USER>;
       DATABASE GLOBAL_FUNCTIONS;
       .run file = hash_md5.btq
       ```
-  1. Grant permissions to run the UDF with grant option.
+  1. Предоставьте разрешения на выполнение UDF с опцией предоставления.
       ```sql
       GRANT EXECUTE FUNCTION ON GLOBAL_FUNCTIONS TO PUBLIC WITH GRANT OPTION;
       ```
   ##### <a name="last_day"></a>last_day
 
-  `last_day` in `teradata_utils`, unlike the corresponding macro in `dbt_utils`, doesn't support `quarter` datepart.
+  `last_day` в `teradata_utils`, в отличие от соответствующего макроса в `dbt_utils`, не поддерживает `quarter` datepart.
 
 <VersionBlock firstVersion="1.8">
 
-dbt-teradata 1.8.0 and later versions support unit tests, enabling you to validate SQL models and logic with a small set of static inputs before going to production. This feature enhances test-driven development and boosts developer efficiency and code reliability. Learn more about dbt unit tests [here](/docs/build/unit-tests).
-
+dbt-teradata 1.8.0 и более поздние версии поддерживают модульные тесты, позволяя вам проверять SQL-модели и логику с помощью небольшого набора статических входных данных перед переходом в продукцию. Эта функция улучшает разработку через тестирование и повышает эффективность разработчиков и надежность кода. Узнайте больше о модульных тестах dbt [здесь](/docs/build/unit-tests).
 
 </VersionBlock>
 
-## Limitations
+## Ограничения
 
-### Transaction mode
-Both ANSI and TERA modes are now supported in dbt-teradata. TERA mode's support is introduced with dbt-teradata 1.7.1, it is an initial implementation.
+### Режим транзакции
+Оба режима ANSI и TERA теперь поддерживаются в dbt-teradata. Поддержка режима TERA была введена с dbt-teradata 1.7.1, это начальная реализация.
 
-:::info TERA transaction mode
-This is an initial implementation of the TERA transaction mode and may not support some use cases. We highly recommend validating all records or transformations using this mode to avoid unexpected issues or errors.
+:::info Режим транзакции TERA
+Это начальная реализация режима транзакции TERA и может не поддерживать некоторые случаи использования. Мы настоятельно рекомендуем проверять все записи или преобразования, используя этот режим, чтобы избежать неожиданных проблем или ошибок.
 :::
 
-## Credits
+## Благодарности
 
-The adapter was originally created by [Doug Beatty](https://github.com/dbeatty10). Teradata took over the adapter in January 2022. We are grateful to Doug for founding the project and accelerating the integration of dbt + Teradata.
+Адаптер был изначально создан [Дугом Бити](https://github.com/dbeatty10). Teradata взяла на себя адаптер в январе 2022 года. Мы благодарны Дугу за основание проекта и ускорение интеграции dbt + Teradata.
 
-## License
+## Лицензия
 
-The adapter is published using Apache-2.0 License. Refer to the [terms and conditions](https://github.com/dbt-labs/dbt-core/blob/main/License.md) to understand items such as creating derivative work and the support model. 
+Адаптер опубликован под лицензией Apache-2.0. Ознакомьтесь с [условиями и положениями](https://github.com/dbt-labs/dbt-core/blob/main/License.md), чтобы понять такие моменты, как создание производных работ и модель поддержки.

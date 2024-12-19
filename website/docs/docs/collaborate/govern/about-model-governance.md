@@ -1,15 +1,15 @@
 ---
-title: "About model governance"
+title: "О управлении моделями"
 id: about-model-governance
-description: "Information about new features related to model governance"
+description: "Информация о новых функциях, связанных с управлением моделями"
 pagination_next: "docs/collaborate/govern/model-access"
 pagination_prev: null
 ---
 
-[**Model access**](model-access): Some models are mature, reusable data productions. Others are your team's implementation details on the way there. Mark models as "public" or "private," to make the distinction clear and to control who else can `ref` them.
+[**Доступ к моделям**](model-access): Некоторые модели являются зрелыми, многоразовыми данными. Другие — это детали реализации вашей команды на пути к этому. Помечайте модели как "публичные" или "приватные", чтобы сделать различие ясным и контролировать, кто еще может их `ref`.
 
-[**Model contracts**](model-contracts): Guarantee the shape of a model while it is building to avoid surprises or breaking changes for downstream queries. Explicitly define column names, data types, and constraints (as supported by your data platform).
+[**Контракты моделей**](model-contracts): Гарантируйте структуру модели во время ее построения, чтобы избежать неожиданностей или разрушающих изменений для последующих запросов. Явно определяйте имена столбцов, типы данных и ограничения (в соответствии с возможностями вашей платформы данных).
 
-[**Model versions**](model-versions): When a breaking change is unavoidable, provide a smoother upgrade pathway by creating a new version of the model. These model versions share a common reference name and can reuse properties & configurations.
+[**Версии моделей**](model-versions): Когда избежать разрушающего изменения невозможно, обеспечьте более плавный путь обновления, создав новую версию модели. Эти версии моделей имеют общее имя ссылки и могут повторно использовать свойства и конфигурации.
 
-[**Project dependencies**](/docs/collaborate/govern/project-dependencies): Use cross project dependencies to reference public models across dbt projects using the [two-argument ref](/reference/dbt-jinja-functions/ref#ref-project-specific-models), which includes the project name.
+[**Зависимости проекта**](/docs/collaborate/govern/project-dependencies): Используйте кросс-проектные зависимости для ссылки на публичные модели в разных проектах dbt, используя [референс с двумя аргументами](/reference/dbt-jinja-functions/ref#ref-project-specific-models), который включает имя проекта.

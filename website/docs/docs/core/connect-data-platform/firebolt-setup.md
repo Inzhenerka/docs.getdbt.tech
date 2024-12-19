@@ -1,13 +1,13 @@
 ---
-title: "Firebolt setup"
-description: "Read this guide to learn about the Firebolt warehouse setup in dbt."
+title: "Настройка Firebolt"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Firebolt в dbt."
 meta:
   maintained_by: Firebolt
   authors: 'Firebolt'
   github_repo: 'firebolt-db/dbt-firebolt'
   pypi_package: 'dbt-firebolt'
   min_core_version: 'v1.1.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-firebolt'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03K2PTHHTP'
@@ -16,7 +16,7 @@ meta:
 ---
 
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for the repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом репозитория, указанного ниже.
 
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
@@ -25,12 +25,12 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 
 
-For other information including Firebolt feature support, see the [GitHub README](https://github.com/firebolt-db/dbt-firebolt/blob/main/README.md) and the [changelog](https://github.com/firebolt-db/dbt-firebolt/blob/main/CHANGELOG.md).
+Для получения другой информации, включая поддержку функций Firebolt, смотрите [README на GitHub](https://github.com/firebolt-db/dbt-firebolt/blob/main/README.md) и [журнал изменений](https://github.com/firebolt-db/dbt-firebolt/blob/main/CHANGELOG.md).
 
 
-## Connecting to Firebolt
+## Подключение к Firebolt
 
-To connect to Firebolt from dbt, you'll need to add a [profile](https://docs.getdbt.com/docs/core/connection-profiles) to your `profiles.yml` file. A Firebolt profile conforms to the following syntax:
+Чтобы подключиться к Firebolt из dbt, вам нужно добавить [профиль](https://docs.getdbt.com/docs/core/connection-profiles) в ваш файл `profiles.yml`. Профиль Firebolt соответствует следующему синтаксису:
 
 <File name='profiles.yml'>
 
@@ -47,41 +47,41 @@ To connect to Firebolt from dbt, you'll need to add a [profile](https://docs.get
       account_name: "<account-name>"
       schema: <tablename-prefix>
       threads: 1
-      #optional fields
+      #опциональные поля
       host: "<hostname>"
 ```
 
 </File>
 
 
-#### Description of Firebolt Profile Fields
+#### Описание полей профиля Firebolt
 
-To specify values as environment variables, use the format `{{ env_var('<variable_name>' }}`. For example, `{{ env_var('DATABASE_NAME' }}`.
+Чтобы указать значения в виде переменных окружения, используйте формат `{{ env_var('<variable_name>' }}`. Например, `{{ env_var('DATABASE_NAME' }}`.
 
-| Field                    | Description |
+| Поле                     | Описание |
 |--------------------------|--------------------------------------------------------------------------------------------------------|
-| `type`                   | This must be included either in `profiles.yml` or in the `dbt_project.yml` file. Must be set to `firebolt`. |
-| `client_id`                   | Required. Your [service account](https://docs.firebolt.io/godocs/Guides/managing-your-organization/service-accounts.html) id. |
-| `client_secret`               | Required. The secret associated with the specified `client_id`. |
-| `database`               | Required. The name of the Firebolt database to connect to. |
-| `engine_name`            | Required in version 0.21.10 and later. Optional in earlier versions. The name (not the URL) of the Firebolt engine to use in the specified `database`. This must be a general purpose read-write engine and the engine must be running. If omitted in earlier versions, the default engine for the specified `database` is used. |
-| `account_name`           | Required. Specifies the account name under which the specified `database` exists. |
-| `schema`                 | Recommended. A string to add as a prefix to the names of generated tables when using the [custom schemas workaround](https://docs.getdbt.com/reference/warehouse-profiles/firebolt-profile#supporting-concurrent-development). |
-| `threads`                | Required. Set to higher number to improve performance. |
-| `host`                   | Optional. The host name of the connection. For all customers it is `api.app.firebolt.io`, which will be used if omitted. |
+| `type`                   | Это должно быть указано либо в `profiles.yml`, либо в файле `dbt_project.yml`. Должно быть установлено на `firebolt`. |
+| `client_id`                   | Обязательно. Ваш [идентификатор сервисного аккаунта](https://docs.firebolt.io/godocs/Guides/managing-your-organization/service-accounts.html). |
+| `client_secret`               | Обязательно. Секрет, связанный с указанным `client_id`. |
+| `database`               | Обязательно. Имя базы данных Firebolt, к которой нужно подключиться. |
+| `engine_name`            | Обязательно в версии 0.21.10 и позже. Опционально в более ранних версиях. Имя (не URL) движка Firebolt, который нужно использовать в указанной `database`. Это должен быть универсальный движок с возможностью чтения и записи, и он должен быть запущен. Если не указано в более ранних версиях, используется движок по умолчанию для указанной `database`. |
+| `account_name`           | Обязательно. Указывает имя аккаунта, под которым существует указанная `database`. |
+| `schema`                 | Рекомендуется. Строка, добавляемая в качестве префикса к именам создаваемых таблиц при использовании [обходного решения с пользовательскими схемами](https://docs.getdbt.com/reference/warehouse-profiles/firebolt-profile#supporting-concurrent-development). |
+| `threads`                | Обязательно. Установите более высокое значение для повышения производительности. |
+| `host`                   | Опционально. Имя хоста подключения. Для всех клиентов это `api.app.firebolt.io`, которое будет использоваться, если не указано. |
 
 
-#### Troubleshooting Connections
+#### Устранение неполадок при подключении
 
-If you encounter issues connecting to Firebolt from dbt, make sure the following criteria are met:
-- You must have adequate permissions to access the engine and the database.
-- Your service account must be attached to a user.
-- The engine must be running.
+Если вы столкнулись с проблемами подключения к Firebolt из dbt, убедитесь, что выполнены следующие условия:
+- У вас должны быть достаточные права для доступа к движку и базе данных.
+- Ваш сервисный аккаунт должен быть привязан к пользователю.
+- Движок должен быть запущен.
 
 
-## Supporting Concurrent Development
+## Поддержка параллельной разработки
 
-In dbt, database schemas are used to compartmentalize developer environments so that concurrent development does not cause <Term id="table" /> name collisions. Firebolt, however, does not currently support database schemas (it is on the roadmap). To work around this, we recommend that you add the following macro to your project. This macro will take the `schema` field of your `profiles.yml` file and use it as a table name prefix.
+В dbt схемы баз данных используются для разделения сред разработчиков, чтобы параллельная разработка не вызывала конфликтов имен <Term id="table" />. Однако Firebolt в настоящее время не поддерживает схемы баз данных (это в планах). Чтобы обойти это, мы рекомендуем добавить следующий макрос в ваш проект. Этот макрос возьмет поле `schema` из вашего файла `profiles.yml` и использует его в качестве префикса для имен таблиц.
 
 ```sql
 -- macros/generate_alias_name.sql
@@ -94,6 +94,6 @@ In dbt, database schemas are used to compartmentalize developer environments so 
 {%- endmacro %}
 ```
 
-For an example of how this works, let’s say Shahar and Eric are both working on the same project.
+Для примера, как это работает, предположим, что Шахар и Эрик оба работают над одним проектом.
 
-In her `.dbt/profiles.yml`, Sharar sets `schema=sh`, whereas Eric sets `schema=er` in his. When each runs the `customers` model, the models will land in the database as tables named `sh_customers` and `er_customers`, respectively. When running dbt in production, you would use yet another `profiles.yml` with a string of your choice.
+В своем `.dbt/profiles.yml` Шахар устанавливает `schema=sh`, в то время как Эрик устанавливает `schema=er` в своем. Когда каждый из них запускает модель `customers`, модели будут сохранены в базе данных как таблицы с именами `sh_customers` и `er_customers` соответственно. При запуске dbt в производственной среде вы бы использовали еще один `profiles.yml` с выбранной вами строкой.

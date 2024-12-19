@@ -1,13 +1,13 @@
 ---
-title: "BigQuery setup"
-description: "Read this guide to learn about the BigQuery warehouse setup in dbt."
+title: "Настройка BigQuery"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища BigQuery в dbt."
 meta:
   maintained_by: dbt Labs
   authors: 'core dbt maintainers'
   github_repo: 'dbt-labs/dbt-bigquery'
   pypi_package: 'dbt-bigquery'
   min_core_version: 'v0.10.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-bigquery'
   slack_channel_link: 'https://getdbt.slack.com/archives/C99SNSRTK'
@@ -15,34 +15,33 @@ meta:
   config_page: '/reference/resource-configs/bigquery-configs'
 ---
 
-
 <Snippet path="warehouse-setups-cloud-callout" />
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Authentication Methods
+## Методы аутентификации
 
-BigQuery targets can be specified using one of four methods:
+Цели BigQuery могут быть указаны с использованием одного из четырех методов:
 
-1. [OAuth via `gcloud`](#oauth-via-gcloud)
-2. [OAuth token-based](#oauth-token-based)
-3. [service account file](#service-account-file)
-4. [service account json](#service-account-json)
+1. [OAuth через `gcloud`](#oauth-via-gcloud)
+2. [На основе токена OAuth](#oauth-token-based)
+3. [файл учетной записи службы](#service-account-file)
+4. [json учетной записи службы](#service-account-json)
 
-For local development, we recommend using the OAuth method. If you're scheduling dbt on a server, you should use the service account auth method instead.
+Для локальной разработки мы рекомендуем использовать метод OAuth. Если вы планируете запускать dbt на сервере, вместо этого следует использовать метод аутентификации с учетной записью службы.
 
-BigQuery targets should be set up using the following configuration in your `profiles.yml` file. There are a number of [optional configurations](#optional-configurations) you may specify as well.
+Цели BigQuery должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`. Также вы можете указать ряд [необязательных конфигураций](#optional-configurations).
 
-### OAuth via gcloud
+### OAuth через gcloud
 
-This connection method requires [local OAuth via `gcloud`](#local-oauth-gcloud-setup).
+Этот метод подключения требует [локальной аутентификации OAuth через `gcloud`](#local-oauth-gcloud-setup).
 
 <File name='~/.dbt/profiles.yml'>
 
 ```yaml
-# Note that only one of these targets is required
+# Обратите внимание, что требуется только одна из этих целей
 
 my-bigquery-db:
   target: dev
@@ -51,24 +50,24 @@ my-bigquery-db:
       type: bigquery
       method: oauth
       project: GCP_PROJECT_ID
-      dataset: DBT_DATASET_NAME # You can also use "schema" here
-      threads: 4 # Must be a value of 1 or greater 
+      dataset: DBT_DATASET_NAME # Вы также можете использовать "schema" здесь
+      threads: 4 # Должно быть значение 1 или больше 
       [OPTIONAL_CONFIG](#optional-configurations): VALUE
 ```
 
 </File>
 
-**Default project**
+**Проект по умолчанию**
 
-If you do not specify a `project`/`database` and are using the `oauth` method, dbt will use the default `project` associated with your user, as defined by `gcloud config set`.
+Если вы не укажете `project`/`database` и используете метод `oauth`, dbt будет использовать проект по умолчанию, связанный с вашим пользователем, как определено в `gcloud config set`.
 
-### OAuth Token-Based
+### На основе токена OAuth
 
-See [docs](https://developers.google.com/identity/protocols/oauth2) on using OAuth 2.0 to access Google APIs.
+Смотрите [документацию](https://developers.google.com/identity/protocols/oauth2) о том, как использовать OAuth 2.0 для доступа к Google API.
 
-#### Refresh token
+#### Токен обновления
 
-Using the refresh token and client information, dbt will mint new access tokens as necessary.
+Используя токен обновления и информацию о клиенте, dbt будет создавать новые токены доступа по мере необходимости.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -80,8 +79,8 @@ my-bigquery-db:
       type: bigquery
       method: oauth-secrets
       project: GCP_PROJECT_ID
-      dataset: DBT_DATASET_NAME # You can also use "schema" here
-      threads: 4 # Must be a value of 1 or greater
+      dataset: DBT_DATASET_NAME # Вы также можете использовать "schema" здесь
+      threads: 4 # Должно быть значение 1 или больше
       refresh_token: TOKEN
       client_id: CLIENT_ID
       client_secret: CLIENT_SECRET
@@ -91,9 +90,9 @@ my-bigquery-db:
 
 </File>
 
-#### Temporary token
+#### Временный токен
 
-dbt will use the one-time access token, no questions asked. This approach makes sense if you have an external deployment process that can mint new access tokens and update the profile file accordingly.
+dbt будет использовать одноразовый токен доступа без дополнительных вопросов. Этот подход имеет смысл, если у вас есть внешний процесс развертывания, который может создавать новые токены доступа и обновлять файл профиля соответственно.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -105,16 +104,15 @@ my-bigquery-db:
       type: bigquery
       method: oauth-secrets
       project: GCP_PROJECT_ID
-      dataset: DBT_DATASET_NAME # You can also use "schema" here
-      threads: 4 # Must be a value of 1 or greater
-      token: TEMPORARY_ACCESS_TOKEN # refreshed + updated by external process
+      dataset: DBT_DATASET_NAME # Вы также можете использовать "schema" здесь
+      threads: 4 # Должно быть значение 1 или больше
+      token: TEMPORARY_ACCESS_TOKEN # обновляется + обновляется внешним процессом
       [OPTIONAL_CONFIG](#optional-configurations): VALUE
 ```
 
 </File>
 
-
-### Service Account File
+### Файл учетной записи службы
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -127,22 +125,20 @@ my-bigquery-db:
       method: service-account
       project: GCP_PROJECT_ID
       dataset: DBT_DATASET_NAME
-      threads: 4 # Must be a value of 1 or greater
+      threads: 4 # Должно быть значение 1 или больше
       keyfile: /PATH/TO/BIGQUERY/keyfile.json
       [OPTIONAL_CONFIG](#optional-configurations): VALUE
 ```
 
 </File>
 
-### Service Account JSON
+### JSON учетной записи службы
 
-:::caution Note
+:::caution Примечание
 
-This authentication method is only recommended for production environments where using a Service Account Keyfile is impractical.
+Этот метод аутентификации рекомендуется только для производственных сред, где использование файла ключа учетной записи службы непрактично.
 
 :::
-
-
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -155,10 +151,10 @@ my-bigquery-db:
       method: service-account-json
       project: GCP_PROJECT_ID
       dataset: DBT_DATASET_NAME
-      threads: 4 # Must be a value of 1 or greater
+      threads: 4 # Должно быть значение 1 или больше
       [OPTIONAL_CONFIG](#optional-configurations): VALUE
 
-      # These fields come from the service account json keyfile
+      # Эти поля берутся из файла ключа учетной записи службы в формате json
       keyfile_json:
         type: xxx
         project_id: xxx
@@ -175,11 +171,11 @@ my-bigquery-db:
 
 </File>
 
-## Optional configurations
+## Необязательные конфигурации
 
-### Priority
+### Приоритет
 
-The `priority` for the BigQuery jobs that dbt executes can be configured with the `priority` configuration in your BigQuery profile. The `priority` field can be set to one of `batch` or `interactive`. For more information on query priority, consult the [BigQuery documentation](https://cloud.google.com/bigquery/docs/running-queries).
+`priority` для заданий BigQuery, которые выполняет dbt, можно настроить с помощью конфигурации `priority` в вашем профиле BigQuery. Поле `priority` может быть установлено на одно из значений `batch` или `interactive`. Для получения дополнительной информации о приоритете запросов обратитесь к [документации BigQuery](https://cloud.google.com/bigquery/docs/running-queries).
 
 ```yaml
 my-profile:
@@ -193,37 +189,37 @@ my-profile:
       priority: interactive
 ```
 
-### Timeouts and Retries
+### Таймауты и повторы
 
-The `dbt-bigquery` plugin uses the BigQuery Python client library to submit queries. Each query requires two steps:
-1. Job creation: Submit the query job to BigQuery, and receive its job ID.
-2. Job execution: Wait for the query job to finish executing, and receive its result.
+Плагин `dbt-bigquery` использует библиотеку клиента Python BigQuery для отправки запросов. Каждый запрос требует двух этапов:
+1. Создание задания: отправка задания запроса в BigQuery и получение его идентификатора задания.
+2. Выполнение задания: ожидание завершения выполнения задания запроса и получение его результата.
 
-Some queries inevitably fail, at different points in process. To handle these cases, dbt supports <Term id="grain">fine-grained</Term> configuration for query timeouts and retries.
+Некоторые запросы неизбежно терпят неудачу на разных этапах процесса. Чтобы справиться с этими случаями, dbt поддерживает <Term id="grain">тонкую</Term> настройку таймаутов и повторов запросов.
 
 #### job_execution_timeout_seconds
 
-Use the `job_execution_timeout_seconds` configuration to set the number of seconds dbt should wait for queries to complete, after being submitted successfully. Of the four configurations that control timeout and retries, this one is the most common to use.
+Используйте конфигурацию `job_execution_timeout_seconds`, чтобы установить количество секунд, которые dbt должен ждать завершения запросов после их успешной отправки. Из четырех конфигураций, которые контролируют таймауты и повторы, эта является наиболее распространенной.
 
-:::info Renamed config
+:::info Переименованная конфигурация
 
-In older versions of `dbt-bigquery`, this same config was called `timeout_seconds`.
-
-:::
-  
-No timeout is set by default. (For historical reasons, some query types use a default of 300 seconds when the `job_execution_timeout_seconds` configuration is not set). When you do set the `job_execution_timeout_seconds`, if any dbt query takes more than 300 seconds to finish, the dbt-bigquery adapter will run into an exception:
-
-```
- Operation did not complete within the designated timeout.
-```
-
-:::caution Note
-
-The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. So, if dbt-bigquery ran into an exception at 300 seconds, the actual BigQuery job could still be running for the time set in BigQuery's own timeout settings.
+В более ранних версиях `dbt-bigquery` эта же конфигурация называлась `timeout_seconds`.
 
 :::
-  
-You can change the timeout seconds for the job execution step by configuring `job_execution_timeout_seconds` in the BigQuery profile:
+
+По умолчанию таймаут не установлен. (По историческим причинам некоторые типы запросов используют значение по умолчанию 300 секунд, если конфигурация `job_execution_timeout_seconds` не установлена). Когда вы устанавливаете `job_execution_timeout_seconds`, если какой-либо запрос dbt занимает более 300 секунд для завершения, адаптер dbt-bigquery вызовет исключение:
+
+```
+ Операция не завершилась в установленный таймаут.
+```
+
+:::caution Примечание
+
+`job_execution_timeout_seconds` представляет собой количество секунд, которые нужно ждать для [основного HTTP-транспорта](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). Это _не_ представляет собой максимальное допустимое время для самого задания BigQuery. Таким образом, если dbt-bigquery столкнется с исключением на 300 секундах, фактическое задание BigQuery все еще может выполняться в течение времени, установленного в собственных настройках таймаута BigQuery.
+
+:::
+
+Вы можете изменить количество секунд таймаута для этапа выполнения задания, настроив `job_execution_timeout_seconds` в профиле BigQuery:
 
 ```yaml
 my-profile:
@@ -234,32 +230,32 @@ my-profile:
       method: oauth
       project: abc-123
       dataset: my_dataset
-      job_execution_timeout_seconds: 600 # 10 minutes
+      job_execution_timeout_seconds: 600 # 10 минут
 ```
 
 #### job_creation_timeout_seconds
 
-It is also possible for a query job to fail to submit in the first place. You can configure the maximum timeout for the job creation step by configuring  `job_creation_timeout_seconds`. No timeout is set by default.
+Также возможно, что задание запроса не удастся отправить с самого начала. Вы можете настроить максимальный таймаут для этапа создания задания, настроив `job_creation_timeout_seconds`. По умолчанию таймаут не установлен.
 
-In the job creation step, dbt is simply submitting a query job to BigQuery's `Jobs.Insert` API, and receiving a query job ID in return. It should take a few seconds at most. In some rare situations, it could take longer.
+На этапе создания задания dbt просто отправляет задание запроса в API `Jobs.Insert` BigQuery и получает идентификатор задания запроса в ответ. Это должно занять не более нескольких секунд. В некоторых редких ситуациях это может занять больше времени.
 
 #### job_retries
 
-Google's BigQuery Python client has native support for retrying query jobs that time out, or queries that run into transient errors and are likely to succeed if run again. You can configure the maximum number of retries by configuring `job_retries`.
+Клиент Python BigQuery от Google имеет встроенную поддержку повторных попыток для заданий запросов, которые истекают по времени, или запросов, которые сталкиваются с временными ошибками и, вероятно, будут успешными при повторном запуске. Вы можете настроить максимальное количество повторов, настроив `job_retries`.
 
-:::info Renamed config
+:::info Переименованная конфигурация
 
-In older versions of `dbt-bigquery`, the `job_retries` config was just called `retries`.
+В более ранних версиях `dbt-bigquery` конфигурация `job_retries` просто называлась `retries`.
 
 :::
 
-The default value is 1, meaning that dbt will retry failing queries exactly once. You can set the configuration to 0 to disable retries entirely.
+Значение по умолчанию равно 1, что означает, что dbt повторит неудачные запросы ровно один раз. Вы можете установить конфигурацию в 0, чтобы полностью отключить повторы.
 
 #### job_retry_deadline_seconds
 
-After a query job times out, or encounters a transient error, dbt will wait one second before retrying the same query. In cases where queries are repeatedly timing out, this can add up to a long wait. You can set the `job_retry_deadline_seconds` configuration to set the total number of seconds you're willing to wait ("deadline") while retrying the same query. If dbt hits the deadline, it will give up and return an error.
+После того как задание запроса истекает по времени или сталкивается с временной ошибкой, dbt будет ждать одну секунду перед повторной попыткой того же запроса. В случаях, когда запросы постоянно истекают по времени, это может привести к длительному ожиданию. Вы можете установить конфигурацию `job_retry_deadline_seconds`, чтобы установить общее количество секунд, которые вы готовы ждать ("срок"), пока повторяете тот же запрос. Если dbt достигнет срока, он сдается и возвращает ошибку.
 
-Combining the four configurations above, we can maximize our chances of mitigating intermittent query errors. In the example below, we will wait up to 30 seconds for initial job creation. Then, we'll wait up to 10 minutes (600 seconds) for the query to return results. If the query times out, or encounters a transient error, we will retry it up to 5 times. The whole process cannot take longer than 20 minutes (1200 seconds). At that point, dbt will raise an error.
+Объединив четыре вышеуказанные конфигурации, мы можем максимизировать наши шансы на смягчение периодических ошибок запросов. В приведенном ниже примере мы будем ждать до 30 секунд для первоначального создания задания. Затем мы будем ждать до 10 минут (600 секунд) для получения результатов запроса. Если запрос истекает по времени или сталкивается с временной ошибкой, мы повторим его до 5 раз. Весь процесс не может занять более 20 минут (1200 секунд). В этот момент dbt вызовет ошибку.
 
 <File name='profiles.yml'>
 
@@ -281,12 +277,10 @@ my-profile:
 
 </File>
 
+### Местоположения наборов данных
 
-### Dataset locations
-
-The location of BigQuery datasets can be configured using the `location` configuration in a BigQuery profile.
-`location` may be either a multi-regional location (e.g. `EU`, `US`), or a regional location (e.g. `us-west2` ) as per [the BigQuery documentation](https://cloud.google.com/bigquery/docs/locations) describes.
-Example:
+Местоположение наборов данных BigQuery можно настроить с помощью конфигурации `location` в профиле BigQuery. `location` может быть либо много региональным местоположением (например, `EU`, `US`), либо региональным местоположением (например, `us-west2`), как описано в [документации BigQuery](https://cloud.google.com/bigquery/docs/locations).
+Пример:
 
 ```yaml
 my-profile:
@@ -297,16 +291,12 @@ my-profile:
       method: oauth
       project: abc-123
       dataset: my_dataset
-      location: US # Optional, one of US or EU, or a regional location
+      location: US # Необязательно, одно из US или EU, или региональное местоположение
 ```
 
-### Maximum Bytes Billed
+### Максимальные выставленные счета в байтах
 
-When a `maximum_bytes_billed` value is configured for a BigQuery profile,
-queries executed by dbt will fail if they exceed the configured maximum bytes
-threshhold. This configuration should be supplied as an integer number
-of bytes.
-
+Когда для профиля BigQuery настроено значение `maximum_bytes_billed`, запросы, выполняемые dbt, будут завершаться с ошибкой, если они превышают установленный максимальный порог в байтах. Эта конфигурация должна быть указана в виде целого числа байтов.
 
 ```yaml
 my-profile:
@@ -317,22 +307,22 @@ my-profile:
       method: oauth
       project: abc-123
       dataset: my_dataset
-      # If a query would bill more than a gigabyte of data, then
-      # BigQuery will reject the query
+      # Если запрос будет выставлен более чем за гигабайт данных, то
+      # BigQuery отклонит запрос
       maximum_bytes_billed: 1000000000
 ```
 
-**Example output**
+**Пример вывода**
 
 ```
-Database Error in model debug_table (models/debug_table.sql)
-  Query exceeded limit for bytes billed: 1000000000. 2000000000 or higher required.
-  compiled SQL at target/run/bq_project/models/debug_table.sql
+Ошибка базы данных в модели debug_table (models/debug_table.sql)
+  Запрос превысил лимит по выставленным счетам: 1000000000. Требуется 2000000000 или больше.
+  скомпилированный SQL в target/run/bq_project/models/debug_table.sql
 ```
 
-### OAuth 2.0 Scopes for Google APIs
+### OAuth 2.0 области для Google API
 
-By default, the BigQuery connector requests three OAuth scopes, namely `https://www.googleapis.com/auth/bigquery`, `https://www.googleapis.com/auth/cloud-platform`, and `https://www.googleapis.com/auth/drive`. These scopes were originally added to provide access for the models that are reading from Google Sheets. However, in some cases, a user may need to customize the default scopes (for example, to reduce them down to the minimal set needed). By using the `scopes` profile configuration you are able to set up your own OAuth scopes for dbt. Example:
+По умолчанию коннектор BigQuery запрашивает три области OAuth, а именно `https://www.googleapis.com/auth/bigquery`, `https://www.googleapis.com/auth/cloud-platform` и `https://www.googleapis.com/auth/drive`. Эти области были изначально добавлены для предоставления доступа к моделям, которые читают данные из Google Sheets. Однако в некоторых случаях пользователю может потребоваться настроить области по умолчанию (например, чтобы сократить их до минимально необходимых). Используя конфигурацию профиля `scopes`, вы можете настроить свои собственные области OAuth для dbt. Пример:
 
 ```yaml
 my-profile:
@@ -347,9 +337,9 @@ my-profile:
         - https://www.googleapis.com/auth/bigquery
 ```
 
-### Service Account Impersonation
+### Имитация учетной записи службы
 
-This feature allows users authenticating via local OAuth to access BigQuery resources based on the permissions of a service account.
+Эта функция позволяет пользователям, аутентифицирующимся через локальный OAuth, получать доступ к ресурсам BigQuery на основе разрешений учетной записи службы.
 
 ```yaml
 my-profile:
@@ -363,18 +353,18 @@ my-profile:
       impersonate_service_account: dbt-runner@yourproject.iam.gserviceaccount.com
 ```
 
-For a general overview of this process, see the official docs for [Creating Short-lived Service Account Credentials](https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials).
+Для общего обзора этого процесса смотрите официальную документацию по [Созданию краткосрочных учетных данных учетной записи службы](https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials).
 
 <FAQ path="Warehouse/bq-impersonate-service-account-why" />
 <FAQ path="Warehouse/bq-impersonate-service-account-setup" />
 
-### Execution project
+### Исполнительный проект
 
-By default, dbt will use the specified `project`/`database` as both:
-1. The location to materialize resources (models, seeds, snapshots, etc), unless they specify a custom `project`/`database` config
-2. The GCP project that receives the bill for query costs or slot usage
+По умолчанию dbt будет использовать указанный `project`/`database` как:
+1. Место для материализации ресурсов (моделей, семян, снимков и т. д.), если они не указывают пользовательскую конфигурацию `project`/`database`
+2. Проект GCP, который получает счет за затраты на запросы или использование слотов
 
-Optionally, you may specify an `execution_project` to bill for query execution, instead of the `project`/`database` where you materialize most resources.
+При желании вы можете указать `execution_project`, чтобы выставлять счета за выполнение запросов, вместо `project`/`database`, где вы материализуете большинство ресурсов.
 
 ```yaml
 my-profile:
@@ -388,35 +378,13 @@ my-profile:
       execution_project: buck-stops-here-456
 ```
 
-### Quota project
-
-By default, dbt will use the `quota_project_id` set within the credentials of the account you are using to authenticate to BigQuery.
-
-Optionally, you may specify `quota_project` to bill for query execution instead of the default quota project specified for the account from the environment.
-
-This can sometimes be required when impersonating service accounts that do not have the BigQuery API enabled within the project in which they are defined. Without overriding the quota project, it will fail to connect.
-
-If you choose to set a quota project, the account you use to authenticate must have the `Service Usage Consumer` role on that project.
-
-```yaml
-my-profile:
-  target: dev
-  outputs:
-    dev:
-      type: bigquery
-      method: oauth
-      project: abc-123
-      dataset: my_dataset
-      quota_project: my-bq-quota-project
-```
-
-### Running Python models on Dataproc
+### Запуск моделей Python на Dataproc
 
 import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
 
 <BigQueryDataproc />
 
-Then, add the bucket name, cluster name, and cluster region to your connection profile:
+Затем добавьте имя ведра, имя кластера и регион кластера в ваш профиль подключения:
 
 ```yaml
 my-profile:
@@ -428,13 +396,13 @@ my-profile:
       project: abc-123
       dataset: my_dataset
       
-      # for dbt Python models to be run on a Dataproc cluster
+      # для запуска моделей Python dbt на кластере Dataproc
       gcs_bucket: dbt-python
       dataproc_cluster_name: dbt-python
       dataproc_region: us-central1
 ```
 
-Alternatively, Dataproc Serverless can be used:
+В качестве альтернативы можно использовать Dataproc Serverless:
 
 ```yaml
 my-profile:
@@ -446,12 +414,12 @@ my-profile:
       project: abc-123
       dataset: my_dataset
       
-      # for dbt Python models to be run on Dataproc Serverless
+      # для запуска моделей Python dbt на Dataproc Serverless
       gcs_bucket: dbt-python
       dataproc_region: us-central1
       submission_method: serverless
       dataproc_batch:
-        batch_id: MY_CUSTOM_BATCH_ID # Supported in v1.7+
+        batch_id: MY_CUSTOM_BATCH_ID # Поддерживается в v1.7+
         environment_config:
           execution_config:
             service_account: dbt@abc-123.iam.gserviceaccount.com
@@ -465,23 +433,22 @@ my-profile:
             spark.driver.memory: 1g
 ```
 
-For a full list of possible configuration fields that can be passed in `dataproc_batch`, refer to the [Dataproc Serverless Batch](https://cloud.google.com/dataproc-serverless/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.Batch) documentation.
+Для полного списка возможных полей конфигурации, которые можно передать в `dataproc_batch`, обратитесь к документации [Dataproc Serverless Batch](https://cloud.google.com/dataproc-serverless/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.Batch).
 
+## Необходимые разрешения
 
-## Required permissions
+Модель разрешений BigQuery отличается от более традиционных баз данных, таких как Snowflake и Redshift. Для учетных записей пользователей dbt требуются следующие разрешения:
+- Редактор данных BigQuery
+- Пользователь BigQuery
 
-BigQuery's permission model is dissimilar from more conventional databases like Snowflake and Redshift. The following permissions are required for dbt user accounts:
-- BigQuery Data Editor
-- BigQuery User
+Этот набор разрешений позволит пользователям dbt читать и создавать таблицы и <Term id="view">представления</Term> в проекте BigQuery.
 
-This set of permissions will permit dbt users to read from and create tables and <Term id="view">views</Term> in a BigQuery project.
+## Настройка локального OAuth gcloud
 
-## Local OAuth gcloud setup
+Чтобы подключиться к BigQuery, используя метод `oauth`, выполните следующие шаги:
 
-To connect to BigQuery using the `oauth` method, follow these steps:
-
-1. Make sure the `gcloud` command is [installed on your computer](https://cloud.google.com/sdk/downloads)
-2. Activate the application-default account with
+1. Убедитесь, что команда `gcloud` [установлена на вашем компьютере](https://cloud.google.com/sdk/downloads)
+2. Активируйте учетную запись по умолчанию приложения с помощью
 
 ```shell
 gcloud auth application-default login \
@@ -490,6 +457,6 @@ https://www.googleapis.com/auth/drive.readonly,\
 https://www.googleapis.com/auth/iam.test
 ```
 
-A browser window should open, and you should be prompted to log into your Google account. Once you've done that, dbt will use your OAuth'd credentials to connect to BigQuery!
+Должно открыться окно браузера, и вам будет предложено войти в свою учетную запись Google. После этого dbt будет использовать ваши учетные данные OAuth для подключения к BigQuery!
 
-This command uses the `--scopes` flag to request access to Google Sheets. This makes it possible to transform data in Google Sheets using dbt. If your dbt project does not transform data in Google Sheets, then you may omit the `--scopes` flag.
+Эта команда использует флаг `--scopes`, чтобы запросить доступ к Google Sheets. Это позволяет преобразовывать данные в Google Sheets с помощью dbt. Если ваш проект dbt не преобразует данные в Google Sheets, вы можете опустить флаг `--scopes`.

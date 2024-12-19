@@ -1,34 +1,30 @@
 ---
-title: "PR template"
+title: "Шаблон PR"
 id: "pr-template"
 ---
-## Configure pull request (PR) template URLs
+## Настройка URL шаблона Pull Request (PR)
 
-When you commit changes to a branch in the IDE, dbt Cloud can prompt users to open a new Pull Request for the code changes. To enable this functionality, ensure that a PR Template URL is configured in the **Repository details** page in your **Account Settings**. If this setting is blank, the IDE will prompt users to merge the changes directly into their default branch.
+Когда вы вносите изменения в ветку в IDE, dbt Cloud может предложить пользователям открыть новый Pull Request для внесенных изменений в код. Чтобы включить эту функциональность, убедитесь, что URL шаблона PR настроен на странице **Детали репозитория** в ваших **Настройках аккаунта**. Если эта настройка пуста, IDE предложит пользователям объединить изменения непосредственно в их основную ветку.
 
-<Lightbox src="/img/docs/collaborate/repo-details.jpg" width="90%" title="Configure a PR template in the 'Repository details' page." />
+<Lightbox src="/img/docs/collaborate/repo-details.jpg" width="90%" title="Настройка шаблона PR на странице 'Детали репозитория'." />
 
-### PR Template URL by git provider
+### URL шаблона PR по провайдеру git
 
-The PR Template URL setting will be automatically set for most repositories, depending on the connection method.
+Настройка URL шаблона PR будет автоматически установлена для большинства репозиториев в зависимости от метода подключения.
 
-- If you connect to your repository via in-app integrations with your git provider or the "Git Clone" method via SSH, this URL setting will be auto-populated and editable.
-  - For AWS CodeCommit, this URL setting isn't auto-populated and must be [manually configured](/docs/cloud/git/import-a-project-by-git-url#step-5-configure-pull-request-template-urls-optional).
-- If you connect via a dbt Cloud [Managed repository](/docs/collaborate/git/managed-repository), this URL will not be set, and the IDE will prompt users to merge the changes directly into their default branch.
+- Если вы подключаетесь к своему репозиторию через интеграции в приложении с вашим провайдером git или методом "Git Clone" через SSH, эта настройка URL будет автоматически заполнена и редактируемой.
+  - Для AWS CodeCommit эта настройка URL не заполняется автоматически и должна быть [настроена вручную](/docs/cloud/git/import-a-project-by-git-url#step-5-configure-pull-request-template-urls-optional).
+- Если вы подключаетесь через [Управляемый репозиторий dbt Cloud](/docs/collaborate/git/managed-repository), этот URL не будет установлен, и IDE предложит пользователям объединить изменения непосредственно в их основную ветку.
 
-The PR template URL supports two variables that can be used to build a URL string.
-These variables, `{{source}}` and `{{destination}}` return branch names based on the
-state of the configured Environment and active branch open in the IDE. The `{{source}}`
-variable represents the active development branch, and the `{{destination}}` variable
-represents the configured base branch for the environment, eg. `master`.
+URL шаблона PR поддерживает две переменные, которые можно использовать для построения строки URL. Эти переменные, `{{source}}` и `{{destination}}`, возвращают имена веток в зависимости от состояния настроенной среды и активной ветки, открытой в IDE. Переменная `{{source}}` представляет активную ветку разработки, а переменная `{{destination}}` представляет настроенную базовую ветку для среды, например, `master`.
 
-A typical PR build URL looks like:
+Типичный URL для сборки PR выглядит следующим образом:
 
 <Tabs
   defaultValue="template"
   values={[
-    { label: 'Template', value: 'template', },
-    { label: 'Rendered', value: 'rendered', },
+    { label: 'Шаблон', value: 'template', },
+    { label: 'Сформированный', value: 'rendered', },
   ]
 }>
 <TabItem value="template">
@@ -47,17 +43,16 @@ https://github.com/dbt-labs/jaffle_shop/compare/master..my-branch
 </TabItem>
 </Tabs>
 
-## Example templates
+## Примеры шаблонов
 
-Some common URL templates are provided below, but please note that the exact
-value may vary depending on your configured git provider.
+Ниже приведены некоторые общие шаблоны URL, но обратите внимание, что точное значение может варьироваться в зависимости от вашего настроенного провайдера git.
 
 ### GitHub
 ```
 https://github.com/<org>/<repo>/compare/{{destination}}..{{source}}
 ```
 
-If you're using Github Enterprise your template may look something like:
+Если вы используете Github Enterprise, ваш шаблон может выглядеть примерно так:
 
 ```
 https://git.<mycompany>.com/<org>/<repo>/compare/{{destination}}..{{source}}

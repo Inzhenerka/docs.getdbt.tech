@@ -1,35 +1,35 @@
 ---
-title: "Install with Docker"
-description: "You can use Docker to install dbt and adapter plugins from the command line."
+title: "Установка с помощью Docker"
+description: "Вы можете использовать Docker для установки dbt и адаптеров плагинов из командной строки."
 ---
 
-dbt Core and all adapter plugins maintained by dbt Labs are available as [Docker](https://docs.docker.com/) images, and distributed via [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages) in a [public registry](https://github.com/dbt-labs/dbt-core/pkgs/container/dbt-core).
+dbt Core и все адаптеры плагинов, поддерживаемые dbt Labs, доступны в виде [Docker](https://docs.docker.com/) образов и распространяются через [GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages) в [публичном реестре](https://github.com/dbt-labs/dbt-core/pkgs/container/dbt-core).
 
-Using a prebuilt Docker image to install dbt Core in production has a few benefits: it already includes dbt-core, one or more database adapters, and pinned versions of all their dependencies. By contrast, `python -m pip install dbt-core dbt-<adapter>` takes longer to run, and will always install the latest compatible versions of every dependency.
+Использование предварительно собранного Docker образа для установки dbt Core в производственной среде имеет несколько преимуществ: он уже включает dbt-core, один или несколько адаптеров баз данных и зафиксированные версии всех их зависимостей. В отличие от этого, команда `python -m pip install dbt-core dbt-<adapter>` выполняется дольше и всегда устанавливает последние совместимые версии каждой зависимости.
 
-You might also be able to use Docker to install and develop locally if you don't have a Python environment set up. Note that running dbt in this manner can be significantly slower if your operating system differs from the system that built the Docker image. If you're a frequent local developer, we recommend that you install dbt Core using [pip](/docs/core/pip-install) instead.
+Вы также можете использовать Docker для установки и разработки локально, если у вас не настроена среда Python. Обратите внимание, что запуск dbt таким образом может быть значительно медленнее, если ваша операционная система отличается от системы, на которой был собран Docker образ. Если вы часто разрабатываете локально, мы рекомендуем установить dbt Core с помощью [pip](/docs/core/pip-install).
 
-### Prerequisites
+### Предварительные требования
 
-* You've installed Docker. For more information, see the [Docker](https://docs.docker.com/) site.
-* You understand which database adapter(s) you need. For more information, see [About dbt adapters](/docs/core/installation-overview#about-dbt-data-platforms-and-adapters).
-* You understand how dbt Core is versioned. For more information, see [About dbt Core versions](/docs/dbt-versions/core).
-* You have a general understanding of the dbt, dbt workflow, developing locally in the command line interface (CLI). For more information, see [About dbt](/docs/introduction#how-do-i-use-dbt).
+* Вы установили Docker. Для получения дополнительной информации смотрите сайт [Docker](https://docs.docker.com/).
+* Вы понимаете, какие адаптеры баз данных вам нужны. Для получения дополнительной информации смотрите [О адаптерах dbt](/docs/core/installation-overview#about-dbt-data-platforms-and-adapters).
+* Вы понимаете, как версионируется dbt Core. Для получения дополнительной информации смотрите [О версиях dbt Core](/docs/dbt-versions/core).
+* У вас есть общее представление о dbt, рабочем процессе dbt, разработке локально в интерфейсе командной строки (CLI). Для получения дополнительной информации смотрите [О dbt](/docs/introduction#how-do-i-use-dbt).
 
-### Install a dbt Docker image from Github Packages
+### Установка образа dbt Docker из GitHub Packages
 
-Official dbt docker images are hosted as [packages in the `dbt-labs` GitHub organization](https://github.com/orgs/dbt-labs/packages?visibility=public). We maintain images and tags for every version of every database adapter, as well as two tags that update as new versions as released:
-- `latest`: Latest overall version of dbt-core + this adapter
-- `<Major>.<Minor>.latest`: Latest patch of dbt-core + this adapter for `<Major>.<Minor>` version family. For example, `1.1.latest` includes the latest patches for dbt Core v1.1.
+Официальные образы dbt Docker размещены в виде [пакетов в организации `dbt-labs` на GitHub](https://github.com/orgs/dbt-labs/packages?visibility=public). Мы поддерживаем образы и теги для каждой версии каждого адаптера баз данных, а также два тега, которые обновляются по мере выхода новых версий:
+- `latest`: Последняя общая версия dbt-core + этот адаптер
+- `<Major>.<Minor>.latest`: Последний патч dbt-core + этот адаптер для версии `<Major>.<Minor>`. Например, `1.1.latest` включает последние патчи для dbt Core v1.1.
 
-Install an image using the `docker pull` command:
+Установите образ с помощью команды `docker pull`:
 ```
 docker pull ghcr.io/dbt-labs/<db_adapter_name>:<version_tag>
 ```
 
-### Running a dbt Docker image in a container
+### Запуск образа dbt Docker в контейнере
 
-The `ENTRYPOINT` for dbt Docker images is the command `dbt`. You can bind-mount your project to `/usr/app` and use dbt as normal:
+`ENTRYPOINT` для образов dbt Docker — это команда `dbt`. Вы можете смонтировать ваш проект в `/usr/app` и использовать dbt как обычно:
 
 ```
 docker run \
@@ -40,7 +40,7 @@ docker run \
 ls
 ```
 
-Or 
+Или 
 
 ```
 docker run \
@@ -51,17 +51,17 @@ docker run \
 ls
 ```
 
-Notes:
-* Bind-mount sources _must_ be an absolute path
-* You may need to make adjustments to the docker networking setting depending on the specifics of your data warehouse or database host.
+Примечания:
+* Исходные пути для монтирования _должны_ быть абсолютными
+* Вам может потребоваться внести изменения в настройки сетевого взаимодействия Docker в зависимости от особенностей вашего хранилища данных или хоста базы данных.
 
-### Building your own dbt Docker image
+### Создание собственного образа dbt Docker
 
-If the pre-made images don't fit your use case, we also provide a [`Dockerfile`](https://github.com/dbt-labs/dbt-core/blob/main/docker/Dockerfile) and [`README`](https://github.com/dbt-labs/dbt-core/blob/main/docker/README.md) that can be used to build custom images in a variety of ways.
+Если готовые образы не подходят для вашего случая, мы также предоставляем [`Dockerfile`](https://github.com/dbt-labs/dbt-core/blob/main/docker/Dockerfile) и [`README`](https://github.com/dbt-labs/dbt-core/blob/main/docker/README.md), которые можно использовать для создания пользовательских образов различными способами.
 
-In particular, the Dockerfile supports building images:
-- Images that all adapters maintained by dbt Labs
-- Images that install one or more third-party adapters
-- Images against another system architecture
+В частности, Dockerfile поддерживает создание образов:
+- Образы, которые включают все адаптеры, поддерживаемые dbt Labs
+- Образы, которые устанавливают один или несколько сторонних адаптеров
+- Образы для другой архитектуры системы
 
-Please note that, if you go the route of building your own Docker images, we are unable to offer dedicated support for custom use cases. If you run into problems, you are welcome to [ask the community for help](/community/resources/getting-help) or [open an issue](/community/resources/oss-expectations#issues) in the `dbt-core` repository. If many users are requesting the same enhancement, we will tag the issue `help_wanted` and invite community contribution.
+Обратите внимание, что если вы решите создать собственные образы Docker, мы не можем предложить специализированную поддержку для пользовательских случаев. Если у вас возникнут проблемы, вы можете [попросить сообщество о помощи](/community/resources/getting-help) или [открыть проблему](/community/resources/oss-expectations#issues) в репозитории `dbt-core`. Если многие пользователи запрашивают одно и то же улучшение, мы пометим проблему тегом `help_wanted` и пригласим к участию в сообществе.

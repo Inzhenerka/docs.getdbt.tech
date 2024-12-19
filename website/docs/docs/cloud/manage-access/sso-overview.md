@@ -1,68 +1,65 @@
 ---
-title: "Single sign-on (SSO) Overview"
+title: "Обзор единого входа (SSO)"
 id: "sso-overview"
 pagination_next: "docs/cloud/manage-access/set-up-sso-saml-2.0"
 pagination_prev: null
 ---
 
-This overview explains how users are provisioned in dbt Cloud via Single Sign-On (SSO).
-dbt Cloud supports JIT (Just-in-Time) provisioning and IdP-initiated login. You can learn more about our supported options [here](https://www.getdbt.com/pricing/).
+Этот обзор объясняет, как пользователи создаются в dbt Cloud через единый вход (SSO). dbt Cloud поддерживает JIT (Just-in-Time) создание учетных записей и вход, инициированный поставщиком удостоверений (IdP). Вы можете узнать больше о наших поддерживаемых вариантах [здесь](https://www.getdbt.com/pricing/).
 
-## Prerequisites
+## Предварительные условия
 
-- You have a dbt Cloud account enrolled in the Enterprise plan. [Contact us](mailto:sales@getdbt.com) to learn more and enroll.
+- У вас есть учетная запись dbt Cloud, зарегистрированная в корпоративном плане. [Свяжитесь с нами](mailto:sales@getdbt.com), чтобы узнать больше и зарегистрироваться.
 
-## Auth0 URIs
+## URIs Auth0
 
 <Snippet path="auth0-uri" />
 
-## SSO process
+## Процесс SSO
 
-The diagram below explains the basic process by which users are provisioned in dbt Cloud upon logging in with SSO.
+Диаграмма ниже объясняет основной процесс, по которому пользователи создаются в dbt Cloud при входе с помощью SSO.
 
-<Lightbox src="/img/sso_overview.png" title="SSO diagram" />
+<Lightbox src="/img/sso_overview.png" title="Диаграмма SSO" />
 
-#### Diagram Explanation
+#### Объяснение диаграммы
 
-- **Login Page**: The user accesses the dbt Cloud login page, initiating the SSO flow.
-- **IdP-Initiated Login**: The user accesses the dbt Cloud login page within the Identity Provider by selecting the dbt Cloud application. This will begin the IdP login flow.
-- **IdP Login Page**: The user is prompted to login to the Identity Provider. This will grant the dbt Cloud application access to the details of their account.
-- **Login?**: The user can choose to continue or to abort the login process.
-  - **Yes**: The user logs in, grants the dbt Cloud application, and continues.
-  - **No**: The user does not log in. They return to the IdP login page.
-- **User Exists?**: This step checks if the user already exist in dbt Cloud's user database.
-  - **Yes**: If so, skip the user creation process
-  - **No**: If so, create a new entry in the dbt Cloud database for the new user.
-- **Create dbt Cloud User**: This will create a new entry in the dbt Cloud database for the new user. This user record contains the user's email address, first and last name, and any IdP attributes (e.g. groups) passed along from the Identity Provider.
-- **Attach Matching Accounts**: dbt Cloud find all of the accounts configured to match the SSO config used by this user to log in, and then create a user license record mapping the user to the account. This step will also delete any licenses that the user should not have based on the current SSO config.
-- **Attach Matching Permissions (Groups)**: dbt Cloud iterates through the groups on the matching accounts, and find all that fit one of the below categories:
-  - Have an SSO mapping group that is assigned to the user
-  - Have the "Assign by Default" option checked.
-Then, assign all of these (and only these) to the user license. This step will also remove any permissions that the user should not have based on the current SSO group mappings.
-- **dbt Cloud Application**: After these steps, the user is redirected into the dbt Cloud application, and they can begin to use the application normally.
+- **Страница входа**: Пользователь получает доступ к странице входа в dbt Cloud, инициируя поток SSO.
+- **Вход, инициированный IdP**: Пользователь получает доступ к странице входа в dbt Cloud через поставщика удостоверений, выбрав приложение dbt Cloud. Это начнет поток входа IdP.
+- **Страница входа IdP**: Пользователь получает запрос на вход в поставщика удостоверений. Это предоставит приложению dbt Cloud доступ к данным их учетной записи.
+- **Вход?**: Пользователь может выбрать продолжить или прервать процесс входа.
+  - **Да**: Пользователь входит в систему, предоставляет приложению dbt Cloud доступ и продолжает.
+  - **Нет**: Пользователь не входит в систему. Он возвращается на страницу входа IdP.
+- **Пользователь существует?**: Этот шаг проверяет, существует ли пользователь уже в базе данных пользователей dbt Cloud.
+  - **Да**: Если да, пропустите процесс создания пользователя.
+  - **Нет**: Если нет, создайте новую запись в базе данных dbt Cloud для нового пользователя.
+- **Создать пользователя dbt Cloud**: Это создаст новую запись в базе данных dbt Cloud для нового пользователя. Эта запись пользователя содержит адрес электронной почты, имя и фамилию пользователя, а также любые атрибуты IdP (например, группы), переданные от поставщика удостоверений.
+- **Привязать соответствующие учетные записи**: dbt Cloud находит все учетные записи, настроенные для соответствия конфигурации SSO, используемой этим пользователем для входа, а затем создает запись лицензии пользователя, сопоставляющую пользователя с учетной записью. Этот шаг также удалит любые лицензии, которые пользователь не должен иметь на основе текущей конфигурации SSO.
+- **Привязать соответствующие разрешения (группы)**: dbt Cloud проходит через группы на соответствующих учетных записях и находит все, которые соответствуют одной из следующих категорий:
+  - Имеют группу сопоставления SSO, назначенную пользователю
+  - Имеют установленный параметр "Назначить по умолчанию".
+Затем все эти (и только эти) назначаются лицензии пользователя. Этот шаг также удалит любые разрешения, которые пользователь не должен иметь на основе текущих сопоставлений групп SSO.
+- **Приложение dbt Cloud**: После этих шагов пользователь перенаправляется в приложение dbt Cloud, и он может начать использовать приложение в обычном режиме.
 
-## SSO enforcement
+## Принуждение к SSO
 
-* **SSO Enforcement:** If SSO is turned on in your organization, dbt Cloud will enforce SSO-only logins for all non-admin users. By default, if an Account Admin or Security Admin already has a password, they can continue logging in with a password. To restrict admins from using passwords, turn off **Allow password logins for account administrators** in the **Single sign-on** section of your organization's **Account settings**.
-* **SSO Re-Authentication:** dbt Cloud will prompt you to re-authenticate using your SSO provider every 24 hours to ensure high security.
+* **Принуждение к SSO:** Если SSO включен в вашей организации, dbt Cloud будет принуждать к входу только через SSO для всех пользователей, не являющихся администраторами. По умолчанию, если у администратора учетной записи или администратора безопасности уже есть пароль, они могут продолжать входить с помощью пароля. Чтобы ограничить администраторам возможность использования паролей, отключите **Разрешить вход с паролем для администраторов учетной записи** в разделе **Единый вход** в настройках вашей организации.
+* **Повторная аутентификация SSO:** dbt Cloud будет запрашивать вас повторно аутентифицироваться с помощью вашего поставщика SSO каждые 24 часа для обеспечения высокой безопасности.
 
-### How should non-admin users log in?
+### Как должны входить пользователи, не являющиеся администраторами?
 
-Non-admin users that currently login with a password will no longer be able to do so. They must login using the dbt Enterprise Login URL or an identity provider (IdP). For example, Okta, Microsoft Entra ID (formerly Azure AD), etc.
+Пользователи, не являющиеся администраторами, которые в настоящее время входят с помощью пароля, больше не смогут этого делать. Им необходимо войти с помощью URL-адреса входа dbt Enterprise или поставщика удостоверений (IdP). Например, Okta, Microsoft Entra ID (ранее Azure AD) и т.д.
 
-### Security best practices
+### Рекомендации по безопасности
 
-There are a few scenarios that might require you to login with a password. We recommend these security best-practices for the two most common scenarios:
-* **Onboarding partners and contractors** &mdash; We highly recommend that you add partners and contractors to your Identity Provider. IdPs like Okta and Microsoft Entra ID offer capabilities explicitly for temporary employees. We highly recommend that you reach out to your IT team to provision an SSO license for these situations. Using an IdP highly secure, reduces any breach risk, and significantly increases the security posture of your dbt Cloud environment.
-* **Identity Provider is down** &mdash; Account admins will continue to be able to log in with a password which would allow them to work with your Identity Provider to troubleshoot the problem.
-* **Offboarding admins** &mdash; When offboarding admins, revoke access to dbt Cloud by deleting the user from your environment; otherwise, they can continue to use username/password credentials to log in. 
+Существуют несколько сценариев, которые могут потребовать от вас входа с паролем. Мы рекомендуем следующие лучшие практики безопасности для двух наиболее распространенных сценариев:
+* **Введение в должность партнеров и подрядчиков** — Мы настоятельно рекомендуем добавлять партнеров и подрядчиков в ваш поставщик удостоверений. IdP, такие как Okta и Microsoft Entra ID, предлагают возможности, специально предназначенные для временных сотрудников. Мы настоятельно рекомендуем вам обратиться к вашей ИТ-команде для предоставления лицензии SSO для этих ситуаций. Использование IdP обеспечивает высокую безопасность, снижает риск утечки данных и значительно повышает уровень безопасности вашей среды dbt Cloud.
+* **Поставщик удостоверений не работает** — Администраторы учетных записей по-прежнему смогут входить с помощью пароля, что позволит им работать с вашим поставщиком удостоверений для устранения проблемы.
+* **Выход из должности администраторов** — При выходе из должности администраторов отозвать доступ к dbt Cloud, удалив пользователя из вашей среды; в противном случае они могут продолжать использовать учетные данные для входа с именем пользователя и паролем.
 
-### Next steps for non-admin users currently logging in with passwords
+### Следующие шаги для пользователей, не являющихся администраторами, которые в настоящее время входят с паролями
 
-If you have any non-admin users logging into dbt Cloud with a password today:
+Если у вас есть пользователи, не являющиеся администраторами, которые сегодня входят в dbt Cloud с помощью пароля:
 
-1. Ensure that all users have a user account in your identity provider and are assigned dbt Cloud so they won’t lose access.
-2. Alert all dbt Cloud users that they won’t be able to use a password for logging in anymore unless they are already an Admin with a password.
-3. We **DO NOT** recommend promoting any users to Admins just to preserve password-based logins because you will reduce security of your dbt Cloud environment.
-
-
+1. Убедитесь, что у всех пользователей есть учетная запись в вашем поставщике удостоверений и они назначены в dbt Cloud, чтобы они не потеряли доступ.
+2. Уведомите всех пользователей dbt Cloud о том, что они больше не смогут использовать пароль для входа, если они уже не являются администраторами с паролем.
+3. Мы **НЕ РЕКОМЕНДУЕМ** повышать каких-либо пользователей до администраторов только для сохранения входа на основе пароля, так как это снизит безопасность вашей среды dbt Cloud.

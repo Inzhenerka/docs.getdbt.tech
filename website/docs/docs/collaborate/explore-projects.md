@@ -1,289 +1,337 @@
 ---
-title: "Discover data with dbt Explorer"
-sidebar_label: "Discover data with dbt Explorer"
-description: "Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your dbt projects."
+title: "Изучение данных с помощью dbt Explorer"
+sidebar_label: "Изучение данных с помощью dbt Explorer"
+description: "Узнайте о dbt Explorer и о том, как взаимодействовать с ним, чтобы понять, улучшить и использовать ваши проекты dbt."
 image: /img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png
-pagination_next: "docs/collaborate/data-health-signals"
+pagination_next: "docs/collaborate/access-from-dbt-cloud"
 pagination_prev: null
 ---
 
-With dbt Explorer, you can view your project's [resources](/docs/build/projects) (such as models, tests, and metrics), their <Term id="data-lineage">lineage</Term>, and [model consumption](/docs/collaborate/auto-exposures) to gain a better understanding of its latest production state. Navigate and manage your projects within dbt Cloud to help you and other data developers, analysts, and consumers discover and leverage your dbt resources. 
+С помощью dbt Explorer вы можете просматривать [ресурсы](/docs/build/projects) вашего проекта (такие как модели, тесты и метрики), их <Term id="data-lineage">происхождение</Term> и [использование моделей](/docs/collaborate/auto-exposures), чтобы лучше понять их текущее состояние в производстве. Навигируйте и управляйте своими проектами в dbt Cloud, чтобы помочь вам и другим разработчикам данных, аналитикам и пользователям открывать и использовать ваши ресурсы dbt.
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-## Prerequisites
+## Предварительные условия
 
-- You have a dbt Cloud account on the [Team or Enterprise plan](https://www.getdbt.com/pricing/).
-- You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) or [staging](/docs/deploy/deploy-environments#create-a-staging-environment) deployment environment for each project you want to explore.
-- You have at least one successful job run in the deployment environment. Note that [CI jobs](/docs/deploy/ci-jobs) do not update dbt Explorer.
-- You are on the dbt Explorer page. To do this, select **Explore** from the navigation in dbt Cloud.
+- У вас есть учетная запись dbt Cloud на [командном или корпоративном плане](https://www.getdbt.com/pricing/).
+- Вы настроили [производственную](/docs/deploy/deploy-environments#set-as-production-environment) или [тестовую](/docs/deploy/deploy-environments#create-a-staging-environment) среду развертывания для каждого проекта, который вы хотите исследовать.
+- У вас есть как минимум один успешный запуск задания в среде развертывания. Обратите внимание, что [CI задания](/docs/deploy/ci-jobs) не обновляют dbt Explorer.
+- Вы находитесь на странице dbt Explorer. Для этого выберите **Изучить** в навигации dbt Cloud.
 
-## Overview page <Lifecycle status="preview" />
+## Страница обзора <Lifecycle status="preview" />
 
-Navigate the dbt Explorer overview page to access your project's resources and metadata. The page includes the following sections:
+Перейдите на страницу обзора dbt Explorer, чтобы получить доступ к ресурсам и метаданным вашего проекта. Страница включает в себя следующие разделы:
 
-- **Search bar** &mdash; [Search](#search-resources) for resources in your project by keyword. You can also use filters to refine your search results.
-- **Sidebar** &mdash; Use the left sidebar to access model [performance](/docs/collaborate/model-performance), [project recommendations](/docs/collaborate/project-recommendations) in the **Project details** section. Browse your project's [resources, file tree, and database](#browse-with-the-sidebar) in the lower section of the sidebar.
-- **Lineage graph** &mdash; Explore your project's or account's [lineage graph](#project-lineage) to visualize the relationships between resources.
-- **Latest updates** &mdash; View the latest changes or issues related to your project's resources, including the most recent job runs, changed properties, lineage, and issues.
-- **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/collaborate/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
-- **Model query history** &mdash; Use [model query history](/docs/collaborate/model-query-history) to track consumption queries on your models for deeper insights.
-- **Auto-exposures** &mdash; [Set up and view auto-exposures](/docs/collaborate/auto-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
-- **Data health signals** &mdash; View the [data-health-signals](/docs/collaborate/data-health-signals) for each resource to understand its health and performance.
+- **Поисковая строка** &mdash; [Ищите](#search-resources) ресурсы в вашем проекте по ключевым словам. Вы также можете использовать фильтры для уточнения результатов поиска.
+- **Боковая панель** &mdash; Используйте левую боковую панель для доступа к [производительности моделей](/docs/collaborate/model-performance), [рекомендациям по проекту](/docs/collaborate/project-recommendations) в разделе **Детали проекта**. Просматривайте [ресурсы, файловое дерево и базу данных](#browse-with-the-sidebar) вашего проекта в нижней части боковой панели.
+- **Граф происхождения** &mdash; Изучите [граф происхождения](#project-lineage) вашего проекта или аккаунта, чтобы визуализировать отношения между ресурсами.
+- **Последние обновления** &mdash; Просматривайте последние изменения или проблемы, связанные с ресурсами вашего проекта, включая последние запуски заданий, измененные свойства, происхождение и проблемы.
+- **Март и публичные модели** &mdash; Просматривайте [марты](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) и [публичные модели](/docs/collaborate/govern/model-access#access-modifiers) в вашем проекте. Вы также можете перейти ко всем публичным моделям в вашем аккаунте через этот вид.
+- **История запросов моделей** &mdash; Используйте [историю запросов моделей](/docs/collaborate/model-query-history) для отслеживания запросов на использование ваших моделей для более глубокого анализа.
+- **Автоэкспозиции** &mdash; [Настройте и просматривайте автоэкспозиции](/docs/collaborate/auto-exposures), чтобы автоматически открывать соответствующие модели данных из Tableau для повышения видимости.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="100%" title="Access dbt Explorer from dbt Cloud by clicking Explore in the navigation."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="100%" title="Доступ к dbt Explorer из dbt Cloud, нажав Изучить в навигации." />
 
-## Generate metadata
+## Генерация метаданных
 
-dbt Explorer uses the metadata provided by the [Discovery API](/docs/dbt-cloud-apis/discovery-api) to display the details about [the state of your project](/docs/dbt-cloud-apis/project-state). The metadata that's available depends on the [deployment environment](/docs/deploy/deploy-environments) you've designated as _production_ or _staging_ in your dbt Cloud project.
+dbt Explorer использует метаданные, предоставленные [Discovery API](/docs/dbt-cloud-apis/discovery-api), чтобы отображать детали о [состоянии вашего проекта](/docs/dbt-cloud-apis/project-state). Доступные метаданные зависят от [среды развертывания](/docs/deploy/deploy-environments), которую вы обозначили как _производственную_ или _тестовую_ в вашем проекте dbt Cloud.
 
-- dbt Explorer automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project. This includes deploy and merge jobs.
-- Note that CI jobs do not update dbt Explorer. This is because they don't reflect the production state and don't provide the necessary metadata updates.
-- To view a resource and its metadata, you must define the resource in your project and run a job in the production or staging environment. 
-- The resulting metadata depends on the [commands](/docs/deploy/job-commands) executed by the jobs. 
+- dbt Explorer автоматически получает обновления метаданных после каждого запуска задания в производственной или тестовой среде развертывания, поэтому он всегда имеет последние результаты для вашего проекта. Это включает в себя задания развертывания и слияния.
+- Обратите внимание, что CI задания не обновляют dbt Explorer. Это связано с тем, что они не отражают состояние производства и не предоставляют необходимые обновления метаданных.
+- Чтобы просмотреть ресурс и его метаданные, вы должны определить ресурс в вашем проекте и запустить задание в производственной или тестовой среде.
+- Результирующие метаданные зависят от [команд](/docs/deploy/job-commands), выполняемых заданиями.
 
-| To view in Explorer | You must successfully run |
-|---------------------|---------------------------|
-| Model lineage, details, or results | [dbt run](/reference/commands/run) or [dbt build](/reference/commands/build) on a given model within a job in the environment |
-| Columns and statistics for models, sources, and snapshots| [dbt docs generate](/reference/commands/cmd-docs) within [a job](/docs/collaborate/build-and-view-your-docs) in the environment |
-| Test results | [dbt test](/reference/commands/test) or [dbt build](/reference/commands/build) within a job in the environment | 
-| Source freshness results | [dbt source freshness](/reference/commands/source#dbt-source-freshness) within a job in the environment |
-| Snapshot details | [dbt snapshot](/reference/commands/snapshot) or [dbt build](/reference/commands/build) within a job in the environment |
-| Seed details | [dbt seed](/reference/commands/seed) or [dbt build](/reference/commands/build) within a job in the environment |
+| Чтобы просмотреть в Explorer | Вы должны успешно запустить |
+|------------------------------|-----------------------------|
+| Происхождение модели, детали или результаты | [dbt run](/reference/commands/run) или [dbt build](/reference/commands/build) для данной модели в рамках задания в среде |
+| Столбцы и статистика для моделей, источников и снимков | [dbt docs generate](/reference/commands/cmd-docs) в рамках [задания](/docs/collaborate/build-and-view-your-docs) в среде |
+| Результаты тестов | [dbt test](/reference/commands/test) или [dbt build](/reference/commands/build) в рамках задания в среде |
+| Результаты свежести источников | [dbt source freshness](/reference/commands/source#dbt-source-freshness) в рамках задания в среде |
+| Детали снимков | [dbt snapshot](/reference/commands/snapshot) или [dbt build](/reference/commands/build) в рамках задания в среде |
+| Детали семян | [dbt seed](/reference/commands/seed) или [dbt build](/reference/commands/build) в рамках задания в среде |
 
-Richer and more timely metadata will become available as dbt Cloud evolves. 
+Более богатые и актуальные метаданные будут доступны по мере развития dbt Cloud.
 
-## Explore your project's lineage graph {#project-lineage}
+## Изучите граф происхождения вашего проекта {#project-lineage}
 
-dbt Explorer provides a visualization of your project’s <Term id="dag">DAG</Term> that you can interact with. To access the project's full lineage graph, select **Overview** in the left sidebar and click the **Explore Lineage** button on the main (center) section of the page. 
+dbt Explorer предоставляет визуализацию <Term id="dag">DAG</Term> вашего проекта, с которой вы можете взаимодействовать. Чтобы получить доступ к полному графу происхождения проекта, выберите **Обзор** в левой боковой панели и нажмите кнопку **Изучить происхождение** в главной (центральной) части страницы.
 
-If you don't see the project lineage graph immediately, click **Render Lineage**. It can take some time for the graph to render depending on the size of your project and your computer’s available memory. The graph of very large projects might not render so you can select a subset of nodes by using selectors, instead.
+Если вы не видите граф происхождения проекта сразу, нажмите **Отобразить происхождение**. Отображение графа может занять некоторое время в зависимости от размера вашего проекта и доступной памяти вашего компьютера. Граф очень больших проектов может не отобразиться, поэтому вы можете выбрать подмножество узлов, используя селекторы.
 
-The nodes in the lineage graph represent the project’s resources and the edges represent the relationships between the nodes. Nodes are color-coded and include iconography according to their resource type.
+Узлы в графе происхождения представляют ресурсы проекта, а ребра представляют отношения между узлами. Узлы имеют цветовую кодировку и включают иконографию в зависимости от типа ресурса.
 
-By default, dbt Explorer shows the project's [applied state](/docs/dbt-cloud-apis/project-state#definition-logical-vs-applied-state-of-dbt-nodes) lineage. That is, it shows models that have been successfully built and are available to query, not just the models defined in the project.
+По умолчанию dbt Explorer показывает происхождение [примененного состояния](/docs/dbt-cloud-apis/project-state#definition-logical-vs-applied-state-of-dbt-nodes) проекта. То есть он показывает модели, которые были успешно построены и доступны для запроса, а не только модели, определенные в проекте.
 
-To explore the lineage graphs of tests and macros, view [their resource details pages](#view-resource-details). By default, dbt Explorer excludes these resources from the full lineage graph unless a search query returns them as results.
+Чтобы исследовать графы происхождения тестов и макросов, просмотрите [их страницы деталей ресурсов](#view-resource-details). По умолчанию dbt Explorer исключает эти ресурсы из полного графа происхождения, если поисковый запрос не возвращает их в качестве результатов.
 
-<Expandable alt_header="How can I interact with the full lineage graph?">
+<Expandable alt_header="Как я могу взаимодействовать с полным графом происхождения?">
 
-- Hover over any item in the graph to display the resource’s name and type.
-- Zoom in and out on the graph by mouse-scrolling.
-- Grab and move the graph and the nodes.
-- Right-click on a node (context menu) to:
-    - Refocus on the node, including its upstream and downstream nodes
-    - Refocus on the node and its downstream nodes only
-    - Refocus on the node and it upstream nodes only
-    - View the node's [resource details](#view-resource-details) page
-- Select a resource to highlight its relationship with other resources in your project. A panel opens on the graph’s right-hand side that displays a high-level summary of the resource’s details. The side panel includes a **General** tab for information like description, materialized type, and other details. In the side panel's upper right corner:
-    - Click the View Resource icon to [view the resource details](#view-resource-details). 
-    - Click the [Open in IDE](#open-in-ide) icon to examine the resource using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
-    - Click the Copy Link to Page icon to copy the page's link to your clipboard.
-- Use [selectors](/reference/node-selection/methods) (in the search bar) to select specific resources or a subset of the DAG. This can help narrow the focus on the resources that interest you. All selectors are available for use, except those requiring a state comparison (result, source status, and state). You can also use the `--exclude` and the `--select` flag (which is optional). Examples:
-    - `resource_type:model [RESOURCE_NAME]` &mdash; Returns all models matching the name search
-    - `resource_type:metric,tag:nightly` &mdash; Returns metrics with the tag `nightly`
-- Use [graph operators](/reference/node-selection/graph-operators) (in the search bar) to select specific resources or a subset of the DAG. This can help narrow the focus on the resources that interest you. Examples:
-    - `+orders` &mdash; Returns all the upstream nodes of `orders`
-    - `+dim_customers,resource_type:source` &mdash; Returns all sources that are upstream of `dim_customers`
-- Use [set operators](/reference/node-selection/set-operators) (in the search bar) to select specific resources or a subset of the DAG. This can help narrow the focus on the resources that interest you. For example:
-    - `+snowplow_sessions +fct_orders` &mdash; Use space-delineated arguments for a union operation. Returns resources that are upstream nodes of either `snowplow_sessions` or `fct_orders`.
+- Наведите курсор на любой элемент в графе, чтобы отобразить имя и тип ресурса.
+- Увеличивайте и уменьшайте масштаб графа с помощью прокрутки мыши.
+- Перетаскивайте граф и узлы.
+- Щелкните правой кнопкой мыши на узле (контекстное меню), чтобы:
+    - Сфокусироваться на узле, включая его верхние и нижние узлы
+    - Сфокусироваться на узле и его нижних узлах
+    - Сфокусироваться на узле и его верхних узлах
+    - Просмотреть страницу [деталей ресурса](#view-resource-details) узла
+- Выберите ресурс, чтобы выделить его связь с другими ресурсами в вашем проекте. На правой стороне графа открывается панель, отображающая краткое резюме деталей ресурса. Боковая панель включает вкладку **Общие** с информацией, такой как описание, тип материализации и другие детали. В верхнем правом углу боковой панели:
+    - Нажмите на значок Просмотреть ресурс, чтобы [просмотреть детали ресурса](#view-resource-details).
+    - Нажмите на значок [Открыть в IDE](#open-in-ide), чтобы изучить ресурс с помощью [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+    - Нажмите на значок Копировать ссылку на страницу, чтобы скопировать ссылку на страницу в буфер обмена.
+- Используйте [селекторы](/reference/node-selection/methods) (в строке поиска), чтобы выбрать конкретные ресурсы или подмножество DAG. Это может помочь сосредоточиться на ресурсах, которые вас интересуют. Все селекторы доступны для использования, за исключением тех, которые требуют сравнения состояния (результат, статус источника и состояние). Вы также можете использовать флаг `--exclude` и флаг `--select` (который является необязательным). Примеры:
+    - `resource_type:model [RESOURCE_NAME]` &mdash; Возвращает все модели, соответствующие поиску по имени
+    - `resource_type:metric,tag:nightly` &mdash; Возвращает метрики с тегом `nightly`
+- Используйте [операторы графа](/reference/node-selection/graph-operators) (в строке поиска), чтобы выбрать конкретные ресурсы или подмножество DAG. Это может помочь сосредоточиться на ресурсах, которые вас интересуют. Примеры:
+    - `+orders` &mdash; Возвращает все верхние узлы `orders`
+    - `+dim_customers,resource_type:source` &mdash; Возвращает все источники, которые находятся выше `dim_customers`
+- Используйте [операторы множеств](/reference/node-selection/set-operators) (в строке поиска), чтобы выбрать конкретные ресурсы или подмножество DAG. Это может помочь сосредоточиться на ресурсах, которые вас интересуют. Например:
+    - `+snowplow_sessions +fct_orders` &mdash; Используйте аргументы, разделенные пробелами, для операции объединения. Возвращает ресурсы, которые являются верхними узлами либо `snowplow_sessions`, либо `fct_orders`.
 
-- [View resource details](#view-resource-details) by selecting a node (double-clicking) in the graph.
-- Click **Lenses** (lower right corner of the graph) to use Explorer's [lenses](#lenses) feature. 
-
-</Expandable>
-
-### Example of full lineage graph
-
-Example of exploring a model in the project's lineage graph:
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png" width="100%" title="Example of full lineage graph" />
-
-## Lenses
-
-The **Lenses** feature is available from your [project's lineage graph](#project-lineage) (lower right corner). Lenses are like map layers for your DAG. Lenses make it easier to understand your project’s contextual metadata at scale, especially to distinguish a particular model or a subset of models.
-
-When you apply a lens, tags become visible on the nodes in the lineage graph, indicating the layer value along with coloration based on that value. If you're significantly zoomed out, only the tags and their colors are visible in the graph.
-
-Lenses are helpful to analyze a subset of the DAG if you're zoomed in, or to find models/issues from a larger vantage point.
-
-<Expandable alt_header="List of available lenses">
-
-A resource in your project is characterized by resource type, materialization type, or model layer, as well as its latest run or latest test status. Lenses are available for the following metadata:
-
-- **Relationship**: Organizes resources by resource type, such as models, tests, seeds, and [more](/reference/node-selection/syntax). Resource type uses the `resource_type` selector.
-- **Materialization type**: Identifies the strategy for building the dbt models in your data platform.
-- **Latest status**: The status from the latest execution of the resource in the current environment. For example, diagnosing a failed DAG region.
-- **Model layer**: The modeling layer that the model belongs to according to [best practices guide](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview#guide-structure-overview). For example, discovering marts models to analyze.
-    - **Marts** &mdash; A model with the prefix `fct_` or `dim_` or a model that lives in the `/marts/` subdirectory.
-    - **Intermediate** &mdash; A model with the prefix `int_`. Or, a model that lives in the `/int/` or `/intermediate/` subdirectory.
-    - **Staging** &mdash; A model with the prefix `stg_`. Or, a model that lives in the `/staging/` subdirectory.
-- **Test status**: The status from the latest execution of the tests that ran again this resource. In the case that a model has multiple tests with different results, the lens reflects the 'worst case' status. 
-- **Usage queries**: The number of queries against this resource over a given time period.
+- [Просмотрите детали ресурса](#view-resource-details), выбрав узел (двойной щелчок) в графе.
+- Нажмите **Линзы** (в нижнем правом углу графа), чтобы использовать функцию [линз](#lenses) Explorer. 
 
 </Expandable>
 
-### Example of lenses
+### Пример полного графа происхождения
 
-Example of applying the **Materialization Type** _lens_ with the lineage graph zoomed out. In this view, each model name has a color according to the materialization type legend at the bottom, which specifies the materialization type. This color-coding helps to quickly identify the materialization types of different models.
+Пример изучения модели в графе происхождения проекта:
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-materialization-type.jpg" width="100%" title="Example of the Materialization type lens" />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-project-lineage-graph.png" width="100%" title="Пример полного графа происхождения" />
 
-Example of applying the **Tests Status** _lens_, where each model name displays the tests status according to the legend at the bottom, which specifies the test status.
+## Линзы
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-status.jpg" width="100%" title="Example of the Test Status lens" />
+Функция **Линзы** доступна из [графа происхождения вашего проекта](#project-lineage) (в нижнем правом углу). Линзы похожи на слои карты для вашего DAG. Линзы упрощают понимание контекстных метаданных вашего проекта в большом масштабе, особенно для различения конкретной модели или подмножества моделей.
 
-## Keyword search {#search-resources}
+Когда вы применяете линзу, теги становятся видимыми на узлах в графе происхождения, указывая значение слоя вместе с цветом, основанным на этом значении. Если вы значительно уменьшили масштаб, в графе видны только теги и их цвета.
 
-You can locate resources in your project by performing a keyword search in the search bar. All resource names, column names, resource descriptions, warehouse relations, and code matching your search criteria will be displayed as a list on the main (center) section of the page. When searching for an exact column name, the results show all relational nodes containing that column in their schemas. If there's a match, a notice in the search result indicates the resource contains the specified column. Also, you can apply filters to further refine your search results.
+Линзы полезны для анализа подмножества DAG, если вы увеличили масштаб, или для поиска моделей/проблем с более широкой точки зрения.
 
-<Expandable alt_header="Search features">
+<Expandable alt_header="Список доступных линз">
 
-- **Partial keyword search** &mdash; This is also referred to as fuzzy search.
-- **Exclude keywords** &mdash; Prepend a minus sign (-) to the keyword you want to exclude from search results. For example, `-user` will exclude all matches of that keyword from search results.
-- **Boolean operators** &mdash; Use Boolean operators to enhance your keyword search. For example, the search results for `users OR github` will include matches for either keyword.
-- **Phrase search** &mdash; Surround a string of keywords with double quotation marks to search for that exact phrase (for example, `"stg users"`). To learn more, refer to [Phrase search](https://en.wikipedia.org/wiki/Phrase_search) on Wikipedia.
-- **SQL keyword search** &mdash; Use SQL keywords in your search. For example, the search results `int github users joined` will include matches that contain that specific string of keywords (similar to phrase searching).
+Ресурс в вашем проекте характеризуется типом ресурса, типом материализации или слоем модели, а также его последним запуском или последним статусом теста. Линзы доступны для следующих метаданных:
 
-</Expandable>
-
-<Expandable alt_header="Filters side panel">
-
-The **Filters** side panel becomes available after you perform a keyword search. Use this panel to further refine the results from your keyword search. By default, Explorer searches across all resources in the project. You can filter on:
-
-- [Resource type](/docs/build/projects) (like models, sources, and so on)
-- [Model access](/docs/collaborate/govern/model-access) (like public, private)
-- [Model layer](/best-practices/how-we-structure/1-guide-overview) (like marts, staging)
-- [Model materialization](/docs/build/materializations) (like view, table)
-- [Tags](/reference/resource-configs/tags) (supports multi-select)
-
-Under the the **Models** option, you can filter on model properties (access or materialization type). Also available are **Advanced** options, where you can limit the search results to column name, model code, and more.  
+- **Отношение**: Организует ресурсы по типу ресурса, таким как модели, тесты, семена и [другие](/reference/node-selection/syntax). Тип ресурса использует селектор `resource_type`.
+- **Тип материализации**: Определяет стратегию построения моделей dbt в вашей платформе данных.
+- **Последний статус**: Статус последнего выполнения ресурса в текущей среде. Например, диагностика неудачной области DAG.
+- **Слой модели**: Модельный слой, к которому принадлежит модель в соответствии с [руководством по лучшим практикам](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview#guide-structure-overview). Например, обнаружение моделей мартов для анализа.
+    - **Марты** &mdash; Модель с префиксом `fct_` или `dim_` или модель, которая находится в подкаталоге `/marts/`.
+    - **Промежуточная** &mdash; Модель с префиксом `int_`. Или модель, которая находится в подкаталоге `/int/` или `/intermediate/`.
+    - **Тестирование** &mdash; Модель с префиксом `stg_`. Или модель, которая находится в подкаталоге `/staging/`.
+- **Статус теста**: Статус последнего выполнения тестов, которые выполнялись для этого ресурса. В случае, если у модели есть несколько тестов с разными результатами, линза отражает статус "наихудшего случая".
+- **Запросы на использование**: Количество запросов к этому ресурсу за определенный период времени.
 
 </Expandable>
 
-### Example of keyword search
-Example of results from searching on the keyword `customers` and applying the filters models, description, and code. [Data health signals](/docs/collaborate/data-health-signals) are visible to the right of the model name in the search results.
+### Пример линз
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-keyword-search.png" width="100%" title="Example of keyword search" />
+Пример применения линзы **Тип материализации** с уменьшенным масштабом графа происхождения. В этом представлении каждое имя модели имеет цвет в соответствии с легендой типа материализации внизу, которая указывает тип материализации. Эта цветовая кодировка помогает быстро идентифицировать типы материализации различных моделей.
 
-## Browse with the sidebar
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-materialization-type.jpg" width="100%" title="Пример линзы типа материализации" />
 
-From the sidebar, you can browse your project's resources, its file tree, and the database. 
+Пример применения линзы **Статус тестов**, где каждое имя модели отображает статус тестов в соответствии с легендой внизу, которая указывает статус теста.
 
-- **Resources** tab &mdash; All resources in the project organized by type. Select any resource type in the list and all those resources in the project will display as a table in the main section of the page. For a description on the different resource types (like models, metrics, and so on), refer to [About dbt projects](/docs/build/projects).
-  - [Data health signals](/docs/collaborate/data-health-signals) are visible to the right of the resource name under the **Health** column.
-- **File Tree** tab &mdash; All resources in the project organized by the file in which they are defined. This mirrors the file tree in your dbt project repository.
-- **Database** tab &mdash; All resources in the project organized by the database and schema in which they are built. This mirrors your data platform's structure that represents the [applied state](/docs/dbt-cloud-apis/project-state) of your project. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-status.jpg" width="100%" title="Пример линзы статуса теста" />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-tabs-sidebar.png" title="Example of tabs in sidebar" />
+## Поиск по ключевым словам {#search-resources}
 
-## Open in IDE
+Вы можете находить ресурсы в вашем проекте, выполняя поиск по ключевым словам в строке поиска. Все имена ресурсов, имена столбцов, описания ресурсов, отношения с хранилищем и код, соответствующий вашим критериям поиска, будут отображаться в виде списка в главной (центральной) части страницы. При поиске точного имени столбца результаты показывают все реляционные узлы, содержащие этот столбец в своих схемах. Если есть совпадение, уведомление в результате поиска указывает, что ресурс содержит указанный столбец. Также вы можете применять фильтры для дальнейшего уточнения результатов поиска.
 
-If you have been assigned a [developer license](/docs/cloud/manage-access/about-user-access#license-based-access-control), you can open the resource in the [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) directly from Explorer. For example, the IDE opens all the corresponding files for the model. This includes the model's SQL or Python definition and any YAML files that include an entry for that model. The feature is available from the [full lineage graph](#example-of-full-lineage-graph) and the [resource's details view](#example-of-model-details). 
+<Expandable alt_header="Функции поиска">
 
-Here's an example of the Open in IDE icon in the upper right corner of the resource details page. The icon is inactive (grayed out) if you haven't been assigned a developer license.  
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-open-in-ide-icon.png" title="Example of icon for Open in IDE" />
-
-
-## View model versions
-
-If models in the project are versioned, you can see which [version of the model](/docs/collaborate/govern/model-versions) is being applied &mdash; `prerelease`, `latest`, and `old` &mdash; in the title of the model’s details page and in the model list from the sidebar.
-
-## View resource details {#view-resource-details}
-You can view the definition and latest run results of any resource in your project. To find a resource and view its details, you can interact with the lineage graph, use search, or browse the catalog. 
-
-The details (metadata) available to you depends on the resource’s type, its definition, and the [commands](/docs/deploy/job-commands) that run within jobs in the production environment. 
-
-In the upper right corner of the resource details page, you can:
-- Click the [Open in IDE](#open-in-ide) icon to examine the resource using the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
-- Click the Share icon to copy the page's link to your clipboard.
-
-<Expandable alt_header="What details are available for a model?">
-
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a model is Healthy, Caution, Degraded, or Unknown. Hover over an icon to view detailed information about the model's health.
-- **Status bar** (below the page title) &mdash; Information on the last time the model ran, whether the run was successful, how the data is materialized, number of rows, and the size of the model. 
-- **General** tab includes:
-    - **Lineage** graph &mdash; The model’s lineage graph that you can interact with. The graph includes one upstream node and one downstream node from the model. Click the Expand icon in the graph's upper right corner to view the model in full lineage graph mode.
-    - **Description** section &mdash; A [description of the model](/docs/build/documentation#adding-descriptions-to-your-project).
-    - **Recent** section &mdash; Information on the last time the model ran, how long it ran for, whether the run was successful, the job ID, and the run ID.
-    - **Tests** section &mdash; [Tests](/docs/build/data-tests) for the model, including a status indicator for the latest test status. A :white_check_mark: denotes a passing test. 
-    - **Details** section &mdash; Key properties like the model’s relation name (for example, how it’s represented and how you can query it in the data platform: `database.schema.identifier`); model governance attributes like access, group, and if contracted; and more.
-    - **Relationships** section &mdash; The nodes the model **Depends On**, is **Referenced by**, and (if applicable) is **Used by** for projects that have declared the models' project as a dependency.
-- **Code** tab &mdash; The source code and compiled code for the model.
-- **Columns** tab &mdash; The available columns in the model. This tab also shows tests results (if any) that you can select to view the test's details page. A :white_check_mark: denotes a passing test. To filter the columns in the resource, you can use the search bar that's located at the top of the columns view. 
+- **Частичный поиск по ключевым словам** &mdash; Это также называется нечетким поиском.
+- **Исключить ключевые слова** &mdash; Добавьте минус (-) перед ключевым словом, которое вы хотите исключить из результатов поиска. Например, `-user` исключит все совпадения этого ключевого слова из результатов поиска.
+- **Булевы операторы** &mdash; Используйте булевы операторы для улучшения вашего поиска по ключевым словам. Например, результаты поиска для `users OR github` будут включать совпадения для любого из ключевых слов.
+- **Поиск по фразе** &mdash; Оберните строку ключевых слов в двойные кавычки, чтобы искать именно эту фразу (например, `"stg users"`). Чтобы узнать больше, обратитесь к [Поиску по фразе](https://en.wikipedia.org/wiki/Phrase_search) на Wikipedia.
+- **Поиск по SQL ключевым словам** &mdash; Используйте SQL ключевые слова в вашем поиске. Например, результаты поиска `int github users joined` будут включать совпадения, содержащие эту конкретную строку ключевых слов (аналогично поиску по фразе).
 
 </Expandable>
 
-<Expandable alt_header="What details are available for an exposure?">
+<Expandable alt_header="Боковая панель фильтров">
 
-- **Status bar** (below the page title) &mdash; Information on the last time the exposure was updated. 
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the exposure's health.
-- **General** tab includes:
-    - **Data health** &mdash; The status on data freshness and data quality.
-    - **Status** section &mdash; The status on data freshness and data quality.
-    - **Lineage** graph &mdash; The exposure’s lineage graph. Click the **Expand** icon in the graph's upper right corner to view the exposure in full lineage graph mode. Integrates natively with Tableau and auto-generates downstream lineage.
-    - **Description** section &mdash; A description of the exposure.
-    - **Details** section &mdash; Details like exposure type, maturity, owner information, and more.
-    - **Relationships** section &mdash; The nodes the exposure **Depends On**. 
+Боковая панель **Фильтры** становится доступной после выполнения поиска по ключевым словам. Используйте эту панель для дальнейшего уточнения результатов вашего поиска по ключевым словам. По умолчанию Explorer ищет по всем ресурсам в проекте. Вы можете фильтровать по:
 
-</Expandable>
+- [Типу ресурса](/docs/build/projects) (например, модели, источники и т. д.)
+- [Доступу к модели](/docs/collaborate/govern/model-access) (например, публичный, частный)
+- [Слою модели](/best-practices/how-we-structure/1-guide-overview) (например, марты, тестирование)
+- [Материализации модели](/docs/build/materializations) (например, представление, таблица)
+- [Тегам](/reference/resource-configs/tags) (поддерживает множественный выбор)
 
-<Expandable alt_header="What details are available for a test?">
-
-- **Status bar** (below the page title) &mdash; Information on the last time the test ran, whether the test passed, test name, test target, and column name. Defaults to all if not specified.
-- **Test Type** (next to the Status bar) &mdash; Information on the different test types available: Unit test or Data test. Defaults to all if not specified.
-
-When you select a test, the following details are available:
-- **General** tab includes:
-    - **Lineage** graph &mdash; The test’s lineage graph that you can interact with. The graph includes one upstream node and one downstream node from the test resource. Click the Expand icon in the graph's upper right corner to view the test in full lineage graph mode.
-    - **Description** section &mdash; A description of the test.
-    - **Recent** section &mdash; Information on the last time the test ran, how long it ran for, whether the test passed, the job ID, and the run ID.
-    - **Details** section &mdash; Details like schema, severity, package, and more.
-    - **Relationships** section &mdash; The nodes the test **Depends On**.
-- **Code** tab &mdash; The source code and compiled code for the test.
-
-Example of the Tests view:
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-type.jpg" width="100%" title="Example of Test Type details" />
+В разделе **Модели** вы можете фильтровать по свойствам модели (доступ или тип материализации). Также доступны **Расширенные** параметры, где вы можете ограничить результаты поиска по имени столбца, коду модели и другим параметрам.
 
 </Expandable>
 
-<Expandable alt_header="What details are available for each source table within a source collection?">
+<Expandable alt_header="Сигналы доверия для ресурсов" lifecycle="preview">
 
-- **Status bar** (below the page title) &mdash; Information on the last time the source was updated and the number of tables the source uses. 
-- **Data health signals** &mdash; [Data health signals](/docs/collaborate/data-health-signals) offer a quick, at-a-glance view of data health. These icons indicate whether a resource is Healthy, Caution, or Degraded. Hover over an icon to view detailed information about the source's health.
-- **General** tab includes:
-    - **Lineage** graph &mdash; The source’s lineage graph that you can interact with. The graph includes one upstream node and one downstream node from the source. Click the Expand icon in the graph's upper right corner to view the source in full lineage graph mode.
-    - **Description** section &mdash; A description of the source.
-    - **Source freshness** section &mdash; Information on whether refreshing the data was successful, the last time the source was loaded, the timestamp of when a run generated data, and the run ID.
-    - **Details** section &mdash; Details like database, schema, and more.
-    - **Relationships** section &mdash; A table that lists all the sources used with their freshness status, the timestamp of when freshness was last checked, and the timestamp of when the source was last loaded.
-- **Columns** tab &mdash; The available columns in the source. This tab also shows tests results (if any) that you can select to view the test's details page. A :white_check_mark: denotes a passing test.
+Иконки сигналов доверия предлагают быстрый обзор состояния данных при просмотре ваших ресурсов в dbt Explorer. Эти иконки информируют вас о состоянии здоровья вашего ресурса, используя индикаторы **Здорово**, **Осторожно**, **Ухудшено** и **Неизвестно**. Для точных данных о здоровье убедитесь, что ресурс актуален и имел недавний запуск задания. Поддерживаемые ресурсы: модели, источники и экспозиции.
+
+Каждая иконка сигнала доверия отражает ключевые компоненты здоровья данных, такие как статус успешности тестов, отсутствие описаний ресурсов, отсутствие сборок за 30-дневные окна и многое другое.
+
+Чтобы получить доступ к сигналам доверия:
+- Используйте функцию поиска или нажмите на **Модели**, **Источники** или **Экспозиции** в разделе **Ресурс**. 
+- Просмотрите иконки в столбце **Здоровье**. 
+- Наведите курсор или щелкните на сигнал доверия, чтобы увидеть подробную информацию. 
+- Для источников сигнал доверия также указывает статус свежести источника.
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/trust-signal-health.jpg" width="60%" title="Просмотр сигналов доверия для ваших моделей." />
+
+<!-- комментарий до дальнейшей итерации контента
+
+<Tabs>
+<TabItem value="healthy" label="Здорово">
+Ресурс считается здоровым, если он соответствует следующим критериям:
+- Все тесты прошли успешно
+- Успешно построен в последнем запуске
+- Имеет описание и настроенные тесты
+- Был построен за последние 30 дней 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/trust-signal-healthy.png" title="Иконка сигнала доверия Здорово"/>
+</TabItem>
+
+<TabItem value="caution" label="Осторожно">
+Любое из следующих условий может вызвать статус осторожности:
+- Успешно построен в последнем запуске
+- Отсутствует описание
+- Не имеет настроенных тестов
+- Не был построен за последние 30 дней
+<Lightbox src="/img/docs/collaborate/dbt-explorer/trust-signal-caution.png" title="Иконка сигнала доверия Осторожно"/>
+</TabItem>
+
+<TabItem value="degraded" label="Ухудшено">
+Ресурс считается ухудшенным, если он соответствует любому из следующих критериев:
+- Последний запуск завершился неудачей или ошибка свежести источника
+<Lightbox src="/img/docs/collaborate/dbt-explorer/trust-signals-degraded.jpg" width="35%" title="Иконка сигнала доверия Ухудшено"/>
+</TabItem>
+
+<TabItem value="unknown" label="Неизвестно">
+Иконка сигнала доверия Неизвестно указывает на то, что:
+- Информация о здоровье неизвестна, потому что ресурс не запускался недавно. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/trust-signal-unknown.png" title="Иконка сигнала доверия Неизвестно"/>
+
+</TabItem>
+</Tabs>
+
+-->
+
+ </Expandable>
+
+### Пример поиска по ключевым словам
+Пример результатов поиска по ключевому слову `customers` с применением фильтров моделей, описания и кода. Сигналы доверия видны справа от имени модели в результатах поиска.
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-keyword-search.png" width="100%" title="Пример поиска по ключевым словам" />
+
+## Просмотр через боковую панель
+
+С помощью боковой панели вы можете просматривать ресурсы вашего проекта, его файловое дерево и базу данных.
+
+- **Вкладка Ресурсы** &mdash; Все ресурсы в проекте, организованные по типу. Выберите любой тип ресурса в списке, и все эти ресурсы в проекте отобразятся в виде таблицы в главной части страницы. Для описания различных типов ресурсов (таких как модели, метрики и т. д.) обратитесь к [О проектах dbt](/docs/build/projects).
+- **Вкладка Файловое дерево** &mdash; Все ресурсы в проекте, организованные по файлу, в котором они определены. Это отражает файловое дерево в вашем репозитории проекта dbt.
+- **Вкладка База данных** &mdash; Все ресурсы в проекте, организованные по базе данных и схеме, в которой они построены. Это отражает структуру вашей платформы данных, представляющую [примененное состояние](/docs/dbt-cloud-apis/project-state) вашего проекта.
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-tabs-sidebar.png" title="Пример вкладок в боковой панели" />
+
+## Открыть в IDE
+
+Если вам выдана [лицензия разработчика](/docs/cloud/manage-access/about-user-access#license-based-access-control), вы можете открыть ресурс в [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) непосредственно из Explorer. Например, IDE открывает все соответствующие файлы для модели. Это включает в себя SQL или Python определение модели и любые YAML файлы, которые содержат запись для этой модели. Функция доступна из [полного графа происхождения](#example-of-full-lineage-graph) и [вида деталей ресурса](#example-of-model-details).
+
+Вот пример значка Открыть в IDE в верхнем правом углу страницы деталей ресурса. Значок неактивен (серый), если вам не выдана лицензия разработчика.  
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-open-in-ide-icon.png" title="Пример значка для Открыть в IDE" />
+
+
+## Просмотр версий модели
+
+Если модели в проекте имеют версии, вы можете увидеть, какая [версия модели](/docs/collaborate/govern/model-versions) применяется &mdash; `prerelease`, `latest` и `old` &mdash; в заголовке страницы деталей модели и в списке моделей из боковой панели.
+
+## Просмотр деталей ресурса {#view-resource-details}
+Вы можете просмотреть определение и результаты последнего запуска любого ресурса в вашем проекте. Чтобы найти ресурс и просмотреть его детали, вы можете взаимодействовать с графом происхождения, использовать поиск или просматривать каталог.
+
+Детали (метаданные), доступные вам, зависят от типа ресурса, его определения и [команд](/docs/deploy/job-commands), которые выполняются в рамках заданий в производственной среде.
+
+В верхнем правом углу страницы деталей ресурса вы можете:
+- Нажать на значок [Открыть в IDE](#open-in-ide), чтобы изучить ресурс с помощью [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud).
+- Нажать на значок Поделиться, чтобы скопировать ссылку на страницу в буфер обмена.
+
+<Expandable alt_header="Какие детали доступны для модели?">
+
+- Иконка сигнала доверия &mdash; Иконки, предлагающие быстрый обзор состояния данных. Эти иконки указывают, является ли модель Здоровой, Осторожной, Ухудшенной или Неизвестной. Наведите курсор на иконку, чтобы увидеть подробную информацию о здоровье модели.
+- **Строка состояния** (под заголовком страницы) &mdash; Информация о последнем запуске модели, успешности запуска, способе материализации данных, количестве строк и размере модели. 
+- **Общая** вкладка включает:
+    - **Граф происхождения** &mdash; Граф происхождения модели, с которым вы можете взаимодействовать. Граф включает один верхний узел и один нижний узел от модели. Нажмите на значок Развернуть в верхнем правом углу графа, чтобы просмотреть модель в режиме полного графа происхождения.
+    - **Раздел описания** &mdash; [Описание модели](/docs/build/documentation#adding-descriptions-to-your-project).
+    - **Раздел недавнего** &mdash; Информация о последнем запуске модели, сколько времени он длился, успешности запуска, ID задания и ID запуска.
+    - **Раздел тестов** &mdash; [Тесты](/docs/build/data-tests) для модели, включая индикатор статуса для последнего статуса теста. :white_check_mark: обозначает проходящий тест. 
+    - **Раздел деталей** &mdash; Ключевые свойства, такие как имя отношения модели (например, как она представлена и как вы можете запрашивать ее в платформе данных: `database.schema.identifier`); атрибуты управления моделью, такие как доступ, группа и если она контрактная; и многое другое.
+    - **Раздел отношений** &mdash; Узлы, от которых модель **Зависит**, на которые **Ссылаются** и (если применимо) которые **Используют** для проектов, которые объявили проект моделей как зависимость.
+- **Вкладка кода** &mdash; Исходный код и скомпилированный код для модели.
+- **Вкладка столбцов** &mdash; Доступные столбцы в модели. Эта вкладка также показывает результаты тестов (если есть), которые вы можете выбрать для просмотра страницы деталей теста. :white_check_mark: обозначает проходящий тест. Чтобы отфильтровать столбцы в ресурсе, вы можете использовать строку поиска, расположенную в верхней части представления столбцов. 
 
 </Expandable>
 
-### Example of model details
+<Expandable alt_header="Какие детали доступны для экспозиции?">
+
+- **Строка состояния** (под заголовком страницы) &mdash; Информация о последнем обновлении экспозиции. 
+- **Общая** вкладка включает:
+    - **Здоровье данных** &mdash; Статус свежести данных и качества данных.
+    - **Статус** &mdash; Статус свежести данных и качества данных.
+    - **Граф происхождения** &mdash; Граф происхождения экспозиции. Нажмите на значок **Развернуть** в верхнем правом углу графа, чтобы просмотреть экспозицию в режиме полного графа происхождения. Интегрируется нативно с Tableau и автоматически генерирует нижнее происхождение.
+    - **Раздел описания** &mdash; Описание экспозиции.
+    - **Раздел деталей** &mdash; Детали, такие как тип экспозиции, зрелость, информация о владельце и многое другое.
+    - **Раздел отношений** &mdash; Узлы, от которых экспозиция **Зависит**. 
+
+</Expandable>
+
+<Expandable alt_header="Какие детали доступны для теста?">
+
+- **Строка состояния** (под заголовком страницы) &mdash; Информация о последнем запуске теста, успешности теста, имени теста, цели теста и имени столбца. По умолчанию все, если не указано.
+- **Тип теста** (рядом со строкой состояния) &mdash; Информация о различных типах тестов: модульный тест или тест данных. По умолчанию все, если не указано.
+
+Когда вы выбираете тест, доступны следующие детали:
+- **Общая** вкладка включает:
+    - **Граф происхождения** &mdash; Граф происхождения теста, с которым вы можете взаимодействовать. Граф включает один верхний узел и один нижний узел от тестового ресурса. Нажмите на значок Развернуть в верхнем правом углу графа, чтобы просмотреть тест в режиме полного графа происхождения.
+    - **Раздел описания** &mdash; Описание теста.
+    - **Раздел недавнего** &mdash; Информация о последнем запуске теста, сколько времени он длился, успешности теста, ID задания и ID запуска.
+    - **Раздел деталей** &mdash; Детали, такие как схема, серьезность, пакет и многое другое.
+    - **Раздел отношений** &mdash; Узлы, от которых тест **Зависит**.
+- **Вкладка кода** &mdash; Исходный код и скомпилированный код для теста.
+
+Пример представления тестов:
+
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-test-type.jpg" width="100%" title="Пример деталей типа теста" />
+
+</Expandable>
+
+<Expandable alt_header="Какие детали доступны для каждой таблицы источника в коллекции источников?">
+
+- **Строка состояния** (под заголовком страницы) &mdash; Информация о последнем обновлении источника и количестве таблиц, используемых источником. 
+- **Общая** вкладка включает:
+    - **Граф происхождения** &mdash; Граф происхождения источника, с которым вы можете взаимодействовать. Граф включает один верхний узел и один нижний узел от источника. Нажмите на значок Развернуть в верхнем правом углу графа, чтобы просмотреть источник в режиме полного графа происхождения.
+    - **Раздел описания** &mdash; Описание источника.
+    - **Раздел свежести источника** &mdash; Информация о том, был ли успешным процесс обновления данных, когда источник был загружен в последний раз, временная метка, когда запуск сгенерировал данные, и ID запуска.
+    - **Раздел деталей** &mdash; Детали, такие как база данных, схема и многое другое.
+    - **Раздел отношений** &mdash; Таблица, в которой перечислены все источники, используемые с их статусом свежести, временной меткой последней проверки свежести и временной меткой последней загрузки источника.
+- **Вкладка столбцов** &mdash; Доступные столбцы в источнике. Эта вкладка также показывает результаты тестов (если есть), которые вы можете выбрать для просмотра страницы деталей теста. :white_check_mark: обозначает проходящий тест.
+
+</Expandable>
+
+### Пример деталей модели
 
 <DocCarousel slidesPerView={1}>
 
-Example of the details view for the model `customers`:<br /> <Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of resource details" />
+Пример представления деталей для модели `customers`:<br /> <Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Пример деталей ресурса" />
 
-<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="95%" title="Example of auto-exposure details for the Tableau exposure."/>
+<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="95%" title="Пример деталей автоэкспозиции для экспозиции Tableau."/>
 
 </DocCarousel>
 
+## Тестовая среда
 
-## Staging environment
+dbt Explorer поддерживает представления для [тестовых сред развертывания](/docs/deploy/deploy-environments#staging-environment) в дополнение к производственной среде. Это дает вам уникальный взгляд на ваши рабочие процессы данных до производства, с теми же инструментами, доступными в производстве, при этом обеспечивая дополнительный уровень проверки.
 
-dbt Explorer supports views for [staging deployment environments](/docs/deploy/deploy-environments#staging-environment), in addition to the production environment. This gives you a unique view into your pre-production data workflows, with the same tools available in production, while providing an extra layer of scrutiny. 
+Вы можете исследовать метаданные из вашей производственной или тестовой среды, чтобы информировать ваш жизненный цикл разработки данных. Просто [установите одну среду](/docs/deploy/deploy-environments) для проекта dbt Cloud как "производственную" или "тестовую", и убедитесь, что соответствующие метаданные были сгенерированы, тогда вы сможете просмотреть их в Explorer. Обратитесь к [Генерации метаданных](/docs/collaborate/explore-projects#generate-metadata) для получения дополнительных деталей.
 
-You can explore the metadata from your production or staging environment to inform your data development lifecycle. Just [set a single environment](/docs/deploy/deploy-environments) per dbt Cloud project as “production” or “staging," and ensure the proper metadata has been generated then you’ll be able to view it in Explorer. Refer to [Generating metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Изучение в тестовой среде" />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explore-staging-env.png" width="100%" title="Explore in a staging environment" />
-
-## Related content
-- [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions) 
-- [About model governance](/docs/collaborate/govern/about-model-governance)
-- Blog on [What is data mesh?](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh)
+## Связанный контент
+- [Корпоративные разрешения](/docs/cloud/manage-access/enterprise-permissions) 
+- [О управлении моделями](/docs/collaborate/govern/about-model-governance)
+- Блог о [Что такое дата-меш?](https://www.getdbt.com/blog/what-is-data-mesh-the-definition-and-importance-of-data-mesh)

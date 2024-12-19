@@ -1,181 +1,179 @@
 ---
-title: "dbt Explorer FAQs"
-sidebar_label: "dbt Explorer FAQs"
-description: "Learn more with the FAQs about dbt Explorer, how it works, how to interact with it, and more."
+title: "Часто задаваемые вопросы о dbt Explorer"
+sidebar_label: "Часто задаваемые вопросы о dbt Explorer"
+description: "Узнайте больше с помощью часто задаваемых вопросов о dbt Explorer, о том, как он работает, как с ним взаимодействовать и многое другое."
 pagination_next: "docs/collaborate/auto-exposures"
 ---
 
-[dbt Explorer](/docs/collaborate/explore-projects) is dbt Cloud’s new knowledge base and lineage visualization experience. It offers an interactive and high-level view of your company’s entire data estate, where you can dive deep into the context you need to understand and improve lineage so your teams can trust the data they’re using to make decisions.
+[dbt Explorer](/docs/collaborate/explore-projects) — это новая база знаний и визуализация связей в dbt Cloud. Она предлагает интерактивный и высокоуровневый обзор всей вашей корпоративной структуры данных, где вы можете углубиться в контекст, необходимый для понимания и улучшения связей, чтобы ваши команды могли доверять данным, которые они используют для принятия решений.
 
-## Overview
+## Обзор
 
-<Expandable alt_header="How does dbt Explorer help with data quality?" >
+<Expandable alt_header="Как dbt Explorer помогает с качеством данных?" >
 
-dbt Explorer makes it easy and intuitive to understand your entire lineage &mdash; from data source to the reporting layer &mdash; so you can troubleshoot, improve, and optimize your pipelines. With built-in features like project recommendations and model performance analysis, you can be sure you have appropriate test and documentation coverage across your estate and quickly spot and remediate slow-running models. With column-level lineage, you can quickly identify the potential downstream impacts of table changes or work backwards to quickly understand the root cause of an incident. dbt Explorer gives teams the insights they need to improve data quality proactively, ensuring pipelines stay performant and data trust remains solid.
-
-</Expandable>
-
-<Expandable alt_header="How is dbt Explorer priced?" >
-
-dbt Explorer is generally available to all regions and deployment types on the dbt Cloud [Enterprise and Team plans](https://www.getdbt.com/). Certain features within dbt Explorer, such as multi-project lineage and column-level lineage, are only available on the Enterprise plan.
-
-dbt Explorer can be accessed by users with developer and read-only seats.
+dbt Explorer упрощает и делает интуитивно понятным понимание всей вашей связи — от источника данных до слоя отчетности — так что вы можете устранять неполадки, улучшать и оптимизировать свои конвейеры. С такими встроенными функциями, как рекомендации по проектам и анализ производительности моделей, вы можете быть уверены, что у вас есть соответствующее покрытие тестами и документацией по всей вашей структуре, а также быстро выявлять и устранять медленно работающие модели. С помощью связи на уровне столбцов вы можете быстро определить потенциальные последствия изменений таблиц или работать в обратном направлении, чтобы быстро понять коренную причину инцидента. dbt Explorer предоставляет командам необходимые инсайты для проактивного улучшения качества данных, обеспечивая производительность конвейеров и надежность данных.
 
 </Expandable>
 
-<Expandable alt_header="What happened to dbt Docs?" >
+<Expandable alt_header="Какова стоимость dbt Explorer?" >
 
-dbt Explorer is the default documentation experience for dbt Cloud customers. dbt Docs is still available but doesn't offer the same speed, metadata, or visibility as dbt Explorer and will become a legacy feature.
+dbt Explorer доступен для всех регионов и типов развертывания на планах dbt Cloud [Enterprise и Team](https://www.getdbt.com/). Некоторые функции dbt Explorer, такие как многоуровневая связь и связь на уровне столбцов, доступны только на плане Enterprise.
 
-</Expandable>
-
-## How dbt Explorer works
-
-<Expandable alt_header="Can I use dbt Explorer on-premises or with my self-hosted dbt Core deployment?" >
-
-No. dbt Explorer and all of its features are only available as a dbt Cloud user experience. dbt Explorer reflects the metadata from your dbt Cloud project(s) and their runs. 
+dbt Explorer может использоваться пользователями с правами разработчика и только для чтения.
 
 </Expandable>
 
-<Expandable alt_header="How does dbt Explorer support dbt Cloud environments?" >
+<Expandable alt_header="Что произошло с dbt Docs?" >
 
-dbt Explorer supports a production or staging [deployment environment](/docs/deploy/deploy-environments) for each project you want to explore. It defaults to the latest production or staging state of a project. Users can only assign one production and one staging environment per dbt Cloud project.
-
-Support for development (dbt Cloud CLI and dbt Cloud IDE) environments is coming soon.
+dbt Explorer является стандартным опытом документации для клиентов dbt Cloud. dbt Docs по-прежнему доступен, но не предлагает такой же скорости, метаданных или видимости, как dbt Explorer, и станет устаревшей функцией.
 
 </Expandable>
 
-<Expandable alt_header="How do I get started in Explorer? How does it update?" >
+## Как работает dbt Explorer
 
-Simply select **Explore** from the dbt Cloud top navigation bar. dbt Explorer automatically updates after each dbt Cloud run in the given project’s environment (production, by default). The dbt commands you run within the environment will generate and update the metadata in dbt Explorer, so make sure to run the correct combination of commands within the jobs of the environment; for more details, refer to [Generate metadata](/docs/collaborate/explore-projects#generate-metadata). 
+<Expandable alt_header="Могу ли я использовать dbt Explorer на месте или с моим собственным развертыванием dbt Core?" >
 
-</Expandable>
-
-<Expandable alt_header="Is it possible to export dbt lineage to an external system or catalog?" >
-
-Yes. The lineage that powers dbt Explorer is also available through the Discovery API.
+Нет. dbt Explorer и все его функции доступны только как пользовательский интерфейс dbt Cloud. dbt Explorer отражает метаданные из вашего проекта dbt Cloud и их запусков.
 
 </Expandable>
 
-<Expandable alt_header="How does dbt Explorer integrate with third-party tools to show end-to-end lineage?" >
+<Expandable alt_header="Как dbt Explorer поддерживает окружения dbt Cloud?" >
 
-dbt Explorer reflects all the lineage defined within the dbt project. Our vision for dbt Explorer is to incorporate additional metadata from external tools like data loaders (sources) and BI/analytics tools (exposures) integrated with dbt Cloud, all seamlessly incorporated into the lineage of the dbt Cloud project.
+dbt Explorer поддерживает производственное или тестовое [окружение развертывания](/docs/deploy/deploy-environments) для каждого проекта, который вы хотите исследовать. По умолчанию он использует последнее производственное или тестовое состояние проекта. Пользователи могут назначить только одно производственное и одно тестовое окружение для каждого проекта dbt Cloud.
 
-</Expandable>
-
-
-## Key features 
-
-<Expandable alt_header="Does dbt Explorer support multi-project discovery (dbt Mesh)?" >
-
-Yes. Refer to [Explore multiple projects](/docs/collaborate/explore-multiple-projects) to learn more. 
+Поддержка окружений разработки (dbt Cloud CLI и dbt Cloud IDE) скоро будет добавлена.
 
 </Expandable>
 
-<Expandable alt_header="What kind of search capabilities does dbt Explorer support?" >
+<Expandable alt_header="Как мне начать работу в Explorer? Как он обновляется?" >
 
-Resource search capabilities include using keywords, partial strings (fuzzy search), and set operators like `OR`. Meanwhile, lineage search supports using dbt selectors. For details, refer to [Keyword search](/docs/collaborate/explore-projects#search-resources).
-
-</Expandable>
-
-<Expandable alt_header="Can I view model execution information for a job that is currently being run?" >
-
-dbt Cloud updates the performance charts and metrics after a job run. 
+Просто выберите **Explore** в верхней навигационной панели dbt Cloud. dbt Explorer автоматически обновляется после каждого запуска dbt Cloud в заданном окружении проекта (по умолчанию — производственном). Команды dbt, которые вы выполняете в окружении, будут генерировать и обновлять метаданные в dbt Explorer, поэтому убедитесь, что вы выполняете правильное сочетание команд в заданиях окружения; для получения дополнительных сведений обратитесь к [Генерация метаданных](/docs/collaborate/explore-projects#generate-metadata).
 
 </Expandable>
 
-<Expandable alt_header="Can I analyze the number of successful model runs within a month?" >
+<Expandable alt_header="Можно ли экспортировать связи dbt в внешнюю систему или каталог?" >
 
-A chart of models built by month is available in the dbt Cloud dashboard. 
-
-</Expandable>
-
-<Expandable alt_header="Can model or column descriptions be edited within dbt Cloud?" >
-
-Yes. Today, you can edit descriptions in the dbt Cloud IDE or CLI by changing the YAML files within the dbt project. In the future, dbt Explorer will support more ways of editing descriptions. 
+Да. Связь, которая поддерживает dbt Explorer, также доступна через Discovery API.
 
 </Expandable>
 
-<Expandable alt_header="Where do recommendations come from? Can they be customized?" >
+<Expandable alt_header="Как dbt Explorer интегрируется с сторонними инструментами для отображения сквозной связи?" >
 
-Recommendations largely mirror the best practice rules from the `dbt_project_evaluator` package. At this time, recommendations can’t be customized. In the future, dbt Explorer will likely support recommendation customization capabilities (for example, in project code). 
-
-</Expandable>
-
-## Column-level lineage
-
-<Expandable alt_header="What are the best use cases for column-level lineage in dbt Explorer?" >
-
-Column-level lineage in dbt Explorer can be used to improve many data development workflows, including:
-
-- **Audit** &mdash; Visualize how data moves through and is used in your dbt project
-- **Root cause** &mdash; Improve time to detect and resolve data quality issues, tracking back to the source
-- **Impact analysis** &mdash; Trace transformations and usage to avoid introducing issues for consumers
-- **Efficiency** &mdash; Prune unnecessary columns to reduce costs and data team overhead
+dbt Explorer отражает все связи, определенные в проекте dbt. Наша цель для dbt Explorer — включить дополнительные метаданные из внешних инструментов, таких как загрузчики данных (источники) и инструменты BI/аналитики (экспозиции), интегрированные с dbt Cloud, все это будет бесшовно интегрировано в связи проекта dbt Cloud.
 
 </Expandable>
 
-<Expandable alt_header="Does the column-level lineage remain functional even if column names vary between models?" >
+## Ключевые функции 
 
-Yes. Column-level lineage can handle name changes across instances of the column in the dbt project.
+<Expandable alt_header="Поддерживает ли dbt Explorer многоуровневое открытие проектов (dbt Mesh)?" >
 
-</Expandable>
-
-<Expandable alt_header="Can multiple projects leverage the same column definition?" >
-
-No. Cross-project column lineage is supported in the sense of viewing how a public model is used across projects, but not on a column-level. 
+Да. Обратитесь к [Изучение нескольких проектов](/docs/collaborate/explore-multiple-projects), чтобы узнать больше.
 
 </Expandable>
 
+<Expandable alt_header="Какие возможности поиска поддерживает dbt Explorer?" >
 
-<Expandable alt_header="Can column descriptions be propagated down in downstream lineage automatically?" >
-
-Yes, a reused column, labeled as passthrough or rename, inherits its description from source and upstream model columns. In other words, source and upstream model columns propagate their descriptions downstream whenever they are not transformed, meaning you don’t need to manually define the description. Refer to [Inherited column descriptions](/docs/collaborate/column-level-lineage#inherited-column-descriptions) for more info.
-
-</Expandable>
-
-<Expandable alt_header="Is column-level lineage also available in the development tab?" >
-
-Not currently, but we plan to incorporate column-level awareness across features in dbt Cloud in the future.
+Возможности поиска ресурсов включают использование ключевых слов, частичных строк (нечеткий поиск) и операторов множеств, таких как `OR`. В то же время поиск по связям поддерживает использование селекторов dbt. Для получения подробной информации обратитесь к [Поиск по ключевым словам](/docs/collaborate/explore-projects#search-resources).
 
 </Expandable>
 
-## Availability, access, and permissions
+<Expandable alt_header="Могу ли я просмотреть информацию о выполнении модели для задания, которое в данный момент выполняется?" >
 
-<Expandable alt_header="How can non-developers interact with dbt Explorer?" >
-
-Read-only users can consume metadata in dbt Explorer. More bespoke experiences and exploration avenues for analysts and less-technical contributors will be provided in the future. 
+dbt Cloud обновляет графики производительности и метрики после выполнения задания.
 
 </Expandable>
 
-<Expandable alt_header="Does dbt Explorer require a specific dbt Cloud plan?" >
+<Expandable alt_header="Могу ли я проанализировать количество успешных запусков модели в течение месяца?" >
 
-dbt Explorer is available on the dbt Cloud Team and Enterprise plans. Certain features within dbt Explorer, like multi-project lineage and column-level lineage, are only available on the Enterprise plan. 
-
-</Expandable>
-
-<Expandable alt_header="Will dbt Core users be able to leverage any of these new dbt Explorer features?" >
-
-No. dbt Explorer is a dbt Cloud-only product experience.
+График моделей, построенных по месяцам, доступен на панели управления dbt Cloud.
 
 </Expandable>
 
-<Expandable alt_header="Is it possible to access dbt Explorer using a read-only license?" >
+<Expandable alt_header="Можно ли редактировать описания моделей или столбцов в dbt Cloud?" >
 
-Yes, users with read-only access can use the dbt Explorer. Specific feature availability within dbt Explorer will depend on your dbt Cloud plan. 
-
-</Expandable>
-
-<Expandable alt_header="Is there an easy way to share useful dbt Explorer content with people outside of dbt Cloud?" >
-
-The ability to embed and share views is being evaluated as a potential future capability. 
+Да. В настоящее время вы можете редактировать описания в dbt Cloud IDE или CLI, изменяя YAML-файлы в проекте dbt. В будущем dbt Explorer будет поддерживать больше способов редактирования описаний.
 
 </Expandable>
 
-<Expandable alt_header=" Is dbt Explorer accessible from other areas inside dbt Cloud?" >
+<Expandable alt_header="Откуда берутся рекомендации? Можно ли их настроить?" >
 
-Yes, you can [access dbt Explorer from various dbt Cloud features](/docs/collaborate/access-from-dbt-cloud), ensuring you have a seamless experience navigating between resources and lineage in your project.
+Рекомендации в значительной степени отражают правила лучших практик из пакета `dbt_project_evaluator`. В настоящее время рекомендации не могут быть настроены. В будущем dbt Explorer, вероятно, будет поддерживать возможности настройки рекомендаций (например, в коде проекта).
 
-While the primary way to access dbt Explorer is through the **Explore** link in the navigation, you can also access it from the [dbt Cloud IDE](/docs/collaborate/access-from-dbt-cloud#dbt-cloud-ide), [the lineage tab in jobs](/docs/collaborate/access-from-dbt-cloud#lineage-tab-in-jobs), and the [model timing tab in jobs](/docs/collaborate/access-from-dbt-cloud#model-timing-tab-in-jobs).
+</Expandable>
+
+## Связь на уровне столбцов
+
+<Expandable alt_header="Каковы лучшие случаи использования связи на уровне столбцов в dbt Explorer?" >
+
+Связь на уровне столбцов в dbt Explorer может быть использована для улучшения многих рабочих процессов разработки данных, включая:
+
+- **Аудит** — Визуализируйте, как данные перемещаются и используются в вашем проекте dbt
+- **Коренная причина** — Ускорьте обнаружение и решение проблем с качеством данных, отслеживая их до источника
+- **Анализ воздействия** — Отслеживайте преобразования и использование, чтобы избежать введения проблем для потребителей
+- **Эффективность** — Удаляйте ненужные столбцы, чтобы снизить затраты и нагрузку на команду данных
+
+</Expandable>
+
+<Expandable alt_header="Сохраняется ли функциональность связи на уровне столбцов, даже если имена столбцов различаются между моделями?" >
+
+Да. Связь на уровне столбцов может обрабатывать изменения имен в различных экземплярах столбца в проекте dbt.
+
+</Expandable>
+
+<Expandable alt_header="Могут ли несколько проектов использовать одно и то же определение столбца?" >
+
+Нет. Поддерживается связь столбцов между проектами в том смысле, что можно просмотреть, как публичная модель используется в разных проектах, но не на уровне столбца.
+
+</Expandable>
+
+<Expandable alt_header="Могут ли описания столбцов автоматически передаваться вниз по связям?" >
+
+Да, повторно используемый столбец, помеченный как passthrough или rename, наследует свое описание от источника и столбцов верхнего уровня модели. Другими словами, столбцы источника и верхнего уровня модели передают свои описания вниз, когда они не преобразуются, что означает, что вам не нужно вручную определять описание. Обратитесь к [Наследуемым описаниям столбцов](/docs/collaborate/column-level-lineage#inherited-column-descriptions) для получения дополнительной информации.
+
+</Expandable>
+
+<Expandable alt_header="Доступна ли связь на уровне столбцов также на вкладке разработки?" >
+
+В настоящее время нет, но мы планируем включить осведомленность о столбцах в функции dbt Cloud в будущем.
+
+</Expandable>
+
+## Доступность, доступ и разрешения
+
+<Expandable alt_header="Как неразработчики могут взаимодействовать с dbt Explorer?" >
+
+Пользователи с правами только для чтения могут использовать метаданные в dbt Explorer. В будущем будут предоставлены более индивидуальные возможности и пути исследования для аналитиков и менее технических участников.
+
+</Expandable>
+
+<Expandable alt_header="Требуется ли для dbt Explorer конкретный план dbt Cloud?" >
+
+dbt Explorer доступен на планах dbt Cloud Team и Enterprise. Некоторые функции dbt Explorer, такие как многоуровневая связь и связь на уровне столбцов, доступны только на плане Enterprise.
+
+</Expandable>
+
+<Expandable alt_header="Смогут ли пользователи dbt Core использовать какие-либо из новых функций dbt Explorer?" >
+
+Нет. dbt Explorer — это продукт, доступный только в dbt Cloud.
+
+</Expandable>
+
+<Expandable alt_header="Можно ли получить доступ к dbt Explorer с лицензией только для чтения?" >
+
+Да, пользователи с доступом только для чтения могут использовать dbt Explorer. Конкретная доступность функций в dbt Explorer будет зависеть от вашего плана dbt Cloud.
+
+</Expandable>
+
+<Expandable alt_header="Существует ли простой способ поделиться полезным контентом dbt Explorer с людьми вне dbt Cloud?" >
+
+Возможность встраивания и обмена представлениями рассматривается как потенциальная будущая возможность.
+
+</Expandable>
+
+<Expandable alt_header="Доступен ли dbt Explorer из других областей внутри dbt Cloud?" >
+
+Да, вы можете [доступаться к dbt Explorer из различных функций dbt Cloud](/docs/collaborate/access-from-dbt-cloud), что обеспечивает вам бесшовный опыт навигации между ресурсами и связями в вашем проекте.
+
+Хотя основной способ доступа к dbt Explorer — это ссылка **Explore** в навигации, вы также можете получить к нему доступ из [dbt Cloud IDE](/docs/collaborate/access-from-dbt-cloud#dbt-cloud-ide), [вкладки связей в заданиях](/docs/collaborate/access-from-dbt-cloud#lineage-tab-in-jobs) и [вкладки времени модели в заданиях](/docs/collaborate/access-from-dbt-cloud#model-timing-tab-in-jobs).
 
 </Expandable>

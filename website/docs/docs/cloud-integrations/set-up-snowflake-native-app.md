@@ -1,62 +1,62 @@
 ---
-title: "Set up the dbt Snowflake Native App"
-description: "Learn how to set up the dbt Snowflake Native App"
+title: "Настройка dbt Snowflake Native App"
+description: "Узнайте, как настроить dbt Snowflake Native App"
 pagination_prev: "docs/cloud-integrations/snowflake-native-app"
 pagination_next: null
 ---
 
-# Set up the dbt Snowflake Native App <Lifecycle status='preview' />
+# Настройка dbt Snowflake Native App <Lifecycle status='preview' />
 
-The [dbt Snowflake Native App](/docs/cloud-integrations/snowflake-native-app) enables these features within the Snowflake user interface: dbt Explorer, the **Ask dbt** chatbot, and dbt Cloud's orchestration observability features. 
+[dbt Snowflake Native App](/docs/cloud-integrations/snowflake-native-app) включает в себя такие функции в интерфейсе Snowflake, как: dbt Explorer, чат-бот **Ask dbt** и функции наблюдаемости оркестрации dbt Cloud.
 
-Configure both dbt Cloud and Snowflake to set up this integration. The high-level steps are described as follows: 
+Настройте как dbt Cloud, так и Snowflake для интеграции. Основные шаги описаны следующим образом:
 
-1. Set up the **Ask dbt** configuration. 
-1. Configure Snowflake. 
-1. Configure dbt Cloud.
-1. Purchase and install the dbt Snowflake Native App.
-1. Configure the app.
-1. Verify successful installation of the app.
-1. Onboard new users to the app.
+1. Настройте конфигурацию **Ask dbt**.
+1. Настройте Snowflake.
+1. Настройте dbt Cloud.
+1. Приобретите и установите dbt Snowflake Native App.
+1. Настройте приложение.
+1. Проверьте успешную установку приложения.
+1. Включите новых пользователей в приложение.
 
-The order of the steps is slightly different if you purchased the public listing of the Native App; you'll start by purchasing the Native App, satisfying the prerequisites, and then completing the remaining steps in order.  
+Порядок шагов немного отличается, если вы приобрели публичный список Native App; вы начнете с покупки Native App, удовлетворения предварительным требованиям, а затем выполните оставшиеся шаги в порядке.
 
-## Prerequisites
-The following are the prerequisites for dbt Cloud and Snowflake. 
+## Предварительные требования
+Следующие требования необходимы для dbt Cloud и Snowflake.
 
 ### dbt Cloud
 
-- You must have a dbt Cloud account on the Enterprise plan that's in an AWS Region or Azure region. If you don't already have one, please [contact us](mailto:sales_snowflake_marketplace@dbtlabs.com) to get started.
-    - Currently, Semantic Layer is unavailable for Azure ST instances and the **Ask dbt** chatbot will not function in the dbt Snowflake Native App without it. 
-- Your dbt Cloud account must have permission to create a [service token](/docs/dbt-cloud-apis/service-tokens). For details, refer to [Enterprise permissions](/docs/cloud/manage-access/enterprise-permissions).
-- There's a dbt Cloud project with [Semantic Layer configured](/docs/use-dbt-semantic-layer/setup-sl) and metrics declared. 
-- You have set up a [production deployment environment](/docs/deploy/deploy-environments#set-as-production-environment).
-    - There has been at least one successful job run that includes a `docs generate` step in the deployment environment.
+- У вас должен быть аккаунт dbt Cloud на корпоративном плане, который находится в регионе AWS или Azure. Если у вас его еще нет, пожалуйста, [свяжитесь с нами](mailto:sales_snowflake_marketplace@dbtlabs.com), чтобы начать.
+    - В настоящее время Semantic Layer недоступен для экземпляров Azure ST, и чат-бот **Ask dbt** не будет работать в dbt Snowflake Native App без него.
+- Ваш аккаунт dbt Cloud должен иметь разрешение на создание [токена службы](/docs/dbt-cloud-apis/service-tokens). Для получения подробной информации обратитесь к [разделу о разрешениях для предприятий](/docs/cloud/manage-access/enterprise-permissions).
+- Должен быть проект dbt с [настроенным Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) и объявленными метриками.
+- Вы настроили [среду развертывания в производственной среде](/docs/deploy/deploy-environments#set-as-production-environment).
+    - Должен быть хотя бы один успешный запуск задания, который включает шаг `docs generate` в среде развертывания.
 
 ### Snowflake
 
-- You have **ACCOUNTADMIN** access in Snowflake.
-- Your Snowflake account must have access to the Native App/SPCS integration and NA/SPCS configurations (Public Preview planned at end of June). If you're unsure, please check with your Snowflake account manager.
-- The Snowflake account must be in an AWS Region. Azure is not currently supported for Native App/SPCS integration. 
-- You have access to Snowflake Cortex through your Snowflake permissions and [Snowflake Cortex is available in your region](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#availability). Without this, Ask dbt will not work.
+- У вас должен быть доступ **ACCOUNTADMIN** в Snowflake.
+- Ваш аккаунт Snowflake должен иметь доступ к интеграции Native App/SPCS и конфигурациям NA/SPCS (публичный предварительный просмотр запланирован на конец июня). Если вы не уверены, пожалуйста, проверьте это с вашим менеджером по аккаунту Snowflake.
+- Аккаунт Snowflake должен находиться в регионе AWS. Azure в настоящее время не поддерживается для интеграции Native App/SPCS.
+- У вас есть доступ к Snowflake Cortex через ваши разрешения Snowflake, и [Snowflake Cortex доступен в вашем регионе](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#availability). Без этого Ask dbt не будет работать.
 
-## Set up the configuration for Ask dbt
+## Настройка конфигурации для Ask dbt
 
-Configure dbt Cloud and Snowflake Cortex to power the **Ask dbt** chatbot.
+Настройте dbt Cloud и Snowflake Cortex для работы чат-бота **Ask dbt**.
 
-1. In dbt Cloud, browse to your Semantic Layer configurations. 
+1. В dbt Cloud перейдите к вашим конфигурациям Semantic Layer.
 
-    1. Navigate to the left hand side panel and click your account name. From there, select **Account settings**. 
-    1. In the left sidebar, select **Projects** and choose your dbt project from the project list. 
+    1. Перейдите в левую панель и нажмите на имя вашего аккаунта. Затем выберите **Настройки аккаунта**.
+    1. В левой боковой панели выберите **Проекты** и выберите ваш проект dbt из списка проектов.
 
-    1. In the **Project details** panel, click the **Edit Semantic Layer Configuration** link (which is below the **GraphQL URL** option). 
-1. In the **Semantic Layer Configuration Details** panel, identify the Snowflake credentials (which you'll use to access Snowflake Cortex) and the environment against which the Semantic Layer is run. Save the username, role, and the environment in a temporary location to use later on. 
+    1. В панели **Детали проекта** нажмите на ссылку **Изменить конфигурацию Semantic Layer** (которая находится под опцией **GraphQL URL**).
+2. В панели **Детали конфигурации Semantic Layer** определите учетные данные Snowflake (которые вы будете использовать для доступа к Snowflake Cortex) и среду, в которой выполняется Semantic Layer. Сохраните имя пользователя, роль и среду в временном месте для дальнейшего использования.
 
-    <Lightbox src="/img/docs/cloud-integrations/semantic_layer_configuration.png" width="100%" title="Semantic Layer credentials"/>
+    <Lightbox src="/img/docs/cloud-integrations/semantic_layer_configuration.png" width="100%" title="Учетные данные Semantic Layer"/>
 
-1. In Snowflake, verify that your SL and deployment user has been granted permission to use Snowflake Cortex. For more information, refer to [Required Privileges](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#required-privileges) in the Snowflake docs. 
-    
-    By default, all users should have access to Snowflake Cortex. If this is disabled for you, open a Snowflake SQL worksheet and run these statements:
+3. В Snowflake проверьте, что вашему SL и пользователю развертывания предоставлены разрешения на использование Snowflake Cortex. Для получения дополнительной информации обратитесь к [Необходимым привилегиям](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#required-privileges) в документации Snowflake.
+
+    По умолчанию все пользователи должны иметь доступ к Snowflake Cortex. Если это отключено для вас, откройте рабочий лист SQL Snowflake и выполните следующие команды:
 
     ```sql
     create role cortex_user_role;
@@ -65,92 +65,89 @@ Configure dbt Cloud and Snowflake Cortex to power the **Ask dbt** chatbot.
     grant role cortex_user_role to user DEPLOYMENT_USER;
     ```
 
-    Make sure to replace `SNOWFLAKE.CORTEX_USER`, `DEPLOYMENT_USER`, and `SL_USER` with the appropriate strings for your environment.
+    Убедитесь, что вы заменили `SNOWFLAKE.CORTEX_USER`, `DEPLOYMENT_USER` и `SL_USER` на соответствующие строки для вашей среды.
 
-## Configure dbt Cloud 
-Collect the following pieces of information from dbt Cloud to set up the application. 
+## Настройка dbt Cloud
+Соберите следующую информацию из dbt Cloud для настройки приложения.
 
-1. Navigate to the left-hand side panel and click your account name. From there, select **Account settings**. Then click **API tokens > Service tokens**. Create a service token with access to all the projects you want to access in the dbt Snowflake Native App. Grant these permission sets: 
-    - **Manage marketplace apps**
-    - **Job Admin**
-    - **Metadata Only**
-    - **Semantic Layer Only**
+1. Перейдите в левую панель и нажмите на имя вашего аккаунта. Затем выберите **Настройки аккаунта**. Затем нажмите **API токены > Токены службы**. Создайте токен службы с доступом ко всем проектам, к которым вы хотите получить доступ в dbt Snowflake Native App. Предоставьте следующие наборы разрешений:
+    - **Управление приложениями в маркетплейсе**
+    - **Администратор заданий**
+    - **Только метаданные**
+    - **Только Semantic Layer**
 
-    Make sure to save the token information in a temporary location to use later during Native App configuration.
+    Убедитесь, что вы сохранили информацию о токене в временном месте для дальнейшего использования при настройке Native App.
 
-    The following is an example of granting the permission sets to all projects:
+    Следующий пример показывает, как предоставить наборы разрешений для всех проектов:
 
-    <Lightbox src="/img/docs/cloud-integrations/example-snowflake-native-app-service-token.png" title="Example of a new service token for the dbt Snowflake Native App"/>
+    <Lightbox src="/img/docs/cloud-integrations/example-snowflake-native-app-service-token.png" title="Пример нового токена службы для dbt Snowflake Native App"/>
 
-1. From the left sidebar, select **Account** and save this information in a temporary location to use later during Native App configuration:
-    - **Account ID** &mdash; A numerical string representing your dbt Cloud account.
-    - **Access URL** &mdash; If you have a North America multi-tenant account, use `cloud.getdbt.com` as the access URL. For all other regions, refer to [Access, Regions, & IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) and look up the access URL you should use in the table. 
+2. В левой боковой панели выберите **Аккаунт** и сохраните эту информацию в временном месте для дальнейшего использования при настройке Native App:
+    - **ID аккаунта** &mdash; Числовая строка, представляющая ваш аккаунт dbt Cloud.
+    - **URL доступа** &mdash; Если у вас есть многопользовательский аккаунт в Северной Америке, используйте `cloud.getdbt.com` в качестве URL доступа. Для всех других регионов обратитесь к [Доступу, регионам и IP-адресам](/docs/cloud/about-cloud/access-regions-ip-addresses) и найдите URL доступа, который вы должны использовать в таблице.
 
-## Install the dbt Snowflake Native App
-1. Browse to the listing for the dbt Snowflake Native App: 
-    - **Private listing** (recommended) &mdash; Use the link from the email sent to you. 
-    - **Public listing** &mdash; Navigate to the [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3). 
-1. Click **Get** on the listing to install the dbt Snowflake Native App. This can take several minutes. When installation is complete, an email is sent to you. 
-    
-    A message will appear asking if you want to change the application and grant access to the warehouse for installation. dbt Labs strongly recommends not changing the application name unless necessary.
-1. When the dbt Snowflake Native App is successfully installed, click **Configure** in the modal window. 
+## Установка dbt Snowflake Native App
+1. Перейдите к списку dbt Snowflake Native App:
+    - **Частный список** (рекомендуется) &mdash; Используйте ссылку из отправленного вам электронного письма.
+    - **Публичный список** &mdash; Перейдите на [Snowflake Marketplace](https://app.snowflake.com/marketplace/listing/GZTYZSRT2R3).
+2. Нажмите **Получить** в списке, чтобы установить dbt Snowflake Native App. Это может занять несколько минут. Когда установка завершится, вам будет отправлено электронное письмо.
 
-## Configure the dbt Snowflake Native App
+    Появится сообщение с вопросом, хотите ли вы изменить приложение и предоставить доступ к складу для установки. dbt Labs настоятельно рекомендует не изменять имя приложения, если это не необходимо.
+3. Когда dbt Snowflake Native App будет успешно установлен, нажмите **Настроить** в модальном окне.
 
-1. On the **Activate dbt** page, click **Grant** in **Step 1: Grant Account Privileges**.
-1. When privileges have been successfully granted, click **Review** in **Step 2: Allow Connections**. 
+## Настройка dbt Snowflake Native App
 
-    Walk through the **Connect to dbt Cloud External Access Integration** steps. You will need your dbt Cloud account information that you collected earlier. Enter your account ID, access URL, and API service token as the **Secret value** when prompted. 
-1. On the **Activate dbt** page, click **Activate** when you've established a successful connection to the dbt Cloud External Access Integration. It can take a few minutes to spin up the required Snowflake services and compute resources. 
-1. When activation is complete, select the **Telemetry** tab and enable the option to share your `INFO` logs. The option might take some time to display. This is because Snowflake needs to create the events table so it can be shared.
-1. When the option is successfully enabled, click **Launch app**. Then, log in to the app with your Snowflake credentials. 
-    
-    If it redirects you to a Snowsight worksheet (instead of the login page), that means the app hasn't finished installing. You can resolve this issue, typically, by refreshing the page.   
+1. На странице **Активировать dbt** нажмите **Предоставить** в **Шаге 1: Предоставить привилегии аккаунта**.
+2. Когда привилегии будут успешно предоставлены, нажмите **Просмотреть** в **Шаге 2: Разрешить подключения**.
 
-    The following is an example of the dbt Snowflake Native App after configuration:
+    Пройдите через шаги **Подключение к интеграции внешнего доступа dbt Cloud**. Вам понадобятся данные вашего аккаунта dbt Cloud, которые вы собрали ранее. Введите ваш ID аккаунта, URL доступа и токен API службы в качестве **Секретного значения**, когда будет предложено.
+3. На странице **Активировать dbt** нажмите **Активировать**, когда вы установите успешное соединение с интеграцией внешнего доступа dbt Cloud. Это может занять несколько минут для запуска необходимых сервисов Snowflake и вычислительных ресурсов.
+4. Когда активация завершится, выберите вкладку **Телеметрия** и включите опцию для совместного использования ваших логов `INFO`. Эта опция может занять некоторое время для отображения. Это связано с тем, что Snowflake должен создать таблицу событий, чтобы ее можно было совместно использовать.
+5. Когда опция будет успешно включена, нажмите **Запустить приложение**. Затем войдите в приложение с помощью ваших учетных данных Snowflake.
 
-    <Lightbox src="/img/docs/cloud-integrations/example-dbt-snowflake-native-app.png" title="Example of the dbt Snowflake Native App"/>
+    Если вас перенаправляет на рабочий лист Snowsight (вместо страницы входа), это означает, что приложение еще не завершило установку. Обычно вы можете решить эту проблему, обновив страницу.
 
-## Verify the app installed successfully
+    Следующий пример показывает dbt Snowflake Native App после настройки:
 
-To verify the app installed successfully, select any of the following from the sidebar:
+    <Lightbox src="/img/docs/cloud-integrations/example-dbt-snowflake-native-app.png" title="Пример dbt Snowflake Native App"/>
 
-- **Explore** &mdash; Launch dbt Explorer and make sure you can access your dbt project information.
-- **Jobs** &mdash; Review the run history of the dbt jobs. 
-- **Ask dbt** &mdash; Click on any of the suggested prompts to ask the chatbot a question. Depending on the number of metrics that's defined for the dbt project, it can take several minutes to load **Ask dbt** the first time because dbt is building the Retrieval Augmented Generation (RAG). Subsequent launches will load faster.
+## Проверьте, что приложение установлено успешно
 
+Чтобы проверить, что приложение установлено успешно, выберите любой из следующих пунктов в боковой панели:
 
-The following is an example of the **Ask dbt** chatbot with the suggested prompts near the top: 
+- **Исследовать** &mdash; Запустите dbt Explorer и убедитесь, что вы можете получить доступ к информации о вашем проекте dbt.
+- **Задания** &mdash; Просмотрите историю выполнения заданий dbt.
+- **Ask dbt** &mdash; Нажмите на любой из предложенных запросов, чтобы задать вопрос чат-боту. В зависимости от количества метрик, определенных для проекта dbt, загрузка **Ask dbt** в первый раз может занять несколько минут, так как dbt строит Retrieval Augmented Generation (RAG). Последующие запуски будут загружаться быстрее.
 
-<Lightbox src="/img/docs/cloud-integrations/example-ask-dbt-native-app.png" title="Example of the Ask dbt chatbot"/>
+Следующий пример показывает чат-бота **Ask dbt** с предложенными запросами в верхней части:
 
+<Lightbox src="/img/docs/cloud-integrations/example-ask-dbt-native-app.png" title="Пример чат-бота Ask dbt"/>
 
-## Onboard new users
-1. From the sidebar in Snowflake, select **Data Products > Apps**. Choose **dbt** from the list to open the app's configuration page. Then, click **Manage access** (in the upper right) to onboard new users to the application. Grant the **APP_USER** role to the appropriate roles that should have access to the application but not the ability to edit the configurations. Grant **APP_ADMIN** to roles that should have access to edit or remove the configurations.
+## Включение новых пользователей
+1. В боковой панели Snowflake выберите **Продукты данных > Приложения**. Выберите **dbt** из списка, чтобы открыть страницу конфигурации приложения. Затем нажмите **Управление доступом** (в правом верхнем углу), чтобы включить новых пользователей в приложение. Предоставьте роль **APP_USER** соответствующим ролям, которые должны иметь доступ к приложению, но не должны иметь возможности редактировать конфигурации. Предоставьте **APP_ADMIN** ролям, которые должны иметь доступ к редактированию или удалению конфигураций.
 
-1. New users can access the app with either the Snowflake app URL that's been shared with them, or by clicking **Launch app** from the app's configuration page.
+2. Новые пользователи могут получить доступ к приложению либо по URL приложения Snowflake, который был с ними поделён, либо нажав **Запустить приложение** на странице конфигурации приложения.
 
+## Часто задаваемые вопросы
 
-## FAQs
+<Expandable alt_header="Не удается установить dbt Cloud Snowflake Native app из Snowflake Marketplace">
 
-<Expandable alt_header="Unable to install the dbt Cloud Snowflake Native app from the Snowflake Marketplace" >
-
-The dbt Cloud Snowflake Native App is not available to Snowflake Free Trial accounts.
+dbt Cloud Snowflake Native App недоступен для аккаунтов Snowflake Free Trial.
 
 </Expandable>
 
-<Expandable alt_header="Received the error message `Unable to access schema dbt_sl_llm` from Ask dbt" >
+<Expandable alt_header="Получено сообщение об ошибке `Не удается получить доступ к схеме dbt_sl_llm` от Ask dbt">
 
-Check that the SL user has been granted access to the `dbt_sl_llm` schema and make sure they have all the necessary permissions to read and write from the schema.
+Проверьте, что пользователю SL предоставлен доступ к схеме `dbt_sl_llm` и убедитесь, что у него есть все необходимые разрешения для чтения и записи в схему.
 
 </Expandable>
 
-<Expandable alt_header="Need to update the dbt configuration options used by the Native App" >
+<Expandable alt_header="Необходимо обновить параметры конфигурации dbt, используемые Native App">
 
-If there's been an update to the dbt Cloud account ID, access URL, or API service token, you need to update the configuration for the dbt Snowflake Native App. In Snowflake, navigate to the app's configuration page and delete the existing configurations. Add the new configuration and then run `CALL app_public.restart_app();` in the application database in Snowsight. 
+Если произошли изменения в ID аккаунта dbt Cloud, URL доступа или токене API службы, вам необходимо обновить конфигурацию для dbt Snowflake Native App. В Snowflake перейдите на страницу конфигурации приложения и удалите существующие конфигурации. Добавьте новую конфигурацию, а затем выполните `CALL app_public.restart_app();` в базе данных приложения в Snowsight.
 </Expandable>
 
-<Expandable alt_header="Are environment variables supported in the Native App?" >
+<Expandable alt_header="Поддерживаются ли переменные окружения в Native App?">
 
-[Environment variables](/docs/build/environment-variables), like `{{env_var('DBT_WAREHOUSE') }}` aren’t supported in the dbt Semantic Layer yet. To use the 'Ask dbt' feature, you must use the actual credentials instead.
+[Переменные окружения](/docs/build/environment-variables), такие как `{{env_var('DBT_WAREHOUSE') }}`, пока не поддерживаются в Semantic Layer dbt. Чтобы использовать функцию 'Ask dbt', вы должны использовать фактические учетные данные вместо этого.
 </Expandable>

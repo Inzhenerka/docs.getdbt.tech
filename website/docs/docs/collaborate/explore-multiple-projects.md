@@ -1,64 +1,64 @@
 ---
-title: "Explore multiple projects"
-sidebar_label: "Explore multiple projects"
-description: "Learn about project-level lineage in dbt Explorer and its uses."
+title: "Изучение нескольких проектов"
+sidebar_label: "Изучение нескольких проектов"
+description: "Узнайте о наследовании на уровне проектов в dbt Explorer и его применении."
 ---
 
-View all the projects and public models in your account (where public models are defined) and gain a better understanding of your cross-project resources and how they're used.
+Просмотрите все проекты и публичные модели в вашем аккаунте (где определены публичные модели) и получите лучшее понимание ваших ресурсов между проектами и их использования.
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-The resource-level lineage graph for a project displays the cross-project relationships in the DAG, with a **PRJ** icon indicating whether or not it's a project resource. That icon is located to the left side of the node name.
+Граф наследования на уровне ресурсов для проекта отображает межпроектные отношения в DAG, с иконкой **PRJ**, указывающей, является ли это ресурсом проекта. Эта иконка расположена слева от имени узла.
 
-To view the project-level lineage graph, click the **View lineage** icon in the upper right corner from the main overview page:
-- This view displays all the projects in your account and their relationships.
-- Viewing an upstream (parent) project displays the downstream (child) projects that depend on it.
-- Selecting a model reveals its dependent projects in the lineage.
-- Click on an upstream (parent) project to view the other projects that reference it in the **Relationships** tab, showing the number of downstream (child) projects that depend on them. 
-  - This includes all projects listing the upstream one as a dependency in its `dependencies.yml` file, even without a direct `{{ ref() }}`.
-- Selecting a project node from a public model opens its detailed lineage graph if you have the [permissions](/docs/cloud/manage-access/enterprise-permissions) to do so.
+Чтобы просмотреть граф наследования на уровне проекта, нажмите на иконку **Просмотреть наследование** в правом верхнем углу на главной странице обзора:
+- Этот вид отображает все проекты в вашем аккаунте и их отношения.
+- Просмотр родительского проекта отображает дочерние проекты, которые от него зависят.
+- Выбор модели показывает ее зависимые проекты в наследовании.
+- Нажмите на родительский проект, чтобы увидеть другие проекты, которые ссылаются на него на вкладке **Отношения**, показывающей количество дочерних проектов, которые от него зависят.
+  - Это включает все проекты, которые указывают на родительский проект как на зависимость в своем файле `dependencies.yml`, даже без прямого `{{ ref() }}`.
+- Выбор узла проекта из публичной модели открывает его детализированный граф наследования, если у вас есть [разрешения](/docs/cloud/manage-access/enterprise-permissions) на это.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-lineage-parent.png" width="100%" height="100" title="View your cross-project lineage in a parent project and the other projects that reference it by clicking the 'Relationships' tab."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-lineage-parent.png" width="100%" height="100" title="Просмотрите ваше межпроектное наследование в родительском проекте и другие проекты, которые ссылаются на него, нажав на вкладку 'Отношения'."/>
 
-When viewing a downstream (child) project that imports and refs public models from upstream (parent) projects:
-- Public models will show up in the lineage graph and you can click on them to view the model details.
-- Clicking on a model opens a side panel containing general information about the model, such as the specific dbt Cloud project that produces that model, description, package, and more.
-- Double-clicking on a model from another project opens the resource-level lineage graph of the parent project, if you have the permissions to do so.
+При просмотре дочернего проекта, который импортирует и ссылается на публичные модели из родительских проектов:
+- Публичные модели будут отображаться в графе наследования, и вы можете нажать на них, чтобы просмотреть детали модели.
+- Нажатие на модель открывает боковую панель с общей информацией о модели, такой как конкретный проект dbt Cloud, который производит эту модель, описание, пакет и многое другое.
+- Двойное нажатие на модель из другого проекта открывает граф наследования на уровне ресурсов родительского проекта, если у вас есть разрешения на это.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-child.png" width="100%" height="100" title="View a downstream (child) project that importants and refs public models from the upstream (parent) project."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/cross-project-child.png" width="100%" height="100" title="Просмотрите дочерний проект, который импортирует и ссылается на публичные модели из родительского проекта."/>
 
-## Explore the project-level lineage graph
+## Изучение графа наследования на уровне проекта
 
-For cross-project collaboration, you can interact with the DAG in all the same ways as described in [Explore your project's lineage](/docs/collaborate/explore-projects#project-lineage) but you can also interact with it at the project level and view the details.
+Для межпроектного сотрудничества вы можете взаимодействовать с DAG так же, как описано в [Изучение наследования вашего проекта](/docs/collaborate/explore-projects#project-lineage), но вы также можете взаимодействовать с ним на уровне проекта и просматривать детали.
 
-If you have permissions for a project in the account, you can view all public models used across the entire account. However, you can only view full public model details and private models if you have permissions for the specific project where those models are defined.
+Если у вас есть разрешения для проекта в аккаунте, вы можете просмотреть все публичные модели, используемые по всему аккаунту. Однако вы можете просмотреть полные детали публичных моделей и частных моделей только если у вас есть разрешения для конкретного проекта, где эти модели определены.
 
-To view all the projects in your account (displayed as a lineage graph or list view):
-- Navigate to the top left section of the **Explore** page, near the navigation bar.
-- Hover over the project name and select the account name. This takes you to a account-level lineage graph page, where you can view all the projects in the account, including dependencies and relationships between different projects.
-- Click the **List view** icon in the page's upper right corner to see a list view of all the projects in the account.
-- The list view page displays a public model list, project list, and a search bar for project searches.
-- Click the **Lineage view** icon in the page's upper right corner to view the account-level lineage graph.
+Чтобы просмотреть все проекты в вашем аккаунте (отображенные в виде графа наследования или списка):
+- Перейдите в верхний левый раздел страницы **Изучение**, рядом с навигационной панелью.
+- Наведите курсор на имя проекта и выберите имя аккаунта. Это перенесет вас на страницу графа наследования на уровне аккаунта, где вы можете просмотреть все проекты в аккаунте, включая зависимости и отношения между различными проектами.
+- Нажмите на иконку **Список** в правом верхнем углу страницы, чтобы увидеть список всех проектов в аккаунте.
+- Страница списка отображает список публичных моделей, список проектов и строку поиска для поиска проектов.
+- Нажмите на иконку **Граф наследования** в правом верхнем углу страницы, чтобы просмотреть граф наследования на уровне аккаунта.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/account-level-lineage.gif" width="100%" title="View a downstream (child) project, which imports and refs public models from upstream (parent) projects."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/account-level-lineage.gif" width="100%" title="Просмотрите дочерний проект, который импортирует и ссылается на публичные модели из родительских проектов."/>
 
-From the account-level lineage graph, you can:
+С графа наследования на уровне аккаунта вы можете:
 
-- Click the **Lineage view** icon (in the graph’s upper right corner) to view the cross-project lineage graph.
-- Click the **List view** icon (in the graph’s upper right corner) to view the project list.
-    - Select a project from the **Projects** tab to switch to that project’s main **Explore** page.
-    - Select a model from the **Public Models** tab to view the [model’s details page](/docs/collaborate/explore-projects#view-resource-details).
-    - Perform searches on your projects with the search bar.
-- Select a project node in the graph (double-clicking) to switch to that particular project’s lineage graph.
+- Нажать на иконку **Граф наследования** (в правом верхнем углу графа), чтобы просмотреть граф наследования между проектами.
+- Нажимать на иконку **Список** (в правом верхнем углу графа), чтобы просмотреть список проектов.
+    - Выберите проект на вкладке **Проекты**, чтобы переключиться на главную страницу **Изучение** этого проекта.
+    - Выберите модель на вкладке **Публичные модели**, чтобы просмотреть [страницу деталей модели](/docs/collaborate/explore-projects#view-resource-details).
+    - Выполняйте поиск по вашим проектам с помощью строки поиска.
+- Выберите узел проекта в графе (двойное нажатие), чтобы переключиться на граф наследования этого конкретного проекта.
 
-When you select a project node in the graph, a project details panel opens on the graph’s right-hand side where you can:
+Когда вы выбираете узел проекта в графе, на правой стороне графа открывается панель деталей проекта, где вы можете:
 
-- View counts of the resources defined in the project.
-- View a list of its public models, if any.
-- View a list of other projects that uses the project, if any.
-- Click **Open Project Lineage** to switch to the project’s lineage graph.
-- Click the **Share** icon to copy the project panel link to your clipboard so you can share the graph with someone.
+- Просмотреть количество ресурсов, определенных в проекте.
+- Просмотреть список его публичных моделей, если таковые имеются.
+- Просмотреть список других проектов, использующих этот проект, если таковые имеются.
+- Нажать **Открыть граф наследования проекта**, чтобы переключиться на граф наследования проекта.
+- Нажать на иконку **Поделиться**, чтобы скопировать ссылку на панель проекта в буфер обмена, чтобы вы могли поделиться графом с кем-то.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/multi-project-overview.gif" width="95%" title="Select a downstream (child) project to open the project details panel for resource counts, public models associated, and more. "/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/multi-project-overview.gif" width="95%" title="Выберите дочерний проект, чтобы открыть панель деталей проекта для подсчета ресурсов, связанных публичных моделей и многого другого."/>

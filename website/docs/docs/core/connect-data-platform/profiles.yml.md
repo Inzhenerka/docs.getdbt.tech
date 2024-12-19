@@ -1,23 +1,23 @@
 ---
-title: "About profiles.yml"
+title: "О файле profiles.yml"
 id: profiles.yml
 ---
 
-If you're using [dbt Core](/docs/core/installation-overview), you'll need a `profiles.yml` file that contains the connection details for your data platform. When you run dbt Core from the command line, it reads your `dbt_project.yml` file to find the `profile` name, and then looks for a profile with the same name in your `profiles.yml` file. This profile contains all the information dbt needs to connect to your data platform.
+Если вы используете [dbt Core](/docs/core/installation-overview), вам понадобится файл `profiles.yml`, который содержит данные для подключения к вашей платформе данных. Когда вы запускаете dbt Core из командной строки, он читает ваш файл `dbt_project.yml`, чтобы найти имя `profile`, а затем ищет профиль с тем же именем в вашем файле `profiles.yml`. Этот профиль содержит всю информацию, необходимую dbt для подключения к вашей платформе данных.
 
-For detailed info, you can refer to the [Connection profiles](/docs/core/connect-data-platform/connection-profiles).
+Для получения подробной информации вы можете обратиться к разделу [Профили подключения](/docs/core/connect-data-platform/connection-profiles).
 
-:::tip No `profiles.yml` file needed for dbt Cloud
-If you're using dbt Cloud, you can [connect to your data platform](/docs/cloud/connect-data-platform/about-connections) directly in the dbt Cloud interface and don't need a `profiles.yml` file.
+:::tip Файл `profiles.yml` не нужен для dbt Cloud
+Если вы используете dbt Cloud, вы можете [подключиться к вашей платформе данных](/docs/cloud/connect-data-platform/about-connections) напрямую в интерфейсе dbt Cloud и не нуждаетесь в файле `profiles.yml`.
 :::
 
-This section identifies the parts of your `profiles.yml` that aren't specific to a particular data platform. For specific connection details, refer to the relevant page for your data platform.
+Этот раздел описывает части вашего `profiles.yml`, которые не специфичны для конкретной платформы данных. Для получения конкретных данных подключения обратитесь к соответствующей странице для вашей платформы данных.
 
 <VersionBlock lastVersion="1.7">
 
-:::warning Global configs
+:::warning Глобальные настройки
 
-Starting in dbt v1.8, global configs have been deprecated from the `profiles.yml` file and should be configured in the [`dbt_project.yml`](/reference/dbt_project.yml) file instead. 
+Начиная с версии dbt v1.8, глобальные настройки были удалены из файла `profiles.yml` и должны быть настроены в файле [`dbt_project.yml`](/reference/dbt_project.yml). 
 
 :::
 
@@ -43,20 +43,20 @@ Starting in dbt v1.8, global configs have been deprecated from the `profiles.yml
   [populate_cache](/reference/global-configs/cache): <true | false>
 
 <profile-name>:
-  target: <target-name> # this is the default target
+  target: <target-name> # это целевой по умолчанию
   outputs:
     <target-name>:
       type: <bigquery | postgres | redshift | snowflake | other>
       schema: <schema_identifier>
       threads: <natural_number>
 
-      ### database-specific connection details
+      ### специфичные для базы данных детали подключения
       ...
 
-    <target-name>: # additional targets
+    <target-name>: # дополнительные цели
       ...
 
-<profile-name>: # additional profiles
+<profile-name>: # дополнительные профили
   ...
 
 ```
@@ -72,20 +72,20 @@ Starting in dbt v1.8, global configs have been deprecated from the `profiles.yml
 ```yml
 
 <profile-name>:
-  target: <target-name> # this is the default target
+  target: <target-name> # это целевой по умолчанию
   outputs:
     <target-name>:
       type: <bigquery | postgres | redshift | snowflake | other>
       schema: <schema_identifier>
       threads: <natural_number>
 
-      ### database-specific connection details
+      ### специфичные для базы данных детали подключения
       ...
 
-    <target-name>: # additional targets
+    <target-name>: # дополнительные цели
       ...
 
-<profile-name>: # additional profiles
+<profile-name>: # дополнительные профили
   ...
 
 ```
@@ -94,6 +94,6 @@ Starting in dbt v1.8, global configs have been deprecated from the `profiles.yml
 
 </VersionBlock>
 
-## User config
+## Конфигурация пользователя
 
-You can set default values of global configs for all projects that you run using your local machine. Refer to [About global configs](/reference/global-configs/about-global-configs) for details.
+Вы можете установить значения по умолчанию для глобальных настроек для всех проектов, которые вы запускаете с помощью вашего локального компьютера. Обратитесь к разделу [О глобальных настройках](/reference/global-configs/about-global-configs) для получения подробной информации.

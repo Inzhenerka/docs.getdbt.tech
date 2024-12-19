@@ -1,6 +1,6 @@
 ---
-title: "Snowflake setup"
-description: "Read this guide to learn about the Snowflake warehouse setup in dbt."
+title: "Настройка Snowflake"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Snowflake в dbt."
 id: "snowflake-setup"
 meta:
   maintained_by: dbt Labs
@@ -8,7 +8,7 @@ meta:
   github_repo: 'dbt-labs/dbt-snowflake'
   pypi_package: 'dbt-snowflake'
   min_core_version: 'v0.8.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-snowflake'
   slack_channel_link: 'https://getdbt.slack.com/archives/C01DRQ178LQ'
@@ -23,11 +23,11 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta}/>
 
 
-## Authentication Methods
+## Методы аутентификации
 
-### User / Password authentication
+### Аутентификация по имени пользователя и паролю
 
-Snowflake can be configured using basic user/password authentication as shown below.
+Snowflake можно настроить с использованием базовой аутентификации по имени пользователя и паролю, как показано ниже.
 
 <VersionBlock lastVersion="1.8">
 
@@ -41,7 +41,7 @@ my-snowflake-db:
       type: snowflake
       account: [account id]
 
-      # User/password auth
+      # Аутентификация по имени пользователя и паролю
       user: [username]
       password: [password]
 
@@ -53,19 +53,19 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
       reuse_connections: False
   ```
 
 </File>
 
-### User / Password + DUO MFA authentication
+### Аутентификация по имени пользователя и паролю + DUO MFA
 
-Snowflake integrates the DUO Mobile app to add 2-Factor authentication to basic user/password as seen below.
+Snowflake интегрирует приложение DUO Mobile для добавления двухфакторной аутентификации к базовой аутентификации по имени пользователя и паролю, как показано ниже.
 
 ```yaml
 my-snowflake-db:
@@ -75,7 +75,7 @@ my-snowflake-db:
       type: snowflake
       account: [account id]
 
-      # User/password auth
+      # Аутентификация по имени пользователя и паролю
       user: [username]
       password: [password]
       authenticator: username_password_mfa
@@ -88,11 +88,11 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
       reuse_connections: False
 ```
 
@@ -110,7 +110,7 @@ my-snowflake-db:
       type: snowflake
       account: [account id]
 
-      # User/password auth
+      # Аутентификация по имени пользователя и паролю
       user: [username]
       password: [password]
 
@@ -122,19 +122,19 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
-      reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
+      reuse_connections: True # по умолчанию: True, если client_session_keep_alive равно False, иначе None
   ```
 
 </File>
 
-### User / Password + DUO MFA authentication
+### Аутентификация по имени пользователя и паролю + DUO MFA
 
-Snowflake integrates the DUO Mobile app to add 2-Factor authentication to basic user/password as seen below.
+Snowflake интегрирует приложение DUO Mobile для добавления двухфакторной аутентификации к базовой аутентификации по имени пользователя и паролю, как показано ниже.
 
 ```yaml
 my-snowflake-db:
@@ -144,7 +144,7 @@ my-snowflake-db:
       type: snowflake
       account: [account id]
 
-      # User/password auth
+      # Аутентификация по имени пользователя и паролю
       user: [username]
       password: [password]
       authenticator: username_password_mfa
@@ -157,23 +157,23 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
-      reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
+      reuse_connections: True # по умолчанию: True, если client_session_keep_alive равно False, иначе None
 ```
 
 </VersionBlock>
 
-Along with adding the `authenticator` parameter, be sure to run `alter account set allow_client_mfa_caching = true;` in your Snowflake warehouse. Together, these will allow you to easily verify authentication with the DUO Mobile app (skipping this results in push notifications for every model built on every `dbt run`).
+Помимо добавления параметра `authenticator`, убедитесь, что вы выполните команду `alter account set allow_client_mfa_caching = true;` в вашем хранилище Snowflake. В совокупности это позволит вам легко проверять аутентификацию с помощью приложения DUO Mobile (пропуск этого шага приведет к получению push-уведомлений для каждой модели, созданной при каждом `dbt run`).
 
-### Key pair authentication
+### Аутентификация с использованием ключевой пары
 
-To use key pair authentication, specify the `private_key_path` in your configuration, avoiding the use of a `password`. If needed, you can add a `private_key_passphrase`. **Note**: Unencrypted private keys are accepted, so add a passphrase only if necessary. However, for dbt Core versions 1.5 and 1.6, configurations using a private key in PEM format (for example, keys enclosed with BEGIN and END tags) are not supported. In these versions, you must use the `private_key_path` to reference the location of your private key file.
+Чтобы использовать аутентификацию с использованием ключевой пары, укажите `private_key_path` в вашей конфигурации, избегая использования `password`. При необходимости вы можете добавить `private_key_passphrase`. **Примечание**: Не зашифрованные закрытые ключи принимаются, поэтому добавляйте пароль только в случае необходимости. Однако для версий dbt Core 1.5 и 1.6 конфигурации с использованием закрытого ключа в формате PEM (например, ключи, заключенные в теги BEGIN и END) не поддерживаются. В этих версиях вы должны использовать `private_key_path`, чтобы указать местоположение вашего файла закрытого ключа.
 
-Starting from [dbt version 1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7), dbt introduced the ability to specify a `private_key` directly as a string instead of a `private_key_path`. This `private_key` string can be in either Base64-encoded DER format, representing the key bytes, or in plain-text PEM format. Refer to [Snowflake documentation](https://docs.snowflake.com/en/user-guide/key-pair-auth) for more info on how they generate the key.
+Начиная с [версии dbt 1.7](/docs/dbt-versions/core-upgrade/upgrading-to-v1.7), dbt представил возможность указывать `private_key` напрямую в виде строки вместо `private_key_path`. Эта строка `private_key` может быть в формате Base64-кодированного DER, представляющего байты ключа, или в открытом формате PEM. Обратитесь к [документации Snowflake](https://docs.snowflake.com/en/user-guide/key-pair-auth) для получения дополнительной информации о том, как они генерируют ключ.
 
 <VersionBlock lastVersion="1.8">
 
@@ -189,9 +189,9 @@ my-snowflake-db:
       user: [username]
       role: [user role]
 
-      # Keypair config
+      # Конфигурация ключевой пары
       private_key_path: [path/to/private.key]
-      # or private_key instead of private_key_path
+      # или private_key вместо private_key_path
       private_key_passphrase: [passphrase for the private key, if key is encrypted]
 
       database: [database name]
@@ -201,22 +201,22 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
       reuse_connections: False
 ```
 
 </File>
 
-### SSO authentication
+### Аутентификация SSO
 
-To use SSO authentication for Snowflake, omit a `password` and instead supply an `authenticator` config to your target. 
-`authenticator` can be one of 'externalbrowser' or a valid Okta URL. 
+Чтобы использовать аутентификацию SSO для Snowflake, опустите `password` и вместо этого укажите конфигурацию `authenticator` для вашей цели. 
+`authenticator` может быть одним из 'externalbrowser' или действительным URL-адресом Okta. 
 
-Refer to the following tabs for more info and examples:
+Смотрите следующие вкладки для получения дополнительной информации и примеров:
 
 <Tabs>
 <TabItem value="externalbrowser" label="externalbrowser">
@@ -230,24 +230,24 @@ my-snowflake-db:
     dev:
       type: snowflake
       account: [account id] # Snowflake <account_name>
-      user: [username] # Snowflake username
-      role: [user role] # Snowflake user role
+      user: [username] # Имя пользователя Snowflake
+      role: [user role] # Роль пользователя Snowflake
 
-      # SSO config
+      # Конфигурация SSO
       authenticator: externalbrowser
 
-      database: [database name] # Snowflake database name
-      warehouse: [warehouse name] # Snowflake warehouse name
+      database: [database name] # Имя базы данных Snowflake
+      warehouse: [warehouse name] # Имя хранилища Snowflake
       schema: [dbt schema]
       threads: [between 1 and 8]
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
       reuse_connections: False
 ```
 
@@ -266,26 +266,26 @@ my-snowflake-db:
     dev:
       type: snowflake
       account: [account id] # Snowflake <account_name>
-      user: [username] # Snowflake username
-      role: [user role] # Snowflake user role
+      user: [username] # Имя пользователя Snowflake
+      role: [user role] # Роль пользователя Snowflake
 
-      # SSO config -- The three following fields are REQUIRED
+      # Конфигурация SSO -- Три следующих поля обязательны
       authenticator: [Okta account URL]
       username: [Okta username]
       password: [Okta password]
 
-      database: [database name] # Snowflake database name
-      warehouse: [warehouse name] # Snowflake warehouse name
+      database: [database name] # Имя базы данных Snowflake
+      warehouse: [warehouse name] # Имя хранилища Snowflake
       schema: [dbt schema]
       threads: [between 1 and 8]
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
       reuse_connections: False
 ```
 
@@ -310,9 +310,9 @@ my-snowflake-db:
       user: [username]
       role: [user role]
 
-      # Keypair config
+      # Конфигурация ключевой пары
       private_key_path: [path/to/private.key]
-      # or private_key instead of private_key_path
+      # или private_key вместо private_key_path
       private_key_passphrase: [passphrase for the private key, if key is encrypted]
 
       database: [database name]
@@ -322,22 +322,22 @@ my-snowflake-db:
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
-      reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
+      reuse_connections: True # по умолчанию: True, если client_session_keep_alive равно False, иначе None
 ```
 
 </File>
 
-### SSO authentication
+### Аутентификация SSO
 
-To use SSO authentication for Snowflake, omit a `password` and instead supply an `authenticator` config to your target. 
-`authenticator` can be one of 'externalbrowser' or a valid Okta URL. 
+Чтобы использовать аутентификацию SSO для Snowflake, опустите `password` и вместо этого укажите конфигурацию `authenticator` для вашей цели. 
+`authenticator` может быть одним из 'externalbrowser' или действительным URL-адресом Okta. 
 
-Refer to the following tabs for more info and examples:
+Смотрите следующие вкладки для получения дополнительной информации и примеров:
 
 <Tabs>
 <TabItem value="externalbrowser" label="externalbrowser">
@@ -351,25 +351,25 @@ my-snowflake-db:
     dev:
       type: snowflake
       account: [account id] # Snowflake <account_name>
-      user: [username] # Snowflake username
-      role: [user role] # Snowflake user role
+      user: [username] # Имя пользователя Snowflake
+      role: [user role] # Роль пользователя Snowflake
 
-      # SSO config
+      # Конфигурация SSO
       authenticator: externalbrowser
 
-      database: [database name] # Snowflake database name
-      warehouse: [warehouse name] # Snowflake warehouse name
+      database: [database name] # Имя базы данных Snowflake
+      warehouse: [warehouse name] # Имя хранилища Snowflake
       schema: [dbt schema]
       threads: [between 1 and 8]
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
-      reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
+      reuse_connections: True # по умолчанию: True, если client_session_keep_alive равно False, иначе None
 ```
 
 </File>
@@ -387,27 +387,27 @@ my-snowflake-db:
     dev:
       type: snowflake
       account: [account id] # Snowflake <account_name>
-      user: [username] # Snowflake username
-      role: [user role] # Snowflake user role
+      user: [username] # Имя пользователя Snowflake
+      role: [user role] # Роль пользователя Snowflake
 
-      # SSO config -- The three following fields are REQUIRED
+      # Конфигурация SSO -- Три следующих поля обязательны
       authenticator: [Okta account URL]
       username: [Okta username]
       password: [Okta password]
 
-      database: [database name] # Snowflake database name
-      warehouse: [warehouse name] # Snowflake warehouse name
+      database: [database name] # Имя базы данных Snowflake
+      warehouse: [warehouse name] # Имя хранилища Snowflake
       schema: [dbt schema]
       threads: [between 1 and 8]
       client_session_keep_alive: False
       query_tag: [anything]
 
-      # optional
-      connect_retries: 0 # default 0
-      connect_timeout: 10 # default: 10
-      retry_on_database_errors: False # default: false
-      retry_all: False  # default: false
-      reuse_connections: True # default: True if client_session_keep_alive is False, otherwise None
+      # необязательно
+      connect_retries: 0 # по умолчанию 0
+      connect_timeout: 10 # по умолчанию: 10
+      retry_on_database_errors: False # по умолчанию: false
+      retry_all: False  # по умолчанию: false
+      reuse_connections: True # по умолчанию: True, если client_session_keep_alive равно False, иначе None
 ```
 
 </File>
@@ -417,17 +417,17 @@ my-snowflake-db:
 
 </VersionBlock>
 
-**Note**: By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
+**Примечание**: По умолчанию каждое соединение, которое открывает dbt, потребует от вас повторной аутентификации в браузере. Пакет соединителя Snowflake поддерживает кэширование вашего токена сеанса, но [в настоящее время поддерживает только Windows и Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
 
-Refer to the [Snowflake docs](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) for info on how to enable this feature in your account.
+Смотрите [документацию Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) для получения информации о том, как включить эту функцию в вашем аккаунте.
 
-### OAuth authorization
+### OAuth авторизация
 
-To learn how to configure OAuth in Snowflake, refer to their [documentation](https://docs.snowflake.com/en/user-guide/oauth-snowflake-overview). Your Snowflake admin needs to generate an [OAuth token](https://community.snowflake.com/s/article/HOW-TO-OAUTH-TOKEN-GENERATION-USING-SNOWFLAKE-CUSTOM-OAUTH) for your configuration to work.
+Чтобы узнать, как настроить OAuth в Snowflake, обратитесь к их [документации](https://docs.snowflake.com/en/user-guide/oauth-snowflake-overview). Ваш администратор Snowflake должен сгенерировать [OAuth токен](https://community.snowflake.com/s/article/HOW-TO-OAUTH-TOKEN-GENERATION-USING-SNOWFLAKE-CUSTOM-OAUTH) для вашей конфигурации.
 
-Provide the OAUTH_REDIRECT_URI in Snowflake:`http://localhost:PORT_NUMBER`. For example, `http://localhost:8080`.
+Укажите OAUTH_REDIRECT_URI в Snowflake:`http://localhost:PORT_NUMBER`. Например, `http://localhost:8080`.
 
-Once your Snowflake admin has configured OAuth, add the following to your `profiles.yml` file:
+После того как ваш администратор Snowflake настроит OAuth, добавьте следующее в ваш файл `profiles.yml`:
 
 ```yaml
 
@@ -438,61 +438,60 @@ my-snowflake-db:
       type: snowflake
       account: [account id]
       
-      # The following fields are retrieved from the Snowflake configuration
+      # Следующие поля извлекаются из конфигурации Snowflake
       authenticator: oauth
       oauth_client_id: [OAuth client id]
       oauth_client_secret: [OAuth client secret]
       token: [OAuth refresh token]
 ```
 
-## Configurations
+## Конфигурации
 
-The "base" configs for Snowflake targets are shown below. Note that you should also specify auth-related configs specific to the authentication method you are using as described above.
+"Базовые" конфигурации для целей Snowflake показаны ниже. Обратите внимание, что вы также должны указать конфигурации, связанные с аутентификацией, специфичные для используемого вами метода аутентификации, как описано выше.
 
-### All configurations
+### Все конфигурации
 
-| Config | Required? | Description |
+| Конфигурация | Обязательная? | Описание |
 | ------ | --------- | ----------- |
-| account | Yes | The account to connect to as per [Snowflake's documentation](https://docs.snowflake.com/en/user-guide/intro-regions.html#specifying-region-information-in-your-account-hostname). See notes [below](#account) |
-| user | Yes | The user to log in as |
-| database | Yes | The database that dbt should create models in |
-| warehouse | Yes | The warehouse to use when building models |
-| schema | Yes | The schema to build models into by default. Can be overridden with [custom schemas](/docs/build/custom-schemas) |
-| role | No (but recommended) | The role to assume when running queries as the specified user. |
-| client_session_keep_alive | No | If `True`, the snowflake client will keep connections for longer than the default 4 hours. This is helpful when particularly long-running queries are executing (&gt; 4 hours). Default: False (see [note below](#client_session_keep_alive)) |
-| threads | No | The number of concurrent models dbt should build. Set this to a higher number if using a bigger warehouse. Default=1 |
-| query_tag | No | A value with which to tag all queries, for later searching in [QUERY_HISTORY view](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html) |
-| retry_all | No | A boolean flag indicating whether to retry on all [Snowflake connector errors](https://github.com/snowflakedb/snowflake-connector-python/blob/main/src/snowflake/connector/errors.py) |
-| retry_on_database_errors | No | A boolean flag indicating whether to retry after encountering errors of type [snowflake.connector.errors.DatabaseError](https://github.com/snowflakedb/snowflake-connector-python/blob/ffdd6b3339aa71885878d047141fe9a77c4a4ae3/src/snowflake/connector/errors.py#L361-L364) |
-| connect_retries | No | The number of times to retry after an unsuccessful connection |
-| connect_timeout | No | The number of seconds to sleep between failed connection retries |
-| reuse_connections | No | A boolean flag indicating whether to reuse idle connections to help reduce total connections opened. Default is `False`. |
+| account | Да | Учетная запись, к которой нужно подключиться, согласно [документации Snowflake](https://docs.snowflake.com/en/user-guide/intro-regions.html#specifying-region-information-in-your-account-hostname). См. примечания [ниже](#account) |
+| user | Да | Пользователь для входа |
+| database | Да | База данных, в которой dbt должен создавать модели |
+| warehouse | Да | Хранилище, которое будет использоваться при построении моделей |
+| schema | Да | Схема, в которую по умолчанию будут создаваться модели. Может быть переопределена с помощью [пользовательских схем](/docs/build/custom-schemas) |
+| role | Нет (но рекомендуется) | Роль, которую следует принять при выполнении запросов от имени указанного пользователя. |
+| client_session_keep_alive | Нет | Если `True`, клиент Snowflake будет поддерживать соединения дольше, чем по умолчанию 4 часа. Это полезно, когда выполняются особенно долгие запросы (> 4 часа). По умолчанию: False (см. [примечание ниже](#client_session_keep_alive)) |
+| threads | Нет | Количество параллельных моделей, которые dbt должен построить. Установите это значение выше, если используете большее хранилище. По умолчанию=1 |
+| query_tag | Нет | Значение, с помощью которого можно пометить все запросы для последующего поиска в [QUERY_HISTORY view](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html) |
+| retry_all | Нет | Логический флаг, указывающий, следует ли повторять попытки при всех [ошибках соединителя Snowflake](https://github.com/snowflakedb/snowflake-connector-python/blob/main/src/snowflake/connector/errors.py) |
+| retry_on_database_errors | Нет | Логический флаг, указывающий, следует ли повторять попытки после возникновения ошибок типа [snowflake.connector.errors.DatabaseError](https://github.com/snowflakedb/snowflake-connector-python/blob/ffdd6b3339aa71885878d047141fe9a77c4a4ae3/src/snowflake/connector/errors.py#L361-L364) |
+| connect_retries | Нет | Количество попыток повторного подключения после неудачного соединения |
+| connect_timeout | Нет | Количество секунд ожидания между неудачными попытками подключения |
+| reuse_connections | Нет | Логический флаг, указывающий, следует ли повторно использовать неактивные соединения для снижения общего количества открытых соединений. По умолчанию `False`. |
 
 ### account
-For AWS accounts in the US West default region, you can use `abc123` (without any other segments). For some AWS accounts you will have to append the region and/or cloud platform. For example, `abc123.eu-west-1` or `abc123.eu-west-2.aws`. 
+Для учетных записей AWS в регионе по умолчанию US West вы можете использовать `abc123` (без каких-либо других сегментов). Для некоторых учетных записей AWS вам нужно будет добавить регион и/или облачную платформу. Например, `abc123.eu-west-1` или `abc123.eu-west-2.aws`. 
 
-For GCP and Azure-based accounts, you have to append the region and cloud platform, such as `gcp` or `azure`, respectively. For example, `abc123.us-central1.gcp`. For details, see Snowflake's documentation: "[Specifying Region Information in Your Account Hostname](https://docs.snowflake.com/en/user-guide/intro-regions.html#specifying-region-information-in-your-account-hostname)". 
+Для учетных записей на базе GCP и Azure вам нужно будет добавить регион и облачную платформу, такие как `gcp` или `azure`, соответственно. Например, `abc123.us-central1.gcp`. Для получения подробной информации смотрите документацию Snowflake: "[Указание информации о регионе в имени хоста вашей учетной записи](https://docs.snowflake.com/en/user-guide/intro-regions.html#specifying-region-information-in-your-account-hostname)". 
 
-Please also note that the Snowflake account name should only be the `account_name` without the prefixed `organization_name`.  To determine if the region and/or cloud platform needs to be appended to the account locator in the legacy format, see Snowflake's documentation on "[Non-VPS account locator formats by cloud platform and region](https://docs.snowflake.com/en/user-guide/admin-account-identifier#non-vps-account-locator-formats-by-cloud-platform-and-region)".
+Также обратите внимание, что имя учетной записи Snowflake должно содержать только `account_name` без префикса `organization_name`. Чтобы определить, нужно ли добавлять регион и/или облачную платформу к локатору учетной записи в устаревшем формате, смотрите документацию Snowflake о "[Форматах локатора учетной записи без VPS по облачной платформе и региону](https://docs.snowflake.com/en/user-guide/admin-account-identifier#non-vps-account-locator-formats-by-cloud-platform-and-region)".
 
 ### client_session_keep_alive
 
-The `client_session_keep_alive` feature is intended to keep Snowflake sessions alive beyond the typical 4 hour timeout limit. The snowflake-connector-python implementation of this feature can prevent processes that use it (read: dbt) from exiting in specific scenarios. If you encounter this in your deployment of dbt, please let us know in [the GitHub issue](https://github.com/dbt-labs/dbt-core/issues/1271), and work around it by disabling the keepalive.
+Функция `client_session_keep_alive` предназначена для поддержания сеансов Snowflake активными дольше, чем типичный лимит времени ожидания в 4 часа. Реализация этой функции в snowflake-connector-python может предотвратить завершение процессов, использующих ее (читай: dbt), в определенных сценариях. Если вы столкнетесь с этим в вашей развертке dbt, пожалуйста, дайте нам знать в [проблеме на GitHub](https://github.com/dbt-labs/dbt-core/issues/1271) и обойдите это, отключив keepalive.
 
 
 ### query_tag
 
-[Query tags](https://docs.snowflake.com/en/sql-reference/parameters.html#query-tag) are a Snowflake
-parameter that can be quite useful later on when searching in the [QUERY_HISTORY view](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html).
+[Теги запросов](https://docs.snowflake.com/en/sql-reference/parameters.html#query-tag) являются параметром Snowflake, который может быть весьма полезен позже при поиске в [QUERY_HISTORY view](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html).
 
 ### reuse_connections
 
-During node execution (such as model and test), dbt opens connections against a Snowflake warehouse. Setting this configuration to `True` reduces execution time by verifying credentials only once for each thread.
+Во время выполнения узлов (таких как модель и тест) dbt открывает соединения с хранилищем Snowflake. Установка этой конфигурации в `True` сокращает время выполнения, проверяя учетные данные только один раз для каждого потока.
 
 ### retry_on_database_errors
 
-The `retry_on_database_errors` flag along with the `connect_retries` count specification is intended to make retries configurable after the snowflake connector encounters errors of type snowflake.connector.errors.DatabaseError. These retries can be helpful for handling errors of type "JWT token is invalid" when using key pair authentication.
+Флаг `retry_on_database_errors` вместе с указанием количества `connect_retries` предназначен для настройки повторных попыток после того, как соединитель Snowflake столкнется с ошибками типа snowflake.connector.errors.DatabaseError. Эти повторные попытки могут быть полезны для обработки ошибок типа "JWT token is invalid" при использовании аутентификации с ключевой парой.
 
 ### retry_all
 
-The `retry_all` flag along with the `connect_retries` count specification is intended to make retries configurable after the snowflake connector encounters any error.
+Флаг `retry_all` вместе с указанием количества `connect_retries` предназначен для настройки повторных попыток после того, как соединитель Snowflake столкнется с любой ошибкой.

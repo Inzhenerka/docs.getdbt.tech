@@ -1,91 +1,90 @@
 ---
-title: "Multi-factor authentication"
-description: "Configure dbt Cloud MFA"
+title: "Многофакторная аутентификация"
+description: "Настройка MFA в dbt Cloud"
 id: "mfa"
 sidebar: null
 ---
 
-# Multi-factor authentication
+# Многофакторная аутентификация
 
 :::important
 
-
-dbt Cloud enforces multi-factor authentication (MFA) for all users with username and password credentials. If MFA is not set up, you will see a notification bar prompting you to configure one of the supported methods when you log in. If you do not, you will have to configure MFA upon subsequent logins, or you will be unable to access dbt Cloud.
+dbt Cloud требует многофакторную аутентификацию (MFA) для всех пользователей с учетными записями, использующими имя пользователя и пароль. Если MFA не настроена, вы увидите уведомление с предложением настроить один из поддерживаемых методов при входе в систему. Если вы этого не сделаете, вам придется настроить MFA при последующих входах, иначе вы не сможете получить доступ к dbt Cloud.
 
 :::
 
-dbt Cloud provides multiple options for multi-factor authentication (MFA). MFA provides an additional layer of security to username and password logins for Developer and Team plan accounts. The available MFA methods are:
+dbt Cloud предлагает несколько вариантов многофакторной аутентификации (MFA). MFA обеспечивает дополнительный уровень безопасности для входа с использованием имени пользователя и пароля для аккаунтов на тарифах Developer и Team. Доступные методы MFA:
 
-- SMS verification code (US-based phone numbers only)
-- Authenticator app
-- Webauthn-compliant security key
+- Код подтверждения по SMS (только для номеров телефонов в США)
+- Приложение-аутентификатор
+- Безопасный ключ, совместимый с Webauthn
 
-This is available across dbt Cloud plans for users with username and password logins only. 
+Эта функция доступна для всех тарифов dbt Cloud только для пользователей с учетными записями, использующими имя пользователя и пароль.
 
-## Configuration
+## Настройка
 
-You can only have one of the three MFA methods configured per user. These are enabled at the user level, not the account level.
+Вы можете настроить только один из трех методов MFA для каждого пользователя. Эти настройки применяются на уровне пользователя, а не на уровне аккаунта.
 
-1. Navigate to the **Account settings** and under **Your profile** click on **Password & Security**. Click **Enroll** next to the preferred method.
-    
-<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="List of available MFA enrollment methods in dbt Cloud." />
+1. Перейдите в **Настройки аккаунта** и в разделе **Ваш профиль** нажмите на **Пароль и безопасность**. Нажмите **Записаться** рядом с предпочтительным методом.
 
-Choose the next steps based on your preferred enrollment selection:
+<Lightbox src="/img/docs/dbt-cloud/mfa-enrollment.png" title="Список доступных методов записи для MFA в dbt Cloud." />
 
-<Expandable alt_header="SMS verification code">
+Выберите следующие шаги в зависимости от вашего предпочтительного метода записи:
 
-2. Select the +1 country code, enter your phone number in the field, and click **Continue**.
+<Expandable alt_header="Код подтверждения по SMS">
 
-<Lightbox src="/img/docs/dbt-cloud/sms-enter-phone.png" title="The phone number selection, including a dropdown for country code." />
+2. Выберите код страны +1, введите свой номер телефона в поле и нажмите **Продолжить**.
 
-3. You will receive an SMS message with a six digit code. Enter the code in dbt Cloud.
+<Lightbox src="/img/docs/dbt-cloud/sms-enter-phone.png" title="Выбор номера телефона, включая выпадающий список для кода страны." />
 
-<Lightbox src="/img/docs/dbt-cloud/enter-code.png" title="Enter the 6-digit code." />
+3. Вы получите SMS-сообщение с шестизначным кодом. Введите код в dbt Cloud.
 
-</Expandable>
-
-<Expandable alt_header="Authenticator app" >
-
-2. Open your preferred authentication app (like Google Authenticator) and scan the QR code.
-
-<Lightbox src="/img/docs/dbt-cloud/scan-qr.png" title="Example of the user generated QR code." />
-
-3. Enter the code provide for "dbt Labs: YOUR_EMAIL_ADDRESS" from your authenticator app into the the field in dbt Cloud.
+<Lightbox src="/img/docs/dbt-cloud/enter-code.png" title="Введите 6-значный код." />
 
 </Expandable>
 
-<Expandable alt_header="Webauthn-compliant security key" >
+<Expandable alt_header="Приложение-аутентификатор" >
 
-2. Follow the instructions in the modal window and click **Use security key**.
+2. Откройте ваше предпочтительное приложение для аутентификации (например, Google Authenticator) и отсканируйте QR-код.
 
-<Lightbox src="/img/docs/dbt-cloud/create-security-key.png" title="Example of the Seciruty Key activation window." />
+<Lightbox src="/img/docs/dbt-cloud/scan-qr.png" title="Пример QR-кода, сгенерированного пользователем." />
 
-3. Scan the QR code or insert and touch activate your USB key to begin the process. Follow the on-screen prompts.
+3. Введите код, предоставленный для "dbt Labs: YOUR_EMAIL_ADDRESS" из вашего приложения-аутентификатора, в поле в dbt Cloud.
 
 </Expandable>
 
-4. You will be given a backup passcode, store it in a secure location. This key will be useful if the MFA method fails (like a lost or broken phone).
+<Expandable alt_header="Безопасный ключ, совместимый с Webauthn" >
 
-## Account Recovery
+2. Следуйте инструкциям в модальном окне и нажмите **Использовать безопасный ключ**.
 
-When setting up MFA, ensure that you store your recovery codes in a secure location, in case your MFA method fails. If you are unable to access your account, reach out to [support@getdbt.com](mailto:support@getdbt.com) for further support. You may need to create a new account if your account cannot be recovered. 
+<Lightbox src="/img/docs/dbt-cloud/create-security-key.png" title="Пример окна активации безопасного ключа." />
 
-If possible, it's recommended to configure multiple MFA methods so that if one fails, there is a backup option.  
+3. Отсканируйте QR-код или вставьте и коснитесь вашего USB-ключа, чтобы начать процесс. Следуйте инструкциям на экране.
 
-## Disclaimer
+</Expandable>
 
-The terms below apply to dbt Cloud’s MFA via SMS program, that dbt Labs (“dbt Labs”, “we”, or “us”) uses to facilitate auto sending of authorization codes to users via SMS for dbt Cloud log-in requests.
+4. Вам будет предоставлен резервный код доступа, сохраните его в безопасном месте. Этот код будет полезен, если метод MFA не сработает (например, если телефон потерян или сломан).
 
-Any clients of dbt Labs that use dbt Cloud Labs 2FA via SMS program (after password is input) are subject to the dbt Labs privacy policy, the client warranty in TOU Section 5.1 second paragraph that Client's use will comply with the Documentation (or similar language in the negotiated service agreement between the parties) and these terms:
+## Восстановление аккаунта
 
-(1) The message frequency is a maximum of 1 message per user login;
+При настройке MFA убедитесь, что вы храните свои коды восстановления в безопасном месте на случай, если ваш метод MFA не сработает. Если вы не можете получить доступ к своему аккаунту, обратитесь в [support@getdbt.com](mailto:support@getdbt.com) для получения дополнительной поддержки. Возможно, вам придется создать новый аккаунт, если ваш аккаунт не может быть восстановлен.
 
-(2) Message and data rates may apply;
+Если это возможно, рекомендуется настроить несколько методов MFA, чтобы в случае сбоя одного был резервный вариант.
 
-(3) Carriers are not liable for delayed or undelivered messages;
+## Отказ от ответственности
 
-(4) For help, please reply HELP to the SMS number from which you receive the log-in authorization code(s);
+Ниже приведены условия, применимые к программе MFA через SMS в dbt Cloud, которую dbt Labs (“dbt Labs”, “мы” или “нас”) использует для автоматической отправки кодов авторизации пользователям через SMS для запросов на вход в dbt Cloud.
 
-(5) To opt-out of future SMS messages, please reply STOP to the SMS number from which you receive the log-in authorization code(s). We encourage you to enable an alternate 2FA method before opting-out of SMS messages or you might not be able to log into your account.
+Все клиенты dbt Labs, использующие программу 2FA через SMS в dbt Cloud (после ввода пароля), подлежат политике конфиденциальности dbt Labs, гарантии клиента в разделе TOU 5.1 второго абзаца, что использование клиентом будет соответствовать Документации (или аналогичному языку в согласованном сервисном соглашении между сторонами) и этим условиям:
 
-Further questions can be submitted to [support@getdbt.com](mailto:support@getdbt.com).
+(1) Частота сообщений составляет максимум 1 сообщение на вход пользователя;
+
+(2) Могут применяться тарифы на сообщения и данные;
+
+(3) Операторы не несут ответственности за задержанные или недоставленные сообщения;
+
+(4) Для получения помощи, пожалуйста, ответьте HELP на SMS-номер, с которого вы получили коды авторизации для входа;
+
+(5) Чтобы отказаться от будущих SMS-сообщений, пожалуйста, ответьте STOP на SMS-номер, с которого вы получили коды авторизации для входа. Мы рекомендуем вам включить альтернативный метод 2FA перед отказом от SMS-сообщений, иначе вы можете не иметь возможности войти в свой аккаунт.
+
+Дополнительные вопросы можно отправить на [support@getdbt.com](mailto:support@getdbt.com).

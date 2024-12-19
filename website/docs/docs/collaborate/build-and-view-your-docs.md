@@ -1,80 +1,80 @@
 ---
-title: "Build and view your docs with dbt Cloud"
+title: "Создание и просмотр документации с помощью dbt Cloud"
 id: "build-and-view-your-docs"
-description: "Automatically generate project documentation as you run jobs."
+description: "Автоматически генерируйте документацию проекта по мере выполнения заданий."
 pagination_next: null
 ---
 
-dbt Cloud enables you to generate documentation for your project and data platform. The documentation is automatically updated with new information after a fully successful job run, ensuring accuracy and relevance.
+dbt Cloud позволяет вам генерировать документацию для вашего проекта и платформы данных. Документация автоматически обновляется с новой информацией после успешного выполнения задания, что обеспечивает ее точность и актуальность.
 
-The default documentation experience in dbt Cloud is [dbt Explorer](/docs/collaborate/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). Use [dbt Explorer](/docs/collaborate/explore-projects) to view your project's resources (such as models, tests, and metrics) and their lineage to gain a better understanding of its latest production state.
+Стандартный опыт работы с документацией в dbt Cloud — это [dbt Explorer](/docs/collaborate/explore-projects), доступный в [планах Team или Enterprise](https://www.getdbt.com/pricing/). Используйте [dbt Explorer](/docs/collaborate/explore-projects) для просмотра ресурсов вашего проекта (таких как модели, тесты и метрики) и их взаимосвязей, чтобы лучше понять его текущее состояние в производственной среде.
 
-Refer to [documentation](/docs/build/documentation) for more configuration details.
+Смотрите [документацию](/docs/build/documentation) для получения дополнительных сведений о конфигурации.
 
-This shift makes [dbt Docs](#dbt-docs) a legacy documentation feature in dbt Cloud. dbt Docs is still accessible and offers basic documentation, but it doesn't offer the same speed, metadata, or visibility as dbt Explorer. dbt Docs is available to dbt Cloud developer plans or dbt Core users.
+Этот переход делает [dbt Docs](#dbt-docs) устаревшей функцией документации в dbt Cloud. dbt Docs по-прежнему доступен и предлагает базовую документацию, но не обеспечивает такой же скорости, метаданных или видимости, как dbt Explorer. dbt Docs доступен для разработчиков dbt Cloud или пользователей dbt Core.
 
-## Set up a documentation job
+## Настройка задания для документации
 
-dbt Explorer uses the [metadata](/docs/collaborate/explore-projects#generate-metadata) generated after each job run in the production or staging environment, ensuring it always has the latest project results. To view richer metadata, you can set up documentation for a job in dbt Cloud when you edit your job settings or create a new job.
+dbt Explorer использует [метаданные](/docs/collaborate/explore-projects#generate-metadata), генерируемые после каждого выполнения задания в производственной или тестовой среде, что гарантирует наличие самых последних результатов проекта. Чтобы просмотреть более полные метаданные, вы можете настроить документацию для задания в dbt Cloud, когда редактируете настройки задания или создаете новое задание.
 
-Configure the job to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) when it runs. If you want to view column and statistics for models, sources, and snapshots in dbt Explorer, then this step is necessary.
+Настройте задание для [генерации метаданных](/docs/collaborate/explore-projects#generate-metadata) при его выполнении. Если вы хотите просмотреть столбцы и статистику для моделей, источников и снимков в dbt Explorer, то этот шаг необходим.
 
-To set up a job to generate docs:
+Чтобы настроить задание для генерации документации:
 
-1. In the top left, click **Deploy** and select **Jobs**.
-2. Create a new job or select an existing job and click **Settings**.
-3. Under **Execution Settings**, select **Generate docs on run** and click **Save**.
-   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/documentation-job-execution-settings.png" width="100%" title="Setting up a job to generate documentation"/>
+1. В верхнем левом углу нажмите **Deploy** и выберите **Jobs**.
+2. Создайте новое задание или выберите существующее и нажмите **Settings**.
+3. В разделе **Execution Settings** выберите **Generate docs on run** и нажмите **Save**.
+   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/documentation-job-execution-settings.png" width="100%" title="Настройка задания для генерации документации"/>
 
-*Note, for dbt Docs users you need to configure the job to generate docs when it runs, then manually link that job to your project. Proceed to [configure project documentation](#configure-project-documentation) so your project generates the documentation when this job runs.*
+*Примечание: для пользователей dbt Docs вам необходимо настроить задание для генерации документации при его выполнении, а затем вручную связать это задание с вашим проектом. Перейдите к [настройке документации проекта](#configure-project-documentation), чтобы ваш проект генерировал документацию при выполнении этого задания.*
 
-You can also add the [`dbt docs generate` command](/reference/commands/cmd-docs) to the list of commands in the job run steps. However, you can expect different outcomes when adding the command to the run steps compared to configuring a job selecting the **Generate docs on run** checkbox. 
+Вы также можете добавить команду [`dbt docs generate`](/reference/commands/cmd-docs) в список команд в шагах выполнения задания. Однако вы можете ожидать различных результатов при добавлении команды в шаги выполнения по сравнению с настройкой задания с выбором флажка **Generate docs on run**.
 
-Review the following options and outcomes:
+Просмотрите следующие варианты и результаты:
 
-| Options | Outcomes |
+| Варианты | Результаты |
 |--------| ------- |
-| **Select checkbox** | Select the **Generate docs on run** checkbox to automatically generate updated project docs each time your job runs. If that particular step in your job fails, the job can still be successful if all subsequent steps are successful. |
-| **Add as a run step** | Add `dbt docs generate` to the list of commands in the job run steps, in whatever order you prefer. If that particular step in your job fails, the job will fail and all subsequent steps will be skipped.   |
+| **Выберите флажок** | Выберите флажок **Generate docs on run**, чтобы автоматически генерировать обновленную документацию проекта каждый раз, когда выполняется ваше задание. Если этот конкретный шаг в вашем задании не удался, задание все равно может быть успешным, если все последующие шаги успешны. |
+| **Добавить как шаг выполнения** | Добавьте `dbt docs generate` в список команд в шагах выполнения задания в любом порядке, который вам удобен. Если этот конкретный шаг в вашем задании не удался, задание завершится неудачей, и все последующие шаги будут пропущены. |
 
-:::tip Tip &mdash; Documentation-only jobs 
+:::tip Совет &mdash; Задания только для документации 
 
-To create and schedule documentation-only jobs at the end of your production jobs, add the `dbt compile` command in the **Commands** section.
+Чтобы создать и запланировать задания только для документации в конце ваших производственных заданий, добавьте команду `dbt compile` в раздел **Commands**.
 
 :::
 
 ## dbt Docs
 
-dbt Docs, available on developer plans or dbt Core users, generates a website from your dbt project using the `dbt docs generate` command. It provides a central location to view your project's resources, such as models, tests, and lineage  &mdash; and helps you understand the data in your warehouse.
+dbt Docs, доступный для разработчиков или пользователей dbt Core, генерирует веб-сайт из вашего проекта dbt с помощью команды `dbt docs generate`. Он предоставляет центральное место для просмотра ресурсов вашего проекта, таких как модели, тесты и взаимосвязи, и помогает вам понять данные в вашем хранилище.
 
-### Configure project documentation
+### Настройка документации проекта
 
-You configure project documentation to generate documentation when the job you set up in the previous section runs. In the project settings, specify the job that generates documentation artifacts for that project. Once you configure this setting, subsequent runs of the job will automatically include a step to generate documentation.
+Вы настраиваете документацию проекта для генерации документации, когда выполняется задание, которое вы настроили в предыдущем разделе. В настройках проекта укажите задание, которое генерирует артефакты документации для этого проекта. После настройки этого параметра последующие выполнения задания автоматически будут включать шаг для генерации документации.
 
-1. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
-2. Navigate to **Projects** and select the project that needs documentation.
-3. Click **Edit**.
-4. Under **Artifacts**, select the job that should generate docs when it runs and click **Save**.
-   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/documentation-project-details.png" width="100%" title="Configuring project documentation"/>
+1. В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**.
+2. Перейдите в **Projects** и выберите проект, которому нужна документация.
+3. Нажмите **Edit**.
+4. В разделе **Artifacts** выберите задание, которое должно генерировать документацию при его выполнении, и нажмите **Save**.
+   <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/documentation-project-details.png" width="100%" title="Настройка документации проекта"/>
 
-:::tip Use dbt Explorer for a richer documentation experience
-For a  richer and more interactive experience, try out [dbt Explorer](/docs/collaborate/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). It includes map layers of your DAG, keyword search, interacts with the IDE, model performance, project recommendations, and more.
+:::tip Используйте dbt Explorer для более богатого опыта документации
+Для более богатого и интерактивного опыта попробуйте [dbt Explorer](/docs/collaborate/explore-projects), доступный в [планах Team или Enterprise](https://www.getdbt.com/pricing/). Он включает в себя слои карты вашего DAG, поиск по ключевым словам, взаимодействие с IDE, производительность моделей, рекомендации по проектам и многое другое.
 :::
 
-### Generating documentation
+### Генерация документации
 
-To generate documentation in the dbt Cloud IDE, run the `dbt docs generate` command in the **Command Bar** in the dbt Cloud IDE. This command will generate the documentation for your dbt project as it exists in development in your IDE session.
+Чтобы сгенерировать документацию в IDE dbt Cloud, выполните команду `dbt docs generate` в **Command Bar** в IDE dbt Cloud. Эта команда сгенерирует документацию для вашего проекта dbt в том виде, в котором он существует в разработке в вашей сессии IDE.
 
-After running `dbt docs generate` in the dbt Cloud IDE, click the icon above the file tree, to see the latest version of your documentation rendered in a new browser window.
+После выполнения `dbt docs generate` в IDE dbt Cloud нажмите на значок над деревом файлов, чтобы увидеть последнюю версию вашей документации, отображенную в новом окне браузера.
 
-### View documentation
+### Просмотр документации
 
-Once you set up a job to generate documentation for your project, you can click **Explore** in the navigation and then click on **dbt Docs**. Your project's documentation should open. This link will always help you find the most recent version of your project's documentation in dbt Cloud.
+После того как вы настроите задание для генерации документации для вашего проекта, вы можете нажать **Explore** в навигации, а затем нажать на **dbt Docs**. Документация вашего проекта должна открыться. Эта ссылка всегда поможет вам найти самую последнюю версию документации вашего проекта в dbt Cloud.
 
-These generated docs always show the last fully successful run, which means that if you have any failed tasks, including tests, then you will not see changes to the docs by this run. If you don't see a fully successful run, then you won't see any changes to the documentation.
+Сгенерированные документы всегда показывают последнее полностью успешное выполнение, что означает, что если у вас есть какие-либо неудачные задачи, включая тесты, то вы не увидите изменений в документации от этого выполнения. Если вы не видите полностью успешного выполнения, то вы не увидите никаких изменений в документации.
 
-The dbt Cloud IDE makes it possible to view [documentation](/docs/build/documentation) for your dbt project while your code is still in development. With this workflow, you can inspect and verify what your project's generated documentation will look like before your changes are released to production.
+IDE dbt Cloud позволяет просматривать [документацию](/docs/build/documentation) для вашего проекта dbt, пока ваш код все еще находится в разработке. С помощью этого рабочего процесса вы можете проверить и подтвердить, как будет выглядеть сгенерированная документация вашего проекта, прежде чем ваши изменения будут выпущены в производственную среду.
 
-## Related docs
-- [Documentation](/docs/build/documentation)
+## Связанные документы
+- [Документация](/docs/build/documentation)
 - [dbt Explorer](/docs/collaborate/explore-projects)

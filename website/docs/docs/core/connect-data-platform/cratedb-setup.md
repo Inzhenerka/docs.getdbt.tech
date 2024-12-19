@@ -1,16 +1,16 @@
 ---
-title: "CrateDB setup"
-description: "Read this guide to learn about the CrateDB data platform setup in dbt."
+title: "Настройка CrateDB"
+description: "Прочитайте это руководство, чтобы узнать о настройке платформы данных CrateDB в dbt."
 id: "cratedb-setup"
 meta:
   maintained_by: Crate.io, Inc.
-  authors: 'CrateDB maintainers'
+  authors: 'Сопровождающие CrateDB'
   github_repo: 'crate/dbt-cratedb2'
   pypi_package: 'dbt-cratedb2'
   min_core_version: 'v1.0.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
-  slack_channel_name: 'Community Forum'
+  slack_channel_name: 'Форум сообщества'
   slack_channel_link: 'https://community.cratedb.com/'
   platform_name: 'CrateDB'
   config_page: '/reference/resource-configs/no-configs'
@@ -21,19 +21,19 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta}/>
 
 
-[CrateDB] is compatible with PostgreSQL, so its dbt adapter strongly depends on
-dbt-postgres, documented at [PostgreSQL profile setup].
+[CrateDB] совместим с PostgreSQL, поэтому его адаптер dbt сильно зависит от
+dbt-postgres, который документирован в [настройке профиля PostgreSQL].
 
-CrateDB targets are configured exactly the same way, see also [PostgreSQL
-configuration], with just a few things to consider which are special to
-CrateDB. Relevant details are outlined at [using dbt with CrateDB],
-which also includes up-to-date information.
+Цели CrateDB настраиваются точно так же, как и в [настройке PostgreSQL],
+с несколькими особенностями, которые специфичны для
+CrateDB. Соответствующие детали изложены в [использовании dbt с CrateDB],
+включая актуальную информацию.
 
 
-## Profile configuration
+## Настройка профиля
 
-CrateDB targets should be set up using a configuration like this minimal sample
-of settings in your [`profiles.yml`] file.
+Цели CrateDB должны быть настроены с использованием конфигурации, подобной этому минимальному образцу
+настроек в вашем [`profiles.yml`] файле.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -47,8 +47,8 @@ cratedb_analytics:
       port: 5432
       user: [username]
       pass: [password]
-      dbname: crate         # Do not change this value. CrateDB's only catalog is `crate`.
-      schema: doc           # Define the schema name. CrateDB's default schema is `doc`.
+      dbname: crate         # Не изменяйте это значение. Единственный каталог CrateDB - `crate`.
+      schema: doc           # Определите имя схемы. Стандартная схема CrateDB - `doc`.
 ```
 
 </File>
@@ -56,7 +56,7 @@ cratedb_analytics:
 
 
 [CrateDB]: https://cratedb.com/database
-[PostgreSQL configuration]: https://docs.getdbt.com/reference/resource-configs/postgres-configs
-[PostgreSQL profile setup]: https://docs.getdbt.com/docs/core/connect-data-platform/postgres-setup
+[настройка PostgreSQL]: https://docs.getdbt.com/reference/resource-configs/postgres-configs
+[настройка профиля PostgreSQL]: https://docs.getdbt.com/docs/core/connect-data-platform/postgres-setup
 [`profiles.yml`]: https://docs.getdbt.com/docs/core/connect-data-platform/profiles.yml
-[using dbt with CrateDB]: https://cratedb.com/docs/guide/integrate/dbt/
+[использование dbt с CrateDB]: https://cratedb.com/docs/guide/integrate/dbt/

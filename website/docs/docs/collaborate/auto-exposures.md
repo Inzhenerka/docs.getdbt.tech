@@ -1,26 +1,26 @@
 ---
-title: "Auto-exposures"
-sidebar_label: "Auto-exposures"
-description: "Import and auto-generate exposures from dashboards and understand how models are used in downstream tools for a richer lineage."
+title: "Авто-экспозиции"
+sidebar_label: "Авто-экспозиции"
+description: "Импортируйте и автоматически генерируйте экспозиции из панелей инструментов и понимайте, как модели используются в downstream-инструментах для более богатой линии."
 pagination_prev: null
 pagination_next:  "docs/collaborate/data-tile"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
-# Auto-exposures <Lifecycle status="enterprise" />
+# Авто-экспозиции <Lifecycle status="preview,enterprise" />
 
-As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto-exposures integrate natively with Tableau (Power BI coming soon) and auto-generate downstream lineage in dbt Explorer for a richer experience.
+Для команды данных критически важно иметь контекст по downstream-применениям и пользователям ваших продуктов данных. Авто-экспозиции интегрируются нативно с Tableau (Power BI скоро) и автоматически генерируют downstream-линию в dbt Explorer для более богатого опыта.
 
-Auto-exposures help users understand how their models are used in downstream analytics tools to inform investments and reduce incidents — ultimately building trust and confidence in data products. It imports and auto-generates exposures based on Tableau dashboards, with user-defined curation.
+Авто-экспозиции помогают пользователям понять, как их модели используются в инструментах аналитики downstream, чтобы информировать инвестиции и уменьшать инциденты — в конечном итоге создавая доверие и уверенность в продуктах данных. Они импортируют и автоматически генерируют экспозиции на основе панелей инструментов Tableau с определенной пользователем кураторской обработкой.
 
-## Supported plans
-Auto-exposures is available on the [dbt Cloud Enterprise](https://www.getdbt.com/pricing/) plan. Currently, you can only connect to a single Tableau site on the same server.
+## Поддерживаемые планы
+Авто-экспозиции доступны на плане [dbt Cloud Enterprise](https://www.getdbt.com/pricing/). В настоящее время вы можете подключиться только к одному сайту Tableau на одном сервере.
 
 :::info Tableau Server
-If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
+Если вы используете Tableau Server, вам необходимо [добавить IP-адреса dbt Cloud в белый список](/docs/cloud/about-cloud/access-regions-ip-addresses) для вашего региона dbt Cloud.
 :::
 
-For more information on how to set up auto-exposures, prerequisites, and more &mdash; refer to [configure auto-exposures in Tableau and dbt Cloud](/docs/cloud-integrations/configure-auto-exposures).
+Для получения дополнительной информации о том, как настроить авто-экспозиции, предварительных требованиях и многом другом — обратитесь к [настройке авто-экспозиций в Tableau и dbt Cloud](/docs/cloud-integrations/configure-auto-exposures).
 
 import ViewExposures from '/snippets/_auto-exposures-view.md';
 

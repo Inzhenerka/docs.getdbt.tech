@@ -1,6 +1,6 @@
 ---
-title: "iomete setup"
-description: "Read this guide to learn about the iomete warehouse setup in dbt."
+title: "Настройка iomete"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища iomete в dbt."
 id: "iomete-setup"
 meta:
   maintained_by: iomete
@@ -8,7 +8,7 @@ meta:
   github_repo: 'iomete/dbt-iomete'
   pypi_package: 'dbt-iomete'
   min_core_version: 'v0.18.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '##db-iomete'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03JFG22EP9'
@@ -22,9 +22,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 
 
-Set up a iomete Target
+Настройка целевого назначения iomete
 
-iomete targets should be set up using the following configuration in your profiles.yml file.
+Целевые назначения iomete должны быть настроены с использованием следующей конфигурации в вашем файле profiles.yml.
 
 <File name='profiles.yml'>
 
@@ -45,22 +45,22 @@ iomete:
 
 </File>
 
-##### Description of Profile Fields
+##### Описание полей профиля
 
-| Field    | Description                                                                                                                             | Required | Example                |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------|----------|------------------------|
-| type     | The specific adapter to use                                                                                                             | Required | `iomete`               |
-| cluster  | The cluster to connect                                                                                                                  | Required | `reporting`            |
-| host     | The host name of the connection. It is a combination of <br/>`account_number` with the prefix `dwh-` <br/>and the suffix `.iomete.com`. | Required | `dwh-12345.iomete.com` |
-| port     | The port to use.                                                                                                                        | Required | `443`                  |
-| schema   | Specify the schema (database) to build models into.                                                                                     | Required | `dbt_finance`          |
-| account_number | The iomete account number with single quotes.                                                                                           | Required | `'1234566789123'`        |
-| username | The iomete username to use to connect to the server.                                                                                    | Required | `dbt_user`             |
-| password | The iomete user password to use to connect to the server.                                                                               | Required | `strong_password`      |
+| Поле          | Описание                                                                                                                                 | Обязательно | Пример                |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------|-----------------------|
+| type          | Конкретный адаптер для использования                                                                                                     | Обязательно  | `iomete`              |
+| cluster       | Кластер для подключения                                                                                                                  | Обязательно  | `reporting`           |
+| host          | Имя хоста подключения. Это комбинация <br/>`account_number` с префиксом `dwh-` <br/>и суффиксом `.iomete.com`.                         | Обязательно  | `dwh-12345.iomete.com`|
+| port          | Порт для использования.                                                                                                                  | Обязательно  | `443`                 |
+| schema        | Укажите схему (базу данных), в которую будут создаваться модели.                                                                        | Обязательно  | `dbt_finance`         |
+| account_number| Номер учетной записи iomete в одинарных кавычках.                                                                                       | Обязательно  | `'1234566789123'`     |
+| username      | Имя пользователя iomete для подключения к серверу.                                                                                       | Обязательно  | `dbt_user`            |
+| password      | Пароль пользователя iomete для подключения к серверу.                                                                                    | Обязательно  | `strong_password`     |
 
-## Supported Functionality
+## Поддерживаемая функциональность
 
-Most dbt Core functionality is supported. 
+Поддерживается большинство функций dbt Core.
 
-Iceberg specific improvements.
-1. Joining the results of `show tables` and `show views`.
+Специфические улучшения для Iceberg.
+1. Объединение результатов `show tables` и `show views`.

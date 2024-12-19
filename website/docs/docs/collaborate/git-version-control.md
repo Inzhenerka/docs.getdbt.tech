@@ -1,27 +1,25 @@
 ---
-title: "About git"
+title: "О git"
 id: git-version-control
-description: "Git overview"
-sidebar_label: "About git"
+description: "Обзор Git"
+sidebar_label: "О git"
 pagination_next: "docs/collaborate/git/version-control-basics"
 pagination_prev: null
 ---
 
-A [version control](https://en.wikipedia.org/wiki/Version_control) system allows you and your teammates to work collaboratively, safely, and simultaneously on a single project. Version control helps you track all the code changes made in your dbt project.
+Система [контроля версий](https://en.wikipedia.org/wiki/Version_control) позволяет вам и вашим коллегам работать совместно, безопасно и одновременно над одним проектом. Контроль версий помогает отслеживать все изменения кода, внесенные в ваш проект dbt.
 
-In a distributed version control system, every developer has a full copy of the project and project history. Git is one of the most popular distributed version control systems and is commonly used for both open source and commercial software development, with great benefits for individuals, teams and businesses.
+В распределенной системе контроля версий каждый разработчик имеет полную копию проекта и истории проекта. Git является одной из самых популярных распределенных систем контроля версий и широко используется как для разработки программного обеспечения с открытым исходным кодом, так и для коммерческой разработки, предоставляя значительные преимущества как для отдельных пользователей, так и для команд и компаний.
 
-![Git overview](https://docs.getdbt.com/img/docs/dbt-cloud/cloud-ide/git-overview.png)
+![Обзор Git](https://docs.getdbt.com/img/docs/dbt-cloud/cloud-ide/git-overview.png)
 
+Git позволяет разработчикам видеть всю хронологию своих изменений, решений и прогресса любого проекта в одном месте. С момента доступа к истории проекта разработчик получает весь контекст, необходимый для его понимания и начала внесения вклада.
 
-Git allows developers see the entire timeline of their changes, decisions, and progression of any project in one place. From the moment they access the history of a project, the developer has all the context they need to understand it and start contributing.
+Когда вы разрабатываете в интерфейсе командной строки (CLI) или в облачной интегрированной среде разработки (IDE), вы можете напрямую использовать Git для контроля версий вашего кода. Чтобы использовать контроль версий, убедитесь, что вы подключены к репозиторию Git в CLI или Cloud IDE.
 
-When you develop in the command line interface (CLI) or Cloud  integrated development environment (IDE), you can leverage Git directly to version control your code. To use version control, make sure you are connected to a Git repository in the CLI or Cloud IDE. 
-
-
-## Related docs
-- [Version control basics](/docs/collaborate/git/version-control-basics)
-- [Merge conflicts](/docs/collaborate/git/merge-conflicts) 
-- [Connect to GitHub](/docs/cloud/git/connect-github)
-- [Connect to GitLab](/docs/cloud/git/connect-gitlab)
-- [Connect to Azure DevOps](/docs/cloud/git/connect-azure-devops)
+## Связанные документы
+- [Основы контроля версий](/docs/collaborate/git/version-control-basics)
+- [Конфликты слияния](/docs/collaborate/git/merge-conflicts) 
+- [Подключение к GitHub](/docs/cloud/git/connect-github)
+- [Подключение к GitLab](/docs/cloud/git/connect-gitlab)
+- [Подключение к Azure DevOps](/docs/cloud/git/connect-azure-devops)

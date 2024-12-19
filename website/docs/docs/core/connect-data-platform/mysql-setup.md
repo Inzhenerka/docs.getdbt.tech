@@ -1,24 +1,24 @@
 ---
-title: "MySQL setup"
-description: "Read this guide to learn about the MySQL warehouse setup in dbt."
+title: "Настройка MySQL"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища MySQL в dbt."
 id: "mysql-setup"
 meta:
-  maintained_by: Community
-  authors: 'Doug Beatty (https://github.com/dbeatty10)'
+  maintained_by: Сообщество
+  authors: 'Даг Бити (https://github.com/dbeatty10)'
   github_repo: 'dbeatty10/dbt-mysql'
   pypi_package: 'dbt-mysql'
   min_core_version: 'v0.18.0'
-  cloud_support: Not Supported
-  min_supported_version: 'MySQL 5.7 and 8.0'
+  cloud_support: Не поддерживается
+  min_supported_version: 'MySQL 5.7 и 8.0'
   slack_channel_name: '#db-mysql-family'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03BK0SHC64'
   platform_name: 'MySQL'
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for each repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом каждого из перечисленных ниже репозиториев.
 
 :::
 
@@ -26,23 +26,23 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-This is an experimental plugin:
-- It has not been tested extensively.
-- Storage engines other than the default of InnoDB are untested.
-- Only tested with [dbt-adapter-tests](https://github.com/dbt-labs/dbt-adapter-tests) with the following versions:
+Это экспериментальный плагин:
+- Он не был протестирован в широком масштабе.
+- Хранилища, отличные от InnoDB, не тестировались.
+- Протестирован только с [dbt-adapter-tests](https://github.com/dbt-labs/dbt-adapter-tests) с следующими версиями:
   - MySQL 5.7
   - MySQL 8.0
   - MariaDB 10.5
-- Compatibility with other [dbt packages](https://hub.getdbt.com/) (like [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)) are also untested.
+- Совместимость с другими [пакетами dbt](https://hub.getdbt.com/) (такими как [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/)) также не тестировалась.
 
-Please read these docs carefully and use at your own risk. [Issues](https://github.com/dbeatty10/dbt-mysql/issues/new) and [PRs](https://github.com/dbeatty10/dbt-mysql/blob/main/CONTRIBUTING.rst#contributing) welcome!
+Пожалуйста, внимательно прочитайте эту документацию и используйте на свой страх и риск. Приветствуются [проблемы](https://github.com/dbeatty10/dbt-mysql/issues/new) и [PR](https://github.com/dbeatty10/dbt-mysql/blob/main/CONTRIBUTING.rst#contributing)!
 
 
-## Connecting to MySQL with dbt-mysql
+## Подключение к MySQL с помощью dbt-mysql
 
-MySQL targets should be set up using the following configuration in your `profiles.yml` file.
+Цели MySQL должны быть настроены с использованием следующей конфигурации в вашем файле `profiles.yml`.
 
-Example:
+Пример:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -62,39 +62,39 @@ your_profile_name:
 
 </File>
 
-#### Description of MySQL Profile Fields
+#### Описание полей профиля MySQL
 
-| Option          | Description                                                                         | Required?                                                          | Example                                        |
+| Опция          | Описание                                                                         | Обязательно?                                                      | Пример                                        |
 | --------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------- |
-| type            | The specific adapter to use                                                         | Required                                                           | `mysql`, `mysql5` or `mariadb`                            |
-| server          | The server (hostname) to connect to                                                 | Required                                                           | `yourorg.mysqlhost.com`                        |
-| port            | The port to use                                                                     | Optional                                                           | `3306`                                         |
-| schema          | Specify the schema (database) to build models into                                  | Required                                                           | `analytics`                                    |
-| username        | The username to use to connect to the server                                        | Required                                                           | `dbt_admin`                                    |
-| password        | The password to use for authenticating to the server                                | Required                                                           | `correct-horse-battery-staple`                 |
-| ssl_disabled    | Set to enable or disable TLS connectivity to mysql5.x                               | Optional                                                           | `True` or `False`                              |
+| type            | Конкретный адаптер для использования                                                 | Обязательно                                                         | `mysql`, `mysql5` или `mariadb`                            |
+| server          | Сервер (имя хоста), к которому нужно подключиться                                   | Обязательно                                                         | `yourorg.mysqlhost.com`                        |
+| port            | Порт для использования                                                               | Необязательно                                                       | `3306`                                         |
+| schema          | Укажите схему (базу данных), в которую будут создаваться модели                    | Обязательно                                                         | `analytics`                                    |
+| username        | Имя пользователя для подключения к серверу                                          | Обязательно                                                         | `dbt_admin`                                    |
+| password        | Пароль для аутентификации на сервере                                               | Обязательно                                                         | `correct-horse-battery-staple`                 |
+| ssl_disabled    | Установите для включения или отключения TLS-соединения с mysql5.x                  | Необязательно                                                       | `True` или `False`                              |
 
-## Supported features
+## Поддерживаемые функции
 
-| MariaDB 10.5 | MySQL 5.7 | MySQL 8.0 | Feature                     |
+| MariaDB 10.5 | MySQL 5.7 | MySQL 8.0 | Функция                     |
 |:---------:|:---------:|:---:|-----------------------------|
-|     ✅     |     ✅     |  ✅  | Table materialization       |
-|     ✅     |     ✅     |  ✅  | View materialization        |
-|     ✅     |     ✅     |  ✅  | Incremental materialization |
-|     ✅     |     ❌     |  ✅  | Ephemeral materialization   |
-|     ✅     |     ✅     |  ✅  | Seeds                       |
-|     ✅     |     ✅     |  ✅  | Sources                     |
-|     ✅     |     ✅     |  ✅  | Custom data tests           |
-|     ✅     |     ✅     |  ✅  | Docs generate               |
-|     🤷     |     🤷     |  ✅  | Snapshots                   |
+|     ✅     |     ✅     |  ✅  | Материализация таблиц       |
+|     ✅     |     ✅     |  ✅  | Материализация представлений  |
+|     ✅     |     ✅     |  ✅  | Инкрементальная материализация |
+|     ✅     |     ❌     |  ✅  | Эфемерная материализация     |
+|     ✅     |     ✅     |  ✅  | Семена                       |
+|     ✅     |     ✅     |  ✅  | Источники                    |
+|     ✅     |     ✅     |  ✅  | Пользовательские тесты данных |
+|     ✅     |     ✅     |  ✅  | Генерация документации       |
+|     🤷     |     🤷     |  ✅  | Снимки                       |
 
-## Notes 
-- Ephemeral materializations rely upon [Common Table Expressions](https://en.wikipedia.org/wiki/Hierarchical_and_recursive_queries_in_SQL) (CTEs), which are not supported until MySQL 8.0.
-- MySQL 5.7 has some configuration gotchas that might affect dbt snapshots to not work properly due to [automatic initialization and updating for `TIMESTAMP`](https://dev.mysql.com/doc/refman/5.7/en/timestamp-initialization.html).
-  - If the output of `SHOW VARIABLES LIKE 'sql_mode'` includes `NO_ZERO_DATE`. A solution is to include the following in a `*.cnf` file:
+## Примечания 
+- Эфемерные материализации зависят от [Общих табличных выражений](https://en.wikipedia.org/wiki/Hierarchical_and_recursive_queries_in_SQL) (CTE), которые не поддерживаются до MySQL 8.0.
+- MySQL 5.7 имеет некоторые конфигурационные особенности, которые могут повлиять на правильную работу снимков dbt из-за [автоматической инициализации и обновления для `TIMESTAMP`](https://dev.mysql.com/doc/refman/5.7/en/timestamp-initialization.html).
+  - Если вывод `SHOW VARIABLES LIKE 'sql_mode'` включает `NO_ZERO_DATE`, решением будет включение следующего в файл `*.cnf`:
   ```
   [mysqld]
   explicit_defaults_for_timestamp = true
   sql_mode = "ALLOW_INVALID_DATES,{other_sql_modes}"
   ```
-  - Where `{other_sql_modes}` is the rest of the modes from the `SHOW VARIABLES LIKE 'sql_mode'` output.
+  - Где `{other_sql_modes}` — это остальные режимы из вывода `SHOW VARIABLES LIKE 'sql_mode'`.

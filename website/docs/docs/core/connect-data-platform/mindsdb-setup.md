@@ -1,13 +1,13 @@
 ---
-title: "MindsDB setup"
+title: "Настройка MindsDB"
 id: "mindsdb-setup"
 meta:
   maintained_by: MindsDB
-  authors: 'MindsDB team'
+  authors: 'Команда MindsDB'
   github_repo: 'mindsdb/dbt-mindsdb'
   pypi_package: 'dbt-mindsdb'
   min_core_version: 'v1.0.1'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: '?'
   slack_channel_name: 'n/a'
   slack_channel_link: 'https://www.getdbt.com/community'
@@ -15,9 +15,9 @@ meta:
   config_page: '/reference/resource-configs/mindsdb-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-The dbt-mindsdb package allows dbt to connect to [MindsDB](https://github.com/mindsdb/mindsdb).
+Пакет dbt-mindsdb позволяет dbt подключаться к [MindsDB](https://github.com/mindsdb/mindsdb).
 
 :::
 
@@ -25,9 +25,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Configurations
+## Конфигурации
 
-Basic `profile.yml` for connecting to MindsDB:
+Базовый `profile.yml` для подключения к MindsDB:
 
 ```yml
 mindsdb:
@@ -43,13 +43,11 @@ mindsdb:
   target: dev
 
 ```
-| Key      | Required | Description                                          | Example                        |
-| -------- | -------- | ---------------------------------------------------- | ------------------------------ |
-| type     |    ✔️   | The specific adapter to use                          | `mindsdb`                      |
-| host     |    ✔️   | The MindsDB (hostname) to connect to                 | `cloud.mindsdb.com`            |
-| port     |    ✔️   | The port to use                                      | `3306`  or `47335`             |
-| schema   |    ✔️   | Specify the schema (database) to build models into   | The MindsDB datasource         |
-| username |    ✔️   | The username to use to connect to the server         | `mindsdb` or mindsdb cloud user|
-| password |    ✔️   | The password to use for authenticating to the server | `pass                          |
-
-
+| Ключ     | Обязательный | Описание                                           | Пример                        |
+| -------- | ----------- | -------------------------------------------------- | ------------------------------ |
+| type     |    ✔️      | Конкретный адаптер для использования               | `mindsdb`                     |
+| host     |    ✔️      | MindsDB (имя хоста), к которому нужно подключиться | `cloud.mindsdb.com`           |
+| port     |    ✔️      | Порт для использования                              | `3306` или `47335`            |
+| schema   |    ✔️      | Укажите схему (базу данных), в которую будут создаваться модели | Источник данных MindsDB       |
+| username |    ✔️      | Имя пользователя для подключения к серверу        | `mindsdb` или пользователь облака mindsdb |
+| password |    ✔️      | Пароль для аутентификации на сервере              | `pass`                        |

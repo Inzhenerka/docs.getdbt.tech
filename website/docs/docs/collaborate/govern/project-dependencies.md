@@ -1,38 +1,32 @@
 ---
-title: "Project dependencies"
+title: "Зависимости проекта"
 id: project-dependencies
-sidebar_label: "Project dependencies"
-description: "Reference public models across dbt projects"
+sidebar_label: "Зависимости проекта"
+description: "Справка по публичным моделям в разных проектах dbt"
 pagination_next: null
-keyword: dbt mesh, project dependencies, ref, cross project ref, project dependencies
+keyword: dbt mesh, зависимости проекта, ref, кросс-проектный ref, зависимости проекта
 ---
 
+На протяжении долгого времени dbt поддерживает повторное использование кода и его расширение путем установки других проектов в качестве [пакетов](/docs/build/packages). Когда вы устанавливаете другой проект в качестве пакета, вы получаете его полный исходный код и добавляете его в свой проект. Это позволяет вам вызывать макросы и запускать модели, определенные в этом другом проекте.
 
-For a long time, dbt has supported code reuse and extension by installing other projects as [packages](/docs/build/packages). When you install another project as a package, you are pulling in its full source code, and adding it to your own. This enables you to call macros and run models defined in that other project.
+Хотя это отличный способ повторного использования кода, обмена утилитами и установления отправной точки для общих преобразований, это не самый эффективный способ для обеспечения сотрудничества между командами и в масштабах, особенно в крупных организациях.
 
-While this is a great way to reuse code, share utility macros, and establish a starting point for common transformations, it's not a great way to enable collaboration across teams and at scale, especially in larger organizations.
+В этом году dbt Labs вводит расширенное понятие `зависимостей` между несколькими проектами dbt:
+- **Пакеты** &mdash; Знакомый и существующий тип зависимости. Вы берете эту зависимость, устанавливая полный исходный код пакета (как библиотеку программного обеспечения).
+- **Проекты** &mdash; _Новый_ способ установить зависимость от другого проекта. Используя сервис метаданных, который работает в фоновом режиме, dbt Cloud разрешает ссылки на лету на публичные модели, определенные в других проектах. Вам не нужно самостоятельно парсить или запускать эти модели. Вместо этого вы рассматриваете свою зависимость от этих моделей как API, который возвращает набор данных. Ответственность за качество и стабильность публичной модели лежит на ее поддерживающем.
 
-This year, dbt Labs is introducing an expanded notion of `dependencies` across multiple dbt projects:
-- **Packages** &mdash; Familiar and pre-existing type of dependency. You take this dependency by installing the package's full source code (like a software library).
-- **Projects** &mdash; A _new_ way to take a dependency on another project. Using a metadata service that runs behind the scenes, dbt Cloud resolves references on-the-fly to public models defined in other projects. You don't need to parse or run those upstream models yourself. Instead, you treat your dependency on those models as an API that returns a dataset. The maintainer of the public model is responsible for guaranteeing its quality and stability.
+## Предварительные условия
+- Доступно в [dbt Cloud Enterprise](https://www.getdbt.com/pricing). Если у вас есть учетная запись Enterprise, вы можете разблокировать эти функции, назначив [публичную модель](/docs/collaborate/govern/model-access) и добавив [кросс-проектный ref](#how-to-write-cross-project-ref). <Lifecycle status="enterprise"/>
+- Определите модели в верхнем ("производящем") проекте, которые настроены с [`access: public`](/reference/resource-configs/access). Вам нужно хотя бы одно успешное выполнение задания после определения их `access`.
+- Определите среду развертывания в верхнем ("производящем") проекте [которая установлена как ваша производственная среда](/docs/deploy/deploy-environments#set-as-production-environment), и убедитесь, что в этой среде было хотя бы одно успешное выполнение задания.
+- Если в верхнем проекте есть среда Staging, выполните задание в этой среде Staging, чтобы убедиться, что кросс-проектный ref разрешается.
+- Каждое имя проекта должно быть уникальным в вашей учетной записи dbt Cloud. Например, если у вас есть проект dbt (кодовая база) для команды `jaffle_marketing`, вы не должны создавать отдельные проекты для `Jaffle Marketing - Dev` и `Jaffle Marketing - Prod`. Эта изоляция должна обрабатываться на уровне среды.
+  - Мы добавляем поддержку разрешений на уровне среды и соединений с хранилищем данных; пожалуйста, свяжитесь с вашей командой dbt Labs для получения доступа к бета-версии.
+- Файл `dbt_project.yml` чувствителен к регистру, что означает, что имя проекта должно точно совпадать с именем в вашем `dependencies.yml`. Например, если ваше имя проекта `jaffle_marketing`, вы должны использовать `jaffle_marketing` (не `JAFFLE_MARKETING`) во всех связанных файлах.
 
-## Prerequisites
-- Available in [dbt Cloud Enterprise](https://www.getdbt.com/pricing). If you have an Enterprise account, you can unlock these features by designating a [public model](/docs/collaborate/govern/model-access) and adding a [cross-project ref](#how-to-write-cross-project-ref). <Lifecycle status="enterprise"/>
-- Define models in an upstream ("producer") project that are configured with [`access: public`](/reference/resource-configs/access). You need at least one successful job run after defining their `access`.
-- Define a deployment environment in the upstream ("producer") project [that is set to be your Production environment](/docs/deploy/deploy-environments#set-as-production-environment), and ensure it has at least one successful job run in that environment.
-- If the upstream project has a Staging environment, run a job in that Staging environment to ensure the downstream cross-project ref resolves.
-- Each project `name` must be unique in your dbt Cloud account. For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, you should not create separate projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`. That isolation should instead be handled at the environment level.
-  - We are adding support for environment-level permissions and data warehouse connections; please contact your dbt Labs account team for beta access.
-- The `dbt_project.yml` file is case-sensitive, which means the project name must exactly match the name in your `dependencies.yml`.  For example, if your project name is `jaffle_marketing`, you should use `jaffle_marketing` (not `JAFFLE_MARKETING`) in all related files.
+## Пример
 
-
-import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
-
-<UseCaseInfo/>
-
-## Example
-
-As an example, let's say you work on the Marketing team at the Jaffle Shop. The name of your team's project is `jaffle_marketing`:
+В качестве примера, предположим, что вы работаете в команде маркетинга в Jaffle Shop. Название проекта вашей команды — `jaffle_marketing`:
 
 <File name="dbt_project.yml">
 
@@ -42,9 +36,9 @@ name: jaffle_marketing
 
 </File>
 
-As part of your modeling of marketing data, you need to take a dependency on two other projects:
-- `dbt_utils` as a [package](#packages-use-case): A collection of utility macros you can use while writing the SQL for your own models. This package is open-source public and maintained by dbt Labs.
-- `jaffle_finance` as a [project use-case](#projects-use-case): Data models about the Jaffle Shop's revenue. This project is private and maintained by your colleagues on the Finance team. You want to select from some of this project's final models, as a starting point for your own work.
+В рамках моделирования маркетинговых данных вам нужно установить зависимость от двух других проектов:
+- `dbt_utils` в качестве [пакета](#packages-use-case): Коллекция утилитных макросов, которые вы можете использовать при написании SQL для своих моделей. Этот пакет является открытым и поддерживается dbt Labs.
+- `jaffle_finance` в качестве [проектного случая использования](#projects-use-case): Модели данных о доходах Jaffle Shop. Этот проект является частным и поддерживается вашими коллегами из финансовой команды. Вы хотите выбрать некоторые из финальных моделей этого проекта в качестве отправной точки для своей работы.
 
 <File name="dependencies.yml">
 
@@ -54,28 +48,28 @@ packages:
     version: 1.1.1
 
 projects:
-  - name: jaffle_finance  # case sensitive and matches the 'name' in the 'dbt_project.yml'
+  - name: jaffle_finance  # чувствительно к регистру и совпадает с 'name' в 'dbt_project.yml'
 ```
 
 </File>
 
-What's happening here?
+Что здесь происходит?
 
-The `dbt_utils` package &mdash; When you run `dbt deps`, dbt will pull down this package's full contents (100+ macros) as source code and add them to your environment. You can then call any macro from the package, just as you can call macros defined in your own project.
+Пакет `dbt_utils` &mdash; Когда вы запускаете `dbt deps`, dbt загрузит все содержимое этого пакета (более 100 макросов) как исходный код и добавит его в вашу среду. Вы сможете вызывать любой макрос из пакета, так же как и макросы, определенные в вашем собственном проекте.
 
-The `jaffle_finance` projects &mdash; This is a new scenario. Unlike installing a package, the models in the `jaffle_finance` project will _not_ be pulled down as source code and parsed into your project. Instead, dbt Cloud provides a metadata service that resolves references to [**public models**](/docs/collaborate/govern/model-access) defined in the `jaffle_finance` project.
+Проект `jaffle_finance` &mdash; Это новый сценарий. В отличие от установки пакета, модели в проекте `jaffle_finance` _не_ будут загружены как исходный код и разобраны в вашем проекте. Вместо этого dbt Cloud предоставляет сервис метаданных, который разрешает ссылки на [**публичные модели**](/docs/collaborate/govern/model-access), определенные в проекте `jaffle_finance`.
 
-### Advantages
+### Преимущества
 
-When you're building on top of another team's work, resolving the references in this way has several advantages:
-- You're using an intentional interface designated by the model's maintainer with `access: public`.
-- You're keeping the scope of your project narrow, and avoiding unnecessary resources and complexity. This is faster for you and faster for dbt.
-- You don't need to mirror any conditional configuration of the upstream project such as `vars`, environment variables, or `target.name`. You can reference them directly wherever the Finance team is building their models in production. Even if the Finance team makes changes like renaming the model, changing the name of its schema, or [bumping its version](/docs/collaborate/govern/model-versions), your `ref` would still resolve successfully.
-- You eliminate the risk of accidentally building those models with `dbt run` or `dbt build`. While you can select those models, you can't actually build them. This prevents unexpected warehouse costs and permissions issues. This also ensures proper ownership and cost allocation for each team's models.
+Когда вы строите на основе работы другой команды, разрешение ссылок таким образом имеет несколько преимуществ:
+- Вы используете целенаправленный интерфейс, назначенный поддерживающим модели с `access: public`.
+- Вы сохраняете узкий масштаб вашего проекта, избегая ненужных ресурсов и сложности. Это быстрее для вас и быстрее для dbt.
+- Вам не нужно дублировать любую условную конфигурацию верхнего проекта, такую как `vars`, переменные окружения или `target.name`. Вы можете ссылаться на них напрямую, где бы команда финансов не строила свои модели в производстве. Даже если команда финансов вносит изменения, такие как переименование модели, изменение имени ее схемы или [обновление ее версии](/docs/collaborate/govern/model-versions), ваш `ref` все равно будет успешно разрешен.
+- Вы исключаете риск случайного построения этих моделей с помощью `dbt run` или `dbt build`. Хотя вы можете выбрать эти модели, вы не можете их фактически построить. Это предотвращает неожиданные затраты на хранилище и проблемы с разрешениями. Это также обеспечивает надлежащее владение и распределение затрат для моделей каждой команды.
 
-### How to write cross-project ref
+### Как написать кросс-проектный ref
 
-**Writing `ref`:** Models referenced from a `project`-type dependency must use [two-argument `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models), including the project name:
+**Написание `ref`:** Модели, на которые ссылаются из зависимости типа `project`, должны использовать [двухаргументный `ref`](/reference/dbt-jinja-functions/ref#ref-project-specific-models), включая имя проекта:
 
 <File name="models/marts/roi_by_channel.sql">
 
@@ -92,56 +86,55 @@ with monthly_revenue as (
 
 </File>
 
-#### Cycle detection
+#### Обнаружение циклов
 
 import CycleDetection from '/snippets/_mesh-cycle-detection.md';
 
 <CycleDetection />
 
-For more guidance on how to use dbt Mesh, refer to the dedicated [dbt Mesh guide](/best-practices/how-we-mesh/mesh-1-intro) and also our freely available [dbt Mesh learning course](https://learn.getdbt.com/courses/dbt-mesh). 
+Для получения дополнительной информации о том, как использовать dbt Mesh, обратитесь к специальному [руководству по dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) и также к нашему бесплатному [курсу обучения dbt Mesh](https://learn.getdbt.com/courses/dbt-mesh).
 
-### Safeguarding production data with staging environments
+### Защита производственных данных с помощью сред Staging
 
-When working in a Development environment, cross-project `ref`s normally resolve to the Production environment of the project. However, to protect production data, set up a [Staging deployment environment](/docs/deploy/deploy-environments#staging-environment) within your projects. 
+При работе в среде разработки кросс-проектные `ref` обычно разрешаются в производственной среде проекта. Однако, чтобы защитить производственные данные, настройте [среду развертывания Staging](/docs/deploy/deploy-environments#staging-environment) в своих проектах.
 
-With a staging environment integrated into the project, dbt Mesh automatically fetches public model information from the producer’s staging environment if the consumer is also in staging. Similarly, dbt Mesh fetches from the producer’s production environment if the consumer is in production. This ensures consistency between environments and adds a layer of security by preventing access to production data during development workflows.
+С интегрированной средой Staging в проекте dbt Mesh автоматически извлекает информацию о публичной модели из среды Staging производителя, если потребитель также находится в Staging. Аналогично, dbt Mesh извлекает из производственной среды производителя, если потребитель находится в производственной среде. Это обеспечивает согласованность между средами и добавляет уровень безопасности, предотвращая доступ к производственным данным во время рабочих процессов разработки.
 
-Read [Why use a staging environment](/docs/deploy/deploy-environments#why-use-a-staging-environment) for more information about the benefits. 
+Читать [Почему использовать среду Staging](/docs/deploy/deploy-environments#why-use-a-staging-environment) для получения дополнительной информации о преимуществах.
 
-#### Staging with downstream dependencies
+#### Staging с зависимостями вниз по потоку
 
-dbt Cloud begins using the Staging environment to resolve cross-project references from downstream projects as soon as it exists in a project without "fail-over" to Production. This means that dbt Cloud will consistently use metadata from the Staging environment to resolve references in downstream projects, even if there haven't been any successful runs in the configured Staging environment. 
+dbt Cloud начинает использовать среду Staging для разрешения кросс-проектных ссылок из проектов вниз по потоку, как только она существует в проекте, без "резервного" перехода к производственной среде. Это означает, что dbt Cloud будет последовательно использовать метаданные из среды Staging для разрешения ссылок в проектах вниз по потоку, даже если в настроенной среде Staging не было успешных запусков.
 
-To avoid causing downtime for downstream developers, you should define and trigger a job before marking the environment as Staging:
+Чтобы избежать простоя для разработчиков вниз по потоку, вы должны определить и запустить задание перед тем, как пометить среду как Staging:
 
-1. Create a new environment, but do NOT mark it as **Staging**.
-2. Define a job in that environment.
-3. Trigger the job to run, and ensure it completes successfully.
-4. Update the environment to mark it as **Staging**.
+1. Создайте новую среду, но не помечайте ее как **Staging**.
+2. Определите задание в этой среде.
+3. Запустите задание и убедитесь, что оно завершилось успешно.
+4. Обновите среду, чтобы пометить ее как **Staging**.
 
-### Comparison
+### Сравнение
 
-If you were to instead install the `jaffle_finance` project as a `package` dependency, you would instead be pulling down its full source code and adding it to your runtime environment. This means:
-- dbt needs to parse and resolve more inputs (which is slower)
-- dbt expects you to configure these models as if they were your own (with `vars`, env vars, etc)
-- dbt will run these models as your own unless you explicitly `--exclude` them
-- You could be using the project's models in a way that their maintainer (the Finance team) hasn't intended
+Если бы вы вместо этого установили проект `jaffle_finance` в качестве зависимости `package`, вы бы загрузили его полный исходный код и добавили его в свою рабочую среду. Это означает:
+- dbt нужно разобрать и разрешить больше входных данных (что медленнее)
+- dbt ожидает, что вы настроите эти модели так, как если бы они были вашими собственными (с `vars`, переменными окружения и т.д.)
+- dbt будет запускать эти модели как ваши собственные, если вы явно не исключите их с помощью `--exclude`
+- Вы могли бы использовать модели проекта таким образом, как это не предполагал их поддерживающий (финансовая команда)
 
-There are a few cases where installing another internal project as a package can be a useful pattern:
-- Unified deployments &mdash; In a production environment, if the central data platform team of Jaffle Shop wanted to schedule the deployment of models across both `jaffle_finance` and `jaffle_marketing`,  they could use dbt's [selection syntax](/reference/node-selection/syntax) to create a new "passthrough" project that installed both projects as packages.
-- Coordinated changes &mdash; In development, if you wanted to test the effects of a change to a public model in an upstream project (`jaffle_finance.monthly_revenue`) on a downstream model (`jaffle_marketing.roi_by_channel`) _before_ introducing changes to a staging or production environment, you can install the `jaffle_finance` package as a package within `jaffle_marketing`.  The installation can point to a specific git branch, however, if you find yourself frequently needing to perform end-to-end testing across both projects, we recommend you re-examine if this represents a stable interface boundary. 
+Есть несколько случаев, когда установка другого внутреннего проекта в качестве пакета может быть полезным паттерном:
+- Унифицированные развертывания &mdash; В производственной среде, если центральная команда платформы данных Jaffle Shop хочет запланировать развертывание моделей как для `jaffle_finance`, так и для `jaffle_marketing`, они могут использовать [синтаксис выбора dbt](/reference/node-selection/syntax), чтобы создать новый "пропускающий" проект, который устанавливает оба проекта в качестве пакетов.
+- Координированные изменения &mdash; В разработке, если вы хотите протестировать влияние изменения публичной модели в верхнем проекте (`jaffle_finance.monthly_revenue`) на модель вниз по потоку (`jaffle_marketing.roi_by_channel`) _до_ внесения изменений в среду Staging или производственную, вы можете установить пакет `jaffle_finance` в качестве пакета в `jaffle_marketing`. Установка может указывать на конкретную ветку git, однако, если вы часто обнаруживаете необходимость в проведении сквозного тестирования между обоими проектами, мы рекомендуем вам пересмотреть, представляет ли это стабильную границу интерфейса.
 
-These are the exceptions, rather than the rule. Installing another team's project as a package adds complexity, latency, and risk of unnecessary costs. By defining clear interface boundaries across teams, by serving one team's public models as "APIs" to another, and by enabling practitioners to develop with a more narrowly defined scope, we can enable more people to contribute, with more confidence, while requiring less context upfront.
+Это исключения, а не правило. Установка проекта другой команды в качестве пакета добавляет сложность, задержки и риск ненужных затрат. Определяя четкие границы интерфейса между командами, предоставляя публичные модели одной команды в качестве "API" для другой и позволяя практикам разрабатывать с более узким определением масштаба, мы можем позволить большему количеству людей вносить вклад с большей уверенностью, требуя при этом меньше контекста заранее.
 
-## FAQs
+## Часто задаваемые вопросы
 
 <details>
-<summary>Can I define private packages in the <code>dependencies.yml</code> file?</summary>
+<summary>Могу ли я определить частные пакеты в файле <code>dependencies.yml</code>?</summary>
 
-If you're using private packages with the [git token method](/docs/build/packages#git-token-method), you must define them in the `packages.yml` file instead of the `dependencies.yml` file. This is because conditional rendering (like Jinja-in-yaml) is not supported.
+Если вы используете частные пакеты с помощью [метода git-токена](/docs/build/packages#git-token-method), вы должны определить их в файле `packages.yml`, а не в файле `dependencies.yml`. Это связано с тем, что условная отрисовка (такая как Jinja-in-yaml) не поддерживается.
 </details>
 
-
-## Related docs
-- Refer to the [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) guide for more guidance on how to use dbt Mesh.
-- [Quickstart with dbt Mesh](/guides/mesh-qs)
+## Связанные документы
+- Обратитесь к [руководству по dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) для получения дополнительной информации о том, как использовать dbt Mesh.
+- [Быстрый старт с dbt Mesh](/guides/mesh-qs)

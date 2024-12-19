@@ -1,69 +1,66 @@
 ---
-title: "Set up Databricks OAuth"
-description: "Learn how dbt Cloud administrators can use Databricks OAuth to control access in a dbt Cloud account."
+title: "Настройка Databricks OAuth"
+description: "Узнайте, как администраторы dbt Cloud могут использовать Databricks OAuth для управления доступом в учетной записи dbt Cloud."
 id: "set-up-databricks-oauth"
 ---
 
-# Set up Databricks OAuth <Lifecycle status="enterprise" />
+# Настройка Databricks OAuth <Lifecycle status="enterprise" />
 
-dbt Cloud supports developer OAuth ([OAuth for partner solutions](https://docs.databricks.com/en/integrations/manage-oauth.html)) with Databricks, providing an additional layer of security for dbt enterprise users. When you enable Databricks OAuth for a dbt Cloud project, all dbt Cloud developers must authenticate with Databricks in order to use the dbt Cloud IDE. The project's deployment environments will still leverage the Databricks authentication method set at the environment level.
+dbt Cloud поддерживает OAuth для разработчиков ([OAuth для партнерских решений](https://docs.databricks.com/en/integrations/manage-oauth.html)) с Databricks, предоставляя дополнительный уровень безопасности для пользователей dbt enterprise. Когда вы включаете Databricks OAuth для проекта dbt Cloud, все разработчики dbt Cloud должны пройти аутентификацию в Databricks, чтобы использовать IDE dbt Cloud. Среды развертывания проекта по-прежнему будут использовать метод аутентификации Databricks, установленный на уровне среды.
 
+Текущие ограничения:
+- Текущий опыт требует перезапуска IDE каждый час (токены доступа истекают через 1 час - [обходное решение](https://docs.databricks.com/en/integrations/manage-oauth.html#override-the-default-token-lifetime-policy-for-dbt-core-power-bi-or-tableau-desktop))
 
-Current limitation:
-- The current experience requires the IDE to be restarted every hour (access tokens expire after 1 hour - [workaround](https://docs.databricks.com/en/integrations/manage-oauth.html#override-the-default-token-lifetime-policy-for-dbt-core-power-bi-or-tableau-desktop))
- 
+### Настройка Databricks OAuth (администратор Databricks)
 
-### Configure Databricks OAuth (Databricks admin)
+Чтобы начать, вам нужно [добавить dbt как OAuth-приложение](https://docs.databricks.com/en/integrations/configure-oauth-dbt.html) в Databricks. Существует два способа настройки этого приложения (CLI или интерфейс Databricks). Вот как вы можете это сделать в интерфейсе Databricks:
 
-To get started, you will need to [add dbt as an OAuth application](https://docs.databricks.com/en/integrations/configure-oauth-dbt.html) with Databricks. There are two ways of configuring this application (CLI or Databricks UI). Here's how you can set this up in the Databricks UI:
+1. Войдите в [консоль учетной записи](https://accounts.cloud.databricks.com/?_ga=2.255771976.118201544.1712797799-1002575874.1704693634) и нажмите на значок **Настройки** в боковом меню.
 
-1. Log in to the [account console](https://accounts.cloud.databricks.com/?_ga=2.255771976.118201544.1712797799-1002575874.1704693634) and click the **Settings** icon in the sidebar.
+2. На вкладке **Подключения приложений** нажмите **Добавить подключение**.
 
-2. On the **App connections** tab, click **Add connection**.
+3. Введите следующие данные:
+   - Имя для вашего подключения.
+   - URL-адреса перенаправления для вашего OAuth-подключения, которые вы можете найти в таблице ниже в этом разделе.
+   - Для областей доступа, API, к которым приложение должно иметь доступ:
+      - Для BI-приложений требуется область SQL, чтобы подключенное приложение могло получить доступ к API Databricks SQL (это необходимо для SQL-моделей).
+      - Для приложений, которым необходимо получить доступ к API Databricks для целей, отличных от запросов, требуется область ALL APIs (это необходимо, если вы запускаете Python-модели).
+   - Время жизни токена доступа (TTL) в минутах. По умолчанию: 60.
+   - Время жизни токена обновления (TTL) в минутах. По умолчанию: 10080.
+4. Выберите **Сгенерировать секрет клиента**. Скопируйте и надежно сохраните секрет клиента. Секрет клиента не будет доступен позже.
 
-3. Enter the following details:
-   - A name for your connection.
-   - The redirect URLs for your OAuth connection, which you can find in the table later in this section.
-   - For Access scopes, the APIs the application should have access to:
-      - For BI applications, the SQL scope is required to allow the connected app to access Databricks SQL APIs (this is required for SQL models).
-      - For applications that need to access Databricks APIs for purposes other than querying, the ALL APIs scope is required (this is required if running Python models).
-   - The access token time-to-live (TTL) in minutes. Default: 60.
-   - The refresh token time-to-live (TTL) in minutes. Default: 10080.
-4. Select **Generate a client secret**. Copy and securely store the client secret. The client secret will not be available later.
+Вы можете использовать следующую таблицу для настройки URL-адресов перенаправления для вашего приложения с dbt Cloud:
 
-You can use the following table to set up the redirect URLs for your application with dbt Cloud:
-
-| Region | Redirect URLs |
+| Регион | URL-адреса перенаправления |
 | ------ | ----- |
-| **US multi-tenant** | https://cloud.getdbt.com/callback <br /> https://cloud.getdbt.com/complete/databricks |
-| **US cell 1** | https://us1.dbt.com/callback <br /> https://us1.dbt.com/complete/databricks |
+| **Многоарендный США** | https://cloud.getdbt.com/callback <br /> https://cloud.getdbt.com/complete/databricks |
+| **США, ячейка 1** | https://us1.dbt.com/callback <br /> https://us1.dbt.com/complete/databricks |
 | **EMEA** | https://emea.dbt.com/callback <br /> https://emea.dbt.com/complete/databricks |
 | **APAC** | https://au.dbt.com/callback <br /> https://au.dbt.com/complete/databricks |
-| **Single tenant** | https://INSTANCE_NAME.getdbt.com/callback <br /> https://INSTANCE_NAME.getdbt.com/complete/databricks
+| **Одинарный арендатор** | https://INSTANCE_NAME.getdbt.com/callback <br /> https://INSTANCE_NAME.getdbt.com/complete/databricks |
 
+### Настройка подключения в dbt Cloud (администратор проекта dbt Cloud)
 
-### Configure the Connection in dbt Cloud (dbt Cloud project admin)
+Теперь, когда у вас есть настроенное OAuth-приложение в Databricks, вам нужно добавить идентификатор клиента и секрет в dbt Cloud. Для этого:
+ - В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
+ - Выберите **Проекты** в меню.
+ - Выберите ваш проект из списка.
+ - Выберите **Подключение**, чтобы отредактировать детали подключения.
+ - Добавьте `OAuth Client ID` и `OAuth Client Secret` из OAuth-приложения Databricks в разделе **Дополнительные настройки**.
 
-Now that you have an OAuth app set up in Databricks, you'll need to add the client ID and secret to dbt Cloud. To do so:
- - From dbt Cloud, click on your account name in the left side menu and select **Account settings**
- - Select **Projects** from the menu
- - Choose your project from the list
- - Select **Connection** to edit the connection details
- - Add the `OAuth Client ID` and `OAuth Client Secret` from the Databricks OAuth app under the **Optional Settings** section
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Добавление идентификатора клиента и секрета приложения Databricks OAuth в dbt Cloud" />
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Adding Databricks OAuth application client ID and secret to dbt Cloud" />
+### Аутентификация в Databricks (разработчик IDE dbt Cloud)
 
-### Authenticating to Databricks (dbt Cloud IDE developer)
+После того как подключение Databricks через OAuth настроено для проекта dbt Cloud, каждому пользователю dbt Cloud необходимо пройти аутентификацию в Databricks, чтобы использовать IDE. Для этого:
 
-Once the Databricks connection via OAuth is set up for a dbt Cloud project, each dbt Cloud user will need to authenticate with Databricks in order to use the IDE. To do so:
+- В dbt Cloud нажмите на имя вашей учетной записи в левом меню и выберите **Настройки учетной записи**.
+- Выберите **Настройки профиля**.
+- Выберите **Учетные данные**.
+- Выберите ваш проект из списка.
+- Выберите `OAuth` в качестве метода аутентификации и нажмите **Сохранить**.
+- Завершите, нажав кнопку **Подключить учетную запись Databricks**.
 
-- From dbt Cloud, click on your account name in the left side menu and select **Account settings**
-- Select **Profile settings**.
-- Select **Credentials**.
-- Choose your project from the list
-- Select `OAuth` as the authentication method, and click **Save**
-- Finalize by clicking the **Connect Databricks Account** button
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Подключение к Databricks из профиля пользователя IDE" />
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/dbt-cloud-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Connecting to Databricks from an IDE user profile" />
-
-You will then be redirected to Databricks and asked to approve the connection. This redirects you back to dbt Cloud. You should now be an authenticated Databricks user, ready to use the dbt Cloud IDE.
+После этого вы будете перенаправлены в Databricks и попросите одобрить подключение. Это перенаправит вас обратно в dbt Cloud. Теперь вы должны быть аутентифицированным пользователем Databricks, готовым использовать IDE dbt Cloud.

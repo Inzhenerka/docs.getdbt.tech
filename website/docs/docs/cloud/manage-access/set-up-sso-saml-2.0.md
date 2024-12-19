@@ -1,5 +1,5 @@
 ---
-title: "Set up SSO with SAML 2.0"
+title: "Настройка SSO с SAML 2.0"
 id: "set-up-sso-saml-2.0"
 ---
 
@@ -7,441 +7,398 @@ import SetUpPages from '/snippets/_sso-docs-mt-available.md';
 
 <SetUpPages features={'/snippets/_sso-docs-mt-available.md'}/>
 
-dbt Cloud Enterprise supports single-sign on (SSO) for any SAML 2.0-compliant identity provider (IdP).
-Currently supported features include:
-* IdP-initiated SSO
-* SP-initiated SSO
-* Just-in-time provisioning
+dbt Cloud Enterprise поддерживает единую аутентификацию (SSO) для любого поставщика идентификации (IdP), совместимого с SAML 2.0. В настоящее время поддерживаемые функции включают:
+* Инициированная IdP SSO
+* Инициированная SP SSO
+* Провизия по запросу
 
-This document details the steps to integrate dbt Cloud with an identity
-provider in order to configure Single Sign On and [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control).
+В этом документе описаны шаги для интеграции dbt Cloud с поставщиком идентификации для настройки единой аутентификации и [управления доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control).
 
-## Auth0 URIs
+## URI Auth0
 
 <Snippet path="auth0-uri" />
 
-## Generic SAML 2.0 integrations
+## Общие интеграции SAML 2.0
 
-If your SAML identity provider is one of Okta, Google, Azure or OneLogin, navigate to the relevant section further down this page. For all other SAML compliant identity providers, you can use the instructions in this section to configure that identity provider.
+Если ваш SAML поставщик идентификации является одним из Okta, Google, Azure или OneLogin, перейдите к соответствующему разделу ниже на этой странице. Для всех других совместимых с SAML поставщиков идентификации вы можете использовать инструкции в этом разделе для их настройки.
 
-### Configure your identity provider
+### Настройка вашего поставщика идентификации
 
-You'll need administrator access to your SAML 2.0 compliant identity provider to configure the identity provider. You can use the following instructions with any SAML 2.0 compliant identity provider.
+Вам потребуется доступ администратора к вашему SAML 2.0 совместимому поставщику идентификации для его настройки. Вы можете использовать следующие инструкции с любым SAML 2.0 совместимым поставщиком идентификации.
 
-### Creating the application
+### Создание приложения
 
-1. Log into your SAML 2.0 identity provider and create a new application.
-2. When promoted, configure the application with the following details:
-   - **Platform:** Web
-   - **Sign on method:** SAML 2.0
-   - **App name:** dbt Cloud
-   - **App logo (optional):** You can optionally [download the dbt logo](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing), and use as the logo for this app.
+1. Войдите в ваш SAML 2.0 поставщик идентификации и создайте новое приложение.
+2. При запросе настройте приложение с следующими данными:
+   - **Платформа:** Веб
+   - **Метод входа:** SAML 2.0
+   - **Имя приложения:** dbt Cloud
+   - **Логотип приложения (по желанию):** Вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа для этого приложения.
 
-#### Configuring the application
+#### Настройка приложения
 
 <Snippet path="access_url" />
 
-To complete this section, you will need to create a login slug. This slug controls the URL where users on your account can log into your application. Login slugs are typically the lowercased name of your organization. It should contain only letters, numbers, and dashes.
-separated with dashes. For example, the login slug for dbt Labs would be `dbt-labs`.
-Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company.
+Чтобы завершить этот раздел, вам нужно создать "slug" для входа. Этот slug контролирует URL, по которому пользователи вашей учетной записи могут войти в ваше приложение. Slug для входа обычно представляет собой имя вашей организации в нижнем регистре. Он должен содержать только буквы, цифры и дефисы. Например, slug для dbt Labs будет `dbt-labs`. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
 
-When prompted for the SAML 2.0 application configurations, supply the following values:
+При запросе конфигураций SAML 2.0 приложения укажите следующие значения:
 
-* Single sign on URL: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
-* Audience URI (SP Entity ID): `urn:auth0:<YOUR_AUTH0_ENTITYID>:{login slug}`
-- Relay State: `<login slug>`
+* URL единой аутентификации: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
+* URI аудитории (SP Entity ID): `urn:auth0:<YOUR_AUTH0_ENTITYID>:{login slug}`
+* Состояние реле: `<login slug>`
 
-Additionally, you may configure the IdP attributes passed from your identity provider into dbt Cloud. We recommend using the following values:
+Кроме того, вы можете настроить атрибуты IdP, передаваемые от вашего поставщика идентификации в dbt Cloud. Мы рекомендуем использовать следующие значения:
 
-
-| name | name format | value | description |
+| имя | формат имени | значение | описание |
 | ---- | ----------- | ----- | ----------- |
-| email | Unspecified | user.email | The user's email address |
-| first_name | Unspecified | user.first_name | The user's first name |
-| last_name | Unspecified | user.last_name | The user's last name |
-| NameID (if applicable) | Unspecified | user.email | The user's email address |
+| email | Неопределенный | user.email | Адрес электронной почты пользователя |
+| first_name | Неопределенный | user.first_name | Имя пользователя |
+| last_name | Неопределенный | user.last_name | Фамилия пользователя |
+| NameID (если применимо) | Неопределенный | user.email | Адрес электронной почты пользователя |
 
-dbt Cloud's [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control) relies
-on group mappings from the IdP to assign dbt Cloud users to dbt Cloud groups. To
-use role-based access control in dbt Cloud, also configure your identity
-provider to provide group membership information in user attribute called
-`groups`:
+Управление доступом на основе ролей в dbt Cloud зависит от сопоставления групп от IdP для назначения пользователей dbt Cloud в группы dbt Cloud. Чтобы использовать управление доступом на основе ролей в dbt Cloud, также настройте ваш поставщик идентификации для предоставления информации о членстве в группах в атрибуте пользователя, называемом `groups`:
 
-| name | name format | value | description |
+| имя | формат имени | значение | описание |
 | ---- | ----------- | ----- | ----------- |
-| groups | Unspecified | `<IdP-specific>` | The groups a user belongs to in the IdP |
+| groups | Неопределенный | `<IdP-specific>` | Группы, к которым принадлежит пользователь в IdP |
 
-:::info Note
-You may use a restricted group attribute statement to limit the groups set
-to dbt Cloud for each authenticated user. For example, if all of your dbt Cloud groups start
-with `DBT_CLOUD_...`, you may optionally apply a filter like `Starts With: DBT_CLOUD_`.
+:::info Примечание
+Вы можете использовать ограниченное утверждение атрибута группы, чтобы ограничить набор групп, передаваемых в dbt Cloud для каждого аутентифицированного пользователя. Например, если все ваши группы dbt Cloud начинаются с `DBT_CLOUD_...`, вы можете применить фильтр, например, `Starts With: DBT_CLOUD_`.
 :::
 
-### Collect integration secrets
+### Сбор секретов интеграции
 
-After confirming your details, the IdP should show you the following values for
-the new SAML 2.0 integration. Keep these values somewhere safe, as you will need
-them to complete setup in dbt Cloud.
+После подтверждения ваших данных IdP должен показать вам следующие значения для новой интеграции SAML 2.0. Сохраните эти значения в безопасном месте, так как они понадобятся для завершения настройки в dbt Cloud.
 
-- Identity Provider Issuer
-- Identity Provider SSO Url
-- X.509 Certificate
+- Издатель поставщика идентификации
+- URL SSO поставщика идентификации
+- Сертификат X.509
 
-### Finish setup
+### Завершение настройки
 
-After creating the application, follow the instructions in the [dbt Cloud Setup](#dbt-cloud-setup)
-section to complete the integration.
+После создания приложения следуйте инструкциям в разделе [Настройка dbt Cloud](#dbt-cloud-setup) для завершения интеграции.
 
-## Okta integration
-You can use the instructions in this section to configure Okta as your identity provider.
+## Интеграция с Okta
+Вы можете использовать инструкции в этом разделе для настройки Okta в качестве вашего поставщика идентификации.
 
-1. Log into your Okta account. Using the Admin dashboard, create a new app.
+1. Войдите в свою учетную запись Okta. Используя панель администратора, создайте новое приложение.
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-1-new-app.png"
-    title="Create a new app"
+    title="Создание нового приложения"
 />
 
-2. Select the following configurations:
-   - **Platform**: Web
-   - **Sign on method**: SAML 2.0
+2. Выберите следующие настройки:
+   - **Платформа**: Веб
+   - **Метод входа**: SAML 2.0
 
-3. Click **Create** to continue the setup process.
+3. Нажмите **Создать**, чтобы продолжить процесс настройки.
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-1-new-app-create.png"
-    title="Configure a new app"
+    title="Настройка нового приложения"
 />
 
-### Configure the Okta application
+### Настройка приложения Okta
 
 <Snippet path="access_url" />
 
-To complete this section, you will need to create a login slug. This slug controls the URL where users on your account can log into your application. Login slugs are typically the lowercased name of your organization. It should contain only letters, numbers, and dashes.
-separated with dashes. For example, the login slug for dbt Labs would be `dbt-labs`.
-Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company.
+Чтобы завершить этот раздел, вам нужно создать "slug" для входа. Этот slug контролирует URL, по которому пользователи вашей учетной записи могут войти в ваше приложение. Slug для входа обычно представляет собой имя вашей организации в нижнем регистре. Он должен содержать только буквы, цифры и дефисы. Например, slug для dbt Labs будет `dbt-labs`. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
 
-1. On the **General Settings** page, enter the following details:
+1. На странице **Общие настройки** введите следующие данные:
 
-   * **App name**: dbt Cloud
-   * **App logo** (optional): You can optionally [download the dbt logo](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing),
-     and upload it to Okta to use as the logo for this app.
+   * **Имя приложения**: dbt Cloud
+   * **Логотип приложения** (по желанию): Вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и загрузить его в Okta для использования в качестве логотипа для этого приложения.
 
-2. Click **Next** to continue.
+2. Нажмите **Далее**, чтобы продолжить.
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-2-general-settings.png"
-    title="Configure the app's General Settings"
+    title="Настройка общих параметров приложения"
 />
 
-### Configure SAML Settings
+### Настройка параметров SAML
 
-1. On the **SAML Settings** page, enter the following values:
+1. На странице **Настройки SAML** введите следующие значения:
 
-   * **Single sign on URL**: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
-   * **Audience URI (SP Entity ID)**: `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`
-   * **Relay State**: `<login slug>`
+   * **URL единой аутентификации**: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
+   * **URI аудитории (SP Entity ID)**: `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`
+   * **Состояние реле**: `<login slug>`
 
-  <Lightbox collapsed={false} src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-3-saml-settings-top.png" title="Configure the app's SAML Settings"/>
+  <Lightbox collapsed={false} src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-3-saml-settings-top.png" title="Настройка параметров SAML приложения"/>
 
-2. Map your organization's Okta User and Group Attributes to the format that
-dbt Cloud expects by using the Attribute Statements and Group Attribute Statements forms.
+2. Сопоставьте атрибуты пользователей и групп вашей организации в Okta с форматом, который ожидает dbt Cloud, используя формы Утверждений атрибутов и Утверждений атрибутов групп.
 
-3. The following table illustrates expected User Attribute Statements:
+3. Следующая таблица иллюстрирует ожидаемые Утверждения атрибутов пользователей:
 
-   | Name           | Name format | Value                | Description                |
+   | Имя           | Формат имени | Значение                | Описание                |
    | -------------- | ----------- | -------------------- | -------------------------- |
-   | `email`        | Unspecified | `user.email`      | _The user's email address_ |
-   | `first_name`   | Unspecified | `user.firstName`  | _The user's first name_    |
-   | `last_name`    | Unspecified | `user.lastName`   | _The user's last name_     |
+   | `email`        | Неопределенный | `user.email`      | _Адрес электронной почты пользователя_ |
+   | `first_name`   | Неопределенный | `user.firstName`  | _Имя пользователя_    |
+   | `last_name`    | Неопределенный | `user.lastName`   | _Фамилия пользователя_     |
 
-4. The following table illustrates expected **Group Attribute Statements**:
+4. Следующая таблица иллюстрирует ожидаемые **Утверждения атрибутов групп**:
 
-   | Name     | Name format | Filter        | Value | Description                           |
+   | Имя     | Формат имени | Фильтр        | Значение | Описание                           |
    | -------- | ----------- | ------------- | ----- | ------------------------------------- |
-   | `groups` | Unspecified | Matches regex | `.*`  | _The groups that the user belongs to_ |
+   | `groups` | Неопределенный | Соответствует регулярному выражению | `.*`  | _Группы, к которым принадлежит пользователь_ |
 
-You can instead use a more restrictive Group Attribute Statement than the
-example shown in the previous steps. For example, if all of your dbt Cloud groups start with
-`DBT_CLOUD_`, you may use a filter like `Starts With: DBT_CLOUD_`. **Okta
-only returns 100 groups for each user, so if your users belong to more than 100
-IdP groups, you will need to use a more restrictive filter**. Please contact
-support if you have any questions.
+Вы также можете использовать более ограничительное Утверждение атрибута группы, чем показано в предыдущих шагах. Например, если все ваши группы dbt Cloud начинаются с `DBT_CLOUD_`, вы можете использовать фильтр, например, `Starts With: DBT_CLOUD_`. **Okta возвращает только 100 групп для каждого пользователя, поэтому, если ваши пользователи принадлежат более чем 100 группам IdP, вам нужно будет использовать более ограничительный фильтр**. Пожалуйста, свяжитесь с поддержкой, если у вас есть вопросы.
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-3-saml-settings-bottom.png"
-    title="Configure the app's User and Group Attribute Statements"
+    title="Настройка Утверждений атрибутов пользователей и групп приложения"
 />
 
-5. Click **Next** to continue.
+5. Нажмите **Далее**, чтобы продолжить.
 
-### Finish Okta setup
+### Завершение настройки Okta
 
-1. Select *I'm an Okta customer adding an internal app*.
-2. Select *This is an internal app that we have created*.
-3. Click **Finish** to finish setting up the
-app.
+1. Выберите *Я клиент Okta, добавляющий внутреннее приложение*.
+2. Выберите *Это внутреннее приложение, которое мы создали*.
+3. Нажмите **Завершить**, чтобы завершить настройку приложения.
 
 <Lightbox
     collapsed={false}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-4-feedback.png"
-    title="Finishing setup in Okta"
+    title="Завершение настройки в Okta"
 />
 
-### View setup instructions
+### Просмотр инструкций по настройке
 
-1. On the next page, click **View Setup Instructions**.
-2. In the steps below, you'll supply these values in your dbt Cloud Account Settings to complete
-the integration between Okta and dbt Cloud.
+1. На следующей странице нажмите **Просмотреть инструкции по настройке**.
+2. В следующих шагах вы предоставите эти значения в настройках вашей учетной записи dbt Cloud, чтобы завершить интеграцию между Okta и dbt Cloud.
 
 <Lightbox
     collapsed={true}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-5-view-instructions.png"
-    title="Viewing the configured application"
+    title="Просмотр настроенного приложения"
 />
 
 <Lightbox
     collapsed={true}
     src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-5-instructions.png"
-    title="Application setup instructions"
+    title="Инструкции по настройке приложения"
 />
 
-3. After creating the Okta application, follow the instructions in the [dbt Cloud Setup](#dbt-cloud-setup)
-section to complete the integration.
+3. После создания приложения Okta следуйте инструкциям в разделе [Настройка dbt Cloud](#dbt-cloud-setup) для завершения интеграции.
 
-## Google integration
+## Интеграция с Google
 
-Use this section if you are configuring Google as your identity provider.
+Используйте этот раздел, если вы настраиваете Google в качестве вашего поставщика идентификации.
 
-### Configure the Google application
+### Настройка приложения Google
 
 <Snippet path="access_url" />
 
-To complete this section, you will need to create a login slug. This slug controls the URL where users on your account
-can log into your application. Login slugs are typically the lowercased name of your organization
-separated with dashes. It should contain only letters, numbers, and dashes. For example, the login slug for dbt Labs would be `dbt-labs`.
-Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company.
+Чтобы завершить этот раздел, вам нужно создать "slug" для входа. Этот slug контролирует URL, по которому пользователи вашей учетной записи могут войти в ваше приложение. Slug для входа обычно представляет собой имя вашей организации в нижнем регистре, разделенное дефисами. Он должен содержать только буквы, цифры и дефисы. Например, slug для dbt Labs будет `dbt-labs`. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
 
-1. Sign into your **Google Admin Console** via an account with super administrator privileges.
-2. From the Admin console Home page, go to **Apps** and then click **Web and mobile apps**.
-3. Click **Add**, then click **Add custom SAML app**.
-4. Click **Next** to continue.
-5. Make these changes on the App Details page:
-    - Name the custom app
-    - Upload an app logo (optional)
-    - Click **Continue**.
+1. Войдите в свою **Консоль администратора Google** через учетную запись с правами супер администратора.
+2. На главной странице консоли администратора перейдите в **Приложения**, затем нажмите **Веб и мобильные приложения**.
+3. Нажмите **Добавить**, затем нажмите **Добавить пользовательское SAML приложение**.
+4. Нажмите **Далее**, чтобы продолжить.
+5. Внесите изменения на странице сведений о приложении:
+    - Назовите пользовательское приложение
+    - Загрузите логотип приложения (по желанию)
+    - Нажмите **Продолжить**.
 
-### Configure SAML Settings
+### Настройка параметров SAML
 
-1. Go to the **Google Identity Provider details** page.
-2. Download the **IDP metadata**.
-3. Copy the **SSO URL** and **Entity ID** and download the **Certificate** (or **SHA-256 fingerprint**, if needed).
-4. Enter the following values on the **Service Provider Details** window:
+1. Перейдите на страницу **Сведения о поставщике идентификации Google**.
+2. Скачайте **метаданные IdP**.
+3. Скопируйте **URL SSO** и **Entity ID** и скачайте **Сертификат** (или **SHA-256 отпечаток**, если необходимо).
+4. Введите следующие значения в окне **Сведения о поставщике услуг**:
    * **ACS URL**: `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
-   * **Audience URI (SP Entity ID)**: `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`
-   - **Start URL**: `<login slug>`
-5. Select the **Signed response** checkbox.
-6. The default **Name ID** is the primary email. Multi-value input is not supported.
-7. Use the **Attribute mapping** page to map your organization's Google Directory Attributes to the format that
-dbt Cloud expects.
-8. Click **Add another mapping** to map additional attributes.
+   * **URI аудитории (SP Entity ID)**: `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`
+   * **Начальный URL**: `<login slug>`
+5. Установите флажок **Подписанный ответ**.
+6. Значение по умолчанию для **Name ID** - это основной адрес электронной почты. Мультизначный ввод не поддерживается.
+7. Используйте страницу **Сопоставление атрибутов**, чтобы сопоставить атрибуты каталога Google вашей организации с форматом, который ожидает dbt Cloud.
+8. Нажмите **Добавить другое сопоставление**, чтобы сопоставить дополнительные атрибуты.
 
-Expected **Attributes**:
+Ожидаемые **Атрибуты**:
 
-| Name           | Name format | Value                | Description                |
+| Имя           | Формат имени | Значение                | Описание                |
 | -------------- | ----------- | -------------------- | -------------------------- |
-| `First name`   | Unspecified | `first_name`         | The user's first name.  |
-| `Last name`    | Unspecified | `last_name`          | The user's last name.     |
-| `Primary email`| Unspecified | `email`              |  The user's email address. |
+| `First name`   | Неопределенный | `first_name`         | Имя пользователя.  |
+| `Last name`    | Неопределенный | `last_name`          | Фамилия пользователя.     |
+| `Primary email`| Неопределенный | `email`              |  Адрес электронной почты пользователя. |
 
-9. To use [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control) in dbt Cloud,  enter the groups in the **Group membership** field during configuration:
+9. Чтобы использовать [управление доступом на основе ролей](/docs/cloud/manage-access/about-user-access#role-based-access-control) в dbt Cloud, введите группы в поле **Членство в группах** во время настройки:
 
-| Google groups  | App attributes |
+| Группы Google  | Атрибуты приложения |
 | -------------- | -------------- |
-| Name of groups | `groups` |
+| Название групп | `groups` |
 
-10. Click **Finish** to continue.
+10. Нажмите **Завершить**, чтобы продолжить.
 
+### Завершение настройки Google
 
-### Finish Google setup
+1. На главной странице консоли администратора перейдите в **Приложения**, затем нажмите **Веб и мобильные приложения**.
+2. Выберите ваше SAML приложение.
+3. Нажмите **Доступ пользователей**.
+4. Чтобы включить или отключить сервис для всех в вашей организации, нажмите **Включить для всех** или **Отключить для всех**, затем нажмите **Сохранить**.
+5. Убедитесь, что адреса электронной почты, которые ваши пользователи используют для входа в SAML приложение, совпадают с адресами электронной почты, которые они используют для входа в ваш домен Google.
 
-1. From the Admin console Home page, go to **Apps** and then click **Web and mobile apps**.
-2. Select your SAML app.
-3. Click **User access**.
-4. To turn on or off a service for everyone in your organization, click **On for everyone** or **Off for everyone**, and then click **Save**.
-5. Ensure that the email addresses your users use to sign in to the SAML app match the email addresses they use to sign in to your Google domain.
+**Примечание:** Изменения обычно вступают в силу в течение нескольких минут, но могут занять до 24 часов.
 
-**Note:** Changes typically take effect in minutes, but can take up to 24 hours.
+### Завершение настройки
 
-### Finish setup
+После создания приложения Google следуйте инструкциям в разделе [Настройка dbt Cloud](#dbt-cloud-setup).
 
-After creating the Google application, follow the instructions in the [dbt Cloud Setup](#dbt-cloud-setup)
+## Интеграция с Microsoft Entra ID (ранее Azure AD)
 
-## Microsoft Entra ID (formerly Azure AD) integration
+Если вы используете Microsoft Entra ID (ранее Azure AD), инструкции ниже помогут вам настроить его в качестве вашего поставщика идентификации.
 
-If you're using Microsoft Entra ID (formerly Azure AD), the instructions below will help you configure it as your identity provider.
-
-### Create a Microsoft Entra ID Enterprise application
+### Создание корпоративного приложения Microsoft Entra ID
 
 <Snippet path="access_url" />
 
-To complete this section, you will need to create a login slug. This slug controls the URL where users on your account can log into your application. Login slugs are typically the lowercased name of your organization
-separated with dashes. It should contain only letters, numbers, and dashes. For example, the login slug for dbt Labs would be `dbt-labs`.
-Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company.
+Чтобы завершить этот раздел, вам нужно создать "slug" для входа. Этот slug контролирует URL, по которому пользователи вашей учетной записи могут войти в ваше приложение. Slug для входа обычно представляет собой имя вашей организации в нижнем регистре, разделенное дефисами. Он должен содержать только буквы, цифры и дефисы. Например, slug для dbt Labs будет `dbt-labs`. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
 
-Follow these steps to set up single sign-on (SSO) with dbt Cloud:
+Следуйте этим шагам, чтобы настроить единую аутентификацию (SSO) с dbt Cloud:
 
-1. Log into your Azure account.
-2. In the Entra ID portal, select **Enterprise applications** and click **+ New application**.
-3. Select **Create your own application**.
-4. Name the application "dbt Cloud" or another descriptive name.
-5. Select **Integrate any other application you don't find in the gallery (Non-gallery)** as the application type.
-6. Click **Create**.
-7. You can find the new application by clicking **Enterprise applications** and selecting **All applications**.
-8. Click the application you just created.
-9. Select **Single sign-on** under Manage in the left navigation.
-10. Click **Set up single sign on** under Getting Started.
-<Lightbox src="/img/docs/dbt-cloud/access-control/single-sign-on-overview.jpg" width="75%" title="In your Overview page, select 'Set up single sign on" />
+1. Войдите в свою учетную запись Azure.
+2. В портале Entra ID выберите **Корпоративные приложения** и нажмите **+ Новое приложение**.
+3. Выберите **Создать свое собственное приложение**.
+4. Назовите приложение "dbt Cloud" или другое описательное имя.
+5. Выберите **Интегрировать любое другое приложение, которое вы не нашли в галерее (Не галерея)** в качестве типа приложения.
+6. Нажмите **Создать**.
+7. Вы можете найти новое приложение, нажав **Корпоративные приложения** и выбрав **Все приложения**.
+8. Нажмите на приложение, которое вы только что создали.
+9. Выберите **Единая аутентификация** в разделе Управление в левой навигации.
+10. Нажмите **Настроить единую аутентификацию** в разделе Начало работы.
+<Lightbox src="/img/docs/dbt-cloud/access-control/single-sign-on-overview.jpg" width="75%" title="На вашей странице Обзор выберите 'Настроить единую аутентификацию'" />
 
-11.  Click **SAML** in "Select a single sign-on method" section.
-<Lightbox src="/img/docs/dbt-cloud/access-control/saml.jpg" width="75%" title="Select the 'SAML' card in the 'Seelct a single sign-on method' section. " />
+11. Нажмите **SAML** в разделе "Выберите метод единой аутентификации".
+<Lightbox src="/img/docs/dbt-cloud/access-control/saml.jpg" width="75%" title="Выберите карточку 'SAML' в разделе 'Выберите метод единой аутентификации'" />
 
-12.   Click **Edit** in the Basic SAML Configuration section.
+12. Нажмите **Изменить** в разделе Основная конфигурация SAML.
 
-<Lightbox src="/img/docs/dbt-cloud/access-control/basic-saml.jpg" width="75%" title="In the 'Set up Single Sign-On with SAML' page, click 'Edit' in the the 'Basic SAML Configuration' card"  />
+<Lightbox src="/img/docs/dbt-cloud/access-control/basic-saml.jpg" width="75%" title="На странице 'Настройка единой аутентификации с SAML' нажмите 'Изменить' в карточке 'Основная конфигурация SAML'" />
 
-13. Use the following table to complete the required fields and connect to dbt:
+13. Используйте следующую таблицу, чтобы заполнить обязательные поля и подключиться к dbt:
 
-   | Field | Value |
+   | Поле | Значение |
    | ----- | ----- |
-   | **Identifier (Entity ID)** | Use `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`. |
-   | **Reply URL (Assertion Consumer Service URL)** | Use `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`. |
-   | **Relay State** | `<login slug>` |
+   | **Идентификатор (Entity ID)** | Используйте `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`. |
+   | **URL ответа (URL службы потребления утверждений)** | Используйте `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`. |
+   | **Состояние реле** | `<login slug>` |
 
-14.   Click **Save** at the top of the form.
+14. Нажмите **Сохранить** в верхней части формы.
 
-### Creating SAML settings
+### Создание параметров SAML
 
-From the Set up Single Sign-On with SAML page:
+На странице Настройка единой аутентификации с SAML:
 
-1. Click **Edit** in the User Attributes & Claims section.
-2. Leave the claim under "Required claim" as is.
-3. Delete all claims under "Additional claims."
-4. Click **Add new claim** and add these three new claims:
+1. Нажмите **Изменить** в разделе Атрибуты пользователей и утверждения.
+2. Оставьте утверждение в разделе "Обязательное утверждение" без изменений.
+3. Удалите все утверждения в разделе "Дополнительные утверждения".
+4. Нажмите **Добавить новое утверждение** и добавьте три новых утверждения:
 
-   | Name | Source attribute |
+   | Имя | Исходный атрибут |
    | ----- | ----- |
    | **email** | user.mail |
    | **first_name** | user.givenname |
    | **last_name** | user.surname |
 
-5. Click **Add a group claim** from User Attributes and Claims.
-6. If you'll assign users directly to the enterprise application, select **Security Groups**. If not, select **Groups assigned to the application**.
-7. Set **Source attribute** to **Group ID**.
-8. Under **Advanced options**, check **Customize the name of the group claim** and specify **Name** to **groups**.
+5. Нажмите **Добавить утверждение группы** в разделе Атрибуты пользователей и утверждения.
+6. Если вы будете назначать пользователей непосредственно корпоративному приложению, выберите **Группы безопасности**. Если нет, выберите **Группы, назначенные приложению**.
+7. Установите **Исходный атрибут** на **Идентификатор группы**.
+8. В разделе **Дополнительные параметры** установите флажок **Настроить имя утверждения группы** и укажите **Имя** как **groups**.
 
-**Note:** Keep in mind that the Group ID in Entra ID maps to that group's GUID. It should be specified in lowercase for the mappings to work as expected. The Source Attribute field alternatively can be set to a different value of your preference.
+**Примечание:** Имейте в виду, что Идентификатор группы в Entra ID соответствует GUID этой группы. Он должен быть указан в нижнем регистре, чтобы сопоставления работали как ожидалось. Поле Исходный атрибут можно также установить на другое значение по вашему выбору.
 
-### Finish setup
+### Завершение настройки
 
-9. After creating the Azure application, follow the instructions in the [dbt Cloud Setup](#dbt-cloud-setup) section to complete the integration.
+9. После создания приложения Azure следуйте инструкциям в разделе [Настройка dbt Cloud](#dbt-cloud-setup) для завершения интеграции.
 
-## OneLogin integration
+## Интеграция с OneLogin
 
-Use this section if you are configuring OneLogin as your identity provider.
+Используйте этот раздел, если вы настраиваете OneLogin в качестве вашего поставщика идентификации.
 
-To configure OneLogin, you will need **Administrator** access.
+Для настройки OneLogin вам потребуется доступ **Администратора**.
 
-### Configure the OneLogin application
+### Настройка приложения OneLogin
 
 <Snippet path="access_url" />
 
-To complete this section, you will need to create a login slug. This slug controls the URL where users on your account can log into your application. Login slugs are typically the lowercased name of your organization
-separated with dashes. It should contain only letters, numbers, and dashes. For example, the login slug for dbt Labs would be `dbt-labs`.
-Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company.
+Чтобы завершить этот раздел, вам нужно создать "slug" для входа. Этот slug контролирует URL, по которому пользователи вашей учетной записи могут войти в ваше приложение. Slug для входа обычно представляет собой имя вашей организации в нижнем регистре, разделенное дефисами. Он должен содержать только буквы, цифры и дефисы. Например, slug для dbt Labs будет `dbt-labs`. Slug для входа должен быть уникальным для всех учетных записей dbt Cloud, поэтому выберите slug, который уникально идентифицирует вашу компанию.
 
-1. Log into OneLogin, and add a new SAML 2.0 Application.
-2. Configure the application with the following details:
-   - **Platform:** Web
-   - **Sign on method:** SAML 2.0
-   - **App name:** dbt Cloud
-   - **App logo (optional):** You can optionally [download the dbt logo](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing), and use as the logo for this app.
+1. Войдите в OneLogin и добавьте новое приложение SAML 2.0.
+2. Настройте приложение с следующими данными:
+   - **Платформа:** Веб
+   - **Метод входа:** SAML 2.0
+   - **Имя приложения:** dbt Cloud
+   - **Логотип приложения (по желанию):** Вы можете [скачать логотип dbt](https://drive.google.com/file/d/1fnsWHRu2a_UkJBJgkZtqt99x5bSyf3Aw/view?usp=sharing) и использовать его в качестве логотипа для этого приложения.
 
-### Configure SAML settings
+### Настройка параметров SAML
 
-3. Under the **Configuration tab**, input the following values:
+3. На вкладке **Конфигурация** введите следующие значения:
 
    - **RelayState:** `<login slug>`
    - **Audience (EntityID):** `urn:auth0:<YOUR_AUTH0_ENTITYID>:<login slug>`
-   - **ACS (Consumer) URL Validator:** `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
-   - **ACS (Consumer) URL:** `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
+   - **ACS (URL потребителя) валидатор:** `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
+   - **ACS (URL потребителя):** `https://YOUR_AUTH0_URI/login/callback?connection=<login slug>`
 
-4. Next, go to the **Parameters tab**. You must have a parameter for the Email, First Name, and Last Name attributes and include all parameters in the SAML assertions. When you add the custom parameters, make sure you select the **Include in SAML assertion** checkbox.
+4. Затем перейдите на вкладку **Параметры**. Вам необходимо иметь параметр для атрибутов Email, First Name и Last Name и включить все параметры в утверждениях SAML. При добавлении пользовательских параметров убедитесь, что вы выбрали флажок **Включить в утверждение SAML**.
 
-We recommend using the following values:
+Мы рекомендуем использовать следующие значения:
 
-| name | name format | value |
+| имя | формат имени | значение |
 | ---- | ----------- | ----- |
-| NameID | Unspecified | Email |
-| email | Unspecified | Email |
-| first_name | Unspecified | First Name |
-| last_name | Unspecified | Last Name |
+| NameID | Неопределенный | Email |
+| email | Неопределенный | Email |
+| first_name | Неопределенный | First Name |
+| last_name | Неопределенный | Last Name |
 
-dbt Cloud's [role-based access control](/docs/cloud/manage-access/about-user-access#role-based-access-control) relies
-on group mappings from the IdP to assign dbt Cloud users to dbt Cloud groups. To
-use role-based access control in dbt Cloud, also configure OneLogin to provide group membership information in user attribute called
-`groups`:
+Управление доступом на основе ролей в dbt Cloud зависит от сопоставления групп от IdP для назначения пользователей dbt Cloud в группы dbt Cloud. Чтобы использовать управление доступом на основе ролей в dbt Cloud, также настройте OneLogin для предоставления информации о членстве в группах в атрибуте пользователя, называемом `groups`:
 
-| name | name format | value | description |
+| имя | формат имени | значение | описание |
 | ---- | ----------- | ----- | ----------- |
-| groups | Unspecified | Series of groups to be used for your organization | The groups a user belongs to in the IdP |
+| groups | Неопределенный | Серия групп, используемых для вашей организации | Группы, к которым принадлежит пользователь в IdP |
 
+### Сбор секретов интеграции
 
-### Collect integration secrets
+5. После подтверждения ваших данных перейдите на вкладку **SSO**. OneLogin должен показать вам следующие значения для новой интеграции. Сохраните эти значения в безопасном месте, так как они понадобятся для завершения настройки в dbt Cloud.
 
-5. After confirming your details, go to the **SSO tab**. OneLogin should show you the following values for
-the new integration. Keep these values somewhere safe, as you will need them to complete setup in dbt Cloud.
+- URL издателя
+- Конечная точка SAML 2.0 (HTTP)
+- Сертификат X.509
 
-- Issuer URL
-- SAML 2.0 Endpoint (HTTP)
-- X.509 Certificate
+### Завершение настройки
 
-### Finish setup
+6. После создания приложения OneLogin следуйте инструкциям в разделе [Настройка dbt Cloud](#dbt-cloud-setup) для завершения интеграции.
 
-6. After creating the OneLogin application, follow the instructions in the [dbt Cloud Setup](#dbt-cloud-setup)
-section to complete the integration.
+## Настройка dbt Cloud
 
-## dbt Cloud Setup
+### Предоставление значений IdP в dbt Cloud
 
-### Providing IdP values to dbt Cloud
+Чтобы завершить настройку, выполните следующие шаги в dbt Cloud:
 
-To complete setup, follow the steps below in dbt Cloud:
+1. Перейдите в **Настройки учетной записи**, затем нажмите на **Единая аутентификация**.
+2. Нажмите **Изменить** в правом верхнем углу.
+3. Укажите следующие данные SSO:
 
-1. Navigate to the **Account Settings** and then click on **Single Sign On**.
-2. Click **Edit** on the upper right corner.
-3. Provide the following SSO details:
-
-   | Field | Value |
+   | Поле | Значение |
    | ----- | ----- |
-   | Log&nbsp;in&nbsp;with | SAML 2.0 |
-   | Identity&nbsp;Provider&nbsp;SSO&nbsp;Url | Paste the **Identity Provider Single Sign-On URL** shown in the IdP setup instructions |
-   | Identity&nbsp;Provider&nbsp;Issuer | Paste the **Identity Provider Issuer** shown in the IdP setup instructions |
-   | X.509&nbsp;Certificate | Paste the **X.509 Certificate** shown in the IdP setup instructions; <br />**Note:** When the certificate expires, an Idp admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
-   | Slug | Enter your desired login slug. |
+   | Вход&nbsp;с&nbsp; | SAML 2.0 |
+   | URL&nbsp;SSO&nbsp;поставщика&nbsp;идентификации | Вставьте **URL единой аутентификации поставщика идентификации**, показанный в инструкциях по настройке IdP |
+   | Издатель&nbsp;поставщика&nbsp;идентификации | Вставьте **Издатель поставщика идентификации**, показанный в инструкциях по настройке IdP |
+   | Сертификат&nbsp;X.509 | Вставьте **Сертификат X.509**, показанный в инструкциях по настройке IdP; <br />**Примечание:** Когда сертификат истечет, администратору IdP придется сгенерировать новый, который нужно будет вставить в dbt Cloud для непрерывного доступа к приложению. |
+   | Slug | Введите желаемый slug для входа. |
     <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/okta/okta-6-setup-integration.png"
-        title="Configuring the application in dbt Cloud" />
+        title="Настройка приложения в dbt Cloud" />
 
-4. Click **Save** to complete setup for the SAML 2.0 integration.
-5. After completing the setup, you can navigate to the URL generated for your account's _slug_ to test logging in with your identity provider. Additionally, users added the the SAML 2.0 app will be able to log in to dbt Cloud from the IdP directly.
-
+4. Нажмите **Сохранить**, чтобы завершить настройку интеграции SAML 2.0.
+5. После завершения настройки вы можете перейти по URL, сгенерированному для slug вашей учетной записи, чтобы протестировать вход с вашим поставщиком идентификации. Кроме того, пользователи, добавленные в приложение SAML 2.0, смогут войти в dbt Cloud напрямую из IdP.
 
 <Snippet path="login_url_note" />
 
-### Setting up RBAC
+### Настройка RBAC
 
-After configuring an identity provider, you will be able to set up [role-based
-access control](/docs/cloud/manage-access/enterprise-permissions) for your account.
+После настройки поставщика идентификации вы сможете настроить [управление доступом на основе ролей](/docs/cloud/manage-access/enterprise-permissions) для вашей учетной записи.

@@ -1,6 +1,6 @@
 ---
-title: "Rockset setup"
-description: "Read this guide to learn about the Rockset warehouse setup in dbt."
+title: "Настройка Rockset"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Rockset в dbt."
 id: "rockset-setup"
 meta:
   maintained_by: Rockset, Inc.
@@ -16,9 +16,9 @@ meta:
   config_page: '/reference/resource-configs/no-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-Certain core functionality may vary. If you would like to report a bug, request a feature, or contribute, you can check out the linked repository and open an issue.
+Некоторые основные функции могут различаться. Если вы хотите сообщить об ошибке, запросить функцию или внести свой вклад, вы можете ознакомиться с указанным репозиторием и открыть проблему.
 
 :::
 
@@ -26,9 +26,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Rockset with **dbt-rockset**
+## Подключение к Rockset с помощью **dbt-rockset**
 
-The dbt profile for Rockset is very simple and contains the following fields:
+Профиль dbt для Rockset очень прост и содержит следующие поля:
 
 <File name='profiles.yml'>
 
@@ -40,21 +40,21 @@ rockset:
       type: rockset
       workspace: [schema]
       api_key: [api_key]
-      api_server: [api_server] # (Default is api.rs2.usw2.rockset.com)
+      api_server: [api_server] # (По умолчанию api.rs2.usw2.rockset.com)
 ```
 
 </File>
 
-### Materializations
+### Материализации
 
-Type | Supported? | Details
------|------------|----------------
-view | YES | Creates a [view](https://rockset.com/docs/views/#gatsby-focus-wrapper).
-table | YES | Creates a [collection](https://rockset.com/docs/collections/#gatsby-focus-wrapper).
-ephemeral | YES | Executes queries using CTEs.
-incremental | YES | Creates a [collection](https://rockset.com/docs/collections/#gatsby-focus-wrapper) if it doesn't exist, and then writes results to it.
+Тип | Поддерживается? | Подробности
+-----|----------------|----------------
+view | ДА | Создает [представление](https://rockset.com/docs/views/#gatsby-focus-wrapper).
+table | ДА | Создает [коллекцию](https://rockset.com/docs/collections/#gatsby-focus-wrapper).
+ephemeral | ДА | Выполняет запросы с использованием CTE.
+incremental | ДА | Создает [коллекцию](https://rockset.com/docs/collections/#gatsby-focus-wrapper), если она не существует, а затем записывает результаты в нее.
 
-## Caveats
-1. `unique_key` is not supported with incremental, unless it is set to [_id](https://rockset.com/docs/special-fields/#the-_id-field), which acts as a natural `unique_key` in Rockset anyway.
-2. The `table` <Term id="materialization" /> is slower in Rockset than most due to Rockset's architecture as a low-latency, real-time database. Creating new collections requires provisioning hot storage to index and serve fresh data, which takes about a minute.
-3. Rockset queries have a two-minute timeout. Any model which runs a query that takes longer to execute than two minutes will fail.
+## Предостережения
+1. `unique_key` не поддерживается для инкрементальных загрузок, если он не установлен на [_id](https://rockset.com/docs/special-fields/#the-_id-field), который в любом случае действует как естественный `unique_key` в Rockset.
+2. Материализация `table` <Term id="materialization" /> медленнее в Rockset, чем в большинстве случаев, из-за архитектуры Rockset как базы данных с низкой задержкой и реального времени. Создание новых коллекций требует выделения горячего хранилища для индексации и обслуживания свежих данных, что занимает около минуты.
+3. Запросы в Rockset имеют тайм-аут в две минуты. Любая модель, которая выполняет запрос, занимающий больше двух минут, завершится с ошибкой.

@@ -1,39 +1,39 @@
 ---
-title: "Extrica Setup"
-description: "Read this guide to learn about the Extrica Trino Query Engine setup in dbt."
+title: "Настройка Extrica"
+description: "Прочитайте это руководство, чтобы узнать о настройке движка запросов Extrica Trino в dbt."
 id: "extrica-setup"
 meta:
   maintained_by: Extrica, Trianz 
-  authors: Gaurav Mittal, Viney Kumar, Mohammed Feroz, and Mrinal Mayank
+  authors: Гаурава Миттала, Виней Кумар, Мохаммед Фероз и Мринал Майанк
   github_repo: 'extricatrianz/dbt-extrica'
   pypi_package: 'dbt-extrica'
   min_core_version: 'v1.7.2'
-  cloud_support: 'Not Supported'
-  min_supported_version: 'n/a'
+  cloud_support: 'Не поддерживается'
+  min_supported_version: 'н/д'
   platform_name: 'Extrica'
 ---
-<h2> Overview of {frontMatter.meta.pypi_package} </h2>
+<h2> Обзор {frontMatter.meta.pypi_package} </h2>
 
 <ul>
-    <li><strong>Maintained by</strong>: {frontMatter.meta.maintained_by}</li>
-    <li><strong>Authors</strong>: {frontMatter.meta.authors}</li>
-    <li><strong>GitHub repo</strong>: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></li>
-    <li><strong>PyPI package</strong>: <code>{frontMatter.meta.pypi_package}</code> <a href={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}`}><img src={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}.svg`}/></a></li>
-    <li><strong>Supported dbt Core version</strong>: {frontMatter.meta.min_core_version} and newer</li>
-    <li><strong>dbt Cloud support</strong>: {frontMatter.meta.cloud_support}</li>
-    <li><strong>Minimum data platform version</strong>: {frontMatter.meta.min_supported_version}</li>
-    </ul>
-<h2> Installing {frontMatter.meta.pypi_package} </h2>
+    <li><strong>Поддерживается</strong>: {frontMatter.meta.maintained_by}</li>
+    <li><strong>Авторы</strong>: {frontMatter.meta.authors}</li>
+    <li><strong>Репозиторий GitHub</strong>: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></li>
+    <li><strong>Пакет PyPI</strong>: <code>{frontMatter.meta.pypi_package}</code> <a href={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}`}><img src={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}.svg`}/></a></li>
+    <li><strong>Поддерживаемая версия dbt Core</strong>: {frontMatter.meta.min_core_version} и новее</li>
+    <li><strong>Поддержка dbt Cloud</strong>: {frontMatter.meta.cloud_support}</li>
+    <li><strong>Минимальная версия платформы данных</strong>: {frontMatter.meta.min_supported_version}</li>
+</ul>
 
-Use `pip` to install the adapter, which automatically installs `dbt-core` and any additional dependencies. Use the following command for installation:
+<h2> Установка {frontMatter.meta.pypi_package} </h2>
+
+Используйте `pip` для установки адаптера, который автоматически установит `dbt-core` и все дополнительные зависимости. Используйте следующую команду для установки:
 
 <code>python -m pip install {frontMatter.meta.pypi_package}</code>
 
+<h2> Подключение к {frontMatter.meta.platform_name} </h2>
 
-<h2> Connecting to {frontMatter.meta.platform_name} </h2>
-
-#### Example profiles.yml 
-Here is an example of dbt-extrica profiles. At a minimum, you need to specify `type`, `method`, `username`, `password` `host`, `port`, `schema`, `catalog` and `threads`. 
+#### Пример profiles.yml 
+Вот пример профилей dbt-extrica. Минимально необходимо указать `type`, `method`, `username`, `password`, `host`, `port`, `schema`, `catalog` и `threads`. 
 <File name='~/.dbt/profiles.yml'>
 
 ```yaml
@@ -42,39 +42,39 @@ Here is an example of dbt-extrica profiles. At a minimum, you need to specify `t
     dev:
       type: extrica
       method: jwt 
-      username: [username for jwt auth]
-      password: [password for jwt auth]  
-      host: [extrica hostname]
-      port: [port number]
+      username: [имя пользователя для jwt аутентификации]
+      password: [пароль для jwt аутентификации]  
+      host: [имя хоста extrica]
+      port: [номер порта]
       schema: [dev_schema]
       catalog: [catalog_name]
-      threads: [1 or more]
+      threads: [1 или более]
 
     prod:
       type: extrica
       method: jwt 
-      username: [username for jwt auth]
-      password: [password for jwt auth]  
-      host: [extrica hostname]
-      port: [port number]
+      username: [имя пользователя для jwt аутентификации]
+      password: [пароль для jwt аутентификации]  
+      host: [имя хоста extrica]
+      port: [номер порта]
       schema: [dev_schema]
       catalog: [catalog_name]
-      threads: [1 or more]
+      threads: [1 или более]
   target: dev
 
 ```
 </File>
 
-#### Description of Extrica Profile Fields
+#### Описание полей профиля Extrica
 
-| Parameter  | Type     | Description                              |
+| Параметр  | Тип     | Описание                              |
 |------------|----------|------------------------------------------|
-| type       | string  | Specifies the type of dbt adapter (Extrica). |
-| method     | jwt      | Authentication method for JWT authentication. |
-| username   | string   | Username for JWT authentication. The obtained JWT token is used to initialize a trino.auth.JWTAuthentication object.      |
-| password   | string   | Password for JWT authentication. The obtained JWT token is used to initialize a trino.auth.JWTAuthentication object.      |
-| host       | string   | The host parameter specifies the hostname or IP address of the Extrica's Trino server.           |
-| port       | integer  | The port parameter specifies the port number on which the Extrica's Trino server is listening.        |
-| schema     | string   | Schema or database name for the connection. |
-| catalog    | string   | Name of the catalog representing the data source. |
-| threads    | integer  | Number of threads for parallel execution of queries. (1 or more) |
+| type       | string  | Указывает тип адаптера dbt (Extrica). |
+| method     | jwt      | Метод аутентификации для JWT аутентификации. |
+| username   | string   | Имя пользователя для JWT аутентификации. Полученный JWT токен используется для инициализации объекта trino.auth.JWTAuthentication.      |
+| password   | string   | Пароль для JWT аутентификации. Полученный JWT токен используется для инициализации объекта trino.auth.JWTAuthentication.      |
+| host       | string   | Параметр host указывает имя хоста или IP-адрес сервера Trino Extrica.           |
+| port       | integer  | Параметр port указывает номер порта, на котором слушает сервер Trino Extrica.        |
+| schema     | string   | Имя схемы или базы данных для подключения. |
+| catalog    | string   | Имя каталога, представляющего источник данных. |
+| threads    | integer  | Количество потоков для параллельного выполнения запросов. (1 или более) |

@@ -1,43 +1,43 @@
 ---
-title: "Set up Snowflake OAuth"
-description: "Learn how dbt Cloud administrators can use Snowflake OAuth to control access in a dbt Cloud account."
+title: "Настройка Snowflake OAuth"
+description: "Узнайте, как администраторы dbt Cloud могут использовать Snowflake OAuth для управления доступом в учетной записи dbt Cloud."
 id: "set-up-snowflake-oauth"
 ---
 
-:::info Enterprise Feature
+:::info Функция для предприятий
 
-This guide describes a feature of the dbt Cloud Enterprise plan. If you’re interested in learning more about an Enterprise plan, contact us at sales@getdbt.com.
+Этот гид описывает функцию плана dbt Cloud Enterprise. Если вы хотите узнать больше о плане Enterprise, свяжитесь с нами по адресу sales@getdbt.com.
 
 :::
 
-dbt Cloud Enterprise supports [OAuth authentication](https://docs.snowflake.net/manuals/user-guide/oauth-intro.html) with Snowflake. When Snowflake OAuth is enabled, users can authorize their Development credentials using Single Sign On (SSO) via Snowflake rather than submitting a username and password to dbt Cloud. If Snowflake is set up with SSO through a third-party identity provider, developers can use this method to log into Snowflake and authorize the dbt Development credentials without any additional setup.
+dbt Cloud Enterprise поддерживает [OAuth аутентификацию](https://docs.snowflake.net/manuals/user-guide/oauth-intro.html) с Snowflake. Когда Snowflake OAuth включен, пользователи могут авторизовать свои учетные данные разработки с помощью единого входа (SSO) через Snowflake, а не вводить имя пользователя и пароль в dbt Cloud. Если Snowflake настроен с SSO через стороннего поставщика идентификации, разработчики могут использовать этот метод для входа в Snowflake и авторизации учетных данных разработки dbt без дополнительной настройки.
 
-To set up Snowflake OAuth in dbt Cloud, admins from both are required for the following steps:
-1. [Locate the redirect URI value](#locate-the-redirect-uri-value) in dbt Cloud.
-2. [Create a security integration](#create-a-security-integration) in Snowflake.
-3. [Configure a connection](#configure-a-connection-in-dbt-cloud) in dbt Cloud.
+Чтобы настроить Snowflake OAuth в dbt Cloud, администраторам обеих сторон необходимо выполнить следующие шаги:
+1. [Найдите значение URI перенаправления](#locate-the-redirect-uri-value) в dbt Cloud.
+2. [Создайте интеграцию безопасности](#create-a-security-integration) в Snowflake.
+3. [Настройте соединение](#configure-a-connection-in-dbt-cloud) в dbt Cloud.
 
-To use Snowflake in the dbt Cloud IDE, all developers must [authenticate with Snowflake](#authorize-developer-credentials) in their profile credentials.
+Чтобы использовать Snowflake в IDE dbt Cloud, все разработчики должны [аутентифицироваться в Snowflake](#authorize-developer-credentials) в своих учетных данных профиля.
 
-### Locate the redirect URI value
+### Найдите значение URI перенаправления
 
-To get started, copy the connection's redirect URI from dbt Cloud:
-1. Navigate to **Account settings**.
-1. Select **Projects** and choose a project from the list. 
-1. Select the connection to view its details and set the **OAuth method** to "Snowflake SSO".
-1. Copy the **Redirect URI** to use in the later steps.
+Чтобы начать, скопируйте URI перенаправления соединения из dbt Cloud:
+1. Перейдите в **Настройки учетной записи**.
+1. Выберите **Проекты** и выберите проект из списка. 
+1. Выберите соединение, чтобы просмотреть его детали, и установите **Метод OAuth** на "Snowflake SSO".
+1. Скопируйте **URI перенаправления** для использования в последующих шагах.
 
 <Lightbox
 	src="/img/docs/dbt-cloud/dbt-cloud-enterprise/snowflake-oauth-redirect-uri.png"
-	title="Locate the Snowflake OAuth redirect URI"
-	alt="The OAuth method and Redirect URI inputs for a Snowflake connection in dbt Cloud."
+	title="Найдите URI перенаправления Snowflake OAuth"
+	alt="Метод OAuth и поля URI перенаправления для соединения Snowflake в dbt Cloud."
 />
 
-### Create a security integration
+### Создайте интеграцию безопасности
 
-In Snowflake, execute a query to create a security integration. Please find the complete documentation on creating a security integration for custom clients [here](https://docs.snowflake.net/manuals/sql-reference/sql/create-security-integration.html#syntax). 
+В Snowflake выполните запрос для создания интеграции безопасности. Полную документацию по созданию интеграции безопасности для пользовательских клиентов можно найти [здесь](https://docs.snowflake.net/manuals/sql-reference/sql/create-security-integration.html#syntax). 
 
-In the following `CREATE OR REPLACE SECURITY INTEGRATION` example query, replace `<REDIRECT_URI>` value with the Redirect URI (also referred to as the [access URL](/docs/cloud/about-cloud/access-regions-ip-addresses)) copied in dbt Cloud. To locate the Redirect URI, refer to the previous [locate the redirect URI value](#locate-the-redirect-uri-value) section.
+В следующем примере запроса `CREATE OR REPLACE SECURITY INTEGRATION` замените значение `<REDIRECT_URI>` на URI перенаправления (также называемый [URL-адресом доступа](/docs/cloud/about-cloud/access-regions-ip-addresses)), скопированным в dbt Cloud. Чтобы найти URI перенаправления, обратитесь к предыдущему разделу [найдите значение URI перенаправления](#locate-the-redirect-uri-value).
 
 ```
 CREATE OR REPLACE SECURITY INTEGRATION DBT_CLOUD
@@ -50,27 +50,27 @@ CREATE OR REPLACE SECURITY INTEGRATION DBT_CLOUD
   OAUTH_REFRESH_TOKEN_VALIDITY = 7776000;
 ```
 
-:::caution Permissions
+:::caution Разрешения
 
-  Note: Only Snowflake account administrators (users with the `ACCOUNTADMIN` role) or a role with the global `CREATE INTEGRATION` privilege can execute this SQL command.
+  Примечание: Только администраторы учетной записи Snowflake (пользователи с ролью `ACCOUNTADMIN`) или роль с глобальным привилегией `CREATE INTEGRATION` могут выполнять эту SQL-команду.
 
 :::
 
-| Field | Description |
+| Поле | Описание |
 | ----- | ----------- |
-| TYPE  | Required |
-| ENABLED  | Required |
-| OAUTH_CLIENT  | Required |
-| OAUTH_CLIENT_TYPE  | Required |
-| OAUTH_REDIRECT_URI  | Required. Use the value in the [dbt Cloud account settings](#locate-the-redirect-uri-value). |
-| OAUTH_ISSUE_REFRESH_TOKENS  | Required |
-| OAUTH_REFRESH_TOKEN_VALIDITY  | Required. This configuration dictates the number of seconds that a refresh token is valid for. Use a smaller value to force users to re-authenticate with Snowflake more frequently. |
+| TYPE  | Обязательно |
+| ENABLED  | Обязательно |
+| OAUTH_CLIENT  | Обязательно |
+| OAUTH_CLIENT_TYPE  | Обязательно |
+| OAUTH_REDIRECT_URI  | Обязательно. Используйте значение из [настроек учетной записи dbt Cloud](#locate-the-redirect-uri-value). |
+| OAUTH_ISSUE_REFRESH_TOKENS  | Обязательно |
+| OAUTH_REFRESH_TOKEN_VALIDITY  | Обязательно. Эта конфигурация определяет количество секунд, в течение которых токен обновления действителен. Используйте меньшее значение, чтобы заставить пользователей чаще повторно аутентифицироваться в Snowflake. |
 
-Additional configuration options may be specified for the security integration as needed.
+Дополнительные параметры конфигурации могут быть указаны для интеграции безопасности по мере необходимости.
 
-### Configure a Connection in dbt Cloud
+### Настройка соединения в dbt Cloud
 
-The Database Admin is responsible for creating a Snowflake Connection in dbt Cloud. This Connection is configured using a Snowflake Client ID and Client Secret. When configuring a Connection in dbt Cloud, select the "Allow SSO Login" checkbox. Once this checkbox is selected, you will be prompted to enter an OAuth Client ID and OAuth Client Secret. These values can be determined by running the following query in Snowflake:
+Администратор базы данных отвечает за создание соединения Snowflake в dbt Cloud. Это соединение настраивается с использованием идентификатора клиента Snowflake и секрета клиента. При настройке соединения в dbt Cloud выберите флажок "Разрешить вход через SSO". После выбора этого флажка вам будет предложено ввести идентификатор клиента OAuth и секрет клиента OAuth. Эти значения можно определить, выполнив следующий запрос в Snowflake:
 
 ```
 with
@@ -86,48 +86,48 @@ from
   integration_secrets;
 ```
 
-Enter the Client ID and Client Secret into dbt Cloud to complete the creation of your Connection.
+Введите идентификатор клиента и секрет клиента в dbt Cloud, чтобы завершить создание вашего соединения.
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" title="Configuring Snowflake OAuth credentials in dbt Cloud" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/database-connection-snowflake-oauth.png" title="Настройка учетных данных Snowflake OAuth в dbt Cloud" />
 
-### Authorize developer credentials
+### Авторизация учетных данных разработчика
 
-Once Snowflake SSO is enabled, users on the project will be able to configure their credentials in their Profiles. By clicking the "Connect to Snowflake Account" button, users will be redirected to Snowflake to authorize with the configured SSO provider, then back to dbt Cloud to complete the setup process. At this point, users should now be able to use the dbt IDE with their development credentials.
+После включения Snowflake SSO пользователи проекта смогут настроить свои учетные данные в своих профилях. Нажав кнопку "Подключиться к учетной записи Snowflake", пользователи будут перенаправлены в Snowflake для авторизации с помощью настроенного поставщика SSO, а затем обратно в dbt Cloud для завершения процесса настройки. На этом этапе пользователи должны иметь возможность использовать IDE dbt с их учетными данными разработки.
 
-### SSO OAuth flow diagram
+### Диаграмма потока SSO OAuth
 
-<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/84427818-841b3680-abf3-11ea-8faf-693d4a39cffb.png" title="SSO OAuth flow diagram" />
+<Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/84427818-841b3680-abf3-11ea-8faf-693d4a39cffb.png" title="Диаграмма потока SSO OAuth" />
 
-Once a user has authorized dbt Cloud with Snowflake via their identity provider, Snowflake will return a Refresh Token to the dbt Cloud application. dbt Cloud is then able to exchange this refresh token for an Access Token which can then be used to open a Snowflake connection and execute queries in the dbt Cloud IDE on behalf of users.
+После того как пользователь авторизовал dbt Cloud с помощью Snowflake через своего поставщика идентификации, Snowflake вернет токен обновления в приложение dbt Cloud. Затем dbt Cloud сможет обменять этот токен обновления на токен доступа, который можно использовать для открытия соединения с Snowflake и выполнения запросов в IDE dbt Cloud от имени пользователей.
 
-**NOTE**: The lifetime of the refresh token is dictated by the OAUTH_REFRESH_TOKEN_VALIDITY parameter supplied in the “create security integration” statement. When a user’s refresh token expires, the user will need to re-authorize with Snowflake to continue development in dbt Cloud.
+**ПРИМЕЧАНИЕ**: Срок действия токена обновления определяется параметром OAUTH_REFRESH_TOKEN_VALIDITY, указанным в операторе "создать интеграцию безопасности". Когда токен обновления пользователя истекает, пользователю необходимо повторно авторизоваться в Snowflake, чтобы продолжить разработку в dbt Cloud.
 
-### Setting up multiple dbt Cloud projects with Snowflake 0Auth
-If you are planning to set up the same Snowflake account to different dbt Cloud projects, you can use the same security integration for all of the projects.
+### Настройка нескольких проектов dbt Cloud с Snowflake OAuth
+Если вы планируете настроить одну и ту же учетную запись Snowflake для различных проектов dbt Cloud, вы можете использовать одну и ту же интеграцию безопасности для всех проектов.
 
-### FAQs
-#### How do I use the Blocked Roles List with dbt Cloud?
+### Часто задаваемые вопросы
+#### Как использовать список заблокированных ролей с dbt Cloud?
 <LoomVideo id="1ad791f87c024f82b5bcf93eb2047676" />
 
-### Troubleshooting
+### Устранение неполадок
 
-#### Invalid consent request
-When clicking on the `Connect Snowflake Account` successfully redirects you to the Snowflake login page, but you receive an `Invalid consent request` error. This could mean:
-* Your user might not have access to the Snowflake role defined on the development credentials in dbt Cloud. Double-check that you have access to that role and if the role name has been correctly entered in as Snowflake is case sensitive.
-* You're trying to use a role that is in the [BLOCKED_ROLES_LIST](https://docs.snowflake.com/en/user-guide/oauth-partner.html#blocking-specific-roles-from-using-the-integration), such as `ACCOUNTADMIN`.
+#### Неверный запрос на согласие
+Когда нажатие на кнопку `Подключиться к учетной записи Snowflake` успешно перенаправляет вас на страницу входа в Snowflake, но вы получаете ошибку `Неверный запрос на согласие`. Это может означать:
+* Ваш пользователь может не иметь доступа к роли Snowflake, определенной в учетных данных разработки в dbt Cloud. Дважды проверьте, что у вас есть доступ к этой роли и что имя роли введено правильно, так как Snowflake чувствителен к регистру.
+* Вы пытаетесь использовать роль, которая находится в [BLOCKED_ROLES_LIST](https://docs.snowflake.com/en/user-guide/oauth-partner.html#blocking-specific-roles-from-using-the-integration), такую как `ACCOUNTADMIN`.
 
-#### The requested scope is invalid
-When you select the `Connect Snowflake Account` button to try to connect to your Snowflake account, you might get an error that says `The requested scope is invalid` even though you were redirected to the Snowflake login page successfully. 
+#### Запрашиваемый объем недействителен
+Когда вы выбираете кнопку `Подключиться к учетной записи Snowflake`, чтобы попытаться подключиться к своей учетной записи Snowflake, вы можете получить ошибку, которая говорит `Запрашиваемый объем недействителен`, даже если вы успешно перенаправлены на страницу входа в Snowflake. 
 
-This error might be because of a configuration issue in the Snowflake OAuth flow, where the `role` in the profile config is mandatory for each user and doesn't inherit it from the project connection page. This means each user needs to supply their role information, regardless of whether it's provided on the project connection page.
-* In the Snowflake OAuth flow, `role` in the profile config is not optional, as it does not inherit from the project connection config. So each user must supply their role, regardless of whether it is provided in the project connection.
+Эта ошибка может быть вызвана проблемой конфигурации в потоке OAuth Snowflake, где `role` в конфигурации профиля является обязательным для каждого пользователя и не наследуется от страницы подключения проекта. Это означает, что каждый пользователь должен предоставить информацию о своей роли, независимо от того, предоставлена ли она на странице подключения проекта.
+* В потоке OAuth Snowflake `role` в конфигурации профиля не является необязательным, так как он не наследуется от конфигурации подключения проекта. Поэтому каждый пользователь должен предоставить свою роль, независимо от того, предоставлена ли она на проекте.
 
-#### Server error 500
-If you experience a 500 server error when redirected from Snowflake to dbt Cloud, double-check that you have allow-listed [dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses), or [VPC Endpoint ID (for PrivateLink connections)](/docs/cloud/secure/snowflake-privatelink#configuring-network-policies), on a Snowflake account level.
+#### Ошибка сервера 500
+Если вы столкнулись с ошибкой сервера 500 при перенаправлении из Snowflake в dbt Cloud, дважды проверьте, что вы добавили в белый список [IP-адреса dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses) или [ID конечной точки VPC (для соединений PrivateLink)](/docs/cloud/secure/snowflake-privatelink#configuring-network-policies) на уровне учетной записи Snowflake.
 
-Enterprise customers who have single-tenant deployments will have a different range of IP addresses (network CIDR ranges) to allow list.
+Корпоративные клиенты, у которых есть развертывания с одним арендатором, будут иметь другой диапазон IP-адресов (CIDR диапазоны сети) для добавления в белый список.
 
-Depending on how you've configured your Snowflake network policies or IP allow listing, you may have to explicitly add the network policy that includes the allow listed dbt Cloud IPs to the security integration you just made.
+В зависимости от того, как вы настроили свои сетевые политики Snowflake или разрешение IP, вам может потребоваться явно добавить сетевую политику, которая включает разрешенные IP-адреса dbt Cloud, в интеграцию безопасности, которую вы только что создали.
 
 ```
 ALTER SECURITY INTEGRATION <security_integration_name>

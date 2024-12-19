@@ -1,6 +1,6 @@
 ---
-title: "Microsoft Fabric Synapse Data Warehouse setup"
-description: "Read this guide to learn about the Microsoft Fabric Synapse Data Warehouse setup in dbt."
+title: "Настройка хранилища данных Microsoft Fabric Synapse"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища данных Microsoft Fabric Synapse в dbt."
 id: fabric-setup
 meta:
   maintained_by: Microsoft
@@ -8,16 +8,16 @@ meta:
   github_repo: 'Microsoft/dbt-fabric'
   pypi_package: 'dbt-fabric'
   min_core_version: '1.4.0'
-  cloud_support: Supported
+  cloud_support: Поддерживается
   platform_name: 'Microsoft Fabric'
   config_page: '/reference/resource-configs/fabric-configs'
 ---
 
 :::info
 
-Below is a guide for use with [Synapse Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing#synapse-data-warehouse), a new product within Microsoft Fabric. The adapter currently only supports connecting to a warehouse and not a lakehouse endpoint. You can access data in your lakehouse via the warehouse if you are in the same workspace. 
+Ниже представлено руководство по работе с [Synapse Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing#synapse-data-warehouse), новым продуктом в рамках Microsoft Fabric. Адаптер в настоящее время поддерживает только подключение к хранилищу данных, а не к конечной точке lakehouse. Вы можете получить доступ к данным в вашем lakehouse через хранилище, если вы находитесь в одном рабочем пространстве.
 
-To learn how to set up dbt with Azure Synapse Dedicated Pools, refer to [Microsoft Azure Synapse DWH setup](/docs/core/connect-data-platform/azuresynapse-setup).
+Чтобы узнать, как настроить dbt с Azure Synapse Dedicated Pools, обратитесь к [настройке Microsoft Azure Synapse DWH](/docs/core/connect-data-platform/azuresynapse-setup).
 
 :::
 
@@ -26,89 +26,89 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-### Prerequisites
+### Предварительные требования
 
-On Debian/Ubuntu make sure you have the ODBC header files before installing
+На Debian/Ubuntu убедитесь, что у вас есть заголовочные файлы ODBC перед установкой
 
 ```bash
 sudo apt install unixodbc-dev
 ```
 
-Download and install the [Microsoft ODBC Driver 18 for SQL Server](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15).
-If you already have ODBC Driver 17 installed, then that one will work as well.
+Скачайте и установите [ODBC Driver 18 для SQL Server](https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15).
+Если у вас уже установлен ODBC Driver 17, то он также подойдет.
 
-#### Supported configurations
+#### Поддерживаемые конфигурации
 
-* The adapter is tested with Microsoft Fabric Synapse Data Warehouses (also referred to as Warehouses).
-* We test all combinations with Microsoft ODBC Driver 17 and Microsoft ODBC Driver 18.
-* The collations we run our tests on are `Latin1_General_100_BIN2_UTF8`.
+* Адаптер протестирован с хранилищами данных Microsoft Fabric Synapse (также называемыми Warehouses).
+* Мы тестируем все комбинации с Microsoft ODBC Driver 17 и Microsoft ODBC Driver 18.
+* Сравнения, на которых мы проводим наши тесты, это `Latin1_General_100_BIN2_UTF8`.
 
-The adapter support is not limited to the matrix of the above configurations. If you notice an issue with any other configuration, let us know by opening an issue on [GitHub](https://github.com/microsoft/dbt-fabric).
+Поддержка адаптера не ограничивается матрицей вышеуказанных конфигураций. Если вы заметили проблему с любой другой конфигурацией, дайте нам знать, открыв проблему на [GitHub](https://github.com/microsoft/dbt-fabric).
 
-##### Unsupported configurations
-SQL analytics endpoints are read-only and so are not appropriate for Transformation workloads, use a Warehouse instead.
+##### Неподдерживаемые конфигурации
+Конечные точки SQL analytics являются только для чтения и поэтому не подходят для рабочих нагрузок трансформации, используйте вместо этого хранилище.
 
-## Authentication methods & profile configuration
+## Методы аутентификации и конфигурация профиля
 
-### Common configuration
+### Общая конфигурация
 
-For all the authentication methods, refer to the following configuration options that can be set in your `profiles.yml` file. 
-A complete reference of all options can be found [at the end of this page](#reference-of-all-connection-options).
+Для всех методов аутентификации обратитесь к следующим параметрам конфигурации, которые можно установить в вашем файле `profiles.yml`. 
+Полная справка по всем параметрам доступна [в конце этой страницы](#reference-of-all-connection-options).
 
-| Configuration option | Description | Type | Example |
+| Параметр конфигурации | Описание | Тип | Пример |
 | --------------------- | ---- | ---- | ------- |
-| `driver` | The ODBC driver to use | Required | `ODBC Driver 18 for SQL Server` |
-| `server` | The server hostname | Required | `localhost` |
-| `port` |  The server port | Required | `1433` |
-| `database` | The database name | Required | Not applicable |
-| `schema` | The schema name | Required | `dbo` |
-| `retries` | The number of automatic times to retry a query before failing. Defaults to `1`. Queries with syntax errors will not be retried. This setting can be used to overcome intermittent network issues. | Optional |  Not applicable  |
-| `login_timeout` | The number of seconds used to establish a connection before failing. Defaults to `0`, which means that the timeout is disabled or uses the default system settings. | Optional |  Not applicable  |
-| `query_timeout` | The number of seconds used to wait for a query before failing. Defaults to `0`, which means that the timeout is disabled or uses the default system settings. | Optional |  Not applicable  |
-| `schema_authorization` |  Optionally set this to the principal who should own the schemas created by dbt. [Read more about schema authorization](#schema-authorization). | Optional |  Not applicable  |
-| `encrypt` |  Whether to encrypt the connection to the server. Defaults to `true`. Read more about [connection encryption](#connection-encryption). | Optional |  Not applicable  |
-| `trust_cert` |   Whether to trust the server certificate. Defaults to `false`. Read more about [connection encryption](#connection-encryption).| Optional |  Not applicable  |
+| `driver` | ODBC-драйвер для использования | Обязательный | `ODBC Driver 18 for SQL Server` |
+| `server` | Имя хоста сервера | Обязательный | `localhost` |
+| `port` | Порт сервера | Обязательный | `1433` |
+| `database` | Имя базы данных | Обязательный | Не применимо |
+| `schema` | Имя схемы | Обязательный | `dbo` |
+| `retries` | Количество автоматических попыток повторного выполнения запроса перед его завершением. По умолчанию `1`. Запросы с синтаксическими ошибками не будут повторяться. Этот параметр можно использовать для преодоления временных сетевых проблем. | Необязательный | Не применимо |
+| `login_timeout` | Количество секунд, используемых для установления соединения перед завершением. По умолчанию `0`, что означает, что тайм-аут отключен или использует настройки системы по умолчанию. | Необязательный | Не применимо |
+| `query_timeout` | Количество секунд, используемых для ожидания выполнения запроса перед завершением. По умолчанию `0`, что означает, что тайм-аут отключен или использует настройки системы по умолчанию. | Необязательный | Не применимо |
+| `schema_authorization` | Опционально установите это на принципала, который должен владеть схемами, созданными dbt. [Узнайте больше о авторизации схемы](#schema-authorization). | Необязательный | Не применимо |
+| `encrypt` | Нужно ли шифровать соединение с сервером. По умолчанию `true`. Узнайте больше о [шифровании соединения](#connection-encryption). | Необязательный | Не применимо |
+| `trust_cert` | Нужно ли доверять сертификату сервера. По умолчанию `false`. Узнайте больше о [шифровании соединения](#connection-encryption).| Необязательный | Не применимо |
 
-### Connection encryption
+### Шифрование соединения
 
-Microsoft made several changes in the release of ODBC Driver 18 that affects how connection encryption is configured.
-To accommodate these changes, starting in dbt-sqlserver 1.2.0 or newer the default values of `encrypt` and `trust_cert` have changed.
-Both of these settings will now **always** be included in the connection string to the server, regardless if you've left them out of your profile configuration or not.
+Microsoft внесла несколько изменений в выпуске ODBC Driver 18, которые влияют на то, как настраивается шифрование соединения.
+Чтобы учесть эти изменения, начиная с dbt-sqlserver 1.2.0 или новее, значения по умолчанию для `encrypt` и `trust_cert` изменились.
+Оба этих параметра теперь **всегда** будут включены в строку соединения с сервером, независимо от того, оставили ли вы их вне конфигурации профиля или нет.
 
-* The default value of `encrypt` is `true`, meaning that connections are encrypted by default.
-* The default value of `trust_cert` is `false`, meaning that the server certificate will be validated. By setting this to `true`, a self-signed certificate will be accepted.
+* Значение по умолчанию для `encrypt` — `true`, что означает, что соединения шифруются по умолчанию.
+* Значение по умолчанию для `trust_cert` — `false`, что означает, что сертификат сервера будет проверен. Установив это значение в `true`, будет принят самоподписанный сертификат.
 
-More details about how these values affect your connection and how they are used differently in versions of the ODBC driver can be found in the [Microsoft documentation](https://learn.microsoft.com/en-us/sql/connect/odbc/dsn-connection-string-attribute?view=sql-server-ver16#encrypt).
+Более подробную информацию о том, как эти значения влияют на ваше соединение и как они используются по-разному в версиях ODBC-драйвера, можно найти в [документации Microsoft](https://learn.microsoft.com/en-us/sql/connect/odbc/dsn-connection-string-attribute?view=sql-server-ver16#encrypt).
 
-### Standard SQL Server authentication
+### Стандартная аутентификация SQL Server
 
-SQL Server and windows authentication are not supported by Microsoft Fabric Synapse Data Warehouse.
+Аутентификация SQL Server и Windows не поддерживаются хранилищем данных Microsoft Fabric Synapse.
 
-### Microsoft Entra ID authentication
+### Аутентификация Microsoft Entra ID
 
-Microsoft Entra ID (formerly Azure AD) authentication is a default authentication mechanism in Microsoft Fabric Synapse Data Warehouse.
+Аутентификация Microsoft Entra ID (ранее Azure AD) является механизмом аутентификации по умолчанию в хранилище данных Microsoft Fabric Synapse.
 
-The following additional methods are available to authenticate to Azure SQL products:
+Доступны следующие дополнительные методы аутентификации для продуктов Azure SQL:
 
-* Microsoft Entra ID username and password
-* Service principal 
-* Environment-based authentication
-* Azure CLI authentication
-* VS Code authentication (available through the automatic option below)
-* Azure PowerShell module authentication (available through the automatic option below)
-* Automatic authentication
+* Имя пользователя и пароль Microsoft Entra ID
+* Сервисный принципал 
+* Аутентификация на основе окружения
+* Аутентификация Azure CLI
+* Аутентификация VS Code (доступна через автоматический вариант ниже)
+* Аутентификация модуля Azure PowerShell (доступна через автоматический вариант ниже)
+* Автоматическая аутентификация
 
-The automatic authentication setting is in most cases the easiest choice and works for all of the above.
+Настройка автоматической аутентификации в большинстве случаев является самым простым выбором и работает для всех вышеперечисленных методов.
 
 <Tabs
   defaultValue="azure_cli"
   values={[
-    {label: 'Microsoft Entra ID username & password', value: 'meid_password'},
-    {label: 'Service principal', value: 'service_principal'},
-    {label: 'Managed Identity', value: 'managed_identity'},
-    {label: 'Environment-based', value: 'environment_based'},
+    {label: 'Имя пользователя и пароль Microsoft Entra ID', value: 'meid_password'},
+    {label: 'Сервисный принципал', value: 'service_principal'},
+    {label: 'Управляемая идентичность', value: 'managed_identity'},
+    {label: 'На основе окружения', value: 'environment_based'},
     {label: 'Azure CLI', value: 'azure_cli'},
-    {label: 'Automatic', value: 'auto'}
+    {label: 'Автоматически', value: 'auto'}
   ]}
 >
 
@@ -122,7 +122,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -138,7 +138,7 @@ your_profile_name:
 
 <TabItem value="service_principal">
 
-Client ID is often also referred to as Application ID.
+Идентификатор клиента часто также называется идентификатором приложения.
 
 <File name='profiles.yml'>
 
@@ -148,7 +148,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -165,10 +165,10 @@ your_profile_name:
 
 <TabItem value="environment_based">
 
-This authentication option allows you to dynamically select an authentication method depending on the available environment variables.
+Этот вариант аутентификации позволяет вам динамически выбирать метод аутентификации в зависимости от доступных переменных окружения.
 
-[The Microsoft docs on EnvironmentCredential](https://docs.microsoft.com/en-us/python/api/azure-identity/azure.identity.environmentcredential?view=azure-python)
-explain the available combinations of environment variables you can use.
+[Документация Microsoft по EnvironmentCredential](https://docs.microsoft.com/en-us/python/api/azure-identity/azure.identity.environmentcredential?view=azure-python)
+объясняет доступные комбинации переменных окружения, которые вы можете использовать.
 
 <File name='profiles.yml'>
 
@@ -178,7 +178,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -192,7 +192,7 @@ your_profile_name:
 
 <TabItem value="azure_cli">
 
-First, install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), then, log in:
+Сначала установите [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), затем выполните вход:
 
 `az login`
 
@@ -204,7 +204,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -218,16 +218,16 @@ your_profile_name:
 
 <TabItem value="auto">
 
-This authentication option will automatically try to use all available authentication methods.
+Этот вариант аутентификации автоматически попытается использовать все доступные методы аутентификации.
 
-The following methods are tried in order:
+Следующие методы пробуются в порядке:
 
-1. Environment-based authentication
-2. Managed Identity authentication. Managed Identity is not supported at this time.
-3. Visual Studio authentication (*Windows only, ignored on other operating systems*)
-4. Visual Studio Code authentication
-5. Azure CLI authentication
-6. Azure PowerShell module authentication
+1. Аутентификация на основе окружения
+2. Аутентификация управляемой идентичности. Управляемая идентичность в настоящее время не поддерживается.
+3. Аутентификация Visual Studio (*только Windows, игнорируется на других операционных системах*)
+4. Аутентификация Visual Studio Code
+5. Аутентификация Azure CLI
+6. Аутентификация модуля Azure PowerShell
 
 <File name='profiles.yml'>
 
@@ -237,7 +237,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -251,25 +251,25 @@ your_profile_name:
 
 </Tabs>
 
-#### Additional options for Microsoft Entra ID on Windows
+#### Дополнительные параметры для Microsoft Entra ID на Windows
 
-On Windows systems, the following additional authentication methods are also available for Azure SQL:
+На системах Windows также доступны следующие дополнительные методы аутентификации для Azure SQL:
 
-* Microsoft Entra ID interactive
-* Microsoft Entra ID integrated
-* Visual Studio authentication (available through the automatic option above)
+* Интерактивная аутентификация Microsoft Entra ID
+* Интегрированная аутентификация Microsoft Entra ID
+* Аутентификация Visual Studio (доступна через автоматический вариант выше)
 
 <Tabs
   defaultValue="meid_interactive"
   values={[
-    {label: 'Microsoft Entra ID interactive', value: 'meid_interactive'},
-    {label: 'Microsoft Entra ID integrated', value: 'meid_integrated'}
+    {label: 'Интерактивная аутентификация Microsoft Entra ID', value: 'meid_interactive'},
+    {label: 'Интегрированная аутентификация Microsoft Entra ID', value: 'meid_integrated'}
   ]}
 >
 
 <TabItem value="meid_interactive">
 
-This setting can optionally show Multi-Factor Authentication prompts.
+Этот параметр может опционально показывать запросы многофакторной аутентификации.
 
 <File name='profiles.yml'>
 
@@ -279,7 +279,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -294,7 +294,7 @@ your_profile_name:
 
 <TabItem value="meid_integrated">
 
-This uses the credentials you're logged in with on the current machine.
+Этот метод использует учетные данные, с которыми вы вошли на текущей машине.
 
 <File name='profiles.yml'>
 
@@ -304,7 +304,7 @@ your_profile_name:
   outputs:
     dev:
       type: fabric
-      driver: 'ODBC Driver 18 for SQL Server' # (The ODBC Driver installed on your system)
+      driver: 'ODBC Driver 18 for SQL Server' # (ODBC-драйвер, установленный на вашей системе)
       server: hostname or IP of your server
       port: 1433
       database: exampledb
@@ -318,51 +318,51 @@ your_profile_name:
 
 </Tabs>
 
-### Automatic Microsoft Entra ID principal provisioning for grants
+### Автоматическое предоставление принципала Microsoft Entra ID для прав
 
-Please note that automatic Microsoft Entra ID principal provisioning is not supported by Microsoft Fabric Synapse Data Warehouse at this time. Even though in dbt 1.2 or newer you can use the [grants](https://docs.getdbt.com/reference/resource-configs/grants) config block to automatically grant/revoke permissions on your models to users or groups, the data warehouse does not support this feature at this time.
+Обратите внимание, что автоматическое предоставление принципала Microsoft Entra ID в настоящее время не поддерживается хранилищем данных Microsoft Fabric Synapse. Хотя в dbt 1.2 или новее вы можете использовать блок конфигурации [grants](https://docs.getdbt.com/reference/resource-configs/grants) для автоматического предоставления/отзыва прав на ваши модели для пользователей или групп, хранилище данных в настоящее время не поддерживает эту функцию.
 
-You need to add the service principal or Microsoft Entra identity to a Fabric Workspace as an admin
+Вам необходимо добавить сервисный принципал или идентичность Microsoft Entra в рабочее пространство Fabric в качестве администратора.
 
-### Schema authorization
+### Авторизация схемы
 
-You can optionally set the principal who should own all schemas created by dbt. This is then used in the `CREATE SCHEMA` statement like so:
+Вы можете опционально установить принципала, который должен владеть всеми схемами, созданными dbt. Это затем используется в операторе `CREATE SCHEMA` следующим образом:
 
 ```sql
 CREATE SCHEMA [schema_name] AUTHORIZATION [schema_authorization]
 ```
 
-A common use case is to use this when you are authenticating with a principal who has permissions based on a group, such as a Microsoft Entra ID group. When that principal creates a schema, the server will first try to create an individual login for this principal and then link the schema to that principal. If you would be using Microsoft Entra ID in this case,
-then this would fail since Azure SQL can't create logins for individuals part of an AD group automatically.
+Распространенный случай использования — это когда вы аутентифицируетесь с помощью принципала, у которого есть разрешения на основе группы, такой как группа Microsoft Entra ID. Когда этот принципал создает схему, сервер сначала попытается создать индивидуальный логин для этого принципала, а затем связать схему с этим принципалом. Если вы будете использовать Microsoft Entra ID в этом случае,
+то это завершится неудачей, поскольку Azure SQL не может автоматически создавать логины для отдельных лиц, входящих в группу AD.
 
-### Reference of all connection options
+### Справка по всем параметрам соединения
 
-| Configuration option   | Description                                                                                                                                        | Required           | Default value |
+| Параметр конфигурации   | Описание                                                                                                                                        | Обязательный           | Значение по умолчанию |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ------------- |
-| `driver`               | The ODBC driver to use.                                                                                                                            | :white_check_mark: |               |
-| `host`                 | The hostname of the database server.                                                                                                               | :white_check_mark: |               |
-| `port`                 | The port of the database server.                                                                                                                   |                    | `1433`        |
-| `database`             | The name of the database to connect to.                                                                                                            | :white_check_mark: |               |
-| `schema`               | The schema to use.                                                                                                                                 | :white_check_mark: |               |
-| `authentication`       | The authentication method to use. This is not required for Windows authentication.                                                                 |                    | `'sql'`       |
-| `UID`                  | Username used to authenticate. This can be left out depending on the authentication method.                                                        |                    |               |
-| `PWD`                  | Password used to authenticate. This can be left out depending on the authentication method.                                                        |                    |               |
-| `tenant_id`            | The tenant ID of the Microsoft Entra ID instance. This is only used when connecting to Azure SQL with a service principal.                     |                    |               |
-| `client_id`            | The client ID of the Microsoft Entra service principal. This is only used when connecting to Azure SQL with a Microsoft Entra service principal.       |                    |               |
-| `client_secret`        | The client secret of the Microsoft Entra service principal. This is only used when connecting to Azure SQL with a Microsoft Entra service principal.   |                    |               |
-| `encrypt`              | Set this to `false` to disable the use of encryption. See [above](#connection-encryption).                                                         |                    | `true`        |
-| `trust_cert`           | Set this to `true` to trust the server certificate. See [above](#connection-encryption).                                                           |                    | `false`       |
-| `retries`              | The number of times to retry a failed connection.                                                                                                  |                    | `1`           |
-| `schema_authorization` | Optionally set this to the principal who should own the schemas created by dbt. [Details above](#schema-authorization).                            |                    |               |
-| `login_timeout`        | The amount of seconds to wait until a response from the server is received when establishing a connection. `0` means that the timeout is disabled. |                    | `0`           |
-| `query_timeout`        | The amount of seconds to wait until a response from the server is received when executing a query. `0` means that the timeout is disabled.         |                    | `0`           |
+| `driver`               | ODBC-драйвер для использования.                                                                                                                            | :white_check_mark: |               |
+| `host`                 | Имя хоста сервера базы данных.                                                                                                               | :white_check_mark: |               |
+| `port`                 | Порт сервера базы данных.                                                                                                                   |                    | `1433`        |
+| `database`             | Имя базы данных, к которой нужно подключиться.                                                                                                            | :white_check_mark: |               |
+| `schema`               | Схема для использования.                                                                                                                                 | :white_check_mark: |               |
+| `authentication`       | Метод аутентификации для использования. Это не требуется для аутентификации Windows.                                                                 |                    | `'sql'`       |
+| `UID`                  | Имя пользователя, используемое для аутентификации. Это можно оставить пустым в зависимости от метода аутентификации.                                                        |                    |               |
+| `PWD`                  | Пароль, используемый для аутентификации. Это можно оставить пустым в зависимости от метода аутентификации.                                                        |                    |               |
+| `tenant_id`            | Идентификатор арендатора экземпляра Microsoft Entra ID. Это используется только при подключении к Azure SQL с сервисным принципалом.                     |                    |               |
+| `client_id`            | Идентификатор клиента сервисного принципала Microsoft Entra. Это используется только при подключении к Azure SQL с сервисным принципалом Microsoft Entra.       |                    |               |
+| `client_secret`        | Секрет клиента сервисного принципала Microsoft Entra. Это используется только при подключении к Azure SQL с сервисным принципалом Microsoft Entra.   |                    |               |
+| `encrypt`              | Установите это значение в `false`, чтобы отключить использование шифрования. См. [выше](#connection-encryption).                                                         |                    | `true`        |
+| `trust_cert`           | Установите это значение в `true`, чтобы доверять сертификату сервера. См. [выше](#connection-encryption).                                                           |                    | `false`       |
+| `retries`              | Количество попыток повторного выполнения неудачного соединения.                                                                                                  |                    | `1`           |
+| `schema_authorization` | Опционально установите это значение на принципала, который должен владеть схемами, созданными dbt. [Подробности выше](#schema-authorization).                            |                    |               |
+| `login_timeout`        | Количество секунд, которые нужно ждать, пока не будет получен ответ от сервера при установлении соединения. `0` означает, что тайм-аут отключен. |                    | `0`           |
+| `query_timeout`        | Количество секунд, которые нужно ждать, пока не будет получен ответ от сервера при выполнении запроса. `0` означает, что тайм-аут отключен.         |                    | `0`           |
 
-Valid values for `authentication`:
+Допустимые значения для `authentication`:
 
-* `ActiveDirectoryPassword`: Active Directory authentication using username and password
-* `ActiveDirectoryInteractive`: Active Directory authentication using a username and MFA prompts
-* `ActiveDirectoryIntegrated`: Active Directory authentication using the current user's credentials
-* `ServicePrincipal`: Microsoft Entra ID authentication using a service principal
-* `CLI`: Microsoft Entra ID authentication using the account you're logged in within the Azure CLI
-* `environment`: Microsoft Entra ID authentication using environment variables as documented [here](https://learn.microsoft.com/en-us/python/api/azure-identity/azure.identity.environmentcredential?view=azure-python)
-* `auto`: Microsoft Entra ID authentication trying the previous authentication methods until it finds one that works
+* `ActiveDirectoryPassword`: Аутентификация Active Directory с использованием имени пользователя и пароля
+* `ActiveDirectoryInteractive`: Аутентификация Active Directory с использованием имени пользователя и запросов MFA
+* `ActiveDirectoryIntegrated`: Аутентификация Active Directory с использованием учетных данных текущего пользователя
+* `ServicePrincipal`: Аутентификация Microsoft Entra ID с использованием сервисного принципала
+* `CLI`: Аутентификация Microsoft Entra ID с использованием учетной записи, с которой вы вошли в Azure CLI
+* `environment`: Аутентификация Microsoft Entra ID с использованием переменных окружения, как описано [здесь](https://learn.microsoft.com/en-us/python/api/azure-identity/azure.identity.environmentcredential?view=azure-python)
+* `auto`: Аутентификация Microsoft Entra ID, пробующая предыдущие методы аутентификации, пока не найдет подходящий

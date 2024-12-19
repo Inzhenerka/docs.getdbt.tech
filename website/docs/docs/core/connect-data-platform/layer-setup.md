@@ -1,6 +1,6 @@
 ---
-title: "Layer setup"
-description: "Read this guide to learn about the Layer warehouse setup in dbt."
+title: "Настройка слоя"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Layer в dbt."
 id: "layer-setup"
 meta:
   maintained_by: Layer
@@ -8,7 +8,7 @@ meta:
   github_repo: 'layerai/dbt-layer'
   pypi_package: 'dbt-layer-bigquery'
   min_core_version: 'v1.0.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#tools-layer'
   slack_channel_link: 'https://getdbt.slack.com/archives/C03STA39TFE'
@@ -21,19 +21,19 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Profile Configuration
+### Конфигурация профиля
 
-Layer Bigquery targets should be set up using the following sections in your `profiles.yml` file.
-#### Layer Authentication
-Add your `layer_api_key` to your `profiles.yaml` to authenticate with Layer. To get your Layer API Key:
-- First, [create your free Layer account](https://app.layer.ai/login?returnTo=%2Fgetting-started).
-- Go to [app.layer.ai](https://app.layer.ai) > **Settings** (Cog Icon by your profile photo) > **Developer** > **Create API key** to get your Layer API Key.
+Цели Layer Bigquery должны быть настроены с использованием следующих разделов в вашем файле `profiles.yml`.
+#### Аутентификация Layer
+Добавьте ваш `layer_api_key` в ваш `profiles.yaml` для аутентификации с Layer. Чтобы получить ваш API-ключ Layer:
+- Сначала [создайте свою бесплатную учетную запись Layer](https://app.layer.ai/login?returnTo=%2Fgetting-started).
+- Перейдите в [app.layer.ai](https://app.layer.ai) > **Настройки** (значок шестеренки рядом с вашей фотографией профиля) > **Разработчик** > **Создать API-ключ**, чтобы получить ваш API-ключ Layer.
 
-#### Bigquery Authentication
-You can use any [authentication method](https://docs.getdbt.com/reference/warehouse-profiles/bigquery-setup) supported in the official dbt Bigquery adapter since Layer uses `dbt-bigquery` adapter to connect to your Bigquery instance. 
+#### Аутентификация Bigquery
+Вы можете использовать любой [метод аутентификации](https://docs.getdbt.com/reference/warehouse-profiles/bigquery-setup), поддерживаемый официальным адаптером dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашему экземпляру Bigquery. 
 
 
-A sample profile:
+Пример профиля:
 
 <File name='profiles.yml'>
 
@@ -42,93 +42,93 @@ layer-profile:
   target: dev
   outputs:
     dev:
-      # Layer authentication
+      # Аутентификация Layer
       type: layer_bigquery
-      layer_api_key: [the API Key to access your Layer account (opt)]
-      # Bigquery authentication
+      layer_api_key: [API-ключ для доступа к вашей учетной записи Layer (опционально)]
+      # Аутентификация Bigquery
       method: service-account
-      project: [GCP project id]
-      dataset: [the name of your dbt dataset]
-      threads: [1 or more]
+      project: [идентификатор проекта GCP]
+      dataset: [название вашего набора данных dbt]
+      threads: [1 или более]
       keyfile: [/path/to/bigquery/keyfile.json]
 ```
 
 </File>
 
-#### Description of Layer Bigquery Profile Fields
+#### Описание полей профиля Layer Bigquery
 
-The following fields are required:
+Следующие поля являются обязательными:
 
-Parameter               | Default     | Type         | Description
------------------------ | ----------- |--------------| ---
-`type`                  |             | string       | Specifies the adapter you want to use. It should be `layer_bigquery`.
-`layer_api_key`         |             | string (opt) | Specifies your Layer API key. If you want to make predictions with public ML models from Layer, you don't need to have this key in your profile. It's required if you load ML models from your Layer account or train an AutoML model.
-`layer_project`         |             | string (opt) | Specifies your target Layer project. If you don't specify, Layer will use the project same name with your dbt project.
-`method`              |             | string       | Specifies the authentication type to connect to your BigQuery.
+Параметр               | Значение по умолчанию | Тип         | Описание
+----------------------- | --------------------- |--------------| ---
+`type`                  |                       | строка      | Указывает адаптер, который вы хотите использовать. Должен быть `layer_bigquery`.
+`layer_api_key`         |                       | строка (опц.) | Указывает ваш API-ключ Layer. Если вы хотите делать прогнозы с помощью публичных ML моделей от Layer, вам не нужно указывать этот ключ в вашем профиле. Он необходим, если вы загружаете ML модели из вашей учетной записи Layer или обучаете модель AutoML.
+`layer_project`         |                       | строка (опц.) | Указывает вашу целевую проект Layer. Если вы не укажете, Layer будет использовать проект с тем же именем, что и ваш проект dbt.
+`method`                |                       | строка      | Указывает тип аутентификации для подключения к вашему BigQuery.
 
-Rest of the parameters depends on the BigQuery authentication method you specified.
+Остальные параметры зависят от метода аутентификации BigQuery, который вы указали.
 
-## Usage
+## Использование
 
 ### AutoML
 
-You can automatically build state-of-art ML models using your own dbt models with plain SQL. To train an AutoML model all you have to do is pass your model type, input data (features) and target column you want to predict to `layer.automl()` in your SQL. The Layer AutoML will pick the best performing model and enable you to call it by its dbt model name to make predictions as shown above. 
+Вы можете автоматически создавать современные ML модели, используя свои собственные модели dbt с помощью простого SQL. Чтобы обучить модель AutoML, вам нужно просто передать тип модели, входные данные (признаки) и целевой столбец, который вы хотите предсказать, в `layer.automl()` в вашем SQL. AutoML Layer выберет наиболее эффективную модель и позволит вам вызывать ее по имени модели dbt для выполнения прогнозов, как показано выше. 
 
-_Syntax:_
+_Синтаксис:_
 ```
 layer.automl("MODEL_TYPE", ARRAY[FEATURES], TARGET)
 ```
 
-_Parameters:_
+_Параметры:_
 
-| Syntax    | Description                                                                                                                                                                                                                                 |
-| --------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `MODEL_TYPE`    | Type of the model your want to train. There are two options: <br/> - `classifier`: A model to predict classes/labels or categories such as spam detection<br/>- `regressor`: A model to predict continious outcomes such as CLV prediction. |
-| `FEATURES`    | Input column names as a list to train your AutoML model.                                                                                                                                                                                    |
-| `TARGET`    | Target column that you want to predict.                                                                                                                                                                                                     |
+| Синтаксис    | Описание                                                                                                                                                                                                                                 |
+| ------------ |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `MODEL_TYPE` | Тип модели, которую вы хотите обучить. Есть два варианта: <br/> - `classifier`: Модель для предсказания классов/меток или категорий, таких как обнаружение спама<br/>- `regressor`: Модель для предсказания непрерывных результатов, таких как предсказание CLV. |
+| `FEATURES`   | Имена входных столбцов в виде списка для обучения вашей модели AutoML.                                                                                                                                                                    |
+| `TARGET`     | Целевой столбец, который вы хотите предсказать.                                                                                                                                                                                         |
 
 
-_Requirements:_
-- You need to put `layer_api_key` to your dbt profile to make AutoML work.
+_Требования:_
+- Вам нужно указать `layer_api_key` в вашем профиле dbt, чтобы AutoML работал.
 
-_Example:_
+_Пример:_
 
-Check out [Order Review AutoML Project](https://github.com/layerai/dbt-layer/tree/mecevit/update-docs/examples/order_review_prediction):
+Посмотрите [Проект AutoML по обзору заказов](https://github.com/layerai/dbt-layer/tree/mecevit/update-docs/examples/order_review_prediction):
 
 ```sql
 SELECT order_id,
        layer.automl(
-           -- This is a regression problem
+           -- Это задача регрессии
            'regressor',
-           -- Data (input features) to train our model
+           -- Данные (входные признаки) для обучения нашей модели
            ARRAY[
            days_between_purchase_and_delivery, order_approved_late,
            actual_delivery_vs_expectation_bucket, total_order_price, total_order_freight, is_multiItems_order,seller_shipped_late],
-           -- Target column we want to predict
+           -- Целевой столбец, который мы хотим предсказать
            review_score
        )
 FROM {{ ref('training_data') }}
 ```
 
-### Prediction
+### Прогнозирование
 
-You can make predictions using any Layer ML model within your dbt models. Layer dbt Adapter helps you score your data resides on your warehouse within your dbt DAG with SQL.
+Вы можете делать прогнозы, используя любую ML модель Layer в ваших моделях dbt. Адаптер dbt Layer помогает вам оценивать ваши данные, находящиеся в вашем хранилище, в рамках вашего DAG dbt с помощью SQL.
 
-_Syntax:_
+_Синтаксис:_
 ```
 layer.predict("LAYER_MODEL_PATH", ARRAY[FEATURES])
 ```
 
-_Parameters:_
+_Параметры:_
 
-| Syntax    | Description                                                                                                                                                                                        |
-| --------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `LAYER_MODEL_PATH`      | This is the Layer model path in form of `/[organization_name]/[project_name]/models/[model_name]`. You can use only the model name if you want to use an AutoML model within the same dbt project. |
-| `FEATURES` | These are the columns that this model requires to make a prediction. You should pass the columns as a list like `ARRAY[column1, column2, column3]`.                                                |
+| Синтаксис           | Описание                                                                                                                                                                                        |
+|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `LAYER_MODEL_PATH`  | Это путь к модели Layer в формате `/[organization_name]/[project_name]/models/[model_name]`. Вы можете использовать только имя модели, если хотите использовать модель AutoML в рамках того же проекта dbt. |
+| `FEATURES`          | Это столбцы, которые эта модель требует для выполнения прогноза. Вы должны передать столбцы в виде списка, например `ARRAY[column1, column2, column3]`.                                                |
 
-_Example:_
+_Пример:_
 
-Check out [Cloth Detection Project](https://github.com/layerai/dbt-layer/tree/mecevit/update-docs/examples/cloth_detector):
+Посмотрите [Проект по обнаружению одежды](https://github.com/layerai/dbt-layer/tree/mecevit/update-docs/examples/cloth_detector):
 
 ```sql
 SELECT
@@ -137,5 +137,3 @@ SELECT
 FROM
     {{ ref("products") }}
 ```
-
-

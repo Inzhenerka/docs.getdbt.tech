@@ -1,84 +1,82 @@
 ---
-title: "Self-service Team account permissions"
-description: "Learn how dbt Cloud administrators can use self-service permissions to control access in a dbt Cloud Team account."
-sidebar_label: "Team permissions"
+title: "Разрешения учетных записей команды для самообслуживания"
+description: "Узнайте, как администраторы dbt Cloud могут использовать разрешения самообслуживания для управления доступом в учетной записи команды dbt Cloud."
+sidebar_label: "Разрешения команды"
 id: "self-service-permissions"
 ---
 
-Self-service Team accounts are a quick and easy way to get dbt Cloud up and running for a small team. For teams looking to scale and access advanced features like SSO, group management, and support for larger user bases, upgrading to an [Enterprise](/docs/cloud/manage-access/enterprise-permissions) account unlocks these capabilities. 
+Учетные записи команды для самообслуживания — это быстрый и простой способ запустить dbt Cloud для небольшой команды. Для команд, стремящихся к масштабированию и доступу к расширенным функциям, таким как SSO, управление группами и поддержка более крупных пользовательских баз, обновление до учетной записи [Enterprise](/docs/cloud/manage-access/enterprise-permissions) открывает эти возможности.
 
-If you're interested in upgrading, contact [dbt Labs today](https://www.getdbt.com/contact)
+Если вы заинтересованы в обновлении, свяжитесь с [dbt Labs сегодня](https://www.getdbt.com/contact).
 
-## Groups and permissions
+## Группы и разрешения
 
-Groups determine a user's permission and there are three groups are available for Team plan dbt Cloud accounts: Owner, Member, and Everyone. The first Owner user is the person who created the dbt Cloud account. 
+Группы определяют разрешения пользователя, и для учетных записей dbt Cloud с планом команды доступны три группы: Владелец, Участник и Все. Первым пользователем-владельцем является тот, кто создал учетную запись dbt Cloud.
 
-New users are added to the Member and Everyone groups when they onboard but this can be changed when the invitation is created. These groups only affect users with a [Developer license](#licenses) assigned. 
+Новые пользователи добавляются в группы Участников и Все при регистрации, но это можно изменить при создании приглашения. Эти группы влияют только на пользователей с назначенной [лицензией разработчика](#licenses).
 
-The group access permissions are as follows:
+Разрешения доступа для групп следующие:
 
-- **Owner** &mdash; Full access to account features.
-- **Member** &mdash; Robust access to the account with restrictions on features that can alter billing or security.
-- **Everyone** &mdash; A catch-all group for all users in the account. This group does not have any permission assignments beyond the user's profile. Users must be assigned to either the Member or Owner group to work in dbt Cloud. 
+- **Владелец** &mdash; Полный доступ ко всем функциям учетной записи.
+- **Участник** &mdash; Широкий доступ к учетной записи с ограничениями на функции, которые могут изменять выставление счетов или безопасность.
+- **Все** &mdash; Группа для всех пользователей в учетной записи. Эта группа не имеет никаких назначений разрешений, кроме профиля пользователя. Пользователи должны быть назначены либо в группу Участников, либо в группу Владельцев, чтобы работать в dbt Cloud.
 
-## Licenses
+## Лицензии
 
-You assign licenses to every user onboarded into dbt Cloud. You only assign Developer-licensed users to the Owner and Member groups. The groups have no impact on Read-only or IT licensed users.
+Вы назначаете лицензии каждому пользователю, зарегистрированному в dbt Cloud. Вы назначаете пользователей с лицензией разработчика только в группы Владельцев и Участников. Группы не влияют на пользователей с лицензиями только для чтения или IT.
 
-There are three license types:
+Существует три типа лицензий:
 
-- **Developer** &mdash; The default license. Developer licenses don't restrict access to any features, so users with this license should be assigned to either the Owner or Member group. You're allotted up to 8 developer licenses per account.
-- **Read-Only** &mdash; Read-only access to your project, including environments dbt Explorer. Doesn't have access to account settings at all. Functions the same regardless of group assignments. You're allotted up to 5 read-only licenses per account.
-- **IT** &mdash; Partial access to the account settings including users, integrations, billing, and API settings. Cannot create or edit connects or access the project at all. Functions the same regardless of group assignments. You're allocated 1 seat per account.
+- **Разработчик** &mdash; Лицензия по умолчанию. Лицензии разработчика не ограничивают доступ к каким-либо функциям, поэтому пользователи с этой лицензией должны быть назначены либо в группу Владельцев, либо в группу Участников. Вам предоставляется до 8 лицензий разработчика на учетную запись.
+- **Только для чтения** &mdash; Доступ только для чтения к вашему проекту, включая среды dbt Explorer. Не имеет доступа к настройкам учетной записи. Функционирует одинаково независимо от назначений групп. Вам предоставляется до 5 лицензий только для чтения на учетную запись.
+- **IT** &mdash; Частичный доступ к настройкам учетной записи, включая пользователей, интеграции, выставление счетов и настройки API. Не может создавать или редактировать подключения или получать доступ к проекту. Функционирует одинаково независимо от назначений групп. Вам выделяется 1 место на учетную запись.
 
-See [Seats and Users](/docs/cloud/manage-access/seats-and-users) for more information on the impact of licenses on these permissions.
+Смотрите [Места и пользователи](/docs/cloud/manage-access/seats-and-users) для получения дополнительной информации о влиянии лицензий на эти разрешения.
 
-## Table of groups, licenses, and permissions
+## Таблица групп, лицензий и разрешений
 
-Key:
+Ключ:
 
-* (W)rite &mdash; Create new or modify existing. Includes `send`, `create`, `delete`, `allocate`, `modify`, and `read`.
-* (R)ead &mdash; Can view but can not create or change any fields.
-* No value &mdash; No access to the feature.
+* (W)rite &mdash; Создавать новые или изменять существующие. Включает `send`, `create`, `delete`, `allocate`, `modify` и `read`.
+* (R)ead &mdash; Может просматривать, но не может создавать или изменять какие-либо поля.
+* Без значения &mdash; Нет доступа к функции.
 
-Permissions:
+Разрешения:
 
-* [Account-level permissions](#account-permissions-for-account-roles) &mdash; Permissions related to management of the dbt Cloud account. For example, billing and account settings.
-* [Project-level permissions](#project-permissions-for-account-roles) &mdash; Permissions related to the projects in dbt Cloud. For example, Explorer and the IDE.
+* [Разрешения на уровне учетной записи](#account-permissions-for-account-roles) &mdash; Разрешения, связанные с управлением учетной записью dbt Cloud. Например, выставление счетов и настройки учетной записи.
+* [Разрешения на уровне проекта](#project-permissions-for-account-roles) &mdash; Разрешения, связанные с проектами в dbt Cloud. Например, Explorer и IDE.
 
-The following tables outline the access that users have if they are assigned a Developer license and the Owner or Member group, Read-only license, or IT license.
+Следующие таблицы описывают доступ, который имеют пользователи, если они назначены в группу Владельцев или Участников с лицензией разработчика, лицензией только для чтения или лицензией IT.
 
-#### Account permissions for account roles
+#### Разрешения учетной записи для ролей учетной записи
 
-| Account-level permission| Owner | Member | Read-only license|  IT license  |
-|:------------------------|:-----:|:------:|:----------------:|:------------:|
-| Account settings        |   W   |   W    |         -        |       W      |
-| Billing                 |   W   |   -    |         -        |       W      |
-| Invitations             |   W   |   W    |         -        |       W      |
-| Licenses                |   W   |   R    |         -        |       W      |
-| Users                   |   W   |   R    |         -        |       W      |
-| Project (create)        |   W   |   W    |         -        |       W      |
-| Connections             |   W   |   W    |         -        |       W      |
-| Service tokens          |   W   |   -    |         -        |       W      |
-| Webhooks                |   W   |   W    |         -        |       -      |
- 
-#### Project permissions for account roles
+| Разрешение на уровне учетной записи | Владелец | Участник | Лицензия только для чтения | Лицензия IT |
+|:------------------------------------|:--------:|:--------:|:--------------------------:|:-----------:|
+| Настройки учетной записи            |    W     |    W     |             -              |      W      |
+| Выставление счетов                  |    W     |    -     |             -              |      W      |
+| Приглашения                         |    W     |    W     |             -              |      W      |
+| Лицензии                            |    W     |    R     |             -              |      W      |
+| Пользователи                        |    W     |    R     |             -              |      W      |
+| Проект (создание)                  |    W     |    W     |             -              |      W      |
+| Подключения                         |    W     |    W     |             -              |      W      |
+| Токены службы                       |    W     |    -     |             -              |      W      |
+| Вебхуки                            |    W     |    W     |             -              |      -      |
 
-|Project-level permission | Owner | Member  | Read-only | IT license |
-|:------------------------|:-----:|:-------:|:---------:|:----------:|
-| Adapters                |   W   |    W    |    R      |      -      |
-| Connections             |   W   |    W    |    R      |      -      |
-| Credentials             |   W   |    W    |    R      |      -      |
-| Custom env. variables   |   W   |    W    |    R      |      -      |
-| Develop (IDE or dbt Cloud CLI)| W |  W    |    -      |      -      |
-| Environments            |   W   |    W    |    R      |      -      |
-| Jobs                    |   W   |    W    |    R      |      -      |
-| dbt Explorer            |   W   |    W    |    R      |      -      |
-| Permissions             |   W   |    R    |    -      |      -      |
-| Profile                 |   W   |    W    |    R      |      -      |
-| Projects                |   W   |    W    |    R      |      -      |
-| Repositories            |   W   |    W    |    R      |      -      |
-| Runs                    |   W   |    W    |    R      |      -      |
-| Semantic Layer Config   |   W   |    W    |    R      |      -      |
+#### Разрешения проекта для ролей учетной записи
 
-
+| Разрешение на уровне проекта | Владелец | Участник | Только для чтения | Лицензия IT |
+|:-----------------------------|:--------:|:--------:|:-----------------:|:-----------:|
+| Адаптеры                     |    W     |    W     |         R         |      -      |
+| Подключения                  |    W     |    W     |         R         |      -      |
+| Учетные данные               |    W     |    W     |         R         |      -      |
+| Пользовательские переменные окружения | W |  W     |         R         |      -      |
+| Разработка (IDE или dbt Cloud CLI) | W |  W     |         -         |      -      |
+| Среды                        |    W     |    W     |         R         |      -      |
+| Задания                      |    W     |    W     |         R         |      -      |
+| dbt Explorer                 |    W     |    W     |         R         |      -      |
+| Разрешения                   |    W     |    R     |         -         |      -      |
+| Профиль                      |    W     |    W     |         R         |      -      |
+| Проекты                      |    W     |    W     |         R         |      -      |
+| Репозитории                  |    W     |    W     |         R         |      -      |
+| Запуски                      |    W     |    W     |         R         |      -      |
+| Конфигурация семантического слоя | W |  W     |         R         |      -      |

@@ -1,6 +1,6 @@
 ---
-title: "Apache Impala setup"
-description: "Read this guide to learn about the Apache Impala warehouse setup in dbt."
+title: "Настройка Apache Impala"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Apache Impala в dbt."
 id: "impala-setup"
 meta:
   maintained_by: Cloudera
@@ -8,7 +8,7 @@ meta:
   github_repo: 'cloudera/dbt-impala'
   pypi_package: 'dbt-impala'
   min_core_version: 'v1.1.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'n/a'
   slack_channel_name: '#db-impala'
   slack_channel_link: 'https://getdbt.slack.com/archives/C01PWAH41A5'
@@ -21,28 +21,28 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Connection Methods
+## Методы подключения
 
-dbt-impala can connect to Apache Impala and Cloudera Data Platform clusters.
+dbt-impala может подключаться к кластерам Apache Impala и Cloudera Data Platform.
 
-The [Impyla](https://github.com/cloudera/impyla/) library is used to establish connections to Impala.
+Для установления соединений с Impala используется библиотека [Impyla](https://github.com/cloudera/impyla/).
 
-Two transport mechanisms are supported:
-- binary
+Поддерживаются два механизма передачи:
+- бинарный
 - HTTP(S)
 
-The default mechanism is `binary`. To use HTTP transport, use the boolean option `use_http_transport: [true / false]`.
+Механизм по умолчанию — `binary`. Чтобы использовать HTTP-передачу, используйте логический параметр `use_http_transport: [true / false]`.
 
-## Authentication Methods
+## Методы аутентификации
 
-dbt-impala supports three authentication mechanisms:
-- [`insecure`](#Insecure) No authentication is used, only recommended for testing.
-- [`ldap`](#ldap) Authentication via LDAP
-- [`kerbros`](#kerbros) Authentication via Kerberos (GSSAPI)
+dbt-impala поддерживает три механизма аутентификации:
+- [`insecure`](#Insecure) Не используется аутентификация, рекомендуется только для тестирования.
+- [`ldap`](#ldap) Аутентификация через LDAP
+- [`kerberos`](#kerberos) Аутентификация через Kerberos (GSSAPI)
 
-### Insecure
+### Не защищенный
 
-This method is only recommended if you have a local install of Impala and want to test out the dbt-impala adapter. 
+Этот метод рекомендуется использовать только в том случае, если у вас есть локальная установка Impala и вы хотите протестировать адаптер dbt-impala. 
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -52,9 +52,9 @@ your_profile_name:
   outputs:
     dev:
       type: impala
-      host: [host] # default value: localhost
-      port: [port] # default value: 21050
-      dbname: [db name]  # this should be same as schema name provided below, starting with 1.1.2 this parameter is optional
+      host: [host] # значение по умолчанию: localhost
+      port: [port] # значение по умолчанию: 21050
+      dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с 1.1.2 этот параметр является необязательным
       schema: [schema name]
       
 ```
@@ -63,9 +63,9 @@ your_profile_name:
 
 ### LDAP
 
-LDAP allows you to authenticate with a username & password when Impala is [configured with LDAP Auth](https://impala.apache.org/docs/build/html/topics/impala_ldap.html). LDAP is supported over Binary & HTTP connection mechanisms.
+LDAP позволяет вам аутентифицироваться с помощью имени пользователя и пароля, когда Impala [настроена с использованием LDAP Auth](https://impala.apache.org/docs/build/html/topics/impala_ldap.html). LDAP поддерживается через бинарные и HTTP механизмы соединения.
 
-This is the recommended authentication mechanism to use with Cloudera Data Platform (CDP).
+Это рекомендуемый механизм аутентификации для использования с Cloudera Data Platform (CDP).
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -77,25 +77,25 @@ your_profile_name:
      type: impala
      host: [host name]
      http_path: [optional, http path to Impala]
-     port: [port] # default value: 21050
+     port: [port] # значение по умолчанию: 21050
      auth_type: ldap
-     use_http_transport: [true / false] # default value: true
-     use_ssl: [true / false] # TLS should always be used with LDAP to ensure secure transmission of credentials, default value: true
+     use_http_transport: [true / false] # значение по умолчанию: true
+     use_ssl: [true / false] # TLS всегда должен использоваться с LDAP для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
      username: [username]
      password: [password]
-     dbname: [db name]  # this should be same as schema name provided below, starting with 1.1.2 this parameter is optional
+     dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с 1.1.2 этот параметр является необязательным
      schema: [schema name]
-     retries: [retries] # number of times impyla attempts retry conneciton to warehouse, default value: 3
+     retries: [retries] # количество попыток, которые impyla делает для повторного подключения к хранилищу, значение по умолчанию: 3
   
 ```
 
 </File>
 
-Note: When creating workload user in CDP ensure that the user has CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ and WRITE permissions. If the user is required to execute GRANT statements, see for instance (https://docs.getdbt.com/reference/resource-configs/grants) or (https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end) appropriate GRANT permissions should be configured. When using Apache Ranger, permissions for allowing GRANT are typically set using "Delegate Admin" option. 
+Примечание: При создании рабочего пользователя в CDP убедитесь, что у пользователя есть разрешения на CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если пользователю необходимо выполнять операторы GRANT, смотрите, например, (https://docs.getdbt.com/reference/resource-configs/grants) или (https://docs.getdbt.com/reference/project-configs/on-run-start-on-run-end) соответствующие разрешения GRANT должны быть настроены. При использовании Apache Ranger разрешения для разрешения GRANT обычно устанавливаются с помощью опции "Delegate Admin". 
 
 ### Kerberos
 
-The Kerberos authentication mechanism uses GSSAPI to share Kerberos credentials when Impala is [configured with Kerberos Auth](https://impala.apache.org/docs/build/html/topics/impala_kerberos.html).
+Механизм аутентификации Kerberos использует GSSAPI для обмена учетными данными Kerberos, когда Impala [настроена с использованием Kerberos Auth](https://impala.apache.org/docs/build/html/topics/impala_kerberos.html).
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -106,45 +106,45 @@ your_profile_name:
     dev:
       type: impala
       host: [hostname]
-      port: [port] # default value: 21050
+      port: [port] # значение по умолчанию: 21050
       auth_type: [GSSAPI]
-      kerberos_service_name: [kerberos service name] # default value: None
-      use_http_transport: true # default value: true
-      use_ssl: true # TLS should always be used with LDAP to ensure secure transmission of credentials, default value: true
-      dbname: [db name]  # this should be same as schema name provided below, starting with 1.1.2 this parameter is optional
+      kerberos_service_name: [kerberos service name] # значение по умолчанию: None
+      use_http_transport: true # значение по умолчанию: true
+      use_ssl: true # TLS всегда должен использоваться с LDAP для обеспечения безопасной передачи учетных данных, значение по умолчанию: true
+      dbname: [db name]  # это должно совпадать с именем схемы, указанным ниже, начиная с 1.1.2 этот параметр является необязательным
       schema: [schema name]
-      retries: [retries] # number of times impyla attempts retry conneciton to warehouse, default value: 3
+      retries: [retries] # количество попыток, которые impyla делает для повторного подключения к хранилищу, значение по умолчанию: 3
   
 ```
 
 </File>
 
-Note: A typical setup of Cloudera EDH will involve the following steps to setup Kerberos before one can execute dbt commands:
-- Get the correct realm config file for your installation (krb5.conf)
-- Set environment variable to point to the config file (export KRB5_CONFIG=/path/to/krb5.conf)
-- Set correct permissions for config file (sudo chmod 644 /path/to/krb5.conf)
-- Obtain keytab using kinit (kinit username@YOUR_REALM.YOUR_DOMAIN)
-- The keytab is valid for certain period after which you will need to run kinit again to renew validity of the keytab.
+Примечание: Типичная настройка Cloudera EDH будет включать следующие шаги для настройки Kerberos перед выполнением команд dbt:
+- Получите правильный файл конфигурации области для вашей установки (krb5.conf)
+- Установите переменную окружения, указывающую на файл конфигурации (export KRB5_CONFIG=/path/to/krb5.conf)
+- Установите правильные разрешения для файла конфигурации (sudo chmod 644 /path/to/krb5.conf)
+- Получите keytab с помощью kinit (kinit username@YOUR_REALM.YOUR_DOMAIN)
+- Keytab действителен в течение определенного времени, после чего вам нужно будет снова запустить kinit, чтобы обновить его действительность.
 
-### Instrumentation
+### Инструментирование
 
-By default, the adapter will send instrumentation events to Cloudera to help improve functionality and understand bugs. If you want to specifically switch this off, for instance, in a production environment, you can explicitly set the flag `usage_tracking: false` in your `profiles.yml` file.
+По умолчанию адаптер будет отправлять события инструментирования в Cloudera, чтобы помочь улучшить функциональность и понять ошибки. Если вы хотите отключить это, например, в производственной среде, вы можете явно установить флаг `usage_tracking: false` в вашем файле `profiles.yml`.
 
-Relatedly, if you'd like to turn off dbt Lab's anonymous usage tracking, see [YAML Configurations: Send anonymous usage stats](https://docs.getdbt.com/reference/global-configs#send-anonymous-usage-stats) for more info
+Связано с этим, если вы хотите отключить анонимное отслеживание использования dbt Lab, смотрите [YAML Configurations: Send anonymous usage stats](https://docs.getdbt.com/reference/global-configs#send-anonymous-usage-stats) для получения дополнительной информации.
 
-### Supported Functionality
+### Поддерживаемая функциональность
 
-| Name | Supported |
-|------|-----------|
-|Materialization: Table|Yes|
-|Materialization: View|Yes|
-|Materialization: Incremental - Append|Yes|
-|Materialization: Incremental - Insert+Overwrite|Yes|
-|Materialization: Incremental - Merge|No|
-|Materialization: Ephemeral|No|
-|Seeds|Yes|
-|Tests|Yes|
-|Snapshots|Yes|
-|Documentation|Yes|
-|Authentication: LDAP|Yes|
-|Authentication: Kerberos|Yes|
+| Название | Поддерживается |
+|----------|----------------|
+|Материализация: Таблица|Да|
+|Материализация: Представление|Да|
+|Материализация: Инкрементальная - Добавление|Да|
+|Материализация: Инкрементальная - Вставка+Перезапись|Да|
+|Материализация: Инкрементальная - Слияние|Нет|
+|Материализация: Эфемерная|Нет|
+|Семена|Да|
+|Тесты|Да|
+|Снимки|Да|
+|Документация|Да|
+|Аутентификация: LDAP|Да|
+|Аутентификация: Kerberos|Да|

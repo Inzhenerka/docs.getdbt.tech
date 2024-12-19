@@ -1,15 +1,15 @@
 ---
-title: "Apache Spark setup"
-description: "Read this guide to learn about the Apache Spark warehouse setup in dbt."
+title: "Настройка Apache Spark"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Apache Spark в dbt."
 id: "spark-setup"
 meta:
   maintained_by: dbt Labs
-  authors: 'core dbt maintainers'
+  authors: 'основные разработчики dbt'
   github_repo: 'dbt-labs/dbt-spark'
   pypi_package: 'dbt-spark'
   min_core_version: 'v0.15.0'
-  cloud_support: Supported
-  min_supported_version: 'n/a'
+  cloud_support: Поддерживается
+  min_supported_version: 'н/д'
   slack_channel_name: 'db-databricks-and-spark'
   slack_channel_link: 'https://getdbt.slack.com/archives/CNGCW8HKL'
   platform_name: 'Spark'
@@ -25,48 +25,47 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-If connecting to Databricks via ODBC driver, it requires `pyodbc`. Depending on your system, you can install it seperately or via pip. See the [`pyodbc` wiki](https://github.com/mkleehammer/pyodbc/wiki/Install) for OS-specific installation details.
+Если вы подключаетесь к Databricks через ODBC-драйвер, вам потребуется `pyodbc`. В зависимости от вашей системы, вы можете установить его отдельно или через pip. См. [вики `pyodbc`](https://github.com/mkleehammer/pyodbc/wiki/Install) для получения информации о установке, специфичной для ОС.
 
-If connecting to a Spark cluster via the generic thrift or http methods, it requires `PyHive`.
+Если вы подключаетесь к кластеру Spark через общие методы thrift или http, вам потребуется `PyHive`.
 
 ```zsh
-# odbc connections
+# odbc соединения
 $ python -m pip install "dbt-spark[ODBC]"
 
-# thrift or http connections
+# thrift или http соединения
 $ python -m pip install "dbt-spark[PyHive]"
 ```
 
 ```zsh
-# session connections
+# session соединения
 $ python -m pip install "dbt-spark[session]"
 ```
 
-<h2> Configuring {frontMatter.meta.pypi_package} </h2>
+<h2> Настройка {frontMatter.meta.pypi_package} </h2>
 
-<p>For {frontMatter.meta.platform_name}-specific configuration please refer to <a href={frontMatter.meta.config_page}>{frontMatter.meta.platform_name} Configuration</a> </p>
+<p>Для настройки, специфичной для {frontMatter.meta.platform_name}, пожалуйста, обратитесь к <a href={frontMatter.meta.config_page}>{frontMatter.meta.platform_name} Configuration</a> </p>
 
-<p>For further info, refer to the GitHub repository: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
+<p>Для получения дополнительной информации обратитесь к репозиторию GitHub: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
-## Connection methods
+## Методы подключения
 
-dbt-spark can connect to Spark clusters by four different methods:
+dbt-spark может подключаться к кластерам Spark четырьмя различными способами:
 
-- [`odbc`](#odbc) is the preferred method when connecting to Databricks. It supports connecting to a SQL Endpoint or an all-purpose interactive cluster.
-- [`thrift`](#thrift) connects directly to the lead node of a cluster, either locally hosted / on premise or in the cloud (e.g. Amazon EMR).
-- [`http`](#http) is a more generic method for connecting to a managed service that provides an HTTP endpoint. Currently, this includes connections to a Databricks interactive cluster.
+- [`odbc`](#odbc) является предпочтительным методом при подключении к Databricks. Он поддерживает подключение к SQL Endpoint или к интерактивному кластеру общего назначения.
+- [`thrift`](#thrift) подключается напрямую к ведущему узлу кластера, который может находиться как локально, так и в облаке (например, Amazon EMR).
+- [`http`](#http) является более общим методом для подключения к управляемому сервису, который предоставляет HTTP-эндпоинт. В настоящее время это включает подключения к интерактивному кластеру Databricks.
 
+- [`session`](#session) подключается к сессии pySpark, работающей локально или на удаленной машине.
 
-- [`session`](#session) connects to a pySpark session, running locally or on a remote machine.
-
-:::info Advanced functionality
-The `session` connection method is intended for advanced users and experimental dbt development. This connection method is not supported by dbt Cloud.
+:::info Расширенная функциональность
+Метод подключения `session` предназначен для опытных пользователей и экспериментальной разработки dbt. Этот метод подключения не поддерживается в dbt Cloud.
 :::
 
 
 ### ODBC
 
-Use the `odbc` connection method if you are connecting to a Databricks SQL endpoint or interactive cluster via ODBC driver. (Download the latest version of the official driver [here](https://databricks.com/spark/odbc-driver-download).)
+Используйте метод подключения `odbc`, если вы подключаетесь к SQL-эндпоинту Databricks или интерактивному кластеру через ODBC-драйвер. (Скачайте последнюю версию официального драйвера [здесь](https://databricks.com/spark/odbc-driver-download).)
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -80,15 +79,15 @@ your_profile_name:
       driver: [path/to/driver]
       schema: [database/schema name]
       host: [yourorg.sparkhost.com]
-      organization: [org id]    # Azure Databricks only
+      organization: [org id]    # Только для Azure Databricks
       token: [abc123]
       
-      # one of:
+      # один из:
       endpoint: [endpoint id]
       cluster: [cluster id]
       
-      # optional
-      port: [port]              # default 443
+      # необязательно
+      port: [port]              # по умолчанию 443
       user: [user]
       server_side_parameters:
         "spark.driver.memory": "4g" 
@@ -98,7 +97,7 @@ your_profile_name:
 
 ### Thrift
 
-Use the `thrift` connection method if you are connecting to a Thrift server sitting in front of a Spark cluster, e.g. a cluster running locally or on Amazon EMR.
+Используйте метод подключения `thrift`, если вы подключаетесь к серверу Thrift, который находится перед кластером Spark, например, кластеру, работающему локально или на Amazon EMR.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -112,12 +111,12 @@ your_profile_name:
       schema: [database/schema name]
       host: [hostname]
       
-      # optional
-      port: [port]              # default 10001
+      # необязательно
+      port: [port]              # по умолчанию 10001
       user: [user]
-      auth: [e.g. KERBEROS]
-      kerberos_service_name: [e.g. hive]
-      use_ssl: [true|false]   # value of hive.server2.use.SSL, default false
+      auth: [например, KERBEROS]
+      kerberos_service_name: [например, hive]
+      use_ssl: [true|false]   # значение hive.server2.use.SSL, по умолчанию false
       server_side_parameters:
         "spark.driver.memory": "4g" 
 ```
@@ -126,7 +125,7 @@ your_profile_name:
 
 ### HTTP
 
-Use the `http` method if your Spark provider supports generic connections over HTTP (e.g. Databricks interactive cluster).
+Используйте метод `http`, если ваш поставщик Spark поддерживает общие подключения через HTTP (например, интерактивный кластер Databricks).
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -139,28 +138,26 @@ your_profile_name:
       method: http
       schema: [database/schema name]
       host: [yourorg.sparkhost.com]
-      organization: [org id]    # Azure Databricks only
+      organization: [org id]    # Только для Azure Databricks
       token: [abc123]
       cluster: [cluster id]
       
-      # optional
-      port: [port]              # default: 443
+      # необязательно
+      port: [port]              # по умолчанию: 443
       user: [user]
-      connect_timeout: 60       # default 10
-      connect_retries: 5        # default 0
+      connect_timeout: 60       # по умолчанию 10
+      connect_retries: 5        # по умолчанию 0
       server_side_parameters:
         "spark.driver.memory": "4g" 
 ```
 
 </File>
 
-Databricks interactive clusters can take several minutes to start up. You may
-include the optional profile configs `connect_timeout` and `connect_retries`,
-and dbt will periodically retry the connection.
+Интерактивные кластеры Databricks могут запускаться в течение нескольких минут. Вы можете включить необязательные параметры профиля `connect_timeout` и `connect_retries`, и dbt будет периодически повторять попытки подключения.
 
 ### Session
 
-Use the `session` method if you want to run `dbt` against a pySpark session. 
+Используйте метод `session`, если вы хотите запустить `dbt` против сессии pySpark. 
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -172,20 +169,20 @@ your_profile_name:
       type: spark
       method: session
       schema: [database/schema name]
-      host: NA                           # not used, but required by `dbt-core`
+      host: NA                           # не используется, но требуется `dbt-core`
       server_side_parameters:
         "spark.driver.memory": "4g" 
 ```
 
 </File>
 
-## Optional configurations
+## Необязательные настройки
 
-### Retries
+### Повторные попытки
 
-Intermittent errors can crop up unexpectedly while running queries against Apache Spark. If `retry_all` is enabled, dbt-spark will naively retry any query that fails, based on the configuration supplied by `connect_timeout` and `connect_retries`. It does not attempt to determine if the query failure was transient or likely to succeed on retry. This configuration is recommended in production environments, where queries ought to be succeeding.
+Непредвиденные ошибки могут возникать неожиданно при выполнении запросов к Apache Spark. Если `retry_all` включен, dbt-spark будет наивно повторять любые запросы, которые не удались, основываясь на конфигурации, предоставленной `connect_timeout` и `connect_retries`. Он не пытается определить, была ли ошибка запроса временной или, вероятно, будет успешной при повторной попытке. Эта конфигурация рекомендуется в производственных средах, где запросы должны быть успешными.
 
-For instance, this will instruct dbt to retry all failed queries up to 3 times, with a 5 second delay between each retry:
+Например, это укажет dbt повторять все неудачные запросы до 3 раз с задержкой в 5 секунд между каждой попыткой:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -197,29 +194,28 @@ connect_retries: 3
 
 </File>
 
-### Server side configuration
+### Конфигурация на стороне сервера
 
-Spark can be customized using [Application Properties](https://spark.apache.org/docs/latest/configuration.html). Using these properties the execution can be customized, for example, to allocate more memory to the driver process. Also, the Spark SQL runtime can be set through these properties. For example, this allows the user to [set a Spark catalogs](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
+Spark можно настроить с помощью [Application Properties](https://spark.apache.org/docs/latest/configuration.html). С помощью этих свойств можно настроить выполнение, например, выделив больше памяти для процесса драйвера. Также через эти свойства можно установить время выполнения Spark SQL. Например, это позволяет пользователю [установить каталоги Spark](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
 
-## Caveats
+## Предостережения
 
-When facing difficulties, run `poetry run dbt debug --log-level=debug`. The logs are saved at `logs/dbt.log`.
+При возникновении трудностей выполните `poetry run dbt debug --log-level=debug`. Логи сохраняются в `logs/dbt.log`.
 
-### Usage with EMR
-To connect to Apache Spark running on an Amazon EMR cluster, you will need to run `sudo /usr/lib/spark/sbin/start-thriftserver.sh` on the master node of the cluster to start the Thrift server (see [the docs](https://aws.amazon.com/premiumsupport/knowledge-center/jdbc-connection-emr/) for more information). You will also need to connect to port 10001, which will connect to the Spark backend Thrift server; port 10000 will instead connect to a Hive backend, which will not work correctly with dbt.
+### Использование с EMR
+Чтобы подключиться к Apache Spark, работающему на кластере Amazon EMR, вам нужно выполнить `sudo /usr/lib/spark/sbin/start-thriftserver.sh` на главном узле кластера, чтобы запустить сервер Thrift (см. [документацию](https://aws.amazon.com/premiumsupport/knowledge-center/jdbc-connection-emr/) для получения дополнительной информации). Вам также нужно подключиться к порту 10001, который подключится к серверу Thrift на бэкенде Spark; порт 10000 подключится к бэкенду Hive, что не будет работать корректно с dbt.
 
-### Supported functionality
+### Поддерживаемая функциональность
 
-Most dbt Core functionality is supported, but some features are only available
-on Delta Lake (Databricks).
+Большинство функций dbt Core поддерживается, но некоторые функции доступны только на Delta Lake (Databricks).
 
-Delta-only features:
-1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/spark-configs#the-merge-strategy))
-2. [Snapshots](/docs/build/snapshots)
-3. [Persisting](/reference/resource-configs/persist_docs) column-level descriptions as database comments
+Функции только для Delta:
+1. Инкрементальные обновления модели по `unique_key` вместо `partition_by` (см. [`merge` strategy](/reference/resource-configs/spark-configs#the-merge-strategy))
+2. [Снимки](/docs/build/snapshots)
+3. [Сохранение](/reference/resource-configs/persist_docs) описаний на уровне столбцов в качестве комментариев к базе данных
 
-### Default namespace with Thrift connection method
+### Стандартное пространство имен с методом подключения Thrift
 
-To run metadata queries in dbt, you need to have a namespace named `default` in Spark when connecting with Thrift. You can check available namespaces by using Spark's `pyspark` and running `spark.sql("SHOW NAMESPACES").show()`. If the default namespace doesn't exist, create it by running `spark.sql("CREATE NAMESPACE default").show()`.
+Чтобы выполнять запросы метаданных в dbt, вам необходимо иметь пространство имен с именем `default` в Spark при подключении с помощью Thrift. Вы можете проверить доступные пространства имен, используя `pyspark` и выполнив `spark.sql("SHOW NAMESPACES").show()`. Если пространство имен по умолчанию не существует, создайте его, выполнив `spark.sql("CREATE NAMESPACE default").show()`.
 
-If there's a network connection issue, your logs will display an error like `Could not connect to any of [('127.0.0.1', 10000)]` (or something similar).
+Если возникла проблема с сетевым подключением, в ваших логах будет отображаться ошибка, подобная `Could not connect to any of [('127.0.0.1', 10000)]` (или что-то подобное).

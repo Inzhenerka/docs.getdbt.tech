@@ -1,35 +1,35 @@
 ---
-title: "Available integrations"
+title: "Доступные интеграции"
 id: avail-sl-integrations
-description: "Discover the diverse range of partners that seamlessly integrate with the powerful dbt Semantic Layer, allowing you to query and unlock valuable insights from your data ecosystem."
-tags: [Semantic Layer]
-sidebar_label: "Available integrations"
+description: "Откройте для себя разнообразие партнеров, которые бесшовно интегрируются с мощным семантическим слоем dbt, позволяя вам запрашивать и извлекать ценные инсайты из вашей экосистемы данных."
+tags: [Семантический слой]
+sidebar_label: "Доступные интеграции"
 hide_table_of_contents: true
 meta:
-  api_name: dbt Semantic Layer APIs
+  api_name: API семантического слоя dbt
 ---
 
-There are a number of data applications that seamlessly integrate with the dbt Semantic Layer, powered by MetricFlow, from business intelligence tools to notebooks, spreadsheets, data catalogs, and more. These integrations allow you to query and unlock valuable insights from your data ecosystem.
+Существует множество приложений для работы с данными, которые бесшовно интегрируются с семантическим слоем dbt, поддерживаемым MetricFlow, от инструментов бизнес-аналитики до ноутбуков, электронных таблиц, каталогов данных и многого другого. Эти интеграции позволяют вам запрашивать и извлекать ценные инсайты из вашей экосистемы данных.
 
-Use the [dbt Semantic Layer APIs](/docs/dbt-cloud-apis/sl-api-overview) to simplify metric queries, optimize your development workflow, and reduce coding. This approach also ensures data governance and consistency for data consumers.
+Используйте [API семантического слоя dbt](/docs/dbt-cloud-apis/sl-api-overview), чтобы упростить запросы метрик, оптимизировать ваш рабочий процесс разработки и сократить объем кода. Этот подход также обеспечивает управление данными и согласованность для потребителей данных.
 
 import AvailIntegrations from '/snippets/_sl-partner-links.md';
 
 <AvailIntegrations/>
 
-### Custom integration
+### Пользовательская интеграция
 
-- [Exports](/docs/use-dbt-semantic-layer/exports) enable custom integration with additional tools that don't natively connect with the dbt Semantic Layer, such as PowerBI.
-- [Consume metrics](/docs/use-dbt-semantic-layer/consume-metrics) and develop custom integrations using different languages and tools, supported through [JDBC](/docs/dbt-cloud-apis/sl-jdbc), ADBC, and [GraphQL](/docs/dbt-cloud-apis/sl-graphql) APIs, and [Python SDK library](/docs/dbt-cloud-apis/sl-python). For more info, check out [our examples on GitHub](https://github.com/dbt-labs/example-semantic-layer-clients/).
-- Connect to any tool that supports SQL queries. These tools must meet one of the two criteria:
-    - Offers a generic JDBC driver option (such as DataGrip) or
-    - Is compatible Arrow Flight SQL JDBC driver version 12.0.0 or higher.
+- [Экспорты](/docs/use-dbt-semantic-layer/exports) позволяют настраивать интеграцию с дополнительными инструментами, которые не подключаются к семантическому слою dbt по умолчанию, такими как PowerBI.
+- [Используйте метрики](/docs/use-dbt-semantic-layer/consume-metrics) и разрабатывайте пользовательские интеграции, используя различные языки и инструменты, поддерживаемые через [JDBC](/docs/dbt-cloud-apis/sl-jdbc), ADBC и [GraphQL](/docs/dbt-cloud-apis/sl-graphql) API, а также [библиотеку Python SDK](/docs/dbt-cloud-apis/sl-python). Для получения дополнительной информации ознакомьтесь с [нашими примерами на GitHub](https://github.com/dbt-labs/example-semantic-layer-clients/).
+- Подключайтесь к любому инструменту, который поддерживает SQL-запросы. Эти инструменты должны соответствовать одному из двух критериев:
+    - Предлагают общий вариант драйвера JDBC (например, DataGrip) или
+    - Совместимы с версией драйвера Arrow Flight SQL JDBC 12.0.0 или выше.
 
-## Related docs
+## Связанные документы
 
-- <span><a href="https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview" target="_self">{frontMatter.meta.api_name}</a></span> to learn how to integrate and query your metrics in downstream tools.
-- [dbt Semantic Layer API query syntax](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) 
-- [Hex dbt Semantic Layer cells](https://learn.hex.tech/docs/explore-data/cells/data-cells/dbt-metrics-cells) to set up SQL cells in Hex.
-- [Resolve 'Failed APN'](/faqs/Troubleshooting/sl-alpn-error) error when connecting to the dbt Semantic Layer.
-- [dbt Semantic Layer on-demand course](https://learn.getdbt.com/courses/semantic-layer)
-- [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs)
+- <span><a href="https://docs.getdbt.com/docs/dbt-cloud-apis/sl-api-overview" target="_self">{frontMatter.meta.api_name}</a></span>, чтобы узнать, как интегрировать и запрашивать ваши метрики в downstream-инструментах.
+- [Синтаксис запросов API семантического слоя dbt](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) 
+- [Ячейки семантического слоя dbt в Hex](https://learn.hex.tech/docs/explore-data/cells/data-cells/dbt-metrics-cells) для настройки SQL-ячейок в Hex.
+- [Решение ошибки 'Failed APN'](/faqs/Troubleshooting/sl-alpn-error) при подключении к семантическому слою dbt.
+- [Курс по семантическому слою dbt по запросу](https://learn.getdbt.com/courses/semantic-layer)
+- [Часто задаваемые вопросы по семантическому слою dbt](/docs/use-dbt-semantic-layer/sl-faqs)

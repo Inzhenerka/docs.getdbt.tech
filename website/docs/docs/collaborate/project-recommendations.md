@@ -1,50 +1,47 @@
 ---
-title: "Project recommendations"
-sidebar_label: "Project recommendations"
-description: "dbt Explorer provides recommendations that you can take to improve the quality of your dbt project."
+title: "Рекомендации по проекту"
+sidebar_label: "Рекомендации по проекту"
+description: "dbt Explorer предоставляет рекомендации, которые вы можете использовать для улучшения качества вашего проекта dbt."
 ---
- 
-dbt Explorer provides recommendations about your project from the `dbt_project_evaluator` [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) using metadata from the [Discovery API](/docs/dbt-cloud-apis/discovery-api). 
 
-- Explorer also offers a global view, showing all the recommendations across the project for easy sorting and summarizing.
-- These recommendations provide insight into how you can create a better-documented, better-tested, and better-built dbt project, creating more trust and less confusion.
-- For a seamless and consistent experience, recommendations use `dbt_project_evaluator`'s pre-defined settings and don't import customizations applied to your package or project.
+dbt Explorer предоставляет рекомендации по вашему проекту из пакета `dbt_project_evaluator` [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) с использованием метаданных из [Discovery API](/docs/dbt-cloud-apis/discovery-api).
+
+- Explorer также предлагает глобальный обзор, показывая все рекомендации по проекту для удобной сортировки и обобщения.
+- Эти рекомендации дают представление о том, как вы можете создать лучше документированный, лучше протестированный и лучше построенный проект dbt, что создает больше доверия и меньше путаницы.
+- Для бесшовного и последовательного опыта рекомендации используют предопределенные настройки `dbt_project_evaluator` и не импортируют настройки, примененные к вашему пакету или проекту.
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-## Recommendations page
-The Recommendations overview page includes two top-level metrics measuring the test and documentation coverage of the models in your project. 
+## Страница рекомендаций
+Страница обзора рекомендаций включает две основные метрики, измеряющие покрытие тестами и документацией моделей в вашем проекте.
 
-- **Model test coverage** &mdash; The percent of models in your project (models not from a package or imported via dbt Mesh) with at least one dbt test configured on them.
-- **Model documentation coverage** &mdash; The percent of models in your project (models not from a package or imported via dbt Mesh) with a description.
+- **Покрытие тестами моделей** &mdash; Процент моделей в вашем проекте (модели, не относящиеся к пакету или импортированные через dbt Mesh) с как минимум одним настроенным тестом dbt.
+- **Покрытие документацией моделей** &mdash; Процент моделей в вашем проекте (модели, не относящиеся к пакету или импортированные через dbt Mesh) с описанием.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-overview.png" width="100%" title="Example of the Recommendations overview page with project metrics and the recommendations for all resources in the project"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-overview.png" width="100%" title="Пример страницы обзора рекомендаций с метриками проекта и рекомендациями для всех ресурсов в проекте"/>
 
-## List of rules
-The following table lists the rules currently defined in the `dbt_project_evaluator` [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/). 
+## Список правил
+В следующей таблице перечислены правила, в настоящее время определенные в пакете `dbt_project_evaluator` [package](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/).
 
-| Category | Name | Description | Package Docs Link |
+| Категория | Название | Описание | Ссылка на документацию пакета |
 | --- | --- | --- | --- |
-| Modeling | Direct Join to Source | Model that joins both a model and source, indicating a missing staging model | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#direct-join-to-source) |
-| Modeling | Duplicate Sources | More than one source node corresponds to the same data warehouse relation | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#duplicate-sources) |
-| Modeling | Multiple Sources Joined  | Models with more than one source parent, indicating lack of staging models | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#multiple-sources-joined) |
-| Modeling | Root Model | Models with no parents, indicating potential hardcoded references and need for sources  | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#root-models) |
-| Modeling | Source Fanout | Sources with more than one model child, indicating a need for staging models | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#source-fanout) |
-| Modeling | Unused Source | Sources that are not referenced by any resource | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#unused-sources) |
-| Performance | Exposure Dependent on View | Exposures with at least one model parent materialized as a view, indicating potential query performance issues | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/performance/#exposure-parents-materializations) |
-| Testing | Missing Primary Key Test | Models with insufficient testing on the grain of the model.  | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/testing/#missing-primary-key-tests) |
-| Documentation | Undocumented Models | Models without a model-level description | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-models) |
-| Documentation | Undocumented Source | Sources (collections of source tables) without descriptions | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-sources) |
-| Documentation | Undocumented Source Tables | Source tables without descriptions | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-source-tables) |
-| Governance | Public Model Missing Contract | Models with public access that do not have a model contract to ensure the data types | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/governance/#public-models-without-contracts) |
+| Моделирование | Прямое соединение с источником | Модель, которая соединяет как модель, так и источник, указывая на отсутствие промежуточной модели | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#direct-join-to-source) |
+| Моделирование | Дублирующиеся источники | Более одного узла источника соответствует одной и той же связи в хранилище данных | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#duplicate-sources) |
+| Моделирование | Соединенные несколько источников | Модели с более чем одним родительским источником, указывая на отсутствие промежуточных моделей | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#multiple-sources-joined) |
+| Моделирование | Корневая модель | Модели без родителей, указывая на потенциальные жестко закодированные ссылки и необходимость в источниках | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#root-models) |
+| Моделирование | Распределение источников | Источники с более чем одной дочерней моделью, указывая на необходимость в промежуточных моделях | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#source-fanout) |
+| Моделирование | Неиспользуемый источник | Источники, на которые не ссылается ни один ресурс | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/modeling/#unused-sources) |
+| Производительность | Экспозиция, зависящая от представления | Экспозиции с как минимум одной родительской моделью, материализованной как представление, указывая на потенциальные проблемы с производительностью запросов | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/performance/#exposure-parents-materializations) |
+| Тестирование | Отсутствие теста первичного ключа | Модели с недостаточным тестированием на уровне модели. | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/testing/#missing-primary-key-tests) |
+| Документация | Модели без документации | Модели без описания на уровне модели | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-models) |
+| Документация | Источник без документации | Источники (коллекции таблиц источников) без описаний | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-sources) |
+| Документация | Таблицы источников без документации | Таблицы источников без описаний | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/documentation/#undocumented-source-tables) |
+| Управление | Публичная модель без контракта | Модели с публичным доступом, которые не имеют контракта модели для обеспечения типов данных | [GitHub](https://dbt-labs.github.io/dbt-project-evaluator/0.8/rules/governance/#public-models-without-contracts) |
 
+## Вкладка Рекомендации
 
-## The Recommendations tab
+Модели, источники и экспозиции также имеют вкладку **Рекомендации** на странице деталей их ресурса, с конкретными рекомендациями, которые соответствуют этому ресурсу:
 
-Models, sources, and exposures each also have a **Recommendations** tab on their resource details page, with the specific recommendations that correspond to that resource:
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-tab.png" width="80%" title="Example of the Recommendations tab "/>
-
-
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-tab.png" width="80%" title="Пример вкладки Рекомендации "/>

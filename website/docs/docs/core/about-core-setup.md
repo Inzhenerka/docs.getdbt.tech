@@ -1,19 +1,19 @@
 ---
-title: About dbt Core setup
+title: О настройке dbt Core
 id: about-core-setup
-description: "Configuration settings for dbt Core."
-sidebar_label: "About dbt Core setup"
+description: "Настройки конфигурации для dbt Core."
+sidebar_label: "О настройке dbt Core"
 pagination_next: "docs/core/dbt-core-environments"
 pagination_prev: null
 ---
 
-dbt Core is an [open-source](https://github.com/dbt-labs/dbt-core) tool that enables data teams to transform data using analytics engineering best practices. You can install dbt locally in your environment and use dbt Core on the command line. It can communicate with databases through adapters.
+dbt Core — это [инструмент с открытым исходным кодом](https://github.com/dbt-labs/dbt-core), который позволяет командам по работе с данными преобразовывать данные, используя лучшие практики аналитического инжиниринга. Вы можете установить dbt локально в своей среде и использовать dbt Core через командную строку. Он может взаимодействовать с базами данных через адаптеры.
 
- This section of our docs will guide you through various settings to get started:
+Этот раздел нашей документации поможет вам разобраться с различными настройками для начала работы:
 
-- [Connecting to a data platform](/docs/core/connect-data-platform/profiles.yml)
-- [How to run your dbt projects](/docs/running-a-dbt-project/run-your-dbt-projects)
+- [Подключение к платформе данных](/docs/core/connect-data-platform/profiles.yml)
+- [Как запускать ваши проекты dbt](/docs/running-a-dbt-project/run-your-dbt-projects)
 
-If you're interested in using a command line interface to [develop dbt projects in dbt Cloud](/docs/cloud/about-develop-dbt), the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) lets you run dbt commands locally. The dbt Cloud CLI is tailored for dbt Cloud's infrastructure and integrates with all its [features](/docs/cloud/about-cloud/dbt-cloud-features).
+Если вас интересует использование интерфейса командной строки для [разработки проектов dbt в dbt Cloud](/docs/cloud/about-develop-dbt), [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) позволяет вам запускать команды dbt локально. dbt Cloud CLI адаптирован для инфраструктуры dbt Cloud и интегрируется со всеми его [функциями](/docs/cloud/about-cloud/dbt-cloud-features).
 
-If you need a more detailed first-time setup guide for specific data platforms, read our [quickstart guides](https://docs.getdbt.com/guides).
+Если вам нужен более подробный гид по первичной настройке для конкретных платформ данных, ознакомьтесь с нашими [руководствами по быстрому старту](https://docs.getdbt.com/guides).

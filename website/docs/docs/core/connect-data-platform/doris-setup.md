@@ -1,6 +1,6 @@
 ---
-title: "Doris setup"
-description: "Read this guide to learn about the Doris warehouse setup in dbt."
+title: "Настройка Doris"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Doris в dbt."
 id: "doris-setup"
 meta:
   maintained_by: SelectDB
@@ -8,7 +8,7 @@ meta:
   github_repo: 'selectdb/dbt-doris'
   pypi_package: 'dbt-doris'
   min_core_version: 'v1.3.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   slack_channel_name: '#db-doris'
   slack_channel_link: 'https://www.getdbt.com/community'
   platform_name: 'Apache Doris / SelectDB'
@@ -20,13 +20,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Connecting to Doris/SelectDB with **dbt-doris**
+## Подключение к Doris/SelectDB с помощью **dbt-doris**
 
-### User / Password Authentication
+### Аутентификация по имени пользователя и паролю
 
-Configure your dbt profile for using Doris:
+Настройте свой профиль dbt для использования с Doris:
 
-#### Doris connection profile
+#### Профиль подключения Doris
 <File name='profiles.yml'>
 
 ```yaml
@@ -45,26 +45,26 @@ dbt-doris:
 
 </File>
 
-#### Description of Profile Fields
+#### Описание полей профиля
 
-| Option   | Description                                                                                                                      | Required? | Example     |
-|----------|----------------------------------------------------------------------------------------------------------------------------------|-----------|-------------|
-| type     | The specific adapter to use                                                                                                      | Required  | `doris`     |
-| host     | The hostname to connect to                                                                                                       | Required  | `127.0.0.1` |
-| port     | The port to use                                                                                                                  | Required  | `9030`      |
-| schema   | Specify the schema (database) to build models into, doris have not schema to make a collection of table or view' like PostgreSql | Required  | `dbt`       |
-| username | The username to use to connect to the doris                                                                                      | Required  | `root`      |
-| password | The password to use for authenticating to the doris                                                                              | Required  | `password`  |
+| Опция    | Описание                                                                                                                      | Обязательно? | Пример      |
+|----------|-------------------------------------------------------------------------------------------------------------------------------|--------------|-------------|
+| type     | Конкретный адаптер для использования                                                                                          | Обязательно   | `doris`     |
+| host     | Имя хоста для подключения                                                                                                     | Обязательно   | `127.0.0.1` |
+| port     | Порт для использования                                                                                                        | Обязательно   | `9030`      |
+| schema   | Укажите схему (базу данных), в которую будут создаваться модели. В Doris нет схемы для создания коллекции таблиц или представлений, как в PostgreSQL | Обязательно   | `dbt`       |
+| username | Имя пользователя для подключения к Doris                                                                                     | Обязательно   | `root`      |
+| password | Пароль для аутентификации в Doris                                                                                            | Обязательно   | `password`  |
 
-## Database User Privileges
+## Привилегии пользователя базы данных
 
-Your Doris/SelectDB database user would be able to have some abilities to read or write.
-You can find some help [here](https://doris.apache.org/docs/admin-manual/privilege-ldap/user-privilege) with Doris privileges management.
+Ваш пользователь базы данных Doris/SelectDB будет иметь возможность читать или записывать данные.
+Вы можете найти дополнительную информацию [здесь](https://doris.apache.org/docs/admin-manual/privilege-ldap/user-privilege) о управлении привилегиями в Doris.
 
-| Required Privilege |
-|--------------------|
-| Select_priv        |
-| Load_priv          |
-| Alter_priv         |
-| Create_priv        |
-| Drop_priv          |
+| Обязательная привилегия |
+|-------------------------|
+| Select_priv             |
+| Load_priv               |
+| Alter_priv              |
+| Create_priv             |
+| Drop_priv               |

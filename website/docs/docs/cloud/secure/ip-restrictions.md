@@ -1,8 +1,8 @@
 ---
-title: "Configuring IP restrictions"
+title: "Настройка ограничений по IP"
 id: ip-restrictions
-description: "Configuring IP restrictions to outside traffic from accessing your dbt Cloud environment"
-sidebar_label: "IP restrictions"
+description: "Настройка ограничений по IP для предотвращения доступа внешнего трафика к вашей среде dbt Cloud"
+sidebar_label: "Ограничения по IP"
 pagination_next: "docs/cloud/secure/about-privatelink"
 pagination_prev: null
 ---
@@ -11,68 +11,68 @@ import SetUpPages from '/snippets/_available-tiers-iprestrictions.md';
 
 <SetUpPages features={'/snippets/_available-tiers-iprestrictions.md'}/>
 
-IP Restrictions help control which IP addresses are allowed to connect to dbt Cloud. IP restrictions allow dbt Cloud customers to meet security and compliance controls by only allowing approved IPs to connect to their dbt Cloud environment. This feature is supported in all regions across NA, Europe, and Asia-Pacific, but contact us if you have questions about availability.
+Ограничения по IP помогают контролировать, какие IP-адреса могут подключаться к dbt Cloud. Ограничения по IP позволяют клиентам dbt Cloud соответствовать требованиям безопасности и соблюдения норм, разрешая подключение только одобренным IP-адресам к их среде dbt Cloud. Эта функция поддерживается во всех регионах Северной Америки, Европы и Азиатско-Тихоокеанского региона, но свяжитесь с нами, если у вас есть вопросы о доступности.
 
-## Configuring IP restrictions
+## Настройка ограничений по IP
 
-To configure IP restrictions, go to **Account Settings** → **IP Restrictions**. IP restrictions provide two methods for determining which IPs can access dbt Cloud: an allowlist and a blocklist. IPs in the allowlist are allowed to access dbt Cloud, and IPs in the deny list will be blocked from accessing dbt Cloud. IP Restrictions can be used for a range of use cases, including:
+Чтобы настроить ограничения по IP, перейдите в **Настройки аккаунта** → **Ограничения по IP**. Ограничения по IP предоставляют два метода для определения, какие IP-адреса могут получить доступ к dbt Cloud: белый список и черный список. IP-адреса в белом списке могут получить доступ к dbt Cloud, а IP-адреса в черном списке будут заблокированы. Ограничения по IP могут использоваться для различных сценариев, включая:
 
-- Only allowing corporate VPN traffic and deny all other traffic
-- Deny IPs flagged by the Security team
-- Allow only VPN traffic but make an exception for contractors’ IP addresses
+- Разрешение только трафика корпоративной VPN и блокировка всего остального трафика
+- Блокировка IP-адресов, отмеченных командой безопасности
+- Разрешение только трафика VPN, но с исключением для IP-адресов подрядчиков
 
-IP restrictions will block all service tokens, user requests done via the API (via personal user token), and the UI if they come from blocked IP addresses.
+Ограничения по IP будут блокировать все токены сервиса, запросы пользователей, выполненные через API (через личный токен пользователя), и интерфейс, если они поступают с заблокированных IP-адресов.
 
-For any version control system integrations (Github, Gitlab, ADO, etc.) inbound into dbt Cloud, ensure their IP addresses are added to the allowed list.
+Для любых интеграций систем контроля версий (Github, Gitlab, ADO и т.д.), входящих в dbt Cloud, убедитесь, что их IP-адреса добавлены в разрешенный список.
 
-### Allowing IPs
+### Разрешение IP-адресов
 
-To add an IP to the allowlist, from the **IP Restrictions** page:
+Чтобы добавить IP в белый список, на странице **Ограничения по IP**:
 
-1.  Click **Edit**
-2. Click **Add Rule**
-3. Add name and description for the rule
-    - For example, Corporate VPN CIDR Range
-4. Select **Allow**
-5. Add the ranges in the CIDR notation
-	- For example, 1.1.1.1/8
-	- You can add multiple ranges in the same rule.
-6. Click **Save**
+1. Нажмите **Редактировать**
+2. Нажмите **Добавить правило**
+3. Укажите имя и описание для правила
+    - Например, диапазон CIDR корпоративной VPN
+4. Выберите **Разрешить**
+5. Добавьте диапазоны в нотации CIDR
+	- Например, 1.1.1.1/8
+	- Вы можете добавить несколько диапазонов в одно правило.
+6. Нажмите **Сохранить**
 
-Add multiple IP ranges by clicking the **Add IP range** button to create a new text field.
+Добавьте несколько диапазонов IP, нажав кнопку **Добавить диапазон IP**, чтобы создать новое текстовое поле.
 
-Note that simply adding the IP Ranges will not enforce IP restrictions. For more information, see the [Enabling restrictions](#enabling-restrictions) section.
+Обратите внимание, что простое добавление диапазонов IP не будет обеспечивать соблюдение ограничений по IP. Для получения дополнительной информации смотрите раздел [Включение ограничений](#enabling-restrictions).
 
-If you only want to allow the IP ranges added to this list and deny all other requests, adding a denylist is not necessary. By default, if only an allow list is added, dbt Cloud will only allow IPs in the allowable range and deny all other IPs. However, you can add a denylist if you want to deny specific IP addresses within your allowlist CIDR range.
+Если вы хотите разрешить только диапазоны IP, добавленные в этот список, и заблокировать все остальные запросы, добавление черного списка не обязательно. По умолчанию, если добавлен только белый список, dbt Cloud будет разрешать только IP-адреса в допустимом диапазоне и блокировать все остальные IP-адреса. Однако вы можете добавить черный список, если хотите заблокировать определенные IP-адреса в пределах вашего диапазона CIDR белого списка.
 
-### Blocking IPs (deny)
+### Блокировка IP-адресов (запрет)
 
-If you have an IP(s) defined in the allowlist that needs to be denied, you can add those IP ranges to the denylist by doing the following:
+Если у вас есть IP-адреса, определенные в белом списке, которые необходимо заблокировать, вы можете добавить эти диапазоны IP в черный список, выполнив следующие действия:
 
-1. Click **Edit**
-2. Click **Add Rule**
-3. Add name and description for the rule
-	- For example, "Corporate VPN Deny Range"
-4. Select **Deny**
-5. Add the ranges or the individual IP addresses in CIDR notation
-6. Click **Save**
+1. Нажмите **Редактировать**
+2. Нажмите **Добавить правило**
+3. Укажите имя и описание для правила
+	- Например, "Диапазон запрета корпоративной VPN"
+4. Выберите **Запретить**
+5. Добавьте диапазоны или отдельные IP-адреса в нотации CIDR
+6. Нажмите **Сохранить**
 
-:::note Duplicate IP addresses
+:::note Дублирующиеся IP-адреса
 
-If identical IP addresses are in both the allow and block configurations, whichever is entered second will fail to save.
+Если идентичные IP-адреса находятся как в разрешенных, так и в заблокированных конфигурациях, то второе введенное значение не удастся сохранить.
 
-It is possible to put an IP range on one list and then a sub-range or IP address that is part of it on the other. Using USA (Range) and NY(sub-range) as an example, the expected behavior is:
-- USA is on denylist and NY in allowlist - Traffic from the USA will be blocked, but IPs from NY will be allowed.
-- USA is on the allowlist, and NY is on the denylist - USA traffic will be allowed, but IPs from NY will be blocked.
+Возможно, поместить диапазон IP в один список, а затем поддиапазон или IP-адрес, который является его частью, в другой. Используя США (диапазон) и Нью-Йорк (поддиапазон) в качестве примера, ожидаемое поведение следующее:
+- США в черном списке, а Нью-Йорк в белом списке - Трафик из США будет заблокирован, но IP-адреса из Нью-Йорка будут разрешены.
+- США в белом списке, а Нью-Йорк в черном списке - Трафик из США будет разрешен, но IP-адреса из Нью-Йорка будут заблокированы.
 
 :::
 
-## Enabling restrictions
+## Включение ограничений
 
-Once you are done adding all your ranges, IP restrictions can be enabled by selecting the **Enable IP restrictions** button and clicking **Save**. If your IP address is in any of the denylist ranges, you won’t be able to save or enable IP restrictions - this is done to prevent accidental account lockouts. If you do get locked out due to IP changes on your end, please reach out to support@getdbt.com
+После того как вы добавили все свои диапазоны, ограничения по IP можно включить, выбрав кнопку **Включить ограничения по IP** и нажав **Сохранить**. Если ваш IP-адрес находится в любом из диапазонов черного списка, вы не сможете сохранить или включить ограничения по IP - это сделано для предотвращения случайной блокировки аккаунта. Если вы все же окажетесь заблокированы из-за изменений IP с вашей стороны, пожалуйста, свяжитесь с support@getdbt.com.
 
-Once enabled, when someone attempts to access dbt Cloud from a restricted IP, they will encounter one of the following messages depending on whether they use email & password or SSO login. 
+После включения, когда кто-то попытается получить доступ к dbt Cloud с ограниченного IP, он столкнется с одним из следующих сообщений в зависимости от того, использует ли он вход по электронной почте и паролю или вход через SSO. 
 
-<Lightbox src="/img/docs/dbt-cloud/ip-restricted-email.png" title="IP restricted access denied message for email logins"/>
+<Lightbox src="/img/docs/dbt-cloud/ip-restricted-email.png" title="Сообщение об отказе в доступе из-за ограничений по IP для входа по электронной почте"/>
 
-<Lightbox src="/img/docs/dbt-cloud/ip-restricted-sso.png" title="IP restricted access denied message for SSO logins"/>
+<Lightbox src="/img/docs/dbt-cloud/ip-restricted-sso.png" title="Сообщение об отказе в доступе из-за ограничений по IP для входа через SSO"/>

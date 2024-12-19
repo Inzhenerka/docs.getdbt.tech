@@ -1,12 +1,12 @@
 ---
-title: "AlloyDB setup"
+title: "Настройка AlloyDB"
 meta:
-  maintained_by: Community?
+  maintained_by: Сообщество?
   authors: 'dbt-labs'
   github_repo: 'dbt-labs/dbt-core'
   pypi_package: 'dbt-postgres'
   min_core_version: 'v1.0.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: '?'
   slack_channel_name: '#db-postgres'
   slack_channel_link: 'https://getdbt.slack.com/archives/C0172G2E273'
@@ -19,6 +19,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-## Profile Configuration
+## Конфигурация профиля
 
-AlloyDB targets are configured exactly the same as [Postgres targets](postgres-setup#profile-configuration).
+Цели AlloyDB настраиваются точно так же, как и [цели Postgres](postgres-setup#profile-configuration).

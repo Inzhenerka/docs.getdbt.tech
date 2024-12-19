@@ -1,78 +1,77 @@
 ---
-title: "Column-level lineage"
-description: "Use dbt Explorer's column-level lineage to gain insights about your data at a granular level."
+title: "Потомственность на уровне столбцов"
+description: "Используйте потомственность на уровне столбцов в dbt Explorer, чтобы получить представление о ваших данных на более детальном уровне."
 ---
 
-dbt Explorer now offers column-level lineage (CLL) for the resources in your dbt project. Analytics engineers can quickly and easily gain insight into the provenance of their data products at a more granular level. For each column in a resource (model, source, or snapshot) in a dbt project, Explorer provides end-to-end lineage for the data in that column given how it's used.
+Теперь dbt Explorer предлагает потомственность на уровне столбцов (CLL) для ресурсов в вашем проекте dbt. Аналитические инженеры могут быстро и легко получить представление о происхождении своих продуктов данных на более детальном уровне. Для каждого столбца в ресурсе (модели, источнике или снимке) в проекте dbt Explorer предоставляет полную потомственность для данных в этом столбце в зависимости от того, как они используются.
 
-CLL is available to dbt Cloud Enterprise accounts that can use Explorer. 
+CLL доступна для учетных записей dbt Cloud Enterprise, которые могут использовать Explorer.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Overview of column level lineage"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Обзор потомственности на уровне столбцов"/>
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 <ExplorerCourse />
 
-## Access the column-level lineage
+## Доступ к потомственности на уровне столбцов
 
-There is no additional setup required for CLL if your account is on an Enterprise plan that can use Explorer. You can access the CLL by expanding the column card in the **Columns** tab of an Explorer [resource details page](/docs/collaborate/explore-projects#view-resource-details) for a model, source, or snapshot.
+Дополнительная настройка для CLL не требуется, если ваша учетная запись находится на корпоративном плане, который может использовать Explorer. Вы можете получить доступ к CLL, развернув карточку столбца на вкладке **Столбцы** на странице [подробностей ресурса](/docs/collaborate/explore-projects#view-resource-details) для модели, источника или снимка.
 
-dbt Cloud updates the lineage in Explorer after each run that's executed in the production or staging environment. At least one job in the production or staging environment must run `dbt docs generate`. Refer to [Generating metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
+dbt Cloud обновляет потомственность в Explorer после каждого выполнения, которое осуществляется в производственной или тестовой среде. По крайней мере, одна задача в производственной или тестовой среде должна выполнить `dbt docs generate`. Смотрите [Генерация метаданных](/docs/collaborate/explore-projects#generate-metadata) для получения дополнительных сведений.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-cll.png" width="40%" title="Example of the Columns tab and where to expand for the CLL"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-cll.png" width="40%" title="Пример вкладки Столбцы и где развернуть для CLL"/>
 
+## Линза эволюции столбца {#column-lens}
 
-## Column evolution lens {#column-lens}
+Вы можете использовать линзу эволюции столбца, чтобы определить, когда столбец преобразуется или повторно используется (передача или переименование). Эта линза помогает вам различать, когда и как столбец фактически изменяется по мере его прохождения через вашу потомственность dbt, что особенно полезно для отладки.
 
-You can use the column evolution lineage lens to determine when a column is transformed vs. reused (passthrough or rename). The lens helps you distinguish when and how a column is actually changed as it flows through your dbt lineage, informing debugging workflows in particular. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-evolution-lens.png" width="90%" title="Пример линзы эволюции столбца"/>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-evolution-lens.png" width="90%" title="Example of the Column evolution lens"/>
+### Унаследованные описания столбцов
 
-### Inherited column descriptions
+Повторно используемый столбец, помеченный как **Передача** или **Переименование** в потомственности, автоматически наследует свое описание от столбцов источника и вышестоящей модели. Наследование происходит настолько далеко, насколько это возможно. Пока столбец не преобразован, вам не нужно вручную определять описание; оно автоматически передается вниз по потоку.
 
-A reused column, labeled as **Passthrough** or **Rename** in the lineage, automatically inherits its description from the source and upstream model columns. The inheritance goes as far back as possible. As long as the column isn't transformed, you don't need to manually define the description; it'll automatically propagate downstream.
+Столбцы передачи и переименования четко помечены и цветом выделены в потомственности.
 
-Passthrough and rename columns are clearly labeled and color-coded in the lineage.
+В следующем примере модели `dim_salesforce_accounts` (расположенной в конце потомственности) описание для столбца, унаследованного от модели `stg_salesforce__accounts` (расположенной второй слева), указывает на его происхождение. Это помогает разработчикам быстро определить оригинальный источник столбца, что упрощает внесение изменений в документацию.
 
-In the following `dim_salesforce_accounts` model example (located at the end of the lineage), the description for a column inherited from the `stg_salesforce__accounts` model (located second to the left) indicates its origin. This helps developers quickly identify the original source of the column, making it easier to know where to make documentation changes.
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-prop-inherit.jpg" width="100%" title="Пример потомственности с переданными и унаследованными описаниями столбцов."/>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-prop-inherit.jpg" width="100%" title="Example of lineage with propagated and inherited column descriptions."/>
+## Сценарии использования потомственности на уровне столбцов {#use-cases}
 
-## Column-level lineage use cases {#use-cases}
+Узнайте больше о том, почему и как вы можете использовать CLL в следующих разделах.
 
-Learn more about why and how you can use CLL in the following sections. 
+### Анализ причин
 
-### Root cause analysis
+Когда в конвейере данных происходит неожиданная ошибка, потомственность на уровне столбцов может быть ценным инструментом для понимания точного места, где произошла ошибка в конвейере. Например, сбой теста данных для определенного столбца в вашей модели dbt мог возникнуть из-за непроверенного столбца выше по потоку. Использование CLL может помочь быстро выявить и исправить ошибки, когда они происходят.
 
-When there is an unexpected breakage in a data pipeline, column-level lineage can be a valuable tool to understand the exact point where the error occurred in the pipeline. For example, a failing data test on a particular column in your dbt model might've stemmed from an untested column upstream. Using CLL can help quickly identify and fix breakages when they happen.
+### Анализ воздействия
 
-### Impact analysis
+Во время разработки аналитические инженеры могут использовать потомственность на уровне столбцов, чтобы понять полный масштаб воздействия своих предложенных изменений. Эти знания позволяют им создавать более качественные запросы на слияние, которые требуют меньшего количества правок, так как они могут предвидеть и предотвратить проблемы, которые остались бы незамеченными без понимания на уровне столбцов.
 
-During development, analytics engineers can use column-level lineage to understand the full scope of the impact of their proposed changes. This knowledge empowers them to create higher-quality pull requests that require fewer edits, as they can anticipate and preempt issues that would've been unchecked without column-level insights. 
+### Сотрудничество и эффективность
 
-### Collaboration and efficiency
+При исследовании ваших продуктов данных навигация по потомственности столбцов позволяет аналитическим инженерам и аналитикам данных легче ориентироваться и понимать происхождение и использование своих данных, что позволяет им принимать более обоснованные решения с большей уверенностью.
 
-When exploring your data products, navigating column lineage allows analytics engineers and data analysts to more easily navigate and understand the origin and usage of their data, enabling them to make better decisions with higher confidence.
+## Ограничения
 
-## Caveats
+Обратите внимание на следующие ограничения или недостатки CLL, когда вы используете dbt Explorer.
 
-Refer to the following CLL caveats or limitations as you navigate dbt Explorer.
+### Использование столбцов
+Потомственность на уровне столбцов отражает потомственность из операторов `select` в SQL-коде ваших моделей. Она не отражает другое использование, такое как соединения и фильтры.
 
-### Column usage
-Column-level lineage reflects the lineage from `select` statements in your models' SQL code. It doesn't reflect other usage like joins and filters. 
+### Парсинг SQL
 
-### SQL parsing
+Потомственность на уровне столбцов зависит от парсинга SQL. Ошибки могут возникать, когда парсинг не удается или происхождение столбца неизвестно (например, при распаковке JSON, боковых соединениях и т. д.). В этих случаях потомственность может быть неполной, и dbt Cloud предоставит предупреждение об этом в потомственности столбца.
 
-Column-level lineage relies on SQL parsing. Errors can occur when parsing fails or a column's origin is unknown (like with JSON unpacking, lateral joins, and so on). In these cases, lineage may be incomplete and dbt Cloud will provide a warning about it in the column lineage. 
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-parsing-error-pill.png" title="Пример предупреждения в полном графе потомственности"/>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-parsing-error-pill.png" title="Example of warning in the full lineage graph"/>
+Чтобы просмотреть детали ошибки:
+1. Нажмите на значок **Развернуть** в правом верхнем углу, чтобы открыть граф потомственности столбца
+1. Выберите узел, чтобы открыть панель деталей столбца
 
-To review the error details:
-1. Click the **Expand** icon in the upper right corner to open the column's lineage graph
-1. Select the node to open the column’s details panel
+Возможные случаи ошибок:
 
-Possible error cases are:
-
-- **Parsing error** &mdash; Error occurs when the SQL is ambiguous or too complex for parsing. An example of ambiguous parsing scenarios are _complex_ lateral joins.
-- **Python error** &mdash; Error occurs when a Python model is used within the lineage. Due to the nature of Python models, it's not possible to parse and determine the lineage.
-- **Unknown error** &mdash; Error occurs when the lineage can't be determined for an unknown reason. An example of this would be if a dbt best practice is not being followed, like using hardcoded table names instead of `ref` statements.
+- **Ошибка парсинга** &mdash; Ошибка возникает, когда SQL неоднозначен или слишком сложен для парсинга. Примером неоднозначных сценариев парсинга являются _сложные_ боковые соединения.
+- **Ошибка Python** &mdash; Ошибка возникает, когда в потомственности используется модель Python. Из-за природы моделей Python невозможно выполнить парсинг и определить потомственность.
+- **Неизвестная ошибка** &mdash; Ошибка возникает, когда потомственность не может быть определена по неизвестной причине. Примером этого может быть несоблюдение лучших практик dbt, таких как использование жестко закодированных имен таблиц вместо операторов `ref`.

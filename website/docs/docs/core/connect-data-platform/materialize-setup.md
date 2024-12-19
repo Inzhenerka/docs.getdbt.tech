@@ -1,24 +1,24 @@
 ---
-title: "Materialize setup"
-description: "Read this guide to learn about the Materialize warehouse setup in dbt."
+title: "Настройка Materialize"
+description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Materialize в dbt."
 id: "materialize-setup"
 meta:
-  maintained_by: Materialize  Inc.
+  maintained_by: Materialize Inc.
   pypi_package: 'dbt-materialize'
-  authors: 'Materialize team'
+  authors: 'Команда Materialize'
   github_repo: 'MaterializeInc/materialize'
   min_core_version: 'v0.18.1'
   min_supported_version: 'v0.28.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   slack_channel_name: '#db-materialize'
   slack_channel_link: 'https://getdbt.slack.com/archives/C01PWAH41A5'
   platform_name: 'Materialize'
   config_page: '/reference/resource-configs/materialize-configs'
 ---
 
-:::info Vendor-supported plugin
+:::info Плагин с поддержкой поставщика
 
-Certain core functionality may vary. If you would like to report a bug, request a feature, or contribute, you can check out the linked repository and open an issue.
+Некоторые основные функции могут различаться. Если вы хотите сообщить об ошибке, запросить функцию или внести свой вклад, вы можете ознакомиться с указанным репозиторием и открыть проблему.
 
 :::
 
@@ -26,9 +26,9 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Materialize
+## Подключение к Materialize
 
-Once you have set up a [Materialize account](https://materialize.com/register/), adapt your `profiles.yml` to connect to your instance using the following reference profile configuration:
+После того как вы настроили [аккаунт Materialize](https://materialize.com/register/), адаптируйте ваш `profiles.yml` для подключения к вашему экземпляру, используя следующую конфигурацию профиля:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -43,58 +43,58 @@ materialize:
       user: [user@domain.com]
       pass: [password]
       dbname: [database]
-      cluster: [cluster] # default 'default'
+      cluster: [cluster] # по умолчанию 'default'
       schema: [dbt schema]
       sslmode: require
-      keepalives_idle: 0 # default: 0, indicating the system default
-      connect_timeout: 10 # default: 10 seconds
-      retries: 1 # default: 1, retry on error/timeout when opening connections
+      keepalives_idle: 0 # по умолчанию: 0, указывая на системный по умолчанию
+      connect_timeout: 10 # по умолчанию: 10 секунд
+      retries: 1 # по умолчанию: 1, повторная попытка в случае ошибки/таймаута при открытии соединений
 ```
 
 </File>
 
-### Configurations
+### Конфигурации
 
-`cluster`: The default [cluster](https://materialize.com/docs/overview/key-concepts/#clusters) is used to maintain materialized views or indexes. A [`default` cluster](https://materialize.com/docs/sql/show-clusters/#default-cluster) is pre-installed in every environment, but we recommend creating dedicated clusters to isolate the workloads in your dbt project (for example, `staging` and `data_mart`).
+`cluster`: По умолчанию используется [кластер](https://materialize.com/docs/overview/key-concepts/#clusters) для поддержания материализованных представлений или индексов. [`default` кластер](https://materialize.com/docs/sql/show-clusters/#default-cluster) предустановлен в каждой среде, но мы рекомендуем создавать выделенные кластеры для изоляции рабочих нагрузок в вашем проекте dbt (например, `staging` и `data_mart`).
 
-`keepalives_idle`: The number of seconds before sending a ping to keep the Materialize connection active. If you are encountering `SSL SYSCALL error: EOF detected`, you may want to lower the [keepalives_idle](https://docs.getdbt.com/reference/warehouse-setups/postgres-setup#keepalives_idle) value to prevent the database from closing its connection.
+`keepalives_idle`: Количество секунд перед отправкой пинга для поддержания активного соединения с Materialize. Если вы сталкиваетесь с ошибкой `SSL SYSCALL error: EOF detected`, возможно, вам стоит уменьшить значение [keepalives_idle](https://docs.getdbt.com/reference/warehouse-setups/postgres-setup#keepalives_idle), чтобы предотвратить закрытие соединения базой данных.
 
-To test the connection to Materialize, run:
+Чтобы протестировать соединение с Materialize, выполните:
 
 ```
 dbt debug
 ```
 
-If the output reads "All checks passed!", you’re good to go! Check the [dbt and Materialize guide](https://materialize.com/docs/guides/dbt/) to learn more and get started.
+Если вывод будет "Все проверки пройдены!", значит, все в порядке! Ознакомьтесь с [руководством по dbt и Materialize](https://materialize.com/docs/guides/dbt/), чтобы узнать больше и начать работу.
 
-## Supported Features
+## Поддерживаемые функции
 
-### Materializations
+### Материализации
 
-Because Materialize is optimized for transformations on streaming data and the core of dbt is built around batch, the `dbt-materialize` adapter implements a few custom materialization types:
+Поскольку Materialize оптимизирован для трансформаций на потоковых данных, а основа dbt построена вокруг пакетной обработки, адаптер `dbt-materialize` реализует несколько пользовательских типов материализации:
 
-Type | Supported? | Details
------|------------|----------------
-`source` | YES | Creates a [source](https://materialize.com/docs/sql/create-source/).
-`view` | YES | Creates a [view](https://materialize.com/docs/sql/create-view/#main).
-`materializedview` | YES | Creates a [materialized view](https://materialize.com/docs/sql/create-materialized-view/#main).
-`table` | YES | Creates a [materialized view](https://materialize.com/docs/sql/create-materialized-view/#main). (Actual table support pending [#5266](https://github.com/MaterializeInc/materialize/issues/5266))
-`sink` | YES | Creates a [sink](https://materialize.com/docs/sql/create-sink/#main).
-`ephemeral` | YES | Executes queries using <Term id="cte">CTEs</Term>.
-`incremental` | NO | Use the `materializedview` <Term id="materialization" /> instead. Materialized views will always return up-to-date results without manual or configured refreshes. For more information, check out [Materialize documentation](https://materialize.com/docs/).
+Тип | Поддерживается? | Подробности
+-----|----------------|----------------
+`source` | ДА | Создает [source](https://materialize.com/docs/sql/create-source/).
+`view` | ДА | Создает [view](https://materialize.com/docs/sql/create-view/#main).
+`materializedview` | ДА | Создает [материализованное представление](https://materialize.com/docs/sql/create-materialized-view/#main).
+`table` | ДА | Создает [материализованное представление](https://materialize.com/docs/sql/create-materialized-view/#main). (Поддержка фактических таблиц ожидается [#5266](https://github.com/MaterializeInc/materialize/issues/5266))
+`sink` | ДА | Создает [sink](https://materialize.com/docs/sql/create-sink/#main).
+`ephemeral` | ДА | Выполняет запросы с использованием <Term id="cte">CTE</Term>.
+`incremental` | НЕТ | Вместо этого используйте <Term id="materialization" /> `materializedview`. Материализованные представления всегда будут возвращать актуальные результаты без ручных или настроенных обновлений. Для получения дополнительной информации ознакомьтесь с [документацией Materialize](https://materialize.com/docs/).
 
-### Indexes
+### Индексы
 
-Materialized views (`materializedview`), views (`view`) and sources (`source`) may have a list of [`indexes`](/reference/resource-configs/materialize-configs#indexes) defined.
+Материализованные представления (`materializedview`), представления (`view`) и источники (`source`) могут иметь список [`indexes`](/reference/resource-configs/materialize-configs#indexes), определенных для них.
 
 ### Seeds
 
-Running [`dbt seed`](/reference/commands/seed) will create a static materialized <Term id="view" /> from a CSV file. You will not be able to add to or update this view after it has been created.
+Запуск [`dbt seed`](/reference/commands/seed) создаст статическое материализованное <Term id="view" /> из CSV-файла. Вы не сможете добавлять или обновлять это представление после его создания.
 
-### Tests
+### Тесты
 
-Running [`dbt test`](/reference/commands/test) with the optional `--store-failures` flag or [`store_failures` config](/reference/resource-configs/store_failures) will create a materialized view for each configured test that can keep track of failures over time.
+Запуск [`dbt test`](/reference/commands/test) с необязательным флагом `--store-failures` или конфигурацией [`store_failures`](/reference/resource-configs/store_failures) создаст материализованное представление для каждого настроенного теста, которое может отслеживать сбои с течением времени.
 
-## Resources
+## Ресурсы
 
-- [dbt and Materialize guide](https://materialize.com/docs/guides/dbt/)
+- [Руководство по dbt и Materialize](https://materialize.com/docs/guides/dbt/)

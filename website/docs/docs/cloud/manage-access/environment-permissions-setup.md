@@ -1,57 +1,56 @@
 ---
-title: "Set up environment-level permissions"
+title: "Настройка разрешений на уровне окружения"
 id: environment-permissions-setup
-description: "Set up environment-level permissions to protect your information"
-sidebar_label: "Set up environment-level permissions"
+description: "Настройка разрешений на уровне окружения для защиты вашей информации"
+sidebar_label: "Настройка разрешений на уровне окружения"
 pagination_next: null
 pagination_prev: null
 ---
 
-To set up and configure environment-level permissions, you must have write permissions to the **Groups & Licenses** settings of your dbt Cloud account. For more information about roles and permissions, check out [User permissions and licenses](/docs/cloud/manage-access/seats-and-users).
+Чтобы настроить и сконфигурировать разрешения на уровне окружения, у вас должны быть права на запись в настройках **Группы и лицензии** вашего аккаунта dbt Cloud. Для получения дополнительной информации о ролях и разрешениях ознакомьтесь с разделом [Разрешения и лицензии пользователей](/docs/cloud/manage-access/seats-and-users).
 
-Environment-level permissions are not the same as account-level [role-based access control (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) and are configured separately from those workflows.
+Разрешения на уровне окружения отличаются от разрешений на уровне аккаунта [управления доступом на основе ролей (RBAC)](/docs/cloud/manage-access/about-user-access#role-based-access-control) и настраиваются отдельно от этих рабочих процессов.
 
-## Setup instructions
+## Инструкции по настройке
 
-In your dbt Cloud account:
+В вашем аккаунте dbt Cloud:
 
-1. Click your account name, above your profile icon on the left side panel, then select **Account settings**. From there, select **Groups & Licenses**. While you can edit existing groups, we recommend not altering the default `Everyone`, `Member`, and `Owner` groups.
+1. Нажмите на имя вашего аккаунта, расположенное над вашим профилем в левой боковой панели, затем выберите **Настройки аккаунта**. Оттуда выберите **Группы и лицензии**. Хотя вы можете редактировать существующие группы, мы рекомендуем не изменять группы по умолчанию `Everyone`, `Member` и `Owner`.
 
-<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt Cloud with the default groups highlighted."/>
+<Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Страница Группы и лицензии в dbt Cloud с выделенными группами по умолчанию."/>
 
-2. Create a new or open an existing group. If it's a new group, give it a name, then scroll down to **Access & permissions**. Click **Add**.
+2. Создайте новую группу или откройте существующую. Если это новая группа, дайте ей имя, затем прокрутите вниз до **Доступ и разрешения**. Нажмите **Добавить**.
 
-<Lightbox src="/img/docs/dbt-cloud/add-permissions.png" width="80%" title="The Access & permissions section with the Add button highlighted."/>
+<Lightbox src="/img/docs/dbt-cloud/add-permissions.png" width="80%" title="Раздел Доступ и разрешения с выделенной кнопкой Добавить."/>
 
-3. Select the **Permission set** for the group. Only the following permissions sets can have environment-level permissions configured:
+3. Выберите **Набор разрешений** для группы. Только следующие наборы разрешений могут иметь настроенные разрешения на уровне окружения:
 
-- Database admin
-- Git admin
-- Team admin
-- Analyst
-- Developer
+- Администратор базы данных
+- Администратор Git
+- Администратор команды
+- Аналитик
+- Разработчик
 
-Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
+Другие наборы разрешений ограничены, поскольку имеют доступ ко всему (например, администратор аккаунта) или ограничения не позволяют им иметь доступ на запись в окружения (например, просмотрщик аккаунта).
 
-If you select a permission set that is not supported, the environment permission option will not appear.
+Если вы выберете набор разрешений, который не поддерживается, опция разрешений на уровне окружения не появится.
 
-<Lightbox src="/img/docs/dbt-cloud/no-option.png" width="80%" title="The view of the permissions box if there is no option for environment permissions."/>
+<Lightbox src="/img/docs/dbt-cloud/no-option.png" width="80%" title="Вид окна разрешений, если нет опции для разрешений на уровне окружения."/>
 
-4. Select the **Environment** for group access. The default is **All environments**, but you can select multiple. If none are selected, the group will have read-only access.
+4. Выберите **Окружение** для доступа группы. По умолчанию выбрано **Все окружения**, но вы можете выбрать несколько. Если ничего не выбрано, группа будет иметь доступ только для чтения.
 
-<Lightbox src="/img/docs/dbt-cloud/environment-options.png" width="80%" title="A list of available environments with the Staging and General boxes selected."/>
+<Lightbox src="/img/docs/dbt-cloud/environment-options.png" width="80%" title="Список доступных окружений с выделенными полями Staging и General."/>
 
-5. Save the Group settings. You're now setup and ready to assign users!
+5. Сохраните настройки группы. Теперь вы готовы назначить пользователей!
 
-## User experience
+## Опыт пользователей
 
-Users with permissions to the environment will see all capabilities assigned to their role. The environment-level permissions are `write` or `read-only` access. This feature does not currently support determining which features in the environment are accessible. For more details on what can and can not be done with environment-level permissions, refer to [About environment-permissions](/docs/cloud/manage-access/environment-permissions).
+Пользователи с разрешениями на окружение увидят все возможности, назначенные их роли. Разрешения на уровне окружения могут быть `запись` или `только для чтения`. Эта функция в настоящее время не поддерживает определение, какие функции в окружении доступны. Для получения дополнительной информации о том, что можно и нельзя делать с разрешениями на уровне окружения, обратитесь к разделу [О разрешениях на уровне окружения](/docs/cloud/manage-access/environment-permissions).
 
-For example, here is an overview of the **Jobs** section of the environment page if a user has been granted access:
+Например, вот обзор раздела **Задания** на странице окружения, если пользователю предоставлен доступ:
 
-<Lightbox src="/img/docs/dbt-cloud/write-access.png" width="80%" title="The jobs page with write access and the 'Create job' button visible ."/>
+<Lightbox src="/img/docs/dbt-cloud/write-access.png" width="80%" title="Страница заданий с доступом на запись и видимой кнопкой 'Создать задание'."/>
 
-The same page if the user has not been granted environment-level permissions:
+Та же страница, если пользователю не предоставлены разрешения на уровне окружения:
 
-<Lightbox src="/img/docs/dbt-cloud/read-only-access.png" width="80%" title="The jobs page with read-only access and the 'Create job' button is not visible ."/>
-
+<Lightbox src="/img/docs/dbt-cloud/read-only-access.png" width="80%" title="Страница заданий с доступом только для чтения и кнопка 'Создать задание' не видна."/>

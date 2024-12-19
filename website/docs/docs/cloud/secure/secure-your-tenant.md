@@ -1,6 +1,6 @@
 ---
-title: "Secure your tenant"
-description: "Learn how to secure your tenant for dbt Cloud"
+title: "Обеспечение безопасности вашего арендатора"
+description: "Узнайте, как обеспечить безопасность вашего арендатора для dbt Cloud"
 pagination_next: "docs/cloud/secure/ip-restrictions"
 pagination_prev: null
 ---
@@ -8,20 +8,20 @@ pagination_prev: null
 <div className="grid--3-col">
 
 <Card
-    title="IP restrictions"
-    body="Learn about IP Restrictions and how it can help secure your dbt Cloud environment."
+    title="Ограничения IP"
+    body="Узнайте об ограничениях IP и о том, как они могут помочь обеспечить безопасность вашей среды dbt Cloud."
     link="/docs/cloud/secure/ip-restrictions"
     icon="dbt-bit"/>
 
 <Card
-    title="About PrivateLink"
-    body="Learn about PrivateLink and how it enables a private connection from any dbt Cloud multi-tenant environment to your data platform hosted on AWS using AWS PrivateLink technology."
+    title="О PrivateLink"
+    body="Узнайте о PrivateLink и о том, как он обеспечивает частное соединение между любой многоарендной средой dbt Cloud и вашей платформой данных, размещенной на AWS, с использованием технологии AWS PrivateLink."
     link="/docs/cloud/secure/about-privatelink"
     icon="dbt-bit"/>
 
 <Card
-    title="PrivateLink for Snowflake"
-    body="Learn how to configure PrivateLink for Snowflake."
+    title="PrivateLink для Snowflake"
+    body="Узнайте, как настроить PrivateLink для Snowflake."
     link="/docs/cloud/secure/snowflake-privatelink"
     icon="dbt-bit"/>
 
@@ -29,20 +29,20 @@ pagination_prev: null
 <br />
 <div className="grid--3-col">
 <Card
-    title="PrivateLink for Databricks"
-    body="Learn how to configure PrivateLink for Databricks. "
+    title="PrivateLink для Databricks"
+    body="Узнайте, как настроить PrivateLink для Databricks."
     link="/docs/cloud/secure/databricks-privatelink"
     icon="dbt-bit"/>
 
 <Card
-    title="PrivateLink for Redshift"
-    body="Learn how to configure PrivateLink for Redshift."
+    title="PrivateLink для Redshift"
+    body="Узнайте, как настроить PrivateLink для Redshift."
     link="/docs/cloud/secure/redshift-privatelink"
     icon="dbt-bit"/>
 
 <Card
-    title="PrivateLink for Postgres"
-    body="Learn how to configure PrivateLink for Postgres."
+    title="PrivateLink для Postgres"
+    body="Узнайте, как настроить PrivateLink для Postgres."
     link="/docs/cloud/secure/postgres-privatelink"
     icon="dbt-bit"/>
 

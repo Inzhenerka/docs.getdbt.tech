@@ -1,45 +1,45 @@
 ---
-title: "Install with pip"
-description: "You can use pip to install dbt Core and adapter plugins from the command line."
+title: "Установка с помощью pip"
+description: "Вы можете использовать pip для установки dbt Core и адаптеров плагинов из командной строки."
 ---
 
-You need to use `pip` to install dbt Core on Windows, Linux, or MacOS operating systems.
+Вам необходимо использовать `pip` для установки dbt Core на операционных системах Windows, Linux или MacOS.
 
-You can install dbt Core and plugins using `pip` because they are Python modules distributed on [PyPI](https://pypi.org/project/dbt-core/).
+Вы можете установить dbt Core и плагины с помощью `pip`, так как они являются модулями Python, распространяемыми на [PyPI](https://pypi.org/project/dbt-core/).
 
 <FAQ path="Core/install-pip-os-prereqs" />
 <FAQ path="Core/install-python-compatibility" />
 
-### Using virtual environments
+### Использование виртуальных окружений
 
-We recommend using virtual environments (venv) to namespace pip modules.
+Мы рекомендуем использовать виртуальные окружения (venv) для организации пространства имен модулей pip.
 
-1. Create a new venv:
-
-```shell
-python -m venv dbt-env				# create the environment
-```
-
-2. Activate that same virtual environment each time you create a shell window or session:
+1. Создайте новое виртуальное окружение:
 
 ```shell
-source dbt-env/bin/activate			# activate the environment for Mac and Linux OR
-dbt-env\Scripts\activate			# activate the environment for Windows
+python -m venv dbt-env				# создайте окружение
 ```
 
-#### Create an alias
+2. Активируйте это же виртуальное окружение каждый раз, когда вы создаете новое окно или сессию командной строки:
 
-To activate your dbt environment with every new shell window or session, you can create an alias for the source command in your $HOME/.bashrc, $HOME/.zshrc, or whichever config file your shell draws from. 
+```shell
+source dbt-env/bin/activate			# активируйте окружение для Mac и Linux ИЛИ
+dbt-env\Scripts\activate			# активируйте окружение для Windows
+```
 
-For example, add the following to your rc file, replacing &lt;PATH_TO_VIRTUAL_ENV_CONFIG&gt; with the path to your virtual environment configuration.
+#### Создание псевдонима
+
+Чтобы активировать ваше окружение dbt с каждым новым окном или сеансом командной строки, вы можете создать псевдоним для команды source в вашем $HOME/.bashrc, $HOME/.zshrc или в любом другом конфигурационном файле, который использует ваша оболочка.
+
+Например, добавьте следующее в ваш rc файл, заменив &lt;PATH_TO_VIRTUAL_ENV_CONFIG&gt; на путь к конфигурации вашего виртуального окружения.
 
 ```shell
 alias env_dbt='source <PATH_TO_VIRTUAL_ENV_CONFIG>/bin/activate'
 ```
 
-### Installing the adapter
+### Установка адаптера
 
-Once you decide [which adapter](/docs/supported-data-platforms) you're using, you can install using the command line. Beginning in v1.8, installing an adapter does not automatically install `dbt-core`. This is because adapters and dbt Core versions have been decoupled from each other so we no longer want to overwrite existing dbt-core installations.
+Как только вы решите, [какой адаптер](/docs/supported-data-platforms) вы используете, вы можете установить его с помощью командной строки. Начиная с версии 1.8, установка адаптера больше не устанавливает `dbt-core` автоматически. Это связано с тем, что версии адаптеров и dbt Core были разделены, и мы больше не хотим перезаписывать существующие установки dbt-core.
 
 <VersionBlock firstVersion="1.8">
 
@@ -57,7 +57,7 @@ python -m pip install dbt-ADAPTER_NAME
 
 </VersionBlock>
 
-For example, if using Postgres:
+Например, если вы используете Postgres:
 
 <VersionBlock firstVersion="1.8">
 
@@ -65,20 +65,20 @@ For example, if using Postgres:
 python -m pip install dbt-core dbt-postgres
 ```
 
-This will install `dbt-core` and `dbt-postgres` _only_:
+Это установит `dbt-core` и `dbt-postgres` _только_:
 
 ```shell
 $ dbt --version
-installed version: 1.0.0
-   latest version: 1.0.0
+установленная версия: 1.0.0
+   последняя версия: 1.0.0
 
-Up to date!
+Все актуально!
 
-Plugins:
+Плагины:
   - postgres: 1.0.0
 ```
 
-All adapters build on top of `dbt-core`. Some also depend on other adapters: for example, `dbt-redshift` builds on top of `dbt-postgres`. In that case, you would see those adapters included by your specific installation, too.
+Все адаптеры строятся на основе `dbt-core`. Некоторые также зависят от других адаптеров: например, `dbt-redshift` строится на основе `dbt-postgres`. В этом случае вы также увидите эти адаптеры, включенные в вашу конкретную установку.
 </VersionBlock>
 
 <VersionBlock lastVersion="1.7">
@@ -87,49 +87,49 @@ All adapters build on top of `dbt-core`. Some also depend on other adapters: for
 python -m pip install dbt-postgres
 ```
 
-This will install `dbt-core` and `dbt-postgres` _only_:
+Это установит `dbt-core` и `dbt-postgres` _только_:
 
 ```shell
 $ dbt --version
-installed version: 1.0.0
-   latest version: 1.0.0
+установленная версия: 1.0.0
+   последняя версия: 1.0.0
 
-Up to date!
+Все актуально!
 
-Plugins:
+Плагины:
   - postgres: 1.0.0
 ```
 
-Some adapters depend on other adapters. For example, `dbt-redshift` builds on top of `dbt-postgres`. In that case, you would see those adapters included by your specific installation, too.
+Некоторые адаптеры зависят от других адаптеров. Например, `dbt-redshift` строится на основе `dbt-postgres`. В этом случае вы также увидите эти адаптеры, включенные в вашу конкретную установку.
 </VersionBlock>
 
-### Upgrade adapters
+### Обновление адаптеров
 
-To upgrade a specific adapter plugin:
+Чтобы обновить конкретный плагин адаптера:
 
 ```shell
 python -m pip install --upgrade dbt-ADAPTER_NAME
 ```
 
-### Install dbt-core only
+### Установка только dbt-core
 
-If you're building a tool that integrates with dbt Core, you may want to install the core library alone, without a database adapter. Note that you won't be able to use dbt as a CLI tool.
+Если вы разрабатываете инструмент, который интегрируется с dbt Core, вы можете установить только основную библиотеку без адаптера базы данных. Обратите внимание, что вы не сможете использовать dbt как инструмент командной строки.
 
 ```shell
 python -m pip install dbt-core
 ```
 
-### Change dbt Core versions
+### Изменение версий dbt Core
 
-You can upgrade or downgrade versions of dbt Core by using the `--upgrade` option on the command line (CLI). For more information, see [Best practices for upgrading in Core versions](/docs/dbt-versions/core#best-practices-for-upgrading).
+Вы можете обновить или понизить версии dbt Core, используя опцию `--upgrade` в командной строке (CLI). Для получения дополнительной информации смотрите [Лучшие практики для обновления версий Core](/docs/dbt-versions/core#best-practices-for-upgrading).
 
-To upgrade dbt to the latest version:
+Чтобы обновить dbt до последней версии:
 
 ```
 python -m pip install --upgrade dbt-core
 ```
 
-To downgrade to an older version, specify the version you want to use. This command can be useful when you're resolving package dependencies. As an example:
+Чтобы понизить до более старой версии, укажите версию, которую вы хотите использовать. Эта команда может быть полезна, когда вы решаете зависимости пакетов. Например:
 
 ```
 python -m pip install --upgrade dbt-core==0.19.0
@@ -137,11 +137,11 @@ python -m pip install --upgrade dbt-core==0.19.0
 
 ### `pip install dbt`
 
-Note that, as of v1.0.0, `pip install dbt` is no longer supported, will raise an explicit error, and the `dbt` package on PyPI stopped receiving updates. Since v0.13, PyPI package named `dbt` was a simple "pass-through" of dbt-core and the four original database adapter plugins.
+Обратите внимание, что начиная с версии 1.0.0, `pip install dbt` больше не поддерживается, вызовет явную ошибку, и пакет `dbt` на PyPI перестал получать обновления. Начиная с версии 0.13, пакет PyPI с именем `dbt` был простым "передатчиком" dbt-core и четырех оригинальных плагинов адаптеров баз данных.
 
-In the fall of 2023, the `dbt` package on PyPI became a supported method to install the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli-in-pip).
+Осенью 2023 года пакет `dbt` на PyPI стал поддерживаемым методом установки [dbt Cloud CLI](/docs/cloud/cloud-cli-installation?install=pip#install-dbt-cloud-cli-in-pip).
 
-If you have workflows or integrations that rely on installing the package named `dbt`, you can achieve the same behavior by installing the same five packages that it used:
+Если у вас есть рабочие процессы или интеграции, которые зависят от установки пакета с именем `dbt`, вы можете достичь того же поведения, установив те же пять пакетов, которые он использовал:
 
 ```shell
 python -m pip install \
@@ -153,4 +153,4 @@ python -m pip install \
   dbt-trino
 ```
 
-Or, better yet, just install the package(s) you need!
+Или, что еще лучше, просто установите необходимые вам пакеты!
