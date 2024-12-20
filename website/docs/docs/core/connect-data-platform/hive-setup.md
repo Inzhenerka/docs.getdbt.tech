@@ -1,6 +1,6 @@
 ---
 title: "Настройка Apache Hive"
-description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Apache Hive в dbt."
+description: "Прочтите это руководство, чтобы узнать о настройке хранилища Apache Hive в dbt."
 id: "hive-setup"
 meta:
   maintained_by: Cloudera
@@ -8,7 +8,7 @@ meta:
   github_repo: 'cloudera/dbt-hive'
   pypi_package: 'dbt-hive'
   min_core_version: 'v1.1.0'
-  cloud_support: Не поддерживается
+  cloud_support: Not Supported
   min_supported_version: 'n/a'
   slack_channel_name: '#db-hive'
   slack_channel_link: 'https://getdbt.slack.com/archives/C0401DTNSKW'
@@ -20,27 +20,25 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-
-
 ## Методы подключения
 
 dbt-hive может подключаться к кластерам Apache Hive и Cloudera Data Platform. Для установления соединений с Hive используется библиотека [Impyla](https://github.com/cloudera/impyla/).
 
-dbt-hive поддерживает два механизма передачи:
+dbt-hive поддерживает два механизма передачи данных:
 - бинарный
 - HTTP(S)
 
-Механизм по умолчанию — `binary`. Чтобы использовать HTTP-передачу, используйте логический параметр. Например, `use_http_transport: true`.
+Механизм по умолчанию — `binary`. Чтобы использовать HTTP-транспорт, используйте булевую опцию. Например, `use_http_transport: true`.
 
 ## Методы аутентификации
 
 dbt-hive поддерживает два механизма аутентификации:
-- [`insecure`](#Insecure) Аутентификация не используется, рекомендуется только для тестирования.
+- [`insecure`](#Insecure) Без аутентификации, рекомендуется только для тестирования.
 - [`ldap`](#ldap) Аутентификация через LDAP
 
-### Не защищенный
+### Insecure
 
-Этот метод рекомендуется использовать только в том случае, если у вас есть локальная установка Hive и вы хотите протестировать адаптер dbt-hive. 
+Этот метод рекомендуется только в случае, если у вас установлена локальная версия Hive и вы хотите протестировать адаптер dbt-hive.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -60,7 +58,7 @@ your_profile_name:
 
 ### LDAP
 
-LDAP позволяет вам аутентифицироваться с помощью имени пользователя и пароля, когда Hive [настроен с использованием LDAP Auth](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2). LDAP поддерживается через бинарные и HTTP механизмы подключения.
+LDAP позволяет аутентифицироваться с помощью имени пользователя и пароля, когда Hive [настроен с LDAP Auth](https://cwiki.apache.org/confluence/display/Hive/Setting+Up+HiveServer2). LDAP поддерживается через механизмы подключения Binary и HTTP.
 
 Это рекомендуемый механизм аутентификации для использования с Cloudera Data Platform (CDP).
 
@@ -73,7 +71,7 @@ your_profile_name:
     dev:
      type: hive
      host: HOST_NAME
-     http_path: YOUR/HTTP/PATH # необязательный, http путь к Hive, значение по умолчанию: None
+     http_path: YOUR/HTTP/PATH # необязательно, http путь к Hive, значение по умолчанию: None
      port: PORT # значение по умолчанию: 10000
      auth_type: ldap
      use_http_transport: BOOLEAN # значение по умолчанию: true
@@ -85,11 +83,11 @@ your_profile_name:
 
 </File>
 
-Примечание: При создании пользователя для выполнения задач в CDP убедитесь, что у пользователя есть разрешения на CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если вам нужно, чтобы пользователь выполнял операторы GRANT, вам также следует настроить соответствующие разрешения GRANT для них. При использовании Apache Ranger разрешения для разрешения GRANT обычно устанавливаются с помощью опции "Delegate Admin". Для получения дополнительной информации смотрите [`grants`](/reference/resource-configs/grants) и [on-run-start & on-run-end](/reference/project-configs/on-run-start-on-run-end).
+Примечание: При создании пользователя для выполнения рабочих нагрузок в CDP убедитесь, что у пользователя есть разрешения CREATE, SELECT, ALTER, INSERT, UPDATE, DROP, INDEX, READ и WRITE. Если вам нужно, чтобы пользователь выполнял операторы GRANT, вы также должны настроить для него соответствующие разрешения GRANT. При использовании Apache Ranger разрешения для разрешения GRANT обычно устанавливаются с помощью опции "Delegate Admin". Для получения дополнительной информации смотрите [`grants`](/reference/resource-configs/grants) и [on-run-start & on-run-end](/reference/project-configs/on-run-start-on-run-end).
 
 ### Kerberos
 
-Механизм аутентификации Kerberos использует GSSAPI для обмена учетными данными Kerberos, когда Hive [настроен с использованием Kerberos Auth](https://ambari.apache.org/1.2.5/installing-hadoop-using-ambari/content/ambari-kerb-2-3-3.html).
+Механизм аутентификации Kerberos использует GSSAPI для обмена учетными данными Kerberos, когда Hive [настроен с Kerberos Auth](https://ambari.apache.org/1.2.5/installing-hadoop-using-ambari/content/ambari-kerb-2-3-3.html).
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -112,23 +110,22 @@ your_profile_name:
 </File>
 
 Примечание: Типичная настройка Cloudera Private Cloud будет включать следующие шаги для настройки Kerberos перед выполнением команд dbt:
-- Получите правильный файл конфигурации области для вашей установки (krb5.conf)
-- Установите переменную окружения, указывающую на файл конфигурации (export KRB5_CONFIG=/path/to/krb5.conf)
+- Получите правильный файл конфигурации realm для вашей установки (krb5.conf)
+- Установите переменную окружения, чтобы указать на файл конфигурации (export KRB5_CONFIG=/path/to/krb5.conf)
 - Установите правильные разрешения для файла конфигурации (sudo chmod 644 /path/to/krb5.conf)
 - Получите keytab с помощью kinit (kinit username@YOUR_REALM.YOUR_DOMAIN)
-- Keytab действителен в течение определенного времени, после чего вам нужно будет снова выполнить kinit для продления его действительности.
-- Пользователь должен иметь разрешения на CREATE, DROP, INSERT для схемы, указанной в profiles.yml.
+- Keytab действителен в течение определенного периода, после чего вам нужно будет снова запустить kinit для обновления его действительности.
+- Пользователю потребуются разрешения CREATE, DROP, INSERT на схему, указанную в profiles.yml
 
 ### Инструментирование
-По умолчанию адаптер будет собирать события инструментирования, чтобы помочь улучшить функциональность и понять ошибки. Если вы хотите специально отключить это, например, в производственной среде, вы можете явно установить флаг `usage_tracking: false` в вашем файле `profiles.yml`. 
+По умолчанию адаптер будет собирать события инструментирования, чтобы помочь улучшить функциональность и понять ошибки. Если вы хотите специально отключить это, например, в производственной среде, вы можете явно установить флаг `usage_tracking: false` в вашем файле `profiles.yml`.
 
 ## Установка и распространение
 
-Адаптер dbt для Apache Hive управляется в своем собственном репозитории, [dbt-hive](https://github.com/cloudera/dbt-hive). Чтобы использовать его, 
-вам необходимо установить плагин `dbt-hive`.
+Адаптер dbt для Apache Hive управляется в собственном репозитории, [dbt-hive](https://github.com/cloudera/dbt-hive). Чтобы использовать его, необходимо установить плагин `dbt-hive`.
 
 ### Использование pip
-Следующие команды установят последнюю версию `dbt-hive`, а также необходимую версию `dbt-core` и драйвера `impyla`, используемого для соединений.
+Следующие команды установят последнюю версию `dbt-hive`, а также необходимую версию `dbt-core` и драйвер `impyla`, используемый для подключений.
 
 ```
 python -m pip install dbt-hive
@@ -137,7 +134,7 @@ python -m pip install dbt-hive
 ### Поддерживаемая функциональность
 
 | Название | Поддерживается |
-|----------|----------------|
+|------|-----------|
 |Материализация: Таблица|Да|
 |Материализация: Представление|Да|
 |Материализация: Инкрементальная - Добавление|Да|

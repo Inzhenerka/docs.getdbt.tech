@@ -10,12 +10,12 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-privatelink.md'}/>
 
-Следующие шаги помогут вам настроить конечную точку Snowflake AWS PrivateLink или Azure Private Link в многопользовательской среде dbt Cloud.
+Следующие шаги проведут вас через настройку конечной точки Snowflake AWS PrivateLink или Azure Private Link в многопользовательской среде dbt Cloud.
 
 <CloudProviders type='Snowflake' />
 
 :::note Snowflake SSO с PrivateLink
-Пользователи, подключающиеся к Snowflake с использованием SSO через соединение PrivateLink из dbt Cloud, также должны иметь доступ к конечной точке PrivateLink со своих локальных рабочих станций.
+Пользователи, подключающиеся к Snowflake с использованием SSO через соединение PrivateLink из dbt Cloud, также потребуют доступа к конечной точке PrivateLink с их локальной рабочей станции.
 
 > В настоящее время для любой учетной записи Snowflake SSO работает только с одним URL-адресом учетной записи одновременно: либо с публичным URL-адресом учетной записи, либо с URL-адресом, связанным с сервисом частного подключения.
 
@@ -24,7 +24,7 @@ import CloudProviders from '/snippets/_privatelink-across-providers.md';
 
 ## О частном подключении для Snowflake
 
-dbt Cloud поддерживает частное подключение для Snowflake с использованием одной из следующих услуг:
+dbt Cloud поддерживает частное подключение для Snowflake с использованием одного из следующих сервисов:
 
 - AWS [PrivateLink](#configure-aws-privatelink)
 - Azure [Private Link](#configure-azure-private-link)
@@ -35,18 +35,18 @@ dbt Cloud поддерживает частное подключение для 
 
 1. Откройте запрос в службу поддержки Snowflake, чтобы разрешить доступ из учетной записи dbt Cloud AWS или Entra ID.
 - Snowflake предпочитает, чтобы владелец учетной записи открывал запрос в службу поддержки напрямую, а не dbt Labs действовал от их имени. Для получения дополнительной информации обратитесь к [статье базы знаний Snowflake](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
-- Укажите свой идентификатор учетной записи dbt Cloud вместе с любой другой информацией, запрашиваемой в статье.
-  - **Идентификатор учетной записи AWS**: `346425330055` &mdash; _ПРИМЕЧАНИЕ: Этот идентификатор учетной записи применяется только к многопользовательским средам dbt Cloud на AWS. Для идентификаторов учетных записей AWS Virtual Private/Single-Tenant, пожалуйста, свяжитесь с [Поддержкой](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support)._
-- Вам потребуется доступ `ACCOUNTADMIN` к экземпляру Snowflake, чтобы отправить запрос в службу поддержки.
+- Предоставьте им ваш ID учетной записи dbt Cloud вместе с любой другой информацией, запрашиваемой в статье.
+  - **AWS account ID**: `346425330055` &mdash; _ПРИМЕЧАНИЕ: Этот ID учетной записи применяется только к многопользовательским средам AWS dbt Cloud. Для ID учетных записей AWS Virtual Private/Single-Tenant, пожалуйста, свяжитесь с [поддержкой](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support)._
+- Вам потребуется доступ `ACCOUNTADMIN` к экземпляру Snowflake для отправки запроса в поддержку.
 
-<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink1.png" title="Открыть случай Snowflake"/>
+<Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink1.png" title="Открыть запрос в Snowflake"/>
 
 2. После того как Snowflake предоставит запрашиваемый доступ, выполните системную функцию Snowflake [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) и скопируйте вывод.
 
-3. Добавьте необходимую информацию в следующий шаблон и отправьте свой запрос в [dbt Support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support):
+3. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос в [поддержку dbt](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support):
 
 ```
-Тема: Запрос на новый Multi-Tenant (Azure или AWS) PrivateLink
+Тема: Новый запрос на Multi-Tenant (Azure или AWS) PrivateLink
 - Тип: Snowflake
 - Вывод SYSTEM$GET_PRIVATELINK_CONFIG:
 - *Использовать privatelink-account-url или regionless-privatelink-account-url?: 
@@ -56,7 +56,6 @@ dbt Cloud поддерживает частное подключение для 
 ```
 _*По умолчанию dbt Cloud будет настроен на использование `privatelink-account-url` из предоставленного [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) в качестве конечной точки PrivateLink. По запросу может быть использован `regionless-privatelink-account-url`._
 
-
 import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
 <PrivateLinkSLA />
@@ -65,7 +64,7 @@ import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
 Чтобы настроить экземпляры Snowflake, размещенные на Azure, для [Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview):
 
-1. В вашей учетной записи Snowflake выполните следующие SQL-запросы и скопируйте вывод: 
+1. В вашей учетной записи Snowflake выполните следующие SQL-запросы и скопируйте вывод:
 
 ```sql
 
@@ -74,58 +73,57 @@ SYSTEM$GET_PRIVATELINK_CONFIG;
 
 ```
 
-
-2. Добавьте необходимую информацию в следующий шаблон и отправьте свой запрос в [dbt Support](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support): 
+2. Добавьте необходимую информацию в следующий шаблон и отправьте ваш запрос в [поддержку dbt](https://docs.getdbt.com/docs/dbt-support#dbt-cloud-support):
 
 ```
-Тема: Запрос на новый Multi-Tenant (Azure или AWS) PrivateLink
+Тема: Новый запрос на Multi-Tenant (Azure или AWS) PrivateLink
 - Тип: Snowflake
-- Вывод из SYSTEM$GET_PRIVATELINK_CONFIG:
+- Вывод SYSTEM$GET_PRIVATELINK_CONFIG:
   - Включите privatelink-pls-id
 - Многопользовательская среда dbt Cloud Azure: 
 ```
 
-3. dbt Support предоставит вам `private endpoint resource_id` нашего `private_endpoint` и диапазон `CIDR`, чтобы вы могли завершить [настройку PrivateLink](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors), связавшись с командой поддержки Snowflake. 
+3. Поддержка dbt предоставит вам `private endpoint resource_id` нашего `private_endpoint` и диапазон `CIDR`, чтобы вы могли завершить [настройку PrivateLink](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors), связавшись с командой поддержки Snowflake.
 
 ## Создание подключения в dbt Cloud
 
-После завершения настройки поддержки dbt Cloud вы можете начать создавать новые подключения с использованием PrivateLink. 
+После того как поддержка dbt Cloud завершит настройку, вы можете начать создавать новые подключения, используя PrivateLink.
 
-1. Перейдите в **Настройки** → **Создать новый проект** → выберите **Snowflake**. 
-2. Вы увидите две радиокнопки: **Публичный** и **Частный.** Выберите **Частный**. 
+1. Перейдите в **Настройки** → **Создать новый проект** → выберите **Snowflake**.
+2. Вы увидите две радиокнопки: **Публичное** и **Частное**. Выберите **Частное**.
 3. Выберите частную конечную точку из выпадающего списка (это автоматически заполнит поле имени хоста/учетной записи).
-4. Настройте оставшиеся детали платформы данных.
-5. Проверьте ваше соединение и сохраните его.
+4. Настройте остальные детали платформы данных.
+5. Проверьте ваше подключение и сохраните его.
 
 ### Включение подключения в Snowflake, размещенном на Azure
 
 :::note
 
-В настоящее время внутренние стадии AWS не поддерживаются.
+Внутренние этапы AWS private в настоящее время не поддерживаются.
 
 :::
 
-Чтобы завершить настройку, выполните оставшиеся шаги из руководств по настройке Snowflake. Инструкции различаются в зависимости от платформы:
+Чтобы завершить настройку, следуйте оставшимся шагам из руководств по настройке Snowflake. Инструкции различаются в зависимости от платформы:
 
 - [Snowflake Azure Private Link](https://docs.snowflake.com/en/user-guide/privatelink-azure)
-- [Частные конечные точки Azure для внутренних стадий](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure)
+- [Частные конечные точки Azure для внутренних этапов](https://docs.snowflake.com/en/user-guide/private-internal-stages-azure)
 
-Существуют некоторые нюансы для каждого подключения, и вам потребуется администратор Snowflake. В качестве администратора Snowflake вызовите функцию `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS`, используя значение privateEndpointResourceID в качестве аргумента функции. Это авторизует доступ к внутренней стадии Snowflake через частную конечную точку. 
+Существуют некоторые нюансы для каждого подключения, и вам потребуется администратор Snowflake. Как администратор Snowflake, вызовите функцию `SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS`, используя значение privateEndpointResourceID в качестве аргумента функции. Это авторизует доступ к внутреннему этапу Snowflake через частную конечную точку.
 
 ```sql
 
 USE ROLE ACCOUNTADMIN;
 
 -- Azure Private Link
-SELECT SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESOURCE ID` );
+SELECT SYSTEMS$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESOURCE ID` );
 
 ```
 
-
 ## Настройка сетевых политик
-Если ваша организация использует [Сетевые политики Snowflake](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к вашей учетной записи Snowflake, вам необходимо добавить сетевое правило для dbt Cloud. 
 
-Вы можете запросить идентификатор VPCE у [dbt Cloud Support](mailto:support@getdbt.com), который вы можете использовать для создания сетевой политики. 
+Если ваша организация использует [сетевые политики Snowflake](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к вашей учетной записи Snowflake, вам потребуется добавить сетевое правило для dbt Cloud.
+
+Вы можете запросить VPCE ID у [поддержки dbt Cloud](mailto:support@getdbt.com), который вы можете использовать для создания сетевой политики.
 
 ### Использование интерфейса
 
@@ -134,15 +132,14 @@ SELECT SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESOU
 2. Нажмите на **Сетевые правила**.
 3. Нажмите на **Добавить правило**.
 4. Дайте правилу имя.
-5. Выберите базу данных и схему, в которой будет храниться правило. Эти выборы предназначены для настройки разрешений и организационных целей; они не влияют на само правило.
-6. Установите тип на `AWS VPCE ID` и режим на `Ingress`.
-7. Введите идентификатор VPCE, предоставленный поддержкой dbt Cloud, в поле идентификатора и нажмите **Enter**.
+5. Выберите базу данных и схему, где будет храниться правило. Эти выборы предназначены для настройки разрешений и организационных целей; они не влияют на само правило.
+6. Установите тип `AWS VPCE ID` и режим `Ingress`.
+7. Введите VPCE ID, предоставленный поддержкой dbt Cloud, в поле идентификатора и нажмите **Enter**.
 8. Нажмите **Создать сетевое правило**.
 
 <Lightbox src="/img/docs/dbt-cloud/snowflakeprivatelink2.png" title="Создать сетевое правило"/>
 
-9. На вкладке **Сетевая политика** отредактируйте политику, к которой вы хотите добавить правило. Это может быть ваша учетная политика или политика, специфичная для пользователей, подключающихся из dbt Cloud.
-
+9. На вкладке **Сетевая политика** отредактируйте политику, к которой вы хотите добавить правило. Это может быть политика на уровне учетной записи или политика, специфичная для пользователей, подключающихся из dbt Cloud.
 
 10. Добавьте новое правило в список разрешенных и нажмите **Обновить сетевую политику**.
 
@@ -150,7 +147,7 @@ SELECT SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESOU
 
 ### Использование SQL
 
-Для быстрой и автоматизированной настройки сетевых правил через SQL в Snowflake следующие команды позволяют вам создать и настроить правила доступа для dbt Cloud. Эти SQL-примеры демонстрируют, как добавить сетевое правило и обновить вашу сетевую политику соответственно.
+Для быстрой и автоматизированной настройки сетевых правил через SQL в Snowflake следующие команды позволяют создать и настроить правила доступа для dbt Cloud. Эти примеры SQL демонстрируют, как добавить сетевое правило и обновить вашу сетевую политику соответствующим образом.
 
 1. Создайте новое сетевое правило с помощью следующего SQL:
 ```sql
@@ -158,7 +155,7 @@ SELECT SYSTEM$AUTHORIZE_STAGE_PRIVATELINK_ACCESS ( `AZURE PRIVATE ENDPOINT RESOU
 CREATE NETWORK RULE allow_dbt_cloud_access
   MODE = INGRESS
   TYPE = AWSVPCEID
-  VALUE_LIST = ('<VPCE_ID>'); -- Замените '<VPCE_ID>' на фактический идентификатор, предоставленный
+  VALUE_LIST = ('<VPCE_ID>'); -- Замените '<VPCE_ID>' на фактический ID, предоставленный
 
 ```
 

@@ -8,13 +8,13 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Изучение данных с помощью dbt Explorer"
-    body="Узнайте о dbt Explorer и о том, как с ним взаимодействовать, чтобы понять, улучшить и использовать ваши проекты dbt."
+    title="Откройте данные с dbt Explorer"
+    body="Узнайте о dbt Explorer и как взаимодействовать с ним, чтобы понять, улучшить и использовать ваши dbt проекты."
     link="/docs/collaborate/explore-projects"
     icon="dbt-bit"/>
 
 <Card
-    title="Контроль версий с помощью Git"
+    title="Контроль версий с Git"
     body="Узнайте о Git и контроле версий."
     link="/docs/collaborate/git-version-control"
     icon="dbt-bit"/>
@@ -24,8 +24,8 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Документирование ваших проектов dbt"
-    body="Узнайте, как хорошая документация для ваших моделей dbt помогает заинтересованным сторонам находить и понимать ваши наборы данных."
+    title="Документируйте ваши dbt проекты"
+    body="Узнайте, как хорошая документация для ваших dbt моделей помогает заинтересованным сторонам находить и понимать ваши наборы данных."
     link="/docs/collaborate/build-and-view-your-docs"
     icon="dbt-bit"/>
 

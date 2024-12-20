@@ -8,8 +8,8 @@ pagination_prev: null
 <div className="grid--2-col">
 
 <Card
-    title="Импорт проекта по git URL"
-    body="Узнайте, как импортировать проект, используя git URL."
+    title="Импорт проекта по URL git"
+    body="Узнайте, как импортировать проект, используя URL git."
     link="/docs/cloud/git/import-a-project-by-git-url"
     icon="dbt-bit"/>
 

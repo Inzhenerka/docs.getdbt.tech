@@ -1,7 +1,8 @@
+```markdown
 ---
 title: "Настройка AlloyDB"
 meta:
-  maintained_by: Сообщество?
+  maintained_by: Community?
   authors: 'dbt-labs'
   github_repo: 'dbt-labs/dbt-core'
   pypi_package: 'dbt-postgres'
@@ -18,7 +19,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-
 ## Конфигурация профиля
 
 Цели AlloyDB настраиваются точно так же, как и [цели Postgres](postgres-setup#profile-configuration).
+```
