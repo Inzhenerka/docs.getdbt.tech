@@ -145,12 +145,12 @@ var siteSettings = {
         },
         {
           to: "/guides",
-          label: "Guides",
+          label: "Гайды",
           position: "left",
         },
         {
           to: "reference/references-overview",
-          label: "Reference",
+          label: "Справочник",
           position: "left",
           activeBasePath: "reference",
         },

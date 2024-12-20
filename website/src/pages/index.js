@@ -74,7 +74,7 @@ function Home() {
       <Head>
         <meta
           name="google-site-verification"
-          content="ex1EMwuCGU33-nOpoOajLXEpMPgUYK5exBWePCu-0l0"
+          content=""
         />
       </Head>
       <Layout permalink="/">
@@ -83,15 +83,31 @@ function Home() {
           style={{ padding: "0", background: "#FFF" }}
         >
           <Hero
-            heading="Welcome to the dbt Developer Hub"
-            subheading="Your home base for learning dbt, connecting with the community and contributing to the craft of analytics engineering "
+            heading="Портал dbt на русском языке"
+            subheading="Добро пожаловать в центр изучения dbt, общения с сообществом и совершенствования аналитических навыков"
             showGraphic
           />
+
+          <section className="translated-note" style={{padding: "2rem", backgroundColor: "#f9f9f9"}}>
+            <h2>Это перевод</h2>
+            <p>
+              Сайт является переведенной версией
+              оригинальной документации по dbt. Мы приглашаем всех желающих
+              вносить правки и улучшения в перевод, чтобы сделать его ещё точнее и
+              полезнее для сообщества.
+            </p>
+            <p>
+              Если вы заметили неточность или хотите
+              помочь улучшить перевод, присылайте правки в
+              <a href="https://github.com/Inzhenerka/docs.getdbt.tech" style={{marginLeft: '5px'}}>репозиторий</a>.
+            </p>
+          </section>
+
           <section
             className={`resource-section row ${spotlightMember ? "has-spotlight-member" : ""}`}
           >
             <div className="popular-header">
-              <h2>Popular resources</h2>
+              <h2>Популярные ресурсы</h2>
             </div>
             <div className="popular-resources">
               <div className="grid">

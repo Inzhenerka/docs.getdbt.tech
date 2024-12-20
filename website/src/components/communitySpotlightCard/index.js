@@ -12,9 +12,9 @@ const SpotlightWrapper = ({ isSpotlightMember, frontMatter, children }) => {
           <Link to="/" title="Home">Home</Link>
           <Link 
             to="/community/spotlight" 
-            title="Community spotlight"
+            title="В центре внимания"
           >
-            Community spotlight
+            В центре внимания
           </Link>
           {frontMatter?.title && frontMatter?.id && 
             <Link 

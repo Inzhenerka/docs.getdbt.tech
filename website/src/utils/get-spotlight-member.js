@@ -67,7 +67,7 @@ function findMemberById(spotlightMember) {
 function setAdditionalProperties(member) {
   if(!member) return null
   const thisMember = member
-  thisMember.sectionTitle = 'Community spotlight'
+  thisMember.sectionTitle = 'В центре внимания'
   thisMember.link = `/community/spotlight/${member.id}`
   return thisMember
 }
