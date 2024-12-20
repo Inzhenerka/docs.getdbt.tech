@@ -1,6 +1,6 @@
 ---
 title: "Организация ваших выходных данных"
-description: "Узнайте, как вы можете организовать свои выходные данные"
+description: "Узнайте, как можно организовать ваши выходные данные"
 pagination_next: "docs/build/custom-schemas"
 pagination_prev: null
 ---
@@ -31,7 +31,7 @@ pagination_prev: null
 
 <Card
     title="Пользовательские имена целей"
-    body="Узнайте, как определить пользовательское имя цели для задания dbt Cloud."
+    body="Узнайте, как определить пользовательское имя цели для задания в dbt Cloud."
     link="/docs/build/custom-target-names"
     icon="dbt-bit"/>
 

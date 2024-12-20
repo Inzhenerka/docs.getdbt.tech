@@ -2,18 +2,18 @@
 title: "Добавление групп в ваш DAG"
 sidebar_label: "Группы"
 id: "groups"
-description: "Когда вы определяете группы в проектах dbt, вы превращаете неявные отношения в явную группировку."
+description: "Когда вы определяете группы в проектах dbt, вы превращаете неявные отношения в явные группы."
 keywords:
-  - группы доступ сетка
+  - группы доступ mesh
 ---
 
-Группа — это коллекция узлов в DAG dbt. Группы имеют имена, и у каждой группы есть `owner`. Они позволяют целенаправленно сотрудничать внутри и между командами, ограничивая [доступ к приватным](/reference/resource-configs/access) моделям.
+Группа — это коллекция узлов в dbt DAG. Группы имеют названия, и у каждой группы есть `владелец`. Они позволяют организовать целенаправленное сотрудничество внутри и между командами, ограничивая [доступ к приватным](/reference/resource-configs/access) моделям.
 
-Членами группы могут быть модели, тесты, семена, снимки, анализы и метрики. (Не включены: источники и экспозиции.) Каждый узел может принадлежать только одной группе.
+Члены группы могут включать модели, тесты, seeds, snapshots, анализы и метрики. (Не включены: источники и экспозиции.) Каждый узел может принадлежать только одной группе.
 
 ### Объявление группы
 
-Группы определяются в `.yml` файлах, вложенных под ключом `groups:`.
+Группы определяются в файлах `.yml`, вложенных под ключом `groups:`.
 
 <File name='models/marts/finance/finance.yml'>
 
@@ -34,7 +34,7 @@ groups:
 Используйте конфигурацию `group`, чтобы добавить одну или несколько моделей в группу.
 
 <Tabs>
-<TabItem value="project" label="Уровень проекта">
+<TabItem value="project" label="На уровне проекта">
 
 <File name='dbt_project.yml'>
 
@@ -49,7 +49,7 @@ models:
 
 </TabItem>
 
-<TabItem value="model-yaml" label="Уровень модели">
+<TabItem value="model-yaml" label="На уровне модели">
 
 <File name='models/schema.yml'>
 
@@ -82,7 +82,7 @@ select ...
 
 ### Ссылка на модель в группе
 
-По умолчанию все модели в группе имеют модификатор доступа `protected` [access modifier](/reference/resource-configs/access). Это означает, что на них могут ссылаться ресурсы ниже по потоку в _любой_ группе в том же проекте, используя функцию [`ref`](/reference/dbt-jinja-functions/ref). Если свойство `access` модели в группе установлено на `private`, только ресурсы внутри этой группы могут на нее ссылаться.
+По умолчанию все модели в группе имеют модификатор доступа `protected`. Это означает, что они могут быть использованы в качестве ссылки для последующих ресурсов в _любой_ группе в том же проекте, используя функцию [`ref`](/reference/dbt-jinja-functions/ref). Если свойство `access` сгруппированной модели установлено как `private`, только ресурсы внутри её группы могут ссылаться на неё.
 
 <File name='models/schema.yml'>
 
@@ -110,9 +110,9 @@ select * from {{ ref('finance_private_model') }}
 ```shell
 $ dbt run -s marketing_model
 ...
-dbt.exceptions.DbtReferenceError: Ошибка разбора
-  Узел model.jaffle_shop.marketing_model попытался сослаться на узел model.jaffle_shop.finance_private_model, 
-  что не разрешено, поскольку ссылающийся узел является приватным для группы finance.
+dbt.exceptions.DbtReferenceError: Parsing Error
+  Node model.jaffle_shop.marketing_model attempted to reference node model.jaffle_shop.finance_private_model, 
+  which is not allowed because the referenced node is private to the finance group.
 ```
 
 ## Связанные документы

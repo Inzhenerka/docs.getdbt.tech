@@ -1,80 +1,79 @@
 ---
-title: MetricFlow time spine
+title: Временная шкала MetricFlow
 id: metricflow-time-spine
-description: "MetricFlow expects a default time spine table called metricflow_time_spine"
-sidebar_label: "MetricFlow time spine"
-tags: [Metrics, Semantic Layer]
+description: "MetricFlow ожидает таблицу временной шкалы по умолчанию, называемую metricflow_time_spine"
+sidebar_label: "Временная шкала MetricFlow"
+tags: [Метрики, Семантический слой]
 ---
 <VersionBlock firstVersion="1.9">
 
-<!-- this whole section is for 1.9 and higher + Release Tracks -->
+<!-- этот раздел для версии 1.9 и выше + Release Tracks -->
 
-It's common in analytics engineering to have a date dimension or "time spine" table as a base table for different types of time-based joins and aggregations. The structure of this table is typically a base column of daily or hourly dates, with additional columns for other time grains, like fiscal quarters, defined based on the base column. You can join other tables to the time spine on the base column to calculate metrics like revenue at a point in time, or to aggregate to a specific time grain.
+В аналитической инженерии часто используется таблица измерения дат или "временная шкала" в качестве базовой таблицы для различных типов соединений и агрегаций на основе времени. Структура этой таблицы обычно включает базовую колонку с ежедневными или почасовыми датами, с дополнительными колонками для других временных гранулярностей, таких как фискальные кварталы, определяемые на основе базовой колонки. Вы можете присоединять другие таблицы к временной шкале по базовой колонке, чтобы вычислять метрики, такие как доход в определенный момент времени, или агрегировать данные до определенной временной гранулярности.
 
-MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. MetricFlow will join against the time-spine model for the following types of metrics and dimensions:
+MetricFlow требует, чтобы вы определили как минимум одну модель dbt, которая предоставляет временную шкалу, а затем указали (в YAML) колонки, которые будут использоваться для соединений на основе времени. MetricFlow будет соединяться с моделью временной шкалы для следующих типов метрик и измерений:
 
-- [Cumulative metrics](/docs/build/cumulative)
-- [Metric offsets](/docs/build/derived#derived-metric-offset)
-- [Conversion metrics](/docs/build/conversion)
-- [Slowly Changing Dimensions](/docs/build/dimensions#scd-type-ii)
-- [Metrics](/docs/build/metrics-overview) with the `join_to_timespine` configuration set to true
+- [Кумулятивные метрики](/docs/build/cumulative)
+- [Смещения метрик](/docs/build/derived#derived-metric-offset)
+- [Метрики конверсии](/docs/build/conversion)
+- [Медленно изменяющиеся измерения](/docs/build/dimensions#scd-type-ii)
+- [Метрики](/docs/build/metrics-overview) с конфигурацией `join_to_timespine`, установленной в true
 
-To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=True` flag when querying the Semantic Layer to return the compiled SQL.
+Чтобы увидеть сгенерированный SQL для типов метрик и измерений, использующих соединения с временной шкалой, обратитесь к соответствующей документации или добавьте флаг `compile=True` при запросе Семантического слоя, чтобы вернуть скомпилированный SQL.
 
-## Configuring time spine in YAML
+## Настройка временной шкалы в YAML
 
- Time spine models are normal dbt models with extra configurations that tell dbt and MetricFlow how to use specific columns by defining their properties. Add the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. If your project already includes a calendar table or date dimension, you can configure that table as a time spine. Otherwise, review the [example time-spine tables](#example-time-spine-tables) to create one.
- 
- Some things to note when configuring time spine models:
+Модели временной шкалы — это обычные модели dbt с дополнительными конфигурациями, которые указывают dbt и MetricFlow, как использовать конкретные колонки, определяя их свойства. Добавьте [ключ `models`](/reference/model-properties) для временной шкалы в ваш каталог `models/`. Если ваш проект уже включает таблицу календаря или измерение дат, вы можете настроить эту таблицу как временную шкалу. В противном случае, ознакомьтесь с [примером таблиц временной шкалы](#example-time-spine-tables), чтобы создать одну из них.
 
-- Add the configurations under the `time_spine` key for that [model's properties](/reference/model-properties), just as you would add a description or tests.
-- You only need to configure time-spine models that the Semantic Layer should recognize.
-- At a minimum, define a time-spine table for a daily grain.
-- You can optionally define additional time-spine tables for different granularities, like hourly. Review the [granularity considerations](#granularity-considerations) when deciding which tables to create.
-- If you're looking to specify the grain of a time dimension so that MetricFlow can transform the underlying column to the required granularity, refer to the [Time granularity documentation](/docs/build/dimensions?dimension=time_gran)
+Некоторые моменты, которые следует учитывать при настройке моделей временной шкалы:
+
+- Добавьте конфигурации под ключом `time_spine` для [свойств модели](/reference/model-properties), так же как вы добавляете описание или тесты.
+- Вам нужно настроить только те модели временной шкалы, которые Семантический слой должен распознавать.
+- Минимально определите таблицу временной шкалы для ежедневной гранулярности.
+- Вы можете дополнительно определить дополнительные таблицы временной шкалы для различных гранулярностей, таких как почасовая. Ознакомьтесь с [соображениями по гранулярности](#granularity-considerations) при принятии решения о том, какие таблицы создавать.
+- Если вы хотите указать гранулярность временного измерения, чтобы MetricFlow мог преобразовать базовую колонку в требуемую гранулярность, обратитесь к [документации по временной гранулярности](/docs/build/dimensions?dimension=time_gran).
 
 :::tip
-If you previously used a model called `metricflow_time_spine`, you no longer need to create this specific model. You can now configure MetricFlow to use any date dimension or time spine table already in your project by updating the `model` setting in the Semantic Layer.
+Если вы ранее использовали модель, называемую `metricflow_time_spine`, вам больше не нужно создавать эту конкретную модель. Теперь вы можете настроить MetricFlow для использования любой таблицы измерения дат или временной шкалы, уже существующей в вашем проекте, обновив настройку `model` в Семантическом слое.
 
-If you don’t have a date dimension table, you can still create one by using the code snippet in the [next section](#creating-a-time-spine-table) to build your time spine model.
+Если у вас нет таблицы измерения дат, вы все равно можете создать ее, используя фрагмент кода в [следующем разделе](#creating-a-time-spine-table), чтобы построить вашу модель временной шкалы.
 :::
 
-### Creating a time spine table  
+### Создание таблицы временной шкалы
 
-MetricFlow supports granularities ranging from milliseconds to years. Refer to the [Dimensions page](/docs/build/dimensions?dimension=time_gran#time) (time_granularity tab) to find the full list of supported granularities.
+MetricFlow поддерживает гранулярности от миллисекунд до лет. Обратитесь к [странице измерений](/docs/build/dimensions?dimension=time_gran#time) (вкладка time_granularity), чтобы найти полный список поддерживаемых гранулярностей.
 
-To create a time spine table from scratch, you can do so by adding the following code to your dbt project. 
-This example creates a time spine at an hourly grain and a daily grain: `time_spine_hourly` and `time_spine_daily`.
+Чтобы создать таблицу временной шкалы с нуля, вы можете добавить следующий код в ваш проект dbt. Этот пример создает временную шкалу с почасовой и ежедневной гранулярностью: `time_spine_hourly` и `time_spine_daily`.
 
 <VersionBlock firstVersion="1.9">
 <File name="models/_models.yml">
   
 ```yaml
 [models:](/reference/model-properties) 
-# Hourly time spine
+# Почасовая временная шкала
   - name: time_spine_hourly 
-    description: my favorite time spine
+    description: моя любимая временная шкала
     time_spine:
-      standard_granularity_column: date_hour # column for the standard grain of your table, must be date time type.
+      standard_granularity_column: date_hour # колонка для стандартной гранулярности вашей таблицы, должна быть типа date time.
       custom_granularities:
         - name: fiscal_year
           column_name: fiscal_year_column
     columns:
       - name: date_hour
-        granularity: hour # set granularity at column-level for standard_granularity_column
+        granularity: hour # установите гранулярность на уровне колонки для standard_granularity_column
 
-# Daily time spine
+# Ежедневная временная шкала
   - name: time_spine_daily
     time_spine:
-      standard_granularity_column: date_day # column for the standard grain of your table
+      standard_granularity_column: date_day # колонка для стандартной гранулярности вашей таблицы
     columns:
       - name: date_day
-        granularity: day # set granularity at column-level for standard_granularity_column
+        granularity: day # установите гранулярность на уровне колонки для standard_granularity_column
 ```
 </File>
 </VersionBlock>
 
-<Lightbox src="/img/time_spines.png" width="50%" title="Time spine directory structure" />
+<Lightbox src="/img/time_spines.png" width="50%" title="Структура каталога временной шкалы" />
 
 <!--
 <VersionBlock lastVersion="1.8">
@@ -83,44 +82,44 @@ This example creates a time spine at an hourly grain and a daily grain: `time_sp
 ```yaml
 models:
   - name: time_spine_hourly
-    description: A date spine with one row per hour, ranging from 2020-01-01 to 2039-12-31.
+    description: Временная шкала с одной строкой на час, охватывающая период с 2020-01-01 по 2039-12-31.
     time_spine:
-      standard_granularity_column: date_hour # column for the standard grain of your table
+      standard_granularity_column: date_hour # колонка для стандартной гранулярности вашей таблицы
     columns:
       - name: date_hour
-        granularity: hour # set granularity at column-level for standard_granularity_column
+        granularity: hour # установите гранулярность на уровне колонки для standard_granularity_column
   
   - name: time_spine_daily
-    description: A date spine with one row per day, ranging from 2020-01-01 to 2039-12-31.
+    description: Временная шкала с одной строкой на день, охватывающая период с 2020-01-01 по 2039-12-31.
     time_spine:
-      standard_granularity_column: date_day # column for the standard grain of your table
+      standard_granularity_column: date_day # колонка для стандартной гранулярности вашей таблицы
     columns:
       - name: date_day
-        granularity: day # set granularity at column-level for standard_granularity_column
+        granularity: day # установите гранулярность на уровне колонки для standard_granularity_column
 ```
 
 </File>
 </VersionBlock>
 -->
 
-- This example configuration shows a time spine model called  `time_spine_hourly` and `time_spine_daily`. It sets the time spine configurations under the `time_spine` key. 
-- The `standard_granularity_column` is the column that maps to one of our [standard granularities](/docs/build/dimensions?dimension=time_gran). This column must be set under the `columns` key and should have a grain that is finer or equal to any custom granularity columns defined in the same model.
-  - It needs to reference a column defined under the `columns` key, in this case, `date_hour` and `date_day`, respectively.
-  - It sets the granularity at the column-level using the `granularity` key, in this case, `hour` and `day`, respectively. 
-- MetricFlow will use the `standard_granularity_column` as the join key when joining the time spine table to another source table.
-- [The `custom_granularities` field](#custom-calendar), (available in dbt Cloud Latest and dbt Core v1.9 and higher) lets you specify non-standard time periods like `fiscal_year` or `retail_month` that your organization may use.
+- Этот пример конфигурации показывает модель временной шкалы, называемую `time_spine_hourly` и `time_spine_daily`. Она устанавливает конфигурации временной шкалы под ключом `time_spine`.
+- `standard_granularity_column` — это колонка, которая соответствует одной из наших [стандартных гранулярностей](/docs/build/dimensions?dimension=time_gran). Эта колонка должна быть установлена под ключом `columns` и должна иметь гранулярность, которая более тонкая или равна любой пользовательской колонке гранулярности, определенной в той же модели.
+  - Она должна ссылаться на колонку, определенную под ключом `columns`, в данном случае `date_hour` и `date_day` соответственно.
+  - Она устанавливает гранулярность на уровне колонки, используя ключ `granularity`, в данном случае `hour` и `day` соответственно.
+- MetricFlow будет использовать `standard_granularity_column` в качестве ключа соединения при соединении таблицы временной шкалы с другой исходной таблицей.
+- [Поле `custom_granularities`](#custom-calendar), (доступно в dbt Cloud Latest и dbt Core v1.9 и выше) позволяет вам указывать нестандартные временные периоды, такие как `fiscal_year` или `retail_month`, которые может использовать ваша организация.
 
-For an example project, refer to our [Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template/blob/main/models/marts/_models.yml) example.
+Для примера проекта обратитесь к нашему [примеру Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template/blob/main/models/marts/_models.yml).
 
-### Considerations when choosing which granularities to create{#granularity-considerations}
+### Соображения при выборе, какие гранулярности создавать{#granularity-considerations}
 
-- MetricFlow will use the time spine with the largest compatible granularity for a given query to ensure the most efficient query possible. For example, if you have a time spine at a monthly grain, and query a dimension at a monthly grain, MetricFlow will use the monthly time spine. If you only have a daily time spine, MetricFlow will use the daily time spine and date_trunc to month.
-- You can add a time spine for each granularity you intend to use if query efficiency is more important to you than configuration time, or storage constraints. For most engines, the query performance difference should be minimal and transforming your time spine to a coarser grain at query time shouldn't add significant overhead to your queries.
-- We recommend having a time spine at the finest grain used in any of your dimensions to avoid unexpected errors. For example, if you have dimensions at an hourly grain, you should have a time spine at an hourly grain.
+- MetricFlow будет использовать временную шкалу с наибольшей совместимой гранулярностью для данного запроса, чтобы обеспечить максимально эффективный запрос. Например, если у вас есть временная шкала с месячной гранулярностью и вы запрашиваете измерение с месячной гранулярностью, MetricFlow будет использовать месячную временную шкалу. Если у вас есть только ежедневная временная шкала, MetricFlow будет использовать ежедневную временную шкалу и date_trunc до месяца.
+- Вы можете добавить временную шкалу для каждой гранулярности, которую вы планируете использовать, если эффективность запроса для вас важнее, чем время настройки или ограничения по хранению. Для большинства движков разница в производительности запроса должна быть минимальной, и преобразование вашей временной шкалы в более грубую гранулярность во время запроса не должно добавлять значительной нагрузки на ваши запросы.
+- Мы рекомендуем иметь временную шкалу с самой тонкой гранулярностью, используемой в любом из ваших измерений, чтобы избежать неожиданных ошибок. Например, если у вас есть измерения с почасовой гранулярностью, у вас должна быть временная шкала с почасовой гранулярностью.
 
-## Example time spine tables
+## Примеры таблиц временной шкалы
 
-### Daily
+### Ежедневная
 
 <File name="metricflow_time_spine.sql">
 
@@ -153,9 +152,9 @@ where date_day > dateadd(year, -4, current_timestamp())
 and date_day < dateadd(day, 30, current_timestamp())
 ```
 
-### Daily (BigQuery)
+### Ежедневная (BigQuery)
 
-Use this model if you're using BigQuery. BigQuery supports `DATE()` instead of `TO_DATE()`:
+Используйте эту модель, если вы используете BigQuery. BigQuery поддерживает `DATE()` вместо `TO_DATE()`:
 
 <File name="metricflow_time_spine.sql">
 
@@ -178,7 +177,7 @@ final as (
 
 select *
 from final
--- filter the time spine to a specific range
+-- фильтруйте временную шкалу до определенного диапазона
 where date_day > date_add(DATE(current_timestamp()), INTERVAL -4 YEAR)
 and date_day < date_add(DATE(current_timestamp()), INTERVAL 30 DAY)
 ```
@@ -187,7 +186,7 @@ and date_day < date_add(DATE(current_timestamp()), INTERVAL 30 DAY)
 
 </File>
 
-### Hourly
+### Почасовая
 
 <File name='time_spine_hourly.sql'>
 
@@ -216,7 +215,7 @@ final as (
 )
 
 select * from final
--- filter the time spine to a specific range
+-- фильтруйте временную шкалу до определенного диапазона
 where date_day > dateadd(year, -4, current_timestamp()) 
 and date_hour < dateadd(day, 30, current_timestamp())
 ```
@@ -228,13 +227,13 @@ and date_hour < dateadd(day, 30, current_timestamp())
 
 <VersionBlock lastVersion="1.8">
 
-<!-- this whole section is for 1.8 and and lower -->
+<!-- этот раздел для версии 1.8 и ниже -->
 
-MetricFlow uses a time spine table to construct cumulative metrics. By default, MetricFlow expects the time spine table to be named `metricflow_time_spine` and doesn't support using a different name. For supported granularities, refer to the [dimensions](/docs/build/dimensions?dimension=time_gran#time) page.
+MetricFlow использует таблицу временной шкалы для построения кумулятивных метрик. По умолчанию MetricFlow ожидает, что таблица временной шкалы будет называться `metricflow_time_spine` и не поддерживает использование другого имени. Для поддерживаемых гранулярностей обратитесь к [странице измерений](/docs/build/dimensions?dimension=time_gran#time).
 
-To create this table, you need to create a model in your dbt project called `metricflow_time_spine` and add the following code:
+Чтобы создать эту таблицу, вам нужно создать модель в вашем проекте dbt, называемую `metricflow_time_spine`, и добавить следующий код:
 
-### Daily
+### Ежедневная
 
 <File name='metricflow_time_spine.sql'>
 
@@ -270,9 +269,9 @@ and date_day  < dateadd(day, 30, current_timestamp())
 
 </File>
 
-### Daily (BigQuery)
+### Ежедневная (BigQuery)
 
-Use this model if you're using BigQuery. BigQuery supports `DATE()` instead of `TO_DATE()`:
+Используйте эту модель, если вы используете BigQuery. BigQuery поддерживает `DATE()` вместо `TO_DATE()`:
 
 <File name="metricflow_time_spine.sql">
 
@@ -294,60 +293,60 @@ final as (
 
 select *
 from final
--- filter the time spine to a specific range
+-- фильтруйте временную шкалу до определенного диапазона
 where date_day > dateadd(year, -4, current_timestamp()) 
 and date_day < dateadd(day, 30, current_timestamp())
 ```
 
 </File>
 
-You only need to include the `date_day` column in the table. MetricFlow can handle broader levels of detail, but finer grains are only supported in versions 1.9 and higher.
+Вам нужно включить только колонку `date_day` в таблицу. MetricFlow может обрабатывать более широкие уровни детализации, но более тонкие гранулярности поддерживаются только в версиях 1.9 и выше.
 
 </VersionBlock>
 
 
-## Custom calendar <Lifecycle status="Preview"/>
+## Пользовательский календарь <Lifecycle status="Preview"/>
 
 <VersionBlock lastVersion="1.8">
 
-The ability to configure custom calendars, such as a fiscal calendar, is available now in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), and it will be available in [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
+Возможность настройки пользовательских календарей, таких как фискальный календарь, доступна сейчас в [последней версии в dbt Cloud](/docs/dbt-versions/cloud-release-tracks), и будет доступна в [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-Custom date transformations can be complex, and organizations often have unique needs that can’t be easily generalized. Creating a custom calendar model allows you to define these transformations in SQL, offering more flexibility than native transformations in MetricFlow. This approach lets you map custom columns back to MetricFlow granularities, ensuring consistency while giving you control over the transformations.
+Пользовательские преобразования дат могут быть сложными, и у организаций часто есть уникальные потребности, которые трудно обобщить. Создание модели пользовательского календаря позволяет вам определять эти преобразования в SQL, предлагая больше гибкости, чем встроенные преобразования в MetricFlow. Этот подход позволяет вам сопоставлять пользовательские колонки с гранулярностями MetricFlow, обеспечивая согласованность, при этом давая вам контроль над преобразованиями.
 
-For example, if you use a custom calendar in your organization, such as a fiscal calendar, you can configure it in MetricFlow using its date and time operations. 
+Например, если вы используете пользовательский календарь в вашей организации, такой как фискальный календарь, вы можете настроить его в MetricFlow, используя его операции с датами и временем.
 
-- This is useful for calculating metrics based on a custom calendar, such as fiscal quarters or weeks. 
-- Use the `custom_granularities` key to define a non-standard time period for querying data, such as a `retail_month` or `fiscal_week`, instead of standard options like `day`, `month`, or `year`.
-- This feature provides more control over how time-based metrics are calculated.
+- Это полезно для расчета метрик на основе пользовательского календаря, таких как фискальные кварталы или недели.
+- Используйте ключ `custom_granularities`, чтобы определить нестандартный временной период для запроса данных, такой как `retail_month` или `fiscal_week`, вместо стандартных опций, таких как `day`, `month` или `year`.
+- Эта функция предоставляет больше контроля над тем, как рассчитываются метрики на основе времени.
 
-<Expandable alt_header="Data types and time zone considerations">
+<Expandable alt_header="Соображения по типам данных и часовым поясам">
  
-When working with custom calendars in MetricFlow, it's important to ensure:
+При работе с пользовательскими календарями в MetricFlow важно обеспечить:
 
-- Consistent data types &mdash; Both your dimension column and the time spine column should use the same data type to allow accurate comparisons. Functions like `DATE_TRUNC` don't change the data type of the input in some databases (like Snowflake). Using different data types can lead to mismatches and inaccurate results.
+- Согласованные типы данных &mdash; как ваша колонка измерения, так и колонка временной шкалы должны использовать один и тот же тип данных для точных сравнений. Функции, такие как `DATE_TRUNC`, не изменяют тип данных входных данных в некоторых базах данных (например, Snowflake). Использование разных типов данных может привести к несоответствиям и неточным результатам.
 
-  We recommend using `DATETIME` or `TIMESTAMP` data types for your time dimensions and time spine, as they support all granularities. The `DATE` data type may not support smaller granularities like hours or minutes.
+  Мы рекомендуем использовать типы данных `DATETIME` или `TIMESTAMP` для ваших временных измерений и временной шкалы, так как они поддерживают все гранулярности. Тип данных `DATE` может не поддерживать более мелкие гранулярности, такие как часы или минуты.
 
-- Time zones &mdash; MetricFlow currently doesn't perform any timezone manipulation. When working with timezone-aware data, inconsistent time zones may lead to unexpected results during aggregations and comparisons.
+- Часовые пояса &mdash; MetricFlow в настоящее время не выполняет никаких манипуляций с часовыми поясами. При работе с данными, учитывающими часовой пояс, несоответствия в часовых поясах могут привести к неожиданным результатам при агрегациях и сравнениях.
 
-For example, if your time spine column is `TIMESTAMP` type and your dimension column is `DATE` type, comparisons between these columns might not work as intended. To fix this, convert your `DATE` column to `TIMESTAMP`, or make sure both columns are the same data type.
+Например, если ваша колонка временной шкалы имеет тип `TIMESTAMP`, а ваша колонка измерения имеет тип `DATE`, сравнения между этими колонками могут не работать, как предполагалось. Чтобы исправить это, преобразуйте вашу колонку `DATE` в `TIMESTAMP` или убедитесь, что обе колонки имеют один и тот же тип данных.
 
 </Expandable>
 
-### Add custom granularities
+### Добавление пользовательских гранулярностей
 
-To add custom granularities, the Semantic Layer supports custom calendar configurations that allow users to query data using non-standard time periods like `fiscal_year` or `retail_month`. You can define these custom granularities (all lowercased) by modifying your model's YAML configuration like this:
+Чтобы добавить пользовательские гранулярности, Семантический слой поддерживает конфигурации пользовательского календаря, которые позволяют пользователям запрашивать данные, используя нестандартные временные периоды, такие как `fiscal_year` или `retail_month`. Вы можете определить эти пользовательские гранулярности (все в нижнем регистре), изменив конфигурацию YAML вашей модели следующим образом:
 
 <File name="models/_models.yml">
 
 ```yaml
 models:
  - name: my_time_spine
-   description: my favorite time spine
+   description: моя любимая временная шкала
    time_spine:
       standard_granularity_column: date_day
       custom_granularities:
@@ -356,7 +355,7 @@ models:
 ```
 </File>
 
-#### Coming soon
-Note that features like calculating offsets and period-over-period will be supported soon!
+#### Скоро
+Обратите внимание, что такие функции, как расчет смещений и периодов по периодам, будут поддерживаться в ближайшее время!
 
 </VersionBlock>

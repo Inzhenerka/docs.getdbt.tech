@@ -1,7 +1,7 @@
 ---
-title: "Подключение к Microsoft Fabric"
-description: "Настройка подключения к Microsoft Fabric."
-sidebar_label: "Подключение к Microsoft Fabric"
+title: "Подключение Microsoft Fabric"
+description: "Настройка подключения Microsoft Fabric."
+sidebar_label: "Подключение Microsoft Fabric"
 ---
 
 ## Поддерживаемые методы аутентификации
@@ -9,33 +9,33 @@ sidebar_label: "Подключение к Microsoft Fabric"
 - Сервисный принципал Microsoft Entra
 - Пароль Microsoft Entra
 
-Пароль SQL (LDAP) не поддерживается в Microsoft Fabric Synapse Data Warehouse, поэтому необходимо использовать Microsoft Entra ID. Это означает, что для использования [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric) в dbt Cloud вам потребуется как минимум один сервисный принципал Microsoft Entra для подключения dbt Cloud к Fabric, желательно по одному сервисному принципалу для каждого пользователя.
+Пароль SQL (LDAP) не поддерживается в Microsoft Fabric Synapse Data Warehouse, поэтому вы должны использовать Microsoft Entra ID. Это означает, что для использования [Microsoft Fabric](https://www.microsoft.com/en-us/microsoft-fabric) в dbt Cloud вам потребуется как минимум один сервисный принципал Microsoft Entra для подключения dbt Cloud к Fabric, желательно один сервисный принципал для каждого пользователя.
 
 ### Сервисный принципал Microsoft Entra
-Следующие поля обязательны для настройки подключения к Microsoft Fabric с использованием аутентификации сервисного принципала Microsoft Entra.
+Ниже приведены необходимые поля для настройки подключения к Microsoft Fabric с использованием аутентификации сервисного принципала Microsoft Entra.
 
 | Поле | Описание |
 | --- | --- |
-| **Сервер** | Значение **host** сервисного принципала для тестовой конечной точки Fabric. |
-| **Порт** | Порт для подключения к Microsoft Fabric. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL-сервера. |
-| **База данных** | Значение **database** сервисного принципала для тестовой конечной точки Fabric. |
-| **Аутентификация** | Выберите **Service Principal** из выпадающего списка. | 
+| **Server** | Значение **host** сервисного принципала для тестовой конечной точки Fabric. |
+| **Port** | Порт для подключения к Microsoft Fabric. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL сервера. |
+| **Database** | Значение **database** сервисного принципала для тестовой конечной точки Fabric. |
+| **Authentication** | Выберите **Service Principal** из выпадающего списка. | 
 | **Tenant ID** | **Directory (tenant) ID** сервисного принципала. |
-| **Client ID** | **Application (client) ID** сервисного принципала. |
-| **Client secret** | **Client secret** сервисного принципала (не **client secret id**). |  
+| **Client ID** | **application (client) ID** сервисного принципала. |
+| **Client secret** | **client secret** сервисного принципала (не **client secret id**). |  
 
 ### Пароль Microsoft Entra
 
-Следующие поля обязательны для настройки подключения к Microsoft Fabric с использованием аутентификации по паролю Microsoft Entra.
+Ниже приведены необходимые поля для настройки подключения к Microsoft Fabric с использованием аутентификации по паролю Microsoft Entra.
 
 | Поле | Описание |
 | --- | --- |
-| **Сервер** | Имя хоста сервера для подключения к Microsoft Fabric. |
-| **Порт** | Порт сервера. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL-сервера. |
-| **База данных** | Имя базы данных. |
-| **Аутентификация** | Выберите **Active Directory Password** из выпадающего списка. | 
-| **Пользователь** | Имя пользователя Microsoft Entra. |
-| **Пароль** | Пароль Microsoft Entra. |
+| **Server** | Имя хоста сервера для подключения к Microsoft Fabric. |
+| **Port** | Порт сервера. Вы можете использовать `1433` (по умолчанию), который является стандартным номером порта SQL сервера. |
+| **Database** | Имя базы данных. |
+| **Authentication** | Выберите **Active Directory Password** из выпадающего списка. | 
+| **User** | Имя пользователя Microsoft Entra. |
+| **Password** | Пароль Microsoft Entra. |
 
 ## Конфигурация
 
