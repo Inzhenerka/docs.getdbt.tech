@@ -1,64 +1,64 @@
 ---
 title: "Обновление до dbt utils v1.0"
-description: Новые функции и изменения, которые следует учитывать при обновлении до dbt utils v1.0.
+description: Новые функции и критические изменения, которые следует учитывать при обновлении до dbt utils v1.0.
 ---
 
 # Обновление до dbt utils v1.0
 
-Впервые [dbt utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) переходит на новую основную версию. Из [блог-поста прошлого месяца](https://www.getdbt.com/blog/announcing-dbt-v1.3-and-utils/):
+Впервые [dbt utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) пересекает границу основной версии. Из [прошломесячного поста в блоге](https://www.getdbt.com/blog/announcing-dbt-v1.3-and-utils/):
 
-> Пора формализовать то, что уже было неофициальной политикой: вы можете полагаться на dbt utils так же, как и на dbt Core, с стабильными интерфейсами и последовательным и интуитивно понятным наименованием.
+> Пришло время формализовать то, что уже было неофициальной политикой: вы можете полагаться на dbt utils так же, как и на dbt Core, с устойчивыми интерфейсами и последовательными и интуитивно понятными именами.
 
-Как и переход на dbt Core 1.0 в прошлом году, здесь есть некоторые изменения, которые могут привести к несовместимости, поскольку мы стандартизировали и готовились к будущему. Большинство изменений можно обработать с помощью поиска и замены. Если вам нужна помощь, напишите на [Community Forum](https://discourse.getdbt.com) или в канале [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) в Slack.
+Как и при переходе на dbt Core 1.0 в прошлом году, есть некоторые критические изменения, так как мы стандартизировали и подготовились к будущему. Большинство изменений можно обработать с помощью поиска и замены. Если вам нужна помощь, опубликуйте сообщение на [Форуме сообщества](https://discourse.getdbt.com) или в канале [#package-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) в Slack.
 
 ## Новые функции
 
-- `get_single_value()` &mdash; Простой способ извлечь одно значение из SQL-запроса, вместо того чтобы обращаться к элементу `[0][0]` результата `run_query`.
+- `get_single_value()` &mdash; Легкий способ извлечь одно значение из SQL-запроса, вместо доступа к элементу `[0][0]` результата `run_query`.
 - `safe_divide()` &mdash; Возвращает null, когда знаменатель равен 0, вместо того чтобы вызывать ошибку деления на ноль.
-- Новый тест `not_empty_string` &mdash; Упрощенная обертка по сравнению с использованием `expression_is_true` для проверки длины столбца.
+- Новый тест `not_empty_string` &mdash; Более простой обертка, чем использование `expression_is_true` для проверки длины столбца.
 
 ## Улучшения
 
-- Многие тесты становятся более значимыми, когда вы запускаете их против подгрупп таблицы. Например, вам может потребоваться проверить, что для каждого турникета существуют недавние данные, а не достаточно одной источника данных. Добавьте новый аргумент `group_by_columns` к вашим тестам, чтобы сделать это. Ознакомьтесь с [этой статьей](https://www.emilyriederer.com/post/grouping-data-quality/) автора теста для получения дополнительной информации.
-- С добавлением аргумента `quote_identifiers`, который включен по умолчанию в макросе `star()`, теперь вы можете отключить кавычки, если это необходимо.
-- Тест `recency` теперь имеет необязательный аргумент `ignore_time_component`, который можно использовать при тестировании по столбцу даты. Это предотвращает влияние времени суток, когда выполняется тест, на ложные отрицательные/положительные результаты.
+- Многие тесты более значимы, когда вы запускаете их для подгрупп таблицы. Например, вам может понадобиться проверить, что недавние данные существуют для каждого турникета, а не только для одного источника данных. Добавьте новый аргумент `group_by_columns` к вашим тестам, чтобы сделать это. Ознакомьтесь с [этой статьей](https://www.emilyriederer.com/post/grouping-data-quality/) автора теста для получения дополнительной информации.
+- С добавлением аргумента `quote_identifiers`, включенного по умолчанию, в макросе `star()`, теперь вы можете отключить кавычки, если это необходимо.
+- Тест `recency` теперь имеет необязательный аргумент `ignore_time_component`, который можно использовать при тестировании столбца даты. Это предотвращает возникновение ложных отрицательных/положительных результатов из-за времени суток, когда выполняется тест.
 
 ## Исправления
 
-- `union()` теперь включает/исключает столбцы без учета регистра.
-- `slugify()` добавляет подчеркивание, когда первый символ является цифрой.
-- Тест `expression_is_true` не выводит `*`, если не сохраняет ошибки, что улучшает затраты для BigQuery.
+- `union()` теперь включает/исключает столбцы без учета регистра
+- `slugify()` добавляет префикс подчеркивания, когда первый символ является цифрой
+- Тест `expression_is_true` не выводит `*`, если не сохраняет ошибки, что является улучшением затрат для BigQuery.
 
-## Изменения, которые могут привести к несовместимости
+## Критические изменения
 ### Изменения в `surrogate_key()`:
 
-- `surrogate_key()` был заменен на `generate_surrogate_key()`. Ранее он обрабатывал null-значения и пустые строки одинаково, что могло привести к созданию дублирующих ключей. `generate_surrogate_key()` не имеет этого недостатка. Сравните [суррогатные ключи, рассчитанные для этих столбцов](https://docs.google.com/spreadsheets/d/1qWfdbieUOSgkzdY0kmJ9iCgdqyWccA0R-6EW0EgaMQc/edit#gid=0):
+- `surrogate_key()` был заменен на `generate_surrogate_key()`. Оригинальный обрабатывал null-значения и пустые строки одинаково, что могло привести к созданию дублирующихся ключей. `generate_surrogate_key()` не имеет этого недостатка. Сравните [суррогатные ключи, рассчитанные для этих столбцов](https://docs.google.com/spreadsheets/d/1qWfdbieUOSgkzdY0kmJ9iCgdqyWccA0R-6EW0EgaMQc/edit#gid=0):
 
 ![Таблица, сравнивающая поведение surrogate_key и generate_surrogate_key](/img/guides/migration/versions/surrogate_key_behaviour.png)
 
-Изменение метода расчета суррогатных ключей, даже если оно улучшено, может иметь значительные последствия для последующего использования (например, для снимков и инкрементальных моделей, которые используют этот столбец в качестве `unique_key`). В результате возможно включение старого поведения, установив следующую переменную в вашем проекте dbt:
+Изменение метода расчета суррогатных ключей, даже в лучшую сторону, может иметь значительные последствия в последующих использованиях (например, в снимках и инкрементальных моделях, которые используют этот столбец в качестве `unique_key`). В результате, возможно включить поведение по умолчанию, установив следующую переменную в вашем проекте dbt:
 
 ```yaml
 #dbt_project.yml
 vars:
-  surrogate_key_treat_nulls_as_empty_strings: true #включить старое поведение
+  surrogate_key_treat_nulls_as_empty_strings: true #включить поведение по умолчанию
 ```
 
 Создавая новый макрос вместо обновления поведения старого, мы требуем от всех проектов, использующих этот макрос, принять явное решение о том, какой подход лучше для их контекста.
 
-**Наша рекомендация заключается в том, что существующие пользователи должны включить старое поведение**, если вы не уверены, что:
+**Наша рекомендация заключается в том, что существующие пользователи должны включить поведение по умолчанию**, если вы не уверены, что:
 
-- ваши суррогатные ключи никогда не содержали null, или
-- ваши суррогатные ключи не используются для инкрементальных моделей, снимков или других состояний и могут быть сгенерированы с новыми значениями без проблем.
+- ваши суррогатные ключи никогда не содержали null-значений, или
+- ваши суррогатные ключи не используются для инкрементальных моделей, снимков или других артефактов с состоянием и могут быть пересчитаны с новыми значениями без проблем.
 
 :::caution Предупреждение для поддерживающих пакеты
 
-Вы не можете предполагать одно или другое поведение, так как каждый проект может настраивать свое поведение.
+Вы не можете предполагать одно поведение или другое, так как каждый проект может настроить свое поведение.
 
 :::
 
-### Функциональность, теперь встроенная в dbt Core:
-- Тест `expression_is_true` больше не имеет отдельного аргумента `condition`. Вместо этого используйте `where`, который [теперь доступен для всех тестов](https://docs.getdbt.com/reference/resource-configs/where):
+### Функциональность теперь встроена в dbt Core:
+- Тест `expression_is_true` больше не имеет выделенного аргумента `condition`. Вместо этого используйте `where`, который [теперь доступен нативно для всех тестов](https://docs.getdbt.com/reference/resource-configs/where):
 
 ```yaml
 version: 2
@@ -79,11 +79,11 @@ models:
           where: "created_at > '2018-12-31'"
 ```
 **Примечание** &mdash; Это может привести к тому, что некоторые тесты получат одинаковые автоматически сгенерированные имена. Чтобы решить эту проблему, вы можете [определить пользовательское имя для теста](/reference/resource-properties/data-tests#define-a-custom-name-for-one-test).
-- Устаревшие тесты `unique_where` и `not_null_where` были удалены, потому что [где теперь доступно для всех тестов](https://docs.getdbt.com/reference/resource-configs/where). Для миграции найдите и замените `dbt_utils.unique_where` на `unique`, а `dbt_utils.not_null_where` на `not_null`.
-- `dbt_utils.current_timestamp()` заменен на `dbt.current_timestamp()`. 
-  - Обратите внимание, что реализация `dbt.current_timestamp()` в Postgres и Snowflake отличается от старой версии `dbt_utils` ([полные детали здесь](https://github.com/dbt-labs/dbt-utils/pull/597#issuecomment-1231074577)). Если вы используете Postgres или Snowflake и нуждаетесь в идентичном обратном совместимом поведении, используйте `dbt.current_timestamp_backcompat()`. Эта разница, надеемся, будет устранена в будущей версии dbt Core.
-- Все другие кросс-базовые макросы были перемещены в пространство имен dbt, без необходимости в каких-либо изменениях, кроме замены `dbt_utils.` на `dbt.`. Ознакомьтесь с [документацией по кросс-базовым макросам](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros) для полного списка.
-    - В вашем редакторе кода вы можете выполнить глобальный поиск и замену с помощью регулярного выражения: `\{\{\s*dbt_utils\.(any_value|bool_or|cast_bool_to_text|concat|dateadd|datediff|date_trunc|escape_single_quotes|except|hash|intersect|last_day|length|listagg|position|replace|right|safe_cast|split_part|string_literal|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|except|intersect|concat|hash|length|position|replace|right|split_part|escape_single_quotes|string_literal|any_value|bool_or|listagg|cast_bool_to_text|safe_cast|dateadd|datediff|date_trunc|last_day)` → `{{ dbt.$1`
+- Устаревшие тесты `unique_where` и `not_null_where` были удалены, потому что [where теперь доступен нативно для всех тестов](https://docs.getdbt.com/reference/resource-configs/where). Чтобы мигрировать, найдите и замените `dbt_utils.unique_where` на `unique` и `dbt_utils.not_null_where` на `not_null`.
+- `dbt_utils.current_timestamp()` заменен на `dbt.current_timestamp()`.
+  - Обратите внимание, что реализация `dbt.current_timestamp()` в Postgres и Snowflake отличается от старой `dbt_utils` ([подробности здесь](https://github.com/dbt-labs/dbt-utils/pull/597#issuecomment-1231074577)). Если вы используете Postgres или Snowflake и нуждаетесь в идентичном обратном совместимом поведении, используйте `dbt.current_timestamp_backcompat()`. Эта разница, надеемся, будет устранена в будущей версии dbt Core.
+- Все остальные кросс-базовые макросы перемещены в пространство имен dbt, без необходимости в изменениях, кроме замены `dbt_utils.` на `dbt.`. Ознакомьтесь с [документацией по кросс-базовым макросам](https://docs.getdbt.com/reference/dbt-jinja-functions/cross-database-macros) для полного списка.
+    - В вашем редакторе кода вы можете выполнить глобальный поиск и замену с использованием регулярных выражений: `\{\{\s*dbt_utils\.(any_value|bool_or|cast_bool_to_text|concat|dateadd|datediff|date_trunc|escape_single_quotes|except|hash|intersect|last_day|length|listagg|position|replace|right|safe_cast|split_part|string_literal|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|type_bigint|type_float|type_int|type_numeric|type_string|type_timestamp|except|intersect|concat|hash|length|position|replace|right|split_part|escape_single_quotes|string_literal|any_value|bool_or|listagg|cast_bool_to_text|safe_cast|dateadd|datediff|date_trunc|last_day)` → `{{ dbt.$1`
 ### Удаление материализации `insert_by_period`
 - Материализация `insert_by_period` была перемещена в [репозиторий экспериментальных функций](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/main/insert_by_period). Чтобы продолжить ее использование, добавьте следующее в ваш файл packages.yml:
 
@@ -91,30 +91,29 @@ models:
 packages:
   - git: https://github.com/dbt-labs/dbt-labs-experimental-features
     subdirectory: insert_by_period
-    revision: XXXX #необязательно, но настоятельно рекомендуется. Укажите полный git sha хэш, например 1c0bfacc49551b2e67d8579cf8ed459d68546e00. Если не указано, используется текущий HEAD.
+    revision: XXXX #необязательно, но настоятельно рекомендуется. Укажите полный хеш git sha, например 1c0bfacc49551b2e67d8579cf8ed459d68546e00. Если не указано, используется текущий HEAD.
 ```
 ### Удаление устаревшего поведения:
 - `safe_add()` работает только со списком аргументов; используйте `{{ dbt_utils.safe_add(['column_1', 'column_2']) }}` вместо varargs `{{ dbt_utils.safe_add('column_1', 'column_2') }}`.
-- Применены несколько давно обещанных устареваний к `deduplicate()`:
+- Несколько давно обещанных устареваний в `deduplicate()` были применены:
     - Аргумент `group_by` заменен на `partition_by`.
     - `relation_alias` удален. Если вам нужен псевдоним, вы можете передать его напрямую в аргумент `relation`.
     - `order_by` теперь обязателен. Передайте статическое значение, например `1`, если вам не важно, как они будут дублироваться.
-- Устаревший аргумент `table` был удален из `unpivot()`. Используйте `relation` вместо этого.
+- Устаревший аргумент `table` был удален из `unpivot()`. Используйте `relation` вместо него.
 
-
-## Устранение сообщений об ошибках
-После обновления это распространенные сообщения об ошибках, с которыми вы можете столкнуться, а также их решения.
+## Решение сообщений об ошибках
+После обновления это распространенные сообщения об ошибках, с которыми вы можете столкнуться, и их решения.
 <details>
 	<summary><code>dict object has no attribute MACRO_NAME</code></summary>
 	<div>
-		<p><b>Причина</b>: Нет макроса с именем <code>MACRO_NAME</code>. Это, скорее всего, связано с тем, что макрос был перемещен в пространство имен <code>dbt</code> (см. выше). Это также может быть связано с тем, что вы не запустили dbt deps или неправильно написали имя макроса.</p>
+		<p><b>Причина</b>: Макрос с именем <code>MACRO_NAME</code> не существует. Скорее всего, это связано с тем, что макрос был перемещен в пространство имен <code>dbt</code> (см. выше). Это также может быть связано с тем, что вы не запустили dbt deps или неправильно написали имя макроса.</p>
 		<p><b>Решение</b>: Для <a href="/reference/dbt-jinja-functions/cross-database-macros">кросс-базовых макросов</a> измените <code>dbt_utils.MACRO_NAME()</code> на <code>dbt.MACRO_NAME()</code>.</p>
 	</div>
 </details>
 <details>
 	<summary><code>macro 'dbt_macro__generate_surrogate_key' takes not more than 1 argument(s)</code> </summary>
 	<div>
-		<p><b>Причина</b>: <code>generate_surrogate_key()</code> требует один аргумент, содержащий список столбцов, а не набор varargs.</p>
+		<p><b>Причина</b>: <code>generate_surrogate_key()</code> требует одного аргумента, содержащего список столбцов, а не набора varargs.</p>
 		<p><b>Решение</b>: Измените на <code>dbt_utils.generate_surrogate_key(['column_1', 'column_2'])</code> - обратите внимание на квадратные скобки. </p>
 	</div>
 </details>
@@ -136,7 +135,7 @@ packages:
 <details>
 	<summary><code>macro dbt_macro__test_expression_is_true takes no keyword argument condition</code></summary>
 	<div>
-		<p><b>Причина</b>: <code>condition</code> был удален из теста <code>expression_is_true</code>, теперь, когда <code>where</code> доступен для всех тестов автоматически.</p>
+		<p><b>Причина</b>: <code>condition</code> был удален из теста <code>expression_is_true</code>, теперь, когда <code>where</code> доступен на всех тестах автоматически.</p>
 		<p><b>Решение</b>: Замените <code>condition</code> на <code>where</code>. </p>
 	</div>
 </details>

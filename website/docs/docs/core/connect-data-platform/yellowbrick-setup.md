@@ -1,16 +1,16 @@
 ---
 title: "Настройка Yellowbrick"
-description: "Прочитайте это руководство, чтобы узнать о настройке хранилища Yellowbrick в dbt."
+description: "Прочтите это руководство, чтобы узнать о настройке хранилища Yellowbrick в dbt."
 id: "yellowbrick-setup"
 meta:
-  maintained_by: Сообщество
-  authors: 'Команда InfoCapital'
+  maintained_by: Community
+  authors: 'InfoCapital team'
   github_repo: 'InfoCapital-AU/dbt-yellowbrick'
   pypi_package: 'dbt-yellowbrick'
   min_core_version: 'v1.7.0'
-  cloud_support: Не поддерживается
+  cloud_support: Not Supported
   min_supported_version: 'Yellowbrick 5.2'
-  slack_channel_name: 'н/д'
+  slack_channel_name: 'n/a'
   slack_channel_link: 'https://www.getdbt.com/community'
   platform_name: 'Yellowbrick Data'
   config_page: '/reference/resource-configs/yellowbrick-configs'
@@ -18,7 +18,7 @@ meta:
 
 :::info Плагин сообщества
 
-Некоторые основные функции могут быть ограничены.
+Некоторая основная функциональность может быть ограничена.
 
 :::
 
@@ -44,22 +44,22 @@ company-name:
       port: [port]
       dbname: [database name]
       schema: [dbt schema]
-      [role](#role): [опционально, установите роль, которую dbt предполагает при выполнении запросов]
-      [sslmode](#sslmode): [опционально, установите sslmode, используемый для подключения к базе данных]
-      [sslrootcert](#sslrootcert): [опционально, установите значение конфигурации sslrootcert на новый путь к файлу, чтобы настроить расположение файла, содержащего корневые сертификаты]
+      [role](#role): [опционально, задает роль, которую dbt принимает при выполнении запросов]
+      [sslmode](#sslmode): [опционально, задает sslmode, используемый для подключения к базе данных]
+      [sslrootcert](#sslrootcert): [опционально, задает значение конфигурации sslrootcert на новый путь к файлу для настройки местоположения файла, содержащего корневые сертификаты]
   
 ```
 
 </File>
 
-### Примечания по конфигурации
+### Примечания к конфигурации
 
-Этот адаптер основан на адаптере dbt-postgres, описанном здесь [Настройка профиля Postgres](/docs/core/connect-data-platform/postgres-setup)
+Этот адаптер основан на адаптере dbt-postgres, документированном здесь [Настройка профиля Postgres](/docs/core/connect-data-platform/postgres-setup)
 
 #### role
 
-Конфигурация `role` управляет ролью пользователя, которую dbt предполагает при открытии новых соединений с базой данных.
+Конфигурация `role` управляет ролью пользователя, которую dbt принимает при открытии новых подключений к базе данных.
 
 #### sslmode / sslrootcert
 
-Параметры конфигурации ssl управляют тем, как dbt подключается к Yellowbrick с использованием SSL. Обратитесь к [документации Yellowbrick](https://docs.yellowbrick.com/5.2.27/client_tools/config_ssl_for_clients_intro.html) для получения подробной информации.
+Параметры конфигурации ssl управляют тем, как dbt подключается к Yellowbrick с использованием SSL. Обратитесь к [документации Yellowbrick](https://docs.yellowbrick.com/5.2.27/client_tools/config_ssl_for_clients_intro.html) для получения подробностей.

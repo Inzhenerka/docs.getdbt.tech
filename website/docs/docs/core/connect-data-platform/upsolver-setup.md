@@ -1,16 +1,16 @@
 ---
 title: "Настройка Upsolver"
-description: "Прочитайте это руководство, чтобы узнать, как настроить Upsolver с dbt."
+description: "Прочтите это руководство, чтобы узнать, как настроить Upsolver с dbt."
 id: "upsolver-setup"
 meta:
-  maintained_by: Команда Upsolver
-  authors: Команда Upsolver
+  maintained_by: Upsolver Team
+  authors: Upsolver Team
   github_repo: 'Upsolver/dbt-upsolver'
   pypi_package: 'dbt-upsolver'
   min_core_version: 'v1.5.0'
   cloud_support: Не поддерживается
-  min_supported_version: 'n/a'
-  slack_channel_name: 'Сообщество Upsolver'
+  min_supported_version: 'н/д'
+  slack_channel_name: 'Upsolver Comunity'
   slack_channel_link: 'https://join.slack.com/t/upsolvercommunity/shared_invite/zt-1zo1dbyys-hj28WfaZvMh4Z4Id3OkkhA'
   platform_name: 'Upsolver'
   config_page: '/reference/resource-configs/upsolver-configs'
@@ -22,14 +22,13 @@ pagination_next: null
 <ul>
     <li><strong>Поддерживается</strong>: {frontMatter.meta.maintained_by}</li>
     <li><strong>Авторы</strong>: {frontMatter.meta.authors}</li>
-    <li><strong>Репозиторий GitHub</strong>: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a><a href={`https://github.com/${frontMatter.meta.github_repo}`}><img src={`https://img.shields.io/github/stars/${frontMatter.meta.github_repo}?style=for-the-badge`}/></a></li>
+    <li><strong>Репозиторий на GitHub</strong>: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a><a href={`https://github.com/${frontMatter.meta.github_repo}`}><img src={`https://img.shields.io/github/stars/${frontMatter.meta.github_repo}?style=for-the-badge`}/></a></li>
     <li><strong>Пакет PyPI</strong>: <code>{frontMatter.meta.pypi_package}</code> <a href={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}`}><img src={`https://badge.fury.io/py/${frontMatter.meta.pypi_package}.svg`}/></a></li>
     <li><strong>Канал Slack</strong>: <a href={frontMatter.meta.slack_channel_link}>{frontMatter.meta.slack_channel_name}</a></li>
     <li><strong>Поддерживаемая версия dbt Core</strong>: {frontMatter.meta.min_core_version} и новее</li>
     <li><strong>Поддержка dbt Cloud</strong>: {frontMatter.meta.cloud_support}</li>
     <li><strong>Минимальная версия платформы данных</strong>: {frontMatter.meta.min_supported_version}</li>
-</ul>
-
+    </ul>
 <h2> Установка {frontMatter.meta.pypi_package} </h2>
 
 pip — это самый простой способ установить адаптер:
@@ -40,15 +39,15 @@ pip — это самый простой способ установить ад�
 
 <h2> Настройка {frontMatter.meta.pypi_package} </h2>
 
-<p>Для специфической настройки {frontMatter.meta.platform_name} пожалуйста, обратитесь к <a href={frontMatter.meta.config_page}>{frontMatter.meta.platform_name} Configuration</a> </p>
+<p>Для конфигурации, специфичной для {frontMatter.meta.platform_name}, пожалуйста, обратитесь к <a href={frontMatter.meta.config_page}>Конфигурация {frontMatter.meta.platform_name}</a> </p>
 
-<p>Для получения дополнительной информации обратитесь к репозиторию GitHub: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
+<p>Для получения дополнительной информации обратитесь к репозиторию на GitHub: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
 ## Методы аутентификации
 
 ### Аутентификация пользователя / токена
 
-Upsolver можно настроить с использованием базовой аутентификации пользователя/токена, как показано ниже.
+Upsolver может быть настроен с использованием базовой аутентификации пользователя/токена, как показано ниже.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -65,7 +64,7 @@ my-upsolver-db:
 
       database: [database name]
       schema: [schema name]
-      threads: [1 или более]
+      threads: [1 or more]
 
   ```
 
@@ -77,10 +76,10 @@ my-upsolver-db:
 
 ### Все конфигурации
 
-| Конфигурация | Обязательная? | Описание |
-| ------------ | ------------- | ----------- |
-| token | Да | Токен для подключения к Upsolver [документация Upsolver](https://docs.upsolver.com/sqlake/api-integration) |
+| Конфигурация | Обязательно? | Описание |
+| ------ | --------- | ----------- |
+| token | Да | Токен для подключения к Upsolver [Документация Upsolver](https://docs.upsolver.com/sqlake/api-integration) |
 | user | Да | Пользователь для входа |
 | database | Да | База данных, в которой dbt должен создавать модели |
 | schema | Да | Схема, в которую по умолчанию будут строиться модели |
-| api_url | Да | URL API для подключения. Общая величина ```https://mt-api-prod.upsolver.com``` |
+| api_url | Да | URL API для подключения. Обычное значение ```https://mt-api-prod.upsolver.com``` |

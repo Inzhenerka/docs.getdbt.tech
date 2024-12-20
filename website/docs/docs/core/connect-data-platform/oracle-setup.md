@@ -1,6 +1,6 @@
 ---
-title: "Oracle setup"
-description: "Read this guide to learn about the Oracle warehouse setup in dbt."
+title: "Настройка Oracle"
+description: "Прочтите это руководство, чтобы узнать о настройке хранилища Oracle в dbt."
 id: "oracle-setup"
 meta:
   maintained_by: Oracle
@@ -20,35 +20,34 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Configure the Python driver mode
+### Настройка режима драйвера Python
 
-[python-oracledb](https://oracle.github.io/python-oracledb/) makes it optional to install the Oracle Client libraries.
-This driver supports 2 modes
+[python-oracledb](https://oracle.github.io/python-oracledb/) делает установку библиотек Oracle Client необязательной.
+Этот драйвер поддерживает 2 режима:
 
-1. **Thin mode (preferred)**: Python process directly connects to the Oracle database. This mode does not need the Oracle Client libraries
-2. **Thick mode**: Python process links with the Oracle Client libraries. Some advanced Oracle database functionalities (for example: Advanced Queuing, LDAP connections, Scrollable cursors) are currently available via Oracle Client libraries
+1. **Тонкий режим (предпочтительный)**: Процесс Python напрямую подключается к базе данных Oracle. В этом режиме не требуются библиотеки Oracle Client.
+2. **Толстый режим**: Процесс Python связывается с библиотеками Oracle Client. Некоторые расширенные функции базы данных Oracle (например, Advanced Queuing, LDAP-соединения, прокручиваемые курсоры) в настоящее время доступны через библиотеки Oracle Client.
 
-You can configure the driver mode using the environment variable `ORA_PYTHON_DRIVER_TYPE`. Use the **thin** mode as it vastly simplifies installation.
+Вы можете настроить режим драйвера, используя переменную окружения `ORA_PYTHON_DRIVER_TYPE`. Используйте **тонкий** режим, так как он значительно упрощает установку.
 
-| Driver Mode            | Oracle Client libraries required? | Configuration |
-|------------------------|-----------------------------------| ------------- |
-| Thin                   | No                                | `ORA_PYTHON_DRIVER_TYPE=thin`|
-| Thick                  | Yes                               | `ORA_PYTHON_DRIVER_TYPE=thick` |
+| Режим драйвера         | Требуются ли библиотеки Oracle Client? | Конфигурация |
+|------------------------|----------------------------------------|--------------|
+| Тонкий                 | Нет                                    | `ORA_PYTHON_DRIVER_TYPE=thin`|
+| Толстый                | Да                                     | `ORA_PYTHON_DRIVER_TYPE=thick` |
 
-The default value of `ORA_PYTHON_DRIVER_TYPE` is `thin`
-
+Значение по умолчанию для `ORA_PYTHON_DRIVER_TYPE` — `thin`.
 
 <Tabs
 defaultValue="thin"
   values={[
-    { label: 'Thin', value: 'thin'},
-    { label: 'Thick', value: 'thick'}]
+    { label: 'Тонкий', value: 'thin'},
+    { label: 'Толстый', value: 'thick'}]
 }>
 
 <TabItem value="thin">
 
   ```bash
-  export ORA_PYTHON_DRIVER_TYPE=thin # default
+  export ORA_PYTHON_DRIVER_TYPE=thin # по умолчанию
   ```
 
 </TabItem>
@@ -59,11 +58,11 @@ defaultValue="thin"
   export ORA_PYTHON_DRIVER_TYPE=thick
   ```
 
-### Install Oracle Instant Client libraries
+### Установка библиотек Oracle Instant Client
 
-In thick mode, you will need the [Oracle Instant Client libraries](https://www.oracle.com/database/technologies/instant-client.html) installed. These provide the necessary network connectivity allowing dbt-oracle to access an Oracle Database instance.
+В толстом режиме вам понадобятся установленные [библиотеки Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client.html). Они обеспечивают необходимую сетевую связь, позволяя dbt-oracle получить доступ к экземпляру базы данных Oracle.
 
-Oracle Client versions 23, 21, 19, 18, 12 and 11.2 are supported. It is recommended to use the latest client possible: Oracle’s standard client-server version interoperability allows connection to both older and newer databases.
+Поддерживаются версии Oracle Client 23, 21, 19, 18, 12 и 11.2. Рекомендуется использовать последнюю доступную версию клиента: стандартная совместимость версий клиент-сервер Oracle позволяет подключаться как к более старым, так и к более новым базам данных.
 
 <Tabs
   defaultValue="linux"
@@ -75,40 +74,38 @@ Oracle Client versions 23, 21, 19, 18, 12 and 11.2 are supported. It is recommen
 
 <TabItem value="linux">
 
-1. Download an Oracle 23, 21, 19, 18, 12, or 11.2 “Basic” or “Basic Light” zip file matching your Python 64-bit or 32-bit architecture:
-   1. [x86-64 64-bit](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html)
-   2. [x86 32-bit](https://www.oracle.com/database/technologies/instant-client/linux-x86-32-downloads.html)
-   3. [ARM (aarch64) 64-bit](https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html)
+1. Скачайте zip-файл Oracle 23, 21, 19, 18, 12 или 11.2 "Basic" или "Basic Light", соответствующий вашей архитектуре Python 64-бит или 32-бит:
+   1. [x86-64 64-бит](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html)
+   2. [x86 32-бит](https://www.oracle.com/database/technologies/instant-client/linux-x86-32-downloads.html)
+   3. [ARM (aarch64) 64-бит](https://www.oracle.com/database/technologies/instant-client/linux-arm-aarch64-downloads.html)
 
-2. Unzip the package into a single directory that is accessible to your application. For example:
+2. Распакуйте пакет в одну директорию, доступную вашему приложению. Например:
   ```bash
   mkdir -p /opt/oracle
   cd /opt/oracle
   unzip instantclient-basic-linux.x64-21.6.0.0.0.zip
   ```
 
-3. Install the libaio package with sudo or as the root user. For example:
+3. Установите пакет libaio с помощью sudo или от имени пользователя root. Например:
   ```bash
   sudo yum install libaio
   ```
-  On some Linux distributions this package is called `libaio1` instead.
+  В некоторых дистрибутивах Linux этот пакет называется `libaio1`.
 
-
-
-4. If there is no other Oracle software on the machine that will be impacted, permanently add Instant Client to the runtime link path. For example, with sudo or as the root user:
+4. Если на машине нет другого программного обеспечения Oracle, которое будет затронуто, добавьте Instant Client в путь к библиотекам времени выполнения. Например, с помощью sudo или от имени пользователя root:
 
  ```bash
 sudo sh -c "echo /opt/oracle/instantclient_21_6 > /etc/ld.so.conf.d/oracle-instantclient.conf"
 sudo ldconfig
  ```
 
-  Alternatively, set the environment variable `LD_LIBRARY_PATH`
+  В качестве альтернативы установите переменную окружения `LD_LIBRARY_PATH`
 
   ```bash
   export LD_LIBRARY_PATH=/opt/oracle/instantclient_21_6:$LD_LIBRARY_PATH
   ```
 
-5. If you use optional Oracle configuration files such as tnsnames.ora, sqlnet.ora, or oraaccess.xml with Instant Client, then put the files in an accessible directory and set the environment variable TNS_ADMIN to that directory name.
+5. Если вы используете дополнительные файлы конфигурации Oracle, такие как tnsnames.ora, sqlnet.ora или oraaccess.xml с Instant Client, поместите файлы в доступную директорию и установите переменную окружения TNS_ADMIN на имя этой директории.
 
   ```bash
   export TNS_ADMIN=/opt/oracle/your_config_dir
@@ -118,22 +115,22 @@ sudo ldconfig
 
 <TabItem value="windows">
 
-1. Download an Oracle 21, 19, 18, 12, or 11.2 “Basic” or “Basic Light” zip file: [64-bit](https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html) or [32-bit](https://www.oracle.com/database/technologies/instant-client/microsoft-windows-32-downloads.html), matching your Python architecture.
+1. Скачайте zip-файл Oracle 21, 19, 18, 12 или 11.2 "Basic" или "Basic Light": [64-бит](https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html) или [32-бит](https://www.oracle.com/database/technologies/instant-client/microsoft-windows-32-downloads.html), соответствующий вашей архитектуре Python.
 
-:::info Windows 7 users
-Note that Oracle Client versions 21c and 19c are not supported on Windows 7.
+:::info Пользователи Windows 7
+Обратите внимание, что версии Oracle Client 21c и 19c не поддерживаются на Windows 7.
 :::
 
-2. Unzip the package into a directory that is accessible to your application. For example, unzip `instantclient-basic-windows.x64-19.11.0.0.0dbru.zip` to `C:\oracle\instantclient_19_11`.
+2. Распакуйте пакет в директорию, доступную вашему приложению. Например, распакуйте `instantclient-basic-windows.x64-19.11.0.0.0dbru.zip` в `C:\oracle\instantclient_19_11`.
 
-3. Oracle Instant Client libraries require a Visual Studio redistributable with a 64-bit or 32-bit architecture to match Instant Client’s architecture.
-   1. For Instant Client 21 install [VS 2019](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170) or later
-   2. For Instant Client 19 install [VS 2017](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170)
-   3. For Instant Client 18 or 12.2 install [VS 2013](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2013-vc-120)
-   4. For Instant Client 12.1 install [VS 2010](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2010-vc-100-sp1-no-longer-supported)
-   5. For Instant Client 11.2 install [VS 2005 64-bit](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2005-vc-80-sp1-no-longer-supported)
+3. Библиотеки Oracle Instant Client требуют Visual Studio redistributable с 64-битной или 32-битной архитектурой, соответствующей архитектуре Instant Client.
+   1. Для Instant Client 21 установите [VS 2019](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170) или более позднюю версию
+   2. Для Instant Client 19 установите [VS 2017](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170)
+   3. Для Instant Client 18 или 12.2 установите [VS 2013](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2013-vc-120)
+   4. Для Instant Client 12.1 установите [VS 2010](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2010-vc-100-sp1-no-longer-supported)
+   5. Для Instant Client 11.2 установите [VS 2005 64-bit](https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2005-vc-80-sp1-no-longer-supported)
 
-4. Add the Oracle Instant Client directory to the `PATH` environment variable. The directory must occur in `PATH` before any other Oracle directories. Restart any open command prompt windows.
+4. Добавьте директорию Oracle Instant Client в переменную окружения `PATH`. Директория должна находиться в `PATH` перед любыми другими директориями Oracle. Перезапустите все открытые окна командной строки.
 
    ```bash
    SET PATH=C:\oracle\instantclient_19_9;%PATH%
@@ -143,92 +140,90 @@ Note that Oracle Client versions 21c and 19c are not supported on Windows 7.
 
 <TabItem value="macos">
 
-Check the python-oracledb documentation for installation instructions on [MacOS ARM64](https://python-oracledb.readthedocs.io/en/latest/user_guide/installation.html#instant-client-scripted-installation-on-macos-arm64) or [MacOS Intel x84-64](https://python-oracledb.readthedocs.io/en/latest/user_guide/installation.html#instant-client-scripted-installation-on-macos-intel-x86-64)
-
+Проверьте документацию python-oracledb для инструкций по установке на [MacOS ARM64](https://python-oracledb.readthedocs.io/en/latest/user_guide/installation.html#instant-client-scripted-installation-on-macos-arm64) или [MacOS Intel x84-64](https://python-oracledb.readthedocs.io/en/latest/user_guide/installation.html#instant-client-scripted-installation-on-macos-intel-x86-64)
 
 </TabItem>
-
 
 </Tabs>
 </TabItem>
 </Tabs>
 
-## Configure wallet for Oracle Autonomous Database (ADB-S) in Cloud
+## Настройка кошелька для Oracle Autonomous Database (ADB-S) в облаке
 
-dbt can connect to Oracle Autonomous Database (ADB-S) in Oracle Cloud using either TLS (Transport Layer Security) or mutual TLS (mTLS). TLS and mTLS provide enhanced security for authentication and encryption.
-A database username and password is still required for dbt connections which can be configured as explained in the next section [Connecting to Oracle Database](#connecting-to-oracle-database).
+dbt может подключаться к Oracle Autonomous Database (ADB-S) в Oracle Cloud, используя либо TLS (Transport Layer Security), либо взаимный TLS (mTLS). TLS и mTLS обеспечивают повышенную безопасность для аутентификации и шифрования.
+Имя пользователя и пароль базы данных по-прежнему требуются для подключений dbt, которые можно настроить, как объясняется в следующем разделе [Подключение к базе данных Oracle](#connecting-to-oracle-database).
 
 <Tabs
   defaultValue="tls"
   values={[
     { label: 'TLS', value: 'tls'},
-    { label: 'Mutual TLS', value: 'm-tls'}]
+    { label: 'Взаимный TLS', value: 'm-tls'}]
 }>
 
 <TabItem value="tls">
 
-With TLS, dbt can connect to Oracle ADB without using a wallet. Both Thin and Thick modes of the python-oracledb driver support TLS.
+С TLS dbt может подключаться к Oracle ADB без использования кошелька. Оба режима драйвера python-oracledb поддерживают TLS.
 
 :::info
-In Thick mode, dbt can connect through TLS only when using Oracle Client library versions 19.14 (or later) or 21.5 (or later).
+В толстом режиме dbt может подключаться через TLS только при использовании версий библиотеки Oracle Client 19.14 (или более поздних) или 21.5 (или более поздних).
 :::
 
-Refer to Oracle documentation to [connect to an ADB instance using TLS authentication](https://docs.oracle.com/en/cloud/paas/autonomous-database/adbsa/connecting-nodejs-tls.html#GUID-B3809B88-D2FB-4E08-8F9B-65A550F93A07) and the blog post [Easy wallet-less connections to Oracle Autonomous Databases in Python](https://blogs.oracle.com/opal/post/easy-way-to-connect-python-applications-to-oracle-autonomous-databases) to enable TLS for your Oracle ADB instance.
+Обратитесь к документации Oracle, чтобы [подключиться к экземпляру ADB с использованием аутентификации TLS](https://docs.oracle.com/en/cloud/paas/autonomous-database/adbsa/connecting-nodejs-tls.html#GUID-B3809B88-D2FB-4E08-8F9B-65A550F93A07) и к блогу [Легкие подключения без кошелька к Oracle Autonomous Databases в Python](https://blogs.oracle.com/opal/post/easy-way-to-connect-python-applications-to-oracle-autonomous-databases), чтобы включить TLS для вашего экземпляра Oracle ADB.
 </TabItem>
 
 <TabItem value="m-tls">
 
-For mutual TLS connections, a wallet needs to be downloaded from the OCI console and the Python driver needs to be configured to use it.
+Для взаимных TLS-соединений необходимо скачать кошелек из консоли OCI и настроить драйвер Python для его использования.
 
-#### Install the Wallet and Network Configuration Files
+#### Установка кошелька и файлов конфигурации сети
 
-From the Oracle Cloud console for the database, download the wallet zip file using the `DB Connection` button. The zip contains the wallet and network configuration files.
+Из консоли Oracle Cloud для базы данных скачайте zip-файл кошелька, используя кнопку `DB Connection`. Zip-файл содержит кошелек и файлы конфигурации сети.
 
-:::warning Note
-Keep wallet files in a secure location and share them only with authorized users.
+:::warning Примечание
+Храните файлы кошелька в безопасном месте и делитесь ими только с авторизованными пользователями.
 :::
 
-Unzip the wallet zip file.
+Распакуйте zip-файл кошелька.
 
 <Tabs
 defaultValue="thin"
   values={[
-    { label: 'Thin', value: 'thin'},
-    { label: 'Thick', value: 'thick'}]
+    { label: 'Тонкий', value: 'thin'},
+    { label: 'Толстый', value: 'thick'}]
 }>
 
 <TabItem value="thin">
-In Thin mode, only two files from the zip are needed:
+В тонком режиме нужны только два файла из zip-архива:
 
-- `tnsnames.ora` - Maps net service names used for application connection strings to your database services
+- `tnsnames.ora` - Сопоставляет сетевые имена служб, используемые для строк подключения приложений, с вашими службами базы данных
 
-- `ewallet.pem` - Enables SSL/TLS connections in Thin mode. Keep this file secure
+- `ewallet.pem` - Обеспечивает SSL/TLS-соединения в тонком режиме. Храните этот файл в безопасности
 
-After unzipping the files in a secure directory, set the **TNS_ADMIN** and **WALLET_LOCATION** environment variables to the directory name.
+После распаковки файлов в безопасную директорию установите переменные окружения **TNS_ADMIN** и **WALLET_LOCATION** на имя директории.
 
 ```bash
 export WALLET_LOCATION=/path/to/directory_containing_ewallet.pem
 export WALLET_PASSWORD=***
 export TNS_ADMIN=/path/to/directory_containing_tnsnames.ora
 ```
-Optionally, if `ewallet.pem` file is encrypted using a wallet password, specify the password using environment variable **WALLET_PASSWORD**
+При необходимости, если файл `ewallet.pem` зашифрован с использованием пароля кошелька, укажите пароль, используя переменную окружения **WALLET_PASSWORD**
 
 </TabItem>
 
 <TabItem value="thick">
-In Thick mode, the following files from the zip are needed:
+В толстом режиме из zip-архива нужны следующие файлы:
 
-- `tnsnames.ora` - Maps net service names used for application connection strings to your database services
-- `sqlnet.ora` - Configures Oracle Network settings
-- `cwallet.sso` - Enables SSL/TLS connections
+- `tnsnames.ora` - Сопоставляет сетевые имена служб, используемые для строк подключения приложений, с вашими службами базы данных
+- `sqlnet.ora` - Настраивает параметры сети Oracle
+- `cwallet.sso` - Обеспечивает SSL/TLS-соединения
 
-After unzipping the files in a secure directory, set the **TNS_ADMIN** environment variable to that directory name.
+После распаковки файлов в безопасную директорию установите переменную окружения **TNS_ADMIN** на имя этой директории.
 
 ```bash
 export TNS_ADMIN=/path/to/directory_containing_tnsnames.ora
 ```
 
-Next, edit the `sqlnet.ora` file to point to the wallet directory.
+Затем отредактируйте файл `sqlnet.ora`, чтобы указать на директорию кошелька.
 
 <File name='sqlnet.ora'>
 
@@ -245,10 +240,9 @@ SSL_SERVER_DN_MATCH=yes
 </TabItem>
 </Tabs>
 
+## Подключение к базе данных Oracle
 
-## Connecting to Oracle Database
-
-Define the following mandatory parameters as environment variables and refer them in the connection profile using [env_var](https://docs.getdbt.com/reference/dbt-jinja-functions/env_var) jinja function. Optionally, you can also define these directly in the `profiles.yml` file, but this is not recommended
+Определите следующие обязательные параметры в качестве переменных окружения и используйте их в профиле подключения с помощью функции jinja [env_var](https://docs.getdbt.com/reference/dbt-jinja-functions/env_var). При желании вы также можете определить их напрямую в файле `profiles.yml`, но это не рекомендуется.
 
 ```bash
 export DBT_ORACLE_USER=<username>
@@ -257,25 +251,25 @@ export DBT_ORACLE_SCHEMA=<username>
 export DBT_ORACLE_DATABASE=example_db2022adb
 ```
 
-Use the following query to retrieve the database name:
+Используйте следующий запрос, чтобы получить имя базы данных:
 ```sql
 SELECT SYS_CONTEXT('userenv', 'DB_NAME') FROM DUAL
 ```
 
-An Oracle connection profile for dbt can be set using any one of the following methods
+Профиль подключения Oracle для dbt можно настроить, используя любой из следующих методов:
 
 <Tabs
   defaultValue="tns_net_service_name"
   values={[
-    { label: 'Using TNS alias', value: 'tns_net_service_name'},
-    { label: 'Using Connect string', value:'connect_string'},
-    { label: 'Using Database hostname', value: 'database_hostname'}]
+    { label: 'Использование TNS alias', value: 'tns_net_service_name'},
+    { label: 'Использование строки подключения', value:'connect_string'},
+    { label: 'Использование имени хоста базы данных', value: 'database_hostname'}]
 }>
 
 <TabItem value="tns_net_service_name">
 
-The `tnsnames.ora` file is a configuration file that contains network service names mapped to connect descriptors.
-The directory location of `tnsnames.ora` file can be specified using `TNS_ADMIN` environment variable
+Файл `tnsnames.ora` — это файл конфигурации, содержащий сетевые имена служб, сопоставленные с дескрипторами подключения.
+Местоположение директории файла `tnsnames.ora` можно указать с помощью переменной окружения `TNS_ADMIN`.
 
 <File name="tnsnames.ora">
 
@@ -292,7 +286,7 @@ db2022adb_high = (description =
 
 </File>
 
-The TNS alias `db2022adb_high` can be defined as an environment variable and referred to in `profiles.yml`
+TNS alias `db2022adb_high` можно определить как переменную окружения и использовать в `profiles.yml`.
 
 ```bash
 export DBT_ORACLE_TNS_NAME=db2022adb_high
@@ -318,11 +312,11 @@ dbt_test:
 
 <TabItem value="connect_string">
 
-The connection string identifies which database service to connect to. It can be one of the following
+Строка подключения определяет, к какой службе базы данных подключаться. Это может быть:
 
-- An [Oracle Easy Connect String](https://docs.oracle.com/en/database/oracle/oracle-database/21/netag/configuring-naming-methods.html#GUID-B0437826-43C1-49EC-A94D-B650B6A4A6EE)
-- An Oracle Net Connect Descriptor String
-- A Net Service Name mapping to a connect descriptor
+- [Строка легкого подключения Oracle](https://docs.oracle.com/en/database/oracle/oracle-database/21/netag/configuring-naming-methods.html#GUID-B0437826-43C1-49EC-A94D-B650B6A4A6EE)
+- Строка дескриптора подключения Oracle Net
+- Сетевое имя службы, сопоставленное с дескриптором подключения
 
 ```bash
 export DBT_ORACLE_CONNECT_STRING="(description=(retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)
@@ -351,10 +345,10 @@ dbt_test:
 
 <TabItem value="database_hostname">
 
-To connect using the database hostname or IP address, you need to specify the following
+Чтобы подключиться, используя имя хоста базы данных или IP-адрес, необходимо указать следующее:
 - host
-- port (1521 or 1522)
-- protocol (tcp or tcps)
+- port (1521 или 1522)
+- protocol (tcp или tcps)
 - service
 
 ```bash
@@ -386,21 +380,20 @@ dbt_test:
 
 </TabItem>
 
-
 </Tabs>
 
-:::info Note
-Starting with `dbt-oracle==1.0.2`, it is **optional** to set the `database` name in `profile.yml`
+:::info Примечание
+Начиная с `dbt-oracle==1.0.2`, установка имени `database` в `profile.yml` является **необязательной**.
 
-Starting with `dbt-oracle==1.8.0` database key in `profile.yml` is **still optional for all but one** of the dbt-oracle workflows.
-if `database` is missing in `profile.yml` the generated catalog used for project documentation will be empty.
+Начиная с `dbt-oracle==1.8.0`, ключ database в `profile.yml` **все еще необязателен для всех, кроме одного** из рабочих процессов dbt-oracle.
+Если `database` отсутствует в `profile.yml`, сгенерированный каталог, используемый для документации проекта, будет пустым.
 
-From `dbt-oracle==1.8`, we detect that `database` key is missing from `profile.yml` and issue a warning to add it for catalog generation. The warning message also shows the database name that dbt-oracle expects. That way users don't have to worry about "what" the database name is and "how" to get it.
+С версии `dbt-oracle==1.8` мы обнаруживаем, что ключ `database` отсутствует в `profile.yml`, и выдаем предупреждение о необходимости его добавления для генерации каталога. Сообщение предупреждения также показывает имя базы данных, которое ожидает dbt-oracle. Таким образом, пользователям не нужно беспокоиться о том, "какое" имя базы данных и "как" его получить.
 :::
 
-### Quoting configuration
+### Конфигурация кавычек
 
-The default quoting configuration used by dbt-oracle is shown below:
+Конфигурация кавычек по умолчанию, используемая dbt-oracle, показана ниже:
 
 <File name='dbt_project.yaml'>
 
@@ -412,32 +405,32 @@ quoting:
 ```
 </File>
 
-This is recommended and works for most cases.
+Это рекомендуется и работает в большинстве случаев.
 
-### Approximate relation match error
+### Ошибка приблизительного совпадения отношения
 
-Often users have complained about an approximate relation match as shown below:
+Часто пользователи жалуются на ошибку приблизительного совпадения отношения, как показано ниже:
 
 ```
-Compilation Error in model <model>
-19:09:40    When searching for a relation, dbt found an approximate match. Instead of guessing
-19:09:40    which relation to use, dbt will move on. Please delete <model>, or rename it to be less ambiguous.
-  Searched for: <model>
+Ошибка компиляции в модели <model>
+19:09:40    При поиске отношения dbt нашел приблизительное совпадение. Вместо того чтобы угадывать,
+19:09:40    какое отношение использовать, dbt продолжит. Пожалуйста, удалите <model> или переименуйте его, чтобы он был менее двусмысленным.
+  Искали: <model>
 ```
 
-This is reported in multiple channels:
+Это сообщается в нескольких каналах:
 
-- [StackOverFlow Approximate relation Match Error](https://stackoverflow.com/questions/75892325/approximate-relation-match-with-dbt-on-oracle)
+- [Ошибка приблизительного совпадения отношения на StackOverFlow](https://stackoverflow.com/questions/75892325/approximate-relation-match-with-dbt-on-oracle)
 
-- [Github Issue #51](https://github.com/oracle/dbt-oracle/issues/51)
+- [Проблема на Github #51](https://github.com/oracle/dbt-oracle/issues/51)
 
-- [Github Issue #143](https://github.com/oracle/dbt-oracle/issues/143)
+- [Проблема на Github #143](https://github.com/oracle/dbt-oracle/issues/143)
 
-- [Github Issue #144](https://github.com/oracle/dbt-oracle/issues/144)
+- [Проблема на Github #144](https://github.com/oracle/dbt-oracle/issues/144)
 
-In all cases, the solution was to enable quoting only for the database.
+Во всех случаях решением было включение кавычек только для базы данных.
 
-To solve this issue of `approximate match` use the following quoting configuration
+Чтобы решить эту проблему `приблизительного совпадения`, используйте следующую конфигурацию кавычек:
 
 <File name='dbt_project.yaml'>
 
@@ -447,42 +440,41 @@ quoting:
 ```
 </File>
 
-## Python models using Oracle Autonomous Database (ADB-S)
+## Модели Python, использующие Oracle Autonomous Database (ADB-S)
 
-Oracle's Autonomous Database Serverless (ADB-S) users can run dbt-py models using Oracle Machine Learning (OML4PY) which is available without any extra setup required.
+Пользователи Oracle's Autonomous Database Serverless (ADB-S) могут запускать модели dbt-py, используя Oracle Machine Learning (OML4PY), который доступен без дополнительной настройки.
 
-### Features
-- User Defined Python function is run in an ADB-S spawned Python 3.12.1 runtime
-- Access to external Python packages available in the Python runtime. For e.g. `numpy`, `pandas`, `scikit_learn` etc
-- Integration with Conda 24.x to create environments with custom Python packages
-- Access to Database session in the Python function
-- DataFrame read API to read `TABLES`, `VIEWS`, and ad-hoc `SELECT` queries as DataFrames
-- DataFrame write API to write DataFrames as `TABLES`
-- Supports both table and incremental materialization
+### Возможности
+- Пользовательская функция Python выполняется в среде выполнения Python 3.12.1, созданной ADB-S
+- Доступ к внешним пакетам Python, доступным в среде выполнения Python. Например, `numpy`, `pandas`, `scikit_learn` и т.д.
+- Интеграция с Conda 24.x для создания сред с пользовательскими пакетами Python
+- Доступ к сеансу базы данных в функции Python
+- API чтения DataFrame для чтения `TABLES`, `VIEWS` и ad-hoc `SELECT` запросов как DataFrames
+- API записи DataFrame для записи DataFrames как `TABLES`
+- Поддерживает как табличную, так и инкрементальную материализацию
 
+### Настройка
 
-### Setup
+#### Необходимые роли
 
-#### Required roles
+- Пользователь должен быть не-ADMIN для выполнения функции Python
+- Пользователю должна быть предоставлена роль `OML_DEVELOPER`
 
-- User must be non-ADMIN to execute the Python function
-- User must be granted the `OML_DEVELOPER` role
+#### URL облачного сервиса OML
 
-#### OML Cloud Service URL
-
-OML Cloud Service URL is of the following format:
+URL облачного сервиса OML имеет следующий формат:
 
 ```text
 https://tenant1-dbt.adb.us-sanjose-1.oraclecloudapps.com
 ```
 
-In this example:
-  - `tenant1` is the tenancy ID
-  - `dbt` is the database name
-  - `us-sanjose-1` is the datacenter region
-  - `oraclecloudapps.com` is the root domain
+В этом примере:
+  - `tenant1` — это идентификатор арендатора
+  - `dbt` — это имя базы данных
+  - `us-sanjose-1` — это регион центра обработки данных
+  - `oraclecloudapps.com` — это корневой домен
 
-Add `oml_cloud_service_url` to your existing `~/.dbt/profiles.yml`
+Добавьте `oml_cloud_service_url` в ваш существующий `~/.dbt/profiles.yml`.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -501,72 +493,72 @@ dbt_test:
 ```
 </File>
 
-### Python model configurations
+### Конфигурации моделей Python
 
-| Configuration | Datatype | Examples                                                                                      |
+| Конфигурация | Тип данных | Примеры                                                                                      |
 |--|--------|-----------------------------------------------------------------------------------------------|
-| Materialization | String | `dbt.config(materialized="incremental")` or `dbt.config(materialized="table")`                |
-| Service | String | `dbt.config(service="HIGH")` or `dbt.config(service="MEDIUM")` or `dbt.config(service="LOW")` |
-| Async Mode | Boolean    | `dbt.config(async_flag=True)`  
-| Timeout in seconds only to be used with **_async_** mode (`min: 1800` and `max: 43200`) | Integer    | `dbt.config(timeout=1800)`  |
-| Conda environment | String | `dbt.config(conda_env_name="dbt_py_env")` |
+| Материализация | Строка | `dbt.config(materialized="incremental")` или `dbt.config(materialized="table")`                |
+| Сервис | Строка | `dbt.config(service="HIGH")` или `dbt.config(service="MEDIUM")` или `dbt.config(service="LOW")` |
+| Асинхронный режим | Логический    | `dbt.config(async_flag=True)`  
+| Тайм-аут в секундах, используется только с **_асинхронным_** режимом (`min: 1800` и `max: 43200`) | Целое число    | `dbt.config(timeout=1800)`  |
+| Среда Conda | Строка | `dbt.config(conda_env_name="dbt_py_env")` |
 
-In async mode, dbt-oracle will schedule a Python job, poll the job's status, and wait for it to complete.
-Without async mode, dbt-oracle will immediately invoke the Python job in a blocking manner.
+В асинхронном режиме dbt-oracle запланирует задание Python, будет опрашивать статус задания и ждать его завершения.
+Без асинхронного режима dbt-oracle немедленно вызовет задание Python в блокирующем режиме.
 
-:::warning Note
-Use `dbt.config(async_flag=True)` for long-running Python jobs.
+:::warning Примечание
+Используйте `dbt.config(async_flag=True)` для длительных заданий Python.
 :::
 
-### Python model examples
+### Примеры моделей Python
 
-#### Refer other model
+#### Ссылка на другую модель
 
-Use `dbt.ref(model_name)` to refer to either SQL or Python model
+Используйте `dbt.ref(model_name)`, чтобы ссылаться на SQL или Python модель.
 
 ```python
 def model(dbt, session):
-    # Must be either table or incremental (view is not currently supported)
+    # Должно быть либо table, либо incremental (view в настоящее время не поддерживается)
     dbt.config(materialized="table")
-    # returns oml.core.DataFrame referring a dbt model
+    # возвращает oml.core.DataFrame, ссылающийся на модель dbt
     s_df = dbt.ref("sales_cost")
     return s_df
 ```
 
-#### Refer a source
+#### Ссылка на источник
 
-Use `dbt.source(source_schema, table_name)`
+Используйте `dbt.source(source_schema, table_name)`.
 
 ```python
 def model(dbt, session):
-    # Must be either table or incremental (view is not currently supported)
+    # Должно быть либо table, либо incremental (view в настоящее время не поддерживается)
     dbt.config(materialized="table")
-    # oml.core.DataFrame representing a datasource
+    # oml.core.DataFrame, представляющий источник данных
     s_df = dbt.source("sh_database", "channels")
     return s_df
 
 ```
 
-#### Incremental materialization
+#### Инкрементальная материализация
 
 ```python
 def model(dbt, session):
-    # Must be either table or incremental
+    # Должно быть либо table, либо incremental
     dbt.config(materialized="incremental")
-    # oml.DataFrame representing a datasource
+    # oml.DataFrame, представляющий источник данных
     sales_cost_df = dbt.ref("sales_cost")
 
     if dbt.is_incremental:
         cr = session.cursor()
         result = cr.execute(f"select max(cost_timestamp) from {dbt.this.identifier}")
         max_timestamp = result.fetchone()[0]
-        # filter new rows
+        # фильтруем новые строки
         sales_cost_df = sales_cost_df[sales_cost_df["COST_TIMESTAMP"] > max_timestamp]
 
     return sales_cost_df
 ```
 
-#### Concatenate a new column in Dataframe
+#### Конкатенация нового столбца в DataFrame
 
 ```python
 
@@ -587,71 +579,71 @@ def model(dbt, session):
     WHERE country.country_iso_code = ''US''
     AND customer.country_id = country.country_id"""
 
-    # session.sync(query) will run the sql query and returns a oml.core.DataFrame
+    # session.sync(query) выполнит SQL-запрос и вернет oml.core.DataFrame
     us_potential_customers = session.sync(query=sql)
 
-    # Compute an ad-hoc anomaly score on the credit limit
+    # Вычисляем произвольный аномальный балл по кредитному лимиту
     median_credit_limit = us_potential_customers["CUST_CREDIT_LIMIT"].median()
     mean_credit_limit = us_potential_customers["CUST_CREDIT_LIMIT"].mean()
     anomaly_score = (us_potential_customers["CUST_CREDIT_LIMIT"] - median_credit_limit)/(median_credit_limit - mean_credit_limit)
 
-    # Add a new column "CUST_CREDIT_ANOMALY_SCORE"
+    # Добавляем новый столбец "CUST_CREDIT_ANOMALY_SCORE"
     us_potential_customers = us_potential_customers.concat({"CUST_CREDIT_ANOMALY_SCORE": anomaly_score.round(3)})
 
-    # Return potential customers dataset as a oml.core.DataFrame
+    # Возвращаем набор данных потенциальных клиентов как oml.core.DataFrame
     return us_potential_customers
 
 ```
 
-### Use Custom Conda environment
+### Использование пользовательской среды Conda
 
-1. As ADMIN user, create a conda environment using [OML4PY Conda Notebook](https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/administrative-task-create-and-conda-environments.html):
+1. В качестве пользователя ADMIN создайте среду conda, используя [OML4PY Conda Notebook](https://docs.oracle.com/en/database/oracle/machine-learning/oml4py/1/mlpug/administrative-task-create-and-conda-environments.html):
 
 ```bash
 conda create -n dbt_py_env -c conda-forge --override-channels --strict-channel-priority python=3.12.1 nltk gensim
 ```
 
-2. Save this environment using the following command from the OML4PY Conda Notebook:
+2. Сохраните эту среду, используя следующую команду из OML4PY Conda Notebook:
 
 ```bash
 conda upload --overwrite dbt_py_env -t application OML4PY
 ```
 
-3. Use the environment in dbt Python models:
+3. Используйте среду в моделях dbt Python:
 
 ```python
-# Import custom packages from Conda environments
+# Импортируйте пользовательские пакеты из сред Conda
 import nltk
 import gensim
 
 def model(dbt, session):
     dbt.config(materialized="table")
-    dbt.config(conda_env_name="dbt_py_env")  # Refer the conda environment
-    dbt.config(async_flag=True) # Use async mode for long running Python jobs
+    dbt.config(conda_env_name="dbt_py_env")  # Ссылаемся на среду conda
+    dbt.config(async_flag=True) # Используем асинхронный режим для длительных заданий Python
     dbt.config(timeout=900)
-    # oml.core.DataFrame referencing a dbt-sql model
+    # oml.core.DataFrame, ссылающийся на модель dbt-sql
     promotion_cost = dbt.ref("direct_sales_channel_promo_cost")
     return promotion_cost
 ```
 
-## Supported features
+## Поддерживаемые функции
 
-- Table materialization
-- View materialization
-- Materialized View
-- Incremental materialization
+- Табличная материализация
+- Материализация представлений
+- Материализованное представление
+- Инкрементальная материализация
 - Seeds
-- Data sources
-- Singular tests
-- Generic tests; Not null, Unique, Accepted values and Relationships
-- Operations
-- Analyses
-- Exposures
-- Document generation
-- Serve project documentation as a website
-- Python Models (from dbt-oracle version 1.5.1)
-- Integration with Conda to use any Python packages from Anaconda's repository
-- All dbt commands are supported
+- Источники данных
+- Единичные тесты
+- Общие тесты; Не null, Уникальные, Допустимые значения и Отношения
+- Операции
+- Анализы
+- Экспозиции
+- Генерация документации
+- Публикация документации проекта в виде веб-сайта
+- Модели Python (с версии dbt-oracle 1.5.1)
+- Интеграция с Conda для использования любых пакетов Python из репозитория Anaconda
+- Поддерживаются все команды dbt
 
-## Not supported features
-- Ephemeral materialization
+## Неподдерживаемые функции
+- Эфемерная материализация
