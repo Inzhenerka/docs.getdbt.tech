@@ -1,7 +1,7 @@
 ---
 id: having
 title: SQL HAVING
-description: Прочитайте это руководство, чтобы узнать о предложении SQL HAVING в dbt.
+description: Прочтите это руководство, чтобы узнать о предложении SQL HAVING в dbt.
 slug: /sql-reference/having
 ---
 
@@ -9,18 +9,17 @@ slug: /sql-reference/having
     <title>Работа с предложением HAVING в SQL</title>
 </head>
 
-SQL HAVING — это одна из тех небольших вещей, которые сделают вашу работу с данными немного проще.
+SQL HAVING — это одна из тех мелочей, которые сделают вашу работу с данными немного проще.
 
-Не очень приятный факт о [предложении WHERE](/sql-reference/where) заключается в том, что вы не можете фильтровать по агрегатам с его помощью... вот тут и приходит на помощь HAVING. С помощью HAVING вы можете не только определить агрегат в [предложении select](/sql-reference/select), но и фильтровать по только что созданному агрегату в предложении HAVING.
+Не очень приятный факт о [WHERE clause](/sql-reference/where) заключается в том, что с его помощью нельзя фильтровать агрегаты... и вот тут на помощь приходит HAVING. С HAVING вы можете не только определить агрегат в [select](/sql-reference/select) запросе, но и фильтровать по этому вновь созданному агрегату в предложении HAVING.
 
-Эта страница объяснит, как использовать HAVING, когда его следует использовать и обсудит поддержку этого предложения в хранилищах данных.
-
+На этой странице мы рассмотрим, как использовать HAVING, когда его следует использовать, и обсудим поддержку этого предложения в различных хранилищах данных.
 
 ## Как использовать предложение HAVING в SQL
 
-Предложение HAVING по сути требует одного: агрегатного поля для оценки. Поскольку HAVING технически является булевым значением, оно вернет строки, которые выполняются как истинные, аналогично предложению WHERE.
+Предложение HAVING по сути требует одного: агрегатного поля для оценки. Поскольку HAVING технически является булевым, он будет возвращать строки, которые выполняются как истинные, аналогично предложению WHERE.
 
-Условие HAVING следует после [предложения GROUP BY](/sql-reference/group-by) и, при необходимости, может быть заключено в предложение ORDER BY:
+Условие HAVING следует после [GROUP BY statement](/sql-reference/group-by) и может быть дополнительно заключено в ORDER BY:
 
 ```sql
 select
@@ -28,12 +27,12 @@ select
 from <table>
 group by <field(s)>
 having condition
-[опционально order by]
+[optional order by]
 ```
 
 Этот пример синтаксиса выглядит немного непонятно без реальных полей, поэтому давайте рассмотрим практический пример использования HAVING.
 
-### Пример SQL HAVING
+### Пример использования SQL HAVING
 
 <Tabs
   defaultValue="having"
@@ -50,7 +49,7 @@ select
     count(order_id) as num_orders
 from {{ ref('orders') }}
 group by 1
-having num_orders > 1 --если вы замените это на `where`, этот запрос не выполнится успешно
+having num_orders > 1 --если заменить это на `where`, запрос не выполнится успешно
 ```
 </TabItem>
 <TabItem value="cte">
@@ -73,7 +72,7 @@ where num_orders > 1
 </TabItem>
 </Tabs>
 
-Этот простой запрос, использующий образец данных из таблицы `orders` [Jaffle Shop](https://github.com/dbt-labs/jaffle_shop), вернет клиентов, у которых было более одного заказа:
+Этот простой запрос, использующий пример набора данных таблицы `orders` из [Jaffle Shop’s](https://github.com/dbt-labs/jaffle_shop), вернет клиентов, у которых было более одного заказа:
 
 | customer_id | num_orders |
 |:---:|:---:|
@@ -83,8 +82,8 @@ where num_orders > 1
 | 64 | 2 |
 | 54 | 4 |
 
-Запрос выше, использующий <Term id="cte" />, содержит больше строк по сравнению с более простым запросом, использующим HAVING, но даст тот же результат.
+Запрос выше, использующий <Term id="cte" />, использует больше строк по сравнению с более простым запросом с использованием HAVING, но даст тот же результат.
 
 ## Синтаксис предложения SQL HAVING в Snowflake, Databricks, BigQuery и Redshift
 
-[Snowflake](https://docs.snowflake.com/en/sql-reference/constructs/having.html), [Databricks](https://docs.databricks.com/sql/language-manual/sql-ref-syntax-qry-select-having.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#having_clause) и [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_HAVING_clause.html) все поддерживают предложение HAVING, и синтаксис его использования одинаков во всех этих хранилищах данных.
+[Snowflake](https://docs.snowflake.com/en/sql-reference/constructs/having.html), [Databricks](https://docs.databricks.com/sql/language-manual/sql-ref-syntax-qry-select-having.html), [BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#having_clause) и [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_HAVING_clause.html) все поддерживают предложение HAVING, и синтаксис для использования HAVING одинаков во всех этих хранилищах данных.
