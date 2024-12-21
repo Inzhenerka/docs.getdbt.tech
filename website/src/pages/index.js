@@ -88,7 +88,7 @@ function Home() {
             showGraphic
           />
 
-          <section className="translated-note" style={{padding: "2rem", backgroundColor: "#f9f9f9"}}>
+          <section className="translated-note" style={{padding: "2rem"}}>
             <h2>Это перевод</h2>
             <p>
               Сайт является переведенной версией

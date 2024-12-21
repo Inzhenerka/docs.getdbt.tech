@@ -210,15 +210,9 @@ var siteSettings = {
       links: [
         {
           html: `
-          <script 
-            src="https://solve-widget.forethought.ai/embed.js" id="forethought-widget-embed-script" data-api-key="9d421bf3-96b8-403e-9900-6fb059132264" 
-            data-ft-workflow-tag="docs" 
-            config-ft-greeting-message="Welcome to dbt Product docs! Ask a question."
-            config-ft-widget-header-title = "Ask a question"
-          ></script>
 
           <div class='footer__items'>
-            <button id="ot-sdk-btn" onclick="openPreferenceCenter()">Cookie Settings</button>
+            <button id="ot-sdk-btn" onclick="openPreferenceCenter()">Настройка куки</button>
           </div>
 
           <div class='footer__items--right'>
@@ -229,7 +223,7 @@ var siteSettings = {
         },
       ],
 
-      copyright: `&copy; ${new Date().getFullYear()} dbt Labs, Inc. All Rights Reserved.`,
+      copyright: `&copy; ${new Date().getFullYear()} ООО "ИНЖЕНЕРКАТЕХ"<br>Основано на сайте компании dbt Labs, Inc. All Rights Reserved`,
     },
   },
   presets: [
@@ -297,7 +291,6 @@ var siteSettings = {
     "/js/headerLinkCopy.js",
     "/js/gtm.js",
     "/js/onetrust.js",
-    "/js/mutiny.js",
   ],
   stylesheets: [
     "/css/fonts.css",
