@@ -1,16 +1,16 @@
 ---
-title: invalidate_hard_deletes (устаревший)
+title: invalidate_hard_deletes (устаревшее)
 resource_types: [snapshots]
-description: "Invalidate_hard_deletes - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Invalidate_hard_deletes - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: column_name
-sidebar_label: invalidate_hard_deletes (устаревший)
+sidebar_label: invalidate_hard_deletes (устаревшее)
 ---
 
-:::warning Это устаревшая конфигурация &mdash; используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо нее.
+:::warning Это устаревшая конфигурация &mdash; Используйте конфигурацию [`hard_deletes`](/reference/resource-configs/hard-deletes) вместо неё.
 
-В версиях без версии и dbt Core 1.9 и выше конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет конфигурацию `invalidate_hard_deletes`, обеспечивая лучший контроль над тем, как обрабатывать удаленные строки из источника.
+В версиях Versionless и dbt Core 1.9 и выше конфигурация [`hard_deletes`](/reference/resource-configs/hard-deletes) заменяет конфигурацию `invalidate_hard_deletes` для лучшего контроля над обработкой удалённых строк из источника.
 
-Для новых снимков установите конфигурацию на `hard_deletes='invalidate'`, а не `invalidate_hard_deletes=true`. Для существующих снимков [организуйте обновление](/reference/snapshot-configs#snapshot-configuration-migration) предварительно существующих таблиц перед включением этой настройки. Смотрите 
+Для новых снимков установите конфигурацию `hard_deletes='invalidate'` вместо `invalidate_hard_deletes=true`. Для существующих снимков [организуйте обновление](/reference/snapshot-configs#snapshot-configuration-migration) предварительно существующих таблиц перед включением этой настройки. Обратитесь к
 :::
 
 <VersionBlock firstVersion="1.9">
@@ -64,7 +64,7 @@ snapshots:
 </File>
 
 ## Описание
-Функция по умолчанию для включения аннулирования жестко удаленных записей во время создания снимка запроса.
+Функция, включаемая по желанию, для аннулирования жёстко удалённых записей при создании снимков запроса.
 
 ## По умолчанию
 По умолчанию функция отключена.

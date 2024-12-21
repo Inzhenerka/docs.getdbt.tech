@@ -3,11 +3,11 @@ title: "event_time"
 id: "event-time"
 sidebar_label: "event_time"
 resource_types: [models, seeds, source]
-description: "dbt использует event_time для понимания времени, когда произошло событие. При определении event_time становятся возможными микропакетные инкрементальные модели и более точное сравнение наборов данных во время Advanced CI."
+description: "dbt использует event_time для понимания, когда произошло событие. При определении event_time позволяет использовать микропакетные инкрементальные модели и более точное сравнение наборов данных во время расширенной CI."
 datatype: string
 ---
 
-Доступно в [последней версии dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
+Доступно в [треке релизов "Latest" dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
 
 <Tabs>
 <TabItem value="model" label="Модели">
@@ -67,7 +67,7 @@ seeds:
 </File>
 </TabItem>
 
-<TabItem value="snapshot" label="Снимки">
+<TabItem value="snapshot" label="Снапшоты">
 
 <File name='dbt_project.yml'>
 
@@ -139,20 +139,20 @@ sources:
 
 ## Определение
 
-Установите `event_time` на имя поля, которое представляет временную метку события — "в какое время произошла строка" — в отличие от даты поступления события. Вы можете настроить `event_time` для [модели](/docs/build/models), [сида](/docs/build/seeds) или [источника](/docs/build/sources) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации.
+Установите `event_time` в имя поля, которое представляет временную метку события — "в какое время произошла строка" — в отличие от даты загрузки события. Вы можете настроить `event_time` для [модели](/docs/build/models), [сида](/docs/build/seeds) или [источника](/docs/build/sources) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации.
 
-Вот несколько примеров хороших и плохих колонок `event_time`:
+Вот несколько примеров хороших и плохих столбцов `event_time`:
 
 - ✅ Хорошо:
-  - `account_created_at` &mdash; Это представляет собой конкретное время, когда был создан аккаунт, что делает его фиксированным событием во времени.
-  - `session_began_at` &mdash; Это фиксирует точную временную метку, когда началась сессия пользователя, которая не изменится и напрямую связана с событием.
+  - `account_created_at` &mdash; Это представляет конкретное время, когда была создана учетная запись, что делает его фиксированным событием во времени.
+  - `session_began_at` &mdash; Это фиксирует точную временную метку, когда началась пользовательская сессия, которая не изменится и напрямую связана с событием.
 
 - ❌ Плохо:
 
-  - `_fivetran_synced` &mdash; Это не время, когда событие произошло, а время, когда событие было обработано.
-  - `last_updated_at` &mdash; Это не лучший вариант, так как это значение будет постоянно меняться со временем.
+  - `_fivetran_synced` &mdash; Это не время, когда произошло событие, это время, когда событие было загружено.
+  - `last_updated_at` &mdash; Это не лучший вариант, так как он будет постоянно изменяться со временем.
 
-`event_time` требуется для [инкрементальных микропакетов](/docs/build/incremental-microbatch) и настоятельно рекомендуется для [сравнения изменений в Advanced CI](/docs/deploy/advanced-ci#optimizing-comparisons) в CI/CD рабочих процессах, где он обеспечивает правильное сравнение одного и того же временного среза данных между вашими CI и производственными средами.
+`event_time` требуется для [инкрементальных микропакетов](/docs/build/incremental-microbatch) и настоятельно рекомендуется для [сравнения изменений в расширенной CI](/docs/deploy/advanced-ci#optimizing-comparisons) в рабочих процессах CI/CD, где он обеспечивает правильное сравнение одного и того же временного среза данных между вашими средами CI и производства.
 
 ## Примеры
 
@@ -197,7 +197,7 @@ models:
 
 </File> 
 
-Эта настройка устанавливает `session_start_time` в качестве `event_time` для модели `user_sessions`.
+Эта настройка устанавливает `session_start_time` как `event_time` для модели `user_sessions`.
 </TabItem> 
 
 <TabItem value="seeds" label="Сиды">
@@ -227,11 +227,11 @@ seeds:
 ```
 </File>
 
-Эта настройка устанавливает `record_timestamp` в качестве `event_time` для `my_seed`. 
+Эта настройка устанавливает `record_timestamp` как `event_time` для `my_seed`. 
 
 </TabItem> 
 
-<TabItem value="snapshot" label="Снимки">
+<TabItem value="snapshot" label="Снапшоты">
 
 Вот пример в файле `dbt_project.yml`:
 
@@ -246,7 +246,7 @@ snapshots:
 
 </File>
 
-Пример в файле свойств снимка YAML:
+Пример в файле свойств снапшота YAML:
 
 <File name='my_project/properties.yml'>
 
@@ -258,7 +258,7 @@ snapshots:
 ```
 </File>
 
-Эта настройка устанавливает `record_timestamp` в качестве `event_time` для `my_snapshot`. 
+Эта настройка устанавливает `record_timestamp` как `event_time` для `my_snapshot`. 
 
 </TabItem> 
 
@@ -278,7 +278,7 @@ sources:
 ```
 </File>
 
-Эта настройка устанавливает `event_timestamp` в качестве `event_time` для указанной таблицы источника.
+Эта настройка устанавливает `event_timestamp` как `event_time` для указанной таблицы источника.
 
 </TabItem> 
 </Tabs>

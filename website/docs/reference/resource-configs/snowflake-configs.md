@@ -1,7 +1,7 @@
 ---
-title: "Snowflake configurations"
+title: "Конфигурации Snowflake"
 id: "snowflake-configs"
-description: "Snowflake Configurations - Read this in-depth guide to learn about configurations in dbt."
+description: "Конфигурации Snowflake - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
 <!----
@@ -11,17 +11,17 @@ To-do:
 
 <VersionBlock firstVersion="1.9">
 
-## Iceberg table format <Lifecycle status="beta"/>
+## Формат таблиц Iceberg <Lifecycle status="beta"/>
 
-The dbt-snowflake adapter supports the Iceberg table format. It is available for three of the Snowflake materializations: 
+Адаптер dbt-snowflake поддерживает формат таблиц Iceberg. Он доступен для трех материализаций Snowflake:
 
 - [Table](/docs/build/materializations#table)
 - [Incremental](/docs/build/materializations#incremental)
-- [Dynamic](#dynamic-tables) 
+- [Dynamic](#dynamic-tables)
 
-For now, to create Iceberg tables, you must implement a [behavior flag](/reference/global-configs/behavior-changes) due to performance impact related to using Iceberg tables. Snowflake does not support `is_iceberg` on the `Show Objects` query, which dbt depends on for metadata.
+На данный момент, чтобы создать таблицы Iceberg, необходимо реализовать [флаг поведения](/reference/global-configs/behavior-changes) из-за влияния на производительность, связанного с использованием таблиц Iceberg. Snowflake не поддерживает `is_iceberg` в запросе `Show Objects`, на который dbt полагается для метаданных.
 
-To use Iceberg, set the `enable_iceberg_materializations` flag to `True` in your dbt_project.yml:
+Чтобы использовать Iceberg, установите флаг `enable_iceberg_materializations` в значение `True` в вашем dbt_project.yml:
 
 <File name='dbt_project.yml'>
 
@@ -34,19 +34,18 @@ flags:
 
 </File>
 
+Поддерживаются следующие конфигурации.
+Для получения дополнительной информации ознакомьтесь с документацией Snowflake по [`CREATE ICEBERG TABLE` (Snowflake как каталог)](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake).
 
-The following configurations are supported.
-For more information, check out the Snowflake reference for [`CREATE ICEBERG TABLE` (Snowflake as the catalog)](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake).
-
-| Field | Type   | Required | Description   | Sample input | Note   |
+| Поле | Тип   | Обязательно | Описание   | Пример ввода | Примечание   |
 | ------ | ----- | -------- | ------------- | ------------ | ------ |
-| Table Format    | String | Yes     | Configures the objects table format.  | `iceberg`  | `iceberg` is the only accepted value.    |
-| External volume       | String | Yes(*)   | Specifies the identifier (name) of the external volume where Snowflake writes the Iceberg table's metadata and data files. | `my_s3_bucket`            | *You don't need to specify this if the account, database, or schema already has an associated external volume. [More info](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake#:~:text=Snowflake%20Table%20Structures.-,external_volume) |
-| Base location Subpath | String | No       | An optional suffix to add to the `base_location` path that dbt automatically specifies.     | `jaffle_marketing_folder` | We recommend that you do not specify this. Modifying this parameter results in a new Iceberg table. See [Base Location](#base-location) for more info.                                                                                                  |
+| Формат таблицы    | Строка | Да     | Настраивает формат таблицы объектов.  | `iceberg`  | `iceberg` — единственное допустимое значение.    |
+| Внешний объем       | Строка | Да(*)   | Указывает идентификатор (имя) внешнего объема, где Snowflake записывает метаданные и файлы данных таблицы Iceberg. | `my_s3_bucket`            | *Не нужно указывать это, если у аккаунта, базы данных или схемы уже есть связанный внешний объем. [Подробнее](https://docs.snowflake.com/en/sql-reference/sql/create-iceberg-table-snowflake#:~:text=Snowflake%20Table%20Structures.-,external_volume) |
+| Подпуть базового расположения | Строка | Нет       | Необязательный суффикс для добавления к пути `base_location`, который dbt автоматически указывает.     | `jaffle_marketing_folder` | Мы рекомендуем не указывать это. Изменение этого параметра приводит к созданию новой таблицы Iceberg. См. [Базовое расположение](#base-location) для получения дополнительной информации.                                                                                                  |
 
-### Example configuration
+### Пример конфигурации
 
-To configure an Iceberg table materialization in dbt, refer to the example configuration:
+Чтобы настроить материализацию таблицы Iceberg в dbt, обратитесь к примеру конфигурации:
 
 <File name='models/<modelname>.sql'>
 
@@ -66,68 +65,65 @@ select * from {{ ref('raw_orders') }}
 
 </File>
 
-### Base location 
+### Базовое расположение
 
-Snowflake's `CREATE ICEBERG TABLE` DDL requires that a `base_location` be provided. dbt defines this parameter on the user's behalf to streamline usage and enforce basic isolation of table data within the `EXTERNAL VOLUME`. The default behavior in dbt is to provide a `base_location` string of the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`
+DDL Snowflake `CREATE ICEBERG TABLE` требует указания `base_location`. dbt определяет этот параметр от имени пользователя, чтобы упростить использование и обеспечить базовую изоляцию данных таблицы в пределах `EXTERNAL VOLUME`. Поведение по умолчанию в dbt — предоставлять строку `base_location` в формате: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`
 
-#### Base Location Subpath
-We recommend using dbt's auto-generated `base_location`. However, if you need to customize the resulting `base_location`, dbt allows users to configure a `base_location_subpath`. When specified, the subpath concatenates to the end of the previously described pattern for `base_location` string generation.
+#### Подпуть базового расположения
+Мы рекомендуем использовать автоматически сгенерированное dbt `base_location`. Однако, если вам нужно настроить результирующее `base_location`, dbt позволяет пользователям настроить `base_location_subpath`. При указании подпуть добавляется в конец ранее описанного шаблона для генерации строки `base_location`.
 
-For example, `config(base_location_subpath="prod")` will generate a `base_location` of the form `_dbt/{SCHEMA_NAME}/{MODEL_NAME}/prod/`.
+Например, `config(base_location_subpath="prod")` создаст `base_location` в формате `_dbt/{SCHEMA_NAME}/{MODEL_NAME}/prod/`.
 
-A theoretical (but not recommended) use case is re-using an `EXTERNAL VOLUME` while maintaining isolation across development and production environments. We recommend against this as storage permissions should configured on the external volume and underlying storage, not paths that any analytics engineer can modify.
+Теоретический (но не рекомендуемый) случай использования — повторное использование `EXTERNAL VOLUME` при сохранении изоляции между средами разработки и производства. Мы не рекомендуем это, так как разрешения на хранение должны быть настроены на внешнем объеме и базовом хранилище, а не на путях, которые любой аналитический инженер может изменить.
 
-#### Rationale
+#### Обоснование
 
-dbt manages `base_location` on behalf of users to enforce best practices. With Snowflake-managed Iceberg format tables, the user owns and maintains the data storage of the tables in an external storage solution (the declared `external volume`). The `base_ location` parameter declares where to write the data within the external volume. The Snowflake Iceberg catalog keeps track of your Iceberg table regardless of where the data lives within the `external volume` declared and the `base_location` provided. However, Snowflake permits passing anything into the `base_location` field, including an empty string, even reusing the same path across multiple tables. This behavior could result in future technical debt because it will limit the ability to:
+dbt управляет `base_location` от имени пользователей, чтобы обеспечить соблюдение лучших практик. С таблицами формата Iceberg, управляемыми Snowflake, пользователь владеет и поддерживает хранение данных таблиц во внешнем хранилище (объявленный `external volume`). Параметр `base_location` указывает, где записывать данные в пределах внешнего объема. Каталог Snowflake Iceberg отслеживает вашу таблицу Iceberg независимо от того, где находятся данные в объявленном `external volume` и предоставленном `base_location`. Однако Snowflake позволяет передавать что угодно в поле `base_location`, включая пустую строку, даже повторно используя тот же путь для нескольких таблиц. Такое поведение может привести к будущим техническим долгам, так как это ограничит возможность:
 
-- Navigate the underlying object store (S3/Azure blob)
-- Read Iceberg tables via an object-store integration
-- Grant schema-specific access to tables via object store
-- Use a crawler pointed at the tables within the external volume to build a new catalog with another tool
+- Навигации по базовому объектному хранилищу (S3/Azure blob)
+- Чтения таблиц Iceberg через интеграцию с объектным хранилищем
+- Предоставления доступа к таблицам на уровне схемы через объектное хранилище
+- Использования краулера, направленного на таблицы в пределах внешнего объема, для создания нового каталога с помощью другого инструмента
 
-To maintain best practices,  we enforce an input. Currently, we do not support overriding the default `base location` input but will consider it based on user feedback. 
+Чтобы поддерживать лучшие практики, мы настаиваем на вводе. В настоящее время мы не поддерживаем переопределение ввода `base location` по умолчанию, но рассмотрим это на основе отзывов пользователей.
 
-In summary, dbt-snowflake does not support arbitrary definition of `base_location` for Iceberg tables. Instead, dbt, by default, writes your tables within a `_dbt/{SCHEMA_NAME}/{TABLE_NAME}` prefix to ensure easier object-store observability and auditability.
+Вкратце, dbt-snowflake не поддерживает произвольное определение `base_location` для таблиц Iceberg. Вместо этого dbt по умолчанию записывает ваши таблицы с префиксом `_dbt/{SCHEMA_NAME}/{TABLE_NAME}`, чтобы обеспечить более легкую наблюдаемость и аудит объектного хранилища.
 
-### Limitations
+### Ограничения
 
-There are some limitations to the implementation you need to be aware of:
+Существуют некоторые ограничения в реализации, о которых вам нужно знать:
 
--  Using Iceberg tables with dbt, the result is that your query is materialized in Iceberg. However, often, dbt creates intermediary objects as temporary and transient tables for certain materializations, such as incremental ones. It is not possible to configure these temporary objects also to be Iceberg-formatted. You may see non-Iceberg tables created in the logs to support specific materializations, but they will be dropped after usage.
-- You cannot incrementally update a preexisting incremental model to be an Iceberg table. To do so, you must fully rebuild the table with the `--full-refresh` flag.
+- Используя таблицы Iceberg с dbt, результатом является материализация вашего запроса в Iceberg. Однако часто dbt создает промежуточные объекты как временные и переходные таблицы для определенных материализаций, таких как инкрементные. Невозможно настроить эти временные объекты также в формате Iceberg. Вы можете увидеть, что в логах создаются не-Iceberg таблицы для поддержки определенных материализаций, но они будут удалены после использования.
+- Вы не можете инкрементно обновить существующую инкрементную модель, чтобы она стала таблицей Iceberg. Для этого необходимо полностью перестроить таблицу с флагом `--full-refresh`.
 
 </VersionBlock>
 
-## Dynamic tables
+## Динамические таблицы
 
-The Snowflake adapter supports [dynamic tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-about).
-This materialization is specific to Snowflake, which means that any model configuration that
-would normally come along for the ride from `dbt-core` (e.g. as with a `view`) may not be available
-for dynamic tables. This gap will decrease in future patches and versions.
-While this materialization is specific to Snowflake, it very much follows the implementation
-of [materialized views](/docs/build/materializations#Materialized-View).
-In particular, dynamic tables have access to the `on_configuration_change` setting.
-Dynamic tables are supported with the following configuration parameters:
+Адаптер Snowflake поддерживает [динамические таблицы](https://docs.snowflake.com/en/user-guide/dynamic-tables-about).
+Эта материализация специфична для Snowflake, что означает, что любая конфигурация модели, которая обычно идет вместе с `dbt-core` (например, как с `view`), может быть недоступна для динамических таблиц. Этот разрыв будет уменьшаться в будущих патчах и версиях.
+Хотя эта материализация специфична для Snowflake, она во многом следует реализации [материализованных представлений](/docs/build/materializations#Materialized-View).
+В частности, динамические таблицы имеют доступ к настройке `on_configuration_change`.
+Динамические таблицы поддерживаются с следующими параметрами конфигурации:
 
 <VersionBlock lastVersion="1.8">
 
-| Parameter          | Type       | Required | Default     | Change Monitoring Support |
+| Параметр          | Тип       | Обязательно | По умолчанию     | Поддержка мониторинга изменений |
 |--------------------|------------|----------|-------------|---------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | no       | `apply`     | n/a                       |
-| [`target_lag`](#target-lag)      | `<string>` | yes      |        | alter          |
-| [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | yes      |       | alter  |
+| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | нет       | `apply`     | n/a                       |
+| [`target_lag`](#target-lag)      | `<string>` | да      |        | alter          |
+| [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | да      |       | alter  |
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-| Parameter          | Type       | Required | Default     | Change Monitoring Support |
+| Параметр          | Тип       | Обязательно | По умолчанию     | Поддержка мониторинга изменений |
 |--------------------|------------|----------|-------------|---------------------------|
-| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | no       | `apply`     | n/a                       |
-| [`target_lag`](#target-lag)      | `<string>` | yes      |        | alter          |
-| [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | yes      |       | alter  |
-| [`refresh_mode`](#refresh-mode)       | `<string>` | no       | `AUTO`      | refresh        |
-| [`initialize`](#initialize)     | `<string>` | no       | `ON_CREATE` | n/a   |
+| [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | нет       | `apply`     | n/a                       |
+| [`target_lag`](#target-lag)      | `<string>` | да      |        | alter          |
+| [`snowflake_warehouse`](#configuring-virtual-warehouses)   | `<string>` | да      |       | alter  |
+| [`refresh_mode`](#refresh-mode)       | `<string>` | нет       | `AUTO`      | refresh        |
+| [`initialize`](#initialize)     | `<string>` | нет       | `ON_CREATE` | n/a   |
 
 </VersionBlock>
 
@@ -137,9 +133,9 @@ Dynamic tables are supported with the following configuration parameters:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -214,9 +210,9 @@ models:
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'Config block', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Блок конфигурации', value: 'config', },
   ]
 }>
 
@@ -291,61 +287,61 @@ models:
 
 </VersionBlock>
 
-Learn more about these parameters in Snowflake's [docs](https://docs.snowflake.com/en/sql-reference/sql/create-dynamic-table):
+Узнайте больше об этих параметрах в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/sql/create-dynamic-table):
 
-### Target lag
+### Целевое отставание
 
-Snowflake allows two configuration scenarios for scheduling automatic refreshes: 
-- **Time-based** &mdash; Provide a value of the form `<int> { seconds | minutes | hours | days }`. For example, if the dynamic table needs to be updated every 30 minutes, use `target_lag='30 minutes'`.
-- **Downstream** &mdash; Applicable when the dynamic table is referenced by other dynamic tables. In this scenario, `target_lag='downstream'` allows for refreshes to be controlled at the target, instead of at each layer.
+Snowflake позволяет два сценария конфигурации для планирования автоматических обновлений:
+- **На основе времени** &mdash; Укажите значение в формате `<int> { seconds | minutes | hours | days }`. Например, если динамическую таблицу нужно обновлять каждые 30 минут, используйте `target_lag='30 minutes'`.
+- **Нисходящий поток** &mdash; Применимо, когда динамическая таблица ссылается на другие динамические таблицы. В этом сценарии `target_lag='downstream'` позволяет контролировать обновления на целевом уровне, а не на каждом уровне.
 
-Learn more about `target_lag` in Snowflake's [docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh#understanding-target-lag). Please note that Snowflake supports a target lag of 1 minute or longer.
+Узнайте больше о `target_lag` в [документации Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh#understanding-target-lag). Обратите внимание, что Snowflake поддерживает целевое отставание в 1 минуту или дольше.
 
 <VersionBlock firstVersion="1.9">
 
-### Refresh mode
+### Режим обновления
 
-Snowflake allows three options for refresh mode:
-- **AUTO** &mdash; Enforces an incremental refresh of the dynamic table by default. If the `CREATE DYNAMIC TABLE` statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.
-- **FULL** &mdash; Enforces a full refresh of the dynamic table, even if the dynamic table can be incrementally refreshed.
-- **INCREMENTAL** &mdash; Enforces an incremental refresh of the dynamic table. If the query that underlies the dynamic table can’t perform an incremental refresh, dynamic table creation fails and displays an error message.
+Snowflake позволяет три варианта режима обновления:
+- **AUTO** &mdash; По умолчанию обеспечивает инкрементное обновление динамической таблицы. Если оператор `CREATE DYNAMIC TABLE` не поддерживает режим инкрементного обновления, динамическая таблица автоматически создается в режиме полного обновления.
+- **FULL** &mdash; Обеспечивает полное обновление динамической таблицы, даже если динамическая таблица может быть обновлена инкрементно.
+- **INCREMENTAL** &mdash; Обеспечивает инкрементное обновление динамической таблицы. Если запрос, лежащий в основе динамической таблицы, не может выполнить инкрементное обновление, создание динамической таблицы завершается с ошибкой.
 
-Learn more about `refresh_mode` in [Snowflake's docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh).
+Узнайте больше о `refresh_mode` в [документации Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh).
 
-### Initialize
+### Инициализация
 
-Snowflake allows two options for initialize:
-- **ON_CREATE** &mdash; Refreshes the dynamic table synchronously at creation. If this refresh fails, dynamic table creation fails and displays an error message.
-- **ON_SCHEDULE** &mdash; Refreshes the dynamic table at the next scheduled refresh.
+Snowflake позволяет два варианта инициализации:
+- **ON_CREATE** &mdash; Обновляет динамическую таблицу синхронно при создании. Если это обновление не удается, создание динамической таблицы завершается с ошибкой.
+- **ON_SCHEDULE** &mdash; Обновляет динамическую таблицу при следующем запланированном обновлении.
 
-Learn more about `initialize` in [Snowflake's docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh).
+Узнайте больше о `initialize` в [документации Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh).
 
 </VersionBlock>
 
-### Limitations
+### Ограничения
 
-As with materialized views on most data platforms, there are limitations associated with dynamic tables. Some worth noting include:
+Как и в случае с материализованными представлениями на большинстве платформ данных, существуют ограничения, связанные с динамическими таблицами. Некоторые из них, которые стоит отметить, включают:
 
-- Dynamic table SQL has a [limited feature set](https://docs.snowflake.com/en/user-guide/dynamic-tables-tasks-create#query-constructs-not-currently-supported-in-dynamic-tables).
-- Dynamic table SQL cannot be updated; the dynamic table must go through a `--full-refresh` (DROP/CREATE).
-- Dynamic tables cannot be downstream from: materialized views, external tables, streams.
-- Dynamic tables cannot reference a view that is downstream from another dynamic table.
+- SQL динамической таблицы имеет [ограниченный набор функций](https://docs.snowflake.com/en/user-guide/dynamic-tables-tasks-create#query-constructs-not-currently-supported-in-dynamic-tables).
+- SQL динамической таблицы не может быть обновлен; динамическая таблица должна пройти через `--full-refresh` (DROP/CREATE).
+- Динамические таблицы не могут быть ниже по потоку от: материализованных представлений, внешних таблиц, потоков.
+- Динамические таблицы не могут ссылаться на представление, которое находится ниже по потоку от другой динамической таблицы.
 
-Find more information about dynamic table limitations in Snowflake's [docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-tasks-create#dynamic-table-limitations-and-supported-functions).
+Найдите больше информации об ограничениях динамических таблиц в [документации Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-tasks-create#dynamic-table-limitations-and-supported-functions).
 
-For dbt limitations, these dbt features are not supported:
-- [Model contracts](/docs/collaborate/govern/model-contracts)
-- [Copy grants configuration](/reference/resource-configs/snowflake-configs#copying-grants)
+Для ограничений dbt, эти функции dbt не поддерживаются:
+- [Контракты моделей](/docs/collaborate/govern/model-contracts)
+- [Конфигурация копирования грантов](/reference/resource-configs/snowflake-configs#copying-grants)
 
-## Temporary tables
+## Временные таблицы
 
-Incremental table merges for Snowflake prefer to utilize a `view` rather than a `temporary table`. The reasoning is to avoid the database write step that a temporary table would initiate and save compile time. 
+Инкрементные слияния таблиц для Snowflake предпочитают использовать `view`, а не `temporary table`. Причина в том, чтобы избежать шага записи в базу данных, который инициировала бы временная таблица, и сэкономить время компиляции.
 
-However, some situations remain where a temporary table would achieve results faster or more safely. The `tmp_relation_type` configuration enables you to opt in to temporary tables for incremental builds. This is defined as part of the model configuration. 
+Однако остаются некоторые ситуации, когда временная таблица может достичь результатов быстрее или безопаснее. Конфигурация `tmp_relation_type` позволяет вам выбрать временные таблицы для инкрементных сборок. Это определяется как часть конфигурации модели.
 
-To guarantee accuracy, an incremental model using the `delete+insert` strategy with a `unique_key` defined requires a temporary table; trying to change this to a view will result in an error.
+Чтобы гарантировать точность, инкрементная модель, использующая стратегию `delete+insert` с определенным `unique_key`, требует временной таблицы; попытка изменить это на представление приведет к ошибке.
 
-Defined in the project YAML:
+Определено в YAML проекта:
 
 <File name='dbt_project.yml'>
 
@@ -356,34 +352,33 @@ name: my_project
 
 models:
   <resource-path>:
-    +tmp_relation_type: table | view ## If not defined, view is the default.
+    +tmp_relation_type: table | view ## Если не определено, по умолчанию используется view.
   
 ```
 
 </File>
 
-In the configuration format for the model SQL file:
+В формате конфигурации для SQL файла модели:
 
 <File name='dbt_model.sql'>
 
 ```yaml
 
 {{ config(
-    tmp_relation_type="table | view", ## If not defined, view is the default.
+    tmp_relation_type="table | view", ## Если не определено, по умолчанию используется view.
 ) }}
 
 ```
 
 </File>
 
+## Переходные таблицы
 
-## Transient tables
+Snowflake поддерживает создание [переходных таблиц](https://docs.snowflake.net/manuals/user-guide/tables-temp-transient.html). Snowflake не сохраняет историю для этих таблиц, что может привести к заметному снижению ваших затрат на хранение в Snowflake. Переходные таблицы участвуют в путешествии во времени в ограниченной степени с периодом удержания по умолчанию в 1 день без периода резервного копирования. Взвесьте эти компромиссы при принятии решения о том, следует ли настраивать ваши модели dbt как `transient`. **По умолчанию все таблицы Snowflake, созданные dbt, являются `transient`.**
 
-Snowflake supports the creation of [transient tables](https://docs.snowflake.net/manuals/user-guide/tables-temp-transient.html). Snowflake does not preserve a history for these tables, which can result in a measurable reduction of your Snowflake storage costs. Transient tables participate in time travel to a limited degree with a retention period of 1 day by default with no fail-safe period. Weigh these tradeoffs when deciding whether or not to configure your dbt models as `transient`. **By default, all Snowflake tables created by dbt are `transient`.**
+### Настройка переходных таблиц в dbt_project.yml
 
-### Configuring transient tables in dbt_project.yml
-
-A whole folder (or package) can be configured to be transient (or not) by adding a line to the `dbt_project.yml` file. This config works just like all of the [model configs](/reference/model-configs) defined in `dbt_project.yml`.
+Целая папка (или пакет) может быть настроена как переходная (или нет) путем добавления строки в файл `dbt_project.yml`. Эта конфигурация работает так же, как и все [конфигурации моделей](/reference/model-configs), определенные в `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
@@ -400,9 +395,9 @@ models:
 
 </File>
 
-### Configuring transience for a specific model
+### Настройка переходности для конкретной модели
 
-A specific model can be configured to be transient by setting the `transient` model config to `true`.
+Конкретная модель может быть настроена как переходная, установив конфигурацию модели `transient` в `true`.
 
 <File name='my_table.sql'>
 
@@ -414,14 +409,11 @@ select * from ...
 
 </File>
 
-## Query tags
+## Теги запросов
 
-[Query tags](https://docs.snowflake.com/en/sql-reference/parameters.html#query-tag) are a Snowflake
-parameter that can be quite useful later on when searching in the [QUERY_HISTORY view](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html).
+[Теги запросов](https://docs.snowflake.com/en/sql-reference/parameters.html#query-tag) — это параметр Snowflake, который может быть весьма полезен позже при поиске в [представлении QUERY_HISTORY](https://docs.snowflake.com/en/sql-reference/account-usage/query_history.html).
 
-dbt supports setting a default query tag for the duration of its Snowflake connections in
-[your profile](/docs/core/connect-data-platform/snowflake-setup). You can set more precise values (and override the default) for subsets of models by setting
-a `query_tag` model config or by overriding the default `set_query_tag` macro:
+dbt поддерживает установку тега запроса по умолчанию на время своих соединений Snowflake в [вашем профиле](/docs/core/connect-data-platform/snowflake-setup). Вы можете установить более точные значения (и переопределить значение по умолчанию) для подмножеств моделей, установив конфигурацию модели `query_tag` или переопределив макрос `set_query_tag` по умолчанию:
 
 <File name='dbt_project.yml'>
 
@@ -445,7 +437,7 @@ select ...
 
 ```
   
-In this example, you can set up a query tag to be applied to every query with the model's name.
+В этом примере вы можете настроить тег запроса, который будет применяться к каждому запросу с именем модели.
   
 ```sql 
 
@@ -453,7 +445,7 @@ In this example, you can set up a query tag to be applied to every query with th
   {% set new_query_tag = model.name %} 
   {% if new_query_tag %}
     {% set original_query_tag = get_current_query_tag() %}
-    {{ log("Setting query_tag to '" ~ new_query_tag ~ "'. Will reset to '" ~ original_query_tag ~ "' after materialization.") }}
+    {{ log("Установка query_tag на '" ~ new_query_tag ~ "'. Будет сброшен на '" ~ original_query_tag ~ "' после материализации.") }}
     {% do run_query("alter session set query_tag = '{}'".format(new_query_tag)) %}
     {{ return(original_query_tag)}}
   {% endif %}
@@ -462,35 +454,34 @@ In this example, you can set up a query tag to be applied to every query with th
 
 ```
 
-**Note:** query tags are set at the _session_ level. At the start of each model <Term id="materialization" />, if the model has a custom `query_tag` configured, dbt will run `alter session set query_tag` to set the new value. At the end of the materialization, dbt will run another `alter` statement to reset the tag to its default value. As such, build failures midway through a materialization may result in subsequent queries running with an incorrect tag.
+**Примечание:** теги запросов устанавливаются на уровне _сессии_. В начале каждой <Term id="materialization" /> модели, если у модели настроен пользовательский `query_tag`, dbt выполнит `alter session set query_tag`, чтобы установить новое значение. В конце материализации dbt выполнит еще один оператор `alter`, чтобы сбросить тег на его значение по умолчанию. Таким образом, сбои сборки в середине материализации могут привести к тому, что последующие запросы будут выполняться с неправильным тегом.
 
 </File>
 
-## Merge behavior (incremental models)
+## Поведение слияния (инкрементные модели)
 
-The [`incremental_strategy` config](/docs/build/incremental-strategy) controls how dbt builds incremental models. By default, dbt will use a [merge statement](https://docs.snowflake.net/manuals/sql-reference/sql/merge.html) on Snowflake to refresh incremental tables.
+Конфигурация [`incremental_strategy`](/docs/build/incremental-strategy) управляет тем, как dbt строит инкрементные модели. По умолчанию dbt будет использовать [оператор слияния](https://docs.snowflake.net/manuals/sql-reference/sql/merge.html) в Snowflake для обновления инкрементных таблиц.
 
-Snowflake supports the following incremental strategies:
-- Merge (default)
-- Append
-- Delete+insert
+Snowflake поддерживает следующие стратегии инкрементного обновления:
+- Слияние (по умолчанию)
+- Добавление
+- Удаление+вставка
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-Snowflake's `merge` statement fails with a "nondeterministic merge" error if the `unique_key` specified in your model config is not actually unique. If you encounter this error, you can instruct dbt to use a two-step incremental approach by setting the `incremental_strategy` config for your model to `delete+insert`.
+Оператор `merge` Snowflake завершится с ошибкой "недетерминированное слияние", если `unique_key`, указанный в конфигурации вашей модели, не является уникальным. Если вы столкнулись с этой ошибкой, вы можете указать dbt использовать двухэтапный инкрементный подход, установив конфигурацию `incremental_strategy` для вашей модели на `delete+insert`.
 
+## Настройка кластеризации таблиц
 
-## Configuring table clustering
+dbt поддерживает [кластеризацию таблиц](https://docs.snowflake.net/manuals/user-guide/tables-clustering-keys.html) в Snowflake. Чтобы управлять кластеризацией для <Term id="table" /> или инкрементной модели, используйте конфигурацию `cluster_by`. Когда эта конфигурация применяется, dbt выполнит два действия:
 
-dbt supports [table clustering](https://docs.snowflake.net/manuals/user-guide/tables-clustering-keys.html) on Snowflake. To control clustering for a <Term id="table" /> or incremental model, use the `cluster_by` config. When this configuration is applied, dbt will do two things:
+1. Он неявно упорядочит результаты таблицы по указанным полям `cluster_by`
+2. Он добавит указанные ключи кластеризации в целевую таблицу
 
-1. It will implicitly order the table results by the specified `cluster_by` fields
-2. It will add the specified clustering keys to the target table
+Используя указанные поля `cluster_by` для упорядочивания таблицы, dbt минимизирует объем работы, требуемой для автоматической кластеризации Snowflake. Если инкрементная модель настроена на использование кластеризации таблиц, то dbt также упорядочит промежуточный набор данных перед его слиянием в целевую таблицу. Таким образом, таблица, управляемая dbt, всегда должна находиться в основном кластеризованном состоянии.
 
-By using the specified `cluster_by` fields to order the table, dbt minimizes the amount of work required by Snowflake's automatic clustering functionality. If an incremental model is configured to use table clustering, then dbt will also order the staged dataset before merging it into the destination table. As such, the dbt-managed table should always be in a mostly clustered state.
+### Использование cluster_by
 
-### Using cluster_by
-
-The `cluster_by` config accepts either a string, or a list of strings to use as clustering keys. The following example will create a sessions table that is clustered by the `session_start` column.
+Конфигурация `cluster_by` принимает либо строку, либо список строк для использования в качестве ключей кластеризации. Следующий пример создаст таблицу сессий, кластеризованную по столбцу `session_start`.
 
 <File name='models/events/sessions.sql'>
 
@@ -514,7 +505,7 @@ group by 1
 
 </File>
 
-The code above will be compiled to SQL that looks (approximately) like this:
+Код выше будет скомпилирован в SQL, который выглядит (примерно) так:
 
 ```sql
 create or replace table my_database.my_schema.my_table as (
@@ -530,8 +521,8 @@ create or replace table my_database.my_schema.my_table as (
     group by 1
   )
 
-  -- this order by is added by dbt in order to create the
-  -- table in an already-clustered manner.
+  -- этот order by добавляется dbt для создания
+  -- таблицы в уже кластеризованном виде.
   order by session_start
 
 );
@@ -539,13 +530,13 @@ create or replace table my_database.my_schema.my_table as (
  alter table my_database.my_schema.my_table cluster by (session_start);
 ```
 
-### Automatic clustering
+### Автоматическая кластеризация
 
-Automatic clustering is [enabled by default in Snowflake today](https://docs.snowflake.com/en/user-guide/tables-auto-reclustering.html), no action is needed to make use of it. Though there is an `automatic_clustering` config, it has no effect except for accounts with (deprecated) manual clustering enabled.
+Автоматическая кластеризация [включена по умолчанию в Snowflake сегодня](https://docs.snowflake.com/en/user-guide/tables-auto-reclustering.html), никаких действий не требуется для ее использования. Хотя существует конфигурация `automatic_clustering`, она не имеет эффекта, кроме как для аккаунтов с (устаревшей) ручной кластеризацией.
 
-If [manual clustering is still enabled for your account](https://docs.snowflake.com/en/user-guide/tables-clustering-manual.html), you can use the `automatic_clustering` config to control whether or not automatic clustering is enabled for dbt models. When `automatic_clustering` is set to `true`, dbt will run an `alter table <table name> resume recluster` query after building the target table.
+Если [ручная кластеризация все еще включена для вашего аккаунта](https://docs.snowflake.com/en/user-guide/tables-clustering-manual.html), вы можете использовать конфигурацию `automatic_clustering`, чтобы управлять тем, включена ли автоматическая кластеризация для моделей dbt. Когда `automatic_clustering` установлено в `true`, dbt выполнит запрос `alter table <table name> resume recluster` после сборки целевой таблицы.
 
-The `automatic_clustering` config can be specified in the `dbt_project.yml` file, or in a model `config()` block.
+Конфигурация `automatic_clustering` может быть указана в файле `dbt_project.yml` или в блоке `config()` модели.
 
 <File name='dbt_project.yml'>
 
@@ -556,21 +547,21 @@ models:
 
 </File>
 
-## Configuring virtual warehouses
+## Настройка виртуальных складов
 
-The default warehouse that dbt uses can be configured in your [Profile](/docs/core/connect-data-platform/profiles.yml) for Snowflake connections. To override the warehouse that is used for specific models (or groups of models), use the `snowflake_warehouse` model configuration. This configuration can be used to specify a larger warehouse for certain models in order to control Snowflake costs and project build times. 
+Склад по умолчанию, который использует dbt, можно настроить в вашем [профиле](/docs/core/connect-data-platform/profiles.yml) для соединений Snowflake. Чтобы переопределить склад, который используется для конкретных моделей (или групп моделей), используйте конфигурацию модели `snowflake_warehouse`. Эта конфигурация может быть использована для указания большего склада для определенных моделей, чтобы контролировать затраты на Snowflake и время сборки проекта.
 
 <Tabs
   defaultValue="dbt_project.yml"
   values={[
-    { label: 'YAML code', value: 'dbt_project.yml', },
-    { label: 'SQL code', value: 'models/events/sessions.sql', },
+    { label: 'YAML код', value: 'dbt_project.yml', },
+    { label: 'SQL код', value: 'models/events/sessions.sql', },
     ]}
 >
 
 <TabItem value="dbt_project.yml">
 
-The example config below changes the warehouse for a group of models with a config argument in the yml.
+Пример конфигурации ниже изменяет склад для группы моделей с помощью аргумента конфигурации в yml.
 
 <File name='dbt_project.yml'>
 
@@ -581,13 +572,13 @@ version: 1.0.0
 ...
 
 models:
-  +snowflake_warehouse: "EXTRA_SMALL"    # use the `EXTRA_SMALL` warehouse for all models in the project...
+  +snowflake_warehouse: "EXTRA_SMALL"    # используйте склад `EXTRA_SMALL` для всех моделей в проекте...
   my_project:
     clickstream:
-      +snowflake_warehouse: "EXTRA_LARGE"    # ...except for the models in the `clickstream` folder, which will use the `EXTRA_LARGE` warehouse.
+      +snowflake_warehouse: "EXTRA_LARGE"    # ...кроме моделей в папке `clickstream`, которые будут использовать склад `EXTRA_LARGE`.
 
 snapshots:
-  +snowflake_warehouse: "EXTRA_LARGE"    # all Snapshot models are configured to use the `EXTRA_LARGE` warehouse.
+  +snowflake_warehouse: "EXTRA_LARGE"    # все модели Snapshot настроены на использование склада `EXTRA_LARGE`.
 ```
 
 </File>
@@ -595,7 +586,7 @@ snapshots:
 
 <TabItem value="models/events/sessions.sql">
 
-The example config below changes the warehouse for a single model with a config() block in the sql model.
+Пример конфигурации ниже изменяет склад для одной модели с помощью блока config() в SQL модели.
 
 <File name='models/events/sessions.sql'>
 
@@ -640,9 +631,9 @@ select * from index_sessions
 </TabItem>
 </Tabs>
 
-## Copying grants
+## Копирование грантов
 
-When the `copy_grants` config is set to `true`, dbt will add the `copy grants` <Term id="ddl" /> qualifier when rebuilding tables and <Term id="view">views</Term>. The default value is `false`.
+Когда конфигурация `copy_grants` установлена в `true`, dbt добавит квалификатор `copy grants` <Term id="ddl" /> при перестроении таблиц и <Term id="view">представлений</Term>. Значение по умолчанию — `false`.
 
 <File name='dbt_project.yml'>
 
@@ -653,11 +644,11 @@ models:
 
 </File>
 
-## Secure views
+## Безопасные представления
 
-To create a Snowflake [secure view](https://docs.snowflake.net/manuals/user-guide/views-secure.html), use the `secure` config for view models. Secure views can be used to limit access to sensitive data. Note: secure views may incur a performance penalty, so you should only use them if you need them.
+Чтобы создать [безопасное представление](https://docs.snowflake.net/manuals/user-guide/views-secure.html) в Snowflake, используйте конфигурацию `secure` для моделей представлений. Безопасные представления могут быть использованы для ограничения доступа к конфиденциальным данным. Примечание: безопасные представления могут привести к снижению производительности, поэтому вы должны использовать их только в случае необходимости.
 
-The following example configures the models in the `sensitive/` folder to be configured as secure views.
+Следующий пример настраивает модели в папке `sensitive/` как безопасные представления.
 
 <File name='dbt_project.yml'>
 
@@ -674,31 +665,29 @@ models:
 
 </File>
 
+## Известное ограничение свежести источника
 
-## Source freshness known limitation
+Snowflake рассчитывает свежесть источника, используя информацию из столбца `LAST_ALTERED`, что означает, что он полагается на поле, обновляемое всякий раз, когда любой объект подвергается модификации, а не только обновлениям данных. Никаких действий не требуется, но аналитические команды должны учитывать эту оговорку.
 
-Snowflake calculates source freshness using information from the `LAST_ALTERED` column, meaning it relies on a field updated whenever any object undergoes modification, not only data updates. No action must be taken, but analytics teams should note this caveat. 
+Согласно [документации Snowflake](https://docs.snowflake.com/en/sql-reference/info-schema/tables#usage-notes):
 
-Per the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/info-schema/tables#usage-notes): 
-
-  >The `LAST_ALTERED` column is updated when the following operations are performed on an object:
-  >- DDL operations.
-  >- DML operations (for tables only).
-  >- Background maintenance operations on metadata performed by Snowflake.
+> Столбец `LAST_ALTERED` обновляется, когда выполняются следующие операции над объектом:
+> - Операции DDL.
+> - Операции DML (только для таблиц).
+> - Фоновые операции по обслуживанию метаданных, выполняемые Snowflake.
 
 <VersionBlock firstVersion="1.9">
 
-## Pagination for object results
+## Постраничная навигация для результатов объектов
 
-By default, when dbt encounters a schema with up to 100,000 objects, it will paginate the results from `show objects` at 10,000 per page for up to 10 pages.
+По умолчанию, когда dbt сталкивается со схемой с до 100,000 объектов, он будет разбивать результаты из `show objects` на страницы по 10,000 на страницу для до 10 страниц.
 
-Environments with more than 100,000 objects in a schema can customize the number of results per page and the page limit using the following [flags](/reference/global-configs/about-global-configs) in the `dbt_project.yml`:
+Среды с более чем 100,000 объектов в схеме могут настроить количество результатов на страницу и лимит страниц, используя следующие [флаги](/reference/global-configs/about-global-configs) в `dbt_project.yml`:
 
-- `list_relations_per_page` &mdash; The number of relations on each page (Max 10k as this is the most Snowflake allows).
-- `list_relations_page_limit` &mdash; The maximum number of pages to include in the results.
+- `list_relations_per_page` &mdash; Количество отношений на каждой странице (Максимум 10k, так как это максимум, который позволяет Snowflake).
+- `list_relations_page_limit` &mdash; Максимальное количество страниц для включения в результаты.
 
-For example, if you wanted to include 10,000 objects per page and include up to 100 pages (1 million objects), configure the flags as follows:
-
+Например, если вы хотите включить 10,000 объектов на страницу и включить до 100 страниц (1 миллион объектов), настройте флаги следующим образом:
 
 ```yml
 

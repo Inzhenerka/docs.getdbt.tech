@@ -1,6 +1,6 @@
 ---
 resource_types: all
-description: "Включено - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Включено - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: boolean
 default_value: true
 ---
@@ -8,15 +8,15 @@ default_value: true
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Модели', value: 'models', },
-    { label: 'Сиды', value: 'seeds', },
-    { label: 'Снимки', value: 'snapshots', },
-    { label: 'Тесты', value: 'tests', },
-    { label: 'Источники', value: 'sources', },
-    { label: 'Метрики', value: 'metrics', },
-    { label: 'Экспозиции', value: 'exposures', },
-    { label: 'Семантические модели', value: 'semantic models', },
-    { label: 'Сохраненные запросы', value: 'saved queries', },
+    { label: 'Models', value: 'models', },
+    { label: 'Seeds', value: 'seeds', },
+    { label: 'Snapshots', value: 'snapshots', },
+    { label: 'Tests', value: 'tests', },
+    { label: 'Sources', value: 'sources', },
+    { label: 'Metrics', value: 'metrics', },
+    { label: 'Exposures', value: 'exposures', },
+    { label: 'Semantic models', value: 'semantic models', },
+    { label: 'Saved queries', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
@@ -286,17 +286,17 @@ saved_queries:
 
 * По умолчанию: true
 
-Когда ресурс отключен, dbt не будет рассматривать его как часть вашего проекта. Обратите внимание, что это может вызвать ошибки компиляции.
+Когда ресурс отключен, dbt не будет учитывать его как часть вашего проекта. Обратите внимание, что это может вызвать ошибки компиляции.
 
-Если вы хотите исключить модель из конкретного запуска, рассмотрите возможность использования параметра `--exclude` в рамках [синтаксиса выбора модели](/reference/node-selection/syntax).
+Если вы хотите исключить модель из конкретного запуска, рассмотрите возможность использования параметра `--exclude` как часть [синтаксиса выбора модели](/reference/node-selection/syntax).
 
-Если вы отключаете модели, потому что они больше не используются, но хотите контролировать версию их SQL, рассмотрите возможность преобразования их в [анализ](/docs/build/analyses).
+Если вы отключаете модели, потому что они больше не используются, но хотите контролировать их версии в SQL, рассмотрите возможность сделать их [анализом](/docs/build/analyses).
 
 ## Примеры
-### Отключение модели в пакете, чтобы использовать свою версию модели.
+### Отключение модели в пакете для использования вашей собственной версии модели.
 Это может быть полезно, если вы хотите изменить логику модели в пакете. Например, если вам нужно изменить логику в `segment_web_page_views` из пакета `segment` ([оригинальная модель](https://github.com/dbt-labs/segment/blob/a8ff2f892b009a69ec36c3061a87e437f0b0ea93/models/base/segment_web_page_views.sql)):
-1. Добавьте модель с именем `segment_web_page_views` (то же имя) в свой проект.
-2. Чтобы избежать ошибки компиляции из-за дублирующихся моделей, отключите версию модели из пакета segment следующим образом:
+1. Добавьте модель с именем `segment_web_page_views` (то же имя) в ваш собственный проект.
+2. Чтобы избежать ошибки компиляции из-за дублирования моделей, отключите версию модели из пакета segment следующим образом:
 
 <File name='dbt_project.yml'>
 

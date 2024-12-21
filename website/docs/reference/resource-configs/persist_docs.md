@@ -1,17 +1,16 @@
 ---
 id: "persist_docs"
-description: "Persist_docs - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Persist_docs - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 datatype: Dict[Str, Bool]
 ---
-
 
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Модели', value: 'models', },
-    { label: 'Источники', value:'sources', },
-    { label: 'Сиды', value: 'seeds', },
-    { label: 'Снимки', value: 'snapshots', },
+    { label: 'Models', value: 'models', },
+    { label: 'Sources', value:'sources', },
+    { label: 'Seeds', value: 'seeds', },
+    { label: 'Snapshots', value: 'snapshots', },
   ]
 }>
 
@@ -119,7 +118,7 @@ select ...
 - Databricks 
 - Apache Spark
 
-Однако некоторые базы данных ограничивают, где и как описания могут быть добавлены к объектам базы данных. Эти адаптеры баз данных могут не поддерживать `persist_docs` или предлагать только частичную поддержку.
+Однако некоторые базы данных ограничивают, где и как можно добавлять описания к объектам базы данных. Эти адаптеры баз данных могут не поддерживать `persist_docs` или могут предлагать только частичную поддержку.
 
 Некоторые известные проблемы и ограничения:
 
@@ -127,7 +126,7 @@ select ...
 
 <div warehouse="Databricks">
 
-- Комментарии на уровне столбцов требуют `file_format: delta` (или другого "v2 file format")
+- Комментарии на уровне столбцов требуют `file_format: delta` (или другого "v2 формата файла")
 
 </div>
 
@@ -143,7 +142,7 @@ select ...
 
 ### Документирование столбцов и отношений
 
-Укажите [описание](/reference/resource-properties/description) для модели:
+Предоставьте [описание](/reference/resource-properties/description) для модели:
 
 <File name='models/schema.yml'>
 
@@ -152,7 +151,7 @@ version: 2
 
 models:
   - name: dim_customers
-    description: Один рекорд на клиента
+    description: Одна запись на клиента
     columns:
       - name: customer_id
         description: Первичный ключ
@@ -177,7 +176,7 @@ models:
 Запустите dbt и убедитесь, что созданные отношения и столбцы аннотированы вашими описаниями:
 
 <Lightbox src="/img/reference/persist_docs_relation.png"
-          title="Описание отношений в BigQuery"/>
+          title="Описания отношений в BigQuery"/>
 
 <Lightbox src="/img/reference/persist_docs_columns.png"
-          title="Описание столбцов в BigQuery"/>
+          title="Описания столбцов в BigQuery"/>

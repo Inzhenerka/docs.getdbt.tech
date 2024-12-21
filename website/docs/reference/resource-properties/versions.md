@@ -17,113 +17,111 @@ version: 2
 models:
   - name: model_name
     versions:
-      - v: <version_identifier> # required
-        defined_in: <file_name> # optional -- default is <model_name>_v<v>
+      - v: <version_identifier> # обязательно
+        defined_in: <file_name> # необязательно -- по умолчанию <model_name>_v<v>
         columns:
-          # specify all columns, or include/exclude columns from the top-level model YAML definition
+          # укажите все столбцы или включите/исключите столбцы из определения модели верхнего уровня в YAML
           - [include](/reference/resource-properties/include-exclude): <include_value>
             [exclude](/reference/resource-properties/include-exclude): <exclude_list>
-          # specify additional columns
-          - name: <column_name> # required
+          # укажите дополнительные столбцы
+          - name: <column_name> # обязательно
       - v: ...
     
-    # optional
+    # необязательно
     [latest_version](/reference/resource-properties/latest_version): <version_identifier> 
 ```
 
 </File>
 
-The standard convention for naming model versions is `<model_name>_v<v>`. This holds for the file where dbt expects to find the model's definition (SQL or Python), and the alias it will use by default when materializing the model in the database.
+Стандартное соглашение для именования версий моделей — `<model_name>_v<v>`. Это касается файла, в котором dbt ожидает найти определение модели (SQL или Python), и псевдонима, который будет использоваться по умолчанию при материализации модели в базе данных.
 
 ### `v`
 
-The version identifier for a version of a model. This value can be numeric (integer or float), or any string.
+Идентификатор версии для версии модели. Это значение может быть числовым (целым или с плавающей точкой) или любой строкой.
 
-The value of the version identifier is used to order versions of a model relative to one another. If a versioned model does _not_ explicitly configure a [`latest_version`](/reference/resource-properties/latest_version), the highest version number is used as the latest version to resolve `ref` calls to the model without a `version` argument.
+Значение идентификатора версии используется для упорядочивания версий модели относительно друг друга. Если версия модели _не_ явно настраивает [`latest_version`](/reference/resource-properties/latest_version), то в качестве последней версии используется наибольший номер версии для разрешения вызовов `ref` к модели без аргумента `version`.
 
-In general, we recommend that you use a simple "major versioning" scheme for your models: `1`, `2`, `3`, and so on, where each version reflects a breaking change from previous versions. You are able to use other versioning schemes. dbt will sort your version identifiers alphabetically if the values are not all numeric. You should **not** include the letter `v` in the version identifier, as dbt will do that for you.
+В общем, мы рекомендуем использовать простую схему "основного версионирования" для ваших моделей: `1`, `2`, `3` и так далее, где каждая версия отражает значительное изменение по сравнению с предыдущими версиями. Вы можете использовать и другие схемы версионирования. dbt будет сортировать ваши идентификаторы версий в алфавитном порядке, если значения не все числовые. Вы **не** должны включать букву `v` в идентификатор версии, так как dbt сделает это за вас.
 
-To run a model with multiple versions, you can use the [`--select` flag](/reference/node-selection/syntax). Refer to [Model versions](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) for more information and syntax.
-
+Чтобы запустить модель с несколькими версиями, вы можете использовать [`--select` флаг](/reference/node-selection/syntax). Обратитесь к [Версии моделей](/docs/collaborate/govern/model-versions#run-a-model-with-multiple-versions) для получения дополнительной информации и синтаксиса.
 
 ### `defined_in`
 
-The name of the model file (excluding the file extension, e.g. `.sql` or `.py`) where the model version is defined.
+Имя файла модели (исключая расширение файла, например, `.sql` или `.py`), в котором определена версия модели.
 
-If `defined_in` is not specified, dbt searches for the definition of a versioned model in a model file named `<model_name>_v<v>`. The **latest** version of a model may also be defined in a file named `<model_name>`, without the version suffix. Model file names must be globally unique, even when defining versioned implementations of a model with a different name.
+Если `defined_in` не указано, dbt ищет определение версии модели в файле модели с именем `<model_name>_v<v>`. **Последняя** версия модели также может быть определена в файле с именем `<model_name>`, без суффикса версии. Имена файлов моделей должны быть уникальными в глобальном масштабе, даже при определении версионных реализаций модели с другим именем.
 
 ### `alias`
 
-The default resolved `alias` for a versioned model is `<model_name>_v<v>`. The logic for this is encoded in the `generate_alias_name` macro.
+Псевдоним по умолчанию для версии модели — `<model_name>_v<v>`. Логика для этого закодирована в макросе `generate_alias_name`.
 
-This default can be overwritten in two ways:
-- Configuring a custom `alias` within the version yaml, or the versioned model's definition
-- Overwriting dbt's `generate_alias_name` macro, to use different behavior based on `node.version`
+Этот параметр по умолчанию можно изменить двумя способами:
+- Настройка пользовательского `alias` в yaml версии или в определении версии модели
+- Переопределение макроса `generate_alias_name` dbt, чтобы использовать другое поведение на основе `node.version`
 
-See ["Custom aliases"](https://docs.getdbt.com/docs/build/custom-aliases) for more details.
+См. ["Пользовательские псевдонимы"](https://docs.getdbt.com/docs/build/custom-aliases) для получения более подробной информации.
 
-Note that the value of `defined_in` and the `alias` configuration of a model are not coordinated, except by convention. The two are declared and determined independently.
+Обратите внимание, что значение `defined_in` и конфигурация `alias` модели не координируются, кроме как по соглашению. Они объявляются и определяются независимо.
 
-### Our recommendations
-- Follow a consistent naming convention for model versions and aliases.
-- Use `defined_in` and `alias` only if you have good reason.
-- Create a view that always points to the latest version of your model. You can automate this for all versioned models in your project with an `on-run-end` hook. For more details, read the full docs on ["Model versions"](/docs/collaborate/govern/model-versions#configuring-database-location-with-alias)
+### Наши рекомендации
+- Следуйте согласованному соглашению об именовании версий моделей и псевдонимов.
+- Используйте `defined_in` и `alias` только если у вас есть веские причины.
+- Создайте представление, которое всегда указывает на последнюю версию вашей модели. Вы можете автоматизировать это для всех версионных моделей в вашем проекте с помощью хука `on-run-end`. Для получения более подробной информации прочитайте полную документацию по ["Версии моделей"](/docs/collaborate/govern/model-versions#configuring-database-location-with-alias).
 
-### Detecting breaking changes
+### Обнаружение значительных изменений
 
-When you use the `state:modified` selection method in Slim CI, dbt will detect changes to versioned model contracts, and raise an error if any of those changes could be breaking for downstream consumers.
+Когда вы используете метод выбора `state:modified` в Slim CI, dbt обнаружит изменения в контрактах версионных моделей и выдаст ошибку, если какие-либо из этих изменений могут быть значительными для потребителей ниже по потоку.
 
 import BreakingChanges from '/snippets/_versions-contracts.md';
 
 <BreakingChanges 
-value="Changing unversioned, contracted models."
-value2="dbt also warns if a model has or had a contract but isn't versioned."
+value="Изменение неконтрактных моделей без версий."
+value2="dbt также предупреждает, если у модели есть или был контракт, но она не имеет версии."
 />
 
 <Tabs>
 
-<TabItem value="unversioned" label="Example message for unversioned models">
+<TabItem value="unversioned" label="Пример сообщения для моделей без версий">
 
 ```
-  Breaking Change to Unversioned Contract for contracted_model (models/contracted_models/contracted_model.sql)
-  While comparing to previous project state, dbt detected a breaking change to an unversioned model.
-    - Contract enforcement was removed: Previously, this model's configuration included contract: {enforced: true}. It is no longer configured to enforce its contract, and this is a breaking change.
-    - Columns were removed:
+  Значительное изменение в неконтрактной модели для contracted_model (models/contracted_models/contracted_model.sql)
+  При сравнении с предыдущим состоянием проекта dbt обнаружил значительное изменение в неконтрактной модели.
+    - Принудительное соблюдение контракта было удалено: Ранее конфигурация этой модели включала contract: {enforced: true}. Теперь она больше не настроена на соблюдение своего контракта, и это значительное изменение.
+    - Столбцы были удалены:
       - color
       - date_day
-    - Enforced column level constraints were removed:
+    - Принудительные ограничения на уровне столбцов были удалены:
       - id (ConstraintType.not_null)
       - id (ConstraintType.primary_key)
-    - Enforced model level constraints were removed:
+    - Принудительные ограничения на уровне модели были удалены:
       - ConstraintType.check -> ['id']
-    - Materialization changed with enforced constraints:
+    - Материализация изменилась с принудительными ограничениями:
       - table -> view
 ```
 </TabItem>
 
-<TabItem value="versioned" label="Example message for versioned models">
+<TabItem value="versioned" label="Пример сообщения для версионных моделей">
 
 ```
-Breaking Change to Contract Error in model sometable (models/sometable.sql)
-  While comparing to previous project state, dbt detected a breaking change to an enforced contract.
+Значительное изменение в контракте Ошибка в модели sometable (models/sometable.sql)
+  При сравнении с предыдущим состоянием проекта dbt обнаружил значительное изменение в принудительном контракте.
 
-  The contract's enforcement has been disabled.
+  Принудительное соблюдение контракта было отключено.
 
-  Columns were removed:
+  Столбцы были удалены:
    - order_name
 
-  Columns with data_type changes:
+  Столбцы с изменениями типа данных:
    - order_id (number -> int)
 
-  Consider making an additive (non-breaking) change instead, if possible.
-  Otherwise, create a new model version: https://docs.getdbt.com/docs/collaborate/govern/model-versions
+  Рассмотрите возможность внесения добавочного (незначительного) изменения, если это возможно.
+  В противном случае создайте новую версию модели: https://docs.getdbt.com/docs/collaborate/govern/model-versions
 ```
 
 </TabItem>
 
-
 </Tabs>
 
-Additive changes are **not** considered breaking:
-- Adding a new column to a contracted model
-- Adding new `constraints` to an existing column in a contracted model
+Добавочные изменения **не** считаются значительными:
+- Добавление нового столбца в контрактную модель
+- Добавление новых `constraints` к существующему столбцу в контрактной модели

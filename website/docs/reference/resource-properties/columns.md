@@ -6,11 +6,11 @@ datatype: test
 <Tabs
   defaultValue="models"
   values={[
-    { label: 'Модели', value: 'models', },
-    { label: 'Источники', value: 'sources', },
-    { label: 'Семена', value: 'seeds', },
-    { label: 'Снимки', value: 'snapshots', },
-    { label: 'Анализы', value: 'analyses', },
+    { label: 'Models', value: 'models', },
+    { label: 'Sources', value: 'sources', },
+    { label: 'Seeds', value: 'seeds', },
+    { label: 'Snapshots', value: 'snapshots', },
+    { label: 'Analyses', value: 'analyses', },
   ]
 }>
 
@@ -26,11 +26,11 @@ models:
     columns:
       - name: <column_name>
         data_type: <string>
-        [описание](/reference/resource-properties/description): <markdown_string>
-        [цитата](/reference/resource-properties/quote): true | false
-        [тесты](/reference/resource-properties/data-tests): ...
-        [теги](/reference/resource-configs/tags): ...
-        [мета](/reference/resource-configs/meta): ...
+        [description](/reference/resource-properties/description): <markdown_string>
+        [quote](/reference/resource-properties/quote): true | false
+        [tests](/reference/resource-properties/data-tests): ...
+        [tags](/reference/resource-configs/tags): ...
+        [meta](/reference/resource-configs/meta): ...
       - name: <another_column>
         ...
 ```
@@ -52,12 +52,12 @@ sources:
     - name: <table_name>
       columns:
         - name: <column_name>
-          [описание](/reference/resource-properties/description): <markdown_string>
+          [description](/reference/resource-properties/description): <markdown_string>
           data_type: <string>
-          [цитата](/reference/resource-properties/quote): true | false
-          [тесты](/reference/resource-properties/data-tests): ...
-          [теги](/reference/resource-configs/tags): ...
-          [мета](/reference/resource-configs/meta): ...
+          [quote](/reference/resource-properties/quote): true | false
+          [tests](/reference/resource-properties/data-tests): ...
+          [tags](/reference/resource-configs/tags): ...
+          [meta](/reference/resource-configs/meta): ...
         - name: <another_column>
           ...
 
@@ -78,12 +78,12 @@ seeds:
   - name: <seed_name>
     columns:
       - name: <column_name>
-        [описание](/reference/resource-properties/description): <markdown_string>
+        [description](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
-        [цитата](/reference/resource-properties/quote): true | false
-        [тесты](/reference/resource-properties/data-tests): ...
-        [теги](/reference/resource-configs/tags): ...
-        [мета](/reference/resource-configs/meta): ...
+        [quote](/reference/resource-properties/quote): true | false
+        [tests](/reference/resource-properties/data-tests): ...
+        [tags](/reference/resource-configs/tags): ...
+        [meta](/reference/resource-configs/meta): ...
       - name: <another_column>
             ...
 ```
@@ -103,12 +103,12 @@ snapshots:
   - name: <snapshot_name>
     columns:
       - name: <column_name>
-        [описание](/reference/resource-properties/description): <markdown_string>
+        [description](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
-        [цитата](/reference/resource-properties/quote): true | false
-        [тесты](/reference/resource-properties/data-tests): ...
-        [теги](/reference/resource-configs/tags): ...
-        [мета](/reference/resource-configs/meta): ...
+        [quote](/reference/resource-properties/quote): true | false
+        [tests](/reference/resource-properties/data-tests): ...
+        [tags](/reference/resource-configs/tags): ...
+        [meta](/reference/resource-configs/meta): ...
       - name: <another_column>
 
 ```
@@ -129,7 +129,7 @@ analyses:
   - name: <analysis_name>
     columns:
       - name: <column_name>
-        [описание](/reference/resource-properties/description): <markdown_string>
+        [description](/reference/resource-properties/description): <markdown_string>
         data_type: <string>
       - name: <another_column>
 
@@ -141,14 +141,14 @@ analyses:
 
 </Tabs>
 
-Столбцы не являются ресурсами сами по себе. Вместо этого они являются дочерними свойствами другого типа ресурса. Они могут определять под-свойства, которые аналогичны свойствам, определенным на уровне ресурса:
-- `теги`
-- `мета`
-- `тесты`
-- `описание`
+Столбцы не являются самостоятельными ресурсами. Вместо этого они являются дочерними свойствами другого типа ресурса. Они могут определять под-свойства, которые аналогичны свойствам, определенным на уровне ресурса:
+- `tags`
+- `meta`
+- `tests`
+- `description`
 
-Поскольку столбцы не являются ресурсами, их свойства `теги` и `мета` не являются истинными конфигурациями. Они не наследуют значения `тегов` или `мета` своих родительских ресурсов. Тем не менее, вы можете выбрать общий тест, определенный на столбце, используя теги, примененные к его столбцу или ресурсу верхнего уровня; см. [примеры выбора тестов](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
+Поскольку столбцы не являются ресурсами, их свойства `tags` и `meta` не являются настоящими конфигурациями. Они не наследуют значения `tags` или `meta` от своих родительских ресурсов. Однако вы можете выбрать общий тест, определенный для столбца, используя теги, примененные к его столбцу или ресурсу верхнего уровня; см. [примеры выбора тестов](/reference/node-selection/test-selection-examples#run-tests-on-tagged-columns).
 
-Столбцы могут дополнительно определять `data_type`, что необходимо для:
-- Принуждения модели к [контракту](/reference/resource-configs/contract)
+Столбцы могут по желанию определять `data_type`, что необходимо для:
+- Обеспечения соблюдения [контракта](/reference/resource-configs/contract) модели
 - Использования в других пакетах или плагинах, таких как свойство [`external`](/reference/resource-properties/external) источников и [`dbt-external-tables`](https://hub.getdbt.com/dbt-labs/dbt_external_tables/latest/)

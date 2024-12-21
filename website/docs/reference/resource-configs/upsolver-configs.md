@@ -1,7 +1,7 @@
 ---
 title: "Конфигурации Upsolver"
 id: "upsolver-configs"
-description: "Конфигурации Upsolver - Прочитайте это подробное руководство, чтобы узнать о конфигурациях в dbt."
+description: "Конфигурации Upsolver - Прочтите это подробное руководство, чтобы узнать о конфигурациях в dbt."
 ---
 
 ## Поддерживаемая функциональность Upsolver SQLake
@@ -10,37 +10,37 @@ description: "Конфигурации Upsolver - Прочитайте это п
 | ------ | ------ | ------ |
 | SQL вычислительный кластер | не поддерживается | - |
 | SQL соединения | поддерживается | connection |
-| SQL копирование данных | поддерживается | incremental |
-| SQL объединение данных | поддерживается | incremental |
-| SQL вставка данных | поддерживается | incremental |
+| SQL копирование задания | поддерживается | incremental |
+| SQL слияние задания | поддерживается | incremental |
+| SQL вставка задания | поддерживается | incremental |
 | SQL материализованные представления | поддерживается | materializedview |
 | Ожидания | поддерживается | incremental |
 
-## Конфигурации материализации
+## Материализация конфигураций
 
-| Конфигурация | Обязательная | Материализация | Описание | Пример |
+| Конфигурация | Обязательно | Материализация | Описание | Пример |
 | ------ | --------- | --------------- | ---------- | ------- |
 | connection_type | Да | connection | Идентификатор соединения: S3/GLUE_CATALOG/KINESIS | connection_type='S3' |
 | connection_options | Да | connection | Словарь опций, поддерживаемых выбранным соединением | connection_options=\{ 'aws_role': 'aws_role', 'external_id': 'SAMPLES', 'read_only': True \} |
 | incremental_strategy | Нет | incremental | Определите одну из стратегий инкрементного обновления: merge/copy/insert. По умолчанию: copy | incremental_strategy='merge' |
 | source | Нет | incremental | Определите источник для копирования: S3/KAFKA/KINESIS | source = 'S3' |
 | target_type | Нет | incremental | Определите тип цели REDSHIFT/ELASTICSEARCH/S3/SNOWFLAKE/POSTGRES. По умолчанию None для Data lake | target_type='Snowflake' |
-| target_prefix | Нет | incremental | Определите PREFIX для типа цели ELASTICSEARCH | target_prefix = 'orders' |
-| target_location | Нет | incremental | Определите LOCATION для типа цели S3 | target_location = 's3://your-bucket-name/path/to/folder/' |
-| schema | Да/Нет | incremental | Определите целевую схему. Обязательно, если target_type, таблица не создается в соединении метастора | schema = 'target_schema' |
-| database | Да/Нет | incremental | Определите целевое соединение. Обязательно, если target_type, таблица не создается в соединении метастора | database = 'target_connection' |
-| alias | Да/Нет | incremental | Определите целевую таблицу. Обязательно, если target_type, таблица не создается в соединении метастора | alias = 'target_table' |
+| target_prefix | Нет | incremental | Определите ПРЕФИКС для типа цели ELASTICSEARCH | target_prefix = 'orders' |
+| target_location | Нет | incremental | Определите ЛОКАЦИЮ для типа цели S3 | target_location = 's3://your-bucket-name/path/to/folder/' |
+| schema | Да/Нет | incremental | Определите схему цели. Обязательно, если target_type, таблица не создается в соединении метахранилища | schema = 'target_schema' |
+| database | Да/Нет | incremental | Определите соединение цели. Обязательно, если target_type, таблица не создается в соединении метахранилища | database = 'target_connection' |
+| alias | Да/Нет | incremental | Определите таблицу цели. Обязательно, если target_type, таблица не создается в соединении метахранилища | alias = 'target_table' |
 | delete_condition | Нет | incremental | Записи, которые соответствуют условию ON и условию удаления, могут быть удалены | delete_condition='nettotal > 1000' |
-| partition_by | Нет | incremental | Список словарей для определения partition_by для целевой таблицы метастора | partition_by=[\{'field':'$field_name'\}] |
-| primary_key | Нет | incremental | Список словарей для определения primary_key для целевой таблицы метастора | primary_key=[\{'field':'customer_email', 'type':'string'\}] |
+| partition_by | Нет | incremental | Список словарей для определения partition_by для таблицы метахранилища цели | partition_by=[\{'field':'$field_name'\}] |
+| primary_key | Нет | incremental | Список словарей для определения partition_by для таблицы метахранилища цели | primary_key=[\{'field':'customer_email', 'type':'string'\}] |
 | map_columns_by_name | Нет | incremental | Соответствует столбцам из оператора SELECT таблице. Логическое значение. По умолчанию: False | map_columns_by_name=True |
-| sync | Нет | incremental/materializedview | Логическая опция для определения, является ли работа синхронизированной или не синхронизированной. По умолчанию: False | sync=True |
-| options | Нет | incremental/materializedview | Словарь опций работы | options=\{ 'START_FROM': 'BEGINNING', 'ADD_MISSING_COLUMNS': True \} |
+| sync | Нет | incremental/materializedview | Логическая опция для определения, синхронизировано ли задание или нет. По умолчанию: False | sync=True |
+| options | Нет | incremental/materializedview | Словарь опций задания | options=\{ 'START_FROM': 'BEGINNING', 'ADD_MISSING_COLUMNS': True \} |
 
 ## SQL соединение
 
-Соединения используются для предоставления Upsolver правильных учетных данных для загрузки ваших данных в SQLake, а также для записи ваших преобразованных данных в различные сервисы. Более подробная информация о ["SQL соединениях Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-connections).
-Как модель dbt, соединение является моделью с materialized='connection'.
+Соединения используются для предоставления Upsolver правильных учетных данных для загрузки ваших данных в SQLake, а также для записи преобразованных данных в различные сервисы. Подробнее о ["Upsolver SQL соединениях"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-connections)
+В dbt модель соединения - это модель с materialized='connection'
 
 ```sql
 {{ config(
@@ -51,13 +51,13 @@ description: "Конфигурации Upsolver - Прочитайте это п
 }}
 ```
 
-Запуск этой модели скомпилирует SQL для CREATE CONNECTION (или ALTER CONNECTION, если существует) и отправит его в движок Upsolver. Имя соединения будет именем модели.
+Запуск этой модели скомпилирует SQL CREATE CONNECTION (или ALTER CONNECTION, если существует) и отправит его в движок Upsolver. Имя соединения будет именем модели.
 
-## SQL копирование данных
+## SQL копирование задания
 
-Работа COPY FROM позволяет вам копировать ваши данные из заданного источника в таблицу, созданную в соединении метастора. Эта таблица затем служит вашей промежуточной таблицей и может использоваться с работами трансформации SQLake для записи в различные целевые места. Более подробная информация о ["SQL копировании данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/copy-from).
+Задание COPY FROM позволяет копировать ваши данные из заданного источника в таблицу, созданную в соединении метахранилища. Эта таблица затем служит вашей промежуточной таблицей и может использоваться с заданиями трансформации SQLake для записи в различные целевые местоположения. Подробнее о ["Upsolver SQL copy-from"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/copy-from)
 
-Как модель dbt, работа копирования данных является моделью с materialized='incremental'.
+В dbt модель копирования задания - это модель с materialized='incremental'
 
 ```sql
 {{ config(  materialized='incremental',
@@ -72,13 +72,13 @@ description: "Конфигурации Upsolver - Прочитайте это п
 SELECT * FROM {{ ref(<model>) }}
 ```
 
-Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE COPY JOB (или ALTER COPY JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
+Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE COPY JOB (или ALTER COPY JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
-## SQL вставка данных
+## SQL вставка задания
 
-Работа INSERT определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет его в назначенное место. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в работе. Более подробная информация о ["SQL вставке данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/insert).
+Задание INSERT определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет его в назначенную цель. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в задании. Подробнее о ["Upsolver SQL insert"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/insert).
 
-Как модель dbt, работа вставки данных является моделью с materialized='incremental' и incremental_strategy='insert'.
+В dbt модель вставки задания - это модель с materialized='incremental' и incremental_strategy='insert'
 
 ```sql
 {{ config(  materialized='incremental',
@@ -98,13 +98,13 @@ GROUP BY ...
 HAVING COUNT(DISTINCT orderid::string) ...
 ```
 
-Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE INSERT JOB (или ALTER INSERT JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
+Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE INSERT JOB (или ALTER INSERT JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
-## SQL объединение данных
+## SQL слияние задания
 
-Работа MERGE определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет, заменяет или удаляет данные из назначенного места на основе определения работы. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в работе. Более подробная информация о ["SQL объединении данных Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/merge).
+Задание MERGE определяет запрос, который извлекает набор данных на основе заданного оператора SELECT и вставляет, заменяет или удаляет данные из назначенной цели на основе определения задания. Этот запрос затем выполняется периодически на основе RUN_INTERVAL, определенного в задании. Подробнее о ["Upsolver SQL merge"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/merge).
 
-Как модель dbt, работа объединения данных является моделью с materialized='incremental' и incremental_strategy='merge'.
+В dbt модель слияния задания - это модель с materialized='incremental' и incremental_strategy='merge'
 
 ```sql
 {{ config(  materialized='incremental',
@@ -124,13 +124,14 @@ GROUP BY ...
 HAVING COUNT ...
 ```
 
-Запуск этой модели скомпилирует SQL для CREATE TABLE для целевого типа Data lake (или ALTER TABLE, если существует) и SQL для CREATE MERGE JOB (или ALTER MERGE JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя работы будет именем модели плюс '_job'.
+Запуск этой модели скомпилирует SQL CREATE TABLE для типа цели Data lake (или ALTER TABLE, если существует) и SQL CREATE MERGE JOB (или ALTER MERGE JOB, если существует) и отправит его в движок Upsolver. Имя таблицы будет именем модели. Имя задания будет именем модели плюс '_job'
 
 ## SQL материализованные представления
 
-При преобразовании ваших данных вы можете обнаружить, что вам нужны данные из нескольких исходных таблиц, чтобы достичь желаемого результата. В таком случае вы можете создать материализованное представление из одной таблицы SQLake, чтобы объединить его с вашей другой таблицей (которая в этом случае считается основной таблицей). Более подробная информация о ["SQL материализованных представлениях Upsolver"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/sql-materialized-views).
+При преобразовании данных вы можете обнаружить, что вам нужны данные из нескольких исходных таблиц для достижения желаемого результата.
+В таком случае вы можете создать материализованное представление из одной таблицы SQLake, чтобы объединить его с другой таблицей (которая в этом случае считается основной таблицей). Подробнее о ["Upsolver SQL материализованные представления"](https://docs.upsolver.com/sqlake/sql-command-reference/sql-jobs/create-job/sql-transformation-jobs/sql-materialized-views).
 
-Как модель dbt, материализованные представления являются моделью с materialized='materializedview'.
+В dbt модель материализованных представлений - это модель с materialized='materializedview'.
 
 ```sql
 {{ config(  materialized='materializedview',
@@ -144,23 +145,24 @@ WHERE ...
 GROUP BY ...
 ```
 
-Запуск этой модели скомпилирует SQL для CREATE MATERIALIZED VIEW (или ALTER MATERIALIZED VIEW, если существует) и отправит его в движок Upsolver. Имя материализованного представления будет именем модели.
+Запуск этой модели скомпилирует SQL CREATE MATERIALIZED VIEW (или ALTER MATERIALIZED VIEW, если существует) и отправит его в движок Upsolver. Имя materializedview будет именем модели.
 
 ## Ожидания/ограничения
 
-Условия качества данных могут быть добавлены к вашей работе, чтобы удалить строку или вызвать предупреждение, когда столбец нарушает предопределенное условие.
+Условия качества данных могут быть добавлены в ваше задание, чтобы удалить строку или вызвать предупреждение, когда столбец нарушает предопределенное условие.
 
 ```sql
 WITH EXPECTATION <expectation_name> EXPECT <sql_predicate>
 ON VIOLATION WARN
 ```
 
-Ожидания могут быть реализованы с помощью ограничений dbt. Поддерживаемые ограничения: check и not_null.
+Ожидания могут быть реализованы с помощью ограничений dbt
+Поддерживаемые ограничения: check и not_null
 
 ```yaml
 models:
   - name: <model name>
-    # обязательный
+    # обязательно
     config:
       contract:
         enforced: true
@@ -192,7 +194,7 @@ models:
 
 ## Опции соединения
 
-| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
+| Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
 | aws_role | s3 | Да | Да | 'aws_role': `'<aws_role>'` |
 | external_id | s3 | Да | Да | 'external_id': `'<external_id>'` |
@@ -267,7 +269,7 @@ models:
 
 ## Опции цели
 
-| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
+| Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
 | globally_unique_keys | datalake | Нет | Да | 'globally_unique_keys': True/False |
 | storage_connection | datalake | Нет | Да | 'storage_connection': `'<storage_connection>'` |
@@ -292,7 +294,7 @@ models:
 
 ## Опции трансформации
 
-| Опция | Хранилище | Редактируемая | Необязательная | Синтаксис конфигурации |
+| Опция | Хранилище | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| --------- | -------- | -------- | ------------- |
 | run_interval | s3 | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
 | start_from | s3 | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
@@ -349,6 +351,10 @@ models:
 | compute_cluster | redshift | Да | Да | 'compute_cluster': `'<compute_cluster>'` |
 | skip_validations | redshift | Нет | Да | 'skip_validations': ('ALLOW_CARTESIAN_PRODUCT', ...) |
 | skip_all_validations | redshift | Нет | Да | 'skip_all_validations': True/False |
+| aggregation_parallelism | redshift | Да | Да | 'aggregation_parallelism': `<integer>` |
+| run_parallelism | redshift | Да | Да | 'run_parallelism': `<integer>` |
+| skip_failed_files | redshift | Нет | Да | 'skip_failed_files': True/False |
+| fail_on_write_error | redshift | Нет | Да | 'fail_on_write_error': True/False |
 | comment | redshift | Да | Да | 'comment': `'<comment>'` |
 | run_interval | postgres | Нет | Да | 'run_interval': `'<N MINUTES/HOURS/DAYS>'` |
 | start_from | postgres | Нет | Да | 'start_from': `'<timestamp>/NOW/BEGINNING'` |
@@ -362,7 +368,7 @@ models:
 
 ## Опции копирования
 
-| Опция | Хранилище | Категория | Редактируемая | Необязательная | Синтаксис конфигурации |
+| Опция | Хранилище | Категория | Редактируемо | Необязательно | Синтаксис конфигурации |
 | -------| ---------- | -------- | -------- | -------- | ------------- |
 | topic | kafka | source_options | Нет | Нет | 'topic': `'<topic>'` |
 | exclude_columns | kafka | job_options | Нет | Да | 'exclude_columns': (`'<exclude_column>'`, ...) |
