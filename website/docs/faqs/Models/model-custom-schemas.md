@@ -1,12 +1,12 @@
 ---
-title: Могу ли я строить свои модели в схеме, отличной от целевой схемы, или разделить свои модели по нескольким схемам?
-description: "Вы можете строить модели вне целевой схемы"
-sidebar_label: 'Как строить модели в схеме(ах), отличных от целевой схемы'
+title: Могу ли я создавать свои модели в схеме, отличной от целевой, или распределять модели по нескольким схемам?
+description: "Вы можете создавать модели вне целевой схемы"
+sidebar_label: 'Как создавать модели в схемах вне целевой схемы'
 id: model-custom-schemas
 
 ---
 
-Да! Используйте конфигурацию [schema](reference/resource-configs/schema.md) в вашем файле `dbt_project.yml` или используйте блок `config`:
+Да! Используйте конфигурацию [schema](reference/resource-configs/schema.md) в вашем файле `dbt_project.yml` или с помощью блока `config`:
 
 <File name='dbt_project.yml'>
 
@@ -18,7 +18,7 @@ name: jaffle_shop
 models:
   jaffle_shop:
     marketing:
-      schema: marketing # семена в подкаталоге `models/mapping/` будут использовать схему marketing
+      schema: marketing # seeds в подкаталоге `models/mapping/` будут использовать схему marketing
 ```
 
 </File>

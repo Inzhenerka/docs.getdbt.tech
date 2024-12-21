@@ -10,7 +10,7 @@ id: install-pip-os-prereqs.md
 
 ### CentOS
 
-CentOS требует Python и некоторые другие зависимости для успешной установки и работы dbt Core.
+Для успешной установки и работы dbt Core на CentOS требуются Python и некоторые другие зависимости.
 
 Чтобы установить Python и другие зависимости:
 
@@ -23,7 +23,7 @@ sudo yum install redhat-rpm-config gcc libffi-devel \
 
 ### MacOS
 
-MacOS требует Python 3.8 или выше для успешной установки и работы dbt Core.
+Для успешной установки и работы dbt Core на MacOS требуется Python версии 3.8 или выше.
 
 Чтобы проверить версию Python:
 
@@ -39,7 +39,7 @@ python --version
 
 ### Ubuntu/Debian
 
-Ubuntu требует Python и другие зависимости для успешной установки и работы dbt Core.
+Для успешной установки и работы dbt Core на Ubuntu требуются Python и другие зависимости.
 
 Чтобы установить Python и другие зависимости:
 
@@ -54,8 +54,8 @@ pip install cryptography~=3.4
 
 ### Windows
 
-Windows требует Python и git для успешной установки и работы dbt Core.
+Для успешной установки и работы dbt Core на Windows требуются Python и git.
 
 Установите [Git для Windows](https://git-scm.com/downloads) и [Python версии 3.9 или выше для Windows](https://www.python.org/downloads/windows/).
 
-Если у вас есть дополнительные вопросы, пожалуйста, ознакомьтесь с [FAQ по совместимости Python](/faqs/Core/install-python-compatibility).
+Если у вас есть дополнительные вопросы, пожалуйста, ознакомьтесь с [FAQ по совместимости с Python](/faqs/Core/install-python-compatibility)

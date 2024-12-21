@@ -6,9 +6,9 @@ id: source-has-bad-name
 
 ---
 
-По умолчанию dbt будет использовать параметры `name:` для создания ссылки на источник.
+По умолчанию dbt будет использовать параметры `name:` для построения ссылки на источник.
 
-Если эти имена не идеальны, используйте свойства [schema](/reference/resource-properties/schema) и [identifier](/reference/resource-properties/identifier), чтобы определить имена в соответствии с базой данных, а свойство `name:` используйте для имени, которое имеет смысл!
+Если эти имена не совсем идеальны, используйте свойства [schema](/reference/resource-properties/schema) и [identifier](/reference/resource-properties/identifier), чтобы определить имена в соответствии с базой данных, и используйте свойство `name:` для имени, которое имеет смысл!
 
 <File name='models/<filename>.yml'>
 
@@ -23,11 +23,13 @@ sources:
       - name: orders
         identifier: api_orders
 
+
 ```
 
 </File>
 
-В модели ниже:
+
+В модели, использующей этот источник:
 ```sql
 select * from {{ source('jaffle_shop', 'orders') }}
 ```
