@@ -6014,7 +6014,7 @@
             "path": "guides/adapter-creation.md",
             "relative_dir": "guides",
             "source_hash": "d4b229e29f99e646c3868d7fe874b935d06ae0712bfffc19996c29f560fb4827",
-            "target_hash": "2f66c98583a189f70eb5c1eb3e518365b997cb6cf4171d2b2755cfa3788a682b",
+            "target_hash": "981b721c29f7a4cb647e4396d8fa3ce471dc01d8df91805523ad0f23e1570352",
             "translated_at": "2024-12-21T01:16:34.622551+00:00",
             "translated_source_hash": "d4b229e29f99e646c3868d7fe874b935d06ae0712bfffc19996c29f560fb4827",
             "translated_target_hash": "2f66c98583a189f70eb5c1eb3e518365b997cb6cf4171d2b2755cfa3788a682b"
@@ -6235,7 +6235,7 @@
             "path": "guides/dbt-python-snowpark.md",
             "relative_dir": "guides",
             "source_hash": "9b2b642c436cce071e1baa1fb13f86e080bf89a0606fbb67bd008b71ebd7e2f1",
-            "target_hash": "2d7ac1270746df63b0760ce416a84f20ffe5dbc82c1a1b824ffb06f8ad63d4cf",
+            "target_hash": "c8f9fa1c5161e85ffed86877ea5991221c55825ce30fcdd76148266f2bd645e0",
             "translated_at": "2024-12-21T01:16:21.179366+00:00",
             "translated_source_hash": "9b2b642c436cce071e1baa1fb13f86e080bf89a0606fbb67bd008b71ebd7e2f1",
             "translated_target_hash": "2d7ac1270746df63b0760ce416a84f20ffe5dbc82c1a1b824ffb06f8ad63d4cf"
@@ -6703,7 +6703,7 @@
             "path": "reference/data-test-configs.md",
             "relative_dir": "reference",
             "source_hash": "1d098d343b405c4b52e0cb0a7f547013c9cd60bfc9477a75e7a0fd0a8ad38393",
-            "target_hash": "995d9568a55784385f35334f91630518836d6a0e9d5c2c153d75a844175f7cd9",
+            "target_hash": "627101f455987c0e421b14549c3de0b594b65dc92e9eac4a95227b15a13d1d2b",
             "translated_at": "2024-12-21T01:12:54.890344+00:00",
             "translated_source_hash": "1d098d343b405c4b52e0cb0a7f547013c9cd60bfc9477a75e7a0fd0a8ad38393",
             "translated_target_hash": "995d9568a55784385f35334f91630518836d6a0e9d5c2c153d75a844175f7cd9"
