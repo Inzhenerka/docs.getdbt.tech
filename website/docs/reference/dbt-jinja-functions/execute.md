@@ -9,10 +9,10 @@ description: "Используйте `execute`, чтобы вернуть True, 
 
 Когда вы выполняете команду `dbt compile` или `dbt run`, dbt:
 
-1. Читает все файлы в вашем проекте и генерирует [манифест](/reference/artifacts/manifest-json), состоящий из моделей, тестов и других узлов графа, присутствующих в вашем проекте. На этом этапе dbt использует найденные инструкции [`ref`](/reference/dbt-jinja-functions/ref) и [`source`](/reference/dbt-jinja-functions/source) для генерации DAG вашего проекта. **На этом этапе SQL не выполняется**, и `execute == False`.
-2. Компилирует (и выполняет) каждый узел (например, строит модели или запускает тесты). **SQL выполняется на этом этапе**, и `execute == True`.
+1. Читает все файлы в вашем проекте и генерирует [манифест](/reference/artifacts/manifest-json), состоящий из моделей, тестов и других узлов графа, присутствующих в вашем проекте. В этом этапе dbt использует операторы [`ref`](/reference/dbt-jinja-functions/ref) и [`source`](/reference/dbt-jinja-functions/source), которые он находит, чтобы сгенерировать DAG для вашего проекта. **На этом этапе SQL не выполняется**, и `execute == False`.
+2. Компилирует (и выполняет) каждый узел (например, строит модели или запускает тесты). **На этом этапе SQL выполняется**, и `execute == True`.
 
-Любая Jinja, которая зависит от результата, возвращаемого из базы данных, вызовет ошибку на этапе разбора. Например, следующий SQL вернет ошибку:
+Любая Jinja, которая полагается на результат, возвращаемый из базы данных, вызовет ошибку на этапе разбора. Например, этот SQL вызовет ошибку:
 
 <File name='models/order_payment_methods.sql'>
 
@@ -26,7 +26,7 @@ description: "Используйте `execute`, чтобы вернуть True, 
 7
 8   {% set results = run_query(payment_method_query) %}
 9
-10  {# Вернуть первый столбец #}
+10  {# Возвращает первый столбец #}
 11  {% set payment_methods = results.columns[0].values() %}
 
 ```
@@ -35,14 +35,14 @@ description: "Используйте `execute`, чтобы вернуть True, 
 
 Ошибка, возвращаемая dbt, будет выглядеть следующим образом:
 ```
-Обнаружена ошибка:
-Ошибка компиляции в модели order_payment_methods (models/order_payment_methods.sql)
-  'None' не имеет атрибута 'table'
+Encountered an error:
+Compilation Error in model order_payment_methods (models/order_payment_methods.sql)
+  'None' has no attribute 'table'
 
 ```
-Это происходит потому, что строка #11 в предыдущем примере кода (`{% set payment_methods = results.columns[0].values() %}`) предполагает, что был возвращен <Term id="table" />, когда на этапе разбора этот запрос еще не был выполнен.
+Это происходит потому, что строка №11 в предыдущем примере кода (`{% set payment_methods = results.columns[0].values() %}`) предполагает, что был возвращен <Term id="table" />, тогда как на этапе разбора этот запрос не был выполнен.
 
-Чтобы обойти это, оберните любую проблемную Jinja в инструкцию `{% if execute %}`:
+Чтобы обойти это, оберните любую проблемную Jinja в оператор `{% if execute %}`:
 
 <File name='models/order_payment_methods.sql'>
 
@@ -56,7 +56,7 @@ order by 1
 
 {% set results = run_query(payment_method_query) %}
 {% if execute %}
-{# Вернуть первый столбец #}
+{# Возвращает первый столбец #}
 {% set payment_methods = results.columns[0].values() %}
 {% else %}
 {% set payment_methods = [] %}

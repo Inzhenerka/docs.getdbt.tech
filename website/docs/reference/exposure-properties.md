@@ -1,9 +1,7 @@
 ---
 title: Свойства экспозиций
-description: "Прочитайте это руководство, чтобы понять свойства экспозиций в dbt."
+description: "Прочтите это руководство, чтобы понять свойства экспозиций в dbt."
 ---
-
-import PropsCallout from '/snippets/_config-prop-callout.md';
 
 ## Связанная документация
 - [Использование экспозиций](/docs/build/exposures)
@@ -11,11 +9,13 @@ import PropsCallout from '/snippets/_config-prop-callout.md';
 
 ## Обзор
 
-Экспозиции определяются в файлах `properties.yml`, вложенных под ключом `exposures:`. Вы можете определять `exposures` в YAML-файлах, которые также определяют `sources` или `models`. <PropsCallout title={frontMatter.title}/>  <br /> 
+import PropsCallout from '/snippets/_config-prop-callout.md';
 
-Вы можете называть эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `models/`.
+Экспозиции определяются в файлах `properties.yml`, вложенных под ключом `exposures:`. Вы можете определять `exposures` в YAML-файлах, которые также определяют `sources` или `models`. <PropsCallout title={frontMatter.title}/>  <br />
 
-Имена экспозиций должны содержать только буквы, цифры и символы подчеркивания (без пробелов и специальных символов). Для короткого удобочитаемого имени с заглавными буквами, пробелами и специальными символами используйте свойство `label`.
+Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и вложить их на любую глубину в подкаталоги внутри директории `models/`.
+
+Имена экспозиций должны содержать только буквы, цифры и подчеркивания (без пробелов или специальных символов). Для короткого, удобного для чтения имени с заглавными буквами, пробелами и специальными символами используйте свойство `label`.
 
 <File name='models/<filename>.yml'>
 
@@ -40,11 +40,11 @@ exposures:
       - source('name', 'table')
       - metric('metric_name')
       
-    label: "Удобочитаемое имя для этой экспозиции!"
+    label: "Человеко-дружественное имя для этой экспозиции!"
     [config](/reference/resource-properties/config):
       enabled: true | false
 
-  - name: ... # объявите свойства дополнительных экспозиций
+  - name: ... # объявление свойств дополнительных экспозиций
 ```
 </File>
 
@@ -58,7 +58,7 @@ version: 2
 exposures:
 
   - name: weekly_jaffle_metrics
-    label: Jaffles по неделям              # необязательно
+    label: Jaffles by the Week              # необязательно
     type: dashboard                         # обязательно
     maturity: high                          # необязательно
     url: https://bi.tool/dashboards/1       # необязательно
@@ -82,7 +82,7 @@ exposures:
     type: ml
     url: https://jupyter.org/mycoolalg
     description: >
-      Глубокое обучение для персонализированного "Открывайте сэндвичи каждую неделю"
+      Глубокое обучение для персонализированного "Откройте для себя бутерброды еженедельно"
     
     depends_on:
       - ref('fct_orders')
@@ -94,7 +94,7 @@ exposures:
       
   - name: jaffle_wrapped
     type: application
-    description: Сообщите пользователям о их любимых яффлах года
+    description: Сообщите пользователям об их любимых jaffles за год
     depends_on: [ ref('fct_orders') ]
     owner: { email: summer-intern@jaffleshop.com }
 ```

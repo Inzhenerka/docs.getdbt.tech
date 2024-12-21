@@ -4,9 +4,9 @@ sidebar_label: "snapshot"
 id: "snapshot"
 ---
 
-Команда `dbt snapshot` выполняет [Снимки](/docs/build/snapshots), определенные в вашем проекте.
+Команда `dbt snapshot` выполняет [Снапшоты](/docs/build/snapshots), определенные в вашем проекте.
 
-dbt будет искать Снимки в путях `snapshot-paths`, определенных в вашем файле `dbt_project.yml`. По умолчанию путь `snapshot-paths` — это `snapshots/`.
+dbt будет искать снапшоты в путях, указанных в `snapshot-paths` в вашем файле `dbt_project.yml`. По умолчанию путь `snapshot-paths` — это `snapshots/`.
 
 **Использование:**
 ```
@@ -20,7 +20,7 @@ usage: dbt snapshot [-h] [--profiles-dir PROFILES_DIR]
 
 optional arguments:
   --select SELECTOR [SELECTOR ...]
-                        Укажите снимки, которые следует включить в выполнение.
+                        Укажите снапшоты, которые нужно включить в выполнение.
   --exclude EXCLUDE [EXCLUDE ...]
-                        Укажите снимки, которые следует исключить из выполнения.
+                        Укажите снапшоты, которые нужно исключить из выполнения.
 ```

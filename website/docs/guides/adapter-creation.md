@@ -1,9 +1,8 @@
 ---
-title: Build, test, document, and promote adapters
+title: Создание, тестирование, документирование и продвижение адаптеров
 id: adapter-creation
-description: "Create an adapter that connects dbt to you platform, and learn how to maintain and version that adapter."
-hoverSnippet: "Learn how to build, test, document, and promote adapters as well as maintaining and versioning an adapter."
-# time_to_complete: '30 minutes' commenting out until we test
+description: "Создайте адаптер, который подключает dbt к вашей платформе, и узнайте, как поддерживать и версионировать этот адаптер."
+hoverSnippet: "Узнайте, как создавать, тестировать, документировать и продвигать адаптеры, а также поддерживать и версионировать адаптер."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Adapter creation']
@@ -13,222 +12,221 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-Adapters are an essential component of dbt. At their most basic level, they are how dbt connects with the various supported data platforms. At a higher-level, dbt Core adapters strive to give analytics engineers more transferrable skills as well as standardize how analytics projects are structured. Gone are the days where you have to learn a new language or flavor of SQL when you move to a new job that has a different data platform. That is the power of adapters in dbt Core.
- 
- Navigating and developing around the nuances of different databases can be daunting, but you are not alone. Visit [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM) Slack channel for additional help beyond the documentation.
+Адаптеры являются важной частью dbt. На базовом уровне они обеспечивают подключение dbt к различным поддерживаемым платформам данных. На более высоком уровне адаптеры dbt Core стремятся предоставить аналитическим инженерам более переносимые навыки, а также стандартизировать структуру аналитических проектов. Больше не нужно изучать новый язык или диалект SQL при переходе на новую работу с другой платформой данных. Это сила адаптеров в dbt Core.
 
-### All databases are not the same
+Навигация и разработка с учетом нюансов различных баз данных может быть сложной задачей, но вы не одиноки. Посетите канал Slack [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM) для дополнительной помощи, выходящей за рамки документации.
 
-There's a tremendous amount of work that goes into creating a database. Here is a high-level list of typical database layers (from the outermost layer moving inwards):
+### Все базы данных не одинаковы
+
+Создание базы данных требует огромного количества работы. Вот список типичных слоев базы данных (от внешнего слоя к внутреннему):
 - SQL API
-- Client Library / Driver
-- Server Connection Manager
-- Query parser
-- Query optimizer
-- Runtime
-- Storage Access Layer
-- Storage
+- Клиентская библиотека / Драйвер
+- Менеджер соединений сервера
+- Парсер запросов
+- Оптимизатор запросов
+- Среда выполнения
+- Слой доступа к хранилищу
+- Хранилище
 
-There's a lot more there than just SQL as a language. Databases (and data warehouses) are so popular because you can abstract away a great deal of the complexity from your brain to the database itself. This enables you to focus more on the data.
+Там гораздо больше, чем просто SQL как язык. Базы данных (и хранилища данных) популярны, потому что они позволяют абстрагировать значительную часть сложности от вашего мозга к самой базе данных. Это позволяет вам сосредоточиться больше на данных.
 
-dbt allows for further abstraction and standardization of the outermost layers of a database (SQL API, client library, connection manager) into a framework that both:
- - Opens database technology to less technical users (a large swath of a DBA's role has been automated, similar to how the vast majority of folks with websites today no longer have to be "[webmasters](https://en.wikipedia.org/wiki/Webmaster)").
- - Enables more meaningful conversations about how data warehousing should be done.
+dbt позволяет дальнейшую абстракцию и стандартизацию внешних слоев базы данных (SQL API, клиентская библиотека, менеджер соединений) в рамках, которые:
+ - Открывают технологии баз данных для менее технических пользователей (большая часть роли администратора баз данных была автоматизирована, аналогично тому, как большинство людей с веб-сайтами сегодня больше не должны быть "[веб-мастерами](https://en.wikipedia.org/wiki/Webmaster)").
+ - Позволяют более содержательные обсуждения о том, как должно осуществляться хранение данных.
 
-This is where dbt adapters become critical.
+Здесь адаптеры dbt становятся критически важными.
 
-### What needs to be adapted?
+### Что нужно адаптировать?
 
-dbt adapters are responsible for _adapting_ dbt's standard functionality to a particular database. Our prototypical database and adapter are PostgreSQL and dbt-postgres, and most of our adapters are somewhat based on the functionality described in dbt-postgres.
+Адаптеры dbt отвечают за _адаптацию_ стандартной функциональности dbt к конкретной базе данных. Наши прототипические база данных и адаптер — PostgreSQL и dbt-postgres, и большинство наших адаптеров в некоторой степени основаны на функциональности, описанной в dbt-postgres.
 
-Connecting dbt to a new database will require a new adapter to be built or an existing adapter to be extended.
+Подключение dbt к новой базе данных потребует создания нового адаптера или расширения существующего адаптера.
 
-The outermost layers of a database map roughly to the areas in which the dbt adapter framework encapsulates inter-database differences.
+Внешние слои базы данных примерно соответствуют областям, в которых фреймворк адаптера dbt инкапсулирует межбазовые различия.
 
 ### SQL API
 
-Even amongst ANSI-compliant databases, there are differences in the SQL grammar. 
-Here are some categories and examples of SQL statements that can be constructed differently:
+Даже среди баз данных, совместимых с ANSI, существуют различия в грамматике SQL. 
+Вот некоторые категории и примеры SQL-запросов, которые могут быть построены по-разному:
 
-| Category                                     | Area of differences                                                                     | Examples                                                                                                                                                                                           |
+| Категория                                     | Область различий                                                                     | Примеры                                                                                                                                                                                           |
 |----------------------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Statement syntax                             | The use of `IF EXISTS`                                                                 | <li>`IF <TABLE> EXISTS, DROP TABLE`</li><li>`DROP <TABLE> IF EXISTS`</li>                                                                                                                                  |
-| Workflow definition & semantics              | Incremental updates                                                                              | <li>`MERGE`</li><li>`DELETE; INSERT`</li>                                                                                                                                                                       |
-| Relation and column attributes/configuration | Database-specific materialization configs | <li>`DIST = ROUND_ROBIN` (Synapse)</li><li>`DIST = EVEN` (Redshift)</li> |
-| Permissioning                                | Grant statements that can only take one grantee at a time vs those that accept lists of grantees | <li>`grant SELECT on table dinner.corn to corn_kid, everyone` </li><li>`grant SELECT on table dinner.corn to corn_kid; grant SELECT on table dinner.corn to everyone`</li> |
+| Синтаксис операторов                             | Использование `IF EXISTS`                                                                 | <li>`IF <TABLE> EXISTS, DROP TABLE`</li><li>`DROP <TABLE> IF EXISTS`</li>                                                                                                                                  |
+| Определение и семантика рабочих процессов              | Инкрементальные обновления                                                                              | <li>`MERGE`</li><li>`DELETE; INSERT`</li>                                                                                                                                                                       |
+| Атрибуты/конфигурация отношений и столбцов | Конфигурации материализации, специфичные для базы данных | <li>`DIST = ROUND_ROBIN` (Synapse)</li><li>`DIST = EVEN` (Redshift)</li> |
+| Разрешения                                | Операторы предоставления, которые могут принимать только одного получателя за раз, по сравнению с теми, которые принимают списки получателей | <li>`grant SELECT on table dinner.corn to corn_kid, everyone` </li><li>`grant SELECT on table dinner.corn to corn_kid; grant SELECT on table dinner.corn to everyone`</li> |
 
-### Python Client Library & Connection Manager
+### Клиентская библиотека Python и менеджер соединений
 
-The other big category of inter-database differences comes with how the client connects to the database and executes queries against the connection. To integrate with dbt, a data platform must have a pre-existing python client library or support ODBC, using a generic python library like pyodbc.
+Другая большая категория межбазовых различий связана с тем, как клиент подключается к базе данных и выполняет запросы к соединению. Чтобы интегрироваться с dbt, платформа данных должна иметь предварительно существующую клиентскую библиотеку Python или поддерживать ODBC, используя универсальную библиотеку Python, такую как pyodbc.
 
-| Category                     | Area of differences              | Examples                                                                                                    |
+| Категория                     | Область различий              | Примеры                                                                                                    |
 |------------------------------|-------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| Credentials & authentication | Authentication                             | <li>Username & password</li><li>MFA with `boto3` or Okta token</li>                                                |
-| Connection opening/closing   | Create a new connection to db             |<li>`psycopg2.connect(connection_string)`</li><li>`google.cloud.bigquery.Client(...)`</li>                        |
-| Inserting local data         | Load seed .`csv` files into Python memory |<li> `google.cloud.bigquery.Client.load_table_from_file(...)` (BigQuery)</li><li>`INSERT ... INTO VALUES ...` prepared statement (most other databases)</li> |
+| Учетные данные и аутентификация | Аутентификация                             | <li>Имя пользователя и пароль</li><li>MFA с `boto3` или токен Okta</li>                                                |
+| Открытие/закрытие соединения   | Создание нового соединения с базой данных             |<li>`psycopg2.connect(connection_string)`</li><li>`google.cloud.bigquery.Client(...)`</li>                        |
+| Вставка локальных данных         | Загрузка файлов .`csv` в память Python |<li> `google.cloud.bigquery.Client.load_table_from_file(...)` (BigQuery)</li><li>`INSERT ... INTO VALUES ...` подготовленный оператор (большинство других баз данных)</li> |
 
 
-### How dbt encapsulates and abstracts these differences
+### Как dbt инкапсулирует и абстрагирует эти различия
 
-Differences between databases are encoded into discrete areas:
+Различия между базами данных кодируются в отдельные области:
 
-| Components       | Code Path                                         | Function                                                                      |
+| Компоненты       | Путь к коду                                         | Функция                                                                      |
 |------------------|---------------------------------------------------|-------------------------------------------------------------------------------|
-| Python classes   | `adapters/<adapter_name>`                         | Configuration (Refer to [Python classes](#python classes)                   |
-| Macros           | `include/<adapter_name>/macros/adapters/`         | SQL API & statement syntax (for example, how to create schema or how to get table info) |
-| Materializations | `include/<adapter_name>/macros/materializations/` | Table/view/snapshot/ workflow definitions                                     |
+| Классы Python   | `adapters/<adapter_name>`                         | Конфигурация (см. [Классы Python](#python classes)                   |
+| Макросы           | `include/<adapter_name>/macros/adapters/`         | SQL API и синтаксис операторов (например, как создать схему или как получить информацию о таблице) |
+| Материализации | `include/<adapter_name>/macros/materializations/` | Определения рабочих процессов таблицы/представления/снимка                                     |
 
 
-#### Python classes
+#### Классы Python
 
-These classes implement all the methods responsible for:
-- Connecting to a database and issuing queries.
-- Providing dbt with database-specific configuration information.
+Эти классы реализуют все методы, отвечающие за:
+- Подключение к базе данных и выполнение запросов.
+- Предоставление dbt информации о конфигурации, специфичной для базы данных.
 
-| Class                    | Description                                                                                                                                                                                 |
+| Класс                    | Описание                                                                                                                                                                                 |
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| AdapterClass | High-level configuration type conversion and any database-specific python methods needed |
-| AdapterCredentials       | Typed dictionary of possible profiles and associated methods                                                                                                                                |
-| AdapterConnectionManager | All the methods responsible for connecting to a database and issuing queries                                                                                                                |
-| AdapterRelation          | How relation names should be rendered, printed, and quoted. Do relation names use all three parts? `catalog.model_name` (two-part name) or `database.schema.model_name` (three-part name) |
-| AdapterColumn            | How names should be rendered, and database-specific properties                                                                                                                              |
+| AdapterClass | Конвертация типов на высоком уровне и любые методы Python, специфичные для базы данных |
+| AdapterCredentials       | Типизированный словарь возможных профилей и связанных методов                                                                                                                                |
+| AdapterConnectionManager | Все методы, отвечающие за подключение к базе данных и выполнение запросов                                                                                                                |
+| AdapterRelation          | Как должны отображаться, печататься и заключаться в кавычки имена отношений. Используют ли имена отношений все три части? `catalog.model_name` (двухчастное имя) или `database.schema.model_name` (трехчастное имя) |
+| AdapterColumn            | Как должны отображаться имена и свойства, специфичные для базы данных                                                                                                                              |
 
-#### Macros
+#### Макросы
 
-A set of *macros* responsible for generating SQL that is compliant with the target database.
+Набор *макросов*, отвечающих за генерацию SQL, совместимого с целевой базой данных.
 
-#### Materializations
+#### Материализации
 
-A set of *materializations* and their corresponding helper macros defined in dbt using jinja and SQL. They codify for dbt how model files should be persisted into the database.
+Набор *материализаций* и соответствующих вспомогательных макросов, определенных в dbt с использованием jinja и SQL. Они кодируют для dbt, как файлы моделей должны сохраняться в базе данных.
 
-### Adapter Architecture
+### Архитектура адаптера
 
+Ниже представлена диаграмма потока, иллюстрирующая, как команда `dbt run` работает с адаптером `dbt-postgres`. Она показывает взаимосвязь между `dbt-core`, `dbt-adapters` и отдельными адаптерами.
 
-Below is a flow diagram illustrating how a `dbt run` command works with the `dbt-postgres` adapter. It shows the relationship between `dbt-core`, `dbt-adapters`, and individual adapters.
+<Lightbox src="/img/adapter-guide/adapter-architecture-diagram.png" title="Диаграмма архитектуры адаптера"/>
 
-<Lightbox src="/img/adapter-guide/adapter-architecture-diagram.png" title="Diagram of adapter architecture"/>
+## Предварительные требования
 
-## Prerequisites
+Очень важно, чтобы у вас были правильные навыки и вы понимали уровень сложности, необходимый для создания адаптера для вашей платформы данных.
 
-It is very important that you have the right skills, and understand the level of difficulty required to make an adapter for your data platform.
+Чем больше вы можете ответить "Да" на приведенные ниже вопросы, тем легче будет разработка вашего адаптера (и пользовательский опыт). См. [New Adapter Information Sheet wiki](https://github.com/dbt-labs/dbt-core/wiki/New-Adapter-Information-Sheet) для еще более конкретных вопросов.
 
-The more you can answer Yes to the below questions, the easier your adapter development (and user-) experience will be. See the [New Adapter Information Sheet wiki](https://github.com/dbt-labs/dbt-core/wiki/New-Adapter-Information-Sheet) for even more specific questions.
+### Обучение
 
-### Training
+- Разработчик (и любые менеджеры продуктов) в идеале должны иметь значительный опыт работы в качестве конечного пользователя dbt. Если нет, настоятельно рекомендуется пройти хотя бы курсы [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) и [Advanced Materializations](https://learn.getdbt.com/courses/advanced-materializations).
 
-- The developer (and any product managers) ideally will have substantial experience as an end-user of dbt. If not, it is highly advised that you at least take the [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) and [Advanced Materializations](https://learn.getdbt.com/courses/advanced-materializations) course.
+### База данных
 
-### Database
+- Завершает ли база данных транзакции достаточно быстро для интерактивной разработки?
+- Можете ли вы выполнять SQL-запросы к платформе данных?
+- Существует ли концепция схем?
+- Поддерживает ли платформа данных ANSI SQL или хотя бы его подмножество?
 
-- Does the database complete transactions fast enough for interactive development?
-- Can you execute SQL against the data platform?
-- Is there a concept of schemas?
-- Does the data platform support ANSI SQL, or at least a subset?
+### Драйвер / Библиотека соединений
 
-### Driver / Connection Library
+- Существует ли драйвер на основе Python для взаимодействия с базой данных, который соответствует db API 2.0 (например, Psycopg2 для Postgres, pyodbc для SQL Server)?
+- Поддерживает ли он: подготовленные операторы, множественные операторы или авторизацию токена единого входа на платформу данных?
 
-- Is there a Python-based driver for interacting with the database that is db API 2.0 compliant (e.g. Psycopg2 for Postgres, pyodbc for SQL Server)
-- Does it support: prepared statements, multiple statements, or single sign on token authorization to the data platform?
+### Программное обеспечение с открытым исходным кодом
 
-### Open source software
+- Существует ли в вашей организации установленный процесс публикации программного обеспечения с открытым исходным кодом?
 
-- Does your organization have an established process for publishing open source software?
+Проще всего создать адаптер для dbt, когда рассматриваемая <Term id="data-warehouse" />/платформа имеет:
 
-It is easiest to build an adapter for dbt when the following the <Term id="data-warehouse" />/platform in question has:
+- стандартный интерфейс ANSI-SQL (или как можно ближе к нему),
+- зрелую библиотеку соединений/SDK, использующую ODBC или Python DB 2 API, и
+- способ, позволяющий разработчикам быстро итеративно работать с быстрыми чтениями и записями
 
-- a conventional ANSI-SQL interface (or as close to it as possible),
-- a mature connection library/SDK that uses ODBC or Python DB 2 API, and
-- a way to enable developers to iterate rapidly with both quick reads and writes
+### Поддержка вашего нового адаптера
 
-### Maintaining your new adapter
+Когда ваш адаптер станет более популярным, и люди начнут его использовать, вы можете быстро стать поддерживающим все более популярного проекта с открытым исходным кодом. С этой новой ролью приходят некоторые неожиданные обязанности, которые включают не только поддержку кода, но и работу с сообществом пользователей и участников. Чтобы помочь людям понять, чего ожидать от вашего проекта, вы должны рано и часто сообщать о своих намерениях в документации адаптера или README. Ответьте на такие вопросы, как: является ли это экспериментальной работой, которую люди должны использовать на свой страх и риск? Или это код производственного уровня, который вы обязуетесь поддерживать в будущем?
 
-When your adapter becomes more popular, and people start using it, you may quickly become the maintainer of an increasingly popular open source project. With this new role, comes some unexpected responsibilities that not only include code maintenance, but also working with a community of users and contributors. To help people understand what to expect of your project, you should communicate your intentions early and often in your adapter documentation or README. Answer questions like, Is this experimental work that people should use at their own risk? Or is this production-grade code that you're committed to maintaining into the future?
+#### Поддержание совместимости кода с dbt Core
 
-#### Keeping the code compatible with dbt Core
+Адаптер совместим с dbt Core, если он правильно реализовал интерфейс, определенный в [dbt-adapters](https://github.com/dbt-labs/dbt-adapters/) и протестирован с помощью [dbt-tests-adapters](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter). До версии dbt Core 1.8 этот интерфейс содержался в `dbt-core`.
 
-An adapter is compatible with dbt Core if it has correctly implemented the interface defined in [dbt-adapters](https://github.com/dbt-labs/dbt-adapters/) and is tested by [dbt-tests-adapters](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter). Prior to dbt Core version 1.8, this interface was contained in `dbt-core`. 
+Новые минорные версии `dbt-adapters` могут включать изменения в интерфейсе Python для плагинов адаптеров, а также новые или обновленные тестовые случаи. Поддерживающие `dbt-adapters` четко сообщат об этих изменениях в документации и примечаниях к выпуску, и они будут стремиться к обратной совместимости, когда это возможно.
 
-New minor version releases of `dbt-adapters` may include changes to the Python interface for adapter plugins, as well as new or updated test cases. The maintainers of `dbt-adapters` will clearly communicate these changes in documentation and release notes, and they will aim for backwards compatibility whenever possible.
+Патч-релизы `dbt-adapters` _не_ будут включать изменения, нарушающие совместимость, или новые функции для кода, ориентированного на адаптеры.
 
-Patch releases of `dbt-adapters` will _not_ include breaking changes or new features to adapter-facing code.
+#### Версионирование и выпуск вашего адаптера
 
-#### Versioning and releasing your adapter
+dbt Labs настоятельно рекомендует вам принять следующий подход при версионировании и выпуске вашего плагина.
 
-dbt Labs strongly recommends you to adopt the following approach when versioning and releasing your plugin. 
-
-- Declare major version compatibility with `dbt-adapters` and only set a boundary on the minor version if there is some known reason.
-- Do not import or rely on code from `dbt-core`. 
-- Aim to release a new minor version of your plugin as you add substantial new features. Typically, this will be triggered by adding support for new features released in `dbt-adapters` or by changes to the data platform itself.
-- While your plugin is new and you're iterating on features, aim to offer backwards compatibility and deprecation notices for at least one minor version. As your plugin matures, aim to leave backwards compatibility and deprecation notices in place until the next major version (dbt Core v2).
-- Release patch versions of your plugins whenever needed. These patch releases should only contain fixes.
+- Объявите основную совместимость версии с `dbt-adapters` и установите границу на минорной версии только в случае, если есть известная причина.
+- Не импортируйте и не полагайтесь на код из `dbt-core`.
+- Стремитесь выпускать новую минорную версию вашего плагина по мере добавления значительных новых функций. Обычно это будет вызвано добавлением поддержки новых функций, выпущенных в `dbt-adapters`, или изменениями в самой платформе данных.
+- Пока ваш плагин новый и вы работаете над функциями, стремитесь предлагать обратную совместимость и уведомления о прекращении поддержки как минимум на одну минорную версию. По мере того, как ваш плагин созревает, стремитесь оставлять обратную совместимость и уведомления о прекращении поддержки до следующей основной версии (dbt Core v2).
+- Выпускайте патч-версии ваших плагинов по мере необходимости. Эти патч-релизы должны содержать только исправления.
 
 :::note
 
-Prior to dbt Core version 1.8, we recommended that the minor version of your plugin should match the minor version in `dbt-core` (for example, 1.1.x).
+До версии dbt Core 1.8 мы рекомендовали, чтобы минорная версия вашего плагина соответствовала минорной версии в `dbt-core` (например, 1.1.x).
 
 :::
 
-## Build a new adapter
+## Создание нового адаптера
 
-This step will walk you through the first creating the necessary adapter classes and macros, and provide some resources to help you validate that your new adapter is working correctly. Make sure you've familiarized yourself with the previous steps in this guide.
+Этот шаг проведет вас через создание необходимых классов и макросов адаптера, а также предоставит некоторые ресурсы, которые помогут вам убедиться, что ваш новый адаптер работает правильно. Убедитесь, что вы ознакомились с предыдущими шагами в этом руководстве.
 
-Once the adapter is passing most of the functional tests in the previous "Testing a new adapter" step, please let the community know that is available to use by adding the adapter to the ["Supported Data Platforms"](/docs/supported-data-platforms) page by following the steps given in "Documenting your adapter.
+Как только адаптер проходит большинство функциональных тестов на предыдущем шаге "Тестирование нового адаптера", пожалуйста, сообщите сообществу, что он доступен для использования, добавив адаптер на страницу ["Поддерживаемые платформы данных"](/docs/supported-data-platforms), следуя шагам, указанным в "Документирование вашего адаптера".
 
-For any questions you may have, don't hesitate to ask in the [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM) Slack channel. The community is very helpful and likely has experienced a similar issue as you.
+Если у вас возникнут вопросы, не стесняйтесь задавать их в канале Slack [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM). Сообщество очень полезно и, вероятно, уже сталкивалось с подобной проблемой, как у вас.
 
-### Scaffolding a new adapter
+### Создание каркаса нового адаптера
 
- To create a new adapter plugin from scratch, you can use the [dbt-database-adapter-scaffold](https://github.com/dbt-labs/dbt-database-adapter-scaffold) to trigger an interactive session which will generate a scaffolding for you to build upon.
+Чтобы создать новый плагин адаптера с нуля, вы можете использовать [dbt-database-adapter-scaffold](https://github.com/dbt-labs/dbt-database-adapter-scaffold) для запуска интерактивной сессии, которая сгенерирует каркас, на основе которого вы сможете строить.
 
-    Example usage:
+    Пример использования:
 
     ```
     $ cookiecutter gh:dbt-labs/dbt-database-adapter-scaffold
     ```
 
-The generated boilerplate starting project will include a basic adapter plugin file structure, examples of macros, high level method descriptions, etc.
+Сгенерированный шаблон начального проекта будет включать базовую файловую структуру плагина адаптера, примеры макросов, описания методов на высоком уровне и т.д.
 
-One of the most important choices you will make during the cookiecutter generation will revolve around the field for `is_sql_adapter` which is a boolean used to correctly apply imports for either a `SQLAdapter` or `BaseAdapter`. Knowing which you will need requires a deeper knowledge of your selected database but a few good guides for the choice are.
+Одним из самых важных выборов, которые вы сделаете во время генерации cookiecutter, будет поле `is_sql_adapter`, которое является булевым значением, используемым для правильного применения импортов для `SQLAdapter` или `BaseAdapter`. Знание того, какой из них вам нужен, требует более глубокого понимания выбранной вами базы данных, но несколько хороших руководств для выбора:
 
-- Does your database have a complete SQL API? Can it perform tasks using SQL such as creating schemas, dropping schemas, querying an `information_schema` for metadata calls? If so, it is more likely to be a SQLAdapter where you set `is_sql_adapter` to `True`.
-- Most adapters do fall under SQL adapters which is why we chose it as the default `True` value.
-- It is very possible to build out a fully functional `BaseAdapter`. This will require a little more ground work as it doesn't come with some prebuilt methods the `SQLAdapter` class provides. See `dbt-bigquery` as a good guide.
+- Имеет ли ваша база данных полный SQL API? Может ли она выполнять задачи с использованием SQL, такие как создание схем, удаление схем, запрос `information_schema` для вызовов метаданных? Если да, то это, скорее всего, SQLAdapter, где вы устанавливаете `is_sql_adapter` в `True`.
+- Большинство адаптеров попадают под SQL адаптеры, поэтому мы выбрали его в качестве значения по умолчанию `True`.
+- Очень возможно создать полностью функциональный `BaseAdapter`. Это потребует немного больше работы, так как он не поставляется с некоторыми предопределенными методами, которые предоставляет класс `SQLAdapter`. См. `dbt-bigquery` как хорошее руководство.
 
-### Implementation details
+### Детали реализации
 
-Regardless if you decide to use the cookiecutter template or manually create the plugin, this section will go over each method that is required to be implemented. The following table provides a high-level overview of the classes, methods, and macros you may have to define for your data platform.
+Независимо от того, решите ли вы использовать шаблон cookiecutter или создать плагин вручную, этот раздел охватывает каждый метод, который необходимо реализовать. Следующая таблица предоставляет обзор классов, методов и макросов, которые вам, возможно, придется определить для вашей платформы данных.
 
-|File  | Component     | <div style={{width:'200px'}}>Purpose</div>    |
+|Файл  | Компонент     | <div style={{width:'200px'}}>Цель</div>    |
 | ---- | ------------- | --------------------------------------------- |
-| `./setup.py`              | `setup()` function           | adapter meta-data (package name, version, author, homepage, etc)   |
-| `myadapter/dbt/adapters/myadapter/__init__.py`    | `AdapterPlugin`  | bundle all the information below into a dbt plugin |
-| `myadapter/dbt/adapters/myadapter/connections.py` | `MyAdapterCredentials` class  | parameters to connect to and configure the database, via a the chosen Python driver  |
-| `myadapter/dbt/adapters/myadapter/connections.py` | `MyAdapterConnectionManager` class  | telling dbt how to interact with the database w.r.t opening/closing connections, executing queries, and fetching data. Effectively a wrapper around the db API or driver.  |
-| `myadapter/dbt/include/bigquery/` | a dbt project of macro "overrides" in the format of "myadapter__" | any differences in SQL syntax for regular db operations will be modified here from the global_project (e.g. "Create Table As Select", "Get all relations in the current schema", etc) |
-| `myadapter/dbt/adapters/myadapter/impl.py`        | `MyAdapterConfig` | database- and relation-level configs and   |
-| `myadapter/dbt/adapters/myadapter/impl.py`        | `MyAdapterAdapter`            | for changing _how_ dbt performs operations like macros and other needed Python functionality    |
-| `myadapter/dbt/adapters/myadapter/column.py`   | `MyAdapterColumn`  | for defining database-specific column such as datatype mappings  |
+| `./setup.py`              | Функция `setup()`           | метаданные адаптера (имя пакета, версия, автор, домашняя страница и т.д.)   |
+| `myadapter/dbt/adapters/myadapter/__init__.py`    | `AdapterPlugin`  | объединяет всю информацию ниже в плагин dbt |
+| `myadapter/dbt/adapters/myadapter/connections.py` | Класс `MyAdapterCredentials`  | параметры для подключения и настройки базы данных через выбранный драйвер Python  |
+| `myadapter/dbt/adapters/myadapter/connections.py` | Класс `MyAdapterConnectionManager`  | сообщает dbt, как взаимодействовать с базой данных в отношении открытия/закрытия соединений, выполнения запросов и извлечения данных. Эффективно обертка вокруг db API или драйвера.  |
+| `myadapter/dbt/include/bigquery/` | проект dbt с макросами "переопределений" в формате "myadapter__" | любые различия в синтаксисе SQL для регулярных операций будут изменены здесь из глобального проекта (например, "Создать таблицу как выбрать", "Получить все отношения в текущей схеме" и т.д.) |
+| `myadapter/dbt/adapters/myadapter/impl.py`        | `MyAdapterConfig` | конфигурации на уровне базы данных и отношений   |
+| `myadapter/dbt/adapters/myadapter/impl.py`        | `MyAdapterAdapter`            | для изменения _как_ dbt выполняет операции, такие как макросы и другие необходимые функции Python    |
+| `myadapter/dbt/adapters/myadapter/column.py`   | `MyAdapterColumn`  | для определения столбцов, специфичных для базы данных, таких как сопоставления типов данных  |
 
 
-### Editing `setup.py`
+### Редактирование `setup.py`
 
-Edit the file at `myadapter/setup.py` and fill in the missing information.
+Отредактируйте файл `myadapter/setup.py` и заполните недостающую информацию.
 
-You can skip this step if you passed the arguments for `email`, `url`, `author`, and `dependencies` to the cookiecutter template script. If you plan on having nested macro folder structures, you may need to add entries to `package_data` so your macro source files get installed.
+Вы можете пропустить этот шаг, если передали аргументы для `email`, `url`, `author` и `dependencies` в скрипт шаблона cookiecutter. Если вы планируете иметь вложенные структуры папок макросов, вам может потребоваться добавить записи в `package_data`, чтобы ваши исходные файлы макросов были установлены.
 
-### Editing the connection manager
+### Редактирование менеджера соединений
 
-Edit the connection manager at `myadapter/dbt/adapters/myadapter/connections.py`. This file is defined in the sections below.
+Отредактируйте менеджер соединений в `myadapter/dbt/adapters/myadapter/connections.py`. Этот файл определен в разделах ниже.
 
-#### The Credentials class
+#### Класс Credentials
 
-The credentials class defines all of the database-specific credentials (e.g. `username` and `password`) that users will need in the [connection profile](/docs/supported-data-platforms) for your new adapter. Each credentials contract should subclass dbt.adapters.base.Credentials, and be implemented as a python dataclass.
+Класс credentials определяет все учетные данные, специфичные для базы данных (например, `username` и `password`), которые пользователи будут нуждаться в [профиле соединения](/docs/supported-data-platforms) для вашего нового адаптера. Каждый контракт credentials должен быть подклассом dbt.adapters.base.Credentials и реализован как dataclass Python.
 
-Note that the base class includes required database and schema fields, as dbt uses those values internally.
+Обратите внимание, что базовый класс включает обязательные поля базы данных и схемы, так как dbt использует эти значения внутренне.
 
-For example, if your adapter requires a host, integer port, username string, and password string, but host is the only required field, you'd add definitions for those new properties to the class as types, like this:
+Например, если ваш адаптер требует хост, целочисленный порт, строку имени пользователя и строку пароля, но хост является единственным обязательным полем, вы добавите определения для этих новых свойств в класс как типы, например:
 
 <File name='connections.py'>
 
@@ -254,25 +252,25 @@ class MyAdapterCredentials(Credentials):
     @property
     def unique_field(self):
         """
-        Hashed and included in anonymous telemetry to track adapter adoption.
-        Pick a field that can uniquely identify one team/organization building with this adapter
+        Хэшируется и включается в анонимную телеметрию для отслеживания использования адаптера.
+        Выберите поле, которое может уникально идентифицировать одну команду/организацию, использующую этот адаптер
         """
         return self.host
 
     def _connection_keys(self):
         """
-        List of keys to display in the `dbt debug` output.
+        Список ключей для отображения в выводе `dbt debug`.
         """
         return ('host', 'port', 'database', 'username')
 ```
 
 </File>
 
-There are a few things you can do to make it easier for users when connecting to your database:
+Существует несколько вещей, которые вы можете сделать, чтобы упростить пользователям подключение к вашей базе данных:
 
-- Be sure to implement the Credentials' `_connection_keys` method shown above. This method will return the keys that should be displayed in the output of the `dbt debug` command. As a general rule, it's good to return all the arguments used in connecting to the actual database except the password (even optional arguments).
-- Create a `profile_template.yml` to enable configuration prompts for a brand-new user setting up a connection profile via the [`dbt init` command](/reference/commands/init). You will find more details in the following steps.
-- You may also want to define an `ALIASES` mapping on your Credentials class to include any config names you want users to be able to use in place of 'database' or 'schema'. For example if everyone using the MyAdapter database calls their databases "collections", you might do:
+- Обязательно реализуйте метод Credentials `_connection_keys`, показанный выше. Этот метод вернет ключи, которые должны отображаться в выводе команды `dbt debug`. Как правило, хорошо возвращать все аргументы, используемые для подключения к фактической базе данных, за исключением пароля (даже необязательные аргументы).
+- Создайте `profile_template.yml`, чтобы включить подсказки конфигурации для совершенно нового пользователя, настраивающего профиль соединения через команду [`dbt init`](/reference/commands/init). Вы найдете больше деталей в следующих шагах.
+- Вы также можете определить отображение `ALIASES` в вашем классе Credentials, чтобы включить любые имена конфигураций, которые вы хотите, чтобы пользователи могли использовать вместо 'database' или 'schema'. Например, если все, кто использует базу данных MyAdapter, называют свои базы данных "collections", вы можете сделать:
 
 <File name='connections.py'>
 
@@ -291,13 +289,13 @@ class MyAdapterCredentials(Credentials):
 
 </File>
 
-Then users can use `collection` OR `database` in their `profiles.yml`, `dbt_project.yml`, or `config()` calls to set the database.
+Тогда пользователи могут использовать `collection` ИЛИ `database` в своих `profiles.yml`, `dbt_project.yml` или вызовах `config()` для установки базы данных.
 
-#### `ConnectionManager` class methods
+#### Методы класса `ConnectionManager`
 
-Once credentials are configured, you'll need to implement some connection-oriented methods. They are enumerated in the SQLConnectionManager docstring, but an overview will also be provided here.
+После настройки учетных данных вам нужно будет реализовать некоторые методы, ориентированные на соединение. Они перечислены в docstring SQLConnectionManager, но здесь также будет предоставлен обзор.
 
-**Methods to implement:**
+**Методы для реализации:**
 
 - `open`
 - `get_response`
@@ -307,22 +305,22 @@ Once credentials are configured, you'll need to implement some connection-orient
 
 ##### `open(cls, connection)`
 
-`open()` is a classmethod that gets a connection object (which could be in any state, but will have a `Credentials` object with the attributes you defined above) and moves it to the 'open' state.
+`open()` — это метод класса, который получает объект соединения (который может находиться в любом состоянии, но будет иметь объект `Credentials` с атрибутами, которые вы определили выше) и переводит его в состояние 'open'.
 
-Generally this means doing the following:
-    - if the connection is open already, log and return it.
-        - If a database needed changes to the underlying connection before re-use, that would happen here
-    - create a connection handle using the underlying database library using the credentials
-        - on success:
-            - set connection.state to `'open'`
-            - set connection.handle to the handle object
-                - this is what must have a `cursor()` method that returns a cursor!
-        - on error:
-            - set connection.state to `'fail'`
-            - set connection.handle to `None`
-            - raise a `dbt.exceptions.FailedToConnectException` with the error and any other relevant information
+Обычно это означает выполнение следующих действий:
+    - если соединение уже открыто, зарегистрируйте и верните его.
+        - Если базе данных нужны изменения в базовом соединении перед повторным использованием, это произойдет здесь
+    - создайте дескриптор соединения, используя базовую библиотеку базы данных, используя учетные данные
+        - при успехе:
+            - установите connection.state в `'open'`
+            - установите connection.handle в объект дескриптора
+                - это то, что должно иметь метод `cursor()`, который возвращает курсор!
+        - при ошибке:
+            - установите connection.state в `'fail'`
+            - установите connection.handle в `None`
+            - вызовите `dbt.exceptions.FailedToConnectException` с ошибкой и любой другой соответствующей информацией
 
-For example:
+Например:
 
 <File name='connections.py'>
 
@@ -352,7 +350,7 @@ For example:
 
 ##### `get_response(cls, cursor)`
 
-`get_response` is a classmethod that gets a cursor object and returns adapter-specific information about the last executed command. The return value should be an `AdapterResponse` object that includes items such as `code`, `rows_affected`, `bytes_processed`, and a summary `_message` for logging to stdout.
+`get_response` — это метод класса, который получает объект курсора и возвращает информацию, специфичную для адаптера, о последней выполненной команде. Возвращаемое значение должно быть объектом `AdapterResponse`, который включает такие элементы, как `code`, `rows_affected`, `bytes_processed` и сводное сообщение `_message` для логирования в stdout.
 
 <File name='connections.py'>
 
@@ -373,7 +371,7 @@ For example:
 
 ##### `cancel(self, connection)`
 
-`cancel` is an instance method that gets a connection object and attempts to cancel any ongoing queries, which is database dependent. Some databases don't support the concept of cancellation, they can simply implement it via 'pass' and their adapter classes should implement an `is_cancelable` that returns False - On ctrl+c connections may remain running. This method must be implemented carefully, as the affected connection will likely be in use in a different thread.
+`cancel` — это метод экземпляра, который получает объект соединения и пытается отменить любые текущие запросы, что зависит от базы данных. Некоторые базы данных не поддерживают концепцию отмены, они могут просто реализовать это через 'pass', и их классы адаптеров должны реализовать `is_cancelable`, который возвращает False — при нажатии ctrl+c соединения могут оставаться активными. Этот метод должен быть реализован осторожно, так как затронутое соединение, вероятно, будет использоваться в другом потоке.
 
 <File name='connections.py'>
 
@@ -391,9 +389,9 @@ For example:
 
 ##### `exception_handler(self, sql, connection_name='master')`
 
-`exception_handler` is an instance method that returns a context manager that will handle exceptions raised by running queries, catch them, log appropriately, and then raise exceptions dbt knows how to handle.
+`exception_handler` — это метод экземпляра, который возвращает менеджер контекста, который будет обрабатывать исключения, возникающие при выполнении запросов, ловить их, логировать соответствующим образом, а затем вызывать исключения, которые dbt знает, как обрабатывать.
 
-If you use the (highly recommended) `@contextmanager` decorator, you only have to wrap a `yield` inside a `try` block, like so:
+Если вы используете (настоятельно рекомендуемый) декоратор `@contextmanager`, вам нужно только обернуть `yield` внутри блока `try`, как показано ниже:
 
 <File name='connections.py'>
 
@@ -418,9 +416,9 @@ If you use the (highly recommended) `@contextmanager` decorator, you only have t
 
 ##### `standardize_grants_dict(self, grants_table: agate.Table) -> dict`
 
-`standardize_grants_dict` is an method that returns the dbt-standardized grants dictionary that matches how users configure grants now in dbt. The input is the result of `SHOW GRANTS ON {{model}}` call loaded into an agate table.
+`standardize_grants_dict` — это метод, который возвращает стандартизированный словарь разрешений dbt, соответствующий тому, как пользователи сейчас настраивают разрешения в dbt. Входные данные — это результат вызова `SHOW GRANTS ON {{model}}`, загруженный в таблицу agate.
 
-If there's any massaging of agate table containing the results, of `SHOW GRANTS ON {{model}}`, that can't easily be accomplished in SQL, it can be done here. For example, the SQL to show grants _should_ filter OUT any grants TO the current user/role (e.g. OWNERSHIP). If that's not possible in SQL, it can be done in this method instead.
+Если есть необходимость в обработке таблицы agate, содержащей результаты `SHOW GRANTS ON {{model}}`, которую нельзя легко выполнить в SQL, это можно сделать здесь. Например, SQL для отображения разрешений _должен_ фильтровать ЛЮБЫЕ разрешения ДЛЯ текущего пользователя/роли (например, СОБСТВЕННОСТЬ). Если это невозможно в SQL, это можно сделать в этом методе.
 
 <File name='impl.py'>
 
@@ -428,9 +426,9 @@ If there's any massaging of agate table containing the results, of `SHOW GRANTS 
     @available
     def standardize_grants_dict(self, grants_table: agate.Table) -> dict:
         """
-        :param grants_table: An agate table containing the query result of
-            the SQL returned by get_show_grant_sql
-        :return: A standardized dictionary matching the `grants` config
+        :param grants_table: Таблица agate, содержащая результат запроса
+            SQL, возвращенного get_show_grant_sql
+        :return: Стандартизированный словарь, соответствующий конфигурации `grants`
         :rtype: dict
         """
         grants_dict: Dict[str, List[str]] = {}
@@ -446,15 +444,15 @@ If there's any massaging of agate table containing the results, of `SHOW GRANTS 
 
 </File>
 
-### Editing the adapter implementation
+### Редактирование реализации адаптера
 
-Edit the connection manager at `myadapter/dbt/adapters/myadapter/impl.py`
+Отредактируйте менеджер соединений в `myadapter/dbt/adapters/myadapter/impl.py`
 
-Very little is required to implement the adapter itself. On some adapters, you will not need to override anything. On others, you'll likely need to override some of the ``convert_*`` classmethods, or override the `is_cancelable` classmethod on others to return `False`.
+Очень мало требуется для реализации самого адаптера. В некоторых адаптерах вам не нужно будет переопределять ничего. В других случаях вам, вероятно, потребуется переопределить некоторые из методов класса ``convert_*``, или переопределить метод класса `is_cancelable` в других, чтобы он возвращал `False`.
 
 #### `datenow()`
 
-This classmethod provides the adapter's canonical date function. This is not used but is required– anyway on all adapters.
+Этот метод класса предоставляет каноническую функцию даты адаптера. Она не используется, но требуется — в любом случае на всех адаптерах.
 
 <File name='impl.py'>
 
@@ -466,39 +464,39 @@ This classmethod provides the adapter's canonical date function. This is not use
 
 </File>
 
-### Editing SQL logic
+### Редактирование логики SQL
 
-dbt implements specific SQL operations using jinja macros. While reasonable defaults are provided for many such operations (like `create_schema`, `drop_schema`, `create_table`, etc), you may need to override one or more of macros when building a new adapter.
+dbt реализует специфические операции SQL с использованием макросов jinja. Хотя для многих таких операций (например, `create_schema`, `drop_schema`, `create_table` и т.д.) предоставляются разумные значения по умолчанию, вам может потребоваться переопределить один или несколько макросов при создании нового адаптера.
 
-#### Required macros
+#### Обязательные макросы
 
-The following macros must be implemented, but you can override their behavior for your adapter using the "dispatch" pattern described below. Macros marked (required) do not have a valid default implementation, and are required for dbt to operate.
+Следующие макросы должны быть реализованы, но вы можете переопределить их поведение для вашего адаптера, используя описанный ниже паттерн "dispatch". Макросы, отмеченные как (обязательные), не имеют допустимой реализации по умолчанию и требуются для работы dbt.
 
 - `alter_column_type` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/columns.sql#L37-L55))
 - `check_schema_exists` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/metadata.sql#L43-L55))
 - `create_schema` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/schema.sql#L1-L9))
 - `drop_relation` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/relation.sql#L34-L42))
 - `drop_schema` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/schema.sql#L12-L20))
-- `get_columns_in_relation` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/columns.sql#L1-L8)) (required)
-- `list_relations_without_caching` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/metadata.sql#L58-L65)) (required)
+- `get_columns_in_relation` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/columns.sql#L1-L8)) (обязательный)
+- `list_relations_without_caching` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/metadata.sql#L58-L65)) (обязательный)
 - `list_schemas` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/metadata.sql#L29-L40))
 - `rename_relation` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/relation.sql#L56-L65))
 - `truncate_relation` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/relation.sql#L45-L53))
-- `current_timestamp` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/freshness.sql#L1-L8)) (required)
+- `current_timestamp` ([source](https://github.com/dbt-labs/dbt-core/blob/f988f76fccc1878aaf8d8631c05be3e9104b3b9a/core/dbt/include/global_project/macros/adapters/freshness.sql#L1-L8)) (обязательный)
 - `copy_grants`
 
-#### Adapter dispatch
+#### Диспетчеризация адаптера
 
-Most modern databases support a majority of the standard SQL spec. There are some databases that _do not_ support critical aspects of the SQL spec however, or they provide their own nonstandard mechanisms for implementing the same functionality. To account for these variations in SQL support, dbt provides a mechanism called [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch) for macros. With this feature, macros can be overridden for specific adapters. This makes it possible to implement high-level methods (like "create <Term id="table" />") in a database-specific way.
+Большинство современных баз данных поддерживают большую часть стандартной спецификации SQL. Однако существуют базы данных, которые _не поддерживают_ критические аспекты спецификации SQL, или они предоставляют свои собственные нестандартные механизмы для реализации той же функциональности. Чтобы учесть эти вариации в поддержке SQL, dbt предоставляет механизм, называемый [множественной диспетчеризацией](https://en.wikipedia.org/wiki/Multiple_dispatch) для макросов. С помощью этой функции макросы могут быть переопределены для конкретных адаптеров. Это позволяет реализовать высокоуровневые методы (например, "создать <Term id="table" />") специфическим для базы данных способом.
 
 <File name='adapters.sql'>
 
 ```jinja2
 
-{# dbt will call this macro by name, providing any arguments #}
+{# dbt вызовет этот макрос по имени, предоставив любые аргументы #}
 {% macro create_table_as(temporary, relation, sql) -%}
 
-  {# dbt will dispatch the macro call to the relevant macro #}
+  {# dbt направит вызов макроса к соответствующему макросу #}
   {{ return(
       adapter.dispatch('create_table_as')(temporary, relation, sql)
      ) }}
@@ -506,21 +504,21 @@ Most modern databases support a majority of the standard SQL spec. There are som
 
 
 
-{# If no macro matches the specified adapter, "default" will be used #}
+{# Если ни один макрос не соответствует указанному адаптеру, будет использован "default" #}
 {% macro default__create_table_as(temporary, relation, sql) -%}
    ...
 {%- endmacro %}
 
 
 
-{# Example which defines special logic for Redshift #}
+{# Пример, который определяет специальную логику для Redshift #}
 {% macro redshift__create_table_as(temporary, relation, sql) -%}
    ...
 {%- endmacro %}
 
 
 
-{# Example which defines special logic for BigQuery #}
+{# Пример, который определяет специальную логику для BigQuery #}
 {% macro bigquery__create_table_as(temporary, relation, sql) -%}
    ...
 {%- endmacro %}
@@ -528,14 +526,14 @@ Most modern databases support a majority of the standard SQL spec. There are som
 
 </File>
 
-The `adapter.dispatch()` macro takes a second argument, `packages`, which represents a set of "search namespaces" in which to find potential implementations of a dispatched macro. This allows users of community-supported adapters to extend or "shim" dispatched macros from common packages, such as `dbt-utils`, with adapter-specific versions in their own project or other installed packages. See:
+Макрос `adapter.dispatch()` принимает второй аргумент, `packages`, который представляет собой набор "пространств имен поиска", в которых можно найти потенциальные реализации диспетчеризуемого макроса. Это позволяет пользователям адаптеров, поддерживаемых сообществом, расширять или "подменять" диспетчеризуемые макросы из общих пакетов, таких как `dbt-utils`, с адаптер-специфическими версиями в их собственном проекте или других установленных пакетах. См.:
 
-- "Shim" package examples: [`spark-utils`](https://github.com/dbt-labs/spark-utils), [`tsql-utils`](https://github.com/dbt-msft/tsql-utils)
-- [`adapter.dispatch` docs](/reference/dbt-jinja-functions/dispatch)
+- Примеры "подменяющих" пакетов: [`spark-utils`](https://github.com/dbt-labs/spark-utils), [`tsql-utils`](https://github.com/dbt-msft/tsql-utils)
+- [документация `adapter.dispatch`](/reference/dbt-jinja-functions/dispatch)
 
-#### Overriding adapter methods
+#### Переопределение методов адаптера
 
-While much of dbt's adapter-specific functionality can be modified in adapter macros, it can also make sense to override adapter methods directly. In this example, assume that a database does not support a `cascade` parameter to `drop schema`. Instead, we can implement an approximation where we drop each relation and then drop the schema.
+Хотя большая часть функциональности, специфичной для адаптера dbt, может быть изменена в макросах адаптера, также может иметь смысл переопределить методы адаптера напрямую. В этом примере предположим, что база данных не поддерживает параметр `cascade` для `drop schema`. Вместо этого мы можем реализовать приближение, где мы удаляем каждое отношение, а затем удаляем схему.
 
 <File name='impl.py'>
 
@@ -552,17 +550,17 @@ While much of dbt's adapter-specific functionality can be modified in adapter ma
 
 </File>
 
-#### Grants Macros
+#### Макросы разрешений
 
-See [this GitHub discussion](https://github.com/dbt-labs/dbt-core/discussions/5468) for information on the macros required for `GRANT` statements:
+См. [это обсуждение на GitHub](https://github.com/dbt-labs/dbt-core/discussions/5468) для получения информации о макросах, необходимых для операторов `GRANT`:
 
-### Behavior change flags
+### Флаги изменения поведения
 
-Starting in `dbt-adapters==1.5.0` and `dbt-core==1.8.7`, adapter maintainers can implement their own behavior change flags. Refer to [Behavior changes](https://docs.getdbt.com/reference/global-configs/behavior-changes) for more information. 
+Начиная с `dbt-adapters==1.5.0` и `dbt-core==1.8.7`, поддерживающие адаптеры могут реализовать свои собственные флаги изменения поведения. Обратитесь к [Изменениям поведения](https://docs.getdbt.com/reference/global-configs/behavior-changes) для получения дополнительной информации.
 
-Behavior Flags are not intended to be long-living feature flags. They should be implemented with the expectation that the behavior will be the default within an expected period of time. To implement a behavior change flag, you must provide a name for the flag, a default setting (`True` / `False`), an optional source, and a description and/or a link to the flag's documentation on docs.getdbt.com. 
+Флаги изменения поведения не предназначены для долгосрочных флагов функций. Они должны быть реализованы с ожиданием, что поведение станет стандартным в течение ожидаемого периода времени. Чтобы реализовать флаг изменения поведения, вы должны предоставить имя для флага, настройку по умолчанию (`True` / `False`), необязательный источник и описание и/или ссылку на документацию флага на docs.getdbt.com.
 
-We recommend having a description and documentation link whenever possible. The description and/or docs should provide end users context for why the flag exists, why they may see a warning, and why they may want to utilize the behavior flag. Behavior change flags can be implemented by overwriting `_behavior_flags()` on the adapter in `impl.py`:
+Мы рекомендуем иметь описание и ссылку на документацию, когда это возможно. Описание и/или документация должны предоставить конечным пользователям контекст, почему существует флаг, почему они могут видеть предупреждение и почему они могут захотеть использовать флаг изменения поведения. Флаги изменения поведения могут быть реализованы путем переопределения `_behavior_flags()` на адаптере в `impl.py`:
 
 <File name='impl.py'>
 
@@ -577,10 +575,10 @@ class ABCAdapter(BaseAdapter):
                 "default": False,
                 "source": "dbt-abc",
                 "description": (
-                    "The dbt-abc adapter is implementing a new method for sourcing metadata. "
-                    "This is a more performant way for dbt to source metadata but requires higher permissions on the platform. "
-                    "Enabling this without granting the requisite permissions will result in an error. "
-                    "This feature is expected to be required by Spring 2025."
+                    "Адаптер dbt-abc реализует новый метод получения метаданных. "
+                    "Это более производительный способ получения метаданных dbt, но требует более высоких разрешений на платформе. "
+                    "Включение этого без предоставления необходимых разрешений приведет к ошибке. "
+                    "Ожидается, что эта функция станет обязательной к весне 2025 года."
                 ),
                 "docs_url": "https://docs.getdbt.com/reference/global-configs/behavior-changes#abc-enable_new_functionality_requiring_higher_permissions",
             }
@@ -589,7 +587,7 @@ class ABCAdapter(BaseAdapter):
 
 </File>
 
-Once a behavior change flag has been implemented, it can be referenced on the adapter both in `impl.py` and in Jinja macros:
+После того, как флаг изменения поведения был реализован, его можно использовать на адаптере как в `impl.py`, так и в макросах Jinja:
 
 <File name='impl.py'>
 
@@ -598,9 +596,9 @@ class ABCAdapter(BaseAdapter):
     ...
     def some_method(self, *args, **kwargs):
         if self.behavior.enable_new_functionality_requiring_higher_permissions:
-            # do the new thing
+            # делаем новое
         else:
-            # do the old thing
+            # делаем старое
 ```
 
 </File>
@@ -610,20 +608,20 @@ class ABCAdapter(BaseAdapter):
 ```sql
 {% macro some_macro(**kwargs) %}
     {% if adapter.behavior.enable_new_functionality_requiring_higher_permissions %}
-        {# do the new thing #}
+        {# делаем новое #}
     {% else %}
-        {# do the old thing #}
+        {# делаем старое #}
     {% endif %}
 {% endmacro %}
 ```
 
 </File>
 
-Every time the behavior flag evaluates to `False,` it warns the user, informing them that a change will occur in the future.
+Каждый раз, когда флаг поведения оценивается как `False`, он предупреждает пользователя, информируя его о том, что в будущем произойдет изменение.
 
-This warning doesn't display when the flag evaluates to `True` as the user is already in the new experience.
+Это предупреждение не отображается, когда флаг оценивается как `True`, так как пользователь уже находится в новом опыте.
 
-Recognizing that the warnings can be disruptive and are not always necessary, you can evaluate the flag without triggering the warning. Simply append `.no_warn` to the end of the flag.
+Понимая, что предупреждения могут быть разрушительными и не всегда необходимы, вы можете оценить флаг без вызова предупреждения. Просто добавьте `.no_warn` в конец флага.
 
 
 <File name='impl.py'>
@@ -633,9 +631,9 @@ Recognizing that the warnings can be disruptive and are not always necessary, yo
         ...
         def some_method(self, *args, **kwargs):
             if self.behavior.enable_new_functionality_requiring_higher_permissions.no_warn:
-                # do the new thing
+                # делаем новое
             else:
-                # do the old thing
+                # делаем старое
 ```
 
 </File>
@@ -645,26 +643,26 @@ Recognizing that the warnings can be disruptive and are not always necessary, yo
 ```sql
 {% macro some_macro(**kwargs) %}
     {% if adapter.behavior.enable_new_functionality_requiring_higher_permissions.no_warn %}
-        {# do the new thing #}
+        {# делаем новое #}
     {% else %}
-        {# do the old thing #}
+        {# делаем старое #}
     {% endif %}
 {% endmacro %}
 ```
 
 </File>
 
-It's best practice to evaluate a behavior flag as few times as possible. This will make it easier to remove once the behavior change has matured.
+Лучше всего оценивать флаг поведения как можно меньше раз. Это облегчит его удаление, когда изменение поведения созреет.
 
-As a result, evaluating the flag earlier in the logic flow is easier. Then, take either the old or the new path. While this may create some duplication in code, using behavior flags in this way provides a safer way to implement a change, which we are already admitting is risky or even breaking in nature.
+В результате, оценка флага раньше в логическом потоке будет проще. Затем выберите либо старый, либо новый путь. Хотя это может создать некоторое дублирование в коде, использование флагов поведения таким образом обеспечивает более безопасный способ реализации изменения, которое мы уже признаем рискованным или даже нарушающим.
 
-### Other files
+### Другие файлы
 
 #### `profile_template.yml`
 
-In order to enable the [`dbt init` command](/reference/commands/init) to prompt users when setting up a new project and connection profile, you should include a **profile template**. The filepath needs to be `dbt/include/<adapter_name>/profile_template.yml`. It's possible to provide hints, default values, and conditional prompts based on connection methods that require different supporting attributes. Users will also be able to include custom versions of this file in their own projects, with fixed values specific to their organization, to support their colleagues when using your dbt adapter for the first time.
+Чтобы команда [`dbt init`](/reference/commands/init) могла предложить пользователям при настройке нового проекта и профиля соединения, вы должны включить **шаблон профиля**. Путь к файлу должен быть `dbt/include/<adapter_name>/profile_template.yml`. Возможно предоставить подсказки, значения по умолчанию и условные подсказки на основе методов соединения, которые требуют различных поддерживающих атрибутов. Пользователи также смогут включать пользовательские версии этого файла в свои собственные проекты, с фиксированными значениями, специфичными для их организации, чтобы поддерживать своих коллег при первом использовании вашего адаптера dbt.
 
-See examples:
+См. примеры:
 
 - [dbt-postgres](https://github.com/dbt-labs/dbt-postgres/blob/main/dbt/include/postgres/profile_template.yml)
 - [dbt-redshift](https://github.com/dbt-labs/dbt-redshift/blob/main/dbt/include/redshift/profile_template.yml)
@@ -673,45 +671,45 @@ See examples:
 
 #### `__version__.py`
 
-To assure that `dbt --version` provides the latest dbt core version the adapter supports, be sure include a `__version__.py` file. The filepath will be `dbt/adapters/<adapter_name>/__version__.py`. We recommend using the latest dbt core version and as the adapter is made compatible with later versions, this file will need to be updated. For a sample file, check out this [example](https://github.com/dbt-labs/dbt-snowflake/blob/main/dbt/adapters/snowflake/__version__.py).
+Чтобы убедиться, что `dbt --version` предоставляет последнюю версию dbt core, которую поддерживает адаптер, обязательно включите файл `__version__.py`. Путь к файлу будет `dbt/adapters/<adapter_name>/__version__.py`. Мы рекомендуем использовать последнюю версию dbt core, и по мере того, как адаптер становится совместимым с более поздними версиями, этот файл нужно будет обновлять. Для примера файла, посмотрите [этот пример](https://github.com/dbt-labs/dbt-snowflake/blob/main/dbt/adapters/snowflake/__version__.py).
 
-It should be noted that both of these files are included in the bootstrapped output of the `dbt-database-adapter-scaffold` so when using the scaffolding, these files will be included.
+Следует отметить, что оба этих файла включены в сгенерированный вывод `dbt-database-adapter-scaffold`, поэтому при использовании каркаса эти файлы будут включены.
 
-## Test your adapter
+## Тестирование вашего адаптера
 
-This document has two sections:
+Этот документ имеет два раздела:
 
-1. Refer to "About the testing framework" for a description of the standard framework that we maintain for using pytest together with dbt. It includes an example that shows the anatomy of a simple test case.
-2. Refer to "Testing your adapter" for a step-by-step guide for using our out-of-the-box suite of "basic" tests, which will validate that your adapter meets a baseline of dbt functionality.
+1. Обратитесь к "О тестовой структуре" для описания стандартной структуры, которую мы поддерживаем для использования pytest вместе с dbt. Он включает пример, который показывает анатомию простого тестового случая.
+2. Обратитесь к "Тестирование вашего адаптера" для пошагового руководства по использованию нашего готового набора "базовых" тестов, которые проверят, что ваш адаптер соответствует базовому функционалу dbt.
 
-### Testing prerequisites
+### Предварительные требования к тестированию
 
-- Your adapter must be compatible with dbt-core **v1.1** or newer
-- You should be familiar with **pytest**: [https://docs.pytest.org](https://docs.pytest.org)
+- Ваш адаптер должен быть совместим с dbt-core **v1.1** или новее
+- Вы должны быть знакомы с **pytest**: [https://docs.pytest.org](https://docs.pytest.org)
 
-### About the testing framework
+### О тестовой структуре
 
-[dbt-adapters-tests](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter) offers a standard framework for running prebuilt functional tests, and for defining your own tests. The core testing framework is built using `pytest`, a mature and standard library for testing Python projects.
+[dbt-adapters-tests](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter) предлагает стандартную структуру для запуска предопределенных функциональных тестов и для определения ваших собственных тестов. Основная тестовая структура построена с использованием `pytest`, зрелой и стандартной библиотеки для тестирования проектов на Python.
 
-It includes basic utilities for setting up pytest + dbt. These are used by all "prebuilt" functional tests, and make it possible to quickly write your own tests.
+Она включает базовые утилиты для настройки pytest + dbt. Эти утилиты используются всеми "предопределенными" функциональными тестами и позволяют быстро писать свои собственные тесты.
 
-Those utilities allow you to do three basic things:
+Эти утилиты позволяют вам делать три основные вещи:
 
-1. **Quickly set up a dbt "project."** Define project resources via methods such as `models()` and `seeds()`. Use `project_config_update()` to pass configurations into `dbt_project.yml`.
-2. **Define a sequence of dbt commands.** The most important utility  is `run_dbt()`, which returns the [results](/reference/dbt-classes#result-objects) of each dbt command. It takes a list of CLI specifiers (subcommand + flags), as well as an optional second argument, `expect_pass=False`, for cases where you expect the command to fail.
-3. **Validate the results of those dbt commands.** For example, `check_relations_equal()` asserts that two database objects have the same structure and content. You can also write your own `assert` statements, by inspecting the results of a dbt command, or querying arbitrary database objects with `project.run_sql()`.
+1. **Быстро настроить "проект" dbt.** Определите ресурсы проекта с помощью таких методов, как `models()` и `seeds()`. Используйте `project_config_update()`, чтобы передать конфигурации в `dbt_project.yml`.
+2. **Определите последовательность команд dbt.** Самая важная утилита — это `run_dbt()`, которая возвращает [результаты](/reference/dbt-classes#result-objects) каждой команды dbt. Она принимает список спецификаторов CLI (подкоманда + флаги), а также необязательный второй аргумент, `expect_pass=False`, для случаев, когда вы ожидаете, что команда завершится неудачей.
+3. **Проверьте результаты этих команд dbt.** Например, `check_relations_equal()` утверждает, что два объекта базы данных имеют одинаковую структуру и содержимое. Вы также можете написать свои собственные утверждения `assert`, проверяя результаты команды dbt или запрашивая произвольные объекты базы данных с помощью `project.run_sql()`.
 
-You can see the full suite of utilities, with arguments and annotations, in [`util.py`](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/tests/util.py). You'll also see them crop up across a number of test cases. While all utilities are intended to be reusable, you won't need all of them for every test. In the example below, we'll show a simple test case that uses only a few utilities.
+Вы можете увидеть полный набор утилит с аргументами и аннотациями в [`util.py`](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/tests/util.py). Вы также увидите их в различных тестовых случаях. Хотя все утилиты предназначены для повторного использования, вам не понадобятся все из них для каждого теста. В приведенном ниже примере мы покажем простой тестовый случай, который использует только несколько утилит.
 
-#### Example: a simple test case
+#### Пример: простой тестовый случай
 
-This example will show you the anatomy of a test case using dbt + pytest. We will create reusable components, combine them to form a dbt "project", and define a sequence of dbt commands. Then, we'll use Python `assert` statements to ensure those commands succeed (or fail) as we expect.
+Этот пример покажет вам анатомию тестового случая с использованием dbt + pytest. Мы создадим повторно используемые компоненты, объединим их, чтобы сформировать "проект" dbt, и определим последовательность команд dbt. Затем мы используем утверждения Python `assert`, чтобы убедиться, что эти команды выполняются успешно (или неудачно), как мы ожидаем.
 
-In ["Getting started running basic tests,"](#getting-started-running-basic-tests) we'll offer step-by-step instructions for installing and configuring `pytest`, so that you can run it on your own machine. For now, it's more important to see how the pieces of a test case fit together.
+В разделе ["Начало работы с запуском базовых тестов"](#getting-started-running-basic-tests) мы предложим пошаговые инструкции по установке и настройке `pytest`, чтобы вы могли запустить его на своей машине. Пока что важнее увидеть, как части тестового случая сочетаются друг с другом.
 
-This example includes a seed, a model, and two tests—one of which will fail.
+Этот пример включает seed, модель и два теста — один из которых завершится неудачей.
 
-1. Define Python strings that will represent the file contents in your dbt project. Defining these in a separate file enables you to reuse the same components across different test cases. The pytest name for this type of reusable component is "fixture."
+1. Определите строки Python, которые будут представлять содержимое файлов в вашем проекте dbt. Определение их в отдельном файле позволяет повторно использовать одни и те же компоненты в разных тестовых случаях. Имя pytest для этого типа повторно используемого компонента — "fixture".
 
 <File name="tests/functional/example/fixtures.py">
 
@@ -741,13 +739,13 @@ models:
       - name: id
         tests:
           - unique
-          - not_null  # this test will fail
+          - not_null  # этот тест завершится неудачей
 """
 ```
 
 </File>
 
-2. Use the "fixtures" to define the project for your test case. These fixtures are always scoped to the **class**, where the class represents one test case—that is, one dbt project or scenario. (The same test case can be used for one or more actual tests, which we'll see in step 3.) Following the default pytest configurations, the file name must begin with `test_`, and the class name must begin with `Test`.
+2. Используйте "fixtures", чтобы определить проект для вашего тестового случая. Эти fixtures всегда имеют область действия **class**, где класс представляет один тестовый случай — то есть один проект dbt или сценарий. (Один и тот же тестовый случай может использоваться для одного или нескольких фактических тестов, которые мы увидим на шаге 3.) Следуя стандартным конфигурациям pytest, имя файла должно начинаться с `test_`, а имя класса должно начинаться с `Test`.
 
 <File name="tests/functional/example/test_example_failing_test.py">
 
@@ -755,24 +753,24 @@ models:
 import pytest
 from dbt.tests.util import run_dbt
 
-# our file contents
+# наше содержимое файлов
 from tests.functional.example.fixtures import (
     my_seed_csv,
     my_model_sql,
     my_model_yml,
 )
 
-# class must begin with 'Test'
+# класс должен начинаться с 'Test'
 class TestExample:
     """
-    Methods in this class will be of two types:
-    1. Fixtures defining the dbt "project" for this test case.
-       These are scoped to the class, and reused for all tests in the class.
-    2. Actual tests, whose names begin with 'test_'.
-       These define sequences of dbt commands and 'assert' statements.
+    Методы в этом классе будут двух типов:
+    1. Fixtures, определяющие "проект" dbt для этого тестового случая.
+       Они имеют область действия класса и повторно используются для всех тестов в классе.
+    2. Фактические тесты, имена которых начинаются с 'test_'.
+       Они определяют последовательности команд dbt и утверждения 'assert'.
     """
     
-    # configuration in dbt_project.yml
+    # конфигурация в dbt_project.yml
     @pytest.fixture(scope="class")
     def project_config_update(self):
         return {
@@ -780,14 +778,14 @@ class TestExample:
           "models": {"+materialized": "view"}
         }
 
-    # everything that goes in the "seeds" directory
+    # все, что идет в директорию "seeds"
     @pytest.fixture(scope="class")
     def seeds(self):
         return {
             "my_seed.csv": my_seed_csv,
         }
 
-    # everything that goes in the "models" directory
+    # все, что идет в директорию "models"
     @pytest.fixture(scope="class")
     def models(self):
         return {
@@ -795,24 +793,24 @@ class TestExample:
             "my_model.yml": my_model_yml,
         }
         
-    # continues below
+    # продолжается ниже
 ```
 
 </File>
 
-3. Now that we've set up our project, it's time to define a sequence of dbt commands and assertions. We define one or more methods in the same file, on the same class (`TestExampleFailingTest`), whose names begin with `test_`. These methods share the same setup (project scenario) from above, but they can be run independently by pytest—so they shouldn't depend on each other in any way.
+3. Теперь, когда мы настроили наш проект, пришло время определить последовательность команд dbt и утверждений. Мы определяем один или несколько методов в том же файле, в том же классе (`TestExampleFailingTest`), имена которых начинаются с `test_`. Эти методы используют ту же настройку (сценарий проекта), что и выше, но они могут выполняться независимо pytest — поэтому они не должны зависеть друг от друга.
 
 <File name="tests/functional/example/test_example_failing_test.py">
 
 ```python
-    # continued from above
+    # продолжение выше
 
-    # The actual sequence of dbt commands and assertions
-    # pytest will take care of all "setup" + "teardown"
+    # Фактическая последовательность команд dbt и утверждений
+    # pytest позаботится обо всех "setup" + "teardown"
     def test_run_seed_test(self, project):
         """
-        Seed, then run, then test. We expect one of the tests to fail
-        An alternative pattern is to use pytest "xfail" (see below)
+        Seed, затем run, затем test. Мы ожидаем, что один из тестов завершится неудачей
+        Альтернативный паттерн — использовать pytest "xfail" (см. ниже)
         """
         # seed seeds
         results = run_dbt(["seed"])
@@ -821,22 +819,22 @@ class TestExample:
         results = run_dbt(["run"])
         assert len(results) == 1
         # test tests
-        results = run_dbt(["test"], expect_pass = False) # expect failing test
+        results = run_dbt(["test"], expect_pass = False) # ожидаем неудачный тест
         assert len(results) == 2
-        # validate that the results include one pass and one failure
+        # проверяем, что результаты включают один успешный и один неудачный тест
         result_statuses = sorted(r.status for r in results)
         assert result_statuses == ["fail", "pass"]
 
     @pytest.mark.xfail
     def test_build(self, project):
-        """Expect a failing test"""
-        # do it all
+        """Ожидаем неудачный тест"""
+        # делаем все
         results = run_dbt(["build"])
 ```
 
 </File>
 
-3. Our test is ready to run! The last step is to invoke `pytest` from your command line. We'll walk through the actual setup and configuration of `pytest` in the next section.
+3. Наш тест готов к запуску! Последний шаг — вызвать `pytest` из командной строки. Мы пройдем через фактическую настройку и конфигурацию `pytest` в следующем разделе.
 
 <File name="terminal">
 
@@ -854,47 +852,47 @@ tests/functional/test_example.py .X                                  [100%]
 
 </File>
 
-You can find more ways to run tests, along with a full command reference, in the [pytest usage docs](https://docs.pytest.org/how-to/usage.html).
+Вы можете найти больше способов запуска тестов, а также полную справку по командам в [документации по использованию pytest](https://docs.pytest.org/how-to/usage.html).
 
-We've found the `-s` flag (or `--capture=no`) helpful to print logs from the underlying dbt invocations, and to step into an interactive debugger if you've added one. You can also use environment variables to set [global dbt configs](/reference/global-configs/about-global-configs), such as `DBT_DEBUG` (to show debug-level logs).
+Мы нашли флаг `-s` (или `--capture=no`) полезным для вывода логов из подлежащих вызовов dbt и для входа в интерактивный отладчик, если вы его добавили. Вы также можете использовать переменные окружения для установки [глобальных конфигураций dbt](/reference/global-configs/about-global-configs), таких как `DBT_DEBUG` (для отображения логов уровня отладки).
 
-### Testing this adapter
+### Тестирование этого адаптера
 
-Anyone who installs `dbt-core`, and wishes to define their own test cases, can use the framework presented in the first section. The framework is especially useful for testing standard dbt behavior across different databases.
+Любой, кто установил `dbt-core` и желает определить свои собственные тестовые случаи, может использовать структуру, представленную в первом разделе. Эта структура особенно полезна для тестирования стандартного поведения dbt на разных базах данных.
 
-To that end, we have built and made available a [package of reusable adapter test cases](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter), for creators and maintainers of adapter plugins. These test cases cover basic expected functionality, as well as functionality that frequently requires different implementations across databases.
+С этой целью мы создали и сделали доступным [пакет повторно используемых тестовых случаев адаптера](https://github.com/dbt-labs/dbt-adapters/tree/main/dbt-tests-adapter) для создателей и поддерживающих плагинов адаптеров. Эти тестовые случаи охватывают базовую ожидаемую функциональность, а также функциональность, которая часто требует различных реализаций на разных базах данных.
 
-For the time being, this package is also located within the `dbt-core` repository, but separate from the `dbt-core` Python package.
+На данный момент этот пакет также находится в репозитории `dbt-core`, но отдельно от пакета Python `dbt-core`.
 
-### Categories of tests
+### Категории тестов
 
-In the course of creating and maintaining your adapter, it's likely that you will end up implementing tests that fall into three broad categories:
+В процессе создания и поддержки вашего адаптера, вероятно, вы реализуете тесты, которые попадают в три широкие категории:
 
-1. **Basic tests** that every adapter plugin is expected to pass. These are defined in `tests.adapter.basic`. Given differences across data platforms, these may require slight modification or reimplementation. Significantly overriding or disabling these tests should be with good reason, since each represents basic functionality expected by dbt users. For example, if your adapter does not support incremental models, you should disable the test, [by marking it with `skip` or `xfail`](https://docs.pytest.org/en/latest/how-to/skipping.html), as well as noting that limitation in any documentation, READMEs, and usage guides that accompany your adapter.
+1. **Базовые тесты**, которые ожидается, что каждый плагин адаптера пройдет. Они определены в `tests.adapter.basic`. Учитывая различия между платформами данных, они могут потребовать небольших изменений или повторной реализации. Значительное переопределение или отключение этих тестов должно быть с веской причиной, так как каждый из них представляет собой базовую функциональность, ожидаемую пользователями dbt. Например, если ваш адаптер не поддерживает инкрементальные модели, вы должны отключить тест, [пометив его как `skip` или `xfail`](https://docs.pytest.org/en/latest/how-to/skipping.html), а также отметить это ограничение в любой документации, README и руководствах по использованию, которые сопровождают ваш адаптер.
 
-2. **Optional tests**, for second-order functionality that is common across plugins, but not required for basic use. Your plugin can opt into these test cases by inheriting existing ones, or reimplementing them with adjustments. For now, this category includes all tests located outside the `basic` subdirectory. More tests will be added as we convert older tests defined on dbt-core and mature plugins to use the standard framework.
+2. **Опциональные тесты**, для второстепенной функциональности, которая является общей для плагинов, но не обязательной для базового использования. Ваш плагин может выбрать эти тестовые случаи, унаследовав существующие или повторно реализовав их с изменениями. На данный момент эта категория включает все тесты, расположенные за пределами подкаталога `basic`. Больше тестов будет добавлено по мере того, как мы конвертируем старые тесты, определенные на dbt-core, и зрелые плагины для использования стандартной структуры.
 
-3. **Custom tests**, for behavior that is specific to your adapter / data platform. Each <Term id="data-warehouse" /> has its own specialties and idiosyncracies. We encourage you to use the same `pytest`-based framework, utilities, and fixtures to write your own custom tests for functionality that is unique to your adapter.
+3. **Пользовательские тесты**, для поведения, специфичного для вашего адаптера / платформы данных. Каждое <Term id="data-warehouse" /> имеет свои особенности и идиосинкразии. Мы рекомендуем вам использовать ту же структуру на основе `pytest`, утилиты и fixtures для написания собственных тестов для функциональности, уникальной для вашего адаптера.
 
-If you run into an issue with the core framework, or the basic/optional test cases—or if you've written a custom test that you believe would be relevant and useful for other adapter plugin developers—please open an issue or PR in the `dbt-core` repository on GitHub.
+Если вы столкнетесь с проблемой в основной структуре или базовых/опциональных тестовых случаях — или если вы написали пользовательский тест, который, по вашему мнению, будет актуален и полезен для других разработчиков плагинов адаптеров — пожалуйста, откройте проблему или PR в репозитории `dbt-core` на GitHub.
 
-### Getting started running basic tests
+### Начало работы с запуском базовых тестов
 
-In this section, we'll walk through the three steps to start running our basic test cases on your adapter plugin:
+В этом разделе мы пройдем через три шага, чтобы начать запуск наших базовых тестовых случаев на вашем плагине адаптера:
 
-1. Install dependencies
-2. Set up and configure pytest
-3. Define test cases
+1. Установите зависимости
+2. Настройте и сконфигурируйте pytest
+3. Определите тестовые случаи
 
-### Install dependencies
+### Установите зависимости
 
-You should already have a virtual environment with `dbt-core` and your adapter plugin installed. You'll also need to install:
+У вас уже должна быть виртуальная среда с установленными `dbt-core` и вашим плагином адаптера. Вам также нужно будет установить:
 
 - [`pytest`](https://pypi.org/project/pytest/)
-- [`dbt-tests-adapter`](https://pypi.org/project/dbt-tests-adapter/), the set of common test cases
-- (optional) [`pytest` plugins](https://docs.pytest.org/en/7.0.x/reference/plugin_list.html)--we'll use `pytest-dotenv` below
+- [`dbt-tests-adapter`](https://pypi.org/project/dbt-tests-adapter/), набор общих тестовых случаев
+- (опционально) [`pytest` плагины](https://docs.pytest.org/en/7.0.x/reference/plugin_list.html) — мы будем использовать `pytest-dotenv` ниже
 
-Or specify all dependencies in a requirements file like:
+Или укажите все зависимости в файле требований, например:
 <File name="dev_requirements.txt">
 
 ```txt
@@ -909,9 +907,9 @@ dbt-tests-adapter
 python -m pip install -r dev_requirements.txt
 ```
 
-### Set up and configure pytest
+### Настройте и сконфигурируйте pytest
 
-First, set yourself up to run `pytest` by creating a file named `pytest.ini` at the root of your repository:
+Сначала настройте себя для запуска `pytest`, создав файл с именем `pytest.ini` в корне вашего репозитория:
 
 <File name="pytest.ini">
 
@@ -921,17 +919,17 @@ filterwarnings =
     ignore:.*'soft_unicode' has been renamed to 'soft_str'*:DeprecationWarning
     ignore:unclosed file .*:ResourceWarning
 env_files =
-    test.env  # uses pytest-dotenv plugin
-              # this allows you to store env vars for database connection in a file named test.env
-              # rather than passing them in every CLI command, or setting in `PYTEST_ADDOPTS`
-              # be sure to add "test.env" to .gitignore as well!
+    test.env  # использует плагин pytest-dotenv
+              # это позволяет вам хранить переменные окружения для подключения к базе данных в файле с именем test.env
+              # вместо передачи их в каждой команде CLI или установки в `PYTEST_ADDOPTS`
+              # обязательно добавьте "test.env" в .gitignore!
 testpaths =
-    tests/functional  # name per convention
+    tests/functional  # имя по соглашению
 ```
 
 </File>
 
-Then, create a configuration file within your tests directory. In it, you'll want to define all necessary profile configuration for connecting to your data platform in local development and continuous integration. We recommend setting these values with environment variables, since this file will be checked into version control.
+Затем создайте файл конфигурации в вашем каталоге тестов. В нем вы захотите определить всю необходимую конфигурацию профиля для подключения к вашей платформе данных в локальной разработке и непрерывной интеграции. Мы рекомендуем устанавливать эти значения с помощью переменных окружения, так как этот файл будет проверен в систему контроля версий.
 
 <File name="tests/conftest.py">
 
@@ -939,12 +937,12 @@ Then, create a configuration file within your tests directory. In it, you'll wan
 import pytest
 import os
 
-# Import the standard functional fixtures as a plugin
-# Note: fixtures with session scope need to be local
+# Импортируйте стандартные функциональные fixtures как плагин
+# Примечание: fixtures с областью действия session должны быть локальными
 pytest_plugins = ["dbt.tests.fixtures.project"]
 
-# The profile dictionary, used to write out profiles.yml
-# dbt will supply a unique schema per test, so we do not specify 'schema' here
+# Словарь профиля, используемый для записи profiles.yml
+# dbt предоставит уникальную схему для каждого теста, поэтому мы не указываем 'schema' здесь
 @pytest.fixture(scope="class")
 def dbt_profile_target():
     return {
@@ -958,9 +956,9 @@ def dbt_profile_target():
 
 </File>
 
-### Define test cases
+### Определите тестовые случаи
 
-As in the example above, each test case is defined as a class, and has its own "project" setup. To get started, you can import all basic test cases and try running them without changes.
+Как в приведенном выше примере, каждый тестовый случай определяется как класс и имеет свою собственную настройку "проекта". Чтобы начать, вы можете импортировать все базовые тестовые случаи и попробовать запустить их без изменений.
 
 <File name="tests/functional/adapter/test_basic.py">
 
@@ -1020,17 +1018,17 @@ class TestBaseAdapterMethod(BaseAdapterMethod):
 
 </File>
 
-Finally, run pytest:
+Наконец, запустите pytest:
 
 ```sh
 python3 -m pytest tests/functional
 ```
 
-### Modifying test cases
+### Изменение тестовых случаев
 
-You may need to make slight modifications in a specific test case to get it passing on your adapter. The mechanism to do this is simple: rather than simply inheriting the "base" test with `pass`, you can redefine any of its fixtures or test methods.
+Вам может потребоваться внести небольшие изменения в конкретный тестовый случай, чтобы он прошел на вашем адаптере. Механизм для этого прост: вместо простого наследования "базового" теста с `pass`, вы можете переопределить любой из его fixtures или тестовых методов.
 
-For instance, on Redshift, we need to explicitly cast a column in the fixture input seed to use data type `varchar(64)`:
+Например, на Redshift нам нужно явно привести столбец в входном seed к типу данных `varchar(64)`:
 
 <File name="tests/functional/adapter/test_basic.py">
 
@@ -1039,8 +1037,8 @@ import pytest
 from dbt.tests.adapter.basic.files import seeds_base_csv, seeds_added_csv, seeds_newcolumns_csv
 from dbt.tests.adapter.basic.test_snapshot_check_cols import BaseSnapshotCheckCols
 
-# set the datatype of the name column in the 'added' seed so it
-# can hold the '_update' that's added
+# установите тип данных столбца name в seed 'added', чтобы он
+# мог содержать '_update', который добавляется
 schema_seed_added_yml = """
 version: 2
 seeds:
@@ -1051,8 +1049,8 @@ seeds:
 """
 
 class TestSnapshotCheckColsRedshift(BaseSnapshotCheckCols):
-    # Redshift defines the 'name' column such that it's not big enough
-    # to hold the '_update' added in the test.
+    # Redshift определяет столбец 'name' таким образом, что он недостаточно велик
+    # чтобы содержать '_update', добавленный в тесте.
     @pytest.fixture(scope="class")
     def models(self):
         return {
@@ -1064,9 +1062,9 @@ class TestSnapshotCheckColsRedshift(BaseSnapshotCheckCols):
 
 </File>
 
-As another example, the `dbt-bigquery` adapter asks users to "authorize" replacing a <Term id="table" /> with a <Term id="view" /> by supplying the `--full-refresh` flag. The reason: In the table <Term id="materialization" /> logic, a view by the same name must first be dropped; if the table query fails, the model will be missing.
+В качестве другого примера, адаптер `dbt-bigquery` просит пользователей "авторизовать" замену <Term id="table" /> на <Term id="view" />, предоставив флаг `--full-refresh`. Причина: в логике материализации таблицы представление с тем же именем должно быть сначала удалено; если запрос таблицы завершится неудачей, модель будет отсутствовать.
 
-Knowing this possibility, the "base" test case offers a `require_full_refresh` switch on the `test_config` fixture class. For BigQuery, we'll switch it on:
+Зная эту возможность, "базовый" тестовый случай предлагает переключатель `require_full_refresh` на fixture класса `test_config`. Для BigQuery мы его включим:
 
 <File name="tests/functional/adapter/test_basic.py">
 
@@ -1077,19 +1075,19 @@ from dbt.tests.adapter.basic.test_base import BaseSimpleMaterializations
 class TestSimpleMaterializationsBigQuery(BaseSimpleMaterializations):
     @pytest.fixture(scope="class")
     def test_config(self):
-        # effect: add '--full-refresh' flag in requisite 'dbt run' step
+        # эффект: добавление флага '--full-refresh' в необходимый шаг 'dbt run'
         return {"require_full_refresh": True}
 ```
 
 </File>
 
-It's always worth asking whether the required modifications represent gaps in perceived or expected dbt functionality. Are these simple implementation details, which any user of this database would understand? Are they limitations worth documenting?
+Всегда стоит задаться вопросом, представляют ли требуемые изменения пробелы в воспринимаемой или ожидаемой функциональности dbt. Являются ли это простыми деталями реализации, которые любой пользователь этой базы данных поймет? Являются ли они ограничениями, которые стоит задокументировать?
 
-If, on the other hand, they represent poor assumptions in the "basic" test cases, which fail to account for a common pattern in other types of databases-—please open an issue or PR in the `dbt-core` repository on GitHub.
+Если, с другой стороны, они представляют собой плохие предположения в "базовых" тестовых случаях, которые не учитывают общую схему в других типах баз данных — пожалуйста, откройте проблему или PR в репозитории `dbt-core` на GitHub.
 
-### Running with multiple profiles
+### Запуск с несколькими профилями
 
-Some databases support multiple connection methods, which map to actually different functionality behind the scenes. For instance, the `dbt-spark` adapter supports connections to Apache Spark clusters _and_ Databricks runtimes, which supports additional functionality out of the box, enabled by the Delta file format.
+Некоторые базы данных поддерживают несколько методов подключения, которые соответствуют фактически различной функциональности за кулисами. Например, адаптер `dbt-spark` поддерживает подключения к кластерам Apache Spark _и_ средам выполнения Databricks, которые поддерживают дополнительную функциональность из коробки, включенную форматом файлов Delta.
 
 <File name="tests/conftest.py">
 
@@ -1098,12 +1096,12 @@ def pytest_addoption(parser):
     parser.addoption("--profile", action="store", default="apache_spark", type=str)
 
 
-# Using @pytest.mark.skip_profile('apache_spark') uses the 'skip_by_profile_type'
-# autouse fixture below
+# Использование @pytest.mark.skip_profile('apache_spark') использует 'skip_by_profile_type'
+# autouse fixture ниже
 def pytest_configure(config):
     config.addinivalue_line(
         "markers",
-        "skip_profile(profile): skip test for the given profile",
+        "skip_profile(profile): пропустить тест для данного профиля",
     )
 
 @pytest.fixture(scope="session")
@@ -1114,7 +1112,7 @@ def dbt_profile_target(request):
     elif profile_type == "apache_spark":
         target = apache_spark_target()
     else:
-        raise ValueError(f"Invalid profile type '{profile_type}'")
+        raise ValueError(f"Неверный тип профиля '{profile_type}'")
     return target
 
 def apache_spark_target():
@@ -1137,18 +1135,18 @@ def skip_by_profile_type(request):
     if request.node.get_closest_marker("skip_profile"):
         for skip_profile_type in request.node.get_closest_marker("skip_profile").args:
             if skip_profile_type == profile_type:
-                pytest.skip("skipped on '{profile_type}' profile")
+                pytest.skip("пропущено на профиле '{profile_type}'")
 ```
 
 </File>
 
-If there are tests that _shouldn't_ run for a given profile:
+Если есть тесты, которые _не должны_ выполняться для данного профиля:
 
 <File name="tests/functional/adapter/basic.py">
 
 ```python
-# Snapshots require access to the Delta file format, available on our Databricks connection,
-# so let's skip on Apache Spark
+# Снимки требуют доступа к формату файлов Delta, доступному на нашем подключении Databricks,
+# поэтому давайте пропустим на Apache Spark
 @pytest.mark.skip_profile('apache_spark')
 class TestSnapshotCheckColsSpark(BaseSnapshotCheckCols):
     @pytest.fixture(scope="class")
@@ -1165,72 +1163,72 @@ class TestSnapshotCheckColsSpark(BaseSnapshotCheckCols):
 
 </File>
 
-Finally:
+Наконец:
 
 ```sh
 python3 -m pytest tests/functional --profile apache_spark
 python3 -m pytest tests/functional --profile databricks_sql_endpoint
 ```
 
-## Document a new adapter
+## Документирование нового адаптера
 
-If you've already built, and tested your adapter, it's time to document it so the dbt community will know that it exists and how to use it.
+Если вы уже создали и протестировали свой адаптер, пора его задокументировать, чтобы сообщество dbt знало, что он существует и как его использовать.
 
-### Making your adapter available
+### Доступность вашего адаптера
 
-Many community members maintain their adapter plugins under open source licenses. If you're interested in doing this, we recommend:
+Многие члены сообщества поддерживают свои плагины адаптеров по лицензиям с открытым исходным кодом. Если вы заинтересованы в этом, мы рекомендуем:
 
-- Hosting on a public git provider (for example, GitHub or Gitlab)
-- Publishing to [PyPI](https://pypi.org/)
-- Adding to the list of ["Supported Data Platforms"](/docs/supported-data-platforms#community-supported) (more info below)
+- Размещение на публичном git-провайдере (например, GitHub или Gitlab)
+- Публикация на [PyPI](https://pypi.org/)
+- Добавление в список ["Поддерживаемые платформы данных"](/docs/supported-data-platforms#community-supported) (подробнее ниже)
 
-### General Guidelines
+### Общие рекомендации
 
-To best inform the dbt community of the new adapter, you should contribute to the dbt's open-source documentation site, which uses the [Docusaurus project](https://docusaurus.io/). This is the site you're currently on!
+Чтобы лучше информировать сообщество dbt о новом адаптере, вы должны внести вклад в сайт документации с открытым исходным кодом dbt, который использует проект [Docusaurus](https://docusaurus.io/). Это сайт, на котором вы сейчас находитесь!
 
-### Conventions
+### Конвенции
 
-Each `.md` file you create needs a header as shown below. The document id will also need to be added to the config file: `website/sidebars.js`.
+Каждый `.md` файл, который вы создаете, нуждается в заголовке, как показано ниже. Идентификатор документа также нужно будет добавить в файл конфигурации: `website/sidebars.js`.
 
 ```md
 ---
-title: "Documenting a new adapter"
+title: "Документирование нового адаптера"
 id: "documenting-a-new-adapter"
 ---
 ```
 
-### Single Source of Truth
+### Единый источник правды
 
-We ask our adapter maintainers to use the [docs.getdbt.com repo](https://github.com/dbt-labs/docs.getdbt.com) (i.e. this site) as the single-source-of-truth for documentation rather than having to maintain the same set of information in three different places. The adapter repo's `README.md` and the data platform's documentation pages should simply link to the corresponding page on this docs site. Keep reading for more information on what should and shouldn't be included on the dbt docs site.
+Мы просим наших поддерживающих адаптеров использовать [репозиторий docs.getdbt.com](https://github.com/dbt-labs/docs.getdbt.com) (т.е. этот сайт) в качестве единственного источника правды для документации, а не поддерживать один и тот же набор информации в трех разных местах. `README.md` репозитория адаптера и страницы документации платформы данных должны просто ссылаться на соответствующую страницу на этом сайте документации. Продолжайте читать, чтобы узнать больше о том, что должно и не должно быть включено на сайт документации dbt.
 
-### Assumed Knowledge
+### Предполагаемые знания
 
-To simplify things, assume the reader of this documentation already knows how both dbt and your data platform works. There's already great material for how to learn dbt and the data platform out there. The documentation we're asking you to add should be what a user who is already profiecient in both dbt and your data platform would need to know in order to use both. Effectively that boils down to two things: how to connect, and how to configure.
+Чтобы упростить задачу, предположим, что читатель этой документации уже знает, как работают как dbt, так и ваша платформа данных. Уже существует отличный материал о том, как изучать dbt и платформу данных. Документация, которую мы просим вас добавить, должна быть тем, что пользователь, который уже хорошо разбирается как в dbt, так и в вашей платформе данных, должен знать, чтобы использовать оба. Фактически это сводится к двум вещам: как подключиться и как настроить.
 
-### Topics and Pages to Cover
+### Темы и страницы для охвата
 
-The following subjects need to be addressed across three pages of this docs site to have your data platform be listed on our documentation. After the corresponding pull request is merged, we ask that you link to these pages from your adapter repo's `README` as well as from your product documentation.
+Следующие темы должны быть рассмотрены на трех страницах этого сайта документации, чтобы ваша платформа данных была включена в нашу документацию. После того, как соответствующий запрос на слияние будет принят, мы просим вас ссылаться на эти страницы из `README` вашего репозитория адаптера, а также из документации вашего продукта.
 
-To contribute, all you will have to do make the changes listed in the table below.
+Чтобы внести вклад, все, что вам нужно сделать, это внести изменения, указанные в таблице ниже.
 
-| How To...    | File to change within `/website/docs/`     | Action | <div style={{width:'200px'}}>Info to include</div>         |
+| Как...    | Файл для изменения в `/website/docs/`     | Действие | <div style={{width:'200px'}}>Информация для включения</div>         |
 |--------------|--------------------------------------------|--------|-------------------------|
-| Connect              | `/docs/core/connect-data-platform/{MY-DATA-PLATFORM}-setup.md` | Create | Give all information needed to define a target in `~/.dbt/profiles.yml` and get `dbt debug` to connect to the database successfully. All possible configurations should be mentioned.             |
-| Configure            | `reference/resource-configs/{MY-DATA-PLATFORM}-configs.md`   | Create | What options and configuration specific to your data platform do users need to know? e.g. table distribution and indexing options, column_quoting policy, which incremental strategies are supported |
-| Discover and Install | `docs/supported-data-platforms.md`                                 | Modify | Is it a vendor- or community- supported adapter? How to install Python adapter package? Ideally with pip and PyPI hosted package, but can also use `git+` link to GitHub Repo                             |
-| Add link to sidebar  | `website/sidebars.js`                                        | Modify | Add the document id to the correct location in the sidebar menu                                                                                                                                      |
+| Подключение              | `/docs/core/connect-data-platform/{MY-DATA-PLATFORM}-setup.md` | Создать | Предоставьте всю информацию, необходимую для определения цели в `~/.dbt/profiles.yml` и успешного подключения `dbt debug` к базе данных. Все возможные конфигурации должны быть упомянуты.             |
+| Настройка            | `reference/resource-configs/{MY-DATA-PLATFORM}-configs.md`   | Создать | Какие параметры и конфигурации, специфичные для вашей платформы данных, должны знать пользователи? например, параметры распределения и индексации таблиц, политика цитирования столбцов, какие стратегии инкрементирования поддерживаются |
+| Обнаружение и установка | `docs/supported-data-platforms.md`                                 | Изменить | Является ли это адаптером, поддерживаемым поставщиком или сообществом? Как установить пакет адаптера Python? В идеале с помощью pip и размещенного на PyPI пакета, но также можно использовать ссылку `git+` на репозиторий GitHub                             |
+| Добавить ссылку в боковое меню  | `website/sidebars.js`                                        | Изменить | Добавьте идентификатор документа в правильное место в боковом меню                                                                                                                                      |
 
-For example say I want to document my new adapter: `dbt-ders`. For the "Connect" page, I will make a new Markdown file, `ders-setup.md` and add it to the `/website/docs/core/connect-data-platform/` directory.
+Например, скажем, я хочу задокументировать свой новый адаптер: `dbt-ders`. Для страницы "Подключение" я создам новый файл Markdown, `ders-setup.md`, и добавлю его в каталог `/website/docs/core/connect-data-platform/`.
 
-### Example PRs to add new adapter documentation
+### Примеры PR для добавления новой документации адаптера
 
-Below are some recent pull requests made by partners to document their data platform's adapter:
+Ниже приведены некоторые недавние запросы на слияние, сделанные партнерами для документирования адаптера их платформы данных:
 
 - [TiDB](https://github.com/dbt-labs/docs.getdbt.com/pull/1309)
 - [SingleStore](https://github.com/dbt-labs/docs.getdbt.com/pull/1044)
 - [Firebolt](https://github.com/dbt-labs/docs.getdbt.com/pull/941)
 
-Note &mdash; Use the following re-usable component to auto-fill the frontmatter content on your new page:
+Примечание — Используйте следующий повторно используемый компонент для автоматического заполнения содержимого frontmatter на вашей новой странице:
 
 ```markdown
 import SetUpPages from '/snippets/_setup-pages-intro.md';
@@ -1238,211 +1236,211 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 ```
 
-## Promote a new adapter
+## Продвижение нового адаптера
 
-The most important thing here is recognizing that people are successful in the community when they join, first and foremost, to engage authentically.
+Самое важное здесь — признать, что люди добиваются успеха в сообществе, когда они присоединяются, прежде всего, для того, чтобы взаимодействовать искренне.
 
-What does authentic engagement look like? It’s challenging to define explicit rules. One good rule of thumb is to treat people with dignity and respect.
+Как выглядит искреннее взаимодействие? Это сложно определить явными правилами. Одно хорошее правило — относиться к людям с достоинством и уважением.
 
-Contributors to the community should think of contribution _as the end itself,_ not a means toward other business KPIs (leads, community members, etc.). [We are a mission-driven company.](https://www.getdbt.com/dbt-labs/values/) Some ways to know if you’re authentically engaging:
+Участники сообщества должны рассматривать вклад _как цель саму по себе_, а не как средство достижения других бизнес-показателей (лиды, члены сообщества и т.д.). [Мы — компания, движимая миссией.](https://www.getdbt.com/dbt-labs/values/) Некоторые способы узнать, взаимодействуете ли вы искренне:
 
-- Is an engagement’s _primary_ purpose of sharing knowledge and resources or building brand engagement?
-- Imagine you didn’t work at the org you do &mdash; can you imagine yourself still writing this?
-- Is it written in formal / marketing language, or does it sound like you, the human?
+- Является ли _основной_ целью взаимодействия обмен знаниями и ресурсами или построение вовлеченности бренда?
+- Представьте, что вы не работаете в той организации, в которой работаете — можете ли вы представить себе, что все равно пишете это?
+- Написано ли это в формальном / маркетинговом языке или это звучит как вы, человек?
 
-### Who should join the dbt community slack?
+### Кто должен присоединиться к Slack-сообществу dbt?
 
-- People who have insight into what it means to do hands-on [analytics engineering](https://www.getdbt.com/analytics-engineering/) work
-  The dbt Community Slack workspace is fundamentally a place for analytics practitioners to interact with each other &mdash; the closer the users are in the community to actual data/analytics engineering work, the more natural their engagement will be (leading to better outcomes for partners and the community).
+- Люди, которые понимают, что значит заниматься практической работой в области [аналитической инженерии](https://www.getdbt.com/analytics-engineering/)
+  Slack-сообщество dbt в первую очередь предназначено для взаимодействия аналитиков друг с другом &mdash; чем ближе пользователи в сообществе к реальной работе с данными/аналитической инженерией, тем более естественным будет их участие (что приведет к лучшим результатам для партнеров и сообщества).
 
-- DevRel practitioners with strong focus
-  DevRel practitioners often have a strong analytics background and a good understanding of the community. It’s essential to be sure they are focused on _contributing,_ not on driving community metrics for partner org (such as signing people up for their slack or events). The metrics will rise naturally through authentic engagement.
+- Практики DevRel с сильной концентрацией
+  Практики DevRel часто имеют сильный аналитический опыт и хорошее понимание сообщества. Важно, чтобы они были сосредоточены на _вкладе_, а не на управлении метриками сообщества для партнерской организации (например, регистрация людей в их Slack или на мероприятия). Метрики будут расти естественным образом через подлинное взаимодействие.
 
-- Founder and executives who are interested in directly engaging with the community
-  This is either incredibly successful or not at all depending on the profile of the founder. Typically, this works best when the founder has a practitioner-level of technical understanding and is interested in joining not to promote, but to learn and hear from users.
+- Основатели и руководители, которые заинтересованы в прямом взаимодействии с сообществом
+  Это может быть либо невероятно успешным, либо совсем не успешным в зависимости от профиля основателя. Обычно это работает лучше всего, когда основатель имеет техническое понимание на уровне практикующего специалиста и заинтересован в присоединении не для продвижения, а для обучения и получения отзывов от пользователей.
 
-- Software Engineers at partner products that are building and supporting integrations with either dbt Core or dbt Cloud
-  This is successful when the engineers are familiar with dbt as a product or at least have taken our training course. The Slack is often a place where end-user questions and feedback is initially shared, so it is recommended that someone technical from the team be present. There are also a handful of channels aimed at those building integrations, which tend to be a font of knowledge.
+- Программисты в партнерских продуктах, которые разрабатывают и поддерживают интеграции с dbt Core или dbt Cloud
+  Это успешно, когда инженеры знакомы с dbt как продуктом или хотя бы прошли наш обучающий курс. Slack часто является местом, где первоначально делятся вопросами и отзывами конечных пользователей, поэтому рекомендуется, чтобы кто-то технический из команды присутствовал. Также есть несколько каналов, ориентированных на тех, кто разрабатывает интеграции, которые являются источником знаний.
 
-### Who might struggle in the dbt community
+### Кто может испытывать трудности в сообществе dbt
 
-- People in marketing roles
-  dbt Slack is not a marketing channel. Attempts to use it as such invariably fall flat and can even lead to people having a negative view of a product. This doesn’t mean that dbt can’t serve marketing objectives, but a long-term commitment to engagement is the only proven method to do this sustainably.
+- Люди в маркетинговых ролях
+  Slack dbt не является маркетинговым каналом. Попытки использовать его в таком качестве неизменно терпят неудачу и могут даже привести к негативному восприятию продукта. Это не означает, что dbt не может служить маркетинговым целям, но долгосрочная приверженность взаимодействию является единственным проверенным методом для этого.
 
-- People in product roles
-  The dbt Community can be an invaluable source of feedback on a product. There are two primary ways this can happen &mdash; organically (community members proactively suggesting a new feature) and via direct calls for feedback and user research. Immediate calls for engagement must be done in your dedicated #tools channel. Direct calls should be used sparingly, as they can overwhelm more organic discussions and feedback.
+- Люди в продуктовых ролях
+  Сообщество dbt может быть бесценным источником отзывов о продукте. Существует два основных способа, как это может произойти &mdash; органически (члены сообщества проактивно предлагают новую функцию) и через прямые запросы на отзывы и исследования пользователей. Немедленные запросы на взаимодействие должны осуществляться в вашем выделенном канале #tools. Прямые запросы следует использовать с осторожностью, так как они могут перегрузить более органические обсуждения и отзывы.
 
-### Who is the audience for an adapter release?
+### Кто является аудиторией для выпуска адаптера?
 
-  A new adapter is likely to drive huge community interest from several groups of people:
-    - People who are currently using the database that the adapter is supporting
-    - People who may be adopting the database in the near future.
-    - People who are interested in dbt development in general.
+  Новый адаптер, вероятно, вызовет огромный интерес сообщества у нескольких групп людей:
+    - Люди, которые в настоящее время используют базу данных, которую поддерживает адаптер
+    - Люди, которые могут принять базу данных в ближайшем будущем.
+    - Люди, которые интересуются разработкой dbt в целом.
 
-The database users will be your primary audience and the most helpful in achieving success. Engage them directly in the adapter’s dedicated Slack channel. If one does not exist already, reach out in #channel-requests, and we will get one made for you and include it in an announcement about new channels.
+Пользователи базы данных будут вашей основной аудиторией и наиболее полезными для достижения успеха. Взаимодействуйте с ними напрямую в выделенном канале Slack адаптера. Если такого канала еще нет, обратитесь в #channel-requests, и мы создадим его для вас и включим в объявление о новых каналах.
 
-The final group is where non-slack community engagement becomes important. Twitter and LinkedIn are both great places to interact with a broad audience. A well-orchestrated adapter release can generate impactful and authentic engagement.
+Последняя группа &mdash; это та, где становится важным взаимодействие с сообществом вне Slack. Twitter и LinkedIn &mdash; отличные места для взаимодействия с широкой аудиторией. Хорошо организованный выпуск адаптера может вызвать значительное и подлинное взаимодействие.
 
-### How to message the initial rollout and follow-up content
+### Как сообщить о начальном выпуске и последующем контенте
 
-Tell a story that engages dbt users and the community. Highlight new use cases and functionality unlocked by the adapter in a way that will resonate with each segment.
+Расскажите историю, которая вовлечет пользователей dbt и сообщество. Подчеркните новые случаи использования и функциональность, которые открывает адаптер, так, чтобы это резонировало с каждым сегментом.
 
-- Existing users of your technology who are new to dbt
-  - Provide a general overview of the value dbt will deliver to your users. This can lean on dbt's messaging and talking points which are laid out in the [dbt viewpoint.](/community/resources/viewpoint)
-  - Give examples of a rollout that speaks to the overall value of dbt and your product.
+- Существующие пользователи вашей технологии, которые новички в dbt
+  - Предоставьте общий обзор ценности, которую dbt принесет вашим пользователям. Это может опираться на сообщения и ключевые моменты dbt, изложенные в [точке зрения dbt.](/community/resources/viewpoint)
+  - Приведите примеры развертывания, которые говорят о общей ценности dbt и вашего продукта.
 
-- Users who are already familiar with dbt and the community
-  - Consider unique use cases or advantages your adapter provide over existing adapters. Who will be excited for this?
-  - Contribute to the dbt Community and ensure that dbt users on your adapter are well supported (tutorial content, packages, documentation, etc).
-  - Example of a rollout that is compelling for those familiar with dbt: [Firebolt](https://www.linkedin.com/feed/update/urn:li:activity:6879090752459182080/)
+- Пользователи, которые уже знакомы с dbt и сообществом
+  - Рассмотрите уникальные случаи использования или преимущества, которые ваш адаптер предоставляет по сравнению с существующими адаптерами. Кто будет в восторге от этого?
+  - Внесите вклад в сообщество dbt и убедитесь, что пользователи dbt на вашем адаптере хорошо поддерживаются (учебный контент, пакеты, документация и т.д.).
+  - Пример развертывания, который привлекателен для тех, кто знаком с dbt: [Firebolt](https://www.linkedin.com/feed/update/urn:li:activity:6879090752459182080/)
 
-### Tactically manage distribution of content about new or existing adapters
+### Тактически управляйте распространением контента о новых или существующих адаптерах
 
-There are tactical pieces on how and where to share that help ensure success.
+Существуют тактические элементы о том, как и где делиться, которые помогают обеспечить успех.
 
-- On slack:
-  - #i-made-this channel &mdash; this channel has a policy against “marketing” and “content marketing” posts, but it should be successful if you write your content with the above guidelines in mind. Even with that, it’s important to post here sparingly.
-  - Your own database / tool channel &mdash; this is where the people who have opted in to receive communications from you and always a great place to share things that are relevant to them.
+- В Slack:
+  - Канал #i-made-this &mdash; в этом канале действует политика против "маркетинга" и "контент-маркетинга", но он должен быть успешным, если вы напишете свой контент с учетом вышеуказанных рекомендаций. Даже с этим важно публиковать здесь умеренно.
+  - Ваш собственный канал базы данных / инструмента &mdash; это место, где люди, которые выбрали получать от вас сообщения, и всегда отличное место для обмена тем, что для них актуально.
 
-- On social media:
+- В социальных сетях:
   - Twitter
   - LinkedIn
-  - Social media posts _from the author_ or an individual connected to the project tend to have better engagement than posts from a company or organization account.
-  - Ask your partner representative about:
-    - Retweets and shares from the official dbt Labs accounts.
-    - Flagging posts internally at dbt Labs to get individual employees to share.
+  - Сообщения в социальных сетях _от автора_ или человека, связанного с проектом, как правило, имеют лучшее взаимодействие, чем сообщения от компании или организационного аккаунта.
+  - Спросите у вашего представителя партнера о:
+    - Ретвиты и репосты от официальных аккаунтов dbt Labs.
+    - Пометка сообщений внутри dbt Labs, чтобы отдельные сотрудники могли делиться ими.
 
-#### Measuring engagement
+#### Измерение вовлеченности
 
-You don’t need 1000 people in a channel to succeed, but you need at least a few active participants who can make it feel lived in. If you’re comfortable working in public, this could be members of your team, or it can be a few people who you know that are highly engaged and would be interested in participating. Having even 2 or 3 regulars hanging out in a channel is all that’s needed for a successful start and is, in fact, much more impactful than 250 people that never post.
+Вам не нужно 1000 человек в канале для успеха, но вам нужно как минимум несколько активных участников, которые могут сделать его живым. Если вам комфортно работать публично, это могут быть члены вашей команды, или это могут быть несколько человек, которых вы знаете, которые очень вовлечены и были бы заинтересованы в участии. Даже 2 или 3 постоянных участника в канале &mdash; это все, что нужно для успешного старта, и это, на самом деле, гораздо более значимо, чем 250 человек, которые никогда не публикуют сообщения.
 
-### How to announce a new adapter
+### Как объявить о новом адаптере
 
-We’d recommend _against_ boilerplate announcements and encourage finding a unique voice. That being said, there are a couple of things that we’d want to include:
+Мы рекомендуем _не_ использовать шаблонные объявления и поощряем поиск уникального голоса. Тем не менее, есть несколько вещей, которые мы хотели бы включить:
 
-- A summary of the value prop of your database / technology for users who aren’t familiar.
-- The personas that might be interested in this news.
-- A description of what the adapter _is_.  For example:
-  > With the release of our new dbt adapter, you’ll be able to to use dbt to model and transform your data in [name-of-your-org]
-- Particular or unique use cases or functionality unlocked by the adapter.
-- Plans for future / ongoing support / development.
-- The link to the documentation for using the adapter on the dbt Labs docs site.
-- An announcement blog.
+- Краткое изложение ценностного предложения вашей базы данных / технологии для пользователей, которые не знакомы.
+- Персоны, которые могут быть заинтересованы в этой новости.
+- Описание того, что такое адаптер. Например:
+  > С выпуском нашего нового адаптера dbt, вы сможете использовать dbt для моделирования и преобразования ваших данных в [название вашей организации]
+- Особые или уникальные случаи использования или функциональность, открываемые адаптером.
+- Планы на будущее / постоянную поддержку / разработку.
+- Ссылка на документацию по использованию адаптера на сайте документации dbt Labs.
+- Объявление в блоге.
 
-#### Announcing new release versions of existing adapters
+#### Объявление о новых версиях существующих адаптеров
 
-This can vary substantially depending on the nature of the release but a good baseline is the types of release messages that [we put out in the #dbt-releases](https://getdbt.slack.com/archives/C37J8BQEL/p1651242161526509) channel.
+Это может значительно варьироваться в зависимости от характера выпуска, но хорошей основой являются типы сообщений о выпуске, которые [мы публикуем в канале #dbt-releases](https://getdbt.slack.com/archives/C37J8BQEL/p1651242161526509).
 
-![Full Release Post](/img/adapter-guide/0-full-release-notes.png)
+![Полный пост о выпуске](/img/adapter-guide/0-full-release-notes.png)
 
-Breaking this down:
+Разбивая это на части:
 
-- Visually distinctive announcement - make it clear this is a release
+- Визуально отличительное объявление - сделайте его ясным, что это выпуск
     <Lightbox src="/img/adapter-guide/1-announcement.png" title="title"/>
-- Short written description of what is in the release
+- Краткое письменное описание того, что входит в выпуск
     <Lightbox src="/img/adapter-guide/2-short-description.png" title="description"/>
-- Links to additional resources
+- Ссылки на дополнительные ресурсы
    <Lightbox src="/img/adapter-guide/3-additional-resources.png" title="more resources"/>
-- Implementation instructions:
+- Инструкции по реализации:
     <Lightbox src="/img/adapter-guide/4-installation.png" title="more installation"/>
-- Contributor recognition (if applicable)
+- Признание вклада (если применимо)
     <Lightbox src="/img/adapter-guide/6-thank-contribs.png" title="thank yous"/>
 
-## Build a trusted adapter
+## Создание доверенного адаптера
 
-The Trusted Adapter Program exists to allow adapter maintainers to demonstrate to the dbt community that your adapter is trusted to be used in production.
+Программа Trusted Adapter существует для того, чтобы позволить поддерживающим адаптеры продемонстрировать сообществу dbt, что ваш адаптер можно доверять использовать в производстве.
 
-The very first data platform dbt supported was Redshift followed quickly by Postgres ([dbt-core#174](https://github.com/dbt-labs/dbt-core/pull/174)). In 2017, back when dbt Labs (née Fishtown Analytics) was still a data consultancy, we added support for Snowflake and BigQuery. We also turned dbt's database support into an adapter framework ([dbt-core#259](https://github.com/dbt-labs/dbt-core/pull/259/)), and a plugin system a few years later. For years, dbt Labs specialized in those four data platforms and became experts in them. However, the surface area of all possible databases, their respective nuances, and keeping them up-to-date and bug-free is a Herculean and/or Sisyphean task that couldn't be done by a single person or even a single team! Enter the dbt community which enables dbt Core to work on more than 30 different databases (32 as of Sep '22)!
+Первая платформа данных, поддерживаемая dbt, была Redshift, за которой быстро последовал Postgres ([dbt-core#174](https://github.com/dbt-labs/dbt-core/pull/174)). В 2017 году, когда dbt Labs (ранее Fishtown Analytics) все еще была консалтинговой компанией по данным, мы добавили поддержку Snowflake и BigQuery. Мы также превратили поддержку баз данных dbt в фреймворк адаптеров ([dbt-core#259](https://github.com/dbt-labs/dbt-core/pull/259/)), а несколько лет спустя &mdash; в систему плагинов. В течение многих лет dbt Labs специализировалась на этих четырех платформах данных и стала экспертами в них. Однако охват всех возможных баз данных, их соответствующих нюансов и поддержание их в актуальном состоянии и без ошибок &mdash; это задача, которую не может выполнить один человек или даже одна команда! Вступает в игру сообщество dbt, которое позволяет dbt Core работать с более чем 30 различными базами данных (32 на сентябрь '22)!
 
-Free and open-source tools for the data professional are increasingly abundant. This is by-and-large a _good thing_, however it requires due dilligence that wasn't required in a paid-license, closed-source software world. Before taking a dependency on an open-source projet is is important to determine the answer to the following questions:
+Бесплатные и открытые инструменты для профессионалов в области данных становятся все более доступными. Это в основном _хорошо_, однако это требует должной осмотрительности, которая не требовалась в мире программного обеспечения с платной лицензией и закрытым исходным кодом. Перед тем, как взять на себя зависимость от проекта с открытым исходным кодом, важно определить ответ на следующие вопросы:
 
-1. Does it work?
-2. Does it meet my team's specific use case?
-3. Does anyone "own" the code, or is anyone liable for ensuring it works?
-4. Do bugs get fixed quickly?
-5. Does it stay up-to-date with new Core features?
-6. Is the usage substantial enough to self-sustain?
-7. What risks do I take on by taking a dependency on this library?
+1. Работает ли это?
+2. Соответствует ли это конкретному случаю использования моей команды?
+3. Кто-то "владеет" кодом или кто-то несет ответственность за его работоспособность?
+4. Быстро ли исправляются ошибки?
+5. Остается ли это актуальным с новыми функциями Core?
+6. Достаточно ли велико использование, чтобы поддерживать себя?
+7. Какие риски я беру на себя, принимая зависимость от этой библиотеки?
 
-These are valid, important questions to answer—especially given that `dbt-core` itself only put out its first stable release (major version v1.0) in December 2021! Indeed, up until now, the majority of new user questions in database-specific channels are some form of:
+Это важные и значимые вопросы, на которые нужно ответить &mdash; особенно учитывая, что `dbt-core` сам выпустил свою первую стабильную версию (основная версия v1.0) в декабре 2021 года! Действительно, до сих пор большинство новых вопросов пользователей в каналах, посвященных конкретным базам данных, являются некоторой формой:
 
-- "How mature is `dbt-<ADAPTER>`? Any gotchas I should be aware of before I start exploring?"
-- "has anyone here used `dbt-<ADAPTER>` for production models?"
-- "I've been playing with  `dbt-<ADAPTER>` -- I was able to install and run my initial experiments. I noticed that there are certain features mentioned on the documentation that are marked as 'not ok' or 'not tested'. What are the risks?
-I'd love to make a statement on my team to adopt DBT [sic], but I'm pretty sure questions will be asked around the possible limitations of the adapter or if there are other companies out there using dbt [sic] with Oracle DB in production, etc."
+- "Насколько зрел `dbt-<ADAPTER>`? Есть ли какие-то подводные камни, о которых я должен знать, прежде чем начать исследовать?"
+- "Кто-нибудь здесь использовал `dbt-<ADAPTER>` для производственных моделей?"
+- "Я играл с `dbt-<ADAPTER>` &mdash; я смог установить и запустить свои начальные эксперименты. Я заметил, что есть определенные функции, упомянутые в документации, которые помечены как 'не ок' или 'не протестированы'. Каковы риски?
+Я бы хотел сделать заявление в своей команде о принятии DBT [sic], но я уверен, что будут заданы вопросы о возможных ограничениях адаптера или если есть другие компании, использующие dbt [sic] с Oracle DB в производстве и т.д."
 
-There has been a tendency to trust the dbt Labs-maintained adapters over community- and vendor-supported adapters, but repo ownership is only one among many indicators of software quality. We aim to help our users feel well-informed as to the caliber of an adapter with a new program.
+Существует тенденция доверять адаптерам, поддерживаемым dbt Labs, больше, чем адаптерам, поддерживаемым сообществом и поставщиками, но владение репозиторием &mdash; это только один из многих показателей качества программного обеспечения. Мы стремимся помочь нашим пользователям быть хорошо информированными о качестве адаптера с помощью новой программы.
 
-### What it means to be trusted
+### Что значит быть доверенным
 
-By opting into the below, you agree to this, and we take you at your word. dbt Labs reserves the right to remove an adapter from the trusted adapter list at any time, should any of the below guidelines not be met.
+Согласившись с нижеприведенным, вы соглашаетесь с этим, и мы принимаем вас на слово. dbt Labs оставляет за собой право удалить адаптер из списка доверенных адаптеров в любое время, если какие-либо из нижеприведенных руководств не будут соблюдены.
 
-### Feature Completeness
+### Полнота функций
 
-To be considered for the Trusted Adapter Program, the adapter must cover the essential functionality of dbt Core given below, with best effort given to support the entire feature set.
+Чтобы быть рассмотренным для программы Trusted Adapter, адаптер должен охватывать основную функциональность dbt Core, указанную ниже, с максимальными усилиями для поддержки всего набора функций.
 
-Essential functionality includes (but is not limited to the following features):
+Основная функциональность включает (но не ограничивается следующими функциями):
 
-- table, view, and seed materializations
-- dbt tests
+- материализации таблиц, представлений и семян
+- тесты dbt
 
-The adapter should have the required documentation for connecting and configuring the adapter. The dbt docs site should be the single source of truth for this information. These docs should be kept up-to-date.
+Адаптер должен иметь необходимую документацию для подключения и настройки адаптера. Сайт документации dbt должен быть единственным источником правды для этой информации. Эти документы должны поддерживаться в актуальном состоянии.
 
-Proceed to the "Document a new adapter" step for more information.
+Перейдите к шагу "Документирование нового адаптера" для получения дополнительной информации.
 
-### Release cadence
+### Частота выпусков
 
-Keeping an adapter up-to-date with the latest features of dbt, as defined in [dbt-adapters](https://github.com/dbt-labs/dbt-adapters), is an integral part of being a trusted adapter. We encourage adapter maintainers to keep track of new dbt-adapter releases and support new features relevant to their platform, ensuring users have the best version of dbt. 
+Поддержание адаптера в актуальном состоянии с последними функциями dbt, как определено в [dbt-adapters](https://github.com/dbt-labs/dbt-adapters), является неотъемлемой частью доверенного адаптера. Мы призываем поддерживающих адаптеры следить за новыми выпусками dbt-adapter и поддерживать новые функции, актуальные для их платформы, обеспечивая пользователям лучшую версию dbt.
 
-Before [dbt Core version 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#new-dbt-core-adapter-installation-procedure), adapter versions needed to match the semantic versioning of dbt Core. After v1.8, this is no longer required. This means users can use an adapter on v1.8+ with a different version of dbt Core v1.8+. For example, a user could use dbt-core v1.9 with dbt-postgres v1.8. 
+До [версии dbt Core 1.8](/docs/dbt-versions/core-upgrade/upgrading-to-v1.8#new-dbt-core-adapter-installation-procedure) версии адаптеров должны были соответствовать семантическому версионированию dbt Core. После v1.8 это больше не требуется. Это означает, что пользователи могут использовать адаптер на v1.8+ с другой версией dbt Core v1.8+. Например, пользователь может использовать dbt-core v1.9 с dbt-postgres v1.8.
 
-### Community responsiveness
+### Отзывчивость сообщества
 
-On a best effort basis, active participation and engagement with the dbt Community across the following forums:
+На основе лучших усилий, активное участие и взаимодействие с сообществом dbt через следующие форумы:
 
-- Being responsive to feedback and supporting user enablement in dbt Community’s Slack workspace
-- Responding with comments to issues raised in public dbt adapter code repository
-- Merging in code contributions from community members as deemed appropriate
+- Быть отзывчивым на отзывы и поддерживать пользователей в рабочем пространстве Slack сообщества dbt
+- Отвечать с комментариями на проблемы, поднятые в публичном репозитории кода адаптера dbt
+- Объединять кодовые вклады от членов сообщества, если это уместно
 
-### Security Practices
+### Практики безопасности
 
-Trusted adapters will not do any of the following:
+Доверенные адаптеры не будут делать следующее:
 
-- Output to logs or file either access credentials information to or data from the underlying data platform itself.
-- Make API calls other than those expressly required for using dbt features (adapters may not add additional logging)
-- Obfuscate code and/or functionality so as to avoid detection
+- Выводить в логи или файлы информацию о доступе или данные из самой платформы данных.
+- Делать API-вызовы, кроме тех, которые явно требуются для использования функций dbt (адаптеры не могут добавлять дополнительное логирование)
+- Скрывать код и/или функциональность, чтобы избежать обнаружения
 
-Additionally, to avoid supply-chain attacks:
+Кроме того, чтобы избежать атак на цепочку поставок:
 
-- Use an automated service to keep Python dependencies up-to-date (such as  Dependabot or similar),
-- Publish directly to PyPI from the dbt adapter code repository by using trusted CI/CD process (such as GitHub actions)
-- Restrict admin access to both the respective code (GitHub) and package (PyPI) repositories
-- Identify and mitigate security vulnerabilities by use of a static code analyzing tool (such as Snyk) as part of a CI/CD process
+- Использовать автоматизированный сервис для поддержания актуальности зависимостей Python (например, Dependabot или аналогичный),
+- Публиковать напрямую в PyPI из репозитория кода адаптера dbt, используя доверенный процесс CI/CD (например, GitHub actions)
+- Ограничить административный доступ как к соответствующему коду (GitHub), так и к репозиторию пакетов (PyPI)
+- Определять и устранять уязвимости безопасности с помощью инструмента статического анализа кода (например, Snyk) в рамках процесса CI/CD
 
-### Other considerations
+### Другие соображения
 
-The adapter repository is:
+Репозиторий адаптера:
 
-- open-souce licensed,
-- published to PyPI, and
-- automatically tests the codebase against dbt Lab's provided adapter test suite
+- имеет лицензию с открытым исходным кодом,
+- опубликован в PyPI, и
+- автоматически тестирует кодовую базу с использованием предоставленного dbt Labs набора тестов адаптера
 
-### How to get an adapter on the trusted list
+### Как добавить адаптер в список доверенных
 
-Open an issue on the [docs.getdbt.com GitHub repository](https://github.com/dbt-labs/docs.getdbt.com) using the "Add adapter to Trusted list" template. In addition to contact information, it will ask confirm that you agree to the following.
+Откройте задачу в [репозитории GitHub docs.getdbt.com](https://github.com/dbt-labs/docs.getdbt.com), используя шаблон "Добавить адаптер в список доверенных". Помимо контактной информации, он попросит подтвердить, что вы согласны с следующим.
 
-1. my adapter meet the guidelines given above
-2. I will make best reasonable effort that this continues to be so
-3. checkbox: I acknowledge that dbt Labs reserves the right to remove an adapter from the trusted adapter list at any time, should any of the above guidelines not be met.
+1. мой адаптер соответствует приведенным выше руководствам
+2. Я приложу все разумные усилия, чтобы это продолжалось
+3. флажок: Я признаю, что dbt Labs оставляет за собой право удалить адаптер из списка доверенных адаптеров в любое время, если какие-либо из вышеуказанных руководств не будут соблюдены.
 
-The approval workflow is as follows:
+Процесс утверждения следующий:
 
-1. create and populate the template-created issue
-2. dbt Labs will respond as quickly as possible (maximally four weeks, though likely faster)
-3. If approved, dbt Labs will create and merge a Pull request to formally add the adapter to the list.
+1. создать и заполнить задачу, созданную шаблоном
+2. dbt Labs ответит как можно быстрее (максимально четыре недели, хотя, вероятно, быстрее)
+3. Если утверждено, dbt Labs создаст и объединит Pull request, чтобы формально добавить адаптер в список.
 
-### Getting help for my trusted adapter
+### Получение помощи для моего доверенного адаптера
 
-Ask your question in #adapter-ecosystem channel of the dbt community Slack.
+Задайте свой вопрос в канале #adapter-ecosystem в Slack-сообществе dbt.
 
 </div>

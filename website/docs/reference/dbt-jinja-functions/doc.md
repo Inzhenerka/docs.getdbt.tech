@@ -1,5 +1,5 @@
 ---
-title: " О функции doc"
+title: "О функции doc"
 sidebar_label: "doc"
 id: "doc"
 description: "Используйте `doc` для ссылки на блоки документации в полях описания."

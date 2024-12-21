@@ -2,27 +2,27 @@
 title: "log"
 sibebar_label: "О функции log"
 id: "log"
-description: "Узнайте больше о функции log Jinja в dbt."
+description: "Узнайте больше о функции log в Jinja для dbt."
 ---
 
 __Аргументы__:
 
  * `msg`: Сообщение (строка) для записи в лог
- * `info`: Если False, записать в файл лога. Если True, записать как в файл лога, так и в stdout (по умолчанию=False)
+ * `info`: Если False, записать в лог-файл. Если True, записать как в лог-файл, так и в stdout (по умолчанию=False)
 
-Записывает строку либо в файл лога, либо в stdout.
+Записывает строку либо в лог-файл, либо в stdout.
 
 <details>
 	<summary>Исходный код</summary>
-	Смотрите на <a href="https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или следующий код в качестве источника: <br /><br />
+	Обратитесь к <a href="https://github.com/dbt-labs/dbt-core/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или к следующему коду в качестве источника: <br /><br />
 
 ```python
     def log(msg: str, info: bool = False) -> str: 
-        """Logs a line to either the log file or stdout.
+        """Записывает строку либо в лог-файл, либо в stdout.
 
-        :param msg: The message to log
-        :param info: If `False`, write to the log file. If `True`, write to
-            both the log file and stdout.
+        :param msg: Сообщение для записи в лог
+        :param info: Если `False`, записать в лог-файл. Если `True`, записать
+            как в лог-файл, так и в stdout.
 
         > macros/my_log_macro.sql
 
@@ -36,6 +36,9 @@ __Аргументы__:
             fire_event(JinjaLogDebug(msg=msg, node_info=get_node_info()))
         return ""
 ```
+	
+
+
 </details>
 
 ```sql

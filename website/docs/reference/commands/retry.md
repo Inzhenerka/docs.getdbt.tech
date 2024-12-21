@@ -4,9 +4,9 @@ sidebar_label: "retry"
 id: "retry"
 ---
 
-`dbt retry` повторно выполняет последнюю команду `dbt` с точки сбоя. Если ранее выполненная команда `dbt` была успешной, `retry` завершится как `no operation`.
+`dbt retry` повторно выполняет последнюю команду `dbt`, начиная с узла, где произошла ошибка. Если ранее выполненная команда `dbt` была успешной, `retry` завершится как `no operation` (без операции).
 
-Retry работает с следующими командами:
+Команда retry работает со следующими командами:
 
 - [`build`](/reference/commands/build)
 - [`compile`](/reference/commands/compile)
@@ -18,9 +18,9 @@ Retry работает с следующими командами:
 - [`run`](/reference/commands/run)
 - [`run-operation`](/reference/commands/run-operation)
 
-`dbt retry` ссылается на [run_results.json](/reference/artifacts/run-results-json), чтобы определить, с чего начинать. Выполнение `dbt retry` без исправления предыдущих ошибок приведет к <Term id="idempotent" /> результатам.
+`dbt retry` ссылается на [run_results.json](/reference/artifacts/run-results-json), чтобы определить, с какого места начать. Выполнение `dbt retry` без исправления предыдущих ошибок приведет к <Term id="idempotent" /> результатам.
 
-`dbt retry` повторно использует [selectors](/reference/node-selection/yaml-selectors) из ранее выполненной команды.
+`dbt retry` повторно использует [селекторы](/reference/node-selection/yaml-selectors) из ранее выполненной команды.
 
 Пример результатов выполнения `dbt retry` после успешного `dbt run`:
 
@@ -96,4 +96,4 @@ Completed successfully
 Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-В каждом сценарии `dbt retry` продолжает с места ошибки, а не выполняет все зависимости выше по цепочке снова.
+В каждом сценарии `dbt retry` продолжает выполнение с места ошибки, а не запускает все вышестоящие зависимости заново.

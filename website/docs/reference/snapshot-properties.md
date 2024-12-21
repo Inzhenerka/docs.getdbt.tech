@@ -1,25 +1,25 @@
 ---
 title: Свойства снимков
-description: "Прочитайте это руководство, чтобы узнать о использовании свойств источников в dbt."
+description: "Прочтите это руководство, чтобы узнать о использовании свойств источников в dbt."
 ---
 
 <VersionBlock firstVersion="1.9">
 
-В dbt версии 1.9 и позже снимки определяются и настраиваются в YAML файлах в директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Свойства снимков объявляются в этих YAML файлах, что позволяет вам определять как конфигурации снимков, так и их свойства в одном месте.
+В dbt версии 1.9 и позже снимки определяются и настраиваются в YAML-файлах в вашем каталоге `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Свойства снимков объявляются в этих YAML-файлах, что позволяет вам определять как конфигурации снимков, так и их свойства в одном месте.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.8">
 
 Свойства снимков могут быть объявлены в `.yml` файлах в:
-- вашей директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)).
-- вашей директории `models/` (как определено в конфигурации [`model-paths`](/reference/project-configs/model-paths))
+- вашем каталоге `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)).
+- вашем каталоге `models/` (как определено в конфигурации [`model-paths`](/reference/project-configs/model-paths))
 
-Обратите внимание, что в dbt версии 1.9 и позже снимки определяются в обновленном синтаксисе с использованием YAML файла в директории `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Для более быстрого и эффективного управления рассмотрите обновленный синтаксис YAML для снимков, доступный сейчас в [последнем релизе dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и скоро в [dbt Core v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
+Обратите внимание, что в dbt версии 1.9 и позже снимки определяются в обновленном синтаксисе с использованием YAML-файла в вашем каталоге `snapshots/` (как определено в конфигурации [`snapshot-paths`](/reference/project-configs/snapshot-paths)). Для более быстрого и эффективного управления рассмотрите обновленный синтаксис YAML для снимков, который уже доступен в [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и вскоре будет доступен в [dbt Core v1.9](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
 </VersionBlock>
 
-Мы рекомендуем помещать их в директорию `snapshots/`. Вы можете назвать эти файлы `whatever_you_want.yml` и вложить их на произвольную глубину в подпапки внутри директории `snapshots/` или `models/`.
+Мы рекомендуем размещать их в каталоге `snapshots/`. Вы можете назвать эти файлы как угодно, например, `whatever_you_want.yml`, и вложить их на любую глубину в подкаталоги внутри каталога `snapshots/` или `models/`.
 
 <VersionBlock firstVersion="1.9">
 

@@ -223,7 +223,7 @@ var siteSettings = {
         },
       ],
 
-      copyright: `&copy; ${new Date().getFullYear()} ООО "ИНЖЕНЕРКАТЕХ"<br>Основано на сайте компании dbt Labs, Inc. All Rights Reserved`,
+      copyright: `&copy; ${new Date().getFullYear()} ООО "ИНЖЕНЕРКАТЕХ"<br>Основано на материалах компании dbt Labs, Inc. All Rights Reserved`,
     },
   },
   presets: [

@@ -1,41 +1,41 @@
 ---
-title: "Файл JSON с результатами выполнения"
+title: "JSON файл результатов выполнения"
 sidebar_label: "Результаты выполнения"
 ---
 
 **Текущая схема**: [`v5`](https://schemas.getdbt.com/dbt/run-results/v5/index.html)
 
-**Сгенерировано с помощью:**
-[`build`](/reference/commands/build)  
-[`compile`](/reference/commands/compile)  
-[`docs generate`](/reference/commands/cmd-docs)  
-[`run`](/reference/commands/run)  
-[`seed`](/reference/commands/seed)  
-[`snapshot`](/reference/commands/snapshot)  
-[`test`](/reference/commands/test)  
-[`run-operation`](/reference/commands/run-operation)  
+**Создается при выполнении:**
+[`build`](/reference/commands/build)
+[`compile`](/reference/commands/compile)
+[`docs generate`](/reference/commands/cmd-docs)
+[`run`](/reference/commands/run)
+[`seed`](/reference/commands/seed)
+[`snapshot`](/reference/commands/snapshot)
+[`test`](/reference/commands/test)
+[`run-operation`](/reference/commands/run-operation)
 
-Этот файл содержит информацию о завершенном вызове dbt, включая информацию о времени и статусе для каждого узла (модель, тест и т.д.), который был выполнен. В совокупности несколько `run_results.json` могут быть объединены для расчета среднего времени выполнения модели, коэффициента неудач тестов, количества изменений записей, зафиксированных снимками и т.д.
+Этот файл содержит информацию о завершенном вызове dbt, включая данные о времени и статусе для каждого узла (модель, тест и т.д.), который был выполнен. В совокупности, множество `run_results.json` могут быть объединены для расчета среднего времени выполнения моделей, частоты отказов тестов, количества изменений записей, зафиксированных снимками и т.д.
 
-Обратите внимание, что в результатах выполнения отображаются только выполненные узлы. Если у вас есть несколько шагов выполнения или тестирования с различными критериями, каждый из них будет генерировать разные результаты выполнения.
+Обратите внимание, что в результатах выполнения отображаются только выполненные узлы. Если у вас есть несколько шагов выполнения или тестирования с разными критериями, каждый из них создаст разные результаты выполнения.
 
 Примечание: `dbt source freshness` создает другой артефакт, [`sources.json`](/reference/artifacts/sources-json), с аналогичными атрибутами.
 
 ### Ключи верхнего уровня
 
 - [`metadata`](/reference/artifacts/dbt-artifacts#common-metadata)
-- `args`: Словарь аргументов, переданных в команду CLI или метод RPC, который создал этот артефакт. Наиболее полезным является `which` (команда) или `rpc_method`. Этот словарь исключает нулевые значения и включает значения по умолчанию, если они не равны нулю. Эквивалентно [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) в контексте dbt-Jinja.
+- `args`: Словарь аргументов, переданных в команду CLI или метод RPC, который создал этот артефакт. Наиболее полезны `which` (команда) или `rpc_method`. Этот словарь исключает значения null и включает значения по умолчанию, если они не null. Эквивалентно [`invocation_args_dict`](/reference/dbt-jinja-functions/flags#invocation_args_dict) в контексте dbt-Jinja.
 - `elapsed_time`: Общее время вызова в секундах.
 - `results`: Массив деталей выполнения узлов.
 
-Каждая запись в `results` является [`объектом Result`](/reference/dbt-classes#result-objects) с одним отличием: вместо включения всего объекта `node` включен только `unique_id`. (Полный объект `node` записывается в [`manifest.json`](/reference/artifacts/manifest-json).)
+Каждая запись в `results` является [`Result` объектом](/reference/dbt-classes#result-objects), с одним отличием: вместо включения всего объекта `node`, включается только `unique_id`. (Полный объект `node` записывается в [`manifest.json`](/reference/artifacts/manifest-json).)
 
-- `unique_id`: Уникальный идентификатор узла, который сопоставляет результаты с `nodes` в [манифесте](/reference/artifacts/manifest-json)
-- `status`: Интерпретация dbt успеха, неудачи или ошибки выполнения
-- `thread_id`: Какой поток выполнил этот узел? Например, `Thread-1`
+- `unique_id`: Уникальный идентификатор узла, который связывает результаты с `nodes` в [манифесте](/reference/artifacts/manifest-json)
+- `status`: Интерпретация dbt успешности выполнения, отказа или ошибки
+- `thread_id`: Какая нить выполняла этот узел? Например, `Thread-1`
 - `execution_time`: Общее время, затраченное на выполнение этого узла
-- `timing`: Массив, который разбивает время выполнения на этапы (часто `compile` + `execute`)
-- `message`: Как dbt будет сообщать этот результат в CLI, основываясь на информации, возвращенной из базы данных
+- `timing`: Массив, разбивающий время выполнения на этапы (часто `compile` + `execute`)
+- `message`: Как dbt сообщит об этом результате в CLI, на основе информации, возвращенной из базы данных
 
 import RowsAffected from '/snippets/_run-result.md';
 
@@ -43,21 +43,21 @@ import RowsAffected from '/snippets/_run-result.md';
 
 <!-- этот фрагмент взят из https://github.com/dbt-labs/docs.getdbt.com/tree/current/website/snippets/_run-result-->
 
-Файл run_results.json включает три атрибута, относящихся к состоянию `applied`, которые дополняют `unique_id`:
+`run_results.json` включает три атрибута, связанные с состоянием `applied`, которые дополняют `unique_id`:
 
-- `compiled`: Логическое значение статуса компиляции узла (`False` после разбора, но `True` после компиляции).
-- `compiled_code`: Сформированная строка кода, который был скомпилирован (пустая после разбора, но полная строка после компиляции).
+- `compiled`: Логическое значение статуса компиляции узла (`False` после парсинга, но `True` после компиляции).
+- `compiled_code`: Отображенная строка кода, который был скомпилирован (пустая после парсинга, но полная строка после компиляции).
 - `relation_name`: Полностью квалифицированное имя объекта, который был (или будет) создан/обновлен в базе данных.
 
-Продолжайте искать дополнительную информацию о `logical` состоянии узлов, используя полный объект узла в manifest.json через `unique_id`.
+Продолжайте искать дополнительную информацию о `логическом` состоянии узлов, используя полный объект узла в manifest.json через `unique_id`.
 
 ## Примеры
 
-Вот несколько примеров и соответствующий вывод в файл `run_results.json`.
+Вот несколько примеров и результирующий вывод в файл `run_results.json`.
 
 ### Результаты компиляции модели
 
-Предположим, у вас есть модель, которая выглядит так:
+Предположим, у вас есть модель, которая выглядит следующим образом:
 
 <File name='models/my_model.sql'>
 
@@ -73,7 +73,7 @@ select {{ dbt.current_timestamp() }} as created_at
 dbt compile -s my_model
 ```
 
-Вот фрагмент из `run_results.json`:
+Вот фрагмент вывода из `run_results.json`:
 
 ```json
     {
@@ -104,7 +104,7 @@ dbt compile -s my_model
 
 ### Запуск общих тестов данных
 
-Используйте конфигурацию [`store_failures_as`](/reference/resource-configs/store_failures_as), чтобы хранить неудачи только для одного теста данных в базе данных:
+Используйте конфигурацию [`store_failures_as`](/reference/resource-configs/store_failures_as), чтобы сохранять отказы только для одного теста данных в базе данных:
 
 <File name='models/_models.yml'>
 
@@ -124,13 +124,13 @@ models:
 
 </File>
 
-Запустите встроенный тест `unique` и сохраните неудачи в виде таблицы:
+Запустите встроенный тест `unique` и сохраните отказы в виде таблицы:
 
 ```shell
 dbt test -s my_model
 ```
 
-Вот фрагмент из `run_results.json`:
+Вот фрагмент вывода из `run_results.json`:
 
 ```json
   "results": [

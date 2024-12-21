@@ -1,9 +1,8 @@
 ---
-title: "Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake" 
+title: "Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake"
 id: "dbt-python-snowpark"
-description: "Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake"
-hoverSnippet: Learn how to leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake.
-# time_to_complete: '30 minutes' commenting out until we test
+description: "Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake"
+hoverSnippet: Узнайте, как использовать dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake.
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Snowflake']
@@ -13,78 +12,78 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-The focus of this workshop will be to demonstrate how we can use both *SQL and python together* in the same workflow to run *both analytics and machine learning models* on dbt Cloud.
+Цель этого воркшопа — продемонстрировать, как можно использовать *SQL и Python вместе* в одном рабочем процессе для запуска *аналитических и моделей машинного обучения* в dbt Cloud.
 
-All code in today’s workshop can be found on [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1).
+Весь код сегодняшнего воркшопа можно найти на [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1).
 
-### What you'll use during the lab
+### Что вы будете использовать во время лабораторной работы
 
-- A [Snowflake account](https://trial.snowflake.com/) with ACCOUNTADMIN access
-- A [dbt Cloud account](https://www.getdbt.com/signup/)
+- Аккаунт [Snowflake](https://trial.snowflake.com/) с доступом ACCOUNTADMIN
+- Аккаунт [dbt Cloud](https://www.getdbt.com/signup/)
 
-### What you'll learn
+### Чему вы научитесь
 
-- How to build scalable data transformation pipelines using dbt, and Snowflake using SQL and Python
-- How to leverage copying data into Snowflake from a public S3 bucket
+- Как строить масштабируемые конвейеры преобразования данных с использованием dbt и Snowflake с помощью SQL и Python
+- Как использовать копирование данных в Snowflake из публичного S3-бакета
 
-### What you need to know
+### Что вам нужно знать
 
-- Basic to intermediate SQL and python.
-- Basic understanding of dbt fundamentals. We recommend the [dbt Fundamentals course](https://learn.getdbt.com) if you're interested.
-- High level machine learning process (encoding, training, testing)
-- Simple ML algorithms &mdash; we will use logistic regression to keep the focus on the *workflow*, not algorithms!
+- Базовые и средние знания SQL и Python.
+- Базовое понимание основ dbt. Мы рекомендуем [курс dbt Fundamentals](https://learn.getdbt.com), если вам интересно.
+- Общий процесс машинного обучения (кодирование, обучение, тестирование)
+- Простые алгоритмы ML &mdash; мы будем использовать логистическую регрессию, чтобы сосредоточиться на *рабочем процессе*, а не на алгоритмах!
 
-### What you'll build
+### Что вы создадите
 
-- A set of data analytics and prediction pipelines using Formula 1 data leveraging dbt and Snowflake, making use of best practices like data quality tests and code promotion between environments
-- We will create insights for:
-    1. Finding the lap time average and rolling average through the years (is it generally trending up or down)?
-    2. Which constructor has the fastest pit stops in 2021?
-    3. Predicting the position of each driver given using a decade of data (2010 - 2020)
+- Набор аналитических и предсказательных конвейеров данных, используя данные Формулы 1, с использованием dbt и Snowflake, применяя лучшие практики, такие как тесты качества данных и продвижение кода между средами
+- Мы создадим инсайты для:
+    1. Поиск среднего времени круга и скользящего среднего за годы (в целом оно увеличивается или уменьшается)?
+    2. Какой конструктор имеет самые быстрые пит-стопы в 2021 году?
+    3. Прогнозирование позиции каждого водителя, используя данные за десятилетие (2010 - 2020)
 
-As inputs, we are going to leverage Formula 1 datasets hosted on a dbt Labs public S3 bucket. We will create a Snowflake Stage for our CSV files then use Snowflake’s `COPY INTO` function to copy the data in from our CSV files into tables. The Formula 1 is available on [Kaggle](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020). The data is originally compiled from the [Ergast Developer API](http://ergast.com/mrd/).
+В качестве входных данных мы будем использовать наборы данных Формулы 1, размещенные в публичном S3-бакете dbt Labs. Мы создадим Snowflake Stage для наших CSV-файлов, а затем используем функцию Snowflake `COPY INTO`, чтобы скопировать данные из наших CSV-файлов в таблицы. Данные Формулы 1 доступны на [Kaggle](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020). Данные изначально собраны из [Ergast Developer API](http://ergast.com/mrd/).
 
-Overall we are going to set up the environments, build scalable pipelines in dbt, establish data tests, and promote code to production.
+В целом, мы настроим среды, построим масштабируемые конвейеры в dbt, установим тесты данных и продвинем код в производство.
 
-## Configure Snowflake
+## Настройка Snowflake
 
-1. Log in to your trial Snowflake account. You can [sign up for a Snowflake Trial Account using this form](https://signup.snowflake.com/) if you don’t have one.
-2. Ensure that your account is set up using **AWS** in the **US East (N. Virginia)**. We will be copying the data from a public AWS S3 bucket hosted by dbt Labs in the us-east-1 region. By ensuring our Snowflake environment setup matches our bucket region, we avoid any multi-region data copy and retrieval latency issues.
+1. Войдите в свой пробный аккаунт Snowflake. Вы можете [зарегистрироваться для пробного аккаунта Snowflake, используя эту форму](https://signup.snowflake.com/), если у вас его нет.
+2. Убедитесь, что ваш аккаунт настроен с использованием **AWS** в **US East (N. Virginia)**. Мы будем копировать данные из публичного AWS S3-бакета, размещенного dbt Labs в регионе us-east-1. Убедившись, что наша настройка среды Snowflake соответствует региону нашего бакета, мы избегаем любых задержек при копировании и извлечении данных между регионами.
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/1-snowflake-trial-AWS-setup.png" title="Snowflake trial"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/1-snowflake-trial-AWS-setup.png" title="Пробная версия Snowflake"/>
 
-3. After creating your account and verifying it from your sign-up email, Snowflake will direct you back to the UI called Snowsight.
+3. После создания вашего аккаунта и его подтверждения из письма для регистрации, Snowflake перенаправит вас обратно в интерфейс, называемый Snowsight.
 
-4. When Snowsight first opens, your window should look like the following, with you logged in as the ACCOUNTADMIN with demo worksheets open:
+4. Когда Snowsight впервые открывается, ваше окно должно выглядеть следующим образом, с вами, вошедшим в систему как ACCOUNTADMIN с открытыми демонстрационными листами:
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/2-new-snowflake-account.png" title="Snowflake trial demo worksheets"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/2-new-snowflake-account.png" title="Демонстрационные листы пробной версии Snowflake"/>
 
-5. Navigate to **Admin > Billing & Terms**. Click **Enable > Acknowledge & Continue** to enable Anaconda Python Packages to run in Snowflake.
+5. Перейдите в **Admin > Billing & Terms**. Нажмите **Enable > Acknowledge & Continue**, чтобы включить пакеты Anaconda Python для работы в Snowflake.
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/3-accept-anaconda-terms.jpeg" title="Anaconda terms"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/3-accept-anaconda-terms.jpeg" title="Условия Anaconda"/>
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/4-enable-anaconda.jpeg" title="Enable Anaconda"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/2-snowflake-configuration/4-enable-anaconda.jpeg" title="Включить Anaconda"/>
 
-6. Finally, create a new Worksheet by selecting **+ Worksheet** in the upper right corner.
+6. Наконец, создайте новый лист, выбрав **+ Worksheet** в правом верхнем углу.
 
-## Connect to data source
+## Подключение к источнику данных
 
-We need to obtain our data source by copying our Formula 1 data into Snowflake tables from a public S3 bucket that dbt Labs hosts.
+Нам нужно получить наш источник данных, скопировав наши данные Формулы 1 в таблицы Snowflake из публичного S3-бакета, который размещает dbt Labs.
 
-1. When a new Snowflake account is created, there should be a preconfigured warehouse in your account named `COMPUTE_WH`.
-2. If for any reason your account doesn’t have this warehouse, we can create a warehouse using the following script:
+1. Когда создается новый аккаунт Snowflake, в вашем аккаунте должен быть предварительно настроенный склад с именем `COMPUTE_WH`.
+2. Если по какой-либо причине в вашем аккаунте нет этого склада, мы можем создать склад, используя следующий скрипт:
 
     ```sql
     create or replace warehouse COMPUTE_WH with warehouse_size=XSMALL
     ```
 
-3. Rename the worksheet to `data setup script` since we will be placing code in this worksheet to ingest the Formula 1 data. Make sure you are still logged in as the **ACCOUNTADMIN** and select the **COMPUTE_WH** warehouse.
+3. Переименуйте лист в `data setup script`, так как мы будем размещать код в этом листе для загрузки данных Формулы 1. Убедитесь, что вы все еще вошли в систему как **ACCOUNTADMIN** и выберите склад **COMPUTE_WH**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/1-rename-worksheet-and-select-warehouse.png" title="Rename worksheet and select warehouse"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/1-rename-worksheet-and-select-warehouse.png" title="Переименовать лист и выбрать склад"/>
 
-4. Copy the following code into the main body of the Snowflake worksheet. You can also find this setup script under the `setup` folder in the [Git repository](https://github.com/dbt-labs/python-snowpark-formula1/blob/main/setup/setup_script_s3_to_snowflake.sql). The script is long since it's bring in all of the data we'll need today!
+4. Скопируйте следующий код в основное тело листа Snowflake. Вы также можете найти этот скрипт настройки в папке `setup` в [Git-репозитории](https://github.com/dbt-labs/python-snowpark-formula1/blob/main/setup/setup_script_s3_to_snowflake.sql). Скрипт длинный, так как он загружает все данные, которые нам понадобятся сегодня!
 
     ```sql
     -- create and define our formula1 database
@@ -233,122 +232,122 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
     ```
 
-5. Ensure all the commands are selected before running the query &mdash; an easy way to do this is to use Ctrl-a to highlight all of the code in the worksheet. Select **run** (blue triangle icon). Notice how the dot next to your **COMPUTE_WH** turns from gray to green as you run the query. The **status** table is the final table of all 8 tables loaded in.
+5. Убедитесь, что все команды выбраны перед выполнением запроса &mdash; простой способ сделать это — использовать Ctrl-a, чтобы выделить весь код в листе. Выберите **run** (синий треугольник). Обратите внимание, как точка рядом с вашим **COMPUTE_WH** меняется с серого на зеленый, когда вы выполняете запрос. Таблица **status** является последней из всех 8 загруженных таблиц.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/2-load-data-from-s3.png" title="Load data from S3 bucket"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/2-load-data-from-s3.png" title="Загрузка данных из S3-бакета"/>
 
-6. Let’s unpack that pretty long query we ran into component parts. We ran this query to load in our 8 Formula 1 tables from a public S3 bucket. To do this, we:
-    - Created a new database called `formula1` and a schema called `raw` to place our raw (untransformed) data into.
-    - Defined our file format for our CSV files. Importantly, here we use a parameter called `field_optionally_enclosed_by =` since the string columns in our Formula 1 csv files use quotes.  Quotes are used around string values to avoid parsing issues where commas `,` and new lines `/n` in data values could cause data loading errors.
-    - Created a stage to locate our data we are going to load in. Snowflake Stages are locations where data files are stored.  Stages are used to both load and unload data to and from Snowflake locations. Here we are using an external stage, by referencing an S3 bucket.
-    - Created our tables for our data to be copied into. These are empty tables with the column name and data type. Think of this as creating an empty container that the data will then fill into.
-    - Used the `copy into` statement for each of our tables. We reference our staged location we created and upon loading errors continue to load in the rest of the data. You should not have data loading errors but if you do, those rows will be skipped and Snowflake will tell you which rows caused errors
+6. Давайте разберем этот довольно длинный запрос на составные части. Мы выполнили этот запрос, чтобы загрузить наши 8 таблиц Формулы 1 из публичного S3-бакета. Для этого мы:
+    - Создали новую базу данных с именем `formula1` и схему с именем `raw`, чтобы разместить наши необработанные (непреобразованные) данные.
+    - Определили формат файла для наших CSV-файлов. Важно, что здесь мы используем параметр `field_optionally_enclosed_by =`, так как строковые столбцы в наших CSV-файлах Формулы 1 используют кавычки. Кавычки используются вокруг строковых значений, чтобы избежать проблем с разбором, когда запятые `,` и новые строки `/n` в значениях данных могут вызвать ошибки загрузки данных.
+    - Создали stage для размещения наших данных, которые мы собираемся загрузить. Snowflake Stages — это места, где хранятся файлы данных. Stages используются как для загрузки, так и для выгрузки данных в и из местоположений Snowflake. Здесь мы используем внешний stage, ссылаясь на S3-бакет.
+    - Создали наши таблицы для копирования данных. Это пустые таблицы с именем столбца и типом данных. Подумайте об этом как о создании пустого контейнера, который затем будет заполнен данными.
+    - Использовали оператор `copy into` для каждой из наших таблиц. Мы ссылаемся на наше staged местоположение, которое мы создали, и при ошибках загрузки продолжаем загружать остальные данные. У вас не должно быть ошибок загрузки данных, но если они возникнут, эти строки будут пропущены, и Snowflake сообщит вам, какие строки вызвали ошибки.
 
-7. Now let's take a look at some of our cool Formula 1 data we just loaded up!
-    1. Create a new worksheet by selecting the **+** then **New Worksheet**.
-        <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" title="Create new worksheet to query data"/>
-    2. Navigate to **Database > Formula1 > RAW > Tables**.
-    3. Query the data using the following code. There are only 76 rows in the circuits table, so we don’t need to worry about limiting the amount of data we query.
+7. Теперь давайте посмотрим на некоторые из наших крутых данных Формулы 1, которые мы только что загрузили!
+    1. Создайте новый лист, выбрав **+** затем **New Worksheet**.
+        <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" title="Создать новый лист для запроса данных"/>
+    2. Перейдите в **Database > Formula1 > RAW > Tables**.
+    3. Запросите данные, используя следующий код. В таблице circuits всего 76 строк, поэтому нам не нужно беспокоиться об ограничении количества запрашиваемых данных.
 
         ```sql
         select * from formula1.raw.circuits
         ```
 
-    4. Run the query. From here on out, we’ll use the keyboard shortcuts Command-Enter or Control-Enter to run queries and won’t explicitly call out this step.
-    5. Review the query results, you should see information about Formula 1 circuits, starting with Albert Park in Australia!
-    6. Finally, ensure you have all 8 tables starting with `CIRCUITS` and ending with `STATUS`. Now we are ready to connect into dbt Cloud!
+    4. Выполните запрос. С этого момента мы будем использовать сочетания клавиш Command-Enter или Control-Enter для выполнения запросов и не будем явно указывать этот шаг.
+    5. Просмотрите результаты запроса, вы должны увидеть информацию о трассах Формулы 1, начиная с Альберт-Парка в Австралии!
+    6. Наконец, убедитесь, что у вас есть все 8 таблиц, начиная с `CIRCUITS` и заканчивая `STATUS`. Теперь мы готовы подключиться к dbt Cloud!
 
-        <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/4-query-circuits-data.png" title="Query circuits data"/>
+        <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/4-query-circuits-data.png" title="Запрос данных о трассах"/>
 
-## Configure dbt Cloud
+## Настройка dbt Cloud
 
-1. We are going to be using [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) to set up a dbt Cloud account. Using this method will allow you to spin up a fully fledged dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [managed repository](/docs/collaborate/git/managed-repository), environments, and credentials already established.
-2. Navigate out of your worksheet back by selecting **home**.
-3. In Snowsight, confirm that you are using the **ACCOUNTADMIN** role.
-4. Navigate to the **Data Products** **> Partner Connect**. Find **dbt** either by using the search bar or navigating the **Data Integration**. Select the **dbt** tile.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/1-open-partner-connect.png" title="Open Partner Connect"/>
-5. You should now see a new window that says **Connect to dbt**. Select **Optional Grant** and add the `FORMULA1` database. This will grant access for your new dbt user role to the FORMULA1 database.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/2-partner-connect-optional-grant.png" title="Partner Connect Optional Grant"/>
+1. Мы будем использовать [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) для настройки аккаунта dbt Cloud. Использование этого метода позволит вам развернуть полноценный аккаунт dbt с вашим [подключением Snowflake](/docs/cloud/connect-data-platform/connect-snowflake), [управляемым репозиторием](/docs/collaborate/git/managed-repository), средами и учетными данными, уже установленными.
+2. Выйдите из своего листа, выбрав **home**.
+3. В Snowsight убедитесь, что вы используете роль **ACCOUNTADMIN**.
+4. Перейдите в **Data Products** **> Partner Connect**. Найдите **dbt**, используя строку поиска или перейдя в **Data Integration**. Выберите плитку **dbt**.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/1-open-partner-connect.png" title="Открыть Partner Connect"/>
+5. Теперь вы должны увидеть новое окно с надписью **Connect to dbt**. Выберите **Optional Grant** и добавьте базу данных `FORMULA1`. Это предоставит доступ вашей новой роли пользователя dbt к базе данных FORMULA1.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/2-partner-connect-optional-grant.png" title="Optional Grant в Partner Connect"/>
 
-6. Ensure the `FORMULA1` is present in your optional grant before clicking **Connect**.  This will create a dedicated dbt user, database, warehouse, and role for your dbt Cloud trial.
+6. Убедитесь, что `FORMULA1` присутствует в вашем optional grant перед нажатием **Connect**. Это создаст выделенного пользователя dbt, базу данных, склад и роль для вашей пробной версии dbt Cloud.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/3-connect-to-dbt.png" title="Connect to dbt"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/3-connect-to-dbt.png" title="Подключение к dbt"/>
 
-7. When you see the **Your partner account has been created** window, click **Activate**.
+7. Когда вы увидите окно **Your partner account has been created**, нажмите **Activate**.
 
-8. You should be redirected to a dbt Cloud registration page. Fill out the form. Make sure to save the password somewhere for login in the future.
+8. Вы должны быть перенаправлены на страницу регистрации dbt Cloud. Заполните форму. Обязательно сохраните пароль где-нибудь для входа в будущем.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="dbt Cloud sign up"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/4-configure-dbt/4-dbt-cloud-sign-up.png" title="Регистрация в dbt Cloud"/>
 
-9. Select **Complete Registration**. You should now be redirected to your dbt Cloud account, complete with a connection to your Snowflake account, a deployment and a development environment, and a sample job.
+9. Выберите **Complete Registration**. Теперь вы должны быть перенаправлены на ваш аккаунт dbt Cloud, с подключением к вашему аккаунту Snowflake, развертыванием и средой разработки, а также примером задания.
 
-10. To help you version control your dbt project, we have connected it to a [managed repository](/docs/collaborate/git/managed-repository), which means that dbt Labs will be hosting your repository for you. This will give you access to a Git workflow without you having to create and host the repository yourself. You will not need to know Git for this workshop; dbt Cloud will help guide you through the workflow. In the future, when you’re developing your own project, [feel free to use your own repository](/docs/cloud/git/connect-github). This will allow you to learn more about features like [Slim CI](/docs/deploy/continuous-integration) builds after this workshop.
+10. Чтобы помочь вам с управлением версиями вашего проекта dbt, мы подключили его к [управляемому репозиторию](/docs/collaborate/git/managed-repository), что означает, что dbt Labs будет размещать ваш репозиторий для вас. Это даст вам доступ к рабочему процессу Git без необходимости создавать и размещать репозиторий самостоятельно. Вам не нужно будет знать Git для этого воркшопа; dbt Cloud поможет вам пройти через рабочий процесс. В будущем, когда вы будете разрабатывать свой собственный проект, [не стесняйтесь использовать свой собственный репозиторий](/docs/cloud/git/connect-github). Это позволит вам узнать больше о таких функциях, как [Slim CI](/docs/deploy/continuous-integration) сборки после этого воркшопа.
 
-## Change development schema name navigate the IDE
+## Изменение имени схемы разработки и навигация по IDE
 
-1. First we are going to change the name of our default schema to where our dbt models will build. By default, the name is `dbt_`. We will change this to `dbt_<YOUR_NAME>` to create your own personal development schema. To do this, click on your account name in the left side menu and select **Account settings**.
+1. Сначала мы изменим имя нашей схемы по умолчанию, в которой будут строиться наши модели dbt. По умолчанию имя — `dbt_`. Мы изменим его на `dbt_<ВАШЕ_ИМЯ>`, чтобы создать вашу личную схему разработки. Для этого нажмите на свое имя аккаунта в левом меню и выберите **Account settings**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" title="Settings menu"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" title="Меню настроек"/>
 
-2. Navigate to the **Credentials** menu and select **Partner Connect Trial**, which will expand the credentials menu.
+2. Перейдите в меню **Credentials** и выберите **Partner Connect Trial**, чтобы развернуть меню учетных данных.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Credentials edit schema name"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/2-credentials-edit-schema-name.png" title="Редактирование имени схемы учетных данных"/>
 
-3. Click **Edit** and change the name of your schema from `dbt_` to `dbt_YOUR_NAME` replacing `YOUR_NAME` with your initials and name (`hwatson` is used in the lab screenshots). Be sure to click **Save** for your changes!
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Save new schema name"/>
+3. Нажмите **Edit** и измените имя вашей схемы с `dbt_` на `dbt_YOUR_NAME`, заменив `YOUR_NAME` вашими инициалами и именем (`hwatson` используется в скриншотах лаборатории). Обязательно нажмите **Save** для сохранения изменений!
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/3-save-new-schema-name.png" title="Сохранить новое имя схемы"/>
 
-4. We now have our own personal development schema, amazing! When we run our first dbt models they will build into this schema.
-5. Let’s open up dbt Cloud’s Integrated Development Environment (IDE) and familiarize ourselves. Choose **Develop** at the top of the UI.
+4. Теперь у нас есть наша личная схема разработки, удивительно! Когда мы запустим наши первые модели dbt, они будут построены в этой схеме.
+5. Давайте откроем интегрированную среду разработки (IDE) dbt Cloud и ознакомимся с ней. Выберите **Develop** в верхней части интерфейса.
 
-6. When the IDE is done loading, click **Initialize dbt project**. The initialization process creates a collection of files and folders necessary to run your dbt project.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/4-initialize-dbt-project.png" title="Initialize dbt project"/>
+6. Когда IDE загрузится, нажмите **Initialize dbt project**. Процесс инициализации создает набор файлов и папок, необходимых для запуска вашего проекта dbt.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/4-initialize-dbt-project.png" title="Инициализация проекта dbt"/>
 
-7. After the initialization is finished, you can view the files and folders in the file tree menu. As we move through the workshop we'll be sure to touch on a few key files and folders that we'll work with to build out our project.
-8. Next click **Commit and push** to commit the new files and folders from the initialize step. We always want our commit messages to be relevant to the work we're committing, so be sure to provide a message like `initialize project` and select **Commit Changes**.
+7. После завершения инициализации вы можете просмотреть файлы и папки в меню дерева файлов. По мере продвижения по воркшопу мы обязательно коснемся нескольких ключевых файлов и папок, с которыми мы будем работать для создания нашего проекта.
+8. Далее нажмите **Commit and push**, чтобы зафиксировать новые файлы и папки из шага инициализации. Мы всегда хотим, чтобы наши сообщения о фиксации были актуальны для работы, которую мы фиксируем, поэтому обязательно предоставьте сообщение, например, `initialize project`, и выберите **Commit Changes**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" title="First commit and push"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" title="Первая фиксация и отправка"/>
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/6-initalize-project.png" title="Initialize project"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/6-initalize-project.png" title="Инициализация проекта"/>
 
-9. [Committing](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) your work here will save it to the managed git repository that was created during the Partner Connect signup. This initial commit is the only commit that will be made directly to our `main` branch and from *here on out we'll be doing all of our work on a development branch*. This allows us to keep our development work separate from our production code.
-10. There are a couple of key features to point out about the IDE before we get to work. It is a text editor, an SQL and Python runner, and a CLI with Git version control all baked into one package! This allows you to focus on editing your SQL and Python files, previewing the results with the SQL runner (it even runs Jinja!), and building models at the command line without having to move between different applications. The Git workflow in dbt Cloud allows both Git beginners and experts alike to be able to easily version control all of their work with a couple clicks.
+9. [Фиксация](https://www.atlassian.com/git/tutorials/saving-changes/git-commit) вашей работы здесь сохранит ее в управляемом git-репозитории, который был создан во время регистрации Partner Connect. Эта начальная фиксация будет единственной фиксацией, которая будет сделана непосредственно в нашей ветке `main`, и с этого момента мы будем выполнять всю нашу работу в ветке разработки. Это позволяет нам держать нашу разработку отдельно от нашего производственного кода.
+10. Есть несколько ключевых функций, на которые стоит обратить внимание в IDE, прежде чем мы начнем работать. Это текстовый редактор, SQL и Python-исполнитель, а также CLI с управлением версиями Git, все в одном пакете! Это позволяет вам сосредоточиться на редактировании ваших SQL и Python файлов, предварительном просмотре результатов с помощью SQL-исполнителя (он даже выполняет Jinja!) и построении моделей в командной строке без необходимости переключаться между различными приложениями. Рабочий процесс Git в dbt Cloud позволяет как новичкам, так и экспертам Git легко управлять версиями всей своей работы с помощью нескольких кликов.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/7-IDE-overview.png" title="IDE overview"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/7-IDE-overview.png" title="Обзор IDE"/>
 
-11. Let's run our first dbt models! Two example models are included in your dbt project in the `models/examples` folder that we can use to illustrate how to run dbt at the command line. Type `dbt run` into the command line and click **Enter** on your keyboard. When the run bar expands you'll be able to see the results of the run, where you should see the run complete successfully.
+11. Давайте запустим наши первые модели dbt! В ваш проект dbt включены две примерные модели в папке `models/examples`, которые мы можем использовать для иллюстрации того, как запускать dbt в командной строке. Введите `dbt run` в командной строке и нажмите **Enter** на клавиатуре. Когда панель выполнения развернется, вы сможете увидеть результаты выполнения, где вы должны увидеть успешное завершение выполнения.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/8-dbt-run-example-models.png" title="dbt run example models"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/8-dbt-run-example-models.png" title="Запуск примерных моделей dbt"/>
 
-12. The run results allow you to see the code that dbt compiles and sends to Snowflake for execution. To view the logs for this run, select one of the model tabs using the  **>** icon and then **Details**. If you scroll down a bit you'll be able to see the compiled code and how dbt interacts with Snowflake. Given that this run took place in our development environment, the models were created in your development schema.
+12. Результаты выполнения позволяют вам увидеть код, который dbt компилирует и отправляет в Snowflake для выполнения. Чтобы просмотреть журналы этого выполнения, выберите одну из вкладок модели, используя значок **>**, а затем **Details**. Если вы немного прокрутите вниз, вы сможете увидеть скомпилированный код и то, как dbt взаимодействует с Snowflake. Поскольку это выполнение происходило в нашей среде разработки, модели были созданы в вашей схеме разработки.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/9-second-model-details.png" title="Details about the second model"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/9-second-model-details.png" title="Детали о второй модели"/>
 
-13. Now let's switch over to Snowflake to confirm that the objects were actually created. Click on the three dots **…** above your database objects and then **Refresh**. Expand the **PC_DBT_DB** database and you should see your development schema. Select the schema, then **Tables**  and **Views**. Now you should be able to see `MY_FIRST_DBT_MODEL` as a table and `MY_SECOND_DBT_MODEL` as a view.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" title="Confirm example models are built in Snowflake"/>
+13. Теперь давайте переключимся на Snowflake, чтобы подтвердить, что объекты действительно были созданы. Нажмите на три точки **…** над вашими объектами базы данных, а затем **Refresh**. Разверните базу данных **PC_DBT_DB**, и вы должны увидеть вашу схему разработки. Выберите схему, затем **Tables** и **Views**. Теперь вы должны увидеть `MY_FIRST_DBT_MODEL` как таблицу и `MY_SECOND_DBT_MODEL` как представление.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" title="Подтвердите, что примерные модели построены в Snowflake"/>
 
-## Create branch and set up project configs
+## Создание ветки и настройка конфигураций проекта
 
-In this step, we’ll need to create a development branch and set up project level configurations.
+На этом этапе нам нужно создать ветку разработки и настроить конфигурации на уровне проекта.
 
-1. To get started with development for our project, we'll need to create a new Git branch for our work. Select **create branch** and name your development branch. We'll call our branch `snowpark_python_workshop` then click **Submit**.
-2. The first piece of development we'll do on the project is to update the `dbt_project.yml` file. Every dbt project requires a `dbt_project.yml` file &mdash; this is how dbt knows a directory is a dbt project. The [dbt_project.yml](/reference/dbt_project.yml) file also contains important information that tells dbt how to operate on your project.
-3. Select the `dbt_project.yml` file from the file tree to open it and replace all of the existing contents with the following code below. When you're done, save the file by clicking **save**. You can also use the Command-S or Control-S shortcut from here on out.
+1. Чтобы начать разработку нашего проекта, нам нужно создать новую ветку Git для нашей работы. Выберите **create branch** и назовите вашу ветку разработки. Мы назовем нашу ветку `snowpark_python_workshop`, затем нажмите **Submit**.
+2. Первым шагом в разработке проекта будет обновление файла `dbt_project.yml`. Каждый проект dbt требует наличия файла `dbt_project.yml` &mdash; это то, как dbt узнает, что каталог является проектом dbt. Файл [dbt_project.yml](/reference/dbt_project.yml) также содержит важную информацию, которая сообщает dbt, как работать с вашим проектом.
+3. Выберите файл `dbt_project.yml` из дерева файлов, чтобы открыть его, и замените все существующее содержимое следующим кодом. Когда закончите, сохраните файл, нажав **save**. Вы также можете использовать сочетание клавиш Command-S или Control-S с этого момента.
 
     ```yaml
-    # Name your project! Project names should contain only lowercase characters
-    # and underscores. A good package name should reflect your organization's
-    # name or the intended use of these models
+    # Назовите ваш проект! Имена проектов должны содержать только строчные символы
+    # и подчеркивания. Хорошее имя пакета должно отражать название вашей организации
+    # или предполагаемое использование этих моделей
     name: 'snowflake_dbt_python_formula1'
     version: '1.3.0'
     require-dbt-version: '>=1.3.0'
     config-version: 2
 
-    # This setting configures which "profile" dbt uses for this project.
+    # Эта настройка конфигурирует, какой "профиль" dbt использует для этого проекта.
     profile: 'default'
 
-    # These configurations specify where dbt should look for different types of files.
-    # The `model-paths` config, for example, states that models in this project can be
-    # found in the "models/" directory. You probably won't need to change these!
+    # Эти конфигурации указывают, где dbt должен искать различные типы файлов.
+    # Конфигурация `model-paths`, например, указывает, что модели в этом проекте можно
+    # найти в каталоге "models/". Вероятно, вам не нужно будет их изменять!
     model-paths: ["models"]
     analysis-paths: ["analyses"]
     test-paths: ["tests"]
@@ -356,8 +355,8 @@ In this step, we’ll need to create a development branch and set up project lev
     macro-paths: ["macros"]
     snapshot-paths: ["snapshots"]
 
-    target-path: "target"  # directory which will store compiled SQL files
-    clean-targets:         # directories to be removed by `dbt clean`
+    target-path: "target"  # каталог, который будет хранить скомпилированные SQL файлы
+    clean-targets:         # каталоги, которые будут удалены командой `dbt clean`
      - "target"
      - "dbt_packages"
 
@@ -390,95 +389,95 @@ In this step, we’ll need to create a development branch and set up project lev
 
     ```
 
-4. The key configurations to point out in the file with relation to the work that we're going to do are in the `models` section.
-    - `require-dbt-version` &mdash; Tells dbt which version of dbt to use for your project. We are requiring 1.3.0 and any newer version to run python models and node colors.
-    - `materialized` &mdash; Tells dbt how to materialize models when compiling the code before it pushes it down to Snowflake. All models in the `marts` folder will be built as tables.
-    - `tags` &mdash; Applies tags at a directory level to all models. All models in the `aggregates` folder will be tagged as `bi` (abbreviation for business intelligence).
-    - `docs` &mdash; Specifies the `node_color` either by the plain color name or a hex value.
-5. [Materializations](/docs/build/materializations) are strategies for persisting dbt models in a warehouse, with `tables` and `views` being the most commonly utilized types. By default, all dbt models are materialized as views and other materialization types can be configured in the `dbt_project.yml` file or in a model itself. It’s very important to note *Python models can only be materialized as tables or incremental models.* Since all our Python models exist under `marts`, the following portion of our `dbt_project.yml` ensures no errors will occur when we run our Python models. Starting with [dbt version 1.4](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4#updates-to-python-models), Python files will automatically get materialized as tables even if not explicitly specified.
+4. Основные конфигурации, на которые стоит обратить внимание в файле в отношении работы, которую мы собираемся выполнить, находятся в разделе `models`.
+    - `require-dbt-version` &mdash; Указывает dbt, какую версию dbt использовать для вашего проекта. Мы требуем 1.3.0 и любую более новую версию для запуска python моделей и цветов узлов.
+    - `materialized` &mdash; Указывает dbt, как материализовать модели при компиляции кода перед его отправкой в Snowflake. Все модели в папке `marts` будут построены как таблицы.
+    - `tags` &mdash; Применяет теги на уровне каталога ко всем моделям. Все модели в папке `aggregates` будут помечены как `bi` (сокращение от business intelligence).
+    - `docs` &mdash; Указывает `node_color` либо по имени цвета, либо по значению hex.
+5. [Материализации](/docs/build/materializations) — это стратегии для сохранения моделей dbt в хранилище, с `tables` и `views` как наиболее часто используемыми типами. По умолчанию все модели dbt материализуются как представления, и другие типы материализации могут быть настроены в файле `dbt_project.yml` или в самой модели. Очень важно отметить, что *Python модели могут быть материализованы только как таблицы или инкрементальные модели.* Поскольку все наши Python модели находятся в `marts`, следующая часть нашего `dbt_project.yml` гарантирует, что не возникнет ошибок при запуске наших Python моделей. Начиная с [версии dbt 1.4](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4#updates-to-python-models), Python файлы автоматически материализуются как таблицы, даже если это не указано явно.
 
     ```yaml
-    marts:     
+    marts:     
       +materialized: table
     ```
 
-## Create folders and organize files
+## Создание папок и организация файлов
 
-dbt Labs has developed a [project structure guide](/best-practices/how-we-structure/1-guide-overview/) that contains a number of recommendations for how to build the folder structure for your project. Do check out that guide if you want to learn more. Right now we are going to create some folders to organize our files:
+dbt Labs разработала [руководство по структуре проекта](/best-practices/how-we-structure/1-guide-overview/), которое содержит ряд рекомендаций по построению структуры папок для вашего проекта. Обязательно ознакомьтесь с этим руководством, если хотите узнать больше. Сейчас мы создадим несколько папок для организации наших файлов:
 
-- Sources &mdash; This is our Formula 1 dataset and it will be defined in a source YAML file.
-- Staging models &mdash; These models have a 1:1 with their source table.
-- Intermediate &mdash; This is where we will be joining some Formula staging models.
-- Marts models &mdash; Here is where we perform our major transformations. It contains these subfolders:
+- Источники &mdash; Это наш набор данных Формулы 1, и он будет определен в YAML файле источника.
+- Модели подготовки &mdash; Эти модели имеют 1:1 с их исходной таблицей.
+- Промежуточные &mdash; Здесь мы будем объединять некоторые модели подготовки Формулы.
+- Модели Marts &mdash; Здесь мы выполняем наши основные преобразования. Он содержит следующие подпапки:
   - aggregates
   - core
   - ml
 
-1. In your file tree, use your cursor and hover over the `models` subdirectory, click the three dots **…** that appear to the right of the folder name, then select **Create Folder**. We're going to add two new folders to the file path, `staging` and `formula1` (in that order) by typing `staging/formula1` into the file path.
+1. В вашем дереве файлов используйте курсор и наведите на подкаталог `models`, нажмите на три точки **…**, которые появятся справа от имени папки, затем выберите **Create Folder**. Мы добавим две новые папки в путь к файлу, `staging` и `formula1` (в этом порядке), введя `staging/formula1` в путь к файлу.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/1-create-folder.png" title="Create folder"/>
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/2-file-path.png" title="Set file path"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/1-create-folder.png" title="Создать папку"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/2-file-path.png" title="Установить путь к файлу"/>
 
-    - If you click into your `models` directory now, you should see the new `staging` folder nested within `models` and the `formula1` folder nested within `staging`.
-2. Create two additional folders the same as the last step. Within the `models` subdirectory, create new directories `marts/core`.
+    - Если вы откроете свой каталог `models` сейчас, вы должны увидеть новую папку `staging`, вложенную в `models`, и папку `formula1`, вложенную в `staging`.
+2. Создайте две дополнительные папки так же, как и на предыдущем шаге. В подкаталоге `models` создайте новые каталоги `marts/core`.
 
-3. We will need to create a few more folders and subfolders using the UI. After you create all the necessary folders, your folder tree should look like this when it's all done:
+3. Нам нужно будет создать еще несколько папок и подпапок с помощью интерфейса. После того, как вы создадите все необходимые папки, ваше дерево папок должно выглядеть так, когда все будет готово:
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/3-tree-of-new-folders.png" title="File tree of new folders"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/7-folder-structure/3-tree-of-new-folders.png" title="Дерево новых папок"/>
 
-Remember you can always reference the entire project in [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1) to view the complete folder and file strucutre.  
+Помните, что вы всегда можете обратиться к полному проекту на [GitHub](https://github.com/dbt-labs/python-snowpark-formula1/tree/python-formula1), чтобы просмотреть полную структуру папок и файлов.
 
-## Create source and staging models
+## Создание источников и моделей подготовки
 
-In this section, we are going to create our source and staging models.
+В этом разделе мы создадим наши источники и модели подготовки.
 
-Sources allow us to create a dependency between our source database object and our staging models which will help us when we look at <Term id="data-lineage" /> later. Also, if your source changes database or schema, you only have to update it in your `f1_sources.yml` file rather than updating all of the models it might be used in.
+Источники позволяют нам создать зависимость между нашим исходным объектом базы данных и нашими моделями подготовки, что поможет нам, когда мы будем смотреть на <Term id="data-lineage" /> позже. Кроме того, если ваш источник изменяет базу данных или схему, вам нужно будет обновить его только в вашем файле `f1_sources.yml`, а не обновлять все модели, в которых он может использоваться.
 
-Staging models are the base of our project, where we bring all the individual components we're going to use to build our more complex and useful models into the project.
+Модели подготовки являются основой нашего проекта, где мы собираем все отдельные компоненты, которые мы будем использовать для создания наших более сложных и полезных моделей в проект.
 
-Since we want to focus on dbt and Python in this workshop, check out our [sources](/docs/build/sources) and [staging](/best-practices/how-we-structure/2-staging) docs if you want to learn more (or take our [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals) course which covers all of our core functionality).
+Поскольку мы хотим сосредоточиться на dbt и Python в этом воркшопе, ознакомьтесь с нашими [источниками](/docs/build/sources) и [документами по подготовке](/best-practices/how-we-structure/2-staging), если хотите узнать больше (или пройдите наш [курс dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals), который охватывает все наши основные функции).
 
-### 1. Create sources
+### 1. Создание источников
 
-We're going to be using each of our 8 Formula 1 tables from our `formula1` database under the `raw`  schema for our transformations and we want to create those tables as sources in our project.
+Мы будем использовать каждую из наших 8 таблиц Формулы 1 из нашей базы данных `formula1` под схемой `raw` для наших преобразований, и мы хотим создать эти таблицы как источники в нашем проекте.
 
-1. Create a new file called `f1_sources.yml` with the following file path: `models/staging/formula1/f1_sources.yml`.
-2. Then, paste the following code into the file before saving it:
+1. Создайте новый файл с именем `f1_sources.yml` с следующим путем к файлу: `models/staging/formula1/f1_sources.yml`.
+2. Затем вставьте следующий код в файл перед его сохранением:
 
 ```yaml
 version: 2
 
 sources:
   - name: formula1
-    description: formula 1 datasets with normalized tables 
+    description: формула 1 наборы данных с нормализованными таблицами 
     database: formula1 
     schema: raw
     tables:
       - name: circuits
-        description: One record per circuit, which is the specific race course. 
+        description: Одна запись на трассу, которая является конкретной гоночной трассой. 
         columns:
           - name: circuitid
             tests:
             - unique
             - not_null
       - name: constructors 
-        description: One record per constructor. Constructors are the teams that build their formula 1 cars. 
+        description: Одна запись на конструктора. Конструкторы — это команды, которые строят свои автомобили Формулы 1. 
         columns:
           - name: constructorid
             tests:
             - unique
             - not_null
       - name: drivers
-        description: One record per driver. This table gives details about the driver. 
+        description: Одна запись на водителя. Эта таблица содержит информацию о водителе. 
         columns:
           - name: driverid
             tests:
             - unique
             - not_null
       - name: lap_times
-        description: One row per lap in each race. Lap times started being recorded in this dataset in 1984 and joined through driver_id.
+        description: Одна строка на круг в каждой гонке. Время круга начало записываться в этом наборе данных в 1984 году и соединяется через driver_id.
       - name: pit_stops 
-        description: One row per pit stop. Pit stops do not have their own id column, the combination of the race_id and driver_id identify the pit stop.
+        description: Одна строка на пит-стоп. Пит-стопы не имеют собственного столбца id, комбинация race_id и driver_id идентифицирует пит-стоп.
         columns:
           - name: stop
             tests:
@@ -486,7 +485,7 @@ sources:
                   values: [1,2,3,4,5,6,7,8]
                   quote: false            
       - name: races 
-        description: One race per row. Importantly this table contains the race year to understand trends. 
+        description: Одна гонка на строку. Важно, что эта таблица содержит год гонки для понимания тенденций. 
         columns:
           - name: raceid
             tests:
@@ -498,9 +497,9 @@ sources:
             tests:
             - unique
             - not_null   
-        description: One row per result. The main table that we join out for grid and position variables.
+        description: Одна строка на результат. Основная таблица, которую мы соединяем для переменных сетки и позиции.
       - name: status
-        description: One status per row. The status contextualizes whether the race was finished or what issues arose e.g. collisions, engine, etc. 
+        description: Один статус на строку. Статус контекстуализирует, была ли гонка завершена или какие проблемы возникли, например, столкновения, двигатель и т.д. 
         columns:
           - name: statusid
             tests:
@@ -508,11 +507,11 @@ sources:
             - not_null
 ```
 
-### 2. Create staging models
+### 2. Создание моделей подготовки
 
-The next step is to set up the staging models for each of the 8 source tables. Given the one-to-one relationship between staging models and their corresponding source tables, we'll build 8 staging models here. We know it’s a lot and in the future, we will seek to update the workshop to make this step less repetitive and more efficient. This step is also a good representation of the real world of data, where you have multiple hierarchical tables that you will need to join together!
+Следующим шагом будет настройка моделей подготовки для каждой из 8 исходных таблиц. Учитывая отношение один к одному между моделями подготовки и их соответствующими исходными таблицами, мы создадим здесь 8 моделей подготовки. Мы знаем, что это много, и в будущем мы постараемся обновить воркшоп, чтобы сделать этот шаг менее повторяющимся и более эффективным. Этот шаг также является хорошим представлением реального мира данных, где у вас есть несколько иерархических таблиц, которые вам нужно будет объединить!
 
-1. Let's go in alphabetical order to easily keep track of all our staging models! Create a new file called `stg_f1_circuits.sql` with this file path `models/staging/formula1/stg_f1_circuits.sql`. Then, paste the following code into the file before saving it:
+1. Давайте пойдем в алфавитном порядке, чтобы легко отслеживать все наши модели подготовки! Создайте новый файл с именем `stg_f1_circuits.sql` с этим путем к файлу `models/staging/formula1/stg_f1_circuits.sql`. Затем вставьте следующий код в файл перед его сохранением:
 
     ```sql
     with
@@ -539,9 +538,9 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-    All we're doing here is pulling the source data into the model using the `source` function, renaming some columns, and omitting the column `url` with a commented note since we don’t need it for our analysis.
+    Все, что мы делаем здесь, это извлекаем исходные данные в модель, используя функцию `source`, переименовываем некоторые столбцы и пропускаем столбец `url` с комментарием, так как он нам не нужен для нашего анализа.
 
-1. Create `stg_f1_constructors.sql` with this file path `models/staging/formula1/stg_f1_constructors.sql`. Paste the following code into it before saving the file:
+1. Создайте `stg_f1_constructors.sql` с этим путем к файлу `models/staging/formula1/stg_f1_constructors.sql`. Вставьте следующий код в него перед сохранением файла:
 
     ```sql
     with
@@ -565,9 +564,9 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-    We have 6 other stages models to create. We can do this by creating new files, then copy and paste the code into our `staging` folder.
+    У нас есть еще 6 моделей подготовки, которые нужно создать. Мы можем сделать это, создавая новые файлы, а затем копируя и вставляя код в нашу папку `staging`.
 
-1. Create `stg_f1_drivers.sql` with this file path `models/staging/formula1/stg_f1_drivers.sql`:
+1. Создайте `stg_f1_drivers.sql` с этим путем к файлу `models/staging/formula1/stg_f1_drivers.sql`:
 
     ```sql
     with
@@ -595,7 +594,7 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-1. Create `stg_f1_lap_times.sql` with this file path `models/staging/formula1/stg_f1_lap_times.sql`:
+1. Создайте `stg_f1_lap_times.sql` с этим путем к файлу `models/staging/formula1/stg_f1_lap_times.sql`:
 
     ```sql
     with
@@ -620,7 +619,7 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-1. Create `stg_f1_pit_stops.sql` with this file path `models/staging/formula1/stg_f1_pit_stops.sql`:
+1. Создайте `stg_f1_pit_stops.sql` с этим путем к файлу `models/staging/formula1/stg_f1_pit_stops.sql`:
 
     ```sql
     with
@@ -647,7 +646,7 @@ The next step is to set up the staging models for each of the 8 source tables. G
     order by pit_stop_duration_seconds desc
     ```
 
-1. Create `stg_f1_races.sql` with this file path `models/staging/formula1/stg_f1_races.sql`:
+1. Создайте `stg_f1_races.sql` с этим путем к файлу `models/staging/formula1/stg_f1_races.sql`:
 
     ```sql
     with
@@ -684,7 +683,7 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-1. Create `stg_f1_results.sql` with this file path `models/staging/formula1/stg_f1_results.sql`:
+1. Создайте `stg_f1_results.sql` с этим путем к файлу `models/staging/formula1/stg_f1_results.sql`:
 
     ```sql
     with
@@ -721,7 +720,7 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-1. Last one! Create `stg_f1_status.sql` with this file path: `models/staging/formula1/stg_f1_status.sql`:
+1. Последний! Создайте `stg_f1_status.sql` с этим путем к файлу: `models/staging/formula1/stg_f1_status.sql`:
 
     ```sql
     with
@@ -742,45 +741,45 @@ The next step is to set up the staging models for each of the 8 source tables. G
     select * from renamed
     ```
 
-    After the source and all the staging models are complete for each of the 8 tables, your staging folder should look like this:
+    После завершения создания источника и всех моделей подготовки для каждой из 8 таблиц ваша папка подготовки должна выглядеть так:
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" title="Staging folder"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/1-staging-folder.png" title="Папка подготовки"/>
 
-1. It’s a good time to delete our example folder since these two models are extraneous to our formula1 pipeline and `my_first_model` fails a `not_null` test that we won’t spend time investigating. dbt Cloud will warn us that this folder will be permanently deleted, and we are okay with that so select **Delete**.
+1. Сейчас хорошее время, чтобы удалить нашу папку с примерами, так как эти две модели являются лишними для нашего конвейера formula1, и `my_first_model` не проходит тест `not_null`, который мы не будем исследовать. dbt Cloud предупредит нас, что эта папка будет удалена навсегда, и мы согласны с этим, поэтому выберите **Delete**.
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" title="Delete example folder"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/2-delete-example.png" title="Удалить папку с примерами"/>
 
-1. Now that the staging models are built and saved, it's time to create the models in our development schema in Snowflake. To do this we're going to enter into the command line `dbt build` to run all of the models in our project, which includes the 8 new staging models and the existing example models.
+1. Теперь, когда модели подготовки созданы и сохранены, пришло время создать модели в нашей схеме разработки в Snowflake. Для этого мы введем в командной строке `dbt build`, чтобы запустить все модели в нашем проекте, включая 8 новых моделей подготовки и существующие модели примеров.
 
-    Your run should complete successfully and you should see green checkmarks next to all of your models in the run results. We built our 8 staging models as views and ran 13 source tests that we configured in the `f1_sources.yml` file with not that much code, pretty cool!
+    Ваше выполнение должно завершиться успешно, и вы должны увидеть зеленые галочки рядом со всеми вашими моделями в результатах выполнения. Мы построили наши 8 моделей подготовки как представления и запустили 13 тестов источников, которые мы настроили в файле `f1_sources.yml` с не таким уж большим количеством кода, довольно круто!
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/3-successful-run-in-snowflake.png" title="Successful dbt build in Snowflake"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/3-successful-run-in-snowflake.png" title="Успешное выполнение dbt build в Snowflake"/>
 
-    Let's take a quick look in Snowflake, refresh database objects, open our development schema, and confirm that the new models are there. If you can see them, then we're good to go!
+    Давайте быстро взглянем на Snowflake, обновим объекты базы данных, откроем нашу схему разработки и подтвердим, что новые модели там. Если вы можете их увидеть, значит, все в порядке!
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/4-confirm-models.png" title="Confirm models"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/8-sources-and-staging/4-confirm-models.png" title="Подтвердите модели"/>
 
-    Before we move onto the next section, be sure to commit your new models to your Git branch. Click **Commit and push** and give your commit a message like `profile, sources, and staging setup` before moving on.
+    Прежде чем перейти к следующему разделу, обязательно зафиксируйте ваши новые модели в вашей ветке Git. Нажмите **Commit and push** и дайте вашему коммиту сообщение, например, `profile, sources, and staging setup`, прежде чем продолжить.
 
-## Transform SQL
+## Преобразование SQL
 
-Now that we have all our sources and staging models done, it's time to move into where dbt shines &mdash; transformation!
+Теперь, когда у нас есть все наши источники и модели подготовки, пришло время перейти к тому, где dbt сияет &mdash; преобразование!
 
-We need to:
+Нам нужно:
 
-- Create some intermediate tables to join tables that aren’t hierarchical
-- Create core tables for business intelligence (BI) tool ingestion
-- Answer the two questions about:
-  - fastest pit stops
-  - lap time trends about our Formula 1 data by creating aggregate models using python!
+- Создать некоторые промежуточные таблицы для объединения таблиц, которые не являются иерархическими
+- Создать основные таблицы для загрузки в инструменты бизнес-аналитики (BI)
+- Ответить на два вопроса о:
+  - самых быстрых пит-стопах
+  - тенденциях времени круга в данных Формулы 1, создавая агрегированные модели с использованием Python!
 
-### Intermediate models
+### Промежуточные модели
 
-We need to join lots of reference tables to our results table to create a human readable dataframe. What does this mean? For example, we don’t only want to have the numeric `status_id` in our table, we want to be able to read in a row of data that a driver could not finish a race due to engine failure (`status_id=5`).
+Нам нужно объединить множество справочных таблиц с нашей таблицей результатов, чтобы создать читаемую человеком таблицу данных. Что это значит? Например, мы не хотим иметь только числовой `status_id` в нашей таблице, мы хотим иметь возможность прочитать в строке данных, что водитель не смог завершить гонку из-за отказа двигателя (`status_id=5`).
 
-By now, we are pretty good at creating new files in the correct directories so we won’t cover this in detail. All intermediate models should be created in the path `models/intermediate`.
+К настоящему моменту мы довольно хорошо умеем создавать новые файлы в правильных каталогах, поэтому не будем подробно останавливаться на этом. Все промежуточные модели должны быть созданы в пути `models/intermediate`.
 
-1. Create a new file called `int_lap_times_years.sql`. In this model, we are joining our lap time and race information so we can look at lap times over years. In earlier Formula 1 eras, lap times were not recorded (only final results), so we filter out records where lap times are null.
+1. Создайте новый файл с именем `int_lap_times_years.sql`. В этой модели мы объединяем информацию о времени круга и гонках, чтобы мы могли смотреть на время круга за годы. В более ранние эпохи Формулы 1 время круга не записывалось (только окончательные результаты), поэтому мы отфильтровываем записи, где время круга равно null.
 
     ```sql
     with lap_times as (
@@ -811,7 +810,7 @@ By now, we are pretty good at creating new files in the correct directories so w
     select * from expanded_lap_times_by_year
     ```
 
-2. Create a file called `in_pit_stops.sql`. Pit stops are a many-to-one (M:1) relationship with our races. We are creating a feature called `total_pit_stops_per_race` by partitioning over our `race_id` and `driver_id`, while preserving individual level pit stops for rolling average in our next section.
+2. Создайте файл с именем `in_pit_stops.sql`. Пит-стопы имеют отношение многие-к-одному (M:1) с нашими гонками. Мы создаем функцию `total_pit_stops_per_race`, разделяя по `race_id` и `driver_id`, сохраняя при этом индивидуальные пит-стопы для скользящего среднего в нашем следующем разделе.
 
     ```sql
     with stg_f1__pit_stops as
@@ -835,7 +834,7 @@ By now, we are pretty good at creating new files in the correct directories so w
     select * from pit_stops_per_race
     ```
 
-3. Create a file called `int_results.sql`. Here we are using 4 of our tables &mdash; `races`, `drivers`, `constructors`, and `status` &mdash; to give context to our `results` table. We are now able to calculate a new feature `drivers_age_years` by bringing the `date_of_birth` and `race_year` into the same table. We are also creating a column to indicate if the driver did not finish (dnf) the race, based upon if their `position` was null called, `dnf_flag`.
+3. Создайте файл с именем `int_results.sql`. Здесь мы используем 4 наших таблицы &mdash; `races`, `drivers`, `constructors` и `status` &mdash; чтобы дать контекст нашей таблице `results`. Теперь мы можем рассчитать новую функцию `drivers_age_years`, приведя `date_of_birth` и `race_year` в одну таблицу. Мы также создаем столбец, чтобы указать, не завершил ли водитель гонку, на основе того, была ли их `position` равна null, называемого `dnf_flag`.
 
     ```sql
     with results as (
@@ -913,22 +912,22 @@ By now, we are pretty good at creating new files in the correct directories so w
     select * from int_results
     ```
 
-1. Create a *Markdown* file `intermediate.md` that we will go over in depth in the Test and Documentation sections of the [Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake](/guides/dbt-python-snowpark) guide.
+1. Создайте *Markdown* файл `intermediate.md`, который мы подробно рассмотрим в разделах Тестирование и Документация руководства [Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake](/guides/dbt-python-snowpark).
 
     ```markdown
-    # the intent of this .md is to allow for multi-line long form explanations for our intermediate transformations
+    # цель этого .md — позволить многострочные длинные объяснения для наших промежуточных преобразований
 
-    # below are descriptions 
-    {% docs int_results %} In this query we want to join out other important information about the race results to have a human readable table about results, races, drivers, constructors, and status. 
-    We will have 4 left joins onto our results table. {% enddocs %}
+    # ниже приведены описания 
+    {% docs int_results %} В этом запросе мы хотим присоединить другую важную информацию о результатах гонок, чтобы иметь читаемую таблицу о результатах, гонках, водителях, конструкторах и статусе. 
+    У нас будет 4 левых соединения с нашей таблицей результатов. {% enddocs %}
 
-    {% docs int_pit_stops %} There are many pit stops within one race, aka a M:1 relationship. 
-    We want to aggregate this so we can properly join pit stop information without creating a fanout.  {% enddocs %}
+    {% docs int_pit_stops %} В одной гонке много пит-стопов, то есть отношение M:1. 
+    Мы хотим агрегировать это, чтобы мы могли правильно присоединить информацию о пит-стопах без создания фан-аута.  {% enddocs %}
 
-    {% docs int_lap_times_years %} Lap times are done per lap. We need to join them out to the race year to understand yearly lap time trends. {% enddocs %}
+    {% docs int_lap_times_years %} Время круга выполняется на круг. Нам нужно присоединить их к году гонки, чтобы понять тенденции времени круга за годы. {% enddocs %}
     ```
 
-1. Create a *YAML* file `intermediate.yml` that we will go over in depth during the Test and Document sections of the [Leverage dbt Cloud to generate analytics and ML-ready pipelines with SQL and Python with Snowflake](/guides/dbt-python-snowpark) guide.
+1. Создайте *YAML* файл `intermediate.yml`, который мы подробно рассмотрим в разделах Тестирование и Документация руководства [Использование dbt Cloud для создания аналитических и ML-готовых конвейеров с SQL и Python в Snowflake](/guides/dbt-python-snowpark).
 
     ```yaml
     version: 2
@@ -942,11 +941,11 @@ By now, we are pretty good at creating new files in the correct directories so w
        description: '{{ doc("int_lap_times_years") }}'
     ```
 
-    That wraps up the intermediate models we need to create our core models!
+    Это завершает промежуточные модели, которые нам нужно создать для наших основных моделей!
 
-### Core models
+### Основные модели
 
-1. Create a file `fct_results.sql`. This is what I like to refer to as the “mega table” &mdash; a really large denormalized table with all our context added in at row level for human readability. Importantly, we have a table `circuits` that is linked through the table `races`. When we joined `races` to `results` in `int_results.sql` we allowed our tables to make the connection from `circuits` to `results` in `fct_results.sql`. We are only taking information about pit stops at the result level so our join would not cause a [fanout](https://community.looker.com/technical-tips-tricks-1021/what-is-a-fanout-23327).
+1. Создайте файл `fct_results.sql`. Это то, что я люблю называть "мега таблицей" &mdash; действительно большая денормализованная таблица со всем нашим контекстом, добавленным на уровне строк для читаемости человеком. Важно, что у нас есть таблица `circuits`, которая связана через таблицу `races`. Когда мы присоединили `races` к `results` в `int_results.sql`, мы позволили нашим таблицам установить связь от `circuits` к `results` в `fct_results.sql`. Мы берем информацию о пит-стопах только на уровне результатов, чтобы наше соединение не вызвало [фан-аута](https://community.looker.com/technical-tips-tricks-1021/what-is-a-fanout-23327).
 
     ```sql
     with int_results as (
@@ -1018,7 +1017,7 @@ By now, we are pretty good at creating new files in the correct directories so w
     select * from base_results
     ```
 
-1. Create the file `pit_stops_joined.sql`. Our results and pit stops are at different levels of dimensionality (also called grain). Simply put, we have multiple pit stops per a result. Since we are interested in understanding information at the pit stop level with information about race year and constructor, we will create a new table `pit_stops_joined.sql` where each row is per pit stop. Our new table tees up our aggregation in Python.
+1. Создайте файл `pit_stops_joined.sql`. Наши результаты и пит-стопы находятся на разных уровнях размерности (также называемых зернистостью). Проще говоря, у нас есть несколько пит-стопов на один результат. Поскольку мы заинтересованы в понимании информации на уровне пит-стопов с информацией о годе гонки и конструкторе, мы создадим новую таблицу `pit_stops_joined.sql`, где каждая строка будет на пит-стоп. Наша новая таблица подготавливает нашу агрегацию в Python.
 
     ```sql
     with base_results as (
@@ -1053,26 +1052,26 @@ By now, we are pretty good at creating new files in the correct directories so w
     select * from pit_stops_joined
     ```
 
-1. Enter in the command line and execute `dbt build` to build out our entire pipeline to up to this point. Don’t worry about “overriding” your previous models – dbt workflows are designed to be <Term id="idempotent">idempotent</Term> so we can run them again and expect the same results.
+1. Введите в командной строке и выполните `dbt build`, чтобы построить весь наш конвейер до этого момента. Не беспокойтесь о "перезаписи" ваших предыдущих моделей – рабочие процессы dbt разработаны так, чтобы быть <Term id="idempotent">идемпотентными</Term>, поэтому мы можем запускать их снова и ожидать тех же результатов.
 
-1. Let’s talk about our lineage so far. It’s looking good 😎. We’ve shown how SQL can be used to make data type, column name changes, and handle hierarchical joins really well; all while building out our automated lineage!
+1. Давайте поговорим о нашей родословной до сих пор. Она выглядит хорошо 😎. Мы показали, как SQL можно использовать для изменения типа данных, имен столбцов и обработки иерархических соединений очень хорошо; все это время строя нашу автоматизированную родословную!
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/9-sql-transformations/1-dag.png" title="The DAG"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/9-sql-transformations/1-dag.png" title="DAG"/>
 
-1. Time to **Commit and push** our changes and give your commit a message like `intermediate and fact models` before moving on.
+1. Время **Commit and push** наших изменений и дайте вашему коммиту сообщение, например, `intermediate and fact models`, прежде чем продолжить.
 
-## Running dbt Python models
+## Запуск моделей dbt Python
 
-Up until now, SQL has been driving the project (car pun intended) for data cleaning and hierarchical joining. Now it’s time for Python to take the wheel (car pun still intended) for the rest of our lab! For more information about running Python models on dbt, check out our [docs](/docs/build/python-models). To learn more about dbt python works under the hood, check out [Snowpark for Python](https://docs.snowflake.com/en/developer-guide/snowpark/python/index.html), which makes running dbt Python models possible.
+До сих пор SQL управлял проектом (автомобильная игра слов намерена) для очистки данных и иерархических соединений. Теперь пришло время Python взять на себя управление (автомобильная игра слов все еще намерена) на оставшуюся часть нашей лаборатории! Для получения дополнительной информации о запуске Python моделей на dbt ознакомьтесь с нашими [документами](/docs/build/python-models). Чтобы узнать больше о том, как работает dbt python под капотом, ознакомьтесь с [Snowpark for Python](https://docs.snowflake.com/en/developer-guide/snowpark/python/index.html), который делает возможным запуск dbt Python моделей.
 
-There are quite a few differences between SQL and Python in terms of the dbt syntax and DDL, so we’ll be breaking our code and model runs down further for our python models.
+Существует довольно много различий между SQL и Python с точки зрения синтаксиса dbt и DDL, поэтому мы будем разбивать наш код и выполнение моделей дальше для наших python моделей.
 
-### Pit stop analysis
+### Анализ пит-стопов
 
-First, we want to find out: which constructor had the fastest pit stops in 2021? (constructor is a Formula 1 team that builds or “constructs” the car).
+Сначала мы хотим узнать: какой конструктор имел самые быстрые пит-стопы в 2021 году? (конструктор — это команда Формулы 1, которая строит или "конструирует" автомобиль).
 
-1. Create a new file called `fastest_pit_stops_by_constructor.py` in our `aggregates` (this is the first time we are using the `.py` extension!).
-2. Copy the following code into the file:
+1. Создайте новый файл с именем `fastest_pit_stops_by_constructor.py` в нашей папке `aggregates` (это первый раз, когда мы используем расширение `.py`).
+2. Скопируйте следующий код в файл:
 
     ```python
     import numpy as np
@@ -1097,61 +1096,61 @@ First, we want to find out: which constructor had the fastest pit stops in 2021?
         return fastest_pit_stops.round(2)
     ```
 
-3. Let’s break down what this code is doing step by step:
-    - First, we are importing the Python libraries that we are using. A *library* is a reusable chunk of code that someone else wrote that you may want to include in your programs/projects. We are using `numpy` and `pandas`in this Python model. This is similar to a dbt *package*, but our Python libraries do *not* persist across the entire project.
-    - Defining a function called `model` with the parameter `dbt` and `session`. The parameter `dbt` is a class compiled by dbt, which enables you to run your Python code in the context of your dbt project and DAG. The parameter `session` is a class representing your Snowflake’s connection to the Python backend. The `model` function *must return a single DataFrame*. You can see that all the data transformation happening is within the body of the `model` function that the `return` statement is tied to.
-    - Then, within the context of our dbt model library, we are passing in a configuration of which packages we need using `dbt.config(packages=["pandas","numpy"])`.
-    - Use the `.ref()` function to retrieve the data frame `pit_stops_joined` that we created in our last step using SQL. We cast this to a pandas dataframe (by default it's a Snowpark Dataframe).
-    - Create a variable named `year` so we aren’t passing a hardcoded value.
-    - Generate a new column called `PIT_STOP_SECONDS` by dividing the value of `PIT_STOP_MILLISECONDS` by 1000.
-    - Create our final data frame `fastest_pit_stops` that holds the records where year is equal to our year variable (2021 in this case), then group the data frame by `CONSTRUCTOR_NAME` and use the `describe()` and `sort_values()` and in descending order. This will make our first row in the new aggregated data frame the team with the fastest pit stops over an entire competition year.
-    - Finally, it resets the index of the `fastest_pit_stops` data frame. The `reset_index()` method allows you to reset the index back to the default 0, 1, 2, etc indexes. By default, this method will keep the "old" indexes in a column named "index"; to avoid this, use the drop parameter. Think of this as keeping your data “flat and square” as opposed to “tiered”. If you are new to Python, now might be a good time to [learn about indexes for 5 minutes](https://towardsdatascience.com/the-basics-of-indexing-and-slicing-python-lists-2d12c90a94cf) since it's the foundation of how Python retrieves, slices, and dices data. The `inplace` argument means we override the existing data frame permanently. Not to fear! This is what we want to do to avoid dealing with multi-indexed dataframes!
-    - Convert our Python column names to all uppercase using `.upper()`, so Snowflake recognizes them.
-    - Finally we are returning our dataframe with 2 decimal places for all the columns using the `round()` method.
-4. Zooming out a bit, what are we doing differently here in Python from our typical SQL code:
-    - Method chaining is a technique in which multiple methods are called on an object in a single statement, with each method call modifying the result of the previous one. The methods are called in a chain, with the output of one method being used as the input for the next one. The technique is used to simplify the code and make it more readable by eliminating the need for intermediate variables to store the intermediate results.
-        - The way you see method chaining in Python is the syntax `.().()`. For example, `.describe().sort_values(by='mean')` where the `.describe()` method is chained to `.sort_values()`.
-    - The `.describe()` method is used to generate various summary statistics of the dataset. It's used on pandas dataframe. It gives a quick and easy way to get the summary statistics of your dataset without writing multiple lines of code.
-    - The `.sort_values()` method is used to sort a pandas dataframe or a series by one or multiple columns. The method sorts the data by the specified column(s) in ascending or descending order. It is the pandas equivalent to `order by` in SQL.
+3. Давайте разберем, что делает этот код шаг за шагом:
+    - Сначала мы импортируем библиотеки Python, которые мы используем. *Библиотека* — это повторно используемый фрагмент кода, написанный кем-то другим, который вы можете захотеть включить в свои программы/проекты. Мы используем `numpy` и `pandas` в этой Python модели. Это похоже на *пакет* dbt, но наши библиотеки Python *не* сохраняются по всему проекту.
+    - Определяем функцию с именем `model` с параметрами `dbt` и `session`. Параметр `dbt` — это класс, скомпилированный dbt, который позволяет вам запускать ваш Python код в контексте вашего проекта dbt и DAG. Параметр `session` — это класс, представляющий соединение вашего Snowflake с бэкэндом Python. Функция `model` *должна возвращать один DataFrame*. Вы можете видеть, что все преобразования данных происходят в теле функции `model`, к которой привязано выражение `return`.
+    - Затем, в контексте нашей библиотеки моделей dbt, мы передаем конфигурацию, какие пакеты нам нужны, используя `dbt.config(packages=["pandas","numpy"])`.
+    - Используйте функцию `.ref()`, чтобы получить фрейм данных `pit_stops_joined`, который мы создали на предыдущем шаге, используя SQL. Мы приводим его к pandas dataframe (по умолчанию это Snowpark Dataframe).
+    - Создайте переменную с именем `year`, чтобы мы не передавали жестко закодированное значение.
+    - Создайте новый столбец с именем `PIT_STOP_SECONDS`, разделив значение `PIT_STOP_MILLISECONDS` на 1000.
+    - Создайте наш окончательный фрейм данных `fastest_pit_stops`, который содержит записи, где год равен нашей переменной года (в данном случае 2021), затем сгруппируйте фрейм данных по `CONSTRUCTOR_NAME` и используйте методы `describe()` и `sort_values()` в порядке убывания. Это сделает нашу первую строку в новом агрегированном фрейме данных командой с самыми быстрыми пит-стопами за весь год соревнований.
+    - Наконец, он сбрасывает индекс фрейма данных `fastest_pit_stops`. Метод `reset_index()` позволяет сбросить индекс обратно к значениям по умолчанию 0, 1, 2 и т. д.; чтобы избежать этого, используйте параметр drop. Подумайте об этом как о сохранении ваших данных "плоскими и квадратными", а не "многоуровневыми". Если вы новичок в Python, сейчас может быть хорошее время [узнать об индексах за 5 минут](https://towardsdatascience.com/the-basics-of-indexing-and-slicing-python-lists-2d12c90a94cf), так как это основа того, как Python извлекает, нарезает и обрабатывает данные. Аргумент `inplace` означает, что мы перезаписываем существующий фрейм данных навсегда. Не бойтесь! Это то, что мы хотим сделать, чтобы избежать работы с многоиндексными фреймами данных!
+    - Преобразуйте наши имена столбцов Python в верхний регистр, используя `.upper()`, чтобы Snowflake их распознал.
+    - Наконец, мы возвращаем наш фрейм данных с двумя десятичными знаками для всех столбцов, используя метод `round()`.
+4. Если взглянуть на это немного шире, что мы делаем по-другому здесь в Python по сравнению с нашим типичным SQL кодом:
+    - Цепочка методов — это техника, при которой несколько методов вызываются на объекте в одном выражении, при этом каждый вызов метода изменяет результат предыдущего. Методы вызываются в цепочке, при этом вывод одного метода используется в качестве ввода для следующего. Эта техника используется для упрощения кода и повышения его читаемости за счет устранения необходимости в промежуточных переменных для хранения промежуточных результатов.
+        - Способ, которым вы видите цепочку методов в Python, — это синтаксис `.().()`. Например, `.describe().sort_values(by='mean')`, где метод `.describe()` связан с `.sort_values()`.
+    - Метод `.describe()` используется для генерации различных статистических данных о наборе данных. Он используется на pandas dataframe. Он дает быстрый и простой способ получить статистику вашего набора данных без написания нескольких строк кода.
+    - Метод `.sort_values()` используется для сортировки pandas dataframe или серии по одному или нескольким столбцам. Метод сортирует данные по указанным столбцам в порядке возрастания или убывания. Это эквивалент `order by` в SQL.
 
-    We won’t go as in depth for our subsequent scripts, but will continue to explain at a high level what new libraries, functions, and methods are doing.
+    Мы не будем так подробно разбирать наши последующие скрипты, но продолжим объяснять на высоком уровне, что делают новые библиотеки, функции и методы.
 
-5. Build the model using the UI which will **execute**:
+5. Постройте модель, используя интерфейс, который **выполнит**:
 
     ```bash
     dbt run --select fastest_pit_stops_by_constructor
     ```
 
-    in the command bar.
+    в командной строке.
 
-    Let’s look at some details of our first Python model to see what our model executed. There two major differences we can see while running a Python model compared to an SQL model:
+    Давайте посмотрим на некоторые детали нашей первой Python модели, чтобы увидеть, что наша модель выполнила. Существует два основных различия, которые мы можем увидеть при запуске Python модели по сравнению с SQL моделью:
 
-    - Our Python model was executed as a stored procedure. Snowflake needs a way to know that it's meant to execute this code in a Python runtime, instead of interpreting in a SQL runtime. We do this by creating a Python stored proc, called by a SQL command.
-    - The `snowflake-snowpark-python` library has been picked up to execute our Python code. Even though this wasn’t explicitly stated this is picked up by the dbt class object because we need our Snowpark package to run Python!
+    - Наша Python модель была выполнена как хранимая процедура. Snowflake нужно знать, что этот код предназначен для выполнения в среде выполнения Python, а не для интерпретации в среде выполнения SQL. Мы делаем это, создавая хранимую процедуру Python, вызываемую SQL командой.
+    - Библиотека `snowflake-snowpark-python` была выбрана для выполнения нашего Python кода. Хотя это не было явно указано, это выбирается объектом класса dbt, потому что нам нужен наш пакет Snowpark для выполнения Python!
 
-    Python models take a bit longer to run than SQL models, however we could always speed this up by using [Snowpark-optimized Warehouses](https://docs.snowflake.com/en/user-guide/warehouses-snowpark-optimized.html) if we wanted to. Our data is sufficiently small, so we won’t worry about creating a separate warehouse for Python versus SQL files today.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/1-python-model-details-output.png" title="We can see our python model is run a stored procedure in our personal development schema"/>
+    Python модели выполняются немного дольше, чем SQL модели, однако мы всегда можем ускорить это, используя [Snowpark-оптимизированные склады](https://docs.snowflake.com/en/user-guide/warehouses-snowpark-optimized.html), если захотим. Наши данные достаточно малы, поэтому мы не будем беспокоиться о создании отдельного склада для Python по сравнению с SQL файлами сегодня.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/1-python-model-details-output.png" title="Мы можем видеть, что наша python модель выполняется как хранимая процедура в нашей личной схеме разработки"/>
 
-    The rest of our **Details** output gives us information about how dbt and Snowpark for Python are working together to define class objects and apply a specific set of methods to run our models.
+    Остальная часть нашего **Details** вывода дает нам информацию о том, как dbt и Snowpark для Python работают вместе, чтобы определить объекты класса и применить определенный набор методов для выполнения наших моделей.
 
-    So which constructor had the fastest pit stops in 2021? Let’s look at our data to find out!
+    Итак, какой конструктор имел самые быстрые пит-стопы в 2021 году? Давайте посмотрим на наши данные, чтобы узнать!
 
-6. We can't preview Python models directly, so let’s create a new file using the **+** button or the Control-n shortcut to create a new scratchpad.
-7. Reference our Python model:
+6. Мы не можем предварительно просмотреть Python модели напрямую, поэтому давайте создадим новый файл, используя кнопку **+** или сочетание клавиш Control-n, чтобы создать новый черновик.
+7. Сошлитесь на нашу Python модель:
 
     ```sql
     select * from {{ ref('fastest_pit_stops_by_constructor') }}
     ```
 
-    and preview the output:
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/2-fastest-pit-stops-preview.png" title="Looking at our new python data model we can see that Red Bull had the fastest pit stops!"/>
+    и предварительно просмотрите вывод:
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/2-fastest-pit-stops-preview.png" title="Смотрим на нашу новую python модель данных, мы видим, что Red Bull имел самые быстрые пит-стопы!"/>
 
-    Not only did Red Bull have the fastest average pit stops by nearly 40 seconds, they also had the smallest standard deviation, meaning they are both fastest and most consistent teams in pit stops. By using the `.describe()` method we were able to avoid verbose SQL requiring us to create a line of code per column and repetitively use the `PERCENTILE_COUNT()` function.
+    Red Bull не только имел самые быстрые средние пит-стопы почти на 40 секунд, но и имел наименьшее стандартное отклонение, что означает, что они являются как самыми быстрыми, так и самыми последовательными командами в пит-стопах. Используя метод `.describe()`, мы смогли избежать многословного SQL, требующего создания строки кода на столбец и повторного использования функции `PERCENTILE_COUNT()`.
 
-    Now we want to find the lap time average and rolling average through the years (is it generally trending up or down)?
+    Теперь мы хотим найти среднее время круга и скользящее среднее за годы (в целом оно увеличивается или уменьшается)?
 
-8. Create a new file called `lap_times_moving_avg.py` in our `aggregates` folder.
-9. Copy the following code into the file:
+8. Создайте новый файл с именем `lap_times_moving_avg.py` в нашей папке `aggregates`.
+9. Скопируйте следующий код в файл:
 
     ```python
     import pandas as pd
@@ -1173,95 +1172,95 @@ First, we want to find out: which constructor had the fastest pit stops in 2021?
         return lap_time_trends.round(1)
     ```
 
-10. Breaking down our code a bit:
-    - We’re only using the `pandas` library for this model and casting it to a pandas data frame `.to_pandas()`.
-    - Generate a new column called `LAP_TIMES_SECONDS` by dividing the value of `LAP_TIME_MILLISECONDS` by 1000.
-    - Create the final dataframe. Get the lap time per year. Calculate the mean series and convert to a data frame.
-    - Reset the index.
-    - Calculate the rolling 5 year mean.
-    - Round our numeric columns to one decimal place.
-11. Now, run this model by using the UI **Run model** or
+10. Разбирая наш код немного:
+    - Мы используем только библиотеку `pandas` для этой модели и приводим ее к pandas dataframe `.to_pandas()`.
+    - Создайте новый столбец с именем `LAP_TIMES_SECONDS`, разделив значение `LAP_TIME_MILLISECONDS` на 1000.
+    - Создайте окончательный фрейм данных. Получите время круга за год. Рассчитайте среднюю серию и преобразуйте в фрейм данных.
+    - Сбросьте индекс.
+    - Рассчитайте скользящее среднее за 5 лет.
+    - Округлите наши числовые столбцы до одного десятичного знака.
+11. Теперь запустите эту модель, используя интерфейс **Run model** или
 
     ```bash
     dbt run --select lap_times_moving_avg
     ```
 
- in the command bar.
+ в командной строке.
 
-12. Once again previewing the output of our data using the same steps for our `fastest_pit_stops_by_constructor` model.
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/3-lap-times-trends-preview.png" title="Viewing our lap trends and 5 year rolling trends"/>
+12. Еще раз предварительно просматривая вывод наших данных, используя те же шаги для нашей модели `fastest_pit_stops_by_constructor`.
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/10-python-transformations/3-lap-times-trends-preview.png" title="Просмотр наших тенденций времени круга и 5-летних скользящих тенденций"/>
 
-    We can see that it looks like lap times are getting consistently faster over time. Then in 2010 we see an increase occur! Using outside subject matter context, we know that significant rule changes were introduced to Formula 1 in 2010 and 2011 causing slower lap times.
+    Мы видим, что, похоже, время круга становится все быстрее со временем. Затем в 2010 году мы видим увеличение! Используя внешний контекст предметной области, мы знаем, что в 2010 и 2011 годах в Формуле 1 были введены значительные изменения правил, что привело к более медленному времени круга.
 
-13. Now is a good time to checkpoint and commit our work to Git. Click **Commit and push** and give your commit a message like `aggregate python models` before moving on.
+13. Сейчас хорошее время для контрольной точки и фиксации нашей работы в Git. Нажмите **Commit and push** и дайте вашему коммиту сообщение, например, `aggregate python models`, прежде чем продолжить.
 
-### The dbt model, .source(), .ref() and .config() functions
+### Модель dbt, функции .source(), .ref() и .config()
 
-Let’s take a step back before starting machine learning to both review and go more in-depth at the methods that make running dbt python models possible. If you want to know more outside of this lab’s explanation read the documentation [here](/docs/build/python-models?version=1.3).
+Давайте сделаем шаг назад перед началом машинного обучения, чтобы как пересмотреть, так и углубиться в методы, которые делают возможным запуск dbt python моделей. Если вы хотите узнать больше за пределами объяснений этой лаборатории, прочитайте документацию [здесь](/docs/build/python-models?version=1.3).
 
-- dbt model(dbt, session). For starters, each Python model lives in a .py file in your models/ folder. It defines a function named `model()`, which takes two parameters:
-  - dbt &mdash; A class compiled by dbt Core, unique to each model, enables you to run your Python code in the context of your dbt project and DAG.
-  - session &mdash; A class representing your data platform’s connection to the Python backend. The session is needed to read in tables as DataFrames and to write DataFrames back to tables. In PySpark, by convention, the SparkSession is named spark, and available globally. For consistency across platforms, we always pass it into the model function as an explicit argument called session.
-- The `model()` function must return a single DataFrame. On Snowpark (Snowflake), this can be a Snowpark or pandas DataFrame.
-- `.source()` and `.ref()` functions. Python models participate fully in dbt's directed acyclic graph (DAG) of transformations. If you want to read directly from a raw source table, use `dbt.source()`. We saw this in our earlier section using SQL with the source function. These functions have the same execution, but with different syntax. Use the `dbt.ref()` method within a Python model to read data from other models (SQL or Python). These methods return DataFrames pointing to the upstream source, model, seed, or snapshot.
-- `.config()`. Just like SQL models, there are three ways to configure Python models:
-  - In a dedicated `.yml` file, within the `models/` directory
-  - Within the model's `.py` file, using the `dbt.config()` method
-  - Calling the `dbt.config()` method will set configurations for your model within your `.py` file, similar to the `{{ config() }} macro` in `.sql` model files:
+- dbt model(dbt, session). Для начала, каждая Python модель находится в .py файле в вашей папке models/. Она определяет функцию с именем `model()`, которая принимает два параметра:
+  - dbt &mdash; Класс, скомпилированный dbt Core, уникальный для каждой модели, позволяет вам запускать ваш Python код в контексте вашего dbt проекта и DAG.
+  - session &mdash; Класс, представляющий соединение вашей платформы данных с Python бэкендом. Сессия необходима для чтения таблиц как DataFrame и записи DataFrame обратно в таблицы. В PySpark, по соглашению, SparkSession называется spark и доступен глобально. Для согласованности между платформами мы всегда передаем его в функцию модели как явный аргумент, называемый session.
+- Функция `model()` должна возвращать один DataFrame. На Snowpark (Snowflake) это может быть Snowpark или pandas DataFrame.
+- Функции `.source()` и `.ref()`. Python модели полностью участвуют в направленном ациклическом графе (DAG) преобразований dbt. Если вы хотите читать напрямую из исходной таблицы, используйте `dbt.source()`. Мы видели это в нашей предыдущей секции, используя SQL с функцией source. Эти функции имеют одинаковое выполнение, но с разным синтаксисом. Используйте метод `dbt.ref()` в Python модели, чтобы читать данные из других моделей (SQL или Python). Эти методы возвращают DataFrame, указывающие на исходный источник, модель, seed или snapshot.
+- `.config()`. Как и SQL модели, есть три способа настройки Python моделей:
+  - В отдельном `.yml` файле, в директории `models/`
+  - Внутри `.py` файла модели, используя метод `dbt.config()`
+  - Вызов метода `dbt.config()` установит конфигурации для вашей модели в вашем `.py` файле, аналогично макросу `{{ config() }}` в `.sql` файлах моделей:
 
     ```python
         def model(dbt, session):
 
-            # setting configuration
+            # установка конфигурации
             dbt.config(materialized="table")
-        ```
-  - There's a limit to how complex you can get with the `dbt.config()` method. It accepts only literal values (strings, booleans, and numeric types). Passing another function or a more complex data structure is not possible. The reason is that dbt statically analyzes the arguments to `.config()` while parsing your model without executing your Python code. If you need to set a more complex configuration, we recommend you define it using the config property in a [YAML file](/reference/resource-properties/config). Learn more about configurations [here](/reference/model-configs).
+    ```
+  - Существует ограничение на то, насколько сложной может быть конфигурация с помощью метода `dbt.config()`. Он принимает только буквальные значения (строки, логические и числовые типы). Передача другой функции или более сложной структуры данных невозможна. Причина в том, что dbt статически анализирует аргументы для `.config()` при разборе вашей модели без выполнения вашего Python кода. Если вам нужно установить более сложную конфигурацию, мы рекомендуем определить ее, используя свойство config в [YAML файле](/reference/resource-properties/config). Узнайте больше о конфигурациях [здесь](/reference/model-configs).
 
-## Prepare for machine learning: cleaning, encoding, and splits
+## Подготовка к машинному обучению: очистка, кодирование и разделение
 
-Now that we’ve gained insights and business intelligence about Formula 1 at a descriptive level, we want to extend our capabilities into prediction. We’re going to take the scenario where we censor the data. This means that we will pretend that we will train a model using earlier data and apply it to future data. In practice, this means we’ll take data from 2010-2019 to train our model and then predict 2020 data.
+Теперь, когда мы получили представления и бизнес-аналитику о Формуле 1 на описательном уровне, мы хотим расширить наши возможности в области прогнозирования. Мы собираемся рассмотреть сценарий, в котором мы цензурируем данные. Это означает, что мы будем притворяться, что обучаем модель, используя более ранние данные, и применяем ее к будущим данным. На практике это означает, что мы возьмем данные с 2010 по 2019 год для обучения нашей модели, а затем предскажем данные 2020 года.
 
-In this section, we’ll be preparing our data to predict the final race position of a driver.
+В этом разделе мы будем готовить наши данные для прогнозирования итоговой позиции гонщика.
 
-At a high level we’ll be:
+На высоком уровне мы будем:
 
-- Creating new prediction features and filtering our dataset to active drivers
-- Encoding our data (algorithms like numbers) and simplifying our target variable called `position`
-- Splitting our dataset into training, testing, and validation
+- Создавать новые прогнозные признаки и фильтровать наш набор данных для активных гонщиков
+- Кодировать наши данные (алгоритмы любят числа) и упрощать нашу целевую переменную, называемую `position`
+- Разделять наш набор данных на обучение, тестирование и валидацию
 
-### ML data prep
+### Подготовка данных для ML
 
-1. To keep our project organized, we’ll need to create two new subfolders in our `ml` directory. Under the `ml` folder, make the subfolders `prep` and `train_predict`.
-2. Create a new file under `ml/prep` called `ml_data_prep.py`. Copy the following code into the file and **Save**.
+1. Чтобы наш проект был организован, нам нужно создать две новые подпапки в нашем каталоге `ml`. В папке `ml` создайте подпапки `prep` и `train_predict`.
+2. Создайте новый файл в `ml/prep`, назовите его `ml_data_prep.py`. Скопируйте следующий код в файл и **сохраните**.
 
     ```python
     import pandas as pd
 
     def model(dbt, session):
-        # dbt configuration
+        # конфигурация dbt
         dbt.config(packages=["pandas"])
 
-        # get upstream data
+        # получение данных из вышестоящей модели
         fct_results = dbt.ref("fct_results").to_pandas()
 
-        # provide years so we do not hardcode dates in filter command
+        # указание лет, чтобы не жестко кодировать даты в команде фильтрации
         start_year=2010
         end_year=2020
 
-        # describe the data for a full decade
+        # описание данных за целое десятилетие
         data =  fct_results.loc[fct_results['RACE_YEAR'].between(start_year, end_year)]
 
-        # convert string to an integer
+        # преобразование строки в целое число
         data['POSITION'] = data['POSITION'].astype(float)
 
-        # we cannot have nulls if we want to use total pit stops 
+        # мы не можем иметь null, если хотим использовать общее количество пит-стопов
         data['TOTAL_PIT_STOPS_PER_RACE'] = data['TOTAL_PIT_STOPS_PER_RACE'].fillna(0)
 
-        # some of the constructors changed their name over the year so replacing old names with current name
+        # некоторые конструкторы изменили свое имя за годы, поэтому заменяем старые имена на текущие
         mapping = {'Force India': 'Racing Point', 'Sauber': 'Alfa Romeo', 'Lotus F1': 'Renault', 'Toro Rosso': 'AlphaTauri'}
         data['CONSTRUCTOR_NAME'].replace(mapping, inplace=True)
 
-        # create confidence metrics for drivers and constructors
+        # создание метрик уверенности для гонщиков и конструкторов
         dnf_by_driver = data.groupby('DRIVER').sum(numeric_only=True)['DNF_FLAG']
         driver_race_entered = data.groupby('DRIVER').count()['DNF_FLAG']
         driver_dnf_ratio = (dnf_by_driver/driver_race_entered)
@@ -1277,7 +1276,7 @@ At a high level we’ll be:
         data['DRIVER_CONFIDENCE'] = data['DRIVER'].apply(lambda x:driver_confidence_dict[x])
         data['CONSTRUCTOR_RELAIBLITY'] = data['CONSTRUCTOR_NAME'].apply(lambda x:constructor_relaiblity_dict[x])
 
-        #removing retired drivers and constructors
+        # удаление ушедших на пенсию гонщиков и конструкторов
         active_constructors = ['Renault', 'Williams', 'McLaren', 'Ferrari', 'Mercedes',
                             'AlphaTauri', 'Racing Point', 'Alfa Romeo', 'Red Bull',
                             'Haas F1 Team']
@@ -1289,42 +1288,42 @@ At a high level we’ll be:
                         'Sergio Pérez', 'Esteban Ocon', 'Antonio Giovinazzi',
                         'Romain Grosjean','Nicholas Latifi']
 
-        # create flags for active drivers and constructors so we can filter downstream              
+        # создание флагов для активных гонщиков и конструкторов, чтобы мы могли фильтровать их в дальнейшем
         data['ACTIVE_DRIVER'] = data['DRIVER'].apply(lambda x: int(x in active_drivers))
         data['ACTIVE_CONSTRUCTOR'] = data['CONSTRUCTOR_NAME'].apply(lambda x: int(x in active_constructors))
         
         return data
     ```
 
-3. As usual, let’s break down what we are doing in this Python model:
-    - We’re first referencing our upstream `fct_results` table and casting it to a pandas dataframe.
-    - Filtering on years 2010-2020 since we’ll need to clean all our data we are using for prediction (both training and testing).
-    - Filling in empty data for `total_pit_stops` and making a mapping active constructors and drivers to avoid erroneous predictions
-        - ⚠️ You might be wondering why we didn’t do this upstream in our `fct_results` table! The reason for this is that we want our machine learning cleanup to reflect the year 2020 for our predictions and give us an up-to-date team name. However, for business intelligence purposes we can keep the historical data at that point in time. Instead of thinking of one table as “one source of truth” we are creating different datasets fit for purpose: one for historical descriptions and reporting and another for relevant predictions.
-    - Create new confidence features for drivers and constructors
-    - Generate flags for the constructors and drivers that were active in 2020
-4. Execute the following in the command bar:
+3. Как обычно, давайте разберем, что мы делаем в этой Python модели:
+    - Сначала мы ссылаемся на нашу вышестоящую таблицу `fct_results` и преобразуем ее в pandas dataframe.
+    - Фильтруем по годам 2010-2020, так как нам нужно очистить все наши данные, которые мы используем для прогнозирования (как для обучения, так и для тестирования).
+    - Заполняем пустые данные для `total_pit_stops` и создаем сопоставление активных конструкторов и гонщиков, чтобы избежать ошибочных прогнозов.
+        - ⚠️ Вы можете задаться вопросом, почему мы не сделали это в вышестоящей таблице `fct_results`! Причина в том, что мы хотим, чтобы наша очистка для машинного обучения отражала 2020 год для наших прогнозов и давала нам актуальное название команды. Однако для целей бизнес-аналитики мы можем сохранить исторические данные на тот момент времени. Вместо того чтобы считать одну таблицу "единственным источником правды", мы создаем разные наборы данных для разных целей: один для исторических описаний и отчетности, а другой для актуальных прогнозов.
+    - Создаем новые признаки уверенности для гонщиков и конструкторов.
+    - Генерируем флаги для конструкторов и гонщиков, которые были активны в 2020 году.
+4. Выполните следующее в командной строке:
 
     ```bash
     dbt run --select ml_data_prep
     ```
 
-5. There are more aspects we could consider for this project, such as normalizing the driver confidence by the number of races entered. Including this would help account for a driver’s history and consider whether they are a new or long-time driver. We’re going to keep it simple for now, but these are some of the ways we can expand and improve our machine learning dbt projects. Breaking down our machine learning prep model:
-    - Lambda functions &mdash; We use some lambda functions to transform our data without having to create a fully-fledged function using the `def` notation. So what exactly are lambda functions?
-        - In Python, a lambda function is a small, anonymous function defined using the keyword "lambda". Lambda functions are used to perform a quick operation, such as a mathematical calculation or a transformation on a list of elements. They are often used in conjunction with higher-order functions, such as `apply`, `map`, `filter`, and `reduce`.
-    - `.apply()` method &mdash; We used `.apply()` to pass our functions into our lambda expressions to the columns and perform this multiple times in our code. Let’s explain apply a little more:
-        - The `.apply()` function in the pandas library is used to apply a function to a specified axis of a DataFrame or a Series. In our case the function we used was our lambda function!
-        - The `.apply()` function takes two arguments: the first is the function to be applied, and the second is the axis along which the function should be applied. The axis can be specified as 0 for rows or 1 for columns. We are using the default value of 0 so we aren’t explicitly writing it in the code. This means that the function will be applied to each *row* of the DataFrame or Series.
-6. Let’s look at the preview of our clean dataframe after running our `ml_data_prep` model:
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/11-machine-learning-prep/1-completed-ml-data-prep.png" title="What our clean dataframe fit for machine learning looks like"/>
+5. Есть еще аспекты, которые мы могли бы рассмотреть для этого проекта, такие как нормализация уверенности гонщика по количеству заездов. Включение этого помогло бы учесть историю гонщика и рассмотреть, является ли он новым или давно выступающим гонщиком. Мы собираемся пока оставить это простым, но это некоторые из способов, которыми мы можем расширить и улучшить наши проекты машинного обучения dbt. Разбирая нашу модель подготовки к машинному обучению:
+    - Лямбда-функции &mdash; Мы используем некоторые лямбда-функции для преобразования наших данных без необходимости создания полноценной функции с использованием нотации `def`. Так что же такое лямбда-функции?
+        - В Python лямбда-функция это небольшая, анонимная функция, определяемая с помощью ключевого слова "lambda". Лямбда-функции используются для выполнения быстрой операции, такой как математическое вычисление или преобразование списка элементов. Они часто используются в сочетании с функциями высшего порядка, такими как `apply`, `map`, `filter` и `reduce`.
+    - Метод `.apply()` &mdash; Мы использовали `.apply()`, чтобы передать наши функции в наши лямбда-выражения к столбцам и выполнить это несколько раз в нашем коде. Давайте объясним apply немного подробнее:
+        - Функция `.apply()` в библиотеке pandas используется для применения функции к указанной оси DataFrame или Series. В нашем случае функция, которую мы использовали, была нашей лямбда-функцией!
+        - Функция `.apply()` принимает два аргумента: первый это функция, которую нужно применить, и второй это ось, вдоль которой функция должна быть применена. Ось может быть указана как 0 для строк или 1 для столбцов. Мы используем значение по умолчанию 0, поэтому не пишем его явно в коде. Это означает, что функция будет применена к каждой *строке* DataFrame или Series.
+6. Давайте посмотрим на предварительный просмотр нашего очищенного dataframe после запуска нашей модели `ml_data_prep`:
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/11-machine-learning-prep/1-completed-ml-data-prep.png" title="Как выглядит наш очищенный dataframe, готовый для машинного обучения"/>
 
-### Covariate encoding
+### Кодирование ковариат
 
-In this next part, we’ll be performing covariate encoding. Breaking down this phrase a bit, a *covariate* is a variable that is relevant to the outcome of a study or experiment, and *encoding* refers to the process of converting data (such as text or categorical variables) into a numerical format that can be used as input for a model. This is necessary because most machine learning algorithms can only work with numerical data. Algorithms don’t speak languages, have eyes to see images, etc. so we encode our data into numbers so algorithms can perform tasks by using calculations they otherwise couldn’t.
+В следующей части мы будем выполнять кодирование ковариат. Разбирая это выражение, *ковариата* это переменная, которая имеет отношение к результату исследования или эксперимента, а *кодирование* относится к процессу преобразования данных (таких как текст или категориальные переменные) в числовой формат, который может быть использован в качестве входных данных для модели. Это необходимо, потому что большинство алгоритмов машинного обучения могут работать только с числовыми данными. Алгоритмы не говорят на языках, не видят изображения и т.д., поэтому мы кодируем наши данные в числа, чтобы алгоритмы могли выполнять задачи, используя вычисления, которые они иначе не могли бы.
 
-🧠 We’ll think about this as : “algorithms like numbers”.
+🧠 Мы будем думать об этом как: "алгоритмы любят числа".
 
-1. Create a new file under `ml/prep` called `covariate_encoding` copy the code below and save.
+1. Создайте новый файл в `ml/prep`, назовите его `covariate_encoding`, скопируйте код ниже и сохраните.
 
     ```python
     import pandas as pd
@@ -1333,29 +1332,29 @@ In this next part, we’ll be performing covariate encoding. Breaking down this 
     from sklearn.linear_model import LogisticRegression
 
     def model(dbt, session):
-        # dbt configuration
+        # конфигурация dbt
         dbt.config(packages=["pandas","numpy","scikit-learn"])
 
-        # get upstream data
+        # получение данных из вышестоящей модели
         data = dbt.ref("ml_data_prep").to_pandas()
 
-        # list out covariates we want to use in addition to outcome variable we are modeling - position
+        # перечисление ковариат, которые мы хотим использовать в дополнение к целевой переменной, которую мы моделируем - position
         covariates = data[['RACE_YEAR','CIRCUIT_NAME','GRID','CONSTRUCTOR_NAME','DRIVER','DRIVERS_AGE_YEARS','DRIVER_CONFIDENCE','CONSTRUCTOR_RELAIBLITY','TOTAL_PIT_STOPS_PER_RACE','ACTIVE_DRIVER','ACTIVE_CONSTRUCTOR', 'POSITION']]
     
-        # filter covariates on active drivers and constructors
-        # use fil_cov as short for "filtered_covariates"
+        # фильтрация ковариат по активным гонщикам и конструкторам
+        # используем fil_cov как сокращение для "filtered_covariates"
         fil_cov = covariates[(covariates['ACTIVE_DRIVER']==1)&(covariates['ACTIVE_CONSTRUCTOR']==1)]
 
-        # Encode categorical variables using LabelEncoder
-        # TODO: we'll update this to both ohe in the future for non-ordinal variables! 
+        # Кодирование категориальных переменных с использованием LabelEncoder
+        # TODO: мы обновим это до ohe в будущем для неординальных переменных! 
         le = LabelEncoder()
         fil_cov['CIRCUIT_NAME'] = le.fit_transform(fil_cov['CIRCUIT_NAME'])
         fil_cov['CONSTRUCTOR_NAME'] = le.fit_transform(fil_cov['CONSTRUCTOR_NAME'])
         fil_cov['DRIVER'] = le.fit_transform(fil_cov['DRIVER'])
         fil_cov['TOTAL_PIT_STOPS_PER_RACE'] = le.fit_transform(fil_cov['TOTAL_PIT_STOPS_PER_RACE'])
 
-        # Simply target variable "position" to represent 3 meaningful categories in Formula1
-        # 1. Podium position 2. Points for team 3. Nothing - no podium or points!
+        # Упрощение целевой переменной "position" для представления 3 значимых категорий в Формуле 1
+        # 1. Позиция на подиуме 2. Очки для команды 3. Ничего - ни подиума, ни очков!
         def position_index(x):
             if x<4:
                 return 1
@@ -1364,7 +1363,7 @@ In this next part, we’ll be performing covariate encoding. Breaking down this 
             else :
                 return 2
 
-        # we are dropping the columns that we filtered on in addition to our training variable
+        # мы удаляем столбцы, по которым фильтровали, в дополнение к нашей обучающей переменной
         encoded_data = fil_cov.drop(['ACTIVE_DRIVER','ACTIVE_CONSTRUCTOR'],axis=1))
         encoded_data['POSITION_LABEL']= encoded_data['POSITION'].apply(lambda x: position_index(x))
         encoded_data_grouped_target = encoded_data.drop(['POSITION'],axis=1))
@@ -1372,104 +1371,104 @@ In this next part, we’ll be performing covariate encoding. Breaking down this 
         return encoded_data_grouped_target
     ```
 
-2. Execute the following in the command bar:
+2. Выполните следующее в командной строке:
 
     ```bash
     dbt run --select covariate_encoding
     ```
 
-3. In this code, we are using a ton of functions from libraries! This is really cool, because we can utilize code other people have developed and bring it into our project simply by using the `import` function. [Scikit-learn](https://scikit-learn.org/stable/), “sklearn” for short, is an extremely popular data science library. Sklearn contains a wide range of machine learning techniques, including supervised and unsupervised learning algorithms, feature scaling and imputation, as well as tools model evaluation and selection. We’ll be using Sklearn for both preparing our covariates and creating models (our next section).
-4. Our dataset is pretty small data so we are good to use pandas and `sklearn`. If you have larger data for your own project in mind, consider `dask` or `category_encoders`.
-5. Breaking it down a bit more:
-    - We’re selecting a subset of variables that will be used as predictors for a driver’s position.
-    - Filter the dataset to only include rows using the active driver and constructor flags we created in the last step.
-    - The next step is to use the `LabelEncoder` from scikit-learn to convert the categorical variables `CIRCUIT_NAME`, `CONSTRUCTOR_NAME`, `DRIVER`, and `TOTAL_PIT_STOPS_PER_RACE` into numerical values.
-    - Create a new variable called `POSITION_LABEL`, which is a derived from our position variable.
-        - 💭 Why are we changing our position variable? There are 20 total positions in Formula 1 and we are grouping them together to simplify the classification and improve performance. We also want to demonstrate you can create a new function within your dbt model!
-        - Our new `position_label` variable has meaning:
-            - In Formula1 if you are in:
-                - Top 3 you get a “podium” position
-                - Top 10 you gain points that add to your overall season total
-                - Below top 10 you get no points!
-        - We are mapping our original variable position to `position_label` to the corresponding places above to 1,2, and 3 respectively.
-    - Drop the active driver and constructor flags since they were filter criteria and additionally drop our original position variable.
+3. В этом коде мы используем множество функций из библиотек! Это действительно круто, потому что мы можем использовать код, разработанный другими людьми, и включать его в наш проект просто с помощью функции `import`. [Scikit-learn](https://scikit-learn.org/stable/), сокращенно "sklearn", это чрезвычайно популярная библиотека для науки о данных. Sklearn содержит широкий спектр методов машинного обучения, включая алгоритмы обучения с учителем и без учителя, масштабирование признаков и импутацию, а также инструменты для оценки и выбора моделей. Мы будем использовать Sklearn как для подготовки наших ковариат, так и для создания моделей (наш следующий раздел).
+4. Наш набор данных довольно мал, поэтому мы можем использовать pandas и `sklearn`. Если у вас есть более крупные данные для вашего собственного проекта, рассмотрите `dask` или `category_encoders`.
+5. Разбирая это немного подробнее:
+    - Мы выбираем подмножество переменных, которые будут использоваться в качестве предикторов для позиции гонщика.
+    - Фильтруем набор данных, чтобы включить только строки, используя флаги активных гонщиков и конструкторов, которые мы создали на предыдущем шаге.
+    - Следующий шаг - использование `LabelEncoder` из scikit-learn для преобразования категориальных переменных `CIRCUIT_NAME`, `CONSTRUCTOR_NAME`, `DRIVER` и `TOTAL_PIT_STOPS_PER_RACE` в числовые значения.
+    - Создаем новую переменную под названием `POSITION_LABEL`, которая является производной от нашей переменной position.
+        - 💭 Почему мы изменяем нашу переменную position? В Формуле 1 всего 20 позиций, и мы группируем их вместе, чтобы упростить классификацию и улучшить производительность. Мы также хотим показать, что вы можете создать новую функцию в вашей dbt модели!
+        - Наша новая переменная `position_label` имеет значение:
+            - В Формуле 1, если вы находитесь:
+                - В топ-3, вы получаете позицию на "подиуме"
+                - В топ-10, вы получаете очки, которые добавляются к вашему общему сезону
+                - Ниже топ-10, вы не получаете очков!
+        - Мы сопоставляем нашу исходную переменную position с `position_label` с соответствующими местами выше на 1, 2 и 3 соответственно.
+    - Удаляем флаги активных гонщиков и конструкторов, так как они были критериями фильтрации, и дополнительно удаляем нашу исходную переменную position.
 
-### Splitting into training and testing datasets
+### Разделение на обучающие и тестовые наборы данных
 
-Now that we’ve cleaned and encoded our data, we are going to further split in by time. In this step, we will create dataframes to use for training and prediction. We’ll be creating two dataframes 1) using data from 2010-2019 for training, and 2) data from 2020 for new prediction inferences. We’ll create variables called `start_year` and `end_year` so we aren’t filtering on hardcasted values (and can more easily swap them out in the future if we want to retrain our model on different timeframes).
+Теперь, когда мы очистили и закодировали наши данные, мы собираемся дополнительно разделить их по времени. На этом этапе мы создадим dataframes для использования в обучении и прогнозировании. Мы создадим два dataframes: 1) используя данные с 2010 по 2019 год для обучения, и 2) данные 2020 года для новых прогнозных выводов. Мы создадим переменные под названием `start_year` и `end_year`, чтобы мы не фильтровали по жестко заданным значениям (и могли бы легче их заменить в будущем, если захотим переобучить нашу модель на других временных рамках).
 
-1. Create a file called `train_test_dataset.py` copy and save the following code:
+1. Создайте файл под названием `train_test_dataset.py`, скопируйте и сохраните следующий код:
 
     ```python
     import pandas as pd
 
     def model(dbt, session):
 
-        # dbt configuration
+        # конфигурация dbt
         dbt.config(packages=["pandas"], tags="train")
 
-        # get upstream data
+        # получение данных из вышестоящей модели
         encoding = dbt.ref("covariate_encoding").to_pandas()
 
-        # provide years so we do not hardcode dates in filter command
+        # указание лет, чтобы не жестко кодировать даты в команде фильтрации
         start_year=2010
         end_year=2019
 
-        # describe the data for a full decade
+        # описание данных за целое десятилетие
         train_test_dataset =  encoding.loc[encoding['RACE_YEAR'].between(start_year, end_year)]
 
         return train_test_dataset
     ```
 
-2. Create a file called `hold_out_dataset_for_prediction.py` copy and save the following code below. Now we’ll have a dataset with only the year 2020 that we’ll keep as a hold out set that we are going to use similar to a deployment use case.
+2. Создайте файл под названием `hold_out_dataset_for_prediction.py`, скопируйте и сохраните следующий код ниже. Теперь у нас будет набор данных только за 2020 год, который мы будем держать как отложенный набор, который мы будем использовать аналогично случаю развертывания.
 
     ```python
     import pandas as pd
 
     def model(dbt, session):
-        # dbt configuration
+        # конфигурация dbt
         dbt.config(packages=["pandas"], tags="predict")
 
-        # get upstream data
+        # получение данных из вышестоящей модели
         encoding = dbt.ref("covariate_encoding").to_pandas()
         
-        # variable for year instead of hardcoding it 
+        # переменная для года вместо жесткого кодирования
         year=2020
 
-        # filter the data based on the specified year
+        # фильтрация данных на основе указанного года
         hold_out_dataset =  encoding.loc[encoding['RACE_YEAR'] == year]
         
         return hold_out_dataset
     ```
 
-3. Execute the following in the command bar:
+3. Выполните следующее в командной строке:
 
     ```bash
     dbt run --select train_test_dataset hold_out_dataset_for_prediction
     ```
 
-    To run our temporal data split models, we can use this syntax in the command line to run them both at once. Make sure you use a *space* [syntax](/reference/node-selection/syntax) between the model names to indicate you want to run both!
-4. **Commit and push** our changes to keep saving our work as we go using `ml data prep and splits` before moving on.
+    Чтобы запустить наши модели временного разделения данных, мы можем использовать этот синтаксис в командной строке, чтобы запустить их обе сразу. Убедитесь, что вы используете *пробел* [синтаксис](/reference/node-selection/syntax) между именами моделей, чтобы указать, что вы хотите запустить обе!
+4. **Закоммитьте и отправьте** наши изменения, чтобы продолжать сохранять нашу работу по мере продвижения, используя `ml data prep and splits` перед тем, как двигаться дальше.
 
-👏 Now that we’ve finished our machine learning prep work we can move onto the fun part &mdash; training and prediction!
+👏 Теперь, когда мы закончили нашу подготовку к машинному обучению, мы можем перейти к самой интересной части &mdash; обучению и прогнозированию!
 
 
-## Training a model to predict in machine learning
+## Обучение модели для прогнозирования в машинном обучении
 
-We’re ready to start training a model to predict the driver’s position. Now is a good time to pause and take a step back and say, usually in ML projects you’ll try multiple algorithms during development and use an evaluation method such as cross validation to determine which algorithm to use. You can definitely do this in your dbt project, but for the content of this lab we’ll have decided on using a logistic regression to predict position (we actually tried some other algorithms using cross validation outside of this lab such as k-nearest neighbors and a support vector classifier but that didn’t perform as well as the logistic regression and a decision tree that overfit).
+Мы готовы начать обучение модели для прогнозирования позиции гонщика. Сейчас хорошее время, чтобы сделать паузу и сказать, что обычно в проектах ML вы попробуете несколько алгоритмов во время разработки и используете метод оценки, такой как кросс-валидация, чтобы определить, какой алгоритм использовать. Вы определенно можете сделать это в вашем проекте dbt, но для содержания этой лаборатории мы решили использовать логистическую регрессию для прогнозирования позиции (мы на самом деле попробовали некоторые другие алгоритмы, используя кросс-валидацию за пределами этой лаборатории, такие как k-ближайшие соседи и классификатор опорных векторов, но они не показали себя так хорошо, как логистическая регрессия и дерево решений, которое переобучилось).
 
-There are 3 areas to break down as we go since we are working at the intersection all within one model file:
+Есть 3 области, которые нужно разобрать, так как мы работаем на пересечении всех в одном файле модели:
 
-1. Machine Learning
-2. Snowflake and Snowpark
-3. dbt Python models
+1. Машинное обучение
+2. Snowflake и Snowpark
+3. dbt Python модели
 
-If you haven’t seen code like this before or use joblib files to save machine learning models, we’ll be going over them at a high level and you can explore the links for more technical in-depth along the way! Because Snowflake and dbt have abstracted away a lot of the nitty gritty about serialization and storing our model object to be called again, we won’t go into too much detail here. There’s *a lot* going on here so take it at your pace!
+Если вы не видели такой код раньше или не использовали файлы joblib для сохранения моделей машинного обучения, мы рассмотрим их на высоком уровне, и вы можете изучить ссылки для более технического углубления по пути! Поскольку Snowflake и dbt абстрагировали множество деталей о сериализации и хранении нашего объекта модели для повторного вызова, мы не будем вдаваться в слишком много деталей здесь. Здесь происходит *многое*, так что берите это в своем темпе!
 
-### Training and saving a machine learning model
+### Обучение и сохранение модели машинного обучения
 
-1. Project organization remains key, so let’s make a new subfolder called `train_predict` under the `ml` folder.
-2. Now create a new file called `train_test_position.py` and copy and save the following code:
+1. Организация проекта остается ключевой, поэтому давайте создадим новую подпапку под названием `train_predict` в папке `ml`.
+2. Теперь создайте новый файл под названием `train_test_position.py` и скопируйте и сохраните следующий код:
 
     ```python
     import snowflake.snowpark.functions as F
@@ -1490,7 +1489,7 @@ If you haven’t seen code like this before or use joblib files to save machine 
         input_stream = io.BytesIO()
         joblib.dump(model, input_stream)
         session._conn.upload_stream(input_stream, path, dest_filename)
-        return "successfully created file: " + path
+        return "успешно создан файл: " + path
 
     def model(dbt, session):
         dbt.config(
@@ -1498,91 +1497,91 @@ If you haven’t seen code like this before or use joblib files to save machine 
             materialized = "table",
             tags = "train"
         )
-        # Create a stage in Snowflake to save our model file
+        # Создание стейджа в Snowflake для сохранения нашего файла модели
         session.sql('create or replace stage MODELSTAGE').collect()
     
         #session._use_scoped_temp_objects = False
         version = "1.0"
-        logger.info('Model training version: ' + version)
+        logger.info('Версия обучения модели: ' + version)
 
-        # read in our training and testing upstream dataset
+        # чтение нашего обучающего и тестового набора данных из вышестоящей модели
         test_train_df = dbt.ref("train_test_dataset")
 
-        #  cast snowpark df to pandas df
+        # приведение snowpark df к pandas df
         test_train_pd_df = test_train_df.to_pandas()
         target_col = "POSITION_LABEL"
 
-        # split out covariate predictors, x, from our target column position_label, y.
+        # разделение ковариатных предикторов, x, от нашей целевой колонки position_label, y.
         split_X = test_train_pd_df.drop([target_col], axis=1)
         split_y = test_train_pd_df[target_col]
 
-        # Split out our training and test data into proportions
+        # Разделение нашего обучающего и тестового набора данных на пропорции
         X_train, X_test, y_train, y_test  = train_test_split(split_X, split_y, train_size=0.7, random_state=42)
         train = [X_train, y_train]
         test = [X_test, y_test]
-        # now we are only training our one model to deploy
-        # we are keeping the focus on the workflows and not algorithms for this lab!
+        # теперь мы обучаем только одну модель для развертывания
+        # мы сосредоточены на рабочих процессах, а не на алгоритмах для этой лаборатории!
         model = LogisticRegression()
     
-        # fit the preprocessing pipeline and the model together 
+        # подгонка предварительной обработки и модели вместе 
         model.fit(X_train, y_train)   
         y_pred = model.predict_proba(X_test)[:,1]
         predictions = [round(value) for value in y_pred]
         balanced_accuracy =  balanced_accuracy_score(y_test, predictions)
 
-        # Save the model to a stage
+        # Сохранение модели на стейдже
         save_file(session, model, "@MODELSTAGE/driver_position_"+version, "driver_position_"+version+".joblib" )
-        logger.info('Model artifact:' + "@MODELSTAGE/driver_position_"+version+".joblib")
+        logger.info('Артефакт модели:' + "@MODELSTAGE/driver_position_"+version+".joblib")
     
-        # Take our pandas training and testing dataframes and put them back into snowpark dataframes
+        # Преобразование наших pandas обучающих и тестовых dataframes обратно в snowpark dataframes
         snowpark_train_df = session.write_pandas(pd.concat(train, axis=1, join='inner'), "train_table", auto_create_table=True, create_temp_table=True)
         snowpark_test_df = session.write_pandas(pd.concat(test, axis=1, join='inner'), "test_table", auto_create_table=True, create_temp_table=True)
     
-        # Union our training and testing data together and add a column indicating train vs test rows
+        # Объединение наших обучающих и тестовых данных вместе и добавление колонки, указывающей на строки обучения и тестирования
         return  snowpark_train_df.with_column("DATASET_TYPE", F.lit("train")).union(snowpark_test_df.with_column("DATASET_TYPE", F.lit("test")))
     ```
 
-3. Execute the following in the command bar:
+3. Выполните следующее в командной строке:
 
     ```bash
     dbt run --select train_test_position
     ```
 
-4. Breaking down our Python script here:
-    - We’re importing some helpful libraries.
-        - Defining a function called `save_file()` that takes four parameters: `session`, `model`, `path` and `dest_filename` that will save our logistic regression model file.
-            - `session` &mdash; an object representing a connection to Snowflake.
-            - `model` &mdash; an object that needs to be saved. In this case, it's a Python object that is a scikit-learn that can be serialized with joblib.
-            - `path` &mdash; a string representing the directory or bucket location where the file should be saved.
-            - `dest_filename` &mdash; a string representing the desired name of the file.
-        - Creating our dbt model
-            - Within this model we are creating a stage called `MODELSTAGE` to place our logistic regression `joblib` model file. This is really important since we need a place to keep our model to reuse and want to ensure it's there. When using Snowpark commands, it's common to see the `.collect()` method to ensure the action is performed. Think of the session as our “start” and collect as our “end” when [working with Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/python/working-with-dataframes.html) (you can use other ending methods other than collect).
-            - Using `.ref()` to connect into our `train_test_dataset` model.
-            - Now we see the machine learning part of our analysis:
-                - Create new dataframes for our prediction features from our target variable `position_label`.
-                - Split our dataset into 70% training (and 30% testing), train_size=0.7 with a `random_state` specified to have repeatable results.
-                - Specify our model is a logistic regression.
-                - Fit our model. In a logistic regression this means finding the coefficients that will give the least classification error.
-                - Round our predictions to the nearest integer since logistic regression creates a probability between for each class and calculate a balanced accuracy to account for imbalances in the target variable.
-        - Right now our model is only in memory, so we need to use our nifty function `save_file` to save our model file to our Snowflake stage. We save our model as a joblib file so Snowpark can easily call this model object back to create predictions. We really don’t need to know much else as a data practitioner unless we want to. It’s worth noting that joblib files aren’t able to be queried directly by SQL. To do this, we would need to transform the joblib file to an SQL querable format such as JSON or CSV (out of scope for this workshop).
-        - Finally we want to return our dataframe, but create a new column indicating what rows were used for training and those for training.
-5. Viewing our output of this model:
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/1-preview-train-test-position.png" title="Preview which rows of our model were used for training and testing"/>
+4. Разбирая наш Python скрипт здесь:
+    - Мы импортируем некоторые полезные библиотеки.
+        - Определяем функцию `save_file()`, которая принимает четыре параметра: `session`, `model`, `path` и `dest_filename`, которая сохранит наш файл модели логистической регрессии.
+            - `session` &mdash; объект, представляющий соединение с Snowflake.
+            - `model` &mdash; объект, который нужно сохранить. В данном случае это Python объект, который является scikit-learn, который может быть сериализован с помощью joblib.
+            - `path` &mdash; строка, представляющая директорию или местоположение корзины, где файл должен быть сохранен.
+            - `dest_filename` &mdash; строка, представляющая желаемое имя файла.
+        - Создание нашей dbt модели
+            - В этой модели мы создаем стейдж под названием `MODELSTAGE`, чтобы разместить наш файл модели логистической регрессии `joblib`. Это действительно важно, так как нам нужно место, чтобы сохранить нашу модель для повторного использования и убедиться, что она там. При использовании команд Snowpark часто можно увидеть метод `.collect()`, чтобы убедиться, что действие выполнено. Думайте о сессии как о нашем "начале" и collect как о нашем "конце" при [работе с Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/python/working-with-dataframes.html) (вы можете использовать другие методы окончания, кроме collect).
+            - Использование `.ref()` для подключения к нашей модели `train_test_dataset`.
+            - Теперь мы видим часть машинного обучения нашего анализа:
+                - Создание новых dataframes для наших прогнозных признаков из нашей целевой переменной `position_label`.
+                - Разделение нашего набора данных на 70% обучения (и 30% тестирования), train_size=0.7 с указанным `random_state`, чтобы иметь повторяемые результаты.
+                - Указание, что наша модель это логистическая регрессия.
+                - Подгонка нашей модели. В логистической регрессии это означает нахождение коэффициентов, которые дадут наименьшую ошибку классификации.
+                - Округление наших прогнозов до ближайшего целого числа, так как логистическая регрессия создает вероятность между для каждого класса и расчет сбалансированной точности, чтобы учесть дисбалансы в целевой переменной.
+        - Сейчас наша модель находится только в памяти, поэтому нам нужно использовать нашу удобную функцию `save_file`, чтобы сохранить наш файл модели на нашем стейдже Snowflake. Мы сохраняем нашу модель как файл joblib, чтобы Snowpark мог легко вызвать этот объект модели для создания прогнозов. Нам действительно не нужно знать много другого как практикующему специалисту по данным, если мы не хотим. Стоит отметить, что файлы joblib не могут быть напрямую запрошены с помощью SQL. Чтобы сделать это, нам нужно было бы преобразовать файл joblib в формат, который можно запросить с помощью SQL, такой как JSON или CSV (вне рамок этого воркшопа).
+        - Наконец, мы хотим вернуть наш dataframe, но создать новую колонку, указывающую, какие строки использовались для обучения, а какие для тестирования.
+5. Просмотр нашего вывода этой модели:
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/1-preview-train-test-position.png" title="Предварительный просмотр, какие строки нашей модели использовались для обучения и тестирования"/>
 
-6. Let’s pop back over to Snowflake and check that our logistic regression model has been stored in our `MODELSTAGE` using the command:
+6. Давайте вернемся в Snowflake и проверим, что наша модель логистической регрессии была сохранена в нашем `MODELSTAGE`, используя команду:
 
     ```sql
     list @modelstage
     ```
 
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/2-list-snowflake-stage.png" title="List the objects in our Snowflake stage to check for our logistic regression to predict driver position"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/2-list-snowflake-stage.png" title="Список объектов в нашем стейдже Snowflake для проверки нашей логистической регрессии для прогнозирования позиции гонщика"/>
 
-7. To investigate the commands run as part of `train_test_position` script, navigate to Snowflake query history to view it **Activity > Query History**. We can view the portions of query that we wrote such as `create or replace stage MODELSTAGE`, but we also see additional queries that Snowflake uses to interpret python code.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/3-view-snowflake-query-history.png" title="View Snowflake query history to see how python models are run under the hood"/>
+7. Чтобы исследовать команды, выполненные в рамках скрипта `train_test_position`, перейдите в историю запросов Snowflake, чтобы просмотреть ее **Activity > Query History**. Мы можем просмотреть части запроса, которые мы написали, такие как `create or replace stage MODELSTAGE`, но мы также видим дополнительные запросы, которые Snowflake использует для интерпретации кода на python.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/12-machine-learning-training-prediction/3-view-snowflake-query-history.png" title="Просмотр истории запросов Snowflake, чтобы увидеть, как python модели выполняются под капотом"/>
 
-### Predicting on new data
+### Прогнозирование на новых данных
 
-1. Create a new file called `predict_position.py` and copy and save the following code:
+1. Создайте новый файл под названием `predict_position.py` и скопируйте и сохраните следующий код:
 
     ```python
     import logging
@@ -1593,18 +1592,18 @@ If you haven’t seen code like this before or use joblib files to save machine 
 
     DB_STAGE = 'MODELSTAGE'
     version = '1.0'
-    # The name of the model file
+    # Имя файла модели
     model_file_path = 'driver_position_'+version
     model_file_packaged = 'driver_position_'+version+'.joblib'
 
-    # This is a local directory, used for storing the various artifacts locally
+    # Это локальная директория, используемая для хранения различных артефактов локально
     LOCAL_TEMP_DIR = f'/tmp/driver_position'
     DOWNLOAD_DIR = os.path.join(LOCAL_TEMP_DIR, 'download')
     TARGET_MODEL_DIR_PATH = os.path.join(LOCAL_TEMP_DIR, 'ml_model')
     TARGET_LIB_PATH = os.path.join(LOCAL_TEMP_DIR, 'lib')
 
-    # The feature columns that were used during model training
-    # and that will be used during prediction
+    # Колонки признаков, которые использовались во время обучения модели
+    # и которые будут использоваться во время прогнозирования
     FEATURE_COLS = [
             "RACE_YEAR"
             ,"CIRCUIT_NAME"
@@ -1618,22 +1617,22 @@ If you haven’t seen code like this before or use joblib files to save machine 
 
     def register_udf_for_prediction(p_predictor ,p_session ,p_dbt):
 
-        # The prediction udf
+        # UDF для прогнозирования
 
         def predict_position(p_df: T.PandasDataFrame[int, int, int, int,
                                             int, int, int, int, int]) -> T.PandasSeries[int]:
-            # Snowpark currently does not set the column name in the input dataframe
-            # The default col names are like 0,1,2,... Hence we need to reset the column
-            # names to the features that we initially used for training.
+            # Snowpark в настоящее время не устанавливает имя колонки во входном dataframe
+            # Имена колонок по умолчанию такие как 0,1,2,... Поэтому нам нужно сбросить имена колонок
+            # на признаки, которые мы изначально использовали для обучения.
             p_df.columns = [*FEATURE_COLS]
         
-            # Perform prediction. this returns an array object
+            # Выполнение прогнозирования. это возвращает объект массива
             pred_array = p_predictor.predict(p_df)
-            # Convert to series
+            # Преобразование в серию
             df_predicted = pd.Series(pred_array)
             return df_predicted
 
-        # The list of packages that will be used by UDF
+        # Список пакетов, которые будут использоваться UDF
         udf_packages = p_dbt.config.get('packages')
 
         predict_position_udf = p_session.udf.register(
@@ -1647,7 +1646,7 @@ If you haven’t seen code like this before or use joblib files to save machine 
         p_session.file.get(f'@{DB_STAGE}/{model_file_path}/{model_file_packaged}', DOWNLOAD_DIR)
     
     def load_model(p_session):
-        # Load the model and initialize the predictor
+        # Загрузка модели и инициализация предиктора
         model_fl_path = os.path.join(DOWNLOAD_DIR, model_file_packaged)
         predictor = joblib.load(model_fl_path)
         return predictor
@@ -1664,12 +1663,12 @@ If you haven’t seen code like this before or use joblib files to save machine 
         predictor = load_model(session)
         predict_position_udf = register_udf_for_prediction(predictor, session ,dbt)
     
-        # Retrieve the data, and perform the prediction
+        # Получение данных и выполнение прогнозирования
         hold_out_df = (dbt.ref("hold_out_dataset_for_prediction")
             .select(*FEATURE_COLS)
         )
 
-        # Perform prediction.
+        # Выполнение прогнозирования.
         new_predictions_df = hold_out_df.withColumn("position_predicted"
             ,predict_position_udf(*FEATURE_COLS)
         )
@@ -1677,94 +1676,94 @@ If you haven’t seen code like this before or use joblib files to save machine 
         return new_predictions_df
     ```
 
-2. Execute the following in the command bar:
+2. Выполните следующее в командной строке:
 
     ```bash
     dbt run --select predict_position
     ```
 
-3. **Commit and push** our changes to keep saving our work as we go using the commit message `logistic regression model training and application` before moving on.
-4. At a high level in this script, we are:
-    - Retrieving our staged logistic regression model
-    - Loading the model in
-    - Placing the model within a user defined function (UDF) to call in line predictions on our driver’s position
-5. At a more detailed level:
-    - Import our libraries.
-    - Create variables to reference back to the `MODELSTAGE` we just created and stored our model to.
-    - The temporary file paths we created might look intimidating, but all we’re doing here is programmatically using an initial file path and adding to it to create the following directories:
+3. **Закоммитьте и отправьте** наши изменения, чтобы продолжать сохранять нашу работу по мере продвижения, используя сообщение коммита `logistic regression model training and application` перед тем, как двигаться дальше.
+4. На высоком уровне в этом скрипте мы:
+    - Извлекаем нашу модель логистической регрессии, размещенную на стейдже
+    - Загружаем модель
+    - Размещаем модель в пользовательской функции (UDF) для вызова прогнозов в строке на позиции гонщика
+5. На более детальном уровне:
+    - Импортируем наши библиотеки.
+    - Создаем переменные для ссылки на `MODELSTAGE`, который мы только что создали и сохранили нашу модель.
+    - Временные пути файлов, которые мы создали, могут выглядеть устрашающе, но все, что мы делаем здесь, это программно используем начальный путь файла и добавляем к нему, чтобы создать следующие директории:
         - LOCAL_TEMP_DIR ➡️ /tmp/driver_position
         - DOWNLOAD_DIR ➡️ /tmp/driver_position/download
         - TARGET_MODEL_DIR_PATH ➡️ /tmp/driver_position/ml_model
         - TARGET_LIB_PATH ➡️ /tmp/driver_position/lib
-    - Provide a list of our feature columns that we used for model training and will now be used on new data for prediction.
-    - Next, we are creating our main function `register_udf_for_prediction(p_predictor ,p_session ,p_dbt):`. This function is used to register a user-defined function (UDF) that performs the machine learning prediction. It takes three parameters: `p_predictor` is an instance of the machine learning model, `p_session` is an instance of the Snowflake session, and `p_dbt` is an instance of the dbt library. The function creates a UDF named `predict_churn` which takes a pandas dataframe with the input features and returns a pandas series with the predictions.
-    - ⚠️ Pay close attention to the whitespace here. We are using a function within a function for this script.
-    - We have 2 simple functions that are programmatically retrieving our file paths to first get our stored model out of our `MODELSTAGE` and downloaded into the session `download_models_and_libs_from_stage` and then to load the contents of our model in (parameters) in `load_model` to use for prediction.
-    - Take the model we loaded in and call it `predictor` and wrap it in a UDF.
-    - Return our dataframe with both the features used to predict and the new label.
+    - Предоставляем список наших колонок признаков, которые мы использовали для обучения модели и теперь будем использовать на новых данных для прогнозирования.
+    - Далее мы создаем нашу основную функцию `register_udf_for_prediction(p_predictor ,p_session ,p_dbt):`. Эта функция используется для регистрации пользовательской функции (UDF), которая выполняет прогнозирование машинного обучения. Она принимает три параметра: `p_predictor` это экземпляр модели машинного обучения, `p_session` это экземпляр сессии Snowflake, и `p_dbt` это экземпляр библиотеки dbt. Функция создает UDF с именем `predict_churn`, который принимает pandas dataframe с входными признаками и возвращает pandas серию с прогнозами.
+    - ⚠️ Обратите внимание на пробелы здесь. Мы используем функцию внутри функции для этого скрипта.
+    - У нас есть 2 простые функции, которые программно извлекают наши пути файлов, чтобы сначала получить нашу сохраненную модель из нашего `MODELSTAGE` и загрузить ее в сессию `download_models_and_libs_from_stage`, а затем загрузить содержимое нашей модели (параметры) в `load_model` для использования в прогнозировании.
+    - Берем модель, которую мы загрузили, называем ее `predictor` и оборачиваем в UDF.
+    - Возвращаем наш dataframe с признаками, использованными для прогнозирования, и новой меткой.
 
-🧠 Another way to read this script is from the bottom up. This can help us progressively see what is going into our final dbt model and work backwards to see how the other functions are being referenced.
+🧠 Другой способ прочитать этот скрипт это снизу вверх. Это может помочь нам постепенно увидеть, что входит в нашу финальную dbt модель и работать назад, чтобы увидеть, как другие функции ссылаются.
 
-6. Let’s take a look at our predicted position alongside our feature variables. Open a new scratchpad and use the following query. I chose to order by the prediction of who would obtain a podium position:
+6. Давайте посмотрим на нашу предсказанную позицию вместе с нашими переменными признаков. Откройте новый scratchpad и используйте следующий запрос. Я выбрал сортировку по прогнозу, кто займет позицию на подиуме:
 
     ```sql
     select * from {{ ref('predict_position') }} order by position_predicted
     ```
 
-7. We can see that we created predictions in our final dataset, we are ready to move on to testing!
+7. Мы видим, что создали прогнозы в нашем финальном наборе данных, мы готовы перейти к тестированию!
 
-## Test your data models
+## Тестирование ваших моделей данных
 
-We have now completed building all the models for today’s lab, but how do we know if they meet our assertions? Put another way, how do we know the quality of our data models are any good? This brings us to testing!
+Теперь мы завершили создание всех моделей для сегодняшней лаборатории, но как мы можем быть уверены, что они соответствуют нашим утверждениям? Другими словами, как мы можем быть уверены в качестве наших моделей данных? Это приводит нас к тестированию!
 
-We test data models for mainly two reasons:
+Мы тестируем модели данных по двум основным причинам:
 
-- Ensure that our source data is clean on ingestion before we start data modeling/transformation (aka avoid garbage in, garbage out problem).
-- Make sure we don’t introduce bugs in the transformation code we wrote (stop ourselves from creating bad joins/fanouts).
+- Убедиться, что наши исходные данные чисты при загрузке, прежде чем мы начнем моделирование/преобразование данных (избежать проблемы "мусор на входе, мусор на выходе").
+- Убедиться, что мы не вводим ошибки в код преобразования, который мы написали (предотвратить создание плохих соединений/разветвлений).
 
-Testing in dbt comes in two flavors: [generic](/docs/build/data-tests#generic-data-tests) and [singular](/docs/build/data-tests#singular-data-tests).
+Тестирование в dbt бывает двух видов: [общие](/docs/build/data-tests#generic-data-tests) и [единичные](/docs/build/data-tests#singular-data-tests).
 
-You define them in a test block (similar to a macro) and once defined, you can reference them by name in your `.yml` files (applying them to models, columns, sources, snapshots, and seeds).
+Вы определяете их в блоке теста (аналогично макросу), и как только они определены, вы можете ссылаться на них по имени в ваших `.yml` файлах (применяя их к моделям, колонкам, источникам, снимкам и seed).
 
-You might be wondering: *what about testing Python models?*
+Вы можете задаться вопросом: *а как насчет тестирования Python моделей?*
 
-Since the output of our Python models are tables, we can test SQL and Python models the same way! We don’t have to worry about any syntax differences when testing SQL versus Python data models. This means we use `.yml` and `.sql` files to test our entities (tables, views, etc.). Under the hood, dbt is running an SQL query on our tables to see if they meet assertions. If no rows are returned, dbt will surface a passed test. Conversely, if a test results in returned rows, it will fail or warn depending on the configuration (more on that later).
+Поскольку вывод наших Python моделей это таблицы, мы можем тестировать SQL и Python модели одинаково! Нам не нужно беспокоиться о каких-либо различиях в синтаксисе при тестировании SQL и Python моделей данных. Это означает, что мы используем `.yml` и `.sql` файлы для тестирования наших сущностей (таблиц, представлений и т.д.). Под капотом dbt выполняет SQL запрос на наших таблицах, чтобы увидеть, соответствуют ли они утверждениям. Если строки не возвращаются, dbt покажет успешный тест. Наоборот, если тест приводит к возвращению строк, он провалится или выдаст предупреждение в зависимости от конфигурации (подробнее об этом позже).
 
-### Generic tests
+### Общие тесты
 
-1. To implement generic out-of-the-box tests dbt comes with, we can use YAML files to specify information about our models. To add generic tests to our aggregates model, create a file called `aggregates.yml`, copy the code block below into the file, and save.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" title="The aggregates.yml file in our file tree"/>
+1. Чтобы реализовать общие тесты из коробки, которые предоставляет dbt, мы можем использовать YAML файлы для указания информации о наших моделях. Чтобы добавить общие тесты к нашей модели агрегатов, создайте файл под названием `aggregates.yml`, скопируйте блок кода ниже в файл и сохраните.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" title="Файл aggregates.yml в нашем дереве файлов"/>
 
     ```yaml
     version: 2
 
     models:
         - name: fastest_pit_stops_by_constructor
-          description: Use the python .describe() method to retrieve summary statistics table about pit stops by constructor. Sort by average stop time ascending so the first row returns the fastest constructor.
+          description: Используйте метод python .describe(), чтобы получить таблицу сводной статистики о пит-стопах по конструктору. Сортируйте по среднему времени остановки по возрастанию, чтобы первая строка возвращала самого быстрого конструктора.
           columns:
             - name: constructor_name
-              description: team that makes the car
+              description: команда, которая делает машину
               tests:
                 - unique
 
         - name: lap_times_moving_avg
-          description: Use the python .rolling() method to calculate the 5 year rolling average of pit stop times alongside the average for each year. 
+          description: Используйте метод python .rolling(), чтобы вычислить 5-летнее скользящее среднее времени пит-стопов вместе со средним для каждого года. 
           columns:
             - name: race_year
-              description: year of the race
+              description: год гонки
               tests:
                 - relationships:
                   to: ref('int_lap_times_years')
                   field: race_year
     ```
 
-2. Let’s unpack the code we have here. We have both our aggregates models with the model name to know the object we are referencing and the description of the model that we’ll populate in our documentation. At the column level (a level below our model), we are providing the column name followed by our tests. We want to ensure our `constructor_name` is unique since we used a pandas `groupby` on `constructor_name` in the model `fastest_pit_stops_by_constructor`. Next, we want to ensure our `race_year` has referential integrity from the model we selected from `int_lap_times_years` into our subsequent `lap_times_moving_avg` model.
-3. Finally, if we want to see how tests were deployed on sources and SQL models, we can look at other files in our project such as the `f1_sources.yml` we created in our Sources and staging section.
+2. Давайте разберем код, который у нас здесь. У нас есть обе наши модели агрегатов с именем модели, чтобы знать объект, на который мы ссылаемся, и описание модели, которое мы будем заполнять в нашей документации. На уровне колонки (уровень ниже нашей модели) мы предоставляем имя колонки, за которым следуют наши тесты. Мы хотим убедиться, что наш `constructor_name` уникален, так как мы использовали pandas `groupby` на `constructor_name` в модели `fastest_pit_stops_by_constructor`. Далее мы хотим убедиться, что наш `race_year` имеет ссылочную целостность из модели, которую мы выбрали из `int_lap_times_years`, в нашу последующую модель `lap_times_moving_avg`.
+3. Наконец, если мы хотим увидеть, как тесты были развернуты на источниках и SQL моделях, мы можем посмотреть на другие файлы в нашем проекте, такие как `f1_sources.yml`, который мы создали в нашем разделе Источники и стадирование.
 
-### Using macros for testing
+### Использование макросов для тестирования
 
-1. Under your `macros` folder, create a new file and name it `test_all_values_gte_zero.sql`. Copy the code block below and save the file. For clarity, “gte” is an abbreviation for greater than or equal to.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" title="macro file for reusable testing code"/>
+1. В вашей папке `macros` создайте новый файл и назовите его `test_all_values_gte_zero.sql`. Скопируйте блок кода ниже и сохраните файл. Для ясности, "gte" это сокращение от greater than or equal to (больше или равно).
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" title="макрос файл для повторно используемого кода тестирования"/>
 
     ```sql
     {% macro test_all_values_gte_zero(table, column) %}
@@ -1774,13 +1773,13 @@ Since the output of our Python models are tables, we can test SQL and Python mod
     {% endmacro %}
     ```
 
-2. Macros in Jinja are pieces of code that can be reused multiple times in our SQL models &mdash; they are analogous to "functions" in other programming languages, and are extremely useful if you find yourself repeating code across multiple models.
-3. We use the `{% macro %}` to indicate the start of the macro and `{% endmacro %}` for the end. The text after the beginning of the macro block is the name we are giving the macro to later call it. In this case, our macro is called `test_all_values_gte_zero`. Macros take in *arguments* to pass through, in this case the `table` and the `column`. In the body of the macro, we see an SQL statement that is using the `ref` function to dynamically select the table and then the column. You can always view macros without having to run them by using `dbt run-operation`. You can learn more [here](https://docs.getdbt.com/reference/commands/run-operation).
-4. Great, now we want to reference this macro as a test! Let’s create a new test file called `macro_pit_stops_mean_is_positive.sql` in our `tests` folder.
+2. Макросы в Jinja это куски кода, которые могут быть использованы многократно в наших SQL моделях &mdash; они аналогичны "функциям" в других языках программирования и чрезвычайно полезны, если вы обнаружите, что повторяете код в нескольких моделях.
+3. Мы используем `{% macro %}` для указания начала макроса и `{% endmacro %}` для конца. Текст после начала блока макроса это имя, которое мы даем макросу, чтобы позже вызвать его. В данном случае наш макрос называется `test_all_values_gte_zero`. Макросы принимают *аргументы* для передачи, в данном случае `table` и `column`. В теле макроса мы видим SQL оператор, который использует функцию `ref` для динамического выбора таблицы, а затем колонки. Вы всегда можете просмотреть макросы без необходимости их выполнения, используя `dbt run-operation`. Вы можете узнать больше [здесь](https://docs.getdbt.com/reference/commands/run-operation).
+4. Отлично, теперь мы хотим сослаться на этот макрос как на тест! Давайте создадим новый тестовый файл под названием `macro_pit_stops_mean_is_positive.sql` в нашей папке `tests`.
 
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/3-gte-macro-applied-to-pit-stops.png" title="creating a test on our pit stops model referencing the macro"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/3-gte-macro-applied-to-pit-stops.png" title="создание теста на нашей модели пит-стопов с ссылкой на макрос"/>
 
-5. Copy the following code into the file and save:
+5. Скопируйте следующий код в файл и сохраните:
 
     ```sql
     {{
@@ -1794,22 +1793,22 @@ Since the output of our Python models are tables, we can test SQL and Python mod
     {{ test_all_values_gte_zero('fastest_pit_stops_by_constructor', 'mean') }}
     ```
 
-6. In our testing file, we are applying some configurations to the test including `enabled`, which is an optional configuration for disabling models, seeds, snapshots, and tests. Our severity is set to `warn` instead of `error`, which means our pipeline will still continue to run. We have tagged our test with `bi` since we are applying this test to one of our bi models.
+6. В нашем тестовом файле мы применяем некоторые конфигурации к тесту, включая `enabled`, который является необязательной конфигурацией для отключения моделей, seed, снимков и тестов. Наша серьезность установлена на `warn` вместо `error`, что означает, что наш pipeline будет продолжать работать. Мы пометили наш тест как `bi`, так как мы применяем этот тест к одной из наших bi моделей.
 
-Then, in our final line, we are calling the `test_all_values_gte_zero` macro that takes in our table and column arguments and inputting our table `'fastest_pit_stops_by_constructor'` and the column `'mean'`.
+Затем, в нашей финальной строке, мы вызываем макрос `test_all_values_gte_zero`, который принимает наши аргументы таблицы и колонки и вводим нашу таблицу `'fastest_pit_stops_by_constructor'` и колонку `'mean'`.
 
-### Custom singular tests to validate Python models
+### Пользовательские единичные тесты для проверки Python моделей
 
-The simplest way to define a test is by writing the exact SQL that will return failing records. We call these "singular" tests, because they're one-off assertions usable for a single purpose.
+Самый простой способ определить тест это написать точный SQL, который вернет неудачные записи. Мы называем их "единичными" тестами, потому что они одноразовые утверждения, пригодные для одной цели.
 
-These tests are defined in `.sql` files, typically in your `tests` directory (as defined by your test-paths config). You can use Jinja in SQL models (including ref and source) in the test definition, just like you can when creating models. Each `.sql` file contains one select statement, and it defines one test.
+Эти тесты определяются в `.sql` файлах, обычно в вашем каталоге `tests` (как определено вашей конфигурацией test-paths). Вы можете использовать Jinja в SQL моделях (включая ref и source) в определении теста, так же как и при создании моделей. Каждый `.sql` файл содержит один select оператор и определяет один тест.
 
-Let’s add a custom test that asserts that the moving average of the lap time over the last 5 years is greater than zero (it’s impossible to have time less than 0!). It is easy to assume if this is not the case the data has been corrupted.
+Давайте добавим пользовательский тест, который утверждает, что скользящее среднее времени круга за последние 5 лет больше нуля (невозможно иметь время меньше 0!). Легко предположить, что если это не так, данные были повреждены.
 
-1. Create a file `lap_times_moving_avg_assert_positive_or_null.sql` under the `tests` folder.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" title="custom singular test for testing lap times are positive values"/>
+1. Создайте файл `lap_times_moving_avg_assert_positive_or_null.sql` в папке `tests`.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" title="пользовательский единичный тест для проверки, что времена кругов положительные значения"/>
 
-2. Copy the following code and save the file:
+2. Скопируйте следующий код и сохраните файл:
 
     ```sql
     {{
@@ -1827,103 +1826,103 @@ Let’s add a custom test that asserts that the moving average of the lap time o
     where lap_moving_avg_5_years < 0 and lap_moving_avg_5_years is not null
     ```
 
-### Putting all our tests together
+### Объединение всех наших тестов
 
-1. Time to run our tests! Altogether, we have created 4 tests for our 2 Python models:
+1. Время запустить наши тесты! В целом, мы создали 4 теста для наших 2 Python моделей:
     - `fastest_pit_stops_by_constructor`
-        - Unique `constructor_name`
-        - Lap times are greater than 0 or null (to allow for the first leading values in a rolling calculation)
+        - Уникальный `constructor_name`
+        - Времена кругов больше 0 или null (чтобы позволить первые ведущие значения в скользящем расчете)
     - `lap_times_moving_avg`
-        - Referential test on `race_year`
-        - Mean pit stop times are greater than or equal to 0 (no negative time values)
-2. To run the tests on both our models, we can use this syntax in the command line to run them both at once, similar to how we did our data splits earlier.
-    Execute the following in the command bar:
+        - Ссылочный тест на `race_year`
+        - Среднее время пит-стопов больше или равно 0 (нет отрицательных значений времени)
+2. Чтобы запустить тесты на обеих наших моделях, мы можем использовать этот синтаксис в командной строке, чтобы запустить их обе сразу, аналогично тому, как мы делали наши разделения данных ранее.
+    Выполните следующее в командной строке:
 
     ```bash
     dbt test --select fastest_pit_stops_by_constructor lap_times_moving_avg
     ```
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/5-running-tests-on-python-models.png" title="running tests on our python models"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/5-running-tests-on-python-models.png" title="запуск тестов на наших python моделях"/>
 
-3. All 4 of our tests passed (yay for clean data)! To understand the SQL being run against each of our tables, we can click into the details of the test.
-4. Navigating into the **Details** of the `unique_fastest_pit_stops_by_constructor_name`, we can see that each line `constructor_name` should only have one row.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/6-testing-output-details.png" title="view details of testing our python model that used SQL to test data assertions"/>
+3. Все 4 наших теста прошли (ура за чистые данные)! Чтобы понять SQL, выполняемый против каждой из наших таблиц, мы можем нажать на детали теста.
+4. Переходя в **Details** теста `unique_fastest_pit_stops_by_constructor_name`, мы можем увидеть, что каждая строка `constructor_name` должна иметь только одну строку.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/6-testing-output-details.png" title="просмотр деталей тестирования нашей python модели, которая использовала SQL для проверки утверждений данных"/>
 
-## Document your dbt project
+## Документирование вашего dbt проекта
 
-When it comes to documentation, dbt brings together both column and model level descriptions that you can provide as well as details from your Snowflake information schema in a static site for consumption by other data team members and stakeholders.
+Когда дело доходит до документации, dbt объединяет как описания на уровне колонок и моделей, которые вы можете предоставить, так и детали из вашей информационной схемы Snowflake в статическом сайте для потребления другими членами команды данных и заинтересованными сторонами.
 
-We are going to revisit 2 areas of our project to understand our documentation:
+Мы собираемся вернуться к 2 областям нашего проекта, чтобы понять нашу документацию:
 
-- `intermediate.md` file
-- `dbt_project.yml` file
+- файл `intermediate.md`
+- файл `dbt_project.yml`
 
-To start, let’s look back at our `intermediate.md` file. We can see that we provided multi-line descriptions for the models in our intermediate models using [docs blocks](/docs/build/documentation#using-docs-blocks). Then we reference these docs blocks in our `.yml` file. Building descriptions with doc blocks in Markdown files gives you the ability to format your descriptions with Markdown and are particularly helpful when building long descriptions, either at the column or model level. In our `dbt_project.yml`, we added `node_colors` at folder levels.
+Для начала давайте посмотрим на наш файл `intermediate.md`. Мы видим, что предоставили многострочные описания для моделей в наших промежуточных моделях, используя [docs блоки](/docs/build/documentation#using-docs-blocks). Затем мы ссылаемся на эти docs блоки в нашем `.yml` файле. Создание описаний с помощью doc блоков в Markdown файлах дает вам возможность форматировать ваши описания с помощью Markdown и особенно полезно при создании длинных описаний, как на уровне колонок, так и на уровне моделей. В нашем `dbt_project.yml` мы добавили `node_colors` на уровне папок.
 
-1. To see all these pieces come together, execute this in the command bar:
+1. Чтобы увидеть, как все эти части объединяются, выполните это в командной строке:
 
   ```bash
   dbt docs generate
   ```
 
-  This will generate the documentation for your project. Click the book button, as shown in the screenshot below to access the docs.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/1-docs-icon.png" title="dbt docs book icon"/>
+  Это сгенерирует документацию для вашего проекта. Нажмите на кнопку книги, как показано на скриншоте ниже, чтобы получить доступ к документации.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/1-docs-icon.png" title="иконка книги dbt docs"/>
 
-2. Go to our project area and view `int_results`. View the description that we created in our doc block.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/2-view-docblock-description.png" title="Docblock description within docs site"/>
+2. Перейдите в нашу область проекта и просмотрите `int_results`. Просмотрите описание, которое мы создали в нашем doc блоке.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/2-view-docblock-description.png" title="Описание docblock в рамках сайта документации"/>
 
-3. View the mini-lineage that looks at the model we are currently selected on (`int_results` in this case).
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" title="Mini lineage view on docs site"/>
+3. Просмотрите мини-родословную, которая смотрит на модель, на которой мы в данный момент выбраны (`int_results` в данном случае).
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" title="Мини-родословная на сайте документации"/>
 
-4. In our `dbt_project.yml`, we configured `node_colors` depending on the file directory. By color coding your project, it can help you cluster together similar models or steps and more easily troubleshoot when viewing lineage in your docs.
+4. В нашем `dbt_project.yml` мы настроили `node_colors` в зависимости от каталога файлов. Цветовое кодирование вашего проекта может помочь вам сгруппировать похожие модели или шаги и легче устранять неполадки при просмотре родословной в вашей документации.
 
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/4-full-dag-docs.png" title="Full project DAG on docs site"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/4-full-dag-docs.png" title="Полный DAG проекта на сайте документации"/>
 
-## Deploy your code
+## Развертывание вашего кода
 
-Before we jump into deploying our code, let's have a quick primer on environments. Up to this point, all of the work we've done in the dbt Cloud IDE has been in our development environment, with code committed to a feature branch and the models we've built created in our development schema in Snowflake as defined in our Development environment connection. Doing this work on a feature branch, allows us to separate our code from what other coworkers are building and code that is already deemed production ready. Building models in a development schema in Snowflake allows us to separate the database objects we might still be modifying and testing from the database objects running production dashboards or other downstream dependencies. Together, the combination of a Git branch and Snowflake database objects form our environment.
+Прежде чем мы перейдем к развертыванию нашего кода, давайте кратко рассмотрим среды. До этого момента вся работа, которую мы проделали в dbt Cloud IDE, была в нашей среде разработки, с кодом, зафиксированным в ветке функции, и моделями, которые мы построили, созданными в нашей схеме разработки в Snowflake, как определено в нашем подключении среды разработки. Выполнение этой работы в ветке функции позволяет нам отделить наш код от того, что строят другие коллеги, и кода, который уже считается готовым к производству. Создание моделей в схеме разработки в Snowflake позволяет нам отделить объекты базы данных, которые мы все еще можем модифицировать и тестировать, от объектов базы данных, которые запускают производственные панели или другие зависимости вниз по потоку. Вместе комбинация ветки Git и объектов базы данных Snowflake формирует нашу среду.
 
-Now that we've completed testing and documenting our work, we're ready to deploy our code from our development environment to our production environment and this involves two steps:
+Теперь, когда мы завершили тестирование и документирование нашей работы, мы готовы развернуть наш код из нашей среды разработки в нашу производственную среду, и это включает два шага:
 
-- Promoting code from our feature branch to the production branch in our repository.
-  - Generally, the production branch is going to be named your main branch and there's a review process to go through before merging code to the main branch of a repository. Here we are going to merge without review for ease of this workshop.
-- Deploying code to our production environment.
-  - Once our code is merged to the main branch, we'll need to run dbt in our production environment to build all of our models and run all of our tests. This will allow us to build production-ready objects into our production environment in Snowflake. Luckily for us, the Partner Connect flow has already created our deployment environment and job to facilitate this step.
+- Продвижение кода из нашей ветки функции в производственную ветку в нашем репозитории.
+  - Обычно производственная ветка будет называться вашей основной веткой, и существует процесс проверки, который нужно пройти перед слиянием кода в основную ветку репозитория. Здесь мы будем сливать без проверки для простоты этого воркшопа.
+- Развертывание кода в нашей производственной среде.
+  - Как только наш код будет слит в основную ветку, нам нужно будет запустить dbt в нашей производственной среде, чтобы построить все наши модели и запустить все наши тесты. Это позволит нам построить готовые к производству объекты в нашей производственной среде в Snowflake. К счастью для нас, поток Partner Connect уже создал нашу среду развертывания и задание для облегчения этого шага.
 
-1. Before getting started, let's make sure that we've committed all of our work to our feature branch. If you still have work to commit, you'll be able to select the **Commit and push**, provide a message, and then select **Commit** again.
-2. Once all of your work is committed, the git workflow button will now appear as **Merge to main**. Select **Merge to main** and the merge process will automatically run in the background.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" title="Merge into main"/>
+1. Прежде чем начать, давайте убедимся, что мы зафиксировали всю нашу работу в нашей ветке функции. Если у вас все еще есть работа для фиксации, вы сможете выбрать **Commit and push**, предоставить сообщение и затем выбрать **Commit** снова.
+2. Как только вся ваша работа зафиксирована, кнопка git workflow теперь будет отображаться как **Merge to main**. Выберите **Merge to main**, и процесс слияния автоматически запустится в фоновом режиме.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" title="Слияние в основную ветку"/>
 
-3. When it's completed, you should see the git button read **Create branch** and the branch you're currently looking at will become **main**.
-4. Now that all of our development work has been merged to the main branch, we can build our deployment job. Given that our production environment and production job were created automatically for us through Partner Connect, all we need to do here is update some default configurations to meet our needs.
-5. In the menu, select **Deploy** **> Environments**
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/2-ui-select-environments.png" title="Navigate to environments within the UI"/>
+3. Когда это завершится, вы должны увидеть, что кнопка git теперь отображается как **Create branch**, и ветка, которую вы в данный момент просматриваете, станет **main**.
+4. Теперь, когда вся наша работа по разработке была слита в основную ветку, мы можем построить наше задание развертывания. Учитывая, что наша производственная среда и производственное задание были автоматически созданы для нас через Partner Connect, все, что нам нужно сделать здесь, это обновить некоторые настройки по умолчанию, чтобы они соответствовали нашим потребностям.
+5. В меню выберите **Deploy** **> Environments**
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/2-ui-select-environments.png" title="Перейдите в среды в интерфейсе"/>
 
-6. You should see two environments listed and you'll want to select the **Deployment** environment then **Settings** to modify it.
-7. Before making any changes, let's touch on what is defined within this environment. The Snowflake connection shows the credentials that dbt Cloud is using for this environment and in our case they are the same as what was created for us through Partner Connect. Our deployment job will build in our `PC_DBT_DB` database and use the default Partner Connect role and warehouse to do so. The deployment credentials section also uses the info that was created in our Partner Connect job to create the credential connection. However, it is using the same default schema that we've been using as the schema for our development environment.
-8. Let's update the schema to create a new schema specifically for our production environment. Click **Edit** to allow you to modify the existing field values. Navigate to **Deployment Credentials >** **schema.**
-9. Update the schema name to **production**. Remember to select **Save** after you've made the change.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Update the deployment credentials schema to production"/>
-10. By updating the schema for our production environment to **production**, it ensures that our deployment job for this environment will build our dbt models in the **production** schema within the `PC_DBT_DB` database as defined in the Snowflake Connection section.
-11. Now let's switch over to our production job. Click on the deploy tab again and then select **Jobs**. You should see an existing and preconfigured **Partner Connect Trial Job**. Similar to the environment, click on the job, then select **Settings** to modify it. Let's take a look at the job to understand it before making changes.
+6. Вы должны увидеть две перечисленные среды, и вам нужно будет выбрать **Deployment** среду, затем **Settings**, чтобы изменить ее.
+7. Прежде чем вносить какие-либо изменения, давайте коснемся того, что определено в этой среде. Соединение Snowflake показывает учетные данные, которые dbt Cloud использует для этой среды, и в нашем случае они такие же, как те, которые были созданы для нас через Partner Connect. Наше задание развертывания будет строиться в нашей базе данных `PC_DBT_DB` и использовать роль и склад по умолчанию Partner Connect для этого. Раздел учетных данных развертывания также использует информацию, созданную в нашем задании Partner Connect, для создания соединения учетных данных. Однако он использует ту же схему по умолчанию, которую мы использовали в качестве схемы для нашей среды разработки.
+8. Давайте обновим схему, чтобы создать новую схему специально для нашей производственной среды. Нажмите **Edit**, чтобы позволить вам изменить существующие значения полей. Перейдите к **Deployment Credentials >** **schema.**
+9. Обновите имя схемы на **production**. Не забудьте выбрать **Save** после того, как вы внесли изменение.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Обновите схему учетных данных развертывания на production"/>
+10. Обновив схему для нашей производственной среды на **production**, это гарантирует, что наше задание развертывания для этой среды будет строить наши dbt модели в **production** схеме в базе данных `PC_DBT_DB`, как определено в разделе соединения Snowflake.
+11. Теперь давайте переключимся на наше производственное задание. Нажмите на вкладку deploy снова, а затем выберите **Jobs**. Вы должны увидеть существующее и предварительно настроенное **Partner Connect Trial Job**. Аналогично среде, нажмите на задание, затем выберите **Settings**, чтобы изменить его. Давайте посмотрим на задание, чтобы понять его, прежде чем вносить изменения.
 
-    - The Environment section is what connects this job with the environment we want it to run in. This job is already defaulted to use the Deployment environment that we just updated and the rest of the settings we can keep as is.
-    - The Execution settings section gives us the option to generate docs, run source freshness, and defer to a previous run state. For the purposes of our lab, we're going to keep these settings as is as well and stick with just generating docs.
-    - The Commands section is where we specify exactly which commands we want to run during this job, and we also want to keep this as is. We want our seed to be uploaded first, then run our models, and finally test them. The order of this is important as well, considering that we need our seed to be created before we can run our incremental model, and we need our models to be created before we can test them.
-    - Finally, we have the Triggers section, where we have a number of different options for scheduling our job. Given that our data isn't updating regularly here and we're running this job manually for now, we're also going to leave this section alone.
+    - Раздел Environment это то, что соединяет это задание с средой, в которой мы хотим его запустить. Это задание уже по умолчанию использует среду Deployment, которую мы только что обновили, и остальные настройки мы можем оставить как есть.
+    - Раздел Execution settings дает нам возможность генерировать документацию, запускать свежесть источников и откладывать на предыдущее состояние выполнения. Для целей нашей лаборатории мы оставим эти настройки как есть и будем генерировать только документацию.
+    - Раздел Commands это то, где мы указываем, какие именно команды мы хотим запустить во время этого задания, и мы также хотим оставить это как есть. Мы хотим, чтобы наш seed был загружен первым, затем запустить наши модели, и наконец протестировать их. Порядок этого важен, так как нам нужно, чтобы наш seed был создан до того, как мы сможем запустить нашу инкрементальную модель, и нам нужно, чтобы наши модели были созданы до того, как мы сможем их протестировать.
+    - Наконец, у нас есть раздел Triggers, где у нас есть несколько различных вариантов для планирования нашего задания. Учитывая, что наши данные здесь не обновляются регулярно, и мы запускаем это задание вручную на данный момент, мы также оставим этот раздел в покое.
   
-  So, what are we changing then? Just the name! Click **Edit** to allow you to make changes. Then update the name of the job to **Production Job** to denote this as our production deployment job. After that's done, click **Save**.
-12. Now let's go to run our job. Clicking on the job name in the path at the top of the screen will take you back to the job run history page where you'll be able to click **Run run** to kick off the job. If you encounter any job failures, try running the job again before further troubleshooting.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/4-run-production-job.png" title="Run production job"/>
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/5-job-details.png" title="View production job details"/>
+  Итак, что мы меняем? Только имя! Нажмите **Edit**, чтобы позволить вам внести изменения. Затем обновите имя задания на **Production Job**, чтобы обозначить это как наше производственное задание развертывания. После этого нажмите **Save**.
+12. Теперь давайте перейдем к запуску нашего задания. Нажатие на имя задания в пути в верхней части экрана вернет вас на страницу истории выполнения задания, где вы сможете нажать **Run run**, чтобы запустить задание. Если вы столкнетесь с какими-либо сбоями задания, попробуйте запустить задание снова, прежде чем продолжать устранение неполадок.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/4-run-production-job.png" title="Запуск производственного задания"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/5-job-details.png" title="Просмотр деталей производственного задания"/>
 
-13. Let's go over to Snowflake to confirm that everything built as expected in our production schema. Refresh the database objects in your Snowflake account and you should see the production schema now within our default Partner Connect database. If you click into the schema and everything ran successfully, you should be able to see all of the models we developed.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" title="Check all our models in our pipeline are in Snowflake"/>
+13. Давайте перейдем в Snowflake, чтобы подтвердить, что все построено, как ожидалось, в нашей производственной схеме. Обновите объекты базы данных в вашей учетной записи Snowflake, и вы должны увидеть производственную схему теперь в нашей базе данных по умолчанию Partner Connect. Если вы нажмете на схему и все прошло успешно, вы должны увидеть все модели, которые мы разработали.
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" title="Проверьте, что все наши модели в нашем pipeline находятся в Snowflake"/>
 
-### Conclusion
+### Заключение
 
-Fantastic! You’ve finished the workshop! We hope you feel empowered in using both SQL and Python in your dbt Cloud workflows with Snowflake. Having a reliable pipeline to surface both analytics and machine learning is crucial to creating tangible business value from your data.
+Фантастика! Вы завершили воркшоп! Мы надеемся, что вы чувствуете себя уверенно, используя как SQL, так и Python в ваших рабочих процессах dbt Cloud с Snowflake. Наличие надежного pipeline для отображения как аналитики, так и машинного обучения имеет решающее значение для создания ощутимой бизнес-ценности из ваших данных.
 
-For more help and information join our [dbt community Slack](https://www.getdbt.com/community/) which contains more than 50,000 data practitioners today. We have a dedicated slack channel #db-snowflake to Snowflake related content. Happy dbt'ing!
+Для получения дополнительной помощи и информации присоединяйтесь к нашему [сообществу dbt в Slack](https://www.getdbt.com/community/), которое сегодня насчитывает более 50 000 специалистов по данным. У нас есть специальный канал в Slack #db-snowflake для контента, связанного с Snowflake. Удачи в dbt!
 
 </div>

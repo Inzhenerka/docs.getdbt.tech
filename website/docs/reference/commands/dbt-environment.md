@@ -4,16 +4,16 @@ sidebar_label: "environment"
 id: dbt-environment
 ---
 
-Команда `dbt environment` позволяет вам взаимодействовать с вашей средой dbt Cloud. Используйте эту команду для:
+Команда `dbt environment` позволяет взаимодействовать с вашей средой dbt Cloud. Используйте эту команду для:
 
-- Просмотра деталей вашей локальной конфигурации (идентификатор учетной записи, идентификатор активного проекта, среда развертывания и многое другое).
-- Просмотра деталей конфигурации вашей среды dbt Cloud (идентификатор среды, имя среды, тип подключения и многое другое).
+- Просмотра деталей вашей локальной конфигурации (ID аккаунта, ID активного проекта, среда развертывания и многое другое).
+- Просмотра деталей конфигурации dbt Cloud (ID среды, имя среды, тип подключения и многое другое).
 
-Этот гид перечисляет все команды и параметры, которые вы можете использовать с `dbt environment` в [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). Чтобы использовать их, добавьте команду или параметр следующим образом: `dbt environment [command]` или используйте сокращение `dbt env [command]`.
+Это руководство перечисляет все команды и опции, которые вы можете использовать с `dbt environment` в [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). Чтобы использовать их, добавьте команду или опцию следующим образом: `dbt environment [command]` или используйте сокращение `dbt env [command]`.
 
 ### dbt environment show
 
-Команда `show` &mdash; Для просмотра деталей вашей локальной конфигурации и конфигурации dbt Cloud. Чтобы выполнить команду с помощью dbt Cloud CLI, введите одну из следующих команд, включая сокращение:
+Команда `show` &mdash; для просмотра деталей вашей локальной и dbt Cloud конфигурации. Чтобы выполнить команду с помощью dbt Cloud CLI, введите одну из следующих команд, включая сокращение:
 
 ```shell
 dbt environment show
@@ -26,43 +26,43 @@ dbt env show
 
 ```bash
 ❯ dbt env show
-Local Configuration:
-  Active account ID              185854
-  Active project ID              271692
-  Active host name               cloud.getdbt.com
-  dbt_cloud.yml file path        /Users/cesar/.dbt/dbt_cloud.yml
-  dbt_project.yml file path      /Users/cesar/git/cloud-cli-test-project/dbt_project.yml
-  dbt Cloud CLI version          0.35.7
-  OS info                        darwin arm64
+Локальная конфигурация:
+  ID активного аккаунта          185854
+  ID активного проекта           271692
+  Имя активного хоста            cloud.getdbt.com
+  Путь к файлу dbt_cloud.yml     /Users/cesar/.dbt/dbt_cloud.yml
+  Путь к файлу dbt_project.yml   /Users/cesar/git/cloud-cli-test-project/dbt_project.yml
+  Версия dbt Cloud CLI           0.35.7
+  Информация об ОС               darwin arm64
 
-Cloud Configuration:
-  Account ID                     185854
-  Project ID                     271692
-  Project name                   Snowflake
-  Environment ID                 243762
-  Environment name               Development
-  Defer environment ID           [N/A]
-  dbt version                    1.6.0-latest
-  Target name                    default
-  Connection type                snowflake
+Конфигурация Cloud:
+  ID аккаунта                    185854
+  ID проекта                     271692
+  Имя проекта                    Snowflake
+  ID среды                       243762
+  Имя среды                      Development
+  ID отложенной среды            [N/A]
+  Версия dbt                     1.6.0-latest
+  Имя цели                       default
+  Тип подключения                snowflake
 
-Snowflake Connection Details:
-  Account                        ska67070
-  Warehouse                      DBT_TESTING_ALT
-  Database                       DBT_TEST
-  Schema                         CLOUD_CLI_TESTING
-  Role                           SYSADMIN
-  User                           dbt_cloud_user
-  Client session keep alive      false 
+Детали подключения Snowflake:
+  Аккаунт                        ska67070
+  Склад                          DBT_TESTING_ALT
+  База данных                    DBT_TEST
+  Схема                          CLOUD_CLI_TESTING
+  Роль                           SYSADMIN
+  Пользователь                   dbt_cloud_user
+  Поддержка сессии клиента       false 
 ```
 
 Обратите внимание, что dbt Cloud не вернет ничего, что является секретным ключом, и вернет 'NA' для любого поля, которое не настроено.
 
 ### Флаги dbt environment
 
-Используйте следующие флаги (или параметры) с командой `dbt environment`:
+Используйте следующие флаги (или опции) с командой `dbt environment`:
 
-- `-h`, `--help` &mdash; Для просмотра документации справки по конкретной команде в вашем интерфейсе командной строки.
+- `-h`, `--help` &mdash; для просмотра документации по помощи для конкретной команды в вашем интерфейсе командной строки.
 
   ```shell 
   dbt environment [command] --help
@@ -73,7 +73,7 @@ Snowflake Connection Details:
 
   ```bash
     ❯ dbt help environment
-    Взаимодействие с окружениями dbt
+    Взаимодействие со средами dbt
 
   Использование:
     dbt environment [command]
@@ -85,12 +85,12 @@ Snowflake Connection Details:
     show        Показать рабочую среду
 
   Флаги:
-    -h, --help   справка по environment
+    -h, --help   помощь для environment
 
   Используйте "dbt environment [command] --help" для получения дополнительной информации о команде.
   ```
 
-  Например, чтобы просмотреть документацию справки для команды `show`, введите одну из следующих команд, включая сокращение:
+  Например, чтобы просмотреть документацию по помощи для команды `show`, введите одну из следующих команд, включая сокращение:
 
   ```shell
   dbt environment show --help
