@@ -6,9 +6,9 @@ id: run-downstream-of-seed
 
 ---
 
-Вы можете запустить модели, зависящие от seed, используя [синтаксис выбора моделей](/reference/node-selection/syntax) и рассматривая seed как модель.
+Вы можете запустить модели, зависящие от seed, используя [синтаксис выбора моделей](/reference/node-selection/syntax), и рассматривая seed как модель.
 
-Например, следующее запустит все модели, зависящие от seed с именем `country_codes`:
+Например, следующая команда запустит все модели, зависящие от seed с именем `country_codes`:
 
 ```shell
 $ dbt run --select country_codes+

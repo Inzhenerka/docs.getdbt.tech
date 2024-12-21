@@ -1,10 +1,9 @@
 ---
-title: Refactoring legacy SQL to dbt
+title: Рефакторинг устаревшего SQL в dbt
 id: refactoring-legacy-sql
-description: This guide walks through refactoring a long SQL query (perhaps from a stored procedure) into modular dbt data models.
-displayText: Creating new materializations
-hoverSnippet: Learn how to refactoring a long SQL query into modular dbt data models.
-# time_to_complete: '30 minutes' commenting out until we test
+description: Это руководство объясняет, как преобразовать длинный SQL-запрос (возможно, из хранимой процедуры) в модульные модели данных dbt.
+displayText: Создание новых материализаций
+hoverSnippet: Узнайте, как преобразовать длинный SQL-запрос в модульные модели данных dbt.
 platform: 'dbt-cloud'
 icon: 'guides'
 hide_table_of_contents: true
@@ -15,73 +14,73 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-You may have already learned how to build dbt models from scratch. But in reality, you probably already have some queries or stored procedures that power analyses and dashboards, and now you’re wondering how to port those into dbt.
+Возможно, вы уже научились создавать модели dbt с нуля. Но в реальности у вас, вероятно, уже есть некоторые запросы или хранимые процедуры, которые обеспечивают работу аналитики и дашбордов, и теперь вы задаетесь вопросом, как перенести их в dbt.
 
-There are two parts to accomplish this: migration and refactoring. In this guide we’re going to learn a process to help us turn legacy SQL code into modular dbt models.
+Для этого нужно выполнить две части: миграцию и рефакторинг. В этом руководстве мы изучим процесс, который поможет нам преобразовать устаревший SQL-код в модульные модели dbt.
 
-When migrating and refactoring code, it’s of course important to stay organized. We'll do this by following several steps:
+При миграции и рефакторинге кода, конечно, важно оставаться организованным. Мы сделаем это, следуя нескольким шагам:
 
-1. Migrate your code 1:1 into dbt
-2. Implement dbt sources rather than referencing raw database tables
-3. Choose a refactoring strategy
-4. Implement <Term id="cte">CTE</Term> groupings and cosmetic cleanup
-5. Separate [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) into standardized layers
-6. Audit the output of dbt models vs legacy SQL
+1. Перенесите ваш код 1:1 в dbt
+2. Используйте источники dbt вместо ссылок на сырые таблицы базы данных
+3. Выберите стратегию рефакторинга
+4. Реализуйте группировки CTE и косметическую очистку
+5. Разделите [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/) на стандартизированные слои
+6. Проведите аудит вывода моделей dbt по сравнению с устаревшим SQL
 
-Let's get into it!
+Давайте начнем!
 
-:::info More resources
-This guide is excerpted from the new dbt Learn On-demand Course, "Refactoring SQL for Modularity" - if you're curious, pick up the [free refactoring course here](https://learn.getdbt.com/courses/refactoring-sql-for-modularity), which includes example and practice refactoring projects. Or for a more in-depth look at migrating DDL and DML from stored procedures, refer to the[Migrate from stored procedures](/guides/migrate-from-stored-procedures) guide.
+:::info Дополнительные ресурсы
+Это руководство взято из нового курса dbt Learn On-demand "Рефакторинг SQL для модульности" - если вам интересно, возьмите [бесплатный курс по рефакторингу здесь](https://learn.getdbt.com/courses/refactoring-sql-for-modularity), который включает примеры и практические проекты по рефакторингу. Или для более глубокого изучения миграции DDL и DML из хранимых процедур, обратитесь к руководству [Миграция из хранимых процедур](/guides/migrate-from-stored-procedures).
 :::
 
-## Migrate your existing SQL code
+## Миграция вашего существующего SQL-кода
 
 <WistiaVideo id="5u67ik9t66" />
 
-Your goal in this initial step is simply to use dbt to run your existing SQL transformation, with as few modifications as possible. This will give you a solid base to work from.
+Ваша цель на этом начальном этапе - просто использовать dbt для выполнения вашей существующей SQL-трансформации с минимальными изменениями. Это даст вам надежную основу для работы.
 
-While refactoring you'll be **moving around** a lot of logic, but ideally you won't be **changing** the logic. More changes = more auditing work, so if you come across anything you'd like to fix, try your best to card that up for another task after refactoring! We'll save the bulk of our auditing for the end when we've finalized our legacy-to-dbt model restructuring.
+Во время рефакторинга вы будете **перемещать** много логики, но в идеале вы не будете **изменять** логику. Больше изменений = больше работы по аудиту, поэтому, если вы столкнетесь с чем-то, что хотите исправить, постарайтесь отложить это на другую задачу после рефакторинга! Мы сохраним основную часть нашего аудита на конец, когда завершим реструктуризацию модели от устаревшего к dbt.
 
-To get going, you'll copy your legacy SQL query into your dbt project, by saving it in a `.sql` file under the `/models` directory of your project.
+Чтобы начать, скопируйте ваш устаревший SQL-запрос в ваш проект dbt, сохранив его в файле `.sql` в каталоге `/models` вашего проекта.
 
-<Lightbox src="/img/tutorial/refactoring/legacy-query-model.png" title="Your dbt project's folder structure" />
+<Lightbox src="/img/tutorial/refactoring/legacy-query-model.png" title="Структура папок вашего проекта dbt" />
 
-Once you've copied it over, you'll want to `dbt run` to execute the query and populate the <Term id="table" /> in your warehouse.
+После того как вы скопировали его, выполните `dbt run`, чтобы выполнить запрос и заполнить <Term id="table" /> в вашем хранилище данных.
 
-If this is your first time running dbt, you may want to start with the [Introduction to dbt](/docs/introduction) and the earlier sections of the [quickstart guide](/guides) before diving into refactoring.
+Если это ваш первый запуск dbt, возможно, вам стоит начать с [Введения в dbt](/docs/introduction) и более ранних разделов [руководства по быстрому старту](/guides) перед тем, как углубляться в рефакторинг.
 
-This step may sound simple, but if you're porting over an existing set of SQL transformations to a new SQL dialect, you will need to consider how your legacy SQL dialect differs from your new SQL flavor, and you may need to modify your legacy code to get it to run at all.  
+Этот шаг может показаться простым, но если вы переносите существующий набор SQL-трансформаций на новый SQL-диалект, вам нужно будет учесть, чем ваш устаревший SQL-диалект отличается от нового SQL-диалекта, и, возможно, вам придется изменить ваш устаревший код, чтобы он вообще работал.
 
-This will commonly happen if you're migrating from a [stored procedure workflow on a legacy database](https://getdbt.com/analytics-engineering/case-for-elt-workflow/) into dbt + a cloud <Term id="data-warehouse" />.
+Это часто происходит, если вы мигрируете с [рабочего процесса хранимых процедур на устаревшей базе данных](https://getdbt.com/analytics-engineering/case-for-elt-workflow/) в dbt + облачное <Term id="data-warehouse" />.
 
-Functions that you were using previously may not exist, or their syntax may shift slightly between SQL dialects.
+Функции, которые вы использовали ранее, могут не существовать, или их синтаксис может немного измениться между SQL-диалектами.
 
-If you're not migrating data warehouses at the moment, then you can keep your SQL syntax the same. You have access to the exact same SQL dialect inside of dbt that you have querying directly from your warehouse.
+Если вы не мигрируете хранилища данных в данный момент, то вы можете оставить ваш SQL-синтаксис таким же. У вас есть доступ к точно такому же SQL-диалекту внутри dbt, который вы используете при прямом запросе из вашего хранилища.
 
-## Create sources from table references
+## Создание источников из ссылок на таблицы
 
 <WistiaVideo id="m1a5p32rny" />
 
-To query from your data warehouse, we recommend creating [sources in dbt](/docs/build/sources) rather than querying the database table directly.
+Для выполнения запросов из вашего хранилища данных мы рекомендуем создавать [источники в dbt](/docs/build/sources) вместо прямого запроса к таблице базы данных.
 
-This allows you to call the same table in multiple places with `{{ src('my_source', 'my_table') }}` rather than `my_database.my_schema.my_table`.
+Это позволяет вам вызывать одну и ту же таблицу в нескольких местах с помощью `{{ src('my_source', 'my_table') }}` вместо `my_database.my_schema.my_table`.
 
-We start here for several reasons:
+Мы начинаем здесь по нескольким причинам:
 
-#### Source freshness reporting
-Using sources unlocks the ability to run [source freshness reporting](/docs/build/sources#source-data-freshness) to make sure your raw data isn't stale.
+#### Отчетность о свежести источников
+Использование источников разблокирует возможность запускать [отчетность о свежести источников](/docs/build/sources#source-data-freshness), чтобы убедиться, что ваши сырые данные не устарели.
 
-#### Easy dependency tracing
-If you're migrating multiple stored procedures into dbt, with sources you can see which queries depend on the same raw tables.
+#### Легкое отслеживание зависимостей
+Если вы мигрируете несколько хранимых процедур в dbt, с источниками вы можете увидеть, какие запросы зависят от одних и тех же сырых таблиц.
 
-This allows you to consolidate modeling work on those base tables, rather than calling them separately in multiple places.
+Это позволяет вам консолидировать работу по моделированию на этих базовых таблицах, вместо того чтобы вызывать их отдельно в нескольких местах.
 
-<Lightbox src="/img/docs/building-a-dbt-project/sources-dag.png" title="Sources appear in green in your DAG in dbt docs" />
+<Lightbox src="/img/docs/building-a-dbt-project/sources-dag.png" title="Источники отображаются зеленым цветом в вашем DAG в документации dbt" />
 
-#### Build the habit of analytics-as-code
-Sources are an easy way to get your feet wet using config files to define aspects of your transformation pipeline.
+#### Привычка аналитики как кода
+Источники - это простой способ начать использовать конфигурационные файлы для определения аспектов вашего конвейера преобразования.
 
 ```yml
 sources:
@@ -91,59 +90,58 @@ sources:
       - name: customers
 ```
 
-With a few lines of code in a `.yml` file in your dbt project's `/models` subfolder, you can now version control how your data sources (Snowplow, Shopify, etc) map to actual database tables.
+С несколькими строками кода в файле `.yml` в подкаталоге `/models` вашего проекта dbt вы можете теперь контролировать версию того, как ваши источники данных (Snowplow, Shopify и т.д.) сопоставляются с реальными таблицами базы данных.
 
-For example, let's say you migrate from one <Term id="etl">ETL tool</Term> to another, and the new tool writes to a new schema in your warehouse. dbt sources allow you to make that update in a single config file, and flip on the change with one pull request to your dbt project.
+Например, предположим, вы мигрируете с одного <Term id="etl">ETL-инструмента</Term> на другой, и новый инструмент записывает в новую схему в вашем хранилище. Источники dbt позволяют вам сделать это обновление в одном конфигурационном файле и включить изменение с помощью одного pull-запроса в ваш проект dbt.
 
-## Choose a refactoring strategy
-There are two ways you can choose to refactor: in-place or alongside.
+## Выбор стратегии рефакторинга
+Существует два способа, как вы можете выбрать рефакторинг: на месте или параллельно.
 
 <WistiaVideo id="5dd74bsw96" />
 
-#### In-place refactoring
-Means that you will work directly on the SQL script that you ported over in the first step.
+#### Рефакторинг на месте
+Означает, что вы будете работать непосредственно с SQL-скриптом, который перенесли на первом этапе.
 
-You'll move it into a `/marts` subfolder within your project's `/models` folder and go to town.
+Вы переместите его в подкаталог `/marts` в папке `/models` вашего проекта и начнете работу.
 
-**Pros**:
-- You won't have any old models to delete once refactoring is done.
+**Плюсы**:
+- У вас не будет старых моделей, которые нужно удалить после завершения рефакторинга.
 
-**Cons**:
-- More pressure to get it right the first time, especially if you've referenced this model from any BI tool or downstream process.
-- Harder to audit, since you've overwritten your audit comparison model.
-- Requires navigating through Git commits to see what code you've changed throughout.
+**Минусы**:
+- Больше давления, чтобы сделать все правильно с первого раза, особенно если вы ссылались на эту модель из любого BI-инструмента или процесса ниже по потоку.
+- Сложнее проводить аудит, так как вы перезаписали вашу модель для сравнения аудита.
+- Требуется навигация по коммитам Git, чтобы увидеть, какой код вы изменили.
 
+#### Параллельный рефакторинг
+Означает, что вы скопируете вашу модель в папку `/marts` и будете работать над изменениями в этой копии.
 
-#### Alongside refactoring
-Means that you will copy your model to a `/marts` folder, and work on changes on that copy.
+**Плюсы**:
+- Меньше влияния на конечных пользователей - все, что ссылается на модель, которую вы рефакторите, может сохранить эту ссылку, пока вы не сможете безопасно устареть эту модель.
+- Меньше давления, чтобы сделать все правильно с первого раза, что означает, что вы можете отправлять/объединять меньшие PR. Это лучше для вас и ваших рецензентов.
+- Вы можете легче проводить аудит, запуская старые и новые модели в вашей ветке разработки и сравнивая результаты. Это гарантирует, что наборы данных, которые вы сравниваете, имеют одинаковые или очень близкие записи.
+- Вы можете легче просматривать старый код, так как он не был изменен.
+- Вы можете решить, когда старая модель готова к устареванию.
 
-**Pros**:
-- Less impact on end users - anything that is referencing the model you're refactoring can keep that reference until you can safely deprecate that model.
-- Less pressure to get it right the first time, meaning you can push/merge smaller PRs. This is better for you and your reviewers.
-- You can audit easier by running the old and new models in your dev branch and comparing the results. This ensures the datasets you're comparing have the same or very close to the same records.
-- You can look at old code more easily, as it has not been changed.
-- You can decide when the old model is ready to be deprecated.
+**Минусы**:
+- У вас будут старые файлы в вашем проекте, пока вы не сможете их устареть - запуск параллельно может казаться дублирующим, и может быть головной болью для управления, если вы мигрируете множество запросов в массовом порядке.
 
-**Cons**:
-- You'll have the old file(s) in your project until you can deprecate them - running side-by-side like this can feel duplicative, and may be a headache to manage if you're migrating a number of queries in bulk.
+Мы обычно рекомендуем подход **параллельного** рефакторинга, который мы будем следовать в этом руководстве.
 
-We generally recommend the **alongside** approach, which we'll follow in this tutorial.
-
-## Implement CTE groupings
-Once you choose your refactoring strategy, you'll want to do some cosmetic cleanups according to your data modeling best practices and start moving code into CTE groupings. This will give you a head start on porting SQL snippets from CTEs into modular [dbt data models](https://docs.getdbt.com/docs/build/models).
+## Реализация группировок CTE
+После выбора стратегии рефакторинга, вам нужно будет провести косметическую очистку в соответствии с вашими лучшими практиками моделирования данных и начать перемещать код в группировки CTE. Это даст вам фору в переносе SQL-фрагментов из CTE в модульные [модели данных dbt](https://docs.getdbt.com/docs/build/models).
 
 <WistiaVideo id="di9jovovdv" />
 
-### What's a CTE?
-CTE stands for “Common Table Expression”, which is a temporary result set available for use until the end of SQL script execution. Using the `with` keyword at the top of a query allows us to use CTEs in our code.
+### Что такое CTE?
+CTE означает "Общее табличное выражение" (Common Table Expression), которое является временным набором результатов, доступным для использования до конца выполнения SQL-скрипта. Использование ключевого слова `with` в начале запроса позволяет нам использовать CTE в нашем коде.
 
-Inside of the model we're refactoring, we’re going to use a 4-part layout:
-1. 'Import' CTEs
-2. 'Logical' CTEs
-3. A 'Final' CTE
-4. A simple SELECT statement
+Внутри модели, которую мы рефакторим, мы будем использовать 4-частную структуру:
+1. 'Импортные' CTE
+2. 'Логические' CTE
+3. 'Финальное' CTE
+4. Простой оператор SELECT
 
-In practice this looks like:
+На практике это выглядит так:
 
 ```sql
 
@@ -151,7 +149,7 @@ with
 
 import_orders as (
 
-    -- query only non-test orders
+    -- запрос только не тестовых заказов
     select * from {{ source('jaffle_shop', 'orders') }}
     where amount > 0
 ),
@@ -162,102 +160,100 @@ import_customers as (
 
 logical_cte_1 as (
 
-    -- perform some math on import_orders
+    -- выполнение некоторых математических операций на import_orders
 
 ),
 
 logical_cte_2 as (
 
-    -- perform some math on import_customers
+    -- выполнение некоторых математических операций на import_customers
 ),
 
 final_cte as (
 
-    -- join together logical_cte_1 and logical_cte_2
+    -- объединение logical_cte_1 и logical_cte_2
 )
 
 select * from final_cte
 ```
 
-Notice there are no nested queries here, which makes reading our logic much more straightforward. If a query needs to be nested, it's just a new CTE that references the previous CTE.
+Обратите внимание, что здесь нет вложенных запросов, что делает чтение нашей логики гораздо более простым. Если запрос нужно вложить, это просто новый CTE, который ссылается на предыдущий CTE.
 
-#### 1. Import CTEs
+#### 1. Импортные CTE
 
-Let's start with our components, and identify raw data that is being used in our analysis. For this exercise, the components are three sources:
+Начнем с наших компонентов и определим сырые данные, которые используются в нашем анализе. Для этого упражнения компоненты - это три источника:
 
 - jaffle_shop.customers
 - jaffle_shop.orders
 - stripe.payment
 
-Let's make a CTE for each of these under the `Import CTEs` comment. These import CTEs should be only simple `select *` statements, but can have filters if necessary.
+Давайте создадим CTE для каждого из них под комментарием `Импортные CTE`. Эти импортные CTE должны быть только простыми операторами `select *`, но могут иметь фильтры, если это необходимо.
 
-We'll cover that later - for now, just use `select * from {{ source('schema', 'table') }}` for each, with the appropriate reference. Then, we will switch out all hard-coded references with our import CTE names.
+Мы рассмотрим это позже - на данный момент просто используйте `select * from {{ source('schema', 'table') }}` для каждого, с соответствующей ссылкой. Затем мы заменим все жестко закодированные ссылки на имена наших импортных CTE.
 
-#### 2. Logical CTEs
+#### 2. Логические CTE
 
-Logical CTEs contain unique transformations used to generate the final product, and we want to separate these into logical blocks. To identify our logical CTEs, we will follow subqueries in order.
+Логические CTE содержат уникальные преобразования, используемые для генерации конечного продукта, и мы хотим разделить их на логические блоки. Чтобы определить наши логические CTE, мы будем следовать за подзапросами по порядку.
 
-If a <Term id="subquery" /> has nested subqueries, we will want to continue moving down until we get to the first layer, then pull out the subqueries in order as CTEs, making our way back to the final select statement.
+Если <Term id="subquery" /> имеет вложенные подзапросы, мы захотим продолжать двигаться вниз, пока не дойдем до первого уровня, затем извлечь подзапросы по порядку как CTE, возвращаясь к окончательному оператору select.
 
-Name these CTEs as the alias that the subquery was given - you can rename it later, but for now it is best to make as few changes as possible.
+Назовите эти CTE так, как был назван псевдоним подзапроса - вы можете переименовать его позже, но на данный момент лучше вносить как можно меньше изменений.
 
-If the script is particularly complicated, it's worth it to go through once you're finished pulling out subqueries and follow the CTEs to make sure they happen in an order that makes sense for the end result.
+Если скрипт особенно сложный, стоит пройтись по нему, когда вы закончите извлекать подзапросы, и следовать за CTE, чтобы убедиться, что они происходят в порядке, который имеет смысл для конечного результата.
 
-#### 3. Final CTE
+#### 3. Финальное CTE
 
-The previous process usually results in a select statement that is left over at the end - this select statement can be moved into its own CTE called the final CTE, or can be named something that is inherent for others to understand. This CTE determines the final product of the model.
+Предыдущий процесс обычно приводит к оставшемуся оператору select в конце - этот оператор select можно переместить в собственное CTE, называемое финальным CTE, или назвать его так, чтобы это было понятно другим. Это CTE определяет конечный продукт модели.
 
-#### 4. Simple SELECT statement
+#### 4. Простой оператор SELECT
 
-After you have moved everything into CTEs, you'll want to write a `select * from final` (or something similar, depending on your final CTE name) at the end of the model.
+После того как вы переместили все в CTE, вам нужно будет написать `select * from final` (или что-то подобное, в зависимости от имени вашего финального CTE) в конце модели.
 
-This allows anyone after us to easily step through the CTEs when troubleshooting, rather than having to untangle nested queries.
+Это позволяет любому после нас легко пройтись по CTE при устранении неполадок, вместо того чтобы распутывать вложенные запросы.
 
-> For more background on CTEs, check out the [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md#ctes).
+> Для получения дополнительной информации о CTE, ознакомьтесь с [стилевым руководством dbt Labs](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md#ctes).
 
-## Port CTEs to individual data models
-Rather than keep our SQL code confined to one long SQL file, we'll now start splitting it into modular + reusable [dbt data models](https://docs.getdbt.com/docs/build/models).
+## Перенос CTE в отдельные модели данных
+Вместо того чтобы оставлять наш SQL-код в одном длинном SQL-файле, мы теперь начнем разделять его на модульные и повторно используемые [модели данных dbt](https://docs.getdbt.com/docs/build/models).
 
-Internally at dbt Labs, we follow roughly this [data modeling technique](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) and we [structure our dbt projects](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) accordingly.
+Внутри dbt Labs мы следуем примерно этой [технике моделирования данных](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) и [структурируем наши проекты dbt](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) соответственно.
 
-We'll follow those structures in this walkthrough, but your team's conventions may of course differ from ours.
+Мы будем следовать этим структурам в этом пошаговом руководстве, но конвенции вашей команды могут, конечно, отличаться от наших.
 
-### Identifying staging models
+### Определение моделей стадий
 
 <WistiaVideo id="f3nqj8tsde" />
 
-To identify our [staging models](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/#staging-models), we want to look at the things we've imported in our import CTEs.
+Чтобы определить наши [модели стадий](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/#staging-models), мы хотим взглянуть на вещи, которые мы импортировали в наших импортных CTE.
 
-For us, that's customers, orders, and payments. We want to look at the transformations that can occur within each of these sources without needing to be joined to each other, and then we want to make components out of those so they can be our building blocks for further development.
+Для нас это клиенты, заказы и платежи. Мы хотим взглянуть на преобразования, которые могут происходить в каждом из этих источников без необходимости объединения друг с другом, и затем мы хотим сделать из них компоненты, чтобы они могли быть нашими строительными блоками для дальнейшей разработки.
 
-### CTEs or intermediate models
+### CTE или промежуточные модели
 
 <WistiaVideo id="9cu4hoiw0w" />
 
-Our left-over logic can then be split into steps that are more easily understandable.
+Наша оставшаяся логика затем может быть разделена на шаги, которые более легко понимаются.
 
-We'll start by using CTEs, but when a model becomes complex or can be divided out into reusable components you may consider an intermediate model.
+Мы начнем с использования CTE, но когда модель становится сложной или может быть разделена на повторно используемые компоненты, вы можете рассмотреть промежуточную модель.
 
-Intermediate models are optional and are not always needed, but do help when you have large data flows coming together.
+Промежуточные модели являются необязательными и не всегда необходимы, но помогают, когда у вас есть большие потоки данных, которые объединяются.
 
+### Финальная модель
+Наша финальная модель достигает набора результатов, который мы хотим, и использует компоненты, которые мы построили. К этому моменту мы определили, что, по нашему мнению, должно остаться в нашей финальной модели.
 
-### Final model
-Our final model accomplishes the result set we want, and it uses the components we've built. By this point we've identified what we think should stay in our final model.
-
-
-## Data model auditing
+## Аудит модели данных
 
 <WistiaVideo id="dymp75cwh6" />
 
-We'll want to audit our results using the dbt [audit_helper package](https://hub.getdbt.com/dbt-labs/audit_helper/latest/).
+Мы захотим провести аудит наших результатов, используя пакет dbt [audit_helper](https://hub.getdbt.com/dbt-labs/audit_helper/latest/).
 
-Under the hood, it generates comparison queries between our before and after states, so that we can compare our original query results to our refactored results to identify differences.
+Под капотом он генерирует запросы для сравнения между нашими состояниями до и после, чтобы мы могли сравнить результаты нашего оригинального запроса с нашими рефакторированными результатами для выявления различий.
 
-Sure, we could write our own query manually to audit these models, but using the dbt `audit_helper` package gives us a head start and allows us to identify variances more quickly.  
+Конечно, мы могли бы написать наш собственный запрос вручную для аудита этих моделей, но использование пакета dbt `audit_helper` дает нам фору и позволяет быстрее выявлять расхождения.
 
-### Ready for refactoring practice?
-Head to the free on-demand course, [Refactoring from Procedural SQL to dbt](https://learn.getdbt.com/courses/refactoring-sql-for-modularity) for a more in-depth refactoring example + a practice refactoring problem to test your skills.
+### Готовы к практике рефакторинга?
+Перейдите к бесплатному курсу по запросу, [Рефакторинг из процедурного SQL в dbt](https://learn.getdbt.com/courses/refactoring-sql-for-modularity) для более глубокого примера рефакторинга + практической задачи по рефакторингу, чтобы проверить свои навыки.
 
-Questions on this guide or the course? Drop a note in #learn-on-demand in [dbt Community Slack](https://getdbt.com/community).
+Вопросы по этому руководству или курсу? Оставьте сообщение в #learn-on-demand в [dbt Community Slack](https://getdbt.com/community).
 
 </div>

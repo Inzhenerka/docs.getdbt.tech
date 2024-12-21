@@ -1,7 +1,7 @@
 ---
-title: Могу ли я создавать свои семена в схеме, отличной от целевой схемы, или могу ли я разделить свои семена по нескольким схемам?
-description: "Используйте конфигурацию схемы в вашем файле dbt_project.yml"
-sidebar_label: 'Создание семян в схеме вне целевой схемы'
+title: Могу ли я создавать свои seeds в схеме, отличной от целевой, или могу ли я распределить свои seeds по нескольким схемам?
+description: "Используйте конфигурацию schema в вашем файле dbt_project.yml"
+sidebar_label: 'Создание seeds в схеме вне целевой схемы'
 id: seed-custom-schemas
 
 ---
@@ -17,9 +17,9 @@ name: jaffle_shop
 
 seeds:
   jaffle_shop:
-    schema: mappings # все семена в этом проекте будут использовать схему "mappings" по умолчанию
+    schema: mappings # все seeds в этом проекте по умолчанию будут использовать схему "mappings"
     marketing:
-      schema: marketing # семена в подкаталоге "seeds/marketing/" будут использовать схему "marketing"
+      schema: marketing # seeds в подкаталоге "seeds/marketing/" будут использовать схему "marketing"
 ```
 
 </File>

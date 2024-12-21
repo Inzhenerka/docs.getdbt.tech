@@ -1,12 +1,12 @@
 ---
-title: Запускаются ли хуки с моментальными снимками?
-description: "Запуск хуков с моментальными снимками"
-sidebar_label: 'Используйте хуки для работы с моментальными снимками'
+title: Выполняются ли хуки со снапшотами?
+description: "Выполнение хуков со снапшотами"
+sidebar_label: 'Использование хуков со снапшотами'
 id: snapshot-hooks
 
 ---
 
-Да! Для моментальных снимков доступны следующие хуки:
+Да! Для снапшотов доступны следующие хуки:
 - [pre-hooks](/reference/resource-configs/pre-hook-post-hook/)
 - [post-hooks](/reference/resource-configs/pre-hook-post-hook/)
 - [on-run-start](/reference/project-configs/on-run-start-on-run-end/)

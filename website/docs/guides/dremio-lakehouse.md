@@ -1,15 +1,14 @@
 ---
-title: Построение дата-лейкхауса с помощью dbt Core и Dremio Cloud
+title: Создание озера данных с dbt Core и Dremio Cloud
 id: build-dremio-lakehouse
-description: Узнайте, как построить дата-лейкхаус с помощью dbt Core и Dremio Cloud.
-displayText: Построение дата-лейкхауса с помощью dbt Core и Dremio Cloud
-hoverSnippet: Узнайте, как построить дата-лейкхаус с помощью dbt Core и Dremio Cloud
-# time_to_complete: '30 минут' закомментировано до тестирования
+description: Узнайте, как создать озеро данных с dbt Core и Dremio Cloud.
+displayText: Создание озера данных с dbt Core и Dremio Cloud
+hoverSnippet: Узнайте, как создать озеро данных с dbt Core и Dremio Cloud
 platform: 'dbt-core'
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Dremio', 'dbt Core']
-level: 'Средний'
+level: 'Intermediate'
 recently_updated: true
 ---
 
@@ -17,19 +16,19 @@ recently_updated: true
 
 ## Введение
 
-Этот гид продемонстрирует, как построить дата-лейкхаус с помощью dbt Core 1.5 или новее и Dremio Cloud. Вы можете упростить и оптимизировать свою инфраструктуру данных с помощью мощной трансформационной платформы dbt и открытого, простого в использовании дата-лейкхауса Dremio. Интегрированное решение позволяет компаниям создать надежную основу для данных и аналитики, способствуя аналитике самообслуживания и улучшая бизнес-инсайты, одновременно упрощая операции за счет устранения необходимости в написании сложных процессов извлечения, трансформации и загрузки (ETL).
+Это руководство покажет, как создать озеро данных с использованием dbt Core версии 1.5 или новее и Dremio Cloud. Вы можете упростить и оптимизировать свою инфраструктуру данных с помощью мощной платформы трансформации dbt и открытого и простого озера данных Dremio. Интегрированное решение позволяет компаниям создать прочную основу для данных и аналитики, способствуя самообслуживанию в аналитике и улучшая бизнес-аналитику, упрощая операции за счет устранения необходимости написания сложных конвейеров Extract, Transform, and Load (ETL).
 
 ### Предварительные требования
 
 * У вас должна быть учетная запись [Dremio Cloud](https://docs.dremio.com/cloud/).
 * У вас должен быть установлен Python 3.
-* У вас должна быть установлена версия dbt Core v1.5 или новее [установленная](//docs/core/installation-overview).
-* У вас должен быть установлен и настроен адаптер Dremio 1.5.0 или новее [для Dremio Cloud](/docs/core/connect-data-platform/dremio-setup).
-* У вас должны быть базовые знания Git и интерфейса командной строки (CLI).
+* У вас должен быть установлен dbt Core версии 1.5 или новее [установлен](//docs/core/installation-overview).
+* У вас должен быть установлен и настроен адаптер Dremio версии 1.5.0 или новее для Dremio Cloud.
+* У вас должны быть базовые знания работы с Git и интерфейсом командной строки (CLI).
 
 ## Проверка вашей среды
 
-Проверьте вашу среду, выполнив следующие команды в вашем CLI и проверив результаты:
+Проверьте вашу среду, запустив следующие команды в вашем CLI и проверив результаты:
 
 ```shell
 
@@ -84,9 +83,9 @@ def quoted_by_component(self, identifier, componentName):
 
 Вам нужно обновить этот шаблон, потому что плагин не поддерживает имена схем в Dremio, содержащие точки и пробелы.
 
-## Построение вашего пайплайна
+## Создание вашего конвейера
 
-1. Создайте файл `profiles.yml` по пути `$HOME/.dbt/profiles.yml` и добавьте следующие конфигурации:
+1. Создайте файл `profiles.yml` в пути `$HOME/.dbt/profiles.yml` и добавьте следующие конфигурации:
 
 ```yaml
 
@@ -106,41 +105,41 @@ dremioSamples:
       user: <your_username>
   target: dev
 
-```
+  ```
 
-2. Выполните трансформационный пайплайн:
+  2. Выполните конвейер трансформации: 
+
+  ```shell
+
+  $ dbt run -t cloud_dev
+
+  ```
+
+  Если вышеуказанные конфигурации были реализованы, вывод будет выглядеть примерно так:
 
 ```shell
 
-$ dbt run -t cloud_dev
-
-```
-
-Если вышеуказанные конфигурации были реализованы, вывод будет выглядеть примерно так:
-
-```shell
-
-17:24:16  Запуск с dbt=1.5.0
-17:24:17  Найдено 5 моделей, 0 тестов, 0 снимков, 0 анализов, 348 макросов, 0 операций, 0 seed файлов, 2 источника, 0 экспозиций, 0 метрик, 0 групп
+17:24:16  Running with dbt=1.5.0
+17:24:17  Found 5 models, 0 tests, 0 snapshots, 0 analyses, 348 macros, 0 operations, 0 seed files, 2 sources, 0 exposures, 0 metrics, 0 groups
 17:24:17
-17:24:29  Параллелизм: 1 поток (target='cloud_dev')
+17:24:29  Concurrency: 1 threads (target='cloud_dev')
 17:24:29
-17:24:29  1 из 5 НАЧАЛО sql view model Preparation.trips .................................. [RUN]
-17:24:31  1 из 5 ОК создан sql view model Preparation.trips ............................. [OK за 2.61с]
-17:24:31  2 из 5 НАЧАЛО sql view model Preparation.weather ................................ [RUN]
-17:24:34  2 из 5 ОК создан sql view model Preparation.weather ........................... [OK за 2.15с]
-17:24:34  3 из 5 НАЧАЛО sql view model Business.Transportation.nyc_trips .................. [RUN]
-17:24:36  3 из 5 ОК создан sql view model Business.Transportation.nyc_trips ............. [OK за 2.18с]
-17:24:36  4 из 5 НАЧАЛО sql view model Business.Weather.nyc_weather ....................... [RUN]
-17:24:38  4 из 5 ОК создан sql view model Business.Weather.nyc_weather .................. [OK за 2.09с]
-17:24:38  5 из 5 НАЧАЛО sql view model Application.nyc_trips_with_weather ................. [RUN]
-17:24:41  5 из 5 ОК создан sql view model Application.nyc_trips_with_weather ............ [OK за 2.74с]
+17:24:29  1 of 5 START sql view model Preparation.trips .................................. [RUN]
+17:24:31  1 of 5 OK created sql view model Preparation. trips ............................. [OK in 2.61s]
+17:24:31  2 of 5 START sql view model Preparation.weather ................................ [RUN]
+17:24:34  2 of 5 OK created sql view model Preparation.weather ........................... [OK in 2.15s]
+17:24:34  3 of 5 START sql view model Business.Transportation.nyc_trips .................. [RUN]
+17:24:36  3 of 5 OK created sql view model Business.Transportation.nyc_trips ............. [OK in 2.18s]
+17:24:36  4 of 5 START sql view model Business.Weather.nyc_weather ....................... [RUN]
+17:24:38  4 of 5 OK created sql view model Business.Weather.nyc_weather .................. [OK in 2.09s]
+17:24:38  5 of 5 START sql view model Application.nyc_trips_with_weather ................. [RUN]
+17:24:41  5 of 5 OK created sql view model Application.nyc_trips_with_weather ............ [OK in 2.74s]
 17:24:41
-17:24:41  Завершено выполнение 5 view моделей за 0 часов 0 минут и 24.03 секунды (24.03с).
+17:24:41  Finished running 5 view models in 0 hours 0 minutes and 24.03 seconds (24.03s).
 17:24:41
-17:24:41  Завершено успешно
+17:24:41  Completed successfully
 17:24:41
-17:24:41  Готово. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5
+17:24:41  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5
 
 ```
 
@@ -148,16 +147,16 @@ $ dbt run -t cloud_dev
 
 <Lightbox src="/img/guides/dremio/dremio-cloned-repo.png" title="Клонированный репозиторий в IDE"/>
 
-## О файле schema.yml
+## О schema.yml
 
-Файл `schema.yml` определяет источники и модели Dremio, которые будут использоваться, и какие модели данных находятся в области действия. В примере проекта в этом руководстве есть два источника данных:
+Файл `schema.yml` определяет источники и модели Dremio, которые будут использоваться, и какие модели данных находятся в области действия. В примере проекта этого руководства есть два источника данных:
 
 1. `NYC-weather.csv`, хранящийся в базе данных **Samples**, и
 2. `sample_data` из **Samples database**.
 
 Модели соответствуют данным о погоде и поездках соответственно и будут объединены для анализа.
 
-Источники можно найти, перейдя в раздел **Object Storage** интерфейса Dremio Cloud.
+Источники можно найти, перейдя в раздел **Object Storage** в интерфейсе Dremio Cloud.
 
 <Lightbox src="/img/guides/dremio/dremio-nyc-weather.png" title="Расположение NYC-weather.csv в Dremio Cloud"/>
 
@@ -169,19 +168,19 @@ $ dbt run -t cloud_dev
 
 **Application** &mdash; `application_nyc_trips_with_weather.sql` объединяет вывод из бизнес-модели. Это то, что будут использовать ваши бизнес-пользователи.
 
-## Вывод работы
+## Вывод задачи
 
-Когда вы запускаете задачу dbt, она создаст папку **dev**, в которой будут находиться все созданные активы данных. Это то, что вы увидите в интерфейсе Dremio Cloud. Пространства в Dremio — это способ организации активов данных, которые соответствуют бизнес-единицам или продуктам данных.
+Когда вы запускаете задачу dbt, она создаст папку пространства **dev**, в которой будут находиться все созданные данные. Это то, что вы увидите в интерфейсе Dremio Cloud. Пространства в Dremio — это способ организации данных, которые соответствуют бизнес-единицам или продуктам данных.
 
-<Lightbox src="/img/guides/dremio/dremio-dev-space.png" title="Dev пространство Dremio Cloud"/>
+<Lightbox src="/img/guides/dremio/dremio-dev-space.png" title="Пространство разработки Dremio Cloud"/>
 
-Откройте папку **Application**, и вы увидите вывод простой трансформации, которую мы сделали с помощью dbt.
+Откройте **папку Application**, и вы увидите результат простой трансформации, которую мы сделали с помощью dbt.
 
-<Lightbox src="/img/guides/dremio/dremio-dev-application.png" title="Вывод трансформации в папке Application"/>
+<Lightbox src="/img/guides/dremio/dremio-dev-application.png" title="Вывод трансформации папки Application"/>
 
 ## Запрос данных
 
-Теперь, когда вы запустили задачу и завершили трансформацию, пришло время запросить ваши данные. Нажмите на представление `nyc_trips_with_weather`. Это перенесет вас на страницу SQL Runner. Нажмите **Показать SQL панель** в правом верхнем углу страницы.
+Теперь, когда вы запустили задачу и завершили трансформацию, пришло время запросить ваши данные. Нажмите на представление `nyc_trips_with_weather`. Это приведет вас на страницу SQL Runner. Нажмите **Show SQL Pane** в верхнем правом углу страницы.
 
 Выполните следующий запрос:
 
@@ -194,8 +193,8 @@ GROUP BY vendor_id
 
 ```
 
-<Lightbox src="/img/guides/dremio/dremio-test-results.png" width="70%"  title="Пример вывода из SQL запроса"/>
+<Lightbox src="/img/guides/dremio/dremio-test-results.png" width="70%"  title="Пример вывода из SQL-запроса"/>
 
-Это завершает настройку интеграции, и данные готовы к использованию в бизнесе.
+Это завершает настройку интеграции, и данные готовы для бизнес-потребления.
 
 </div>

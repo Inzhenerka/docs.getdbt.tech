@@ -1,10 +1,9 @@
 ---
-title: Migrate from DDL, DML, and stored procedures
+title: Миграция с DDL, DML и хранимых процедур
 id: migrate-from-stored-procedures
-description:  Learn how to transform from a historical codebase of mixed DDL and DML statements to dbt models, including tips and patterns for the shift from a procedural to a declarative approach in defining datasets.
-displayText: Migrate from DDL, DML, and stored procedures
-hoverSnippet: Learn how to transform from a historical codebase of mixed DDL and DML statements to dbt models
-# time_to_complete: '30 minutes' commenting out until we test
+description: Узнайте, как преобразовать историческую кодовую базу, состоящую из смешанных DDL и DML операторов, в модели dbt, включая советы и шаблоны для перехода от процедурного к декларативному подходу в определении наборов данных.
+displayText: Миграция с DDL, DML и хранимых процедур
+hoverSnippet: Узнайте, как преобразовать историческую кодовую базу, состоящую из смешанных DDL и DML операторов, в модели dbt
 platform: 'dbt-core'
 icon: 'guides'
 hide_table_of_contents: true
@@ -15,36 +14,36 @@ recently_updated: true
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-One of the more common situations that new dbt adopters encounter is a historical codebase of transformations written as a hodgepodge of DDL and DML statements, or stored procedures. Going from DML statements to dbt models is often a challenging hump for new users to get over, because the process involves a significant paradigm shift between a procedural flow of building a dataset (e.g. a series of DDL and DML statements) to a declarative approach to defining a dataset (e.g. how dbt uses SELECT statements to express data models). This guide aims to provide tips, tricks, and common patterns for converting DML statements to dbt models.
+Одна из наиболее распространенных ситуаций, с которой сталкиваются новые пользователи dbt, — это историческая кодовая база преобразований, написанная как смесь DDL и DML операторов или хранимых процедур. Переход от DML операторов к моделям dbt часто является сложной задачей для новых пользователей, поскольку этот процесс включает значительный сдвиг парадигмы от процедурного потока построения набора данных (например, серия DDL и DML операторов) к декларативному подходу к определению набора данных (например, как dbt использует SELECT операторы для выражения моделей данных). Это руководство призвано предоставить советы, хитрости и общие шаблоны для преобразования DML операторов в модели dbt.
 
-### Preparing to migrate
+### Подготовка к миграции
 
-Before getting into the meat of conversion, it’s worth noting that DML statements will not always illustrate a comprehensive set of columns and column types that an original table might contain. Without knowing the DDL to create the table, it’s impossible to know precisely if your conversion effort is apples-to-apples, but you can generally get close.
+Прежде чем углубляться в процесс преобразования, стоит отметить, что DML операторы не всегда иллюстрируют полный набор столбцов и типов столбцов, которые может содержать исходная таблица. Без знания DDL для создания таблицы невозможно точно определить, является ли ваше усилие по преобразованию точным, но вы можете приблизиться к этому.
 
-If your <Term id="data-warehouse" /> supports `SHOW CREATE TABLE`, that can be a quick way to get a comprehensive set of columns you’ll want to recreate. If you don’t have the DDL, but are working on a substantial stored procedure, one approach that can work is to pull column lists out of any DML statements that modify the table, and build up a full set of the columns that appear.
+Если ваш <Term id="data-warehouse" /> поддерживает `SHOW CREATE TABLE`, это может быть быстрым способом получить полный набор столбцов, которые вы захотите воссоздать. Если у вас нет DDL, но вы работаете с крупной хранимой процедурой, один из подходов, который может сработать, — это извлечь списки столбцов из любых DML операторов, которые изменяют таблицу, и собрать полный набор столбцов, которые появляются.
 
-As for ensuring that you have the right column types, since models materialized by dbt generally use `CREATE TABLE AS SELECT` or `CREATE VIEW AS SELECT` as the driver for object creation, tables can end up with unintended column types if the queries aren’t explicit. For example, if you care about `INT` versus `DECIMAL` versus `NUMERIC`, it’s generally going to be best to be explicit. The good news is that this is easy with dbt: you just cast the column to the type you intend.
+Что касается обеспечения правильных типов столбцов, поскольку модели, материализованные dbt, обычно используют `CREATE TABLE AS SELECT` или `CREATE VIEW AS SELECT` в качестве драйвера для создания объектов, таблицы могут оказаться с непреднамеренными типами столбцов, если запросы не являются явными. Например, если вам важно различие между `INT`, `DECIMAL` и `NUMERIC`, лучше всего будет быть явным. Хорошая новость заключается в том, что это легко сделать с dbt: вы просто приводите столбец к нужному типу.
 
-We also generally recommend that column renaming and type casting happen as close to the source tables as possible, typically in a layer of staging transformations, which helps ensure that future dbt modelers will know where to look for those transformations! See [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview) for more guidance on overall project structure.
+Мы также обычно рекомендуем, чтобы переименование столбцов и приведение типов происходило как можно ближе к исходным таблицам, обычно на уровне промежуточных преобразований, что помогает гарантировать, что будущие моделисты dbt будут знать, где искать эти преобразования! См. [Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview) для получения дополнительной информации о структуре проекта в целом.
 
-### Operations we need to map
+### Операции, которые нам нужно сопоставить
 
-There are four primary DML statements that you are likely to have to convert to dbt operations while migrating a procedure:
+Существует четыре основных DML оператора, которые вам, вероятно, придется преобразовать в операции dbt при миграции процедуры:
 
 - `INSERT`
 - `UPDATE`
 - `DELETE`
 - `MERGE`
 
-Each of these can be addressed using various techniques in dbt. Handling `MERGE`s is a bit more involved than the rest, but can be handled effectively via dbt. The first three, however, are fairly simple to convert.
+Каждый из них можно обработать с помощью различных техник в dbt. Обработка `MERGE` немного сложнее, чем остальных, но может быть эффективно выполнена с помощью dbt. Первые три, однако, довольно просты для преобразования.
 
-## Map INSERTs
+## Сопоставление INSERT
 
-An `INSERT` statement is functionally the same as using dbt to `SELECT` from an existing source or other dbt model. If you are faced with an `INSERT`-`SELECT` statement, the easiest way to convert the statement is to just create a new dbt model, and pull the `SELECT` portion of the `INSERT` statement out of the procedure and into the model. That’s basically it!
+Оператор `INSERT` функционально аналогичен использованию dbt для `SELECT` из существующего источника или другой модели dbt. Если вы столкнулись с оператором `INSERT`-`SELECT`, самый простой способ преобразовать оператор — это просто создать новую модель dbt и извлечь часть `SELECT` из оператора `INSERT` из процедуры и поместить ее в модель. Вот и все!
 
-To really break it down, let’s consider a simple example:
+Чтобы действительно разобрать это, давайте рассмотрим простой пример:
 
 ```sql
 INSERT INTO returned_orders (order_id, order_date, total_return)
@@ -52,7 +51,7 @@ INSERT INTO returned_orders (order_id, order_date, total_return)
 SELECT order_id, order_date, total FROM orders WHERE type = 'return'
 ```
 
-Converting this with a first pass to a [dbt model](/guides/bigquery?step=8) (in a file called returned_orders.sql) might look something like:
+Преобразование этого с первого раза в [модель dbt](/guides/bigquery?step=8) (в файле, называемом returned_orders.sql) может выглядеть примерно так:
 
 ```sql
 SELECT
@@ -65,15 +64,15 @@ FROM {{ ref('orders') }}
 WHERE type = 'return'
 ```
 
-Functionally, this would create a model (which could be materialized as a table or view depending on needs) called `returned_orders` that contains three columns: `order_id`, `order_date`, `total_return`) predicated on the type column. It achieves the same end as the `INSERT`, just in a declarative fashion, using dbt.
+Функционально это создаст модель (которая может быть материализована как таблица или представление в зависимости от потребностей), называемую `returned_orders`, которая содержит три столбца: `order_id`, `order_date`, `total_return`, основанные на столбце type. Это достигает той же цели, что и `INSERT`, только в декларативной форме, используя dbt.
 
-### **A note on `FROM` clauses**
+### **Заметка о `FROM`**
 
-In dbt, using a hard-coded table or view name in a `FROM` clause is one of the most serious mistakes new users make. dbt uses the ref and source macros to discover the ordering that transformations need to execute in, and if you don’t use them, you’ll be unable to benefit from dbt’s built-in <Term id="data-lineage">lineage</Term> generation and pipeline execution. In the sample code throughout the remainder of this article, we’ll use ref statements in the dbt-converted versions of SQL statements, but it is an exercise for the reader to ensure that those models exist in their dbt projects.
+В dbt использование жестко закодированного имени таблицы или представления в `FROM` является одной из самых серьезных ошибок, которые делают новые пользователи. dbt использует макросы ref и source для определения порядка, в котором должны выполняться преобразования, и если вы их не используете, вы не сможете воспользоваться встроенной генерацией <Term id="data-lineage">родословной данных</Term> и выполнением конвейера в dbt. В примерах кода на протяжении оставшейся части этой статьи мы будем использовать операторы ref в dbt-преобразованных версиях SQL операторов, но это упражнение для читателя — убедиться, что эти модели существуют в их проектах dbt.
 
-### **Sequential `INSERT`s to an existing table can be `UNION ALL`’ed together**
+### **Последовательные `INSERT` в существующую таблицу можно объединить с помощью `UNION ALL`**
 
-Since dbt models effectively perform a single `CREATE TABLE AS SELECT` (or if you break it down into steps, `CREATE`, then an `INSERT`), you may run into complexities if there are multiple `INSERT` statements in your transformation that all insert data into the same table. Fortunately, this is a simple thing to handle in dbt. Effectively, the logic is performing a `UNION ALL` between the `INSERT` queries. If I have a transformation flow that looks something like (ignore the contrived nature of the scenario):
+Поскольку модели dbt фактически выполняют один `CREATE TABLE AS SELECT` (или, если разбить это на шаги, `CREATE`, затем `INSERT`), вы можете столкнуться с сложностями, если в вашем преобразовании есть несколько операторов `INSERT`, которые все вставляют данные в одну и ту же таблицу. К счастью, это простая задача для обработки в dbt. Фактически, логика выполняет `UNION ALL` между запросами `INSERT`. Если у меня есть поток преобразования, который выглядит примерно так (игнорируйте надуманность сценария):
 
 ```sql
 CREATE TABLE all_customers
@@ -83,7 +82,7 @@ INSERT INTO all_customers SELECT * FROM us_customers
 INSERT INTO all_customers SELECT * FROM eu_customers
 ```
 
-The dbt-ified version of this would end up looking something like:
+Версия dbt этого будет выглядеть примерно так:
 
 ```sql
 SELECT * FROM {{ ref('us_customers') }}
@@ -93,11 +92,11 @@ UNION ALL
 SELECT * FROM {{ ref('eu_customers') }}
 ```
 
-The logic is functionally equivalent. So if there’s another statement that `INSERT`s into a model that I’ve already created, I can just add that logic into a second `SELECT` statement that is just `UNION ALL`'ed with the first. Easy!
+Логика функционально эквивалентна. Таким образом, если есть еще один оператор, который `INSERT` в модель, которую я уже создал, я могу просто добавить эту логику во второй оператор `SELECT`, который просто объединен с первым с помощью `UNION ALL`. Легко!
 
-## Map UPDATEs
+## Сопоставление UPDATE
 
-`UPDATE`s start to increase the complexity of your transformations, but fortunately, they’re pretty darn simple to migrate, as well. The thought process that you go through when translating an `UPDATE` is quite similar to how an `INSERT` works, but the logic for the `SELECT` list in the dbt model is primarily sourced from the content in the `SET` section of the `UPDATE` statement. Let’s look at a simple example:
+`UPDATE` начинают увеличивать сложность ваших преобразований, но, к счастью, они также довольно просты для миграции. Процесс мышления, который вы проходите при переводе `UPDATE`, очень похож на то, как работает `INSERT`, но логика для списка `SELECT` в модели dbt в основном исходит из содержимого секции `SET` оператора `UPDATE`. Давайте рассмотрим простой пример:
 
 ```sql
 UPDATE orders
@@ -107,14 +106,14 @@ SET type = 'return'
 WHERE total < 0
 ```
 
-The way to look at this is similar to an `INSERT`-`SELECT` statement. The table being updated is the model you want to modify, and since this is an `UPDATE`, that model has likely already been created, and you can either:
+Способ взглянуть на это аналогичен оператору `INSERT`-`SELECT`. Таблица, которая обновляется, — это модель, которую вы хотите изменить, и поскольку это `UPDATE`, эта модель, вероятно, уже была создана, и вы можете либо:
 
-- add to it with subsequent transformations
-- create an intermediate model that builds off of the original model – perhaps naming it something like `int_[entity]_[verb].sql`.
+- добавить к ней с последующими преобразованиями
+- создать промежуточную модель, которая строится на основе оригинальной модели — возможно, назвав ее что-то вроде `int_[entity]_[verb].sql`.
 
-The `SELECT` list should contain all of the columns for the table, but for the specific columns being updated by the DML, you’ll use the computation on the right side of the equals sign as the `SELECT`ed value. Then, you can use the target column name on the left of the equals sign as the column alias.
+Список `SELECT` должен содержать все столбцы для таблицы, но для конкретных столбцов, которые обновляются DML, вы будете использовать вычисление на правой стороне знака равенства в качестве значения `SELECT`. Затем вы можете использовать целевое имя столбца на левой стороне знака равенства в качестве псевдонима столбца.
 
-If I were building an intermediate transformation from the above query would translate to something along the lines of:
+Если бы я создавал промежуточное преобразование из приведенного выше запроса, это выглядело бы примерно так:
 
 ```sql
 SELECT
@@ -129,11 +128,11 @@ SELECT
 FROM {{ ref('stg_orders') }}
 ```
 
-Since the `UPDATE` statement doesn’t modify every value of the type column, we use a `CASE` statement to apply the contents’ `WHERE` clause. We still want to select all of the columns that should end up in the target table. If we left one of the columns out, it wouldn’t be passed through to the target table at all due to dbt’s declarative approach.
+Поскольку оператор `UPDATE` не изменяет каждое значение столбца type, мы используем оператор `CASE`, чтобы применить содержимое условия `WHERE`. Мы все еще хотим выбрать все столбцы, которые должны оказаться в целевой таблице. Если мы оставим один из столбцов, он вообще не будет передан в целевую таблицу из-за декларативного подхода dbt.
 
-Sometimes, you may not be sure what all the columns are in a table, or in the situation as above, you’re only modifying a small number of columns relative to the total number of columns in the table. It can be cumbersome to list out every column in the table, but fortunately dbt contains some useful utility macros that can help list out the full column list of a table.
+Иногда вы можете не знать, какие все столбцы находятся в таблице, или в ситуации, как выше, вы изменяете только небольшое количество столбцов относительно общего количества столбцов в таблице. Может быть обременительно перечислять каждый столбец в таблице, но, к счастью, dbt содержит некоторые полезные утилиты макросов, которые могут помочь перечислить полный список столбцов таблицы.
 
-Another way I could have written the model a bit more dynamically might be:
+Другой способ, которым я мог бы написать модель немного более динамично, может быть:
 
 ```sql
 SELECT
@@ -146,27 +145,27 @@ SELECT
 FROM {{ ref('stg_orders') }}
 ```
 
-The `dbt_utils.star()` macro will print out the full list of columns in the table, but skip the ones I’ve listed in the except list, which allows me to perform the same logic while writing fewer lines of code. This is a simple example of using dbt macros to simplify and shorten your code, and dbt can get a lot more sophisticated as you learn more techniques. Read more about the [dbt_utils package](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) and the [star macro](https://github.com/dbt-labs/dbt-utils/tree/0.8.6/#star-source).
+Макрос `dbt_utils.star()` выведет полный список столбцов в таблице, но пропустит те, которые я перечислил в списке исключений, что позволяет мне выполнять ту же логику, написав меньше строк кода. Это простой пример использования макросов dbt для упрощения и сокращения вашего кода, и dbt может стать гораздо более сложным, когда вы изучите больше техник. Прочитайте больше о [пакете dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) и [макросе star](https://github.com/dbt-labs/dbt-utils/tree/0.8.6/#star-source).
 
-## Map DELETEs
+## Сопоставление DELETE
 
-One of the biggest differences between a procedural transformation and how dbt models data is that dbt, in general, will never destroy data. While there are ways to execute hard `DELETE`s in dbt that are outside of the scope of this article, the general best practice for handling deleted data is to just use soft deletes, and filter out soft-deleted data in a final transformation.
+Одно из самых больших различий между процедурным преобразованием и тем, как dbt моделирует данные, заключается в том, что dbt, в общем, никогда не уничтожает данные. Хотя существуют способы выполнения жестких `DELETE` в dbt, которые выходят за рамки этой статьи, общая лучшая практика для обработки удаленных данных — просто использовать мягкие удаления и фильтровать мягко удаленные данные в конечном преобразовании.
 
-Let’s consider a simple example query:
+Рассмотрим простой пример запроса:
 
 ```sql
 DELETE FROM stg_orders WHERE order_status IS NULL
 ```
 
-In a dbt model, you’ll need to first identify the records that should be deleted and then filter them out. There are really two primary ways you might translate this query:
+В модели dbt вам нужно сначала определить записи, которые должны быть удалены, а затем отфильтровать их. Существует действительно два основных способа, которыми вы можете перевести этот запрос:
 
 ```sql
 SELECT * FROM {{ ref('stg_orders') }} WHERE order_status IS NOT NULL
 ```
 
-This first approach just inverts the logic of the DELETE to describe the set of records that should remain, instead of the set of records that should be removed. This ties back to the way dbt declaratively describes datasets. You reference the data that should be in a dataset, and the table or view gets created with that set of data.
+Этот первый подход просто инвертирует логику DELETE, чтобы описать набор записей, которые должны остаться, вместо набора записей, которые должны быть удалены. Это связано с тем, как dbt декларативно описывает наборы данных. Вы ссылаетесь на данные, которые должны быть в наборе данных, и таблица или представление создается с этим набором данных.
 
-Another way you could achieve this is by marking the deleted records, and then filtering them out. For example:
+Другой способ, которым вы могли бы достичь этого, — это пометить удаленные записи, а затем отфильтровать их. Например:
 
 ```sql
 WITH
@@ -187,19 +186,19 @@ soft_deletes AS (
 SELECT * FROM soft_deletes WHERE to_delete = false
 ```
 
-This approach flags all of the deleted records, and the final `SELECT` filters out any deleted data, so the resulting table contains only the remaining records. It’s a lot more verbose than just inverting the `DELETE` logic, but for complex `DELETE` logic, this ends up being a very effective way of performing the `DELETE` that retains historical context.
+Этот подход помечает все удаленные записи, и финальный `SELECT` фильтрует любые удаленные данные, так что результирующая таблица содержит только оставшиеся записи. Это гораздо более многословно, чем просто инвертировать логику `DELETE`, но для сложной логики `DELETE` это оказывается очень эффективным способом выполнения `DELETE`, который сохраняет исторический контекст.
 
-It’s worth calling out that while this doesn’t enable a hard delete, hard deletes can be executed a number of ways, the most common being to execute a dbt [macros](/docs/build/jinja-macros) via as a [run-operation](https://docs.getdbt.com/reference/commands/run-operation), or by using a [post-hook](https://docs.getdbt.com/reference/resource-configs/pre-hook-post-hook/) to perform a `DELETE` statement after the records to-be-deleted have been marked. These are advanced approaches outside the scope of this guide.
+Стоит отметить, что хотя это не позволяет выполнить жесткое удаление, жесткие удаления могут быть выполнены несколькими способами, наиболее распространенным из которых является выполнение dbt [макросов](/docs/build/jinja-macros) через [run-operation](https://docs.getdbt.com/reference/commands/run-operation), или с помощью [post-hook](https://docs.getdbt.com/reference/resource-configs/pre-hook-post-hook/) для выполнения оператора `DELETE` после того, как записи, которые должны быть удалены, были помечены. Это продвинутые подходы, выходящие за рамки этого руководства.
 
+## Сопоставление MERGE
 
-## Map MERGEs
-dbt has a concept called [materialization](/docs/build/materializations), which determines how a model is physically or logically represented in the warehouse. `INSERT`s, `UPDATE`s, and `DELETE`s will typically be accomplished using <Term id='table'>table</Term> or <Term id='view'>view</Term> materializations. For incremental workloads accomplished via commands like `MERGE` or `UPSERT`, dbt has a particular materialization called [incremental](/docs/build/incremental-models). The incremental materialization is specifically used to handle incremental loads and updates to a table without recreating the entire table from scratch on every run.
+dbt имеет концепцию, называемую [материализацией](/docs/build/materializations), которая определяет, как модель физически или логически представлена в хранилище. `INSERT`, `UPDATE` и `DELETE` обычно выполняются с использованием <Term id='table'>таблицы</Term> или <Term id='view'>представления</Term> материализаций. Для инкрементных рабочих нагрузок, выполняемых с помощью команд, таких как `MERGE` или `UPSERT`, dbt имеет особую материализацию, называемую [инкрементальной](/docs/build/incremental-models). Инкрементальная материализация специально используется для обработки инкрементных загрузок и обновлений таблицы без воссоздания всей таблицы с нуля при каждом запуске.
 
-### Step 1: Map the MERGE like an INSERT/UPDATE to start
+### Шаг 1: Сопоставьте MERGE как INSERT/UPDATE для начала
 
-Before we get into the exact details of how to implement an incremental materialization, let’s talk about logic conversion. Extracting the logic of the `MERGE` and handling it as you would an `INSERT` or an `UPDATE` is the easiest way to get started migrating a `MERGE` command. .
+Прежде чем мы углубимся в точные детали того, как реализовать инкрементальную материализацию, давайте поговорим о логическом преобразовании. Извлечение логики `MERGE` и обработка ее так же, как `INSERT` или `UPDATE`, — это самый простой способ начать миграцию команды `MERGE`.
 
-To see how the logic conversion works, we’ll start with an example `MERGE`. In this scenario, imagine a ride sharing app where rides are loaded into a details table daily, and tips may be updated at some later date, and need to be kept up-to-date:
+Чтобы увидеть, как работает логическое преобразование, начнем с примера `MERGE`. В этом сценарии представьте приложение для совместного использования поездок, где поездки загружаются в таблицу деталей ежедневно, а чаевые могут быть обновлены в более поздний срок и должны быть актуальными:
 
 ```sql
 MERGE INTO ride_details USING (
@@ -221,13 +220,13 @@ MERGE INTO ride_details USING (
 );
 ```
 
-The content of the `USING` clause is a useful piece of code because that can easily be placed in a CTE as a starting point for handling the match statement. I find that the easiest way to break this apart is to treat each match statement as a separate CTE that builds on the previous match statements.
+Содержимое оператора `USING` — это полезный фрагмент кода, потому что его можно легко поместить в CTE в качестве отправной точки для обработки оператора совпадения. Я считаю, что самый простой способ разбить это — это рассматривать каждый оператор совпадения как отдельный CTE, который строится на предыдущих операторах совпадения.
 
-We can ignore the `ON` clause for now, as that will only come into play once we get to a point where we’re ready to turn this into an incremental.
+Мы можем игнорировать оператор `ON` на данный момент, так как он будет играть роль только тогда, когда мы будем готовы превратить это в инкрементальную материализацию.
 
-As with `UPDATE`s and `INSERT`s, you can use the `SELECT` list and aliases to name columns appropriately for the target table, and `UNION` together `INSERT` statements (taking care to use `UNION`, rather than `UNION ALL` to avoid duplicates).
+Как и в случае с `UPDATE` и `INSERT`, вы можете использовать список `SELECT` и псевдонимы для именования столбцов соответствующим образом для целевой таблицы и объединять `INSERT` операторы (принимая во внимание использование `UNION`, а не `UNION ALL`, чтобы избежать дубликатов).
 
-The `MERGE` would end up translating to something like this:
+`MERGE` будет переведен примерно так:
 
 ```sql
 WITH
@@ -272,17 +271,17 @@ FROM updates
 UNION inserts
 ```
 
-To be clear, this transformation isn’t complete. The logic here is similar to the `MERGE`, but will not actually do the same thing, since the updates and inserts CTEs are both selecting from the same source query. We’ll need to ensure we grab the separate sets of data as we transition to the incremental materialization.
+Чтобы было ясно, это преобразование не завершено. Логика здесь похожа на `MERGE`, но на самом деле не будет делать то же самое, так как CTEs обновлений и вставок оба выбирают из одного и того же исходного запроса. Нам нужно будет убедиться, что мы захватываем отдельные наборы данных, когда мы переходим к инкрементальной материализации.
 
-One important caveat is that dbt does not natively support `DELETE` as a `MATCH` action. If you have a line in your `MERGE` statement that uses `WHEN MATCHED THEN DELETE`, you’ll want to treat it like an update and add a soft-delete flag, which is then filtered out in a follow-on transformation.
+Одно важное предостережение заключается в том, что dbt не поддерживает нативно `DELETE` как действие `MATCH`. Если у вас есть строка в вашем операторе `MERGE`, которая использует `WHEN MATCHED THEN DELETE`, вы захотите рассматривать это как обновление и добавить флаг мягкого удаления, который затем фильтруется в последующем преобразовании.
 
-### Step 2: Convert to incremental materialization
+### Шаг 2: Преобразование в инкрементальную материализацию
 
-As mentioned above, incremental materializations are a little special in that when the target table does not exist, the materialization functions in nearly the same way as a standard table materialization, and executes a `CREATE TABLE AS SELECT` statement. If the target table does exist, however, the materialization instead executes a `MERGE` statement.
+Как упоминалось выше, инкрементальные материализации немного особенные, поскольку, когда целевая таблица не существует, материализация функционирует почти так же, как стандартная материализация таблицы, и выполняет оператор `CREATE TABLE AS SELECT`. Если целевая таблица существует, однако, материализация вместо этого выполняет оператор `MERGE`.
 
-Since a `MERGE` requires a `JOIN` condition between the `USING` clause and the target table, we need a way to specify how dbt determines whether or not a record triggers a match or not. That particular piece of information is specified in the dbt model configuration.
+Поскольку `MERGE` требует условия `JOIN` между оператором `USING` и целевой таблицей, нам нужен способ указать, как dbt определяет, вызывает ли запись совпадение или нет. Эта конкретная информация указывается в конфигурации модели dbt.
 
-We can add the following `config()` block to the top of our model to specify how it should build incrementally:
+Мы можем добавить следующий блок `config()` в начало нашей модели, чтобы указать, как она должна строиться инкрементально:
 
 ```sql
 {{
@@ -294,22 +293,22 @@ We can add the following `config()` block to the top of our model to specify how
 }}
 ```
 
-The three configuration fields in this example are the most important ones.
+Три поля конфигурации в этом примере являются наиболее важными.
 
-- Setting `materialized='incremental'` tells dbt to apply UPSERT logic to the target table.
-- The `unique_key` should be a primary key of the target table. This is used to match records with the existing table.
-- `incremental_strategy` here is set to MERGE any existing rows in the target table with a value for the `unique_key` which matches the incoming batch of data. There are [various incremental strategies](/docs/build/incremental-strategy) for different situations and warehouses.
+- Установка `materialized='incremental'` сообщает dbt применять логику UPSERT к целевой таблице.
+- `unique_key` должен быть первичным ключом целевой таблицы. Это используется для сопоставления записей с существующей таблицей.
+- `incremental_strategy` здесь установлен на MERGE, чтобы объединить любые существующие строки в целевой таблице со значением для `unique_key`, которое совпадает с входящей партией данных. Существуют [различные инкрементальные стратегии](/docs/build/incremental-strategy) для различных ситуаций и хранилищ.
 
-The bulk of the work in converting a model to an incremental materialization comes in determining how the logic should change for incremental loads versus full backfills or initial loads. dbt offers a special macro, `is_incremental()`, which evaluates false for initial loads or for backfills (called full refreshes in dbt parlance), but true for incremental loads.
+Основная часть работы по преобразованию модели в инкрементальную материализацию заключается в определении того, как логика должна изменяться для инкрементных загрузок по сравнению с полными загрузками или начальными загрузками. dbt предлагает специальный макрос, `is_incremental()`, который оценивается как ложный для начальных загрузок или для полных загрузок (называемых полными обновлениями в терминологии dbt), но истинный для инкрементных загрузок.
 
-This macro can be used to augment the model code to adjust how data is loaded for subsequent loads. How that logic should be added will depend a little bit on how data is received. Some common ways might be:
+Этот макрос можно использовать для дополнения кода модели, чтобы настроить, как данные загружаются для последующих загрузок. Как эта логика должна быть добавлена, будет немного зависеть от того, как данные получены. Некоторые общие способы могут быть:
 
-1. The source table is truncated ahead of incremental loads, and only contains the data to be loaded in that increment.
-2. The source table contains all historical data, and there is a load timestamp column that identifies new data to be loaded.
+1. Исходная таблица очищается перед инкрементными загрузками и содержит только данные, которые должны быть загружены в этом инкременте.
+2. Исходная таблица содержит все исторические данные, и есть столбец временной метки загрузки, который идентифицирует новые данные, которые должны быть загружены.
 
-In the first case, the work is essentially done already. Since the source table always contains only the new data to be loaded, the query doesn’t have to change for incremental loads. The second case, however, requires the use of the `is_incremental()` macro to correctly handle the logic.
+В первом случае работа фактически уже выполнена. Поскольку исходная таблица всегда содержит только новые данные, которые должны быть загружены, запрос не должен изменяться для инкрементных загрузок. Однако второй случай требует использования макроса `is_incremental()`, чтобы правильно обработать логику.
 
-Taking the converted `MERGE` statement that we’d put together previously, we’d augment it to add this additional logic:
+Взяв преобразованный оператор `MERGE`, который мы собрали ранее, мы бы дополнили его, чтобы добавить эту дополнительную логику:
 
 ```sql
 WITH
@@ -368,14 +367,13 @@ inserts AS (
 SELECT * FROM updates UNION inserts
 ```
 
-There are a couple important concepts to understand here:
+Здесь есть несколько важных концепций, которые нужно понять:
 
-1. The code in the `is_incremental()` conditional block only executes for incremental executions of this model code. If the target table doesn’t exist, or if the `--full-refresh` option is used, that code will not execute.
-2. `{{ this }}` is a special keyword in dbt that when used in a Jinja block, self-refers to the model for which the code is executing. So if you have a model in a file called `my_incremental_model.sql`, `{{ this }}` will refer to `my_incremental_model` (fully qualified with database and schema name if necessary). By using that keyword, we can leverage the current state of the target table to inform the source query.
+1. Код в условном блоке `is_incremental()` выполняется только для инкрементных выполнений этого кода модели. Если целевая таблица не существует или если используется опция `--full-refresh`, этот код не будет выполняться.
+2. `{{ this }}` — это специальное ключевое слово в dbt, которое при использовании в блоке Jinja самоссылается на модель, для которой выполняется код. Таким образом, если у вас есть модель в файле, называемом `my_incremental_model.sql`, `{{ this }}` будет ссылаться на `my_incremental_model` (полностью квалифицированное с именем базы данных и схемы, если необходимо). Используя это ключевое слово, мы можем использовать текущее состояние целевой таблицы, чтобы информировать исходный запрос.
 
+## Миграция хранимых процедур
 
-## Migrate Stores procedures
-
-The techniques shared above are useful ways to get started converting the individual DML statements that are often found in stored procedures. Using these types of patterns, legacy procedural code can be rapidly transitioned to dbt models that are much more readable, maintainable, and benefit from software engineering best practices like <Term id='dry'>DRY principles</Term>. Additionally, once transformations are rewritten as dbt models, it becomes much easier to test the transformations to ensure that the data being used downstream is high-quality and trustworthy.
+Техники, описанные выше, являются полезными способами начать преобразование отдельных DML операторов, которые часто встречаются в хранимых процедурах. Используя такие шаблоны, устаревший процедурный код можно быстро преобразовать в модели dbt, которые гораздо более читаемы, поддерживаемы и соответствуют лучшим практикам программной инженерии, таким как <Term id='dry'>принципы DRY</Term>. Кроме того, как только преобразования переписаны как модели dbt, становится гораздо проще тестировать преобразования, чтобы гарантировать, что данные, используемые в дальнейшем, являются качественными и надежными.
 
 </div>

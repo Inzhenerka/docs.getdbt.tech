@@ -12,7 +12,7 @@ $ dbt run --select source:jaffle_shop+
 ```
 (Вы также можете использовать сокращение `-s` вместо `--select`)
 
-Чтобы запустить модели, зависящие от одного источника <Term id="table" />:
+Чтобы запустить модели, зависящие от одной <Term id="table" /> источника:
 
 ```shell
 $ dbt run --select source:jaffle_shop.orders+

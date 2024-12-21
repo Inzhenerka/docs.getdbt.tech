@@ -1,9 +1,8 @@
 ---
 title: "Создание событий Datadog из результатов dbt Cloud"
 id: serverless-datadog
-description: Настройка безсерверного приложения для добавления событий dbt Cloud в журналы Datadog.
-hoverSnippet: Узнайте, как настроить безсерверное приложение для добавления событий dbt Cloud в журналы Datadog.
-# time_to_complete: '30 минут' закомментировано до тестирования
+description: Настройка серверного приложения для добавления событий dbt Cloud в логи Datadog.
+hoverSnippet: Узнайте, как настроить серверное приложение для добавления событий dbt Cloud в логи Datadog.
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Webhooks']
@@ -15,26 +14,26 @@ recently_updated: true
 
 ## Введение
 
-Этот гид научит вас, как создать и разместить простое приложение на Python, которое будет добавлять события выполнения задач dbt Cloud в Datadog. Для этого, когда задача dbt Cloud завершится, будет создана запись в журнале для каждого узла, который был выполнен, содержащая всю информацию об узле, предоставленную [Discovery API](/docs/dbt-cloud-apis/discovery-schema-job-models).
+Это руководство научит вас создавать и размещать простое приложение на Python, которое будет добавлять события заданий dbt Cloud в Datadog. Для этого, когда задание dbt Cloud завершится, будет создана запись в логе для каждого узла, который был выполнен, содержащая всю информацию об узле, предоставленную [Discovery API](/docs/dbt-cloud-apis/discovery-schema-job-models).
 
-В этом примере мы будем использовать [fly.io](https://fly.io) для хостинга/запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости выделения серверов и т.д. Этот уровень использования должен удобно вписываться в бесплатный тариф. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://adem.sh/blog/tutorial-fastapi-aws-lambda-serverless) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
+В этом примере мы будем использовать [fly.io](https://fly.io) для размещения/запуска сервиса. fly.io — это платформа для запуска полнофункциональных приложений без необходимости в настройке серверов и т.д. Этот уровень использования должен комфортно вписываться в бесплатный тариф. Вы также можете использовать альтернативные инструменты, такие как [AWS Lambda](https://adem.sh/blog/tutorial-fastapi-aws-lambda-serverless) или [Google Cloud Run](https://github.com/sekR4/FastAPI-on-Google-Cloud-Run).
 
 ### Предварительные требования
 
-Этот гид предполагает некоторую знакомость с:
-- [dbt Cloud Webhooks](/docs/deploy/webhooks)
+Это руководство предполагает, что вы знакомы с:
+- [Вебхуками dbt Cloud](/docs/deploy/webhooks)
 - CLI приложениями
-- Развертыванием кода на безсерверных платформах, таких как fly.io или AWS Lambda
+- Развертыванием кода на серверных платформах, таких как fly.io или AWS Lambda
 
 ## Клонирование репозитория `dbt-cloud-webhooks-datadog`
 
-[Этот репозиторий](https://github.com/dpguthrie/dbt-cloud-webhooks-datadog) содержит пример кода для проверки вебхука и создания журналов в Datadog.
+[Этот репозиторий](https://github.com/dpguthrie/dbt-cloud-webhooks-datadog) содержит пример кода для проверки вебхука и создания логов в Datadog.
 
 ## Установка `flyctl` и регистрация на fly.io
 
-Следуйте инструкциям для вашей операционной системы в [документации fly.io](https://fly.io/docs/hands-on/install-flyctl/), затем в командной строке выполните следующие команды:
+Следуйте инструкциям для вашей операционной системы в [документации fly.io](https://fly.io/docs/hands-on/install-flyctl/), затем выполните следующие команды в командной строке:
 
-Перейдите в директорию, содержащую репозиторий, который вы клонировали на шаге 1:
+Перейдите в директорию, содержащую клонированный вами репозиторий на шаге 1:
 
     ```shell
     #пример: замените на ваш фактический путь
@@ -46,59 +45,59 @@ recently_updated: true
     flyctl auth signup
     ```
 
-Ваша консоль должна показать `успешно вошли как YOUR_EMAIL`, когда вы закончите, но если этого не произошло, войдите в fly.io из командной строки:
+Ваша консоль должна показать `successfully logged in as YOUR_EMAIL`, когда вы закончите, но если этого не произошло, войдите в fly.io из командной строки:
     ```shell
     flyctl auth login
     ```
 
 ## Запуск вашего приложения на fly.io
 
-Запуск вашего приложения публикует его в интернете и делает его готовым для получения событий вебхука:
+Запуск вашего приложения публикует его в интернете и делает готовым к приему событий вебхуков:
     ```shell
     flyctl launch
     ```
 
-1. Вы увидите сообщение о том, что был найден существующий файл `fly.toml`. Введите `y`, чтобы скопировать его конфигурацию в ваше новое приложение.
+1. Вы увидите сообщение о том, что найден существующий файл `fly.toml`. Введите `y`, чтобы скопировать его конфигурацию в ваше новое приложение.
 
-2. Выберите имя приложения по вашему выбору, например `YOUR_COMPANY-dbt-cloud-webhook-datadog`, или оставьте пустым, и оно будет сгенерировано для вас. Обратите внимание, что ваше имя может содержать только цифры, строчные буквы и дефисы.
+2. Выберите имя приложения по вашему выбору, например, `YOUR_COMPANY-dbt-cloud-webhook-datadog`, или оставьте поле пустым, и имя будет сгенерировано автоматически. Обратите внимание, что имя может содержать только цифры, строчные буквы и дефисы.
 
-3. Выберите регион развертывания и запомните сгенерированное имя хоста (обычно `APP_NAME.fly.dev`).
+3. Выберите регион для развертывания и запомните сгенерированное имя хоста (обычно `APP_NAME.fly.dev`).
 
-4. Когда вас спросят, хотите ли вы настроить базы данных Postgresql или Redis, введите `n` для каждой.
+4. Когда вас спросят, хотите ли вы настроить базы данных Postgresql или Redis, введите `n` для каждого.
 
-5. Введите `y`, когда вас спросят, хотите ли вы развернуть сейчас.
+5. Введите `y`, когда вас спросят, хотите ли вы развернуть приложение сейчас.
 
 <details>
-<summary>Пример вывода из мастера настройки:</summary>
+<summary>Пример вывода мастера настройки:</summary>
 <code>
 joel@Joel-Labes dbt-cloud-webhooks-datadog % flyctl launch<br/>
-Был найден существующий файл fly.toml для приложения dbt-cloud-webhooks-datadog<br/>
-? Хотите ли вы скопировать его конфигурацию в новое приложение? Да<br/>
-Создание приложения в /Users/joel/Documents/GitHub/dbt-cloud-webhooks-datadog<br/>
-Сканирование исходного кода<br/>
-Обнаружено приложение Dockerfile<br/>
-? Выберите имя приложения (оставьте пустым для генерации): demo-dbt-cloud-webhook-datadog<br/>
-автоматически выбрана личная организация: Joel Labes<br/>
-Некоторые регионы требуют платного плана (fra, maa).<br/>
-Смотрите https://fly.io/plans для настройки плана.<br/>
-? Выберите регион для развертывания:  [Используйте стрелки для перемещения, введите для фильтрации]<br/>
-? Выберите регион для развертывания: Сидней, Австралия (syd)<br/>
-Создано приложение dbtlabs-dbt-cloud-webhook-datadog в организации личной<br/>
-URL администратора: https://fly.io/apps/demo-dbt-cloud-webhook-datadog<br/>
-Имя хоста: demo-dbt-cloud-webhook-datadog.fly.dev<br/>
-? Хотите ли вы настроить базу данных Postgresql сейчас? Нет<br/>
-? Хотите ли вы настроить базу данных Upstash Redis сейчас? Нет<br/>
-Записан конфигурационный файл fly.toml<br/>
-? Хотите ли вы развернуть сейчас? Да
+An existing fly.toml file was found for app dbt-cloud-webhooks-datadog<br/>
+? Would you like to copy its configuration to the new app? Yes<br/>
+Creating app in /Users/joel/Documents/GitHub/dbt-cloud-webhooks-datadog<br/>
+Scanning source code<br/>
+Detected a Dockerfile app<br/>
+? Choose an app name (leave blank to generate one): demo-dbt-cloud-webhook-datadog<br/>
+automatically selected personal organization: Joel Labes<br/>
+Some regions require a paid plan (fra, maa).<br/>
+See https://fly.io/plans to set up a plan.<br/>
+? Choose a region for deployment:  [Use arrows to move, type to filter]<br/>
+? Choose a region for deployment: Sydney, Australia (syd)<br/>
+Created app dbtlabs-dbt-cloud-webhook-datadog in organization personal<br/>
+Admin URL: https://fly.io/apps/demo-dbt-cloud-webhook-datadog<br/>
+Hostname: demo-dbt-cloud-webhook-datadog.fly.dev<br/>
+? Would you like to set up a Postgresql database now? No<br/>
+? Would you like to set up an Upstash Redis database now? No<br/>
+Wrote config file fly.toml<br/>
+? Would you like to deploy now? Yes
 </code>
 </details>
 
 ### 4. Создание API-ключа Datadog
-[Создайте API-ключ для вашей учетной записи Datadog](https://docs.datadoghq.com/account_management/api-app-keys/) и запомните его, а также ваш сайт Datadog (например, `datadoghq.com`) для дальнейшего использования.
+[Создайте API-ключ для вашего аккаунта Datadog](https://docs.datadoghq.com/account_management/api-app-keys/) и запомните его и ваш сайт Datadog (например, `datadoghq.com`) для дальнейшего использования.
 
 ## Настройка нового вебхука в dbt Cloud
 
-1. См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Ваше событие должно быть **Выполнение завершено**.
+1. См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения полных инструкций. Ваше событие должно быть **Run completed**.
 2. Установите URL вебхука на имя хоста, которое вы создали ранее (`APP_NAME.fly.dev`).
 3. Запомните секретный ключ вебхука для дальнейшего использования.
 
@@ -107,10 +106,10 @@ URL администратора: https://fly.io/apps/demo-dbt-cloud-webhook-dat
 ## Хранение секретов
 
 Приложение требует установки четырех секретов с использованием следующих имен:
-- `DBT_CLOUD_SERVICE_TOKEN`: токен [личного доступа](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) или [токен сервисной учетной записи](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) dbt Cloud с как минимум разрешением `Только метаданные`.
+- `DBT_CLOUD_SERVICE_TOKEN`: личный токен доступа dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) или токен учетной записи сервиса [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens) с как минимум разрешением `Metdata Only`.
 - `DBT_CLOUD_AUTH_TOKEN`: секретный ключ для вебхука dbt Cloud, который вы создали ранее.
 - `DD_API_KEY`: API-ключ, который вы создали ранее.
-- `DD_SITE`: сайт Datadog для вашей организации, например, `datadoghq.com`.
+- `DD_SITE`: Сайт Datadog для вашей организации, например, `datadoghq.com`.
 
 Установите эти секреты следующим образом, заменив `abc123` и т.д. на фактические значения:
     ```shell
@@ -119,6 +118,6 @@ URL администратора: https://fly.io/apps/demo-dbt-cloud-webhook-dat
 
 ## Развертывание вашего приложения
 
-После установки секретов fly.io повторно развернет ваше приложение. Когда это будет успешно завершено, вернитесь к настройкам вебхука dbt Cloud и нажмите **Тестировать конечную точку**.
+После установки секретов, fly.io повторно развернет ваше приложение. Когда это будет успешно завершено, вернитесь к настройкам вебхука dbt Cloud и нажмите **Test Endpoint**.
 
 </div>
