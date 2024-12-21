@@ -54,7 +54,7 @@ const sidebarSettings = {
             "docs/cloud/migration",
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Подключение к платформам данных",
               link: {
                 type: "doc",
                 id: "docs/cloud/connect-data-platform/about-connections",
@@ -75,7 +75,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Manage access",
+              label: "Управление доступом",
               link: {
                 type: "doc",
                 id: "docs/cloud/manage-access/about-user-access",
@@ -86,7 +86,7 @@ const sidebarSettings = {
                 "docs/cloud/manage-access/mfa",
                 {
                   type: "category",
-                  label: "User permissions and licenses",
+                  label: "Разрешения пользователей и лицензии",
                   link: {
                     type: "doc",
                     id: "docs/cloud/manage-access/seats-and-users",
@@ -99,7 +99,7 @@ const sidebarSettings = {
                 },
                 {
                   type: "category",
-                  label: "Environment permissions",
+                  label: "Разрешения окружения",
                   link: {
                     type: "doc",
                     id: "docs/cloud/manage-access/environment-permissions",
@@ -111,7 +111,7 @@ const sidebarSettings = {
                 },
                 {
                   type: "category",
-                  label: "Single sign-on and Oauth",
+                  label: "Single sign-on и Oauth",
                   link: {
                     type: "doc",
                     id: "docs/cloud/manage-access/sso-overview",
@@ -135,7 +135,7 @@ const sidebarSettings = {
 
             {
               type: "category",
-              label: "Configure Git",
+              label: "Настройка Git",
               link: {
                 type: "doc",
                 id: "docs/cloud/git/git-configuration-in-dbt-cloud",
@@ -162,7 +162,7 @@ const sidebarSettings = {
             }, // Supported Git providers
             {
               type: "category",
-              label: "Secure your tenant",
+              label: "Защита вашего арендатора",
               link: { type: "doc", id: "docs/cloud/secure/secure-your-tenant" },
               items: [
                 "docs/cloud/secure/secure-your-tenant",
@@ -188,7 +188,7 @@ const sidebarSettings = {
             "docs/core/dbt-core-environments",
             {
               type: "category",
-              label: "Install dbt Core",
+              label: "Установка dbt Core",
               link: { type: "doc", id: "docs/core/installation-overview" },
               items: [
                 "docs/core/installation-overview",
@@ -199,7 +199,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Connect data platform",
+              label: "Подключение к платформам данных",
               link: {
                 type: "doc",
                 id: "docs/core/connect-data-platform/about-core-connections",

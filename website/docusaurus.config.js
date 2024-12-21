@@ -43,8 +43,8 @@ console.log("DEBUG: metatags = ", metatags);
 
 var siteSettings = {
   baseUrl: "/",
-  tagline: "End user documentation, guides and technical reference for dbt",
-  title: "dbt Developer Hub",
+  tagline: "Документация, гайды и руководства по dbt на русском языке",
+  title: "Документация dbt",
   url: SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -177,11 +177,15 @@ var siteSettings = {
           position: "right",
           items: [
             {
-              label: "⭐ Русскоязычное сообщество",
+              label: "⭐ dbt & modern data stack",
               to: "https://t.me/dbt_users",
             },
             {
-              label: "Become a contributor",
+              label: "⭐ INZHENERKA.TECH – Чат",
+              to: "https://t.me/+xgMQWT0kBlUxNDNi",
+            },
+            {
+              label: "Внести вклад",
               to: "/community/contribute",
             },
             {
@@ -253,9 +257,9 @@ var siteSettings = {
           ]
         },
         blog: {
-          blogTitle: "Developer Blog | dbt Developer Hub",
+          blogTitle: "Блоги разработчиков | dbt",
           blogDescription:
-            "Find tutorials, product updates, and developer insights in the dbt Developer blog.",
+            "Учебные материалы, обновления продукта и инсайты для разработчиков в блоге dbt Developer.",
           postsPerPage: 20,
           blogSidebarTitle: "Recent posts",
           blogSidebarCount: 5,
@@ -289,8 +293,6 @@ var siteSettings = {
     },
     "https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js",
     "/js/headerLinkCopy.js",
-    "/js/gtm.js",
-    // "/js/onetrust.js",
   ],
   stylesheets: [
     "/css/fonts.css",
