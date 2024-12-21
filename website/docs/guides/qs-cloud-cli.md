@@ -1,7 +1,7 @@
 ---
 title: "Coalesce: Быстрый старт для dbt Cloud CLI"
 id: "dbt-cloud-cli"
-level: 'Начинающий'
+level: 'Beginner'
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Cloud CLI', 'dbt Cloud','Quickstart']

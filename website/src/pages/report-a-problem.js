@@ -12,18 +12,12 @@ function ReportAProblem() {
           style={{ padding: "0", background: "#FFF" }}
         >
           <Hero
-            heading="Report a problem with our website"
-            subheading="Experiencing a problem on our website? Fill out the form below and we'll look into it."
+            heading="Сообщить о проблеме с сайтом"
+            subheading="Испытываете проблему на нашем сайте? Напишите об этом в GitHub-репозитории сайта (ссылка внизу страницы)."
             showGraphic
           />
           <section className="report-a-problem">
             <div>
-              <HubSpotForm
-                region="na1"
-                portalId="8698602"
-                formId="ca4d617f-af4f-4f9d-ba69-97dba802a5b1"
-                containerId="report-hubspot-form"
-              />
             </div>
           </section>
         </div>

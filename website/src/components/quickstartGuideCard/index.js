@@ -13,7 +13,7 @@ export default function QuickstartGuideCard({ frontMatter }) {
   return (
     <Link to={`/guides/${id}`} className={styles.quickstartCard}>
       {recently_updated && (
-        <span className={styles.recently_updated}>Updated</span>
+        <span className={styles.recently_updated}>Обновлен</span>
       )}
       {icon && getIconType(icon, styles.icon)}
 
@@ -24,7 +24,7 @@ export default function QuickstartGuideCard({ frontMatter }) {
       )}
 
       <span to={`/guides/${id}`} className={styles.start}>
-        Start <span className={styles.right_arrow}>{rightArrow}</span>
+        Начать <span className={styles.right_arrow}>{rightArrow}</span>
       </span>
 
       {(tags || level) && (
@@ -50,7 +50,7 @@ export function QuickstartGuideTitle({ frontMatter }) {
   return (
     <div className={styles.infoContainer}>
       {recently_updated && (
-        <span className={styles.recently_updated}>Updated</span>
+        <span className={styles.recently_updated}>Обновлен</span>
       )}
       {time_to_complete && (
         <span className={styles.time_to_complete}>{getSvgIcon('fa-clock')} {time_to_complete}</span>

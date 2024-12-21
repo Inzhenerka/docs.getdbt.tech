@@ -870,7 +870,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Platform-specific configs",
+      label: "Конфигурация платформ",
       items: [
         "reference/resource-configs/athena-configs",
         "reference/resource-configs/impala-configs",
@@ -902,13 +902,13 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Resource configs and properties",
+      label: "Конфигурация и свойства ресурсов",
       items: [
         "reference/configs-and-properties",
         "reference/resource-configs/resource-path",
         {
           type: "category",
-          label: "General properties",
+          label: "Основные свойства",
           items: [
             "reference/resource-properties/columns",
             "reference/resource-properties/config",
@@ -924,7 +924,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "General configs",
+          label: "Основные конфигурации",
           items: [
             "reference/resource-configs/access",
             "reference/resource-configs/alias",
@@ -951,7 +951,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For models",
+          label: "Model",
           items: [
             "reference/model-properties",
             "reference/resource-properties/model_name",
@@ -964,7 +964,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For seeds",
+          label: "Seed",
           items: [
             "reference/seed-properties",
             "reference/seed-configs",
@@ -975,7 +975,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For snapshots",
+          label: "Snapshot",
           items: [
             "reference/snapshot-properties",
             "reference/snapshot-configs",
@@ -993,7 +993,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For data tests",
+          label: "Data test",
           items: [
             "reference/data-test-configs",
             "reference/resource-configs/fail_calc",
@@ -1006,7 +1006,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For unit tests",
+          label: "Unit test",
           items: [
             "reference/resource-properties/unit-tests",
             "reference/resource-properties/unit-test-input",
@@ -1018,7 +1018,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For sources",
+          label: "Source",
           items: [
             "reference/source-properties",
             "reference/source-configs",
@@ -1034,17 +1034,17 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For analyses",
+          label: "Analysis",
           items: ["reference/analysis-properties"],
         },
         {
           type: "category",
-          label: "For exposures",
+          label: "Exposure",
           items: ["reference/exposure-properties"],
         },
         {
           type: "category",
-          label: "For macros",
+          label: "Macro",
           items: [
             "reference/macro-properties",
             "reference/resource-properties/argument-type",
@@ -1054,12 +1054,12 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Commands",
+      label: "Команды",
       items: [
         "reference/dbt-commands",
         {
           type: "category",
-          label: "List of commands",
+          label: "Список команд",
           items: [
             "reference/commands/build",
             "reference/commands/clean",
@@ -1086,7 +1086,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Node selection",
+          label: "Выбор узла (node)",
           items: [
             "reference/node-selection/syntax",
             "reference/node-selection/graph-operators",
@@ -1102,7 +1102,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Flags (global configs)",
+          label: "Флаги (глобальная конфигурация)",
           link: {
             type: "doc",
             id: "reference/global-configs/about-global-configs",
@@ -1111,7 +1111,7 @@ const sidebarSettings = {
             "reference/global-configs/about-global-configs",
             "reference/global-configs/behavior-changes",
             { type: "category",
-              label: "Adapter behavior changes",
+              label: "Изменение поведения адаптера",
               link: { type: "doc", id: "reference/global-configs/adapter-behavior-changes" },
               items: [
                 "reference/global-configs/adapter-behavior-changes",
@@ -1121,7 +1121,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Setting flags",
+              label: "Флаги настроек",
               items: [
                 "reference/global-configs/command-line-options",
                 "reference/global-configs/environment-variable-configs",
@@ -1130,7 +1130,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Available flags",
+              label: "Доступные флаги",
               items: [
                 "reference/global-configs/logs",
                 "reference/global-configs/cache",
@@ -1156,16 +1156,16 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Jinja Reference",
+      label: "Руководство Jinja",
       items: [
         {
           type: "category",
-          label: "dbt Jinja functions",
+          label: "Функции dbt Jinja",
           link: {
             type: "generated-index",
-            title: "dbt Jinja functions",
+            title: "Функции dbt Jinja",
             description:
-              "In addition to the standard Jinja library, we've added additional functions and variables to the Jinja context that are useful when working with a dbt project.",
+              "В дополнение к стандартной библиотеке Jinja мы добавили дополнительные функции и переменные в контекст Jinja, которые полезны при работе с проектом dbt.",
             slug: "/reference/dbt-jinja-functions",
           },
           items: [
@@ -1180,7 +1180,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "dbt Artifacts",
+      label: "Артефакты dbt",
       items: [
         "reference/artifacts/dbt-artifacts",
         "reference/artifacts/manifest-json",
@@ -1193,7 +1193,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Database Permissions",
+      label: "Разрешения в базе данных",
       items: [
         "reference/database-permissions/about-database-permissions",
         "reference/database-permissions/databricks-permissions",
@@ -1206,18 +1206,18 @@ const sidebarSettings = {
   bestpractices: [
     {
       type: "category",
-      label: "Best practices",
+      label: "Лучшие практики",
       link: {
         type: "generated-index",
-        title: "Best practice guides",
+        title: "Гайды по лучшим практикам",
         description:
-          "Learn how dbt Labs approaches building projects through our current viewpoints on structure, style, and setup.",
+          "Узнайте, как dbt Labs подходит к созданию проектов, основываясь на наших актуальных взглядах на структуру, стиль и настройку.",
         slug: "best-practices",
       },
       items: [
         {
           type: "category",
-          label: "How we structure our dbt projects",
+          label: "Как мы структурируем наши проекты dbt",
           link: {
             type: "doc",
             id: "best-practices/how-we-structure/1-guide-overview",
@@ -1231,7 +1231,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How we style our dbt projects",
+          label: "Как мы оформляем наши проекты dbt",
           link: {
             type: "doc",
             id: "best-practices/how-we-style/0-how-we-style-our-dbt-projects",
@@ -1247,7 +1247,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How we build our metrics",
+          label: "Как мы создаем наши метрики",
           link: {
             type: "doc",
             id: "best-practices/how-we-build-our-metrics/semantic-layer-1-intro",
@@ -1266,7 +1266,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How we build our dbt Mesh projects",
+          label: "Как мы создаем наши проекты dbt Mesh",
           link: {
             type: "doc",
             id: "best-practices/how-we-mesh/mesh-1-intro",
@@ -1280,7 +1280,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Materialization best practices",
+          label: "Лучшие практики материализации",
           link: {
             type: "doc",
             id: "best-practices/materializations/materializations-guide-1-guide-overview",
@@ -1309,7 +1309,7 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Contributing",
+      label: "Внести вклад",
       link: {
         type: "doc",
         id: "community/contribute",
@@ -1317,7 +1317,7 @@ const sidebarSettings = {
       items: [
         {
           type: "doc",
-          label: "Become a contributor",
+          label: "Стать контрибьютером",
           id: "community/contribute",
         },
         "community/contributing/contributing-writing",
@@ -1328,17 +1328,17 @@ const sidebarSettings = {
     },
     {
       type: "link",
-      label: "Community forum",
+      label: "Форум сообщества",
       href: "/community/forum",
     },
     {
       type: "link",
-      label: "Events",
+      label: "Мероприятия",
       href: "/community/events",
     },
     {
       type: "category",
-      label: "Additional resources",
+      label: "Дополнительные ресурсы",
       items: [
         "community/resources/viewpoint",
         "community/resources/code-of-conduct",
@@ -1358,18 +1358,18 @@ const sidebarSettings = {
   SQLReference: [
     {
       type: "category",
-      label: "SQL Reference",
+      label: "Справочник по SQL",
       link: {
         type: "generated-index",
-        title: "SQL Reference",
+        title: "Справочник по SQL",
         description:
-          "The SQL Reference is a collection of SQL functions and keywords that you can use during your daily data work.",
+          "Справочник по SQL — это собрание SQL-функций и ключевых слов, которые вы можете использовать в своей повседневной работе с данными.",
         slug: "/sql-reference",
       },
       items: [
         {
           type: "category",
-          label: "Statements",
+          label: "Инструкции",
           items: [
             "sql-reference/statements/select",
             "sql-reference/statements/from",
@@ -1380,7 +1380,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Aggregate Functions",
+          label: "Функции агрегации",
           items: [
             "sql-reference/aggregate-functions/avg",
             "sql-reference/aggregate-functions/count",
@@ -1393,7 +1393,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Clauses",
+          label: "Выражения",
           items: [
             "sql-reference/clauses/where",
             "sql-reference/clauses/having",
@@ -1403,7 +1403,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Date Functions",
+          label: "Работа с датами",
           items: [
             "sql-reference/date-functions/dateadd",
             "sql-reference/date-functions/datediff",
@@ -1413,7 +1413,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "String Functions",
+          label: "Текстовые функции",
           items: [
             "sql-reference/string-functions/upper",
             "sql-reference/string-functions/lower",
@@ -1423,7 +1423,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Window Functions",
+          label: "Оконные функции",
           items: [
             "sql-reference/window-functions/rank",
             "sql-reference/window-functions/row-number",
@@ -1431,7 +1431,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Operators",
+          label: "Операторы",
           items: [
             "sql-reference/operators/between",
             "sql-reference/operators/in",
@@ -1445,7 +1445,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Joins",
+          label: "Объединения",
           items: [
             "sql-reference/joins/inner-join",
             "sql-reference/joins/outer-join",
@@ -1457,7 +1457,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Data Types",
+          label: "Типы данных",
           items: [
             "sql-reference/data-type/data-types",
             "sql-reference/data-type/strings",
@@ -1465,7 +1465,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Other",
+          label: "Другое",
           items: ["sql-reference/other/cast", "sql-reference/other/comments"],
         },
       ],

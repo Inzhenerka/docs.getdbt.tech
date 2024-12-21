@@ -45,9 +45,9 @@ function Home() {
     }, []);
 
   const featuredResource = {
-    title: "How we structure our dbt projects",
+    title: "Как мы структурируем наши проекты dbt",
     description:
-      "Our hands-on learnings for how to structure your dbt project for success and gain insights into the principles of analytics engineering.",
+      "Наши практические рекомендации по структурированию вашего проекта dbt для успеха и пониманию принципов инженерии аналитики.",
     link: "/best-practices/how-we-structure/1-guide-overview",
     image: "/img/structure-dbt-projects.png",
     sectionTitle: "Featured resource",
@@ -72,10 +72,6 @@ function Home() {
   return (
     <>
       <Head>
-        <meta
-          name="google-site-verification"
-          content=""
-        />
       </Head>
       <Layout permalink="/">
         <div
@@ -83,7 +79,7 @@ function Home() {
           style={{ padding: "0", background: "#FFF" }}
         >
           <Hero
-            heading="Портал dbt на русском языке"
+            heading="Документация dbt на русском языке"
             subheading="Добро пожаловать в центр изучения dbt, общения с сообществом и совершенствования аналитических навыков"
             showGraphic
           />
@@ -113,32 +109,32 @@ function Home() {
               <div className="grid">
                 <div>
                   <Card
-                    title="What is dbt?"
-                    body="dbt enables data practitioners to adopt software engineering best practices and deploy modular, reliable analytics code."
+                    title="Что такое dbt?"
+                    body="dbt позволяет специалистам по данным применять лучшие практики разработки программного обеспечения и разрабатывать модульный, надежный аналитический код."
                     link="/docs/introduction"
                     icon="question-mark"
                   />
                 </div>
                 <div>
                   <Card
-                    title="Getting started guide"
-                    body="Learn how to set up dbt and build your first models. You will also test and document your project, and schedule a job."
+                    title="Начало работы"
+                    body="Научитесь настраивать dbt и создавать свои первые модели. Вы также сможете протестировать и задокументировать проект, а затем запланировать выполнение задачи."
                     link="/docs/get-started-dbt"
                     icon="book"
                   />
                 </div>
                 <div>
                   <Card
-                    title="Docs"
-                    body="Discover everything dbt has to offer from the basics to advanced concepts."
+                    title="Документация"
+                    body="Узнайте все возможности dbt — от основ до продвинутых концепций."
                     link="/docs/build/projects"
                     icon="docs"
                   />
                 </div>
                 <div>
                   <Card
-                    title="Supported data platforms"
-                    body="dbt connects to most major databases, data warehouses, data lakes, or query engines."
+                    title="Поддерживаемые платформы данных"
+                    body="dbt подключается к большинству основных баз, хранилищ, озер данных и SQL-движков."
                     link="/docs/supported-data-platforms"
                     icon="rocket"
                   />
@@ -158,33 +154,33 @@ function Home() {
           </section>
 
           <section className="from-the-blog">
-            <h2>The latest from the Developer Blog</h2>
+            <h2>Последние статьи из блогов</h2>
             <PostCarousel blogPostData={recentBlogData} />
           </section>
 
           <section className="from-the-community">
-            <h2>From the dbt Community</h2>
+            <h2>От сообщества dbt</h2>
             <div className="grid--3-col">
               <div>
                 <Card
-                  title="Join the community"
-                  body="Connect with data practitioners from around the world."
+                  title="Присоединяйтесь к сообществу"
+                  body="Общайтесь со специалистами по данным со всего мира."
                   link="/community/join"
                   icon="smiley-face"
                 />
               </div>
               <div>
                 <Card
-                  title="Become a contributor"
-                  body="Help build the resources the community uses to solve hard problems."
+                  title="Станьте контрибьютером"
+                  body="Помогайте создавать ресурсы, которые сообщество использует для решения сложных задач."
                   link="/community/contribute"
                   icon="pencil-paper"
                 />
               </div>
               <div>
                 <Card
-                  title="Open source dbt Packages"
-                  body="Take your dbt project to the next level with community built packages."
+                  title="Пакеты dbt с открытым исходным кодом"
+                  body="Выведите ваш dbt-проект на новый уровень с пакетами, созданными сообществом."
                   link="https://hub.getdbt.com/"
                   icon="packages"
                 />
@@ -193,29 +189,29 @@ function Home() {
           </section>
 
           <section className="like-a-pro">
-            <h2>Use dbt like a pro</h2>
+            <h2>Используй dbt как профессионал</h2>
             <div className="grid--3-col">
               <div>
                 <Card
-                  title="Best practices"
-                  body="Learn battle tested strategies for analytics engineering best practices."
+                  title="Лучшие практики"
+                  body="Изучите проверенные стратегии для внедрения лучших практик аналитики."
                   link="/best-practices"
                   icon="guides"
                 />
               </div>
               <div>
                 <Card
-                  title="Community forum"
-                  body="Get help and swap knowledge in the async forum."
+                  title="Форум сообщества"
+                  body="Получайте помощь и делитесь знаниями на форуме."
                   link="/community/forum"
                   icon="discussions"
                 />
               </div>
               <div>
                 <Card
-                  title="Online courses"
-                  body="Structured video courses to give you a deep dive into analytics engineering topics."
-                  link="https://learn.getdbt.com/"
+                  title="Онлайн-курсы"
+                  body="Структурированные курсы для глубокого погружения в темы аналитики и инженерии."
+                  link="https://inzhenerka.tech/working-with-data"
                   icon="computer"
                 />
               </div>

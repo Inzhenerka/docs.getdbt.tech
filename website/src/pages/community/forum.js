@@ -7,16 +7,16 @@ function Events() {
   return (
     <Layout>
       <Head>
-        <title>Questions | dbt Developer Hub</title>
-        <meta name="description" content="Recent interesting discussions from across the dbt Forum" />
+        <title>Вопросы | Центр разработчиков dbt</title>
+        <meta name="description" content="Последние интересные обсуждения на форуме dbt" />
       </Head>
       <section className='discourse-forum-page'>
-        <div className='container'>   
-          <h1>dbt Community forum</h1>
-          <p>The dbt Community forum is the preferred platform for support questions  as well as a space for long-lived discussions about dbt, analytics engineering, and the analytics profession. It's a place for us to build up a long-lasting knowledge base around the common challenges, opportunities, and patterns we work with every day.</p>
-          <DiscourseFeed title='Unanswered Help Questions' category='help' status='unsolved'  link_text='See open topics' link_href='https://discourse.getdbt.com/c/help/19' show_cta={true} />
-          <DiscourseFeed title='In-Depth Discussions' category='discussions' link_text='See discussions' link_href='https://discourse.getdbt.com/c/discussions/21' show_cta={true} />
-          <DiscourseFeed title='Show and Tell' category='show-and-tell' link_text='See more topics' link_href='https://discourse.getdbt.com/c/show-and-tell/22' show_cta={true} />
+        <div className='container'>
+          <h1>Форум сообщества dbt</h1>
+          <p>Форум сообщества dbt — это предпочтительная платформа для вопросов по поддержке, а также пространство для долгосрочных обсуждений, связанных с dbt, аналитической инженерией и профессией аналитика. Это место, где мы создаем долговременную базу знаний о распространенных проблемах, возможностях и шаблонах, с которыми мы работаем каждый день.</p>
+          <DiscourseFeed title='Вопросы без ответа' category='help' status='unsolved' link_text='Смотреть открытые темы' link_href='https://discourse.getdbt.com/c/help/19' show_cta={true} />
+          <DiscourseFeed title='Глубокие обсуждения' category='discussions' link_text='Смотреть обсуждения' link_href='https://discourse.getdbt.com/c/discussions/21' show_cta={true} />
+          <DiscourseFeed title='Показать и рассказать' category='show-and-tell' link_text='Смотреть больше тем' link_href='https://discourse.getdbt.com/c/show-and-tell/22' show_cta={true} />
         </div>
       </section>
     </Layout>

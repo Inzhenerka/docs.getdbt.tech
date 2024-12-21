@@ -1,21 +1,19 @@
-
 import React from 'react';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import EventsFeed from '@site/src/components/events';
 
-
 function Events() {
   return (
     <Layout>
         <Head>
-          <title>dbt Community events</title>
-          <meta name="description" content="Join us for upcoming meetups, conferences, or office hours with the dbt Labs team." />
+          <title>События сообщества dbt</title>
+          <meta name="description" content="Присоединяйтесь к dbt Labs на предстоящие встречи, конференции или офисные часы с командой." />
         </Head>
         <div className="container events-page">
            <section>
-            <h1>Upcoming dbt Community events</h1>
-            <p>Join us for upcoming meetups, conferences, or office hours with the dbt Labs team. Events are online unless explicitly listed as in-person.</p>
+            <h1>Предстоящие события сообщества dbt</h1>
+            <p>Присоединяйтесь к dbt Labs на предстоящие встречи, конференции или офисные часы с командой. Все события проводятся онлайн, если не указано, что они проходят очно.</p>
 
             <EventsFeed />
            </section>

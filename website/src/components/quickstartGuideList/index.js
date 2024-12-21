@@ -10,8 +10,8 @@ import { SelectDropdown } from '../selectDropdown';
 import SearchInput from '../searchInput';
 import { useHistory, useLocation } from '@docusaurus/router';
 
-const quickstartTitle = 'Guides';
-const quickstartDescription = 'dbt Cloud is the fastest and most reliable way to deploy your dbt jobs and dbt Core is a powerful open-source tool for data transformations. With the help of a sample project, learn how to quickly start using dbt and one of the most common data platforms.';
+const quickstartTitle = 'Гайды';
+const quickstartDescription = 'dbt Core — это мощный инструмент с открытым исходным кодом для трансформации данных, а dbt Cloud — быстрый способ развертывания ваших задач dbt. С помощью примерного проекта вы узнаете, как быстро начать использовать dbt и одну из самых популярных платформ данных.';
 
 function QuickstartList({ quickstartData }) {
   const { siteConfig } = useDocusaurusContext();
@@ -102,15 +102,15 @@ function QuickstartList({ quickstartData }) {
   // The value of the tag must match a tag in the frontmatter of the guides in order for the filter to apply after clicking
   const heroCTAs = [
     {
-      title: 'Quickstart guides',
+      title: 'Быстрый старт',
       value: 'Quickstart'
     },
     {
-      title: 'Use Jinja to improve your SQL code',
+      title: 'Jinja для улучшения SQL-кода',
       value: 'Jinja'
     },
     {
-      title: 'Orchestration',
+      title: 'Оркестрация',
       value: 'Orchestration'
     },
   ];
@@ -141,7 +141,7 @@ function QuickstartList({ quickstartData }) {
           onClick: () => handleCallToActionClick(guide.value),
           newTab: guide.newTab
         }))}
-        callToActionsTitle={'Popular guides'}
+        callToActionsTitle={'Популярные гайды'}
       />
       <section id='quickstart-card-section'>
         <div className={`container ${styles.quickstartFilterContainer} `}>

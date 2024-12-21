@@ -6,7 +6,7 @@ displayText: Изучите версионированный код, польз�
 hoverSnippet: Изучите версионированный код, пользовательские конвейеры и улучшенное тестирование кода.
 icon: 'guides'
 hide_table_of_contents: true
-tags: ['dbt Cloud', 'Оркестрация', 'CI']
+tags: ['dbt Cloud', 'Orchestration', 'CI']
 level: 'Intermediate'
 recently_updated: true
 search_weight: "heavy"
