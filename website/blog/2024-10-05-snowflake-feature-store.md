@@ -1,6 +1,6 @@
 ---
-title: "Snowflake feature store and dbt: A bridge between data pipelines and ML"
-description: A deep-dive into the workflow steps you can take to build and deploy ML models within a single platform.
+title: "Хранилище признаков Snowflake и dbt: Мост между данными и ML"
+description: Подробное руководство по шагам рабочего процесса, которые вы можете предпринять для создания и развертывания моделей машинного обучения на одной платформе.
 slug: snowflake-feature-store
 authors: [randy_pettus, luis_leon]
 tags: [snowflake ML]
@@ -9,75 +9,71 @@ date: 2024-10-08
 is_featured: true
 ---
 
-Flying home into Detroit this past week working on this blog post on a plane and saw for the first time, the newly connected deck of the Gordie Howe International [bridge](https://www.freep.com/story/news/local/michigan/detroit/2024/07/24/gordie-howe-bridge-deck-complete-work-moves-to-next-phase/74528258007/) spanning the Detroit River and connecting the U.S. and Canada. The image stuck out because, in one sense, a feature store is a bridge between the clean, consistent datasets and the machine learning models that rely upon this data. But, more interesting than the bridge itself is the massive process of coordination needed to build it. This construction effort &mdash; I think &mdash; can teach us more about processes and the need for feature stores in machine learning (ML).
+На прошлой неделе, летя домой в Детройт и работая над этой статьей в самолете, я впервые увидел недавно соединенную палубу Международного моста Горди Хоу, который пересекает реку Детройт и соединяет США и Канаду. Этот образ запомнился, потому что, в некотором смысле, хранилище признаков является мостом между чистыми, согласованными наборами данных и моделями машинного обучения, которые зависят от этих данных. Но более интересным, чем сам мост, является огромный процесс координации, необходимый для его строительства. Это строительное усилие, как мне кажется, может научить нас многому о процессах и необходимости хранилищ признаков в машинном обучении (ML).
 
-Think of the manufacturing materials needed as our data and the building of the bridge as the building of our ML models. There are thousands of engineers and construction workers taking materials from all over the world, pulling only the specific pieces needed for each part of the project. However, to make this project truly work at this scale, we need the warehousing and logistics to ensure that each load of concrete rebar and steel meets the standards for quality and safety needed and is available to the right people at the right time &mdash; as even a single fault can have catastrophic consequences or cause serious delays in project success. This warehouse and the associated logistics play the role of the feature store, ensuring that data is delivered consistently where and when it is needed to train and run ML models.
+Представьте себе, что производственные материалы — это наши данные, а строительство моста — это создание наших моделей машинного обучения. Тысячи инженеров и строителей берут материалы со всего мира, выбирая только те, которые необходимы для каждой части проекта. Однако, чтобы этот проект действительно работал в таком масштабе, нам нужны складские помещения и логистика, чтобы гарантировать, что каждая партия бетона, арматуры и стали соответствует стандартам качества и безопасности и доступна нужным людям в нужное время, так как даже одна ошибка может иметь катастрофические последствия или вызвать серьезные задержки в успехе проекта. Этот склад и связанная с ним логистика играют роль хранилища признаков, обеспечивая доставку данных последовательно там и тогда, когда они необходимы для обучения и запуска моделей машинного обучения.
 
 <!-- truncate -->
 
-## What is a feature? 
+## Что такое признак?
 
-A feature is a transformed or enriched data that serves as an input into a machine learning model to make predictions.  In machine learning, a data scientist derives features from various data sources to build a model that makes predictions based on historical data. To capture the value from this model, the enterprise must operationalize the data pipeline, ensuring that the features being used in production at inference time match those being used in training and development.
+Признак — это преобразованные или обогащенные данные, которые служат входными данными для модели машинного обучения для осуществления предсказаний. В машинном обучении специалист по данным извлекает признаки из различных источников данных, чтобы построить модель, которая делает предсказания на основе исторических данных. Чтобы извлечь ценность из этой модели, предприятие должно операционализировать конвейер данных, гарантируя, что признаки, используемые в производстве во время вывода, соответствуют тем, которые использовались при обучении и разработке.
 
-## What role does dbt play in getting data ready for ML models? 
+## Какую роль играет dbt в подготовке данных для моделей ML?
 
-dbt is the standard for data transformation in the enterprise. Organizations leverage dbt at scale to deliver clean and well-governed datasets wherever and whenever they are needed. Using dbt to manage the data transformation processes to cleanse and prepare datasets used in feature development will ensure consistent datasets of guaranteed data quality &mdash; meaning that feature development will be consistent and reliable.
+dbt является стандартом для преобразования данных в корпоративной среде. Организации используют dbt в больших масштабах для предоставления чистых и хорошо управляемых наборов данных везде и всегда, когда они необходимы. Использование dbt для управления процессами преобразования данных для очистки и подготовки наборов данных, используемых в разработке признаков, обеспечит согласованные наборы данных с гарантированным качеством данных, что означает, что разработка признаков будет последовательной и надежной.
 
+## Кто будет использовать это и какие выгоды они получат?
 
-## Who is going to use this and what benefits will they see?
+Snowflake и dbt уже являются хорошо зарекомендовавшей себя и надежной комбинацией для обеспечения превосходства данных в корпоративной среде. Возможность регистрировать конвейеры dbt в Snowflake Feature Store еще больше расширяет эту комбинацию для рабочих нагрузок ML и AI, при этом естественно вписываясь в инженерные и функциональные конвейеры данных, уже присутствующие в dbt.
 
-Snowflake and dbt are already a well-established and trusted combination for delivering data excellence across the enterprise. The ability to register dbt pipelines in the Snowflake Feature Store further extends this combination for ML and AI workloads, while fitting naturally into the data engineering and feature pipelines already present in dbt.  
+Некоторые из ключевых преимуществ:
 
+- **Сотрудничество по признакам** — Специалисты по данным, аналитики данных, инженеры данных и инженеры машинного обучения сотрудничают над признаками, используемыми в моделях машинного обучения как на Python, так и на SQL, что позволяет командам делиться и повторно использовать признаки. В результате команды могут улучшить время до получения ценности от моделей, улучшая понимание их компонентов. Все это поддерживается ролевым управлением доступом (RBAC) и управлением в Snowflake.
+- **Согласованность признаков** — Команды уверены, что признаки, сгенерированные для обучающих наборов и используемые для вывода модели, согласованы. Это особенно важно для крупных организаций, где могут существовать несколько версий истины. Подобно тому, как dbt и Snowflake помогают предприятиям иметь единственный источник истины данных, теперь они могут иметь единственный источник истины для признаков.
+- **Видимость и использование признаков** — Snowflake Feature Store предоставляет интуитивно понятный SDK для работы с признаками ML и их связанной метаинформацией. Кроме того, пользователи могут просматривать и искать признаки в интерфейсе Snowflake, что обеспечивает легкий способ идентификации признаков.
+- **Точность на момент времени** — Snowflake извлекает точные на момент времени признаки, используя ASOF Joins, устраняя значительную сложность в генерации правильного значения признака для данного периода времени, будь то для обучения или пакетного извлечения предсказаний.
+- **Интеграция с конвейерами данных** — Команды, которые уже построили конвейеры данных в dbt, могут продолжать использовать их с Snowflake Feature Store. Не требуется дополнительной миграции или повторного создания признаков, так как команды подключаются к тем же конвейерам.
 
-Some of the key benefits are:
+## Почему мы интегрировали/создали это с Snowflake?
 
-- **Feature collaboration** &mdash; Data scientists, data analysts, data engineers, and machine learning engineers collaborate on features used in machine learning models in both Python and SQL, enabling teams to share and reuse features. As a result, teams can improve the time to value of models while improving the understanding of their components. This is all backed by Snowflake’s role-based access control (RBAC) and governance.
-- **Feature consistency** &mdash; Teams are assured that features generated for training sets and those served for model inference are consistent. This can especially be a concern for large organizations where multiple versions of the truth might persist. Much like how dbt and Snowflake help enterprises have a single source of data truth, now they can have a single source of truth for features.
-- **Feature visibility and use** &mdash; The Snowflake Feature Store provides an intuitive SDK to work with ML features and their associated metadata. In addition, users can browse and search for features in the Snowflake UI, providing an easy way to identify features
-- **Point-in-time correctness** &mdash; Snowflake retrieves point-in-time correct features using ASOF Joins, removing the significant complexity in generating the right feature value for a given time period whether for training or batch prediction retrieval. 
-- **Integration with data pipelines** &mdash; Teams that have already built data pipelines in dbt can continue to use these with the Snowflake Feature Store. No additional migration or feature re-creation is necessary as teams plug into the same pipelines.
+Как dbt помогает с рабочими нагрузками ML сегодня? dbt играет ключевую роль в подготовке данных для моделей ML, преобразуя сырые данные в формат, подходящий для инженерии признаков. Он помогает оркестрировать и автоматизировать эти преобразования, обеспечивая чистоту, согласованность и готовность данных для приложений ML. Сочетание мощного AI Data Cloud от Snowflake и возможностей преобразования dbt делает их непобедимой парой для организаций, стремящихся эффективно масштабировать свои операции ML.
 
-## Why did we integrate/build this with Snowflake?
+## Упрощение создания и развертывания данных и моделей ML для инженеров ML/данных
 
-How does dbt help with ML workloads today? dbt plays a pivotal role in preparing data for ML models by transforming raw data into a format suitable for feature engineering. It helps orchestrate and automate these transformations, ensuring that data is clean, consistent, and ready for ML applications. The combination of Snowflake’s powerful AI Data Cloud and dbt’s transformation prowess makes it an unbeatable pair for organizations aiming to scale their ML operations efficiently.
+dbt — это идеальный инструмент для содействия сотрудничеству между инженерами данных, инженерами ML и специалистами по данным. dbt разработан для поддержки сотрудничества и качества конвейеров данных через такие функции, как контроль версий, среды и жизненные циклы разработки, а также встроенное тестирование данных и конвейеров. Использование dbt означает, что инженеры данных и специалисты по данным могут сотрудничать и разрабатывать новые модели и признаки, поддерживая строгую управляемость и высокое качество, которые необходимы.
 
-## Making it easier for ML/Data Engineers to both build & deploy ML data & models
+Кроме того, dbt Mesh делает поддержание владения доменом чрезвычайно простым, разбивая части наших проектов данных и конвейеров на связанные проекты, где критические модели могут быть опубликованы для использования другими с жесткими контрактами данных, обеспечивающими качество и управляемость. Эта парадигма поддерживает быстрое развитие, так как каждый проект может быть сохранен в управляемом размере для его участников и разработчиков. Контракты на опубликованные модели, используемые между этими проектами, обеспечивают согласованность точек интеграции между ними.
 
-dbt is a perfect tool to promote collaboration between data engineers, ML engineers, and data scientists. dbt is designed to support collaboration and quality of data pipelines through features including version control, environments and development life cycles, as well as built-in data and pipeline testing. Leveraging dbt means that data engineers and data scientists can collaborate and develop new models and features while maintaining the rigorous governance and high quality that's needed.
+Наконец, dbt Cloud также предоставляет [dbt Explorer](/docs/collaborate/explore-projects) — идеальный инструмент для каталогизации и обмена знаниями об организационных данных между разрозненными командами. dbt Explorer предоставляет центральное место для информации о конвейерах данных, включая информацию о происхождении, свежести данных и качестве. И самое лучшее, dbt Explorer обновляется каждый раз, когда выполняются задания dbt, обеспечивая актуальность и релевантность этой информации.
 
-Additionally, dbt Mesh makes maintaining domain ownership extremely easy by breaking up portions of our data projects and pipelines into connected projects where critical models can be published for consumption by others with strict data contracts enforcing quality and governance. This paradigm supports rapid development as each project can be kept to a maintainable size for its contributors and developers. Contracting on published models used between these projects ensures the consistency of the integration points between them.
+## Какие технологии используются?
 
-Finally, dbt Cloud also provides [dbt Explorer](/docs/collaborate/explore-projects) &mdash; a perfect tool to catalog and share knowledge about organizational data across disparate teams. dbt Explorer provides a central place for information on data pipelines, including lineage information, data freshness, and quality. Best of all, dbt Explorer updates every time dbt jobs run, ensuring this information is always up-to-date and relevant.
+Вот что вам нужно от dbt. dbt должен использоваться для управления конвейерами преобразования данных и генерации наборов данных, необходимых инженерам ML и специалистам по данным, поддерживающим Snowflake Feature Store. Пользователи dbt Cloud Enterprise должны использовать dbt Mesh для создания различных проектов с четкими владельцами для этих различных доменов конвейеров данных. Этот дизайн Mesh будет способствовать более легкому сотрудничеству, сохраняя каждый проект dbt меньшим и более управляемым для людей, которые его строят и поддерживают. dbt также поддерживает как SQL, так и Python-преобразования, что делает его идеальным для рабочих процессов AI/ML, которые обычно используют оба языка.
 
-## What tech is at play?
+Использование dbt для конвейеров преобразования данных также обеспечит качество и согласованность продуктов данных, что критически важно для обеспечения успешных усилий AI/ML.
 
-Here’s what you need from dbt. dbt should be used to manage data transformation pipelines and generate the datasets needed by ML engineers and data scientists maintaining the Snowflake Feature Store. dbt Cloud Enterprise users should leverage dbt Mesh to create different projects with clear owners for these different domains of data pipelines. This Mesh design will promote easier collaboration by keeping each dbt project smaller and more manageable for the people building and maintaining it. dbt also supports both SQL and Python-based transformations making it an ideal fit for AI/ML workflows, which commonly leverage both languages.
+## Обзор Snowflake ML
 
-Using dbt for the data transformation pipelines will also ensure the quality and consistency of data products, which is critical for ensuring successful AI/ML efforts.
+Feature Store является одним из компонентов интегрированного набора функций машинного обучения [Snowflake ML](https://www.snowflake.com/en/data-cloud/snowflake-ml/), который обеспечивает полное машинное обучение на одной платформе. Специалисты по данным и инженеры ML используют готовые функции ML или создают пользовательские рабочие процессы ML, все это без перемещения данных или жертвования управляемостью. Snowflake ML включает в себя масштабируемую инженерию признаков и возможности обучения моделей. Между тем, Feature Store и Model Registry позволяют командам хранить и использовать признаки и модели в производстве, предоставляя полный набор для работы с ML-нагрузками в масштабе.
 
-## Snowflake ML overview
+## Что нужно сделать, чтобы все это работало?
 
-The Feature Store is one component of [Snowflake ML’s](https://www.snowflake.com/en/data-cloud/snowflake-ml/) integrated suite of machine learning features that powers end-to-end machine learning within a single platform. Data scientists and ML engineers leverage ready-to-use ML functions or build custom ML workflows all without any data movement or without sacrificing governance. Snowflake ML includes scalable feature engineering and model training capabilities. Meanwhile, the Feature Store and Model Registry allow teams to store and use features and models in production, providing an end-to-end suite for operating ML workloads at scale.
+dbt Cloud предлагает самый быстрый и простой способ запуска dbt. Он предлагает облачную IDE, облачный CLI и даже вариант визуального редактора с низким кодом (в настоящее время в бета-версии), что делает его идеальным для подключения пользователей из разных команд с различными рабочими процессами и предпочтениями инструментов, что очень распространено в рабочих процессах AI/ML. Это инструмент, который вы будете использовать для подготовки и управления данными для AI/ML, содействия сотрудничеству между различными командами, необходимыми для успешного рабочего процесса AI/ML, и обеспечения качества и согласованности базовых данных, которые будут использоваться для создания признаков и обучения моделей.
 
+Организации, заинтересованные в рабочих процессах AI/ML через Snowflake, также должны обратить внимание на новое приложение dbt Snowflake Native App — Snowflake Native Application, которое расширяет функциональность dbt Cloud в Snowflake. Особый интерес представляет Ask dbt — чат-бот, который интегрируется напрямую с Snowflake Cortex и dbt Semantic Layer, позволяя задавать вопросы о данных Snowflake на естественном языке.
 
-## What do you need to do to make it all work?
+## Как использовать dbt и Snowflake Feature Store для ML-конвейеров
 
-dbt Cloud offers the fastest and easiest way to run dbt. It offers a Cloud-based IDE, Cloud-attached CLI, and even a low-code visual editor option (currently in beta), meaning it’s perfect for connecting users across different teams with different workflows and tooling preferences, which is very common in AI/ML workflows. This is the tool you will use to prepare and manage data for AI/ML, promote collaboration across the different teams needed for a successful AI/ML workflow, and ensure the quality and consistency of the underlying data that will be used to create features and train models.
+Давайте предоставим краткий пример того, как выглядит этот рабочий процесс в dbt и Snowflake для создания и использования мощных возможностей Feature Store. В этом примере предположим, что у нас есть конвейер данных в dbt для обработки данных о транзакциях клиентов. Различные команды специалистов по данным в организации должны извлекать признаки из этих транзакций для использования в различных моделях, включая предсказание мошенничества и выполнение сегментации и персонализации клиентов. Эти различные случаи использования все выигрывают от наличия связанных признаков, таких как количество транзакций или суммы покупок за разные периоды времени (например, за последний день, 7 дней или 30 дней) для данного клиента.
 
-Organizations interested in AI/ML workflows through Snowflake should also look at the new dbt Snowflake Native App &mdash; a Snowflake Native Application that extends the functionality of dbt Cloud into Snowflake. Of particular interest is Ask dbt &mdash; a chatbot that integrates directly with Snowflake Cortex and the dbt Semantic Layer to allow natural language questions of Snowflake data.
+Вместо того чтобы специалисты по данным строили свои собственные рабочие процессы для извлечения этих признаков, давайте рассмотрим поток использования dbt для управления конвейером признаков и Snowflake Feature Store для решения этой проблемы. Следующие подразделы описывают рабочий процесс шаг за шагом.
 
+### Создание таблиц признаков как моделей dbt
 
-## How to power ML pipelines with dbt and Snowflake’s Feature Store
+Первый шаг состоит в создании таблицы признаков как модели dbt. Специалисты по данным и инженеры данных подключаются к существующим конвейерам dbt и извлекают таблицу, которая включает в себя основную сущность (например, идентификатор клиента, временную метку и значения признаков). Таблица признаков агрегирует необходимые признаки на соответствующую временную метку для данной сущности. Обратите внимание, что Snowflake предоставляет различные общие шаблоны признаков и запросов, доступные [здесь](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/examples). Таким образом, в нашем примере мы увидим данного клиента, временную метку и признаки, представляющие количество и суммы транзакций за различные периоды. Специалисты по данным могут использовать SQL или Python непосредственно в dbt для создания этой таблицы, что позволит перенести логику в Snowflake, позволяя специалистам по данным использовать свои существующие навыки.
 
-Let’s provide a brief example of what this workflow looks like in dbt and Snowflake to build and use the powerful capabilities of a Feature Store. For this example, consider that we have a data pipeline in dbt to process customer transaction data. Various data science teams in the organization need to derive features from these transactions to use in various models, including to predict fraud and perform customer segmentation and personalization. These different use cases all benefit from having related features, such as the count of transactions or purchased amounts over different periods of time (for example, the last day, 7 days, or 30 days) for a given customer. 
-
-Instead of the data scientists building out their own workflows to derive these features, let’s look at the flow of using dbt to manage the feature pipeline and Snowflake’s Feature Store to solve this problem. The following subsections describe the workflow step by step.
-
-### Create feature tables as dbt models
-
-The first step consists of building out a feature table as a dbt model. Data scientists and data engineers plug in to existing dbt pipelines and derive a table that includes the underlying entity (for example, customer id, timestamp and feature values). The feature table aggregates the needed features at the appropriate timestamp for a given entity. Note that Snowflake provides various common feature and query patterns available [here](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/examples). So, in our example, we would see a given customer, timestamp, and features representing transaction counts and sums over various periods. Data scientists can use SQL or Python directly in dbt to build this table, which will push down the logic into Snowflake, allowing data scientists to use their existing skill set.
-
-Window aggregations play an important role in the creation of features. Because the logic for these aggregations is often complex, let’s see how Snowflake and dbt make this process easier by leveraging Don’t Repeat Yourself (DRY) principles. We’ll create a macro that will allow us to use Snowflake’s `range between` syntax in a repeatable way:
+Агрегации по окнам играют важную роль в создании признаков. Поскольку логика для этих агрегаций часто сложна, давайте посмотрим, как Snowflake и dbt упрощают этот процесс, используя принципы "Не повторяй себя" (DRY). Мы создадим макрос, который позволит нам использовать синтаксис `range between` Snowflake повторяемым образом:
 
 ```sql
 {% macro rolling_agg(column, partition_by, order_by, interval='30 days', agg_function='sum') %}
@@ -87,13 +83,11 @@ Window aggregations play an important role in the creation of features. Because 
        range between interval '{{ interval }}' preceding and current row
    )
 {% endmacro %}
-
 ```
 
-Now, we use this macro in our feature table to build out various aggregations of customer transactions over the last day, 7 days, and 30 days. Snowflake has just taken significant complexity away in generating appropriate feature values and dbt has just made the code even more readable and repeatable. While the following example is built in SQL, teams can also build these pipelines using Python directly. 
+Теперь мы используем этот макрос в нашей таблице признаков для построения различных агрегаций транзакций клиентов за последний день, 7 дней и 30 дней. Snowflake значительно упростил генерацию соответствующих значений признаков, а dbt сделал код еще более читаемым и повторяемым. Хотя следующий пример построен на SQL, команды также могут строить эти конвейеры, используя Python непосредственно.
 
 ```sql
-
 select
    tx_datetime,
    customer_id,
@@ -117,15 +111,13 @@ select
    {{ rolling_agg("*", "CUSTOMER_ID", "TX_DATETIME", "30 days", "count") }}
    as tx_cnt_30d
 from {{ ref("stg_transactions") }}
-
 ```
 
-### Create or connect to a Snowflake Feature Store
+### Создание или подключение к Snowflake Feature Store
 
-Once a feature table is built in dbt, data scientists use Snowflake’s [snowflake-ml-python](https://docs.snowflake.com/en/developer-guide/snowflake-ml/snowpark-ml) package to create or connect to an existing Feature Store in Snowflake. Data scientists can do this all in Python, including in Jupyter Notebooks or directly in Snowflake using [Snowflake Notebooks](https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks).
+После создания таблицы признаков в dbt специалисты по данным используют пакет [snowflake-ml-python](https://docs.snowflake.com/en/developer-guide/snowflake-ml/snowpark-ml) от Snowflake для создания или подключения к существующему Feature Store в Snowflake. Специалисты по данным могут делать это все на Python, включая в Jupyter Notebooks или непосредственно в Snowflake, используя [Snowflake Notebooks](https://docs.snowflake.com/en/user-guide/ui-snowsight/notebooks).
 
-Let’s go ahead and create the Feature Store in Snowflake:
-
+Давайте создадим Feature Store в Snowflake:
 
 ```sql
 from snowflake.ml.feature_store import (
@@ -142,29 +134,27 @@ fs = FeatureStore(
     default_warehouse='WH_DBT',
     creation_mode=CreationMode.CREATE_IF_NOT_EXIST,
 )
-
 ```
 
-### Create and register feature entities
+### Создание и регистрация сущностей признаков
 
-The next step consists of creating and registering [entities](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/entities). These represent the underlying objects that features are associated with, forming the join keys used for feature lookups. In our example, the data scientist can register various entities, including for the customer, a transaction id, or other necessary attributes.
+Следующий шаг состоит в создании и регистрации [сущностей](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/entities). Эти сущности представляют собой основные объекты, с которыми связаны признаки, формируя ключи соединения, используемые для поиска признаков. В нашем примере специалист по данным может зарегистрировать различные сущности, включая клиента, идентификатор транзакции или другие необходимые атрибуты.
 
-Let’s create some example entities.
+Давайте создадим несколько примеров сущностей.
 
 ```python
 customer = Entity(name="CUSTOMER", join_keys=["CUSTOMER_ID"])
 transaction = Entity(name="TRANSACTION", join_keys=["TRANSACTION_ID"])
 fs.register_entity(customer)
 fs.register_entity(transaction)
-
 ```
 
-### Register feature tables as feature views 
+### Регистрация таблиц признаков как представлений признаков
 
-After registering entities, the next step is to register a [feature view](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/feature-views). This represents a group of related features that stem from the features tables created in the dbt model. In this case, note that the feature logic, refresh, and consistency is managed by the dbt pipeline. The feature view in Snowflake enables versioning of the features while providing discoverability among teams. 
+После регистрации сущностей следующий шаг — регистрация [представления признаков](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/feature-views). Это представляет собой группу связанных признаков, которые происходят из таблиц признаков, созданных в модели dbt. В этом случае обратите внимание, что логика признаков, обновление и согласованность управляются конвейером dbt. Представление признаков в Snowflake позволяет версионировать признаки, обеспечивая их обнаруживаемость среди команд.
 
 ```python
-# Create a dataframe from our feature table produced in dbt
+# Создание датафрейма из нашей таблицы признаков, созданной в dbt
 customers_transactions_df = session.sql(f"""
     SELECT 
         CUSTOMER_ID,
@@ -181,35 +171,34 @@ customers_transactions_df = session.sql(f"""
     FROM {fs_db}.{fs_data_schema}.ft_customer_transactions
     """)
 
-# Create a feature view on top of these features
+# Создание представления признаков на основе этих признаков
 customer_transactions_fv = FeatureView(
     name="customer_transactions_fv", 
     entities=[customer],
     feature_df=customers_transactions_df,
     timestamp_col="TX_DATETIME",
     refresh_freq=None,
-    desc="Customer transaction features with window aggregates")
+    desc="Признаки транзакций клиентов с агрегатами по окнам")
 
-# Register the feature view for use beyond the session
+# Регистрация представления признаков для использования за пределами сессии
 customer_transactions_fv = fs.register_feature_view(
     feature_view=customer_transactions_fv,
     version="1",
     #overwrite=True,
     block=True)
-
 ```
 
-### Search and discover features in the Snowflake UI
+### Поиск и обнаружение признаков в интерфейсе Snowflake
 
-Now, with features created, teams can view their features directly in the Snowflake UI, as shown below. This enables teams to easily search and browse features, all governed through Snowflake’s role-based access control (RBAC).
+Теперь, когда признаки созданы, команды могут просматривать свои признаки непосредственно в интерфейсе Snowflake, как показано ниже. Это позволяет командам легко искать и просматривать признаки, все это управляется через ролевое управление доступом (RBAC) Snowflake.
 
-<Lightbox src="/img/blog/example-snowflake-ui.png" title="Example of Snowflake UI" />
+<Lightbox src="/img/blog/example-snowflake-ui.png" title="Пример интерфейса Snowflake" />
 
-### Generate training dataset
+### Генерация обучающего набора данных
 
-Now that the feature view is created, data scientists produce a [training dataset](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/modeling#generating-tables-for-training) that uses the feature view. In our example, whether the data scientist is building a fraud or segmentation model, they will retrieve point-in-time correct features for a customer at a specific point in time using the Feature Store’s `generate_training_set` method. 
+Теперь, когда представление признаков создано, специалисты по данным создают [обучающий набор данных](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/modeling#generating-tables-for-training), который использует представление признаков. В нашем примере, независимо от того, строит ли специалист по данным модель для обнаружения мошенничества или сегментации, он будет извлекать точные на момент времени признаки для клиента в определенный момент времени, используя метод `generate_training_set` Feature Store.
 
-To generate the training set, we need to supply a spine dataframe, representing the entities and timestamp values that we will need to retrieve features for. The following example shows this using a few records, although teams can leverage other tables to produce this spine.
+Чтобы сгенерировать обучающий набор, нам нужно предоставить датафрейм позвоночника, представляющий сущности и значения временных меток, для которых нам нужно извлечь признаки. Следующий пример показывает это с использованием нескольких записей, хотя команды могут использовать другие таблицы для создания этого позвоночника.
 
 ```python
 spine_df = session.create_dataframe(
@@ -228,20 +217,19 @@ train_dataset = fs.generate_dataset(
     spine_timestamp_col= "EVENT_TIMESTAMP",
     spine_label_cols = []
 )
-
 ```
 
-Now that we have produced the training dataset, let’s see what it looks like.
+Теперь, когда мы создали обучающий набор, давайте посмотрим, как он выглядит.
 
-<Lightbox src="/img/blog/example-training-data-set.png" title="Example of training dataset" />
+<Lightbox src="/img/blog/example-training-data-set.png" title="Пример обучающего набора данных" />
 
-### Train and deploy a model
+### Обучение и развертывание модели
 
-Now with this training set, data scientists can use [Snowflake Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/index) and [Snowpark ML Modeling](https://docs.snowflake.com/en/developer-guide/snowflake-ml/modeling) to use familiar Python frameworks for additional preprocessing, feature engineering, and model training all within Snowflake. The model can be registered in the Snowflake [Model Registry](https://docs.snowflake.com/en/developer-guide/snowflake-ml/model-registry/overview) for secure model management. Note that we will leave the model training for you as part of this exercise.
+Теперь с этим обучающим набором специалисты по данным могут использовать [Snowflake Snowpark](https://docs.snowflake.com/en/developer-guide/snowpark/index) и [Snowpark ML Modeling](https://docs.snowflake.com/en/developer-guide/snowflake-ml/modeling) для использования знакомых фреймворков Python для дополнительной предобработки, инженерии признаков и обучения моделей, все это в пределах Snowflake. Модель может быть зарегистрирована в [Model Registry](https://docs.snowflake.com/en/developer-guide/snowflake-ml/model-registry/overview) Snowflake для безопасного управления моделью. Обратите внимание, что мы оставим обучение модели вам в рамках этого упражнения.
 
-### Retrieve features for predictions
+### Извлечение признаков для предсказаний
 
-For inference, data pipelines retrieve feature values using the [retrieve_feature_values](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/modeling#retrieving-features-and-making-predictions) method. These retrieved values can be fed directly to a model’s predict capability in your Python session using a developed model or by invoking a model’s predict method from Snowflake’s Model Registry. For batch scoring purposes, teams can build this entire pipeline using [Snowflake ML](https://docs.snowflake.com/en/developer-guide/snowflake-ml/overview). The following code demonstrates how the features are retrieved using this method.
+Для вывода конвейеры данных извлекают значения признаков, используя метод [retrieve_feature_values](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/modeling#retrieving-features-and-making-predictions). Эти извлеченные значения могут быть переданы непосредственно в возможность предсказания модели в вашей сессии Python, используя разработанную модель или вызывая метод предсказания модели из Model Registry Snowflake. Для целей пакетного скоринга команды могут построить весь этот конвейер, используя [Snowflake ML](https://docs.snowflake.com/en/developer-guide/snowflake-ml/overview). Следующий код демонстрирует, как признаки извлекаются с использованием этого метода.
 
 ```python
 infernce_spine = session.create_dataframe(
@@ -259,15 +247,14 @@ inference_dataset = fs.retrieve_feature_values(
 )
 
 inference_dataset.to_pandas()
-
 ``` 
 
-Here’s an example view of our features produced for model inferencing.
+Вот примерный вид наших признаков, созданных для вывода модели.
 
-<Lightbox src="/img/blog/example-features-produced.png" title="Example of training data set" />
+<Lightbox src="/img/blog/example-features-produced.png" title="Пример обучающего набора данных" />
 
-## Conclusion
+## Заключение
 
-We’ve just seen how quickly and easily you can begin to develop features through dbt and leverage the Snowflake Feature Store to deliver predictive modeling as part of your data pipelines. The ability to build and deploy ML models, including integrating feature storage, data transformation, and ML logic within a single platform, simplifies the entire ML life cycle. Combining this new power with the well-established partnership of dbt and Snowflake unlocks even more potential for organizations to safely build and explore new AI/ML use cases and drive further collaboration in the organization.
+Мы только что увидели, как быстро и легко вы можете начать разрабатывать признаки с помощью dbt и использовать Snowflake Feature Store для предоставления предсказательного моделирования в рамках ваших конвейеров данных. Возможность создавать и развертывать модели ML, включая интеграцию хранения признаков, преобразования данных и логики ML в одной платформе, упрощает весь жизненный цикл ML. Сочетание этой новой мощности с хорошо зарекомендовавшим себя партнерством dbt и Snowflake открывает еще больше потенциала для организаций, чтобы безопасно строить и исследовать новые случаи использования AI/ML и способствовать дальнейшему сотрудничеству в организации.
 
-The code used in the examples above is publicly available on [GitHub](https://github.com/sfc-gh-rpettus/dbt-feature-store). Also, you can run a full example yourself in this [quickstart guide](https://quickstarts.snowflake.com/guide/getting-started-with-feature-store-and-dbt/index.html?index=..%2F..index#0) from the Snowflake docs.
+Код, использованный в приведенных выше примерах, доступен публично на [GitHub](https://github.com/sfc-gh-rpettus/dbt-feature-store). Также вы можете самостоятельно запустить полный пример в этом [руководстве по быстрому старту](https://quickstarts.snowflake.com/guide/getting-started-with-feature-store-and-dbt/index.html?index=..%2F..index#0) из документации Snowflake.

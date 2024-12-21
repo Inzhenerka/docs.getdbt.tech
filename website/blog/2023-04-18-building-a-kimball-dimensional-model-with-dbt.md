@@ -1,101 +1,101 @@
 ---
-title: "Building a Kimball dimensional model with dbt"
-description: "Tackle dimensional modeling in dbt with this step-by-step tutorial from Jonathan Neo of Canva."
+title: "Создание размерной модели Кимбалла с помощью dbt"
+description: "Освойте размерное моделирование в dbt с помощью этого пошагового руководства от Джонатана Нео из Canva."
 slug: kimball-dimensional-model
 
 authors: [jonathan_neo]
 
-tags: [analytics craft, dbt tutorials]
+tags: [аналитическое ремесло, dbt руководства]
 hide_table_of_contents: false
 
 date: 2023-04-20
 is_featured: true
 ---
 
-<Term id="dimensional-modeling">Dimensional modeling</Term> is one of many data modeling techniques that are used by data practitioners to organize and present data for analytics. Other data modeling techniques include Data Vault (DV), Third Normal Form (3NF), and One Big Table (OBT) to name a few.
+<Term id="dimensional-modeling">Размерное моделирование</Term> — это одна из многих техник моделирования данных, используемых специалистами по данным для организации и представления данных для аналитики. Другие техники моделирования данных включают Data Vault (DV), Third Normal Form (3NF) и One Big Table (OBT), чтобы назвать несколько.
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/data-modelling.png" width="85%" title="Data modeling techniques on a normalization vs denormalization scale"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/data-modelling.png" width="85%" title="Техники моделирования данных на шкале нормализации и денормализации"/>
 
-While the relevance of dimensional modeling [has been debated by data practitioners](https://discourse.getdbt.com/t/is-kimball-dimensional-modeling-still-relevant-in-a-modern-data-warehouse/225/6), it is still one of the most widely adopted data modeling technique for analytics.
+Хотя актуальность размерного моделирования [обсуждается специалистами по данным](https://discourse.getdbt.com/t/is-kimball-dimensional-modeling-still-relevant-in-a-modern-data-warehouse/225/6), оно по-прежнему остается одной из наиболее широко применяемых техник моделирования данных для аналитики.
 
-Despite its popularity, resources on how to create dimensional models using dbt remain scarce and lack detail. This tutorial aims to solve this by providing the definitive guide to dimensional modeling with dbt. 
+Несмотря на свою популярность, ресурсы по созданию размерных моделей с использованием dbt остаются скудными и недостаточно детализированными. Это руководство призвано решить эту проблему, предоставив окончательное руководство по размерному моделированию с dbt.
 
-By the end of this tutorial, you will: 
+К концу этого руководства вы:
 
-- Understand dimensional modeling concepts
-- Set up a mock dbt project and database
-- Identify the business process to model
-- Identify the fact and dimension tables
-- Create the dimension tables
-- Create the fact table
-- Document the dimensional model relationships
-- Consume the dimensional model
+- Поймете концепции размерного моделирования
+- Настроите макетный проект dbt и базу данных
+- Определите бизнес-процесс для моделирования
+- Определите таблицы фактов и измерений
+- Создадите таблицы измерений
+- Создадите таблицу фактов
+- Задокументируете отношения размерной модели
+- Используете размерную модель
 
 <!--truncate-->
 
-## Dimensional modeling
+## Размерное моделирование
 
-Dimensional modeling is a technique introduced by Ralph Kimball in 1996 with his book, [The Data Warehouse Toolkit](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/books/data-warehouse-dw-toolkit/). 
+Размерное моделирование — это техника, представленная Ральфом Кимбаллом в 1996 году в его книге [The Data Warehouse Toolkit](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/books/data-warehouse-dw-toolkit/).
 
-The goal of dimensional modeling is to take raw data and transform it into Fact and Dimension tables that represent the business. 
+Цель размерного моделирования — взять сырые данные и преобразовать их в таблицы фактов и измерений, которые представляют бизнес.
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/3nf-to-dimensional-model.png" title="Raw 3NF data to dimensional model"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/3nf-to-dimensional-model.png" title="Сырые данные 3NF в размерную модель"/>
 
-The benefits of dimensional modeling are: 
+Преимущества размерного моделирования:
 
-- **Simpler data model for analytics**: Users of dimensional models do not need to perform complex joins when consuming a dimensional model for analytics. Performing joins between fact and dimension tables are made simple through the use of surrogate keys.
-- <Term id="dry">Don’t repeat yourself</Term>: Dimensions can be easily re-used with other fact tables to avoid duplication of effort and code logic. Reusable dimensions are referred to as conformed dimensions.
-- **Faster data retrieval**: Analytical queries executed against a dimensional model are significantly faster than a 3NF model since data transformations like joins and aggregations have been already applied.
-- **Close alignment with actual business processes**: Business processes and metrics are modeled and calculated as part of dimensional modeling. This helps ensure that the modeled data is easily usable.
+- **Простая модель данных для аналитики**: Пользователям размерных моделей не нужно выполнять сложные соединения при использовании размерной модели для аналитики. Выполнение соединений между таблицами фактов и измерений упрощается за счет использования суррогатных ключей.
+- <Term id="dry">Не повторяйся</Term>: Измерения могут быть легко повторно использованы с другими таблицами фактов, чтобы избежать дублирования усилий и логики кода. Повторно используемые измерения называются согласованными измерениями.
+- **Быстрое извлечение данных**: Аналитические запросы, выполняемые против размерной модели, значительно быстрее, чем модель 3NF, поскольку преобразования данных, такие как соединения и агрегации, уже применены.
+- **Тесное соответствие с реальными бизнес-процессами**: Бизнес-процессы и метрики моделируются и рассчитываются как часть размерного моделирования. Это помогает гарантировать, что смоделированные данные легко использовать.
 
-Now that we understand the broad concepts and benefits of dimensional modeling, let’s get hands-on and create our first dimensional model using dbt. 
+Теперь, когда мы понимаем общие концепции и преимущества размерного моделирования, давайте перейдем к практике и создадим нашу первую размерную модель с использованием dbt.
 
-## Part 1: Setup dbt project and database
+## Часть 1: Настройка проекта dbt и базы данных
 
-### Step 1: Before you get started
+### Шаг 1: Перед началом работы
 
-Before you can get started: 
+Перед началом работы:
 
-- You must have either DuckDB or PostgreSQL installed. Choose one, and download and install the database using one of the following links:
-    - Download [DuckDB](https://duckdb.org/docs/installation/index)
-    - Download [PostgreSQL](https://www.postgresql.org/download/)
-- You must have Python 3.8 or above installed
-- You must have dbt version 1.3.0 or above installed
-- You should have a basic understanding of [SQL](https://www.sqltutorial.org/)
-- You should have a basic understanding of [dbt](https://docs.getdbt.com/guides)
+- У вас должен быть установлен либо DuckDB, либо PostgreSQL. Выберите один и загрузите и установите базу данных, используя одну из следующих ссылок:
+    - Загрузить [DuckDB](https://duckdb.org/docs/installation/index)
+    - Загрузить [PostgreSQL](https://www.postgresql.org/download/)
+- У вас должен быть установлен Python 3.8 или выше
+- У вас должна быть установлена версия dbt 1.3.0 или выше
+- Вы должны иметь базовое понимание [SQL](https://www.sqltutorial.org/)
+- Вы должны иметь базовое понимание [dbt](https://docs.getdbt.com/guides)
 
-### Step 2: Clone the repository
+### Шаг 2: Клонирование репозитория
 
-Clone the [github repository](https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling) by running this command in your terminal: 
+Клонируйте [репозиторий github](https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling), выполнив эту команду в вашем терминале:
 
 ```text
 git clone https://github.com/Data-Engineer-Camp/dbt-dimensional-modelling.git
 cd dbt-dimensional-modelling/adventureworks
 ```
 
-### Step 3: Install dbt database adaptors
+### Шаг 3: Установка адаптеров базы данных dbt
 
-Depending on which database you’ve chosen, install the relevant database adaptor for your database: 
+В зависимости от выбранной вами базы данных установите соответствующий адаптер базы данных:
 
 ```text
-# install adaptor for duckdb
+# установка адаптера для duckdb
 python -m pip install dbt-duckdb
 
-# OR 
+# ИЛИ
 
-# install adaptor for postgresql
+# установка адаптера для postgresql
 python -m pip install dbt-postgres
 ```
 
-### Step 4: Setup dbt profile
+### Шаг 4: Настройка профиля dbt
 
-The dbt profile (see `adventureworks/profiles.yml`) has already been pre-configured for you. Verify that the configurations are set correctly based on your database credentials: 
+Профиль dbt (см. `adventureworks/profiles.yml`) уже предварительно настроен для вас. Убедитесь, что конфигурации установлены правильно на основе ваших учетных данных базы данных:
 
 ```yaml
 adventureworks:
-  target: duckdb # leave this as duckdb, or change this to your chosen database
+  target: duckdb # оставьте это как duckdb или измените на выбранную вами базу данных
 
-  # supported databases: duckdb, postgres 
+  # поддерживаемые базы данных: duckdb, postgres 
   outputs:
     duckdb: 
      type: duckdb
@@ -108,54 +108,54 @@ adventureworks:
       user: postgres
       password: postgres
       port: 5432
-      dbname: adventureworks # create this empty database beforehand 
+      dbname: adventureworks # создайте эту пустую базу данных заранее 
       schema: dbo
       threads: 12
 ```
 
-### Step 5: Install dbt dependencies
+### Шаг 5: Установка зависимостей dbt
 
-We use packages like [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) in this project, and we need to install the libraries for this package by running the command: 
+Мы используем пакеты, такие как [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/), в этом проекте, и нам нужно установить библиотеки для этого пакета, выполнив команду:
 
 ```
 dbt deps 
 ```
 
-### Step 6: Seed your database
+### Шаг 6: Заполнение вашей базы данных
 
-We are using [dbt seeds](https://docs.getdbt.com/docs/build/seeds) (see `adventureworks/seeds/*`) to insert AdventureWorks data into your database: 
+Мы используем [dbt seeds](https://docs.getdbt.com/docs/build/seeds) (см. `adventureworks/seeds/*`) для вставки данных AdventureWorks в вашу базу данных:
 
 ```text
-# seed duckdb 
+# заполнение duckdb 
 dbt seed --target duckdb
 
-# seed postgres
+# заполнение postgres
 dbt seed --target postgres
 ```
 
-### Step 7: Examine the database source schema
+### Шаг 7: Изучение схемы источника базы данных
 
-All data generated by the business is stored on an OLTP database. The Entity Relationship Diagram (ERD) of the database has been provided to you. 
+Все данные, сгенерированные бизнесом, хранятся в базе данных OLTP. Диаграмма сущностей и связей (ERD) базы данных предоставлена вам.
 
-Examine the database source schema below, paying close attention to: 
+Изучите схему источника базы данных ниже, уделяя особое внимание:
 
-- Tables
-- Keys
-- Relationships
+- Таблицам
+- Ключам
+- Отношениям
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/source-schema.png" width="85%" title="Source schema"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/source-schema.png" width="85%" title="Схема источника"/>
 
-### Step 8: Query the tables
+### Шаг 8: Запрос таблиц
 
-Get a better sense of what the records look like by executing select statements using your database's SQL editor. 
+Получите лучшее представление о том, как выглядят записи, выполняя операторы select с помощью SQL-редактора вашей базы данных.
 
-For example:  
+Например:
 
 ```sql
 select * from sales.salesorderheader limit 10; 
 ```
 
-Output: 
+Вывод:
 
 ```
 ┌──────────────┬──────────────┬─────────────────┬───┬───────────────┬─────────────────────┬────────────────┐
@@ -177,68 +177,68 @@ Output:
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-When you’ve successfully set up the dbt project and database, we can now move into the next part to identify the tables required for a dimensional model. 
+Когда вы успешно настроили проект dbt и базу данных, мы можем перейти к следующей части, чтобы определить таблицы, необходимые для размерной модели.
 
-## Part 2: Identify the business process
+## Часть 2: Определение бизнес-процесса
 
-Now that you’ve set up the dbt project, database, and have taken a peek at the schema, it’s time for you to identify the business process. 
+Теперь, когда вы настроили проект dbt, базу данных и взглянули на схему, пришло время определить бизнес-процесс.
 
-Identifying the business process is done in collaboration with the business user. The business user has context around the business objectives and business processes, and can provide you with that information. 
+Определение бизнес-процесса осуществляется в сотрудничестве с бизнес-пользователем. Бизнес-пользователь имеет контекст вокруг бизнес-целей и бизнес-процессов и может предоставить вам эту информацию.
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/conversation.png" title="Conversation between business user and analytics engineer"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/conversation.png" title="Разговор между бизнес-пользователем и аналитическим инженером"/>
 
-Upon speaking with the CEO of AdventureWorks, you learn the following information: 
+Поговорив с генеральным директором AdventureWorks, вы узнаете следующую информацию:
 
-> AdventureWorks manufactures bicycles and sells them to consumers (B2C) and businesses (B2B). The bicycles are shipped to customers from all around the world. As the CEO of the business, I would like to know how much revenue we have generated for the year ending 2011, broken down by: 
-- Product category and subcategory 
-- Customer 
-- Order status 
-- Shipping country, state, and city
+> AdventureWorks производит велосипеды и продает их потребителям (B2C) и бизнесам (B2B). Велосипеды отправляются клиентам по всему миру. Как генеральный директор компании, я хотел бы знать, сколько дохода мы получили за год, заканчивающийся в 2011 году, с разбивкой по:
+- Категории и подкатегории продукта
+- Клиенту
+- Статусу заказа
+- Стране, штату и городу доставки
 
-Based on the information provided by the business user, you have identified that the business process in question is the ***Sales process***. In the next part, you are going to design a dimensional model for the Sales process. 
+На основе информации, предоставленной бизнес-пользователем, вы определили, что бизнес-процесс, о котором идет речь, — это ***Процесс продаж***. В следующей части вы собираетесь разработать размерную модель для процесса продаж.
 
-## Part 3: Identify the fact and dimension tables
+## Часть 3: Определение таблиц фактов и измерений
 
-Based on the information provided from the earlier part, we want to create a dimensional model that represents that business’ Sales process and also be able to slice and dice the data by: 
+На основе информации, предоставленной в предыдущей части, мы хотим создать размерную модель, которая представляет процесс продаж бизнеса и также позволяет анализировать данные по:
 
-- Product category and subcategory
-- Customer
-- Order status
-- Shipping country, state, and city
-- Date (year, month, day)
+- Категории и подкатегории продукта
+- Клиенту
+- Статусу заказа
+- Стране, штату и городу доставки
+- Дате (год, месяц, день)
 
-### Fact tables
-
-:::info
-[Fact tables](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/facts-for-measurement/) are database tables that represent a business process in the real world. Each record in the fact table represents a business event such as a: 
-
-- Item sale
-- Website click
-- Production work order
-:::
-
-There are two tables in the sales schema that catch our attention. These two tables can be used to create the fact table for the sales process: 
-
-- The `sales.salesorderheader` table contains information about the credit card used in the order, the shipping address, and the customer. Each record in this table represents an order header that contains one or more order details.
-- The `sales.salesorderdetail` table contains information about the product that was ordered, and the order quantity and unit price, which we can use to calculate the revenue. Each record in this table represents a single order detail.
-
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/sales-order-header-detail.png" width="85%" title="Sales Order Header and Detail"/>
-
-Let’s define a fact table called `fct_sales` which joins `sales.salesorderheader` and `sales.salesorderdetail` together. Each record in the fact table (also known as the [grain](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/grain/)) is an order detail. 
-
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/fct_sales.png" width="85%" title="fct_sales table"/>
-
-### Dimension tables
+### Таблицы фактов
 
 :::info
-[Dimension tables](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/dimensions-for-context/) are used to represent contextual or descriptive information for a business process event. Examples of dimensions include: 
+[Таблицы фактов](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/facts-for-measurement/) — это таблицы базы данных, которые представляют бизнес-процесс в реальном мире. Каждая запись в таблице фактов представляет бизнес-событие, такое как:
 
-- Customer details: Who is the customer for a particular order number? 
-- Website click location details: Which button is the user clicking on? 
-- Product details: What are the details of the product that was added to the cart? 
+- Продажа товара
+- Клик на сайте
+- Производственный заказ
 :::
 
-Based on the business questions that our business user would like answered, we can identify several tables that would contain useful contextual information for our business process: 
+В схеме продаж есть две таблицы, которые привлекают наше внимание. Эти две таблицы могут быть использованы для создания таблицы фактов для процесса продаж:
+
+- Таблица `sales.salesorderheader` содержит информацию о кредитной карте, использованной в заказе, адресе доставки и клиенте. Каждая запись в этой таблице представляет заголовок заказа, содержащий одну или несколько деталей заказа.
+- Таблица `sales.salesorderdetail` содержит информацию о заказанном продукте, количестве заказа и цене за единицу, которые мы можем использовать для расчета дохода. Каждая запись в этой таблице представляет одну деталь заказа.
+
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/sales-order-header-detail.png" width="85%" title="Заголовок и детали заказа на продажу"/>
+
+Давайте определим таблицу фактов под названием `fct_sales`, которая объединяет `sales.salesorderheader` и `sales.salesorderdetail`. Каждая запись в таблице фактов (также известная как [зерно](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/grain/)) — это деталь заказа.
+
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/fct_sales.png" width="85%" title="Таблица fct_sales"/>
+
+### Таблицы измерений
+
+:::info
+[Таблицы измерений](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/dimensions-for-context/) используются для представления контекстной или описательной информации для события бизнес-процесса. Примеры измерений включают:
+
+- Детали клиента: Кто является клиентом для определенного номера заказа?
+- Детали местоположения клика на сайте: На какую кнопку пользователь нажимает?
+- Детали продукта: Каковы детали продукта, добавленного в корзину?
+:::
+
+На основе бизнес-вопросов, на которые наш бизнес-пользователь хотел бы получить ответы, мы можем определить несколько таблиц, которые содержат полезную контекстную информацию для нашего бизнес-процесса:
 
 - `person.address`
 - `person.countryregion`
@@ -246,47 +246,47 @@ Based on the business questions that our business user would like answered, we c
 - `production.productcategory`
 - `sales.customer`
 - `sales.store`
-- And many more …
+- И многие другие …
 
-There are different ways we could create the dimension tables. We could use the existing relationships between the tables as depicted in the diagram below. 
+Существуют разные способы создания таблиц измерений. Мы могли бы использовать существующие отношения между таблицами, как показано на диаграмме ниже.
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/snowflake-schema.png" width="85%" title="Snowflake schema"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/snowflake-schema.png" width="85%" title="Схема снежинки"/>
 
-This is known as a snowflake schema design, where the fact table is the centre of the snowflake, and there are many fractals branching off the centre of the snowflake. However, this results in many joins that need to be performed by the consumer of the dimensional model. 
+Это известно как дизайн схемы снежинки, где таблица фактов является центром снежинки, и от центра снежинки отходят многие фракталы. Однако это приводит к множеству соединений, которые должны быть выполнены потребителем размерной модели.
 
-Instead, we can denormalize the dimension tables by performing joins. 
+Вместо этого мы можем денормализовать таблицы измерений, выполняя соединения.
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/star-schema.png" width="85%" title="Star schema"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/star-schema.png" width="85%" title="Схема звезды"/>
 
-This is known as a star schema and this approach reduces the amount of joins that need to be performed by the consumer of the dimensional model. 
+Это известно как схема звезды, и этот подход уменьшает количество соединений, которые должны быть выполнены потребителем размерной модели.
 
-Using the star schema approach, we can identify 6 dimensions as shown below that will help us answer the business questions: 
+Используя подход схемы звезды, мы можем определить 6 измерений, которые помогут нам ответить на бизнес-вопросы:
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/dimension-tables.png" width="85%" title="Dimension tables"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/dimension-tables.png" width="85%" title="Таблицы измерений"/>
 
-- `dim_product` : a dimension table that joins `product` , `productsubcategory`, `productcategory`
-- `dim_address` : a dimension table that joins `address` , `stateprovince`, `countryregion`
-- `dim_customer` : a dimension table that joins `customer` , `person` , `store`
-- `dim_credit_card` : a dimension table created from `creditcard`
-- `dim_order_status` : a dimension table created by taking distinct statuses from `salesorderheader`
-- `dim_date` : a specially generated dimension table containing date attributes using the [dbt_date](https://hub.getdbt.com/calogica/dbt_date/latest/) package. 
+- `dim_product`: таблица измерений, объединяющая `product`, `productsubcategory`, `productcategory`
+- `dim_address`: таблица измерений, объединяющая `address`, `stateprovince`, `countryregion`
+- `dim_customer`: таблица измерений, объединяющая `customer`, `person`, `store`
+- `dim_credit_card`: таблица измерений, созданная из `creditcard`
+- `dim_order_status`: таблица измерений, созданная путем выбора уникальных статусов из `salesorderheader`
+- `dim_date`: специально сгенерированная таблица измерений, содержащая атрибуты даты с использованием пакета [dbt_date](https://hub.getdbt.com/calogica/dbt_date/latest/).
 
-:::note 
-We have manually seeded the `dim_date` table since DuckDB is not supported by the dbt_date package.
+:::note
+Мы вручную заполнили таблицу `dim_date`, так как DuckDB не поддерживается пакетом dbt_date.
 :::
 
-In the next part, we use dbt to create the fact and dimension tables we have identified. 
+В следующей части мы используем dbt для создания таблиц фактов и измерений, которые мы определили.
 
-## Part 4: Create the dimension tables
+## Часть 4: Создание таблиц измерений
 
-Let's first create `dim_product` . The other dimension tables will use the same steps that we’re about to go through. 
+Давайте сначала создадим `dim_product`. Остальные таблицы измерений будут использовать те же шаги, которые мы собираемся пройти.
 
-### Step 1: Create model files
+### Шаг 1: Создание файлов моделей
 
-Let’s create the new dbt model files that will contain our transformation code. Under `adventureworks/models/marts/` , create two files: 
+Давайте создадим новые файлы моделей dbt, которые будут содержать наш код преобразования. В каталоге `adventureworks/models/marts/` создайте два файла:
 
-- `dim_product.sql` : This file will contain our SQL transformation code.
-- `dim_product.yml` : This file will contain our documentation and tests for `dim_product` .
+- `dim_product.sql`: Этот файл будет содержать наш SQL-код преобразования.
+- `dim_product.yml`: Этот файл будет содержать нашу документацию и тесты для `dim_product`.
 
 ```
 adventureworks/models/
@@ -295,9 +295,9 @@ adventureworks/models/
     ├── dim_product.yml
 ```
 
-### Step 2: Fetch data from the upstream tables
+### Шаг 2: Извлечение данных из вышестоящих таблиц
 
-In `dim_product.sql`, you can select data from the upstream tables using Common Table Expressions (CTEs). 
+В `dim_product.sql` вы можете выбрать данные из вышестоящих таблиц, используя Общие Табличные Выражения (CTE).
 
 ```sql
 with stg_product as (
@@ -318,11 +318,11 @@ stg_product_category as (
 ... 
 ```
 
-We use the `ref` function to reference the upstream tables and create a <Term id="dag">Directed Acyclic Graph (DAG)</Term> of the dependencies. 
+Мы используем функцию `ref`, чтобы ссылаться на вышестоящие таблицы и создавать <Term id="dag">ориентированный ациклический граф (DAG)</Term> зависимостей.
 
-### Step 3: Perform the joins
+### Шаг 3: Выполнение соединений
 
-Next, perform the joins between the <Term id="cte">CTE</Term> tables using the appropriate join keys. 
+Далее выполните соединения между <Term id="cte">CTE</Term> таблицами, используя соответствующие ключи соединения.
 
 ```sql
 ...
@@ -334,21 +334,21 @@ left join stg_product_subcategory on stg_product.productsubcategoryid = stg_prod
 left join stg_product_category on stg_product_subcategory.productcategoryid = stg_product_category.productcategoryid
 ```
 
-### Step 4: Create the surrogate key
+### Шаг 4: Создание суррогатного ключа
 
 :::info
-[Surrogate keys](https://www.kimballgroup.com/1998/05/surrogate-keys/) provide consumers of the dimensional model with an easy-to-use key to join the fact and dimension tables together, without needing to understand the underlying business context. 
+[Суррогатные ключи](https://www.kimballgroup.com/1998/05/surrogate-keys/) предоставляют потребителям размерной модели простой в использовании ключ для соединения таблиц фактов и измерений, без необходимости понимания основного бизнес-контекста.
 :::
 
-There are several approaches to creating a <Term id="surrogate-key">surrogate key</Term>: 
+Существует несколько подходов к созданию <Term id="surrogate-key">суррогатного ключа</Term>:
 
-- **Hashing surrogate key**: a surrogate key that is constructed by hashing the unique keys of a table (e.g. `md5(key_1, key_2, key_3)` ).
-- **Incrementing surrogate key**: a surrogate key that is constructed by using a number that is always incrementing (e.g. `row_number()`).
-- **Concatenating surrogate key**: a surrogate key that is constructed by concatenating the unique key columns (e.g. `concat(key_1, key_2, key_3)` ).
+- **Хеширование суррогатного ключа**: суррогатный ключ, который создается путем хеширования уникальных ключей таблицы (например, `md5(key_1, key_2, key_3)`).
+- **Инкрементный суррогатный ключ**: суррогатный ключ, который создается с использованием числа, которое всегда увеличивается (например, `row_number()`).
+- **Конкатенация суррогатного ключа**: суррогатный ключ, который создается путем конкатенации уникальных столбцов ключей (например, `concat(key_1, key_2, key_3)`).
 
-We are using arguably the easiest approach which is to perform a hash on the unique key columns of the dimension table. This approach removes the hassle of performing a join with dimension tables when generating the surrogate key for the fact tables later. 
+Мы используем, пожалуй, самый простой подход, который заключается в выполнении хеширования уникальных столбцов ключей таблицы измерений. Этот подход устраняет необходимость выполнения соединения с таблицами измерений при генерации суррогатного ключа для таблиц фактов позже.
 
-To generate the surrogate key, we use a dbt macro that is provided by the `dbt_utils` package called `generate_surrogate_key()` . The generate surrogate key macro uses the appropriate hashing function from your database to generate a surrogate key from a list of key columns (e.g. `md5()`, `hash()`). Read more about the [generate_surrogate_key macro](https://docs.getdbt.com/blog/sql-surrogate-keys). 
+Для генерации суррогатного ключа мы используем макрос dbt, предоставляемый пакетом `dbt_utils`, под названием `generate_surrogate_key()`. Макрос генерации суррогатного ключа использует соответствующую функцию хеширования из вашей базы данных для генерации суррогатного ключа из списка столбцов ключей (например, `md5()`, `hash()`). Подробнее о [макросе generate_surrogate_key](https://docs.getdbt.com/blog/sql-surrogate-keys).
 
 ```sql
 ...
@@ -361,9 +361,9 @@ left join stg_product_subcategory on stg_product.productsubcategoryid = stg_prod
 left join stg_product_category on stg_product_subcategory.productcategoryid = stg_product_category.productcategoryid
 ```
 
-### Step 5: Select dimension table columns
+### Шаг 5: Выбор столбцов таблицы измерений
 
-You can now select the dimension table columns so that they can be used in conjunction with the fact table later. We select columns that will help us answer the business questions identified earlier. 
+Теперь вы можете выбрать столбцы таблицы измерений, чтобы они могли быть использованы вместе с таблицей фактов позже. Мы выбираем столбцы, которые помогут нам ответить на ранее определенные бизнес-вопросы.
 
 ```sql
 ...
@@ -382,15 +382,15 @@ left join stg_product_subcategory on stg_product.productsubcategoryid = stg_prod
 left join stg_product_category on stg_product_subcategory.productcategoryid = stg_product_category.productcategoryid
 ```
 
-### Step 6: Choose a materialization type
+### Шаг 6: Выбор типа материализации
 
-You may choose from one of the following materialization types supported by dbt: 
+Вы можете выбрать один из следующих типов материализации, поддерживаемых dbt:
 
 - View
 - Table
 - Incremental
 
-It is common for dimension tables to be materialized as `table` or `view` since the data volumes in dimension tables are generally not very large. In this example, we have chosen to go with `table`, and have set the materialization type for all dimensional models in the `marts` schema to `table` in `dbt_project.yml` 
+Обычно таблицы измерений материализуются как `table` или `view`, так как объемы данных в таблицах измерений обычно не очень большие. В этом примере мы выбрали `table` и установили тип материализации для всех размерных моделей в схеме `marts` как `table` в `dbt_project.yml`.
 
 ```sql
 models:
@@ -400,9 +400,9 @@ models:
       +schema: marts
 ```
 
-### Step 7: Create model documentation and tests
+### Шаг 7: Создание документации и тестов модели
 
-Alongside our `dim_product.sql` model, we can populate the corresponding `dim_product.yml` file to document and test our model. 
+Вместе с нашей моделью `dim_product.sql` мы можем заполнить соответствующий файл `dim_product.yml`, чтобы задокументировать и протестировать нашу модель.
 
 ```yaml
 version: 2
@@ -411,41 +411,41 @@ models:
   - name: dim_product
     columns:
       - name: product_key 
-        description: The surrogate key of the product
+        description: Суррогатный ключ продукта
         tests:
           - not_null
           - unique
       - name: productid 
-        description: The natural key of the product
+        description: Естественный ключ продукта
         tests:
           - not_null
           - unique
       - name: product_name 
-        description: The product name
+        description: Название продукта
         tests:
           - not_null
 ```
 
-### Step 8: Build dbt models
+### Шаг 8: Построение моделей dbt
 
-Execute the [dbt run](https://docs.getdbt.com/reference/commands/run) and [dbt test](https://docs.getdbt.com/reference/commands/run) commands to run and test your dbt models: 
+Выполните команды [dbt run](https://docs.getdbt.com/reference/commands/run) и [dbt test](https://docs.getdbt.com/reference/commands/run), чтобы запустить и протестировать ваши модели dbt:
 
 ```
 dbt run && dbt test 
 ```
 
-We have now completed all the steps to create a dimension table. We can now repeat the same steps to all dimension tables that we have identified earlier. Make sure to create all dimension tables before moving on to the next part. 
+Теперь мы завершили все шаги для создания таблицы измерений. Мы можем повторить те же шаги для всех таблиц измерений, которые мы определили ранее. Убедитесь, что вы создали все таблицы измерений, прежде чем переходить к следующей части.
 
-## Part 5: Create the fact table
+## Часть 5: Создание таблицы фактов
 
-After we have created all required dimension tables, we can now create the fact table for `fct_sales`. 
+После того как мы создали все необходимые таблицы измерений, мы можем создать таблицу фактов для `fct_sales`.
 
-### Step 1: Create model files
+### Шаг 1: Создание файлов моделей
 
-Let’s create the new dbt model files that will contain our transformation code. Under `adventureworks/models/marts/` , create two files: 
+Давайте создадим новые файлы моделей dbt, которые будут содержать наш код преобразования. В каталоге `adventureworks/models/marts/` создайте два файла:
 
-- `fct_sales.sql` : This file will contain our SQL transformation code.
-- `fct_sales.yml` : This file will contain our documentation and tests for `fct_sales` .
+- `fct_sales.sql`: Этот файл будет содержать наш SQL-код преобразования.
+- `fct_sales.yml`: Этот файл будет содержать нашу документацию и тесты для `fct_sales`.
 
 ```
 adventureworks/models/
@@ -454,9 +454,9 @@ adventureworks/models/
     ├── fct_sales.yml
 ```
 
-### Step 2: Fetch data from the upstream tables
+### Шаг 2: Извлечение данных из вышестоящих таблиц
 
-To answer the business questions, we need columns from both `salesorderheader` and `salesorderdetail`. Let’s reflect that in `fct_sales.sql` : 
+Чтобы ответить на бизнес-вопросы, нам нужны столбцы как из `salesorderheader`, так и из `salesorderdetail`. Давайте отразим это в `fct_sales.sql`:
 
 ```sql
 with stg_salesorderheader as (
@@ -484,9 +484,9 @@ stg_salesorderdetail as (
 ... 
 ```
 
-### Step 3: Perform joins
+### Шаг 3: Выполнение соединений
 
-The grain of the `fct_sales` table is one record in the SalesOrderDetail table, which describes the quantity of a product within a SalesOrderHeader. So we perform a join between `salesorderheader` and `salesorderdetail` to achieve that grain. 
+Зерно таблицы `fct_sales` — это одна запись в таблице SalesOrderDetail, которая описывает количество продукта в SalesOrderHeader. Поэтому мы выполняем соединение между `salesorderheader` и `salesorderdetail`, чтобы достичь этого зерна.
 
 ```sql
 ... 
@@ -497,9 +497,9 @@ from stg_salesorderdetail
 inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_salesorderheader.salesorderid
 ```
 
-### Step 4: Create the surrogate key
+### Шаг 4: Создание суррогатного ключа
 
-Next, we create the surrogate key to uniquely identify each row in the fact table. Each row in the `fct_sales` table can be uniquely identified by the `salesorderid` and the `salesorderdetailid` which is why we use both columns in the `generate_surrogate_key()` macro. 
+Далее мы создаем суррогатный ключ для уникальной идентификации каждой строки в таблице фактов. Каждая строка в таблице `fct_sales` может быть уникально идентифицирована с помощью `salesorderid` и `salesorderdetailid`, поэтому мы используем оба столбца в макросе `generate_surrogate_key()`.
 
 ```sql
 ... 
@@ -511,9 +511,9 @@ from stg_salesorderdetail
 inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_salesorderheader.salesorderid
 ```
 
-### Step 5:  Select fact table columns
+### Шаг 5: Выбор столбцов таблицы фактов
 
-You can now select the fact table columns that will help us answer the business questions identified earlier. We want to be able to calculate the amount of revenue, and therefore we include a column revenue per sales order detail which was calculated above by `unitprice * orderqty as revenue` . 
+Теперь вы можете выбрать столбцы таблицы фактов, которые помогут нам ответить на ранее определенные бизнес-вопросы. Мы хотим иметь возможность рассчитать сумму дохода, и поэтому мы включаем столбец дохода на каждую деталь заказа, который был рассчитан выше как `unitprice * orderqty as revenue`.
 
 ```sql
 ...
@@ -529,11 +529,11 @@ from stg_salesorderdetail
 inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_salesorderheader.salesorderid
 ```
 
-### Step 6:  Create foreign surrogate keys
+### Шаг 6: Создание внешних суррогатных ключей
 
-We want to be able to slice and dice our fact table against the dimension tables we have created in the earlier step. So we need to create the foreign surrogate keys that will be used to join the fact table back to the dimension tables. 
+Мы хотим иметь возможность анализировать нашу таблицу фактов в разрезе таблиц измерений, которые мы создали на предыдущем шаге. Поэтому нам нужно создать внешние суррогатные ключи, которые будут использоваться для соединения таблицы фактов с таблицами измерений.
 
-We achieve this by applying the `generate_surrogate_key()` macro to the same unique id columns that we had previously used when generating the surrogate keys in the dimension tables. 
+Мы достигаем этого, применяя макрос `generate_surrogate_key()` к тем же уникальным столбцам идентификаторов, которые мы использовали ранее при генерации суррогатных ключей в таблицах измерений.
 
 ```sql
 ...
@@ -555,19 +555,19 @@ from stg_salesorderdetail
 inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_salesorderheader.salesorderid
 ```
 
-### Step 7: Choose a materialization type
+### Шаг 7: Выбор типа материализации
 
-You may choose from one of the following materialization types supported by dbt: 
+Вы можете выбрать один из следующих типов материализации, поддерживаемых dbt:
 
 - View
 - Table
 - Incremental
 
-It is common for fact tables to be materialized as `incremental` or `table` depending on the data volume size. [As a rule of thumb](https://docs.getdbt.com/docs/build/incremental-overview#when-to-use-an-incremental-model), if you are transforming millions or billions of rows, then you should start using the `incremental` materialization. In this example, we have chosen to go with `table` for simplicity. 
+Обычно таблицы фактов материализуются как `incremental` или `table` в зависимости от объема данных. [Как правило](https://docs.getdbt.com/docs/build/incremental-overview#when-to-use-an-incremental-model), если вы преобразуете миллионы или миллиарды строк, то вам следует начать использовать материализацию `incremental`. В этом примере мы выбрали `table` для простоты.
 
-### Step 8: Create model documentation and tests
+### Шаг 8: Создание документации и тестов модели
 
-Alongside our `fct_sales.sql` model, we can populate the corresponding `fct_sales.yml` file to document and test our model. 
+Вместе с нашей моделью `fct_sales.sql` мы можем заполнить соответствующий файл `fct_sales.yml`, чтобы задокументировать и протестировать нашу модель.
 
 ```yaml
 version: 2
@@ -577,57 +577,57 @@ models:
     columns:
 
       - name: sales_key
-        description: The surrogate key of the fct sales
+        description: Суррогатный ключ продаж
         tests:
           - not_null
           - unique
 
       - name: product_key
-        description: The foreign key of the product
+        description: Внешний ключ продукта
         tests:
           - not_null
 
       - name: customer_key
-        description: The foreign key of the customer
+        description: Внешний ключ клиента
         tests:
           - not_null 
       
       ... 
 
       - name: orderqty
-        description: The quantity of the product 
+        description: Количество продукта 
         tests:
           - not_null
 
       - name: revenue
-        description: The revenue obtained by multiplying unitprice and orderqty
+        description: Доход, полученный путем умножения unitprice и orderqty
 ```
 
-### Step 9: Build dbt models
+### Шаг 9: Построение моделей dbt
 
-Execute the [dbt run](https://docs.getdbt.com/reference/commands/run) and [dbt test](https://docs.getdbt.com/reference/commands/run) commands to run and test your dbt models: 
+Выполните команды [dbt run](https://docs.getdbt.com/reference/commands/run) и [dbt test](https://docs.getdbt.com/reference/commands/run), чтобы запустить и протестировать ваши модели dbt:
 
 ```
 dbt run && dbt test 
 ```
 
-Great work, you have successfully created your very first fact and dimension tables! Our dimensional model is now complete!! 🎉  
+Отличная работа, вы успешно создали свои первые таблицы фактов и измерений! Наша размерная модель теперь завершена!! 🎉
 
-## Part 6: Document the dimensional model relationships
+## Часть 6: Документирование отношений размерной модели
 
-Let’s make it easier for consumers of our dimensional model to understand the relationships between tables by creating an [Entity Relationship Diagram (ERD)](https://www.visual-paradigm.com/guide/data-modeling/what-is-entity-relationship-diagram/). 
+Давайте упростим потребителям нашей размерной модели понимание отношений между таблицами, создав [Диаграмму сущностей и связей (ERD)](https://www.visual-paradigm.com/guide/data-modeling/what-is-entity-relationship-diagram/).
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/target-schema.png" width="85%" title="Final dimensional model ERD"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/target-schema.png" width="85%" title="Итоговая ERD размерной модели"/>
 
-The ERD will enable consumers of our dimensional model to quickly identify the keys and relationship type (one-to-one, one-to-many) that need to be used to join tables. 
+ERD позволит потребителям нашей размерной модели быстро определить ключи и тип отношений (один-к-одному, один-ко-многим), которые необходимо использовать для соединения таблиц.
 
-## Part 7: Consume dimensional model
+## Часть 7: Использование размерной модели
 
-Finally, we can consume our dimensional model by connecting our data warehouse to our Business Intelligence (BI) tools such as Tableau, Power BI, and Looker.
+Наконец, мы можем использовать нашу размерную модель, подключив наш склад данных к нашим инструментам бизнес-аналитики (BI), таким как Tableau, Power BI и Looker.
 
-Most modern BI tools have a built-in semantic layer that supports relationships between tables, which is required if we want to consume the dimensional models directly without any additional data transformation. 
+Большинство современных BI-инструментов имеют встроенный семантический слой, который поддерживает отношения между таблицами, что необходимо, если мы хотим использовать размерные модели напрямую без дополнительных преобразований данных.
 
-In Looker for example, we can define relationships using [LookML](https://cloud.google.com/looker/docs/what-is-lookml): 
+В Looker, например, мы можем определить отношения, используя [LookML](https://cloud.google.com/looker/docs/what-is-lookml):
 
 ```
 explore: fct_order {
@@ -638,7 +638,7 @@ explore: fct_order {
 }
 ```
 
-If your BI tool doesn’t have a semantic layer that supports relationships, then you will have to reflect that relationship by creating a One Big Table (OBT) that joins the fact table against all of its dimension tables. 
+Если ваш BI-инструмент не имеет семантического слоя, поддерживающего отношения, то вам придется отразить это отношение, создав One Big Table (OBT), который соединяет таблицу фактов со всеми ее таблицами измерений.
 
 ```sql
 with f_sales as (
@@ -688,23 +688,23 @@ left join d_order_status on f_sales.order_status_key = d_order_status.order_stat
 left join d_date on f_sales.order_date_key = d_date.date_key
 ```
 
-In the OBT above, we perform joins between the fact and dimension tables using the surrogate keys. 
+В приведенном выше OBT мы выполняем соединения между таблицей фактов и таблицами измерений, используя суррогатные ключи.
 
-Using `dbt_utils.star()`, we select all columns except the surrogate key columns since the surrogate keys don't hold any meaning besides being useful for the joins. 
+Используя `dbt_utils.star()`, мы выбираем все столбцы, кроме столбцов суррогатных ключей, так как суррогатные ключи не имеют никакого значения, кроме как быть полезными для соединений.
 
-We can then build the OBT by running `dbt run`. Your dbt DAG should now look like this: 
+Затем мы можем построить OBT, запустив `dbt run`. Ваш DAG dbt теперь должен выглядеть так:
 
-<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/dbt-dag.png" width="85%" title="Final dbt DAG"/>
+<Lightbox src="/img/blog/2023-04-18-building-a-kimball-dimensional-model-with-dbt/dbt-dag.png" width="85%" title="Итоговый DAG dbt"/>
 
-Congratulations, you have reached the end of this tutorial. If you want to learn more, please see the learning resources below on dimensional modeling. 
+Поздравляем, вы дошли до конца этого руководства. Если вы хотите узнать больше, пожалуйста, ознакомьтесь с учебными ресурсами ниже по размерному моделированию.
 
-## Learning resources
+## Учебные ресурсы
 
-- [Kimball group learning resources](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/)
-- [The Data Warehouse toolkit book](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/books/data-warehouse-dw-toolkit/)
-- [dbt discourse on whether dimensional modeling is still relevant](https://discourse.getdbt.com/t/is-kimball-dimensional-modeling-still-relevant-in-a-modern-data-warehouse/225)
-- [dbt glossary on dimensional modeling](https://docs.getdbt.com/terms/dimensional-modeling)
+- [Учебные ресурсы группы Кимбалла](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/)
+- [Книга The Data Warehouse toolkit](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/books/data-warehouse-dw-toolkit/)
+- [Обсуждение dbt о том, актуально ли еще размерное моделирование](https://discourse.getdbt.com/t/is-kimball-dimensional-modeling-still-relevant-in-a-modern-data-warehouse/225)
+- [Глоссарий dbt по размерному моделированию](https://docs.getdbt.com/terms/dimensional-modeling)
 
-If you have any questions about the material, please reach out to me on the dbt Community Slack (@Jonathan Neo), or on [LinkedIn](https://www.linkedin.com/in/jonneo/). 
+Если у вас есть вопросы по материалу, пожалуйста, свяжитесь со мной в сообществе dbt Slack (@Jonathan Neo) или на [LinkedIn](https://www.linkedin.com/in/jonneo/).
 
-*Author's note: The materials in this article were created by [Data Engineer Camp](https://dataengineercamp.com/), a 16-week data engineering bootcamp for professionals looking to transition to data engineering and analytics engineering. The article was written by Jonathan Neo, with editorial and technical guidance from [Kenny Ning](https://www.linkedin.com/in/kenny-ning/) and editorial review from [Paul Hallaste](https://www.linkedin.com/in/paulhallaste/) and [Josh Devlin](https://www.linkedin.com/in/josh-devlin/).*
+*Примечание автора: Материалы в этой статье были созданы [Data Engineer Camp](https://dataengineercamp.com/), 16-недельным буткемпом по инженерии данных для профессионалов, желающих перейти в инженерию данных и аналитическую инженерию. Статья была написана Джонатаном Нео, с редакционным и техническим руководством от [Кенни Нинга](https://www.linkedin.com/in/kenny-ning/) и редакционным обзором от [Пола Халласте](https://www.linkedin.com/in/paulhallaste/) и [Джоша Девлина](https://www.linkedin.com/in/josh-devlin/).*

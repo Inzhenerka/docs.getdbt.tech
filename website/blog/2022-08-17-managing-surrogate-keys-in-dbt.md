@@ -1,6 +1,6 @@
 ---
-title: "Surrogate keys in dbt: Integers or hashes?"
-description: "Wondering how to build a data model with surrogate keys? Dave Connors walks you through two strategies."
+title: "Суррогатные ключи в dbt: целые числа или хеши?"
+description: "Задумываетесь, как построить модель данных с суррогатными ключами? Дэйв Коннорс расскажет о двух стратегиях."
 slug: managing-surrogate-keys
 
 authors: [dave_connors]
@@ -12,15 +12,15 @@ date: 2022-08-24
 is_featured: true
 ---
 
-Those who have been building <Term id="data-warehouse">data warehouses</Term> for a long time have undoubtedly encountered the challenge of building <Term id="surrogate-key">surrogate keys</Term> on their data models. Having a column that uniquely represents each entity helps ensure your data model is complete, does not contain duplicates, and able to join across different data models in your warehouse.  
+Те, кто давно занимается построением <Term id="data-warehouse">хранилищ данных</Term>, несомненно, сталкивались с задачей создания <Term id="surrogate-key">суррогатных ключей</Term> в своих моделях данных. Наличие столбца, который уникально представляет каждую сущность, помогает гарантировать, что ваша модель данных полная, не содержит дубликатов и может объединяться с другими моделями данных в вашем хранилище.
 
-Sometimes, we are lucky enough to have data sources with these keys built right in — Shopify data synced via their API, for example, has easy-to-use keys on all the <Term id="table">tables</Term> written to your warehouse. If this is not the case, or if you build a data model with a compound key (aka the data is unique across multiple dimensions), you will have to rely on some strategy for creating and maintaining these keys yourself. How can you do this with dbt? Let’s dive in.
+Иногда нам везет, и у нас есть источники данных с уже встроенными ключами — например, данные Shopify, синхронизированные через их API, имеют простые в использовании ключи на всех <Term id="table">таблицах</Term>, записанных в ваше хранилище. Если это не так, или если вы строите модель данных с составным ключом (то есть данные уникальны по нескольким измерениям), вам придется полагаться на какую-то стратегию для создания и поддержания этих ключей самостоятельно. Как это сделать с помощью dbt? Давайте разберемся.
 
 <!--truncate-->
 
-## How were surrogate keys managed in the past?
+## Как раньше управляли суррогатными ключами?
 
-Before the advent of the analytical warehouse tools we use today, the data warehouse architecture had a few key constraints that led to the rise of the Kimball-style warehouse with a snowflake schema. This was because storage was expensive — it was more efficient to store data as few times as possible, and rely on joins to connect data tog   ether when a report required it. And to make those joins efficient, it became standard practice to use **<Term id="monotonically-increasing"/> integer surrogate keys (MIISKs)**, a fancy way to say “count each record starting at one” so that your data model would look something like this (you are a cheesemonger):
+До появления аналитических инструментов для хранилищ данных, которые мы используем сегодня, архитектура хранилищ данных имела несколько ключевых ограничений, которые привели к появлению хранилищ в стиле Кимбалла со снежной схемой. Это было связано с тем, что хранение данных было дорогим — было более эффективно хранить данные как можно меньше раз и полагаться на объединения для соединения данных, когда это требовалось для отчета. И чтобы сделать эти объединения эффективными, стало стандартной практикой использовать **<Term id="monotonically-increasing"/> монотонно возрастающие целочисленные суррогатные ключи (MIISKs)**, что является сложным способом сказать "считайте каждую запись, начиная с единицы", чтобы ваша модель данных выглядела примерно так (вы — торговец сыром):
 
 | product_id | product_name | created_by | created_at |
 | --- | --- | --- | --- |
@@ -41,47 +41,47 @@ Before the advent of the analytical warehouse tools we use today, the data wareh
 | 2 | 8 | 2022-07-05 |
 | 3 | 10 | 2022-07-07 |
 
-There are some clear benefits here!
+Здесь есть очевидные преимущества!
 
-- There are clear, intuitive relationships between these entities!
-- The fact that the keys here are small integers, the database can a) not worry about storage costs for this data b) index this field easily, making joins quick and efficient.
+- Существуют четкие, интуитивно понятные отношения между этими сущностями!
+- Поскольку ключи здесь — это небольшие целые числа, база данных может а) не беспокоиться о затратах на хранение этих данных б) легко индексировать это поле, что делает объединения быстрыми и эффективными.
 
-However, there are also some clear maintenance issues here. Making updates to, say, your products table will require some careful surgical work to ensure the association of cheddar to id 2 is never accidentally changed. You may have heard of the phrase “load your dims before your facts” — this refers to the careful work required to maintain this referential integrity. Additionally, you need to know about the *exact state of the data* before making any updates. This data is **stateful**, making it rigid and more difficult to work with should there be any losses to this data. Imagine trying to rebuild these relationships from scratch!
+Однако здесь также есть некоторые очевидные проблемы с обслуживанием. Обновление, например, вашей таблицы продуктов потребует тщательной работы, чтобы гарантировать, что ассоциация чеддера с id 2 никогда не будет случайно изменена. Вы, возможно, слышали фразу "загружайте измерения перед фактами" — это относится к тщательной работе, необходимой для поддержания этой ссылочной целостности. Кроме того, вам нужно знать о *точном состоянии данных* перед внесением любых обновлений. Эти данные **состоянием**, что делает их жесткими и более сложными в работе, если произойдут какие-либо потери данных. Представьте, что нужно восстанавливать эти отношения с нуля!
 
-## MIISKs in dbt
+## MIISKs в dbt
 
-If this is your preferred modeling approach, dbt can absolutely support this workflow! This will likely require you to take advantage of built-in warehouse functionality to generate these MIISKs — in Snowflake, we can use [sequences](https://docs.snowflake.com/en/user-guide/querying-sequences.html), which are objects built exactly for this purpose. We’ll use Snowflake as the example here, but this approach can likely be adapted for other warehouses as well. 
+Если это ваш предпочтительный подход к моделированию, dbt может полностью поддержать этот рабочий процесс! Это, вероятно, потребует от вас использования встроенной функциональности хранилища для генерации этих MIISKs — в Snowflake мы можем использовать [последовательности](https://docs.snowflake.com/en/user-guide/querying-sequences.html), которые являются объектами, созданными именно для этой цели. Мы будем использовать Snowflake в качестве примера здесь, но этот подход, вероятно, можно адаптировать и для других хранилищ.
 
-### Creating and maintaining sequences
+### Создание и поддержание последовательностей
 
-In order to properly maintain the sequence of the surrogate keys in your data models, we’ll need to build and maintain a sequence for each table that needs one. In order to do this at scale, we’ll make use of the [meta](https://docs.getdbt.com/reference/resource-configs/meta) config of dbt model. This configuration allows you to define any metadata dictionary that you want. Using this, we can programmatically apply a surrogate key configuration for each model that needs one, and reference that configuration in a macro to properly create and update surrogate keys when necessary. 
+Чтобы правильно поддерживать последовательность суррогатных ключей в ваших моделях данных, нам нужно будет создать и поддерживать последовательность для каждой таблицы, которой она нужна. Чтобы сделать это в масштабе, мы воспользуемся конфигурацией [meta](https://docs.getdbt.com/reference/resource-configs/meta) модели dbt. Эта конфигурация позволяет вам определить любой словарь метаданных, который вы хотите. Используя это, мы можем программно применить конфигурацию суррогатного ключа для каждой модели, которой она нужна, и ссылаться на эту конфигурацию в макросе для правильного создания и обновления суррогатных ключей, когда это необходимо.
 
-Here’s an example configuration:
+Вот пример конфигурации:
 
 ```yaml
-# assign the surrogate key config to your model
+# назначьте конфигурацию суррогатного ключа вашей модели
 
 version: 2
 
 models:
   - name: dim_customers
-	description: all customers
+	description: все клиенты
     config:
       meta:
         surrogate_key: true
 ```
 
-This metadata can then be leveraged in a macro in an `on-run-start` operation to ensure all sequences exist for all models that need one before the models execute. 
+Эти метаданные затем могут быть использованы в макросе в операции `on-run-start`, чтобы гарантировать, что все последовательности существуют для всех моделей, которым они нужны, до выполнения моделей.
 
 ```yaml
-# in macros/generate_sequences.sql
+# в macros/generate_sequences.sql
 
 {% macro generate_sequences() %}
 
     {% if execute %}
       
     {% set models = graph.nodes.values() | selectattr('resource_type', 'eq', 'model') %}
-    {# parse through the graph object, find all models with the meta surrogate key config #}
+    {# анализируем объект графа, находим все модели с конфигурацией мета суррогатного ключа #}
     {% set sk_models = [] %}
     {% for model in models %}
         {% if model.config.meta.surrogate_key %}
@@ -94,12 +94,12 @@ This metadata can then be leveraged in a macro in an `on-run-start` operation to
     {% for model in sk_models %}
 
         {% if flags.FULL_REFRESH or model.config.materialized == 'table' %}
-        {# regenerate sequences if necessary #}
+        {# при необходимости регенерируем последовательности #}
 
         create or replace sequence {{ model.database }}.{{ model.schema }}.{{ model.name }}_seq;
 
         {% else %}
-        {# create only if not exists for incremental models #}
+        {# создаем только если не существует для инкрементных моделей #}
     
         create sequence if not exists {{ model.database }}.{{ model.schema }}.{{ model.name }}_seq;
         
@@ -111,10 +111,10 @@ This metadata can then be leveraged in a macro in an `on-run-start` operation to
 
 ```
 
-You can see in the above macro that we’re baking a naming convention here — for any model, the name of the sequence will exist in the same database and schema and follow the naming convention `<model_name>_seq`. Adhering to this pattern allows us to also create an easy macro to increment the sequences in our model definitions without having to hard code the sequence name in every model that needs a surrogate key. 
+Вы можете видеть в приведенном выше макросе, что мы используем соглашение об именах — для любой модели имя последовательности будет существовать в той же базе данных и схеме и следовать соглашению об именах `<model_name>_seq`. Соблюдение этого шаблона позволяет нам также создать простой макрос для увеличения последовательностей в наших определениях моделей без необходимости жестко кодировать имя последовательности в каждой модели, которой нужен суррогатный ключ.
 
 ```yaml
-# in macros/increment_sequence.sql
+# в macros/increment_sequence.sql
 
 {%- macro increment_sequence() -%}
   
@@ -123,10 +123,10 @@ You can see in the above macro that we’re baking a naming convention here — 
 {%- endmacro -%}
 ```
 
-So your model code looks like:
+Таким образом, ваш код модели выглядит так:
 
 ```yaml
-# in dim_customers
+# в dim_customers
 ...
 
 with cte_name as (
@@ -145,11 +145,11 @@ from cte_name
 ...
 ```
 
-### Caveats
+### Предостережения
 
-Despite the relative simplicity of this strategy, there are a handful of drawbacks with regard to making sure these sequences work the way we want them to. 
+Несмотря на относительную простоту этой стратегии, есть несколько недостатков, связанных с тем, чтобы убедиться, что эти последовательности работают так, как мы хотим.
 
-- **dbt Run errors -** If an incremental model that has surrogate keys maintained in this way *fails* due to some SQL error, we may end up with gaps in our surrogate key. When dbt goes to execute the model, the sequence is queried, and therefore incremented, but the model failure prevents changes to the target table model. That means the next time we run the model, the incremental model will start on the wrong value, and we may end up with a column that looks like this:
+- **Ошибки dbt Run -** Если инкрементная модель, в которой суррогатные ключи поддерживаются таким образом, *не удается* из-за какой-либо ошибки SQL, мы можем получить пробелы в нашем суррогатном ключе. Когда dbt выполняет модель, последовательность запрашивается и, следовательно, увеличивается, но ошибка модели предотвращает изменения в целевой таблице модели. Это означает, что в следующий раз, когда мы запускаем модель, инкрементная модель начнет с неправильного значения, и мы можем получить столбец, который выглядит так:
     
     | surrogate_key_id | 
     | --- | 
@@ -160,20 +160,20 @@ Despite the relative simplicity of this strategy, there are a handful of drawbac
     | 5 | x
     | 8 | 
     
-    In fact, most cloud platforms [can’t guarantee](https://docs.snowflake.com/en/user-guide/querying-sequences.html#:~:text=Snowflake%20does%20not%20guarantee%20generating%20sequence%20numbers%20without%20gaps.%20The%20generated%20numbers%20consistently%20increase%20in%20value%20(or%20decrease%20in%20value%20if%20the%20step%20size%20is%20negative)%20but%20are%20not%20necessarily%20contiguous) that sequences will be generated without gaps because of their use of parallel processing, even if we *don’t* have a dbt run error — because queries will be spread across multiple compute clusters, each step might query the sequence at different times, which makes it possible to have an out of order sequence result. This is a major consideration in using sequences — if that’s a deal breaker, you may need additional SQL logic in our models (like a `row_number()` function) to guarantee your keys are monotonically increasing. 
+    На самом деле, большинство облачных платформ [не могут гарантировать](https://docs.snowflake.com/en/user-guide/querying-sequences.html#:~:text=Snowflake%20does%20not%20guarantee%20generating%20sequence%20numbers%20without%20gaps.%20The%20generated%20numbers%20consistently%20increase%20in%20value%20(or%20decrease%20in%20value%20if%20the%20step%20size%20is%20negative)%20but%20are%20not%20necessarily%20contiguous), что последовательности будут генерироваться без пробелов из-за их использования параллельной обработки, даже если у нас *нет* ошибки выполнения dbt — поскольку запросы будут распределены по нескольким вычислительным кластерам, каждый шаг может запрашивать последовательность в разное время, что делает возможным получение результата последовательности не по порядку. Это важное соображение при использовании последовательностей — если это является препятствием, вам может понадобиться дополнительная логика SQL в наших моделях (например, функция `row_number()`), чтобы гарантировать, что ваши ключи монотонно возрастают.
     
-- **<Term id="view">Views</Term> -** Because sequences in Snowflake increment on every query, using them as the surrogate keys for views would mean every time the view is queried, the sequence would increment and therefore change. This strategy would only work for table or incremental models.
-- **Ordering -** Since sequences will be regenerated on every run for tables, and every time an incremental model is regenerated, the order of the resulting query determines which records get assigned to each key. In order to maintain referential integrity (i.e. product_id 1 always means mozzarella), you need to build in `ORDER BY` statements to your models. This can cause adverse performance during table builds.
-- **“Load your dims before your facts” -** This strategy can also lead to some very messy DAGs in order to keep relationships intact in your project. As mentioned above, it’s imperative that each product record results in the same surrogate key value every time dbt is run. Additionally, this means that any table that needs to read from this table needs to run downstream of that initial process. This can lead to bottlenecks at runtime.
+- **<Term id="view">Представления</Term> -** Поскольку последовательности в Snowflake увеличиваются при каждом запросе, использование их в качестве суррогатных ключей для представлений означало бы, что каждый раз, когда представление запрашивается, последовательность увеличивается и, следовательно, изменяется. Эта стратегия будет работать только для таблиц или инкрементных моделей.
+- **Упорядочение -** Поскольку последовательности будут регенерироваться при каждом запуске для таблиц и каждый раз, когда инкрементная модель регенерируется, порядок результирующего запроса определяет, какие записи получают каждый ключ. Чтобы поддерживать ссылочную целостность (т.е. product_id 1 всегда означает моцареллу), вам нужно встроить операторы `ORDER BY` в ваши модели. Это может вызвать неблагоприятную производительность при построении таблиц.
+- **"Загружайте измерения перед фактами" -** Эта стратегия также может привести к очень запутанным DAG, чтобы сохранить отношения в вашем проекте. Как упоминалось выше, крайне важно, чтобы каждая запись продукта приводила к одному и тому же значению суррогатного ключа каждый раз, когда dbt выполняется. Кроме того, это означает, что любая таблица, которая должна читать из этой таблицы, должна выполняться ниже этого начального процесса. Это может привести к узким местам во время выполнения.
 
-Even though configuring MIISKs with sequences can be pretty well automated, it’s a bit of a brittle process that relies on a lot of assumptions and requires a whole lot of bandwidth from the data team to recreate the warehouse should anything go haywire. 
+Несмотря на то, что настройка MIISKs с последовательностями может быть довольно хорошо автоматизирована, это немного хрупкий процесс, который полагается на множество предположений и требует большого количества ресурсов от команды данных для восстановления хранилища, если что-то пойдет не так.
 
-## Hashed surrogate keys
+## Хешированные суррогатные ключи
 
-An alternative to using the traditional MIISK strategy is to use cryptographic hashing functions to *derive the surrogate key values from the data itself,* a fancy way of saying “create a random string for every unique combination of values you find in my table”. These hashing functions are **deterministic**, meaning the same set of inputs will always produce the same output. In our SQL models, we can pass the column or columns that represent to the <Term id="grain">grain</Term> to this hashing function and voilà, a consistent, unique identifier is generated automatically! This has been packaged up in the `surrogate_key()` macro in the `dbt_utils` package ([source](https://github.com/dbt-labs/dbt-utils#surrogate_key-source)), and works across warehouse providers! Check out our SQL Magic post that dives deeper into this function [here](https://docs.getdbt.com/blog/sql-surrogate-keys).  
+Альтернативой использованию традиционной стратегии MIISK является использование криптографических хеш-функций для *вывода значений суррогатных ключей из самих данных*, что является сложным способом сказать "создайте случайную строку для каждой уникальной комбинации значений, которую вы найдете в моей таблице". Эти хеш-функции **детерминированы**, что означает, что один и тот же набор входных данных всегда будет производить один и тот же выход. В наших SQL моделях мы можем передать столбец или столбцы, которые представляют <Term id="grain">зерно</Term>, в эту хеш-функцию и voilà, последовательный, уникальный идентификатор генерируется автоматически! Это было упаковано в макрос `surrogate_key()` в пакете `dbt_utils` ([source](https://github.com/dbt-labs/dbt-utils#surrogate-key-source)), и работает на всех поставщиках хранилищ! Ознакомьтесь с нашим постом SQL Magic, который более подробно рассматривает эту функцию [здесь](https://docs.getdbt.com/blog/sql-surrogate-keys).
 
 ```sql
-# in models/reports/daily_user_orders.sql
+# в models/reports/daily_user_orders.sql
 with 
 
 orders as (
@@ -207,24 +207,23 @@ final as (
 select * from final
 ```
 
-Using hashed keys makes our transformations <Term id="idempotent" /> — every dbt run results in the same exact outputs every time. I can safely delete all my non-source objects in my warehouse, execute a dbt run and be right back where I started (though I wouldn’t necessarily recommend this 😅).  
+Использование хешированных ключей делает наши преобразования <Term id="idempotent" /> — каждый запуск dbt приводит к точно таким же результатам каждый раз. Я могу безопасно удалить все свои объекты, не являющиеся источниками, в моем хранилище, выполнить dbt run и вернуться туда, откуда начал (хотя я бы не рекомендовал это делать 😅).
 
-The analytical warehouses we use now no longer have the same constraints that traditional warehouses had  — joins on strings aren’t notably less performant than those on integers, and storing slightly larger values in the surrogate key column is peanuts given the relative cost of storage on these platforms. This strategy also removes the need for tight coupling of transformations to propagate the surrogate key values across our project — anywhere the inputs for the surrogate keys are present, the hashing function produces the same keys, so we can take advantage of parallel processing in our warehouse and avoid the bottlenecks we had before. 
+Аналитические хранилища, которые мы используем сейчас, больше не имеют тех же ограничений, что и традиционные хранилища — объединения по строкам не заметно менее производительны, чем по целым числам, и хранение немного больших значений в столбце суррогатного ключа — это мелочь, учитывая относительную стоимость хранения на этих платформах. Эта стратегия также устраняет необходимость в тесной связи преобразований для распространения значений суррогатных ключей по нашему проекту — везде, где присутствуют входные данные для суррогатных ключей, хеш-функция производит те же ключи, так что мы можем воспользоваться параллельной обработкой в нашем хранилище и избежать узких мест, которые у нас были раньше.
 
-### Caveats
+### Предостережения
 
-This strategy is not without its caveats either!
+Эта стратегия также не лишена своих предостережений!
 
+- **Коллизии -** Хотя это *чрезвычайно* редко, в зависимости от используемого алгоритма хеширования, возможно, что два разных набора входных данных могут производить одинаковые выходные данные, вызывая ошибочные дублирующие записи в вашем наборе данных. Используя хеш MD5 (по умолчанию для макроса `dbt_utils.generate_surrogate_key`), у вас есть 50% вероятность коллизии, когда вы достигнете 2^64 записей (1.84 x 10E19, то есть очень много данных). Хотя это [очень, очень, очень маловероятно](https://docs.getdbt.com/terms/surrogate-key#a-note-on-hashing-algorithms), это, безусловно, стоит учитывать для действительно больших наборов данных.
+- **Типы данных -** Если вы находитесь в процессе миграции устаревшего кода к новому поставщику хранилищ, у вас, вероятно, есть некоторые ограничения на тип данных ваших ключей от потребителей ваших наборов данных, и могут возникнуть проблемы с преобразованием в строковый ключ. К счастью, некоторые поставщики хранилищ имеют хеш-функции, которые выводят целочисленные значения (например, функции Snowflake `MD5_UPPER/LOWER_64`). Однако у них меньше бит в функции хеширования, что может привести к проблемам с коллизиями на больших наборах данных.
+- **Производительность -** Хешированные ключи обычно приводят к длинным строковым значениям. На огромных наборах данных в некоторых хранилищах это может вызвать проблемы с производительностью. В отличие от MIISKs, строковые значения не могут быть легко разделены для улучшения производительности запросов. К счастью, как описано в предыдущем пункте, вы можете выбрать использование хеш-функций, которые выводят другие, более производительные типы данных!
+- **Хранение -** Как упоминалось выше, хеш-ключи приведут к более высоким затратам на хранение, чем их аналоги MIISK. Учитывая, что стоимость хранения в облачных хранилищах чрезвычайно низка, вряд ли стоит оптимизировать затраты на хранение.
 
-- **Collisions -** Although it's *exceedingly* rare, depending on the hashing algorithm you use, it's possible for two different sets of inputs to produce the same outputs, causing erroneous duplicate records in your dataset. Using an MD5 hash (the default for the `dbt_utils.generate_surrogate_key` macro), you have a 50% of a collision when you get up to 2^64 records (1.84 x 10E19 aka a whole lot of data). While [very very very unlikely](https://docs.getdbt.com/terms/surrogate-key#a-note-on-hashing-algorithms), it’s certainly something to consider for truly massive datasets.
-- **Datatypes -** If you’re in the process of migrating legacy code to a new warehouse provider, you likely have some constraints on the datatype of your keys from the consumers of your datasets, and may have some issues converting to a string-based key. Luckily, some warehouse providers have hash functions that output integer values (like Snowflake’s `MD5_UPPER/LOWER_64` functions). However, these have fewer bits in the hashing function, so may lead to collision issues on big data sets.
-- **Performance -** Hashed keys generally result in long string-type values. On massive datasets on some warehouses, this could cause some performance issues. Unlike MIISKs, string values can’t be easily partitioned to improve query performance. Luckily, as described in the above bullet point, you can choose to utilize hashing functions that output other, more performant datatypes!
-- **Storage -** As mentioned above, hash keys will end up with higher storage costs than their MIISK counterparts. Given that the cost of storage in cloud warehouses is extremely cheap, it’s unlikely to be worth the effort to optimize for storage costs.
+## Итак, какой выбрать?
 
-## OK, so which one?
+Суррогатные ключи являются критическим компонентом логической модели данных, и, как и в большинстве случаев, у вас есть варианты, когда дело доходит до их генерации и поддержания с помощью dbt. Уникальные ограничения вашего бизнеса в отношении затрат на обслуживание, производительности и размера данных, вероятно, будут основными факторами, определяющими ваше решение. Также важно учитывать потребности ваших заинтересованных сторон — привыкли ли они видеть данные в определенном формате? есть ли сотня дашбордов, которые взорвутся, если вы измените некоторые ключи с целых чисел на строки? Для многих организаций это нетривиальное решение!
 
-Surrogate keys are a critical component of a logical data model, and as with most anything, you’ve got options when it comes to generating and maintaining them with dbt. Your business’s unique constraints with respect to maintenance overhead, performance, and data size will likely be the primary drivers for your decision. It will also be important to consider your stakeholders’ needs — are they used to seeing data in a particular format? are there one hundred dashboards that will explode if you change some keys from an integer to a string? For many orgs, this is a non-trivial decision! 
+На мой взгляд, простота использования хешированных ключей значительно перевешивает потенциальные преимущества наличия MIISKs в вашей модели данных. Построение с dbt работает лучше всего, когда все части вашего проекта идемпотентны, и хешированные ключи требуют почти нулевого обслуживания. Затраты времени на восстановление ваших суррогатных ключей в ваших моделях данных, если вы не можете воссоздать их с помощью простого `dbt run`, обычно компенсируют любые скромные улучшения производительности и хранения, которые вы могли бы достичь с помощью MIISKs.
 
-For my money, the simplicity of using hashed keys far outweighs the potential benefits of having MIISKs in your data model. Building with dbt works best when all parts of your project are idempotent, and hashed keys require close to zero maintenance. The cost of time spent rebuilding your surrogate keys in your data models if you can’t recreate them with a simple `dbt run` usually offsets any modest performance and storage gains you might be able to achieve with MIISKs.
-
-Big thanks to [Mike Fuller](https://github.com/mikegfuller) and [Bennie Regenold](https://github.com/bennieregenold7) for help ideating on this blog!
+Большое спасибо [Майку Фуллеру](https://github.com/mikegfuller) и [Бенни Регенольду](https://github.com/bennieregenold7) за помощь в разработке этой статьи!

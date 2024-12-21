@@ -1,6 +1,6 @@
 ---
-title: "How we shaved 90 minutes off our longest running model"
-description: "Monitoring large, complex projects can be difficult. When you're running 1,000+ models in a day, how do you know which of those consistently take the longest to run? In this article, Bennie Regenold and Barr Yaron show the benefits of the Model Timing tab in dbt Cloud."
+title: "Как мы сократили время выполнения нашей самой долгой модели на 90 минут"
+description: "Мониторинг больших и сложных проектов может быть сложной задачей. Когда вы запускаете более 1000 моделей в день, как узнать, какие из них постоянно занимают больше всего времени на выполнение? В этой статье Бенни Регенолд и Барр Ярон показывают преимущества вкладки Model Timing в dbt Cloud."
 slug: how-we-shaved-90-minutes-off-model
 authors: [bennie_regenold, barr_yaron]
 tags: [analytics craft]
@@ -10,49 +10,49 @@ date: 2022-08-18
 is_featured: true
 ---
 
-When running a job that has over 1,700 models, how do you know what a “good” runtime is? If the total process takes 3 hours, is that fantastic or terrible? While there are many possible answers depending on dataset size, complexity of modeling, and historical run times, the crux of the matter is normally “did you hit your SLAs”? However, in the cloud computing world where bills are based on usage, the question is really “did you hit your SLAs _and stay within budget_”?
+Когда вы запускаете задачу, содержащую более 1700 моделей, как определить, что является "хорошим" временем выполнения? Если весь процесс занимает 3 часа, это замечательно или ужасно? Хотя существует множество возможных ответов в зависимости от размера набора данных, сложности моделирования и исторических времен выполнения, суть обычно заключается в вопросе "достигли ли вы своих SLA"? Однако в мире облачных вычислений, где счета выставляются на основе использования, вопрос на самом деле звучит так: "достигли ли вы своих SLA _и остались в рамках бюджета_?"
 
-Here at dbt Labs, we used the Model Timing tab in our internal analytics dbt project to help us identify inefficiencies in our incremental dbt Cloud job that eventually led to major financial savings, and a path forward for periodic improvement checks.
+Здесь, в dbt Labs, мы использовали вкладку Model Timing в нашем внутреннем аналитическом проекте dbt, чтобы помочь нам выявить неэффективности в нашей инкрементальной задаче dbt Cloud, что в конечном итоге привело к значительной экономии средств и созданию пути для периодических проверок улучшений.
 
 <!--truncate-->
 
-## Your new best friend: The Model Timing tab
+## Ваш новый лучший друг: вкладка Model Timing
 
-The dbt Labs internal project is a beast! Our daily incremental dbt Cloud job runs 4x/day and invokes over 1,700 models. We like to sift through our dbt Cloud job using the [Model Timing](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) tab in dbt Cloud. The `Model Timing` dashboard displays the model composition, order, and run time for every job run in dbt Cloud (for team and enterprise plans). The top 1% of model durations are automatically highlighted, which makes it easy to find bottlenecks in our runs. You can see that our longest running model stuck out like a sore thumb -- here's an example of our incremental job before a fix was applied:
+Внутренний проект dbt Labs — это настоящий монстр! Наша ежедневная инкрементальная задача dbt Cloud запускается 4 раза в день и вызывает более 1700 моделей. Мы любим просматривать нашу задачу dbt Cloud, используя вкладку [Model Timing](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) в dbt Cloud. Панель `Model Timing` отображает состав моделей, порядок и время выполнения для каждой задачи в dbt Cloud (для командных и корпоративных планов). Топ 1% длительностей выполнения моделей автоматически выделяется, что облегчает поиск узких мест в наших запусках. Вы можете увидеть, что наша самая долго выполняющаяся модель выделяется как больной палец — вот пример нашей инкрементальной задачи до применения исправления:
 
 ![Model Timing tab before picture](/img/blog/2022-08-12-model-timing/model_timing_before.png)
 
-As you can see, it's straightforward to identify the model that's causing the long run times and holding up other models. The model `fct_dbt_invocations` takes, on average, 1.5 hours to run. This isn't surprising, given that it's a relatively large dataset (~5B records) and that we're performing several intense SQL calculations. Additionally, this model calls an [ephemeral model](https://docs.getdbt.com/docs/build/materializations#ephemeral) named `dbt_model_summary` that also does some heavy lifting. Still, we decided to explore if we could refactor this model and make it faster.
+Как вы можете видеть, легко определить модель, которая вызывает длительное время выполнения и задерживает другие модели. Модель `fct_dbt_invocations` в среднем занимает 1,5 часа на выполнение. Это неудивительно, учитывая, что это относительно большой набор данных (~5 миллиардов записей) и что мы выполняем несколько интенсивных SQL-вычислений. Кроме того, эта модель вызывает [эфемерную модель](https://docs.getdbt.com/docs/build/materializations#ephemeral) под названием `dbt_model_summary`, которая также выполняет значительную работу. Тем не менее, мы решили исследовать возможность рефакторинга этой модели, чтобы сделать ее быстрее.
 
-After refactoring this code, we ended up swapping the ephemeral model `dbt_model_summary` to an incremental model that took the bulk of the processing out of the main `fct_dbt_invocations` model. Instead of recalculating this complex logic every run, we pull only new data and run that logic on the smaller subset of those records. The combined run time of the new `dbt_model_summary` and `fct_dbt_invocations` is now ~15-20 minutes, a savings of over an hour per run!
+После рефакторинга этого кода мы заменили эфемерную модель `dbt_model_summary` на инкрементальную модель, которая вынесла основную часть обработки из основной модели `fct_dbt_invocations`. Вместо того чтобы пересчитывать эту сложную логику при каждом запуске, мы извлекаем только новые данные и применяем эту логику к меньшему подмножеству этих записей. Общее время выполнения новой `dbt_model_summary` и `fct_dbt_invocations` теперь составляет ~15-20 минут, что позволяет сэкономить более часа на каждом запуске!
 
 ![Model Timing tab after picture](/img/blog/2022-08-12-model-timing/model_timing_after.png)
 
-## Identifying the problem
+## Определение проблемы
 
-This project runs on Snowflake, so all the examples below show the Snowflake UI. However, it is possible to do a similar style of analysis in any data warehouse.
+Этот проект работает на Snowflake, поэтому все приведенные ниже примеры показывают интерфейс Snowflake. Однако аналогичный анализ можно провести в любом хранилище данных.
 
-Also, this blog post represents a pretty technical deep dive. If everything you read here doesn't line up immediately, that's ok! We recommend reading through this article, then brushing up on cloud <Term id="data-warehouse">data warehouses</Term> and query optimization to help supplement the learnings here.
+Кроме того, этот блог-пост представляет собой довольно техническое погружение. Если все, что вы здесь прочитали, не сразу укладывается в голове, это нормально! Мы рекомендуем прочитать эту статью, а затем освежить знания о <Term id="data-warehouse">облачных хранилищах данных</Term> и оптимизации запросов, чтобы дополнить полученные здесь знания.
 
-### Unpacking the query plan
+### Разбор плана запроса
 
-Finding this long running query was step one. Since it was so dominant in the Model Timing tab, it was easy to go straight to the problematic model and start looking for ways to improve it. The next step was to check out what the Snowflake query plan looked like.
+Нахождение этого долго выполняющегося запроса было первым шагом. Поскольку он был настолько доминирующим на вкладке Model Timing, было легко перейти прямо к проблемной модели и начать искать способы ее улучшения. Следующим шагом было изучение того, как выглядел план запроса Snowflake.
 
-There are a few ways you can do this: either find the executed query in the `History` tab of the Snowflake UI, or grab the compiled code from dbt and run it in a worksheet. As it’s running, you can click on the `Query ID` link to see the plan. More details on this process are available in your provider’s documentation ([Snowflake](https://docs.snowflake.com/en/user-guide/ui-query-profile.html), [BigQuery](https://cloud.google.com/bigquery/docs/query-plan-explanation), [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/c-the-query-plan.html), [Databricks](https://docs.databricks.com/sql/admin/query-profile.html)).
+Существует несколько способов сделать это: либо найти выполненный запрос на вкладке `History` в интерфейсе Snowflake, либо взять скомпилированный код из dbt и запустить его в рабочем листе. Пока он выполняется, вы можете нажать на ссылку `Query ID`, чтобы увидеть план. Более подробная информация об этом процессе доступна в документации вашего провайдера ([Snowflake](https://docs.snowflake.com/en/user-guide/ui-query-profile.html), [BigQuery](https://cloud.google.com/bigquery/docs/query-plan-explanation), [Redshift](https://docs.aws.amazon.com/redshift/latest/dg/c-the-query-plan.html), [Databricks](https://docs.databricks.com/sql/admin/query-profile.html)).
 
-Below you can see the query plan for `fct_dbt_invocations`, which includes the logic from `dbt_model_summary`:
+Ниже вы можете увидеть план запроса для `fct_dbt_invocations`, который включает логику из `dbt_model_summary`:
 
 ![Snowflake query plan](/img/blog/2022-08-12-model-timing/snowflake_query_plan.png)
 
-From the query profile, it was easy to find the issue. There are two window functions that account for over 90% of the run time when we factor in the table scan needed to retrieve the data. Additionally, there is nearly 1TB worth of data that is [spilled to remote storage](https://github.com/dbt-labs/docs.getdbt.com/discussions/1550) as part of this query. Within Snowflake, [remote storage is considerably slower](https://docs.snowflake.com/en/user-guide/ui-query-profile.html?_ga=2.162889724.1914632094.1659383329-1610273913.1651521575&_gac=1.229438062.1658341107.Cj0KCQjwz96WBhC8ARIsAATR2516I_11uMuOf0cXXe0zlyOBUXLap5CfVvKnpGwTb3bLqC5tHwlurxcaAskEEALw_wcB#queries-too-large-to-fit-in-memory:~:text=This%20spilling%20can%20have%20a%20profound%20effect%20on%20query%20performance%20(especially%20if%20remote%20disk%20is%20used%20for%20spilling).%20To%20alleviate%20this%2C%20we%20recommend%3A) to both write and read from, so any data that’s on the remote drive will really slow down a query. We’ve found the problem!
+Из профиля запроса было легко найти проблему. Существуют две оконные функции, которые составляют более 90% времени выполнения, когда мы учитываем сканирование таблицы, необходимое для извлечения данных. Кроме того, почти 1 ТБ данных [выгружается в удаленное хранилище](https://github.com/dbt-labs/docs.getdbt.com/discussions/1550) в рамках этого запроса. В Snowflake [удаленное хранилище значительно медленнее](https://docs.snowflake.com/en/user-guide/ui-query-profile.html?_ga=2.162889724.1914632094.1659383329-1610273913.1651521575&_gac=1.229438062.1658341107.Cj0KCQjwz96WBhC8ARIsAATR2516I_11uMuOf0cXXe0zlyOBUXLap5CfVvKnpGwTb3bLqC5tHwlurxcaAskEEALw_wcB#queries-too-large-to-fit-in-memory:~:text=This%20spilling%20can%20have%20a%20profound%20effect%20on%20query%20performance%20(especially%20if%20remote%20disk%20is%20used%20for%20spilling).%20To%20alleviate%20this%2C%20we%20recommend%3A) как для записи, так и для чтения, поэтому любые данные, находящиеся на удаленном диске, действительно замедляют выполнение запроса. Мы нашли проблему!
 
-### Understanding the data
+### Понимание данных
 
-Once we identified the issue, we had to find a way to fix it.
+После того как мы выявили проблему, нам нужно было найти способ ее исправить.
 
-First, it’s good to have a high level understanding of the underlying data for `fct_dbt_invocations`. Any time you issue a command to dbt (run, test, build, snapshot, etc.), we track certain pieces of metadata about that run. We call these “invocations,” and as you can imagine, dbt is invoked *a lot*. The table this query is running against is filtered, but still has somewhere in the neighborhood of 5 billion rows. The relevant pieces of data that we are using in this query include project IDs, model IDs, and an anonymized hash key representing the raw model contents to know if a model changed.
+Во-первых, полезно иметь общее представление о базовых данных для `fct_dbt_invocations`. Каждый раз, когда вы выдаете команду dbt (run, test, build, snapshot и т.д.), мы отслеживаем определенные метаданные об этом запуске. Мы называем их "вызовами", и, как вы можете себе представить, dbt вызывается *очень часто*. Таблица, против которой выполняется этот запрос, отфильтрована, но все же содержит около 5 миллиардов строк. Соответствующие части данных, которые мы используем в этом запросе, включают идентификаторы проектов, идентификаторы моделей и анонимизированный хеш-ключ, представляющий необработанное содержимое модели, чтобы узнать, изменилась ли модель.
 
-If you’re curious, here’s a look at the query for `dbt_model_summary` before any changes were made:
+Если вам интересно, вот как выглядел запрос для `dbt_model_summary` до внесения изменений:
 
 ```sql
 {{config(materialized = 'ephemeral')}}
@@ -73,10 +73,10 @@ diffed as (
         ) = 1 as is_new,
 
         /*
-            The `mode` window function returns the most common content hash for a
-            given model on a given day. We use this a proxy for the 'production'
-            version of the model, running in deployment. When a different hash
-            is run, it likely reflects that the model is undergoing development.
+            Оконная функция `mode` возвращает наиболее распространенный хеш содержимого
+            для данной модели в течение данного дня. Мы используем это как прокси для
+            'производственной' версии модели, работающей в развертывании. Когда выполняется
+            другой хеш, это, вероятно, отражает, что модель находится в стадии разработки.
         */
 
         contents != mode(contents) over (
@@ -106,37 +106,37 @@ final as (
 select * from final
 ```
 
-The window functions referenced above are answering the following questions:
+Оконные функции, упомянутые выше, отвечают на следующие вопросы:
 
 - `row_number()`
-    - *Is this the first time that this specific model has run in a project?*
-    - Note: this grain is at the project level
+    - *Это первый раз, когда эта конкретная модель запускается в проекте?*
+    - Примечание: это зерно на уровне проекта
 - `mode()`
-    - *Is this the most frequent version of the model that ran today (based on the hashed contents)?*
-    - Note: this grain is at the model + run date level
+    - *Это наиболее частая версия модели, которая запускалась сегодня (на основе хешированного содержимого)?*
+    - Примечание: это зерно на уровне модели + даты запуска
 
-## Moving to solutions
+## Переход к решениям
 
-### Attempt #1: Optimizing our objects and materializations
+### Попытка №1: Оптимизация наших объектов и материализаций
 
-Given the size and complexity of this query, the first few approaches we took didn’t focus on changing the query as much as optimizing our objects and materializations.
+Учитывая размер и сложность этого запроса, первые несколько подходов, которые мы предприняли, не были сосредоточены на изменении запроса, а скорее на оптимизации наших объектов и материализаций.
 
-The two window functions (`row_number()` and `mode()` in the `diffed` <Term id="cte" /> above) were in an [ephemeral model](https://docs.getdbt.com/docs/build/materializations#ephemeral) which isn’t stored in the data warehouse, but is instead executed in-memory at run time. Since it was obvious our virtual warehouse was running out of memory (remote storage spillage), we tried swapping that to a view, then a table materialization. Neither of these improved the run time significantly, so we tried clustering the table. However, since our two window functions are at different grains there wasn’t a great clustering key we found for this.
+Две оконные функции (`row_number()` и `mode()` в `diffed` <Term id="cte" /> выше) находились в [эфемерной модели](https://docs.getdbt.com/docs/build/materializations#ephemeral), которая не хранится в хранилище данных, а выполняется в памяти во время выполнения. Поскольку было очевидно, что наш виртуальный склад исчерпывает память (выгрузка в удаленное хранилище), мы попробовали заменить это на представление, а затем на материализацию таблицы. Ни одно из этих действий не улучшило время выполнения значительно, поэтому мы попробовали кластеризацию таблицы. Однако, поскольку наши две оконные функции находятся на разных уровнях зерна, мы не нашли подходящего ключа кластеризации для этого.
 
-### Attempt #2: Moving to an incremental model
+### Попытка №2: Переход к инкрементальной модели
 
-The final strategy we tried, which ended up being the solution we implemented, was to swap the ephemeral model (`dbt_model_summary`) to an [incremental model](https://docs.getdbt.com/docs/build/incremental-models). Since we’re calculating metrics based on historical events (**first** model run, most frequent model run **today**), an incremental model let us perform the calculation for all of history once in an initial build, then every subsequent build only needs to look at a much smaller subset of the data to run it’s calculations.
+Последняя стратегия, которую мы попробовали и которая в итоге оказалась решением, заключалась в замене эфемерной модели (`dbt_model_summary`) на [инкрементальную модель](https://docs.getdbt.com/docs/build/incremental-models). Поскольку мы рассчитываем метрики на основе исторических событий (**первый** запуск модели, наиболее частый запуск модели **сегодня**), инкрементальная модель позволила нам выполнить расчет для всей истории один раз в начальной сборке, а затем каждая последующая сборка должна была рассматривать гораздо меньший подмножество данных для выполнения своих расчетов.
 
-One of the biggest problems with the ephemeral model was remote spillage due to lack of memory, so having a smaller dataset to run the calculation against made a massive impact. Snowflake can easily calculate a daily mode or a first model run when we only had to look at a sliver of the data each time.
+Одной из самых больших проблем с эфемерной моделью была выгрузка в удаленное хранилище из-за нехватки памяти, поэтому наличие меньшего набора данных для выполнения расчета оказало огромное влияние. Snowflake может легко рассчитать ежедневный режим или первый запуск модели, когда нам нужно было рассматривать только небольшую часть данных каждый раз.
 
-Swapping from ephemeral to incremental can be simple, but in this case we are calculating at two grains and need more than just the data loaded since the prior run.
+Переход от эфемерной к инкрементальной модели может быть простым, но в этом случае мы рассчитываем на двух уровнях зерна и нам нужно больше, чем просто данные, загруженные с момента предыдущего запуска.
 
 - `row_number()`
-    - To get the first time a model was run, we need every invocation of that model to see if this is the first one. Still, we don’t need the full history, just the subset that changed today. This is handled in the `new_models` CTE you can see below.
+    - Чтобы получить первый раз, когда модель была запущена, нам нужно каждое вызов этой модели, чтобы увидеть, является ли это первым. Тем не менее, нам не нужна полная история, только подмножество, которое изменилось сегодня. Это обрабатывается в CTE `new_models`, который вы можете увидеть ниже.
 - `mode()`
-    - Since we’re calculating a daily mode, we actually need the full day’s worth of data every time this incremental model runs. We do that by applying the `::date` operator to our incremental logic to always pull a full days (or multiple days) worth of history each time.
+    - Поскольку мы рассчитываем ежедневный режим, нам на самом деле нужны полные данные за день каждый раз, когда эта инкрементальная модель запускается. Мы делаем это, применяя оператор `::date` к нашей инкрементальной логике, чтобы каждый раз извлекать полную историю за день (или несколько дней).
 
-This let to slightly more complex logic in the model, as you can see below:
+Это привело к несколько более сложной логике в модели, как вы можете видеть ниже:
 
 ```sql
 {{config(materialized = 'incremental', unique_key = 'invocation_id')}}
@@ -153,14 +153,14 @@ with model_execution as (
 
     {% elif is_incremental() %}
 
-        --incremental runs re-process a full day everytime to get an accurate mode below
+        --инкрементальные запуски повторно обрабатывают полный день каждый раз, чтобы получить точный режим ниже
         and collector_tstamp > (select max(max_collector_tstamp)::date from {{ this }})
 
     {% endif %}
 
 ),
 
-{# When running rull refresh we have access to all records, so this logis isn't needed #}
+{# При выполнении полного обновления у нас есть доступ ко всем записям, поэтому эта логика не нужна #}
 {% if is_incremental() %}
 new_models as (
 
@@ -204,10 +204,10 @@ diffed as (
         {% endif %}
 
         /*
-            The `mode` window function returns the most common content hash for a
-            given model on a given day. We use this a proxy for the 'production'
-            version of the model, running in deployment. When a different hash
-            is run, it likely reflects that the model is undergoing development.
+            Оконная функция `mode` возвращает наиболее распространенный хеш содержимого
+            для данной модели в течение данного дня. Мы используем это как прокси для
+            'производственной' версии модели, работающей в развертывании. Когда выполняется
+            другой хеш, это, вероятно, отражает, что модель находится в стадии разработки.
         */
 
         model_execution.contents != mode(model_execution.contents) over (
@@ -245,49 +245,49 @@ final as (
 select * from final
 ```
 
-The astute reader will notice that the entire `new_models` CTE is wrapped in an `{% if is_incremental() %}` block. That’s because when the model is ran incrementally we need the full history of model runs for the given model. This means we have to join back to the main table to get that full history. However, when we’re running this as a full refresh (or on the initial load), we already have the full history of runs in the query, so we don’t need to join back to the table. This additional piece of `{% if is_incremental() %}` dropped the full refresh run time down from over 2 hours to just under 30 minutes. This is a one time savings (or however often we have to full refresh), but is well worth the slightly more complex logic.
+Внимательный читатель заметит, что весь CTE `new_models` обернут в блок `{% if is_incremental() %}`. Это потому, что когда модель запускается инкрементально, нам нужна полная история запусков модели для данной модели. Это означает, что мы должны вернуться к основной таблице, чтобы получить эту полную историю. Однако, когда мы выполняем это как полное обновление (или при начальной загрузке), у нас уже есть полная история запусков в запросе, поэтому нам не нужно возвращаться к таблице. Этот дополнительный элемент `{% if is_incremental() %}` сократил время выполнения полного обновления с более чем 2 часов до чуть менее 30 минут. Это одноразовая экономия (или как часто нам нужно полное обновление), но она стоит немного более сложной логики.
 
-## Difficulty with testing
+## Трудности с тестированием
 
-A major challenge in testing and implementing our changes was the volume of data needed for comparison testing. Again, the biggest problem we had was that our virtual warehouse was running out of memory, so trying to do performance testing on a subset of the data had misleading results (our testing was a subset of 10 million records). Since this query runs just fine on a small set of data (think the incremental runs), when we were initially trying to performance test the new vs old it looked like there was no real benefit to the incremental model. This led to many wasted hours of trying to figure out why we weren’t seeing an improvement.
+Основной проблемой при тестировании и внедрении наших изменений был объем данных, необходимый для сравнительного тестирования. Опять же, самой большой проблемой было то, что наш виртуальный склад исчерпывал память, поэтому попытки провести тестирование производительности на подмножестве данных давали вводящие в заблуждение результаты (наше тестирование было на подмножестве из 10 миллионов записей). Поскольку этот запрос отлично работает на небольшом наборе данных (подумайте об инкрементальных запусках), когда мы изначально пытались протестировать производительность новой и старой модели, казалось, что инкрементальная модель не дает реальной пользы. Это привело к многим потраченным впустую часам, пытаясь понять, почему мы не видим улучшений.
 
-Eventually, we figured out that we needed to test this on the full dataset to see the impact. In the cloud warehousing world where you pay-for-use this has very easy to track cost implications. However, you have to spend money to make money, so we decided the increased cost associated with testing this on the full dataset was worth the expense.
+В конце концов, мы поняли, что нам нужно протестировать это на полном наборе данных, чтобы увидеть влияние. В мире облачных хранилищ, где вы платите за использование, это имеет легко отслеживаемые финансовые последствия. Однако, чтобы заработать деньги, нужно потратить деньги, поэтому мы решили, что увеличенные затраты, связанные с тестированием на полном наборе данных, стоят этих расходов.
 
-To start with, we [cloned](https://docs.snowflake.com/en/sql-reference/sql/create-clone.html) the entire prod schema to a testing schema, which is a free operation in Snowflake. Then, we did an initial build of the new `dbt_model_summary` model since it was switching from ephemeral to incremental. Once that was complete, we were able to delete out a few days worth of data from both `dbt_model_summary` and `fct_dbt_invocations` to see how long an incremental run would take. This represented the true day-to-day runs, and the results were fantastic! The combined run time of both models dropped from 1.5 hours to 15-20 minutes for incremental runs.
+Для начала мы [клонировали](https://docs.snowflake.com/en/sql-reference/sql/create-clone.html) всю продуктивную схему в тестовую схему, что является бесплатной операцией в Snowflake. Затем мы провели начальную сборку новой модели `dbt_model_summary`, так как она переходила от эфемерной к инкрементальной. После завершения этого процесса мы смогли удалить несколько дней данных как из `dbt_model_summary`, так и из `fct_dbt_invocations`, чтобы увидеть, сколько времени займет инкрементальный запуск. Это представляло собой настоящие ежедневные запуски, и результаты были фантастическими! Общее время выполнения обеих моделей сократилось с 1,5 часов до 15-20 минут для инкрементальных запусков.
 
-## Benefits of the improvement
+## Преимущества улучшения
 
-The end result of this improvement saves a nice chunk of change. Since this query was running 4 times per day and took 1.5 hours per run, this change is saving roughly 5 hours per day in run time. Given that this on Snowflake, we can calculate the savings based on their public pricing. Currently for the Enterprise edition of Snowflake it costs $3/credit, and a medium warehouse consumes 4 credits/hour. Putting this all together, that’s a savings of ~$1800/month.
+Конечный результат этого улучшения позволяет сэкономить значительную сумму денег. Поскольку этот запрос выполнялся 4 раза в день и занимал 1,5 часа на каждый запуск, это изменение экономит примерно 5 часов в день на время выполнения. Учитывая, что это на Snowflake, мы можем рассчитать экономию на основе их публичных цен. В настоящее время для Enterprise-версии Snowflake стоимость составляет $3/кредит, а средний склад потребляет 4 кредита/час. Сложив все это вместе, это экономия примерно $1800 в месяц.
 
-The cost savings are great, but there are two other “time based” benefits that come from faster runs:
+Экономия средств — это здорово, но есть еще два "временных" преимущества, которые возникают благодаря более быстрым запускам:
 
-1. Since this process runs 4 times daily, there is a limit to the length any given run can take, and in turn how many metrics we can calculate. By saving time on the longest running metrics it frees up runtime for us to add new logic to our runs. This generally leads to happier end consumers because they get more information to work with.
-2. If the need ever arises to refresh our data more frequently, we now have some runway to do that. While these particular models will never be near-real-time, we could realistically get more up-to-date information since we can now process the data faster.
+1. Поскольку этот процесс выполняется 4 раза в день, существует ограничение на продолжительность любого данного запуска, и, в свою очередь, на количество метрик, которые мы можем рассчитать. Экономя время на самых долго выполняющихся метриках, мы освобождаем время выполнения для добавления новой логики в наши запуски. Это обычно приводит к более довольным конечным пользователям, потому что они получают больше информации для работы.
+2. Если когда-либо возникнет необходимость обновлять наши данные более часто, у нас теперь есть возможность это сделать. Хотя эти конкретные модели никогда не будут почти в реальном времени, мы могли бы реально получить более актуальную информацию, поскольку теперь мы можем обрабатывать данные быстрее.
 
-## Conclusion
+## Заключение
 
-Developing an analytic code base is an ever-evolving process. What worked well when the dataset was a few million records may not work as well on billions of records. As your code base and data evolve, be on the lookout for areas of improvement. This article showed a very specific example around two models, but the general principals can be applied to any code base:
+Разработка аналитической кодовой базы — это постоянно развивающийся процесс. То, что хорошо работало, когда набор данных составлял несколько миллионов записей, может не работать так же хорошо на миллиардах записей. По мере того, как ваша кодовая база и данные развиваются, ищите области для улучшения. Эта статья показала очень конкретный пример вокруг двух моделей, но общие принципы могут быть применены к любой кодовой базе:
 
-1. **Periodically review your run times**
+1. **Периодически проверяйте время выполнения**
 
-    This is made easy with the [Model Timing tab](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) in dbt Cloud. You can quickly go to any run to see the model composition, order, and run time for every run in dbt Cloud. The longest running models stick out like a sore thumb!
+    Это легко сделать с помощью вкладки [Model Timing](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-model-timing-tab) в dbt Cloud. Вы можете быстро перейти к любому запуску, чтобы увидеть состав моделей, порядок и время выполнения для каждого запуска в dbt Cloud. Самые долго выполняющиеся модели выделяются как больной палец!
 
-2. **Use the query analyzer from your data warehouse**
+2. **Используйте анализатор запросов вашего хранилища данных**
 
-    Once you’ve found the problematic model (or models!), use the query analyzer to find which part of the model takes the longest to run. The graphical tree provided gives you a more fine grained view into what is going on. Some tips to look out for:
+    Как только вы нашли проблемную модель (или модели!), используйте анализатор запросов, чтобы найти, какая часть модели занимает больше всего времени на выполнение. Графическое дерево, предоставляемое анализатором, дает более детальное представление о том, что происходит. Несколько советов, на что обратить внимание:
 
-    - Window functions on large data sets
-    - Cross joins
-    - OR joins
-    - Snowflake specifically: spilling to remote disk
-3. **Try a few different approaches**
+    - Оконные функции на больших наборах данных
+    - Кросс-соединения
+    - OR-соединения
+    - Специфично для Snowflake: выгрузка на удаленный диск
+3. **Попробуйте несколько разных подходов**
 
-    There is seldom one solution to a problem, especially in a system as complex as a data warehouse. Don’t get too bogged down on a single solution, and instead try a few different strategies to see their impact. If you can’t commit to fully rewriting the logic, see if clustering/partitioning the table will help. Sometimes a bigger warehouse really is the solution. If you don’t try, you’ll never know.
+    Редко бывает одно решение проблемы, особенно в такой сложной системе, как хранилище данных. Не зацикливайтесь на одном решении, а попробуйте несколько разных стратегий, чтобы увидеть их влияние. Если вы не можете полностью переписать логику, посмотрите, поможет ли кластеризация/разделение таблицы. Иногда действительно решение — это больший склад. Если не попробуете, никогда не узнаете.
 
-4. **Test on representative data**
+4. **Тестируйте на репрезентативных данных**
 
-    Testing on a [subset of data](https://docs.getdbt.com/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) is a great general practice. It allows you to iterate quickly, and doesn’t waste resources. However, there are times when you need to test on a larger dataset for problems like disk spillage to come to the fore. Testing on large data is hard and expensive, so make sure you have a good idea of the solution before you commit to this step.
+    Тестирование на [подмножестве данных](https://docs.getdbt.com/best-practices/best-practice-workflows#limit-the-data-processed-when-in-development) — это отличная общая практика. Это позволяет быстро итеративно работать и не тратить ресурсы впустую. Однако бывают случаи, когда вам нужно протестировать на большем наборе данных, чтобы выявить проблемы, такие как выгрузка на диск. Тестирование на больших данных сложно и дорого, поэтому убедитесь, что у вас есть хорошее представление о решении, прежде чем вы перейдете к этому шагу.
 
-5. **Repeat**
+5. **Повторяйте**
 
-    Remember that your code and data evolves and grows. Be sure to keep an eye on run times, and repeat this process as needed. Also, keep in mind that a developer’s time and energy are a cost as well, so going after a handful of big-hitting items less frequently may be better than constantly rewriting code for incremental gains.
+    Помните, что ваш код и данные развиваются и растут. Обязательно следите за временем выполнения и повторяйте этот процесс по мере необходимости. Также имейте в виду, что время и энергия разработчика — это тоже затраты, поэтому лучше сосредоточиться на нескольких крупных задачах реже, чем постоянно переписывать код для незначительных улучшений.

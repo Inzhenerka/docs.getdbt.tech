@@ -1,6 +1,6 @@
 ---
-title: "Test smarter not harder: add the right tests to your dbt project"
-description: "Testing your data should drive action, not accumulate alerts. We synthesized countless customer experiences to build a repeatable testing framework."
+title: "Тестируйте умнее, а не усерднее: добавьте правильные тесты в ваш проект dbt"
+description: "Тестирование данных должно приводить к действиям, а не накапливать оповещения. Мы обобщили множество клиентских опытов, чтобы создать воспроизводимую структуру тестирования."
 slug: test-smarter-not-harder
 
 authors: [faith_mckenna, jerrie_kumalah_kenney]
@@ -12,152 +12,151 @@ date: 2024-11-11
 is_featured: true
 ---
 
+[Цикл разработки аналитики (ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle) — это рабочий процесс для улучшения зрелости и скорости работы с данными. Тестирование является ключевой фазой здесь. Многие разработчики dbt склонны сосредотачиваться на [первичных ключах и свежести источников.](https://www.getdbt.com/blog/building-a-data-quality-framework-with-dbt-and-dbt-cloud) Мы считаем, что существует более целостный и глубокий путь. Тестирование — это ключевой элемент ADLC, и оно должно способствовать качеству данных.
 
+В этом блоге мы рассмотрим план определения качества данных. Это будет выглядеть следующим образом:
 
-The [Analytics Development Lifecycle (ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle) is a workflow for improving data maturity and velocity. Testing is a key phase here. Many dbt developers tend to focus on [primary keys and source freshness.](https://www.getdbt.com/blog/building-a-data-quality-framework-with-dbt-and-dbt-cloud) We think there is a more holistic and in-depth path to tread. Testing is a key piece of the ADLC, and it should drive data quality.
+- выявление проблем *гигиены данных*
+- выявление проблем *аномалий, ориентированных на бизнес*
+- выявление проблем *аномалий, ориентированных на статистику*
 
-In this blog, we’ll walk through a plan to define data quality. This will look like:
+После того как мы *определим* качество данных, мы перейдем к *приоритизации* этих проблем. Мы будем:
 
-- identifying *data hygiene*  issues
-- identifying *business-focused anomaly*  issues
-- identifying *stats-focused anomaly*  issues
-
-Once we have *defined* data quality, we’ll move on to *prioritize* those concerns. We will:
-
-- think through each concern in terms of the breadth of impact
-- decide if each concern should be at error or warning severity
+- обдумывать каждую проблему с точки зрения широты воздействия
+- решать, должна ли каждая проблема иметь уровень ошибки или предупреждения
 
 <!-- truncate -->
 
-### Who are we?
+### Кто мы?
 
-Let’s start with introductions - we’re Faith and Jerrie, and we work on dbt Labs’s training and services teams, respectively. By working closely with countless companies using dbt, we’ve gained unique perspectives of the landscape.  
+Давайте начнем с представления — мы Фэйт и Джерри, и мы работаем в командах обучения и услуг dbt Labs соответственно. Работая в тесном сотрудничестве с множеством компаний, использующих dbt, мы получили уникальные представления о ландшафте.
 
-The training team collates problems organizations think about today and gauge how our solutions fit. These are shorter engagements, which means we see the data world shift and change in real time. Resident Architects spend much more time with teams to craft much more in-depth solutions, figure out where those solutions are helping, and where problems still need to be addressed. Trainers help identify patterns in the problems data teams face, and Resident Architects dive deep on solutions.
+Команда обучения собирает проблемы, о которых думают организации сегодня, и оценивает, как наши решения подходят. Это более короткие взаимодействия, что означает, что мы видим, как мир данных меняется в реальном времени. Резидентные архитекторы проводят гораздо больше времени с командами, чтобы разрабатывать более глубокие решения, выяснять, где эти решения помогают, а где проблемы все еще нуждаются в решении. Тренеры помогают выявлять закономерности в проблемах, с которыми сталкиваются команды данных, а резидентные архитекторы углубляются в решения.
 
-Today, we’ll guide you through a particularly thorny problem: testing.
+Сегодня мы проведем вас через особенно сложную проблему: тестирование.
 
-## Why testing?
+## Зачем тестирование?
 
-Mariah Rogers broke early ground on data quality and testing in her [Coalesce 2022 talk](https://www.youtube.com/watch?v=hxvVhmhWRJA). We’ve seen similar talks again at Coalesce 2024, like [this one](https://www.youtube.com/watch?v=iCG-5vqMRAo) from the data team at Aiven and [this one](https://www.youtube.com/watch?v=5bRG3y9IM4Q&list=PL0QYlrC86xQnWJ72sJlzDqPS0peE7j9Ed&index=71) from the co-founder at Omni Analytics. These talks share a common theme: testing your dbt project too much can get out of control quickly, leading to alert fatigue.
+Мэрайя Роджерс заложила основу для качества данных и тестирования в своем [докладе Coalesce 2022](https://www.youtube.com/watch?v=hxvVhmhWRJA). Мы видели подобные доклады снова на Coalesce 2024, такие как [этот](https://www.youtube.com/watch?v=iCG-5vqMRAo) от команды данных в Aiven и [этот](https://www.youtube.com/watch?v=5bRG3y9IM4Q&list=PL0QYlrC86xQnWJ72sJlzDqPS0peE7j9Ed&index=71) от соучредителя Omni Analytics. Эти доклады объединяет общая тема: чрезмерное тестирование вашего проекта dbt может быстро выйти из-под контроля, приводя к усталости от оповещений.
 
-In our customer engagements, we see *wildly different approaches* to testing data. We’ve definitely seen what Mariah, the Aiven team, and the Omni team have described, which is so many tests that errors and alerts just become noise. We’ve also seen the opposite end of the spectrum—only primary keys being tested. From our field experiences, we believe there’s room for a middle path.
-A desire for a better approach to data quality and testing isn’t just anecdotal to Coalesce, or to dbt’s training and services. The dbt community has long called for a more intentional approach to data quality and testing - data quality is on the industry’s mind! In fact, [57% of respondents](https://www.getdbt.com/resources/reports/state-of-analytics-engineering-2024) to dbt’s 2024 State of Analytics Engineering survey said that data quality is a predominant issue facing their day-to-day work.
+В наших взаимодействиях с клиентами мы видим *совершенно разные подходы* к тестированию данных. Мы определенно видели то, что описали Мэрайя, команда Aiven и команда Omni, а именно так много тестов, что ошибки и оповещения просто становятся шумом. Мы также видели противоположный конец спектра — тестируются только первичные ключи. Из нашего полевого опыта мы считаем, что есть место для среднего пути.
 
-### What does d@tA qUaL1Ty even mean?!
+Желание найти лучший подход к качеству данных и тестированию не является просто анекдотом для Coalesce или для обучения и услуг dbt. Сообщество dbt давно призывает к более осознанному подходу к качеству данных и тестированию — качество данных на уме у индустрии! Фактически, [57% респондентов](https://www.getdbt.com/resources/reports/state-of-analytics-engineering-2024) в опросе dbt 2024 State of Analytics Engineering заявили, что качество данных является преобладающей проблемой, с которой они сталкиваются в своей повседневной работе.
 
-High-quality data is *trusted* and *used frequently.* It doesn’t get argued over or endlessly scrutinized for matching to other data. Data *testing* should lead to higher data *quality* and insights, period.
+### Что вообще значит к@чЕсТвО д@нНых?!
 
-Best practices in data quality are still nascent. That said, a lot of important baseline work has been done here. There are [case](https://medium.com/@AtheonAnalytics/mastering-data-testing-with-dbt-part-1-689b2a025675) [studies](https://medium.com/@AtheonAnalytics/mastering-data-testing-with-dbt-part-2-c4031af3df18) on implementing dbt testing well. dbt Labs also has an [Advanced Testing](https://learn.getdbt.com/courses/advanced-testing) course, emphasizing that testing should spur action and be focused and informative enough to help address failures. You can even enforce testing best practices and dbt Labs’s own best practices using the [dbt_meta_testing](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest/) or [dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator) packages and dbt Explorer’s [Recommendations](https://docs.getdbt.com/docs/collaborate/project-recommendations) page.
+Высококачественные данные *доверенные* и *часто используемые.* Они не подвергаются спорам или бесконечному анализу на соответствие другим данным. Тестирование данных должно приводить к более высокому качеству данных и инсайтам, точка.
 
-The missing piece is still cohesion and guidance for everyday practitioners to help develop their testing framework.
+Лучшие практики в области качества данных все еще находятся на начальной стадии. Тем не менее, здесь проделана важная базовая работа. Существуют [кейсы](https://medium.com/@AtheonAnalytics/mastering-data-testing-with-dbt-part-1-689b2a025675) [исследования](https://medium.com/@AtheonAnalytics/mastering-data-testing-with-dbt-part-2-c4031af3df18) по успешной реализации тестирования dbt. dbt Labs также предлагает курс [Advanced Testing](https://learn.getdbt.com/courses/advanced-testing), подчеркивающий, что тестирование должно стимулировать действия и быть достаточно сфокусированным и информативным, чтобы помочь в решении проблем. Вы даже можете применять лучшие практики тестирования и собственные лучшие практики dbt Labs, используя пакеты [dbt_meta_testing](https://hub.getdbt.com/tnightengale/dbt_meta_testing/latest/) или [dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator) и страницу [Recommendations](https://docs.getdbt.com/docs/collaborate/project-recommendations) в dbt Explorer.
 
-To recap, we’re going to start with:
+Отсутствующим элементом все еще остается согласованность и руководство для повседневных практиков, чтобы помочь разработать их структуру тестирования.
 
-- identifying *data hygiene* issues
-- identifying *business-focused anomaly* issues
-- identifying *stats-focused anomaly* issues
+Подведем итог, мы начнем с:
 
-Next, we’ll prioritize. We will:
+- выявления проблем *гигиены данных*
+- выявления проблем *аномалий, ориентированных на бизнес*
+- выявления проблем *аномалий, ориентированных на статистику*
 
-- think through each concern in terms of the breadth of impact
-- decide if each concern should be at error or warning severity
+Далее мы будем приоритизировать. Мы будем:
 
-Get a pen and paper (or a google doc) and join us in constructing your own testing framework.
+- обдумывать каждую проблему с точки зрения широты воздействия
+- решать, должна ли каждая проблема иметь уровень ошибки или предупреждения
 
-## Identifying data quality issues in your pipeline
+Возьмите ручку и бумагу (или документ в Google) и присоединяйтесь к нам в создании вашей собственной структуры тестирования.
 
-Let’s start our framework by *identifying* types of data quality issues.
+## Выявление проблем качества данных в вашем конвейере
 
-In our daily work with customers, we find that data quality issues tend to fall into one of three broad buckets: *data hygiene, business-focused anomalies,* and *stats-focused anomalies.* Read the bucket descriptions below, and list 2-3 data quality concerns in your own business context that fall into each bucket.
+Давайте начнем нашу структуру с *выявления* типов проблем качества данных.
 
-### Bucket 1: Data hygiene
+В нашей повседневной работе с клиентами мы обнаруживаем, что проблемы качества данных, как правило, попадают в одну из трех широких категорий: *гигиена данных, аномалии, ориентированные на бизнес,* и *аномалии, ориентированные на статистику.* Прочитайте описания категорий ниже и перечислите 2-3 проблемы качества данных в вашем собственном бизнес-контексте, которые попадают в каждую категорию.
 
-*Data hygiene* issues are concerns you address in your [staging layer.](https://docs.getdbt.com/best-practices/how-we-structure/2-staging) Hygienic data meets your expectations around formatting, completeness, and granularity requirements. Here are a few examples.
+### Категория 1: Гигиена данных
 
-- *Granularity:* primary keys are unique and not null. Duplicates throw off calculations.
-- *Completeness:* columns that should always contain text, *do.* Incomplete data often has to get excluded, reducing your overall analytical power.
-- *Formatting:* email addresses always have a valid domain. Incorrect emails may affect things like marketing outreach.
+Проблемы *гигиены данных* — это проблемы, которые вы решаете на [этапе подготовки данных.](https://docs.getdbt.com/best-practices/how-we-structure/2-staging) Гигиеничные данные соответствуют вашим ожиданиям в отношении форматирования, полноты и требований к детализации. Вот несколько примеров.
 
-### Bucket 2: Business-focused anomalies
+- *Детализация:* первичные ключи уникальны и не содержат null. Дубликаты сбивают с толку расчеты.
+- *Полнота:* столбцы, которые всегда должны содержать текст, *содержат.* Неполные данные часто приходится исключать, что снижает вашу общую аналитическую мощность.
+- *Форматирование:* адреса электронной почты всегда имеют действительный домен. Неправильные адреса электронной почты могут повлиять на такие вещи, как маркетинговые рассылки.
 
-*Business-focused anomalies* catch unexpected behavior. You can flag unexpected behavior by clearly defining *expected* behavior. *Business-focused anomalies* are when aspects of the data differ from what you know to be typical in your business. You’ll know what’s typical either through your own analyses, your colleagues’ analyses, or things your stakeholder homies point out to you.
+### Категория 2: Аномалии, ориентированные на бизнес
 
-Since business-focused anomaly testing is set by a human, it will be fluid and need to be adjusted periodically. Here’s an example.
+*Аномалии, ориентированные на бизнес,* выявляют неожиданное поведение. Вы можете отметить неожиданное поведение, четко определив *ожидаемое* поведение. *Аномалии, ориентированные на бизнес,* возникают, когда аспекты данных отличаются от того, что вы знаете как типичное для вашего бизнеса. Вы узнаете, что типично, либо через собственные анализы, анализы ваших коллег, либо через то, что ваши заинтересованные стороны указывают вам.
 
-Imagine you’re a sales analyst. Generally, you know that if your daily sales amount goes up or down by more than 20% daily, that’s bad. Specifically, it’s usually a warning sign for fraud or the order management system (OMS) dropping orders. You set a test in dbt to fail if any given day’s sales amount is a delta of 20% from the previous day. This works for a while.
+Поскольку тестирование аномалий, ориентированных на бизнес, устанавливается человеком, оно будет изменчивым и потребует периодической корректировки. Вот пример.
 
-Then, you have a stretch of 3 months where your test fails 5 times a week! Every time you investigate, it turns out to be valid consumer behavior. You’re suddenly in hypergrowth, and sales are legitimately increasing that much.
+Представьте, что вы аналитик по продажам. В общем, вы знаете, что если ваша дневная сумма продаж увеличивается или уменьшается более чем на 20% в день, это плохо. Конкретно, это обычно является предупреждающим знаком о мошенничестве или сбоях в системе управления заказами (OMS). Вы устанавливаете тест в dbt, чтобы он проваливался, если сумма продаж за любой день отличается на 20% от предыдущего дня. Это работает какое-то время.
 
-Your 20%-change fraud and OMS failure detector is no longer valid. You need to investigate anew which sales spikes or drops indicate fraud or OMS problems. Once you figure out a new threshold, you’ll go back and adjust your testing criteria.
+Затем у вас наступает период в 3 месяца, когда ваш тест проваливается 5 раз в неделю! Каждый раз, когда вы исследуете, оказывается, что это действительно поведение потребителей. Вы внезапно находитесь в состоянии гиперроста, и продажи действительно увеличиваются настолько.
 
-Although your data’s expected behavior will shift over time, you should still commit to defining business-focused anomalies to grow your understanding of what is normal for your data.
+Ваш детектор мошенничества и сбоев OMS с изменением на 20% больше не действителен. Вам нужно заново исследовать, какие пики или падения продаж указывают на мошенничество или проблемы с OMS. Как только вы определите новый порог, вы вернетесь и скорректируете свои критерии тестирования.
 
-Here’s how to identify potential anomalies.
+Хотя ожидаемое поведение ваших данных будет меняться со временем, вы все равно должны стремиться определять аномалии, ориентированные на бизнес, чтобы расширять свое понимание того, что является нормальным для ваших данных.
 
-Start at your business intelligence (BI) layer. Pick 1-3 dashboards or tables that you *know* are used frequently. List these 1-3 dashboards or tables. For each dashboard or table you have, identify 1-3 “expected” behaviors that your end-users rely on.  Here are a few examples to get you thinking:
+Вот как определить потенциальные аномалии.
 
-- Revenue numbers should not change by more than X% in Y amount of time. This could indicate fraud or OMS problems.
-- Monthly active users should not decline more than X% after the initial onboarding period. This might indicate user dissatisfaction, usability issues, or that users not finding a feature valuable.
-- Exam passing rates should stay above Y%.  A decline below that threshold may indicate recent content changes or technical issues are affecting understanding or accessibility.
+Начните с вашего уровня бизнес-аналитики (BI). Выберите 1-3 панели или таблицы, которые вы *знаете,* что используются часто. Перечислите эти 1-3 панели или таблицы. Для каждой панели или таблицы, которую у вас есть, определите 1-3 "ожидаемых" поведения, на которые полагаются ваши конечные пользователи. Вот несколько примеров, чтобы заставить вас задуматься:
 
-You should also consider what data issues you have had in the past! Look through recent data incidents and pick out 3 or 4 to guard against next time. These might be in a #data-questions channel or perhaps a DM from a stakeholder.
+- Числа доходов не должны изменяться более чем на X% за Y период времени. Это может указывать на мошенничество или проблемы с OMS.
+- Количество активных пользователей в месяц не должно снижаться более чем на X% после начального периода адаптации. Это может указывать на неудовлетворенность пользователей, проблемы с удобством использования или то, что пользователи не находят функцию ценной.
+- Процент сдачи экзаменов должен оставаться выше Y%. Снижение ниже этого порога может указывать на недавние изменения в содержании или технические проблемы, влияющие на понимание или доступность.
 
-### Bucket 3: Stats-focused anomalies
+Вы также должны учитывать, какие проблемы с данными у вас были в прошлом! Просмотрите недавние инциденты с данными и выберите 3 или 4, чтобы защититься от них в следующий раз. Они могут быть в канале #data-questions или, возможно, в личном сообщении от заинтересованного лица.
 
-*Stats-focused anomalies* are fluctuations that go against your expected volumes or metrics.  Some examples include:
+### Категория 3: Аномалии, ориентированные на статистику
 
-- Volume anomalies. This could be site traffic amounts that may indicate illicit behavior, or perhaps site traffic dropping one day then doubling the next, indicating that a chunk of data were not loaded properly.
-- Dimensional anomalies, like too many product types underneath a particular product line that may indicate incorrect barcodes.
-- Column anomalies, like sale values more than a certain number of standard deviations from a mean, that may indicate improper discounting.
+*Аномалии, ориентированные на статистику,* — это колебания, которые противоречат вашим ожидаемым объемам или метрикам. Некоторые примеры включают:
 
-Overall, stats-focused anomalies can indicate system flaws, illicit site behavior, or fraud, depending on your industry. They also tend to require more advanced testing practices than we are covering in this blog. We feel stats-based anomalies are worth exploring once you have a good handle on your data hygiene and business-focused anomalies. We won’t give recommendations on stats-focused anomalies in this post.
+- Аномалии объема. Это могут быть объемы трафика на сайте, которые могут указывать на незаконное поведение, или, возможно, трафик на сайте, который падает в один день, а затем удваивается на следующий, указывая на то, что часть данных не была загружена должным образом.
+- Аномалии измерений, такие как слишком много типов продуктов под определенной линейкой продуктов, что может указывать на неправильные штрих-коды.
+- Аномалии столбцов, такие как значения продаж, которые больше определенного количества стандартных отклонений от среднего, что может указывать на неправильное предоставление скидок.
 
-## How to prioritize data quality concerns in your pipeline
+В целом, аномалии, ориентированные на статистику, могут указывать на системные недостатки, незаконное поведение на сайте или мошенничество, в зависимости от вашей отрасли. Они также, как правило, требуют более продвинутых практик тестирования, чем мы рассматриваем в этом блоге. Мы считаем, что аномалии, основанные на статистике, стоит изучать, когда у вас есть хорошее понимание гигиены данных и аномалий, ориентированных на бизнес. Мы не будем давать рекомендации по аномалиям, ориентированным на статистику, в этом посте.
 
-Now, you have a written and categorized list of data hygiene concerns and business-focused anomalies to guard against. It’s time to *prioritize* which quality issues deserve to fail your pipelines.
+## Как приоритизировать проблемы качества данных в вашем конвейере
 
-To prioritize your data quality concerns, think about real-life impact. A couple of guiding questions to consider are:
+Теперь у вас есть написанный и категоризированный список проблем гигиены данных и аномалий, ориентированных на бизнес, от которых нужно защищаться. Пора *приоритизировать,* какие проблемы качества заслуживают того, чтобы провалить ваши конвейеры.
 
-- Are your numbers *customer-facing?* For example, maybe you work with temperature-tracking devices. Your customers rely on these devices to show them average temperatures on perishable goods like strawberries in-transit. What happens if the temperature of the strawberries reads as 300C when they know their refrigerated truck was working just fine? How is your brand perception impacted when the numbers are wrong?
-- Are your numbers *used to make financial decisions?* For example, is the marketing team relying on your numbers to choose how to spend campaign funds?
-- Are your numbers *executive-facing?* Will executives use these numbers to reallocate funds or shift priorities?
+Чтобы приоритизировать ваши проблемы качества данных, подумайте о реальном воздействии. Несколько направляющих вопросов, которые стоит рассмотреть:
 
-We think these 3 categories above constitute high-impact, pipeline-failing events, and should be your top priorities. Of course, adjust priority order if your business context calls for it.
+- Являются ли ваши числа *ориентированными на клиентов?* Например, возможно, вы работаете с устройствами для отслеживания температуры. Ваши клиенты полагаются на эти устройства, чтобы показывать им средние температуры на скоропортящихся товарах, таких как клубника, в пути. Что произойдет, если температура клубники будет показывать 300°C, когда они знают, что их рефрижераторный грузовик работал нормально? Как это повлияет на восприятие вашего бренда, когда числа неверны?
+- Являются ли ваши числа *используемыми для принятия финансовых решений?* Например, полагается ли маркетинговая команда на ваши числа, чтобы выбрать, как потратить средства на кампанию?
+- Являются ли ваши числа *ориентированными на руководителей?* Будут ли руководители использовать эти числа для перераспределения средств или изменения приоритетов?
 
-Consult your list of data quality issues in the categories we mention above. Decide and mark if any are customer facing, used for financial decisions, or are executive-facing. Mark any data quality issues in those categories as “error”. These are your pipeline-failing events.
+Мы считаем, что эти 3 категории выше составляют события с высоким воздействием, которые должны быть вашими главными приоритетами. Конечно, корректируйте порядок приоритетов, если ваш бизнес-контекст требует этого.
 
-If any data quality concerns fall outside of these 3 categories, we classify them as **nice-to-knows**. **Nice-to-know** data quality testing *can* be helpful. But if you don’t have a *specific action you can immediately take* when a nice-to-know quality test fails, the test *should be a warning, not an error.*
+Проконсультируйтесь с вашим списком проблем качества данных в категориях, которые мы упоминаем выше. Решите и отметьте, являются ли какие-либо из них ориентированными на клиентов, используемыми для финансовых решений или ориентированными на руководителей. Отметьте любые проблемы качества данных в этих категориях как "ошибка". Это ваши события, которые провалят конвейер.
 
-You could also remove nice-to-know tests altogether. Data testing should drive action. The more alerts you have in your pipeline, the less action you will take. Configure alerts with care!
+Если какие-либо проблемы качества данных выходят за рамки этих 3 категорий, мы классифицируем их как **приятные к знанию**. Тестирование качества данных **может** быть полезным. Но если у вас нет **конкретного действия, которое вы можете немедленно предпринять** при провале теста на качество, который приятно знать, тест **должен быть предупреждением, а не ошибкой.**
 
-However, we do think nice-to-know tests are worth keeping *if and only if* you are gathering evidence for action you plan to take within the next 6 months, like product feature research. In a scenario like that, those tests should still be set to warning.
+Вы также можете полностью удалить тесты, которые приятно знать. Тестирование данных должно приводить к действиям. Чем больше у вас оповещений в конвейере, тем меньше действий вы предпримете. Настраивайте оповещения с осторожностью!
 
-### Start your action plan
+Однако мы считаем, что тесты, которые приятно знать, стоит сохранять **только если** вы собираете доказательства для действий, которые планируете предпринять в течение следующих 6 месяцев, например, исследование функций продукта. В таком сценарии эти тесты все равно должны быть установлены на предупреждение.
 
-Now, your data quality concerns are listed and prioritized. Next, add 1 or 2 initial debugging steps you will take if/when the issues surface. These steps should get added to your framework document. Additionally, consider adding them to a [test’s description.](https://discourse.getdbt.com/t/is-it-possible-to-add-a-description-to-singular-tests/5472/4)
+### Начните свой план действий
 
-This step is *important.* Data quality testing should spur action, not accumulate alerts. Listing initial debugging steps for each concern will refine your list to the most critical elements.
+Теперь ваши проблемы качества данных перечислены и приоритизированы. Далее добавьте 1 или 2 начальных шага отладки, которые вы предпримете, если/когда проблемы возникнут. Эти шаги должны быть добавлены в ваш документ структуры. Кроме того, рассмотрите возможность добавления их в [описание теста.](https://discourse.getdbt.com/t/is-it-possible-to-add-a-description-to-singular-tests/5472/4)
 
-If you can't identify an action step for any quality issue, *remove it*. Put it on a backlog and research what you can do when it surfaces later.
+Этот шаг *важен.* Тестирование качества данных должно стимулировать действия, а не накапливать оповещения. Перечисление начальных шагов отладки для каждой проблемы уточнит ваш список до самых критических элементов.
 
-Here’s a few examples from our list of unexpected behaviors above.
+Если вы не можете определить шаг действия для любой проблемы качества, *удалите ее.* Поместите ее в бэклог и исследуйте, что вы можете сделать, когда она возникнет позже.
 
-- For calculated field X, a value above Y or below Z is not possible.
-  - *Debugging initial steps*
-    - Use dbt test SQL or recent test results in dbt Explorer to find problematic rows
-    - Check these rows in staging and first transformed model
-    - Pinpoint where unusual values first appear
-- Revenue shouldn’t change by more than X% in Y amount of time.
-  - *Debugging initial steps:*
-    - Check recent revenue values in staging model
-    - Identify transactions near min/max values
-    - Discuss outliers with sales ops team
+Вот несколько примеров из нашего списка неожиданных поведений выше.
 
-You now have written out a prioritized list of data quality concerns, as well as action steps to take when each concern surfaces. Next, consult [hub.getdbt.com](http://hub.getdbt.com) and find tests that address each of your highest priority concerns. [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) and [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) are great places to start.
+- Для вычисляемого поля X значение выше Y или ниже Z невозможно.
+  - *Начальные шаги отладки*
+    - Используйте SQL теста dbt или недавние результаты теста в dbt Explorer, чтобы найти проблемные строки
+    - Проверьте эти строки на этапе подготовки и в первой преобразованной модели
+    - Определите, где впервые появляются необычные значения
+- Доходы не должны изменяться более чем на X% за Y период времени.
+  - *Начальные шаги отладки:*
+    - Проверьте недавние значения доходов в модели подготовки
+    - Определите транзакции, близкие к минимальным/максимальным значениям
+    - Обсудите выбросы с командой операционного управления продажами
 
-The data tests you’ve marked as “errors” above should get error-level severity. Any concerns falling into that nice-to-know category should either *not get tested* or have their tests *set to warning.*
+Теперь у вас есть написанный приоритизированный список проблем качества данных, а также шаги действий, которые нужно предпринять, когда каждая проблема возникнет. Далее, проконсультируйтесь с [hub.getdbt.com](http://hub.getdbt.com) и найдите тесты, которые решают каждую из ваших самых приоритетных проблем. [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) и [dbt_utils](https://hub.getdbt.com/dbt-labs/dbt_utils/latest/) — отличные места для начала.
 
-Your data quality priorities list is a living reference document. We recommend linking it in your project’s README so that you can go back and edit it as your testing needs evolve. Additionally, developers in your project should have easy access to this document. Maintaining good data quality is everyone’s responsibility!
+Тесты данных, которые вы отметили как "ошибки" выше, должны иметь уровень серьезности ошибки. Любые проблемы, попадающие в категорию приятно знать, не должны тестироваться или их тесты должны быть установлены на предупреждение.
 
-As you try these ideas out, come to the dbt Community Slack and let us know what works and what doesn’t. Data is a community of practice, and we are eager to hear what comes out of yours.
+Ваш список приоритетов качества данных — это живой справочный документ. Мы рекомендуем ссылаться на него в README вашего проекта, чтобы вы могли вернуться и редактировать его по мере изменения ваших потребностей в тестировании. Кроме того, разработчики в вашем проекте должны иметь легкий доступ к этому документу. Поддержание хорошего качества данных — это ответственность каждого!
+
+Когда вы попробуете эти идеи, приходите в Slack сообщества dbt и дайте нам знать, что работает, а что нет. Данные — это сообщество практики, и мы с нетерпением ждем, что выйдет из вашего.

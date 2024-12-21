@@ -1,6 +1,6 @@
 ---
-title: "BigQuery ingestion-time partitioning and partition copy with dbt"
-description: "How one data team saved significant BigQuery run time (and therefore $$) by building ingestion-time partitioning support to dbt's incremental model materialization."
+title: "Разделение по времени загрузки и копирование разделов в BigQuery с dbt"
+description: "Как одна команда по работе с данными значительно сократила время выполнения запросов в BigQuery (а значит и затраты), добавив поддержку разделения по времени загрузки в инкрементальную материализацию моделей dbt."
 slug: bigquery-ingestion-time-partitioning-and-partition-copy-with-dbt
 canonical_url: https://medium.com/teads-engineering/bigquery-ingestion-time-partitioning-and-partition-copy-with-dbt-cc8a00f373e3
 
@@ -13,41 +13,41 @@ date: 2023-03-10
 is_featured: true
 ---
 
-At Teads, we’ve been using BigQuery (BQ) to build our analytics stack since 2017. As presented in a previous [article](https://medium.com/teads-engineering/give-meaning-to-100-billion-analytics-events-a-day-d6ba09aa8f44), we have designed pipelines that use multiple roll-ups that are aggregated in data marts. Most of them revolve around time series, and therefore time-based partitioning is often the most appropriate approach.
+В Teads мы используем BigQuery (BQ) для построения нашей аналитической платформы с 2017 года. Как было представлено в предыдущей [статье](https://medium.com/teads-engineering/give-meaning-to-100-billion-analytics-events-a-day-d6ba09aa8f44), мы разработали конвейеры, которые используют множественные свертки, агрегируемые в витринах данных. Большинство из них вращаются вокруг временных рядов, и поэтому разделение на основе времени часто является наиболее подходящим подходом.
 
 <!--truncate-->
 
-Back then, only ingestion-time partitioning was available on BQ and only at a daily level. Other levels required to work with sharded tables. It’s still the case if we consider the partition limit set at 4096 when we’re using hourly partitions, since it translates to roughly 170 days.
+На тот момент в BQ было доступно только разделение по времени загрузки и только на дневном уровне. Другие уровни требовали работы с шардированными таблицами. Это все еще актуально, если учитывать ограничение на количество разделов в 4096 при использовании почасовых разделов, так как это примерно соответствует 170 дням.
 
-We built an internal SQL query executor tool to wrap the execution of our BigQuery jobs while dbt Labs (formerly known as Fishtown Analytics) was creating its own product: dbt. After a successful experiment in 2021, dbt is now part of our go-to solution to create new BigQuery jobs at Teads. Though it misses a few custom features, it has become a superset of our former tool for everyday usage.
+Мы создали внутренний инструмент для выполнения SQL-запросов, чтобы обернуть выполнение наших заданий в BigQuery, в то время как dbt Labs (ранее известная как Fishtown Analytics) создавала свой собственный продукт: dbt. После успешного эксперимента в 2021 году dbt стал частью нашего решения для создания новых заданий в BigQuery в Teads. Хотя ему не хватает некоторых пользовательских функций, он стал надмножеством нашего предыдущего инструмента для повседневного использования.
 
-As column partitioning was released on BQ, and dbt favored [incremental materialization](/docs/build/incremental-models), we identified one case that wasn’t well supported: [ingestion-time partitioned tables using incremental materialization](https://github.com/dbt-labs/dbt-bigquery/issues/75).
+Когда в BQ было выпущено разделение по столбцам, и dbt отдал предпочтение [инкрементальной материализации](/docs/build/incremental-models), мы выявили один случай, который не был хорошо поддержан: [таблицы с разделением по времени загрузки, использующие инкрементальную материализацию](https://github.com/dbt-labs/dbt-bigquery/issues/75).
 
-🎉 **We’ve been drafting a technical solution since the end of 2021 and finally managed to [merge our contribution](https://github.com/dbt-labs/dbt-bigquery/pull/136) during Coalesce 2022!**
+🎉 **Мы разрабатывали техническое решение с конца 2021 года и наконец смогли [влить наш вклад](https://github.com/dbt-labs/dbt-bigquery/pull/136) во время Coalesce 2022!**
 
-## When to use ingestion-time partitioning tables
+## Когда использовать таблицы с разделением по времени загрузки
 
-Ingestion-time partitioning tables are very similar to column-type partitioning with `TIMESTAMP` columns. We can actually replicate most of the behavior from each other.
+Таблицы с разделением по времени загрузки очень похожи на таблицы с разделением по столбцам с `TIMESTAMP`. Мы можем фактически воспроизвести большинство поведения друг друга.
 
-Let’s see the main differences brought by ingestion-time partitioning tables:
+Давайте рассмотрим основные различия, которые привносят таблицы с разделением по времени загрузки:
 
-- In ingestion-time partitioning tables, we have a `TIMESTAMP` pseudo column called `_PARTITIONTIME`. This is not taken into account in the table’s weight which is interesting, so if you have a lot of rows, it can be worth it. You can also request `_PARTITIONDATE` which contains the same data truncated at the day-level with a `DATE` type.
-- Selecting data from ingestion-time partitioning tables that include a pseudocolumn is also cheaper because the column is not billed. We also figured out that queries filtering on time partition columns are faster on ingestion-time partitioning tables regarding slot time. So whether we’re using “pay as we go” or “flat rate”, we’re better off with ingestion-time partitioning tables regarding performance.
-- If we need to insert into multiple time partitions in a load/insert, we have to use column-type partitioning. Yet you can use a merge to insert in multiple partitions with ingestion-time partitioning tables.
-- We can’t select the pseudocolumn as is for some operations such as a `GROUP BY` and it must be renamed. Practically the column name is restricted and we have to alias it to something else.
-- We cannot use a `CREATE TABLE … AS SELECT …` on ingestion-time partitioning tables; it’s one of the main reasons why dbt didn’t support them at first with incremental materialization. It requires creating the table using a `PARTITION BY` clause and then inserting the data.
+- В таблицах с разделением по времени загрузки у нас есть псевдостолбец `TIMESTAMP`, называемый `_PARTITIONTIME`. Это не учитывается в весе таблицы, что интересно, поэтому, если у вас много строк, это может быть выгодно. Вы также можете запросить `_PARTITIONDATE`, который содержит те же данные, усеченные до уровня дня с типом `DATE`.
+- Выборка данных из таблиц с разделением по времени загрузки, включающих псевдостолбец, также дешевле, потому что столбец не тарифицируется. Мы также выяснили, что запросы, фильтрующие по временным столбцам разделов, быстрее на таблицах с разделением по времени загрузки с точки зрения времени слотов. Поэтому, независимо от того, используем ли мы "оплату по мере использования" или "фиксированную ставку", мы выигрываем с таблицами с разделением по времени загрузки с точки зрения производительности.
+- Если нам нужно вставить в несколько временных разделов в одной загрузке/вставке, мы должны использовать разделение по столбцам. Однако вы можете использовать слияние для вставки в несколько разделов с таблицами с разделением по времени загрузки.
+- Мы не можем выбрать псевдостолбец как есть для некоторых операций, таких как `GROUP BY`, и он должен быть переименован. Практически имя столбца ограничено, и мы должны присвоить ему псевдоним.
+- Мы не можем использовать `CREATE TABLE … AS SELECT …` на таблицах с разделением по времени загрузки; это одна из основных причин, почему dbt не поддерживал их сначала с инкрементальной материализацией. Это требует создания таблицы с использованием `PARTITION BY` и затем вставки данных.
 
-As a rule of thumb, you can consider that if your table partition length is less than a 1 million rows, you’re better off using column-type partitioning.
+Как правило, если длина раздела вашей таблицы меньше 1 миллиона строк, вам лучше использовать разделение по столбцам.
 
-## How to use ingestion-time partitioning in dbt
+## Как использовать разделение по времени загрузки в dbt
 
-> The following requires dbt bigquery v1.4+
+> Следующее требует dbt bigquery v1.4+
 
-When we designed ingestion partitioning table support with the dbt Labs team, we focused on ease of use and how to have seamless integration with incremental materialization.
+Когда мы проектировали поддержку таблиц с разделением по времени загрузки с командой dbt Labs, мы сосредоточились на простоте использования и на том, как обеспечить бесшовную интеграцию с инкрементальной материализацией.
 
-One of the great features of incremental materialization is to be able to proceed with a full refresh. We added support for that feature and, luckily, `MERGE` statements are working as intended for ingestion-time partitioning tables. This is also the approach used by the [dbt BigQuery connector](/docs/core/connect-data-platform/bigquery-setup).
+Одной из замечательных функций инкрементальной материализации является возможность выполнения полного обновления. Мы добавили поддержку этой функции, и, к счастью, операторы `MERGE` работают как задумано для таблиц с разделением по времени загрузки. Это также подход, используемый [коннектором dbt BigQuery](/docs/core/connect-data-platform/bigquery-setup).
 
-The complexity is hidden in the connector and it’s very intuitive to use. For example, if you have a model with the following SQL:
+Сложность скрыта в коннекторе, и его использование очень интуитивно. Например, если у вас есть модель с следующим SQL:
 
 ```sql
 {{ config(
@@ -66,7 +66,7 @@ select
 from {{ source('logs', 'tracking_events') }}
 ```
 
-We only need to add a field to move to ingestion-time partitioning: `"time_ingestion_partitioning": true`
+Нам нужно только добавить поле, чтобы перейти к разделению по времени загрузки: `"time_ingestion_partitioning": true`
 
 ```sql
 {{ config(
@@ -86,62 +86,62 @@ select
 from {{ source('logs', 'tracking_events') }}
 ```
 
-The resulting table schema will be:
+Результирующая схема таблицы будет:
 
 ```yaml
 campaign_id INT64
 impressions_count INT64
 ```
 
-Indeed the day column data will be inserted into the `_PARTITIONTIME` pseudo column which is not visible in the table schema. Underneath, dbt generates a `MERGE` statement that wraps the insertion in the table. It’s very convenient when our model output contains multiple partitions and/or your incremental strategy is `incremental_overwrite`.
+Действительно, данные столбца day будут вставлены в псевдостолбец `_PARTITIONTIME`, который не виден в схеме таблицы. Внутри dbt генерирует оператор `MERGE`, который оборачивает вставку в таблицу. Это очень удобно, когда наш выходной результат модели содержит несколько разделов и/или ваша инкрементальная стратегия - `incremental_overwrite`.
 
-### MERGE statements and performance
+### Операторы MERGE и производительность
 
-However, if you need to insert or overwrite a single partition, for instance, with an hourly/daily rollup, then writing on an explicit partition is much more efficient than a `MERGE`.
+Однако, если вам нужно вставить или перезаписать один раздел, например, с почасовым/дневным сверткой, то запись в явный раздел гораздо эффективнее, чем `MERGE`.
 
-We had a job with millions of rows on which we compared both approaches and measured:
+У нас была задача с миллионами строк, на которой мы сравнили оба подхода и измерили:
 
-- 43 minutes with a `MERGE` approach using dbt
-- 26 minutes with a custom query using `WRITE_TRUNCATE` on the destination table using a partition decorator
+- 43 минуты с подходом `MERGE`, используя dbt
+- 26 минут с пользовательским запросом, используя `WRITE_TRUNCATE` на целевой таблице с использованием декоратора раздела
 
-That’s a 17 minutes difference which means that almost 40% of the `MERGE` statement is spent on adding the data to the table.
+Это разница в 17 минут, что означает, что почти 40% оператора `MERGE` тратится на добавление данных в таблицу.
 
-Of course, the `MERGE` statement offers much more flexibility than a `WRITE_TRUNCATE` query. Yet in most analytics workload cases, the queries are time series that are immutable - and therefore, either the destination partition is empty or we’ll likely have to reprocess a partial period so that it translates into overwriting every row in a subset of the existing partitions.
+Конечно, оператор `MERGE` предлагает гораздо больше гибкости, чем запрос `WRITE_TRUNCATE`. Однако в большинстве случаев аналитической нагрузки запросы представляют собой временные ряды, которые неизменны - и, следовательно, либо целевой раздел пуст, либо нам, вероятно, придется перепроцессировать частичный период, чтобы это привело к перезаписи каждой строки в подмножестве существующих разделов.
 
-### Efficient solution
+### Эффективное решение
 
-The dbt approach to insert/overwrite incremental partitions using `insert_overwrite` without using static partitions is the following:
+Подход dbt для вставки/перезаписи инкрементальных разделов с использованием `insert_overwrite` без использования статических разделов следующий:
 
-- Create a temporary table using the model query
-- Apply the schema change based on the `on_schema_change` configuration
-- Use a `MERGE` statement to insert the data from temporary table into the destination one
+- Создать временную таблицу, используя запрос модели
+- Применить изменение схемы на основе конфигурации `on_schema_change`
+- Использовать оператор `MERGE`, чтобы вставить данные из временной таблицы в целевую
 
-If we want to get rid of the `MERGE` statement, there are 2 solutions:
+Если мы хотим избавиться от оператора `MERGE`, есть 2 решения:
 
-- Use a `SELECT` statement over the data of a partition from the temporary table and use the partition decorator on the destination table to output the data using `WRITE_TRUNCATE`
-- Copy every partition with overwrite from using BigQuery driver
+- Использовать оператор `SELECT` для данных раздела из временной таблицы и использовать декоратор раздела на целевой таблице, чтобы вывести данные, используя `WRITE_TRUNCATE`
+- Копировать каждый раздел с перезаписью, используя драйвер BigQuery
 
-In both cases, the operation can be done on a single partition at a time so it requires a tradeoff between speed and model atomicity if multiple partitions are involved.
+В обоих случаях операция может быть выполнена на одном разделе за раз, поэтому требуется компромисс между скоростью и атомарностью модели, если задействовано несколько разделов.
 
-On a 192 GB partition here is how the different methods compare:
+На разделе размером 192 ГБ вот как сравниваются различные методы:
 
 <Lightbox src="/img/blog/2023-02-01-ingestion-time-partitioning-bigquery/merge-vs-select.png" />
 
-Also, the `SELECT` statement consumed more than 10 hours of slot time while `MERGE` statement took days of slot time.
+Также оператор `SELECT` потребил более 10 часов времени слотов, в то время как оператор `MERGE` занял дни времени слотов.
 
-So picking the BQ copy approach is definitely a no-brainer. That’s the solution we picked to improve the BQ output on incremental materialization using the `insert_overwrite` strategy.
+Таким образом, выбор подхода копирования BQ определенно очевиден. Это решение, которое мы выбрали для улучшения вывода BQ на инкрементальной материализации, используя стратегию `insert_overwrite`.
 
-Though it looks like a silver bullet, there are cases where we DON’T want to use it:
+Хотя это выглядит как универсальное решение, есть случаи, когда мы НЕ хотим его использовать:
 
-- If we have a small partition, merging on a small table, the gains are negligible
-- If a lot of partitions are involved, the copy will happen sequentially. It could be parallelized in another update but depending on how many concurrent operations would be configured, the performance might still not improve enough over a `MERGE` statement.
-- If you need consistency across multiple partitions replacement, this approach will not fit your needs as all partitions are not replaced atomically.
+- Если у нас небольшой раздел, слияние на небольшой таблице, выгоды незначительны
+- Если задействовано много разделов, копирование будет происходить последовательно. Это может быть параллелизировано в другом обновлении, но в зависимости от того, сколько параллельных операций будет настроено, производительность может все еще не улучшиться достаточно по сравнению с оператором `MERGE`.
+- Если вам нужна согласованность при замене нескольких разделов, этот подход не подойдет, так как все разделы не заменяются атомарно.
 
-## How to use partition copy with dbt
+## Как использовать копирование разделов с dbt
 
-> The following requires dbt bigquery v1.4+
+> Следующее требует dbt bigquery v1.4+
 
-To move a model to use partition copy instead of a `MERGE` statement, let’s take the same model as previously:
+Чтобы перевести модель на использование копирования разделов вместо оператора `MERGE`, давайте возьмем ту же модель, что и ранее:
 
 ```sql
 {{ config(
@@ -160,7 +160,7 @@ select
 from {{ source('logs', 'tracking_events') }}
 ```
 
-Again we only need to add a field to move to partition copy: `"copy_partitions": true`
+Снова нам нужно только добавить поле, чтобы перейти к копированию разделов: `"copy_partitions": true`
 
 ```sql
 {{ config(
@@ -180,18 +180,18 @@ select
 from {{ source('logs', 'tracking_events') }}
 ```
 
-The configuration will be read at run time and will use the BQ driver integration to write the data using partition copy. The integration should be seamless.
+Конфигурация будет прочитана во время выполнения и будет использовать интеграцию драйвера BQ для записи данных с использованием копирования разделов. Интеграция должна быть бесшовной.
 
-## Conclusion
+## Заключение
 
-**Combining ingestion-time partitioning and partition copy is a great way to achieve better performance for your models**. Of course, it would have been simpler if both features were fully integrated with SQL and didn’t require work around BigQuery Data Definition Language SQL or driver usage.
+**Комбинирование разделения по времени загрузки и копирования разделов - отличный способ добиться лучшей производительности для ваших моделей**. Конечно, было бы проще, если бы обе функции были полностью интегрированы с SQL и не требовали работы вокруг SQL языка определения данных BigQuery или использования драйвера.
 
-But thanks to dbt’s open-source approach and dbt Labs team, **we had the opportunity to add support for those use cases** and bring it to more BigQuery users.
+Но благодаря открытому подходу dbt и команде dbt Labs, **у нас была возможность добавить поддержку этих случаев использования** и предоставить ее большему количеству пользователей BigQuery.
 
-Lastly, I wanted to share [Jeremy Cohen’s post](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982) which is giving great insights to **figure out how to pick an incremental strategy** and its options depending on your needs.
+Наконец, я хотел бы поделиться [постом Джереми Коэна](https://discourse.getdbt.com/t/bigquery-dbt-incremental-changes/982), который дает отличные идеи, чтобы **определить, как выбрать инкрементальную стратегию** и ее параметры в зависимости от ваших потребностей.
 
 ---
 
-**If you love working with data at scale and look for a new challenge**, have a look at our [engineering job opportunities](https://engineering.teads.com/jobs/) at Teads.
+**Если вам нравится работать с данными в больших масштабах и вы ищете новый вызов**, взгляните на наши [вакансии в инженерной команде](https://engineering.teads.com/jobs/) в Teads.
 
-🎁 If this article was of interest, you might want to have a look at [BQ Booster](https://bqbooster.kayrnt.fr/), a platform I’m building to help BigQuery users improve their day-to-day.
+🎁 Если эта статья была вам интересна, возможно, вам стоит взглянуть на [BQ Booster](https://bqbooster.kayrnt.fr/), платформу, которую я создаю, чтобы помочь пользователям BigQuery улучшить их повседневную работу.

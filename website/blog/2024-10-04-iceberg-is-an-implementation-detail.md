@@ -1,66 +1,65 @@
 ---
-title: "Iceberg Is An Implementation Detail"
-description: "This blog will talk about iceberg table support and why it both matters and doesn't"
+title: "Iceberg — это деталь реализации"
+description: "В этом блоге мы поговорим о поддержке таблиц Iceberg и о том, почему это важно и не важно одновременно"
 slug: icebeg-is-an-implementation-detail
 
 authors: [amy_chen]
 
-tags: [table formats, iceberg]
+tags: [форматы таблиц, iceberg]
 hide_table_of_contents: false
 
 date: 2024-10-04
 is_featured: false
 ---
 
-If you haven’t paid attention to the data industry news cycle, you might have missed the recent excitement centered around an open table format called Apache Iceberg™. It’s one of many open table formats like Delta Lake, Hudi, and Hive. These formats are changing the way data is stored and metadata accessed. They are groundbreaking in many ways.
+Если вы не следите за новостями в индустрии данных, вы могли пропустить недавний ажиотаж вокруг открытого формата таблиц под названием Apache Iceberg™. Это один из многих открытых форматов таблиц, таких как Delta Lake, Hudi и Hive. Эти форматы меняют способ хранения данных и доступа к метаданным. Они во многом революционны.
 
-But I have to be honest: **I don’t care**. But not for the reasons you think.
+Но я должна быть честной: **меня это не волнует**. Но не по тем причинам, которые вы могли бы подумать.
 
 <!-- truncate -->
 
-## What is Iceberg?
+## Что такое Iceberg?
 
-To have this conversation, we need to start with the same foundational understanding of Iceberg. Apache Iceberg is a high-performance open table format developed for modern data lakes. It was designed for large-scale datasets, and within the project, there are many ways to interact with it. When people talk about Iceberg, it often means multiple components including but not limited to:
+Чтобы обсудить это, нам нужно начать с общего понимания Iceberg. Apache Iceberg — это высокопроизводительный открытый формат таблиц, разработанный для современных озер данных. Он был создан для работы с крупномасштабными наборами данных, и в рамках проекта существует множество способов взаимодействия с ним. Когда люди говорят об Iceberg, это часто означает несколько компонентов, включая, но не ограничиваясь:
 
-1. Iceberg Table Format - an open-source table format with large-scale data. Tables materialized in iceberg table format are stored on a user’s infrastructure, such as S3 Bucket.
-2. Iceberg Data Catalog - an open-source metadata management system that tracks the schema, partition, and versions of Iceberg tables.
-3. Iceberg REST Protocol (also called Iceberg REST API) is how engines can support and speak to other Iceberg-compatible catalogs.
+1. Формат таблиц Iceberg — это открытый формат таблиц для крупномасштабных данных. Таблицы, материализованные в формате таблиц Iceberg, хранятся на инфраструктуре пользователя, такой как S3 Bucket.
+2. Каталог данных Iceberg — это система управления метаданными с открытым исходным кодом, которая отслеживает схему, разбиение и версии таблиц Iceberg.
+3. Протокол REST Iceberg (также называемый REST API Iceberg) — это способ, с помощью которого движки могут поддерживать и взаимодействовать с другими совместимыми с Iceberg каталогами.
 
-If you have been in the industry, you also know that everything I just wrote above about Iceberg could easily be replaced by `Hive,` `Hudi,` or `Delta.` This is because they were all designed to solve essentially the same problem. Ryan Blue (creator of Iceberg) and Michael Armbrust (creator of Delta Lake) recently sat down for this [fantastic chat](https://vimeo.com/1012543474) and said two points that resonated with me:
+Если вы работаете в индустрии, вы также знаете, что все, что я только что написала об Iceberg, можно легко заменить на `Hive,` `Hudi` или `Delta.` Это потому, что все они были разработаны для решения по сути одной и той же проблемы. Райан Блю (создатель Iceberg) и Майкл Армбруст (создатель Delta Lake) недавно провели [замечательную беседу](https://vimeo.com/1012543474) и сказали два момента, которые мне запомнились:
 
-- “We never intended for people to pay attention to this area. It’s something we wanted to fix, but people should be able to not pay attention and just work with their data. Storage systems should just work.”
-- “We solve the same challenges with different approaches.”
+- «Мы никогда не предполагали, что люди будут обращать внимание на эту область. Это то, что мы хотели исправить, но люди должны иметь возможность не обращать на это внимание и просто работать со своими данными. Системы хранения должны просто работать».
+- «Мы решаем одни и те же задачи разными подходами».
 
-At the same time, the industry is converging on Apache Iceberg. [Iceberg has the highest availability of read and write support](https://medium.com/sundeck/2024-lakehouse-format-rundown-7edd75015428).
+В то же время индустрия объединяется вокруг Apache Iceberg. [Iceberg имеет наивысшую доступность поддержки чтения и записи](https://medium.com/sundeck/2024-lakehouse-format-rundown-7edd75015428).
 
-<Lightbox src="/img/blog/2024-10-04-iceberg-blog/2024-10-03-iceberg-support.png" width="85%" title="Credit to Jacques at Sundeck for creating this fantastic chart of all the Iceberg Support" />
+<Lightbox src="/img/blog/2024-10-04-iceberg-blog/2024-10-03-iceberg-support.png" width="85%" title="Благодарность Жаку из Sundeck за создание этой замечательной диаграммы всей поддержки Iceberg" />
 
+Snowflake запустил поддержку Iceberg в 2022 году. Databricks запустил поддержку Iceberg через Uniform в прошлом году. Microsoft объявила о поддержке Iceberg в Fabric в сентябре 2024 года на Fabric Con. **Клиенты требуют интероперабельности, и поставщики прислушиваются**.
 
-Snowflake launched Iceberg support in 2022. Databricks launched Iceberg support via Uniform last year. Microsoft announced Fabric support for Iceberg in September 2024 at Fabric Con. **Customers are demanding interoperability, and vendors are listening**.
+Почему это важно? Стандартизация в индустрии приносит пользу клиентам. Когда индустрия стандартизируется, клиенты получают гибкость. У каждого есть предпочтительный способ работы, и благодаря стандартизации они всегда могут использовать свои предпочтительные инструменты в данных своей организации.
 
-Why does this matter? Standardization of the industry benefits customers. When the industry standardizes - customers have the gift of flexibility. Everyone has a preferred way of working, and with standardization &mdash; they can always bring their preferred tools to their organization’s data.
+## Просто еще одна деталь реализации
 
-## Just another implementation detail
+Я не говорю, что открытые форматы таблиц не важны. Управление метаданными и производительность делают их очень значимыми и заслуживающими внимания. Наши пользователи уже рады использовать их для создания озер данных, чтобы экономить на затратах на хранение, создавать больше абстракции от своих вычислений и т.д.
 
-I’m not saying open table formats aren't important. The metadata management and performance make them very meaningful and should be paid attention to.  Our users are already excited to use it to create data lakes to save on storage costs, create more abstraction from their computing, etc.
+Но при создании моделей данных или сосредоточении на предоставлении бизнес-ценности через аналитику моя основная забота не в том, *как* данные хранятся, а в том, *как* я могу использовать их для получения инсайтов и принятия решений. Жизненный цикл разработки аналитики и так достаточно сложен, чтобы учитывать каждую деталь. dbt абстрагирует основную платформу и позволяет мне сосредоточиться на написании SQL и оркестрации моих преобразований. Это функция, благодаря которой мне не нужно думать о том, как таблицы хранятся или оптимизируются — мне просто нужно знать, что когда я ссылаюсь на dim_customers или fct_sales, правильные данные там и готовы к использованию. **Оно должно просто работать.**
 
-But when building data models or focusing on delivering business value through analytics, my primary concern is not *how* the data is stored—it's *how* I can leverage it to generate insights and drive decisions. The analytics development lifecycle is hard enough without having to take into every detail. dbt abstracts the underlying platform and lets me focus on writing SQL and orchestrating my transformations. It’s a feature that I don’t need to think about how tables are stored or optimized—I just need to know that when I reference dim_customers or fct_sales, the correct data is there and ready to use. **It should just work.**
+## Иногда детали действительно важны
 
-## Sometimes the details do matter
+Хотя форматы таблиц являются деталью реализации для преобразования данных, Iceberg может повлиять на разработчиков dbt, когда детали реализации не бесшовны. В настоящее время использование Iceberg требует значительного объема предварительной настройки и интеграционной работы, помимо просто создания таблиц для начала работы.
 
-While table formats are an implementation detail for data transformation &mdash; Iceberg can impact dbt developers when the implementation details aren’t seamless. Currently, using Iceberg requires a significant amount of upfront configuration and integration work beyond just creating tables to get started.
+Одним из самых больших препятствий является управление слоем метаданных Iceberg. Эти метаданные часто нужно синхронизировать с внешними каталогами, что требует тщательной настройки и постоянного обслуживания, чтобы предотвратить несоответствия. Разрешения и контроль доступа добавляют еще один уровень сложности — поскольку несколько движков могут получать доступ к таблицам Iceberg, вы должны убедиться, что все системы имеют правильный доступ как к файлам данных, так и к каталогу метаданных. В настоящее время настройка интеграций между этими движками также далека от бесшовной; в то время как некоторые движки нативно поддерживают Iceberg, другие требуют хрупких обходных путей, чтобы гарантировать правильную синхронизацию метаданных. Этот фрагментированный ландшафт означает, что вы можете оказаться в сети взаимосвязанных компонентов.
 
-One of the biggest hurdles is managing Iceberg’s metadata layer. This metadata often needs to be synced with external catalogs, which requires careful setup and ongoing maintenance to prevent inconsistencies. Permissions and access controls add another layer of complexity—because multiple engines can access Iceberg tables, you have to ensure that all systems have the correct access to both the data files and the metadata catalog. Currently, setting up integrations between these engines is also far from seamless; while some engines natively support Iceberg, others require brittle workarounds to ensure the metadata is synced correctly. This fragmented landscape means you could land with a web of interconnected components.
+## Исправление
 
-## Fixing it
+**Сегодня мы объявили о официальной поддержке формата таблиц Iceberg в dbt.** Поддержка формата таблиц Iceberg — это еще одна вещь, о которой вам не нужно беспокоиться на пути к внедрению Iceberg.
 
-**Today, we announced official support for the Iceberg table format in dbt.** By supporting the Iceberg table format, it’s one less thing you have to worry about on your journey to adopting Iceberg.
+С поддержкой формата таблиц Iceberg теперь проще конвертировать ваши модели dbt, использующие проприетарные форматы таблиц, в Iceberg, обновив вашу конфигурацию. После того как вы настроите внешнее хранилище для Iceberg и подключите его к вашим платформам, вы сможете перейти в вашу модель dbt и обновить конфигурацию, чтобы она выглядела примерно так:
 
-With support for Iceberg Table Format, it is now easier to convert your dbt models using proprietary table formats to Iceberg by updating your configuration. After you have set up your external storage for Iceberg and connected it to your platforms, you will be able to jump into your dbt model and update the configuration to look something like this:
+<Lightbox src="/img/blog/2024-10-04-iceberg-blog/iceberg_materialization.png" width="85%" title="Поддержка формата таблиц Iceberg в dbt для Snowflake" />
 
-<Lightbox src="/img/blog/2024-10-04-iceberg-blog/iceberg_materialization.png" width="85%" title="Iceberg Table Format Support on dbt for Snowflake" />
-
-It is available on these adapters:
+Она доступна на следующих адаптерах:
 
 - Athena
 - Databricks
@@ -69,16 +68,16 @@ It is available on these adapters:
 - Starburst/Trino
 - Dremio
 
-As with the beauty of any open-source project, Iceberg support grew organically, so the implementations vary. However, this will change in the coming months as we converge onto one dbt standard. This way, no matter which adapter you jump into, the configuration will always be the same.
+Как и в случае с любым проектом с открытым исходным кодом, поддержка Iceberg развивалась органично, поэтому реализации различаются. Однако это изменится в ближайшие месяцы, когда мы придем к одному стандарту dbt. Таким образом, независимо от того, в какой адаптер вы перейдете, конфигурация всегда будет одинаковой.
 
-## dbt the Abstraction Layer
+## dbt как слой абстракции
 
-dbt is more than about abstracting away the DDL to create and manage objects. It’s also about ensuring an opinionated approach to managing and optimizing your data. That remains true for our strategy around Iceberg Support.
+dbt — это не только абстрагирование DDL для создания и управления объектами. Это также обеспечение мнения о том, как управлять и оптимизировать ваши данные. Это остается верным для нашей стратегии вокруг поддержки Iceberg.
 
-In our dbt-snowflake implementation, we have already started to [enforce best practices centered around how to manage the base location](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#base-location) to ensure you don’t create technical debt accidentally, ensuring your Iceberg implementation scales over time. And we aren’t done yet.
+В нашей реализации dbt-snowflake мы уже начали [внедрять лучшие практики, связанные с управлением базовым местоположением](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#base-location), чтобы гарантировать, что вы случайно не создадите технический долг, обеспечивая масштабируемость вашей реализации Iceberg со временем. И мы еще не закончили.
 
-That said, while we can create the models, there is a *lot* of initial work to get to that stage.  dbt developers must still consider the implementation, like how their external volume has been set up or where dbt can access the metadata. We have to make this better.
+Тем не менее, хотя мы можем создавать модели, требуется *много* начальной работы, чтобы достичь этой стадии. Разработчики dbt все еще должны учитывать реализацию, например, как настроен их внешний объем или где dbt может получить доступ к метаданным. Мы должны сделать это лучше.
 
-Given the friction of getting launched on Iceberg, over the coming months, we will enable more capabilities to empower users to adopt Iceberg. It should be easier to read from foreign Iceberg catalogs. It should be easier to mount your volume. It should be easier to manage refreshes. And you should also trust that permissions and governance are consistently enforced.
+Учитывая трения при запуске на Iceberg, в ближайшие месяцы мы предоставим больше возможностей, чтобы помочь пользователям внедрять Iceberg. Должно быть проще читать из внешних каталогов Iceberg. Должно быть проще монтировать ваш объем. Должно быть проще управлять обновлениями. И вы также должны доверять, что разрешения и управление соблюдаются последовательно.
 
-And this work doesn’t stop at Iceberg. The framework we are building is also compatible with other table formats, ensuring that whatever table format works for you is supported on dbt. This way &mdash; dbt users can also stop caring about table formats. **It’s just another implementation detail.**
+И эта работа не останавливается на Iceberg. Фреймворк, который мы строим, также совместим с другими форматами таблиц, гарантируя, что любой формат таблиц, который вам подходит, поддерживается в dbt. Таким образом, пользователи dbt также могут перестать заботиться о форматах таблиц. **Это просто еще одна деталь реализации.**

@@ -1,7 +1,7 @@
 ---
 
-title: To defer or to clone, that is the question
-description: "In dbt v1.6, we introduce support for zero-copy cloning via the new dbt clone command. In this blog post, Kshitij will cover what clone is, how it is different from deferral, and when to use each."
+title: Клонировать или откладывать, вот в чем вопрос
+description: "В dbt версии 1.6 мы представляем поддержку клонирования без копирования данных с помощью новой команды dbt clone. В этом блоге Кшитидж расскажет, что такое клонирование, чем оно отличается от откладывания и когда использовать каждое из них."
 slug: to-defer-or-to-clone
 
 image: /img/blog/2023-10-31-to-defer-or-to-clone/preview.png
@@ -16,107 +16,107 @@ is_featured: true
 
 ---
 
-Hi all, I’m Kshitij, a senior software engineer on the Core team at dbt Labs.
-One of the coolest moments of my career here thus far has been shipping the new `dbt clone` command as part of the dbt-core v1.6 release.
+Привет всем, я Кшитидж, старший инженер-программист в команде Core в dbt Labs.
+Одним из самых крутых моментов в моей карьере здесь было внедрение новой команды `dbt clone` в рамках выпуска dbt-core v1.6.
 
-However, one of the questions I’ve received most frequently is guidance around “when” to clone that goes beyond [the documentation on “how” to clone](https://docs.getdbt.com/reference/commands/clone).
-In this blog post, I’ll attempt to provide this guidance by answering these FAQs:
+Однако один из самых частых вопросов, которые я получаю, касается рекомендаций о том, "когда" клонировать, выходящих за рамки [документации о "как" клонировать](https://docs.getdbt.com/reference/commands/clone).
+В этом блоге я постараюсь дать эти рекомендации, ответив на следующие часто задаваемые вопросы:
 
-1. What is `dbt clone`?
-2. How is it different from deferral?
-3. Should I defer or should I clone?
+1. Что такое `dbt clone`?
+2. Чем это отличается от откладывания?
+3. Должен ли я откладывать или клонировать?
 <!--truncate-->
-## What is `dbt clone`?
+## Что такое `dbt clone`?
 
-`dbt clone` is a new command in dbt 1.6 that leverages native zero-copy clone functionality on supported warehouses to **copy entire schemas for free, almost instantly**.
+`dbt clone` — это новая команда в dbt 1.6, которая использует нативную функциональность клонирования без копирования данных на поддерживаемых хранилищах для **копирования целых схем бесплатно и почти мгновенно**.
 
-### How is this possible?
+### Как это возможно?
 
-Well, the warehouse “cheats” by only copying metadata from the `source` schema to the `target` schema; the underlying data remains at rest during this operation. 
-This metadata includes materialized objects like tables and views, which is why you see a **clone** of these objects in the target schema.
+Хранилище "читит", копируя только метаданные из схемы `source` в схему `target`; исходные данные остаются на месте во время этой операции.
+Эти метаданные включают материализованные объекты, такие как таблицы и представления, поэтому вы видите **клон** этих объектов в целевой схеме.
 
-In computer science jargon, `clone` makes a copy of the pointer from the `source` schema to the underlying data; after the operation there are now two pointers (`source` and `target` schemas) that each point to the same underlying data.
+На языке информатики, `clone` создает копию указателя из схемы `source` на исходные данные; после операции теперь есть два указателя (схемы `source` и `target`), которые указывают на одни и те же исходные данные.
 
-## How is cloning different from deferral?
+## Чем клонирование отличается от откладывания?
 
-On the surface, cloning and deferral seem similar – **they’re both ways to save costs in the data warehouse.**
-They do this by bypassing expensive model re-computations – clone by [eagerly copying](https://en.wikipedia.org/wiki/Evaluation_strategy#Eager_evaluation) an entire schema into the target schema, and defer by [lazily referencing](https://en.wikipedia.org/wiki/Lazy_evaluation) pre-built models in the source schema.
+На первый взгляд, клонирование и откладывание кажутся похожими — **оба способа экономии затрат в хранилище данных.**
+Они делают это, обходя дорогостоящие пересчеты моделей — клонирование [активно копирует](https://en.wikipedia.org/wiki/Evaluation_strategy#Eager_evaluation) всю схему в целевую схему, а откладывание [лениво ссылается](https://en.wikipedia.org/wiki/Lazy_evaluation) на предварительно построенные модели в исходной схеме.
 
-Let’s unpack this sentence and explore its first-order effects:
+Давайте разберем это предложение и исследуем его первичные эффекты:
 
 |                           | defer                                                                                                                                                              | clone                                                                                                                                    |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| **How do I use it?**      | Implicit via the `--defer` flag                                                                                                                                    | Explicit via the `dbt clone` command                                                                                                     |
-| **What are its outputs?** | Doesn't create any objects itself, but dbt might create objects in the target schema if they’ve changed from those in the source schema.                           | Copies objects from source schema to target schema in the data warehouse, which are persisted after operation is finished.               |
-| **How does it work?**     | Compares manifests between source and target dbt runs and overrides ref to resolve models not built in the target run to point to objects built in the source run. | Uses zero-copy cloning if available to copy objects from source to target schemas, else creates pointer views (`select * from my_model`) |
+| **Как это использовать?** | Неявно через флаг `--defer`                                                                                                                                        | Явно через команду `dbt clone`                                                                                                           |
+| **Каковы его результаты?**| Не создает никаких объектов сам по себе, но dbt может создать объекты в целевой схеме, если они изменились по сравнению с исходной схемой.                          | Копирует объекты из исходной схемы в целевую схему в хранилище данных, которые сохраняются после завершения операции.                     |
+| **Как это работает?**     | Сравнивает манифесты между исходными и целевыми запусками dbt и переопределяет ref, чтобы разрешить модели, не построенные в целевом запуске, указывая на объекты, построенные в исходном запуске. | Использует клонирование без копирования, если доступно, для копирования объектов из исходных в целевые схемы, иначе создает указательные представления (`select * from my_model`) |
 
-These first-order effects lead to the following second-order effects that truly distinguish clone and defer from each other:
+Эти первичные эффекты приводят к следующим вторичным эффектам, которые действительно отличают клонирование от откладывания:
 
 |                                                                          | defer                                                                                                                              | clone                                                                                  |
 |--------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| **Where can I use objects built in the target schema?**                  | Only within the context of dbt                                                                                                     | Any downstream tool (e.g. BI)                                                          |
-| **Can I safely modify objects built in the target schema?**              | No, since this would modify production data                                                                                        | Yes, cloning is a cheap way to create a sandbox of production data for experimentation |
-| **Will data in the target schema drift from data in the source schema?** | No, since deferral will always point to the latest version of the source schema                                                    | Yes, since clone is a point-in-time operation                                          |
-| **Can I use multiple source schemas at once?**                           | Yes, defer can dynamically switch between source schemas e.g. ref unchanged models from production and changed models from staging | No, clone copies objects from one source schema to one target schema                   |
+| **Где я могу использовать объекты, построенные в целевой схеме?**        | Только в контексте dbt                                                                                                             | В любом инструменте downstream (например, BI)                                          |
+| **Могу ли я безопасно изменять объекты, построенные в целевой схеме?**   | Нет, так как это изменит производственные данные                                                                                   | Да, клонирование — это дешевый способ создать песочницу производственных данных для экспериментов |
+| **Будут ли данные в целевой схеме отличаться от данных в исходной схеме?** | Нет, так как откладывание всегда будет указывать на последнюю версию исходной схемы                                                | Да, так как клонирование — это операция в определенный момент времени                  |
+| **Могу ли я использовать несколько исходных схем одновременно?**         | Да, откладывание может динамически переключаться между исходными схемами, например, ссылаться на неизмененные модели из производства и измененные модели из стадии | Нет, клонирование копирует объекты из одной исходной схемы в одну целевую схему        |
 
-## Should I defer or should I clone?
+## Должен ли я откладывать или клонировать?
 
-Putting together all the points above, here’s a handy cheat sheet for when to defer and when to clone:
+Собрав все вышеперечисленные пункты, вот удобная шпаргалка, когда откладывать и когда клонировать:
 
 |                                                                           | defer | clone |
 |---------------------------------------------------------------------------|-------|-------|
-| **Save time & cost by avoiding re-computation**                           | ✅     | ✅     |
-| **Create database objects to be available in downstream tools (e.g. BI)** | ❌     | ✅     |
-| **Safely modify objects in the target schema**                            | ❌     | ✅     |
-| **Avoid creating new database objects**                                   | ✅     | ❌     |
-| **Avoid data drift**                                                      | ✅     | ❌     |
-| **Support multiple dynamic sources**                                      | ✅     | ❌     |
+| **Экономия времени и затрат за счет избежания пересчета**                 | ✅     | ✅     |
+| **Создание объектов базы данных для использования в downstream инструментах (например, BI)** | ❌     | ✅     |
+| **Безопасное изменение объектов в целевой схеме**                         | ❌     | ✅     |
+| **Избегание создания новых объектов базы данных**                         | ✅     | ❌     |
+| **Избегание дрейфа данных**                                               | ✅     | ❌     |
+| **Поддержка нескольких динамических источников**                          | ✅     | ❌     |
 
-To absolutely drive this point home:
+Чтобы окончательно закрепить эту мысль:
 
-1. If you send someone this cheatsheet by linking to this page, you are deferring to this page
-2. If you print out this page and write notes in the margins, you have cloned this page
+1. Если вы отправляете кому-то эту шпаргалку, ссылаясь на эту страницу, вы откладываете на эту страницу
+2. Если вы распечатываете эту страницу и пишете заметки на полях, вы клонировали эту страницу
 
-## Putting it in practice
+## Применение на практике
 
-Using the cheat sheet above, let’s explore a few common scenarios and explore whether we should use defer or clone for each:
+Используя приведенную выше шпаргалку, давайте рассмотрим несколько распространенных сценариев и выясним, следует ли использовать откладывание или клонирование для каждого из них:
 
-1. **Testing staging datasets in BI**
+1. **Тестирование стадийных наборов данных в BI**
 
-    In this scenario, we want to:
-    1. Make a copy of our production dataset available in our downstream BI tool
-    2. To safely iterate on this copy without breaking production datasets
+    В этом сценарии мы хотим:
+    1. Сделать копию нашего производственного набора данных доступной в нашем downstream BI инструменте
+    2. Безопасно итеративно работать с этой копией, не нарушая производственные наборы данных
     
-    Therefore, we should use **clone** in this scenario.
+    Поэтому в этом сценарии мы должны использовать **клонирование**.
     
 2. **[Slim CI](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603)**
 
-    In this scenario, we want to:
-    1. Refer to production models wherever possible to speed up continuous integration (CI) runs
-    2. Only run and test models in the CI staging environment that have changed from the production environment
-    3. Reference models from different environments – prod for unchanged models, and staging for modified models
+    В этом сценарии мы хотим:
+    1. Ссылаться на производственные модели, где это возможно, чтобы ускорить запуски непрерывной интеграции (CI)
+    2. Запускать и тестировать только те модели в CI стадии, которые изменились по сравнению с производственной средой
+    3. Ссылаться на модели из разных сред — prod для неизмененных моделей и staging для измененных моделей
     
-    Therefore, we should use **defer** in this scenario.
+    Поэтому в этом сценарии мы должны использовать **откладывание**.
 
-:::tip Use `dbt clone` in CI jobs to test incremental models
-Learn how to [use `dbt clone` in CI jobs](/best-practices/clone-incremental-models) to efficiently test modified incremental models, simulating post-merge behavior while avoiding full-refresh costs.
+:::tip Используйте `dbt clone` в CI задачах для тестирования инкрементальных моделей
+Узнайте, как [использовать `dbt clone` в CI задачах](/best-practices/clone-incremental-models) для эффективного тестирования измененных инкрементальных моделей, имитируя поведение после слияния, избегая затрат на полное обновление.
 :::
     
 3. **[Blue/Green Deployments](https://discourse.getdbt.com/t/performing-a-blue-green-deploy-of-your-dbt-project-on-snowflake/1349)**
 
-    In this scenario, we want to:
-    1. Ensure that all tests are always passing on the production dataset, even if that dataset is slightly stale
-    2. Atomically rollback a promotion to production if tests aren’t passing across the entire staging dataset
+    В этом сценарии мы хотим:
+    1. Убедиться, что все тесты всегда проходят на производственном наборе данных, даже если этот набор данных немного устарел
+    2. Атомарно откатить продвижение в производство, если тесты не проходят по всему стадийному набору данных
     
-    In this scenario, we can use **clone** to implement a deployment strategy known as blue-green deployments where we build the entire staging dataset and then run tests against it, and only clone it over to production if all tests pass.
+    В этом сценарии мы можем использовать **клонирование** для реализации стратегии развертывания, известной как blue-green deployments, где мы строим весь стадийный набор данных, а затем запускаем тесты против него, и только клонируем его в производство, если все тесты проходят.
     
 
-As a rule of thumb, deferral lends itself better to continuous integration (CI) use cases whereas cloning lends itself better to continuous deployment (CD) use cases.
+Как правило, откладывание лучше подходит для случаев использования непрерывной интеграции (CI), тогда как клонирование лучше подходит для случаев использования непрерывного развертывания (CD).
 
-## Wrapping Up
+## Завершение
 
-In this post, we covered what `dbt clone` is, how it is different from deferral, and when to use each. Often, they can be used together within the same project in different parts of the deployment lifecycle. 
+В этом посте мы рассмотрели, что такое `dbt clone`, чем оно отличается от откладывания и когда использовать каждое из них. Часто они могут использоваться вместе в рамках одного проекта на разных этапах жизненного цикла развертывания.
 
-Thanks for reading, and I look forward to seeing what you build with `dbt clone`.
+Спасибо за чтение, и я с нетерпением жду, что вы создадите с помощью `dbt clone`.
 
-*Thanks to [Jason Ganz](https://docs.getdbt.com/author/jason_ganz) and [Gwen Windflower](https://www.linkedin.com/in/gwenwindflower/) for reviewing drafts of this article*
+*Спасибо [Джейсон Ганц](https://docs.getdbt.com/author/jason_ganz) и [Гвен Виндфлауэр](https://www.linkedin.com/in/gwenwindflower/) за рецензирование черновиков этой статьи*

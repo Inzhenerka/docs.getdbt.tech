@@ -1,6 +1,6 @@
 ---
-title: "Founding an Analytics Engineering Team"
-description: "Nate Sooter shares the challenges and successes of forming the first analytics engineering team at Smartsheet"
+title: "Создание команды аналитической инженерии"
+description: "Нейт Сутер делится вызовами и успехами в формировании первой команды аналитической инженерии в Smartsheet"
 slug: founding-an-analytics-engineering-team-smartsheet
 
 authors: [nate_sooter]
@@ -12,200 +12,200 @@ date: 2022-03-02
 is_featured: true
 ---
 
-# Founding an Analytics Engineering Team
+# Создание команды аналитической инженерии
 
-**Executive Summary:**
+**Краткое содержание:**
 
-If your company is struggling to leverage analytics, dealing with an overgrown ecosystem of dashboards/databases or simply want to avoid the mistakes of others, this story is for you. In this article, I will walk through forming the first analytics engineering team at Smartsheet including how momentum built around forming the team,  the challenges we faced, and the solutions we developed within the first year.
+Если ваша компания испытывает трудности с использованием аналитики, сталкивается с разросшейся экосистемой дашбордов/баз данных или просто хочет избежать ошибок других, эта история для вас. В этой статье я расскажу о формировании первой команды аналитической инженерии в Smartsheet, включая то, как возник импульс для создания команды, с какими вызовами мы столкнулись и какие решения разработали в течение первого года.
 
-## Introduction
+## Введение
 
-Most writing about analytics engineering, or AE for short, assumes a team already exists. It’s about operating as an AE team or managing stakeholders or leveraging tools more effectively. But what about the prologue? What initial problems do AEs solve? How does an AE team even start? What do the early days look like? <!--truncate-->
+Большинство материалов об аналитической инженерии, или AE, предполагают, что команда уже существует. Они касаются работы в команде AE, управления заинтересованными сторонами или более эффективного использования инструментов. Но что насчет пролога? Какие начальные проблемы решают аналитические инженеры? Как вообще начинается команда AE? Как выглядят первые дни? <!--truncate-->
 
-Enter this story. I’m Nate and I manage the Analytics Engineering team at [Smartsheet](https://www.smartsheet.com/customers-home), a software platform that helps you manage your work. We’re not a large team, just me and two others. A lot went into the formation of our team and this is that story. I’ll tell it in three parts:
+Вступайте в эту историю. Я Нейт, и я управляю командой аналитической инженерии в [Smartsheet](https://www.smartsheet.com/customers-home), программной платформе, которая помогает вам управлять вашей работой. Мы не большая команда, всего я и еще двое. Многое было вложено в формирование нашей команды, и это та история. Я расскажу ее в трех частях:
 
-- State of Analytics Before AE
-- Selling & Starting the AE team
-- Technology & Database Design
+- Состояние аналитики до AE
+- Продажа и запуск команды AE
+- Технологии и проектирование баз данных
 
-## State of Analytics Before Analytics Engineering
+## Состояние аналитики до аналитической инженерии
 
-Smartsheet, in general, has a great analytics setup. Strong data engineering and data analytics teams. A cloud <Term id="data-warehouse" /> and an on-prem BI tool for front-end data visibility.  However, even with that foundation, there were some limitations under the hood requiring action:
+В целом, Smartsheet имеет отличную аналитическую настройку. Сильные команды по обработке данных и аналитике данных. Облачный <Term id="data-warehouse" /> и локальный инструмент BI для видимости данных на переднем плане. Однако, даже с этой основой, были некоторые ограничения, требующие действий:
 
-### (1) Multiple undocumented transformation databases
+### (1) Несколько недокументированных баз данных трансформации
 
-Organic growth of a company usually translates to organic growth of the database. One <Term id="table" /> became two, became fifteen, became too many to count. Analysts who built key tables left, new analysts joined and re-made or duplicated key tables. Suddenly, “the truth” was hard to find as data sprawl increased.
+Органический рост компании обычно приводит к органическому росту базы данных. Одна <Term id="table" /> стала двумя, пятнадцатью, слишком многими, чтобы сосчитать. Аналитики, которые создавали ключевые таблицы, ушли, новые аналитики присоединились и заново создали или дублировали ключевые таблицы. Внезапно, "истина" стала труднодоступной, так как разрастание данных увеличилось.
 
-Expanding data meant increasing difficulty finding The Truth within the database. Analysts gained knowledge inefficiently and over a long period of time of discussions and trial and error. With limited documentation and a growing database, this challenge continued to expand as more and more analysts came on board.
+Расширение данных означало увеличение сложности нахождения Истины в базе данных. Аналитики получали знания неэффективно и в течение длительного времени через обсуждения и метод проб и ошибок. С ограниченной документацией и растущей базой данных эта проблема продолжала расширяться по мере прихода все большего числа аналитиков.
 
-### (2) Analysts could only ship code once every 1-2 weeks
+### (2) Аналитики могли отправлять код только раз в 1-2 недели
 
-Analysts need a process to “productionalize” tables where their code is version controlled and is run on a schedule. Such a process existed at Smartsheet for analysts, but the issue was that deployments only happened once per week. The existing data engineering workflow understandably emphasized stability and reliability, with analysts simply hitching a ride. This meant a tradeoff on speed and agility as it was a one to two week process for any analyst to get new or updated code into the repository, no matter how simple.
+Аналитикам нужен процесс для "производственной" обработки таблиц, где их код контролируется версиями и запускается по расписанию. Такой процесс существовал в Smartsheet для аналитиков, но проблема заключалась в том, что развертывания происходили только раз в неделю. Существующий рабочий процесс обработки данных, естественно, подчеркивал стабильность и надежность, и аналитики просто присоединялись к нему. Это означало компромисс в скорости и гибкости, так как процесс занимал одну-две недели для любого аналитика, чтобы получить новый или обновленный код в репозиторий, независимо от его простоты.
 
-For example, this meant if an analyst noticed some incorrect data on a dashboard, it was a long process to get that fixed. The business moved too fast to wait a week or two for data to update.
+Например, это означало, что если аналитик замечал некорректные данные на дашборде, это был долгий процесс, чтобы исправить это. Бизнес двигался слишком быстро, чтобы ждать неделю или две для обновления данных.
 
-### (3) Data & business logic siloed in visualization layer
+### (3) Данные и бизнес-логика изолированы на уровне визуализации
 
-Analysts found the pressure release valve around problem two in the visualization tool. It turns out that visualization tools can:
+Аналитики нашли выход из проблемы два в инструменте визуализации. Оказалось, что инструменты визуализации могут:
 
-(a) Hold a custom SQL script
+(a) Содержать пользовательский SQL-скрипт
 
-and
+и
 
-(b) Run that script on a schedule.
+(b) Запускать этот скрипт по расписанию.
 
-Voila, new analytics code now deployed more often than once per week. But it came with a downside as data and business logic became even more siloed than before.
+Вуаля, новый аналитический код теперь развертывается чаще, чем раз в неделю. Но это имело обратную сторону, так как данные и бизнес-логика стали еще более изолированными, чем раньше.
 
-With undocumented and undiscoverable logic embedded in custom code buried deep within a dashboard workbook instead of in database tables, the data ecosystem became brittle and unmaintainable. Whenever raw data or business logic changed, no one had any idea which dashboards went sour (hint: usually it was the business users seeing “something off”). Discovering data became even more difficult. Data silos deepened between team members. Thousands of dashboards appeared.
+С недокументированной и неоткрываемой логикой, встроенной в пользовательский код, глубоко закопанный в рабочей книге дашборда вместо таблиц базы данных, экосистема данных стала хрупкой и неудержимой. Всякий раз, когда изменялись сырые данные или бизнес-логика, никто не знал, какие дашборды испортились (подсказка: обычно это были бизнес-пользователи, видящие "что-то не так"). Обнаружение данных стало еще более сложным. Изоляция данных углубилась между членами команды. Появились тысячи дашбордов.
 
-The above problems are not uncommon for most companies and you can get by like this for a while. But as the scale of these challenges compounded, laying the foundation for the formation of an analytics engineering team.
+Эти проблемы не редкость для большинства компаний, и вы можете какое-то время обходиться так. Но по мере того, как масштаб этих вызовов увеличивался, закладывалась основа для формирования команды аналитической инженерии.
 
-## Justifying & Starting the Analytics Engineering Team
+## Обоснование и запуск команды аналитической инженерии
 
-### Making our case
+### Обоснование нашего дела
 
-We just didn’t realize it yet, but momentum for an AE team was building.  Several internal analysts, including myself, [knew things could be better](https://www.hashpath.com/2020/12/an-analytics-engineer-is-really-just-a-pissed-off-data-analyst/) and discussed a new schema holding core transformed tables. One analyst in particular (who later became the core engineer of the AE team) created crucial tables which everyone needed. I joined the effort. We gained traction rapidly as we sold its value to other analysts and it immediately saved everyone time and effort.
+Мы просто еще не осознавали этого, но импульс для команды AE нарастал. Несколько внутренних аналитиков, включая меня, [знали, что можно сделать лучше](https://www.hashpath.com/2020/12/an-analytics-engineer-is-really-just-a-pissed-off-data-analyst/) и обсуждали новую схему, содержащую основные преобразованные таблицы. Один аналитик, в частности (который позже стал основным инженером команды AE), создал важные таблицы, которые были нужны всем. Я присоединился к усилиям. Мы быстро набрали обороты, продавая его ценность другим аналитикам, и это сразу сэкономило всем время и усилия.
 
-Around this same time, I discovered the [Locally Optimistic](https://locallyoptimistic.com/) data community and learned the name of our efforts: [Analytics Engineering](https://locallyoptimistic.com/post/analytics-engineer/#:~:text=They%20bring%20a%20formal%20and,data%20team%20as%20a%20whole.). Given our clear need for this internally and the early traction of our initial schema, my job became clear: Smartsheet needed Analytics Engineering. I put together a couple slide decks going over our analytics issues and why an AE practice would help. For example, I drew a chart showing our existing messy data ecosystem:
+Примерно в это же время я обнаружил сообщество данных [Locally Optimistic](https://locallyoptimistic.com/) и узнал название наших усилий: [Аналитическая инженерия](https://locallyoptimistic.com/post/analytics-engineer/#:~:text=They%20bring%20a%20formal%20and,data%20team%20as%20a%20whole.). Учитывая нашу явную потребность в этом внутри компании и ранний успех нашей начальной схемы, моя задача стала ясной: Smartsheet нуждался в аналитической инженерии. Я подготовил несколько презентаций, в которых рассматривались наши аналитические проблемы и почему практика AE поможет. Например, я нарисовал диаграмму, показывающую нашу существующую запутанную экосистему данных:
 
-![Graphic depicting the current state of Smartsheet's enrichment structure and its flaws](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/current-enrichment-structure.png)
+![Графическое изображение текущей структуры обогащения данных Smartsheet и ее недостатков](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/current-enrichment-structure.png)
 
-I also presented slides going over solutions to these issues. After all, outlining problems is easy; bringing solutions is difficult.
+Я также представил слайды, рассматривающие решения этих проблем. В конце концов, изложение проблем легко; привнесение решений сложно.
 
-![Image of Nate's proposed solutions to Smartsheet's dysfunctional data enrichment structure](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/enrichment-structure-solutions.png)
+![Изображение предложенных Нейтом решений для дисфункциональной структуры обогащения данных Smartsheet](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/enrichment-structure-solutions.png)
 
-The core of the solutions at the time seemed simple. It boiled down to:
+Основой решений в то время казалось простое. Это сводилось к:
 
-**Let’s just make some more tables in that source of truth schema, with some additional governance and clarity of ownership.**
+**Давайте просто создадим больше таблиц в этой схеме источника истины, с дополнительным управлением и ясностью владения.**
 
-More on this in a bit - turns out this was only *part* of the solution.
+Подробнее об этом чуть позже - оказалось, что это была только *часть* решения.
 
-After a few meetings, additional discussions and a couple months, the opportunity crystallized: I and the analyst creating most source-of-truth tables would form the team. We would have one more headcount to hire. We officially became a team on Valentines Day, a true Data Love Story.
+После нескольких встреч, дополнительных обсуждений и пары месяцев возможность кристаллизовалась: я и аналитик, создающий большинство таблиц источника истины, сформируем команду. У нас будет еще одна вакансия для найма. Мы официально стали командой в День святого Валентина, настоящая история любви к данным.
 
-### The early days and re-scoping our mission
+### Первые дни и пересмотр нашей миссии
 
-As mentioned earlier, we set off thinking “let’s just make some more tables in that trusted schema, except make them more organized.” So we compiled a list of tables asking questions like, what do we need to make? And more importantly, how do we make it scalable?
+Как упоминалось ранее, мы начали с мысли "давайте просто создадим больше таблиц в этой доверенной схеме, только более организованных". Поэтому мы составили список таблиц, задавая вопросы, такие как, что нам нужно сделать? И, что более важно, как сделать это масштабируемым?
 
-The list of tables grew and grew. Enough that we started to realize a single schema wouldn’t pass muster. If we just made a ‘faster horse’ we would repeat the existing problem: too many tables in one place, all tangled up. After a couple months of planning and strategizing (delayed in part due to my parental leave, which I’m very thankful Smartsheet provides!), we thought to ourselves: what if we start fresh with our own database?
+Список таблиц рос и рос. Достаточно, чтобы мы начали осознавать, что одна схема не пройдет. Если бы мы просто сделали 'быстрого коня', мы бы повторили существующую проблему: слишком много таблиц в одном месте, все перепутаны. После пары месяцев планирования и стратегирования (задержанных частично из-за моего родительского отпуска, за который я очень благодарен Smartsheet!), мы подумали: что если мы начнем с нуля с нашей собственной базой данных?
 
-Something magical happened over the period of a couple weeks. We started asking even more “What if?” questions. They included:
+Что-то волшебное произошло в течение пары недель. Мы начали задавать еще больше вопросов "А что если?". Они включали:
 
-What if we chose our own set of tools?
+Что если мы выберем свой собственный набор инструментов?
 
-What if we overhauled the analytics code production process?
+Что если мы пересмотрим процесс производства аналитического кода?
 
-What if analysts could ship early and often instead of every few weeks?
+Что если аналитики смогут отправлять код рано и часто, а не каждые несколько недель?
 
-What if we cleaned up the old reporting ecosystem at the same time?
+Что если мы одновременно очистим старую экосистему отчетности?
 
-A dozen light bulbs went off at once. We could change *everything*. We could make *everyone’s* time more effective and efficient.
+Дюжина лампочек загорелась одновременно. Мы могли изменить *все*. Мы могли сделать *время каждого* более эффективным и продуктивным.
 
-I remember going into a meeting with our team SVP after realizing we should do more than just make some clean tables. I told him “this project is a lot bigger than we signed on for, there’s so much to do to get it right.” He was gracious to give us some more time, with the expectation that we’d deliver something within the year. It was time to get to work. We not only needed to make some clean data, choose our tools, overhaul the analytics code production process and significantly clean the old reporting ecosystem. It would take a marathon sprint to get there. The question of “What if” became “When?” We ambitiously chose by the end of the calendar year and off to the races we went.
+Я помню, как пришел на встречу с нашим старшим вице-президентом команды после того, как осознал, что мы должны сделать больше, чем просто создать чистые таблицы. Я сказал ему: "этот проект намного больше, чем мы подписались, есть так много, что нужно сделать, чтобы сделать это правильно". Он был любезен дать нам немного больше времени, с ожиданием, что мы доставим что-то в течение года. Пришло время работать. Нам нужно было не только создать чистые данные, выбрать наши инструменты, пересмотреть процесс производства аналитического кода и значительно очистить старую экосистему отчетности. Это был марафонский спринт, чтобы достичь этого. Вопрос "А что если" стал "Когда?". Мы амбициозно выбрали конец календарного года и отправились в гонку.
 
-## Technology & Database Design
+## Технологии и проектирование баз данных
 
-While this expansive project required numerous decisions, I want to highlight three primary and important decision points early on in our development.
+Хотя этот обширный проект требовал множества решений, я хочу выделить три основных и важных точки принятия решений на ранних этапах нашего развития.
 
-### Technology Stack
+### Технологический стек
 
-As mentioned earlier, the Smartsheet data stack was already pretty modern—including our cloud data warehouse. We also used some other modern on-prem or in-house tools in the existing analytics stack. However, we had a rare chance to take a step back and choose anew.
+Как упоминалось ранее, стек данных Smartsheet уже был довольно современным, включая наше облачное хранилище данных. Мы также использовали некоторые другие современные локальные или внутренние инструменты в существующем аналитическом стеке. Однако у нас была редкая возможность сделать шаг назад и выбрать заново.
 
-In the interest of getting a proof of concept out the door (I highly favor focus on delivering value quickly and then iterating improvements), we settled on a small and compact tech stack:
+В интересах быстрого вывода концепции на рынок (я очень предпочитаю сосредоточиться на быстрой доставке ценности и затем итеративном улучшении), мы остановились на небольшом и компактном технологическом стеке:
 
-- Our own Dev, Prod & Publish databases
-- Our own code repository which we managed independently
+- Наши собственные базы данных Dev, Prod и Publish
+- Наш собственный репозиторий кода, который мы управляли независимо
 - dbt Core CLI
-- Virtual Machine running dbt on a schedule
+- Виртуальная машина, запускающая dbt по расписанию
 
-None of us had used dbt before, but we’d heard amazing things about it. We hotly debated the choice between dbt and building our own lightweight stack, and looking back now, I couldn’t be happier with choosing dbt. While there was a learning curve that slowed us down initially, we’re now seeing the benefit of that decision. Onboarding new analysts is a breeze and much of the functionality we need is pre-built. The more we use the tool, the faster we are at using it and the more value we’re gaining from the product.
+Никто из нас раньше не использовал dbt, но мы слышали о нем потрясающие вещи. Мы горячо обсуждали выбор между dbt и созданием собственного легкого стека, и, оглядываясь назад, я не мог быть счастливее, выбрав dbt. Хотя была кривая обучения, которая замедлила нас вначале, теперь мы видим пользу от этого решения. Внедрение новых аналитиков стало легким, и большая часть функциональности, которая нам нужна, уже встроена. Чем больше мы используем инструмент, тем быстрее мы его используем и тем больше ценности мы получаем от продукта.
 
-For example, we previously used a separate tool to schedule [DAGs](https://analyticsengineers.club/whats-a-dag/). There was quite the spaghetti graph to keep straight and the tool became a headache for analysts. With dbt setting our DAGs automatically during the run, we could (and can) focus on more important tasks.
+Например, ранее мы использовали отдельный инструмент для планирования [DAGs](https://analyticsengineers.club/whats-a-dag/). Это была настоящая головоломка, и инструмент стал головной болью для аналитиков. С dbt, автоматически устанавливающим наши DAGs во время выполнения, мы могли (и можем) сосредоточиться на более важных задачах.
 
-I’m certain that if we’d chosen to roll our own homemade transformation pipeline, we’d be operating at a much slower pace today.
+Я уверен, что если бы мы выбрали создание собственной самодельной трансформационной конвейерной линии, мы бы работали с гораздо меньшей скоростью сегодня.
 
-### Our own take on Data Mesh
+### Наш собственный взгляд на Data Mesh
 
-In the midst of the [Great Data Mesh Debate](https://pedram.substack.com/p/the-last-thing-ill-ever-say-about), we were silently applying pieces of [Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html) into our database design. Specifically, we truly believed that separating out ownership and/or structure of data by domain within the company was a valuable step. Certain departments know certain pieces of information, and it is normal in transformations to join those things together to solve common use cases.
+В разгар [Великой дискуссии о Data Mesh](https://pedram.substack.com/p/the-last-thing-ill-ever-say-about), мы тихо применяли элементы [Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html) в нашем проектировании базы данных. В частности, мы действительно верили, что разделение владения и/или структуры данных по доменам внутри компании является ценным шагом. Определенные отделы знают определенные части информации, и это нормально в трансформациях объединять эти вещи вместе для решения общих задач.
 
-We believed this because our goal was to have wide, denormalized tables covering specific concepts like “Accounts”, “Users” or “Contracts”. The issue with wide tables is that a lot of columns from a lot of different ‘owners’ are needed. That sounded like a nightmare. If everyone owns a table, no one owns the table.
+Мы верили в это, потому что наша цель заключалась в том, чтобы иметь широкие, денормализованные таблицы, охватывающие конкретные концепции, такие как "Аккаунты", "Пользователи" или "Контракты". Проблема с широкими таблицами заключается в том, что требуется много столбцов от множества разных 'владельцев'. Это звучало как кошмар. Если все владеют таблицей, никто не владеет таблицей.
 
-Then, the lightbulb came suddenly one day. We realized that the **ownership of data could be at the column level, *not* just at the table level.** That piece of the puzzle unlocked our design.
+Затем, внезапно, однажды загорелась лампочка. Мы поняли, что **владение данными может быть на уровне столбца, *а не* только на уровне таблицы.** Этот элемент головоломки разблокировал наш дизайн.
 
-![Graphic depicting Smartsheet's new proposed data structure ](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/new-structure-example.png)
+![Графическое изображение новой предложенной структуры данных Smartsheet](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/new-structure-example.png)
 
-1. Each core ‘object’ in our database (e.g., a customer Contract) would start with a **Frame** table, which was just a simple table holding one row for each record to serve as the backbone of downstream transformations (e.g., a list of all unique Contract IDs).
-2. Each department would then take that Frame into their own schema and own their **Detail** version of the table. Finance would have the Finance.Contract table, Product would have Product.Contract table, etc. These were simply left joins of the Frame table with the columns about which each domain could supply trustworthy information. For example: Finance knows the value and when that contract is up for renewal, Product knows how many active users there are for that contract, and Sales knows the value of open opportunities for that contract’s renewal.
-3. We would then take those disparate Contract tables and join them together into our **Core** schema. Since all of these tables share the same root Frame table, the join is simple and there are no duplication issues or confusion about what counts as a contract.
-4. We left room for a **Utility** set of schemas for teams to take Core tables and build their own tables for specific use cases, knowing that not every use case ended in a wide table.
+1. Каждый основной 'объект' в нашей базе данных (например, контракт клиента) начинался бы с таблицы **Frame**, которая была просто простой таблицей, содержащей одну строку для каждой записи, служащей основой для последующих трансформаций (например, список всех уникальных идентификаторов контрактов).
+2. Каждый отдел затем брал бы эту Frame в свою собственную схему и владел своей версией таблицы **Detail**. Финансы имели бы таблицу Finance.Contract, Продукт имел бы таблицу Product.Contract и так далее. Это были просто левые соединения таблицы Frame с столбцами, о которых каждый домен мог предоставить надежную информацию. Например: Финансы знают стоимость и когда этот контракт подлежит продлению, Продукт знает, сколько активных пользователей есть для этого контракта, а Продажи знают стоимость открытых возможностей для продления этого контракта.
+3. Мы затем брали бы эти разрозненные таблицы Contract и объединяли их в нашу схему **Core**. Поскольку все эти таблицы имеют общий корневой Frame, соединение простое, и нет проблем с дублированием или путаницей о том, что считается контрактом.
+4. Мы оставили место для набора схем **Utility**, чтобы команды могли брать таблицы Core и строить свои собственные таблицы для конкретных задач, зная, что не каждая задача заканчивается широкой таблицей.
 
-This twist on Data Mesh gave us a strong foundation to build around. Enforcing ownership of columns at the domain level is important since data experts should contribute their knowledge into tables others can leverage.  Previously, those experts contributed knowledge when someone asked around. Now that knowledge lives in intuitive locations of the database, discoverable by anyone.
+Этот поворот на Data Mesh дал нам прочную основу для построения. Принуждение к владению столбцами на уровне домена важно, так как эксперты по данным должны вносить свои знания в таблицы, которые могут использовать другие. Ранее эти эксперты вносили знания, когда кто-то спрашивал. Теперь эти знания живут в интуитивно понятных местах базы данных, доступных для всех.
 
-### Data flow from Raw to Prod
+### Поток данных от Raw до Prod
 
-With the structure figured out, we turned our attention to the nitty gritty details and, wow, this was overwhelming. None of us came from a data engineering background. We had never created databases or maintained them, or thought about permissions, run schedules or disaster recovery. But there were decisions to make and we ran headlong into tackling them one at a time.
+С структурой, выясненной, мы обратили наше внимание на мелкие детали, и, вау, это было ошеломляюще. Никто из нас не имел опыта в области инженерии данных. Мы никогда не создавали базы данных или не поддерживали их, или не думали о разрешениях, расписаниях выполнения или восстановлении после сбоев. Но были решения, которые нужно было принять, и мы с головой погрузились в их решение одно за другим.
 
-For example, we originally assumed the data flow from Raw into its Prod state would be relatively simple: Raw → dbt magic → Prod.  But that ‘dbt magic’ part had *many* layers to it. Where will dbt run? How do we schedule it? How do we make sure data is in sync? What does being in sync even mean? How often do we update the database? What happens if one model is queried in the middle of an update? How do we make sure the right people see the right objects?
+Например, мы изначально предполагали, что поток данных от Raw до его состояния Prod будет относительно простым: Raw → dbt magic → Prod. Но эта часть 'dbt magic' имела *много* слоев. Где будет работать dbt? Как мы его планируем? Как мы убеждаемся, что данные синхронизированы? Что вообще означает быть синхронизированным? Как часто мы обновляем базу данных? Что происходит, если одна модель запрашивается в середине обновления? Как мы убеждаемся, что нужные люди видят нужные объекты?
 
-To get through the fog of questions, we chose one principle on which to plant our flag: **Data must be in sync and always accessible across the database**. In our existing database, if you queried a table mid-update: too bad. You got weird data and might not even know it, or your query would fail. We wanted to do better and our cloud data warehouse provided the platform we needed to make it happen.
+Чтобы пройти через туман вопросов, мы выбрали один принцип, на котором решили закрепиться: **Данные должны быть синхронизированы и всегда доступны по всей базе данных**. В нашей существующей базе данных, если вы запрашивали таблицу в середине обновления: слишком плохо. Вы получали странные данные и могли даже не знать об этом, или ваш запрос мог бы завершиться сбоем. Мы хотели сделать лучше, и наше облачное хранилище данных предоставило платформу, необходимую для этого.
 
-We settled on the following [data transformation](https://www.getdbt.com/analytics-engineering/transformation/) flow. Our transformation code is pulled every 8 hours onto a virtual machine (VM). A script on that VM triggers dbt to run that code, populating a staging database which is visible only to my team. Staging continues to update table by table until the run is successful.  When successful, Staging immediately clones over to Prod, with no downtime for users even if they are mid-query.  Everyone is happy.
+Мы остановились на следующем [потоке трансформации данных](https://www.getdbt.com/analytics-engineering/transformation/). Наш код трансформации извлекается каждые 8 часов на виртуальную машину (VM). Скрипт на этой VM запускает dbt для выполнения этого кода, заполняя промежуточную базу данных, которая видна только моей команде. Промежуточная база продолжает обновляться таблица за таблицей, пока выполнение не будет успешным. Когда успешно, Промежуточная база немедленно клонируется в Prod, без простоя для пользователей, даже если они находятся в середине запроса. Все счастливы.
 
-![Graphic depicting Smartsheet's finalized data transformation workflow structure](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/new-transformation-workflow.png)
+![Графическое изображение окончательной структуры рабочего процесса трансформации данных Smartsheet](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/new-transformation-workflow.png)
 
-This is scratching the surface of the decisions we made, but I hope it’s helpful in illuminating some of the hidden decisions one makes when designing a reliable analytics database.
+Это лишь поверхностное описание решений, которые мы приняли, но я надеюсь, что это поможет пролить свет на некоторые скрытые решения, которые принимаются при проектировании надежной аналитической базы данных.
 
-## V1 Launch
+## Запуск V1
 
-Starting around August, not only was the vision clear, we also had a plan of attack of what to make for V1. Planning and strategy time was largely over; it was time to execute and deliver value.
+Начиная с августа, не только видение стало ясным, но у нас также был план атаки, что сделать для V1. Время планирования и стратегии в основном закончилось; пришло время выполнять и доставлять ценность.
 
-I could write much more about each of these and the entire story of how we went from August to December but we’ll have to save that for another day. By December 20, 2021, we completed three key deliverables which will become the foundation for an internal analytics renaissance.
+Я мог бы написать гораздо больше о каждом из этих аспектов и всей истории о том, как мы прошли путь с августа по декабрь, но это придется оставить на другой день. К 20 декабря 2021 года мы завершили три ключевых результата, которые станут основой для внутреннего аналитического возрождения.
 
-### 70+ enriched tables in dbt refreshing every eight hours
+### 70+ обогащенных таблиц в dbt, обновляющихся каждые восемь часов
 
-We identified the core tables which covered the broadest swaths of use cases and laser focused on those. We delivered 70 tables in total, with highlights of:
+Мы определили основные таблицы, которые охватывали самые широкие области использования, и сосредоточились на них. Мы доставили 70 таблиц в общей сложности, с основными моментами:
 
-- 17 **Core** tables joined from the building blocks discussed in the prior section,
-- Multiple **Journal** tables (i.e., one row per change to a record) that had been on the “we want these” list for analysts for years, such as Account history and User history. These existed prior in a very raw format; good luck avoiding landmines and/or writing efficient queries on raw data, and
-- **Meta** tables giving up to date statistics on each model such as their data freshness.Up to this point, analysts had no idea how fresh the data was in a table and you couldn’t confidently tell a stakeholder through when the data on a dashboard was accurate.
+- 17 **Core** таблиц, объединенных из строительных блоков, обсужденных в предыдущем разделе,
+- Несколько **Journal** таблиц (т.е. одна строка на изменение записи), которые были в списке "мы хотим это" для аналитиков в течение многих лет, таких как история аккаунтов и история пользователей. Эти таблицы существовали ранее в очень сыром формате; удачи в избегании мин и/или написании эффективных запросов на сырых данных, и
+- **Meta** таблицы, предоставляющие актуальную статистику по каждой модели, такие как их свежесть данных. До этого момента аналитики не имели представления о том, насколько свежи данные в таблице, и вы не могли уверенно сказать заинтересованной стороне, до какого момента данные на дашборде были точными.
 
-Plenty more to make but the foundation was there, and now it was time to enroll other analysts in this process. This is a significant step toward unwinding the tangled data ecosystem described in problem one at the beginning of this article.
+Многое еще предстоит сделать, но основа была заложена, и теперь пришло время привлечь других аналитиков к этому процессу. Это значительный шаг к распутыванию запутанной экосистемы данных, описанной в первой проблеме в начале этой статьи.
 
-### Brand new code production process
+### Совершенно новый процесс производства кода
 
-This topic also deserves its own blog post, but I’ll attempt to quickly describe what we changed. As described in the problem statement, analysts could only ship code every 1-2 weeks and the process was incredibly painful. It was more than 16 steps with multiple ‘gotchas’ where analysts would get stuck and waste time.
+Эта тема также заслуживает отдельного поста в блоге, но я постараюсь быстро описать, что мы изменили. Как описано в заявлении о проблеме, аналитики могли отправлять код только раз в 1-2 недели, и процесс был невероятно болезненным. Это было более 16 шагов с множеством 'подводных камней', где аналитики застревали и тратили время.
 
-The process is now six steps, with massive time savings for the analytics team both in the creation and testing of their script along with how long it takes for new data to get into the data warehouse.This is on top of all of dbt’s benefits such as data definitions, <Term id="data-lineage">lineage</Term>, automatic testing, macros…the list goes on.
+Процесс теперь состоит из шести шагов, с огромной экономией времени для аналитической команды как в создании и тестировании их скрипта, так и в том, сколько времени требуется для того, чтобы новые данные попали в хранилище данных. Это поверх всех преимуществ dbt, таких как определения данных, <Term id="data-lineage">происхождение данных</Term>, автоматическое тестирование, макросы... список можно продолжать.
 
-![Graphic depicting Smartsheet's new and improved code production process that outlines 6 steps](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/completed-process.png)
+![Графическое изображение нового и улучшенного процесса производства кода Smartsheet, который включает 6 шагов](/img/blog/2022-02-23-founding-an-AE-team-smartsheet/completed-process.png)
 
-### Cleaned up dashboard/reporting ecosystem
+### Очистка экосистемы дашбордов/отчетности
 
-With clean tables in place and a strong process to create even more, it was time to tackle dashboarding/reporting. Over 1,000 workbooks contained over 5,000 dashboards, built up over years of analysts adding in ad-hoc queries and letting them run.
+С чистыми таблицами на месте и сильным процессом для создания еще большего количества, пришло время заняться дашбордингом/отчетностью. Более 1,000 рабочих книг содержали более 5,000 дашбордов, накопленных за годы, когда аналитики добавляли ad-hoc запросы и позволяли им работать.
 
-I started by setting up a process with criteria determining which dashboards to delete: if your dashboard isn’t used, it’s getting deleted. At first, the rule was “no views within six months” but then it tightened to “less than five views within six months”. Soon, it will move to “less than five views within three months” and we’ll tweak from there.
+Я начал с настройки процесса с критериями, определяющими, какие дашборды удалить: если ваш дашборд не используется, он будет удален. Сначала правило было "нет просмотров в течение шести месяцев", но затем оно ужесточилось до "менее пяти просмотров в течение шести месяцев". Вскоре оно перейдет на "менее пяти просмотров в течение трех месяцев", и мы будем корректировать оттуда.
 
-Next, I send out a monthly Smartsheet which lists all dashboards set for deprecation, notify everyone who owns at least one workbook, and give them the requirement of explaining why their workbook should remain. So far, very few dashboards receive a request to remain and most are allowed to expire by the owners.
+Затем я отправляю ежемесячный Smartsheet, который перечисляет все дашборды, подлежащие удалению, уведомляю всех, кто владеет хотя бы одной рабочей книгой, и даю им требование объяснить, почему их рабочая книга должна остаться. До сих пор очень немногие дашборды получают запрос на сохранение, и большинство из них разрешено истечь владельцами.
 
-As of now, we’ve retired 50% of all workbooks (roughly 500) which contained 42% of all dashboards (roughly 2,100). We’re confident that this cleanup will pair with less and less demand to make workbooks. The code automation process with dbt will also significantly relieve the pressure that drove analysts to over-rely on our visualization tool for data refreshing.
+На данный момент мы удалили 50% всех рабочих книг (примерно 500), которые содержали 42% всех дашбордов (примерно 2,100). Мы уверены, что эта очистка будет сочетаться с уменьшением спроса на создание рабочих книг. Процесс автоматизации кода с dbt также значительно снизит давление, которое заставляло аналитиков чрезмерно полагаться на наш инструмент визуализации для обновления данных.
 
-All of this cascades into many benefits that Smartsheet will benefit from going forward:
+Все это приводит к множеству преимуществ, от которых Smartsheet будет получать пользу в будущем:
 
-- Less business logic living in disparate systems (it shouldn’t be in there in the first place!)
-- Fewer reports breaking when business logic does change
-- Discoverability of the important reports greatly improved for business users
+- Меньше бизнес-логики, живущей в разрозненных системах (она не должна быть там в первую очередь!)
+- Меньше отчетов, которые ломаются, когда бизнес-логика изменяется
+- Улучшенная обнаруживаемость важных отчетов для бизнес-пользователей
 
-## The Road Ahead
+## Дорога вперед
 
-All the above brings us to today. It’s been an amazing, stressful, ridiculous journey over the last year.  Lots of learning and mistakes and triumphs and failures and everything in between. I’m in awe of the team as they took on this incredible task with gusto and grit. I’m proud to work alongside them each day.
+Все вышеперечисленное приводит нас к сегодняшнему дню. Это было удивительное, стрессовое, нелепое путешествие за последний год. Много обучения и ошибок, триумфов и неудач и всего, что между ними. Я в восторге от команды, так как они взялись за эту невероятную задачу с энтузиазмом и стойкостью. Я горжусь тем, что работаю вместе с ними каждый день.
 
-It’s difficult to remember to pause and look back and see where you came from, especially when the mountain in front of you still feels larger than life. This blog is partially an attempt to do just that. We’ve come far, and we have momentum going forward.
+Трудно помнить, чтобы остановиться и оглянуться назад, чтобы увидеть, откуда вы пришли, особенно когда гора перед вами все еще кажется больше, чем жизнь. Этот блог частично является попыткой сделать именно это. Мы прошли долгий путь, и у нас есть импульс для движения вперед.
 
-My hope is this story is helpful for you, wherever you are on your analytics journey. I’m certain the above isn’t unique to Smartsheet and is common. We’re all in good company.
+Моя надежда заключается в том, что эта история будет полезна вам, где бы вы ни находились на своем аналитическом пути. Я уверен, что вышеописанное не уникально для Smartsheet и является общим. Мы все в хорошей компании.
 
-The road ahead is both clear and unclear.  But there is one primary focus we have for the upcoming year:  **Adoption, Adoption, Adoption**
+Дорога вперед как ясна, так и неясна. Но есть один основной фокус, который у нас есть на предстоящий год: **Принятие, Принятие, Принятие**
 
-Even if we build the most amazing process on top of the most amazing tools available, it’s irrelevant if internal adoption lags. Our team of three is incapable of delivering everything Smartsheet needs, and our design intentionally avoids us becoming an internal bottleneck. Instead, we are **enablers**.  We *have* to move away from our old enrichment databases and build anew in the new database. We *have* to onboard new analysts into our new process. We *have* to apply this new foundation to better serve our internal customers.
+Даже если мы построим самый удивительный процесс на основе самых удивительных доступных инструментов, это не имеет значения, если внутреннее принятие отстает. Наша команда из трех человек не в состоянии предоставить все, что нужно Smartsheet, и наш дизайн намеренно избегает того, чтобы мы стали внутренним узким местом. Вместо этого мы **включатели**. Мы *должны* уйти от наших старых баз данных обогащения и построить заново в новой базе данных. Мы *должны* внедрить новых аналитиков в наш новый процесс. Мы *должны* применить эту новую основу, чтобы лучше обслуживать наших внутренних клиентов.
 
-So the focus is now on adoption. What does this mean for analysts? What does this mean for internal stakeholders?  How do we leverage all this newfound power into better self-serve tools and more agile data teams?
+Так что теперь фокус на принятии. Что это значит для аналитиков? Что это значит для внутренних заинтересованных сторон? Как мы можем использовать всю эту новую мощь для создания лучших инструментов самообслуживания и более гибких команд данных?
 
-We have some ideas - but that’s for another blog post.  What is certain is my job is turning into an internal sales and marketing position. Good thing I started out in Customer Success before going into analytics; it’s time to put that hat back on.
+У нас есть некоторые идеи - но это для другого поста в блоге. Что точно, так это то, что моя работа превращается во внутреннюю позицию по продажам и маркетингу. Хорошо, что я начал в Customer Success, прежде чем перейти в аналитику; пришло время снова надеть эту шляпу.

@@ -1,6 +1,6 @@
 ---
-title: "How we reduced a 6-hour runtime in Alteryx to 9 minutes with dbt and Snowflake"
-description: Learn how the folks at Indicium Tech leveraged the modularity and visibility features of dbt to reduce a 6-hour runtime in Alteryx to only 9 minutes by implementing a refactoring workflow.
+title: "Как мы сократили время выполнения в Alteryx с 6 часов до 9 минут с помощью dbt и Snowflake"
+description: Узнайте, как специалисты из Indicium Tech использовали модульность и функции видимости dbt, чтобы сократить время выполнения в Alteryx с 6 часов до всего 9 минут, внедрив процесс рефакторинга.
 authors: [arthur_marcon, lucas_bergodias, christian_vanbellen]
 slug: framework-refactor-alteryx-dbt
 tags: [analytics craft]
@@ -9,126 +9,125 @@ date: 2023-04-25
 is_featured: true
 ---
 
-Alteryx is a visual data transformation platform with a user-friendly interface and drag-and-drop tools. Nonetheless, Alteryx may have difficulties to cope with the complexity increase within an organization’s data pipeline, and it can become a suboptimal tool when companies start dealing with large and complex data transformations. In such cases, moving to dbt can be a natural step, since dbt is designed to manage complex data transformation pipelines in a scalable, efficient, and more explicit manner. Also, this transition involved migrating from on-premises SQL Server to Snowflake cloud computing. In this article, we describe the differences between Alteryx and dbt, and how we reduced a client's 6-hour runtime in Alteryx to 9 minutes with dbt and Snowflake at Indicium Tech.
+Alteryx — это платформа визуальной трансформации данных с удобным интерфейсом и инструментами перетаскивания. Тем не менее, Alteryx может испытывать трудности с увеличением сложности в рамках конвейера данных организации и может стать неоптимальным инструментом, когда компании начинают работать с большими и сложными преобразованиями данных. В таких случаях переход на dbt может быть естественным шагом, поскольку dbt предназначен для управления сложными конвейерами преобразования данных более масштабируемым, эффективным и явным образом. Также этот переход включал миграцию с локального SQL Server на облачные вычисления Snowflake. В этой статье мы описываем различия между Alteryx и dbt и как мы сократили время выполнения клиента в Alteryx с 6 часов до 9 минут с помощью dbt и Snowflake в Indicium Tech.
 
 <!--truncate-->
 
-## Introduction
+## Введение
 
-Transforming data to follow business rules can be a complex task, especially with the increasing amount of data collected by companies. To reduce such complexity, data transformation solutions designed as drag-and-drop tools can be seen as more intuitive, since analysts can visualize the steps taken to transform data. One example of a popular drag-and-drop transformation tool is Alteryx which allows business analysts to transform data by dragging and dropping operators in a canvas. The graphic interface of Alteryx Designer is presented in **Figure 1**.
+Преобразование данных в соответствии с бизнес-правилами может быть сложной задачей, особенно с увеличением объема данных, собираемых компаниями. Чтобы уменьшить такую сложность, решения для преобразования данных, разработанные как инструменты перетаскивания, могут рассматриваться как более интуитивные, поскольку аналитики могут визуализировать шаги, предпринимаемые для преобразования данных. Примером популярного инструмента преобразования с перетаскиванием является Alteryx, который позволяет бизнес-аналитикам преобразовывать данные, перетаскивая операторы на холсте. Графический интерфейс Alteryx Designer представлен на **Рисунке 1**.
 
-<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure1.png" title="Figure 1 — Alteryx Designer workflow interface" />
+<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure1.png" title="Рисунок 1 — Интерфейс рабочего процесса Alteryx Designer" />
 
-Nonetheless, as data workflows become more complex, Alteryx lacks the modularity, documentation, and version control capabilities that these flows require. In this sense, dbt may be a more suitable solution to building resilient and modular data pipelines due to its focus on data modeling.
+Тем не менее, по мере усложнения рабочих процессов данных Alteryx не хватает модульности, документации и возможностей контроля версий, которые требуются этим потокам. В этом смысле dbt может быть более подходящим решением для построения устойчивых и модульных конвейеров данных благодаря своему фокусу на моделировании данных.
 
-**This article reports our experience migrating a large client's data workflow from Alteryx to dbt over the course of three months. After model refactoring, model runtime was reduced from 6 hours to 9 minutes in dbt, with clearer lineage of models and better documentation and version control.**
+**Эта статья описывает наш опыт миграции рабочего процесса данных крупного клиента из Alteryx в dbt в течение трех месяцев. После рефакторинга моделей время выполнения модели было сокращено с 6 часов до 9 минут в dbt, с более четкой родословной моделей и лучшей документацией и контролем версий.**
 
-To that end, we:
+Для этого мы:
 
-- Defined which models would be prioritized together with the client's team,
-- Defined which approach would be used to refactor Alteryx workflows to dbt models,
-- Audited refactored models to make sure they matched the outputs from the original Alteryx workflow, and
-- Replaced clients' data sources to the dbt refactored models.
+- Определили, какие модели будут приоритетными вместе с командой клиента,
+- Определили, какой подход будет использоваться для рефакторинга рабочих процессов Alteryx в модели dbt,
+- Провели аудит рефакторированных моделей, чтобы убедиться, что они соответствуют выходным данным из оригинального рабочего процесса Alteryx, и
+- Заменили источники данных клиентов на рефакторированные модели dbt.
 
-We hope that our experience can be useful for analytics engineers who are looking for a high-level framework to help in the transition from Alteryx workflows to dbt, and that it can help them to see the bigger picture in model refactoring.
+Мы надеемся, что наш опыт будет полезен аналитическим инженерам, которые ищут высокоуровневую структуру, чтобы помочь в переходе от рабочих процессов Alteryx к dbt, и что это поможет им увидеть общую картину в рефакторинге моделей.
 
-## Who isn't this post for?
+## Для кого не предназначен этот пост?
 
-While we feel that dbt is a better transformation tool than Alteryx for most use cases, we acknowledge that a migration from Alteryx to dbt isn’t appropriate for everyone. Alteryx is designed for data analysts, but its capabilities are well-suited for business users, including marketing, sales, accounting, and HR. Alteryx may be a good enough tool when:
+Хотя мы считаем, что dbt является лучшим инструментом преобразования, чем Alteryx для большинства случаев использования, мы признаем, что миграция из Alteryx в dbt не подходит для всех. Alteryx разработан для аналитиков данных, но его возможности хорошо подходят для бизнес-пользователей, включая маркетинг, продажи, бухгалтерию и HR. Alteryx может быть достаточно хорошим инструментом, когда:
 
-- You have a small number of transformations
-- The transformations are relatively simple
-- Transformations don't need to run frequently
-- You want non-technical users to manage this process
+- У вас небольшое количество преобразований
+- Преобразования относительно просты
+- Преобразования не нужно выполнять часто
+- Вы хотите, чтобы этот процесс управлялся нетехническими пользователями
 
-Focusing more on data pipeline visibility and a friendlier user experience, Alteryx excels while working with smaller, more understandable data flows, where the Analytics Engineer (AE) can really visualize how the data is being transformed from the source all the way downstream to each output.
+Сосредоточившись больше на видимости конвейера данных и более дружественном пользовательском интерфейсе, Alteryx превосходит при работе с меньшими, более понятными потоками данных, где аналитический инженер (AE) может действительно визуализировать, как данные преобразуются от источника до каждого выхода.
 
-When it comes to handling complex data structures, dbt has several features that make it superior to Alteryx. As we will see ahead with more details, in a data stack transition context, when long and complex data flows are common, dbt is often faster than Alteryx. That happens for a few reasons (**Table 2**):
+Когда дело доходит до обработки сложных структур данных, dbt имеет несколько функций, которые делают его превосходящим Alteryx. Как мы увидим далее с более подробной информацией, в контексте перехода стека данных, когда длинные и сложные потоки данных являются обычным явлением, dbt часто быстрее, чем Alteryx. Это происходит по нескольким причинам (**Таблица 2**):
 
-| Aspect | dbt | Alteryx |
+| Аспект | dbt | Alteryx |
 | --- | --- | --- |
-| Development experience | Command-line interface and IDE | Graphical user interface |
-| Goal | Designed for data transformation and modeling | Data manipulation and analysis capabilities |
-| Optimization | Takes advantage of query optimization capabilities | It does not reuse the same source that has already been executed by a model and runs it again |
-| Run logic | Processes only changed data for large data sets (incremental run) | Processes all data every time it is run |
+| Опыт разработки | Интерфейс командной строки и IDE | Графический пользовательский интерфейс |
+| Цель | Разработан для преобразования и моделирования данных | Возможности манипуляции и анализа данных |
+| Оптимизация | Использует возможности оптимизации запросов | Не использует повторно тот же источник, который уже был выполнен моделью, и запускает его снова |
+| Логика выполнения | Обрабатывает только измененные данные для больших наборов данных (инкрементальный запуск) | Обрабатывает все данные каждый раз, когда он запускается |
 
-*<center>**Table 2** — High-level comparison between dbt and Alteryx</center>*
+*<center>**Таблица 2** — Высокоуровневое сравнение между dbt и Alteryx</center>*
 
-## A step-by-step guide on how we moved Alteryx workflows into dbt models
+## Пошаговое руководство по переносу рабочих процессов Alteryx в модели dbt
 
-### Case description
+### Описание случая
 
-This blog post reports a consulting project for a major client at Indicium Tech®, which will be kept anonymous. The client is a global technology company that specializes in providing enterprise content management and automation solutions. Several data analytic softwares were implemented by the organization to store and analyze data. Because the data transformation step is not concentrated in one single software, analyzing and transforming data has gotten increasingly complex and expensive over time. Especially, because the company purchased many data transformation tools (such as Alteryx, Tableau Prep, Power BI and SQL Server Stored Procedures) that were used across different teams. This hampered having one single source of truth and a centralized data transformation platform.
+Этот блог-пост описывает консалтинговый проект для крупного клиента в Indicium Tech®, который останется анонимным. Клиент — это глобальная технологическая компания, специализирующаяся на предоставлении решений для управления корпоративным контентом и автоматизации. Несколько программных продуктов для аналитики данных были внедрены организацией для хранения и анализа данных. Поскольку этап преобразования данных не сосредоточен в одном программном обеспечении, анализ и преобразование данных со временем стали все более сложными и дорогими. Особенно потому, что компания приобрела множество инструментов для преобразования данных (таких как Alteryx, Tableau Prep, Power BI и хранимые процедуры SQL Server), которые использовались в разных командах. Это затрудняло наличие единого источника правды и централизованной платформы преобразования данных.
 
-When the client hired Indicium, they had dozens of Alteryx workflows built and running daily solely for the marketing team, which was the focus of the project. For the marketing team, the Alteryx workflows had to be executed in the correct order since they were interdependent, which means one Alteryx workflow used the outcome of the previous one, and so on. The main Alteryx workflows run daily by the marketing team took about 6 hours to run. Another important aspect to consider was that if a model had not finished running when the next one downstream began to run, the data would be incomplete, requiring the workflow to be run again. The execution of all models was usually scheduled to run overnight and by early morning, so the data would be up to date the next day. But if there was an error the night before, the data would be incorrect or out of date. **Figure 3** exemplifies the scheduler.
+Когда клиент нанял Indicium, у них было десятки рабочих процессов Alteryx, построенных и выполняемых ежедневно исключительно для маркетинговой команды, которая была в центре внимания проекта. Для маркетинговой команды рабочие процессы Alteryx должны были выполняться в правильном порядке, так как они были взаимозависимы, что означает, что один рабочий процесс Alteryx использовал результат предыдущего, и так далее. Основные рабочие процессы Alteryx, выполняемые ежедневно маркетинговой командой, занимали около 6 часов. Еще один важный аспект, который нужно было учитывать, заключался в том, что если модель не завершила выполнение, когда следующая модель начала выполняться, данные были бы неполными, требуя повторного запуска рабочего процесса. Выполнение всех моделей обычно планировалось на ночь и раннее утро, чтобы данные были актуальными на следующий день. Но если накануне вечером произошла ошибка, данные были бы неверными или устаревшими. **Рисунок 3** иллюстрирует планировщик.
 
-<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure3.png" title="Figure 3 — Example of Alteryx schedule workflow" />
+<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure3.png" title="Рисунок 3 — Пример рабочего процесса планировщика Alteryx" />
 
-<Term id="data-lineage">Data lineage</Term> was a point that added a lot of extra labor because it was difficult to identify which models were dependent on others with so many Alteryx workflows built. When the number of workflows increased, it required a long time to create a view of that lineage in another software. So, if a column's name changed in a model due to a change in the model's source, the marketing analysts would have to map which downstream models were impacted by such change to make the necessary adjustments. Because model lineage was mapped manually, it was a challenge to keep it up to date.
+<Term id="data-lineage">Происхождение данных</Term> было аспектом, который добавлял много дополнительной работы, потому что было трудно определить, какие модели зависели от других при таком количестве построенных рабочих процессов Alteryx. Когда количество рабочих процессов увеличивалось, требовалось много времени, чтобы создать представление этой родословной в другом программном обеспечении. Таким образом, если имя столбца изменялось в модели из-за изменения в источнике модели, аналитики по маркетингу должны были бы сопоставить, какие модели ниже по потоку были затронуты таким изменением, чтобы внести необходимые корректировки. Поскольку родословная модели была сопоставлена вручную, было сложно поддерживать ее в актуальном состоянии.
 
-One of our main objectives was to refactor the Alteryx workflows that the marketing team utilized every day. As you may already suspect, this refactoring was done by creating models in dbt. The construction and description of how this refactoring was done is presented next.
+Одной из наших основных задач было рефакторинг рабочих процессов Alteryx, которые маркетинговая команда использовала каждый день. Как вы уже могли догадаться, этот рефакторинг был выполнен путем создания моделей в dbt. Конструкция и описание того, как был выполнен этот рефакторинг, представлены далее.
 
-### How we refactored (a step-by-step guide based on our experience)
+### Как мы рефакторили (пошаговое руководство на основе нашего опыта)
 
-Below we provide a high-level framework with the steps we followed to refactor the Alteryx workflows into dbt:
+Ниже мы предоставляем высокоуровневую структуру с шагами, которые мы следовали для рефакторинга рабочих процессов Alteryx в dbt:
 
-![Figure 4 — Steps followed for Alteryx to dbt model refactoring](/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure4.png)
-*<center>Figure 4 — Steps followed for Alteryx to dbt model refactoring</center>*
+![Рисунок 4 — Шаги, выполненные для рефакторинга моделей Alteryx в dbt](/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure4.png)
+*<center>Рисунок 4 — Шаги, выполненные для рефакторинга моделей Alteryx в dbt</center>*
 
-#### Step 1: Start by refactoring smaller Alteryx workflows and then move on to more complex ones
+#### Шаг 1: Начните с рефакторинга меньших рабочих процессов Alteryx, а затем переходите к более сложным
 
-Understanding where to begin the refactoring process is very important, as it directly impacts the client's perception of value delivery. For some clients, it may be better to start with minor models to understand the best approach to model refactoring. Starting with shorter and less complex Alteryx workflows can be a way of creating a proof of concept and having small/quick wins. Also, this approach can be used to provide evidence of dbt's superior run performance for skeptical clients.
+Понимание того, с чего начать процесс рефакторинга, очень важно, так как это напрямую влияет на восприятие клиентом ценности доставки. Для некоторых клиентов может быть лучше начать с небольших моделей, чтобы понять лучший подход к рефакторингу моделей. Начало с более коротких и менее сложных рабочих процессов Alteryx может быть способом создания доказательства концепции и получения небольших/быстрых побед. Также этот подход может быть использован для предоставления доказательств превосходной производительности dbt для скептически настроенных клиентов.
 
-On the other hand, some clients may prefer to start with their most important or most used models to have the major business intelligence reports running on dbt as soon as possible. Although this approach allows for greater value delivery, it will probably take longer for AEs to refactor these workflows due to their complexity of transformations and steps involved in the workflow.
+С другой стороны, некоторые клиенты могут предпочесть начать с самых важных или наиболее используемых моделей, чтобы основные отчеты бизнес-аналитики работали на dbt как можно скорее. Хотя этот подход позволяет достичь большей ценности, вероятно, потребуется больше времени для рефакторинга этих рабочих процессов из-за их сложности преобразований и шагов, вовлеченных в рабочий процесс.
 
-We adopted a mixed approach by starting with one or two simpler workflows to gain experience and confidence with the refactoring process and then moving on to refactoring the client's most important workflows. This approach provides for a great balance between time and value delivery.
+Мы приняли смешанный подход, начав с одного или двух более простых рабочих процессов, чтобы получить опыт и уверенность в процессе рефакторинга, а затем перейдя к рефакторингу самых важных рабочих процессов клиента. Этот подход обеспечивает отличный баланс между временем и доставкой ценности.
 
-#### Step 2: Identify the source models and refactor the Alteryx from left to right
+#### Шаг 2: Определите исходные модели и рефакторите Alteryx слева направо
 
-The first step is to validate all data sources and create one <Term id="cte">common table expression (CTE)</Term> for each source referenced in the specific Alteryx workflow being refactored, so that it is easy to reuse them throughout the model.
+Первый шаг — это проверить все источники данных и создать одно <Term id="cte">общее выражение таблицы (CTE)</Term> для каждого источника, упомянутого в конкретном рабочем процессе Alteryx, который рефакторится, чтобы его было легко повторно использовать в модели.
 
-It is essential to click on each data source (the green book icons on the leftmost side of **Figure 5**) and examine whether any transformations have been done inside that data source query. It is very common for a source icon to contain more than one data source or filter, which is why this step is important. The next step is to follow the workflow and transcribe the transformations into SQL queries in the dbt models to replicate the same data transformations as in the Alteryx workflow.
+Важно нажать на каждый источник данных (зеленые значки книг на самой левой стороне **Рисунка 5**) и проверить, были ли выполнены какие-либо преобразования внутри этого запроса источника данных. Очень часто значок источника содержит более одного источника данных или фильтра, поэтому этот шаг важен. Следующий шаг — следовать за рабочим процессом и транскрибировать преобразования в SQL-запросы в моделях dbt, чтобы воспроизвести те же преобразования данных, что и в рабочем процессе Alteryx.
 
-<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure5.png" title="Figure 5 — Alteryx workflow" />
+<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure5.png" title="Рисунок 5 — Рабочий процесс Alteryx" />
 
+На этом этапе мы определили, какие операторы использовались в источнике данных (например, объединение данных, упорядочивание столбцов, группировка и т.д.). Обычно операторы Alteryx довольно понятны, и вся необходимая информация для понимания отображается на левой стороне меню. Мы также проверили документацию, чтобы понять, как каждый оператор Alteryx работает за кулисами.
 
-For this step, we identified which operators were used in the data source (for example, joining data, order columns, group by, etc). Usually the Alteryx operators are pretty self-explanatory and all the information needed for understanding appears on the left side of the menu. We also checked the documentation to understand how each Alteryx operator works behind the scenes.
+Мы следовали руководству dbt Labs о том, как рефакторить устаревшие SQL-запросы в dbt и некоторые [лучшие практики](/guides/refactoring-legacy-sql). После того как мы завершили рефакторинг всех рабочих процессов Alteryx, мы проверили, совпадает ли выход Alteryx с выходом рефакторированной модели, построенной на dbt.
 
-We followed dbt Labs' guide on how to refactor legacy SQL queries in dbt and some [best practices](/guides/refactoring-legacy-sql). After we finished refactoring all the Alteryx workflows, we checked if the Alteryx output matched the output of the refactored model built on dbt.
+#### Шаг 3: Используйте пакет `audit_helper` для аудита рефакторированных моделей данных
 
-#### Step 3: Use the `audit_helper` package to audit refactored data models
+Аудит больших моделей, иногда с десятками столбцов и миллионами строк, может быть действительно сложной задачей для выполнения вручную. Невозможно вручную проверить столбцы один за другим, объединяя таблицы по их первичному ключу и измеряя совместимость через самодельный SQL. К счастью, существует несколько пакетов dbt, созданных исключительно для автоматизации этого процесса!
 
-Auditing large models, with sometimes dozens of columns and millions of rows, can be a really tough task to execute manually. It is humanly impossible to validate columns one by one, joining tables by their primary key and measuring compatibility through hand-made SQL. Fortunately, there are a couple of dbt packages built entirely for the purpose of automating this process!
+В этом проекте мы использовали [пакет `audit_helper`](https://github.com/dbt-labs/dbt-audit-helper), потому что он предоставляет более надежные макросы аудита и предлагает больше возможностей автоматизации для нашего случая использования. Для этого нам нужно было иметь как выходную таблицу устаревшего рабочего процесса Alteryx, так и рефакторированную модель dbt, материализованную в хранилище данных проекта. Затем мы использовали макросы, доступные в `audit_helper`, чтобы сравнить результаты запросов, типы данных, значения столбцов, количество строк и многое другое, что доступно в пакете. Для подробного объяснения и руководства по использованию пакета `audit_helper`, ознакомьтесь с [этой статьей в блоге](https://docs.getdbt.com/blog/audit-helper-for-migration). **Рисунок 6** графически иллюстрирует логику валидации, стоящую за audit_helper.
 
-In this project, we used [the `audit_helper` package](https://github.com/dbt-labs/dbt-audit-helper), because it provides more robust auditing macros and offers more automation possibilities for our use case. To that end, we needed to have both the legacy Alteryx workflow output table and the refactored dbt model materialized in the project’s data warehouse. Then we used the macros available in `audit_helper` to compare query results, data types, column values, row numbers and many more things that are available within the package. For an in-depth explanation and tutorial on how to use the `audit_helper` package, check out [this blog post](https://docs.getdbt.com/blog/audit-helper-for-migration). **Figure 6** graphically illustrates the validation logic behind audit_helper.
+<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure6.png" title="Рисунок 6 - Логика валидации данных audit_helper" />
 
-<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure6.png" title="Figure 6 - Audit_helper data validation logic" />
+#### Шаг 4: Дублируйте отчеты и подключите их к рефакторированным моделям dbt
 
-#### Step 4: Duplicate reports and connect them to the dbt refactored models
+С рефакторированными и проверенными моделями пришло время подключить их к инструменту BI-отчетов. Хотя некоторые будут достаточно смелыми, чтобы подключить рефакторированную модель непосредственно к оригинальному BI-отчету, мы рекомендуем дублировать BI-отчет и подключить эту копию к новой рефакторированной модели dbt.
 
-With the models refactored and audited, it is time to plug them in the BI report tool. Although some will be brave enough to plug the refactored model directly into the original BI report, we recommend duplicating the BI report and connecting this replica to the newly refactored dbt model.
+Этот подход позволяет сравнивать два отчета бок о бок и проверять, как данные ведут себя в созданных визуализациях. Также это может служить шагом для двойной проверки того, что значения совпадают в рефакторированных и устаревших таблицах. Поэтому иногда может потребоваться вернуться к шагу преобразования и изменить типы столбцов или изменить бизнес-правило, например.
 
-This approach allows you to compare the two reports side by side and check how data behaves in the visualizations created. Also, it can function as a step to double check that values match in refactored and legacy tables. Therefore, at times, it may be necessary to go back to the transformation step and cast column types or change a business rule, for example.
+## Преимущества процесса рефакторинга
 
-## The gains of the refactoring process
+Успешное преобразование всего набора рабочих процессов данных из движка Alteryx в dbt, безусловно, не является тривиальной задачей, но внедрение этой структуры, как результат процесса обучения методом проб и ошибок команды, позволило нам ускорить этот процесс, в то время как его фокус на аудите данных позволил обеспечить видимое и автоматизированное обеспечение качества данных.
 
-Successfully converting an entire set of data workflows from the Alteryx engine to dbt is surely not a trivial task, but the implementation of this framework, as a result of a trial-and-error learning process from the team, allowed us to accelerate this process, while its data auditing focus enabled delivering data with visible and automated quality assurance.
+Преобразование оказалось очень ценным для клиента благодаря трем основным аспектам нового стека данных на основе dbt, которые были замечены обеими командами:
 
-The conversion proved to be of great value to the client due to three main aspects of the new dbt-based data stack, which were observed by both teams:
+- Невероятно сокращенное время выполнения: Возможно, самый впечатляющий результат, общее время выполнения рабочего процесса данных маркетинговой команды было сокращено с более чем **6 часов** до всего **9 минут**. Это представляет собой **сокращение времени выполнения более чем в** **40 раз**. Большая часть этого происходит из-за перехода с локальных вычислений SQL Server на облачные вычисления Snowflake, гибкой компиляции SQL и предложений материализации dbt, а также последовательного выполнения на основе родословной (см. Рисунок 7).
+- Улучшенная видимость рабочего процесса: Поддержка dbt для документации и тестирования, в сочетании с dbt Cloud, позволяет получить отличную видимость выполнения родословной рабочего процесса, ускоряя идентификацию ошибок и несоответствий данных и их устранение. Не раз наша команда смогла раньше идентифицировать влияние изменения логики одного столбца на модели ниже по потоку, чем эти модели Alteryx.
+- Упрощение рабочего процесса: Модульный подход dbt к моделированию данных, помимо ускорения общего времени выполнения рабочего процесса данных, упростил создание новых таблиц на основе уже существующих модулей и улучшил читаемость кода.
 
-- Incredibly shortened run time: Perhaps the most impressive result obtained, the total run time of the marketing team’s data workflow was reduced from more than **6 hours** to just **9 minutes**. This represents a **run time reduction of more than** **40x**. Much of this comes from transitioning from SQL Server on-premises computing to Snowflake cloud computing, dbt’s agile SQL compilation and materialization offers, and the sequential lineage based execution (see Figure 7).
-- Improved workflow visibility: dbt’s support for documentation and testing, associated with dbt Cloud, allows for great visibility of the workflow’s lineage execution, accelerating errors and data inconsistencies identification and troubleshooting. More than once, our team was able to identify the impact of one column’s logic alteration in downstream models much earlier than these Alteryx models.
-- Workflow simplification: dbt’s modularized approach of data modeling, aside from accelerating total run time of the data workflow, simplified the construction of new tables, based on the already existing modules, and improved code readability.
+<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure7.png" title="Рисунок 7 — Сравнение времени выполнения, в минутах" />
 
-<Lightbox src="/img/blog/2023-04-24-framework-refactor-alteryx-dbt/Figure7.png" title="Figure 7 — Run time comparison, in minutes" />
+Как мы видим, рефакторинг Alteryx в dbt был важным шагом в направлении доступности данных и позволил значительно ускорить процессы для команды данных клиента. С меньшим количеством времени, посвященного ручному выполнению последовательных рабочих процессов Alteryx, которые занимали часы для завершения, и поиску ошибок в каждом отдельном файле, аналитики могли сосредоточиться на том, что они делают лучше всего: **получении инсайтов из данных и создании ценности из них**.
 
-As we can see, refactoring Alteryx to dbt was an important step in the direction of data availability, and allowed for much more agile processes for the client’s data team. With less time dedicated to manually executing sequential Alteryx workflows that took hours to complete, and searching for errors in each individual file, the analysts could focus on what they do best: **getting insights from the data and generating value from them**.
+## Ссылки
 
-## References
-
-> [Migrating from Stored Procedures to dbt](https://docs.getdbt.com/blog/migrating-from-stored-procs)
+> [Миграция из хранимых процедур в dbt](https://docs.getdbt.com/blog/migrating-from-stored-procs)
 >
 >
-> [Audit_helper in dbt: Bringing data auditing to a higher level](https://docs.getdbt.com/blog/audit-helper-for-migration)
+> [Audit_helper в dbt: Поднятие аудита данных на более высокий уровень](https://docs.getdbt.com/blog/audit-helper-for-migration)
 >
-> [Refactoring legacy SQL to dbt](/guides/refactoring-legacy-sql)
+> [Рефакторинг устаревшего SQL в dbt](/guides/refactoring-legacy-sql)

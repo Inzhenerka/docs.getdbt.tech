@@ -1,6 +1,6 @@
 ---
-title: "Welcome to the dbt Developer Blog"
-description: "Doing analytics is hard. Doing analytics *right* is even harder. The purpose of this blog is to double down on our long running commitment to contributing to the knowledge loop."
+title: "Добро пожаловать в блог разработчиков dbt"
+description: "Аналитика — это сложно. Делать аналитику *правильно* — еще сложнее. Цель этого блога — удвоить наши давние усилия по внесению вклада в цикл знаний."
 slug: welcome
 
 authors: [jason_ganz, david_krevitt]
@@ -11,55 +11,55 @@ hide_table_of_contents: false
 date: 2021-11-29
 is_featured: true
 ---
-Doing analytics is hard. Doing analytics *right* is even harder.
+Аналитика — это сложно. Делать аналитику *правильно* — еще сложнее.
 
-There are a massive number of factors to consider: Is data missing? How do we make this insight discoverable? Why is my database locked? *Are we even asking the right questions?*
+Существует огромное количество факторов, которые нужно учитывать: отсутствуют ли данные? Как сделать это инсайт доступным? Почему моя база данных заблокирована? *Мы вообще задаем правильные вопросы?*
 
-Compounding this is the fact that analytics can sometimes feel like a lonely pursuit.
+Усугубляет ситуацию то, что аналитика иногда может казаться одиноким занятием.
 
-Sure, our data is generally proprietary and therefore we can’t talk much about it. But we certainly **can** share what we’ve learned **about** working with that data.
+Конечно, наши данные обычно являются собственностью компании, и поэтому мы не можем много о них говорить. Но мы, безусловно, **можем** поделиться тем, что мы узнали **о** работе с этими данными.
 
-So let’s all commit to sharing our hard won knowledge with each other—and in doing so pave the path for the next generations of analytics practitioners.
+Так давайте все вместе возьмем на себя обязательство делиться нашими труднодобытыми знаниями друг с другом — и тем самым проложим путь для будущих поколений аналитиков.
 <!--truncate-->
 
-## Welcome to the dbt Developer Blog
+## Добро пожаловать в блог разработчиков dbt
 
-The purpose of this blog is to double down on our long running commitment to contributing to the knowledge loop.
+Цель этого блога — удвоить наши давние усилия по внесению вклада в цикл знаний.
 
-From early posts like ‘[The Startup Founders Guide to Analytics’](https://thinkgrowth.org/the-startup-founders-guide-to-analytics-1d2176f20ac1) to foundational guides like [‘How We Structure Our dbt Projects](/best-practices/how-we-structure/1-guide-overview)’, we’ve had a long standing goal of working with the community to create practical, hands-on tutorials and guides which distill the knowledge we’ve been able to collectively gather.
+От ранних постов, таких как «[Руководство по аналитике для основателей стартапов](https://thinkgrowth.org/the-startup-founders-guide-to-analytics-1d2176f20ac1)» до основополагающих руководств, таких как [«Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview)», мы всегда стремились работать с сообществом для создания практических, практико-ориентированных руководств и туториалов, которые дистиллируют знания, которые мы смогли коллективно собрать.
 
-dbt as a product is based around the philosophy that even the most complicated problems can be broken down into modular, reusable components, then mixed and matched to create something novel.
+dbt как продукт основан на философии, что даже самые сложные проблемы можно разбить на модульные, повторно используемые компоненты, а затем комбинировать их для создания чего-то нового.
 
-This blog represents the exact same philosophy, just applied via the lens of written guides rather than code. Our knowledge grows strongest when we bounce ideas off of each other: no idea is too small, something that’s old hat to you may spark something big in someone else.
+Этот блог представляет собой ту же философию, только примененную через призму письменных руководств, а не кода. Наши знания становятся сильнее, когда мы обмениваемся идеями: ни одна идея не слишком мала, то, что для вас уже привычно, может вдохновить кого-то другого на что-то великое.
 
-## A Note on "Best Practices"
+## Заметка о "Лучших практиках"
 
-A critical part of making knowledge sharing successful is understanding that many ideas are a work in progress—think of posts here less as canonical declarations of truth, and more as point-in-time snapshots of the writer’s thinking.
+Критически важной частью успешного обмена знаниями является понимание того, что многие идеи находятся в процессе разработки — рассматривайте посты здесь скорее как моментальные снимки мышления автора, чем как канонические заявления истины.
 
-The goal is for each post here to have at least one new reusable piece of knowledge that you can return to again and again throughout your work.
+Цель состоит в том, чтобы каждый пост здесь содержал хотя бы один новый повторно используемый элемент знаний, к которому вы можете возвращаться снова и снова в своей работе.
 
-## The Types of Posts You’ll Find Here
+## Типы постов, которые вы найдете здесь
 
-A brief overview of the types of posts that you will find on the blog:
+Краткий обзор типов постов, которые вы найдете в блоге:
 
-* *Analytics Craft*: The art of being an analytics practitioner.
+* *Искусство аналитики*: Искусство быть аналитиком.
 
-* *dbt Tutorials:* Best practices in the usage of our favorite data transformation tool.
+* *Туториалы по dbt:* Лучшие практики использования нашего любимого инструмента трансформации данных.
 
-* *Data Ecosystem:* Walkthroughs of how top data practitioners use tools in the modern data stack.
+* *Экосистема данных:* Обзоры того, как ведущие специалисты по данным используют инструменты в современной архитектуре данных.
 
-* *Product Updates:* An archive of monthly product updates from the dbt Labs team.
+* *Обновления продукта:* Архив ежемесячных обновлений продукта от команды dbt Labs.
 
-* *SQL Magic*: Stories of dbt developers making SQL sing across warehouses
+* *Магия SQL*: Истории о том, как разработчики dbt заставляют SQL звучать в разных хранилищах.
 
-## Get Involved
+## Присоединяйтесь
 
-Analytics engineering is a relatively young skillset, and many of the basic tenets and patterns are still in the process of being discovered. There is not yet a canonical set of patterns to implement and processes to follow in order to guarantee success.
+Инженерия аналитики — это относительно молодая область, и многие основные принципы и шаблоны все еще находятся в процессе открытия. Пока еще нет канонического набора шаблонов для реализации и процессов, которым нужно следовать, чтобы гарантировать успех.
 
-So! We hope this blog can provide a platform for community learning and knowledge sharing.
+Итак! Мы надеемся, что этот блог сможет предоставить платформу для обучения и обмена знаниями в сообществе.
 
-The insights to get there cannot come from any one individual or organization - for this project to be successful, they have to integrate the collective knowledge of a diverse set of voices from within the analytics community.
+Инсайты для достижения этой цели не могут исходить от одного человека или организации — для успеха этого проекта необходимо интегрировать коллективные знания разнообразного набора голосов из аналитического сообщества.
 
-If you are interested in contributing, requesting topics or just looking at what is coming down the road on the blog, check out the [dbt Developer Blog repo](https://github.com/dbt-labs/dbt-technical-blog-writing). This repo contains all the information you need to get involved and get started, including the [Discussions board](https://github.com/dbt-labs/dbt-technical-blog-writing/discussions) where you can propose new topics for posts.
+Если вы заинтересованы в том, чтобы внести свой вклад, предложить темы или просто посмотреть, что будет в блоге, загляните в [репозиторий блога разработчиков dbt](https://github.com/dbt-labs/dbt-technical-blog-writing). Этот репозиторий содержит всю необходимую информацию для участия и начала работы, включая [доску обсуждений](https://github.com/dbt-labs/dbt-technical-blog-writing/discussions), где вы можете предложить новые темы для постов.
 
-Together, we will begin to write the playbooks to ensure any organization has access to the accumulated knowledge of the analytics engineering community.
+Вместе мы начнем писать руководства, чтобы любая организация имела доступ к накопленным знаниям сообщества инженеров аналитики.

@@ -1,6 +1,6 @@
 ---
-title: "More time coding, less time waiting: Mastering defer in dbt"
-description: "Learn how to take advantage of the defer to prod feature in dbt Cloud"
+title: "Больше времени на кодинг, меньше времени на ожидание: Осваиваем defer в dbt"
+description: "Узнайте, как воспользоваться функцией defer to prod в dbt Cloud"
 slug: defer-to-prod
 
 authors: [dave_connors]
@@ -12,24 +12,24 @@ date: 2024-01-09
 is_featured: true
 ---
 
-Picture this — you’ve got a massive dbt project, thousands of models chugging along, creating actionable insights for your stakeholders. A ticket comes your way &mdash; a model needs to be refactored! "No problem," you think to yourself, "I will simply make that change and test it locally!" You look at your lineage, and realize this model is many layers deep, buried underneath a long chain of tables and views.
+Представьте себе — у вас огромный проект dbt, тысячи моделей работают, создавая полезные инсайты для ваших заинтересованных сторон. Вам поступает запрос &mdash; модель нужно переработать! "Нет проблем," думаете вы, "Я просто внесу изменения и протестирую их локально!" Вы смотрите на свою родословную и понимаете, что эта модель находится на многих уровнях глубоко, погребенная под длинной цепочкой таблиц и представлений.
 
-“OK,” you think further, “I’ll just run a `dbt build -s +my_changed_model` to make sure I have everything I need built into my dev schema and I can test my changes”. You run the command. You wait. You wait some more. You get some coffee, and completely take yourself out of your dbt development flow state. A lot of time and money down the drain to get to a point where you can *start* your work. That’s no good!
+"Хорошо," думаете вы дальше, "Я просто выполню `dbt build -s +my_changed_model`, чтобы убедиться, что у меня все построено в моей dev-схеме, и я могу протестировать свои изменения". Вы запускаете команду. Ждете. Ждете еще. Берете кофе и полностью выходите из своего потока разработки dbt. Много времени и денег потрачено впустую, чтобы добраться до точки, где вы можете *начать* свою работу. Это не годится!
 
-Luckily, dbt’s defer functionality allow you to *only* build what you care about when you need it, and nothing more. This feature helps developers spend less time and money in development, helping ship trusted data products faster. dbt Cloud offers native support for this workflow in development, so you can start deferring without any additional overhead!
+К счастью, функциональность defer в dbt позволяет вам *строить только то, что вам нужно*, и ничего больше. Эта функция помогает разработчикам тратить меньше времени и денег на разработку, помогая быстрее выпускать надежные продукты данных. dbt Cloud предлагает нативную поддержку этого рабочего процесса в разработке, так что вы можете начать использовать defer без дополнительных затрат!
 <!-- truncate -->
-## Defer to prod or prefer to slog
+## Defer to prod или предпочесть slog
 
-A lot of dbt’s magic relies on the elegance and simplicity of the `{{ ref() }}` function, which is how you can build your lineage graph, and how dbt can be run in different environments &mdash; the `{{ ref() }}` functions dynamically compile depending on your environment settings, so that you can run your project in development and production without changing any code. 
+Многое из магии dbt основывается на элегантности и простоте функции `{{ ref() }}`, с помощью которой вы можете строить свой граф родословной, и как dbt может запускаться в разных средах &mdash; функции `{{ ref() }}` динамически компилируются в зависимости от настроек вашей среды, так что вы можете запускать свой проект в разработке и производстве без изменения кода.
 
-Here's how a simple `{{ ref() }}` would compile in different environments:
+Вот как простая `{{ ref() }}` будет компилироваться в разных средах:
 
 <Tabs defaultValue="Raw Model Code">
 
   <TabItem value="Raw Model Code">
 
   ```sql
-  -- in models/my_model.sql
+  -- в models/my_model.sql
   select * from {{ ref('model_a') }}
   ```
   </TabItem>
@@ -37,7 +37,7 @@ Here's how a simple `{{ ref() }}` would compile in different environments:
   <TabItem value="Compiled in Dev">
 
   ```sql
-  -- in target/compiled/models/my_model.sql
+  -- в target/compiled/models/my_model.sql
   select * from analytics.dbt_dconnors.model_a
   ```
   </TabItem>
@@ -45,73 +45,73 @@ Here's how a simple `{{ ref() }}` would compile in different environments:
   <TabItem value="Compiled in Prod">
 
   ```sql
-  -- in target/compiled/models/my_model.sql
+  -- в target/compiled/models/my_model.sql
   select * from analytics.analytics.model_a
   ```
   </TabItem>
 
 </Tabs>
 
-All of that is made possible by the dbt `manifest.json`, [the artifact](https://docs.getdbt.com/reference/artifacts/manifest-json) that is produced each time you run a dbt command, containing the comprehensive and encyclopedic compendium of all things in your project. Each node is assigned a `unique_id` (like `model.my_project.my_model` ) and the manifest stores all the metadata about that model in a dictionary associated to that id. This includes the data warehouse location that gets returned when you write `{{ ref('my_model') }}` in SQL. Different runs of your project in different environments result in different metadata written to the manifest.
+Все это становится возможным благодаря `manifest.json` в dbt, [артефакту](https://docs.getdbt.com/reference/artifacts/manifest-json), который создается каждый раз, когда вы запускаете команду dbt, содержащему всеобъемлющий и энциклопедический справочник по всем аспектам вашего проекта. Каждому узлу присваивается `unique_id` (например, `model.my_project.my_model`), и манифест хранит все метаданные об этой модели в словаре, связанном с этим id. Это включает в себя местоположение в хранилище данных, которое возвращается, когда вы пишете `{{ ref('my_model') }}` в SQL. Разные запуски вашего проекта в разных средах приводят к записи разных метаданных в манифест.
 
-Let’s think back to the hypothetical above &mdash; what if we made use of the production metadata to read in data from production, so that I don’t have to rebuild *everything* upstream of the model I’m changing? That’s exactly what `defer` does! When you supply dbt with a production version of the `manifest.json` artifact, and pass the `--defer` flag to your dbt command, dbt will resolve the `{{ ref() }}` functions for any resource upstream of your selected models with the *production metadata* — no need to rebuild anything you don’t have to!
+Давайте вернемся к гипотетической ситуации выше &mdash; что если мы воспользуемся производственными метаданными, чтобы читать данные из производства, чтобы мне не пришлось перестраивать *все* выше по потоку модели, которую я изменяю? Именно это и делает `defer`! Когда вы предоставляете dbt производственную версию артефакта `manifest.json` и передаете флаг `--defer` в вашу команду dbt, dbt разрешит функции `{{ ref() }}` для любого ресурса выше по потоку от выбранных вами моделей с использованием *производственных метаданных* — нет необходимости перестраивать то, что вам не нужно!
 
-Let’s take a look at a simplified example &mdash; let’s say your project looks like this in production:
+Давайте рассмотрим упрощенный пример &mdash; допустим, ваш проект выглядит так в производстве:
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-environment-plain.png" width="85%" title="A simplified dbt project running in production." />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-environment-plain.png" width="85%" title="Упрощенный проект dbt, работающий в производстве." />
 
-And you’re tasked with making changes to `model_f`. Without defer, you would need to make sure to at minimum execute a `dbt run -s +model_f` to ensure all the upstream dependencies of `model_f` are present in your development schema so that you can start to run `model_f`.* You just spent a whole bunch of time and money duplicating your models, and now your warehouse looks like this:
+И вам поручено внести изменения в `model_f`. Без defer вам нужно было бы как минимум выполнить `dbt run -s +model_f`, чтобы убедиться, что все зависимости выше по потоку от `model_f` присутствуют в вашей dev-схеме, чтобы вы могли начать запускать `model_f`.* Вы только что потратили кучу времени и денег на дублирование ваших моделей, и теперь ваше хранилище выглядит так:
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-full.png" width="85%" title="The whole project has been rebuilt into the dev schema, which can be time consuming and expensive!" />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-full.png" width="85%" title="Весь проект был перестроен в dev-схему, что может быть времязатратно и дорого!" />
 
-With defer, we should not build anything other than the models that have changed, and are now different from their production counterparts! Let’s tell dbt to use production metadata to resolve our refs, and only build the model I have changed &mdash; that command would be `dbt run -s model_f --defer` .**
+С defer мы не должны строить ничего, кроме моделей, которые изменились и теперь отличаются от их производственных аналогов! Давайте скажем dbt использовать производственные метаданные для разрешения наших ссылок и строить только ту модель, которую я изменил &mdash; эта команда будет `dbt run -s model_f --defer` .**
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-defer.png" width="85%" title="Using defer, we can only build one single model" />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-defer.png" width="85%" title="С использованием defer мы можем построить только одну модель" />
 
-This results in a *much slimmer build* &mdash; we read data in directly from the production version of `model_b` and `model_c`, and don’t have to worry about building anything other than what we selected!
+Это приводит к *гораздо более компактной сборке* &mdash; мы читаем данные непосредственно из производственной версии `model_b` и `model_c`, и нам не нужно беспокоиться о построении чего-либо, кроме того, что мы выбрали!
 
-\* [Another option](https://docs.getdbt.com/reference/commands/clone) is to run `dbt clone -s +model_f` , which will make clones of your production models into your development schema, making use of zero copy cloning where available. Check out this [great dev blog](https://docs.getdbt.com/blog/to-defer-or-to-clone) from Doug and Kshitij on when to use `clone` vs `defer`!
+\* [Другой вариант](https://docs.getdbt.com/reference/commands/clone) — запустить `dbt clone -s +model_f`, который создаст клоны ваших производственных моделей в вашей dev-схеме, используя клонирование без копирования, где это возможно. Ознакомьтесь с этим [отличным блогом разработчиков](https://docs.getdbt.com/blog/to-defer-or-to-clone) от Дуга и Кшитиджа о том, когда использовать `clone` против `defer`!
 
-** in dbt Core, you also have to tell dbt where to find the production artifacts! Otherwise it doesn’t know what to defer to. You can either use the `--state path/to/artifact/folder` option, or set a `DBT_STATE` environment variable.
+** в dbt Core, вам также нужно указать dbt, где найти производственные артефакты! В противном случае он не знает, к чему откладывать. Вы можете использовать опцию `--state path/to/artifact/folder`, или установить переменную окружения `DBT_STATE`.
 
-### Batteries included deferral in dbt Cloud
+### Встроенная поддержка defer в dbt Cloud
 
-dbt Cloud offers a seamless deferral experience in both the dbt Cloud IDE and the dbt Cloud CLI — dbt Cloud ***always*** has the latest run artifacts from your production environment. Rather than having to go through the painful process of somehow getting a copy of your latest production `manifest.json` into your local filesystem to defer to, and building a pipeline to always keep it fresh, dbt Cloud does all that work for you. When developing in dbt Cloud, the latest artifact is automatically provided to you under the hood, and dbt Cloud handles the `--defer` flag for you when you run commands in “defer mode”. dbt Cloud will use the artifacts from the deployment environment in your project marked as `Production` in the [environments settings](https://docs.getdbt.com/docs/deploy/deploy-environments#set-as-production-environment) in both the IDE and the Cloud CLI. Be sure to configure a production environment to unlock this feature!
+dbt Cloud предлагает бесшовный опыт defer как в dbt Cloud IDE, так и в dbt Cloud CLI — dbt Cloud ***всегда*** имеет последние артефакты запуска из вашей производственной среды. Вместо того чтобы проходить через болезненный процесс получения копии вашего последнего производственного `manifest.json` в вашу локальную файловую систему для defer, и создания конвейера для его постоянного обновления, dbt Cloud делает всю эту работу за вас. При разработке в dbt Cloud последний артефакт автоматически предоставляется вам под капотом, и dbt Cloud обрабатывает флаг `--defer` за вас, когда вы запускаете команды в "режиме defer". dbt Cloud будет использовать артефакты из среды развертывания в вашем проекте, отмеченной как `Production` в [настройках среды](https://docs.getdbt.com/docs/deploy/deploy-environments#set-as-production-environment) как в IDE, так и в Cloud CLI. Убедитесь, что настроили производственную среду, чтобы разблокировать эту функцию!
 
-In the dbt Cloud IDE, there’s as simple toggle switch labeled `Defer to production`. Simply enabling this toggle will defer your command to the production environment when you run any dbt command in the IDE!
+В dbt Cloud IDE есть простой переключатель с надписью `Defer to production`. Просто включив этот переключатель, вы отложите вашу команду в производственную среду, когда вы запускаете любую команду dbt в IDE!
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/defer-toggle.png" title="The defer to prod toggle in the IDE" />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/defer-toggle.png" title="Переключатель defer to prod в IDE" />
 
-The cloud CLI has this setting *on by default* — there’s nothing else you need to do to set this up! If you prefer not to defer, you can pass the `--no-defer` flag to override this behavior. You can also set an environment other than your production environment as the deferred to environment in your `dbt-cloud` settings in your `dbt_project.yml` :
+В облачном CLI эта настройка *включена по умолчанию* — вам не нужно ничего делать, чтобы это настроить! Если вы предпочитаете не откладывать, вы можете передать флаг `--no-defer`, чтобы переопределить это поведение. Вы также можете установить среду, отличную от вашей производственной среды, как среду для defer в ваших настройках `dbt-cloud` в вашем `dbt_project.yml`:
 
 ```yaml
 dbt-cloud:
-  project-id: <Your project id>
-  defer-env-id: <An environment id>
+  project-id: <Ваш id проекта>
+  defer-env-id: <Id среды>
 ```
 
-When you’re developing with dbt Cloud, you can defer right away, and completely avoid unnecessary model builds in development!
+Когда вы разрабатываете с dbt Cloud, вы можете сразу же использовать defer и полностью избежать ненужных сборок моделей в разработке!
 
-### Other things to to know about defer
+### Другие вещи, которые нужно знать о defer
 
-**Favoring state**
+**Предпочтение состояния**
 
-One of the major gotchas in the defer workflow is that when you’re in defer mode, dbt assumes that all the objects in your development schema are part of your current work stream, and will prioritize those objects over the production objects when possible.
+Одной из основных ловушек в рабочем процессе defer является то, что когда вы находитесь в режиме defer, dbt предполагает, что все объекты в вашей dev-схеме являются частью вашего текущего рабочего потока, и будет отдавать предпочтение этим объектам перед производственными объектами, когда это возможно.
 
-Let’s take a look at that example above again, and pretend that some time before we went to make this edit, we did some work on `model_c`, and we have a local copy of `model_c` hanging out in our development schema:
+Давайте снова посмотрим на тот пример выше и представим, что некоторое время до того, как мы собирались внести это изменение, мы поработали над `model_c`, и у нас есть локальная копия `model_c`, находящаяся в нашей dev-схеме:
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-model-c.png" width="85%" title="Hypothetical starting point, with a development copy of model_c in the development schema at the start of the development cycle." />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-model-c.png" width="85%" title="Гипотетическая начальная точка, с копией model_c в dev-схеме в начале цикла разработки." />
 
-When you run `dbt run -s model_f --defer` , dbt will detect the development copy of `model_c` and say “Hey, y’know, I bet Dave is working on that model too, and he probably wants to make sure his changes to `model_c` work together with his changes to `model_f` . Because I am a kind and benevolent data transformation tool, i’ll make sure his `{{ ref('model_c') }]` function compiles to his development changes!” Thanks dbt!
+Когда вы запускаете `dbt run -s model_f --defer`, dbt обнаружит копию `model_c` в dev-схеме и скажет: "Эй, знаешь, я думаю, что Дэйв работает над этой моделью тоже, и он, вероятно, хочет убедиться, что его изменения в `model_c` работают вместе с его изменениями в `model_f`. Поскольку я добрый и великодушный инструмент для трансформации данных, я позабочусь о том, чтобы его функция `{{ ref('model_c') }}` компилировалась с его изменениями в разработке!" Спасибо, dbt!
 
-As a result, we’ll effectively see this behavior when we run our command:
+В результате, мы фактически увидим такое поведение, когда запустим нашу команду:
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-mixed.png" width="85%" title="With a development version of model_a in our dev schema, dbt will preferentially use that version instead of deferring" />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/prod-and-dev-mixed.png" width="85%" title="С версией model_a в dev-схеме, dbt будет использовать эту версию вместо defer" />
 
-Where our code would compile from
+Где наш код будет компилироваться из
 
 ```sql
-# in models/model_f.sql
+# в models/model_f.sql
 with 
 
 model_b as (
@@ -125,10 +125,10 @@ model_c as (
 ...
 ```
 
-to
+в
 
 ```sql
-# in target/compiled/models/model_f.sql
+# в target/compiled/models/model_f.sql
 with 
 
 model_b as (
@@ -142,19 +142,19 @@ model_c as (
 ...
 ```
 
-A mix of prod and dev models may not be what we want! To avoid this, we have a couple options:
+Смешение prod и dev моделей может быть не тем, что мы хотим! Чтобы избежать этого, у нас есть несколько вариантов:
 
-1. **Start fresh every time:** The simplest way to avoid this issue is to make sure you are always drop your development schema at the start of a new development session. That way, the only things that show up in your development schema are the things you intentionally selected with your commands!
-2. **Favor state:** Passing the `--favor-state` flag to your command tells dbt “Hey benevolent tool, go ahead and use what you find in the production manifest no matter what you find in my development schema” so that both `{{ ref() }}` functions in the example above point to the production schema, even if `model_c` was hanging around in there.
+1. **Начинайте с чистого листа каждый раз:** Самый простой способ избежать этой проблемы — убедиться, что вы всегда удаляете свою dev-схему в начале новой сессии разработки. Таким образом, единственные вещи, которые появляются в вашей dev-схеме, это те, которые вы намеренно выбрали с помощью ваших команд!
+2. **Предпочтение состояния:** Передача флага `--favor-state` вашей команде говорит dbt "Эй, великодушный инструмент, иди вперед и используй то, что ты найдешь в производственном манифесте, независимо от того, что ты найдешь в моей dev-схеме", так что обе функции `{{ ref() }}` в примере выше указывают на производственную схему, даже если `model_c` находился там.
 
-In this example, `model_c` is a relic of a previous development cycle, but I should be clear here that defaulting to using dev relations is *usually the right course of action* &mdash; generally, a dbt PR spans a few models, and you want to coordinate your changes across those models together. This behavior can just get a bit confusing if you’re encountering it for the first time!
+В этом примере `model_c` является реликтом предыдущего цикла разработки, но я должен быть ясен, что по умолчанию использование dev-отношений *обычно является правильным курсом действий* &mdash; как правило, PR в dbt охватывает несколько моделей, и вы хотите координировать свои изменения между этими моделями вместе. Это поведение может просто немного запутать, если вы сталкиваетесь с ним впервые!
 
-**When should I *not* defer to prod**
+**Когда я *не должен* использовать defer to prod**
 
-While defer is a faster and cheaper option for most folks in most situations, defer to prod does not support all projects. The most common reason you should not use defer is regulatory &mdash; defer to prod makes the assumption that data is shared between your production and development environments, so reading between these environments is not an issue. For some organizations, like healthcare companies, have restrictions around the data access and sharing that precludes the basic defer structure presented here.
+Хотя defer является более быстрым и дешевым вариантом для большинства людей в большинстве ситуаций, defer to prod не поддерживает все проекты. Наиболее распространенная причина, по которой вы не должны использовать defer, это нормативные требования &mdash; defer to prod предполагает, что данные разделяются между вашими производственными и dev-средами, так что чтение между этими средами не является проблемой. Для некоторых организаций, таких как компании здравоохранения, существуют ограничения на доступ к данным и их обмен, которые исключают базовую структуру defer, представленную здесь.
 
-### Call me Willem Defer
+### Зовите меня Виллем Дефер
 
-<Lightbox src="/img/blog/2024-01-09-defer-in-development/willem.png" title="Willem Dafoe after using the `-—defer` flag" />
+<Lightbox src="/img/blog/2024-01-09-defer-in-development/willem.png" title="Виллем Дефо после использования флага `-—defer`" />
 
-Defer to prod is a powerful way to improve your development velocity with dbt, and dbt Cloud makes it easier than ever to make use of this feature! You too could look this cool while you’re saving time and money developing on your dbt projects!
+Defer to prod — это мощный способ улучшить вашу скорость разработки с dbt, и dbt Cloud делает использование этой функции проще, чем когда-либо! Вы тоже можете выглядеть так круто, экономя время и деньги на разработке ваших проектов dbt!

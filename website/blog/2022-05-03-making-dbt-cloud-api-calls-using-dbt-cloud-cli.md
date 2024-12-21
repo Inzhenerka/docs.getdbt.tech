@@ -1,6 +1,6 @@
 ---
-title: "Making dbt Cloud API calls using dbt-cloud-cli"
-description: "Simo Tumelius shares how to use his dbt-cloud-cli to make more readable and streamlined dbt Cloud API calls."
+title: "Вызовы API dbt Cloud с использованием dbt-cloud-cli"
+description: "Симо Тумелиус делится, как использовать его dbt-cloud-cli для более читаемых и упрощенных вызовов API dbt Cloud."
 slug: making-dbt-cloud-api-calls-using-dbt-cloud-cli
 
 authors: [simo_tumelius]
@@ -12,31 +12,31 @@ date: 2022-05-03
 is_featured: true
 ---
 
-:::info Different from dbt Cloud CLI
-This blog explains how to use the `dbt-cloud-cli` Python library to create a data catalog app with dbt Cloud artifacts. This is different from the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation), a tool that allows you to run dbt commands against your dbt Cloud development environment from your local command line.
+:::info Отличие от dbt Cloud CLI
+Этот блог объясняет, как использовать библиотеку Python `dbt-cloud-cli` для создания приложения каталога данных с артефактами dbt Cloud. Это отличается от [dbt Cloud CLI](/docs/cloud/cloud-cli-installation), инструмента, который позволяет запускать команды dbt в вашей среде разработки dbt Cloud с локальной командной строки.
 :::
 
-dbt Cloud is a hosted service that many organizations use for their dbt deployments. Among other things, it provides an interface for creating and managing deployment jobs. When triggered (e.g., cron schedule, API trigger), the jobs generate various artifacts that contain valuable metadata related to the dbt project and the run results.
+dbt Cloud — это хостинговый сервис, который многие организации используют для своих развертываний dbt. Среди прочего, он предоставляет интерфейс для создания и управления заданиями развертывания. Когда задания запускаются (например, по расписанию cron или через API), они генерируют различные артефакты, содержащие ценную метадату, связанную с проектом dbt и результатами выполнения.
 
-dbt Cloud provides a REST API for managing jobs, run artifacts and other dbt Cloud resources. Data/analytics engineers would often write custom scripts for issuing automated calls to the API using tools [cURL](https://curl.se/) or [Python Requests](https://requests.readthedocs.io/en/latest/).  In some cases, the engineers would go on and copy/rewrite them between projects that need to interact with the API. Now, they have a bunch of scripts on their hands that they need to maintain and develop further if business requirements change. If only there was a dedicated tool for interacting with the dbt Cloud API that abstracts away the complexities of the API calls behind an easy-to-use interface… Oh wait, there is: [the dbt-cloud-cli](https://github.com/data-mie/dbt-cloud-cli)!
+dbt Cloud предоставляет REST API для управления заданиями, артефактами выполнения и другими ресурсами dbt Cloud. Инженеры по данным/аналитике часто пишут пользовательские скрипты для автоматизированных вызовов API, используя инструменты [cURL](https://curl.se/) или [Python Requests](https://requests.readthedocs.io/en/latest/). В некоторых случаях инженеры копируют/переписывают их между проектами, которым нужно взаимодействовать с API. Теперь у них есть куча скриптов, которые нужно поддерживать и развивать, если изменяются бизнес-требования. Если бы только существовал специальный инструмент для взаимодействия с API dbt Cloud, который абстрагировал бы сложности вызовов API за простым в использовании интерфейсом... О, подождите, он есть: [dbt-cloud-cli](https://github.com/data-mie/dbt-cloud-cli)!
 
 <!--truncate-->
 
-In this blog post I’ll shine some light on how the dbt-cloud-cli project came to be and how it can make a data/analytics engineer’s work easier. I’ll also walk you through an example use case where we download a dbt Cloud job run catalog.json artifact and implement a simple data catalog app using the same tools that were used in creating dbt-cloud-cli.
+В этом посте я расскажу, как появился проект dbt-cloud-cli и как он может облегчить работу инженера по данным/аналитике. Я также проведу вас через пример использования, где мы загружаем артефакт catalog.json выполнения задания dbt Cloud и реализуем простое приложение каталога данных, используя те же инструменты, которые использовались при создании dbt-cloud-cli.
 
-## What is dbt-cloud-cli and why should you use it?
+## Что такое dbt-cloud-cli и почему вам стоит его использовать?
 
-What kicked off this project came from the fact that there is currently no easy-to-use interface for the dbt Cloud API. In order to make calls to the API you’d need to write custom scripts that use tools like cURL or Python Requests. There’s nothing inherently wrong with custom scripts but there is an overhead in writing and maintaining those scripts.
+Проект начался с того, что на данный момент нет простого в использовании интерфейса для API dbt Cloud. Чтобы делать вызовы к API, вам нужно писать пользовательские скрипты, использующие такие инструменты, как cURL или Python Requests. В пользовательских скриптах нет ничего плохого, но есть накладные расходы на их написание и поддержку.
 
-Readability is also a factor the importance of which cannot be overstated. With most programming languages, [the ratio of time reading vs writing code is well over 10:1](https://app.works/the-importance-of-code-readability/#:~:text=What%20is%20code%20readability%3F,or%20add%20a%20new%20feature.). Good code is easily readable and understandable by ourselves and other developers and it minimizes the cognitive load of deciphering what was the original intention of the author.
+Читаемость также является фактором, важность которого трудно переоценить. В большинстве языков программирования [соотношение времени чтения к написанию кода превышает 10:1](https://app.works/the-importance-of-code-readability/#:~:text=What%20is%20code%20readability%3F,or%20add%20a%20new%20feature.). Хороший код легко читается и понимается нами и другими разработчиками, и он минимизирует когнитивную нагрузку на расшифровку первоначального намерения автора.
 
-dbt-cloud-cli is a command line interface (CLI) that abstracts dbt Cloud API calls behind a user-friendly and elegant interface. The CLI is written in Python using [pydantic](https://pydantic-docs.helpmanual.io/) and [click](https://click.palletsprojects.com/en/8.0.x/). Let me demonstrate the difference in complexity and readability between cURL vs dbt-cloud-cli for triggering a dbt Cloud job run:
+dbt-cloud-cli — это интерфейс командной строки (CLI), который абстрагирует вызовы API dbt Cloud за удобным и элегантным интерфейсом. CLI написан на Python с использованием [pydantic](https://pydantic-docs.helpmanual.io/) и [click](https://click.palletsprojects.com/en/8.0.x/). Позвольте мне продемонстрировать разницу в сложности и читаемости между cURL и dbt-cloud-cli для запуска выполнения задания dbt Cloud:
 
 <Tabs
   defaultValue="cURL"
   values={[
-    { label: 'cURL triggered job run', value: 'cURL', },
-    { label: 'dbt-cloud-cli triggered job run', value: 'dbt-cloud-cli', },
+    { label: 'Запуск задания с помощью cURL', value: 'cURL', },
+    { label: 'Запуск задания с помощью dbt-cloud-cli', value: 'dbt-cloud-cli', },
   ]
 }>
 <TabItem value="cURL">
@@ -55,38 +55,38 @@ dbt-cloud job run --job-id 43167
 </TabItem>
 </Tabs>
 
-You probably agree that the latter example is definitely more elegant and easier to read. `dbt-cloud` handles the request boilerplate (e.g., api token in the header, endpoint URL) so that you don’t need to worry about authentication or remember which endpoint to use. Also, the CLI implements additional functionality (e.g., `--wait`) for some endpoints; for example, `dbt cloud job run --wait` will issue the job trigger, wait until the job finishes, fails or is cancelled and then prints out the job status response.
+Вы, вероятно, согласитесь, что последний пример определенно более элегантен и легче читается. `dbt-cloud` обрабатывает шаблон запроса (например, токен API в заголовке, URL конечной точки), так что вам не нужно беспокоиться об аутентификации или помнить, какую конечную точку использовать. Также CLI реализует дополнительную функциональность (например, `--wait`) для некоторых конечных точек; например, `dbt cloud job run --wait` выполнит запуск задания, подождет, пока задание не завершится, не провалится или не будет отменено, и затем выведет ответ о статусе задания.
 
-In addition to CLI commands that interact with a single dbt Cloud API endpoint there are composite helper commands that call one or more API endpoints and perform more complex operations. One example of composite commands are `dbt-cloud job export` and `dbt-cloud job import` where, under the hood, the export command performs a `dbt-cloud job get` and writes the job metadata to a <Term id="json" /> file and the import command reads job parameters from a JSON file and calls `dbt-cloud job create`. The export and import commands can be used in tandem to move dbt Cloud jobs between projects. Another example is the `dbt-cloud job delete-all` which fetches a list of all jobs using `dbt-cloud job list` and then iterates over the list prompting the user if they want to delete the job. For each job that the user agrees to delete  a `dbt-cloud job delete` is performed.
+В дополнение к командам CLI, которые взаимодействуют с одной конечной точкой API dbt Cloud, существуют составные вспомогательные команды, которые вызывают одну или несколько конечных точек API и выполняют более сложные операции. Один из примеров составных команд — это `dbt-cloud job export` и `dbt-cloud job import`, где, под капотом, команда экспорта выполняет `dbt-cloud job get` и записывает метаданные задания в файл <Term id="json" />, а команда импорта читает параметры задания из JSON-файла и вызывает `dbt-cloud job create`. Команды экспорта и импорта могут использоваться вместе для перемещения заданий dbt Cloud между проектами. Другой пример — это `dbt-cloud job delete-all`, который получает список всех заданий с помощью `dbt-cloud job list`, а затем перебирает список, предлагая пользователю удалить задание. Для каждого задания, которое пользователь соглашается удалить, выполняется `dbt-cloud job delete`.
 
-To install the CLI in your Python environment run `python -m pip install dbt-cloud-cli` and you’re all set. You can use it locally in your development environment or e.g. in a GitHub actions workflow.
+Чтобы установить CLI в вашу среду Python, выполните `python -m pip install dbt-cloud-cli`, и вы готовы. Вы можете использовать его локально в вашей среде разработки или, например, в рабочем процессе GitHub actions.
 
-## How the project came to be
+## Как появился проект
 
-I’m a freelance data and analytics engineer and almost all of the projects I work with involve dbt Cloud one way or another. In a typical project, we’d set up a simple “run and test” job in dbt Cloud that is scheduled to run once or twice a day. Often there’d also be a [continuous integration job](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) that runs on Pull Requests in GitHub.
+Я фрилансер, инженер по данным и аналитике, и почти все проекты, с которыми я работаю, так или иначе связаны с dbt Cloud. В типичном проекте мы настраиваем простое задание "запуск и тестирование" в dbt Cloud, которое запланировано на выполнение один или два раза в день. Часто также есть [задание непрерывной интеграции](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration), которое запускается на Pull Requests в GitHub.
 
-These two job triggering methods (i.e., cron and PR trigger) are sufficient in most projects, but there are some cases where additional control over when a job is run or what else is executed in the job’s context is needed. For example, you may need to load data to your database before a job is run or download artifacts after the run is finished.
+Эти два метода запуска заданий (т.е. cron и триггер PR) достаточны в большинстве проектов, но есть случаи, когда требуется дополнительный контроль над тем, когда задание выполняется или что еще выполняется в контексте задания. Например, вам может понадобиться загрузить данные в вашу базу данных перед выполнением задания или загрузить артефакты после завершения выполнения.
 
-In my case, we didn’t yet have an EL pipeline for an external data source. So, we hacked together a simple Python script for loading the data and ran the script as part of our CI workflow in GitHub Actions before triggering a dbt Cloud job. This would ensure that the data in our database was up-to-date before the job ran.
+В моем случае у нас еще не было конвейера EL для внешнего источника данных. Поэтому мы собрали простой скрипт на Python для загрузки данных и запускали скрипт как часть нашего рабочего процесса CI в GitHub Actions перед запуском задания dbt Cloud. Это гарантировало, что данные в нашей базе данных были актуальными перед выполнением задания.
 
-Initially, we issued the dbt Cloud API requests to trigger job runs using cURL and it worked perfectly fine until we needed to implement a waiting loop that periodically checked the job status and returned when the job was finished. Luckily I found a Python script by Sean McIntyre ([see the dbt Discourse post](https://discourse.getdbt.com/t/triggering-a-dbt-cloud-job-in-your-automated-workflow-with-python/2573)) that does exactly this.
+Изначально мы выполняли запросы API dbt Cloud для запуска заданий с помощью cURL, и это работало прекрасно, пока нам не понадобилось реализовать цикл ожидания, который периодически проверял статус задания и возвращался, когда задание было завершено. К счастью, я нашел скрипт на Python от Шона МакИнтайра ([см. пост на dbt Discourse](https://discourse.getdbt.com/t/triggering-a-dbt-cloud-job-in-your-automated-workflow-with-python/2573)), который делает именно это.
 
-I modified the script according to our needs and wrapped it in a `dbt-cloud job run` CLI command using click (actually the entry point wasn’t `dbt-cloud` at that time but you get the idea). Click (“Command Line Interface Creation Kit”) is a Python library for creating CLIs with as little code as necessary. Implementing a simple CLI using click only requires adding a few decorators (e.g., `group`, `command` and `option`) to the functions in your code and you’re good to go.
+Я модифицировал скрипт в соответствии с нашими потребностями и обернул его в команду CLI `dbt-cloud job run` с использованием click (на самом деле, точка входа тогда не была `dbt-cloud`, но вы поняли идею). Click ("Command Line Interface Creation Kit") — это библиотека Python для создания CLI с минимальным количеством кода. Реализация простого CLI с использованием click требует лишь добавления нескольких декораторов (например, `group`, `command` и `option`) к функциям в вашем коде, и вы готовы.
 
-Now we had exactly what we wanted and our CI workflow in GitHub actions looked slick:
+Теперь у нас было именно то, что мы хотели, и наш рабочий процесс CI в GitHub actions выглядел круто:
 
 ```
-- name: Trigger dbt Cloud job run
+- name: Запуск задания dbt Cloud
   run: |
     ./cool_script_bro.sh
     dbt-cloud job run --job-id $DBT_CLOUD_JOB_ID
 ```
 
-Fast forward a month or two and there was another client that needed something similar. I felt that this was an opportunity to open source the project not just to benefit me and my clients but also [the broader dbt community](https://www.getdbt.com/community/) (❤️). So, I moved the project to a public github repository with a goal of eventually covering all of the dbt Cloud API endpoints.
+Прошло месяц или два, и у другого клиента возникла похожая потребность. Я почувствовал, что это возможность открыть проект с открытым исходным кодом не только для меня и моих клиентов, но и для [широкого сообщества dbt](https://www.getdbt.com/community/) (❤️). Поэтому я переместил проект в публичный репозиторий на GitHub с целью в конечном итоге охватить все конечные точки API dbt Cloud.
 
-While working with the initial 0.1.0 release that included only the `dbt-cloud job run` command I decided to have some fun and try how well pydantic (Python dataclasses on steroids!) and `click` worked together. I’m a big fan of `pydantic`, and I’ve used it in a wide variety of projects including machine learning models and automated testing software for a medical device. Even though Python has had built-in dataclasses since version 3.7, they fall short when it comes to data validation and general developer ergonomics (IMO) and that’s where `pydantic` comes in; among other things, `pydantic` implements a validator decorator that is used to define custom validations for model fields (e.g., CLI arguments).
+Работая с начальным выпуском 0.1.0, который включал только команду `dbt-cloud job run`, я решил повеселиться и попробовать, насколько хорошо pydantic (Python dataclasses на стероидах!) и `click` работают вместе. Я большой поклонник `pydantic`, и я использовал его в самых разных проектах, включая модели машинного обучения и программное обеспечение для автоматизированного тестирования медицинского устройства. Хотя в Python есть встроенные dataclasses с версии 3.7, они не дотягивают, когда дело доходит до проверки данных и общей эргономики для разработчиков (на мой взгляд), и здесь на помощь приходит `pydantic`; среди прочего, `pydantic` реализует декоратор валидатора, который используется для определения пользовательских проверок для полей модели (например, аргументов CLI).
 
-I refactored the `dbt-cloud-cli` code so that the CLI commands were now implemented as pydantic models where the model fields are the dbt Cloud API endpoint arguments. The `pydantic` model fields could now be translated to `click` arguments which resulted in the following CLI command implementation pattern:
+Я переработал код `dbt-cloud-cli`, так что команды CLI теперь реализованы как модели pydantic, где поля модели являются аргументами конечных точек API dbt Cloud. Поля модели `pydantic` теперь можно было перевести в аргументы `click`, что привело к следующему шаблону реализации команды CLI:
 
 ```python
 import click
@@ -107,34 +107,34 @@ def get(**kwargs):
     execute_and_print(command)
 ```
 
-After the initial release I started to expand to cover the rest of the dbt Cloud API endpoints. For a list of all the covered API endpoints and implemented CLI commands, see https://github.com/data-mie/dbt-cloud-cli.
+После первоначального выпуска я начал расширять проект, чтобы охватить остальные конечные точки API dbt Cloud. Для списка всех охваченных конечных точек API и реализованных команд CLI, см. https://github.com/data-mie/dbt-cloud-cli.
 
-## Creating a data catalog app using dbt Cloud artifacts
+## Создание приложения каталога данных с использованием артефактов dbt Cloud
 
-In this example we’ll download a `catalog.json` artifact from the latest run of a dbt Cloud job using `dbt-cloud run list` and `dbt-cloud get-artifact` and then write a simple Data Catalog CLI application using the same tools that are used in `dbt-cloud-cli` (i.e., `click` and `pydantic`). Let’s dive right in!
+В этом примере мы загрузим артефакт `catalog.json` из последнего выполнения задания dbt Cloud, используя `dbt-cloud run list` и `dbt-cloud get-artifact`, а затем напишем простое CLI-приложение каталога данных, используя те же инструменты, которые используются в `dbt-cloud-cli` (т.е. `click` и `pydantic`). Давайте начнем!
 
-The first command we need is the `dbt-cloud run list` which uses an [API endpoint](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/List%20Runs) that returns runs sorted by creation date, with the most recent run appearing first. The command returns a JSON response that has one top-level attribute `data` that contains a list of runs. We’ll need to extract the `id` attribute of the first one and to do that we use [jq](https://stedolan.github.io/jq/):
+Первая команда, которая нам нужна, это `dbt-cloud run list`, которая использует [конечную точку API](https://docs.getdbt.com/dbt-cloud/api-v2#/operations/List%20Runs), возвращающую выполнения, отсортированные по дате создания, с самым последним выполнением, появляющимся первым. Команда возвращает JSON-ответ, который имеет один атрибут верхнего уровня `data`, содержащий список выполнений. Нам нужно извлечь атрибут `id` первого из них, и для этого мы используем [jq](https://stedolan.github.io/jq/):
 
 ```
 latest_run_id=$(dbt-cloud run list --job-id $DBT_CLOUD_JOB_ID | jq .data[0].id -r)
 ```
 
-Next, we use the `dbt-cloud get-artifact` command to download the `catalog.json` artifact:
+Далее мы используем команду `dbt-cloud get-artifact` для загрузки артефакта `catalog.json`:
 
 ```
 dbt-cloud run get-artifact --run-id $latest_run_id --path catalog.json -f catalog.json
 ```
 
-To explore the downloaded catalog file we’ll write a simple CLI application. The [catalog.json](https://schemas.getdbt.com/dbt/catalog/v1.json) has four top level properties: metadata, nodes, sources and errors. In this example we explore the nodes and sources only and leave the metadata and errors out.
+Чтобы исследовать загруженный файл каталога, мы напишем простое CLI-приложение. [catalog.json](https://schemas.getdbt.com/dbt/catalog/v1.json) имеет четыре свойства верхнего уровня: metadata, nodes, sources и errors. В этом примере мы исследуем только nodes и sources, оставляя metadata и errors в стороне.
 
-First, we need a `Catalog` abstraction that reflects the catalog JSON schema:
+Сначала нам нужна абстракция `Catalog`, отражающая схему JSON каталога:
 
 ```py
 from typing import Optional, Dict, Any
 from pydantic import BaseModel, Field
 
 class Stats(BaseModel):
-    """Represent node stats in the Catalog."""
+    """Представляет статистику узла в каталоге."""
 
     id: str
     label: str
@@ -147,7 +147,7 @@ class Stats(BaseModel):
 
 
 class Column(BaseModel):
-    """Represents a column in the Catalog."""
+    """Представляет столбец в каталоге."""
 
     type: str
     index: int
@@ -159,7 +159,7 @@ class Column(BaseModel):
 
 
 class Node(BaseModel):
-    """Represents a node in the Catalog."""
+    """Представляет узел в каталоге."""
 
     unique_id: str
     metadata: Dict[str, Optional[str]]
@@ -193,7 +193,7 @@ class Node(BaseModel):
 
 
 class Catalog(BaseModel):
-    """Represents a dbt catalog.json artifact."""
+    """Представляет артефакт dbt catalog.json."""
 
     metadata: Dict
     nodes: Dict[str, Node]
@@ -201,9 +201,9 @@ class Catalog(BaseModel):
     errors: Optional[Dict]
 ```
 
-The four abstractions (`Stats`,`Column`, `Node `and `Catalog`) all inherit [the pydantic BaseModel](https://pydantic-docs.helpmanual.io/usage/models/) which implements various methods for parsing files and other python objects into model instances. We’ll leave the parsing to pydantic (i.e., `BaseModel.parse_file` classmethod) so that we can focus solely on the app logic.
+Четыре абстракции (`Stats`, `Column`, `Node` и `Catalog`) все наследуют [модель pydantic BaseModel](https://pydantic-docs.helpmanual.io/usage/models/), которая реализует различные методы для парсинга файлов и других объектов Python в экземпляры моделей. Мы оставим парсинг pydantic (т.е. метод класса `BaseModel.parse_file`), чтобы мы могли сосредоточиться исключительно на логике приложения.
 
-The `CatalogExploreCommand` abstraction implements the CLI app which is then wrapped in a `click.command` that implements the CLI entry point. The `CatalogExploreCommand` class inherits `ClickBaseModel` that implements a `click_options` classmethod which we’ll use to decorate the entry point. This method is where the pydantic to click translation magic happens (i.e., pydantic model fields are translated [into click options](https://click.palletsprojects.com/en/8.0.x/options/)). Note that the app [uses inquirer](https://github.com/magmax/python-inquirer) in addition to `click` to create interactive “select option from a list” CLI prompts.
+Абстракция `CatalogExploreCommand` реализует CLI-приложение, которое затем оборачивается в `click.command`, реализующий точку входа CLI. Класс `CatalogExploreCommand` наследует `ClickBaseModel`, который реализует метод класса `click_options`, который мы будем использовать для декорирования точки входа. Этот метод — это место, где происходит магия перевода pydantic в click (т.е. поля модели pydantic переводятся [в параметры click](https://click.palletsprojects.com/en/8.0.x/options/)). Обратите внимание, что приложение [использует inquirer](https://github.com/magmax/python-inquirer) в дополнение к `click` для создания интерактивных CLI-подсказок "выберите опцию из списка".
 
 ```py
 import click
@@ -218,15 +218,15 @@ class NodeType(Enum):
 
 
 class CatalogExploreCommand(ClickBaseModel):
-    """An inteactive application for exploring catalog artifacts."""
+    """Интерактивное приложение для исследования артефактов каталога."""
 
-    file: Path = Field(default="catalog.json", description="Catalog file path.")
+    file: Path = Field(default="catalog.json", description="Путь к файлу каталога.")
     title: str = Field(
-        default="Data Catalog", description="ASCII art title for the app."
+        default="Data Catalog", description="ASCII art заголовок для приложения."
     )
     title_font: str = Field(
         default="rand-large",
-        description="ASCII art title font (see https://github.com/sepandhaghighi/art#try-art-in-your-browser for a list of available fonts)",
+        description="Шрифт ASCII art заголовка (см. https://github.com/sepandhaghighi/art#try-art-in-your-browser для списка доступных шрифтов)",
     )
 
     def get_catalog(self) -> Catalog:
@@ -246,17 +246,17 @@ class CatalogExploreCommand(ClickBaseModel):
             node_type_options = [
                 inquirer.List(
                     "node_type",
-                    message="Select node type to explore",
+                    message="Выберите тип узла для исследования",
                     choices=[node_type.value for node_type in NodeType],
                 )
             ]
             node_type = NodeType(inquirer.prompt(node_type_options)["node_type"])
             self.explore(node_type=node_type)
-            if not click.confirm("Explore another node type?"):
+            if not click.confirm("Исследовать другой тип узла?"):
                 break
 
     def explore(self, node_type: NodeType):
-        """Interactive exploration of nodes to explore and display their metadata"""
+        """Интерактивное исследование узлов для изучения и отображения их метаданных"""
         import inquirer
 
         catalog = self.get_catalog()
@@ -268,25 +268,25 @@ class CatalogExploreCommand(ClickBaseModel):
         while True:
             databases = sorted(set(map(lambda x: x.database, nodes)))
             database_options = [
-                inquirer.List("database", message="Select database", choices=databases)
+                inquirer.List("database", message="Выберите базу данных", choices=databases)
             ]
             database = inquirer.prompt(database_options)["database"]
             nodes_filtered = list(filter(lambda x: x.database == database, nodes))
 
             schemas = sorted(set(map(lambda x: x.schema, nodes_filtered)))
             schema_options = [
-                inquirer.List("schema", message="Select schema", choices=schemas)
+                inquirer.List("schema", message="Выберите схему", choices=schemas)
             ]
             schema = inquirer.prompt(schema_options)["schema"]
             nodes_filtered = list(filter(lambda x: x.schema == schema, nodes_filtered))
 
             node_options = [
                 inquirer.List(
-                    "node", message="Select node", choices=sorted(nodes_filtered)
+                    "node", message="Выберите узел", choices=sorted(nodes_filtered)
                 )
             ]
             node = inquirer.prompt(node_options)["node"]
-            click.echo(f"{node.name} columns:")
+            click.echo(f"Столбцы {node.name}:")
             for column in node.columns.values():
                 click.echo(f"- {column}")
             click.echo("")
@@ -294,7 +294,7 @@ class CatalogExploreCommand(ClickBaseModel):
                 if stats.id == "has_stats":
                     continue
                 click.echo(stats)
-            if not click.confirm(f"Explore another {node_type.value}?"):
+            if not click.confirm(f"Исследовать другой {node_type.value}?"):
                 break
 
 
@@ -305,27 +305,26 @@ def data_catalog(**kwargs):
     command.execute()
 ```
 
-The `CatalogExploreCommand.execute` method implements the interactive exploration logic. First the app prompts to select a node type to explore (`source` or `node`) and then it asks the user to select a database, a schema in the selected database and finally a model in the selected schema. The app then prints out the model columns and stats (if there are any). All this is wrapped in a loop with “Explore another node? [y/N]” and “Explore another node type? [y/N]” prompts for either continuing the loop or breaking out of it.
+Метод `CatalogExploreCommand.execute` реализует логику интерактивного исследования. Сначала приложение предлагает выбрать тип узла для исследования (`source` или `node`), а затем просит пользователя выбрать базу данных, схему в выбранной базе данных и, наконец, модель в выбранной схеме. Затем приложение выводит столбцы модели и статистику (если она есть). Все это обернуто в цикл с подсказками "Исследовать другой узел? [y/N]" и "Исследовать другой тип узла? [y/N]" для продолжения цикла или выхода из него.
 
-I’ve included the app in the latest version of dbt-cloud-cli so you can test it out yourself! To use the app you need install dbt-cloud-cli with extra dependencies:
+Я включил приложение в последнюю версию dbt-cloud-cli, так что вы можете протестировать его сами! Чтобы использовать приложение, вам нужно установить dbt-cloud-cli с дополнительными зависимостями:
 
 ```bash
 python -m pip install dbt-cloud-cli[demo]
 ```
 
-Now you can the run app:
+Теперь вы можете запустить приложение:
 
 ```bash
 dbt-cloud demo data-catalog --file catalog.json
 ```
 
-## Parting thoughts
+## Заключительные мысли
 
-To summarize, the `dbt-cloud-cli`I implements an easy-to-use command line interface for the dbt Cloud API which abstracts away the complexities of the API calls. The CLI has interfaces to many of the API endpoints and covering all of the endpoints is on the project’s roadmap. For a list of all the covered API endpoints and implemented CLI commands, see https://github.com/data-mie/dbt-cloud-cli.
+В заключение, `dbt-cloud-cli` реализует простой в использовании интерфейс командной строки для API dbt Cloud, который абстрагирует сложности вызовов API. CLI имеет интерфейсы для многих конечных точек API, и охват всех конечных точек находится в дорожной карте проекта. Для списка всех охваченных конечных точек API и реализованных команд CLI, см. https://github.com/data-mie/dbt-cloud-cli.
 
-In addition to commands that interact with a single dbt Cloud API endpoint there are composite helper commands that call one or more API endpoints and perform more complex operations (e.g., `dbt-cloud job export` and `dbt-cloud job import`).
+В дополнение к командам, которые взаимодействуют с одной конечной точкой API dbt Cloud, существуют составные вспомогательные команды, которые вызывают одну или несколько конечных точек API и выполняют более сложные операции (например, `dbt-cloud job export` и `dbt-cloud job import`).
 
-The `dbt-cloud-cli` makes interacting with the dbt Cloud API a breeze compared to using and maintaining custom cURL/ Python Requests scripts. Furthermore, `dbt-cloud-cli` commands handle all the API call boilerplate under the hood so that you don’t need to google or memorize how to interact with the API. And when in doubt, just add a `--help` flag to a `dbt-cloud-cli` command and you’ll get a list of all the available commands or arguments.
+`dbt-cloud-cli` делает взаимодействие с API dbt Cloud легким по сравнению с использованием и поддержкой пользовательских скриптов cURL/Python Requests. Более того, команды `dbt-cloud-cli` обрабатывают все шаблоны вызовов API под капотом, так что вам не нужно гуглить или запоминать, как взаимодействовать с API. И если вы сомневаетесь, просто добавьте флаг `--help` к команде `dbt-cloud-cli`, и вы получите список всех доступных команд или аргументов.
 
-
-PS. There are still API endpoints that haven’t been implemented in the CLI. If there’s an endpoint you’d like a CLI command for you can open an issue in the GitHub repository. All contributions to the project (be it documentation in README or new CLI commands) are welcome! If you have any questions on the project or how to contribute, feel free to drop me a DM in dbt Slack.
+P.S. Все еще есть конечные точки API, которые не были реализованы в CLI. Если есть конечная точка, для которой вы хотели бы команду CLI, вы можете открыть проблему в репозитории GitHub. Все вклады в проект (будь то документация в README или новые команды CLI) приветствуются! Если у вас есть вопросы по проекту или как внести вклад, не стесняйтесь написать мне в личные сообщения в dbt Slack.

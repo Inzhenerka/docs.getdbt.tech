@@ -1,6 +1,6 @@
 ---
-title: "The Exact dbt Commands We Run in Production"
-description: "Without a command to run them, dbt models and tests are just taking up space in a Git repo. These are the exact dbt commands we run internally at dbt Labs."
+title: "Точные команды dbt, которые мы запускаем в производственной среде"
+description: "Без команды для их запуска, модели и тесты dbt просто занимают место в репозитории Git. Это точные команды dbt, которые мы запускаем внутри dbt Labs."
 slug: dbt-production-commands
 
 authors: [andrew_escay]
@@ -12,44 +12,44 @@ date: 2021-11-29
 is_featured: false
 ---
 
-Without a command to run them, dbt models and tests are just taking up space in a Git repo.
+Без команды для их запуска, модели и тесты dbt просто занимают место в репозитории Git.
 
-The specific dbt commands you run in production are the control center for your project. They are the structure that defines your team’s data quality + freshness standards.
+Конкретные команды dbt, которые вы запускаете в производственной среде, являются центром управления вашим проектом. Они формируют структуру, определяющую стандарты качества и свежести данных вашей команды.
 
 <!--truncate-->
 
-> _Note: As of dbt v0.21.0 (released in October 2021), you can now set your preferred production commands using [`dbt build`](https://github.com/dbt-labs/dbt-core/releases). Once setup, a single `dbt build` command can be used to execute your prescribed `seed`, `test`, `run` and `snapshot` and other commands in a specified order._
+> _Примечание: Начиная с dbt v0.21.0 (выпущенной в октябре 2021 года), вы можете установить предпочитаемые производственные команды, используя [`dbt build`](https://github.com/dbt-labs/dbt-core/releases). После настройки, одна команда `dbt build` может использоваться для выполнения предписанных вами команд `seed`, `test`, `run` и `snapshot` и других команд в заданном порядке._
 
-The most important command is [`dbt run`](https://docs.getdbt.com/reference/commands/run). But in deployment, we rarely just use `dbt run`.
+Самая важная команда — это [`dbt run`](https://docs.getdbt.com/reference/commands/run). Но в развертывании мы редко используем только `dbt run`.
 
-You’re probably familiar with a bunch of [dbt commands](https://docs.getdbt.com/reference/dbt-commands) already, and this section is dedicated to showing you what we believe the most effective commands should be when running your dbt project in production!
+Вы, вероятно, уже знакомы с множеством [команд dbt](https://docs.getdbt.com/reference/dbt-commands), и этот раздел посвящен тому, чтобы показать вам, какие команды, по нашему мнению, должны быть наиболее эффективными при запуске вашего проекта dbt в производственной среде!
 
-In production, reliability and consistency are key. This guarantees that your stakeholders have data that could be meaningfully used. In order to ensure reliability and consistency, here are a few principles we believe you should keep in mind when designing your deployment commands:
+В производственной среде надежность и согласованность являются ключевыми. Это гарантирует, что ваши заинтересованные стороны имеют данные, которые могут быть использованы значимым образом. Чтобы обеспечить надежность и согласованность, вот несколько принципов, которые, по нашему мнению, вы должны учитывать при разработке команд развертывания:
 
-## Principles of dbt deployment commands
+## Принципы команд развертывания dbt
 
 <WistiaVideo id="7em2tj62yo" />
 
-### 1) Always test your data
+### 1) Всегда тестируйте ваши данные
 
-You’re likely already familiar with testing in dbt, and we believe that every production run should always be tested.
-
-
-### 2) Understand the impact of delayed data in your project
-
-Some projects can afford to have older data in the warehouse, others can’t.
+Вы, вероятно, уже знакомы с тестированием в dbt, и мы считаем, что каждый производственный запуск всегда должен быть протестирован.
 
 
-### 3) Simplify your regularly scheduled runs
+### 2) Понимание влияния задержанных данных в вашем проекте
 
-The more complex your run commands are, the harder it gets to maintain this in the long run. Feel free to rely on dbt’s DAG (more info on why we &lt;3 DAGs in my colleagues Christine + Randy’s [modular data modeling technique](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/) post).
-
-Given those principles, we’ll now take a look at the most common run commands for production jobs, and why we think they could work for your organization! Do note that yours may vary slightly (depending on your team’s specific needs), but as long as you stick to the principles mentioned above, your project should be in good shape!
+Некоторые проекты могут позволить себе иметь более старые данные в хранилище, другие — нет.
 
 
-## Simplest possible production dbt commands
+### 3) Упрощение регулярных запланированных запусков
 
-The simplest version of your project’s scheduled run commands could be:
+Чем сложнее ваши команды запуска, тем сложнее их поддерживать в долгосрочной перспективе. Не стесняйтесь полагаться на DAG dbt (больше информации о том, почему мы &lt;3 DAGs в посте моих коллег Кристин и Рэнди о [модульной технике моделирования данных](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/)).
+
+Учитывая эти принципы, мы теперь рассмотрим наиболее распространенные команды запуска для производственных задач и почему мы считаем, что они могут работать для вашей организации! Обратите внимание, что ваши могут немного отличаться (в зависимости от конкретных потребностей вашей команды), но пока вы придерживаетесь вышеупомянутых принципов, ваш проект должен быть в хорошем состоянии!
+
+
+## Самые простые возможные производственные команды dbt
+
+Самая простая версия запланированных команд запуска вашего проекта может быть:
 
 ```
 
@@ -59,58 +59,56 @@ dbt test
 
 ```
 
-This version is the most basic and adheres to all the principles mentioned above. This assumes that you can afford to have slightly incorrect data (data is only tested after a dbt project runs).
+Эта версия является самой базовой и соответствует всем вышеупомянутым принципам. Это предполагает, что вы можете позволить себе иметь немного некорректные данные (данные тестируются только после запуска проекта dbt).
 
 
-## Preferred production dbt commands
+## Предпочтительные производственные команды dbt
 
-In practice however, we often find that this is more effective:
+На практике, однако, мы часто находим, что это более эффективно:
 
 ```
 
-dbt test -s source:* (or dbt test -m source:* if you are on a version earlier than dbt v0.21.0)
+dbt test -s source:* (или dbt test -m source:* если вы используете версию ранее dbt v0.21.0)
 
 dbt run
 
 dbt test --exclude source:*
 
-dbt source `freshness ` (or dbt source snapshot-freshness if you are on a version earlier to dbt v0.21.0) (this could optionally be the first step)
+dbt source `freshness` (или dbt source snapshot-freshness если вы используете версию ранее dbt v0.21.0) (это может быть первым шагом)
 
 ```
 
-This is a more robust implementation of the first version. The two additions here would be:
+Это более надежная реализация первой версии. Два дополнения здесь:
+
+1. Тестирование исходных данных перед запуском любой трансформации dbt, и
+2. Тестирование свежести источников
+
+Когда вы тестируете исходные данные перед запуском трансформаций, это исключает возможность того, что плохие исходные данные повлияют на проект dbt.
+
+Это остановит процесс сборки, если будут обнаружены плохие исходные данные, и защитит целостность ваших моделей dbt.
+
+Когда источники тестируются на свежесть, это позволяет вам легко определить, являются ли данные в вашем хранилище старыми, и, впоследствии, уведомить соответствующих заинтересованных лиц.
+
+Вы также можете выбрать запуск теста свежести источников в начале, если ваша организация предпочитает, чтобы устаревшие данные не обрабатывались, или если вы считаете, что устаревшие данные могут привести к ненадежным конечным моделям.
 
 
+## Профессиональный совет: остерегайтесь селекторов моделей
 
-1. Testing source data before running any dbt transformation, and
-2. Testing source freshness
+Сначала я хочу быстро рассмотреть тему использования [селекторов моделей](https://docs.getdbt.com/reference/node-selection/syntax) (`-s` для конкретных моделей/тегов/папок, или `-m`, если вы используете версию ранее dbt v0.21.0) в ваших командах запуска. Вы, возможно, уже знаете, как запускать конкретные модели и, впоследствии, их родительские или дочерние модели.
 
-When you test source data before running transformations, this removes the possibility of bad source data affecting the dbt project.
+При создании производственных задач мы настоятельно не рекомендуем полагаться на них, так как это добавляет сложности вашему проекту и может привести к несоответствию времени в ваших шагах сборки.
 
-This will stop the build process if bad source data is detected, and protects the integrity of your dbt models.
+Способ думать о селекторах моделей в запусках — это скорее исключение, чем правило. Лучше всего начать с одной основной задачи, которая выполняется с постоянной частотой. Оттуда оцените, нуждаются ли конкретные части вашего проекта dbt в специфической обработке для оптимизации.
 
-When sources are tested for freshness, it allows you to easily triage whether data in your warehouse is old, and subsequently alert relevant stakeholders.
+Возможно, некоторые модели требуют обновления только раз в неделю, в то время как все остальное нужно обновлять каждый час. Возможно, некоторые команды нуждаются в данных в определенное время дня, и, следовательно, их модели должны запускаться в определенное время утром.
 
-You could also opt to run your source freshness test at the beginning, if your organization would prefer that stale data isn’t processed, or if you believe that stale data could lead to unreliable final models.
-
-
-## Pro trip: beware of model selectors
-
-First, I want to quickly cover the topic of using [model selectors](https://docs.getdbt.com/reference/node-selection/syntax) (`-s` for specific models/tags/folders, or `-m` if you’re on a version prior to dbt v0.21.0) in your run commands. You may already know how to run specific models and subsequently their parent or child models.
-
-When building production jobs, we highly advise not relying on these, as it adds to the complexity of your project, and is prone to creating mismatched timings in your build steps.
-
-The way to think about model selectors in runs is more of an exception, rather than the default. It’s best to start with a single main job that runs at a consistent cadence. From there, assess whether specific parts of your dbt project need specific handling for optimization.
-
-Maybe some models only require updating once a week, while everything else needs to be updated every hour. Maybe some teams need data at a specific time of the day, and thus need their models to be run at a specific time in the morning.
-
-These exceptions justify having separate run commands, and even a separate job, but make sure to exercise caution when building these as they could easily become difficult to manage in the long run.
+Эти исключения оправдывают наличие отдельных команд запуска и даже отдельной задачи, но убедитесь, что вы проявляете осторожность при их создании, так как они могут легко стать трудными для управления в долгосрочной перспективе.
 
 
-## How do your run commands differ?
+## Чем отличаются ваши команды запуска?
 
-These are the dbt commands that our team runs in production, and we recommend to our professional services clients.
+Это команды dbt, которые наша команда запускает в производственной среде, и которые мы рекомендуем нашим клиентам по профессиональным услугам.
 
-But! Your mileage will vary, and there are perfectly good reasons for running other commands in production—I’m always curious to see what works best for your team.
+Но! Ваш опыт может отличаться, и есть вполне обоснованные причины для запуска других команд в производственной среде — мне всегда интересно узнать, что лучше всего работает для вашей команды.
 
-As long as you remember the core principles I shared earlier (mostly keep things simple), you’ll be in great shape.
+Пока вы помните основные принципы, которые я поделился ранее (в основном, держите все просто), вы будете в отличной форме.

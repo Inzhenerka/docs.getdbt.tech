@@ -1,6 +1,6 @@
 ---
-title: "On the Importance of Naming: Model Naming Conventions (Part 1)"
-description: "Naming our models is one of the hardest and most important tasks of the analytics engineer. This post walks through the reasons that we should focus on naming as a key part of the process of building data models."
+title: "О важности именования: Конвенции именования моделей (Часть 1)"
+description: "Именование наших моделей — одна из самых сложных и важных задач аналитического инженера. Этот пост объясняет, почему мы должны сосредоточиться на именовании как на ключевой части процесса создания моделей данных."
 slug: on-the-importance-of-naming
 
 authors: [pat_kearns]
@@ -12,22 +12,21 @@ date: 2021-11-29
 is_featured: false
 ---
 
-💾 _This article is for anyone who has ever questioned the sanity of a date not in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format_
+💾 _Эта статья для всех, кто когда-либо сомневался в здравомыслии даты, не представленной в формате [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)_
 
+Вам когда-нибудь поручали добавить новые поля или концепции в существующий набор моделей, и вы задавались вопросом:
 
-Have you ever been assigned to add new fields or concepts to an existing set of models and wondered:
+* Почему существует несколько моделей с почти одинаковыми, но слегка различающимися именами?
 
-* Why are there multiple models named almost the same but slightly different?
+* В какой модели находятся нужные мне поля?
 
-* Which model has the fields I need?
-
-* Which model is upstream or downstream from which?
+* Какая модель является предшественником или последователем какой?
 
 <!--truncate-->
 
-* If I am going to add to those models, should I add it here or there (or over there)?
+* Если я собираюсь добавить что-то в эти модели, стоит ли добавить это здесь или там (или вон там)?
 
-Someone on the data team might send you a list of models and say "It is in one of these models, but I am not sure which"
+Кто-то из команды данных может отправить вам список моделей и сказать: "Это в одной из этих моделей, но я не уверен, в какой именно".
 
 ```
 
@@ -43,76 +42,76 @@ Someone on the data team might send you a list of models and say "It is in one o
 
 ```
 
-This is a common problem when multiple developers (both past and present) are cohabitating in a project repo, continually creating new combinations of models in all directions as new analytic opportunities arise.
+Это распространенная проблема, когда несколько разработчиков (как прошлых, так и настоящих) работают в одном репозитории проекта, постоянно создавая новые комбинации моделей во всех направлениях по мере появления новых аналитических возможностей.
 
-It's not difficult to imagine why this happens — people have different opinions, habits, and diligence about naming and when developing, it is often easier to build a new thing fit for the new purpose then to integrate your changes into the pre-existing ecosystem, test that yours works without breaking everyone else's, etc.
+Нетрудно представить, почему это происходит — у людей разные мнения, привычки и усердие в отношении именования, и при разработке часто проще создать что-то новое, подходящее для новой цели, чем интегрировать свои изменения в уже существующую экосистему, протестировать, что ваше работает, не ломая чужое, и так далее.
 
-It is a common joke in computer science (and by extension data) that among all of the hard things we do, naming things is *one of the hardest*. These problems are not going away, but what if we can add a little more structure to the naming conventions so that the name of the model can clearly communicate its intent. Simply by reading the name of the model you can know  what type of data might be in there, where in the DAG it might be (left, middle, right), or whether it is an internal building block or an external <Term id="table" /> used in the BI Tool for analysis.
+В компьютерных науках (и, следовательно, в данных) существует распространенная шутка, что среди всех сложных задач, которые мы выполняем, именование является *одной из самых сложных*. Эти проблемы не исчезнут, но что, если мы сможем добавить немного больше структуры в конвенции именования, чтобы имя модели могло четко передавать ее намерение. Просто прочитав имя модели, вы можете понять, какие данные могут быть в ней, где в DAG она может находиться (слева, в середине, справа) или является ли она внутренним строительным блоком или внешней <Term id="table" /> используемой в BI-инструменте для анализа.
 
-This is the first in a series of posts around model naming conventions: why they are important and how you should think about naming models in your own projects.
+Это первая часть серии постов о конвенциях именования моделей: почему они важны и как вы должны думать об именовании моделей в своих проектах.
 
-### **Standing on the Shoulders of Giants**
+### **Стоя на плечах гигантов**
 
-There is some prior art on this topic -  the foundational post[ How We Structure Our dbt Projects](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355). This article has helped countless projects begin the process of organizing their data, but after implementing dbt at a series of large enterprise companies it has left me with some lingering questions and some of its precepts are open to individual interpretations -  which can cause drift and tech debt down the line.
+Существует некоторая предшествующая работа по этой теме - основополагающий пост [Как мы структурируем наши проекты dbt](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355). Эта статья помогла бесчисленным проектам начать процесс организации своих данных, но после внедрения dbt в ряде крупных корпоративных компаний у меня остались некоторые вопросы, и некоторые из ее принципов открыты для индивидуальных интерпретаций, что может вызвать дрейф и технический долг в будущем.
 
-I am elated to stand on the shoulders of giants to write a follow up to this post, with the caveat that this is aimed at a different audience. The above discourse is usually read or linked in 101 courses, where the focus is on initial project setup. In this series of posts you will see how our approach has shifted after working with and implementing these practices at scale.
+Я рад стоять на плечах гигантов, чтобы написать продолжение этого поста, с оговоркой, что он нацелен на другую аудиторию. Указанная выше дискуссия обычно читается или упоминается в курсах 101, где акцент делается на начальной настройке проекта. В этой серии постов вы увидите, как наш подход изменился после работы с этими практиками и их внедрения в масштабах.
 
-![example marts folder structure](/img/blog/on_the_importance_of_naming_image_0.png)
+![пример структуры папки marts](/img/blog/on_the_importance_of_naming_image_0.png)
 
-If you follow the advice from ‘How We Structure Our dbt Projects', you will end up with a project which is fairly easy to read when viewing within the folder hierarchy (from the Analytics Engineer perspective), but the same is not true when viewing in the DAG or the database itself. For the analyst or stakeholder who simply has access to the output database objects and not the hierarchy and flow with which they were developed, it can be at best slightly overwhelming, and at worst, unmanageable. With that in mind, I set out to help answer some of the outstanding questions around model naming and organization:
+Если вы следуете советам из 'Как мы структурируем наши проекты dbt', у вас получится проект, который довольно легко читать, просматривая в иерархии папок (с точки зрения аналитического инженера), но то же самое нельзя сказать, когда вы просматриваете DAG или саму базу данных. Для аналитика или заинтересованного лица, у которого есть доступ только к объектам выходной базы данных, а не к иерархии и потоку, с которыми они были разработаны, это может быть в лучшем случае немного ошеломляющим, а в худшем — неуправляемым. С учетом этого, я решил помочь ответить на некоторые из оставшихся вопросов по поводу именования и организации моделей:
 
-* Do intermediates live within marts folder or as a top level directory (or does it matter)?
+* Должны ли промежуточные модели находиться в папке marts или как верхний уровень директории (или это не имеет значения)?
 
-* How can we delineate between what is a building block and what is a final output model?
+* Как мы можем разграничить, что является строительным блоком, а что — конечной моделью вывода?
 
-* We all (I think) agree on `stg_` model naming conventions, but should we have more formalized naming guidelines as we move throughout the DAG??
+* Мы все (я думаю) согласны с конвенциями именования моделей `stg_`, но должны ли у нас быть более формализованные руководства по именованию по мере продвижения по DAG?
 
-The folder structure is a useful way to organize a project based off of your stakeholders and how they might contribute, as marts are usually mapped to specific business units. This structure also helps with configs, materializations, etc. which can be setup based on the folder structure, which is a great way to apply many configs all at once. But while it is great to have a project that makes sense when viewed from within the folder hierarchy of your dbt project, there are many other ways you and your team will be interacting with your models. By settling on a more formalized naming convention to supplement your folder based organization, your project will be much more usable when viewed in the DAG, in your database, or even in the BI layer
+Структура папок — это полезный способ организации проекта на основе ваших заинтересованных сторон и того, как они могут вносить свой вклад, так как marts обычно сопоставляются с конкретными бизнес-единицами. Эта структура также помогает с конфигурациями, материализациями и т.д., которые могут быть настроены на основе структуры папок, что является отличным способом применить многие конфигурации сразу. Но хотя это здорово — иметь проект, который имеет смысл при просмотре из иерархии папок вашего проекта dbt, существует множество других способов, которыми вы и ваша команда будете взаимодействовать с вашими моделями. Установив более формализованную конвенцию именования в дополнение к вашей организации на основе папок, ваш проект будет гораздо более удобным для использования при просмотре в DAG, в вашей базе данных или даже в BI-слое.
 
-**When your company scales to have hundreds or thousands of models, the subtle freedom to name models whatever you want starts to wreak havoc on the system** — the developer isn't sure which model to add to or what it's usage is, so they start spinning up tangentially related models using some of the pieces and adding another slightly different variant of the, for example, _`users`_ model. We should do a favor to others in our organization, including our future selves, by sensibly naming and keeping a lid on maintainability, preventing our DAG from descending into chaos.
+**Когда ваша компания масштабируется до сотен или тысяч моделей, тонкая свобода называть модели как угодно начинает наносить ущерб системе** — разработчик не уверен, к какой модели добавить или каково ее использование, поэтому они начинают создавать косвенно связанные модели, используя некоторые из частей и добавляя еще один слегка отличающийся вариант, например, модели _`users`_. Мы должны сделать одолжение другим в нашей организации, включая наших будущих себя, разумно называя и поддерживая поддерживаемость, предотвращая превращение нашего DAG в хаос.
 
-Backing up, dbt builds a [directed acyclic graph (DAG)](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful) based on the interdepencies between models – each node of the graph represents a model, and edges between the nodes are defined by ref functions, where a model specified in a ref function is recognized as a predecessor of the current model. Analytics Engineers often use the DAG to get a holistic <Term id="table" /> of the project or at least the subset of models that our model of interest is interacting with, typically a few models in either direction that are direct parents or children. The DAG helps you visualize how the data flows from left to right (from raw to transformed), without having to comb through SQL with a magnifying glass.
+Возвращаясь назад, dbt строит [ориентированный ациклический граф (DAG)](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful) на основе взаимозависимостей между моделями — каждая узел графа представляет модель, а связи между узлами определяются функциями ref, где модель, указанная в функции ref, распознается как предшественник текущей модели. Аналитические инженеры часто используют DAG, чтобы получить целостное <Term id="table" /> проекта или, по крайней мере, подмножество моделей, с которыми взаимодействует наша интересующая модель, обычно несколько моделей в любом направлении, которые являются прямыми родителями или детьми. DAG помогает визуализировать, как данные текут слева направо (от сырых к преобразованным), без необходимости просматривать SQL с лупой.
 
-**Here are some real life examples of a company's DAG, simplified using model selection syntax:**
+**Вот несколько реальных примеров DAG компании, упрощенных с использованием синтаксиса выбора модели:**
 
-Let’s take a look at a real life example of an (admittedly rather complex)  DAG to see just how important it is to have a solid framework for naming your models
+Давайте взглянем на реальный пример (признаем, довольно сложного) DAG, чтобы увидеть, насколько важно иметь надежную структуру для именования ваших моделей.
 
 `+users`
 
-* Everything to the left of their users flow
+* Все, что находится слева от их потока пользователей
 
-* Meaning, all the descendants needed to build the `users` model
+* То есть все потомки, необходимые для построения модели `users`
 
-![zoomed out screenshot of a DAG](/img/blog/on_the_importance_of_naming_image_1.png)
+![скриншот DAG с увеличением](/img/blog/on_the_importance_of_naming_image_1.png)
 
 `users+`
 
-* Everything to the right of their users flow
+* Все, что находится справа от их потока пользователей
 
-* Meaning, all the ancestor references that depend on the `users` model once created
+* То есть все ссылки предков, которые зависят от модели `users` после ее создания
 
-![zoomed out screenshot of the right of a dag](/img/blog/on_the_importance_of_naming_image_2.png)
+![скриншот правой части DAG](/img/blog/on_the_importance_of_naming_image_2.png)
 
-Imagine trying to mentally internalize this after reading through countless SQL files, without looking at the DAG!
+Представьте, что вы пытаетесь мысленно усвоить это после прочтения множества SQL-файлов, не глядя на DAG!
 
-### **Zoom in and it will make more sense?**
+### **Увеличьте, и это станет более понятным?**
 
-You're not actually supposed to be able to read those DAGs, as they are notoriously hard to grok when zoomed out. Let's pick a random zoom in point to show the "spider web", aka uncontrollable references to other models with no clear movement from left to right in a logical fashion.
+На самом деле, вы не должны быть в состоянии прочитать эти DAG, так как они печально известны своей сложностью для понимания при уменьшении масштаба. Давайте выберем случайную точку увеличения, чтобы показать "паутину", то есть неконтролируемые ссылки на другие модели без четкого движения слева направо в логической последовательности.
 
-![zoomed in picture of a DAG](/img/blog/on_the_importance_of_naming_image_3.png)
+![увеличенное изображение DAG](/img/blog/on_the_importance_of_naming_image_3.png)
 
-In my utopia, when you zoom into a DAG and you  would see  a swimlane, or etymology, such that you would be able to understand the purpose of a given model. This real world example gives us a view into what happens when we don’t have that.
+В моей утопии, когда вы увеличиваете DAG, вы увидите дорожку или этимологию, так что вы сможете понять назначение данной модели. Этот реальный пример показывает, что происходит, когда у нас этого нет.
 
-* `fct_`'s on both sides of the screenshot, with all sorts of other models in between
+* `fct_` с обеих сторон скриншота, с различными другими моделями между ними
 
-* a `report_` is used, not as an endpoint, but instead as an input by another model
+* `report_` используется не как конечная точка, а как входные данные для другой модели
 
-* what is a `tool_` (or your company’s equivalent of an undocumented pattern)?
+* что такое `tool_` (или эквивалент вашей компании для недокументированного шаблона)?
 
-* Does `user_` at the beginning have a meaning?
+* Имеет ли значение `user_` в начале?
 
-In the organization which produced the above example, they are managing to remain prolific in their creation of models and outgoing analysis (which is good!), but they are introducing tech debt and potential failure modes that loom in the future, such as decreasing modularity and reproducibility, and increasing complexity. These are the kinds of issues that  will increase the time to onboard new team members.
+В организации, которая создала приведенный выше пример, они продолжают активно создавать модели и проводить анализ (что хорошо!), но они вводят технический долг и потенциальные режимы отказа, которые нависают в будущем, такие как снижение модульности и воспроизводимости, а также увеличение сложности. Это те проблемы, которые увеличат время на адаптацию новых членов команды.
 
-Hopefully by now I have convinced you that it is worth your time to spend a considerable amount of effort on a logical naming convention for your models. After all, if you cannot understand the flow of data through models even when looking at the DAG (or using folder hierarchy) then how are we supposed to set our company up for success, onboard new members to our team quickly, and ensure that without supervision, your project (and DAG) continues to grow in a stable fashion?
+Надеюсь, к настоящему моменту я убедил вас, что стоит потратить значительное количество усилий на логическую конвенцию именования для ваших моделей. В конце концов, если вы не можете понять поток данных через модели, даже когда смотрите на DAG (или используя иерархию папок), то как мы должны настроить нашу компанию на успех, быстро адаптировать новых членов команды и гарантировать, что без надзора ваш проект (и DAG) продолжит расти в стабильной манере?
 
-In the next posts in this series, I’ll walk you through a number of guidelines and heuristics that we have developed to make it easy and repeatable to name your models well.
+В следующих постах этой серии я расскажу вам о ряде руководств и эвристик, которые мы разработали, чтобы сделать процесс именования ваших моделей простым и повторяемым.

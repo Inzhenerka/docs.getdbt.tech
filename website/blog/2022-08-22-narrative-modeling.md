@@ -1,6 +1,6 @@
 ---
-title: "Narrative modeling: How structure can tell a story"
-description: "Analytics engineers work in the space between technical and business understanding, but tried-and-true modeling patterns often default to the technical. In this article, Ian Fahey makes a case for a pattern of modeling that follows the narrative of the business it represents."
+title: "Нарративное моделирование: как структура может рассказать историю"
+description: "Инженеры аналитики работают на стыке технического и бизнес-понимания, но проверенные временем модели часто склоняются к технической стороне. В этой статье Иан Фэй делает акцент на модели, которая следует нарративу бизнеса, который она представляет."
 slug: narrative-modeling
 authors: [ian_fahey]
 tags: [analytics craft]
@@ -10,227 +10,227 @@ date: 2022-08-22
 is_featured: true
 ---
 
-The larger a data ecosystem gets, the more its users and stakeholders expect consistency. As the ratio of data models to team members (to say nothing of stakeholders to team members) skyrockets, an agreed-upon modeling pattern often acts as scaffolding around that growth. 
+Чем больше становится экосистема данных, тем больше ее пользователи и заинтересованные стороны ожидают от нее согласованности. По мере того как соотношение моделей данных к числу членов команды (не говоря уже о заинтересованных сторонах) стремительно растет, согласованная модель часто выступает в качестве каркаса для этого роста.
 
-The biggest tool in the toolbox today, dimensional modeling, offers enough consistency to make it the dominant approach in the space, but what might be possible if we shut that toolbox, took a break from our workbench, and instead strolled over to our bookshelf?
+Сегодня самым большим инструментом в арсенале является размерное моделирование, которое предлагает достаточно согласованности, чтобы стать доминирующим подходом в этой области. Но что, если мы закроем этот ящик с инструментами, сделаем перерыв и вместо этого обратимся к нашей книжной полке?
 
-In other words, what if we told a story?
+Другими словами, что если мы расскажем историю?
 <!--truncate-->
-# The stakeholder’s hydra
+# Гидра заинтересованных сторон
 
-“When ***business questions*** come, they come not single spies, but in battalions.” - noted data professional William Shakespeare
+"Когда ***бизнес-вопросы*** приходят, они приходят не поодиночке, а батальонами." - известный специалист по данным Уильям Шекспир
 
-This is, perhaps, a more collaborative way to describe the analytics engineer / stakeholder relationship than “if you give a mouse a cookie.”
+Это, возможно, более совместный способ описания отношений между инженером аналитики и заинтересованными сторонами, чем "если дать мышке печенье".
 
-After all, business questions *should* multiply, following the path from “What happened?” to “Why did that happen?” to “How can we predict what happens in the future?” and finally “How can we make something else happen instead?”
+В конце концов, бизнес-вопросы *должны* множиться, следуя пути от "Что произошло?" к "Почему это произошло?" к "Как мы можем предсказать, что произойдет в будущем?" и, наконец, "Как мы можем сделать так, чтобы произошло что-то другое?"
 
-What does this look like in practice? Let’s take an example:
+Как это выглядит на практике? Давайте рассмотрим пример:
 
-*How many orders came in last week?*
+*Сколько заказов поступило на прошлой неделе?*
 
-With a straightforward question, formal modeling principles may not be important. You have the source data you need and the information requested. Name it something that works and move on. It’s that simple.
+С простым вопросом формальные принципы моделирования могут быть не важны. У вас есть исходные данные и запрашиваемая информация. Назовите это как-то подходяще и двигайтесь дальше. Все так просто.
 
-It’s *not* that simple. 
+Но это *не* так просто.
 
-*How many of the placed orders were fulfilled within three days?*
+*Сколько из размещенных заказов было выполнено в течение трех дней?*
 
-*How many items were in each order?*
+*Сколько товаров было в каждом заказе?*
 
-*How many of the orders were returning customers?*
+*Сколько из заказов были от возвращающихся клиентов?*
 
-Business curiosity is the quintessential hydra (just look at a dbt DAG), and the analytics engineer should know better than to think a single head is the end of it. 
+Бизнес-любопытство - это квинтэссенция гидры (просто посмотрите на dbt DAG), и инженер аналитики должен знать, что одна голова - это не конец.
 
-With an exponential growth in scope, however, comes a question of consistency. Modeling at scale is often easier with a structural framework. Specifically, principled naming conventions and database design help analytics engineers keep flow through stylistic decisions to focus on the request at hand, while providing other team members the ability to support follow-up questions on models they may not have built in the first place. 
+Однако с экспоненциальным ростом объема возникает вопрос о согласованности. Моделирование в масштабе часто проще с использованием структурной основы. В частности, принципиальные соглашения о наименовании и проектирование базы данных помогают инженерам аналитики сосредоточиться на запросе, предоставляя другим членам команды возможность поддерживать последующие вопросы по моделям, которые они, возможно, не создавали изначально.
 
-# The leading solution
+# Ведущее решение
 
-So what conventions should we use in our projects? 
+Итак, какие соглашения мы должны использовать в наших проектах?
 
-History and gravity have pulled many a team towards [dimensional modeling](https://docs.getdbt.com/terms/dimensional-modeling), building business molecules out of atomic fcts and dims. This approach benefits from well-deserved “if it ain’t broke” adoption as well as a commanding market share of data team practices. 
+История и гравитация привели многие команды к [размерному моделированию](https://docs.getdbt.com/terms/dimensional-modeling), построению бизнес-молекул из атомных fct и dim. Этот подход пользуется заслуженной популярностью "если не сломано, не чини" и занимает значительную долю практик команд данных.
 
-Within this framework, our business question would likely be answered from a table called `fct_orders`, because an order is, in a sense, an event. It might have a `customer_id` field that ties it to another model, `dim_customers`. 
+В рамках этой структуры наш бизнес-вопрос, вероятно, будет отвечен из таблицы под названием `fct_orders`, потому что заказ, в некотором смысле, является событием. У него может быть поле `customer_id`, которое связывает его с другой моделью, `dim_customers`.
 
-These are actually common examples of a fact/dim structure, and if we have this tried-and-true approach, it may not make sense to seek another one. Any alternative would have to have similarly reliable conventions while offering some additional benefit to be worth the departure from the norm. 
+Это на самом деле общие примеры структуры факт/измерение, и если у нас есть этот проверенный подход, может не иметь смысла искать другой. Любая альтернатива должна иметь такие же надежные соглашения, предлагая при этом дополнительную выгоду, чтобы стоило отклониться от нормы.
 
-But what if that additional benefit was clarity?
+Но что, если эта дополнительная выгода - это ясность?
 
-# Introducing narrative modeling
+# Введение в нарративное моделирование
 
-In the past, I’ve used a framework I call *narrative modeling*, naming and structuring data models so that they tell the story of the business. Unlike dimensional modeling, which was born out of a need to solve a technical problem (expensive data storage), the principles of narrative modeling are people-oriented:
+В прошлом я использовал структуру, которую называю *нарративным моделированием*, именуя и структурируя модели данных так, чтобы они рассказывали историю бизнеса. В отличие от размерного моделирования, которое возникло из необходимости решения технической проблемы (дорогое хранение данных), принципы нарративного моделирования ориентированы на людей:
 
-- Navigating an analytical database should be intuitive and educational
-- Traversing the underlying code for an analytical database should be intuitive and stakeholder-friendly
-- Adding to an analytical database should be intuitive and scaleable
+- Навигация по аналитической базе данных должна быть интуитивной и образовательной
+- Переход по коду, лежащему в основе аналитической базы данных, должен быть интуитивным и удобным для заинтересованных сторон
+- Добавление в аналитическую базу данных должно быть интуитивным и масштабируемым
 
-Out of those principles came three primary conventions: event tables, details tables, and entity schemas.
+Из этих принципов возникли три основных соглашения: таблицы событий, таблицы деталей и схемы сущностей.
 
-## Event tables
+## Таблицы событий
 
-First, the backbone of a good narrative is the plot: what happened? In our example, *How many orders came in last week?*
+Во-первых, основа хорошего нарратива - это сюжет: что произошло? В нашем примере, *Сколько заказов поступило на прошлой неделе?*
 
-To answer this question, we still need one row per order placed, with timestamps so that we can filter down to specific time periods (e.g. last week). But what should we name it?
+Чтобы ответить на этот вопрос, нам все еще нужна одна строка на каждый размещенный заказ с временными метками, чтобы мы могли фильтровать по конкретным периодам времени (например, на прошлой неделе). Но как мы должны это назвать?
 
-Every principle of narrative modeling included the word “intuitive”. With that in mind, let’s call this table `order_placed`.
+Каждый принцип нарративного моделирования включает слово "интуитивный". С учетом этого, давайте назовем эту таблицу `order_placed`.
 
-In narrative modeling, we’d call `order_placed`  an *event table*. Event tables have the naming convention of `subject_verb` . 
+В нарративном моделировании мы бы назвали `order_placed` *таблицей событий*. Таблицы событий имеют соглашение о наименовании `subject_verb`.
 
-If this looks similar to `fct_` tables, it is! However, the benefit of `order_placed`over `fct_orders` appears when you need an additional order-level event. For instance, *How many orders were fulfilled last week?*
+Если это похоже на `fct_` таблицы, так и есть! Однако преимущество `order_placed` над `fct_orders` проявляется, когда вам нужно дополнительное событие на уровне заказа. Например, *Сколько заказов было выполнено на прошлой неделе?*
 
-- In dimensional modeling, you already used `fct_orders`, so you likely would need to rename that model. This can result in naming conventions like `fct_order_placement` and `fct_order_fulfillment` which can feel like reporting on two separate entities rather than two things that can happen to orders.
-- In narrative modeling, the sky’s the limit as we stand up `order_fulfilled` alongside `order_placed` with room for `order_cancelled` and all matter of other steps along an order’s flow.
+- В размерном моделировании вы уже использовали `fct_orders`, поэтому, вероятно, вам нужно будет переименовать эту модель. Это может привести к соглашениям о наименовании, таким как `fct_order_placement` и `fct_order_fulfillment`, которые могут казаться отчетом о двух отдельных сущностях, а не о двух вещах, которые могут произойти с заказами.
+- В нарративном моделировании нет ограничений, так как мы создаем `order_fulfilled` рядом с `order_placed`, оставляя место для `order_cancelled` и всех других шагов в потоке заказа.
 
-Now we can model out the narrative thrust of an order, but events can be a little dry without a fleshed-out protagonist. How would we describe our hero, a single order?
+Теперь мы можем смоделировать нарративный импульс заказа, но события могут быть немного сухими без проработанного главного героя. Как бы мы описали нашего героя, один заказ?
 
-## Details tables
+## Таблицы деталей
 
-In narrative modeling, details tables are where a user can expect to find more descriptive information about a particular business entity. 
+В нарративном моделировании таблицы деталей - это место, где пользователь может ожидать найти более подробную информацию о конкретной бизнес-сущности.
 
-In the example of orders, an `order_details` table might contain fields like:
+В примере с заказами таблица `order_details` может содержать такие поля, как:
 
 - `customer_id`
 - `items_ordered`
 - `payment_method`
 
-Initially, it might seem as though these should just be fields on `order_placed` and, for those examples, it’s a reasonable point[^1]. Consider instead the following:
+Изначально может показаться, что эти поля должны быть просто полями в `order_placed`, и для этих примеров это разумная точка зрения[^1]. Вместо этого рассмотрим следующее:
 
 - `items_fulfilled`
 - `days_to_fulfillment`
 
-One can imagine a stakeholder wanting to know all five of these data points, but the context for them comes from multiple events in the order’s flow. A `_details` table allows us to assemble a broad bank of knowledge about a given entity (in this case, an order) in one place. If data refresh is performant enough, this could even be the place to surface true snapshot fields like `status` or`current_location`.
+Можно представить, что заинтересованная сторона хочет знать все пять этих данных, но контекст для них исходит из нескольких событий в потоке заказа. Таблица `_details` позволяет нам собрать широкий банк знаний о данной сущности (в данном случае, о заказе) в одном месте. Если обновление данных достаточно производительно, это может быть даже место для отображения истинных снимков полей, таких как `status` или `current_location`.
 
-So we have everything that happened to our order and everything we’d want to know about it. Now let’s put it all together…literally.
+Итак, у нас есть все, что произошло с нашим заказом, и все, что мы хотели бы о нем знать. Теперь давайте соберем все это вместе... буквально.
 
-## Entity schemas
+## Схемы сущностей
 
-I mentioned above that navigating an analytical database should be intuitive and educational. Given the building blocks of event and details tables described above, the intuitive part could be considered complete just by naming convention. If all of our data models were in a single schema, then the following tables would likely sort together:
+Я упомянул выше, что навигация по аналитической базе данных должна быть интуитивной и образовательной. Учитывая строительные блоки таблиц событий и деталей, описанных выше, интуитивная часть может считаться завершенной только благодаря соглашению о наименовании. Если бы все наши модели данных находились в одной схеме, то следующие таблицы, вероятно, были бы отсортированы вместе:
 
 - `order_cancelled`
 - `order_details`
 - `order_fulfilled`
 - `order_placed`
 
-Keeping related information grouped seems sufficient for usability. Then again, I’ve seen enough analytical databases where the database and schema have the same name (e.g. `DATA_MARTS.DATA_MARTS.*`) to see an opportunity for building a database that describes the business as soon as you open it. 
+Сохранение связанной информации в группе кажется достаточным для удобства использования. Однако я видел достаточно аналитических баз данных, где база данных и схема имеют одно и то же имя (например, `DATA_MARTS.DATA_MARTS.*`), чтобы увидеть возможность создания базы данных, которая описывает бизнес, как только вы ее открываете.
 
-Throughout our example, `order` has been an entity we want to know a lot about. Any undertaking that creates business questions will have dozens if not hundreds of entities that people care about. Even in our example, we’ve glanced off other entities, such as `item` and `customer`. 
+На протяжении нашего примера `order` была сущностью, о которой мы хотим знать много. Любое предприятие, которое создает бизнес-вопросы, будет иметь десятки, если не сотни сущностей, которые интересуют людей. Даже в нашем примере мы коснулись других сущностей, таких как `item` и `customer`.
 
-Grouping the models for each entity under a schema named for that entity builds out a database that describes the scope of the business in simple terms, while also allowing stakeholders using the database to navigate more purposefully, expanding schemas rather than scrolling tables in a single mega-schema.
+Группировка моделей для каждой сущности под схемой, названной в честь этой сущности, создает базу данных, которая описывает охват бизнеса простыми терминами, позволяя заинтересованным сторонам, использующим базу данных, более целенаправленно ориентироваться, расширяя схемы, а не прокручивая таблицы в одной мега-схеме.
 
-- `analytics` database
-    - `customer` schema
+- `analytics` база данных
+    - `customer` схема
         - `customer_details`
         - `customer_created`
-    - `item` schema
+    - `item` схема
         - `item_details`
         - `item_fulfilled`
-    - `order` schema
+    - `order` схема
         - `order_cancelled`
         - `order_details`
         - `order_fulfilled`
         - `order_placed`
 
-This structuring principle can also help address the boogeyman of business entity resolution, overlapping names. If you’re a business that orders parts regularly and then fulfills customer orders, the question *How many orders came in last week?* can get a lot more confusing. At a fast-moving company, a new hire could be asked the question and answer in the wrong context completely[^2], because the tenured stakeholder can no longer imagine mixing them up. 
+Этот принцип структурирования также может помочь решить проблему разрешения бизнес-сущностей, пересекающихся имен. Если вы бизнес, который регулярно заказывает запчасти, а затем выполняет заказы клиентов, вопрос *Сколько заказов поступило на прошлой неделе?* может стать гораздо более запутанным. В быстро развивающейся компании новый сотрудник может быть задан вопрос и ответить в неправильном контексте полностью[^2], потому что опытный заинтересованный сотрудник больше не может представить себе их путаницу.
 
-If instead, the database had schemas for`parts_order` and`customer_order`, that same new hire hits the database, sees those schemas, and thinks “Oh, there are two types…I should probably ask which.” That distinction can be a lot harder to spot in a single analytics schema.
+Если вместо этого база данных имела схемы для `parts_order` и `customer_order`, тот же новый сотрудник заходит в базу данных, видит эти схемы и думает: "О, есть два типа... Я, вероятно, должен спросить, какой." Это различие может быть гораздо труднее заметить в одной аналитической схеме.
 
-Intuitive *and* educational. 
+Интуитивно *и* образовательной.
 
-# Let’s get visual
+# Давайте визуализируем
 
-One of the most powerful ways for stakeholders to conceptualize the flow of data through a dbt project is through the DAG visualization in dbt docs. If we consider it a goal of ours to capture business knowledge and have conversations about how we ascertain that knowledge, let’s consider how the two options manifest in their DAGS:
+Одним из самых мощных способов для заинтересованных сторон концептуализировать поток данных через проект dbt является визуализация DAG в документации dbt. Если мы считаем своей целью захват бизнес-знаний и ведение разговоров о том, как мы получаем эти знания, давайте рассмотрим, как два варианта проявляются в их DAG:
 
-### Dimensional modeling
+### Размерное моделирование
 
 ![Untitled](/img/blog/2022-08-22-narrative-modeling/dimensional-modeling-dag.png)
 
-In this approach, we have the standard `fct` and `dim` tables and a clean DAG flow. Let’s consider some possible shortcomings:
+В этом подходе у нас есть стандартные `fct` и `dim` таблицы и чистый поток DAG. Давайте рассмотрим некоторые возможные недостатки:
 
-- Because I made this flow, I know that the `fct_shipments` to `dim_order_items` to `fct_orders` represents a knowledge flow. A package got shipped with items in it, meaning those items themselves are now shipped and if all of the items in a given order are shipped, then the entire order is fulfilled. However, for a new person to learn that in this approach, they would need to enter the models themselves and look at the SQL for *why* they are dependencies.
-- We called the table `fct_orders` because orders are events. Because we can conceive of a stakeholder wanting to identify *cancelled* orders, we take an `int` / `fct` approach, but now the intent of `fct` feels a little murky. It captures an event, *order placement*, at which time we *don’t know* it will be cancelled. We could potentially create `dim_orders` and `fct_order_placements` if we want to capture both, but that suggests the `fct` / `dim` design is much more of a choice, one different developers in your codebase might approach differently.
+- Поскольку я создал этот поток, я знаю, что `fct_shipments` к `dim_order_items` к `fct_orders` представляет собой поток знаний. Пакет был отправлен с товарами внутри, что означает, что сами товары теперь отправлены, и если все товары в данном заказе отправлены, то весь заказ выполнен. Однако, чтобы новый человек узнал это в этом подходе, ему нужно войти в модели и посмотреть SQL, чтобы понять, *почему* они являются зависимостями.
+- Мы назвали таблицу `fct_orders`, потому что заказы - это события. Поскольку мы можем представить себе заинтересованную сторону, желающую идентифицировать *отмененные* заказы, мы используем подход `int` / `fct`, но теперь намерение `fct` кажется немного неясным. Оно захватывает событие, *размещение заказа*, в момент, когда мы *не знаем*, что он будет отменен. Мы могли бы потенциально создать `dim_orders` и `fct_order_placements`, если мы хотим захватить оба, но это предполагает, что дизайн `fct` / `dim` является скорее выбором, который разные разработчики в вашем коде могут подходить по-разному.
 
-In general, the dimensional DAG can begin to feel like it’s not for a user who *only* has a business context, which can keep the structural decision-making purely on the analytics engineer or at best only the most technically-adept stakeholders. 
+В общем, размерный DAG может начать казаться, что он не для пользователя, который *только* имеет бизнес-контекст, что может оставить структурные решения исключительно на инженере аналитики или в лучшем случае только на самых технически подкованных заинтересованных сторонах.
 
-### Narrative modeling
+### Нарративное моделирование
 
 ![Untitled](/img/blog/2022-08-22-narrative-modeling/narrative-modeling-dag.png)
 
-How does this compare to the above?
+Как это сравнивается с вышеизложенным?
 
-- Now we’re being explicit about our dependencies. We’re telling the viewer we infer items were shipped from packages being shipped, then use those items to identify when an order was entirely fulfilled.
-- The order placement and fulfillment steps are both explicit, flowing into an `order_details` table where we can also calculate `days_to_fulfillment`
-- The DAG does look a little more complex, with additional nodes and a broader base of final models on the right compared to the slimming effect of the dimensional modeling. This potential drawback could use some contextualization:
-    - First, we are being more explicit about the business questions we are answering, so each of the milestones of an `order` that might have previously been tucked into the CTEs of `fct_orders` is now a node unto itself
-    - Second, remember the hydra? Ideally, business questions beget business answers beget new business questions. If the knowledge base needs to expand, it’s reasonable that the DAG might as well. The key, however, is validating that each model is answering a question someone is asking
+- Теперь мы явно указываем на наши зависимости. Мы говорим зрителю, что мы делаем вывод, что товары были отправлены из отправленных пакетов, затем используем эти товары, чтобы определить, когда заказ был полностью выполнен.
+- Шаги размещения и выполнения заказа теперь явные, переходящие в таблицу `order_details`, где мы также можем рассчитать `days_to_fulfillment`.
+- DAG выглядит немного более сложным, с дополнительными узлами и более широкой базой конечных моделей справа по сравнению с эффектом сужения размерного моделирования. Этот потенциальный недостаток может нуждаться в контекстуализации:
+    - Во-первых, мы более явно указываем на бизнес-вопросы, на которые мы отвечаем, поэтому каждый из этапов `order`, который мог бы ранее быть спрятан в CTE `fct_orders`, теперь является узлом сам по себе.
+    - Во-вторых, помните гидру? В идеале бизнес-вопросы порождают бизнес-ответы, которые порождают новые бизнес-вопросы. Если база знаний должна расширяться, разумно, что DAG может также. Ключ, однако, заключается в проверке того, что каждая модель отвечает на вопрос, который кто-то задает.
 
-To that final point, if presented with the DAG from the narrative modeling approach, stakeholders can participate in the conversation. One can imagine a stakeholder looking at the flow and saying “Interesting that we say an order is fulfilled when each item *ships.* Perhaps we should get shipper data and declare an order fulfilled when all items are *received*.” Because we took the modeling structure as far as possible into business concepts, we can have a conversation on methodology without shouting over a great contextual distance. 
+В конечном итоге, если представить DAG из подхода нарративного моделирования, заинтересованные стороны могут участвовать в разговоре. Можно представить себе заинтересованную сторону, смотрящую на поток и говорящую: "Интересно, что мы говорим, что заказ выполнен, когда каждый товар *отправлен*. Возможно, нам следует получить данные от перевозчика и заявить, что заказ выполнен, когда все товары *получены*." Поскольку мы довели структуру моделирования до бизнес-концепций, мы можем вести разговор о методологии без крика через большое контекстуальное расстояние.
 
-# Benefits in practice
+# Преимущества на практике
 
-### Stakeholders find it easier to participate in data modeling
+### Заинтересованные стороны находят участие в моделировании данных более простым
 
-- They don’t need to learn the idiosyncrasies of fct/dim structuring (e.g. idea that only some business datapoints are called facts).
-- The discrete models are framed as events or entities in the business, which means the stakeholder can compare the model’s logic to their subject matter expertise.
+- Им не нужно изучать особенности структуры fct/dim (например, идея о том, что только некоторые бизнес-данные называются фактами).
+- Отдельные модели оформлены как события или сущности в бизнесе, что позволяет заинтересованной стороне сравнивать логику модели с их предметными знаниями.
 
-### Intangible business steps are easier to model
+### Нематериальные бизнес-шаги легче моделировать
 
-- Knowledge gaps are captured accurately. For instance, if the best way you know that a shipment was received by a customer is that a truck driver scanned it out of the system, you can model `shipment_scanned_out` as an explicit model, followed by an implicit`shipment_received` model referencing it. This stores in code the company’s current point-of-view that the scanning action is the best information available
-- Certain business decisions directly drive [data transformations](https://www.getdbt.com/analytics-engineering/transformation/). If an entire package costs $50.00 to ship and it has multiple items inside, shipping cost could be attributed to each item via weight or product value. In either case, teams can capture this attribution as `item_apportioned_shipping_cost`.
+- Пробелы в знаниях фиксируются точно. Например, если лучший способ, которым вы знаете, что отправление было получено клиентом, это то, что водитель грузовика отсканировал его из системы, вы можете смоделировать `shipment_scanned_out` как явную модель, за которой следует неявная модель `shipment_received`, ссылающаяся на нее. Это сохраняет в коде текущую точку зрения компании, что действие сканирования - это лучшая доступная информация.
+- Определенные бизнес-решения напрямую управляют [преобразованиями данных](https://www.getdbt.com/analytics-engineering/transformation/). Если вся посылка стоит $50.00 за доставку и в ней несколько товаров, стоимость доставки может быть распределена по каждому товару в зависимости от веса или стоимости продукта. В любом случае, команды могут зафиксировать это распределение как `item_apportioned_shipping_cost`.
 
-### Users can tie business concepts to source data
+### Пользователи могут связывать бизнес-концепции с исходными данными
 
-- While the schema structure above is focused on business entities, there are still ample use cases for [staging and intermediate tables](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview).
-- After cleaning up source data with staging tables, use the same “what happened” approach to more technical events, creating a three-node dependency from `stg_snowplow_events` to  `int_page_click_captured` to `user_refreshed_cart`  and thus answering the question “where do we get online user behavior information?” in a quick visit to the DAG in dbt docs.
+- Хотя структура схемы выше сосредоточена на бизнес-сущностях, все еще существуют многочисленные случаи использования [стейджинговых и промежуточных таблиц](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview).
+- После очистки исходных данных с помощью стейджинговых таблиц используйте тот же подход "что произошло" для более технических событий, создавая трехузловую зависимость от `stg_snowplow_events` до `int_page_click_captured` до `user_refreshed_cart`, таким образом отвечая на вопрос "где мы получаем информацию о поведении пользователей в Интернете?" в быстром посещении DAG в документации dbt.
 
-# Should your team use it?
+# Должна ли ваша команда использовать это?
 
-Narrative modeling primarily values comprehension as an outcome of data modeling, which can be a high priority for…
+Нарративное моделирование в первую очередь ценит понимание как результат моделирования данных, что может быть высоким приоритетом для...
 
-- …companies with a high stakeholder-to-data-team-member ratio.
-- …companies with SQL-savvy stakeholders
-- …companies looking to on-board new team members at a high rate (as the project in this case is a sketch of the business itself)
-- …companies who can dedicate staffing and time to writing strong documentation so that the doors to the models can be thrown open.
+- ...компаний с высоким соотношением заинтересованных сторон к членам команды данных.
+- ...компаний с заинтересованными сторонами, владеющими SQL.
+- ...компаний, стремящихся быстро интегрировать новых членов команды (так как проект в этом случае является наброском самого бизнеса).
+- ...компаний, которые могут выделить персонал и время на написание качественной документации, чтобы двери к моделям могли быть открыты.
 
-Narrative modeling might not be the right fit for…
+Нарративное моделирование может не подойти для...
 
-- …companies where storage spend, even in cloud warehouses, needs to be closely tracked. After all, fct/dim models emerged from a need to optimize data storage.
-- …companies with BI tools that rely heavily on multi-entity tables. This can generally still work with narrative modeling, however, if there is an additional layer of standard datasets being modeled out of the shared components of your narrative models (to insure data stays in step across contexts).
+- ...компаний, где расходы на хранение, даже в облачных хранилищах, должны быть тщательно отслежены. В конце концов, модели fct/dim возникли из необходимости оптимизации хранения данных.
+- ...компаний с BI-инструментами, которые сильно зависят от таблиц с несколькими сущностями. Это все еще может работать с нарративным моделированием, однако, если есть дополнительный слой стандартных наборов данных, моделируемых из общих компонентов ваших нарративных моделей (чтобы данные оставались в шаге в разных контекстах).
 
-# A neverending story
+# Бесконечная история
 
-There’s a classic movie called Desk Set in which Katharine Hepburn runs the reference desk of a major TV network and Spencer Tracy comes in to install a research computer in her department. In gladiatorial bouts of banter, the movie investigates the concept of knowledge and, in particular, how human it should be. At one point, Tracy’s Richard Sumner runs Hepburn’s Bunny Watson through a chunky “train left the station” word problem and I think about her response (abbreviated below) all the time. 
+Существует классический фильм под названием "Desk Set", в котором Кэтрин Хепберн управляет справочным столом крупной телесети, а Спенсер Трейси приходит установить исследовательский компьютер в ее отделе. В гладиаторских поединках остроумия фильм исследует концепцию знаний и, в частности, насколько они должны быть человеческими. В какой-то момент Ричард Самнер, персонаж Трейси, проводит Бани Уотсон, персонажа Хепберн, через громоздкую задачу "поезд покинул станцию", и я все время думаю о ее ответе (сокращенном ниже).
 
-**Richard Sumner:** Now, a train started out at Grand Central, with seventeen passengers aboard and a crew of nine. At 125th Street, four got off and nine got on. At White Plains, three got off and one got on. At Chappaqua, nine got off and four got on. And at each successive stop thereafter, nobody got off, nobody got on till the train reached its next-to-the-last stop, where five people got off and one got on. Then it reached the terminal.
+**Ричард Самнер:** Итак, поезд отправился из Гранд Централ с семнадцатью пассажирами на борту и экипажем из девяти человек. На 125-й улице четверо вышли, а девять вошли. В Уайт Плейнс трое вышли, а один вошел. В Чаппакуа девять вышли, а четверо вошли. И на каждой следующей остановке никто не выходил, никто не входил, пока поезд не достиг предпоследней остановки, где пятеро вышли, а один вошел. Затем он достиг терминала.
 
-**Richard Sumner:** How many people got off at Chappaqua?
+**Ричард Самнер:** Сколько людей вышло в Чаппакуа?
 
-**Bunny Watson:** Nine.
+**Бани Уотсон:** Девять.
 
-**Richard Sumner:** Uh, would you mind telling me how you arrived at that conclusion?
+**Ричард Самнер:** Эм, не могли бы вы сказать мне, как вы пришли к этому выводу?
 
-**Bunny Watson:** Spooky, isn't it? Did you notice that there are also nine letters in Chappaqua?
+**Бани Уотсон:** Страшно, не правда ли? Вы заметили, что в Чаппакуа также девять букв?
 
-**Richard Sumner:** Are you in the habit of associating words with the number of letters in them?
+**Ричард Самнер:** Вы привыкли ассоциировать слова с количеством букв в них?
 
-**Bunny Watson:** I associate many things with many things.
+**Бани Уотсон:** Я ассоциирую многие вещи с многими вещами.
 
-**Richard Sumner:** I see. Hmm.
+**Ричард Самнер:** Понятно. Хм.
 
-**Bunny Watson:** Aren't you going to ask me how many people got off at White Plains? Three.
+**Бани Уотсон:** Разве вы не собираетесь спросить меня, сколько людей вышло в Уайт Плейнс? Трое.
 
-**Richard Sumner:** But there are ten letters in White Plains.
+**Ричард Самнер:** Но в Уайт Плейнс десять букв.
 
-**Bunny Watson:** No. Eleven.
+**Бани Уотсон:** Нет. Одиннадцать.
 
-**Richard Sumner:** [beat] But only three got off there.
+**Ричард Самнер:** [пауза] Но только трое вышли там.
 
-**Bunny Watson:** You see, I've only ever been to White Plains three times in my whole life.
+**Бани Уотсон:** Видите ли, я была в Уайт Плейнс всего три раза в своей жизни.
 
-Much like Mr. Sumner, we would be hard-pressed to teach a computer to answer questions the way Bunny does. Her accumulated knowledge and how she accesses it is deeply human. Why, then, do we so often take the accumulated knowledge of subject matter experts across our business and abstract it AWAY from its context to capture it in a data model? Put another way, why do we store business answers in a way that, over time, forgets the questions? 
+Как и мистер Самнер, нам было бы трудно научить компьютер отвечать на вопросы так, как это делает Бани. Ее накопленные знания и то, как она к ним обращается, глубоко человеческие. Почему же тогда мы так часто берем накопленные знания экспертов в нашей компании и абстрагируем их от контекста, чтобы зафиксировать в модели данных? Иными словами, почему мы храним бизнес-ответы так, что со временем забываем вопросы?
 
-Narrative modeling can help structure the data with questions and answers stored side-by-side, allowing us to be reference librarians with a killer card catalog. We can model out the expertise of the finance team or the marketing team or the product team in their own words, which keeps the context for not only the next person to join *those* teams, but also the next person to join our own. 
+Нарративное моделирование может помочь структурировать данные с вопросами и ответами, хранящимися бок о бок, позволяя нам быть библиотекарями со смертоносным каталогом карточек. Мы можем моделировать экспертные знания финансовой команды, маркетинговой команды или продуктовой команды их собственными словами, что сохраняет контекст не только для следующего человека, который присоединится к *этим* командам, но и для следующего человека, который присоединится к нашей собственной.
 
-And so, in the face of battalions of business questions, we can become a host unto ourselves.
+Итак, перед лицом батальонов бизнес-вопросов мы можем стать хозяевами самих себя.
 
-### Footnotes
-[^1]: However, in terms of the upstream commerce data, it’s conceivable for items to be added to an order as discrete events first before a final order placement event. An API endpoint for an order being placed might not need to know what’s in the cart, but rather just the who and the when. At that point, it’s dealer’s choice whether to join in items for order_placed or order_details
+### Примечания
+[^1]: Однако, с точки зрения исходных данных коммерции, можно представить, что товары добавляются в заказ как отдельные события сначала, прежде чем происходит окончательное событие размещения заказа. Конечная точка API для размещения заказа может не нуждаться в знании того, что находится в корзине, а только в том, кто и когда. В этом случае выбор за дилером, присоединять ли товары для order_placed или order_details.
 
-[^2]: Ask me how I know!
+[^2]: Спросите меня, откуда я это знаю!

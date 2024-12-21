@@ -1,6 +1,6 @@
 ---
-title: "Why we're deprecating the dbt_metrics package"
-description: "We are bidding adieu to dbt_metrics and moving forward with MetricFlow! Discover how this new source-available project lays the foundation for the dbt Semantic Layer. Let's dive in!"
+title: "Почему мы прекращаем поддержку пакета dbt_metrics"
+description: "Мы прощаемся с dbt_metrics и движемся вперед с MetricFlow! Узнайте, как этот новый проект с открытым исходным кодом закладывает основу для семантического слоя dbt. Давайте погрузимся в детали!"
 slug: deprecating-dbt-metrics
 
 authors: [callum_mccann]
@@ -11,61 +11,60 @@ date: 2023-04-26
 is_featured: true
 ---
 
+Здравствуйте, дорогие специалисты по данным.
 
-Hello, my dear data people.
+Если вы еще не читали [пост в блоге Ника и Рокси о будущем семантического слоя dbt](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), настоятельно рекомендую ознакомиться с ним, так как он дает полезный контекст о том, что нас ждет впереди.
 
-If you haven’t read [Nick & Roxi’s blog post about what’s coming in the future of the dbt Semantic Layer](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), I highly recommend you read through that, as it gives helpful context around what the future holds.
-
-With that said, it has come time for us to bid adieu to our beloved dbt_metrics package. **Upon the release of dbt-core v1.6 in late July, we will be deprecating support for the dbt_metrics package.** 
+Сказав это, пришло время попрощаться с нашим любимым пакетом dbt_metrics. **С выпуском dbt-core версии 1.6 в конце июля мы прекратим поддержку пакета dbt_metrics.**
 
 <!--truncate-->
 
-With the upcoming integration with MetricFlow, we're on the cusp of a new era for the dbt Semantic Layer. And if we’re honest with ourselves, it is a brighter future than the dbt_metrics package would have been able to support.
+С предстоящей интеграцией с MetricFlow мы на пороге новой эры для семантического слоя dbt. И если быть честными с собой, это более светлое будущее, чем то, которое мог бы поддержать пакет dbt_metrics.
 
-We know that some of you have been using the package to help serve your organizations. **We will be providing migration scripts to help reduce the complexity of upgrading to the new specs.** 
+Мы знаем, что некоторые из вас использовали этот пакет для помощи своим организациям. **Мы предоставим скрипты миграции, чтобы помочь уменьшить сложность перехода на новые спецификации.**
 
-If you’re interested in getting ahead of the transition, we recommend that you start familiarizing yourself with the new spec in this [Github Discussion](https://github.com/dbt-labs/dbt-core/discussions/7456). If you’re even more curious, you can read the MetricFlow documentation, although some elements will change in the coming months as we work on the integration. I’m confident that, with a little time, you'll come to love MetricFlow far more than you did dbt_metrics.
+Если вы хотите заранее подготовиться к переходу, рекомендуем начать знакомство с новой спецификацией в этом [обсуждении на Github](https://github.com/dbt-labs/dbt-core/discussions/7456). Если вы еще более любопытны, вы можете прочитать документацию MetricFlow, хотя некоторые элементы изменятся в ближайшие месяцы, пока мы работаем над интеграцией. Я уверен, что со временем вы полюбите MetricFlow гораздо больше, чем dbt_metrics.
 
-Before we get into the technical details around why we’re deprecating the package, I want to give a big thank you to everyone from the community who used or contributed to the dbt_metrics package over the last year. From the bottom of my heart, I’ve loved hearing from all of you and discussing ways to help you solve your organization's data problems. It’s been a dream come true to work in this area and it wouldn’t have been possible without all of you lovely folks.
+Прежде чем мы углубимся в технические детали, почему мы прекращаем поддержку пакета, хочу выразить огромную благодарность всем из сообщества, кто использовал или внес вклад в пакет dbt_metrics за последний год. От всего сердца, мне было приятно слышать от всех вас и обсуждать способы помочь вам решить проблемы с данными вашей организации. Это была мечта, ставшая реальностью, работать в этой области, и это было бы невозможно без всех вас, замечательных людей.
 
-## Why we’re deprecating
+## Почему мы прекращаем поддержку
 
-With all that said, let’s dig into the exact reasons why we’re deprecating the package.
+Сказав это, давайте углубимся в точные причины, почему мы прекращаем поддержку пакета.
 
-**Duplicative functionality:** 
+**Дублирующая функциональность:**
 
-MetricFlow and dbt_metrics share a common purpose – a simplified and standard way to generate SQL to query metrics. However, MetricFlow does this much more effectively, with advanced features and a more robust foundation.
+MetricFlow и dbt_metrics имеют общую цель — упрощенный и стандартный способ генерации SQL для запросов метрик. Однако MetricFlow делает это гораздо более эффективно, с расширенными функциями и более надежной основой.
 
-**The Jinja trap:** 
+**Ловушка Jinja:**
 
-Relying on Jinja macros for generating SQL in dbt_metrics proved to be sub-optimal and restrictive. This approach limited the package's potential and made it difficult to scale and customize for each new metric type and piece of functionality that we wanted to add. In contrast, MetricFlow's Python implementation offers a far more flexible and expressive solution.
+Опора на макросы Jinja для генерации SQL в dbt_metrics оказалась неоптимальной и ограничивающей. Этот подход ограничивал потенциал пакета и затруднял масштабирование и настройку для каждого нового типа метрик и функциональности, которую мы хотели добавить. В отличие от этого, реализация MetricFlow на Python предлагает гораздо более гибкое и выразительное решение.
 
-- *To further emphasize that MetricFlow is years ahead of dbt_metrics, it actually used to use Jinja templates but moved away from them in a complete overhaul in order to increase flexibility.*
+- *Чтобы подчеркнуть, что MetricFlow на годы опережает dbt_metrics, он на самом деле использовал шаблоны Jinja, но отказался от них в ходе полной переработки, чтобы увеличить гибкость.*
 
-**Focusing on a dynamic semantic layer:** 
+**Фокус на динамическом семантическом слое:**
 
-We feel strongly that the power of a Semantic Layer lies in its ability to serve the organization dynamically - to answer the user’s first, second, and third questions. As such, **MetricFlow will not support materializing metric queries as static database objects.** Instead, we will focus on caching functionality that increases performance without reducing capability.
+Мы твердо уверены, что сила семантического слоя заключается в его способности динамически обслуживать организацию — отвечать на первый, второй и третий вопросы пользователя. Таким образом, **MetricFlow не будет поддерживать материализацию запросов метрик как статических объектов базы данных.** Вместо этого мы сосредоточимся на функциональности кэширования, которая увеличивает производительность без снижения возможностей.
 
-**Advanced SQL generation with intelligent joins:**
+**Продвинутая генерация SQL с интеллектуальными соединениями:**
 
-MetricFlow brings advanced SQL generation to the table and leaves dbt_metrics far behind in terms of capabilities. One of the key features is its sophisticated handling of joins, which has been the number one feature requested by folks within the community. With MetricFlow you can effortlessly access all valid dimensions for your metrics on the fly, even when they are defined in different semantic models. Moreover, you can construct metrics using measures from multiple semantic models.
+MetricFlow предлагает продвинутую генерацию SQL и оставляет dbt_metrics далеко позади по возможностям. Одной из ключевых функций является его сложная обработка соединений, которая была функцией номер один, запрашиваемой сообществом. С MetricFlow вы можете легко получить доступ ко всем допустимым измерениям для ваших метрик на лету, даже если они определены в разных семантических моделях. Более того, вы можете строить метрики, используя меры из нескольких семантических моделей.
 
-- *How does it do this?* It creates a graph with semantic models as nodes and join paths as edges, automatically generating the appropriate join type based on the entity types. This approach helps avoid fan-out or chasm joins to ensure that the results are correct. **Trying to do this within Jinja would have been a fool's errand.**
+- *Как он это делает?* Он создает граф с семантическими моделями в качестве узлов и путями соединений в качестве ребер, автоматически генерируя соответствующий тип соединения на основе типов сущностей. Этот подход помогает избежать фан-аута или соединений типа "пропасть", чтобы гарантировать правильность результатов. **Попытка сделать это в Jinja была бы пустой тратой времени.**
 
-**First-rate validation with a three-step approach**:
+**Первоклассная валидация с трехэтапным подходом:**
 
-MetricFlow offers comprehensive validation for the semantics, making sure that your data models are sound and reliable. This process involves three key steps:
+MetricFlow предлагает комплексную валидацию семантики, обеспечивая надежность и достоверность ваших моделей данных. Этот процесс включает три ключевых этапа:
 
-1. **Data warehouse validation**: To further validate your semantics, MetricFlow checks if the semantic definitions exist in your data warehouse. By running queries against your data warehouse, it ensures that the generated SQL for semantic models, dimensions, and metrics will execute as intended.
+1. **Валидация хранилища данных**: Для дальнейшей проверки вашей семантики MetricFlow проверяет, существуют ли семантические определения в вашем хранилище данных. Запуская запросы к вашему хранилищу данных, он гарантирует, что сгенерированный SQL для семантических моделей, измерений и метрик будет выполняться, как задумано.
 
-2. **Semantic validation**: After building your semantic models, MetricFlow runs a suite of tests to ensure that the semantics make sense. For example, it checks if measure names are unique or if metrics reference existing measures. This helps maintain the integrity and consistency of the semantic manifest.
-    
-3. **Continuous Integration (CI)**: By integrating these validation steps into your CI pipeline, MetricFlow helps catch any issues early in the development process. This results in fewer surprises, a more reliable dbt pipeline, and increased confidence in your DAG.
+2. **Семантическая валидация**: После создания ваших семантических моделей MetricFlow запускает набор тестов, чтобы убедиться, что семантика имеет смысл. Например, он проверяет, уникальны ли имена мер или ссылаются ли метрики на существующие меры. Это помогает поддерживать целостность и согласованность семантического манифеста.
 
-**A flexible foundation for integration**: 
+3. **Непрерывная интеграция (CI)**: Интегрируя эти шаги валидации в ваш CI-пайплайн, MetricFlow помогает выявлять любые проблемы на ранних этапах процесса разработки. Это приводит к меньшему количеству сюрпризов, более надежному пайплайну dbt и повышенной уверенности в вашем DAG.
 
-MetricFlow is a more flexible foundation through which we can provide our integration partners with the tools to build differentiated experiences. This opens the door to exciting collaborations and makes it easier for our partners to build.
+**Гибкая основа для интеграции:**
 
-So as we bid farewell to the `dbt_metrics` package, we say hello to MetricFlow and all the opportunities and advancements that come with it. This is the next era for the Semantic Layer. 
+MetricFlow является более гибкой основой, через которую мы можем предоставить нашим партнерам по интеграции инструменты для создания дифференцированных решений. Это открывает двери для захватывающих сотрудничеств и упрощает нашим партнерам создание.
 
-With the migration tools and resources coming soon, we're committed to supporting you through this transition. We extend our gratitude to everyone who has used, contributed to, or supported dbt_metrics, and we invite you all to join us on this exciting journey toward a brighter future in data analytics. If you're interested in discussing, please come on over to [#dbt-core-metrics](https://getdbt.slack.com/archives/C02CCBBBR1D)!
+Итак, прощаясь с пакетом `dbt_metrics`, мы приветствуем MetricFlow и все возможности и достижения, которые он приносит. Это новая эра для семантического слоя.
+
+С инструментами и ресурсами для миграции, которые скоро появятся, мы стремимся поддержать вас в этом переходе. Мы выражаем благодарность всем, кто использовал, внес вклад или поддерживал dbt_metrics, и приглашаем всех вас присоединиться к нам в этом захватывающем путешествии к более светлому будущему в аналитике данных. Если вы хотите обсудить, пожалуйста, присоединяйтесь к [#dbt-core-metrics](https://getdbt.slack.com/archives/C02CCBBBR1D)!

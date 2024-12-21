@@ -1,7 +1,7 @@
 ---
 
-title: Why you should specify a production environment in dbt Cloud
-description: "The bottom line: You should split your Environments in dbt Cloud based on their purposes (e.g. Production and Staging/CI) and mark one environment as Production. This will improve your CI experience and enable you to use dbt Explorer."
+title: Почему вам следует указать производственную среду в dbt Cloud
+description: "Основная идея: Вы должны разделить свои среды в dbt Cloud в зависимости от их назначения (например, Производственная и Стадия/CI) и отметить одну из них как Производственную. Это улучшит ваш опыт CI и позволит использовать dbt Explorer."
 slug: specify-prod-environment
 
 authors: [joel_labes]
@@ -14,64 +14,64 @@ is_featured: false
 
 ---
 
-:::note You can now use a Staging environment!
-This blog post was written before Staging environments. You can now use dbt Cloud can to support the patterns discussed here. Read more about [Staging environments](/docs/deploy/deploy-environments#staging-environment).
+:::note Теперь вы можете использовать среду Staging!
+Этот блог был написан до появления сред Staging. Теперь вы можете использовать dbt Cloud для поддержки обсуждаемых здесь шаблонов. Подробнее о [средах Staging](/docs/deploy/deploy-environments#staging-environment).
 :::
 
-:::tip The Bottom Line:
-You should [split your Jobs](#how) across Environments in dbt Cloud based on their purposes (e.g. Production and Staging/CI) and set one environment as Production. This will improve your CI experience and enable you to use dbt Explorer.
+:::tip Основная идея:
+Вы должны [разделить свои задания](#how) по средам в dbt Cloud в зависимости от их назначения (например, Производственная и Стадия/CI) и установить одну из них как Производственную. Это улучшит ваш опыт CI и позволит использовать dbt Explorer.
 :::
 
-[Environmental segmentation](/docs/environments-in-dbt) has always been an important part of the analytics engineering workflow:
+[Сегментация сред](/docs/environments-in-dbt) всегда была важной частью рабочего процесса аналитической инженерии:
 
-- When developing new models you can [process a smaller subset of your data](/reference/dbt-jinja-functions/target#use-targetname-to-limit-data-in-dev) by using `target.name` or an environment variable.
-- By building your production-grade models into [a different schema and database](https://docs.getdbt.com/docs/build/custom-schemas#managing-environments), you can experiment in peace without being worried that your changes will accidentally impact downstream users.
-- Using dedicated credentials for production runs, instead of an analytics engineer's individual dev credentials, ensures that things don't break when that long-tenured employee finally hangs up their IDE.
+- При разработке новых моделей вы можете [обрабатывать меньший подмножество ваших данных](/reference/dbt-jinja-functions/target#use-targetname-to-limit-data-in-dev) с помощью `target.name` или переменной окружения.
+- Создавая ваши производственные модели в [другой схеме и базе данных](https://docs.getdbt.com/docs/build/custom-schemas#managing-environments), вы можете экспериментировать спокойно, не беспокоясь о том, что ваши изменения случайно повлияют на пользователей ниже по потоку.
+- Использование выделенных учетных данных для производственных запусков, вместо индивидуальных учетных данных аналитического инженера, гарантирует, что ничего не сломается, когда этот давний сотрудник наконец-то завершит свою работу.
 
-Historically, dbt Cloud required a separate environment for _Development_, but was otherwise unopinionated in how you configured your account. This mostly just worked – as long as you didn't have anything more complex than a CI job mixed in with a couple of production jobs – because important constructs like deferral in CI and documentation were only ever tied to a single job.
+Исторически сложилось так, что dbt Cloud требовал отдельной среды для _разработки_, но не имел строгих требований к конфигурации вашей учетной записи. Это в основном работало – до тех пор, пока у вас не было ничего более сложного, чем CI-задание, смешанное с парой производственных заданий – потому что важные конструкции, такие как отложенные действия в CI и документация, были связаны только с одним заданием.
 
-But as companies' dbt deployments have grown more complex, it doesn't make sense to assume that a single job is enough anymore. We need to exchange a job-oriented strategy for a more mature and scalable environment-centric view of the world. To support this, a recent change in dbt Cloud enables project administrators to [mark one of their environments as the Production environment](/docs/deploy/deploy-environments#set-as-production-environment-beta), just as has long been possible for the Development environment.
+Но по мере того, как развертывания dbt в компаниях становились более сложными, предположение, что одного задания достаточно, больше не имеет смысла. Нам нужно обменять стратегию, ориентированную на задания, на более зрелый и масштабируемый подход, ориентированный на среду. Для поддержки этого недавнее изменение в dbt Cloud позволяет администраторам проектов [отметить одну из своих сред как Производственную среду](/docs/deploy/deploy-environments#set-as-production-environment-beta), так же как это давно возможно для среды разработки.
 
-Explicitly separating your Production workloads lets dbt Cloud be smarter with the metadata it creates, and is particularly important for two new features: dbt Explorer and the revised CI workflows.
+Явное разделение ваших производственных нагрузок позволяет dbt Cloud быть более умным с метаданными, которые он создает, и особенно важно для двух новых функций: dbt Explorer и пересмотренных рабочих процессов CI.
 
 <!-- truncate -->
 
-## Make sure dbt Explorer always has the freshest information available
+## Убедитесь, что dbt Explorer всегда имеет самую свежую информацию
 
-**The old way**: Your dbt docs site was based on a single job's run.
+**Старый способ**: Ваш сайт dbt docs основывался на запуске одного задания.
 
-**The new way**: dbt Explorer uses metadata from across every invocation in a defined Production environment to build the richest and most up-to-date understanding of your project.
+**Новый способ**: dbt Explorer использует метаданные из всех вызовов в определенной производственной среде, чтобы создать наиболее полное и актуальное понимание вашего проекта.
 
-Because dbt docs could only be updated by a single predetermined job, users who needed their documentation to immediately reflect changes deployed throughout the day (regardless of which job executed them) would find themselves forced to run a dedicated job which did nothing other than run `dbt docs generate` on a regular schedule.
+Поскольку dbt docs могли обновляться только одним заранее определенным заданием, пользователи, которым нужно было, чтобы их документация немедленно отражала изменения, развернутые в течение дня (независимо от того, какое задание их выполняло), были вынуждены запускать специальное задание, которое ничего не делало, кроме как регулярно запускало `dbt docs generate`.
 
-The Discovery API that powers dbt Explorer ingests all metadata generated by any dbt invocation, which means that it can always be up to date with the applied state of your project. However it doesn't make sense for dbt Explorer to show docs based on a PR that hasn't been merged yet.
+API Discovery, который поддерживает dbt Explorer, поглощает все метаданные, сгенерированные любым вызовом dbt, что означает, что он всегда может быть актуальным с примененным состоянием вашего проекта. Однако не имеет смысла, чтобы dbt Explorer показывал документы на основе PR, который еще не был объединен.
 
-To avoid this conflation, you need to mark an environment as the Production environment. All runs completed in _that_ environment will contribute to dbt Explorer's, while others will be excluded. (Future versions of Explorer will support environment selection, so that you can preview your documentation changes as well.)
+Чтобы избежать этого смешения, вам нужно отметить среду как Производственную. Все запуски, завершенные в _этой_ среде, будут способствовать dbt Explorer, в то время как другие будут исключены. (Будущие версии Explorer будут поддерживать выбор среды, чтобы вы могли предварительно просмотреть изменения в документации.)
 
-## Run Slimmer CI than ever with environment-level deferral
+## Запускайте более компактный CI с отложением на уровне среды
 
-**The old way**: [Slim CI](/guides/set-up-ci?step=2) deferred to a single job, and would only detect changes as of that job's last build time.
+**Старый способ**: [Slim CI](/guides/set-up-ci?step=2) откладывал на одно задание и обнаруживал изменения только на момент последнего времени сборки этого задания.
 
-**The new way**: Changes are detected regardless of the job they were deployed in, removing false positives and overbuilding of models in CI.
+**Новый способ**: Изменения обнаруживаются независимо от задания, в котором они были развернуты, устраняя ложные срабатывания и избыточное построение моделей в CI.
 
-Just like dbt docs, relying on a single job to define your state for comparison purposes leads to a choice between unnecessarily rebuilding models which were deployed by another job, or creating a dedicated job that runs `dbt compile` on repeat to keep on top of all changes.
+Точно так же, как и dbt docs, полагаться на одно задание для определения вашего состояния для целей сравнения приводит к выбору между ненужным перестроением моделей, которые были развернуты другим заданием, или созданием специального задания, которое повторно запускает `dbt compile`, чтобы быть в курсе всех изменений.
 
-By using the environment as the arbiter of state, any time a change is made to your Production deployment it will immediately be taken into consideration by subsequent Slim CI runs.
+Используя среду как арбитра состояния, всякий раз, когда в вашем производственном развертывании вносятся изменения, они немедленно будут учтены в последующих запусках Slim CI.
 
-## The easiest way to break apart your jobs {#how}
+## Самый простой способ разделить ваши задания {#how}
 
-<Lightbox src="/img/blog/2023-11-06-differentiate-prod-and-staging-environments/data-landscape.png" alt="A chart showing the interplay of Data Warehouse, git repo and dbt Cloud project across Dev, CI and Prod environments." title="Your organization's data landscape should separate Dev, CI and Prod environments. To achieve this, configure your data warehouse, git repo and dbt Cloud account as shown above." width="100%"/>
+<Lightbox src="/img/blog/2023-11-06-differentiate-prod-and-staging-environments/data-landscape.png" alt="Диаграмма, показывающая взаимодействие хранилища данных, git-репозитория и проекта dbt Cloud в средах Dev, CI и Prod." title="Ландшафт данных вашей организации должен разделять среды Dev, CI и Prod. Для этого настройте ваше хранилище данных, git-репозиторий и учетную запись dbt Cloud, как показано выше." width="100%"/>
 
-For most projects, changing from a job-centric to environment-centric approach to metadata is straightforward and immediately pays dividends as described above. Assuming that your Staging/CI and Production jobs are currently intermingled, you can extricate them as follows:
+Для большинства проектов переход от подхода, ориентированного на задания, к подходу, ориентированному на среду, к метаданным прост и сразу приносит дивиденды, как описано выше. Предполагая, что ваши задания Staging/CI и Production в настоящее время смешаны, вы можете их разделить следующим образом:
 
-1. Create a new dbt Cloud environment called Staging
-2. For each job that belongs to the Staging environment, edit the job and update its environment
-3. Tick the ["Mark as Production environment" box](/docs/deploy/deploy-environments#set-as-production-environment-beta) in your original environment's settings
+1. Создайте новую среду dbt Cloud под названием Staging
+2. Для каждого задания, принадлежащего среде Staging, отредактируйте задание и обновите его среду
+3. Отметьте [«Отметить как производственную среду»](/docs/deploy/deploy-environments#set-as-production-environment-beta) в настройках вашей оригинальной среды
 
-## Conclusion
+## Заключение
 
-Until very recently, I only thought of Environments in dbt Cloud as a way to use different authentication credentials in different contexts. And until very recently, I was mostly right.
+До недавнего времени я считал среды в dbt Cloud способом использования различных учетных данных аутентификации в разных контекстах. И до недавнего времени я был в основном прав.
 
-Not anymore. The metadata dbt creates is critical for effective data teams – whether you're concerned about cost savings, discoverability, increased development speed or reliable results across your organization – but is only fully effective if it's segmented by the environment that created it.
+Но больше нет. Метаданные, которые создает dbt, критически важны для эффективных команд по работе с данными – будь то экономия затрат, обнаруживаемость, увеличение скорости разработки или надежные результаты по всей вашей организации – но они полностью эффективны только в том случае, если они сегментированы по среде, которая их создала.
 
-Take a few minutes to clean up your environments - it'll make all the difference.
+Потратьте несколько минут на очистку ваших сред – это сделает всю разницу.

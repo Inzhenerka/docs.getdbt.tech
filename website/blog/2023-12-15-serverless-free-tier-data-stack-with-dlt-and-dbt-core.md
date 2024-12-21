@@ -1,6 +1,6 @@
 ---
-title: Serverless, free-tier data stack with dlt + dbt core.
-description: "In this article, Euan shares his personal project to fetch property price data during his and his partner's house-hunting process, and how he created a serverless free-tier data stack by using Google Cloud Functions to run data ingestion tool dlt alongside dbt for transformation."
+title: Безсерверный стек данных с бесплатным уровнем с dlt + dbt core.
+description: "В этой статье Юэн делится своим личным проектом по сбору данных о ценах на недвижимость во время поиска дома для себя и своей партнерши, и как он создал безсерверный стек данных с бесплатным уровнем, используя Google Cloud Functions для запуска инструмента загрузки данных dlt вместе с dbt для трансформации."
 slug: serverless-dlt-dbt-stack
 
 authors: [euan_johnston]
@@ -11,66 +11,64 @@ date: 2024-01-15
 is_featured: false
 ---
 
+## Проблема, разработчик и инструменты
 
+**Проблема**: Мы с партнершей рассматриваем возможность покупки недвижимости в Португалии. Здесь нет справочных данных по рынку недвижимости — сколько домов продается, по какой цене? Никто не знает, кроме агентств недвижимости и, возможно, банков, и они неохотно делятся этой информацией. Единственный источник данных, который у нас есть, — это Idealista, портал, где агентства недвижимости размещают объявления.
 
-## The problem, the builder and tooling
+К сожалению, количество объектов значительно меньше, чем количество объявлений — кажется, многие агентства недвижимости повторно размещают те же объявления, что и другие, с намеренно измененными данными и часто вводящей в заблуждение информацией. Агентства делают это, чтобы заинтересованные стороны обращались к ним за разъяснениями, и с этого момента они могут начать процесс продажи. В то же время, сайт с объявлениями заинтересован в том, чтобы это продолжалось, так как они получают оплату за каждое объявление, а не за объект.
 
-**The problem**: My partner and I are considering buying a property in Portugal. There is no reference data for the real estate market here - how many houses are being sold, for what price? Nobody knows except the property office and maybe the banks, and they don’t readily divulge this information. The only data source we have is Idealista, which is a portal where real estate agencies post ads.
+**Разработчик:** Я фрилансер в области данных, который разрабатывает комплексные решения, поэтому, когда у меня возникает проблема с данными, я не могу просто оставить ее.
 
-Unfortunately, there are significantly fewer properties than ads - it seems many real estate companies re-post the same ad that others do, with intentionally different data and often misleading bits of info. The real estate agencies do this so the interested parties reach out to them for clarification, and from there they can start a sales process. At the same time, the website with the ads is incentivised to allow this to continue as they get paid per ad, not per property.
-
-**The builder:** I’m a data freelancer who deploys end to end solutions, so when I have a data problem, I cannot just let it go.
-
-**The tools:** I want to be able to run my project on [Google Cloud Functions](https://cloud.google.com/functions) due to the generous free tier. [dlt](https://dlthub.com/) is a new Python library for declarative data ingestion which I have wanted to test for some time. Finally, I will use dbt Core for transformation.
+**Инструменты:** Я хочу запустить свой проект на [Google Cloud Functions](https://cloud.google.com/functions) из-за щедрого бесплатного уровня. [dlt](https://dlthub.com/) — это новая библиотека на Python для декларативной загрузки данных, которую я давно хотел протестировать. Наконец, я буду использовать dbt Core для трансформации.
 
 <!-- truncate -->
-## The starting point
+## Начальная точка
 
-If I want to have reliable information on the state of the market I will need to:
+Если я хочу иметь надежную информацию о состоянии рынка, мне нужно:
 
-- Grab the messy data from Idealista and historize it.
-- Deduplicate existing listings.
-- Try to infer what listings sold for how much.
+- Собрать неструктурированные данные с Idealista и сохранить их историю.
+- Удалить дубликаты существующих объявлений.
+- Попробовать выяснить, за сколько были проданы объекты.
 
-Once I have deduplicated listings with some online history, I can get an idea:
+Как только у меня будут объявления без дубликатов с некоторой историей, я смогу понять:
 
-- How expensive which properties are.
-- How fast they get sold, hopefully a signal of whether they are “worth it” or not.
+- Насколько дорогие объекты.
+- Как быстро они продаются, что, надеюсь, будет сигналом о том, "стоит ли" их покупать.
 
-## Towards a solution
+## К решению
 
-The solution has pretty standard components:
+Решение состоит из довольно стандартных компонентов:
 
-- An EtL pipeline. The little t stands for normalisation, such as transforming strings to dates or unpacking nested structures. This is handled by dlt functions written in Python.
-- A transformation layer taking the source data loaded by my dlt functions and creating the tables necessary, handled by dbt.
-- Due to the complexity of deduplication, I needed to add a human element to confirm the deduplication in Google Sheets.
+- Конвейер EtL. Маленькая t означает нормализацию, такую как преобразование строк в даты или распаковка вложенных структур. Это обрабатывается функциями dlt, написанными на Python.
+- Слой трансформации, который берет исходные данные, загруженные моими функциями dlt, и создает необходимые таблицы, обрабатываемые dbt.
+- Из-за сложности удаления дубликатов мне пришлось добавить человеческий элемент для подтверждения удаления дубликатов в Google Sheets.
 
-These elements are reflected in the diagram below and further clarified in greater detail later in the article:
+Эти элементы отражены на диаграмме ниже и более подробно разъяснены далее в статье:
 
-<Lightbox src="/img/blog/serverless-free-tier-data-stack-with-dlt-and-dbt-core/architecture_diagram.png" width="70%" title="Project architecture" />
+<Lightbox src="/img/blog/serverless-free-tier-data-stack-with-dlt-and-dbt-core/architecture_diagram.png" width="70%" title="Архитектура проекта" />
 
-### Ingesting the data
+### Загрузка данных
 
-For ingestion, I use a couple of sources:
+Для загрузки я использую несколько источников:
 
-First, I ingest home listings from the Idealista API, accessed through [API Dojo's freemium wrapper](https://rapidapi.com/apidojo/api/idealista2). The dlt pipeline I created for ingestion is in [this repo](https://github.com/euanjohnston-dev/Idealista_pipeline).
+Во-первых, я загружаю объявления о домах из API Idealista, доступного через [freemium-обертку API Dojo](https://rapidapi.com/apidojo/api/idealista2). Конвейер dlt, который я создал для загрузки, находится в [этом репозитории](https://github.com/euanjohnston-dev/Idealista_pipeline).
 
-After an initial round of transformation (described in the next section), the deduplicated data is loaded into BigQuery where I can query it from the Google Sheets client and manually review the deduplication.
+После начального этапа трансформации (описанного в следующем разделе) данные без дубликатов загружаются в BigQuery, где я могу запрашивать их из клиента Google Sheets и вручную проверять удаление дубликатов.
 
-When I'm happy with the results, I use the [ready-made dlt Sheets source connector](https://dlthub.com/docs/dlt-ecosystem/verified-sources/google_sheets) to pull the data back into BigQuery, [as defined here](https://github.com/euanjohnston-dev/gsheets_check_pipeline).
+Когда я доволен результатами, я использую [готовый источник-коннектор dlt для Sheets](https://dlthub.com/docs/dlt-ecosystem/verified-sources/google_sheets), чтобы вернуть данные в BigQuery, [как определено здесь](https://github.com/euanjohnston-dev/gsheets_check_pipeline).
 
-### Transforming the data
+### Трансформация данных
 
-For transforming I use my favorite solution, dbt Core. For running and orchestrating dbt on Cloud Functions, I am using dlt’s dbt Core runner. The benefit of the runner in this context is that I can re-use the same credential setup, instead of creating a separate profiles.yml file.
+Для трансформации я использую свое любимое решение, dbt Core. Для запуска и оркестрации dbt на Cloud Functions я использую dbt Core runner от dlt. Преимущество runner в этом контексте заключается в том, что я могу повторно использовать ту же настройку учетных данных, вместо создания отдельного файла profiles.yml.
 
-This is the package I created: [https://github.com/euanjohnston-dev/idealista_dbt_pipeline](https://github.com/euanjohnston-dev/idealista_dbt_pipeline)
+Это пакет, который я создал: [https://github.com/euanjohnston-dev/idealista_dbt_pipeline](https://github.com/euanjohnston-dev/idealista_dbt_pipeline)
 
-### Production-readying the pipeline
+### Подготовка конвейера к производству
 
-To make the pipeline more “production ready”, I made some improvements:
+Чтобы сделать конвейер более "готовым к производству", я внес некоторые улучшения:
 
-- Using a credential store instead of hard-coding passwords, in this case Google Secret Manager.
-- Be notified when the pipeline runs and what the outcome is. For this I sent data to Slack via a dlt decorator that posts the error on failure and the metadata on success.
+- Использование хранилища учетных данных вместо жесткого кодирования паролей, в данном случае Google Secret Manager.
+- Получение уведомлений о запуске конвейера и его результате. Для этого я отправлял данные в Slack через декоратор dlt, который публикует ошибку в случае сбоя и метаданные в случае успеха.
 
 ```python
 from dlt.common.runtime.slack import send_slack_message
@@ -91,45 +89,45 @@ def notify_on_completion(hook):
     return decorator
 ```
 
-## The outcome
+## Результат
 
-The outcome was first and foremost a visualisation highlighting the unique properties available in my specific area of search. The map shown on the left of the page gives a live overview of location, number of duplicates (bubble size) and price (bubble colour) which can amongst other features be filtered using the sliders on the right. This represents a much better decluttered solution from which to observe the actual inventory available.
+Результатом стала, прежде всего, визуализация, подчеркивающая уникальные объекты, доступные в моей конкретной области поиска. Карта, показанная слева на странице, дает живой обзор местоположения, количества дубликатов (размер пузыря) и цены (цвет пузыря), которые, среди прочих функций, можно фильтровать с помощью ползунков справа. Это представляет собой гораздо более упорядоченное решение, с помощью которого можно наблюдать за фактическим доступным инвентарем.
 
-<Lightbox src="/img/blog/serverless-free-tier-data-stack-with-dlt-and-dbt-core/map_screenshot.png" width="70%" title="Dashboard mapping overview" />
+<Lightbox src="/img/blog/serverless-free-tier-data-stack-with-dlt-and-dbt-core/map_screenshot.png" width="70%" title="Обзор картографического дашборда" />
 
-Further charts highlight additional metrics which – now that deduplication is complete – can be accurately measured including most importantly, the development over time of “average price/square metre” and those properties which have been inferred to have been sold.
+Дополнительные диаграммы подчеркивают дополнительные метрики, которые — теперь, когда удаление дубликатов завершено — могут быть точно измерены, включая, что наиболее важно, развитие со временем "средней цены/квадратный метр" и тех объектов, которые, как предполагается, были проданы.
 
-### Next steps
+### Следующие шаги
 
-This version was very much about getting a base from which to analyze the properties for my own personal use case.
+Эта версия была в основном о создании базы, с которой можно анализировать объекты для моего личного использования.
 
-In terms of further development which could take place, I have had interest from people to run the solution on their own specific target area.
+В плане дальнейшего развития, которое могло бы произойти, у меня был интерес от людей, которые хотели бы запустить решение в своей собственной целевой области.
 
-For this to work at scale I would need a more robust method to deal with duplicate attribution, which is a difficult problem as real estate agencies intentionally change details like number of rooms or surface area.
+Для того чтобы это работало в масштабе, мне нужен более надежный метод для работы с атрибуцией дубликатов, что является сложной проблемой, так как агентства недвижимости намеренно изменяют такие детали, как количество комнат или площадь.
 
-Perhaps this is a problem ML or GPT could solve equally well as a human, given the limited options available.
+Возможно, это проблема, которую ML или GPT могли бы решить так же хорошо, как и человек, учитывая ограниченные доступные варианты.
 
-## Learnings and conclusion
+## Извлеченные уроки и заключение
 
-The data problem itself was an eye opener into the real-estate market. It’s a messy market full of unknowns and noise, which adds a significant purchase risk to first time buyers.
+Проблема с данными сама по себе открыла глаза на рынок недвижимости. Это запутанный рынок, полный неизвестностей и шума, что добавляет значительный риск покупки для покупателей впервые.
 
-Tooling wise, it was surprising how quick it was to set everything up. dlt integrates well with dbt and enables fast and simple data ingestion, making this project simpler than I thought it would be.
+Что касается инструментов, было удивительно, как быстро все было настроено. dlt хорошо интегрируется с dbt и позволяет быстро и просто загружать данные, делая этот проект проще, чем я думал.
 
 ### dlt
 
-Good:
+Плюсы:
 
-- As a big fan of dbt I love how seamlessly the two solutions complement one another. dlt handles the data cleaning and normalisation automatically so I can focus on curating and modelling it in dbt. While the automatic unpacking leaves some small adjustments for the analytics engineer, it’s much better than cleaning and typing json in the database or in custom python code.
-- When creating my first dummy pipeline I used duckdb. It felt like a great introduction into how simple it is to get started and provided a solid starting block before developing something for the cloud.
+- Как большой поклонник dbt, я люблю, как эти два решения дополняют друг друга. dlt автоматически обрабатывает очистку и нормализацию данных, так что я могу сосредоточиться на их курировании и моделировании в dbt. Хотя автоматическая распаковка оставляет некоторые небольшие корректировки для аналитического инженера, это гораздо лучше, чем очистка и типизация json в базе данных или в пользовательском коде на Python.
+- При создании моего первого тестового конвейера я использовал duckdb. Это было отличным введением в то, насколько просто начать, и предоставило надежную отправную точку перед разработкой чего-то для облака.
 
-Bad:
+Минусы:
 
-- I did have a small hiccup with the google sheets connector assuming an oauth authentication over my desired sdk but this was relatively easy to rectify. (explicitly stating GcpServiceAccountCredentials in the init.py file for the source).
-- Using both a verified source in the gsheets connector and building my own from Rapid API endpoints seemed equally intuitive. However I would have wanted more documentation on how to run these 2 pipelines in the same script with the dbt pipeline.
+- У меня была небольшая заминка с коннектором Google Sheets, который предполагал аутентификацию oauth вместо моего желаемого sdk, но это было относительно легко исправить (явно указав GcpServiceAccountCredentials в файле init.py для источника).
+- Использование как проверенного источника в коннекторе gsheets, так и создание собственного из конечных точек Rapid API казалось одинаково интуитивным. Однако я бы хотел больше документации о том, как запускать эти 2 конвейера в одном скрипте с конвейером dbt.
 
 ### dbt
 
-No surprises there. I developed the project locally, and to deploy to cloud functions I injected credentials to dbt via the dlt runner. This meant I could re-use the setup I did for the other dlt pipelines.
+Здесь без сюрпризов. Я разработал проект локально, и для развертывания в облачных функциях я внедрил учетные данные в dbt через dlt runner. Это означало, что я мог повторно использовать настройку, которую сделал для других конвейеров dlt.
 
 ```python
 def dbt_run():
@@ -150,12 +148,12 @@ def dbt_run():
         print(f"Model {m.model_name} materialized in {m.time} with status {m.status} and message {m.message}"
 ```
 
-### Cloud functions
+### Облачные функции
 
-While I had used cloud functions before, I had never previously set them up for dbt and I was able to easily follow dlt’s docs to run the pipelines there. Cloud functions is a great solution to cheaply run small scale pipelines and my running cost of the project is a few cents a month. If the insights drawn from the project help us save even 1% of a house price, the project will have been a success.
+Хотя я использовал облачные функции раньше, я никогда ранее не настраивал их для dbt, и я смог легко следовать документации dlt, чтобы запустить конвейеры там. Облачные функции — отличное решение для дешевого запуска маломасштабных конвейеров, и мои затраты на проект составляют несколько центов в месяц. Если выводы из проекта помогут нам сэкономить даже 1% от стоимости дома, проект будет успешным.
 
-### To sum up
+### В итоге
 
-dlt feels like the perfect solution for anyone who has scratched the surface of python development. To be able to have schemas ready for transformation in such a short space of time is truly… transformational. As a freelancer, being able to accelerate the development of pipelines is a huge benefit within companies who are often frustrated with the amount of time it takes to start ‘showing value’.
+dlt кажется идеальным решением для любого, кто уже немного знаком с разработкой на Python. Возможность иметь схемы, готовые к трансформации, в столь короткие сроки действительно... трансформационна. Как фрилансер, возможность ускорить разработку конвейеров — это огромное преимущество в компаниях, которые часто разочарованы тем, сколько времени требуется, чтобы начать "показывать ценность".
 
-I’d welcome the chance to discuss what’s been built to date or collaborate on any potential further development in the comments below.
+Я был бы рад обсудить то, что было построено на сегодняшний день, или сотрудничать в любом потенциальном дальнейшем развитии в комментариях ниже.

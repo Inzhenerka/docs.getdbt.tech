@@ -1,6 +1,6 @@
 ---
-title: "KonMari your data: Planning a query migration using the Marie Kondo method"
-description: "Do your data models spark joy? Let’s talk about how to apply the KonMari Method to a new data migration project."
+title: "KonMari ваши данные: Планирование миграции запросов с использованием метода Мари Кондо"
+description: "Ваши модели данных приносят радость? Давайте поговорим о том, как применить метод КонМари к новому проекту миграции данных."
 slug: marie-kondo-query-migration
 authors: [lauren_benezra]
 tags: [analytics craft]
@@ -10,124 +10,123 @@ date: 2022-09-08
 is_featured: true
 ---
 
-If you’ve ever heard of Marie Kondo, you’ll know she has an incredibly soothing and meditative method to tidying up physical spaces. Her KonMari Method is about categorizing, discarding unnecessary items, and building a sustainable system for keeping *stuff*. 
+Если вы когда-либо слышали о Мари Кондо, вы знаете, что у нее невероятно успокаивающий и медитативный метод наведения порядка в физических пространствах. Ее метод КонМари заключается в категоризации, избавлении от ненужных вещей и создании устойчивой системы для хранения *вещей*.
 
-As an analytics engineer at your company, doesn’t that last sentence describe your job perfectly?! I like to think of the practice of analytics engineering as applying the KonMari Method to data modeling. Our goal as Analytics Engineers is not only to organize and clean up data, but to design a sustainable and scalable transformation project that is easy to navigate, grow, and consume by downstream customers. 
+Как аналитический инженер в вашей компании, разве это не идеально описывает вашу работу?! Я люблю думать о практике аналитического инжиниринга как о применении метода КонМари к моделированию данных. Наша цель как аналитических инженеров не только организовать и очистить данные, но и спроектировать устойчивый и масштабируемый проект трансформации, который будет легким для навигации, роста и потребления конечными пользователями.
 
-Let’s talk about how to apply the KonMari Method to a new migration project. Perhaps you’ve been tasked with unpacking the kitchen in your new house; AKA, you’re the engineer hired to move your legacy SQL  queries into dbt and get everything working smoothly. That might mean you’re grabbing a query that is 1500 lines of SQL and reworking it into modular pieces. When you’re finished, you have a performant, scalable, easy-to-navigate data flow. <!--truncate--> That does take a bit of planning, but you’ll see that we can take this… 
+Давайте поговорим о том, как применить метод КонМари к новому проекту миграции. Возможно, вам поручили распаковать кухню в вашем новом доме; другими словами, вы инженер, нанятый для переноса ваших устаревших SQL-запросов в dbt и обеспечения их бесперебойной работы. Это может означать, что вы берете запрос из 1500 строк SQL и перерабатываете его в модульные части. Когда вы закончите, у вас будет производительный, масштабируемый, легкий для навигации поток данных. <!--truncate--> Это требует некоторого планирования, но вы увидите, что мы можем превратить это...
 
-![buried in boxes](/img/blog/2022-09-08-konmari-your-query-migration/buried-in-boxes.webp)
+![завалены коробками](/img/blog/2022-09-08-konmari-your-query-migration/buried-in-boxes.webp)
 
-to THIS!
+в ЭТО!
 
-![cat perched in kitchen](/img/blog/2022-09-08-konmari-your-query-migration/cat_kitchen.jpeg)
+![кот на кухне](/img/blog/2022-09-08-konmari-your-query-migration/cat_kitchen.jpeg)
 
-That’s the power of the KonMari Method. Let’s apply the method specifically to data:  
+Это сила метода КонМари. Давайте применим метод конкретно к данным:
 
-**KonMari Method**
+**Метод КонМари**
 
-1. Commit yourself and stakeholders to tidying up this project
-2. Imagine the ideal state of this query
-3. Finish discarding unnecessary models and columns
-4. Tidy by category
-5. Follow the right order—downstream to upstream
-6. Validate that the result *sparks joy*, AKA, satisfies all of the consumers’ needs 
+1. Обязуйтесь вместе с заинтересованными сторонами навести порядок в этом проекте
+2. Представьте идеальное состояние этого запроса
+3. Завершите удаление ненужных моделей и столбцов
+4. Наведите порядок по категориям
+5. Следуйте правильному порядку — от конечного к началу
+6. Убедитесь, что результат *приносит радость*, то есть удовлетворяет все потребности потребителей
 
-Are you ready to tidy?! Summon Marie Kondo! 
+Готовы навести порядок?! Призовите Мари Кондо!
 
-![Marie Kondo](/img/blog/2022-09-08-konmari-your-query-migration/mariekondo.gif)
+![Мари Кондо](/img/blog/2022-09-08-konmari-your-query-migration/mariekondo.gif)
 
-Think about when you moved to a new house. Maybe, at some point during the packing process, you got annoyed and just started labeling everything as “kitchen stuff”, rather than what was actually put in the boxes. (Isn’t this…everyone?!) So now, in your new kitchen, you’ve got tons of boxes labeled “kitchen stuff” and you don’t know where everything goes, or how to organize everything. You start to unpack, and your housemates come into the kitchen and ask, why is the Tupperware above the fridge? And why the cooking utensils are in the drawer furthest from the stove? 
+Вспомните, когда вы переезжали в новый дом. Возможно, в какой-то момент процесса упаковки вы устали и просто начали маркировать все как "кухонные вещи", вместо того, чтобы указывать, что именно было в коробках. (Разве это не... все?!) Итак, теперь, на вашей новой кухне, у вас куча коробок с надписью "кухонные вещи", и вы не знаете, куда все это идет или как все организовать. Вы начинаете распаковывать, и ваши сожители заходят на кухню и спрашивают, почему контейнеры для еды над холодильником? И почему кухонные принадлежности в ящике, который дальше всего от плиты?
 
 ![nachka-cat.gif](/img/blog/2022-09-08-konmari-your-query-migration/nachka-cat.gif)
 
-Before you build, you need to plan. And before you plan, you need to get everyone on the same page to understand how they use the kitchen, so you can organize a kitchen that makes sense to the people who use it. So let’s jump into step one. 
+Прежде чем строить, нужно планировать. И прежде чем планировать, нужно, чтобы все были на одной волне, чтобы понять, как они используют кухню, чтобы вы могли организовать кухню, которая имеет смысл для тех, кто ее использует. Давайте перейдем к первому шагу.
 
-## Step 1: Commit yourself and stakeholders to tidying up this project
+## Шаг 1: Обязуйтесь вместе с заинтересованными сторонами навести порядок в этом проекте
 
-This may feel like an unnecessary step, but haven’t you ever started migrating a new query, only to find out that it was no longer being used? Or people found it so difficult to consume that they instead created their own queries? Or you carved out precious time for this project, but the people you need to be involved have not?  Or maybe your consumers expected you to have completed this project yesterday...*Initiate anxiety-stomachache now*. 
+Это может показаться ненужным шагом, но разве вы никогда не начинали миграцию нового запроса, только чтобы обнаружить, что он больше не используется? Или люди находили его настолько сложным для использования, что вместо этого создавали свои собственные запросы? Или вы выделили драгоценное время для этого проекта, но нужные вам люди не были вовлечены? Или, возможно, ваши потребители ожидали, что вы завершите этот проект вчера... *Инициируйте тревожную боль в животе сейчас*.
 
-Take the opportunity to meet with your stakeholders, and get everyone on the same page. These are likely your report-readers, and your report-builders. 
+Воспользуйтесь возможностью встретиться с вашими заинтересованными сторонами и убедитесь, что все на одной волне. Это, вероятно, ваши читатели отчетов и создатели отчетов.
 
-Your *readers* are the stakeholders who are not the boots-on-the-ground engineers or analysts, but rather the people who rely on the output of the engineering and analysis — Head of Marketing, Head of Sales, etc. — these are your housemates who come into the kitchen searching for a fork to eat the dinner prepared for them. 
+Ваши *читатели* — это заинтересованные стороны, которые не являются непосредственными инженерами или аналитиками, а скорее те, кто полагается на результаты инженерии и анализа — руководитель отдела маркетинга, руководитель отдела продаж и т.д. — это ваши сожители, которые приходят на кухню в поисках вилки, чтобы съесть приготовленный для них ужин.
 
-The *builders* are the post-dbt data analysts — they transform your thoughtfully-curated <Term id="table">tables</Term> into beautiful analysis dashboards and reports to answer the readers’ questions — Marketing Analyst, Tableau Guru, Looker Developer — these are your housemates who use your meticulously organized kitchen to cook delicious meals. 
+*Создатели* — это аналитики данных после dbt — они преобразуют ваши тщательно подобранные <Term id="table">таблицы</Term> в красивые аналитические панели и отчеты, чтобы ответить на вопросы читателей — аналитик по маркетингу, гуру Tableau, разработчик Looker — это ваши сожители, которые используют вашу тщательно организованную кухню для приготовления вкусных блюд.
 
-You might be thinking, why would I bother the report-reader, when I have the report-builder? Remember, your reader needs to know where the forks live. In this step, it is crucial to set up an *initial* meeting with all of these people to make sure you’re on the same page about what is being built and why. Then you’ll be able to find one person in the group who can be your phone-a-friend for context questions. 
+Вы можете подумать, зачем беспокоить читателя отчета, когда у меня есть создатель отчета? Помните, ваш читатель должен знать, где находятся вилки. На этом этапе важно провести *первоначальную* встречу со всеми этими людьми, чтобы убедиться, что вы на одной волне относительно того, что строится и почему. Затем вы сможете найти одного человека в группе, который сможет быть вашим другом на телефоне для вопросов по контексту.
 
-Here are some example questions you’ll want to ask in this initial meeting:
+Вот несколько примерных вопросов, которые вы захотите задать на этой первоначальной встрече:
 
-- How is this data table currently being utilized?
-- What transformations are being performed *on top* of this table? Aggregations? Filters? Adjustments? Joins?
-- What are the pain points you face with this table? Slow to query? Incorrect outputs? Missing columns? Unnecessary columns?
-- What questions do you want this table to answer? Can those questions be broken apart? i.e., Can this table be broken up into smaller tables, each of which answers a different part of the question? Or is it best as one table?
-- How can we bucket these sources? Think consumption — where are these subqueries going to be consumed downstream? Do these sources make sense to join upstream?
-- If the original table output is incorrect, do they have a table with correct data that we can validate against? How will we know if it is correct?
+- Как в настоящее время используется эта таблица данных?
+- Какие преобразования выполняются *поверх* этой таблицы? Агрегации? Фильтры? Корректировки? Объединения?
+- С какими проблемами вы сталкиваетесь с этой таблицей? Медленно выполняется запрос? Неправильные результаты? Отсутствующие столбцы? Ненужные столбцы?
+- На какие вопросы вы хотите, чтобы эта таблица ответила? Можно ли разбить эти вопросы? То есть, можно ли разбить эту таблицу на более мелкие таблицы, каждая из которых отвечает на разные части вопроса? Или лучше оставить ее как одну таблицу?
+- Как мы можем сгруппировать эти источники? Подумайте о потреблении — где эти подзапросы будут потребляться в дальнейшем? Имеет ли смысл объединять эти источники на более ранних этапах?
+- Если исходный вывод таблицы неверен, есть ли у них таблица с правильными данными, с которой мы можем свериться? Как мы узнаем, что это правильно?
 
-## Step 2: Imagine the ideal state of your project
+## Шаг 2: Представьте идеальное состояние вашего проекта
 
-This is my favorite part. If you dive in to all the boxes labeled “kitchen stuff” with no plan, you’ll end up moving things around multiple times until it feels right. Sometimes, you won’t even get to a place where it feels right before your housemates jumble everything up, because they use the kitchen differently than you. You need the kitchen to flow with the way that you *and* your housemates use the kitchen — if you know that the silverware goes in the drawer closest to the dishwasher, and the cups and glasses go in the cabinet next to the sink, and the mugs go above the coffee pot, you’ll unpack once and everyone will be able to navigate the kitchen with ease. 
+Это моя любимая часть. Если вы погрузитесь во все коробки с надписью "кухонные вещи" без плана, вы будете перемещать вещи несколько раз, пока не почувствуете, что все на своих местах. Иногда вы даже не доберетесь до места, где все будет на своих местах, прежде чем ваши сожители все перепутают, потому что они используют кухню иначе, чем вы. Вам нужно, чтобы кухня соответствовала тому, как вы *и* ваши сожители используете кухню — если вы знаете, что столовые приборы находятся в ящике ближе всего к посудомоечной машине, а чашки и стаканы находятся в шкафу рядом с раковиной, и кружки находятся над кофеваркой, вы распакуете все один раз, и все смогут легко ориентироваться на кухне.
 
-Let’s plan how to unpack our query. This may be what you’re working with: 30+ sources all packed into one SUPER query 🦸. 
+Давайте спланируем, как распаковать наш запрос. Возможно, вы работаете с этим: более 30 источников, все упакованы в один СУПЕР-запрос 🦸.
 
-![many-to-one DAG](/img/blog/2022-09-08-konmari-your-query-migration/many-to-one-dag.png)
+![много-к-одному DAG](/img/blog/2022-09-08-konmari-your-query-migration/many-to-one-dag.png)
 
-Or, perhaps you’re migrating a stored procedure, and you have DAG Spaghetti that you’re contending with, as [Matt talks through in this article](/blog/migrating-from-stored-procs).
+Или, возможно, вы мигрируете хранимую процедуру, и у вас есть DAG-спагетти, с которым вы боретесь, как [Мэтт рассказывает в этой статье](/blog/migrating-from-stored-procs).
 
-![spaghetti data DAG](/img/blog/2022-09-08-konmari-your-query-migration/spaghetti-data-dag.png)
+![спагетти данные DAG](/img/blog/2022-09-08-konmari-your-query-migration/spaghetti-data-dag.png)
 
-Now we can look at the details of this code, and start to categorize. You can start building out what this may look like as a DAG in a process mapping tool, like [Whimsical](https://whimsical.com/). 
+Теперь мы можем взглянуть на детали этого кода и начать категоризацию. Вы можете начать строить, как это может выглядеть как DAG в инструменте для картирования процессов, таком как [Whimsical](https://whimsical.com/).
 
-Where can you break a massive query apart, and pull pieces out to create modularizations? Or, where can you combine repeated code to answer a more general question? 
+Где вы можете разбить огромный запрос и выделить части для создания модульных элементов? Или, где вы можете объединить повторяющийся код, чтобы ответить на более общий вопрос?
 
-- Use your buckets identified in your initial meetings with clients to identify where you can create re-usable intermediate models.
-- Locate repeated joins and subqueries to identify more intermediate models.
-- Figure out which sources aren’t really providing answers to the questions, and remove them from your design.
+- Используйте ваши группы, определенные на ваших первоначальных встречах с клиентами, чтобы определить, где вы можете создать повторно используемые промежуточные модели.
+- Найдите повторяющиеся объединения и подзапросы, чтобы определить больше промежуточных моделей.
+- Определите, какие источники на самом деле не предоставляют ответы на вопросы, и удалите их из вашего дизайна.
 
-Perhaps your redesigned DAG looks something like this — you have intermediate models and joins carved out, creating modular, reusable pieces of code ([read more on that here!](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/)). You’ve created a data flow devoid of circular logic, and your end-table has all the necessary components to answer your stakeholders’ questions. 
+Возможно, ваш переработанный DAG будет выглядеть примерно так — у вас есть промежуточные модели и объединения, выделенные в отдельные, создавая модульные, повторно используемые части кода ([читайте больше об этом здесь!](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/)). Вы создали поток данных, лишенный циклической логики, и ваша конечная таблица содержит все необходимые компоненты для ответа на вопросы ваших заинтересованных сторон.
 
-**Before you accuse me of wishful thinking, this is the result of a real client project! We broke up almost 1500 lines of code in a single query into this beautiful waterfall. Marie Kondo would be proud.* 
+**Прежде чем обвинять меня в мечтательности, это результат реального клиентского проекта! Мы разбили почти 1500 строк кода в одном запросе на этот красивый водопад. Мари Кондо была бы горда.*
 
-![fully konmarid project](/img/blog/2022-09-08-konmari-your-query-migration/fully-konmarid-project.png)
+![полностью конмарированный проект](/img/blog/2022-09-08-konmari-your-query-migration/fully-konmarid-project.png)
 
-While you don’t *have to* design your flow this way, it is incredibly important to consider modularity, readability, scalability, and performance in your design. Design with intention! Remember, don’t put your forks too far from the dishwasher. 
+Хотя вы не *обязаны* проектировать ваш поток именно так, крайне важно учитывать модульность, читаемость, масштабируемость и производительность в вашем дизайне. Проектируйте с намерением! Помните, не ставьте вилки слишком далеко от посудомоечной машины.
 
-## Step 3: Finish discarding unnecessary models and columns
+## Шаг 3: Завершите удаление ненужных моделей и столбцов
 
-As you’re pulling items out of your “kitchen stuff” boxes, you may discover that you have Tupperware bottoms without lids, broken dishes, and eight cake pans. Who needs eight cake pans?! No one. There’s some clean out you can do with your kitchen stuff, as well as your data models. 
+Когда вы вытаскиваете предметы из ваших коробок с "кухонными вещами", вы можете обнаружить, что у вас есть контейнеры без крышек, разбитая посуда и восемь форм для выпечки. Кому нужно восемь форм для выпечки?! Никому. Есть некоторые вещи, от которых можно избавиться как с вашими кухонными вещами, так и с вашими моделями данных.
 
-Now that you have your design, and your notes from your stakeholder meeting, you can start going through your query and removing all the unnecessary pieces. 
+Теперь, когда у вас есть ваш дизайн и ваши заметки с вашей встречи с заинтересованными сторонами, вы можете начать проходить через ваш запрос и удалять все ненужные части.
 
-Here are a few things to look for:
+Вот несколько вещей, на которые стоит обратить внимание:
 
-- Get rid of unused sources  — [there’s a package for that!](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/)
-- Remove columns that are being brought in with import <Term id="cte">CTEs</Term>, but are just clogging your query
-- Only bring in the columns you need (this is especially true for BigQuery and Redshift for performance purposes)
-- Where you can, do the same with rows! Is a filter being applied in the final query, that could be moved to a CTE, or maybe even an intermediate model?
-- Remember that in most cases, it is more performant to filter and truncate the data before the joins take place
+- Избавьтесь от неиспользуемых источников — [есть пакет для этого!](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/)
+- Удалите столбцы, которые импортируются с помощью <Term id="cte">CTE</Term>, но просто засоряют ваш запрос
+- Приводите только те столбцы, которые вам нужны (это особенно важно для BigQuery и Redshift для повышения производительности)
+- Где возможно, делайте то же самое с строками! Применяется ли фильтр в конечном запросе, который можно переместить в CTE или даже в промежуточную модель?
+- Помните, что в большинстве случаев более производительно фильтровать и обрезать данные до того, как произойдут объединения
 
-## Steps 4 & 5: Tidy by category and follow the right order—upstream to downstream
+## Шаги 4 и 5: Наведите порядок по категориям и следуйте правильному порядку — от начала к концу
 
-We are ready to unpack our kitchen. Use your design as a guideline for [modularization](/best-practices/how-we-structure/1-guide-overview). 
+Мы готовы распаковать нашу кухню. Используйте ваш дизайн как руководство для [модульности](/best-practices/how-we-structure/1-guide-overview).
 
-- Build your staging tables first, and then your intermediate tables in your pre-planned buckets.
-- Important, reusable joins that are performed in the final query should be moved upstream into their own modular models, as well as any joins that are repeated in your query.
-- Remember that you don’t want to make these intermediate tables *too* specific. Don’t apply filters if it causes the model to be consumable by only one query downstream. If you do this, you aren’t creating a scalable project, you’re just recreating the same issue as your original query, but spread amongst mulitple models, which will be hard to untangle later.
+- Сначала создайте ваши таблицы подготовки, а затем промежуточные таблицы в ваших заранее спланированных группах.
+- Важные, повторно используемые объединения, которые выполняются в конечном запросе, должны быть перемещены на более ранние этапы в их собственные модульные модели, а также любые объединения, которые повторяются в вашем запросе.
+- Помните, что вы не хотите делать эти промежуточные таблицы *слишком* специфичными. Не применяйте фильтры, если это делает модель пригодной для использования только одним запросом в дальнейшем. Если вы это сделаете, вы не создаете масштабируемый проект, вы просто воссоздаете ту же проблему, что и ваш исходный запрос, но распределенную между несколькими моделями, которые будет трудно распутать позже.
 
-Your final query should be concretely defined — is it a <Term id="dimensional-modeling">fact or dimension</Term> table? Is it a report table? What are the stepping stones to get there? What’s the most performant way to [materialize](/docs/build/materializations)?
+Ваш конечный запрос должен быть четко определен — это <Term id="dimensional-modeling">факт или измерение</Term>? Это таблица отчета? Какие шаги нужно пройти, чтобы добраться туда? Какой самый производительный способ [материализации](/docs/build/materializations)?
 
-Build with the goal to scale — when might you need these intermediate models again? Will you need to repeat the same joins? Hopefully you’ve designed with enough intention to know the answer to that last one is “no.” Avoid repeating joins! 
+Стройте с целью масштабирования — когда вам могут понадобиться эти промежуточные модели снова? Придется ли вам повторять те же объединения? Надеюсь, вы спроектировали с достаточным намерением, чтобы знать, что ответ на последний вопрос — "нет". Избегайте повторения объединений!
 
-## Step 6: Validate that the result *sparks joy*, AKA, satisfies all of the consumers’ needs
+## Шаг 6: Убедитесь, что результат *приносит радость*, то есть удовлетворяет все потребности потребителей
 
-When you walk into your newly unpacked kitchen, and the counters are organized, you can unload the dishwasher because the location of the forks is intuitive. You ask your housemate to make dinner for everyone, and they navigate the kitchen with ease!
+Когда вы входите в вашу недавно распакованную кухню, и столешницы организованы, вы можете разгрузить посудомоечную машину, потому что расположение вилок интуитивно понятно. Вы просите вашего сожителя приготовить ужин для всех, и они легко ориентируются на кухне!
 
-Ask yourself these questions:
+Задайте себе эти вопросы:
 
-- Does my finished build design spark joy? Meaning, have I executed my build reflective of my scalable design?
-- Is it easy to navigate? Is it easy to understand?
-- Are all of the pieces easy to consume, when I need to utilize the modularity in the future?
-- Does my final query perform well, and answer all of the consumers’ needs?
+- Приносит ли мой законченный дизайн радость? То есть, выполнил ли я свою сборку в соответствии с моим масштабируемым дизайном?
+- Легко ли в нем ориентироваться? Легко ли его понять?
+- Все ли части легко использовать, когда мне нужно будет воспользоваться модульностью в будущем?
+- Хорошо ли выполняется мой конечный запрос и удовлетворяет ли он все потребности потребителей?
 
-If your answer is yes to these questions, you’ve sparked JOY. Well done friend! If the answer is no, consider which pieces need to be planned again. If your code isn’t scalable, or easy for consumers to use, start from step one again — gather your consumers, try to understand where communication broke down, and redesign.
-
+Если ваш ответ "да" на эти вопросы, вы вызвали РАДОСТЬ. Отличная работа, друг! Если ответ "нет", подумайте, какие части нужно спланировать заново. Если ваш код не масштабируем или его трудно использовать потребителям, начните с первого шага снова — соберите ваших потребителей, постарайтесь понять, где произошел сбой в коммуникации, и перепроектируйте.

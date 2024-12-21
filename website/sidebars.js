@@ -316,13 +316,13 @@ const sidebarSettings = {
         "docs/build/dbt-tips",
         {
           type: "category",
-          label: "Build your DAG",
+          label: "Создание DAG",
           collapsed: true,
           link: { type: "doc", id: "docs/build/models" },
           items: [
             {
               type: "category",
-              label: "Models",
+              label: "Модели",
               link: { type: "doc", id: "docs/build/models" },
               items: [
                 "docs/build/models",
@@ -332,7 +332,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Tests",
+              label: "Тесты",
               link: { type: "doc", id: "docs/build/data-tests" },
               items: ["docs/build/data-tests", "docs/build/unit-tests"],
             },
@@ -348,19 +348,19 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Build your metrics",
+          label: "Создание метрик",
           link: { type: "doc", id: "docs/build/build-metrics-intro" },
           collapsed: true,
           items: [
             "docs/build/build-metrics-intro",
             {
               type: "link",
-              label: "Quickstart with the dbt Cloud Semantic Layer",
+              label: "Быстрый старт с dbt Cloud Semantic Layer",
               href: `/guides/sl-snowflake-qs`,
             },
             {
               type: "category",
-              label: "About MetricFlow",
+              label: "О MetricFlow",
               link: { type: "doc", id: "docs/build/about-metricflow" },
               items: [
                 "docs/build/about-metricflow",
@@ -372,7 +372,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Semantic models",
+              label: "Семантические модели",
               link: { type: "doc", id: "docs/build/semantic-models" },
               items: [
                 "docs/build/semantic-models",
@@ -383,7 +383,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Metrics",
+              label: "Метрики",
               link: { type: "doc", id: "docs/build/metrics-overview" },
               items: [
                 "docs/build/metrics-overview",
@@ -397,7 +397,7 @@ const sidebarSettings = {
             "docs/build/saved-queries",
             {
               type: "category",
-              label: "Advanced data modeling",
+              label: "Продвинутое моделирование данных",
               link: { type: "doc", id: "docs/build/advanced-topics" },
               items: [
                 "docs/build/fill-nulls-advanced",
@@ -408,7 +408,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Enhance your models",
+          label: "Улучшение моделей",
           collapsed: true,
           link: { type: "doc", id: "docs/build/enhance-your-models" },
           items: [
@@ -416,7 +416,7 @@ const sidebarSettings = {
             "docs/build/materializations",
             {
               type: "category",
-              label: "Incremental models",
+              label: "Инкрементальные модели",
               link: {
                 type: "doc",
                 id: "docs/build/incremental-models-overview",
@@ -432,7 +432,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Enhance your code",
+          label: "Улучшение кода",
           collapsed: true,
           link: { type: "doc", id: "docs/build/enhance-your-code" },
           items: [
@@ -445,7 +445,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Organize your outputs",
+          label: "Организация вывода",
           collapsed: true,
           link: { type: "doc", id: "docs/build/organize-your-outputs" },
           items: [
@@ -471,7 +471,7 @@ const sidebarSettings = {
         "docs/deploy/deploy-environments",
         {
         type: "category",
-        label: "Continuous integration",
+        label: "Непрерывная интеграция (CI)",
         collapsed: true,
         link: { type: "doc", id: "docs/deploy/about-ci" },
         items: [
@@ -483,7 +483,7 @@ const sidebarSettings = {
         "docs/deploy/continuous-deployment",
         {
           type: "category",
-          label: "Jobs",
+          label: "Работы (jobs)",
           link: { type: "doc", id: "docs/deploy/jobs" },
           items: [
             "docs/deploy/jobs",
@@ -495,7 +495,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Monitor jobs and alerts",
+          label: "Мониторинг и алерты",
           link: { type: "doc", id: "docs/deploy/monitor-jobs" },
           items: [
             "docs/deploy/monitor-jobs",
@@ -519,7 +519,7 @@ const sidebarSettings = {
         "docs/collaborate/collaborate-with-others",
         {
           type: "category",
-          label: "Discover data with dbt Explorer",
+          label: "Изучение данных с dbt Explorer",
           link: { type: "doc", id: "docs/collaborate/explore-projects" },
           items: [
             "docs/collaborate/explore-projects",
@@ -532,7 +532,7 @@ const sidebarSettings = {
             "docs/collaborate/dbt-explorer-faqs",
             {
               type: "category",
-              label: "Model consumption",
+              label: "Потребление моделей",
               link: {
                 type: "doc",
                 id: "docs/collaborate/auto-exposures",
@@ -547,7 +547,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Git version control",
+          label: "Контроль версий с Git",
           link: { type: "doc", id: "docs/collaborate/git-version-control" },
           items: [
             "docs/collaborate/git-version-control",
@@ -559,7 +559,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Document your projects",
+          label: "Документация проекта",
           link: {
             type: "doc",
             id: "docs/collaborate/build-and-view-your-docs",
@@ -568,7 +568,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Model governance",
+          label: "Управление моделями",
           collapsed: true,
           link: {
             type: "doc",
@@ -586,19 +586,19 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Use the dbt Semantic Layer",
+      label: "Использование семантического слоя dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/use-dbt-semantic-layer/dbt-sl" },
       items: [
         "docs/use-dbt-semantic-layer/dbt-sl",
         {
           type: "link",
-          label: "Quickstart with the dbt Cloud Semantic Layer",
+          label: "Быстрый старт с dbt Cloud Semantic Layer",
           href: `/guides/sl-snowflake-qs`,
         },
         {
           type: "category",
-          label: "Configure",
+          label: "Настройка",
           link: { type: "doc", id: "docs/use-dbt-semantic-layer/setup-sl" },
           items: [
             "docs/use-dbt-semantic-layer/setup-sl",
@@ -607,7 +607,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Deploy metrics",
+          label: "Развертывание метрик",
           link: { type: "doc", id: "docs/use-dbt-semantic-layer/deploy-sl" },
           items: [
             "docs/use-dbt-semantic-layer/deploy-sl", 
@@ -617,7 +617,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Consume",
+          label: "Потребление",
           link: { type: "doc", id: "docs/use-dbt-semantic-layer/consume-metrics" },
           items: [
             "docs/use-dbt-semantic-layer/consume-metrics",
@@ -635,7 +635,7 @@ const sidebarSettings = {
         "docs/dbt-cloud-apis/overview",
         {
           type: "category",
-          label: "API Access",
+          label: "Доступ к API",
           link: { type: "doc", id: "docs/dbt-cloud-apis/authentication" },
           items: [
             "docs/dbt-cloud-apis/authentication",
@@ -672,7 +672,7 @@ const sidebarSettings = {
             "docs/dbt-cloud-apis/discovery-querying",
             {
               type: "category",
-              label: "Schema",
+              label: "Схема",
               link: {
                 type: "doc",
                 id: "docs/dbt-cloud-apis/discovery-schema-environment",
@@ -681,7 +681,7 @@ const sidebarSettings = {
                 "docs/dbt-cloud-apis/discovery-schema-environment",
                 {
                   type: "category",
-                  label: "Job",
+                  label: "Работа (job)",
                   link: {
                     type: "doc",
                     id: "docs/dbt-cloud-apis/discovery-schema-job",
@@ -758,7 +758,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Semantic Layer integrations",
+          label: "Интеграции Semantic Layer",
           link: {
             type: "doc",
             id: "docs/cloud-integrations/avail-sl-integrations",
@@ -785,7 +785,7 @@ const sidebarSettings = {
         "docs/dbt-versions/experimental-features",
         {
           type: "category",
-          label: "dbt Core upgrade guides",
+          label: "Гайды по обновлению dbt Core",
           link: {
             type: "generated-index",
             title: "Version upgrade guides",
@@ -842,7 +842,7 @@ const sidebarSettings = {
     "reference/references-overview",
     {
       type: "category",
-      label: "Project configs",
+      label: "Конфигурация проекта",
       collapsed: true,
       items: [
         "reference/dbt_project.yml",

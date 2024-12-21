@@ -1,73 +1,73 @@
 ---
-title: "Building a historical user segmentation model with dbt"
-description: "Learn how to use dbt to build custom user segments and track them over time."
+title: "Создание модели исторической сегментации пользователей с помощью dbt"
+description: "Узнайте, как использовать dbt для создания пользовательских сегментов и отслеживания их изменений во времени."
 slug: historical-user-segmentation
 
 authors: [santiago_jauregui]
 
-tags: [analytics craft, dbt tutorials, sql magic]
+tags: [аналитическое мастерство, dbt учебники, sql магия]
 hide_table_of_contents: false
 
 date: 2023-06-13
 is_featured: true
 ---
 
-## Introduction
+## Введение
 
-Most data modeling approaches for customer segmentation are based on a wide table with user attributes. This table only stores the current attributes for each user, and is then loaded into the various SaaS platforms via Reverse ETL tools.
+Большинство подходов к моделированию данных для сегментации клиентов основаны на широкой таблице с атрибутами пользователей. Эта таблица хранит только текущие атрибуты для каждого пользователя и затем загружается в различные SaaS платформы с помощью инструментов обратного ETL.
 
-Take for example a Customer Experience (CX) team that uses Salesforce as a CRM. The users will create tickets to ask for assistance, and the CX team will start attending them in the order that they are created. This is a good first approach, but not a data driven one. 
+Возьмем, к примеру, команду по работе с клиентами (CX), которая использует Salesforce в качестве CRM. Пользователи создают заявки на помощь, и команда CX начинает их обрабатывать в порядке создания. Это хороший первый подход, но не основанный на данных.
 
-An improvement to this would be to prioritize the tickets based on the customer segment, answering our most valuable customers first. An Analytics Engineer can build a segmentation to identify the power users (for example with an RFM approach) and store it in the data warehouse. The Data Engineering team can then export that user attribute to the CRM, allowing the customer experience team to build rules on top of it.
+Улучшением этого подхода было бы приоритизировать заявки на основе сегмента клиента, отвечая сначала нашим наиболее ценным клиентам. Инженер-аналитик может построить сегментацию для идентификации активных пользователей (например, с помощью подхода RFM) и сохранить ее в хранилище данных. Команда по обработке данных затем может экспортировать этот атрибут пользователя в CRM, позволяя команде по работе с клиентами строить правила на его основе.
 
 <!--truncate-->
-<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-segments-example.png" width="40%" title="Example of an RFM user segmentation"/>
+<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-segments-example.png" width="40%" title="Пример сегментации пользователей с помощью RFM"/>
 
-## Problems
+## Проблемы
 
-This is a pretty common approach that helps analytics engineering teams to add value to the company outside of just building models that impact reports or dashboards. The main issue here is that we often build models that only show us the latest status of each user, which brings the following challenges.
+Это довольно распространенный подход, который помогает командам аналитической инженерии добавлять ценность компании, выходя за рамки просто построения моделей, влияющих на отчеты или панели управления. Основная проблема здесь в том, что мы часто строим модели, которые показывают нам только последнее состояние каждого пользователя, что приводит к следующим вызовам.
 
-### Validating the improvement
+### Проверка улучшения
 
-Let’s say that you were able to build the segmentation and export it to the CRM. The customer experience team is now prioritizing the tickets based on the value added by your client. But how can you validate if this initiative actually worked?
+Предположим, что вам удалось построить сегментацию и экспортировать ее в CRM. Команда по работе с клиентами теперь приоритизирует заявки на основе ценности, добавленной вашим клиентом. Но как вы можете проверить, сработала ли эта инициатива на самом деле?
 
-- If you are running a retention campaign and you are prioritizing your “Champions”, are you able to check if they are still “Champions” a month after you contacted them? With the model proposed before, you can’t verify if a Champion is still a champion because you only keep the customer’s last status.
-- If you are running an activation campaign and you are prioritizing your “New Users”, you are also unable to check if they became “Champions” or if they are “Hibernating” a month later.
+- Если вы проводите кампанию по удержанию и приоритизируете своих "Чемпионов", можете ли вы проверить, остаются ли они "Чемпионами" через месяц после того, как вы с ними связались? С предложенной ранее моделью вы не можете проверить, остается ли Чемпион чемпионом, потому что вы храните только последнее состояние клиента.
+- Если вы проводите кампанию по активации и приоритизируете своих "Новых пользователей", вы также не можете проверить, стали ли они "Чемпионами" или "Гибернирующими" через месяц.
 
-### Code redundancy with data scientists
+### Избыточность кода с учеными данных
 
-It might also be the case that you have a data science or machine learning (ML) team in your company. The ML practitioners often use user attributes as an input to train their models (also called features in a data science context). In order for that attribute to be useful as a feature in the ML model, they need to know how it changed over time. 
+Также может быть так, что у вас в компании есть команда по науке о данных или машинному обучению (ML). Практики ML часто используют атрибуты пользователей в качестве входных данных для обучения своих моделей (также называемых признаками в контексте науки о данных). Чтобы этот атрибут был полезен в качестве признака в модели ML, им нужно знать, как он изменялся со временем.
 
-As a result, data scientists often end up rewriting the same user attributes logic in their modeling language (typically Python). This results in wasted effort and inconsistency in business logic between the machine learning and the analytics engineering models.
+В результате ученые данных часто переписывают ту же логику атрибутов пользователей на своем языке моделирования (обычно Python). Это приводит к потере усилий и несоответствиям в бизнес-логике между моделями машинного обучения и аналитической инженерии.
 
-Analytics engineering best practices are oriented to helping the data team reuse the models built by other practitioners. We need to find a way to extend that outside of just the analytics team and impact the data team as a whole.
+Лучшие практики аналитической инженерии ориентированы на помощь команде данных в повторном использовании моделей, построенных другими практиками. Нам нужно найти способ расширить это за пределы только аналитической команды и повлиять на команду данных в целом.
 
-## Solution
+## Решение
 
-The approach to solving this is quite simple; we need to build a model that doesn’t just consider the last value for each user attribute, but instead saves a snapshot of how it changed over time.
+Подход к решению этой проблемы довольно прост; нам нужно построить модель, которая не просто учитывает последнее значение для каждого атрибута пользователя, а вместо этого сохраняет снимок того, как он изменялся со временем.
 
-One way to solve it would be to use [dbt snapshots](https://docs.getdbt.com/docs/build/snapshots), but this would only keep the attributes history from the time of our model deployment onwards, losing potentially useful data that existed prior to that point in time.
+Один из способов решения этой задачи — использовать [снимки dbt](https://docs.getdbt.com/docs/build/snapshots), но это будет сохранять историю атрибутов только с момента развертывания нашей модели, теряя потенциально полезные данные, существовавшие до этого момента.
 
-A better approach for our use case was to calculate the snapshots in our SQL logic. This snapshot can be calculated in various time windows (monthly, weekly, daily) depending on the type of analysis that you need to perform.
+Лучший подход для нашего случая использования — это вычисление снимков в нашей SQL-логике. Этот снимок можно вычислять в различных временных окнах (ежемесячно, еженедельно, ежедневно) в зависимости от типа анализа, который вам нужно выполнить.
 
-In this section we’ll show you how to build a basic user segmentation model with RFM that only keeps the current value, and then we will go through the changes in the code to preserve the segmentation history.
+В этом разделе мы покажем вам, как построить базовую модель сегментации пользователей с RFM, которая сохраняет только текущее значение, а затем мы рассмотрим изменения в коде для сохранения истории сегментации.
 
-### RFM Segmentation
+### Сегментация RFM
 
-The goal of RFM analysis is to segment customers into groups based on how recently they made a purchase (Recency), how frequently they make purchases (Frequency), and how much money they spend (Monetary).
+Цель анализа RFM — сегментировать клиентов на группы на основе того, как недавно они совершили покупку (Recency), как часто они совершают покупки (Frequency) и сколько денег они тратят (Monetary).
 
-We are going to use just the Recency and Frequency matrix, and use the Monetary value as an accessory attribute. This is a common approach in companies where the Frequency and the Monetary Value are highly correlated.
+Мы будем использовать только матрицу Recency и Frequency, а значение Monetary использовать в качестве вспомогательного атрибута. Это распространенный подход в компаниях, где Frequency и Monetary Value сильно коррелируют.
 
-<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-segmentation-matrix.png" width="100%" title="Example of a Recency and Frequency matrix"/>
+<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-segmentation-matrix.png" width="100%" title="Пример матрицы Recency и Frequency"/>
 
-### RFM model for current segment
+### Модель RFM для текущего сегмента
 
-We will first use a `SELECT *` CTE to load all our payments data. The columns that we will be using for the segmentation are the following:
+Сначала мы используем `SELECT *` CTE, чтобы загрузить все наши данные о платежах. Колонки, которые мы будем использовать для сегментации, следующие:
 
-- **user_id:** Unique identifier for each user or customer
-- **payment_date:** Date of each customer’s payment
-- **payment_id:** Unique identifier of each payment
-- **payment_amount:** Transacted amount of each payment
+- **user_id:** Уникальный идентификатор для каждого пользователя или клиента
+- **payment_date:** Дата каждого платежа клиента
+- **payment_id:** Уникальный идентификатор каждого платежа
+- **payment_amount:** Сумма каждой транзакции
 
 ```sql
 WITH payments AS(
@@ -84,13 +84,12 @@ WITH payments AS(
 | D | 2022-11-28 14:43:42 | DD | 580.5 |
 | E | 2022-11-28 14:44:44 | EE | 462.36 |
 
+Далее мы рассчитаем RFM (recency, frequency и monetary value) для каждого пользователя:
 
-Next we will calculate the RFM (recency, frequency and monetary value) for each user:
-
-- **max_payment_date:** Last payment date of each user. We keep it for auditing
-- **recency:** Days that passed between the last transaction of each user and today
-- **frequency:** Quantity of user transactions in the analyzed window
-- **monetary:** Transacted amount by the user in the analyzed window
+- **max_payment_date:** Дата последнего платежа каждого пользователя. Мы сохраняем ее для аудита
+- **recency:** Дни, прошедшие с момента последней транзакции каждого пользователя до сегодняшнего дня
+- **frequency:** Количество транзакций пользователя в анализируемом окне
+- **monetary:** Сумма транзакций пользователя в анализируемом окне
 
 ```sql
 rfm_values AS (
@@ -112,7 +111,7 @@ rfm_values AS (
 | D | 2023-04-19 19:00:24 | 5 09:42:37.034 | 4 | 2911.16 |
 | E | 2023-03-23 19:22:00 | 32 09:21:01.034 | 40 | 30595.15 |
 
-There are various approaches to dividing users based on their RFM values. In this model we use percentiles to divide customers into groups based on their relative ranking in each of the three metrics, using the `PERCENT_RANK()` function.
+Существует несколько подходов к разделению пользователей на основе их значений RFM. В этой модели мы используем перцентили для разделения клиентов на группы на основе их относительного ранжирования в каждой из трех метрик, используя функцию `PERCENT_RANK()`.
 
 ```sql
 rfm_percentiles AS (
@@ -135,11 +134,11 @@ rfm_percentiles AS (
 | D | 4 21:16:33.112 | 4 | 490.14 | 0.91 | 0.56 | 0.34 |
 | E | 2 08:08:22.921 | 14 | 7239.69 | 0.95 | 0.85 | 0.28 |
 
-Now that we have the percentiles of each RFM value of each user, we can assign them a score based on were they end up on the distribution, going by steps of 0.2 or 20% each:
+Теперь, когда у нас есть перцентили каждого значения RFM для каждого пользователя, мы можем присвоить им оценку на основе того, где они находятся в распределении, с шагом 0.2 или 20%:
 
-- **recency_score:** Recency percentile values grouped from 1 to 5
-- **frequency_score:** Frequency percentile values grouped from 1 to 5
-- **monetary_score:** Monetary percentile values grouped from 1 to 5
+- **recency_score:** Значения перцентилей Recency, сгруппированные от 1 до 5
+- **frequency_score:** Значения перцентилей Frequency, сгруппированные от 1 до 5
+- **monetary_score:** Значения перцентилей Monetary, сгруппированные от 1 до 5
 
 ```sql
 rfm_scores AS(
@@ -175,11 +174,11 @@ rfm_scores AS(
 | B | 0.94 | 0.38 | 0.23 | 5 | 2 | 2 |
 | C | 0.85 | 0.96 | 0.87 | 5 | 5 | 5 |
 | D | 0.71 | 0.63 | 0.93 | 4 | 4 | 5 |
-| E | 0.67 | 0.51 lo | 0.76 | 4 | 3 | 5 |
+| E | 0.67 | 0.51 | 0.76 | 4 | 3 | 5 |
 
-Lastly, we can segment the users by their frequency and recency scores based on the proposed R-F matrix:
+Наконец, мы можем сегментировать пользователей по их оценкам частоты и недавности на основе предложенной матрицы R-F:
 
-- **rfm_segment:** Segment of each user based on a mapping of the recency and frequency scores.
+- **rfm_segment:** Сегмент каждого пользователя на основе сопоставления оценок недавности и частоты.
 
 ```sql
 
@@ -222,9 +221,9 @@ FROM rfm_segment
 | D | 1 | 5 | 5 | Cannot Lose Them |
 | E | 1 | 4 | 5 | At Risk |
 
-### RFM model with segmentation history
+### Модель RFM с историей сегментации
 
-This next example shows how you can build a model with a snapshot of the user attributes at the end of each month. The same could be built for a weekly model with minor adjustments.
+Следующий пример показывает, как можно построить модель со снимком атрибутов пользователя на конец каждого месяца. То же самое можно сделать для еженедельной модели с небольшими изменениями.
 
 ```sql
 WITH payments AS(
@@ -323,9 +322,9 @@ SELECT *
 FROM rfm_segment
 ```
 
-The original query uses the current date (obtained by using the `NOW()` function) to calculate the recency of each user, whereas the new approach includes 2 CTEs that allow the RFM scores to be calculated on a monthly basis. 
+Оригинальный запрос использует текущую дату (полученную с помощью функции `NOW()`) для расчета недавности каждого пользователя, тогда как новый подход включает 2 CTE, которые позволяют рассчитывать оценки RFM на ежемесячной основе.
 
-- The first CTE queries a calendar table and selects the `date_month` column. It also appends a row with the `NOW()` function to calculate the attributes for the current month.
+- Первый CTE запрашивает таблицу календаря и выбирает столбец `date_month`. Он также добавляет строку с функцией `NOW()`, чтобы рассчитать атрибуты для текущего месяца.
 
 ```sql
 months AS(
@@ -343,8 +342,9 @@ months AS(
 | 2023-03-01 0:00:00 |
 | 2023-02-01 0:00:00 |
 | 2023-01-01 0:00:00 |
-- The second CTE has a `LEFT JOIN` that keeps the list of payments the user had until the end of each month, which allows the model to calculate the RFM segment the user had at the end of each period.
-- The recency metric is calculated to the end of each month. If the month is not yet finished, we calculate it to the current day (thanks to the `UNION` in the first query).
+
+- Второй CTE имеет `LEFT JOIN`, который сохраняет список платежей, которые пользователь имел до конца каждого месяца, что позволяет модели рассчитывать сегмент RFM, который пользователь имел в конце каждого периода.
+- Метрика недавности рассчитывается до конца каждого месяца. Если месяц еще не закончился, мы рассчитываем ее до текущего дня (благодаря `UNION` в первом запросе).
 
 ```sql
 payments_with_months AS(
@@ -368,9 +368,9 @@ payments_with_months AS(
 | E | 2023-04-25 5:55:05 | 2023-02-05 12:17:19 | EE | 10630 |
 | E | 2023-04-01 0:00:00 | 2023-02-05 12:17:19 | EE | 10630 |
 
-### Getting the lastest status
+### Получение последнего статуса
 
-Once we have our historical model built, we can add another model that runs after it in our dependency graph. This can help reduce the latency in use cases where querying the whole history is not needed (like personalization initiatives).
+Как только мы построили нашу историческую модель, мы можем добавить другую модель, которая запускается после нее в нашем графе зависимостей. Это может помочь уменьшить задержку в случаях, когда запрос всей истории не требуется (например, в инициативах по персонализации).
 
 ```sql
 WITH rfm_segments AS(
@@ -386,26 +386,24 @@ SELECT *
 FROM current_segments
 ```
 
-### Solution overview
+### Обзор решения
 
-With the new approach, our dependency graph would look like this:
+С новым подходом наш граф зависимостей будет выглядеть следующим образом:
 
-<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-models-dependency-graph.png" width="100%" title="RFM models dependency graph"/>
+<Lightbox src="/img/blog/2023-05-08-building-a-historical-user-segmentation-model-with-dbt/rfm-models-dependency-graph.png" width="100%" title="Граф зависимостей моделей RFM"/>
 
-- For analysts that want to see how the segments changed over time, they can query the historical model. There is also an option to build an aggregated model before loading it in a Business Intelligence tool.
-- For ML model training, data scientists and machine learning practitioners can import this model into their notebooks or their feature store, instead of rebuilding the attributes from scratch.
-- If you want to personalize the experience of a user based on their segment, like in the CX example from the beginning, you can query the current segmention and export it to your CRM with a Reverse ETL tool.
+- Для аналитиков, которые хотят увидеть, как сегменты изменялись со временем, они могут запросить историческую модель. Также есть возможность построить агрегированную модель перед загрузкой ее в инструмент бизнес-аналитики.
+- Для обучения моделей ML ученые данных и практики машинного обучения могут импортировать эту модель в свои ноутбуки или хранилище признаков, вместо того чтобы заново строить атрибуты с нуля.
+- Если вы хотите персонализировать опыт пользователя на основе его сегмента, как в примере CX в начале, вы можете запросить текущую сегментацию и экспортировать ее в свою CRM с помощью инструмента обратного ETL.
 
-## Conclusions
+## Заключение
 
-This design has trade-offs, notably longer build-time and harder explainability. However, we believe that data teams that invest in this approach will get better datasets for historical analysis, more collaboration with data scientists, and overall greater impact from their analytics engineering efforts.
+Этот дизайн имеет свои компромиссы, в частности, более длительное время сборки и сложность объяснения. Однако мы считаем, что команды данных, которые инвестируют в этот подход, получат лучшие наборы данных для исторического анализа, больше сотрудничества с учеными данных и в целом больший эффект от своих усилий в области аналитической инженерии.
 
-## Related resources
+## Связанные ресурсы
 
-[Operational Analytics in Practice](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/)
+[Операционная аналитика на практике](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/)
 
-[How dbt Labs' data team approaches reverse ETL](https://www.getdbt.com/open-source-data-culture/reverse-etl-playbook/)
+[Как команда данных dbt Labs подходит к обратному ETL](https://www.getdbt.com/open-source-data-culture/reverse-etl-playbook/)
 
-[The Operational Data Warehouse: Reverse ETL, CDPs, and the future of data activation](https://www.getdbt.com/coalesce-2021/operational-data-warehouse-reverse-etl-cdp-data-activation/)
-
-
+[Операционное хранилище данных: обратный ETL, CDP и будущее активации данных](https://www.getdbt.com/coalesce-2021/operational-data-warehouse-reverse-etl-cdp-data-activation/)

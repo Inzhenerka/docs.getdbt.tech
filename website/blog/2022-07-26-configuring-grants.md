@@ -1,6 +1,6 @@
 ---
-title: "Updating our permissioning guidelines: grants as configs in dbt Core v1.2"
-description: "End consumers (like users and BI tools) will need to be granted the privilege to read the tables and views dbt creates in your warehouse. In v1.2, we introduced a `grants` config that is easier to use than hooks and uses syntax that is database agnostic."
+title: "Обновление наших рекомендаций по разрешениям: grants как конфигурации в dbt Core v1.2"
+description: "Конечным потребителям (таким как пользователи и BI-инструменты) необходимо предоставить привилегии для чтения таблиц и представлений, которые dbt создает в вашем хранилище. В версии v1.2 мы представили конфигурацию `grants`, которая проще в использовании, чем хуки, и использует синтаксис, независимый от базы данных."
 
 slug: configuring-grants
 
@@ -13,34 +13,34 @@ date: 2022-07-26
 is_featured: true
 ---
 
-If you’ve needed to grant access to a dbt model between 2019 and today, there’s a good chance you’ve come across the ["The exact grant statements we use in a dbt project"](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430) post on Discourse. It explained options for covering two complementary abilities:
-1. querying relations via the "select" privilege
-1. using the schema those relations are within via the "usage" privilege
+Если вам нужно было предоставить доступ к модели dbt с 2019 года по сегодняшний день, есть большая вероятность, что вы наткнулись на пост ["Точные операторы grant, которые мы используем в проекте dbt"](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430) на Discourse. В нем объяснялись варианты для покрытия двух дополнительных возможностей:
+1. запрос отношений через привилегию "select"
+1. использование схемы, в которой находятся эти отношения, через привилегию "usage"
 
 <!--truncate-->
 
-## The solution then
-Prior to dbt Core v1.2, we proposed three possible approaches (each coming with [caveats and trade-offs](#caveats-and-trade-offs-of-the-original-guidance)):
+## Решение тогда
+До dbt Core v1.2 мы предлагали три возможных подхода (каждый из которых имел [предостережения и компромиссы](#caveats-and-trade-offs-of-the-original-guidance)):
 
-1. Using `on-run-end` hooks to `grant select on all` tables/views dbt has just built
-1. Using `post-hook` to grant `select` on a model as soon as it’s built
-1. Using either default grants (future grants on Snowflake) or a combination of `post-hooks` and `on-run-end` hooks instead
+1. Использование хуков `on-run-end` для `grant select on all` таблиц/представлений, которые только что построил dbt
+1. Использование `post-hook` для предоставления `select` на модели сразу после ее построения
+1. Использование либо стандартных грантов (будущие гранты в Snowflake), либо комбинации `post-hooks` и `on-run-end` хуков
 
-These options were the state of the art... until today!
+Эти варианты были передовыми... до сегодняшнего дня!
 
-## What’s changed?
+## Что изменилось?
 
-In v1.2, we [introduced](https://www.getdbt.com/blog/teaching-dbt-about-grants) a [`grants` config](https://docs.getdbt.com/reference/resource-configs/grants) that works a lot like `post-hook`, with two key differences:
+В версии v1.2 мы [представили](https://www.getdbt.com/blog/teaching-dbt-about-grants) конфигурацию [`grants`](https://docs.getdbt.com/reference/resource-configs/grants), которая работает очень похоже на `post-hook`, с двумя ключевыми отличиями:
 
-- You configure `grants` as a structured dictionary rather than writing all the SQL yourself
-- dbt will take *the most efficient path* to apply those grants
+- Вы настраиваете `grants` как структурированный словарь, а не пишете весь SQL самостоятельно
+- dbt выберет *наиболее эффективный путь* для применения этих грантов
 
-### Why `grants` are better than hooks
+### Почему `grants` лучше, чем хуки
 
-First of all, [hooks are hard](#issues-related-to-hooks)! Especially that nonsense around [nested curlies](https://docs.getdbt.com/docs/building-a-dbt-project/dont-nest-your-curlies).
+Во-первых, [хуки сложны](#issues-related-to-hooks)! Особенно эта путаница с [вложенными фигурными скобками](https://docs.getdbt.com/docs/building-a-dbt-project/dont-nest-your-curlies).
 
-#### A problem then
-Let’s say you’ve been working on an incremental model. Previously, you granted access on this incremental model directly to `reporter`, so people can query it downstream:
+#### Проблема тогда
+Предположим, вы работали над инкрементальной моделью. Ранее вы предоставили доступ к этой инкрементальной модели напрямую `reporter`, чтобы люди могли запрашивать ее далее:
 
 ```sql
 -- models/my_incremental_model.sql
@@ -53,7 +53,7 @@ Let’s say you’ve been working on an incremental model. Previously, you grant
 select ...
 ```
 
-Over time, this model took on more and more responsibilities and you decided to refactor the incremental model to feed a series of dedicated views instead. Thoughtfully, you also removed the `post_hook` that granted direct access to the incremental model:
+Со временем эта модель взяла на себя все больше и больше обязанностей, и вы решили переработать инкрементальную модель, чтобы она питала серию специализированных представлений. Заботливо, вы также удалили `post_hook`, который предоставлял прямой доступ к инкрементальной модели:
 
 ```sql
 -- models/my_incremental_model.sql
@@ -63,13 +63,13 @@ Over time, this model took on more and more responsibilities and you decided to 
 select ...
 ```
 
-**The problem?** Until you `--full-refresh` it, your incremental model is still granted to the `reporter` role!
+**Проблема?** Пока вы не выполните `--full-refresh`, ваша инкрементальная модель все еще предоставлена роли `reporter`!
 
-#### The solution today
+#### Решение сегодня
 
-dbt’s new `grants` implementation takes account of this. It knows whether grants are “carried over” when a model is re-run based on its materialization and your database. It makes up the difference between the existing grants and the ones you actually want.
+Новая реализация `grants` в dbt учитывает это. Она знает, переносятся ли гранты, когда модель запускается повторно, в зависимости от ее материализации и вашей базы данных. Она компенсирует разницу между существующими грантами и теми, которые вы действительно хотите.
 
-Try it out!
+Попробуйте!
 
 ```sql
 
@@ -83,7 +83,7 @@ Try it out!
 select ...
 ```
 
-Run that, verify that `another_user` can select from your model. Then change your model and run it again:
+Запустите это, убедитесь, что `another_user` может выбрать вашу модель. Затем измените вашу модель и запустите ее снова:
 
 ```sql
 -- models/my_incremental_model.sql
@@ -96,51 +96,51 @@ Run that, verify that `another_user` can select from your model. Then change you
 select ...
 ```
 
-If you check your database, you should see that *no one* can select from the incremental model. You could also see, in the debug-level logs, that dbt has run a `revoke` statement.
+Если вы проверите свою базу данных, вы должны увидеть, что *никто* не может выбрать из инкрементальной модели. Вы также можете увидеть в журналах уровня отладки, что dbt выполнил оператор `revoke`.
 
-(Note that, if `grants` is missing or set to `{}`, dbt will understand that you don’t want it managing grants for this table. So it’s best to explicitly specify the privilege, and that you want *no one* to have it!)
+(Обратите внимание, что если `grants` отсутствует или установлен в `{}`, dbt поймет, что вы не хотите, чтобы он управлял грантами для этой таблицы. Поэтому лучше явно указать привилегию и то, что вы хотите, чтобы *никто* ее не имел!)
 
-Great! Now that you’re using the `grants` feature in dbt v1.2, you’ve just given this more thought than you should ever need to again 😎
+Отлично! Теперь, когда вы используете функцию `grants` в dbt v1.2, вы только что уделили этому больше внимания, чем когда-либо потребуется снова 😎
 
-## Is there still a place for hooks?
+## Есть ли еще место для хуков?
 
-Yes, indeed! Some areas that stand out:
-- [Granting permissions on other object types](#granting-permissions-on-other-object-types) like granting usage on a schema
-- [Advanced permissions](#advanced-permissions-or-other-operations) like row-level access
+Да, конечно! Некоторые области, которые выделяются:
+- [Предоставление разрешений на другие типы объектов](#granting-permissions-on-other-object-types), такие как предоставление использования на схему
+- [Расширенные разрешения](#advanced-permissions-or-other-operations), такие как доступ на уровне строк
 
-### Granting permissions on other object types
+### Предоставление разрешений на другие типы объектов
 
-For now, it’s still necessary to grant `usage` on schemas to users that will need to select from objects in those schemas. Even though dbt creates schemas at the start of runs, there isn’t really a way to configure *schemas as their own objects* within dbt.
+На данный момент все еще необходимо предоставлять `usage` на схемы пользователям, которым нужно будет выбирать объекты в этих схемах. Хотя dbt создает схемы в начале запусков, на самом деле нет способа настроить *схемы как их собственные объекты* в dbt.
 
-Here's a couple ways you could approach it:
-- Option A -- simple and familiar -- hooks to the rescue
-- Option B -- too clever by half -- use the dbt graph to infer which schemas need "usage"
+Вот несколько способов, как вы можете подойти к этому:
+- Вариант A -- простой и знакомый -- хуки на помощь
+- Вариант B -- слишком хитро -- использовать граф dbt, чтобы определить, какие схемы нуждаются в "usage"
 
-#### Option A: simple and familiar
+#### Вариант A: простой и знакомый
 
 ```yaml
 on-run-end:
-	# better as a macro
+	# лучше как макрос
 	- "{% for schema in schemas %}grant usage on schema {{ schema }} to reporter;{% endfor %}"
 ```
 
-Upside: Short, sweet, to the point.
+Плюсы: Коротко, ясно, по делу.
 
-Downside: we need to repeat the same list of roles here that we specified in our `grants` config.
+Минусы: нам нужно повторить тот же список ролей здесь, который мы указали в нашей конфигурации `grants`.
 
-#### Option B: Too clever by half
+#### Вариант B: Слишком хитро
 
-Now that `grants` is a real config in dbt, available via dbt metadata, you can do all sorts of fun things with it. For instance, figure out which schemas have at least one object granting `select` to a role, and then grant `usage` on that schema to that role!
+Теперь, когда `grants` является реальной конфигурацией в dbt, доступной через метаданные dbt, вы можете делать с ней всевозможные интересные вещи. Например, определить, какие схемы имеют хотя бы один объект, предоставляющий `select` роли, и затем предоставить `usage` на эту схему этой роли!
 
 ```sql
 -- macros/operations/reporting_grants.sql
 {% macro grant_usage_on_schemas_where_select() %}
     /*
-      Note: This is pseudo code only, for demonstration purposes
-      For every role that can access at least one object in a schema,
-      grant 'usage' on that schema to the role.
-      That way, users with the role can run metadata queries showing objects
-      in that schema (a common need for BI tools)
+      Примечание: Это только псевдокод, для демонстрационных целей
+      Для каждой роли, которая может получить доступ хотя бы к одному объекту в схеме,
+      предоставить 'usage' на эту схему этой роли.
+      Таким образом, пользователи с этой ролью могут выполнять метаданные запросы, показывающие объекты
+      в этой схеме (обычная потребность для BI-инструментов)
     */
     {% set schema_grants = {} %}
     {% if execute %}
@@ -168,42 +168,42 @@ Now that `grants` is a real config in dbt, available via dbt metadata, you can d
 {% endmacro %}
 ```
 
-This is certainly too clever -- but you get the idea, and an illustration of what's possible!
+Это, конечно, слишком хитро -- но вы поняли идею и получили иллюстрацию того, что возможно!
 
-You can even do this at the *start* of the run, right after dbt creates its schemas, rather than waiting until the end. (Although it’s not a huge deal to wait.)
+Вы даже можете сделать это в *начале* запуска, сразу после того, как dbt создаст свои схемы, а не ждать до конца. (Хотя это не большая проблема ждать.)
 
 ```yaml
 on-run-start:
 	- {{ grant_usage_on_schemas_where_select() }}
 ```
 
-### Advanced permissions (or other operations)
+### Расширенные разрешения (или другие операции)
 
-Want to restrict access to specific rows in a table for specific users? Or dynamically mask column values depending on who’s asking?
+Хотите ограничить доступ к определенным строкам в таблице для определенных пользователей? Или динамически маскировать значения столбцов в зависимости от того, кто запрашивает?
 
-The approach varies by database: in Snowflake, you’ll still want a `post-hook` to apply a [row access policy](https://docs.snowflake.com/en/user-guide/security-row-intro.html) or a column [masking policy](https://docs.snowflake.com/en/sql-reference/sql/create-masking-policy.html) to your table whereas in Databricks you'd use [dynamic view functions](https://docs.databricks.com/security/access-control/table-acls/object-privileges.html#dynamic-view-functions).
+Подход варьируется в зависимости от базы данных: в Snowflake вам все еще понадобится `post-hook`, чтобы применить [политику доступа к строкам](https://docs.snowflake.com/en/user-guide/security-row-intro.html) или [политику маскирования столбцов](https://docs.snowflake.com/en/sql-reference/sql/create-masking-policy.html) к вашей таблице, тогда как в Databricks вы бы использовали [функции динамического представления](https://docs.databricks.com/security/access-control/table-acls/object-privileges.html#dynamic-view-functions).
 
-It’s good to have hooks and operations as a method to utilize cutting-edge database capabilities. Any cases that become a wide and clearly demonstrated need can be upgraded by being built into `dbt-core`.
+Хорошо иметь хуки и операции как метод использования передовых возможностей базы данных. Любые случаи, которые станут широко и явно продемонстрированной потребностью, могут быть улучшены путем их интеграции в `dbt-core`.
 
-## Appendix
+## Приложение
 
-### Caveats and trade-offs of the original guidance
-`on-run-end` hooks:
-> for the period of time between when a model runs, and the end of the run, no one will be able to query that model, instead they’ll get a “permission denied” error. This creates downtime in your BI tool.”
+### Предостережения и компромиссы оригинальных рекомендаций
+`on-run-end` хуки:
+> в период времени между запуском модели и концом запуска никто не сможет запросить эту модель, вместо этого они получат ошибку "permission denied". Это создает простой в вашем BI-инструменте."
 
-`manage grants` privilege:
-> It is worth noting that this privilege *is* a global privilege – now anyone using the `transformer` role can change grants on any object as though they are the owner of the object. Up to you if you’re comfortable with this! If not, you may want to use a combination of `post-hooks` and `on-run-end` hooks instead 🙂”
+привилегия `manage grants`:
+> Стоит отметить, что эта привилегия *является* глобальной привилегией – теперь любой, использующий роль `transformer`, может изменять гранты на любом объекте, как будто они являются владельцем объекта. Решать вам, комфортно ли вам с этим! Если нет, вы можете использовать комбинацию `post-hooks` и `on-run-end` хуков вместо этого 🙂"
 
-The biggest problems:
+Основные проблемы:
 
-- Even if you wrote the [DRYest](https://en.wikipedia.org/wiki/Don't_repeat_yourself) code you could, there are still *thousands* of projects who have all written the same exact [DCL](https://en.wikipedia.org/wiki/Data_control_language) statements, wrapped in the same exact macros.
-- Default + future grants—our original recommendation, back in 2019— are *tricky.* They often require extra permissions (superuser status!), they take effect automatically, and they don’t fly for folks at many organizations with tighter security policies.
+- Даже если вы написали самый [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself) код, который могли, все равно существуют *тысячи* проектов, которые все написали одни и те же [DCL](https://en.wikipedia.org/wiki/Data_control_language) операторы, обернутые в одни и те же макросы.
+- Стандартные + будущие гранты — наша оригинальная рекомендация, еще в 2019 году — *сложны.* Они часто требуют дополнительных разрешений (статус суперпользователя!), они вступают в силу автоматически и не подходят для многих организаций с более строгими политиками безопасности.
 
-### Issues related to hooks
-This is just a sample of the issues we've seen:
-- [Post hooks that call macros get parsed with execute = False #2370](https://github.com/dbt-labs/dbt-core/issues/2370)
-- [get_relation returns none in hook context #2938](https://github.com/dbt-labs/dbt-core/issues/2938)
-- [this.is_view and this.is_table not working in BigQuery inside a hook #3529](https://github.com/dbt-labs/dbt-core/issues/3529)
-- [custom table schema path of \{\{ this \}\} parsed in correctly in post-hook macro #3985](https://github.com/dbt-labs/dbt-core/issues/3985)
-- [Post-hook doesn't resolve custom schema #4023](https://github.com/dbt-labs/dbt-core/issues/4023)
-- [[CT-80] [Bug] post-hook macro generates SQL with incorrect source table #4606](https://github.com/dbt-labs/dbt-core/issues/4606)
+### Проблемы, связанные с хуками
+Это всего лишь образец проблем, которые мы видели:
+- [Post hooks, которые вызывают макросы, парсятся с execute = False #2370](https://github.com/dbt-labs/dbt-core/issues/2370)
+- [get_relation возвращает none в контексте хука #2938](https://github.com/dbt-labs/dbt-core/issues/2938)
+- [this.is_view и this.is_table не работают в BigQuery внутри хука #3529](https://github.com/dbt-labs/dbt-core/issues/3529)
+- [пользовательский путь схемы таблицы \{\{ this \}\} неправильно парсится в post-hook макросе #3985](https://github.com/dbt-labs/dbt-core/issues/3985)
+- [Post-hook не разрешает пользовательскую схему #4023](https://github.com/dbt-labs/dbt-core/issues/4023)
+- [[CT-80] [Bug] post-hook макрос генерирует SQL с неправильной исходной таблицей #4606](https://github.com/dbt-labs/dbt-core/issues/4606)

@@ -1,6 +1,6 @@
 ---
-title: Up and Running with Azure Synapse on dbt Cloud
-description: "Some tips for getting started with Azure Synapse on dbt Cloud"
+title: Быстрый старт с Azure Synapse на dbt Cloud
+description: "Некоторые советы для начала работы с Azure Synapse на dbt Cloud"
 slug: synapse-best-practices
 
 authors: [anders_swanson]
@@ -12,129 +12,129 @@ date: 2024-05-17
 is_featured: true
 ---
 
-At dbt Labs, we’ve always believed in meeting analytics engineers where they are. That’s why we’re so excited to announce that today, analytics engineers within the Microsoft Ecosystem can use dbt Cloud with not only Microsoft Fabric but also Azure Synapse Analytics Dedicated SQL Pools (ASADSP).
+В dbt Labs мы всегда стремились поддерживать аналитиков там, где они находятся. Поэтому мы рады сообщить, что теперь аналитики в экосистеме Microsoft могут использовать dbt Cloud не только с Microsoft Fabric, но и с Azure Synapse Analytics Dedicated SQL Pools (ASADSP).
 
-Since the early days of dbt, folks have been interested having MSFT data platforms. Huge shoutout to [Mikael Ene](https://github.com/mikaelene) and [Jacob Mastel](https://github.com/jacobm001) for their efforts back in 2019 on the original SQL Server adapters ([dbt-sqlserver](https://github.com/dbt-msft/dbt-sqlserver) and [dbt-mssql](https://github.com/jacobm001/dbt-mssql), respectively)
+С самого начала dbt люди проявляли интерес к платформам данных MSFT. Огромная благодарность [Mikael Ene](https://github.com/mikaelene) и [Jacob Mastel](https://github.com/jacobm001) за их усилия в 2019 году по созданию оригинальных адаптеров SQL Server ([dbt-sqlserver](https://github.com/dbt-msft/dbt-sqlserver) и [dbt-mssql](https://github.com/jacobm001/dbt-mssql), соответственно).
 
-The journey for the Azure Synapse dbt adapter, dbt-synapse, is closely tied to my journey with dbt. I was the one who forked dbt-sqlserver into dbt-synapse in April of 2020. I had first learned of dbt only a month earlier and knew immediately that my team needed the tool. With a great deal of assistance from Jeremy and experts at Microsoft, my team and I got it off the ground and started using it. When I left my team at Avanade in early 2022 to join dbt Labs, I joked that I wasn’t actually leaving the team; I was just temporarily embedding at dbt Labs to expedite dbt Labs getting into Cloud. Two years later, I can tell my team that the mission has been accomplished! Kudos to all the folks who have contributed to the TSQL adapters either directly in GitHub or in the community Slack channels. The integration would not exist if not for you!
+Путь адаптера dbt для Azure Synapse, dbt-synapse, тесно связан с моим путем в dbt. Я был тем, кто форкнул dbt-sqlserver в dbt-synapse в апреле 2020 года. Я узнал о dbt всего за месяц до этого и сразу понял, что моей команде нужен этот инструмент. С большой помощью от Джереми и экспертов из Microsoft моя команда и я запустили его и начали использовать. Когда я покинул свою команду в Avanade в начале 2022 года, чтобы присоединиться к dbt Labs, я пошутил, что на самом деле не покидаю команду; я просто временно встраиваюсь в dbt Labs, чтобы ускорить внедрение dbt Labs в Cloud. Два года спустя я могу сказать своей команде, что миссия выполнена! Спасибо всем, кто внес вклад в адаптеры TSQL, как напрямую в GitHub, так и в каналах Slack сообщества. Интеграция не существовала бы без вас!
 
 <!--truncate-->
 
-## Fabric Best Practices
+## Лучшие практики для Fabric
 
-With the introduction of dbt Cloud support for Microsoft Fabric and Azure Synapse Analytics Dedicated SQL Pools, we're opening up new possibilities for analytics engineers in the Microsoft Ecosystem.
+С введением поддержки dbt Cloud для Microsoft Fabric и Azure Synapse Analytics Dedicated SQL Pools мы открываем новые возможности для аналитиков в экосистеме Microsoft.
 
-The goal of this blog is to ensure a great experience for both
+Цель этого блога — обеспечить отличный опыт как для
 
-- end-user data analysts who rely upon the data products built with dbt and
-- the analytics engineers, who should predominately spend time creating and maintaining data products instead of maintaining and spinning up infrastructure
-- data engineers who focus on data movement and ingestion into Synapse
+- конечных пользователей-аналитиков данных, которые полагаются на продукты данных, созданные с помощью dbt, так и
+- аналитиков, которые должны в основном тратить время на создание и поддержку продуктов данных, а не на поддержку и развертывание инфраструктуры
+- инженеров данных, которые сосредоточены на перемещении и загрузке данных в Synapse
 
-To achieve this goal, this post will cover four main areas
+Для достижения этой цели в этом посте будут рассмотрены четыре основные области:
 
-- Microsoft Fabric: the future of data warehousing in the Microsoft/Azure stack
-- strategic recommendations for provisioning Synapse environment
-- data modeling in dbt: Synapse style
-- Considerations for upstream and downstream of a Synapse-backed dbt project
+- Microsoft Fabric: будущее хранения данных в стеке Microsoft/Azure
+- стратегические рекомендации по созданию среды Synapse
+- моделирование данных в dbt: стиль Synapse
+- соображения для верхнего и нижнего уровня проекта dbt на базе Synapse
 
-With that, let’s dive in!
+С этим давайте начнем!
 
-## Fabric is the future
+## Fabric — это будущее
 
-Many data teams currently use Azure Synapse dedicated pools. However, Fabric Synapse Data Warehouse is the future of data warehousing in the Microsoft Ecosystem.  Azure Synapse Analytics will remain available for a few more years, but Microsoft’s main focus is on Fabric as we can see in their roadmap and launches.
+Многие команды данных в настоящее время используют выделенные пулы Azure Synapse. Однако Fabric Synapse Data Warehouse — это будущее хранения данных в экосистеме Microsoft. Azure Synapse Analytics останется доступным еще несколько лет, но основное внимание Microsoft сосредоточено на Fabric, как мы можем видеть в их дорожной карте и запусках.
 
-Because data platform migrations are complex and time-consuming, it’s perfectly reasonable to still be using dbt with Azure Synapse for the next two years while the migration is under way. Thankfully, if your team already is using ASADSP, transitioning to the new Cloud offering will be much more straightforward than the migration from on-premise databases to the Cloud.
+Поскольку миграции платформ данных сложны и требуют много времени, вполне разумно продолжать использовать dbt с Azure Synapse в течение следующих двух лет, пока идет миграция. К счастью, если ваша команда уже использует ASADSP, переход на новое облачное предложение будет гораздо проще, чем миграция с локальных баз данных в облако.
 
-In addition, if you're already managing your Synapse warehouse with a dbt project, you'll benefit from an even smoother migration process. Your DDL statements will be automatically handled, reducing the need for manual refactoring.
+Кроме того, если вы уже управляете своим хранилищем Synapse с помощью проекта dbt, вы получите выгоду от еще более плавного процесса миграции. Ваши операторы DDL будут обрабатываться автоматически, что уменьшит необходимость в ручной переработке.
 
-Bottom line, Fabric is the future of data warehousing for Microsoft customers, and Synapse is will be deprecated at an as-of-yet undeclared End-of-Life.
+В конечном итоге, Fabric — это будущее хранения данных для клиентов Microsoft, а Synapse будет выведен из эксплуатации в еще не объявленный срок окончания жизни.
 
- There’s undeniable potential offered by Fabric with it’s:
+Fabric предлагает неоспоримый потенциал благодаря:
 
-- fully-separated storage and compute, and
-- pay-per-second compute.
+- полностью разделенному хранению и вычислениям, и
+- оплате за секунду вычислений.
 
-These two things alone greatly simplify the below section on Resource Provisioning.
+Эти два аспекта значительно упрощают раздел ниже о предоставлении ресурсов.
 
-For more information, see:
+Для получения дополнительной информации см.:
 
-- the official guide: [Migration: Azure Synapse Analytics dedicated SQL pools to Fabric](https://learn.microsoft.com/en-us/fabric/data-warehouse/migration-synapse-dedicated-sql-pool-warehouse).
-- this blog about [the Future of Azure Synapse Analytics](https://blog.fabric.microsoft.com/en-us/blog/microsoft-fabric-explained-for-existing-synapse-users/)
+- официальный гид: [Миграция: выделенные SQL-пулы Azure Synapse Analytics в Fabric](https://learn.microsoft.com/en-us/fabric/data-warehouse/migration-synapse-dedicated-sql-pool-warehouse).
+- этот блог о [будущем Azure Synapse Analytics](https://blog.fabric.microsoft.com/en-us/blog/microsoft-fabric-explained-for-existing-synapse-users/)
 
-## Resource Provisioning
+## Предоставление ресурсов
 
-Here are some considerations if you’re setting up an environment from scratch. If the infrastructure of multiple Synapse dedicated SQL pools and a Git repo already exist, you can skip to the next section, though a review of the below as a refresher wouldn’t hurt.
+Вот некоторые соображения, если вы настраиваете среду с нуля. Если инфраструктура нескольких выделенных SQL-пулов Synapse и репозиторий Git уже существуют, вы можете перейти к следующему разделу, хотя не помешает освежить в памяти приведенное ниже.
 
-### minimize pools; maximize DWUs
+### минимизация пулов; максимизация DWU
 
-#### definitions
+#### определения
 
-- dedicated SQL pools: effectively one data warehouse
-- Data warehouse units (DWUs): the size of the cluster
+- выделенные SQL-пулы: фактически одно хранилище данных
+- Единицы хранилища данных (DWU): размер кластера
 
-#### number of pools
+#### количество пулов
 
-With Synapse, a warehouse is both storage and compute. That is to say, to access data, the cluster needs to be on and warmed up.
+С Synapse хранилище данных является как хранилищем, так и вычислительным ресурсом. Это означает, что для доступа к данным кластер должен быть включен и разогрет.
 
-If you only have one team of analytics engineers, you should have two SQL pools: one for development and one for production. If you have multiple distinct teams that will be modeling data in Synapse using dbt, consider using dbt Cloud’s Mesh paradigm to enable cross team collaboration.
+Если у вас есть только одна команда аналитиков, у вас должно быть два SQL-пула: один для разработки и один для производства. Если у вас есть несколько отдельных команд, которые будут моделировать данные в Synapse с использованием dbt, рассмотрите возможность использования парадигмы Mesh в dbt Cloud для обеспечения совместной работы между командами.
 
-Each should be at the highest tier that you can afford. You should also consider purchasing “year-long reservations” for a steep discount.
+Каждый из них должен быть на самом высоком уровне, который вы можете себе позволить. Вы также должны рассмотреть возможность покупки «годовых резервов» для значительной скидки.
 
-Some folks will recommend looking into scaling up and down pools based on demand. However, I’ve learned from personal experience that this optimization is not a free lunch and will require significant investment to not only build out but maintain. A large enough instance that is on whenever needed, keeps at least half an engineers time free to work on actual data modeling rather than platform maintenance.
+Некоторые люди рекомендуют рассмотреть возможность масштабирования пулов вверх и вниз в зависимости от спроса. Однако, исходя из личного опыта, я узнал, что эта оптимизация не является бесплатной и потребует значительных инвестиций не только для создания, но и для поддержки. Достаточно большой экземпляр, который включен всякий раз, когда это необходимо, освобождает как минимум половину времени инженера для работы над фактическим моделированием данных, а не над поддержкой платформы.
 
-#### DWUs
+#### DWU
 
-The starting tier is `DW100c`, which costs $1.20/hour, has limitations such as only allowing 4 concurrent queries. To add 4  concurrent queries, you must increase the DWH tier. For every increase in 100 `c`'s, you gain an additional 4 concurrent queries.
+Начальный уровень — `DW100c`, который стоит $1.20/час и имеет ограничения, такие как разрешение только 4 одновременных запросов. Чтобы добавить 4 одновременных запроса, вы должны увеличить уровень DWH. За каждое увеличение на 100 `c` вы получаете дополнительные 4 одновременных запроса.
 
-If this warehouse is intended to be the single source of truth for data analysts, you should design it to perform for that use case. In all likelihood, that means paying for a higher tier. Just like the above discussed potential for saving money by turning the cluster on and off as needed, paying for a lower tier, introduces another host of problems. If the limitation of 4 concurrent queries becomes a bottleneck, your choice is to either
+Если это хранилище предназначено для того, чтобы быть единственным источником правды для аналитиков данных, вы должны спроектировать его для этой цели. Скорее всего, это означает оплату за более высокий уровень. Как и в случае с обсуждаемой выше возможностью экономии денег за счет включения и выключения кластера по мере необходимости, оплата за более низкий уровень вводит еще один ряд проблем. Если ограничение в 4 одновременных запроса становится узким местом, ваш выбор заключается в том, чтобы либо
 
-- design infrastructure to push the data out of Synapse and into a Azure SQL db or elsewhere
-- increase the tier of service paid (i.e. increase the `DWU`s)
+- спроектировать инфраструктуру для перемещения данных из Synapse в базу данных Azure SQL или в другое место
+- увеличить уровень оплачиваемой услуги (т.е. увеличить `DWU`)
 
-I’m of the opinion that minimizing Cloud spend should not come at the expense of developer productivity — both sides of the equation need to be considered. As such, I advocate predominately for the latter of the above two choices.
+Я считаю, что минимизация расходов на облако не должна происходить за счет производительности разработчиков — обе стороны уравнения должны быть учтены. Таким образом, я в основном поддерживаю второй из двух вышеупомянутых вариантов.
 
-### Deployment Resources
+### Ресурсы для развертывания
 
-In the Microsoft ecosystem, data warehouse deployments are more commonly conducted with Azure Data Factory instead of Azure DevOps pipelines or GitHub Actions. We recommend separating dbt project deployments from any ingestion pipeline defined in ADF.
+В экосистеме Microsoft развертывание хранилищ данных чаще всего осуществляется с помощью Azure Data Factory, а не конвейеров Azure DevOps или GitHub Actions. Мы рекомендуем отделить развертывания проектов dbt от любых конвейеров загрузки, определенных в ADF.
 
-However, if you must use ADF as the deployment pipeline, it is possible to use dbt Cloud APIs. Running dbt Core within Azure Data Factory can be challenging as there’s no easy way to install and invoke dbt Core, because there’s no easy way to install and run Python. The workarounds aren’t great, for example: Setting up dbt calls via Azure Serverless Functions and invoking them  from ADF.  
+Однако, если вы должны использовать ADF в качестве конвейера развертывания, возможно использование API dbt Cloud. Запуск dbt Core в Azure Data Factory может быть сложной задачей, так как нет простого способа установить и вызвать dbt Core, потому что нет простого способа установить и запустить Python. Обходные пути не идеальны, например: Настройка вызовов dbt через Azure Serverless Functions и их вызов из ADF.
 
-### access control
+### контроль доступа
 
-#### permissions for analytics engineers
+#### разрешения для аналитиков
 
 :::caution
-⚠️ User-based Azure Active Directory authentication is not yet supported in dbt Cloud. As a workaround, consider having a [Service Principal](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser) made for each contributing Analytics Engineer for use in dbt Cloud
+⚠️ Аутентификация на основе пользователей Azure Active Directory пока не поддерживается в dbt Cloud. В качестве обходного пути рассмотрите возможность создания [Сервисного принципала](https://learn.microsoft.com/en-us/entra/identity-platform/app-objects-and-service-principals?tabs=browser) для каждого аналитика, участвующего в dbt Cloud.
 :::
 
-In the development warehouse, each user should have the following privileges: `EXECUTE`, `SELECT`, `INSERT`, `UPDATE`, and `DELETE`.
+В хранилище разработки каждый пользователь должен иметь следующие привилегии: `EXECUTE`, `SELECT`, `INSERT`, `UPDATE` и `DELETE`.
 
-#### service principal permissions
+#### разрешения сервисного принципала
 
-In addition, a service principal is required for dbt Cloud to directly interact with both the warehouse and your Git service provider (e.g. GitHub or Azure DevOps).
+Кроме того, требуется сервисный принципал для dbt Cloud, чтобы напрямую взаимодействовать как с хранилищем, так и с вашим поставщиком услуг Git (например, GitHub или Azure DevOps).
 
-Only the Service Principal in charge of deployment has the above permissions in production. End users have only `SELECT` access to this environment.
+Только Сервисный принципал, отвечающий за развертывание, имеет вышеуказанные разрешения в производственной среде. Конечные пользователи имеют только доступ `SELECT` к этой среде.
 
-## Model Considerations
+## Соображения по моделированию
 
-The magic begins when the environments are provisioned and dbt Cloud is connected.
+Магия начинается, когда среды настроены и dbt Cloud подключен.
 
-With dbt on Synapse, you can own the entire data transformation workflow from raw data to modeled data that data analysts and end users rely upon. The end product of which will be documented and tested.
+С dbt на Synapse вы можете управлять всем процессом преобразования данных от необработанных данных до смоделированных данных, на которые полагаются аналитики данных и конечные пользователи. Конечный продукт будет документирован и протестирован.
 
-With dbt Cloud, things are even more streamlined. The dbt Cloud CLI allows developers to build only the models they need for a PR, deferring to the production environment for dependencies. There’s also dbt Explorer, which now has column-level lineage.
+С dbt Cloud все еще более упрощено. CLI dbt Cloud позволяет разработчикам строить только те модели, которые им нужны для PR, ссылаясь на производственную среду для зависимостей. Также есть dbt Explorer, который теперь имеет родословную на уровне столбцов.
 
-While there are already platform-agnostic best practice guides that still apply for Synapse, there are some additional factors related to data distribution and indexing.
+Хотя уже существуют платформенно-агностичные руководства по лучшим практикам, которые все еще применимы для Synapse, есть некоторые дополнительные факторы, связанные с распределением данных и индексированием.
 
-### distributions & indices
+### распределения и индексы
 
-Working in ASADSP, it is important to remember that you’re working in a [Massively-Parallel Processing (MPP) architecture](https://www.indicative.com/resource/what-is-massively-parallel-processing-mpp/).
+Работая в ASADSP, важно помнить, что вы работаете в архитектуре [Массово-параллельной обработки (MPP)](https://www.indicative.com/resource/what-is-massively-parallel-processing-mpp/).
 
-What this means for an analytics engineer working using dedicated SQL pools is that for every table model, it must have an `index` and `distribution` configured. In `dbt-synapse` the defaults are:
+Это означает, что для каждого табличного модуля необходимо настроить `index` и `distribution`. В `dbt-synapse` по умолчанию используются:
 
-- index: `CLUSTERED COLUMNSTORE INDEX`
-- distribution `ROUND_ROBIN`
+- индекс: `CLUSTERED COLUMNSTORE INDEX`
+- распределение: `ROUND_ROBIN`
 
-If you want something different, you can define it like below. For more information, see [dbt docs: configurations for Azure Synapse DWH: Indices and distributions](https://docs.getdbt.com/reference/resource-configs/azuresynapse-configs#indices-and-distributions).
+Если вы хотите что-то другое, вы можете определить это, как показано ниже. Для получения дополнительной информации см. [документацию dbt: конфигурации для Azure Synapse DWH: Индексы и распределения](https://docs.getdbt.com/reference/resource-configs/azuresynapse-configs#indices-and-distributions).
 
 ```sql
 {{
@@ -146,42 +146,40 @@ If you want something different, you can define it like below. For more informat
 SELECT * FROM {{ ref('some_model') }}
 ```
 
-A distribution specifies how the table rows should be stored across the 60 nodes of the cluster. The goal is to provide a configuration that both:
+Распределение указывает, как строки таблицы должны храниться на 60 узлах кластера. Цель состоит в том, чтобы предоставить конфигурацию, которая:
 
-1. ensures data is split evenly across the nodes of the cluster, and
-2. minimizes inter-node movement of data.
+1. обеспечивает равномерное распределение данных по узлам кластера, и
+2. минимизирует межузловое перемещение данных.
 
-For example, imagine querying a 100-row seed table in a downstream model. Using `distribution=ROUND_ROBIN` instructs the pool to evenly distribute the rows between the 60 node, which equates to  having only one or two rows in each node. This `SELECT`-ing all these an operation that touches all 60 nodes. The end result is that the query will run much slower than you might expect.
+Например, представьте, что вы запрашиваете таблицу с 100 строками в нисходящей модели. Использование `distribution=ROUND_ROBIN` инструктирует пул равномерно распределять строки между 60 узлами, что эквивалентно наличию только одной или двух строк в каждом узле. Это `SELECT`-ирование всех этих операций, которые затрагивают все 60 узлов. В результате запрос будет выполняться намного медленнее, чем вы могли бы ожидать.
 
-The optimal distribution is `REPLICATE` which will load a full copy of the table to every node. In this scenario, any node can return the 100 rows without coordination from the others. This is ideal for a lookup table which could limit the result set within each node before aggregating each nodes results.
+Оптимальное распределение — это `REPLICATE`, которое загружает полную копию таблицы на каждый узел. В этом сценарии любой узел может вернуть 100 строк без координации с другими. Это идеально для таблицы поиска, которая может ограничить набор результатов в каждом узле перед агрегированием результатов каждого узла.
 
+#### дополнительная информация
 
-#### more information
+- [Руководство по проектированию распределенных таблиц с использованием выделенного SQL-пула в Azure Synapse Analytics](https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-distribute)
+- [исходный код для макроса `synapse__create_table_as()`](https://github.com/microsoft/dbt-synapse/blob/master/dbt/include/synapse/macros/materializations/models/table/create_table_as.sql)
 
-- [Guidance for designing distributed tables using dedicated SQL pool in Azure Synapse Analytics](https://learn.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-distribute)
-- [source code for `synapse__create_table_as()` macro](https://github.com/microsoft/dbt-synapse/blob/master/dbt/include/synapse/macros/materializations/models/table/create_table_as.sql)
+## Развертывания и экосистема
 
+С инфраструктурой на месте и аналитиками, оснащенными лучшими практиками, последний шаг — продумать, как проект dbt вписывается в более широкий стек данных вашей организации как на верхнем, так и на нижнем уровне.
 
-## Deployments & Ecosystem
+### Верхний уровень
 
-With the infrastructure in place and the analytics engineers enabled with best practices, the final piece is to think through how a dbt project sits in the larger data stack of your organization both upstream and downstream.
+В dbt мы предполагаем, что данные уже загружены в хранилище в необработанном виде. Это следует более широкой парадигме, известной как Extract-Load-Transform (ELT). То же самое касается dbt с Azure Synapse. Цель должна состоять в том, чтобы данные загружались в Synapse как можно более "нетронутыми" с момента их поступления из вышестоящей системы источника. Часто команды данных, использующие Azure Data Factory, продолжают применять парадигму ETL, где данные преобразуются еще до того, как они попадают в хранилище. Мы не рекомендуем это, так как это приводит к тому, что критические преобразования данных находятся за пределами проекта dbt и, следовательно, не документированы.
 
-### Upstream
+Если вы еще этого не сделали, свяжитесь с центральной/вышестоящей командой инженеров данных, чтобы разработать план интеграции извлечения и перемещения данных в таких инструментах, как SSIS и Azure Data Factory, с преобразованием, выполняемым через dbt Cloud.
 
-In dbt, we assume the data has already been ingested into the warehouse raw. This follows a broader paradigm known as Extract-Load-Transform (ELT). The same goes for dbt with Azure Synapse. The goal should be to have the data ingested into Synapse that is as “untouched” as possible from when it came from the upstream source system. It’s common for data teams using Azure Data Factory to continue to imploy an ETL-paradigm where data is transformed before it even lands in the warehouse. We do not recommend this, as it results in critical data transformation living outside of the dbt project, and therefore undocumented.
+### Потребители нижнего уровня (Power BI)
 
-If you have not already, engage the central/upstream data engineering team to devise a plan to integrate data extraction and movement in tools such as SSIS and Azure Data Factory with the transformation performed via dbt Cloud.
+В экосистеме данных MSFT крайне распространено, что значительные объемы моделирования данных находятся в отчетах и/или наборах данных Power BI. Это допустимо до определенного момента.
 
-### Downstream Consumers (Power BI)
+Правильный подход заключается не в том, чтобы требовать, чтобы все моделирование данных выполнялось в dbt с использованием `SQL`. Вместо этого ищите наиболее критически важные для бизнеса наборы данных и отчеты Power BI. Любое моделирование, выполненное в этих отчетах, должно быть перенесено в проект dbt, где оно может быть правильно протестировано и задокументировано.
 
-It is extremely common in MSFT data ecosystem to have significant amounts of data modeling live within Power BI reports and/or datasets. This is ok up to a certain point.
+Должны быть постоянные усилия по переносу кода Power Query, написанного в PBI, в код преобразования и его переносу в хранилище данных, где моделирование может быть протестировано, задокументировано, повторно использовано другими и развернуто с уверенностью.
 
-The correct approach is not to mandate that all data modeling should be done in dbt with `SQL`. Instead seek out the most business critical Power BI datasets and reports. Any modeling done in those reports should be upstreamed into the dbt project where it can be properly tested and documented.
+## Заключение
 
-There should be a continuous effort to take and Power Query code written in PBI as transformation code and to upstream it into the data warehouse where the modeling can be tested, documented, reused by others and deployed with confidence.
+Сегодня в dbt Cloud есть отличные возможности для команд данных, использующих Azure Synapse. Хотя Fabric — это будущее, есть значимые соображения, касающиеся предоставления ресурсов, проектирования моделей и развертываний в более широкой экосистеме.
 
-## Conclusion
-
-There’s great opportunity in dbt Cloud today for data teams using Azure Synapse. While Fabric is the future, there’s meaningful considerations when it comes to resource provisioning, model design, and deployments within the larger ecosystem.
-
-As we look ahead, we're excited about the possibilities that Microsoft Fabric holds for the future of data analytics. With dbt Cloud and Azure Synapse, analytics engineers can be disseminate knowledge with confidence to the rest of their organization.
+Смотря вперед, мы с нетерпением ждем возможностей, которые Microsoft Fabric предлагает для будущего аналитики данных. С dbt Cloud и Azure Synapse аналитики могут с уверенностью распространять знания в своей организации.

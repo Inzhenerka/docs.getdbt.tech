@@ -1,6 +1,6 @@
 ---
-title: "Data engineers + dbt v1.5: Evolving the craft for scale"
-description: "Where have we been? Where are we going? What does the future hold for data engineers? How can dbt help you get there?"
+title: "Инженеры данных + dbt v1.5: Эволюция мастерства для масштабирования"
+description: "Где мы были? Куда мы идем? Что ждет инженеров данных в будущем? Как dbt может помочь вам туда добраться?"
 slug: evolving-data-engineer-craft
 
 authors: [sung_chung, kira_furuichi]
@@ -11,57 +11,57 @@ date: 2023-05-01
 is_featured: true
 ---
 
-# Data Engineers + dbt 1.5: Evolving the Craft for Scale
+# Инженеры данных + dbt 1.5: Эволюция мастерства для масштабирования
 
-I, Sung, entered the data industry by chance in Fall 2014. I was using this thing called audit command language (ACL) to automate debits equal credits for accounting analytics (yes, it’s as tedious as it sounds). I remember working my butt off in a hotel room in Des Moines, Iowa where the most interesting thing there was a Panda Express. It was late in the AM. I’m thinking about 2 am. And I took a step back and thought to myself, “Why am I working so hard for something that I just don’t care about with tools that hurt more than help?”
+Я, Сунг, случайно попал в индустрию данных осенью 2014 года. Я использовал нечто под названием язык команд аудита (ACL) для автоматизации дебетов, равных кредитам, для аналитики бухгалтерского учета (да, это так же утомительно, как звучит). Я помню, как усердно работал в гостиничном номере в Де-Мойне, штат Айова, где самым интересным местом был Panda Express. Было поздно ночью, около 2 часов утра. Я сделал шаг назад и подумал: «Почему я так усердно работаю над чем-то, что мне неинтересно, с инструментами, которые больше вредят, чем помогают?»
 <!--truncate-->
 
-I did lots of soul searching and deduced I loved analytics, but not the job and subject matter. My next gig was in consulting where I bootstrapped my way into data engineering and had to learn the whole gamut below.
+Я много размышлял и пришел к выводу, что мне нравится аналитика, но не работа и предмет. Моя следующая работа была в консалтинге, где я самостоятельно освоил инженерное дело данных и должен был изучить весь спектр ниже.
 
-| Tech skills | Place in tech stack | Why it mattered at the time |
+| Технические навыки | Место в технологическом стеке | Почему это было важно в то время |
 | --- | --- | --- |
-| Airflow | Orchestrator | The industry standard to run data pipelines |
-| SQL | Lingua franca of data transformation | My business logic codified (think: revenue by month) |
-| Python | Lingua franca of data engineering | It’s how you use Airflow |
-| Terraform | Get infra ready for airflow Kubernetes cluster | Infrastructure automation |
-| Google Cloud | Cloud | Big customer footprint |
-| Amazon Web Services | Cloud | Big customer footprint |
-| dbt | The T in ELT | The reason people finally test their data with SQL |
-| BigQuery | Cloud data warehouse | A lot of my clients used this |
+| Airflow | Оркестратор | Промышленный стандарт для запуска конвейеров данных |
+| SQL | Лингва франка преобразования данных | Моя бизнес-логика закодирована (например: доход по месяцам) |
+| Python | Лингва франка инженерии данных | Это то, как вы используете Airflow |
+| Terraform | Подготовка инфраструктуры для кластера Kubernetes в Airflow | Автоматизация инфраструктуры |
+| Google Cloud | Облако | Большая клиентская база |
+| Amazon Web Services | Облако | Большая клиентская база |
+| dbt | T в ELT | Причина, по которой люди наконец тестируют свои данные с помощью SQL |
+| BigQuery | Облачный склад данных | Многие из моих клиентов использовали это |
 
-These are still great skills to learn and maintain even six years after I learned them in 2017. Armed with them, I finally saw the magic of the modern data stack and what problems it could solve. It took my questionable little pipelines back in 2014 and made them gleam with a new shine (and reliability). I felt like what the cool kids call a **[10x data engineer](https://knowyourmeme.com/memes/10x-engineer)**. 
+Эти навыки все еще полезно изучать и поддерживать даже спустя шесть лет после того, как я их освоил в 2017 году. Вооружившись ими, я наконец увидел магию современного стека данных и какие проблемы он может решить. Он преобразил мои сомнительные маленькие конвейеры данных в 2014 году, придав им новый блеск (и надежность). Я почувствовал себя тем, кого крутые ребята называют **[10x инженером данных](https://knowyourmeme.com/memes/10x-engineer)**.
 
-However, as my skills grew, so did the problems. Big Data eventually turned into data swamps, the charm of using these great tools lost its shine, and my excitement gradually gave way to exhaustion. Not because they’re bad tools, but because the problem space of managing giant mounds of data required something data tools are still wrestling with today: scale and control. I kept looking for goldilocks projects to save/make money for companies. I wanted to build prestige in my career. But in practice, I was babysitting brittle data pipelines. To enable dozens of people was mind-numbing, much less hundreds of data analysts to all work elegantly together.
+Однако по мере роста моих навыков росли и проблемы. Большие данные в конечном итоге превратились в болота данных, очарование использования этих замечательных инструментов потеряло свой блеск, и мой энтузиазм постепенно уступил место усталости. Не потому, что это плохие инструменты, а потому, что пространство проблем управления огромными объемами данных требует чего-то, с чем инструменты данных все еще борются сегодня: масштаб и контроль. Я продолжал искать проекты, которые могли бы сэкономить/заработать деньги для компаний. Я хотел построить престиж в своей карьере. Но на практике я нянчился с хрупкими конвейерами данных. Обеспечить работу десятков людей было утомительно, не говоря уже о сотнях аналитиков данных, которые должны были работать вместе элегантно.
 
-I’m still juggling my messy data pipelines and wondering what’s signal vs. noise in how to evolve my skills. I feel like a .5x data engineer. It’s like taking 2 steps forward and 1 big step back. So my question becomes:
+Я все еще жонглирую своими беспорядочными конвейерами данных и задаюсь вопросом, что является сигналом, а что шумом в том, как развивать свои навыки. Я чувствую себя инженером данных на 0,5x. Это как сделать 2 шага вперед и 1 большой шаг назад. Так что мой вопрос становится:
 
-> Why am I working so hard for data pipelines no one uses and **scale** that hurts more than helps?
+> Почему я так усердно работаю над конвейерами данных, которые никто не использует, и **масштабом**, который больше вредит, чем помогает?
 > 
 
-I take a step back and realize my job is playing more defense than offense. My KPIs are less about revenue and cost impact, and more about how many times I get yelled at this week and making that number go down and to the right. This was/is my story, and I have a strong feeling it’s yours too.
+Я делаю шаг назад и понимаю, что моя работа больше связана с защитой, чем с нападением. Мои KPI меньше связаны с доходом и затратами, и больше с тем, сколько раз на меня накричали на этой неделе, и с тем, чтобы это число уменьшалось. Это была/есть моя история, и у меня есть сильное чувство, что это и ваша история.
 
-And I know there isn’t a silver bullet to solve all the above, but I do want to see momentum in the right direction. Where have tools like dbt met me and how exactly does it need to meet me going forward?
+И я знаю, что нет серебряной пули, чтобы решить все вышеперечисленное, но я хочу видеть движение в правильном направлении. Где такие инструменты, как dbt, встретили меня и как именно они должны встретить меня в будущем?
 
-## Where dbt is meeting data engineers, and where it’s going
+## Где dbt встречает инженеров данных и куда он движется
 
-The joys and pains of data engineering and analytics engineering are real; the win you get when a stakeholder eventually contributes to a dbt model; the loss when a pipeline breaks, and the onslaught of Slack notifications that come hurling your way. dbt transformed ;) the way data teams interact with their data, and the people that depend on them. When dbt was first developed, it aimed to bring the best practices in software engineering to the field of analytics—this meant version-controlled, rigorously tested, and collaborative data transformations. dbt brought code-based tests, integrated CI, efficient development with packages, and global docs. These features have been foundational to the way data teams work, and have allowed data engineers to focus on the most important part of their job: building data pipelines that power the business.
+Радости и боли инженерии данных и аналитической инженерии реальны; победа, которую вы получаете, когда заинтересованная сторона в конечном итоге вносит вклад в модель dbt; потеря, когда конвейер ломается, и шквал уведомлений в Slack, которые обрушиваются на вас. dbt преобразовал ;) способ взаимодействия команд данных с их данными и людьми, которые от них зависят. Когда dbt был впервые разработан, он стремился привнести лучшие практики в области программной инженерии в область аналитики — это означало версионное управление, тщательное тестирование и совместные преобразования данных. dbt принес тесты на основе кода, интегрированное CI, эффективную разработку с пакетами и глобальную документацию. Эти функции стали основой того, как работают команды данных, и позволили инженерам данных сосредоточиться на самой важной части своей работы: создании конвейеров данных, которые питают бизнес.
 
-### Building the future: Where data engineers are going with dbt
+### Строим будущее: куда идут инженеры данных с dbt
 
-As dbt has grown, so has the complexity of dbt projects. Tristan has [written extensively about this](https://www.getdbt.com/blog/analytics-engineering-next-step-forwards/), but a few years ago, a *big* dbt project was ~500 models. Today, there are many organizations with *thousands* of dbt models. This level of complexity and organization has changed the landscape of interesting problems in the analytics engineering space; dependency graphs become increasingly large, identifying ownership becomes murky, and the barrier to contribution is raised. You can see how larger, complex data teams approach this today in this public GitHub discussion: [https://github.com/dbt-labs/dbt-core/discussions/5244](https://github.com/dbt-labs/dbt-core/discussions/5244).
+По мере роста dbt росла и сложность проектов dbt. Тристан [много писал об этом](https://www.getdbt.com/blog/analytics-engineering-next-step-forwards), но несколько лет назад *большой* проект dbt состоял из ~500 моделей. Сегодня существует множество организаций с *тысячами* моделей dbt. Этот уровень сложности и организации изменил ландшафт интересных проблем в области аналитической инженерии; графы зависимостей становятся все больше, определение владельцев становится неясным, и барьер для вклада повышается. Вы можете увидеть, как более крупные и сложные команды данных подходят к этому сегодня в этом публичном обсуждении на GitHub: [https://github.com/dbt-labs/dbt-core/discussions/5244](https://github.com/dbt-labs/dbt-core/discussions/5244).
 
-v1.5 features aim to support the growth of those type of dbt projects by going back to the roots of software engineering best practices—dbt v1.5 is bringing service oriented architectures to a dbt project near you. dbt’s v1.5 features of contracts, model versions, and group permissions—alongside all of the foundational “dbtonic” things—culminate in a toolkit that will allow data engineers, alongside analysts, to build long-term, scalable, and efficient dbt projects.
+Функции v1.5 нацелены на поддержку роста таких проектов dbt, возвращаясь к истокам лучших практик программной инженерии — dbt v1.5 приносит сервисно-ориентированные архитектуры в проект dbt рядом с вами. Функции dbt v1.5, такие как контракты, версии моделей и групповые разрешения, наряду со всеми основными "dbtonic" вещами, создают набор инструментов, который позволит инженерам данных, вместе с аналитиками, строить долгосрочные, масштабируемые и эффективные проекты dbt.
 
-Below, we’ll breakdown where dbt v1.5 is evolving scale and control in your work, and how it’ll elevate your daily practice of data engineering (and remove some of those panicked Slack messages 😉).
+Ниже мы разберем, как dbt v1.5 развивает масштаб и контроль в вашей работе и как это повысит вашу ежедневную практику инженерии данных (и уберет некоторые из тех панических сообщений в Slack 😉).
 
-[**Model Contracts**](https://docs.getdbt.com/docs/collaborate/publish/model-contracts)
+[**Контракты моделей**](https://docs.getdbt.com/docs/collaborate/publish/model-contracts)
 
-- **Problems you’re living through**: I can’t guarantee the shape of my data (think: column names, data types, no blank values) without triple checking my work and running `dbt build` a couple times and eyeballing my data. I get tired of doing this everyday, so I end up not doing it in the long-term.
-- **Solution**: Model contracts allow you to define how a model should conform—which columns will never be `null`, which columns will always be a certain type, and more—all within a `YAML` file. These contracts are meant to be binding artifacts that create levels of accountability between the folks that create a model with a contract, and the downstream consumers of that model.
-- **How it will change your daily work**: The lingering doubt—*”can I trust this table?”*—is removed with a model contract. These contracts create systems of accountability, governance, and reliability, ultimately allowing people to feel confident in the models they reference. With a contract, you shouldn’t have to test if the primary key from an upstream reference is null, the contract stated as so—and that contract is law.
+- **Проблемы, с которыми вы сталкиваетесь**: Я не могу гарантировать форму моих данных (например: имена столбцов, типы данных, отсутствие пустых значений) без тройной проверки моей работы и многократного запуска `dbt build` и визуальной проверки моих данных. Я устаю делать это каждый день, поэтому в долгосрочной перспективе я перестаю это делать.
+- **Решение**: Контракты моделей позволяют вам определить, как модель должна соответствовать — какие столбцы никогда не будут `null`, какие столбцы всегда будут определенного типа и многое другое — все это в файле `YAML`. Эти контракты предназначены для создания уровней ответственности между теми, кто создает модель с контрактом, и конечными потребителями этой модели.
+- **Как это изменит вашу ежедневную работу**: Долгий сомнение — *"могу ли я доверять этой таблице?"* — устраняется с помощью контракта модели. Эти контракты создают системы ответственности, управления и надежности, в конечном итоге позволяя людям чувствовать уверенность в моделях, на которые они ссылаются. С контрактом вам не нужно тестировать, является ли первичный ключ из вышестоящей ссылки null, контракт это указал — и этот контракт является законом.
 
 ```yaml
-# snowflake contract example
+# пример контракта для snowflake
 models:
   - name: dim_customers
     config:
@@ -73,11 +73,11 @@ models:
         description: hello
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include in DDL
-          - type: check       # not supported -- will warn & exclude from DDL
+          - type: primary_key # не применяется -- будет предупреждение и включение в DDL
+          - type: check       # не поддерживается -- будет предупреждение и исключение из DDL
             expression: "id > 0"
         tests:
-          - unique            # primary_key constraint is not enforced
+          - unique            # ограничение primary_key не применяется
       - name: customer_name
         data_type: text
       - name: first_transaction_date
@@ -85,7 +85,7 @@ models:
 ```
 
 ```sql
---SQL run against database
+--SQL выполняется в базе данных
 create or replace transient table <database>.<schema>.dim_customers        
 (
     id integer not null primary key,
@@ -101,11 +101,11 @@ select
 );
 ```
 
-[**Model Versions**](https://docs.getdbt.com/docs/collaborate/publish/model-versions)
+[**Версии моделей**](https://docs.getdbt.com/docs/collaborate/publish/model-versions)
 
-- **Problems you’re living through**: I change my vital model `fct_orders.sql` every week, and many people rely on this for their work. However, I keep getting doubtful questions on what’s changed since my last update, and I don’t have great way to instill confidence that this will/won’t break the way they rely on it.
-- **What it is**: Model versions in v1.5 allow you to create, specify, and reference versions of models. Core reporting models can now be updated and deprecated following software engineering practices and create systems of accountability between data creators and data consumers.
-- **How it will change your daily work**: Not every model is going to need to be versioned, but for core models that power your business intelligence, *power your data team*, you will now have the option to create multiple versions of a model and implement breaking changes in a more realistic and accountable way. Say I’m the primary owner of Core Data Team dbt `Project A`, and inside that project contains a core `dim_customers` model that powers the way finance, customer success, and marketing analyze customer data and CLV (customer lifetime value). I need to make a breaking change to `dim_customers`—CLV is going to be removed in favor of a more complex ROI value. Finance team uses the existing CLV value for cohort analysis and other reports, but understands that the new ROI column may be more favorable over time. However, it takes time to transition those reports and systems to conform to the ROI values, so `Project A` can develop a `dim_customers_v2` that drops LTV in favor for the new ROI.
+- **Проблемы, с которыми вы сталкиваетесь**: Я меняю свою важную модель `fct_orders.sql` каждую неделю, и многие люди полагаются на нее в своей работе. Однако я продолжаю получать сомнительные вопросы о том, что изменилось с момента моего последнего обновления, и у меня нет хорошего способа вселить уверенность, что это не сломает то, на что они полагаются.
+- **Что это такое**: Версии моделей в v1.5 позволяют вам создавать, указывать и ссылаться на версии моделей. Основные отчетные модели теперь могут обновляться и устаревать, следуя практикам программной инженерии, и создавать системы ответственности между создателями данных и потребителями данных.
+- **Как это изменит вашу ежедневную работу**: Не каждая модель нуждается в версионности, но для основных моделей, которые питают вашу бизнес-аналитику, *питают вашу команду данных*, у вас теперь будет возможность создавать несколько версий модели и внедрять критические изменения более реалистичным и ответственным образом. Скажем, я основной владелец dbt `Проекта A` основной команды данных, и внутри этого проекта содержится основная модель `dim_customers`, которая питает способ анализа данных о клиентах и CLV (пожизненная ценность клиента) для финансов, успеха клиентов и маркетинга. Мне нужно внести критическое изменение в `dim_customers` — CLV будет удален в пользу более сложного значения ROI. Финансовая команда использует существующее значение CLV для когортного анализа и других отчетов, но понимает, что новый столбец ROI может быть более предпочтительным со временем. Однако требуется время, чтобы перейти на эти отчеты и системы, чтобы соответствовать значениям ROI, поэтому `Проект A` может разработать `dim_customers_v2`, который заменяет LTV на новый ROI.
 
 ```yaml
 models:
@@ -120,11 +120,11 @@ models:
         description: hello
         constraints:
           - type: not_null
-          - type: primary_key # not enforced  -- will warn & include in DDL
-          - type: check       # not supported -- will warn & exclude from DDL
+          - type: primary_key # не применяется -- будет предупреждение и включение в DDL
+          - type: check       # не поддерживается -- будет предупреждение и исключение из DDL
             expression: "id > 0"
         tests:
-          - unique            # primary_key constraint is not enforced, so also verify with a dbt test
+          - unique            # ограничение primary_key не применяется, поэтому также проверяйте с помощью теста dbt
       - name: customer_name
         data_type: text
       - name: first_transaction_date
@@ -144,11 +144,11 @@ models:
 select * from {{ ref('dim_customers', v=2) }}
 ```
 
-[**Model Access**](https://docs.getdbt.com/docs/collaborate/govern/model-access)
+[**Доступ к моделям**](https://docs.getdbt.com/docs/collaborate/govern/model-access)
 
-- **Problems you’re living through**: I split out my dbt project subdirectories in sales, marketing, and finance, and have a large team referencing dbt models across those folders everyday. However, I notice a lot of the references use staging tables that are incomplete and shouldn’t be referenced. I don’t have a good way to prevent inappropriate references.
-- **What it is**: You can now define public, private, and protected models within dbt project subdirectories and models so your teammates only touch what they’re supposed to!
-- **How it will change your daily work**: The exhaustive sighs of telling your teammates, “you’re not supposed to use that model” is now gone. dbt practices energetic boundaries between multiple files and subfolders and tells your teammates why they can’t reference a specific dbt model.
+- **Проблемы, с которыми вы сталкиваетесь**: Я разделил свои подкаталоги проекта dbt на продажи, маркетинг и финансы, и у меня большая команда, которая ежедневно ссылается на модели dbt в этих папках. Однако я замечаю, что многие ссылки используют промежуточные таблицы, которые не завершены и не должны использоваться. У меня нет хорошего способа предотвратить неправильные ссылки.
+- **Что это такое**: Теперь вы можете определять публичные, частные и защищенные модели в подкаталогах и моделях проекта dbt, чтобы ваши коллеги касались только того, что им положено!
+- **Как это изменит вашу ежедневную работу**: Изнурительные вздохи, когда вы говорите своим коллегам: «вы не должны использовать эту модель», теперь исчезли. dbt практикует энергичные границы между несколькими файлами и подпапками и объясняет вашим коллегам, почему они не могут ссылаться на конкретную модель dbt.
 
 ```yaml
 models:
@@ -173,21 +173,21 @@ dbt.exceptions.DbtReferenceError: Parsing Error
   which is not allowed because the referenced node is private to the finance group.
 ```
 
-## What does winning with v1.5 look like for you, the data engineer?
-This is great and all, but how do we know if these features are working to make your work more streamlined, intuitive, or easier? Because you’re probably wondering, “Are we trying to inflate v1.5 as this silver bullet to solve all data transformation problems?” Short answer: “No”. We just want to have less headaches when it comes to governing and scaling your data work, and bring back the joy working with data.
+## Как выглядит победа с v1.5 для вас, инженера данных?
+Это все замечательно, но как мы узнаем, работают ли эти функции, чтобы сделать вашу работу более упорядоченной, интуитивной или легкой? Потому что вы, вероятно, задаетесь вопросом: «Пытаемся ли мы раздуть v1.5 как эту серебряную пулю, чтобы решить все проблемы с преобразованием данных?» Краткий ответ: «Нет». Мы просто хотим иметь меньше головной боли, когда дело доходит до управления и масштабирования вашей работы с данными, и вернуть радость работы с данными.
 
-If it’s anything like the imagined future we have for you below, then we all win:
+Если это хоть немного похоже на воображаемое будущее, которое мы представляем для вас ниже, то мы все выигрываем:
 
-| 😊 Emotional Victory |  📝 Future Resume Bullet Points |
+| 😊 Эмоциональная победа |  📝 Будущие пункты резюме |
 | --- | --- |
-| Invite people into the magic of working with and in data | - Scaled from 10 to 500 users in dbt Cloud and, on average, onboarded new users in 1 week |
-| Getting one step closer to self-service without the eye-rolling | - Established uptime of 99.99% with core metrics like revenue, marketing, churn with model contracts and dbt Semantic Layer and reduced data validation efforts by the business by 5 hours per week |
-| The tedious admin work melts away and you get that breath of relief knowing people aren’t “moving fast and breaking things”…as much | - Reduced 5% of all transform spend with less code implementing data model contracts with 10% more quality. Removed 4 hours per person per week in teams across finance, marketing, sales by reducing duplicative development by 20% and reduced basic context gathering |
-| Get the taste of being offensive vs. defensive with your work | - Used dbt to drive revenue (think: embedded data products) and added a new SKU earning $500,000 per year |
+| Пригласите людей в магию работы с данными и в данных | - Масштабировал с 10 до 500 пользователей в dbt Cloud и, в среднем, вводил новых пользователей за 1 неделю |
+| На шаг ближе к самообслуживанию без закатывания глаз | - Установил время безотказной работы 99,99% с основными метриками, такими как доход, маркетинг, отток с контрактами моделей и dbt Semantic Layer и сократил усилия по проверке данных бизнесом на 5 часов в неделю |
+| Утомительная административная работа исчезает, и вы получаете облегчение, зная, что люди не «двигаются быстро и ломают вещи»... так часто | - Сократил 5% всех затрат на преобразование с меньшим количеством кода, реализуя контракты моделей данных с 10% более высоким качеством. Убрал 4 часа на человека в неделю в командах по финансам, маркетингу, продажам, сократив дублирующую разработку на 20% и сократив базовый сбор контекста |
+| Почувствуйте вкус быть в наступлении, а не в защите в своей работе | - Использовал dbt для увеличения дохода (например: встроенные продукты данных) и добавил новый SKU, приносящий $500,000 в год |
 
-## So, what’s next?
+## Итак, что дальше?
 
-- Try out v1.5! Let us know how the ergonomics and functionality of model contracts, versions, and group permissions feel to you. Open up an issue if you notice any bugs.
-- Watch the [Community recording on contracts](https://www.loom.com/share/375dee38aa9448deaed860a06487f8ff)—a great way to see them live in action—or [watch the recording from Staging](https://www.getdbt.com/resources/staging-april-2023/) to see dbt v1.5 features come to life!
-- Comment directly in this post on thoughts of v1.5 or this article!
-- Join the [#multi-project channel](https://getdbt.slack.com/archives/C04FP5LQA15) in the [dbt Community Slack](https://www.getdbt.com/community/join-the-community/)—start sparking up conversations with people like myself around the pains and gains of multi-deployment dbt projects. Validate if the constructs in v1.5 translate well to a multi-project future.
+- Попробуйте v1.5! Дайте нам знать, как вам эргономика и функциональность контрактов моделей, версий и групповых разрешений. Откройте проблему, если заметите какие-либо ошибки.
+- Посмотрите [запись сообщества о контрактах](https://www.loom.com/share/375dee38aa9448deaed860a06487f8ff) — отличный способ увидеть их в действии — или [посмотрите запись со Staging](https://www.getdbt.com/resources/staging-april-2023/), чтобы увидеть функции dbt v1.5 в действии!
+- Комментируйте прямо в этом посте свои мысли о v1.5 или этой статье!
+- Присоединяйтесь к каналу [#multi-project](https://getdbt.slack.com/archives/C04FP5LQA15) в [dbt Community Slack](https://www.getdbt.com/community/join-the-community/) — начните обсуждения с людьми, как я, о болях и достижениях в проектах с многократным развертыванием dbt. Убедитесь, что конструкции в v1.5 хорошо переводятся на будущее с многопроектной структурой.

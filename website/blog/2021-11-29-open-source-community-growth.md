@@ -1,6 +1,6 @@
 ---
-title: "How I Study Open Source Community Growth with dbt"
-description: "Building a data pipeline to study open source community growth with BigQuery, dbt, OpenLineage and Superset."
+title: "Как я изучаю рост сообщества с открытым исходным кодом с помощью dbt"
+description: "Создание конвейера данных для изучения роста сообщества с открытым исходным кодом с использованием BigQuery, dbt, OpenLineage и Superset."
 slug: open-source-community-growth-analysis
 
 authors: [ross_turk]
@@ -12,72 +12,72 @@ date: 2021-11-29
 is_featured: false
 ---
 
-Most organizations spend at least *some* of their time contributing to an open source project. 100% of them, though, depend in some way on the output of open source communities.
+Большинство организаций тратят хотя бы *часть* своего времени на вклад в проект с открытым исходным кодом. Однако 100% из них в той или иной степени зависят от результатов работы сообществ с открытым исходным кодом.
 
 <!--truncate-->
 
-In fact we all do. The work of communities can be found everywhere - in the cell phone that wakes you up, the machine that makes your coffee, the car that drives you to get better coffee, the magic app that brings you dinner, and the television that lulls you back to sleep. It's your entire day, even if you aren't a software engineer. Call me weird, but I think everyone should be interested in how open source communities grow and operate.
+На самом деле, мы все зависим. Работа сообществ встречается повсюду — в мобильном телефоне, который вас будит, машине, которая готовит вам кофе, автомобиле, который везет вас за лучшим кофе, волшебном приложении, которое приносит вам ужин, и телевизоре, который убаюкивает вас обратно ко сну. Это ваш весь день, даже если вы не инженер-программист. Назовите меня странным, но я думаю, что всем должно быть интересно, как растут и функционируют сообщества с открытым исходным кодом.
 
-## Why I Care About Open Source Adoption
-There are two communities that my colleagues and I have a particular curiosity in: OpenLineage and Marquez. We build a product based on the standards, conventions, and capabilities that are created there, and at least 70% of our engineering time is spent in contribution. Understanding how these communities grow and evolve, and how our behavior affects them, is important to each of us.
+## Почему меня интересует принятие открытого исходного кода
+Есть два сообщества, которые вызывают у моих коллег и меня особый интерес: OpenLineage и Marquez. Мы создаем продукт на основе стандартов, конвенций и возможностей, которые там создаются, и как минимум 70% нашего инженерного времени уходит на вклад. Понимание того, как эти сообщества растут и развиваются, и как наше поведение влияет на них, важно для каждого из нас.
 
-In many organizations it's important to measure the results of ongoing investment in open source projects, especially when dealing with stakeholders who favor quantitative proof. Often, this is framed in terms of popularity and adoption - i.e., "how many people use our stuff" and "how many people love it". A chart showing strong adoption of a project is likely to make hard conversations easier...and a hockey stick might just lead to a stronger round of funding.
+Во многих организациях важно измерять результаты текущих инвестиций в проекты с открытым исходным кодом, особенно при работе с заинтересованными сторонами, которые предпочитают количественные доказательства. Часто это выражается в терминах популярности и принятия — например, "сколько людей используют наши вещи" и "сколько людей их любят". График, показывающий сильное принятие проекта, вероятно, облегчит сложные разговоры... а "хоккейная клюшка" может привести к более сильному раунду финансирования.
 
-But there are tactical uses for this data as well. Consider these scenarios:
+Но у этих данных есть и тактические применения. Рассмотрим следующие сценарии:
 
-* Docker pulls of a particular image have unexpectedly dropped in frequency
-* A vulnerability has been fixed in a Python module, but people are still downloading the old version for some reason
-* An engineer who is about to go on sabbatical is the most active participant on Slack
+* Частота загрузок определенного образа Docker неожиданно снизилась
+* Уязвимость была исправлена в модуле Python, но люди по-прежнему загружают старую версию по какой-то причине
+* Инженер, который собирается в отпуск, является самым активным участником в Slack
 
-These are all situations that require investigation and action, and can only be discovered with up-to-date information on open source community activity. It has become essential for teams like ours - perhaps even as essential as an accurate sales pipeline forecast. Fortunately, this information is easy to find.
+Это все ситуации, требующие расследования и действий, и их можно обнаружить только с помощью актуальной информации о деятельности сообщества с открытым исходным кодом. Это стало необходимым для таких команд, как наша — возможно, даже столь же необходимым, как точный прогноз продаж. К счастью, эту информацию легко найти.
 
-In most cases, the numbers I'm looking for are on a web page, just a few clicks away. I can visit the GitHub page for a project and see the number of stars, or look at a package on PyPI when I need to know how many downloads it's gotten. But it's hard to get a sense of how a thing behaves by looking at its current state. Instead, you have to watch it move! You need to *collect* the data that's important to your business and study how it changes over time.
+В большинстве случаев нужные мне цифры находятся на веб-странице, всего в нескольких кликах. Я могу зайти на страницу GitHub проекта и увидеть количество звезд, или посмотреть на пакет на PyPI, когда мне нужно узнать, сколько загрузок он получил. Но трудно понять, как что-то ведет себя, глядя на его текущее состояние. Вместо этого нужно наблюдать за его движением! Вам нужно *собирать* данные, которые важны для вашего бизнеса, и изучать, как они меняются со временем.
 
-That's why I built a mini-warehouse for studying community growth. Several times a day I gather information about the OpenLineage and Marquez communities from different data sources. My models process the data so that it's easy to perform analysis and spot trends.
+Вот почему я построил мини-склад для изучения роста сообщества. Несколько раз в день я собираю информацию о сообществах OpenLineage и Marquez из различных источников данных. Мои модели обрабатывают данные так, чтобы было легко проводить анализ и выявлять тенденции.
 
-In this post, I'll walk you through our stack and sources. Then I'll show you how I track engagement across Slack, GitHub, Docker Hub, and PyPI, using a warehouse built with BigQuery, dbt, OpenLineage and Superset.
+В этом посте я проведу вас через наш стек и источники. Затем я покажу вам, как я отслеживаю вовлеченность в Slack, GitHub, Docker Hub и PyPI, используя хранилище, построенное с помощью BigQuery, dbt, OpenLineage и Superset.
 
-## The Tool Stack
-I am a copy-and-paste coder, which means that starting with an empty screen is difficult for me. So it was important that I built everything using standard tools with established communities and plenty of examples.
+## Стек инструментов
+Я программист, который копирует и вставляет код, что означает, что начинать с пустого экрана для меня сложно. Поэтому было важно, чтобы я построил все, используя стандартные инструменты с устоявшимися сообществами и множеством примеров.
 
-Here are the tools I chose to use:
+Вот инструменты, которые я выбрал:
 
-- Google Bigquery acts as the main database, holding all the source data, intermediate models, and data marts. This could just as easily have been Snowflake or Redshift, but I chose BigQuery because one of my data sources is already there as a public dataset.
+- Google BigQuery выступает в качестве основной базы данных, хранящей все исходные данные, промежуточные модели и витрины данных. Это могло бы быть Snowflake или Redshift, но я выбрал BigQuery, потому что один из моих источников данных уже там в виде публичного набора данных.
 
-- dbt seeds data from offline sources and performs necessary transformations on data after it's been loaded into BigQuery. 
+- dbt загружает данные из офлайн-источников и выполняет необходимые преобразования данных после их загрузки в BigQuery.
 
-- OpenLineage collects <Term id="data-lineage" /> and performance metadata as models run, so I can identify issues and find bottlenecks. Also, to be the subject ecosystem for this study :)
+- OpenLineage собирает <Term id="data-lineage" /> и метаданные производительности по мере выполнения моделей, чтобы я мог выявлять проблемы и находить узкие места. Также, чтобы быть предметом экосистемы для этого исследования :)
 
-- Superset visualizes and analyzes results, creates dashboards, and helps me communicate with stakeholders.
+- Superset визуализирует и анализирует результаты, создает панели и помогает мне общаться с заинтересованными сторонами.
 
-## Data Sources & Metrics
-I decided to start small, with just four data sources: Slack, GitHub, Docker Hub, and PyPI. This gives me a good sense for both the activity in and adoption of the projects over time.
+## Источники данных и метрики
+Я решил начать с малого, всего с четырех источников данных: Slack, GitHub, Docker Hub и PyPI. Это дает мне хорошее представление как о деятельности, так и о принятии проектов с течением времени.
 
-For starters, I want to know how much conversation is occurring across the various channels and communities we participate in. Our communities use Slack, so the number of messages over time (by user) is what I'm looking for. When there's an unexpected boost in activity, I'd like to be able to study the change in its historical context. I need to be able to view a list of the most active users, updated automatically. When new members join, I want to understand how their activity affects the community. 
+Для начала я хочу знать, сколько разговоров происходит в различных каналах и сообществах, в которых мы участвуем. Наши сообщества используют Slack, поэтому количество сообщений с течением времени (по пользователю) — это то, что я ищу. Когда происходит неожиданный всплеск активности, я хотел бы иметь возможность изучить изменение в его историческом контексте. Мне нужно иметь возможность просматривать список самых активных пользователей, обновляемый автоматически. Когда новые участники присоединяются, я хочу понять, как их активность влияет на сообщество.
 
-There are a ton of metrics that can be tracked in any GitHub project — committers, pull requests, forks, releases — but I started pretty simple. For each of the projects we participate in, I just want to know how the number of GitHub stars grows over time, and whether the growth is accelerating or flattening out. This has become a key performance indicator for open source communities, for better or for worse, and keeping track of it isn't optional.
+Существует множество метрик, которые можно отслеживать в любом проекте на GitHub — коммитеры, pull-запросы, форки, релизы — но я начал довольно просто. Для каждого из проектов, в которых мы участвуем, я просто хочу знать, как количество звезд на GitHub растет с течением времени, и ускоряется ли рост или замедляется. Это стало ключевым показателем эффективности для сообществ с открытым исходным кодом, к лучшему или к худшему, и отслеживание его не является необязательным.
 
-Finally, I want to know how much Marquez and OpenLineage are being used. It used to be that when you wanted to consume a bit of tech, you'd download a file. Folks like me who study user behavior would track download counts as if they were stock prices. This is no longer the case; today, our tech is increasingly distributed through package managers and image repositories. Docker Hub and PyPI metrics have therefore become good indicators of consumption. Docker image pulls and runs of `python -m pip install` are the modern day download and, as noisy as these metrics are, they indicate a similar level of user commitment.
+Наконец, я хочу знать, насколько активно используются Marquez и OpenLineage. Раньше, когда вы хотели использовать немного технологий, вы загружали файл. Люди, такие как я, которые изучают поведение пользователей, отслеживали количество загрузок, как если бы это были цены на акции. Это больше не так; сегодня наши технологии все чаще распространяются через менеджеры пакетов и репозитории образов. Метрики Docker Hub и PyPI, таким образом, стали хорошими индикаторами потребления. Загрузки образов Docker и запуски `python -m pip install` — это современные загрузки, и, как бы шумны ни были эти метрики, они указывают на аналогичный уровень приверженности пользователей.
 
-To summarize, here are the metrics I decided to track (for now, anyway):
-- Slack messages (by user/ by community)
-- GitHub stars (by project)
-- Docker Hub pulls (by image)
-- PyPI downloads (by package)
+Вкратце, вот метрики, которые я решил отслеживать (пока, во всяком случае):
+- Сообщения в Slack (по пользователю/по сообществу)
+- Звезды на GitHub (по проекту)
+- Загрузки на Docker Hub (по образу)
+- Загрузки на PyPI (по пакету)
 
-## Getting raw data into BigQuery
+## Загрузка необработанных данных в BigQuery
 
-The first step was to get all of my raw data into BigQuery. This was the messiest part of the entire operation, without question. Let's dig into each data source one at a time.
+Первым шагом было загрузить все мои необработанные данные в BigQuery. Это была самая грязная часть всей операции, без сомнения. Давайте разберем каждый источник данных по очереди.
 
 ### Slack
 
-**Loading in the raw data**
+**Загрузка необработанных данных**
 
-It wasn't immediately clear how to get a message count from each of the Slack communities. The Slack API can provide some of what I need, but I chose instead to use Zapier to load messages into BigQuery in real time.
+Сразу не было ясно, как получить количество сообщений из каждого из сообществ Slack. API Slack может предоставить часть того, что мне нужно, но я выбрал вместо этого использовать Zapier для загрузки сообщений в BigQuery в реальном времени.
 
-Zapier is an event-based system that can be used to automate random tasks. It has a collection of connectors with common toolchain components and a straightforward interface for designing actions. I implemented a basic Zap that triggers on each new Slack message, storing a copy of the message in a BigQuery <Term id="table" />.
+Zapier — это система на основе событий, которая может использоваться для автоматизации случайных задач. У нее есть коллекция коннекторов с общими компонентами цепочки инструментов и простой интерфейс для проектирования действий. Я реализовал базовый Zap, который срабатывает на каждом новом сообщении в Slack, сохраняя копию сообщения в таблице BigQuery <Term id="table" />.
 
-Before creating the Zap, I created a table called `slack_messages` to act as a destination. The schema is as follows:
+Перед созданием Zap я создал таблицу под названием `slack_messages`, чтобы она служила местом назначения. Схема следующая:
 
 ```sql
 CREATE TABLE `openlineage.metrics.slack_messages`
@@ -93,13 +93,13 @@ CREATE TABLE `openlineage.metrics.slack_messages`
 )
 ```
 
-Next I created two separate Zaps using the "New Public Message Posted Anywhere in Slack" trigger, one for the OpenLineage community and one for the Marquez community. I chose the ["Create Row in Google BigQuery" action](https://zapier.com/shared/61b1356ac4f7542d3adee2e8c6adecbfcb469a25), and mapped across each of the fields the schema required.
+Затем я создал два отдельных Zap, используя триггер "New Public Message Posted Anywhere in Slack", один для сообщества OpenLineage и один для сообщества Marquez. Я выбрал действие ["Create Row in Google BigQuery"](https://zapier.com/shared/61b1356ac4f7542d3adee2e8c6adecbfcb469a25) и сопоставил каждое из полей, требуемых схемой.
 
-After turning the two Zaps on, I was able to verify that new messages were appearing in the `slack_messages` table.
+После включения двух Zap я смог убедиться, что новые сообщения появляются в таблице `slack_messages`.
 
-**Setting up dbt sources**
+**Настройка источников dbt**
 
-To make dbt aware of this new table, I created a new `models/schema.yml` file containing the following:
+Чтобы dbt знал об этой новой таблице, я создал новый файл `models/schema.yml`, содержащий следующее:
 
 ```
 sources:
@@ -110,20 +110,20 @@ sources:
       - name: slack_messages
 ```
 
-From this, dbt knows to grab the schema for these tables from BigQuery during generation of the documentation website and store it in `catalog.json` for later use. For more information about defining sources, take a look at the Sources page in the dbt docs.
+Из этого dbt знает, что нужно захватить схему для этих таблиц из BigQuery во время генерации сайта документации и сохранить ее в `catalog.json` для последующего использования. Для получения дополнительной информации о определении источников, взгляните на страницу Источники в документации dbt.
 
-Explicitly defining external data sources in dbt was important to me for two reasons:
+Явное определение внешних источников данных в dbt было важно для меня по двум причинам:
 
-1. It allows us to use the jinja `source()` and `ref()` functions to refer to these tables within our models, as opposed to hardcoding the table names.
-2. It ensures that the schemas are included in `catalog.json` when `dbt docs generate` is run, which is critical for collecting and tracing data lineage. I need this information so that it can be transmitted to OpenLineage during the run cycle.
+1. Это позволяет нам использовать функции jinja `source()` и `ref()` для ссылки на эти таблицы в наших моделях, вместо жесткого кодирования имен таблиц.
+2. Это гарантирует, что схемы включены в `catalog.json`, когда выполняется `dbt docs generate`, что критично для сбора и отслеживания происхождения данных. Мне нужна эта информация, чтобы она могла быть передана в OpenLineage во время цикла выполнения.
 
 ### GitHub
 
-**Loading in the raw data**
+**Загрузка необработанных данных**
 
-Getting a current GitHub star count into BigQuery wasn't terribly difficult, since there is a public API that provides it.
+Получение текущего количества звезд GitHub в BigQuery не было особенно сложным, так как существует публичный API, который это предоставляет.
 
-I created a short Python script inside a new `loaderscripts/` directory in my project to pull the latest star count from the GitHub API and load it into BigQuery. This script is called at the beginning of each pipeline run, currently as part of my container's `entrypoint.sh`. Here are the important bits:
+Я создал короткий скрипт на Python внутри нового каталога `loaderscripts/` в моем проекте, чтобы извлечь последнее количество звезд из API GitHub и загрузить его в BigQuery. Этот скрипт вызывается в начале каждого запуска конвейера, в настоящее время как часть `entrypoint.sh` моего контейнера. Вот важные части:
 
 ```
 dataset_ref = client.dataset('metrics')
@@ -139,9 +139,9 @@ for project in projects:
   client.insert_rows(table, [(now,project,watchers)])
 ```
 
-You can see the script in its entirety here. It ensures that the latest GitHub star count is always available before the run cycle begins.
+Вы можете увидеть скрипт в его полном объеме здесь. Он гарантирует, что последнее количество звезд GitHub всегда доступно перед началом цикла выполнения.
 
-Before running the script, I created a table called `github_stars` to act as a destination. The schema:
+Перед запуском скрипта я создал таблицу под названием `github_stars`, чтобы она служила местом назначения. Схема:
 
 ```sql
 CREATE TABLE `openlineage.metrics.github_stars`
@@ -152,9 +152,9 @@ CREATE TABLE `openlineage.metrics.github_stars`
 )
 ```
 
-**Setting up dbt sources**
+**Настройка источников dbt**
 
-To make dbt aware of this new `github_stars` table, I added it to the list of tables in `models/schema.xml`:
+Чтобы dbt знал об этой новой таблице `github_stars`, я добавил ее в список таблиц в `models/schema.xml`:
 
 ```
 sources:
@@ -165,9 +165,9 @@ sources:
       - name: github_stars
 ```
 
-This is an effective way to track stars from now on, but can't be used to populate any historical data. Fortunately, there are a few ways to get the complete star history for a project. I used this tool to download CSVs of GitHub star history for each of the projects. I combined them into a single file and placed it in `data/github_daily_summary_history.csv` as a seed file.
+Это эффективный способ отслеживания звезд с этого момента, но он не может быть использован для заполнения любых исторических данных. К счастью, есть несколько способов получить полную историю звезд для проекта. Я использовал этот инструмент для загрузки CSV-файлов истории звезд GitHub для каждого из проектов. Я объединил их в один файл и поместил его в `data/github_daily_summary_history.csv` в качестве файла семян.
 
-The schema for this data must be explicitly defined. I did this by adding a section to `dbt_project.yml` file with the following:
+Схема для этих данных должна быть явно определена. Я сделал это, добавив раздел в файл `dbt_project.yml` со следующим содержимым:
 
 ```
 seeds:
@@ -179,13 +179,13 @@ seeds:
         stars: integer
 ```
 
-When `dbt seed` is run, a table will be created with the star history. Being explicit about column types in this way ensures that each field is parsed as the intended type.
+Когда выполняется `dbt seed`, будет создана таблица с историей звезд. Явное указание типов столбцов таким образом гарантирует, что каждое поле будет разобрано как предполагаемый тип.
 
 ### DockerHub
 
-**Loading in the raw data**
+**Загрузка необработанных данных**
 
-For Docker Hub, I took a similar approach. There's an API that provides the total number of pulls each image has had over its entire history. I wrote another simple script in `loaderscripts/` to poll the API and load the count into BigQuery. It is very similar to the GitHub script, with only the block at the end differing:
+Для Docker Hub я использовал аналогичный подход. Существует API, который предоставляет общее количество загрузок, которые каждый образ имел за всю свою историю. Я написал еще один простой скрипт в `loaderscripts/`, чтобы опрашивать API и загружать количество в BigQuery. Он очень похож на скрипт GitHub, с отличием только в блоке в конце:
 
 ```
 for image in images:
@@ -195,9 +195,9 @@ for image in images:
   client.insert_rows(table, [(now,image,pull_count)])
 ```
 
-You can see the script in its entirety here. Like the GitHub loader script, this is executed immediately before the dbt run cycle begins.
+Вы можете увидеть скрипт в его полном объеме здесь. Как и скрипт загрузчика GitHub, он выполняется непосредственно перед началом цикла выполнения dbt.
 
-Just as I did with the GitHub loader script, I created a table called `dockerhub_pulls`. The schema is as follows:
+Как и в случае со скриптом загрузчика GitHub, я создал таблицу под названием `dockerhub_pulls`. Схема следующая:
 
 ```sql
 CREATE TABLE `openlineage.metrics.dockerhub_pulls`
@@ -208,9 +208,9 @@ CREATE TABLE `openlineage.metrics.dockerhub_pulls`
 )
 ```
 
-**Setting up dbt sources**
+**Настройка источников dbt**
 
-Again, to make dbt aware of this new `dockerhub_pulls` table, I added it to the list of tables in `models/schema.xml`:
+Снова, чтобы dbt знал об этой новой таблице `dockerhub_pulls`, я добавил ее в список таблиц в `models/schema.xml`:
 
 ```
 sources:
@@ -225,11 +225,11 @@ sources:
 
 ### PyPI
 
-PyPI download stats are available as a public data set in BigQuery, so they are easy to work with. There is a `file_downloads` table that contains one row per download, which is ideal for my purposes. However, it's a lot of data to be working with, and I only care about a little bit of it.
+Статистика загрузок PyPI доступна в виде публичного набора данных в BigQuery, поэтому с ними легко работать. Существует таблица `file_downloads`, которая содержит одну строку на каждую загрузку, что идеально подходит для моих целей. Однако это много данных для работы, и меня интересует только небольшая их часть.
 
-I decided that this situation called for a small slice of PyPI: a table that only contains rows for the packages I am studying, one that I can point a greedy dashboarding tool at without blowing up my Google Cloud bill. 
+Я решил, что эта ситуация требует небольшого среза PyPI: таблицы, которая содержит только строки для пакетов, которые я изучаю, и на которую я могу направить жадный инструмент для создания панелей, не взрывая мой счет в Google Cloud.
 
-To carve this slice, I first added the source table from the BigQuery public data set to `models/schema.xml`:
+Чтобы вырезать этот срез, я сначала добавил исходную таблицу из публичного набора данных BigQuery в `models/schema.xml`:
 
 ```
 sources:
@@ -247,7 +247,7 @@ sources:
       - name: file_downloads
 ```
 
-Then, I created an incremental model in `models/pypi_downloads.sql` that pulls the target rows and columns from the source table. I used an incremental model so it could be re-run periodically to update my slice with the latest rows from the source table:
+Затем я создал инкрементальную модель в `models/pypi_downloads.sql`, которая извлекает целевые строки и столбцы из исходной таблицы. Я использовал инкрементальную модель, чтобы ее можно было периодически перезапускать для обновления моего среза последними строками из исходной таблицы:
 
 ```
 {{
@@ -274,15 +274,15 @@ and timestamp > TIMESTAMP_SECONDS(1549497600)
 {% endif %}
 ```
 
-## Creating data models 
+## Создание моделей данных
 
-So! I had figured out how to load all the raw data into BigQuery, but I wasn't done yet. Dashboarding tools tend to want data structured in predictable ways, and that means having clear measures and dimensions (almost always with one of the dimensions being a unit of time). I created several dbt models to cajole everything into the proper shape.
+Итак! Я выяснил, как загрузить все необработанные данные в BigQuery, но я еще не закончил. Инструменты для создания панелей обычно хотят, чтобы данные были структурированы предсказуемым образом, а это значит, что должны быть четкие меры и измерения (почти всегда с одним из измерений, являющимся единицей времени). Я создал несколько моделей dbt, чтобы привести все в нужную форму.
 
 **Slack**
 
-For Slack, I had a simple transformation to do. The `slack_messages` table contains one row per message sent. What I needed, instead, was one row per user, per community, per day; the only measure I track currently is the number of messages sent.
+Для Slack у меня было простое преобразование. Таблица `slack_messages` содержит одну строку на каждое отправленное сообщение. Что мне нужно, вместо этого, это одна строка на пользователя, на сообщество, на день; единственная мера, которую я отслеживаю в настоящее время, это количество отправленных сообщений.
 
-To create this table, I built a new model in `models/slack_daily_summary_by_user.sql` containing:
+Чтобы создать эту таблицу, я построил новую модель в `models/slack_daily_summary_by_user.sql`, содержащую:
 
 ```
 select
@@ -297,9 +297,9 @@ group by day, domain, username
 
 **GitHub**
 
-For GitHub, the challenge is that there are two inputs: `github_stars`, which is populated by the loader script, and `github_daily_summary_history`, which is loaded from a CSV file. Both of these sources contain a date, a project, and a star count. In both cases there is the possibility of multiple data points per day.
+Для GitHub проблема в том, что есть два входных источника: `github_stars`, который заполняется скриптом загрузчика, и `github_daily_summary_history`, который загружается из CSV-файла. Оба этих источника содержат дату, проект и количество звезд. В обоих случаях возможно наличие нескольких точек данных в день.
 
-What I want, instead, is a single table with one row per day per GitHub project. I created `models/github_daily_summary.sql` containing:
+Что я хочу, вместо этого, это единственная таблица с одной строкой на день на проект GitHub. Я создал `models/github_daily_summary.sql`, содержащую:
 
 ```
 with combined_stars as (
@@ -316,7 +316,7 @@ group by day, project
 
 **Docker Hub**
 
-The Docker Hub data requires very little transformation. However, for consistency I decided to create a summary table containing the maximum value recorded for each image on a given day. To accomplish this, a new `models/dockerhub_daily_summary.sql` file was required:
+Данные Docker Hub требуют очень небольшого преобразования. Однако для согласованности я решил создать таблицу сводки, содержащую максимальное значение, зарегистрированное для каждого образа в данный день. Чтобы достичь этого, потребовался новый файл `models/dockerhub_daily_summary.sql`:
 
 ```
 {{
@@ -333,11 +333,11 @@ from {{ source('metrics', 'dockerhub_pulls') }}
 group by day, image
 ```
 
-I decided to make this a <Term id="view" />, since the source table is already pretty svelte and the transformation involved is lightweight. In the future, I'd like to calculate a `new_pulls` field that contains the difference between the current `total_pulls` and the previous day's value. Once I build that, I'm likely to change this model into a table.
+Я решил сделать это <Term id="view" />, так как исходная таблица уже довольно компактная, и вовлеченное преобразование легковесное. В будущем я хотел бы рассчитать поле `new_pulls`, которое содержит разницу между текущим `total_pulls` и значением предыдущего дня. Как только я это построю, я, вероятно, изменю эту модель на таблицу.
 
 **PyPI**
 
-Finally, the PyPI data requires a simple model to count the number of daily downloads per package, `models/pypi_daily_summary.sql`:
+Наконец, данные PyPI требуют простой модели для подсчета количества ежедневных загрузок на пакет, `models/pypi_daily_summary.sql`:
 
 ```
 select
@@ -348,19 +348,19 @@ from {{ ref('pypi_downloads') }}
 group by day, project, version
 ```
 
-## Configuring OpenLineage
+## Настройка OpenLineage
 
-In order to collect lineage metadata as the models run, I used the OpenLineage wrapper script. This script collects lineage metadata from files generated by dbt during the run, emitting OpenLineage events to a metadata server. 
+Чтобы собирать метаданные происхождения по мере выполнения моделей, я использовал скрипт-обертку OpenLineage. Этот скрипт собирает метаданные происхождения из файлов, сгенерированных dbt во время выполнения, отправляя события OpenLineage на сервер метаданных.
 
-Having this metadata allows me to study the flow of data as it changes over time. This might seem like overkill for such a small, basic pipeline, but I've got a feeling it won't stay that way for long. It's best to establish good practices early.
+Наличие этих метаданных позволяет мне изучать поток данных по мере их изменения с течением времени. Это может показаться излишним для такого маленького, базового конвейера, но у меня есть ощущение, что он не останется таким надолго. Лучше установить хорошие практики на раннем этапе.
 
-To make sure the script and OpenLineage client libraries were installed in my Python virtual environment (hey, folks, always use a virtual environment!) I ran:
+Чтобы убедиться, что скрипт и библиотеки клиента OpenLineage были установлены в моей виртуальной среде Python (эй, ребята, всегда используйте виртуальную среду!), я выполнил:
 
 ```
 % pip3 install openlineage-dbt
 ```
 
-Marquez is an OpenLineage-compatible metadata server and lineage analysis tool. I spun up an instance using its `docker/up.sh` script:
+Marquez — это совместимый с OpenLineage сервер метаданных и инструмент анализа происхождения. Я запустил экземпляр, используя его скрипт `docker/up.sh`:
 
 ```
 % git clone git@github.com:MarquezProject/marquez.git
@@ -368,15 +368,15 @@ Marquez is an OpenLineage-compatible metadata server and lineage analysis tool. 
 % ./docker/up.sh -d
 ```
 
-Finally, I set the `OPENLINEAGE_URL` environment variable to the location of my Marquez server:
+Наконец, я установил переменную окружения `OPENLINEAGE_URL` на местоположение моего сервера Marquez:
 
 ```
 % export OPENLINEAGE_URL=http://localhost:5000
 ```
 
-## Running the Pipeline
+## Запуск конвейера
 
-The OpenLineage integration pulls some important metadata from `target/catalog.json`, which is created by dbt when docs are generated. So it's necessary to do so before running models:
+Интеграция OpenLineage извлекает некоторые важные метаданные из `target/catalog.json`, который создается dbt при генерации документации. Поэтому необходимо сделать это перед запуском моделей:
 
 ```
 % dbt docs generate
@@ -391,13 +391,13 @@ Found 7 models, 0 tests, 0 snapshots, 0 analyses, 184 macros, 0 operations, 2 se
 
 ```
 
-Next, I ran each of the scripts inside the `loaderscripts/` directory to populate GitHub stars and Docker Hub pulls from their respective APIs:
+Затем я запустил каждый из скриптов внутри каталога `loaderscripts/`, чтобы заполнить звезды GitHub и загрузки Docker Hub из их соответствующих API:
 
 ```
 % for x in loaderscripts/*.py; do python3 $x; done
 ```
 
-Then, to create the `github_daily_summary_history` table with the contents of the file in `data/`:
+Затем, чтобы создать таблицу `github_daily_summary_history` с содержимым файла в `data/`:
 
 ```
 % dbt seed
@@ -419,7 +419,7 @@ Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
 
 ```
 
-Finally, to run the models and pass lineage metadata to my local instance of Marquez:
+Наконец, чтобы запустить модели и передать метаданные происхождения в мой локальный экземпляр Marquez:
 
 ```
 % dbt-ol run
@@ -455,44 +455,43 @@ Emitted 16 openlineage events
 
 ```
 
-A lineage graph of the entire pipeline can now be viewed in Marquez, which shows the relationships between datasets and provides detail about the run history.
+Теперь граф происхождения всего конвейера можно просмотреть в Marquez, который показывает взаимосвязи между наборами данных и предоставляет информацию о истории выполнения.
 
 
-![marquez dashboard](/img/blog/community-growth-marquez.png "marquez dashboard")
+![панель управления marquez](/img/blog/community-growth-marquez.png "панель управления marquez")
 
 
-## Visualizing the Results
+## Визуализация результатов
 
-This is the simplest part, by far. Since we have a set of tables with clearly-defined measures and dimensions, getting everything working in a system like Apache Superset is straightforward.
+Это самая простая часть, безусловно. Поскольку у нас есть набор таблиц с четко определенными мерами и измерениями, работа в системе, такой как Apache Superset, проста.
 
-Configuring the data source and adding each table to a Preset Workspace was easy. First, I connected my BigQuery database by uploading a <Term id="json" /> key for my service account. 
+Настройка источника данных и добавление каждой таблицы в рабочее пространство Preset было легким. Сначала я подключил свою базу данных BigQuery, загрузив <Term id="json" /> ключ для своей учетной записи службы.
 
-Once the database connection was in place, I created datasets for each of my `*_daily_summary` tables by  selecting the database/schema/table from a dropdown.
+После того как подключение к базе данных было установлено, я создал наборы данных для каждой из моих таблиц `*_daily_summary`, выбрав базу данных/схему/таблицу из выпадающего списка.
 
-With the database and datasets configured, I was able to use the charting interface to explore the various measures and dimensions in the warehouse. After about fifteen minutes, I had created a dashboard that shows the evolution of the communities where my colleagues and I do our work.
-
-
-![community growth dashboard](/img/blog/community-growth-dashboard.png "community growth dashboard")
+С настроенной базой данных и наборами данных я смог использовать интерфейс построения графиков для изучения различных мер и измерений в хранилище. Примерно через пятнадцать минут я создал панель, которая показывает эволюцию сообществ, в которых работают мои коллеги и я.
 
 
-This overall view is interesting - it suggests acceleration in activity across every channel during the summer of 2021, which makes a lot of sense. That is when the first release of OpenLineage happened, and also when a few talks and podcasts were released. Things have slowed down as the holiday approaches, which also checks out. Unless you're in the retail business, that kind of thing happens.
-
-Indeed, you can see a familiar pattern happen every year on the PyPI chart. That indicates at least one thing: CI/CD systems aren't responsible for *all* of those package downloads. The trend has too much humanity baked into it, too many calendar-influenced peaks and valleys.
-
-Something else can be learned from this PyPI data, something more specific to my project. Over the summer, several integrations were moved from the Marquez project to the OpenLineage project. That means that `marquez-airflow` has become `openlineage-airflow`. I'd like to know whether the old packages are still being used. When I create a chart using `num_downloads` as a metric and `package` as a dimension, with monthly granularity, it shows:
-
-![community growth trends](/img/blog/community-growth-trend.png "community growth trends")
-
-The shift began in August, and as of right now the Marquez packages still account for about half of the total downloads. That means we have some work to do. Likely there is some old documentation still out there to be found and updated.
-
-## What's next?
-
-This is a very simple community metrics pipeline. Maybe this post should have been called "how to *start* studying community growth". Still, it contains all of the pieces of a large, complex one. 
-Next, I plan to:
+![панель роста сообщества](/img/blog/community-growth-dashboard.png "панель роста сообщества")
 
 
-* Use Airflow (perhaps with the Astro CLI) to orchestrate the loading of data into `dockerhub_stats` and `github_stats`, then trigger the necessary seed/run steps in dbt. 
-* Look into creating some basic user segmentation - e.g., how much of this activity comes from people my employer sponsors?
-* Expand the list of projects to include those we contribute to less frequently, so I can study possible intersections. Perhaps even include a few completely unrelated projects just for fun :)
+Этот общий вид интересен — он предполагает ускорение активности во всех каналах летом 2021 года, что имеет смысл. Это время, когда произошел первый выпуск OpenLineage, а также когда были выпущены несколько докладов и подкастов. Дела замедлились по мере приближения праздников, что также соответствует действительности. Если вы не в розничном бизнесе, такое случается.
 
-To view the entire thing (including a Dockerfile I use to containerize it all) check out the [OpenLineage metrics GitHub project](https://github.com/OpenLineage/metrics), where pull requests are most welcome. I am easy to find - @rossturk on [GitHub](https://github.com/rossturk), [Twitter](https://mobile.twitter.com/rossturk), and dbt Slack - and am always interested in a chat about community metrics.
+Действительно, вы можете увидеть знакомую картину каждый год на графике PyPI. Это указывает как минимум на одно: CI/CD системы не ответственны за *все* эти загрузки пакетов. Тренд имеет слишком много человечности, слишком много пиков и спадов, связанных с календарем.
+
+Из этих данных PyPI можно извлечь еще кое-что, более специфичное для моего проекта. Летом несколько интеграций были перенесены из проекта Marquez в проект OpenLineage. Это означает, что `marquez-airflow` стал `openlineage-airflow`. Я хотел бы знать, используются ли еще старые пакеты. Когда я создаю график, используя `num_downloads` в качестве метрики и `package` в качестве измерения, с месячной гранулярностью, он показывает:
+
+![тренды роста сообщества](/img/blog/community-growth-trend.png "тренды роста сообщества")
+
+Сдвиг начался в августе, и на данный момент пакеты Marquez все еще составляют около половины от общего числа загрузок. Это означает, что у нас есть работа. Вероятно, где-то еще есть старая документация, которую нужно найти и обновить.
+
+## Что дальше?
+
+Это очень простой конвейер метрик сообщества. Возможно, этот пост следовало бы назвать "как *начать* изучать рост сообщества". Тем не менее, он содержит все элементы большого, сложного конвейера. 
+Далее я планирую:
+
+* Использовать Airflow (возможно, с Astro CLI) для оркестрации загрузки данных в `dockerhub_stats` и `github_stats`, а затем запускать необходимые шаги seed/run в dbt. 
+* Изучить создание базовой сегментации пользователей — например, сколько из этой активности исходит от людей, которых спонсирует мой работодатель?
+* Расширить список проектов, включив в него те, в которые мы вносим вклад реже, чтобы изучить возможные пересечения. Возможно, даже включить несколько совершенно не связанных проектов просто для развлечения :)
+
+Чтобы просмотреть все это (включая Dockerfile, который я использую для контейнеризации), загляните в [проект OpenLineage metrics на GitHub](https://github.com/OpenLineage/metrics), где pull-запросы очень приветствуются. Меня легко найти — @rossturk на [GitHub](https://github.com/rossturk), [Twitter](https://mobile.twitter.com/rossturk) и dbt Slack — и я всегда заинтересован в беседе о метриках сообщества.

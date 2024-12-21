@@ -1,6 +1,6 @@
 ---
-title: "Stronger together: Python, dataframes, and SQL"
-description: "Going polyglot is a major next step in the journey of dbt Core. It expands possibilities and also the potential for confusion right along with it. SQL, dataframes, and Python are stronger together and polyglot dbt allows informed practitioners to choose when to use each."
+title: "Сильнее вместе: Python, датафреймы и SQL"
+description: "Переход на полиглотность — это важный следующий шаг в развитии dbt Core. Это расширяет возможности, но также увеличивает потенциал для путаницы. SQL, датафреймы и Python сильнее вместе, и полиглотный dbt позволяет информированным практикам выбирать, когда использовать каждый из них."
 slug: polyglot-dbt-python-dataframes-sql
 
 authors: [doug_beatty]
@@ -11,104 +11,104 @@ date: 2022-10-18
 is_featured: true
 ---
 
-# Stronger together: Python, dataframes, and SQL
+# Сильнее вместе: Python, датафреймы и SQL
 
-For years working in data and analytics engineering roles, I treasured the daily camaraderie sharing a small office space with talented folks using a range of tools - from analysts using SQL and Excel to data scientists working in Python. I always sensed that there was so much we could work on in collaboration with each other - but siloed data and tooling made this much more difficult. The diversity of our tools and languages made the potential for collaboration all the more interesting, since we could have folks with different areas of expertise each bringing their unique spin to the project. But logistically, it just couldn’t be done in a scalable way.
+Много лет, работая в области данных и аналитической инженерии, я ценил ежедневное общение в небольшом офисе с талантливыми людьми, использующими различные инструменты — от аналитиков, работающих с SQL и Excel, до дата-сайентистов, работающих с Python. Я всегда чувствовал, что у нас есть много возможностей для совместной работы, но изолированные данные и инструменты делали это гораздо сложнее. Разнообразие наших инструментов и языков делало потенциал для сотрудничества еще более интересным, поскольку у нас могли быть люди с разными областями экспертизы, каждый из которых вносил бы свой уникальный вклад в проект. Но с логистической точки зрения это просто не могло быть реализовано в масштабируемом виде.
 
-So I couldn’t be more excited about dbt’s polyglot capabilities arriving in dbt Core 1.3. This release brings Python dataframe libraries that are crucial to data scientists and enables general-purpose Python but still uses a shared database for reading and writing data sets. Analytics engineers and data scientists are stronger together, and I can’t wait to work side-by-side in the same repo with all my data scientist friends.
+Поэтому я не могу быть более взволнован возможностями полиглотности dbt, которые появились в dbt Core 1.3. Этот релиз приносит библиотеки датафреймов Python, которые важны для дата-сайентистов, и позволяет использовать Python общего назначения, но при этом использует общую базу данных для чтения и записи наборов данных. Аналитические инженеры и дата-сайентисты сильнее вместе, и я не могу дождаться, чтобы работать бок о бок в одном репозитории со всеми моими друзьями-дата-сайентистами.
 
-Going polyglot is a major next step in the journey of dbt Core. While it expands possibilities, we  also recognize the potential for confusion. When combined in an intentional manner, SQL, dataframes, and Python are also stronger together. Polyglot dbt allows informed practitioners to choose the language that best fits your use case.
+Переход на полиглотность — это важный следующий шаг в развитии dbt Core. Хотя это расширяет возможности, мы также признаем потенциал для путаницы. Когда они объединены намеренно, SQL, датафреймы и Python также сильнее вместе. Полиглотный dbt позволяет информированным практикам выбирать язык, который лучше всего подходит для вашего случая использования.
 
-In this post, we’ll give you your hands-on experience and seed your imagination with potential applications. We’ll walk you through a [demo](https://github.com/dbt-labs/demo-python-blog) that showcases string parsing - one simple way that Python can be folded into a dbt project.
+В этом посте мы дадим вам практический опыт и вдохновим ваше воображение потенциальными приложениями. Мы проведем вас через [демонстрацию](https://github.com/dbt-labs/demo-python-blog), которая демонстрирует разбор строк — один из простых способов, как Python может быть интегрирован в проект dbt.
 
-We’ll also give you the intellectual resources to compare/contrast:
-- different dataframe implementations within different data platforms
-- dataframes vs. SQL
+Мы также предоставим вам интеллектуальные ресурсы для сравнения:
+- различных реализаций датафреймов в разных платформах данных
+- датафреймы против SQL
 
-Finally, we’ll share “gotchas” and best practices we’ve learned so far and invite you to participate in discovering the answers to outstanding questions we are still curious about ourselves.
+Наконец, мы поделимся "подводными камнями" и лучшими практиками, которые мы узнали до сих пор, и пригласим вас участвовать в поиске ответов на нерешенные вопросы, которые нас самих все еще интересуют.
 
-Based on our early experiences, we recommend that you:
+На основе нашего раннего опыта, мы рекомендуем вам:
 
-✅ **Do**: Use Python when it is better suited for the job – model training, using predictive models, matrix operations, exploratory data analysis (EDA), Python packages that can assist with complex transformations, and select other cases where Python is a more natural fit for the problem you are trying to solve.
+✅ **Делайте**: Используйте Python, когда он лучше подходит для задачи — обучение моделей, использование предсказательных моделей, матричные операции, исследовательский анализ данных (EDA), пакеты Python, которые могут помочь с комплексными трансформациями, и другие случаи, когда Python является более естественным решением для проблемы, которую вы пытаетесь решить.
 
-❌ **Don’t**: Use Python where the solution in SQL is just as direct. Although a pure Python dbt project is possible, we’d expect the most impactful projects to be a mixture of SQL and Python.
+❌ **Не делайте**: Используйте Python там, где решение на SQL столь же прямолинейно. Хотя чисто Python проект dbt возможен, мы ожидаем, что наиболее значимые проекты будут смесью SQL и Python.
 
 <!--truncate-->
 
-## Polyglot dbt: An alloy of Python, dataframes, and SQL
+## Полиглотный dbt: Сплав Python, датафреймов и SQL
 
-dbt Core 1.3 [gives you the ability](https://www.getdbt.com/blog/introducing-support-for-python/) to use Python models to materialize dataframes as tables within your dbt DAG. In combination, Python and SQL models form an alloy within a dbt project, yielding net new properties not found in isolation.
+dbt Core 1.3 [дает вам возможность](https://www.getdbt.com/blog/introducing-support-for-python/) использовать модели Python для материализации датафреймов как таблиц в вашем dbt DAG. В комбинации, модели Python и SQL формируют сплав в проекте dbt, создавая новые свойства, которых нет в изоляции.
 
-This is a simultaneous two-part unlock. One, we get a general purpose programming language in Python. Two, we get access to special-purpose dataframe libraries for reading from / writing to the database.
+Это одновременное двухчастное разблокирование. Во-первых, мы получаем язык программирования общего назначения в Python. Во-вторых, мы получаем доступ к специализированным библиотекам датафреймов для чтения из/записи в базу данных.
 
-Some pretty cool functionality follows:
-1. **Vast ecosystem of Python packages**: The rich Python ecosystem of packages is the heart of varied use cases like machine learning, exploratory data analysis (EDA), data set generation, and many, many more.
-1. **Dataframe syntax for data set manipulation**: There’s a vibrant community of Python-first developers that can more easily contribute to dbt projects when they can use dataframe syntax. This is especially useful in conjunction with data science use-cases.
-1. **Python workflows where your data lives**: Most Python work being done today is done outside of the data platform that stores the source data, meaning developers have to transfer the data into the Python environment first, which adds significant friction to the development workflow. In the case of Snowpark DataFrames, data movement is reduced by pushing the computation down to the data platform.
+Некоторые довольно крутые функции следуют:
+1. **Обширная экосистема пакетов Python**: Богатая экосистема пакетов Python является сердцем различных случаев использования, таких как машинное обучение, исследовательский анализ данных (EDA), генерация наборов данных и многие, многие другие.
+1. **Синтаксис датафреймов для манипуляции наборами данных**: Существует активное сообщество разработчиков, ориентированных на Python, которые могут легче вносить вклад в проекты dbt, когда они могут использовать синтаксис датафреймов. Это особенно полезно в сочетании с случаями использования в области науки о данных.
+1. **Рабочие процессы Python там, где находятся ваши данные**: Большая часть работы с Python сегодня выполняется вне платформы данных, которая хранит исходные данные, что означает, что разработчикам сначала нужно перенести данные в среду Python, что добавляет значительное трение в рабочий процесс разработки. В случае Snowpark DataFrames перемещение данных сокращается за счет переноса вычислений на платформу данных.
 
-## Trade-offs between SQL and dataframe syntax
+## Компромиссы между SQL и синтаксисом датафреймов
 
-Once you’re set up - the next question is: what _should_ you use Python for? How should you think about tradeoffs between SQL vs. dataframes? I haven’t personally pondered this deeply… but the folks at [Ponder](https://ponder.io/) have 😉 They published a series of posts comparing the two in terms of:
+Как только вы настроитесь, следующий вопрос: для чего _следует_ использовать Python? Как следует думать о компромиссах между SQL и датафреймами? Я лично не задумывался об этом глубоко... но ребята из [Ponder](https://ponder.io/) задумывались 😉 Они опубликовали серию постов, сравнивающих их с точки зрения:
 
-- [convenience](https://ponder.io/pandas-vs-sql-part-4-pandas-is-more-convenient/) - dataframes go well with data science libraries like [Scikit-learn](https://scikit-learn.org/stable/)
-- [conciseness](https://ponder.io/pandas-vs-sql-part-2-pandas-is-more-concise/) - dataframes have concise syntax for normalization, one-hot encoding, rolling averages, and other uses
-- [flexibility](https://ponder.io/pandas-vs-sql-part-3-pandas-is-more-flexible/) - rows and columns in dataframes can be transposed and functions can be applied along columns or rows
+- [удобства](https://ponder.io/pandas-vs-sql-part-4-pandas-is-more-convenient/) - датафреймы хорошо сочетаются с библиотеками науки о данных, такими как [Scikit-learn](https://scikit-learn.org/stable/)
+- [краткости](https://ponder.io/pandas-vs-sql-part-2-pandas-is-more-concise/) - датафреймы имеют краткий синтаксис для нормализации, one-hot кодирования, скользящих средних и других применений
+- [гибкости](https://ponder.io/pandas-vs-sql-part-3-pandas-is-more-flexible/) - строки и столбцы в датафреймах могут быть транспонированы, и функции могут быть применены вдоль столбцов или строк
 
-Gaining **your own** sense of these differences will empower you to create your own alloy mix of polyglot dbt models.
+Получение **вашего собственного** понимания этих различий позволит вам создать свой собственный сплав полиглотных моделей dbt.
 
-## Comparing dataframe libraries
+## Сравнение библиотек датафреймов
 
-Before we get into our hands-on example, let’s take a look at the nuts and bolts of getting your project working with different dataframe types. Multiple data platforms and dataframe libraries are supported in dbt Core as of version 1.3, but not uniformly (see compatibility table below). See [here](/docs/build/python-models) for platform-specific setup instructions.
+Прежде чем мы перейдем к нашему практическому примеру, давайте взглянем на детали настройки вашего проекта с различными типами датафреймов. Несколько платформ данных и библиотек датафреймов поддерживаются в dbt Core начиная с версии 1.3, но не равномерно (см. таблицу совместимости ниже). См. [здесь](/docs/build/python-models) для инструкций по настройке для конкретной платформы.
 
-| **Type of data frame**     | **Snowflake**                      | **Databricks**                    | **BigQuery**  |
-|----------------------------|------------------------------------|-----------------------------------|---------------|
-| Snowpark DataFrames        | ✅                                  | ❌                                 | ❌             |
-| pandas DataFrames          | ✅                                  | ✅                                 | ✅             |
-| Spark DataFrames           | ❌                                  | ✅                                 | ✅             |
-| pandas-on-Spark DataFrames | ❌                                  | ✅                                 | ✅             |
-| Koalas DataFrames          | ❌                                  | ✅                                 | ✅             |
+| **Тип датафрейма**        | **Snowflake**                      | **Databricks**                    | **BigQuery**  |
+|---------------------------|------------------------------------|-----------------------------------|---------------|
+| Snowpark DataFrames       | ✅                                  | ❌                                 | ❌             |
+| pandas DataFrames         | ✅                                  | ✅                                 | ✅             |
+| Spark DataFrames          | ❌                                  | ✅                                 | ✅             |
+| pandas-on-Spark DataFrames| ❌                                  | ✅                                 | ✅             |
+| Koalas DataFrames         | ❌                                  | ✅                                 | ✅             |
 
 <details>
-  <summary>More detailed comparisons and trade-offs</summary>
+  <summary>Более детальные сравнения и компромиссы</summary>
 
-Snowpark DataFrames are only supported in Snowflake, while Spark DataFrames are only available on Databricks and BigQuery. It’s also worth keeping in mind that different types of dataframes use [different syntax](/docs/build/python-models#dataframe-api-and-syntax).
+Snowpark DataFrames поддерживаются только в Snowflake, в то время как Spark DataFrames доступны только на Databricks и BigQuery. Также стоит помнить, что разные типы датафреймов используют [разный синтаксис](/docs/build/python-models#dataframe-api-and-syntax).
 
-We’ve intentionally not included Jinja within Python models: a primary use of Jinja is for control flow and accessing dynamic-esque variables both of which you can just do within Python! The other main use for Jinja within dbt is for creating abstractions across differing database syntaxes. At this time, there’s no unified syntax abstraction across the different types of dataframes. (But someone will probably [make one](https://xkcd.com/927/)!)
+Мы намеренно не включили Jinja в модели Python: основное использование Jinja заключается в управлении потоком и доступе к динамическим переменным, что можно сделать в Python! Другое основное использование Jinja в dbt — создание абстракций для различных синтаксисов баз данных. На данный момент нет единой абстракции синтаксиса для различных типов датафреймов. (Но кто-то, вероятно, [создаст одну](https://xkcd.com/927/)!)
 
-Although pandas DataFrames may seem like the ideal solution due to their support across data platforms, they come with their own tradeoffs. For instance, they can’t take advantage of the efficiency of native types like Spark and Snowpark DataFrames. They’re also limited by memory – large data sets will quickly exhaust available memory. In addition to that, they are constrained by being single-threaded, so they can not take advantage of multiple cores. Although pandas can be parallelized via solutions like Dask, Modin, etc., both Snowpark and Spark DataFrames will handle these scaling challenges natively. So use Snowpark, pandas-on-Spark DataFrames, and Spark DataFrames whenever you can! (Note: pandas-on-Spark DataFrames were formerly known as Koalas DataFrames and now commonly called pandas API DataFrames.)
+Хотя pandas DataFrames могут показаться идеальным решением из-за их поддержки на различных платформах данных, они имеют свои собственные компромиссы. Например, они не могут воспользоваться эффективностью нативных типов, таких как Spark и Snowpark DataFrames. Они также ограничены памятью — большие наборы данных быстро исчерпают доступную память. В дополнение к этому, они ограничены однопоточностью, поэтому не могут использовать несколько ядер. Хотя pandas можно параллелизовать с помощью решений, таких как Dask, Modin и т.д., как Snowpark, так и Spark DataFrames будут обрабатывать эти проблемы масштабирования нативно. Поэтому используйте Snowpark, pandas-on-Spark DataFrames и Spark DataFrames, когда это возможно! (Примечание: pandas-on-Spark DataFrames ранее были известны как Koalas DataFrames и теперь обычно называются pandas API DataFrames.)
 
-In Snowflake, any Snowpark DataFrame transformations specified in Python are actually compiled to SQL before execution.
+В Snowflake любые трансформации Snowpark DataFrame, указанные в Python, фактически компилируются в SQL перед выполнением.
 
 </details>
 
-## First hands-on experience using a Python package
+## Первый практический опыт использования пакета Python
 
-Now that we have sufficient background covered, let’s dive into a real-world use-case.
+Теперь, когда у нас есть достаточный фон, давайте погрузимся в реальный случай использования.
 
-The full source code for this demo is available at:
+Полный исходный код для этой демонстрации доступен по адресу:
 - https://github.com/dbt-labs/python-string-parsing
 
-This example is using [DuckDB](https://duckdb.org/) as the database backend. You can use this same code by copying it in your project that is using your database adapter of choice.
+Этот пример использует [DuckDB](https://duckdb.org/) в качестве базы данных. Вы можете использовать этот же код, скопировав его в свой проект, который использует ваш адаптер базы данных.
 
-Our example will give you hands-on experience with three things:
-1. read data from a table into a dataframe
-1. parse uniform datetimes out of a variety of string formats using the `dateutil` library
-1. writes the result back into a table
+Наш пример даст вам практический опыт с тремя вещами:
+1. чтение данных из таблицы в датафрейм
+1. разбор унифицированных дат и времени из различных строковых форматов с использованием библиотеки `dateutil`
+1. запись результата обратно в таблицу
 
-Date/time parsing is a common use-case because dates and times are ubiquitous in transactional source data. Often, the source format is unknown, and it may even be a mixture of multiple formats. The `dateutil` package has a method that will do a best-effort attempt at parsing a string into a Python datetime object, and it will raise an exception when it is unable to parse the input. (Users of pandas may already be familiar with the `pandas.to_datetime` method, which uses `dateutil`). The following demo uses `dateutil` to parse source data with unknown date/time formats.
+Разбор дат/времени — это распространенный случай использования, потому что даты и время повсеместны в транзакционных исходных данных. Часто исходный формат неизвестен, и он может даже быть смесью нескольких форматов. Пакет `dateutil` имеет метод, который будет делать попытку разбора строки в объект даты и времени Python, и он вызовет исключение, когда не сможет разобрать ввод. (Пользователи pandas могут уже быть знакомы с методом `pandas.to_datetime`, который использует `dateutil`). Следующая демонстрация использует `dateutil` для разбора исходных данных с неизвестными форматами даты/времени.
 
-In this example we’ll:
-1. Install the requirements in a virtual environment
-1. Build the dbt project
-1. Examine the output
+В этом примере мы:
+1. Установим требования в виртуальной среде
+1. Построим проект dbt
+1. Проверим вывод
 
-### Components of the dbt project
+### Компоненты проекта dbt
 
-This dbt project has only two main pieces (besides our seed data to mimic source data):
-1. Transformation logic within the dbt Python model
-1. Configuration of data testing for quality assurance
+Этот проект dbt имеет только две основные части (помимо наших исходных данных для имитации исходных данных):
+1. Логика трансформации в модели dbt Python
+1. Конфигурация тестирования данных для обеспечения качества
 
-#### The dbt Python model
+#### Модель dbt на Python
 
 ```python
 import dateutil
@@ -129,13 +129,13 @@ def model(dbt, session):
     return df
 ```
 
-This model tries to parse the raw string value into a Python datetime. When not successful, it yields a `None` value rather than raising an error. The `dateutil` can handle a wider range of formats than most data platforms’ native functionality.
+Эта модель пытается разобрать необработанное строковое значение в объект даты и времени Python. Когда это не удается, она возвращает значение `None`, а не вызывает ошибку. `dateutil` может обрабатывать более широкий диапазон форматов, чем большинство нативных функций платформ данных.
 
-#### Testing the result
+#### Тестирование результата
 
-During the build process, dbt will check if any of the values are null. This is using the built-in [`not_null`](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests) test, which will generate and execute SQL in the data platform.
+Во время процесса сборки dbt проверит, есть ли какие-либо значения null. Это использует встроенный тест [`not_null`](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests), который будет генерировать и выполнять SQL на платформе данных.
 
-Our initial recommendation for testing Python models is to use [generic](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests) and [singular](https://docs.getdbt.com/docs/building-a-dbt-project/tests#singular-data-tests) tests.
+Наше первоначальное предложение для тестирования моделей Python — использовать [общие](https://docs.getdbt.com/docs/building-a-dbt-project/tests#generic-data-tests) и [единичные](https://docs.getdbt.com/docs/building-a-dbt-project/tests#singular-data-tests) тесты.
 
 ```yaml
 version: 2
@@ -148,18 +148,18 @@ models:
           - not_null
 ```
 
-### Download the repository and install requirements
+### Загрузка репозитория и установка требований
 
-The full source code for this demo is available at:
+Полный исходный код для этой демонстрации доступен по адресу:
 - https://github.com/dbt-labs/python-string-parsing
 
-The only prerequisites for this demo are `python3` and `git`. You can verify both are installed and you’re on the right version via these commands in your terminal:
+Единственные предварительные условия для этой демонстрации — это `python3` и `git`. Вы можете убедиться, что оба установлены и вы используете правильную версию, с помощью этих команд в вашем терминале:
 ```shell
 python3 --version
 git --version
 ```
 
-Assuming both are availble in your system, then you can clone the example repository using your method of choice:
+Предполагая, что оба доступны в вашей системе, вы можете клонировать пример репозитория, используя ваш предпочтительный метод:
 
 <details open>
 <summary>HTTPS</summary>
@@ -191,7 +191,7 @@ cd demo-python-blog
 
 </details>
 
-Then you'll create a virtual environment and install all the dependencies. Choose your shell / operating system from the list below and run the commands (defaulting to `zsh`/`bash`):
+Затем вы создадите виртуальную среду и установите все зависимости. Выберите вашу оболочку / операционную систему из списка ниже и выполните команды (по умолчанию `zsh`/`bash`):
 
 <details open>
 <summary>POSIX bash/zsh</summary>
@@ -267,22 +267,22 @@ env\Scripts\Activate.ps1
 </details>
 
 
-### Build it
-Once the dependencies are all installed, we can build the project:
+### Построение
+Как только все зависимости установлены, мы можем построить проект:
 
 ```shell
 dbt build
 ```
 
-### Query the result of the dbt transformation
+### Запрос результата трансформации dbt
 
-Congrats on successfully running your first dbt Python model! Let’s confirm the output visually by running the following query:
+Поздравляем с успешным запуском вашей первой модели dbt на Python! Давайте подтвердим вывод визуально, выполнив следующий запрос:
 
 ```shell
 duckcli demo.duckdb --table --execute "select id, transaction_time, parsed_transaction_time from parse_datetimes order by id"
 ```
 
-As you can see, each of the various input formats were successfully parsed into a uniform and standardized format.
+Как вы можете видеть, каждый из различных входных форматов был успешно разобран в унифицированный и стандартизированный формат.
 
 | id | transaction_time                 | parsed_transaction_time |
 |----|----------------------------------|-------------------------|
@@ -300,47 +300,47 @@ As you can see, each of the various input formats were successfully parsed into 
 | 12 | 2022-08-02 02:59:36+00:00        | 2022-08-02 02:59:36     |
 | 13 | 2022-10-18 02:59:36+00:00        | 2022-10-18 02:59:36     |
 
-⚠️ Remember to deactivate the environment as a final step:
+⚠️ Не забудьте деактивировать среду как последний шаг:
 ```
 deactivate
 ```
 
-And there you go! A real live python example for a common analytics use case! Now let’s think about what we learned.
+И вот так! Реальный пример использования Python для распространенного аналитического случая! Теперь давайте подумаем о том, что мы узнали.
 
-## Best practice recommendations
+## Рекомендации по лучшим практикам
 
-Based on our early experiences using dbt Python models and our ongoing conversations with members of the dbt Community, here are some recommended “do’s and don'ts” we think will help set you up for success.
+На основе нашего раннего опыта использования моделей dbt на Python и наших текущих разговоров с членами сообщества dbt, вот некоторые рекомендованные "делайте и не делайте", которые, как мы думаем, помогут вам добиться успеха.
 
-### ✅ **Do**:
+### ✅ **Делайте**:
 
-- Use Python when it is better suited for the job – model training, using predictive models, matrix operations, exploratory data analysis (EDA), and Python packages that can assist with complex transformations.
-- Use the native the dataframe type and syntax for your data platform. Use a notebook environment (and a small sample of your data set) for initial development before copying it into dbt.
+- Используйте Python, когда он лучше подходит для задачи — обучение моделей, использование предсказательных моделей, матричные операции, исследовательский анализ данных (EDA) и пакеты Python, которые могут помочь с комплексными трансформациями.
+- Используйте нативный тип датафрейма и синтаксис для вашей платформы данных. Используйте среду ноутбука (и небольшой образец вашего набора данных) для начальной разработки перед копированием его в dbt.
 
-### ❌ **Don’t**:
+### ❌ **Не делайте**:
 
-- Use Python where the solution in SQL is just as direct. Although a pure Python dbt project is possible, we’d expect the most impactful projects to be a mixture of SQL and Python.
-- Perform web scraping or download data from the web.
-- Use pandas unless absolutely necessary. Although pandas can be useful in the prototyping stage, scaling to larger data sets often requires a platform-native type like Snowpark, Spark, or pandas-on-Spark.
-- Translate your entire project to be Python-only. Although possible, if models are already written in SQL and there’s not a specific benefit to it being in Python, just leave it as SQL.
+- Используйте Python там, где решение на SQL столь же прямолинейно. Хотя чисто Python проект dbt возможен, мы ожидаем, что наиболее значимые проекты будут смесью SQL и Python.
+- Выполняйте веб-скрапинг или загружайте данные из интернета.
+- Используйте pandas, если это не абсолютно необходимо. Хотя pandas может быть полезен на этапе прототипирования, масштабирование до больших наборов данных часто требует платформенного нативного типа, такого как Snowpark, Spark или pandas-on-Spark.
+- Переводите весь ваш проект на Python. Хотя это возможно, если модели уже написаны на SQL и нет конкретной выгоды от их перевода на Python, просто оставьте их как SQL.
 
-### 🤷 We don’t know yet!
-There are several outstanding questions where you are invited to contribute to the discussion:
-- [Reusable Python logic](https://github.com/dbt-labs/dbt-core/discussions/5741)
-- [Debugging output](https://github.com/dbt-labs/dbt-core/discussions/5799)
-- [Testing Python models](https://github.com/dbt-labs/docs.getdbt.com/discussions/1811)
-- [Abstractions over different dataframe APIs](https://github.com/dbt-labs/dbt-core/discussions/5738)
+### 🤷 Мы еще не знаем!
+Есть несколько нерешенных вопросов, в обсуждение которых вы приглашены внести свой вклад:
+- [Повторно используемая логика Python](https://github.com/dbt-labs/dbt-core/discussions/5741)
+- [Отладка вывода](https://github.com/dbt-labs/dbt-core/discussions/5799)
+- [Тестирование моделей Python](https://github.com/dbt-labs/docs.getdbt.com/discussions/1811)
+- [Абстракции над различными API датафреймов](https://github.com/dbt-labs/dbt-core/discussions/5738)
 
-## Conclusion
+## Заключение
 
-Python is particularly well suited for many use-cases within a dbt project, including:
-- **Data science** model training or in-line deployment
-- **Utilizing packages** within the Python ecosystem like [ftfy](https://ftfy.readthedocs.io/en/latest/), [dateutil](https://dateutil.readthedocs.io/en/stable/index.html), etc.
-- **Exploratory data analysis** (EDA) using functions and packages such as [`pandas.describe`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html), [Pandas profiling](https://pandas-profiling.ydata.ai/docs/master/index.html), [Great Expectations](https://github.com/great-expectations/great_expectations), etc.
-- Generating **synthetic data sets** using [Faker](https://faker.readthedocs.io/en/master/)
-- **Linear programming** libraries like [CVXOPT](https://cvxopt.org/), [PULP](https://github.com/coin-or/pulp), [CVXPY](https://www.cvxpy.org/), [ECOS](https://github.com/embotech/ecos-python), [Google OR-Tools](https://github.com/google/or-tools), [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html), etc.
-- **Simulation** using [SimPy](https://simpy.readthedocs.io/en/latest/examples/index.html), [Monte Carlo simulation](https://github.com/matsonj/nba-monte-carlo), what-if analysis
-- More yet to come!
+Python особенно хорошо подходит для многих случаев использования в проекте dbt, включая:
+- **Наука о данных**: обучение моделей или развертывание в реальном времени
+- **Использование пакетов** в экосистеме Python, таких как [ftfy](https://ftfy.readthedocs.io/en/latest/), [dateutil](https://dateutil.readthedocs.io/en/stable/index.html) и т.д.
+- **Исследовательский анализ данных** (EDA) с использованием функций и пакетов, таких как [`pandas.describe`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html), [Pandas profiling](https://pandas-profiling.ydata.ai/docs/master/index.html), [Great Expectations](https://github.com/great-expectations/great_expectations) и т.д.
+- Генерация **синтетических наборов данных** с использованием [Faker](https://faker.readthedocs.io/en/master/)
+- **Линейное программирование** с использованием библиотек, таких как [CVXOPT](https://cvxopt.org/), [PULP](https://github.com/coin-or/pulp), [CVXPY](https://www.cvxpy.org/), [ECOS](https://github.com/embotech/ecos-python), [Google OR-Tools](https://github.com/google/or-tools), [SciPy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html) и т.д.
+- **Моделирование** с использованием [SimPy](https://simpy.readthedocs.io/en/latest/examples/index.html), [Монте-Карло моделирование](https://github.com/matsonj/nba-monte-carlo), анализ "что если"
+- И многое другое!
 
-There is no one programming language to rule them all, so there’s no programming language hill that we are going to die on! We’ll make sure that dbt supports a wide variety of languages and let you make well-reasoned decisions for each individual use case.
+Нет одного языка программирования, который бы правил всеми, поэтому нет языка программирования, за который мы будем бороться до конца! Мы обеспечим, чтобы dbt поддерживал широкий спектр языков и позволял вам принимать обоснованные решения для каждого отдельного случая использования.
 
-We are excited to hear what you discover and build! Please share with us in the [#dbt-core-python-models](https://getdbt.slack.com/archives/C03QUA7DWCW) or [#i-made-this](https://getdbt.slack.com/archives/C01NH3F2E05) channels in Slack.
+Мы с нетерпением ждем, что вы откроете и создадите! Пожалуйста, поделитесь с нами в каналах [#dbt-core-python-models](https://getdbt.slack.com/archives/C03QUA7DWCW) или [#i-made-this](https://getdbt.slack.com/archives/C01NH3F2E05) в Slack.

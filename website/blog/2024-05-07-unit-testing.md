@@ -1,6 +1,6 @@
 ---
-title: "Unit testing in dbt for test-driven development"
-description: "In dbt v1.8, we introduce support for unit testing. In this blog post, Doug will show how to use them"
+title: "Модульное тестирование в dbt для разработки, управляемой тестами"
+description: "В dbt v1.8 мы вводим поддержку модульного тестирования. В этом блоге Даг покажет, как их использовать"
 slug: announcing-unit-testing
 
 authors: [doug_beatty]
@@ -12,47 +12,47 @@ date: 2024-05-07
 is_featured: true
 ---
 
-Do you ever have "bad data" dreams? Or am I the only one that has recurring nightmares? 😱
+Вам когда-нибудь снились кошмары о "плохих данных"? Или я единственный, у кого такие повторяющиеся кошмары? 😱
 
-Here's the one I had last night:
+Вот один из них, который мне приснился прошлой ночью:
 
-It began with a midnight bug hunt. A menacing insect creature has locked my colleagues in a dungeon, and they are pleading for my help to escape . Finding the key is elusive and always seems just beyond my grasp. The stress is palpable, a physical weight on my chest, as I raced against time to unlock them.
+Все началось с ночной охоты на баги. Угрожающее насекомое заперло моих коллег в подземелье, и они умоляют меня помочь им выбраться. Найти ключ оказывается сложно, и он всегда кажется чуть-чуть недосягаемым. Стресс ощутим, как физический груз на моей груди, пока я соревнуюсь со временем, чтобы освободить их.
 
-Of course I wake up without actually having saved them, but I am relieved nonetheless. And I've had similar nightmares involving a heroic code refactor or the launch of a new model or feature.
+Конечно, я просыпаюсь, так и не спасая их, но все равно чувствую облегчение. И у меня были похожие кошмары, связанные с героической переработкой кода или запуском новой модели или функции.
 
-Good news: beginning in dbt v1.8, we're introducing a first-class unit testing framework that can handle each of the scenarios from my data nightmares.
+Хорошие новости: начиная с dbt v1.8, мы вводим полноценный фреймворк модульного тестирования, который может справиться с каждым из сценариев из моих кошмаров о данных.
 
-Before we dive into the details, let's take a quick look at how we got here.
+Прежде чем углубиться в детали, давайте быстро посмотрим, как мы к этому пришли.
 
 <!--truncate-->
 
-## Story of data quality in dbt
+## История качества данных в dbt
 
-The underlying reason behind my bad dreams is worry about unfortunate data quality that affects shared outcomes.
+Основная причина моих плохих снов — это беспокойство о некачественных данных, которые влияют на общие результаты.
 
-One of the things I loved right away when I first started using dbt was that it had a first-class mechanism for asserting data quality on our full production data in the form of [data tests](https://docs.getdbt.com/docs/build/data-tests).
+Одной из вещей, которая мне сразу понравилась, когда я начал использовать dbt, было то, что он имел полноценный механизм для утверждения качества данных на всех наших производственных данных в виде [тестов данных](https://docs.getdbt.com/docs/build/data-tests).
 
-I no longer had to worry about whether or not my primary key was actually unique, I could just add a dbt data test to assert that expectation!
+Мне больше не нужно было беспокоиться о том, уникален ли мой первичный ключ, я мог просто добавить тест данных dbt, чтобы подтвердить это ожидание!
 
-`dbt test` quickly became a beloved command, allowing me to run our full suite of data quality tests in production each day. And these same tests would run in CI and development.
+`dbt test` быстро стал любимой командой, позволяющей мне ежедневно запускать полный набор тестов качества данных в производстве. И эти же тесты запускались в CI и разработке.
 
-But while this mechanism is tremendously useful at a holistic level, it doesn't lend itself as well at the granular level. It was not designed to handle minimal test cases for a model with with fixed inputs and the expected output from those inputs. Nor was it designed to handle isolated test cases that can run simultaneously for the same model.
+Но хотя этот механизм чрезвычайно полезен на целостном уровне, он не так хорошо подходит для более детального уровня. Он не был разработан для обработки минимальных тестовых случаев для модели с фиксированными входными данными и ожидаемым выходом из этих данных. Также он не был предназначен для обработки изолированных тестовых случаев, которые могут выполняться одновременно для одной и той же модели.
 
-So it doesn't meet the standard software engineering use-case of setting up and running individual test cases and other [desireable properties](https://tidyfirst.substack.com/p/desirable-unit-tests).
+Таким образом, он не соответствует стандартному случаю использования в программной инженерии, который предполагает настройку и запуск отдельных тестовых случаев и других [желательных свойств](https://tidyfirst.substack.com/p/desirable-unit-tests).
 
-## Introducing unit testing in dbt
+## Введение модульного тестирования в dbt
 
-dbt version 1.8 marks the introduction of a built-in unit testing framework to extend the capabilities of software engineering best practices for analytics engineers. It allows for crafting isolated and repeatable [unit tests](https://en.wikipedia.org/wiki/Unit_testing) that are well-suited to execute during development and CI. They are useful in a variety of scenarios like responding to **bug reports**, confident **code refactoring,** and using [test-driven development](https://en.wikipedia.org/wiki/Test-driven_development) when adding **new features**.
+Версия dbt 1.8 знаменует собой введение встроенного фреймворка модульного тестирования для расширения возможностей лучших практик программной инженерии для аналитических инженеров. Он позволяет создавать изолированные и повторяемые [модульные тесты](https://en.wikipedia.org/wiki/Unit_testing), которые хорошо подходят для выполнения во время разработки и CI. Они полезны в различных сценариях, таких как реагирование на **сообщения об ошибках**, уверенное **рефакторинг кода** и использование [разработки, управляемой тестами](https://en.wikipedia.org/wiki/Test-driven_development) при добавлении **новых функций**.
 
-Let's dive into the details...
+Давайте углубимся в детали...
 
-## Hello, unit testing world
+## Привет, мир модульного тестирования
 
-<Lightbox src="/img/blog/2024-05-07-unit-testing/hello-world.png" width="50%" title="Hello unit testing world" />
+<Lightbox src="/img/blog/2024-05-07-unit-testing/hello-world.png" width="50%" title="Привет, мир модульного тестирования" />
 
-A key way that I build self-confidence is starting out with the [simplest example possible](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program). Once I've gotten the initial thing to work, then I can tweak it to take on more complicated use-cases (scroll down to the ["real world example"](#real-world-example) section below for something more realistic!). So here's a super simple example that you can use to get your feet wet. Afterwards, I'll explain more about each of the main components and how you can apply them to your own test cases.
+Ключевой способ, которым я строю уверенность в себе, — это начинать с [самого простого примера](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program). Как только я добиваюсь, чтобы начальная вещь заработала, я могу настроить ее для более сложных случаев использования (прокрутите вниз до раздела ["пример из реального мира"](#real-world-example) для чего-то более реалистичного!). Итак, вот супер простой пример, который вы можете использовать, чтобы начать. После этого я объясню больше о каждом из основных компонентов и о том, как вы можете применить их к своим собственным тестовым случаям.
 
-First, create this trivial model:
+Сначала создайте эту тривиальную модель:
 
 ```sql
 -- models/hello_world.sql
@@ -60,7 +60,7 @@ First, create this trivial model:
 select 'world' as hello
 ```
 
-Then, add a simple unit test for that model:
+Затем добавьте простой модульный тест для этой модели:
 
 ```yaml
 # models/_properties.yml
@@ -68,84 +68,84 @@ Then, add a simple unit test for that model:
 unit_tests:
   - name: test_hello_world
 
-    # Always only one transformation to test
+    # Всегда только одна трансформация для тестирования
     model: hello_world
 
-    # No inputs needed this time!
-    # Most unit tests will have inputs -- see the "real world example" section below
+    # На этот раз входные данные не нужны!
+    # Большинство модульных тестов будут иметь входные данные — см. раздел "пример из реального мира" ниже
     given: []
 
-    # Expected output can have zero to many rows
+    # Ожидаемый результат может содержать от нуля до нескольких строк
     expect:
       rows:
         - {hello: world}
 ```
 
-Finally, run the model and all its tests in a single command like this:
+Наконец, выполните модель и все ее тесты одной командой, как это:
 
 ```shell
 dbt build --select hello_world
 ```
 
-<Lightbox src="/img/blog/2024-05-07-unit-testing/unit-test-terminal-output.png" title="Terminal output of hello world unit test" />
+<Lightbox src="/img/blog/2024-05-07-unit-testing/unit-test-terminal-output.png" title="Вывод терминала модульного теста hello world" />
 
-Voilà! We can see that a single unit test ran and it passed.
+Voilà! Мы видим, что один модульный тест был выполнен и он прошел.
 
-## Crafting Unit Tests
+## Создание модульных тестов
 
-After you've run your first "hello, world" unit test, you'll want to get started writing your own. There's two things that will help you be successful:
+После того, как вы выполнили свой первый модульный тест "hello, world", вы захотите начать писать свои собственные. Есть две вещи, которые помогут вам добиться успеха:
 
-1. How to think about a unit test conceptually
-2. How to actually craft your unit tests in YAML
+1. Как концептуально думать о модульном тесте
+2. Как на самом деле создавать свои модульные тесты в YAML
 
-Here's a step-by-step guide for you to follow:
+Вот пошаговое руководство, которое вы можете следовать:
 
-### Organizing your thoughts
+### Организация ваших мыслей
 
-1. **Identify your scenarios:** Which scenarios do you want to be more confident about? For each scenario, what is the relevant model? Consider edge cases: which inputs might be tricky for that model to handle correctly? This will identify your *model* and *given inputs*.
-2. **Define the success criteria:** What is the expected output for each scenario? Be specific. This will identify your *expected output*.
+1. **Определите свои сценарии:** В каких сценариях вы хотите быть более уверенными? Для каждого сценария, какая модель является релевантной? Рассмотрите крайние случаи: какие входные данные могут быть сложными для правильной обработки этой модели? Это определит вашу *модель* и *заданные входные данные*.
+2. **Определите критерии успеха:** Каков ожидаемый результат для каждого сценария? Будьте конкретны. Это определит ваш *ожидаемый результат*.
 
-### Writing your unit tests
+### Написание ваших модульных тестов
 
-1. **Start with a "model-inputs-output" structure:** When running this *model*, given these test *inputs*, then expect this *output*.
-2. **Use meaningful descriptions:** They should clearly explain what the test is doing so collaborators and future developers can understand the purpose.
-3. **Test one behavior per test case:** This keeps tests focused and easier to debug.
+1. **Начните с структуры "модель-входные данные-выход":** При запуске этой *модели*, с учетом этих тестовых *входных данных*, ожидается этот *выход*.
+2. **Используйте значимые описания:** Они должны четко объяснять, что делает тест, чтобы сотрудники и будущие разработчики могли понять его цель.
+3. **Тестируйте одно поведение на тестовый случай:** Это позволяет тестам быть сосредоточенными и легче отлаживаемыми.
 
-**Additional tips:**
+**Дополнительные советы:**
 
-- **Think about maintainability:** Write tests that are easy to understand and update.
-- **Refactor tests as needed:** Keep them up-to-date with code changes.
-- **Practice test-driven development (TDD):** Write tests before writing code to guide your development process.
-- **Remember, unit testing is just one part of quality assurance.** Combine it with other testing methods like data tests and model contracts for a comprehensive approach.
+- **Думайте о поддерживаемости:** Пишите тесты, которые легко понять и обновить.
+- **Рефакторьте тесты по мере необходимости:** Держите их в актуальном состоянии с изменениями кода.
+- **Практикуйте разработку, управляемую тестами (TDD):** Пишите тесты перед написанием кода, чтобы направлять процесс разработки.
+- **Помните, что модульное тестирование — это только часть обеспечения качества.** Сочетайте его с другими методами тестирования, такими как тесты данных и контракты моделей, для комплексного подхода.
 
-Next, I'll show you a brief example from the "real" world.
+Далее я покажу вам краткий пример из "реального" мира.
 
-## Real world example
+## Пример из реального мира
 
-When we were trying out the developer experience and ergonomics of unit testing in dbt, we went to our trusty [Jaffle Shop repo](https://github.com/dbt-labs/jaffle-shop). We began to follow the framework above to **identify scenarios** and then define the **success criteria**.
+Когда мы пробовали опыт разработчика и эргономику модульного тестирования в dbt, мы обратились к нашему надежному [репозиторию Jaffle Shop](https://github.com/dbt-labs/jaffle-shop). Мы начали следовать вышеуказанному фреймворку, чтобы **определить сценарии**, а затем определить **критерии успеха**.
 
-The first scenario we considered was counting the number of food items and drink items within an order. One natural edge case is an order without any drinks. Our success criteria in this case is for `count_drink_items` to be 0 in the `order_items_summary` model.
+Первым сценарием, который мы рассмотрели, было подсчет количества продуктов питания и напитков в заказе. Одним из естественных крайних случаев является заказ без напитков. Наши критерии успеха в этом случае заключаются в том, чтобы `count_drink_items` было равно 0 в модели `order_items_summary`.
 
-To implement the unit test, we started by starting with a "model-inputs-output" (MIO) structure above. The relevant **model** was `orders` with **given** inputs were from `order_items` and `stg_orders`. In this case, we **expect** our output for order_id 2 to be `count_drink_items: 0`.
+Чтобы реализовать модульный тест, мы начали с структуры "модель-входные данные-выход" (MIO), описанной выше. Релевантной **моделью** была `orders` с **заданными** входными данными из `order_items` и `stg_orders`. В этом случае мы **ожидаем**, что наш выход для order_id 2 будет `count_drink_items: 0`.
 
-Here's what the unit test YAML looked like:
+Вот как выглядел YAML модульного теста:
 
-### Unit test YAML
+### YAML модульного теста
 
 ```yaml
 unit_tests:
 
   - name: test_order_items_count_drink_items_with_zero_drinks
     description: >
-      Scenario: Order without any drinks
-        When the `order_items_summary` table is built
-        Given an order with nothing but 1 food item
-        Then the count of drink items is 0
+      Сценарий: Заказ без напитков
+        Когда таблица `order_items_summary` создается
+        Дано заказ с только 1 продуктом питания
+        Тогда количество напитков равно 0
 
-    # Model
+    # Модель
     model: order_items_summary
 
-    # Inputs
+    # Входные данные
     given:
       - input: ref('order_items')
         rows:
@@ -158,7 +158,7 @@ unit_tests:
         rows:
           - { order_id: 76 }
 
-    # Output
+    # Выходные данные
     expect:
       rows:
         - {
@@ -167,13 +167,13 @@ unit_tests:
           }
 ```
 
-Suffice it to say that when we ran the unit test for the first time, it failed! 💥
+Достаточно сказать, что когда мы впервые запустили модульный тест, он провалился! 💥
 
-But it wasn't because we defined the unit test incorrectly – it was because we found a bug that we didn't know about previously. To get things back on the right path, we [opened a PR](https://github.com/dbt-labs/jaffle-shop/pull/12) that added the relevant unit test to confirm the bug as well as the bug fix. The good news is that by implementing the unit test, we were able to find a bug before someone else did. 😎
+Но это произошло не потому, что мы неправильно определили модульный тест — это произошло потому, что мы обнаружили баг, о котором ранее не знали. Чтобы вернуть все на правильный путь, мы [открыли PR](https://github.com/dbt-labs/jaffle-shop/pull/12), который добавил соответствующий модульный тест для подтверждения бага, а также исправление бага. Хорошая новость заключается в том, что, реализовав модульный тест, мы смогли обнаружить баг до того, как это сделал кто-то другой. 😎
 
-If you're curious about what the model looked like before and the code changes for the fix, here you go:
+Если вам интересно, как выглядела модель до и какие изменения в коде были внесены для исправления, вот они:
 
-### Original SQL code
+### Оригинальный SQL код
 
 ```sql
 with
@@ -208,7 +208,7 @@ from order_items
 group by 1
 ```
 
-### SQL Code fix
+### Исправление SQL кода
 
 ```diff
 17c17
@@ -221,28 +221,27 @@ group by 1
 >     sum(
 ```
 
-### Caveats and pro-tips
+### Предостережения и советы
 
-See the docs for [helpful information before you begin](https://docs.getdbt.com/docs/build/unit-tests#before-you-begin), including unit testing [incremental models](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-incremental-models), [models that depend on ephemeral model(s)](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-a-model-that-depend-on-ephemeral-models), and platform-specific considerations like `STRUCT`s in BigQuery. In many cases, the [`sql` format](https://docs.getdbt.com/reference/resource-properties/data-formats#sql) can help solve tricky edge cases that come up.
+Смотрите документацию для [полезной информации перед началом](https://docs.getdbt.com/docs/build/unit-tests#before-you-begin), включая модульное тестирование [инкрементальных моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-incremental-models), [моделей, зависящих от эфемерных моделей](https://docs.getdbt.com/docs/build/unit-tests#unit-testing-a-model-that-depend-on-ephemeral-models), и платформенно-специфические соображения, такие как `STRUCT` в BigQuery. Во многих случаях, [`sql` формат](https://docs.getdbt.com/reference/resource-properties/data-formats#sql) может помочь решить сложные крайние случаи, которые возникают.
 
-Another advanced topic is overcoming issues when non-deterministic factors are involved, such as a current timestamp. To ensure that the output remains consistent regardless of when the test is run, you can set a fixed, predetermined value by using the [`overrides`](https://docs.getdbt.com/reference/resource-properties/unit-test-overrides) configuration.
+Еще одна продвинутая тема — преодоление проблем, когда задействованы недетерминированные факторы, такие как текущая временная метка. Чтобы гарантировать, что выходные данные остаются неизменными независимо от времени выполнения теста, вы можете установить фиксированное, заранее определенное значение, используя конфигурацию [`overrides`](https://docs.getdbt.com/reference/resource-properties/unit-test-overrides).
 
-Before we wrap up, let's do a brief comparison of the different data quality capabilties in dbt and identify the situations where each would be most effective.
+Прежде чем мы завершим, давайте кратко сравним различные возможности обеспечения качества данных в dbt и определим ситуации, в которых каждая из них будет наиболее эффективной.
 
-## Unit tests vs. model contracts vs. data tests
+## Модульные тесты vs. контракты моделей vs. тесты данных
 
-dbt has multiple complementary features that support data quality including [unit tests](https://docs.getdbt.com/docs/build/unit-tests), [model contracts](https://docs.getdbt.com/docs/collaborate/govern/model-contracts), and [data tests](https://docs.getdbt.com/docs/build/data-tests). Here's a table of how they compare and when you might use each:
+dbt имеет несколько дополнительных функций, поддерживающих качество данных, включая [модульные тесты](https://docs.getdbt.com/docs/build/unit-tests), [контракты моделей](https://docs.getdbt.com/docs/collaborate/govern/model-contracts) и [тесты данных](https://docs.getdbt.com/docs/build/data-tests). Вот таблица, как они сравниваются и когда вы можете использовать каждую из них:
 
-| Unit tests | Model contracts | Data tests |
+| Модульные тесты | Контракты моделей | Тесты данных |
 | --- | --- | --- |
-| Enforced before a resource node is materialized | Enforced while the resource node is materialized | Enforced after a resource node is materialized |
-| Blocks the attempt to build the resource | Blocks the building the resource node and downstream nodes | Blocks building of downstream nodes |
-| Rigid tests of the exact expected output for a single transformation | Tests the "shape" of the container (column names and data types) for a single data set | Flexible and can test assertions across multiple data sets, ranges of values, etc. |
-| Good for testing the precise values expected in the output | Good for enforcing the column names and data types that describe the "shape" of the data and specifying constraints like primary and foreign keys | Good for testing assertions other than equality (like ranges of acceptable values) or source data whose transformation is a black box |
+| Применяются до материализации узла ресурса | Применяются во время материализации узла ресурса | Применяются после материализации узла ресурса |
+| Блокируют попытку построить ресурс | Блокируют построение узла ресурса и нижестоящих узлов | Блокируют построение нижестоящих узлов |
+| Жесткие тесты точного ожидаемого результата для одной трансформации | Тестируют "форму" контейнера (названия столбцов и типы данных) для одного набора данных | Гибкие и могут тестировать утверждения по нескольким наборам данных, диапазонам значений и т.д. |
+| Хороши для тестирования точных значений, ожидаемых в выходных данных | Хороши для обеспечения названий столбцов и типов данных, описывающих "форму" данных, и указания ограничений, таких как первичные и внешние ключи | Хороши для тестирования утверждений, отличных от равенства (например, диапазонов допустимых значений) или исходных данных, чья трансформация является черным ящиком |
 
+## Резюме
 
-## Summary
+Теперь вы готовы создать свои первые модульные тесты с этой новой функцией, которая появится в dbt v1.8! Мы с нетерпением ждем, когда вы попробуете это — дайте нам знать, как это работает для вас, оставив комментарий в [этом обсуждении](https://github.com/dbt-labs/dbt-core/discussions/8275) или [открыв проблему](https://github.com/dbt-labs/dbt-core/issues/new/choose).
 
-You're now ready to build your first unit tests with this new feature coming to dbt in v1.8! We're eager for you to try this out – let us know how it works for you by commenting in [this discussion](https://github.com/dbt-labs/dbt-core/discussions/8275) or [opening an issue](https://github.com/dbt-labs/dbt-core/issues/new/choose).
-
-There's more details about the syntax which you can access in our [documentation](https://docs.getdbt.com/docs/build/unit-tests). We hope this gives you the tools to boost your confidence in your data pipelines and sleep easier at night 😴
+Более подробную информацию о синтаксисе вы можете найти в нашей [документации](https://docs.getdbt.com/docs/build/unit-tests). Надеемся, это даст вам инструменты для повышения уверенности в ваших конвейерах данных и позволит спать спокойнее ночью 😴

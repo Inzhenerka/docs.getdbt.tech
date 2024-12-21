@@ -1,74 +1,74 @@
 ---
-title: "LLM-powered Analytics Engineering: How we're using AI inside of our dbt project, today, with no new tools."
-description: "By orchestrating Snowflake's new Cortex functions inside of dbt Cloud, we can do once-impractical analytics with no additional tooling."
+title: "Аналитическая инженерия с поддержкой LLM: Как мы используем ИИ внутри нашего проекта dbt сегодня, без новых инструментов."
+description: "Оркеструя новые функции Cortex от Snowflake внутри dbt Cloud, мы можем выполнять ранее невозможную аналитику без дополнительного инструментария."
 slug: dbt-models-with-snowflake-cortex
 
 authors: [joel_labes]
 
-tags: [analytics craft, data ecosystem]
+tags: [аналитическое ремесло, экосистема данных]
 hide_table_of_contents: false
 
 date: 2024-03-19
 is_featured: true
 ---
 
-## Cloud Data Platforms make new things possible; dbt helps you put them into production
+## Облачные платформы данных открывают новые возможности; dbt помогает внедрить их в производство
 
-The original paradigm shift that enabled dbt to exist and be useful was databases going to the cloud.
+Первый сдвиг парадигмы, который позволил dbt существовать и быть полезным, заключался в переходе баз данных в облако.
 
-All of a sudden it was possible for more people to do better data work as huge blockers became huge opportunities:
+Внезапно стало возможным для большего числа людей выполнять более качественную работу с данными, так как огромные препятствия превратились в огромные возможности:
 
-- We could now dynamically scale compute on-demand, without upgrading to a larger on-prem database.
-- We could now store and query enormous datasets like clickstream data, without pre-aggregating and transforming it.
+- Теперь мы могли динамически масштабировать вычисления по требованию, без необходимости обновления до более крупной локальной базы данных.
+- Теперь мы могли хранить и запрашивать огромные наборы данных, такие как данные о кликах, без предварительной агрегации и трансформации.
 
-Today, the next wave of innovation is happening in AI and LLMs, and it's coming to the cloud data platforms dbt practitioners are already using every day. For one example, Snowflake have just released their [Cortex functions](https://docs.snowflake.com/LIMITEDACCESS/cortex-functions) to access LLM-powered tools tuned for running common tasks against your existing datasets. In doing so, there are a new set of opportunities available to us:
+Сегодня следующая волна инноваций происходит в области ИИ и LLM, и она приходит на облачные платформы данных, которые специалисты dbt уже используют каждый день. Например, Snowflake только что выпустили свои [функции Cortex](https://docs.snowflake.com/LIMITEDACCESS/cortex-functions) для доступа к инструментам с поддержкой LLM, настроенным для выполнения общих задач с вашими существующими наборами данных. Это открывает перед нами новые возможности:
 
 <!-- truncate -->
 
-- We can now **derive meaning from large unstructured blocks of text**, without painstakingly building complex regexes
-- We can now **summarize or translate content** without having to call out to external third-party APIs.
-- Most significantly, we can now **bake reasoning capabilities into our dbt models** by describing what we want to happen.
+- Теперь мы можем **извлекать смысл из больших неструктурированных блоков текста**, без утомительного создания сложных регулярных выражений.
+- Теперь мы можем **резюмировать или переводить контент** без необходимости обращения к внешним API третьих сторон.
+- Наиболее значимо, теперь мы можем **встраивать возможности рассуждения в наши модели dbt**, описывая, что мы хотим, чтобы произошло.
 
-Analytics Engineers have always existed at the intersection of business context and data - LLMs on the warehouse make it possible to embed more business context _and_ unlock more data, increasing our leverage in both directions at once.
+Аналитические инженеры всегда существовали на пересечении бизнес-контекста и данных - LLM в хранилище делают возможным встраивание большего бизнес-контекста _и_ разблокировку большего объема данных, увеличивая нашу эффективность в обоих направлениях одновременно.
 
-## Anatomy of an LLM-powered workflow
+## Анатомия рабочего процесса с поддержкой LLM
 
-My colleagues and I did some [experiments last year](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface) using GPT-4 to enhance the Semantic Layer, but this is the first time it's been possible to use AI directly inside of our dbt project, without any additional tooling.
+Мои коллеги и я провели [эксперименты в прошлом году](https://roundup.getdbt.com/p/semantic-layer-as-the-data-interface) с использованием GPT-4 для улучшения семантического слоя, но это первый раз, когда стало возможным использовать ИИ непосредственно внутри нашего проекта dbt, без какого-либо дополнительного инструментария.
 
-When we were looking for a first AI-powered use case in our analytics stack, we wanted to find something that:
+Когда мы искали первый случай использования с поддержкой ИИ в нашем аналитическом стеке, мы хотели найти что-то, что:
 
-- Solves a real business problem for us today
-- Makes use of the unique capabilities of LLMs
-- Was cognisant of their current uncertainties and limitations
-- Anticipated future improvements to the models available to us, so things that don't work today might soon work very well indeed.
+- Решает реальную бизнес-проблему для нас сегодня
+- Использует уникальные возможности LLM
+- Осознает их текущие неопределенности и ограничения
+- Предвосхищает будущие улучшения доступных нам моделей, так что вещи, которые не работают сегодня, могут вскоре работать очень хорошо.
 
-Once we selected our use case, the analytics engineering work of building and orchestrating the new dbt models felt very familiar; in fact it was exactly the same as any other model I've built.
+После того как мы выбрали наш случай использования, работа по аналитической инженерии по созданию и оркестровке новых моделей dbt показалась очень знакомой; на самом деле, это было точно так же, как и любая другая модель, которую я строил.
 
-- I still built a DAG in layers, with existing staging models as the foundation and building new modular segments on top
-- I still followed the same best practices and conventions around writing, styling and versioning controlling my code
-- I still ensured my models behaved as I expected by going through a code review and automated testing process, before deploying my LLM workloads to production with the dbt Cloud orchestrator.
+- Я все еще строил DAG слоями, с существующими моделями на стадии как основой и создавая новые модульные сегменты сверху
+- Я все еще следовал тем же лучшим практикам и конвенциям по написанию, стилю и контролю версий моего кода
+- Я все еще обеспечивал, чтобы мои модели вели себя так, как я ожидал, проходя процесс код-ревью и автоматического тестирования, прежде чем развернуть мои рабочие нагрузки LLM в производственной среде с оркестратором dbt Cloud.
 
-In short, the same dbt I know and love, but augmented by the new power that Cortex exposes.
+Вкратце, тот же dbt, который я знаю и люблю, но дополненный новой мощью, которую предоставляет Cortex.
 
-## Developing our first LLM-powered analytics workflow in dbt Cloud
+## Разработка нашего первого аналитического рабочего процесса с поддержкой LLM в dbt Cloud
 
-When thinking about a project that would only be possible if we could make sense of a large volume of unstructured text, I pretty quickly realised this could help me keep up to date with the dbt Community Slack. Even though we spend a lot of time in Slack, there's hundreds of threads taking place across dozens of channels every day, so we often miss important or interesting conversations.
+Когда я думал о проекте, который был бы возможен только в том случае, если бы мы могли разобраться в большом объеме неструктурированного текста, я довольно быстро понял, что это может помочь мне быть в курсе событий в сообществе dbt в Slack. Хотя мы проводим много времени в Slack, ежедневно происходит сотни обсуждений в десятках каналов, поэтому мы часто пропускаем важные или интересные разговоры.
 
-We already pull Slack data into Snowflake for basic analytics, but having a triage agent that could keep a watchful eye over the Slack – and let us know about things we'd otherwise have missed – would help the Developer Experience team do a better job of keeping our finger on the pulse of dbt developers' needs.
+Мы уже загружаем данные из Slack в Snowflake для базовой аналитики, но наличие агента триажа, который мог бы внимательно следить за Slack и сообщать нам о вещах, которые мы иначе могли бы пропустить, помогло бы команде по работе с разработчиками лучше понимать потребности разработчиков dbt.
 
-Once it was finished, it looked like this:
+Когда проект был завершен, он выглядел так:
 
-<Lightbox src="/img/blog/2024-02-29-cortex-slack/slack-summaries.png" width="85%" title="An example of some summarized threads for review (lightly edited for anonymity)." />
+<Lightbox src="/img/blog/2024-02-29-cortex-slack/slack-summaries.png" width="85%" title="Пример некоторых резюмированных обсуждений для обзора (слегка отредактировано для анонимности)." />
 
-Up to once a day, we'll get a post in our internal Slack with links to a handful of interesting threads for each person's focus areas and a brief summary of the discussion so far. From there, we can go deeper by diving into the thread ourselves, wherever it happens to take place. While developing this I found multiple threads that I wouldn't have found any other way (which was itself a problem, since my model filters out threads once a dbt Labs employee is participating in it, so I kept losing all my testing data).
+До одного раза в день мы получаем сообщение в нашем внутреннем Slack с ссылками на несколько интересных обсуждений для каждой области фокуса и кратким резюме обсуждения на данный момент. Оттуда мы можем углубиться, погрузившись в обсуждение самостоятельно, где бы оно ни происходило. Разрабатывая это, я нашел несколько обсуждений, которые не нашел бы никаким другим способом (что само по себе было проблемой, так как моя модель фильтрует обсуждения, как только в них участвует сотрудник dbt Labs, поэтому я постоянно терял все свои тестовые данные).
 
-You probably don't have the exact same use case as I do, but you can imagine a wide set of use case for LLM powered analytics engineering:
+У вас, вероятно, нет точно такого же случая использования, как у меня, но вы можете представить себе широкий набор случаев использования аналитической инженерии с поддержкой LLM:
 
-- A SaaS company could pull information from sales calls or support tickets to gain insight into conversations
-- A mobile app developer might pull in app store reviews for sentiment analysis
-- By calculating the vector embeddings for text, deduplicating similar but nonidentical text becomes more tractable.
+- SaaS-компания может извлекать информацию из звонков по продажам или заявок в службу поддержки, чтобы получить представление о разговорах
+- Разработчик мобильных приложений может анализировать отзывы в магазине приложений для анализа настроений
+- Вычисляя векторные встраивания для текста, дедупликация схожих, но не идентичных текстов становится более осуществимой.
 
-Here's an extract of some of the code, using the [cortex.complete() function](https://docs.snowflake.com/sql-reference/functions/complete-snowflake-cortex) - notice that the whole thing feels just like normal SQL, because it is!
+Вот фрагмент кода, использующего функцию [cortex.complete()](https://docs.snowflake.com/sql-reference/functions/complete-snowflake-cortex) - обратите внимание, что все это выглядит как обычный SQL, потому что это и есть SQL!
 
 ```sql
         select trim(
@@ -85,16 +85,16 @@ Here's an extract of some of the code, using the [cortex.complete() function](ht
         ) as thread_summary,
 ```
 
-## Tips for building LLM-powered dbt models
+## Советы по созданию моделей dbt с поддержкой LLM
 
-- **Always build incrementally.** Anyone who's interacted with any LLM-powered tool knows that it can take some time to get results back from a request, and that the results can vary from one invocation to another. For speed, cost and consistency reasons, I implemented both models incrementally even though in terms of row count the tables are tiny. I also added the [full_refresh: false](https://docs.getdbt.com/reference/resource-configs/full_refresh) config to protect against other full refreshes we run to capture late-arriving facts.
-- **Beware of token limits.** Requests that contain [too many tokens](https://docs.snowflake.com/LIMITEDACCESS/cortex-functions#model-restrictions) are truncated, which can lead to unexpected results if the cutoff point is halfway through a message. In future I would first try to use the llama-70b model (~4k token limit), and for unsuccessful rows make a second pass using the mistral-7b model (~32k token limit). Like many aspects of LLM powered workflows, we expect token length constraints to increase substantially in the near term.
-- **Orchestrate defensively, for now**. Because of the above considerations, I've got these steps running in their own dbt Cloud job, [triggered by the successful completion of our main project job](/docs/deploy/deploy-jobs#trigger-on-job-completion--). I don't want the data team to be freaked out by a failing production run due to my experiments. We use [YAML selectors](/reference/node-selection/yaml-selectors) to define what gets run in our default job; I created a new selector for these models and then added that selector to the default job's exclusion list. Once this becomes more stable, I'll fold it into our normal job.
-- **Iterate on your prompt.** In the same way as you gradually iterate on a SQL query, you have to tweak your prompt frequently in development to ensure you're getting the expected results. In general, I started with the shortest command I thought could work and tweaked it based on the results I was seeing. One slightly disappointing part of prompt engineering: I can spend an afternoon working on a problem, and at the end of it only have a single line of code to check into a commit.
-- **Remember that your results are non-deterministic.** For someone who loves to talk about <Term id="idempotent">idempotency</Term>, having a model whose results vary based on the vibes of some rocks we tricked into dreaming is a bit weird, and requires a bit more defensive coding than you may be used to. For example, one of the prompts I use is classification-focused (identifying the discussion's product area), and normally the result is just the name of that product. But sometimes it will return a little spiel explaining its thinking, so I need to explicitly extract that value from the response instead of unthinkingly accepting whatever I get back. Defining the valid options in a Jinja variable has helped keep them in sync: I can pass them into the prompt and then reuse the same list when extracting the correct answer.
+- **Всегда стройте инкрементально.** Любой, кто взаимодействовал с инструментом с поддержкой LLM, знает, что может потребоваться некоторое время, чтобы получить результаты от запроса, и что результаты могут варьироваться от одного вызова к другому. По причинам скорости, стоимости и согласованности я реализовал обе модели инкрементально, даже несмотря на то, что по количеству строк таблицы крошечные. Я также добавил конфигурацию [full_refresh: false](https://docs.getdbt.com/reference/resource-configs/full_refresh), чтобы защититься от других полных обновлений, которые мы запускаем для захвата поздно поступающих фактов.
+- **Остерегайтесь ограничений на количество токенов.** Запросы, содержащие [слишком много токенов](https://docs.snowflake.com/LIMITEDACCESS/cortex-functions#model-restrictions), обрезаются, что может привести к неожиданным результатам, если точка отсечения находится в середине сообщения. В будущем я бы сначала попробовал использовать модель llama-70b (предел ~4k токенов), а для неудачных строк сделал бы второй проход, используя модель mistral-7b (предел ~32k токенов). Как и многие аспекты рабочих процессов с поддержкой LLM, мы ожидаем, что ограничения на длину токенов значительно увеличатся в ближайшее время.
+- **Оркестрируйте защитно, пока что.** Из-за вышеуказанных соображений я запускаю эти шаги в их собственной задаче dbt Cloud, [запускаемой после успешного завершения нашей основной задачи проекта](/docs/deploy/deploy-jobs#trigger-on-job-completion--). Я не хочу, чтобы команда данных была напугана неудачным производственным запуском из-за моих экспериментов. Мы используем [YAML-селекторы](/reference/node-selection/yaml-selectors) для определения того, что запускается в нашей задаче по умолчанию; я создал новый селектор для этих моделей и затем добавил этот селектор в список исключений задачи по умолчанию. Как только это станет более стабильным, я интегрирую это в нашу обычную задачу.
+- **Итеративно улучшайте свой запрос.** Так же, как вы постепенно улучшаете SQL-запрос, вам нужно часто корректировать свой запрос в процессе разработки, чтобы убедиться, что вы получаете ожидаемые результаты. В общем, я начинал с самой короткой команды, которая, по моему мнению, могла бы сработать, и корректировал ее на основе получаемых результатов. Один из немного разочаровывающих аспектов инженерии запросов: я могу потратить полдня на работу над проблемой, и в конце концов у меня будет только одна строка кода, чтобы добавить в коммит.
+- **Помните, что ваши результаты недетерминированы.** Для кого-то, кто любит говорить об <Term id="idempotent">идемпотентности</Term>, иметь модель, результаты которой варьируются в зависимости от "настроения" некоторых камней, которые мы обманули, заставив мечтать, немного странно и требует немного более защитного кодирования, чем вы могли бы привыкнуть. Например, один из запросов, которые я использую, ориентирован на классификацию (определение области продукта обсуждения), и обычно результатом является просто название этого продукта. Но иногда он возвращает небольшое объяснение своего мышления, поэтому мне нужно явно извлекать это значение из ответа, а не бездумно принимать все, что я получаю. Определение допустимых вариантов в переменной Jinja помогло сохранить их в синхронизации: я могу передать их в запрос, а затем повторно использовать тот же список при извлечении правильного ответа.
 
 ```sql
--- a cut down list of segments for the sake of readability
+-- сокращенный список сегментов для удобочитаемости
 {% set segments = ['Warehouse configuration', 'dbt Cloud IDE', 'dbt Core', 'SQL', 'dbt Orchestration', 'dbt Explorer', 'Unknown'] %}
 
     select trim(
@@ -108,17 +108,17 @@ Here's an extract of some of the code, using the [cortex.complete() function](ht
         )
     ) as product_segment_raw,
 
-    -- reusing the segments Jinja variable here
+    -- повторное использование переменной segments Jinja здесь
     coalesce(regexp_substr(product_segment_raw, '{{ segments | join ("|") }}'), 'Unknown') as product_segment
 ```
 
-## Share your experiences
+## Поделитесь своим опытом
 
-If you're doing anything like this in your work or side project, I'd love to hear about it in the comment section on Discourse or in machine-learning-general in Slack.
+Если вы делаете что-то подобное в своей работе или побочном проекте, я был бы рад услышать об этом в разделе комментариев на Discourse или в канале machine-learning-general в Slack.
 
-## Appendix: An example complete model
+## Приложение: Пример полной модели
 
-Here's the full model that I'm running to create the overall rollup messages that get posted to Slack, built on top of the row-by-row summary in an earlier model:
+Вот полная модель, которую я запускаю для создания общих сообщений, которые публикуются в Slack, построенная на основе построчного резюме в более ранней модели:
 
 ```sql
 {{
@@ -131,13 +131,11 @@ Here's the full model that I'm running to create the overall rollup messages tha
 
 
 {# 
-    This partition_by dict is to dry up the columns that are used in different parts of the query. 
-    The SQL is used in the partition by components of the window function aggregates, and the column 
-    names are used (in conjunction with the SQL) to select the relevant columns out in the final model.
-    They could be written out manually, but it creates a lot of places to update when changing from 
-    day to week truncation for example. 
+    Этот словарь partition_by предназначен для упрощения использования столбцов, которые используются в разных частях запроса. 
+    SQL используется в компонентах partition by агрегатов оконных функций, а имена столбцов используются (в сочетании с SQL) для выбора соответствующих столбцов в финальной модели.
+    Их можно было бы прописать вручную, но это создает много мест для обновления при изменении, например, с дневного на недельное усечение. 
 
-    Side note: I am still not thrilled with this approach, and would be happy to hear about alternatives!
+    Стороннее замечание: я все еще не в восторге от этого подхода и был бы рад услышать об альтернативах!
 #}
 {%- set partition_by = [
     {'column': 'summary_period', 'sql': 'date_trunc(day, sent_at)'},
@@ -165,14 +163,14 @@ summaries as (
 
 aggregated as (
     select distinct
-        {# Using the columns defined above #}
+        {# Использование столбцов, определенных выше #}
         {% for p in partition_by -%}
             {{ p.sql }} as {{ p.column }},
         {% endfor -%}
 
-        -- This creates a JSON array, where each element is one thread + its permalink. 
-        -- Each array is broken down by the partition_by columns defined above, so there's
-        -- one summary per time period and product etc.
+        -- Это создает JSON-массив, где каждый элемент - это одна ветка + ее постоянная ссылка. 
+        -- Каждый массив разбивается по столбцам partition_by, определенным выше, так что есть
+        -- одно резюме на период времени и продукт и т.д.
         array_agg(
             object_construct(
                 'permalink', thread_permalink,
@@ -181,8 +179,8 @@ aggregated as (
         ) over (partition by {{ partition_by_sqls | join(', ') }}) as agg_threads,
         count(*) over (partition by {{ partition_by_sqls | join(', ') }}) as num_records,
         
-        -- The partition columns are the grain of the table, and can be used to create
-        -- a unique key for incremental purposes
+        -- Столбцы partition являются зерном таблицы и могут быть использованы для создания
+        -- уникального ключа для инкрементальных целей
         {{ dbt_utils.generate_surrogate_key(partition_by_columns) }} as unique_key
     from summaries
     {% if is_incremental() %}
@@ -209,7 +207,7 @@ summarised as (
 final as (
     select 
         * exclude overall_summary,
-        -- The LLM loves to say something like "Sure, here's your summary:" despite my best efforts. So this strips that line out
+        -- LLM любит говорить что-то вроде "Конечно, вот ваше резюме:" несмотря на мои усилия. Поэтому это удаляет эту строку
         regexp_replace(
             overall_summary, '(^Sure.+:\n*)', ''
         ) as overall_summary

@@ -1,6 +1,6 @@
 ---
-title: "Modeling ragged time-varying hierarchies"
-description: "Learn how to maximize the utility of complex hierarchical data in your analytics warehouse."
+title: "Моделирование неравномерных временных иерархий"
+description: "Узнайте, как максимально использовать сложные иерархические данные в вашем аналитическом хранилище."
 slug: modeling-ragged-time-varying-hierarchies
 
 authors: [sterling_paramore]
@@ -12,25 +12,25 @@ date: 2023-05-02
 is_featured: true
 ---
 
-This article covers an approach to handling time-varying ragged hierarchies in a <Term id="dimensional-modeling">dimensional model</Term>.  These kinds of data structures are commonly found in manufacturing, where components of a product have both parents and children of arbitrary depth and those components may be replaced over the product's lifetime.  The strategy described here simplifies many common types of analytical and reporting queries.
+Эта статья описывает подход к обработке временных неравномерных иерархий в <Term id="dimensional-modeling">модели измерений</Term>. Такие структуры данных часто встречаются в производстве, где компоненты продукта имеют как родителей, так и детей произвольной глубины, и эти компоненты могут заменяться в течение жизненного цикла продукта. Описанная здесь стратегия упрощает многие распространенные типы аналитических и отчетных запросов.
 
-To help visualize this data, we're going to pretend we are a company that manufactures and rents out eBikes in a ride share application.  When we build a bike, we keep track of the serial numbers of the components that make up the bike.  Any time something breaks and needs to be replaced, we track the old parts that were removed and the new parts that were installed.  We also precisely track the mileage accumulated on each of our bikes.  Our primary analytical goal is to be able to report on the expected lifetime of each component, so we can prioritize improving that component and reduce costly maintenance.
+Чтобы помочь визуализировать эти данные, мы представим, что мы — компания, которая производит и сдает в аренду электровелосипеды в приложении для совместного использования. Когда мы собираем велосипед, мы отслеживаем серийные номера компонентов, из которых он состоит. Каждый раз, когда что-то ломается и нуждается в замене, мы отслеживаем старые детали, которые были удалены, и новые детали, которые были установлены. Мы также точно отслеживаем пробег, накопленный на каждом из наших велосипедов. Наша основная аналитическая цель — иметь возможность сообщать о предполагаемом сроке службы каждого компонента, чтобы мы могли приоритизировать улучшение этого компонента и снизить затраты на обслуживание.
 
 <!--truncate-->
 
-## Data model
+## Модель данных
 
-Obviously, a real bike could have a hundred or more separate components.  To keep things simple for this article, let's just consider the bike, the frame, a wheel, the wheel rim, tire, and tube.  Our component hierarchy looks like:
+Очевидно, что у настоящего велосипеда может быть сотня или более отдельных компонентов. Чтобы упростить эту статью, давайте рассмотрим велосипед, раму, колесо, обод колеса, шину и камеру. Наша иерархия компонентов выглядит следующим образом:
 
-<Lightbox src="/img/blog/2023-05-02-modeling-ragged-time-varying-hierarchies/hierarchy.png" title="eBike Hierarchy" />
+<Lightbox src="/img/blog/2023-05-02-modeling-ragged-time-varying-hierarchies/hierarchy.png" title="Иерархия eBike" />
 
-This hierarchy is *ragged* because different paths through the hierarchy terminate at different depths.  It is *time-varying* because specific components can be added and removed.
+Эта иерархия *неравномерная*, потому что разные пути через иерархию заканчиваются на разных уровнях. Она *временная*, потому что конкретные компоненты могут быть добавлены и удалены.
 
-Now let's take a look at how this data is represented in our source data systems and how it can be transformed to make analytics queries easier.
+Теперь давайте посмотрим, как эти данные представлены в наших исходных системах данных и как их можно преобразовать, чтобы упростить аналитические запросы.
 
-### Transactional model
+### Транзакционная модель
 
-Our ERP system (Enterprise Resource Planning) contains records that log when a specific component serial number (`component_id`) was installed in or removed from a parent assembly component (`assembly_id`).  The top-most assembly component is the eBike itself, which has no parent assembly.  So when an eBike (specifically, the eBike with serial number "Bike-1") is originally constructed, the ERP system would contain records that look like the following.
+Наша система ERP (планирование ресурсов предприятия) содержит записи, которые фиксируют, когда конкретный серийный номер компонента (`component_id`) был установлен в или удален из родительского сборочного компонента (`assembly_id`). Верхний сборочный компонент — это сам eBike, у которого нет родительской сборки. Таким образом, когда eBike (конкретно, eBike с серийным номером "Bike-1") изначально собирается, система ERP будет содержать записи, которые выглядят следующим образом.
 
 **`erp_components`:**
 
@@ -43,8 +43,7 @@ Our ERP system (Enterprise Resource Planning) contains records that log when a s
 | Wheel-1       | Tire-1         | 2023-01-01     |              |
 | Tire-1        | Tube-1         | 2023-01-01     |              |
 
-Now let's suppose this bike has been ridden for a while, and on June 1, the user of the bike reported a flat tire.  A service technician then went to the site, replaced the tube that was in the wheel, and installed a new one.  They logged this in the ERP system, causing one record to be updated with a `removed_at` date, and another record to be created with the new tube `component_id`.
-
+Теперь предположим, что этот велосипед был в эксплуатации некоторое время, и 1 июня пользователь велосипеда сообщил о проколотой шине. Техник по обслуживанию затем отправился на место, заменил камеру в колесе и установил новую. Они зафиксировали это в системе ERP, обновив одну запись с датой `removed_at` и создав другую запись с новым `component_id` камеры.
 
 **`erp_components`:**
 
@@ -55,7 +54,7 @@ Now let's suppose this bike has been ridden for a while, and on June 1, the user
 | Tire-1        | Tube-2         | 2023-06-01     |              |
 | ...           | ...            | ...            | ...          |
 
-After a few more months, there is a small crash.  Don't worry, everyone's OK!  However, the wheel (`Wheel-1`)is totally broken and must be replaced (with `Wheel-2`).  When the technician updates the ERP, the entire hierarchy under the replaced wheel is also updated, as shown below.
+Через несколько месяцев происходит небольшая авария. Не волнуйтесь, все в порядке! Однако колесо (`Wheel-1`) полностью сломано и должно быть заменено (на `Wheel-2`). Когда техник обновляет ERP, вся иерархия под замененным колесом также обновляется, как показано ниже.
 
 **`erp_components`:**
 
@@ -64,14 +63,13 @@ After a few more months, there is a small crash.  Don't worry, everyone's OK!  H
 | Bike-1        | Wheel-1        | 2023-01-01     | 2023-08-01   |
 | Wheel-1       | Rim-1          | 2023-01-01     | 2023-08-01   |
 | Wheel-1       | Tire-1         | 2023-01-01     | 2023-08-01   |
-| Tire-1        | Tube-2         | 2023-06-01     | 2023-08-01   | # Note that this part has different install date
+| Tire-1        | Tube-2         | 2023-06-01     | 2023-08-01   | # Обратите внимание, что эта часть имеет другую дату установки
 | Bike-1        | Wheel-2        | 2023-08-01     |              |
 | Wheel-2       | Rim-2          | 2023-08-01     |              |
 | Wheel-2       | Tire-2         | 2023-08-01     |              |
 | Tire-2        | Tube-3         | 2023-08-01     |              |
 
-
-After all of the above updates and additions, our ERP data looks like the following.
+После всех вышеуказанных обновлений и добавлений наши данные ERP выглядят следующим образом.
 
 **`erp_components`:**
 
@@ -89,11 +87,11 @@ After all of the above updates and additions, our ERP data looks like the follow
 | Wheel-2       | Tire-2         | 2023-08-01     |              |
 | Tire-2        | Tube-3         | 2023-08-01     |              |
 
-So that's all fine and good from the perspective of the ERP system.  But this data structure can be difficult to work with if we want to generate reports that calculate the total mileage accumulated on various components, or the average mileage of a particular component type, or how one component type might affect the lifetime of another component.
+Итак, с точки зрения системы ERP все в порядке. Но эта структура данных может быть сложной для работы, если мы хотим создавать отчеты, которые рассчитывают общий пробег, накопленный на различных компонентах, или средний пробег определенного типа компонента, или как один тип компонента может влиять на срок службы другого компонента.
 
-### Multivalued dimensional model
+### Многозначная модель измерений
 
-In dimensional modeling, we have *fact* tables that contain measurements and *dimension* tables that contain the context for those measurements (attributes).  In our eBike data warehouse, we have a fact table that contains one record for each eBike for each day it is ridden and the measured mileage accumulated during rides that day.  This fact table contains *surrogate key* columns, indicated by the `_sk` suffix.  These are usually system-generated keys used to join to other tables in the database; the specific values of these keys are not important.
+В моделировании измерений у нас есть *факт* таблицы, содержащие измерения, и *измерительные* таблицы, содержащие контекст для этих измерений (атрибуты). В нашем хранилище данных eBike у нас есть факт таблица, содержащая одну запись для каждого eBike за каждый день, когда он используется, и измеренный пробег, накопленный в течение этого дня. Эта факт таблица содержит столбцы *суррогатных ключей*, обозначенные суффиксом `_sk`. Это обычно системно сгенерированные ключи, используемые для соединения с другими таблицами в базе данных; конкретные значения этих ключей не важны.
 
 **`fct_daily_mileage`:**
 
@@ -108,7 +106,7 @@ In dimensional modeling, we have *fact* tables that contain measurements and *di
 | bsk1      | csk3           | 2023-08-02   | 8       |
 | bsk1      | csk3           | 2023-08-03   | 4       |
 
-One of the dimension tables is a simple table containing information about the individual bikes we have manufactured.
+Одна из измерительных таблиц — это простая таблица, содержащая информацию о отдельных велосипедах, которые мы произвели.
 
 **`dim_bikes`:**
 
@@ -116,8 +114,7 @@ One of the dimension tables is a simple table containing information about the i
 | -         | -         | -       | -            |
 | bsk1      | Bike-1    | Orange  | Wyld Stallyn |
 
-
-There is a simple many-to-one relationship between `fct_daily_mileage` and `dim_bikes`.  If we need to calculate the total mileage accumulated for each bike in our entire fleet of eBikes, we just join the two tables and aggregate on the `miles` measurement.
+Существует простое отношение "многие к одному" между `fct_daily_mileage` и `dim_bikes`. Если нам нужно рассчитать общий пробег, накопленный для каждого велосипеда в нашем парке eBike, мы просто соединяем две таблицы и агрегируем по измерению `miles`.
 
 ```sql
 select
@@ -133,10 +130,9 @@ group by
     1
 ```
 
-Extending this to determine if orange bikes get more use than red bikes or whether certain models are preferred are similarly straightforward queries.
+Расширение этого запроса для определения, используются ли оранжевые велосипеды больше, чем красные, или предпочитаются ли определенные модели, также является простым запросом.
 
-Dealing with all of the components is more complicated because there are many components installed on the same day.  The relationship between days when the bikes are ridden and the components is thus *multivalued*.  In `dim_bikes`, there is one record per bike and surrogate key.  In our components dimension will have multiple records with the same surrogate key and will therefore be a *multivalued dimension*.  Of course, to make things even more complicated, the components can change from day to day.  To construct the multivalued dimension table, we break down the time-varying component hierarchy into distinct ranges of time where all of the components in a particular bike remain constant.  At specific points in time where the components are changed, a new surrogate key is created.  The final dimension table for our example above looks like the following, where the `valid_from_at` and `valid_to_at` represent the begin and end of a range of time where all the components of an eBike remain unchanged.
-
+Работа со всеми компонентами более сложна, потому что на один и тот же день установлено много компонентов. Отношение между днями, когда велосипеды используются, и компонентами, таким образом, *многозначное*. В `dim_bikes` есть одна запись на велосипед и суррогатный ключ. В нашей измерительной таблице компонентов будет несколько записей с тем же суррогатным ключом, и, следовательно, это будет *многозначная измерительная таблица*. Конечно, чтобы сделать все еще более сложным, компоненты могут меняться изо дня в день. Чтобы построить многозначную измерительную таблицу, мы разбиваем временную иерархию компонентов на отдельные временные диапазоны, в которых все компоненты в конкретном велосипеде остаются постоянными. В определенные моменты времени, когда компоненты изменяются, создается новый суррогатный ключ. Конечная измерительная таблица для нашего примера выше выглядит следующим образом, где `valid_from_at` и `valid_to_at` представляют начало и конец временного диапазона, в котором все компоненты eBike остаются неизменными.
 
 **`mdim_components`:**
 
@@ -161,11 +157,11 @@ Dealing with all of the components is more complicated because there are many co
 | csk3           | Wheel-2       | Tire-2         | 2       | 2023-08-01     |              | 2023-08-01      |               |
 | csk3           | Tire-2        | Tube-3         | 3       | 2023-08-01     |              | 2023-08-01      |               |
 
-Now, let's look at how this structure can help in writing queries.  In a later section of this article, we'll examine the SQL code that can take our ERP table and convert it into this dimensional model.
+Теперь давайте посмотрим, как эта структура может помочь в написании запросов. В следующем разделе этой статьи мы рассмотрим SQL-код, который может взять нашу таблицу ERP и преобразовать ее в эту модель измерений.
 
-### Mileage for a component
+### Пробег для компонента
 
-Suppose we wanted to know the total mileage accumulated on "Wheel-1".  The SQL code for determining this is very similar to that for determining the mileage for a given bike.
+Предположим, мы хотим узнать общий пробег, накопленный на "Wheel-1". SQL-код для определения этого очень похож на код для определения пробега для данного велосипеда.
 
 ```sql
 select
@@ -185,12 +181,12 @@ where
 
 :::caution
 
-One thing to be *very cautious* about when working with multivalued dimensions is that you need to be careful interpreting aggregations.  For example, suppose  we chose to aggregate on `top_assembly_id` (to reduce clutter, this field is not shown in the data model above because it is just "Bike-1" for each record).  For this aggregation, we would be over-counting the total mileage on that top assembly because the join would result in a Cartesian product and thus we'd get a ["fan-out" situation](https://community.looker.com/technical-tips-tricks-1021/the-problem-of-sql-fanouts-30232).
+Одно, о чем нужно быть *очень осторожным*, работая с многозначными измерениями, это интерпретация агрегаций. Например, предположим, что мы выбрали агрегирование по `top_assembly_id` (чтобы уменьшить загромождение, это поле не показано в модели данных выше, потому что оно просто "Bike-1" для каждой записи). Для этой агрегации мы бы переоценили общий пробег на этой верхней сборке, потому что соединение привело бы к декартовому произведению, и, следовательно, мы бы получили ["ситуацию раздувания"](https://community.looker.com/technical-tips-tricks-1021/the-problem-of-sql-fanouts-30232).
 :::
 
-### Bonus: Finding components installed at the same time as other components
+### Бонус: Поиск компонентов, установленных одновременно с другими компонентами
 
-This structure simplifies other kinds of interesting analysis.  Suppose we wanted to start exploring how one component affects another, like whether certain brands of tube needed to be replaced more often if they were in a new brand of tire.  We can do this by partitioning the data into the segments of time where the components are not changing and looking for other components installed at the same time.  For example, to find all of the components that were ever installed at the same time "Tube-3" was installed, we can collect them with a simple window function.  We could then use the results of this query in a regression or other type of statistical analysis.
+Эта структура упрощает другие виды интересного анализа. Предположим, мы хотим начать исследовать, как один компонент влияет на другой, например, требуются ли определенные бренды камер для замены чаще, если они находятся в новой шине. Мы можем сделать это, разделив данные на сегменты времени, в которых компоненты не меняются, и ищем другие компоненты, установленные одновременно. Например, чтобы найти все компоненты, которые когда-либо были установлены одновременно с "Tube-3", мы можем собрать их с помощью простой оконной функции. Мы могли бы затем использовать результаты этого запроса в регрессии или другом типе статистического анализа.
 
 ```sql
 select distinct
@@ -201,46 +197,45 @@ qualify
     sum(iff(component_id = 'Tube-3', 1, 0)) over (partition by valid_from_at, valid_to_at) > 0
 ```
 
+## SQL-код для построения модели измерений
 
-## SQL code to build the dimensional model
+Теперь мы переходим к самой интересной части! В этом разделе показано, как взять исходные данные ERP и превратить их в многозначную модель измерений. Этот SQL-код был написан и протестирован с использованием Snowflake, но должен быть адаптируем к другим диалектам.
 
-Now we get to the fun part!  This section shows how to take the ERP source data and turn it into the multivalued dimensional model.  This SQL code was written and tested using Snowflake, but should be adaptable to other dialects.
+### Обход иерархии
 
-### Traversing the hierarchy
+Первым шагом будет обход иерархии компонентов, чтобы найти все компоненты, которые принадлежат одной и той же верхней сборке. В нашем примере выше у нас был только один велосипед и, следовательно, только одна верхняя сборка; в реальной системе их будет много (и мы даже можем менять компоненты между разными верхними сборками!).
 
-The first step will be to traverse the hierarchy of components to find all components that belong to the same top assembly.  In our example above, we only had one bike and thus just one top assembly; in a real system, there will be many (and we may even swap components between different top assemblies!).
-
-The key here is to use a [recursive join](https://docs.snowflake.com/en/sql-reference/constructs/with#recursive-clause) to move from the top of the hierarchy to all children and grandchildren.  The top of the hierarchy is easy to identify because they are the only records without any parents.
+Ключ здесь — использовать [рекурсивное соединение](https://docs.snowflake.com/en/sql-reference/constructs/with#recursive-clause), чтобы перемещаться от вершины иерархии ко всем детям и внукам. Вершина иерархии легко идентифицируется, потому что это единственные записи без родителей.
 
 ```sql
 with recursive
--- Contains our source data with records that link a child to a parent
+-- Содержит наши исходные данные с записями, которые связывают ребенка с родителем
 components as (
     select
         *,
-        -- Valid dates start as installed/removed, but may be modified as we traverse the hierarchy below
+        -- Даты действия начинаются как установленные/удаленные, но могут быть изменены по мере обхода иерархии ниже
         installed_at as valid_from_at,
         removed_at as valid_to_at
     from
         erp_components
 ),
 
--- Get all the source records that are at the top of hierarchy
+-- Получить все исходные записи, которые находятся на вершине иерархии
 top_assemblies as (
     select * from components where assembly_id is null
 ),
 
--- This is where the recursion happens that traverses the hierarchy
+-- Здесь происходит рекурсия, которая обходит иерархию
 traversal as (
-    -- Start at the top of hierarchy
+    -- Начать с вершины иерархии
     select
-        -- Keep track of the depth as we traverse down
+        -- Отслеживать глубину по мере продвижения вниз
         0 as component_hierarchy_depth,
-        -- Flag to determine if we've entered a circular relationship
+        -- Флаг для определения, вошли ли мы в циклическое отношение
         false as is_circular,
-        -- Define an array that will keep track of all of the ancestors of a component
+        -- Определить массив, который будет отслеживать всех предков компонента
         [component_id] as component_trace,
-        -- At the top of the hierarchy, the component is the top assembly
+        -- На вершине иерархии компонент является верхней сборкой
         component_id as top_assembly_id,
 
         assembly_id,
@@ -255,15 +250,15 @@ traversal as (
 
     union all
 
-    -- Join the current layer of the hierarchy with the next layer down by linking
-    -- the current component id to the assembly id of the child
+    -- Соединить текущий слой иерархии со следующим слоем вниз, связывая
+    -- текущий идентификатор компонента с идентификатором сборки ребенка
     select
         traversal.component_hierarchy_depth + 1 as component_hierarchy_depth,
-        -- Check for any circular dependencies
+        -- Проверить наличие циклических зависимостей
         array_contains(components.component_id::variant, traversal.component_trace) as is_circular,
-        -- Append trace array
+        -- Добавить в массив трассировки
         array_append(traversal.component_trace, components.component_id) as component_trace,
-        -- Keep track of the top of the assembly
+        -- Отслеживать вершину сборки
         traversal.top_assembly_id,
 
         components.assembly_id,
@@ -271,8 +266,7 @@ traversal as (
 
         components.installed_at,
         components.removed_at,
-        -- As we recurse down the hierarchy, only want to consider time ranges where both
-        -- parent and child are installed; so choose the latest "from" timestamp and the earliest "to".
+        -- По мере рекурсии вниз по иерархии, учитывать только временные диапазоны, в которых и родитель, и ребенок установлены; поэтому выбираем последнюю "с" метку времени и первую "до".
         greatest(traversal.valid_from_at, components.valid_from_at) as valid_from_at,
         least(traversal.valid_to_at, components.valid_to_at) as valid_to_at
     from
@@ -282,55 +276,54 @@ traversal as (
         on
             traversal.component_id = components.assembly_id
             and
-            -- Exclude component assemblies that weren't installed at the same time
-            -- This may happen due to source data quality issues
+            -- Исключить сборки компонентов, которые не были установлены одновременно
+            -- Это может произойти из-за проблем с качеством исходных данных
             (
                 traversal.valid_from_at < components.valid_to_at
                 and
                 traversal.valid_to_at >= components.valid_from_at
             )
     where
-        -- Stop if a circular hierarchy is detected
+        -- Остановиться, если обнаружена циклическая иерархия
         not array_contains(components.component_id::variant, traversal.component_trace)
-        -- There can be some bad data that might end up in hierarchies that are artificially extremely deep
+        -- Может быть плохие данные, которые могут оказаться в иерархиях, которые искусственно чрезвычайно глубокие
         and traversal.component_hierarchy_depth < 20
 ),
 
 final as (
-    -- Note that there may be duplicates at this point (thus "distinct").
-    -- Duplicates can happen when a component's parent is moved from one grandparent to another.
-    -- At this point, we only traced the ancestry of a component, and fixed the valid/from dates
-    -- so that all child ranges are contained in parent ranges.
+    -- Обратите внимание, что на этом этапе могут быть дубликаты (поэтому "distinct").
+    -- Дубликаты могут возникнуть, когда родитель компонента перемещается от одного дедушки к другому.
+    -- На этом этапе мы только проследили родословную компонента и исправили даты действия/от, чтобы все диапазоны детей содержались в диапазонах родителей.
 
     select distinct *
     from
         traversal
     where
-        -- Prevent zero-time (or less) associations from showing up
+        -- Предотвратить появление ассоциаций с нулевым временем (или меньше)
         valid_from_at < valid_to_at
 )
 
 select * from final
 ```
 
-At the end of the above step, we have a table that looks very much like the `erp_components` that it used as the source, but with a few additional valuable columns:
+В конце вышеуказанного шага у нас есть таблица, которая очень похожа на `erp_components`, которая использовалась в качестве источника, но с несколькими дополнительными ценными столбцами:
 
-* `top_assembly_id` - This is the most important output of the hierarchy traversal.  It ties all sub components to a their common parent.  We'll use this in the next step to chop up the hierarchy into all the distinct ranges of time where the components that share a common top assembly are constant (and each distict range of time and `top_assembly_id` getting their own surrogate key).
-* `component_hierarchy_depth` - Indicates how far removed a component is from the top assembly.
-* `component_trace` - Contains an array of all the components linking this component to the top assembly.
-* `valid_from_at`/`valid_to_at` - If you have really high-quality source data, these will be identical to `installed_at`/`removed_at`.  However, in the real world, we've found cases where the installed and removal dates are not consistent between parent and child, either due to a data entry error or a technician forgetting to note when a component was removed.  So for example, we may have a parent assembly that was removed along with all of its children, but only the parent assembly has `removed_at` populated.  At this point, the `valid_from_at` and `valid_to_at` tidy up these kinds of scenarios.
+* `top_assembly_id` - Это самый важный результат обхода иерархии. Он связывает все подкомпоненты с их общим родителем. Мы будем использовать это на следующем шаге, чтобы разбить иерархию на все отдельные временные диапазоны, в которых компоненты, которые имеют общий верхний сборочный узел, остаются постоянными (и каждый отдельный временной диапазон и `top_assembly_id` получают свой собственный суррогатный ключ).
+* `component_hierarchy_depth` - Указывает, насколько удален компонент от верхнего сборочного узла.
+* `component_trace` - Содержит массив всех компонентов, связывающих этот компонент с верхним сборочным узлом.
+* `valid_from_at`/`valid_to_at` - Если у вас действительно качественные исходные данные, они будут идентичны `installed_at`/`removed_at`. Однако в реальном мире мы обнаружили случаи, когда даты установки и удаления не согласованы между родителем и ребенком, либо из-за ошибки ввода данных, либо из-за того, что техник забыл отметить, когда компонент был удален. Таким образом, например, у нас может быть родительская сборка, которая была удалена вместе со всеми ее детьми, но только у родительской сборки заполнено `removed_at`. На этом этапе `valid_from_at` и `valid_to_at` упорядочивают такие сценарии.
 
-### Temporal range join
+### Временное соединение диапазонов
 
-The last step is perform a [temporal range join](https://discourse.getdbt.com/t/joining-snapshot-tables-time-range-based-joins/3226) between the top assembly and all of its descendents.  This is what splits out all of the time-varying component changes into distinct ranges of time where the component hierarchy is constant.  This range join makes use of [the dbt macro in this gist](https://gist.github.com/gnilrets/48886b4c8945dde1da13547c2373df73), the operation of which is out-of-scope for this article, but you are encouraged to investigate it and the discourse post mentioned earlier.
+Последний шаг — выполнить [временное соединение диапазонов](https://discourse.getdbt.com/t/joining-snapshot-tables-time-range-based-joins/3226) между верхним сборочным узлом и всеми его потомками. Это то, что разделяет все временные изменения компонентов на отдельные временные диапазоны, в которых иерархия компонентов постоянна. Это соединение диапазонов использует [макрос dbt в этом gist](https://gist.github.com/gnilrets/48886b4c8945dde1da13547c2373df73), работа которого выходит за рамки этой статьи, но вам рекомендуется изучить его и обсуждение, упомянутое ранее.
 
 ```sql
--- Start with all of the assemblies at the top (hierarchy depth = 0)
+-- Начать со всех сборок на вершине (глубина иерархии = 0)
 with l0_assemblies as (
     select
         top_assembly_id,
         component_id,
-        -- Prep fields required for temporal range join
+        -- Подготовить поля, необходимые для временного соединения диапазонов
         {{ dbt_utils.surrogate_key(['component_id', 'valid_from_at']) }} as dbt_scd_id,
         valid_from_at as dbt_valid_from,
         valid_to_at as dbt_valid_to
@@ -349,7 +342,7 @@ components as (
         component_id,
         installed_at,
         removed_at,
-        -- Prep fields required for temporal range join
+        -- Подготовить поля, необходимые для временного соединения диапазонов
         {{ dbt_utils.surrogate_key(['component_trace', 'valid_from_at'])}} as dbt_scd_id,
         valid_from_at as dbt_valid_from,
         valid_to_at as dbt_valid_to
@@ -357,7 +350,7 @@ components as (
         component_traversal
 ),
 
--- Perform temporal range join
+-- Выполнить временное соединение диапазонов
 {{
     trange_join(
       left_model='l0_assemblies',
@@ -401,9 +394,9 @@ order by
     component_hierarchy_depth
 ```
 
-## Bonus: component swap
+## Бонус: замена компонентов
 
-Before we go, let's investigate one other interesting scenario.  Suppose we have two bikes, "Bike-1" and "Bike-2".  While performing service, a technician notices that the color on the rim of "Bike-2" matches with the frame of "Bike-1" and vice-versa.  Perhaps there was a mistake made during the initial assembly process?  The technician decides to swap the wheels between the two bikes.  The ERP system then shows that "Wheel-1" was removed from "Bike-1" on the service date and that "Wheel-1" was installed in "Bike-2" on the same date (similarly for "Wheel-2").  To reduce clutter below, we'll ignore Frames and Tubes.
+Прежде чем мы закончим, давайте рассмотрим еще один интересный сценарий. Предположим, у нас есть два велосипеда, "Bike-1" и "Bike-2". Во время обслуживания техник замечает, что цвет обода "Bike-2" совпадает с рамой "Bike-1" и наоборот. Возможно, была допущена ошибка во время первоначальной сборки? Техник решает поменять колеса между двумя велосипедами. Система ERP затем показывает, что "Wheel-1" был удален из "Bike-1" в дату обслуживания и что "Wheel-1" был установлен в "Bike-2" в ту же дату (аналогично для "Wheel-2"). Чтобы уменьшить загромождение ниже, мы проигнорируем рамы и камеры.
 
 **`erp_components`:**
 
@@ -420,7 +413,7 @@ Before we go, let's investigate one other interesting scenario.  Suppose we have
 | Bike-2        | Wheel-1        | 2023-06-01     |              |
 | Bike-1        | Wheel-2        | 2023-06-01     |              |
 
-When this ERP data gets converted into the multivalued dimension, we get the table below.  In the ERP data, only one kind of component assembly, the wheel, was removed/installed, but in the dimensional model all of the child components come along for the ride.  In the table below, we see that "Bike-1" and "Bike-2" each have two distinct ranges of valid time, one prior to the wheel swap, and one after.
+Когда эти данные ERP преобразуются в многозначную измерительную модель, мы получаем таблицу ниже. В данных ERP только один вид сборки компонентов, колесо, был удален/установлен, но в измерительной модели все дочерние компоненты идут вместе. В таблице ниже мы видим, что у "Bike-1" и "Bike-2" есть два отдельных диапазона времени действия, один до замены колес и один после.
 
 **`mdim_components`:**
 
@@ -443,8 +436,8 @@ When this ERP data gets converted into the multivalued dimension, we get the tab
 | sk4            | Bike-2            | Wheel-1       | Rim-1          | 2023-06-01      |               |
 | sk4            | Bike-2            | Wheel-1       | Tire-1         | 2023-06-01      |               |
 
-## Summary
+## Резюме
 
-In this article, we've explored a strategy for creating a dimensional model for ragged time-varying hierarchies.  We used a simple toy system involving one or two eBikes.  In the real world, there would be many more individual products, deeper hierarchies, more component attributes, and the install/removal dates would likely be captured with a timestamp component as well.  The model described here works very well even in these messier real world cases.
+В этой статье мы исследовали стратегию создания модели измерений для неравномерных временных иерархий. Мы использовали простую игрушечную систему, включающую один или два eBike. В реальном мире было бы гораздо больше отдельных продуктов, более глубокие иерархии, больше атрибутов компонентов, и даты установки/удаления, вероятно, также фиксировались бы с компонентом временной метки. Описанная здесь модель работает очень хорошо даже в этих более сложных реальных случаях.
 
-If you have any questions or comments, please reach out to me by commenting on this post or contacting me on dbt slack (@Sterling Paramore).
+Если у вас есть вопросы или комментарии, пожалуйста, свяжитесь со мной, оставив комментарий к этому посту или связавшись со мной в dbt slack (@Sterling Paramore).

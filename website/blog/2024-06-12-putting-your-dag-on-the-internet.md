@@ -1,49 +1,48 @@
 ---
-title: Putting Your DAG on the internet
-description: "Use dbt and Snowflake's external access integrations to allow Snowflake Python models access the internet."
+title: Размещение вашего DAG в интернете
+description: "Используйте dbt и интеграции внешнего доступа Snowflake, чтобы позволить моделям Python в Snowflake получить доступ к интернету."
 slug: dag-on-the-internet
 
 authors: [ernesto_ongaro, sebastian_stan, filip_byrén]
 
-tags: [analytics craft, APIs, data ecosystem]
+tags: [аналитическое ремесло, API, экосистема данных]
 hide_table_of_contents: false
 
 date: 2024-06-14
 is_featured: true
 ---
 
-## New in dbt: allow Snowflake Python models to access the internet
+## Новое в dbt: разрешение моделям Python в Snowflake доступ к интернету
 
-With dbt 1.8, dbt released support for Snowflake’s [external access integrations](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview) further enabling the use of dbt + AI to enrich your data. This allows querying of external APIs within dbt Python models, a functionality that was required for dbt Cloud customer, [EQT AB](https://eqtgroup.com/). Learn about why they needed it and how they helped build the feature and get it shipped!
+С выпуском dbt 1.8, dbt добавил поддержку [интеграций внешнего доступа](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview) Snowflake, что позволяет использовать dbt + AI для обогащения ваших данных. Это позволяет выполнять запросы к внешним API в моделях Python в dbt, что было необходимо для клиента dbt Cloud, [EQT AB](https://eqtgroup.com/). Узнайте, почему им это было нужно и как они помогли разработать и внедрить эту функцию!
 
 <!--truncate-->
-## Why did EQT require this functionality? 
-by Filip Bryén, VP and Software Architect (EQT) and Sebastian Stan, Data Engineer (EQT)
+## Почему EQT требовалась эта функциональность?
+от Филипа Бриена, вице-президента и архитектора программного обеспечения (EQT) и Себастьяна Стэна, инженера данных (EQT)
 
-_EQT AB is a global investment organization and as a long-term customer of dbt Cloud, presented at dbt’s Coalesce [2020](https://www.getdbt.com/coalesce-2020/seven-use-cases-for-dbt) and [2023](https://www.youtube.com/watch?v=-9hIUziITtU)._
+_EQT AB — это глобальная инвестиционная организация и давний клиент dbt Cloud, выступавшая на конференции dbt Coalesce в [2020](https://www.getdbt.com/coalesce-2020/seven-use-cases-for-dbt) и [2023](https://www.youtube.com/watch?v=-9hIUziITtU) годах._
 
-_Motherbrain Labs is EQT’s bespoke AI team, primarily focused on accelerating our portfolio companies' roadmaps through hands-on data and AI work. Due to the high demand for our time, we are constantly exploring mechanisms for simplifying our processes and increasing our own throughput. Integration of workflow components directly in dbt has been a major efficiency gain and helped us rapidly deliver across a global portfolio._
+_Motherbrain Labs — это специализированная команда AI в EQT, основное внимание которой сосредоточено на ускорении дорожных карт наших портфельных компаний через практическую работу с данными и AI. Из-за высокого спроса на наше время мы постоянно исследуем механизмы упрощения наших процессов и увеличения собственной производительности. Интеграция компонентов рабочего процесса непосредственно в dbt стала значительным приростом эффективности и помогла нам быстро доставлять результаты по всему глобальному портфелю._
 
-Motherbrain Labs is focused on creating measurable AI impact in our portfolio. We work hand-in-hand with leadership from our deal teams and portfolio company leadership but our starting approach is always the same: identify which data matters. 
+Motherbrain Labs сосредоточена на создании измеримого AI-эффекта в нашем портфеле. Мы работаем рука об руку с руководством наших команд по сделкам и руководством портфельных компаний, но наш начальный подход всегда одинаков: определить, какие данные имеют значение.
 
-While we have access to reams of proprietary information, we believe the greatest effect happens when we combine that information with external datasets like geolocation, demographics, or competitor traction. 
+Хотя у нас есть доступ к огромному количеству собственных данных, мы считаем, что наибольший эффект достигается, когда мы комбинируем эту информацию с внешними наборами данных, такими как геолокация, демография или активность конкурентов.
 
-These valuable datasets often come from third-party vendors who operate on a pay-per-use model; a single charge for every piece of information we want. To avoid overspending, we focus on enriching only the specific subset of data that is relevant to an individual company's strategic question. 
+Эти ценные наборы данных часто поступают от сторонних поставщиков, работающих по модели оплаты за использование; взимается плата за каждую единицу информации, которую мы хотим получить. Чтобы избежать перерасхода, мы сосредотачиваемся на обогащении только той конкретной подмножества данных, которая имеет отношение к стратегическому вопросу отдельной компании.
 
-In response to this recurring need, we have partnered with Snowflake and dbt to introduce new functionality that facilitates communication with external endpoints and manages secrets within dbt. This new integration enables us to incorporate enrichment processes directly into our DAGs, similar to how current Python models are utilized within dbt environments. We’ve found that this augmented approach allows us to reduce complexity and enable external communications before materialization.
+В ответ на эту повторяющуюся потребность мы объединились с Snowflake и dbt для внедрения новой функциональности, которая облегчает связь с внешними конечными точками и управляет секретами в dbt. Эта новая интеграция позволяет нам включать процессы обогащения непосредственно в наши DAG, аналогично тому, как текущие модели Python используются в средах dbt. Мы обнаружили, что этот расширенный подход позволяет нам уменьшить сложность и обеспечить внешние коммуникации до материализации.
 
-## An example with Carbon Intensity: How does it work?
+## Пример с углеродной интенсивностью: как это работает?
 
-In this section, we will demonstrate how to integrate an external API to retrieve the current Carbon Intensity of the UK power grid. The goal is to illustrate how the feature works, and perhaps explore how the scheduling of data transformations at different times can potentially reduce their carbon footprint, making them a greener choice. We will be leveraging the API from the [UK National Grid ESO](https://www.nationalgrideso.com/) to achieve this.
+В этом разделе мы продемонстрируем, как интегрировать внешний API для получения текущей углеродной интенсивности энергосистемы Великобритании. Цель состоит в том, чтобы показать, как работает эта функция, и, возможно, исследовать, как планирование преобразований данных в разное время может потенциально снизить их углеродный след, делая их более экологичным выбором. Мы будем использовать API от [UK National Grid ESO](https://www.nationalgrideso.com/) для достижения этой цели.
 
-To start, we need to set up a network rule (Snowflake instructions [here](https://docs.snowflake.com/en/user-guide/network-rules)) to allow access to the external API. Specifically, we'll create an egress rule to permit Snowflake to communicate with api.carbonintensity.org.
+Для начала нам нужно настроить сетевое правило (инструкции Snowflake [здесь](https://docs.snowflake.com/en/user-guide/network-rules)), чтобы разрешить доступ к внешнему API. В частности, мы создадим правило исходящего трафика, чтобы разрешить Snowflake общаться с api.carbonintensity.org.
 
-Next, to access network locations outside of Snowflake, you need to define an external access integration first and reference it within a dbt Python model. You can find an overview of Snowflake's external network access [here](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview).
+Далее, чтобы получить доступ к сетевым местоположениям за пределами Snowflake, вам сначала нужно определить интеграцию внешнего доступа и указать ее в модели Python в dbt. Обзор внешнего сетевого доступа Snowflake можно найти [здесь](https://docs.snowflake.com/en/developer-guide/external-network-access/external-network-access-overview).
 
-This API is open and if it requires an API key, handle it similarly to managing secrets. More information on API authentication in Snowflake is available [here](https://docs.snowflake.com/en/user-guide/api-authentication).
+Этот API открыт, и если он требует ключа API, обрабатывайте его аналогично управлению секретами. Дополнительная информация об аутентификации API в Snowflake доступна [здесь](https://docs.snowflake.com/en/user-guide/api-authentication).
 
-For simplicity’s sake, we will show how to create them using [pre-hooks](/reference/resource-configs/pre-hook-post-hook) in a model configuration yml file:
-
+Для простоты мы покажем, как создать их, используя [pre-hooks](/reference/resource-configs/pre-hook-post-hook) в конфигурационном файле модели yml:
 
 ```yml
 models:
@@ -54,8 +53,7 @@ models:
         - "create or replace external access integration test_external_access_integration allowed_network_rules = (test_network_rule) enabled = true;"
 ```
 
-Then we can simply use the new external_access_integrations configuration parameter to use our network rule within a Python model (called external_access_sample.py):
-
+Затем мы можем просто использовать новый параметр конфигурации external_access_integrations, чтобы использовать наше сетевое правило в модели Python (называемой external_access_sample.py):
 
 ```python
 import snowflake.snowpark as snowpark
@@ -71,9 +69,7 @@ def model(dbt, session: snowpark.Session):
     )
 ```
 
-
-The result is a model with some json I can parse, for example, in a SQL model to extract some information: 
-
+Результатом является модель с некоторым json, который я могу разобрать, например, в модели SQL, чтобы извлечь некоторую информацию:
 
 ```sql
 {{
@@ -99,21 +95,20 @@ from raw,
     lateral flatten(input => raw.carbon_intensity_json:data)
 ```
 
+Результатом является модель, которая будет отслеживать вызовы dbt и текущие уровни углеродной интенсивности в Великобритании.
 
-The result is a model that will keep track of dbt invocations, and the current UK carbon intensity levels.
+<Lightbox src="/img/blog/2024-06-12-putting-your-dag-on-the-internet/image1.png" title="Предварительный просмотр в dbt Cloud IDE вывода" />
 
-<Lightbox src="/img/blog/2024-06-12-putting-your-dag-on-the-internet/image1.png" title="Preview in dbt Cloud IDE of output" />
+## Лучшие практики dbt
 
-## dbt best practices
+Это очень новая область для Snowflake и dbt — что-то особенное в SQL и dbt заключается в том, что они очень устойчивы к внешней энтропии. Как только мы начинаем полагаться на вызовы API, пакеты Python и другие внешние зависимости, мы открываемся для гораздо большего количества внешней энтропии. API будут изменяться, ломаться, и ваши модели могут выйти из строя.
 
-This is a very new area to Snowflake and dbt -- something special about SQL and dbt is that it’s very resistant to external entropy. The second we rely on API calls, Python packages and other external dependencies, we open up to a lot more external entropy. APIs will change, break, and your models could fail.
+Традиционно dbt является T в ELT (обзор dbt [здесь](https://docs.getdbt.com/terms/elt)), и эта функциональность открывает совершенно новые возможности EL, для которых еще не существуют лучшие практики. Очевидно, что рабочие нагрузки EL должны быть отделены от рабочих нагрузок T, возможно, в другом слое моделирования. Обратите внимание, что если не использовать инкрементные модели, ваши исторические данные могут быть легко удалены. dbt видел множество случаев использования этого, включая этот пример AI, как описано в этом внешнем [инженерном блоге](https://klimmy.hashnode.dev/enhancing-your-dbt-project-with-large-language-models).
 
-Traditionally dbt is the T in ELT (dbt overview [here](https://docs.getdbt.com/terms/elt)), and this functionality unlocks brand new EL capabilities for which best practices do not yet exist. What’s clear is that EL workloads should be separated from T workloads, perhaps in a different modeling layer. Note also that unless using incremental models, your historical data can easily be deleted. dbt has seen a lot of use cases for this, including this AI example as outlined in this external [engineering blog post](https://klimmy.hashnode.dev/enhancing-your-dbt-project-with-large-language-models).
+## Несколько слов о силе коммерческого программного обеспечения с открытым исходным кодом
 
-## A few words about the power of Commercial Open Source Software
+Чтобы быстро внедрить эту функциональность, EQT открыла pull request, Snowflake помогла с некоторыми проблемами, которые у нас возникли с CI, и сотрудник dbt Labs помог написать тесты и объединить код!
 
-In order to get this functionality shipped quickly, EQT opened a pull request, Snowflake helped with some problems we had with CI and a member of dbt Labs helped write the tests and merge the code in!  
+Теперь dbt включает эту функциональность в dbt 1.8+ и во всех [выпусках](/docs/dbt-versions/cloud-release-tracks) в dbt Cloud.
 
-dbt now features this functionality in dbt 1.8+ and all [Release tracks](/docs/dbt-versions/cloud-release-tracks) in dbt Cloud.
-
-dbt Labs staff and community members would love to chat more about it in the [#db-snowflake](https://getdbt.slack.com/archives/CJN7XRF1B) slack channel.
+Сотрудники dbt Labs и члены сообщества будут рады обсудить это в канале slack [#db-snowflake](https://getdbt.slack.com/archives/CJN7XRF1B).

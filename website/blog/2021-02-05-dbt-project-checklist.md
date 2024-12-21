@@ -1,6 +1,6 @@
 ---
-title: "Your Essential dbt Project Checklist"
-description: "A checklist created to guide our internal work, which you can use to clean up your own dbt project."
+title: "Ваш контрольный список для проекта dbt"
+description: "Контрольный список, созданный для руководства нашей внутренней работой, который вы можете использовать для очистки вашего собственного проекта dbt."
 slug: essential-dbt-project-checklist
 canonical_url: https://discourse.getdbt.com/t/your-essential-dbt-project-checklist/1377
 
@@ -13,248 +13,247 @@ date: 2020-06-20
 is_featured: true
 ---
 
-If you’ve been using dbt for over a year, your project is out-of-date. This is natural.  
+Если вы используете dbt более года, ваш проект устарел. Это естественно.
 
-New functionalities have been released. Warehouses change. Best practices are updated. Over the last year, I and others on the Fishtown Analytics (now dbt Labs!) team have conducted seven audits for clients who have been using dbt for a minimum of 2 months.
+Появились новые функции. Изменяются хранилища данных. Обновляются лучшие практики. За последний год я и другие члены команды Fishtown Analytics (теперь dbt Labs!) провели семь аудитов для клиентов, которые использовали dbt минимум 2 месяца.
 
 <!--truncate-->
 
-In every single audit, we found opportunities to:
+В каждом аудите мы находили возможности для:
 
-1.  Improve performance
-2.  Improve maintainability
-3.  Make it easier for new people to get up-to-speed on the project
+1. Улучшения производительности
+2. Повышения удобства сопровождения
+3. Упрощения для новых участников проекта
 
-This post is the checklist I created to guide our internal work, and I’m sharing it here so you can use it to clean up your own dbt project. Think of this checklist like a `Where's Waldo?` book: you’ll still have to go out and find him, but with this in hand, you’ll at least know what you’re looking for.
+Этот пост — контрольный список, который я создал для руководства нашей внутренней работой, и я делюсь им здесь, чтобы вы могли использовать его для очистки вашего собственного проекта dbt. Думайте об этом контрольном списке как о книге `Где Уолдо?`: вам все равно придется его искать, но с этим списком вы хотя бы будете знать, что искать.
 
 ## ✅ dbt\_project.yml
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
-*   Project naming conventions
-    *   What is the name of your project?
-        *   Did you keep it as ‘my\_new\_project’ per the init project or renamed it to make sense?
-        *   Our recommendation is to name it after your company such as ‘fishtown\_analytics’.
-        *   If you have multiple dbt projects, something like ‘fishtown\_analytics\_marketing’ might make more sense.
-*   Do you have unnecessary configurations like materialized: <Term id="view" />?
-    *   By default, dbt models are materialized as “views”. This removes the need to declare any models as views.
-    *   If all of your models in a folder are <Term id="table">tables</Term>, define the <Term id="materialization" /> on the dbt\_project.yml file rather than on the model file. This removes clutter from the model file.
-*   Do you have a ton of placeholder comments from the init command?
-    *   This creates unnecessary clutter.
-*   Do you use post-hooks to grant permissions to other transformers and BI users?
-    *   If no, you should! This will ensure that any changes made will be accessible to your collaborators and be utilized on the BI layer.
+*   Конвенции именования проекта
+    *   Как называется ваш проект?
+        *   Оставили ли вы его как ‘my\_new\_project’ по умолчанию или переименовали, чтобы было понятно?
+        *   Мы рекомендуем называть его в честь вашей компании, например, ‘fishtown\_analytics’.
+        *   Если у вас несколько проектов dbt, что-то вроде ‘fishtown\_analytics\_marketing’ может иметь больше смысла.
+*   Есть ли у вас ненужные конфигурации, такие как materialized: <Term id="view" />?
+    *   По умолчанию модели dbt материализуются как “views”. Это устраняет необходимость объявлять любые модели как views.
+    *   Если все ваши модели в папке являются <Term id="table">tables</Term>, определите <Term id="materialization" /> в файле dbt\_project.yml, а не в файле модели. Это убирает лишние элементы из файла модели.
+*   Есть ли у вас много комментариев-заполнителей из команды init?
+    *   Это создает ненужный беспорядок.
+*   Используете ли вы post-hooks для предоставления разрешений другим трансформаторам и пользователям BI?
+    *   Если нет, вам стоит это сделать! Это обеспечит доступность любых изменений для ваших сотрудников и их использование на уровне BI.
         ![on run end](/img/blog/checklist-on-run-end.png)
-*   Are you utilizing tags in your project?
-    *   The majority of your project’s models should be untagged. Use tags for models and tests that fall out of the norm with how you want to interact with them. For example, tagging ‘nightly’ models makes sense, but _also_ tagging all your non-nightly models as ‘hourly’ is unnecessary - you can simply exclude the nightly models!
-    *   Check to see if a node selector is a good option here instead of tags.
-    *   Are you tagging individual models in config blocks?
-        *   You can use folder selectors in many cases to eliminate over tagging of every model in a folder.
-*   Are you using YAML selectors?
-    *   These enable intricate, layered model selection and can eliminate complicated tagging mechanisms and improve the legibility of the project configuration
+*   Используете ли вы теги в вашем проекте?
+    *   Большинство моделей вашего проекта должны быть без тегов. Используйте теги для моделей и тестов, которые выходят за рамки нормы в том, как вы хотите с ними взаимодействовать. Например, тегирование моделей ‘nightly’ имеет смысл, но _также_ тегирование всех ваших не-‘nightly’ моделей как ‘hourly’ излишне - вы можете просто исключить ‘nightly’ модели!
+    *   Проверьте, является ли селектор узлов хорошим вариантом вместо тегов.
+    *   Тегируете ли вы отдельные модели в блоках конфигурации?
+        *   Вы можете использовать селекторы папок во многих случаях, чтобы избежать избыточного тегирования каждой модели в папке.
+*   Используете ли вы YAML селекторы?
+    *   Они позволяют сложный, многослойный выбор моделей и могут устранить сложные механизмы тегирования и улучшить читаемость конфигурации проекта.
 
-**Useful links**:
+**Полезные ссылки**:
 
-* [.yml files](/docs/build/sources#testing-and-documenting-sources)
-*   [Materializations](/docs/build/materializations/#configuring-materializations)
-*   [YAML selectors](/reference/node-selection/yaml-selectors/)
+* [.yml файлы](/docs/build/sources#testing-and-documenting-sources)
+*   [Материализации](/docs/build/materializations/#configuring-materializations)
+*   [YAML селекторы](/reference/node-selection/yaml-selectors/)
 
-## ✅ Package Management
+## ✅ Управление пакетами
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*   How up to date are the versions of your dbt Packages?
-    *   You can check this by looking at your packages.yml file and comparing it to the packages hub page.
-*   Do you have the dbt\_utils package installed?
-    *   This is by far our most popular and essential package. The package contains clever macros to improve your dbt Project. Once implemented, you have access to the macros (no need to copy them over to your project).
+*   Насколько актуальны версии ваших dbt пакетов?
+    *   Вы можете проверить это, посмотрев на ваш файл packages.yml и сравнив его с страницей пакетов на hub.
+*   Установлен ли у вас пакет dbt\_utils?
+    *   Это, безусловно, наш самый популярный и необходимый пакет. Пакет содержит умные макросы для улучшения вашего проекта dbt. После его внедрения у вас будет доступ к макросам (нет необходимости копировать их в ваш проект).
 
-**Useful links**
+**Полезные ссылки**
 
-*   [Packages Docs](/docs/build/packages/)
-*   [Package Hub](https://hub.getdbt.com/)
-*   [dbt utils package](https://github.com/dbt-labs/dbt-utils)
+*   [Документация по пакетам](/docs/build/packages/)
+*   [Пакетный хаб](https://hub.getdbt.com/)
+*   [Пакет dbt utils](https://github.com/dbt-labs/dbt-utils)
 
-## ✅ Code style
+## ✅ Стиль кода
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-*   Do you have a clearly defined code style?
-*   Are you following it strictly?
-*   Are you optimizing your SQL?
-    *   Are you using window functions and aggregations?
+*   Есть ли у вас четко определенный стиль кода?
+*   Строго ли вы его придерживаетесь?
+*   Оптимизируете ли вы ваш SQL?
+    *   Используете ли вы оконные функции и агрегации?
 
-**Useful links**
+**Полезные ссылки**
 
-*   [dbt Labs' code style](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md)
-*   [Leveling up SQL](https://blog.getdbt.com/one-analysts-guide-for-going-from-good-to-great/)
+*   [Стиль кода dbt Labs](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md)
+*   [Улучшение SQL](https://blog.getdbt.com/one-analysts-guide-for-going-from-good-to-great/)
 
-## ✅ Project structure
+## ✅ Структура проекта
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*   If you are using <Term id="dimensional-modeling" /> techniques, do you have staging and marts models?
-    *   Do they use table prefixes like ‘fct\_’ and ‘dim\_’?
-*   Is the code modular? Is it one transformation per one model?
-*   Are you filtering as early as possible?
-    *   One of the most common mistakes we have found is not filtering or transforming early enough. This causes multiple models downstream to have the same repeated logic (i.e., wet code) and makes updating business logic more cumbersome.
-*   Are the <Term id="cte">CTEs</Term> modular with one transformation per CTE?
-*   If you have macro files, are you naming them in a way that clearly represent the macro(s) contained in the file?
+*   Если вы используете <Term id="dimensional-modeling" /> техники, есть ли у вас модели для стадий и витрин?
+    *   Используют ли они префиксы таблиц, такие как ‘fct\_’ и ‘dim\_’?
+*   Является ли код модульным? Это одна трансформация на одну модель?
+*   Фильтруете ли вы как можно раньше?
+    *   Одна из самых распространенных ошибок, которые мы обнаружили, это недостаточно раннее фильтрование или трансформация. Это приводит к тому, что несколько моделей ниже по потоку имеют одну и ту же повторяющуюся логику (т.е. мокрый код) и делает обновление бизнес-логики более трудоемким.
+*   Являются ли <Term id="cte">CTE</Term> модульными с одной трансформацией на CTE?
+*   Если у вас есть файлы макросов, называете ли вы их так, чтобы они четко представляли макрос(ы), содержащиеся в файле?
 
-**Useful links**
+**Полезные ссылки**
 
-*   [How Fishtown Structures our dbt Project](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355)
-*   [Why the Fishtown SQL style guide uses so many CTEs](https://discourse.getdbt.com/t/why-the-fishtown-sql-style-guide-uses-so-many-ctes/1091)
+*   [Как Fishtown структурирует наш проект dbt](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355)
+*   [Почему руководство по стилю SQL Fishtown использует так много CTE](https://discourse.getdbt.com/t/why-the-fishtown-sql-style-guide-uses-so-many-ctes/1091)
 
 ## ✅ dbt
 --------------------------------------------------------------------------------------------------------------------------
 
-*   What version of dbt are you on?
-    *   The further you get away from the latest release, the more likely you are to keep around old bugs and make updating that much harder.
-*   What happens when you `dbt run`?
-    *   What are your longest-running models?
-        *   Is it time to reevaluate your modeling strategy?
-        *   Should the model be incremental?
-            *   If it’s already incremental, should you adjust your incremental strategy?
-    *   How long does it take to run the entire dbt project?
-    *   Does every model run? (This is not a joke.)
-        *   If not, why?
-    *   Do you have circular model references?
-*   Do you use sources?
-    *   If so, do you use source freshness tests?
-*   Do you use refs and sources for everything?
-    *   Make sure nothing is querying off of raw tables, etc.
+*   Какую версию dbt вы используете?
+    *   Чем дальше вы от последнего выпуска, тем больше вероятность, что у вас останутся старые ошибки, и обновление станет сложнее.
+*   Что происходит, когда вы выполняете `dbt run`?
+    *   Какие ваши самые долго выполняющиеся модели?
+        *   Пора ли пересмотреть вашу стратегию моделирования?
+        *   Должна ли модель быть инкрементной?
+            *   Если она уже инкрементная, следует ли вам скорректировать вашу инкрементную стратегию?
+    *   Сколько времени занимает выполнение всего проекта dbt?
+    *   Выполняется ли каждая модель? (Это не шутка.)
+        *   Если нет, то почему?
+    *   Есть ли у вас циклические ссылки на модели?
+*   Используете ли вы источники?
+    *   Если да, используете ли вы тесты свежести источников?
+*   Используете ли вы refs и sources для всего?
+    *   Убедитесь, что ничего не запрашивается из сырых таблиц и т.д.
         ![no querying raw tables](/img/blog/checklist-8ddc2f76de24c98690ef986dcc7974bff09adb59.png)
 
-*   Do you regularly run `dbt test` as part of your workflow and production jobs?
-*   Do you use Jinja & Macros for repeated code?
-    *   If you do, is the balance met where it’s not being overused to the point code is not readable?
-    *   Is your Jinja easy to read?
-        *   Did you place all of your `set` statements at the top of the model files?
-        *   Did you format the code for Jinja-readability or just for the compiled SQL?
-        *   Do you alter your whitespace?
-            *   Example: `{{ this }}` and not `{{this}}`
-    *   Did you make complex macros as approachable as possible?
-        *   Way to do this are providing argument names and in-line documentation using `{# <insert text> #}`
-*   If you have incremental models, are they using unique keys and is\_incremental() macro?
-*   If you have tags, do they make sense? Do they get utilized?
+*   Регулярно ли вы запускаете `dbt test` как часть вашего рабочего процесса и производственных заданий?
+*   Используете ли вы Jinja и макросы для повторяющегося кода?
+    *   Если да, соблюден ли баланс, чтобы это не использовалось чрезмерно до такой степени, что код становится нечитаемым?
+    *   Легко ли читается ваш Jinja?
+        *   Разместили ли вы все ваши `set` операторы в начале файлов моделей?
+        *   Форматировали ли вы код для читаемости Jinja или только для скомпилированного SQL?
+        *   Изменяете ли вы пробелы?
+            *   Пример: `{{ this }}` а не `{{this}}`
+    *   Сделали ли вы сложные макросы максимально доступными?
+        *   Способы сделать это: предоставление имен аргументов и встроенная документация с использованием `{# <вставьте текст> #}`
+*   Если у вас есть инкрементные модели, используют ли они уникальные ключи и макрос is\_incremental()?
+*   Если у вас есть теги, имеют ли они смысл? Используются ли они?
 
-**Useful links**
+**Полезные ссылки**
 
-*   [dbt release version](https://github.com/dbt-labs/dbt/releases)
-*   [Sources](/docs/build/sources/)
+*   [Версия выпуска dbt](https://github.com/dbt-labs/dbt/releases)
+*   [Источники](/docs/build/sources/)
 *   [Refs](/reference/dbt-jinja-functions/ref/)
-*   [tags](/reference/resource-configs/tags/)
-* [Jinja docs](/guides/using-jinja)
+*   [Теги](/reference/resource-configs/tags/)
+* [Документация Jinja](/guides/using-jinja)
 
-## ✅ Testing & Continuous Integration
+## ✅ Тестирование и непрерывная интеграция
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*   Do your models have tests?
-    *   The ideal project has 100% test coverage on all of its models. While there are cases where this doesn’t make sense, our rule of thumb is models should have at least a not\_null/unique test on the <Term id="primary-key" />.
-*   What are you testing for? Does it make sense?
-*   What are the assumptions you should be testing for?
-    *   Think about your core business logic as well as your understanding of your sources.
-*   Are you using pull requests/other forms of version control?
-    *   How easy is it to understand what the code change and intention behind the code change do?
-*   Do you have mandatory PR reviews before merging code to your dbt project or BI layer?
-    *   Do you use a PR template?
+*   Есть ли у ваших моделей тесты?
+    *   Идеальный проект имеет 100% покрытие тестами всех своих моделей. Хотя есть случаи, когда это не имеет смысла, наше правило заключается в том, что модели должны иметь хотя бы тест на not\_null/unique на <Term id="primary-key" />.
+*   Что вы тестируете? Имеет ли это смысл?
+*   Какие предположения вы должны тестировать?
+    *   Подумайте о вашей основной бизнес-логике, а также о вашем понимании ваших источников.
+*   Используете ли вы pull-запросы/другие формы управления версиями?
+    *   Насколько легко понять, что делает изменение кода и намерение за изменением кода?
+*   Есть ли у вас обязательные проверки PR перед слиянием кода в ваш проект dbt или слой BI?
+    *   Используете ли вы шаблон PR?
 
-**Useful links**
+**Полезные ссылки**
 
-* [Version control](/best-practices/best-practice-workflows#version-control-your-dbt-project)
-*   [dbt Labs' PR Template](/blog/analytics-pull-request-template)
+* [Управление версиями](/best-practices/best-practice-workflows#version-control-your-dbt-project)
+*   [Шаблон PR от dbt Labs](/blog/analytics-pull-request-template)
 
-## ✅ Documentation
+## ✅ Документация
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-*   Do you use documentation?
-*   Are there descriptions for each model?
-*   Are complex transformations and business logic explained in an easily accessible place?
-*   Are your stakeholders using your documentation?
-    *   If not, why?
-*   Do you have a readme and regularly update it?
-*   How easy would it be to onboard someone to your project?
-*   If you have column-level descriptions, are you using doc blocks?
+*   Используете ли вы документацию?
+*   Есть ли описания для каждой модели?
+*   Объяснены ли сложные трансформации и бизнес-логика в легкодоступном месте?
+*   Используют ли ваши заинтересованные стороны вашу документацию?
+    *   Если нет, то почему?
+*   Есть ли у вас readme и регулярно ли вы его обновляете?
+*   Насколько легко было бы ввести кого-то в ваш проект?
+*   Если у вас есть описания на уровне столбцов, используете ли вы блоки документации?
 
-Useful Links
+Полезные ссылки
 
-*   [FAQs for documentation](/docs/build/documentation#faqs)
-*   [Doc blocks](/docs/build/documentation#using-docs-blocks)
+*   [Часто задаваемые вопросы по документации](/docs/build/documentation#faqs)
+*   [Блоки документации](/docs/build/documentation#using-docs-blocks)
 
-## ✅ dbt Cloud specifics
+## ✅ Специфика dbt Cloud
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-*   What dbt version are the jobs?
-    *   Are the majority of them inheriting from the environment to make upgrading easier?
-*   What do your jobs look like? Do they make sense?
-*   How are your dbt cloud projects organized?
-    *   Do you have any unused projects?
-*   Have you chosen the most appropriate job for your account level documentation?
-*   Are the number of runs syncing up with how often your raw data updates and are viewed?
-    *   If your data isn’t updating as often as the runs are happening, this is just not doing anything.
-*   Do you have a full refresh of the production data?
-*   Do you run tests on a periodic basis?
-*   What are the longest-running jobs?
-*   Do you have a Continuous Integration job? (Github only)
+*   Какую версию dbt используют задания?
+    *   Большинство из них наследуют от окружения, чтобы упростить обновление?
+*   Как выглядят ваши задания? Имеют ли они смысл?
+*   Как организованы ваши проекты в dbt cloud?
+    *   Есть ли у вас неиспользуемые проекты?
+*   Выбрали ли вы наиболее подходящее задание для документации уровня вашего аккаунта?
+*   Синхронизируется ли количество запусков с тем, как часто обновляются и просматриваются ваши сырые данные?
+    *   Если ваши данные не обновляются так часто, как происходят запуски, это просто ничего не делает.
+*   Есть ли у вас полное обновление производственных данных?
+*   Запускаете ли вы тесты на периодической основе?
+*   Какие задания выполняются дольше всего?
+*   Есть ли у вас задание для непрерывной интеграции? (Только для Github)
 
-Are you using the IDE and if so, how well?
+Используете ли вы IDE и если да, то насколько хорошо?
 
-*   We found that the IDE has assisted in alleviating issues of maintaining the upgraded dbt version.
-*   Does dbt cloud have its own user in their warehouse? What is the default warehouse/role?
-*   Are you getting notifications for failed jobs? Have you set up the slack notifications?
+*   Мы обнаружили, что IDE помогло в решении проблем с поддержанием обновленной версии dbt.
+*   Есть ли у dbt cloud свой пользователь в их хранилище? Какое хранилище/роль по умолчанию?
+*   Получаете ли вы уведомления о неудачных заданиях? Настроили ли вы уведомления в Slack?
 
-**Useful links**
+**Полезные ссылки**
 
-*   [dbt Cloud as a CI tool](/docs/deploy/continuous-integration)
+*   [dbt Cloud как инструмент CI](/docs/deploy/continuous-integration)
 
-
-## ✅ DAG Auditing
+## ✅ Аудит DAG
 -------------------------------------------------------------------------------------------------------------------------
 
-_Note: diagrams in this section show what NOT to do!_
+_Примечание: диаграммы в этом разделе показывают, чего НЕ следует делать!_
 
-*   Does your DAG have any common modeling pitfalls?
-    *   Are there any direct joins from sources into an intermediate model?
+*   Есть ли в вашем DAG какие-либо распространенные ошибки моделирования?
+    *   Есть ли прямые соединения из источников в промежуточную модель?
 
-        *   All sources should have a corresponding staging model to clean and standardize the data structure. They should not look like the image below.  
+        *   Все источники должны иметь соответствующую модель стадии для очистки и стандартизации структуры данных. Они не должны выглядеть как изображение ниже.  
 
             ![bad dag](/img/blog/checklist-28c75101367e272fbc2db2ebb1a1ec030517bb5e_2_517x250.jpeg)
 
-    *   Do sources join directly together?
+    *   Соединяются ли источники напрямую друг с другом?
 
-        *   All sources should have a corresponding staging model to clean and standardize the data structure. They should not look like the image below.  
+        *   Все источники должны иметь соответствующую модель стадии для очистки и стандартизации структуры данных. Они не должны выглядеть как изображение ниже.  
 
             ![bad dag 2](/img/blog/checklist-5d8ad45deb695eb6771003e010b242c0a3c122b9_2_517x220.jpeg)
 
-    *   Are there any rejoining of upstream concepts?
+    *   Есть ли повторное соединение концепций верхнего уровня?
 
-        *   This may indicate:
-            *   a model may need to be expanded so all the necessary data is available downstream
-            *   a new intermediate model is necessary to join the concepts for use in both places  
+        *   Это может указывать на:
+            *   модель может нуждаться в расширении, чтобы все необходимые данные были доступны ниже по потоку
+            *   необходима новая промежуточная модель для соединения концепций для использования в обоих местах  
 
                 ![bad dag 2](/img/blog/checklist-acd57c0e781b1eaf75a65b5063f97ac3ddc5c493_2_517x136.jpeg)
 
-    *   Are there any “bending connections”?
+    *   Есть ли "изгибающиеся соединения"?
 
-        *   Are models in the same layer dependent on each other?
-        *   This may indicate a change in naming is necessary, or the model should reference further upstream models  
+        *   Зависимы ли модели в одном слое друг от друга?
+        *   Это может указывать на необходимость изменения именования или модель должна ссылаться на модели выше по потоку  
 
             ![bad dag 3](/img/blog/checklist-0532fd13a7d63e3e5df71d025700c4d9c158a7ff_2_517x155.jpeg)
 
-    *   Are there model fan outs of intermediate/dimension/fact models?
+    *   Есть ли разветвления моделей промежуточных/измерений/фактов?
 
-        *   This might indicate some transformations should move to the BI layer, or transformations should be moved upstream
-        *   Your dbt project needs a defined end point!  
+        *   Это может указывать на то, что некоторые трансформации следует перенести на уровень BI или трансформации следует переместить выше по потоку
+        *   Ваш проект dbt нуждается в определенной конечной точке!  
 
             [![bad dag 4](/img/blog/checklist-33fcd7c4922233412d1364b39227c876d0cb8215_2_517x111.jpeg)
 
-    *   Is there repeated logic found in multiple models?
+    *   Есть ли повторяющаяся логика в нескольких моделях?
 
-        *   This indicates an opportunity to move logic into upstream models or create specific intermediate models to make that logic reusable
-        *   One common place to look for this is complex join logic. For example, if you’re checking multiple fields for certain specific values in a join, these can likely be condensed into a single field in an upstream model to create a clean, simple join.
+        *   Это указывает на возможность переместить логику в модели выше по потоку или создать конкретные промежуточные модели, чтобы сделать эту логику повторно используемой
+        *   Одно из распространенных мест для поиска этого — сложная логика соединения. Например, если вы проверяете несколько полей на определенные значения в соединении, их можно, вероятно, свести к одному полю в модели выше по потоку, чтобы создать чистое, простое соединение.
 
-Thanks to Christine Berger for her DAG diagrams!
+Благодарим Кристину Бергер за ее диаграммы DAG!
 
-**Useful links**
+**Полезные ссылки**
 
-*   [How we structure our dbt Project](/best-practices/how-we-structure/1-guide-overview)
-*   [Coalesce DAG Audit Talk](https://www.youtube.com/watch?v=5W6VrnHVkCA&t=2s)
-*   [Modular Data Modeling Technique](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/)
-*   [Understanding Threads](/docs/running-a-dbt-project/using-threads)
+*   [Как мы структурируем наш проект dbt](/best-practices/how-we-structure/1-guide-overview)
+*   [Доклад об аудите DAG на Coalesce](https://www.youtube.com/watch?v=5W6VrnHVkCA&t=2s)
+*   [Техника модульного моделирования данных](https://getdbt.com/analytics-engineering/modular-data-modeling-technique/)
+*   [Понимание потоков](/docs/running-a-dbt-project/using-threads)
 
-This is a quick overview of things to think about in your project.  We’ll keep this post updated as we continue to refine our best practices! Happy modeling!
+Это краткий обзор вещей, о которых стоит подумать в вашем проекте. Мы будем обновлять этот пост по мере продолжения совершенствования наших лучших практик! Удачного моделирования!

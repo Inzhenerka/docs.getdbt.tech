@@ -1,6 +1,6 @@
 ---
-title: "How to Upgrade dbt Versions (Mostly) Without Fear"
-description: "Upgrading your dbt project can be daunting – you rely on dbt to power your analytics workflow and can’t afford to change things just to discover that your daily run doesn’t work anymore. I’ve been there. This is the checklist I wish I had when I owned my last company’s dbt project."
+title: "Как обновить версии dbt (почти) без страха"
+description: "Обновление вашего проекта dbt может быть пугающим – вы полагаетесь на dbt для обеспечения вашего аналитического рабочего процесса и не можете позволить себе изменения, которые могут привести к тому, что ваш ежедневный запуск перестанет работать. Я был в такой ситуации. Это список, который я хотел бы иметь, когда владел проектом dbt в своей последней компании."
 slug: upgrade-dbt-without-fear
 
 authors: [joel_labes]
@@ -12,78 +12,78 @@ date: 2021-11-29
 is_featured: true
 ---
 
-:::tip February 2024 Update
+:::tip Обновление на февраль 2024 года
 
-It's been a few years since dbt-core turned 1.0! Since then, we've committed to releasing zero breaking changes whenever possible and it's become much easier to upgrade dbt Core versions.
+Прошло несколько лет с тех пор, как dbt-core достиг версии 1.0! С тех пор мы обязались выпускать нулевые изменения, нарушающие совместимость, когда это возможно, и обновление версий dbt Core стало намного проще.
 
-In 2024, we're taking this promise further by:
+В 2024 году мы идем дальше, обещая:
 
-- Stabilizing interfaces for everyone — adapter maintainers, metadata consumers, and (of course) people writing dbt code everywhere — as discussed in [our November 2023 roadmap update](https://github.com/dbt-labs/dbt-core/blob/main/docs/roadmap/2023-11-dbt-tng.md).
-- Introducing [Release tracks](/docs/dbt-versions/cloud-release-tracks) (formerly known as Versionless) to dbt Cloud. No more manual upgrades and no need for _a second sandbox project_ just to try out new features in development. For more details, refer to [Upgrade Core version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Стабилизировать интерфейсы для всех — поддерживающих адаптеры, потребителей метаданных и (конечно) людей, пишущих код dbt повсюду — как обсуждалось в [нашем обновлении дорожной карты за ноябрь 2023 года](https://github.com/dbt-labs/dbt-core/blob/main/docs/roadmap/2023-11-dbt-tng.md).
+- Внедрить [Треки выпусков](/docs/dbt-versions/cloud-release-tracks) (ранее известные как Versionless) в dbt Cloud. Больше никаких ручных обновлений и необходимости в _втором песочном проекте_ только для того, чтобы попробовать новые функции в разработке. Для получения более подробной информации обратитесь к [Обновление версии Core в Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
 
-We're leaving the rest of this post as is, so we can all remember how it used to be. Enjoy a stroll down memory lane.
+Мы оставляем остальную часть этого поста как есть, чтобы мы все могли вспомнить, как это было раньше. Наслаждайтесь прогулкой по переулку памяти.
 
 :::
 
-As we get closer to dbt v1.0 shipping in December, it's a perfect time to get your installation up to scratch. dbt 1.0 represents the culmination of over five years of development and refinement to the analytics engineering experience - smoothing off sharp edges, speeding up workflows and enabling whole new classes of work.
+По мере приближения к выпуску dbt v1.0 в декабре, это идеальное время, чтобы привести вашу установку в порядок. dbt 1.0 представляет собой кульминацию более чем пяти лет разработки и совершенствования опыта аналитической инженерии — сглаживание острых углов, ускорение рабочих процессов и создание совершенно новых классов работы.
 
-Even with all the new shinies on offer, upgrading can be daunting – you rely on dbt to power your analytics workflow and can’t afford to change things just to discover that your daily run doesn’t work anymore. I’ve been there. This is the checklist I wish I had when I owned my last company’s dbt project.
+Даже с учетом всех новых возможностей, обновление может быть пугающим — вы полагаетесь на dbt для обеспечения вашего аналитического рабочего процесса и не можете позволить себе изменения, которые могут привести к тому, что ваш ежедневный запуск перестанет работать. Я был в такой ситуации. Это список, который я хотел бы иметь, когда владел проектом dbt в своей последней компании.
 
 <!--truncate-->
 
-This guide covers the steps to safely upgrade, using a hypothetical project as a case study. The project uses dbt v0.16.0 and is relatively mature. It contains a couple of hundred models and uses a wide swathe of dbt functionality - custom tests, macros from dbt-utils, and snapshots to capture changes in critical business data.
+Это руководство охватывает шаги для безопасного обновления, используя гипотетический проект в качестве примера. Проект использует dbt v0.16.0 и является относительно зрелым. Он содержит пару сотен моделей и использует широкий спектр функциональности dbt — пользовательские тесты, макросы из dbt-utils и снимки для фиксации изменений в критически важных бизнес-данных.
 
-We’ll walk through the steps to upgrade from 0.16.0 to 0.17.2, but the same principles apply regardless of the migration you’re making. The steps of the process boil down to:
+Мы пройдем через шаги обновления с 0.16.0 до 0.17.2, но те же принципы применимы независимо от того, какую миграцию вы выполняете. Шаги процесса сводятся к:
 
-1. Decide which version you are upgrading to
+1. Решите, до какой версии вы обновляетесь
 
-2. Add `require-dbt-version` to your `dbt_project.yml` file
+2. Добавьте `require-dbt-version` в ваш файл `dbt_project.yml`
 
-3. Upgrade dbt
+3. Обновите dbt
 
-4. Try to run `dbt compile`
+4. Попробуйте запустить `dbt compile`
 
-5. Handle any deprecations
+5. Обработайте любые устаревшие функции
 
-    1. Update your packages
+    1. Обновите ваши пакеты
 
-    2. Fix errors, then warnings
+    2. Исправьте ошибки, затем предупреждения
 
-    3. Rinse and repeat until all errors and warnings are resolved
+    3. Повторяйте, пока все ошибки и предупреждения не будут устранены
 
-6. Test and review
+6. Тестируйте и проверяйте
 
-7. Merge and communicate
+7. Объедините и сообщите
 
->ℹ️ If you're not clear on the difference between major, minor and patch versions, it'd be useful to [read Jeremy's blog post](https://blog.getdbt.com/getting-ready-for-v1-0/) first which includes a primer on semantic versioning.
+>ℹ️ Если вы не уверены в разнице между основными, минорными и патч-версиями, будет полезно [прочитать блог-пост Джереми](https://blog.getdbt.com/getting-ready-for-v1-0/), который включает введение в семантическое версионирование.
 
-## Step 1: Decide which version you are upgrading to
+## Шаг 1: Решите, до какой версии вы обновляетесь
 
-Key principles:
+Ключевые принципы:
 
-* Only move up one or two minor versions at a time.
+* Переходите только на одну или две минорные версии за раз.
 
-* Update to the most recent patch version of a given minor version.
+* Обновляйтесь до самой последней патч-версии данной минорной версии.
 
-* Read the migration guide in advance.
+* Прочитайте руководство по миграции заранее.
 
-As noted above, the project is on 0.16.0 right now. 0.17.2 is the final patch release of the next minor version, so we’ll be upgrading to that.
+Как отмечено выше, проект сейчас на версии 0.16.0. 0.17.2 — это финальный патч-релиз следующей минорной версии, поэтому мы будем обновляться до него.
 
->❓ Why not an earlier patch? 0.17.0 introduced a breaking change that was reverted in a later release; let's jump straight to the most stable version of 0.17 instead of stepping through each bugfix release
+>❓ Почему не более ранний патч? 0.17.0 ввел изменение, нарушающее совместимость, которое было отменено в более позднем выпуске; давайте сразу перейдем к самой стабильной версии 0.17 вместо того, чтобы проходить через каждый выпуск исправлений ошибок.
 >
-> If that's the logic for patch versions, why not leap all the way to dbt 0.21 or 1.0 in one hit? In short: **reduced risk**. Dealing with deprecations and behaviour changes one at a time makes it easier to pinpoint the cause of an issue.
+> Если это логика для патч-версий, почему бы не перейти сразу на dbt 0.21 или 1.0? Вкратце: **снижение риска**. Работа с устаревшими функциями и изменениями поведения по одному за раз облегчает определение причины проблемы.
 >
-> Practically, it also lets you lock in "checkpoints" of known-stable setups. If you need to pause your migration work to deal with an urgent request, you can safely deploy what you've finished so far instead of having a bunch of unrelated half-finished changes.
+> Практически это также позволяет вам зафиксировать "контрольные точки" известных стабильных настроек. Если вам нужно приостановить работу по миграции, чтобы справиться с срочным запросом, вы можете безопасно развернуть то, что вы уже сделали, вместо того, чтобы иметь кучу несвязанных незавершенных изменений.
 
-Review the migration guides to get an initial indication of what changes you might need to make. For example, in [the migration guide for 0.17.0](/docs/dbt-versions/core-upgrade), there are several significant changes to dbt's functionality, but it's unlikely that all of them will apply to your project. We'll cover this more later.
+Просмотрите руководства по миграции, чтобы получить первоначальное представление о том, какие изменения вам, возможно, придется внести. Например, в [руководстве по миграции для 0.17.0](/docs/dbt-versions/core-upgrade) есть несколько значительных изменений в функциональности dbt, но маловероятно, что все они будут применимы к вашему проекту. Мы рассмотрим это подробнее позже.
 
-## Step 2: `Add require-dbt-version` to your `dbt_project.yml` file.
+## Шаг 2: Добавьте `require-dbt-version` в ваш файл `dbt_project.yml`.
 
-Key principles:
+Ключевые принципы:
 
-* Stop your colleagues from accidentally staying on an old version.
+* Предотвратите случайное использование старой версии вашими коллегами.
 
-Your `dbt_project.yml` file lets you prevent users from running your dbt project with an unsupported version of dbt Core. If your project already has this configuration, update it. If not, add it in like this:
+Ваш файл `dbt_project.yml` позволяет предотвратить запуск вашего проекта dbt с неподдерживаемой версией dbt Core. Если в вашем проекте уже есть эта конфигурация, обновите ее. Если нет, добавьте ее следующим образом:
 
 ```yml
 #/dbt_project.yml
@@ -97,96 +97,96 @@ require-dbt-version: ">=0.17.2"
 ...
 ```
 
-You can add an upper bound of supported versions like this: `[">=0.20.0", "<=1.0.0"]`, but for an internal analytics project it's probably overkill. Fun fact: this upper bound is how package vendors stop users from accidentally using an old version of a package like dbt-utils - more on this in a bit!
+Вы можете добавить верхнюю границу поддерживаемых версий следующим образом: `[">=0.20.0", "<=1.0.0"]`, но для внутреннего аналитического проекта это, вероятно, излишне. Забавный факт: эта верхняя граница — это способ, которым поставщики пакетов предотвращают случайное использование старой версии пакета, такого как dbt-utils — об этом подробнее чуть позже!
 
-## Step 3: Upgrade dbt
+## Шаг 3: Обновите dbt
 
-If you use dbt Cloud, you can upgrade [as described here](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-choosing-a-dbt-version). We recommend that you [create a second "sandbox" project](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions#testing-your-changes-before-upgrading), so that your experimentation doesn’t impact the rest of the team. For dbt Core, upgrade instructions will vary based on your [original installation method](https://docs.getdbt.com/dbt-cli/installation).
+Если вы используете dbt Cloud, вы можете обновиться [как описано здесь](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-choosing-a-dbt-version). Мы рекомендуем [создать второй "песочный" проект](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions#testing-your-changes-before-upgrading), чтобы ваши эксперименты не повлияли на остальную команду. Для dbt Core инструкции по обновлению будут варьироваться в зависимости от вашего [исходного метода установки](https://docs.getdbt.com/dbt-cli/installation).
 
-## Step 4: Try to run `dbt compile`
+## Шаг 4: Попробуйте запустить `dbt compile`
 
-Key principles:
+Ключевые принципы:
 
-* Check that your version has increased as you expect.
+* Убедитесь, что ваша версия увеличилась, как вы ожидали.
 
-* Quickly identify backwards incompatible changes which need to be resolved.
+* Быстро определите изменения, нарушающие обратную совместимость, которые необходимо устранить.
 
-`dbt compile` is the quickest way to validate that the upgrade succeeded. If you are still on 0.16.0, your `require-dbt-version` constraint will reject the command.
+`dbt compile` — это самый быстрый способ проверить, что обновление прошло успешно. Если вы все еще на 0.16.0, ваше ограничение `require-dbt-version` отклонит команду.
 
-Compiling your project will also validate that your project is valid while interacting with the database as little as possible, so you don't need to wait for queries' results.
+Компиляция вашего проекта также проверит, что ваш проект действителен, взаимодействуя с базой данных как можно меньше, так что вам не придется ждать результатов запросов.
 
-## Step 5: Handle any deprecations
+## Шаг 5: Обработайте любые устаревшие функции
 
-Key principles:
+Ключевые принципы:
 
-* Update packages first - there's no point in worrying about code that someone else has already fixed.
+* Сначала обновите пакеты — нет смысла беспокоиться о коде, который кто-то уже исправил.
 
-* Fix errors, then warnings.
+* Исправьте ошибки, затем предупреждения.
 
-* Stay focused: don't try to refactor logic "while you're there".
+* Оставайтесь сосредоточенными: не пытайтесь рефакторить логику "пока вы здесь".
 
-* Repeat until there are no errors left.
+* Повторяйте, пока не останется ошибок.
 
-### Step 5a. Update your packages
+### Шаг 5a. Обновите ваши пакеты
 
-The easiest migrations are those that someone else did for you. By installing an updated package, you'll get rid of a host of errors immediately.
+Самые простые миграции — это те, которые кто-то сделал за вас. Установив обновленный пакет, вы сразу избавитесь от множества ошибок.
 
->ℹ️ As hinted at above, most packages have an upper bound of dbt version compatibility as well as a lower bound. Treating future versions of dbt Core as incompatible with a package until proven otherwise is a defensive approach common prior to dbt Core v1.0's release. Once the API stabilises in v1.0, the upper boundaries will be able to loosen, making upgrades easier.
+>ℹ️ Как упоминалось выше, большинство пакетов имеют верхнюю границу совместимости с версиями dbt, а также нижнюю. Рассмотрение будущих версий dbt Core как несовместимых с пакетом до тех пор, пока не будет доказано обратное, является защитным подходом, распространенным до выпуска dbt Core v1.0. Как только API стабилизируется в v1.0, верхние границы смогут ослабнуть, что облегчит обновления.
 
-In this case, our example project probably has dbt 0.3.0 installed. By reviewing the [dbt-utils x dbt-core compatibility matrix](https://docs.google.com/spreadsheets/d/1RoDdC69auAtrwiqmkRsgcFdZ3MdNpeKcJrWkmEpXVIs/edit#gid=0), we see that both 0.4.1 and 0.5.1 are compatible with dbt Core v.0.17.2. The same principles apply for packages as dbt Core versions - install the latest patch release, and don't jump too far ahead in one go. Since there are no breaking changes in 0.4.x, we can safely move to 0.5.1.
+В данном случае наш примерный проект, вероятно, имеет установленную версию dbt 0.3.0. Просмотрев [матрицу совместимости dbt-utils x dbt-core](https://docs.google.com/spreadsheets/d/1RoDdC69auAtrwiqmkRsgcFdZ3MdNpeKcJrWkmEpXVIs/edit#gid=0), мы видим, что как 0.4.1, так и 0.5.1 совместимы с dbt Core v.0.17.2. Те же принципы применимы к пакетам, как и к версиям dbt Core — установите последний патч-релиз и не прыгайте слишком далеко вперед за один раз. Поскольку в 0.4.x нет изменений, нарушающих совместимость, мы можем безопасно перейти на 0.5.1.
 
->⚠️ Remember to run [`dbt clean`](https://docs.getdbt.com/reference/commands/clean) and [`dbt deps`](https://docs.getdbt.com/reference/commands/deps) after updating your `packages.yml` file!
+>⚠️ Не забудьте запустить [`dbt clean`](https://docs.getdbt.com/reference/commands/clean) и [`dbt deps`](https://docs.getdbt.com/reference/commands/deps) после обновления вашего файла `packages.yml`!
 
-### Step 5b. Fix errors, then warnings
+### Шаг 5b. Исправьте ошибки, затем предупреждения
 
-Obviously, errors that stop you from running your dbt project at all are the most important to deal with. Let's assume that our project used a too-broadly-scoped variable in a macro file, support for which was removed in v0.17. The [migration guide explains what to do instead](/docs/dbt-versions/core-upgrade), and it's a pretty straightforward fix.
+Очевидно, что ошибки, которые мешают вам вообще запустить ваш проект dbt, являются самыми важными для устранения. Предположим, что наш проект использовал слишком широко определенную переменную в файле макроса, поддержка которой была удалена в v0.17. [Руководство по миграции объясняет, что делать вместо этого](/docs/dbt-versions/core-upgrade), и это довольно простое исправление.
 
-Once your errors are out of the way, have a look at warnings. For example, 0.17 introduced `config-version: 2` to `dbt_project.yml`. Although it's backwards compatible for now, we know that support for the old version will be removed in a future version of dbt so we might as well deal with it now. Again, the migration guide explains [what we need to do](/docs/dbt-versions/core-upgrade), and how to take full advantage of the new functionality in the future.
+После того, как вы устраните ошибки, обратите внимание на предупреждения. Например, 0.17 ввел `config-version: 2` в `dbt_project.yml`. Хотя это пока обратно совместимо, мы знаем, что поддержка старой версии будет удалена в будущей версии dbt, так что мы можем заняться этим сейчас. Опять же, руководство по миграции объясняет [что нам нужно сделать](/docs/dbt-versions/core-upgrade) и как в будущем полностью воспользоваться новой функциональностью.
 
-### Stay focused
+### Оставайтесь сосредоточенными
 
-It might be tempting to update all of your `whatever.yml` files to use the new syntax, or totally rewrite an old macro that depended on a broadly scoped variable "while you're there". Suppress this urge! The primary goal is to get everything upgraded more or less in-place. As you come across things that could be done in a more elegant fashion, make a note to come back to them at the end of your migration journey.
+Может возникнуть соблазн обновить все ваши файлы `whatever.yml`, чтобы использовать новый синтаксис, или полностью переписать старый макрос, который зависел от широко определенной переменной "пока вы здесь". Подавите это желание! Основная цель — обновить все более или менее на месте. Когда вы наткнетесь на вещи, которые можно сделать более элегантно, сделайте заметку, чтобы вернуться к ним в конце вашего пути миграции.
 
-You want to make your code review as easy as possible when the time comes to merge your work back into the main branch. Combining refactors with compatibility updates is a sure-fire way to confuse your reviewer. For more discussion on this topic, check out the Netlify team's writeup of [moving from one warehouse to another](https://www.netlify.com/blog/2021/08/10/how-the-netlify-data-team-migrated-from-databricks-to-snowflake/) which touches on the same principles.
+Вы хотите сделать ваш код-ревью как можно проще, когда придет время объединить вашу работу обратно в основную ветку. Совмещение рефакторинга с обновлениями совместимости — это верный способ запутать вашего рецензента. Для более подробного обсуждения этой темы ознакомьтесь с отчетом команды Netlify о [переходе с одного хранилища на другое](https://www.netlify.com/blog/2021/08/10/how-the-netlify-data-team-migrated-from-databricks-to-snowflake/), который касается тех же принципов.
 
-### Step 5c. Rinse and repeat
+### Шаг 5c. Повторяйте
 
-This part of the process is an iterative loop. As you fix each error, run dbt compile again to identify any new issues. For example, until you upgrade dbt-utils from 0.3.0 to 0.5.1, your project won't even start to compile because of the `require-dbt-version` mismatch. Once that's fixed, new issues might appear.
+Эта часть процесса является итеративной петлей. По мере исправления каждой ошибки снова запускайте dbt compile, чтобы выявить любые новые проблемы. Например, до тех пор, пока вы не обновите dbt-utils с 0.3.0 до 0.5.1, ваш проект даже не начнет компилироваться из-за несоответствия `require-dbt-version`. Как только это будет исправлено, могут появиться новые проблемы.
 
-## Step 6. Test and review
+## Шаг 6. Тестируйте и проверяйте
 
-Key principles:
+Ключевые принципы:
 
-* Complete a full `dbt run` and `dbt test`.
+* Выполните полный `dbt run` и `dbt test`.
 
-* Update your CI job's dbt version.
+* Обновите версию dbt в вашей CI задаче.
 
-* Review your Slim CI configuration.
+* Проверьте вашу конфигурацию Slim CI.
 
-* Open a PR.
+* Откройте PR.
 
-Once your compilation issues are resolved, it's time to run your job for real, to make sure that everything works from end to end. It's unlikely that a dbt version change will cause any runtime errors with your SQL, so you should feel confident going into this stage that the end is near.
+После того, как ваши проблемы с компиляцией будут решены, пришло время запустить вашу задачу по-настоящему, чтобы убедиться, что все работает от начала до конца. Маловероятно, что изменение версии dbt вызовет какие-либо ошибки выполнения с вашим SQL, так что вы должны чувствовать уверенность, что конец близок.
 
-After that, make sure that your CI environment in dbt Cloud or your orchestrator is on the right dbt version, then open a PR.
+После этого убедитесь, что ваша среда CI в dbt Cloud или ваш оркестратор находятся на правильной версии dbt, затем откройте PR.
 
-If you're using [Slim CI](https://docs.getdbt.com/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci), keep in mind that artifacts aren't necessarily compatible from one version to another, so you won't be able to use it until the job you defer to has completed a run with the upgraded dbt version. This doesn't impact our example because support for Slim CI didn't come out until 0.18.0.
+Если вы используете [Slim CI](https://docs.getdbt.com/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci), имейте в виду, что артефакты не обязательно совместимы от одной версии к другой, так что вы не сможете использовать его, пока задача, на которую вы ссылаетесь, не завершит выполнение с обновленной версией dbt. Это не влияет на наш пример, так как поддержка Slim CI не вышла до 0.18.0.
 
-## Step 7. Merge and communicate
+## Шаг 7. Объедините и сообщите
 
-Key principles:
+Ключевые принципы:
 
-* 🎉 You did it!
+* 🎉 Вы сделали это!
 
-* Make sure everyone knows that you did it, or they'll hit an error next time they run.
+* Убедитесь, что все знают, что вы сделали это, иначе они столкнутся с ошибкой в следующий раз, когда запустят.
 
-* Update your production environment's dbt version.
+* Обновите версию dbt в вашей производственной среде.
 
-* Move onto the next upgrade while you're on a roll.
+* Переходите к следующему обновлению, пока вы находитесь в ударе.
 
-Merge your upgrade branch into your main branch, and then make sure your colleagues in turn pull main into their development branches and update their local environments.
+Объедините вашу ветку обновления в основную ветку, а затем убедитесь, что ваши коллеги, в свою очередь, подтягивают основную ветку в свои ветки разработки и обновляют свои локальные среды.
 
->⚠️ Remember to also update your production environment!
+>⚠️ Не забудьте также обновить вашу производственную среду!
 
->💡 If you're moving through multiple versions, you might like to wait and have your colleagues update their development environments in one go.
+>💡 Если вы переходите через несколько версий, возможно, вам захочется подождать и позволить вашим коллегам обновить свои среды разработки за один раз.
 
-Thanks to [Claire](https://twitter.com/clairebcarroll) and [Winnie](https://twitter.com/gwenwindflower) for their help in developing this post 💕
+Спасибо [Клэр](https://twitter.com/clairebcarroll) и [Винни](https://twitter.com/gwenwindflower) за их помощь в разработке этого поста 💕

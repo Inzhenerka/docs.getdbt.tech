@@ -1,6 +1,6 @@
 ---
-title: "Introducing the dbt_project_evaluator: Automatically evaluate your dbt project for alignment with best practices "
-description: "The dbt_project_evaluator is a dbt package created by the Professional Services team at dbt Labs to help analytics engineers automatically audit their dbt projects for bad practices. Goodbye auditing nightmares, hello beautiful DAG."
+title: "Представляем dbt_project_evaluator: Автоматическая оценка вашего dbt проекта на соответствие лучшим практикам"
+description: "dbt_project_evaluator — это пакет dbt, созданный командой профессиональных услуг dbt Labs, чтобы помочь аналитическим инженерам автоматически проверять свои dbt проекты на наличие плохих практик. Прощайте, кошмары аудита, здравствуй, красивый DAG."
 slug: align-with-dbt-project-evaluator
 
 authors: [grace_goheen]
@@ -12,103 +12,103 @@ date: 2022-11-30
 is_featured: true
 ---
 
-## Why we built this: A brief history of the dbt Labs Professional Services team
+## Почему мы это создали: Краткая история команды профессиональных услуг dbt Labs
 
-If you attended [Coalesce 2022](https://www.youtube.com/watch?v=smbRwmcM1Ok), you’ll know that the secret is out — the dbt Labs Professional Services team is not just [a group of experienced data consultants](https://www.getdbt.com/dbt-labs/services/); we’re also an intergalactic group of aliens traveling the Milky Way on a mission to enable analytics engineers to successfully adopt and manage dbt throughout the galaxy.
+Если вы посетили [Coalesce 2022](https://www.youtube.com/watch?v=smbRwmcM1Ok), вы знаете, что секрет раскрыт — команда профессиональных услуг dbt Labs — это не просто [группа опытных консультантов по данным](https://www.getdbt.com/dbt-labs/services/); мы также межгалактическая группа инопланетян, путешествующих по Млечному Пути с миссией помочь аналитическим инженерам успешно внедрять и управлять dbt по всей галактике.
 
 <!--truncate-->
 
-Don’t believe me??? Here’s photographic proof.
+Не верите мне??? Вот фотографическое доказательство.
 
-<Lightbox src="/img/blog/2022-11-30-dbt-project-evaluator/proserv_aliens.png" title="Rare photographic evidence of the dbt Labs Professional Services team" />
+<Lightbox src="/img/blog/2022-11-30-dbt-project-evaluator/proserv_aliens.png" title="Редкое фотографическое доказательство команды профессиональных услуг dbt Labs" />
 
-Since the inception of dbt Labs, our team has been embedded with a variety of different data teams — from an over-stretched-data-team-of-one to a data-mesh-multiverse.
+С момента основания dbt Labs наша команда работала с различными командами по данным — от перегруженной команды из одного человека до мультивселенной данных.
 
-Throughout these engagements, we began to take note of the common issues many analytics engineers face when scaling their dbt projects:
+В ходе этих взаимодействий мы начали замечать общие проблемы, с которыми сталкиваются многие аналитические инженеры при масштабировании своих dbt проектов:
 
-- No alerts when data models produce incorrect outputs
-- Long execution times when building or querying a model
-- Duplicated code and differing metric definitions across teams
-- Lack of knowledge of what a model or field represents
-- Wasted developer time locating and reading through messy SQL files
+- Отсутствие оповещений, когда модели данных выдают некорректные результаты
+- Длительное время выполнения при построении или запросе модели
+- Дублирование кода и различия в определениях метрик между командами
+- Недостаток знаний о том, что представляет собой модель или поле
+- Потеря времени разработчиков на поиск и чтение неаккуратных SQL файлов
 
-Maybe your team is facing some of these issues right now 👀 And that’s okay! We know that building an effective, scalable dbt project takes a lot of effort and brain power. Maybe you’ve inherited a legacy dbt project with a mountain of tech debt. Maybe you’re starting from scratch. Either way it can be difficult to know the best way to set your team up for success. Don’t worry, you’re in the right place!
+Возможно, ваша команда сталкивается с некоторыми из этих проблем прямо сейчас 👀 И это нормально! Мы знаем, что создание эффективного, масштабируемого dbt проекта требует много усилий и умственных затрат. Возможно, вы унаследовали устаревший dbt проект с горой технического долга. Возможно, вы начинаете с нуля. В любом случае, может быть сложно понять, как лучше всего настроить вашу команду на успех. Не волнуйтесь, вы в правильном месте!
 
-Through solving these problems over and over, the Professional Services team began to hone our best practices for working with dbt and how analytics engineers could improve their dbt project. We added “solutions reviews'' to our list of service offerings — client engagements in which we evaluate a given dbt project and provide specific recommendations to improve performance, save developer time, and prevent misuse of dbt’s features. And in an effort to share these best practices with the wider dbt community, we developed a *lot* of content. We wrote articles on the Developer Blog (see [1](https://docs.getdbt.com/blog/on-the-importance-of-naming), [2](https://discourse.getdbt.com/t/your-essential-dbt-project-checklist/1377), and [3](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview)), gave [Coalesce talks](https://www.getdbt.com/coalesce-2020/auditing-model-layers-and-modularity-with-your-dag/), and created [training courses](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
+Решая эти проблемы снова и снова, команда профессиональных услуг начала оттачивать наши лучшие практики работы с dbt и то, как аналитические инженеры могли бы улучшить свой dbt проект. Мы добавили «обзоры решений» в наш список предлагаемых услуг — взаимодействия с клиентами, в которых мы оцениваем данный dbt проект и предоставляем конкретные рекомендации по улучшению производительности, экономии времени разработчиков и предотвращению неправильного использования функций dbt. И в стремлении поделиться этими лучшими практиками с более широкой сообществом dbt, мы разработали *много* контента. Мы писали статьи в блоге разработчиков (см. [1](https://docs.getdbt.com/blog/on-the-importance-of-naming), [2](https://discourse.getdbt.com/t/your-essential-dbt-project-checklist/1377), и [3](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview)), давали [доклады на Coalesce](https://www.getdbt.com/coalesce-2020/auditing-model-layers-and-modularity-with-your-dag/), и создавали [учебные курсы](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
 
-TIme and time again, we found that when teams are aligned with these best practices, their projects are more:
+Снова и снова мы обнаруживали, что когда команды следуют этим лучшим практикам, их проекты становятся более:
 
-- **U**sable: Data outputs are reliable with proper alerting in place
-- **F**ast: Jobs are more efficient without long-running model bottlenecks
-- **O**rganized: Developers can quickly find, read, and understand the code they need to update
-- **S**calable: No more "black holes", duplicated code is eliminated allowing your project to grow with ease
+- **У**добными: Результаты данных надежны с надлежащими оповещениями
+- **Б**ыстрыми: Задачи выполняются более эффективно без узких мест в моделях с длительным временем выполнения
+- **О**рганизованными: Разработчики могут быстро находить, читать и понимать код, который им нужно обновить
+- **М**асштабируемыми: Больше никаких "черных дыр", дублирование кода устранено, что позволяет вашему проекту расти с легкостью
 
-Even with all of these great resources, evaluating a dbt project still took considerable upfront development time to discover exactly where and how to apply these best practices.
+Даже с учетом всех этих отличных ресурсов, оценка dbt проекта все еще требовала значительного времени на разработку, чтобы точно определить, где и как применять эти лучшие практики.
 
-**That’s when we came up with a space-altering idea: what if we could compress all of our ideas about best practices into a single, actionable tool to automate the process of discovering these misalignments, so that analytics engineers could immediately understand exactly where their projects deviated from our best practices and *be empowered to improve their projects on their own*.**
+**Именно тогда у нас появилась идея, изменяющая пространство: что если бы мы могли сжать все наши идеи о лучших практиках в один действенный инструмент, чтобы автоматизировать процесс обнаружения этих несоответствий, чтобы аналитические инженеры могли сразу понять, где их проекты отклоняются от наших лучших практик и *были в состоянии улучшить свои проекты самостоятельно*.**
 
-Flash forward through a six month long development process…
+Перенесемся на шесть месяцев вперед в процессе разработки…
 
-The [dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator) was born: a dbt package that uses the shared language of SQL, models, and tests to identify and assert specific recommendations for a given dbt project.
+Родился [dbt_project_evaluator](https://github.com/dbt-labs/dbt-project-evaluator): пакет dbt, который использует общий язык SQL, моделей и тестов для выявления и утверждения конкретных рекомендаций для данного dbt проекта.
 
-## How the `dbt_project_evaluator` package works
+## Как работает пакет `dbt_project_evaluator`
 
-When you install and run this package in your own dbt project, it will:
+Когда вы устанавливаете и запускаете этот пакет в своем dbt проекте, он:
 
-1. Convert the [graph](https://docs.getdbt.com/reference/dbt-jinja-functions/graph) object — which is a variable that contains information about the nodes in your dbt project — into a query-able table. This enables us to write SQL queries against a tabular representation of your <Term id = "dag" />.
-2. Capture each misalignment of an established “best practice” in a dbt model.
-3. Test these new models to alert you to the presence of misalignments in your dbt project.
+1. Преобразует объект [graph](https://docs.getdbt.com/reference/dbt-jinja-functions/graph) — который является переменной, содержащей информацию о узлах в вашем dbt проекте — в таблицу, доступную для запросов. Это позволяет нам писать SQL запросы к табличному представлению вашего <Term id = "dag" />.
+2. Фиксирует каждое несоответствие установленной «лучшей практике» в модели dbt.
+3. Тестирует эти новые модели, чтобы предупредить вас о наличии несоответствий в вашем dbt проекте.
 
-Currently, the dbt_project_evaluator package covers five main categories:
+В настоящее время пакет dbt_project_evaluator охватывает пять основных категорий:
 
-| Category | Example Best Practices |
+| Категория | Примеры лучших практик |
 | --- | --- |
-| Modeling | - Every [raw source](https://docs.getdbt.com/docs/build/sources) has a one-to-one relationship with a [staging model](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) to centralize data cleanup. <br />- Every model can be traced back to a declared source in the dbt project (i.e. no "root" models). <br /> - End-of-DAG fanout remains under a specified threshold. |
-| Testing | - Every model has a <Term id = "primary-key" /> that is appropriately tested. <br /> - The percentage of models that have minimum 1 test applied is greater than or equal to a specified threshold. |
-| Documentation | - Every model has a [description](https://docs.getdbt.com/reference/resource-properties/description). <br /> - The percentage of models that have a description is greater than or equal to a specified threshold. |
-| Structure | - All models are named with the appropriate prefix aligned according to their model types (e.g. staging models are prefixed with `stg_`).<br /> - The sql file for each model is in the subdirectory aligned with the model type (e.g. intermediate models are in an [intermediate subdirectory](https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate)).<br /> - Each models subdirectory contains one .yml file that includes tests and documentation for all models within the given subdirectory. |
-| Performance | - Every model that directly feeds into an [exposure](https://docs.getdbt.com/docs/build/exposures) is materialized as a <Term id="table" />.<br /> - No models are dependent on chains of "non-physically-materialized" models greater than a specified threshold. |
+| Моделирование | - Каждый [сырой источник](https://docs.getdbt.com/docs/build/sources) имеет одно-ко-одному отношение с [моделью подготовки](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) для централизации очистки данных. <br />- Каждая модель может быть отслежена до объявленного источника в dbt проекте (т.е. нет "корневых" моделей). <br /> - Разветвление в конце DAG остается ниже заданного порога. |
+| Тестирование | - У каждой модели есть <Term id = "primary-key" />, который правильно тестируется. <br /> - Процент моделей, к которым применен минимум 1 тест, больше или равен заданному порогу. |
+| Документация | - У каждой модели есть [описание](https://docs.getdbt.com/reference/resource-properties/description). <br /> - Процент моделей, имеющих описание, больше или равен заданному порогу. |
+| Структура | - Все модели названы с соответствующим префиксом в соответствии с их типами моделей (например, модели подготовки имеют префикс `stg_`).<br /> - SQL файл для каждой модели находится в подкаталоге, соответствующем типу модели (например, промежуточные модели находятся в [промежуточном подкаталоге](https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate)).<br /> - Каждый подкаталог моделей содержит один .yml файл, который включает тесты и документацию для всех моделей в данном подкаталоге. |
+| Производительность | - Каждая модель, которая напрямую подает данные в [экспозицию](https://docs.getdbt.com/docs/build/exposures), материализуется как <Term id="table" />.<br /> - Ни одна модель не зависит от цепочек "нефизически материализованных" моделей, превышающих заданный порог. |
 
-For the full up-to-date list of covered rules, check out the package’s [README](https://github.com/dbt-labs/dbt-project-evaluator#rules-1), which outlines for each misalignment of a best practice:
+Для полного актуального списка охваченных правил, ознакомьтесь с [README](https://github.com/dbt-labs/dbt-project-evaluator#rules-1) пакета, который описывает для каждого несоответствия лучшей практике:
 
-- Definition and clarifying example
-- Reason for flagging the misalignment
-- Any known exceptions to the rule
-- How to remediate the issue
+- Определение и поясняющий пример
+- Причина для пометки несоответствия
+- Любые известные исключения из правила
+- Как устранить проблему
 
-There might be specific situations where you need to depart from our best practices. *That’s actually okay*, as long as you’ve reviewed the misalignment and made the active choice to do something different. We built this tool with simple mechanisms to customize the package behavior, including:
+Могут быть конкретные ситуации, когда вам нужно отойти от наших лучших практик. *Это на самом деле нормально*, если вы рассмотрели несоответствие и приняли активное решение сделать что-то другое. Мы создали этот инструмент с простыми механизмами для настройки поведения пакета, включая:
 
-- Disabling a package model to exclude a best practice from the entire evaluation process
-- Overriding variables to adjust *how* a best practice is evaluated
-- Documenting specific project exceptions to a best practice in a seed file
+- Отключение модели пакета, чтобы исключить лучшую практику из всего процесса оценки
+- Переопределение переменных для настройки *как* оценивается лучшая практика
+- Документирование конкретных исключений проекта из лучшей практики в seed файле
 
-For instructions and code snippets for each customization method, check out the [README](https://github.com/dbt-labs/dbt-project-evaluator#customization-1).
+Для инструкций и фрагментов кода для каждого метода настройки, ознакомьтесь с [README](https://github.com/dbt-labs/dbt-project-evaluator#customization-1).
 
-## Try it out!
+## Попробуйте!
 
-To try out the package in your own project:
+Чтобы попробовать пакет в вашем собственном проекте:
 
-1. **Install the package**: Check [dbt Hub](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) for the latest installation instructions, or read [the docs](https://docs.getdbt.com/docs/build/packages) for more information on installing packages.
-2. **Run and test all of the models in the package**: Execute a `dbt build --select package:dbt_project_evaluator` command.
-3. **Identify any warnings**: Each test warning indicates the presence of a type of misalignment.
+1. **Установите пакет**: Проверьте [dbt Hub](https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/) для последних инструкций по установке или прочитайте [документацию](https://docs.getdbt.com/docs/build/packages) для получения дополнительной информации о установке пакетов.
+2. **Запустите и протестируйте все модели в пакете**: Выполните команду `dbt build --select package:dbt_project_evaluator`.
+3. **Определите любые предупреждения**: Каждое предупреждение теста указывает на наличие типа несоответствия.
 
-For *each warning* that pops up:
+Для *каждого предупреждения*, которое появляется:
 
-1. Identify the model name.
-2. Locate the related documentation in the package [README](https://github.com/dbt-labs/dbt-project-evaluator#rules-1).
-3. Query the model to find the specific instances of the issue within your project.
-4. Either fix the issue(s) or [customize](https://github.com/dbt-labs/dbt-project-evaluator#customization-1) the package to exclude the issue(s).
+1. Определите имя модели.
+2. Найдите соответствующую документацию в [README](https://github.com/dbt-labs/dbt-project-evaluator#rules-1) пакета.
+3. Запросите модель, чтобы найти конкретные случаи проблемы в вашем проекте.
+4. Либо исправьте проблему(ы), либо [настройте](https://github.com/dbt-labs/dbt-project-evaluator#customization-1) пакет, чтобы исключить проблему(ы).
 
-In order to automatically maintain project quality as your team expands, you can enforce alignment with dbt Lab’s best practices on all future code changes by [adding this package as a CI check](https://github.com/dbt-labs/dbt-project-evaluator#running-this-package-as-a-ci-check-1). Every time one of your team members (or yourself) opens a PR, the CI check will automatically ensure that new code changes don’t introduce new misalignments.
+Чтобы автоматически поддерживать качество проекта по мере расширения вашей команды, вы можете обеспечить соответствие лучшим практикам dbt Labs для всех будущих изменений кода, [добавив этот пакет в качестве проверки CI](https://github.com/dbt-labs/dbt-project-evaluator#running-this-package-as-a-ci-check-1). Каждый раз, когда один из членов вашей команды (или вы сами) открывает PR, проверка CI автоматически гарантирует, что новые изменения кода не вводят новые несоответствия.
 
-You can think of this as “linting” your dbt project to keep it aligned with our best practices — in the same way you might lint your SQL code to keep it aligned with your style guide.
+Вы можете рассматривать это как "линтинг" вашего dbt проекта, чтобы он соответствовал нашим лучшим практикам — так же, как вы могли бы линтить ваш SQL код, чтобы он соответствовал вашему стилевому руководству.
 
-To add this package as a CI check:
+Чтобы добавить этот пакет в качестве проверки CI:
 
-1. Override the severity of your tests using an [environment variable](https://docs.getdbt.com/docs/build/environment-variables).
-2. Run this package as a step in your CI job.
+1. Переопределите серьезность ваших тестов, используя [переменную окружения](https://docs.getdbt.com/docs/build/environment-variables).
+2. Запустите этот пакет как шаг в вашей CI задаче.
 
-To watch a full demo of using this package in greater detail, make sure to check out [my Coalesce talk below](https://youtu.be/smbRwmcM1Ok) [demo starts at 7:35].
+Чтобы посмотреть полную демонстрацию использования этого пакета более подробно, обязательно посмотрите [мой доклад на Coalesce ниже](https://youtu.be/smbRwmcM1Ok) [демонстрация начинается на 7:35].
 
 <center>
     <YoutubeVideo id="smbRwmcM1Ok" />
@@ -116,8 +116,8 @@ To watch a full demo of using this package in greater detail, make sure to check
 
 <br /> 
 
-If something isn’t working quite right or you have ideas for future functionality, [open an issue in the Github repository](https://github.com/dbt-labs/dbt-project-evaluator/issues) or even contribute code of your own!
+Если что-то не работает должным образом или у вас есть идеи для будущей функциональности, [откройте проблему в репозитории Github](https://github.com/dbt-labs/dbt-project-evaluator/issues) или даже внесите свой код!
 
-Together, we can ensure that dbt projects across the galaxy are set up for success as they grow to infinity and beyond.
+Вместе мы можем гарантировать, что dbt проекты по всей галактике настроены на успех, когда они растут до бесконечности и дальше.
 
-<Lightbox src="/img/blog/2022-11-30-dbt-project-evaluator/grace_at_coalesce.png" title="Alien Graceline beams back to dbt Labs’ mission control center…for now" />
+<Lightbox src="/img/blog/2022-11-30-dbt-project-evaluator/grace_at_coalesce.png" title="Инопланетянка Грейслайн возвращается в центр управления миссией dbt Labs... пока что" />

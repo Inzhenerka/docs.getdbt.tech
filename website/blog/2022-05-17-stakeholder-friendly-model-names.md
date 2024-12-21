@@ -1,6 +1,6 @@
 ---
-title: "Stakeholder-friendly model names: Model naming conventions that give context"
-description: "Your model names are usually made by engineers, for engineers. While that's great for maintainability, your end users won't have the same context into those model names as you do."
+title: "Названия моделей, понятные заинтересованным сторонам: Конвенции именования моделей, которые дают контекст"
+description: "Названия ваших моделей обычно создаются инженерами для инженеров. Хотя это отлично для поддерживаемости, ваши конечные пользователи не будут иметь такого же контекста в этих названиях моделей, как вы."
 slug: stakeholder-friendly-model-names
 
 authors: [pat_kearns]
@@ -12,156 +12,156 @@ date: 2022-05-17
 is_featured: true
 ---
 
-Analytics engineers (AEs) are constantly navigating through the names of the models in their project, so naming is important for maintainability in your project in the way you access it and work within it. By default, dbt will use your model file name as the view or table name in the database. But this means the name has a life outside of dbt and supports the many end users who will potentially never know about dbt and where this data came from, but still access the database objects in the database or business intelligence (BI) tool.
+Инженеры по аналитике (AEs) постоянно работают с названиями моделей в своем проекте, поэтому именование важно для поддерживаемости вашего проекта в том, как вы к нему обращаетесь и работаете в нем. По умолчанию, dbt будет использовать имя файла вашей модели в качестве имени представления или таблицы в базе данных. Но это означает, что имя имеет жизнь за пределами dbt и поддерживает многих конечных пользователей, которые, возможно, никогда не узнают о dbt и откуда взялись эти данные, но все равно будут обращаться к объектам базы данных в базе данных или инструменте бизнес-аналитики (BI).
 
-Model naming conventions are usually made by AEs, for AEs. While that’s useful for maintainability, it leaves out the people who model naming is supposed to primarily benefit: the end users. **Good model naming conventions should be created with one thing in mind: Assume your end-user will have no other context than the model name.** Folders, schema, and documentation can add additional context, but they may not always be present. Your model names will always be shown in the database.
+Конвенции именования моделей обычно создаются AEs для AEs. Хотя это полезно для поддерживаемости, это исключает людей, для которых именование моделей должно в первую очередь приносить пользу: конечных пользователей. **Хорошие конвенции именования моделей должны создаваться с одной мыслью: предполагайте, что ваш конечный пользователь не будет иметь никакого другого контекста, кроме имени модели.** Папки, схемы и документация могут добавить дополнительный контекст, но они могут не всегда присутствовать. Ваши имена моделей всегда будут отображаться в базе данных.
 
 <!--truncate-->
 
-In this article, we’ll take a deeper look at why model naming conventions are important from the point-of-view of the stakeholders that actually use their output. We’ll explore:
+В этой статье мы более подробно рассмотрим, почему конвенции именования моделей важны с точки зрения заинтересованных сторон, которые фактически используют их результаты. Мы исследуем:
 
-- Who those stakeholders are
-- How they access your projects & what the user experience looks like
-- What they are really looking for out of your model names
-- Some model naming best practices you can follow to make everyone happy
+- Кто эти заинтересованные стороны
+- Как они получают доступ к вашим проектам и как выглядит пользовательский опыт
+- Что они действительно ищут в ваших именах моделей
+- Некоторые лучшие практики именования моделей, которые вы можете следовать, чтобы сделать всех счастливыми
 
-## Your model names and your end-user’s experience
+## Ваши имена моделей и опыт ваших конечных пользователей
 
->“[Data folks], what we [create in the database]… echoes in eternity.”   -Max(imus, Gladiator)
+>“[Данные], что мы [создаем в базе данных]... отзываются в вечности.” -Макс(имус, Гладиатор)
 
-Analytics Engineers are often centrally located in the company, sandwiched between data analysts and data engineers. This means everything AEs create might be read and need to be understood by both an analytics or customer-facing team and by teams who spend most of their time in code and the database. Depending on the audience, the scope of access differs, which means the user experience and context changes. Let’s elaborate on what that experience might look like by breaking end-users into two buckets: 
+Инженеры по аналитике часто находятся в центре компании, между аналитиками данных и инженерами данных. Это означает, что все, что создают AEs, может быть прочитано и должно быть понято как аналитической или клиентской командой, так и командами, которые проводят большую часть своего времени в коде и базе данных. В зависимости от аудитории, объем доступа различается, что означает, что пользовательский опыт и контекст меняются. Давайте подробнее рассмотрим, как может выглядеть этот опыт, разделив конечных пользователей на две категории:
 
-- Analysts / BI users
-- Analytics engineers / Data engineers
+- Аналитики / пользователи BI
+- Инженеры по аналитике / инженеры данных
 
-### The analyst’s user experience
+### Пользовательский опыт аналитика
 
-Analysts are interfacing with data from the outside in. They are in meetings with stakeholders, clients, customers, and management within the organization. These stakeholders want clearly articulated thoughts, answers, trends, insights from the analyst that will help move the needle forward, help the business grow, increase productivity, increase profitability, etc. With these goals in mind, they must form a hypothesis and prove their point with data. They will access the data via:
+Аналитики взаимодействуют с данными извне. Они участвуют в встречах с заинтересованными сторонами, клиентами, заказчиками и руководством внутри организации. Эти заинтересованные стороны хотят четко сформулированных мыслей, ответов, тенденций, инсайтов от аналитика, которые помогут продвинуть дело вперед, помочь бизнесу расти, повысить производительность, увеличить прибыльность и т.д. С этими целями они должны сформулировать гипотезу и доказать свою точку зрения с помощью данных. Они будут получать доступ к данным через:
 
-- Precomputed views/tables in a BI tool
-- Read-only access to the dbt Cloud IDE docs
-- Full list of tables and views in their <Term id="data-warehouse" />
+- Предварительно вычисленные представления/таблицы в инструменте BI
+- Доступ только для чтения к документации dbt Cloud IDE
+- Полный список таблиц и представлений в их <Term id="data-warehouse" />
 
-#### Precomputed views/tables in a BI tool
+#### Предварительно вычисленные представления/таблицы в инструменте BI
 
-Here we have drag and drop functionality and a skin over top of the underlying `database.schema.table` where the database object is stored. The BI Tool has been configured by an Analytics Engineer or Data Engineer to automatically join datasets as you click/drag/drop fields into your exploration.
+Здесь у нас есть функция перетаскивания и интерфейс поверх `database.schema.table`, где хранится объект базы данных. Инструмент BI был настроен инженером по аналитике или инженером данных для автоматического объединения наборов данных, когда вы кликаете/перетаскиваете поля в ваше исследование.
 
-**How model names can make this painful:**
-The end users might not even know what tables the data refers to, as potentially everything is joined by the system and they don’t need to write their own queries. If model names are chosen poorly, there is a good chance that the BI layer on top of the database tables has been renamed to something more useful for the analysts. This adds an extra step of mental complexity in tracing the <Term id="data-lineage">lineage</Term> from data model to BI.
+**Как имена моделей могут усложнить это:**
+Конечные пользователи могут даже не знать, к каким таблицам относятся данные, так как потенциально все объединено системой, и им не нужно писать свои собственные запросы. Если имена моделей выбраны плохо, есть большая вероятность, что слой BI поверх таблиц базы данных был переименован во что-то более полезное для аналитиков. Это добавляет дополнительный шаг умственной сложности в отслеживании <Term id="data-lineage">происхождения</Term> от модели данных до BI.
 
-#### Read only access to the dbt Cloud IDE docs 
-If Analysts want more context via documentation, they may traverse back to the dbt layer and check out the data models in either the context of the Project or Database. In the Project view, they will see the data models in the folder hierarchy present in your project’s repository. In the Database view you will see the output of the data models as present in your database, ie. `database / schema / object`.
+#### Доступ только для чтения к документации dbt Cloud IDE
+Если аналитики хотят больше контекста через документацию, они могут вернуться к слою dbt и проверить модели данных либо в контексте проекта, либо базы данных. В представлении проекта они увидят модели данных в иерархии папок, присутствующих в репозитории вашего проекта. В представлении базы данных вы увидите вывод моделей данных, как он представлен в вашей базе данных, т.е. `database / schema / object`.
 
-![A screenshot depicting the dbt Cloud IDE menu's Database view which shows you the output of your data models. Next to this view, is the Project view.](/img/blog/2022-05-17-stakeholder-friendly-model-names/project-view.png)
+![Скриншот, изображающий меню Database view в dbt Cloud IDE, которое показывает вам вывод ваших моделей данных. Рядом с этим представлением находится представление Project view.](/img/blog/2022-05-17-stakeholder-friendly-model-names/project-view.png)
 
-**How model names can make this painful:**
-For the Project view, generally abstracted department or organizational structures as folder names presupposes the reader/engineer knows what is contained within the folder beforehand or what that department actually does, or promotes haphazard clicking to open folders to see what is within. Organizing the final outputs by business unit or analytics function is great for end users but doesn't accurately represent all the sources and references that had to come together to build this output, as they often live in another folder. 
+**Как имена моделей могут усложнить это:**
+Для представления проекта, как правило, абстрагированные структуры отделов или организаций в качестве имен папок предполагают, что читатель/инженер знает, что содержится в папке заранее или чем на самом деле занимается этот отдел, или поощряют хаотичное нажатие для открытия папок, чтобы увидеть, что внутри. Организация конечных результатов по бизнес-единице или аналитической функции отлично подходит для конечных пользователей, но не точно представляет все источники и ссылки, которые должны были быть объединены для создания этого результата, так как они часто находятся в другой папке.
 
-For the Database view, pray your team has been declaring a logical schema bucketing, or a logical model naming convention, otherwise you will have a long, alphabetized list of database objects to scroll through, where staging, intermediate, and final output models are all intermixed. Clicking into a data model and viewing the documentation is helpful, but you would need to check out the DAG to see where the model lives in the overall flow.
+Для представления базы данных, молитесь, чтобы ваша команда объявила логическое распределение схем или логическую конвенцию именования моделей, иначе у вас будет длинный, алфавитный список объектов базы данных для прокрутки, где модели промежуточного, промежуточного и конечного вывода все перемешаны. Переход к модели данных и просмотр документации полезен, но вам нужно будет проверить DAG, чтобы увидеть, где модель находится в общем потоке.
 
-#### The full dropdown list in their data warehouse.
+#### Полный выпадающий список в их хранилище данных.
 
-If they have access to Worksheets, SQL runner, or another way to write ad hoc sql queries, then they will have access to the data models as present in your database, ie. `database / schema / object`, but with less documentation attached, and more proclivity towards querying tables to check out their contents, which costs time and money.
+Если у них есть доступ к Worksheets, SQL runner или другому способу написания ad hoc SQL-запросов, то у них будет доступ к моделям данных, как они представлены в вашей базе данных, т.е. `database / schema / object`, но с меньшей документацией и большей склонностью к запросу таблиц для проверки их содержимого, что стоит времени и денег.
 
-![A screenshot of the the SQL Runner menu within Looker showcasing the dropdown list of all data models present in the database.](/img/blog/2022-05-17-stakeholder-friendly-model-names/data-warehouse-dropdown.png)
+![Скриншот меню SQL Runner в Looker, демонстрирующий выпадающий список всех моделей данных, присутствующих в базе данных.](/img/blog/2022-05-17-stakeholder-friendly-model-names/data-warehouse-dropdown.png)
 
-**How model names can make this painful:**
-Without proper naming conventions, you will encounter `analytics.order`, `analytics.orders`, `analytics.orders_new` and not know which one is which, so you will open up a scratch statement tab and attempt to figure out which is correct:
+**Как имена моделей могут усложнить это:**
+Без надлежащих конвенций именования вы столкнетесь с `analytics.order`, `analytics.orders`, `analytics.orders_new` и не будете знать, какая из них правильная, поэтому вы откроете вкладку с черновым заявлением и попытаетесь выяснить, какая из них правильная:
 
 ```sql
 -- select * from analytics.order  limit 10
 -- select * from analytics.orders  limit 10
 select * from analytics.orders_new  limit 10
 ```
-Hopefully you get it right via sampling queries, or eventually find out there is a true source of truth defined in a totally separate area: `core.dim_orders`. 
+Надеюсь, вы выберете правильный вариант с помощью выборочных запросов или в конечном итоге узнаете, что есть истинный источник истины, определенный в совершенно отдельной области: `core.dim_orders`.
 
-The problem here is the only information you can use to determine what data is within an object or the purpose of the object is within the schema and model name. 
+Проблема здесь в том, что единственная информация, которую вы можете использовать для определения того, какие данные содержатся в объекте или какова цель объекта, находится в схеме и имени модели.
 
-### The engineer’s user experience
+### Пользовательский опыт инженера
 
-Analytics Engineers and Data Engineers are often the ones creating analytics code, using SQL to transform data in a way that builds trust across your team — with testing, documentation and transparency. These engineers will have additional rights and might access and interact with the project (or parts of it) from:
+Инженеры по аналитике и инженеры данных часто являются теми, кто создает аналитический код, используя SQL для преобразования данных таким образом, чтобы вызывать доверие в вашей команде — с тестированием, документацией и прозрачностью. Эти инженеры будут иметь дополнительные права и могут получить доступ и взаимодействовать с проектом (или его частями) из:
 
-- Within the BI tool
-- Within the data warehouse
-- Within the folder structure of dbt Cloud IDE
-- Within the DAG (Directed Acyclical Graph)
-- Within the Pull Request (PR)
+- Внутри инструмента BI
+- Внутри хранилища данных
+- Внутри структуры папок dbt Cloud IDE
+- Внутри DAG (направленного ациклического графа)
+- Внутри Pull Request (PR)
 
-#### Within the BI tool
+#### Внутри инструмента BI
 
-This is largely the same as the Analyst experience above, except they likely built or are aware of the database objects exposed in the BI Tool.
+Это в основном то же самое, что и опыт аналитика, описанный выше, за исключением того, что они, вероятно, создали или знают о объектах базы данных, представленных в инструменте BI.
 
-**How model names can make this painful:**
-There is not much worse than spending all week developing on a task, submitting Pull Requests, getting reviews from team members, and then exposing data models in the BI Tool, only to realize a better naming of the data models would make a lot more sense in the context of the BI Tool. You are then faced with a choice: rename your data model in the BI Tool (over-label as a quick fix) or go back in the stack, rename models and all dependencies, submit a new PR, get reviews, run & test to ensure your quick fix doesn’t break anything, then continue to expose your correctly named model in the BI Tool, ensuring the same name persists throughout the whole lineage (long fix).
+**Как имена моделей могут усложнить это:**
+Нет ничего хуже, чем потратить всю неделю на разработку задачи, отправку Pull Requests, получение отзывов от членов команды, а затем представление моделей данных в инструменте BI, только чтобы понять, что лучшее именование моделей данных имело бы больше смысла в контексте инструмента BI. Вы сталкиваетесь с выбором: переименовать вашу модель данных в инструменте BI (быстрое исправление) или вернуться в стек, переименовать модели и все зависимости, отправить новый PR, получить отзывы, запустить и протестировать, чтобы убедиться, что ваше быстрое исправление ничего не сломает, затем продолжить представление вашей правильно названной модели в инструменте BI, обеспечивая сохранение того же имени на протяжении всей линии (долгое исправление).
 
-#### Within the data warehouse
-This is largely the same as the Analyst experience above, except they created the data models or are aware of their etymologies. They are likely more comfortable writing ad hoc queries, but also have the ability to make changes, which adds a layer of thought processing when working.
+#### Внутри хранилища данных
+Это в основном то же самое, что и опыт аналитика, описанный выше, за исключением того, что они создали модели данных или знают их этимологию. Они, вероятно, более комфортно пишут ad hoc запросы, но также имеют возможность вносить изменения, что добавляет уровень мыслительного процесса при работе.
 
-**How model names can make this painful:**
-It takes time to become a subject matter expert in the database. You will need to know which schema a subject lives in, what tables are the source of truth and/or output models, versus experiments, outdated objects, or building blocks used along the way. Working within this context, engineers know the history and company lore behind why a table was named that way or how its purpose may differ slightly from its name, but they also have the ability to make changes. 
+**Как имена моделей могут усложнить это:**
+Требуется время, чтобы стать экспертом в базе данных. Вам нужно будет знать, в какой схеме находится предмет, какие таблицы являются источником истины и/или моделями вывода, в отличие от экспериментов, устаревших объектов или строительных блоков, использованных на пути. Работая в этом контексте, инженеры знают историю и корпоративные легенды о том, почему таблица была названа так или как ее цель может немного отличаться от ее имени, но они также имеют возможность вносить изменения.
 
-Change management is hard; how many places would you need to update, rename, re-document, and retest to fix a poor naming choice from long ago? It is a daunting position, which can create internal strife when constrained for time over whether we should continually revamp and refactor for maintainability or focus on building new models in the same pattern as before.
+Управление изменениями сложно; сколько мест вам нужно будет обновить, переименовать, задокументировать и протестировать, чтобы исправить плохой выбор имени из прошлого? Это пугающая позиция, которая может создать внутренние разногласия, когда ограничены во времени, стоит ли постоянно обновлять и рефакторить для поддерживаемости или сосредоточиться на создании новых моделей в том же шаблоне, что и раньше.
 
-#### Within the folder structure of Cloud IDE
-![A screenshot of the folder explorer within the dbt Cloud IDE that exposes the data model names.](/img/blog/2022-05-17-stakeholder-friendly-model-names/dbt-cloud-ide-folder.png)
+#### Внутри структуры папок Cloud IDE
+![Скриншот проводника папок в dbt Cloud IDE, который показывает имена моделей данных.](/img/blog/2022-05-17-stakeholder-friendly-model-names/dbt-cloud-ide-folder.png)
 
-While developing within the IDE, you have almost the full range of information to reason about what is contained with a data model. You have a folder structure which will determine staging vs marts or any other helpful bucketing. You can see any configurations which might determine the target for your data model – database, schema, etc. You have documentation, both in line as comments and more formalized in descriptions in yml. Finally, you have the model name which should give you additional context.
+Разрабатывая в IDE, у вас есть почти полный набор информации, чтобы рассуждать о том, что содержится в модели данных. У вас есть структура папок, которая определит стадии или любые другие полезные группировки. Вы можете увидеть любые конфигурации, которые могут определить цель вашей модели данных — база данных, схема и т.д. У вас есть документация, как в виде комментариев, так и более формализованная в описаниях в yml. Наконец, у вас есть имя модели, которое должно дать вам дополнительный контекст.
 
-**How model names can make this painful:**
-Within this context, model names do not seem as important, as they are surrounded by so much other contextual information. If you mistakenly rely on that contextual information to relay information to the end user, it will be lost when the context is removed.
+**Как имена моделей могут усложнить это:**
+В этом контексте имена моделей не кажутся такими важными, так как они окружены стольким другим контекстуальным материалом. Если вы по ошибке полагаетесь на эту контекстуальную информацию для передачи информации конечному пользователю, она будет потеряна, когда контекст будет удален.
 
-Without proper naming conventions, you are missing out on a way to determine lineage. You can reason about this with folder hierarchy, or by viewing the DAG, but that’s not always possible.
+Без надлежащих конвенций именования вы упускаете возможность определить происхождение. Вы можете рассуждать об этом с помощью иерархии папок или просматривая DAG, но это не всегда возможно.
 
-#### Within the DAG
+#### Внутри DAG
 
-By contrast, when viewing the DAG within the docs site or within the lineage tab, you get a lineage which adds more context to dependencies and directional flow. You get insight into how models are used as building blocks from left to right to transform your data from crude or normalized raw sources, into cleaned up modular derived pieces, and finally into the final outputs on the far right of the DAG, ready to be used by the analyst in infinite combinations to present it in ways to help clients, customers, and organizations make better decisions.
+Напротив, при просмотре DAG на сайте документации или в вкладке происхождения, вы получаете происхождение, которое добавляет больше контекста к зависимостям и направленному потоку. Вы получаете представление о том, как модели используются как строительные блоки слева направо для преобразования ваших данных из грубых или нормализованных исходных источников в очищенные модульные производные части, и, наконец, в конечные результаты на крайнем правом краю DAG, готовые к использованию аналитиком в бесконечных комбинациях для представления их таким образом, чтобы помочь клиентам, заказчикам и организациям принимать лучшие решения.
 
-![A screenshot of the lineage graph within dbt Cloud that showcases all data models within the project and their outputs.](/img/blog/2022-05-17-stakeholder-friendly-model-names/dag-view.png)
+![Скриншот графа происхождения в dbt Cloud, который демонстрирует все модели данных в проекте и их результаты.](/img/blog/2022-05-17-stakeholder-friendly-model-names/dag-view.png)
 
-**How model names can make this painful:**
-The problem is that you will only see the model names (which become the nodes in the DAG), but you will not see folders, database/schema configurations, docs, etc. You can see the logical flow of data through your dbt pipeline, but without clearly defined model/node naming, the purpose of the model might be misconstrued, leading to wonky DAG pathways in the future.
+**Как имена моделей могут усложнить это:**
+Проблема в том, что вы увидите только имена моделей (которые становятся узлами в DAG), но не увидите папки, конфигурации базы данных/схемы, документацию и т.д. Вы можете увидеть логический поток данных через ваш конвейер dbt, но без четко определенного именования моделей/узлов цель модели может быть неправильно понята, что приведет к странным путям DAG в будущем.
 
-#### Within Pull Requests
+#### Внутри Pull Requests
 
-While reviewing code from someone else who is is contributing, you will see only the files that have been changed in the project’s repository.
+При просмотре кода от кого-то другого, кто вносит вклад, вы увидите только файлы, которые были изменены в репозитории проекта.
 
-![A screenshot of the file names that have been listed in the "Files Changed" section of a GitHub Pull Request](/img/blog/2022-05-17-stakeholder-friendly-model-names/PR-view.png)
+![Скриншот имен файлов, которые были перечислены в разделе "Измененные файлы" Pull Request на GitHub](/img/blog/2022-05-17-stakeholder-friendly-model-names/PR-view.png)
 
-**How model names can make this painful:**
-This will severely limit the amount of information you see, because it will be localized to the changed files. You will still see changed folders and changed model names, but lack the total project context where those are helpful. Hopefully you have a robust pull request template and traditions of linking to the task ticket and providing context to why the work was completed this way, otherwise the person reviewing your changes will not have a lot of information at hand to make clear suggestions for improvement.
+**Как имена моделей могут усложнить это:**
+Это сильно ограничит количество информации, которую вы видите, потому что она будет локализована в измененных файлах. Вы все равно увидите измененные папки и измененные имена моделей, но не будете иметь полного контекста проекта, где они полезны. Надеюсь, у вас есть надежный шаблон pull request и традиции связывания с задачей и предоставления контекста, почему работа была выполнена таким образом, иначе у человека, просматривающего ваши изменения, не будет много информации для ясных предложений по улучшению.
 
-## Model naming conventions that make everyone happy
-While each of these examples are accessing the same thing (your SQL code and the database objects it creates), the context changes depending on how you access it and none of the methods show a complete picture by themselves. The only constant between all of them is the model name, which in turn becomes the database object name and the DAG node name. This is why it is important to focus on model naming conventions, in addition to, but with less emphasis on, folder structure and schema names, because the latter two will not persist to all access points.
+## Конвенции именования моделей, которые делают всех счастливыми
+Хотя каждый из этих примеров обращается к одному и тому же (вашему SQL-коду и объектам базы данных, которые он создает), контекст меняется в зависимости от того, как вы к нему обращаетесь, и ни один из методов не показывает полную картину сам по себе. Единственная постоянная между всеми ними — это имя модели, которое, в свою очередь, становится именем объекта базы данных и именем узла DAG. Вот почему важно сосредоточиться на конвенциях именования моделей, в дополнение к, но с меньшим акцентом на структуру папок и имена схем, потому что последние два не будут сохраняться для всех точек доступа.
 
-So what are some high level heuristics that analytics engineers can use to ensure the most information about a model’s purpose accompanies a model name?
+Итак, какие высокоуровневые эвристики могут использовать инженеры по аналитике, чтобы обеспечить максимальную информацию о назначении модели, сопровождающую имя модели?
 
-### Embed information in the name using an agreed upon pattern
+### Встраивайте информацию в имя, используя согласованный шаблон
 
-Practice verbosity in a reproducible way. Extra characters in a name are free. Potential errors caused by choosing the wrong database object or mental complexity as your DAG/project expands to entropy can cost a lot.
+Практикуйте многословие воспроизводимым образом. Дополнительные символы в имени бесплатны. Потенциальные ошибки, вызванные выбором неправильного объекта базы данных или умственной сложностью по мере расширения вашего DAG/проекта до энтропии, могут стоить дорого.
 
-#### Use a format like `<type/dag_stage>_<source/topic>__<additional_context>`.
+#### Используйте формат, такой как `<type/dag_stage>_<source/topic>__<additional_context>`.
 
 **`type/dag_stage`**
 
-Where in the DAG does this model live? This also correlates with whether this model is a modular building block or an output model for analysis. Something like `stg_` or `int_` is likely a cleanup or composable piece used within dbt and isn’t relevant for analysts. Something like `fct_`, `dim_` would be an output model that will be used in the BI Tool by analysts. This should not, however, be a declaration of materialization. You should be free to change the materialization of your model without needing to change the model name.
+Где в DAG находится эта модель? Это также коррелирует с тем, является ли эта модель модульным строительным блоком или моделью вывода для анализа. Что-то вроде `stg_` или `int_` вероятно является очисткой или составной частью, используемой в dbt и не имеет отношения к аналитикам. Что-то вроде `fct_`, `dim_` будет моделью вывода, которая будет использоваться в инструменте BI аналитиками. Однако это не должно быть декларацией материализации. Вы должны иметь возможность изменить материализацию вашей модели без необходимости изменять имя модели.
 
 **`source/topic`**
 
-Gives verbose context to the content. `stripe__payments` tells you what source system it comes from and what are the contents of the data.
+Дает подробный контекст содержимого. `stripe__payments` говорит вам, из какой системы источников он поступает и каково содержимое данных.
 
 **`additional_context`**
 
-Adding a suffix for optional transformations can add clarity. `__daily` or `__pivoted` will tell you what transformation has happened to some other dataset. This should live at the end of the model name so that they remain together in the alphabetized list (e.g. `fct_paid_orders` and `fct_paid_orders__daily`)
+Добавление суффикса для необязательных преобразований может добавить ясности. `__daily` или `__pivoted` скажет вам, какое преобразование было выполнено с некоторым другим набором данных. Это должно находиться в конце имени модели, чтобы они оставались вместе в алфавитном списке (например, `fct_paid_orders` и `fct_paid_orders__daily`).
 
-These 3 parts go from least granular (general) to most granular (specific) so you can scan a list of all models and see large categories at a glance and hone in on the models of interest without further context.
+Эти 3 части идут от наименее гранулярного (общего) к наиболее гранулярному (конкретному), чтобы вы могли просканировать список всех моделей и увидеть крупные категории с первого взгляда и сосредоточиться на интересующих моделях без дальнейшего контекста.
 
-### Coming up...
+### Вперед...
 
-In this part of the series, we talked about why the model name is the center of understanding for the purpose and content within a model. In the in the upcoming ["How We Structure Our dbt Projects"](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) guide, you can explore how to use this naming pattern with more specific examples in different parts of your dbt DAG that cover regular use cases:
+В этой части серии мы говорили о том, почему имя модели является центром понимания назначения и содержимого внутри модели. В предстоящем руководстве ["Как мы структурируем наши проекты dbt"](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) вы можете изучить, как использовать этот шаблон именования с более конкретными примерами в различных частях вашего DAG dbt, которые охватывают регулярные случаи использования:
 
-- How would you name a model that is filtered on some columns
-- Do we recommend naming snapshots in a specific way
-- How would we name models in the case of:
-    - Internet user sessions
-    - Orders with customers, line items and payments
-    - Software as a Service models with Annually Recurring Revenue/Monthly Recurring Revenue churn etc...
+- Как бы вы назвали модель, которая фильтруется по некоторым столбцам
+- Рекомендуем ли мы называть снимки определенным образом
+- Как бы мы назвали модели в случае:
+    - Сессии интернет-пользователей
+    - Заказы с клиентами, позициями и платежами
+    - Модели программного обеспечения как услуги с ежегодной/ежемесячной выручкой от подписки и оттоком и т.д.

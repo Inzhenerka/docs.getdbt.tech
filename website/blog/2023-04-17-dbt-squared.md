@@ -1,6 +1,6 @@
 ---
-title: "dbt Squared: Leveraging dbt Core and dbt Cloud together at scale"
-description: "How do you effectively scale dbt? João Antunes from Roche walks through their multi-tool journey."
+title: "dbt Squared: Использование dbt Core и dbt Cloud вместе в масштабе"
+description: "Как эффективно масштабировать dbt? Жоао Антунес из Roche рассказывает о их пути с использованием нескольких инструментов."
 slug: dbt-squared
 
 authors: [joao_antunes, yannick_misteli, sean_mcintyre]
@@ -12,105 +12,104 @@ date: 2023-04-17
 is_featured: true
 ---
 
-Teams thrive when each team member is provided with the tools that best complement and enhance their skills. You wouldn’t hand Cristiano Ronaldo a tennis racket and expect a perfect serve! At Roche, getting the right tools in the hands of our teammates was critical to our ability to grow our data team from 10 core engineers to over 100 contributors in just two years. We embraced both dbt Core and dbt Cloud at Roche (a dbt-squared solution, if you will!) to quickly scale our data platform.
+Команды процветают, когда каждому члену команды предоставляются инструменты, которые наилучшим образом дополняют и усиливают их навыки. Вы бы не дали Криштиану Роналду теннисную ракетку и не ожидали бы идеальной подачи! В Roche предоставление правильных инструментов нашим коллегам было критически важным для того, чтобы увеличить нашу команду по работе с данными с 10 основных инженеров до более чем 100 участников всего за два года. Мы приняли как dbt Core, так и dbt Cloud в Roche (решение dbt-squared, если хотите!) для быстрого масштабирования нашей платформы данных.
 <!--truncate-->
-We faced three key areas of growth along this journey to scale: technology, people, and processes in an all-or-nothing game—getting only one right wouldn’t cut it.
+На этом пути к масштабированию мы столкнулись с тремя ключевыми областями роста: технологиями, людьми и процессами в игре "все или ничего" — добиться успеха только в одной из них было бы недостаточно.
 
-- **Technology**: dbt on the CLI was the right tool for core engineers, but couldn’t scale to our affiliate teams. dbt Cloud catalyzed their contribution to the platform.
-- **People**: We needed to onboard teams well-versed in SQL, but new to dbt, into our workflow with as little friction as possible.
-- **Process**: Local CI/CD, GitOps, and development processes on the core team needed to be adapted to allow for more contributors, and enforce quality at scale.
+- **Технологии**: dbt на CLI был подходящим инструментом для основных инженеров, но не мог масштабироваться для наших аффилированных команд. dbt Cloud стал катализатором их вклада в платформу.
+- **Люди**: Нам нужно было интегрировать команды, хорошо разбирающиеся в SQL, но новые в dbt, в наш рабочий процесс с минимальными препятствиями.
+- **Процесс**: Локальные процессы CI/CD, GitOps и разработки в основной команде нуждались в адаптации, чтобы позволить большему количеству участников и обеспечить качество в масштабе.
 
-dbt Core jump started our data platform’s growth, and dbt Cloud allowed us to spread it across the globe. Today, we are able to:
+dbt Core дал старт росту нашей платформы данных, а dbt Cloud позволил нам распространить ее по всему миру. Сегодня мы можем:
 
-- Power our platform in 35 countries, and run over 15,000 models and 40,000 tests every day.
-- Support our core and country teams with the workflows that best suit them.
-- Promote code to production in two week cycles instead of the previous quarter or semester-long cycles.
+- Обеспечивать работу нашей платформы в 35 странах и запускать более 15,000 моделей и 40,000 тестов каждый день.
+- Поддерживать наши основные и страновые команды с помощью рабочих процессов, которые наилучшим образом подходят им.
+- Продвигать код в производство в двухнедельных циклах вместо прежних квартальных или семестровых циклов.
 
-To understand the changes that we made, let's dive into what our technology, people and process looked like at the beginning of this path.
+Чтобы понять изменения, которые мы внесли, давайте углубимся в то, как выглядели наши технологии, люди и процессы в начале этого пути.
 
-## Where we started
+## С чего мы начали
 
-Our dbt journey at Roche started roughly 3 years ago when we began to build a cloud native content recommendation system tailored to our Sales Reps. We started with a small team of under 10 people and we designed our core architecture based on some well-defined principles: deploy Everything as Code, choose Serverless whenever feasible, and apply <Term id="elt">Extract Load Transform</Term> as opposed to <Term id="etl">Extract Transform Load</Term>.
+Наш путь с dbt в Roche начался примерно 3 года назад, когда мы начали строить облачную систему рекомендаций контента, адаптированную для наших торговых представителей. Мы начали с небольшой команды из менее чем 10 человек и разработали нашу основную архитектуру на основе некоторых четко определенных принципов: развертывать все как код, выбирать серверлесс, когда это возможно, и применять <Term id="elt">Extract Load Transform</Term> вместо <Term id="etl">Extract Transform Load</Term>.
 
-With these principles in mind, we designed a highly scalable architecture, leveraging AWS-native services to extract and load the data into an S3-based data lake and a Redshift cluster Data Warehouse.  Keep in mind, when we started, Redshift Serverless was not yet a thing! All of the data transformation occurs in the warehouse with (you guessed it!) dbt.
+С этими принципами на уме мы разработали высокомасштабируемую архитектуру, используя сервисы AWS для извлечения и загрузки данных в озеро данных на основе S3 и кластер Data Warehouse Redshift. Помните, когда мы начинали, Redshift Serverless еще не существовал! Все преобразования данных происходят в хранилище с использованием (угадайте!) dbt.
 
-The simplicity of dbt, combined with the compute power of Redshift, allowed us to implement a Data Vault architecture capable of supporting our content recommendation system. After the success here, there was interest to scale the platform to a plethora of new use cases in the pharma commercial domain.
+Простота dbt в сочетании с вычислительной мощностью Redshift позволила нам реализовать архитектуру Data Vault, способную поддерживать нашу систему рекомендаций контента. После успеха здесь возник интерес к масштабированию платформы для множества новых случаев использования в коммерческой фармацевтической области.
 
-## The scalability problem
+## Проблема масштабируемости
 
-Supporting the pharma domain meant we needed to reevaluate our dbt setup, as dozens of downstream teams would soon be building from the core team’s data assets. To be able to deliver the insights we wanted, we needed to get multiple teams collaborating on many dbt projects in a federated way without sacrificing quality or speed.
+Поддержка фармацевтической области означала, что нам нужно было пересмотреть нашу настройку dbt, так как десятки команд, работающих ниже по потоку, вскоре начнут строить на основе данных основной команды. Чтобы иметь возможность предоставлять нужные нам инсайты, нам нужно было, чтобы несколько команд сотрудничали в рамках многих проектов dbt в федеративной манере, не жертвуя качеством или скоростью.
 
-### Technology
+### Технологии
 
-We needed a way to make this architecture manageable when dozens of downstream teams were collaborating on the codebase simultaneously. Our first major architectural decision was how to separate the core team’s project from the country-specific projects, while still guaranteeing that each country team would be able to access the codebase of any other project if needed. Ensuring ease-of-access to other countries’ projects has a threefold purpose:
+Нам нужен был способ сделать эту архитектуру управляемой, когда десятки команд, работающих ниже по потоку, одновременно сотрудничают над кодовой базой. Нашим первым важным архитектурным решением было то, как отделить проект основной команды от проектов, специфичных для стран, при этом гарантируя, что каждая страновая команда сможет получить доступ к кодовой базе любого другого проекта, если это необходимо. Обеспечение легкого доступа к проектам других стран имеет тройную цель:
 
-1. Act as a catalyst for code reuse and best-practice sharing
-2. Share common models and macros that span multiple countries across projects more easily
-3. Promote a common workflow—an engineer working today for a Brazilian use-case could easily work tomorrow on a solution for Germany.
+1. Действовать как катализатор для повторного использования кода и обмена лучшими практиками
+2. Легче делиться общими моделями и макросами, которые охватывают несколько стран в проектах
+3. Продвигать общий рабочий процесс — инженер, работающий сегодня над случаем использования в Бразилии, мог бы легко работать завтра над решением для Германии.
 
-The second architectural decision was whether or not to create a single dbt project for all 50+ country teams, or to follow a multi-project approach in which each country would have its own separate dbt project in the shared repo. It was critical that each country team was able to move at different paces and have full control over their domains. This would avoid issues like model name collisions across countries and remove dependencies that would risk cascading errors between countries. Therefore, we opted for a one project per country approach.
+Вторым архитектурным решением было, создавать ли один проект dbt для всех 50+ страновых команд или следовать многопроектному подходу, в котором каждая страна имела бы свой отдельный проект dbt в общем репозитории. Было критически важно, чтобы каждая страновая команда могла двигаться с разной скоростью и имела полный контроль над своими доменами. Это позволило бы избежать таких проблем, как коллизии имен моделей между странами, и устранить зависимости, которые могли бы привести к каскадным ошибкам между странами. Поэтому мы выбрали подход "один проект на страну".
 
-<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-project-tree.png" width="85%" title="Roche project structure as seen in the repository" />
+<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-project-tree.png" width="85%" title="Структура проекта Roche, как видно в репозитории" />
 
-The resulting data flow from core to country teams now follows this pattern. The *Sources* database holds all of the raw data in the Redshift cluster and the *Integrated* database contains the curated and ready-for-consumption outputs from the core dbt project. These outputs are termed Source Data Products (SDPs). These SDPs are then leveraged by the core team to build Global Data Products—products tailored to answering business questions for global stakeholders. They are also filtered at the country-level and used as sources to the country-specific Data Products managed by the country teams. These, in turn, are hosted in the respective `affiliate_db_<country>` database. Segregating at the database-level facilitates data governance and privacy management.
+Получившийся поток данных от основной команды к страновым командам теперь следует этой схеме. База данных *Sources* содержит все необработанные данные в кластере Redshift, а база данных *Integrated* содержит курированные и готовые к потреблению выходные данные из основного проекта dbt. Эти выходные данные называются Продуктами Исходных Данных (SDP). Эти SDP затем используются основной командой для создания Глобальных Продуктов Данных — продуктов, адаптированных для ответа на бизнес-вопросы глобальных заинтересованных сторон. Они также фильтруются на уровне стран и используются в качестве источников для страновых Продуктов Данных, управляемых страновыми командами. Эти продукты, в свою очередь, размещаются в соответствующей базе данных `affiliate_db_<country>`. Разделение на уровне базы данных облегчает управление данными и управление конфиденциальностью.
 
-<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-db-diagram.png" width="85%" title="Roche project structure as seen in the repository" />
+<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-db-diagram.png" width="85%" title="Структура проекта Roche, как видно в репозитории" />
 
-### People
+### Люди
 
-At the start of the journey, we built the core team from a blank canvas by cherry-picking individuals with a lot of engineering experience who were comfortable working on the command line. On the other hand, the country teams comprised people working on legacy data systems at the company—some with a deep understanding of technologies like Informatica, Talend, or Hadoop. All had one thing in common—no one had ever used dbt.
+В начале пути мы сформировали основную команду с нуля, отбирая людей с большим опытом в инженерии, которые были комфортны в работе с командной строкой. С другой стороны, страновые команды состояли из людей, работающих с устаревшими системами данных в компании — некоторые из них имели глубокое понимание таких технологий, как Informatica, Talend или Hadoop. У всех было одно общее — никто никогда не использовал dbt.
 
-We quickly realized that we needed to lower the barrier of entry for new teams to start leveraging the data platform. We wanted to relieve the teams from unnecessary exposure to overly complex, hard-to-read features in the core repo, and empower them to focus on their data modeling work exclusively. While dbt was clearly the right transformation tool, lack of experience on the command line demanded a more approachable, ready-to-use tool for these teams.
+Мы быстро поняли, что нам нужно снизить барьер для входа для новых команд, чтобы они могли начать использовать платформу данных. Мы хотели избавить команды от ненужного воздействия чрезмерно сложных, трудночитаемых функций в основном репозитории и дать им возможность сосредоточиться исключительно на своей работе по моделированию данных. Хотя dbt явно был правильным инструментом для трансформации, отсутствие опыта работы с командной строкой требовало более доступного, готового к использованию инструмента для этих команд.
 
-### Process
+### Процесс
 
-The success of this program relied on adopting DevOps practices from the start. This required a cultural shift, which can be particularly challenging in large scale organizations. We needed to take the DevOps processes that were working well for the core team, and scale them to dozens of teams to ensure the same level of quality and consistency in our data products. By seamlessly integrating dbt with git, our CI/CD processes were able to scale effortlessly, allowing for automated testing, building, and releasing of our pipelines.
+Успех этой программы зависел от принятия практик DevOps с самого начала. Это требовало культурного сдвига, что может быть особенно сложным в крупных организациях. Нам нужно было взять процессы DevOps, которые хорошо работали для основной команды, и масштабировать их для десятков команд, чтобы обеспечить тот же уровень качества и согласованности в наших продуктах данных. Благодаря бесшовной интеграции dbt с git, наши процессы CI/CD смогли масштабироваться без усилий, позволяя автоматизировать тестирование, сборку и выпуск наших конвейеров.
 
-Often overlooked, this third pillar of process can be the key to success when scaling a global platform. Simple things, such as accounting for time zone differences, can determine whether a message gets across the board. To facilitate the communication and coordination between Global and Country teams, all the teams follow the same sprint cycle, and we hold weekly scrum of scrums. We needed to set up extensive onboarding documentation, ensure newcomers had proper training and guidance, and create dedicated slack channels for announcements, incident reporting, and occasional random memes, helping build a community that stretches from Brazil to Malaysia.
+Часто упускаемый из виду, этот третий столп процесса может быть ключом к успеху при масштабировании глобальной платформы. Простые вещи, такие как учет разницы в часовых поясах, могут определить, будет ли сообщение понято всеми. Чтобы облегчить коммуникацию и координацию между глобальными и страновыми командами, все команды следуют одному и тому же циклу спринта, и мы проводим еженедельные scrum of scrums. Нам нужно было создать обширную документацию по внедрению, обеспечить новичкам надлежащее обучение и руководство, а также создать выделенные каналы в Slack для объявлений, отчетов о происшествиях и случайных мемов, помогая строить сообщество, которое простирается от Бразилии до Малайзии.
 
-<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-meme.png" width="85%" title="Roche project structure as seen in the repository" />
+<Lightbox src="/img/blog/2023-04-17-dbt-squared/roche-meme.png" width="85%" title="Структура проекта Roche, как видно в репозитории" />
 
-## The solution: dbt Squared
+## Решение: dbt Squared
 
-### Technology and people
+### Технологии и люди
 
-Our teams’ differing levels of technical maturity demanded different technical solutions. The core team was well versed with dbt Core (even [contributing](https://github.com/dbt-labs/dbt-core/pull/3408) to the project!) and had been working on the same project for 3 years with software engineering best practices  (i.e. CI/CD, unit tests, linting, and pre-commit hooks). The affiliate teams had noticeably different exposure to these tools. Thus, we rolled out dbt Cloud to the country teams to avoid onboarding them to complex core workflows, which would have unnecessarily slowed them down.
+Различные уровни технической зрелости наших команд требовали различных технических решений. Основная команда была хорошо знакома с dbt Core (даже [вносила вклад](https://github.com/dbt-labs/dbt-core/pull/3408) в проект!) и работала над одним и тем же проектом в течение 3 лет, используя лучшие практики разработки программного обеспечения (например, CI/CD, модульные тесты, линтинг и pre-commit хуки). Аффилированные команды имели заметно другой опыт работы с этими инструментами. Таким образом, мы внедрили dbt Cloud для страновых команд, чтобы избежать их интеграции в сложные основные рабочие процессы, что бы их ненужно замедлило.
 
-dbt Cloud removed the need to set up local environments; no need to worry about library versions or about installing git clients. Instead, they were quickly building and testing dbt models. As SQL is second nature to all of the country teams (irrespective of the platform they were using prior to dbt), they picked up dbt in no time at all, and the need for support from the core team quickly became minimal.
+dbt Cloud устранил необходимость в настройке локальных сред; не нужно беспокоиться о версиях библиотек или об установке клиентов git. Вместо этого они быстро создавали и тестировали модели dbt. Поскольку SQL является второй натурой для всех страновых команд (независимо от платформы, которую они использовали до dbt), они освоили dbt в кратчайшие сроки, и потребность в поддержке со стороны основной команды быстро стала минимальной.
 
-This autonomy proved to be critical; it would otherwise be impractical to have a fully-centralized support team. We appointed regional leads to oversee the work of multiple country teams. This made country teams less reliant on core teams; now different countries could collaborate on dbt work independently.
+Эта автономия оказалась критически важной; в противном случае было бы непрактично иметь полностью централизованную команду поддержки. Мы назначили региональных лидеров для наблюдения за работой нескольких страновых команд. Это сделало страновые команды менее зависимыми от основных команд; теперь разные страны могли сотрудничать в работе с dbt независимо.
 
-Doubling down on dbt Cloud had a big impact on how fast we could grow without compromising key features of software development. In the past, the initial setup of the tooling needed to start building data pipelines can take days. With this solution, code versioning, IDE, SQL previewer and lineage graphs were all in one place without any initial setup needed from the developers. In a matter of weeks, we started seeing the first data pipelines fully migrated.
+Удвоение ставок на dbt Cloud оказало большое влияние на то, как быстро мы могли расти, не жертвуя ключевыми функциями разработки программного обеспечения. В прошлом начальная настройка инструментов, необходимых для начала создания конвейеров данных, могла занять дни. С этим решением версионирование кода, IDE, SQL-просмотрщик и графы родословной были все в одном месте без какой-либо начальной настройки, необходимой от разработчиков. В течение нескольких недель мы начали видеть первые полностью мигрированные конвейеры данных.
 
-### Process
+### Процесс
 
-Operating at scale meant we needed to adapt our processes that once worked for a  core team of ten to now work for a team of hundreds.
+Работа в масштабе означала, что нам нужно было адаптировать наши процессы, которые когда-то работали для основной команды из десяти человек, чтобы теперь они работали для команды из сотен.
 
-- **Project Setup**: We needed to have a scalable way to provision new projects for the first time.
-- **Development Flow**: We needed to make sure any team member could develop seamlessly, no matter how far downstream they sat.
-- **Release Flow**: Releasing to one project was straightforward, but releasing to connected projects simultaneously needed considerable coordination.
+- **Настройка проекта**: Нам нужно было иметь масштабируемый способ предоставления новых проектов в первый раз.
+- **Процесс разработки**: Нам нужно было убедиться, что любой член команды может разрабатывать без проблем, независимо от того, насколько далеко вниз по потоку он находится.
+- **Процесс выпуска**: Выпуск в один проект был простым, но выпуск в связанные проекты одновременно требовал значительной координации.
 
-### Project setup flow
+### Поток настройки проекта
 
-Because we decided to go with a multi-project architecture, there was some initial setup needed. Each country would need a dbt project in our Git repository and also needed to be deployed in dbt Cloud…twice, as each affiliate has a dev and a prod project. To avoid setting up all of the projects manually in the dbt Cloud UI, we implemented a python library as a wrapper around the [dbt Cloud Administrative API](https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api).  This would read a YAML configuration file and deploy all of the projects automatically. This saved a lot of time, as we would already have a new team’s dbt project setup in both the git repository and dbt Cloud as soon as they were ready to start building.
+Поскольку мы решили использовать многопроектную архитектуру, требовалась некоторая начальная настройка. Каждая страна нуждалась в проекте dbt в нашем Git-репозитории, а также в развертывании в dbt Cloud… дважды, так как у каждого аффилиата есть проект для разработки и проект для производства. Чтобы избежать ручной настройки всех проектов в интерфейсе dbt Cloud, мы реализовали библиотеку на Python в качестве обертки вокруг [Административного API dbt Cloud](https://docs.getdbt.com/docs/dbt-cloud-apis/admin-cloud-api). Это читало YAML-файл конфигурации и автоматически развертывало все проекты. Это сэкономило много времени, так как у нас уже был настроен проект dbt новой команды как в git-репозитории, так и в dbt Cloud, как только они были готовы начать строить.
 
-### Development flow
+### Поток разработки
 
-The core teams using dbt on the CLI often leveraged the [defer command](https://docs.getdbt.com/reference/node-selection/defer), which can be used in dbt Cloud, but requires a [workaround](https://discourse.getdbt.com/t/possible-to-use-defer-to-testing-time-in-cloud-ide/6189) that involves injecting a production manifest file into your repo. Several rounds of fruitful discussions with the dbt Labs team lead us towards using  [“Proxy Views”](https://gist.github.com/boxysean/c1e0cb6735f6bbbb422cb06a14c3cd92), which emulate zero-copy clone functionality and allows for a similar `defer` workflow. For this solution to work, we also needed to override the `redshift__list_relations_without_caching` macro (for more details please read the comments of our Lead Engineer Jakub Lanski [here](https://github.com/dbt-labs/dbt-redshift/issues/179)). This enables each engineer to develop and test their models without the need to entirely recreate the upstream dependencies. Instead, these upstream model dependencies are created as views in the developer’s target schema that point to their production counterparts. This is particularly critical when implementing models that rely on dozens of upstream dependencies. By avoiding unnecessary data replication, we dramatically reduced development time.
+Основные команды, использующие dbt на CLI, часто использовали [команду defer](https://docs.getdbt.com/reference/node-selection/defer), которая может быть использована в dbt Cloud, но требует [обходного пути](https://discourse.getdbt.com/t/possible-to-use-defer-to-testing-time-in-cloud-ide/6189), который включает в себя внедрение файла манифеста производства в ваш репозиторий. Несколько раундов плодотворных обсуждений с командой dbt Labs привели нас к использованию [“Proxy Views”](https://gist.github.com/boxysean/c1e0cb6735f6bbbb422cb06a14c3cd92), которые эмулируют функциональность клонирования без копирования и позволяют использовать аналогичный рабочий процесс `defer`. Для работы этого решения нам также нужно было переопределить макрос `redshift__list_relations_without_caching` (для получения более подробной информации, пожалуйста, прочитайте комментарии нашего ведущего инженера Якуба Лански [здесь](https://github.com/dbt-labs/dbt-redshift/issues/179)). Это позволяет каждому инженеру разрабатывать и тестировать свои модели без необходимости полностью воссоздавать зависимости вверх по потоку. Вместо этого эти зависимости моделей вверх по потоку создаются как представления в целевой схеме разработчика, которые указывают на их производственные аналоги. Это особенно критично при реализации моделей, которые зависят от десятков зависимостей вверх по потоку. Избегая ненужного дублирования данных, мы значительно сократили время разработки.
 
-### Release flow
+### Поток выпуска
 
-Last but not least, the core team uses the [pre-commit](https://pre-commit.com/) framework to ensure code quality before opening merge requests to the common branch. The core team also leverages [sqlfluff](https://sqlfluff.com/) to standardize the code across several streams of work. Since dbt Cloud doesn’t yet offer the possibility to run the pre-commit hooks directly in the IDE, we migrated these workflows to CI checks. These checks are triggered when a merge request to the common branch is raised, guaranteeing that even if a developer is not using the framework locally, the code changes are evaluated before the merge is completed.
+И наконец, основная команда использует фреймворк [pre-commit](https://pre-commit.com/), чтобы обеспечить качество кода перед открытием запросов на слияние в общую ветку. Основная команда также использует [sqlfluff](https://sqlfluff.com/), чтобы стандартизировать код в нескольких потоках работы. Поскольку dbt Cloud пока не предлагает возможность запускать pre-commit хуки непосредственно в IDE, мы перенесли эти рабочие процессы в проверки CI. Эти проверки запускаются, когда создается запрос на слияние в общую ветку, гарантируя, что даже если разработчик не использует фреймворк локально, изменения кода оцениваются перед завершением слияния.
 
-Now, not only was the pace of delivery much faster, we were also able to make investments in the incident management process. Rather than relying on a separate operations team, we allocate part of the development team to incident management, and we rotate the team members responsible for incident management on a sprint-by-sprint basis. As a result, we achieved a widespread culture of accountability that ultimately led to increased test coverage and code reliability.
+Теперь не только темп доставки стал намного быстрее, но мы также смогли сделать инвестиции в процесс управления инцидентами. Вместо того чтобы полагаться на отдельную операционную команду, мы выделяем часть команды разработчиков для управления инцидентами и чередуем членов команды, ответственных за управление инцидентами, на основе спринта. В результате мы достигли широкой культуры ответственности, которая в конечном итоге привела к увеличению покрытия тестов и надежности кода.
 
-## Conclusion
+## Заключение
 
-In less than one year, we managed to migrate siloed data pipelines from tools like Informatica, Spark, Talend and Oracle into dbt, powering close to 50 dashboards today.
+Менее чем за год мы смогли мигрировать изолированные конвейеры данных из таких инструментов, как Informatica, Spark, Talend и Oracle, в dbt, обеспечивая работу почти 50 дашбордов сегодня.
 
-While we acknowledge the success story so far, we also believe the future of this endeavor depends heavily on how much we continue to invest in people. Therefore, we are creating a dbt fast-track path to prepare our team leads to earn [the dbt Certification](https://www.getdbt.com/blog/dbt-certification-program/). We foster close collaboration with the dbt Labs team which helps our organization set out for success as we plan our roadmap with expert advice.
+Хотя мы признаем успех этой истории, мы также считаем, что будущее этого начинания сильно зависит от того, насколько мы продолжим инвестировать в людей. Поэтому мы создаем ускоренный путь dbt, чтобы подготовить наших лидеров команд к получению [сертификации dbt](https://www.getdbt.com/blog/dbt-certification-program/). Мы поддерживаем тесное сотрудничество с командой dbt Labs, что помогает нашей организации настраиваться на успех, когда мы планируем наш дорожную карту с экспертными советами.
 
-While successful scaling requires good technology, it also requires empowering your people and establishing strong processes.  Be sure to prioritize collaboration, communication, and training as you grow your dbt footprint. We hope this post has given you some useful insight and strategies for scaling the use of dbt in your organization. If you're facing similar challenges or have found other effective solutions, we'd love to hear from you in the comments below.
+Хотя успешное масштабирование требует хороших технологий, оно также требует предоставления возможностей вашим людям и установления сильных процессов. Обязательно уделяйте приоритетное внимание сотрудничеству, коммуникации и обучению по мере роста вашего присутствия dbt. Мы надеемся, что этот пост дал вам полезные инсайты и стратегии для масштабирования использования dbt в вашей организации. Если вы сталкиваетесь с аналогичными проблемами или нашли другие эффективные решения, мы будем рады услышать от вас в комментариях ниже.
 
-
-*Editor's note: This article was written by the João Antunes and Yannick Misteli of Roche, with editorial and technical guidance from Sean McIntyre of dbt Labs*
+*Примечание редактора: Эта статья была написана Жоао Антунесом и Янником Мистели из Roche, с редакционным и техническим руководством от Шона Макинтайра из dbt Labs*

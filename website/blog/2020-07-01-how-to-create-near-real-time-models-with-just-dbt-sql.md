@@ -1,6 +1,6 @@
 ---
-title: "How to Create Near Real-time Models With Just dbt + SQL"
-description: "Before I dive into how to create this, I have to say this. **You probably don’t need this**."
+title: "Как создать модели почти в реальном времени, используя только dbt + SQL"
+description: "Прежде чем я углублюсь в то, как это создать, я должен сказать следующее. **Вам, вероятно, это не нужно**."
 slug: how-to-create-near-real-time-models-with-just-dbt-sql
 canonical_url: https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457
 
@@ -13,72 +13,71 @@ date: 2020-07-01
 is_featured: false
 ---
 
-:::caution More up-to-date information available
+:::caution Более актуальная информация доступна
 
-Since this blog post was first published, many data platforms have added support for [materialized views](/blog/announcing-materialized-views), which are a superior way to achieve the goals outlined here. We recommend them over the below approach. 
-
+С момента первой публикации этого поста многие платформы данных добавили поддержку [материализованных представлений](/blog/announcing-materialized-views), которые являются более совершенным способом достижения целей, изложенных здесь. Мы рекомендуем их вместо подхода, описанного ниже.
 
 :::
 
-Before I dive into how to create this, I have to say this. **You probably don’t need this**. I, along with my other Fishtown colleagues, have spent countless hours working with clients that ask for near-real-time streaming data. However, when we start digging into the project, it is often realized that the use case is not there. There are a variety of reasons why near real-time streaming is not a good fit. Two key ones are:
+Прежде чем я углублюсь в то, как это создать, я должен сказать следующее. **Вам, вероятно, это не нужно**. Я, вместе с моими коллегами из Fishtown, провел бесчисленные часы, работая с клиентами, которые запрашивают потоковые данные почти в реальном времени. Однако, когда мы начинаем углубляться в проект, часто оказывается, что такой случай использования отсутствует. Существует множество причин, по которым потоковая передача данных почти в реальном времени не подходит. Две ключевые из них:
 
-1.  The source data isn’t updating frequently enough.
-2.  End users aren’t looking at the data often enough.
+1. Исходные данные не обновляются достаточно часто.
+2. Конечные пользователи не смотрят на данные достаточно часто.
 
-So when presented with a near-real-time modeling request, I (and you as well!) have to be cynical.
+Поэтому, когда поступает запрос на моделирование почти в реальном времени, я (и вы тоже!) должен быть скептичен.
 
 <!--truncate-->
 
-## The right use case
+## Правильный случай использования
 -------------------------------------------
 
-Recently I was working on a JetBlue project and was presented with a legitimate use case: operational data. JetBlue’s Crewmembers need to make real-time decisions on when to close the door to a flight or rebook a flight. If you have ever been to an airport when there is a flight delay, you know how high the tension is in the room for airline employees to make the right decisions. They literally cannot do their jobs without real-time data.
+Недавно я работал над проектом JetBlue и столкнулся с законным случаем использования: операционные данные. Члены экипажа JetBlue должны принимать решения в реальном времени о том, когда закрыть дверь на рейс или перебронировать рейс. Если вы когда-либо были в аэропорту, когда рейс задерживается, вы знаете, насколько высоко напряжение в комнате для сотрудников авиакомпании, чтобы принять правильные решения. Они буквально не могут выполнять свою работу без данных в реальном времени.
 
-If possible, the best thing to do is to query data as close to the source as possible. You don’t want to hit your production database unless you want to frighten and likely anger your DBA. Instead, the preferred approach is to replicate the source data to your analytics warehouse, which would provide a suitable environment for analytic queries. In JetBlue’s case, the data arrives in <Term id="json" /> blobs, which then need to be unnested, transformed, and joined before the data becomes useful for analysis. There was no way to just query from the source to get the information people required.
+Если возможно, лучше всего запрашивать данные как можно ближе к источнику. Вы не хотите обращаться к вашей производственной базе данных, если не хотите напугать и, вероятно, разозлить вашего администратора баз данных. Вместо этого предпочтительный подход — реплицировать исходные данные в ваш аналитический склад, который предоставит подходящую среду для аналитических запросов. В случае JetBlue данные поступают в <Term id="json" /> blob-объектах, которые затем нужно развернуть, преобразовать и объединить, прежде чем данные станут полезными для анализа. Не было возможности просто запросить источник, чтобы получить необходимую информацию.
 
-Tldr: If you need transformed, operational data to make in-the-moment decisions then you probably need real-time data.
+Кратко: если вам нужны преобразованные операционные данные для принятия решений в моменте, то вам, вероятно, нужны данные в реальном времени.
 
-## What are our options?
+## Какие у нас есть варианты?
 ------------------------------------------------
 
-#### 1\. Materialize everything as views
+#### 1\. Материализовать все как представления
 
-Since <Term id="view">views</Term> are simply stored queries that do not store data, they are always up to date. This approach works until your transformations take more than 2+ minutes, which wouldn’t meet a “near real-time” SLA. When your data is small enough, this is the preferred approach, however it isn’t scalable.
+Поскольку <Term id="view">представления</Term> — это просто хранимые запросы, которые не хранят данные, они всегда актуальны. Этот подход работает до тех пор, пока ваши преобразования не занимают более 2+ минут, что не соответствует SLA "почти в реальном времени". Когда ваши данные достаточно малы, это предпочтительный подход, однако он не масштабируется.
 
-#### 2\. Run dbt in micro-batches
+#### 2\. Запускать dbt в микро-пакетах
 
-Just don’t do it. Because dbt is primarily designed for batch-based data processing, you should not schedule your dbt jobs to run continuously. This can open the door to unforeseeable bugs.
+Просто не делайте этого. Поскольку dbt в первую очередь предназначен для пакетной обработки данных, вы не должны планировать выполнение ваших dbt задач непрерывно. Это может открыть дверь для непредвиденных ошибок.
 
-#### 3\. Use Materialized Views
+#### 3\. Использовать материализованные представления
 
-While the concept is very exciting, implementation still has some key limitations. They are expensive and cannot include some useful transformations. Check out this [section in Snowflake’s documentation about their current limitations](https://docs.snowflake.com/en/user-guide/views-materialized.html#limitations-on-creating-materialized-views). Additionally, we have a [office hours](https://www.youtube.com/watch?v=awj-5aYXZnc) on this topic that I recommend checking out. Overall, we are excited to see how this develops.
+Хотя концепция очень захватывающая, реализация все еще имеет некоторые ключевые ограничения. Они дорогие и не могут включать некоторые полезные преобразования. Ознакомьтесь с этой [секцией в документации Snowflake о текущих ограничениях](https://docs.snowflake.com/en/user-guide/views-materialized.html#limitations-on-creating-materialized-views). Кроме того, у нас есть [офисные часы](https://www.youtube.com/watch?v=awj-5aYXZnc) на эту тему, которые я рекомендую посмотреть. В целом, мы с нетерпением ждем, как это будет развиваться.
 
-#### 4\. Use a dedicated streaming stack
+#### 4\. Использовать специализированный потоковый стек
 
-Tools like [Materialize](https://materialize.io/) and [Spark](https://databricks.com/glossary/what-is-spark-streaming) are great solutions to this problem. At the time of writing this post, these dbt adapters were not available and would have required a commitment to a new platform in this situation so they were not considered.
+Инструменты, такие как [Materialize](https://materialize.io/) и [Spark](https://databricks.com/glossary/what-is-spark-streaming), являются отличными решениями для этой проблемы. На момент написания этого поста эти адаптеры dbt не были доступны и потребовали бы обязательства к новой платформе в этой ситуации, поэтому они не рассматривались.
 
-#### 5\. Use dbt in a clever way
+#### 5\. Использовать dbt хитроумным способом
 
-By being thoughtful about how we define models, we can use dbt and the existing materializations to solve this problem. Lambda views are a simple and readily available solution that is tool agnostic and SQL based. This is what I implemented at JetBlue.
+Будучи внимательными к тому, как мы определяем модели, мы можем использовать dbt и существующие материализации для решения этой проблемы. Lambda представления — это простое и доступное решение, которое не зависит от инструмента и основано на SQL. Это то, что я реализовал в JetBlue.
 
-## What are lambda views?
+## Что такое lambda представления?
 --------------------------------------------------
 
-The idea of lambda views comes from lambda architecture. This [Wikipedia page](https://en.wikipedia.org/wiki/Lambda_architecture) can explain much more in-depth but the core concept of this architecture is to take advantage of both batch and stream processing methods. This enables handling a lot of data in a very performant manner.
+Идея lambda представлений происходит из lambda архитектуры. Эта [страница в Википедии](https://en.wikipedia.org/wiki/Lambda_architecture) может объяснить гораздо более подробно, но основная концепция этой архитектуры заключается в использовании как пакетных, так и потоковых методов обработки. Это позволяет обрабатывать большое количество данных очень производительно.
 
-Taking that approach, a lambda view is essentially the union of a historical table and a current view. The model where the union takes place is the lambda view. Here is a diagram that might be helpful:
+Применяя этот подход, lambda представление по сути является объединением исторической таблицы и текущего представления. Модель, в которой происходит объединение, является lambda представлением. Вот диаграмма, которая может быть полезной:
 
 ![lambda views](/img/blog/real-time-9eb7699399fe576a2a20b13bcf523a1e8b96cf09_2_624x244.png)
 
-The lamba view can be queried for always up-to-date data, no matter how often you have run your dbt models. Since the majority of the records in the lambda view come directly from a table, it should be relatively fast to query. And since the most recent rows come from the view, transformations are run on a small subset of data which shouldn’t take long in the lambda view. This provides a performant and always up-to-date model.
+Lambda представление можно запрашивать для получения всегда актуальных данных, независимо от того, как часто вы запускали свои dbt модели. Поскольку большинство записей в lambda представлении поступает непосредственно из таблицы, запросы к нему должны выполняться относительно быстро. И поскольку самые последние строки поступают из представления, преобразования выполняются на небольшом подмножестве данных, что не должно занимать много времени в lambda представлении. Это обеспечивает производительную и всегда актуальную модель.
 
-The SQL in the lambda view is simple (just a `union all`), but there’s a bit of work to get to the unioned model. To better understand this, it is important to think about the flow of transformations as demonstrated below.
+SQL в lambda представлении прост (просто `union all`), но есть немного работы, чтобы добраться до объединенной модели. Чтобы лучше понять это, важно подумать о потоке преобразований, как показано ниже.
 
 ![lambda view flow](/img/blog/real-time-5ab4b384ec36ed52d422e3ffcf238a4446dc3ba5_2_624x345.jpeg)
 
-What is essentially happening is a series of parallel transformations from the raw data. Looking at the blue and red boxes that represent the creation of both the current view and historical table, you can see that they are the same transformations. The only key difference is that one flow is always using views as the materialization versus the other is materialized as tables. Often, those tables are incrementally built to improve performance.
+По сути, происходит серия параллельных преобразований из необработанных данных. Глядя на синие и красные блоки, которые представляют создание как текущего представления, так и исторической таблицы, вы можете увидеть, что это одни и те же преобразования. Единственное ключевое отличие заключается в том, что один поток всегда использует представления в качестве материализации, в то время как другой материализуется как таблицы. Часто эти таблицы создаются инкрементально для улучшения производительности.
 
-The most basic version of the SQL looks like this:
+Самая базовая версия SQL выглядит так:
 
 ```    
     with current_view as (
@@ -111,19 +110,19 @@ The most basic version of the SQL looks like this:
 ```    
     
 
-As you start to implement lambda views with more sources, creating a macro for the lambda view union is a great way to make things drier.
+Когда вы начинаете реализовывать lambda представления с большим количеством источников, создание макроса для объединения lambda представлений — отличный способ сделать код более сухим.
 
-## Key Concepts of a lambda view
+## Ключевые концепции lambda представления
 ------------------------------------------------------------------
 
-#### Filters are key to making this performant
+#### Фильтры — ключ к производительности
 
-You need to filter often and intentionally on your current view flow. This is because there is usually a lot of data being transformed and you want to transform only what is necessary. There are two main places that filters should be considered.
+Вам нужно часто и намеренно фильтровать ваш текущий поток представлений. Это связано с тем, что обычно обрабатывается много данных, и вы хотите преобразовывать только то, что необходимо. Существует два основных места, где следует учитывать фильтры.
 
-*   **At the beginning of the current view flow**: This is usually happening at Transformation 1. This filter takes into account how often the historical table is run. If it’s being run every hour, then I filter for only the last 2 hours of “current rows”. The overlap is assurance that if there are any issues with the job run, we don’t miss out on rows.
-*   **At the unioned model**: If you have late-arriving facts, you will want to include a <Term id="primary-key" /> filter to assure that there are no fanouts.
+*   **В начале потока текущего представления**: Это обычно происходит на этапе Преобразования 1. Этот фильтр учитывает, как часто запускается историческая таблица. Если она запускается каждый час, то я фильтрую только последние 2 часа "текущих строк". Перекрытие — это гарантия того, что если возникнут какие-либо проблемы с выполнением задачи, мы не упустим строки.
+*   **В объединенной модели**: Если у вас есть поздно поступающие факты, вы захотите включить фильтр <Term id="primary-key" />, чтобы гарантировать, что не будет разветвлений.
 
-As you start to create more lambda views, you will want to make the filter into a macro for drier code. Here is a sample macro for you to use:
+Когда вы начинаете создавать больше lambda представлений, вы захотите сделать фильтр макросом для более сухого кода. Вот пример макроса, который вы можете использовать:
 
 ```    
     {% macro lambda_filter(column_name) %}
@@ -152,41 +151,41 @@ As you start to create more lambda views, you will want to make the filter into 
 ```    
     
 
-\*\* Note for the macro above, the timestamp is `var(lambda_timestamp, run_started_at)`. We want to default to the last time the historical models were run but allow for flexibility depending on the situation. It would be useful to note that we used [run\_started\_at timestamp](/reference/dbt-jinja-functions/run_started_at/) rather than `current_timestamp()` to avoid any situations where there is a job failure and the historical table hasn’t been updated for the last 5 hours.
+\*\* Примечание для макроса выше: временная метка — это `var(lambda_timestamp, run_started_at)`. Мы хотим по умолчанию использовать время последнего запуска исторических моделей, но позволить гибкость в зависимости от ситуации. Полезно отметить, что мы использовали [временную метку run\_started\_at](/reference/dbt-jinja-functions/run_started_at/), а не `current_timestamp()`, чтобы избежать ситуаций, когда произошел сбой задачи и историческая таблица не обновлялась последние 5 часов.
 
-### Write idempotent models
+### Пишите идемпотентные модели
 
-As with every dbt model, be sure to keep this principle in mind as you start to create the models leading up to the union as well as the union itself.
+Как и в случае с каждой моделью dbt, убедитесь, что вы придерживаетесь этого принципа, когда начинаете создавать модели, ведущие к объединению, а также само объединение.
 
-### Build the historical model intentionally
+### Создавайте историческую модель намеренно
 
-My dbt cloud jobs are set to run every hour, building all of the models in the historical table flow. All of the models leading up to the historical table are configured as an incremental model to improve performance.
+Мои задачи в dbt cloud настроены на выполнение каждый час, создавая все модели в потоке исторической таблицы. Все модели, ведущие к исторической таблице, настроены как инкрементальные модели для улучшения производительности.
 
-## Tradeoffs & Limitations
+## Компромиссы и ограничения
 ----------------------------------------------------
 
-#### 1\. Duplicated logic
+#### 1\. Дублированная логика
 
-We are essentially creating duplicate models with the same logic, just different materializations. There are currently two approaches: 1) You can write the SQL in a macro and then have only one place to update this logic. This is great but creates complex folder organization and lowers model readability. 2) You can duplicate the SQL in both models but then there’s two places to update the logic in. This makes maintenance more error-prone.
+Мы по сути создаем дублирующие модели с одинаковой логикой, только с разными материализациями. В настоящее время существует два подхода: 1) Вы можете написать SQL в макросе и тогда иметь только одно место для обновления этой логики. Это здорово, но создает сложную организацию папок и снижает читаемость модели. 2) Вы можете дублировать SQL в обеих моделях, но тогда есть два места для обновления логики. Это делает обслуживание более подверженным ошибкам.
 
-#### 2\. Complex DAGs & Multi-step transformations
+#### 2\. Сложные DAG и многоэтапные преобразования
 
-With every final model needing duplicate models, this makes DAGs significantly more complex. Add to that the need for more complex transformations, this approach may not scale up well due to the complexity.
+С каждой финальной моделью, требующей дублирующих моделей, это делает DAG значительно более сложными. Добавьте к этому необходимость более сложных преобразований, и этот подход может не масштабироваться из-за сложности.
 
-#### 3\. Enforcing materializations
+#### 3\. Принуждение к материализациям
 
-This approach is extremely dependent on the type of materializations. Requiring that models in the current view flow and their dependencies are all views can be challenging. Your project is more brittle because small changes can easily impact your data quality and how up-to-date it is.
+Этот подход чрезвычайно зависит от типа материализаций. Требование, чтобы модели в потоке текущего представления и их зависимости были все представлениями, может быть сложной задачей. Ваш проект становится более хрупким, потому что небольшие изменения могут легко повлиять на качество данных и их актуальность.
 
-## Future implementations
+## Будущие реализации
 ----------------------------------------------------
 
-All I can truly say is there’s more to come. Internally Jeremy and Claire have been working on if and how we should create a custom materialization to make this approach a lot cleaner. If interested, keep an eye out on our [experimental features repo](https://github.com/dbt-labs/dbt-labs-experimental-features) and contribute if you have thoughts!
+Все, что я могу действительно сказать, это то, что впереди еще много всего. Внутренне Джереми и Клэр работают над тем, следует ли и как создать пользовательскую материализацию, чтобы сделать этот подход гораздо более чистым. Если вам интересно, следите за нашим [репозиторием экспериментальных функций](https://github.com/dbt-labs/dbt-labs-experimental-features) и вносите свой вклад, если у вас есть мысли!
 
-## Thank You
+## Спасибо
 --------------------------
 
-This post would not have materialized (lol) without the Fishtown Team working together.
+Этот пост не был бы материализован (лол) без совместной работы команды Fishtown.
 
-Drew and I had a brainstorming session to discuss lambda architecture and the initial concept of lambda views. Sanajana and Jeremy were my rubber duckies as I started writing the SQL and conceptizing how things would work in code. Janessa and Claire also spent a lot of time helping me write this discourse post as I tried to form it between meetings. [This is basically us at Fishtown.](https://gph.is/2R7vpjR)
+Дрю и я провели мозговой штурм, чтобы обсудить lambda архитектуру и первоначальную концепцию lambda представлений. Санджана и Джереми были моими резиновыми уточками, когда я начал писать SQL и концептуализировать, как все будет работать в коде. Джанесса и Клэр также потратили много времени, помогая мне написать этот пост на дискурсе, когда я пытался сформировать его между встречами. [Это в основном мы в Fishtown.](https://gph.is/2R7vpjR)
 
-I also want to give a special thanks to Ben from JetBlue who has been essential to this process from implementation to editing this post. My apologies for spelling JetBlue as Jetblue far too many times!
+Я также хочу выразить особую благодарность Бену из JetBlue, который был незаменим в этом процессе от реализации до редактирования этого поста. Мои извинения за то, что я слишком много раз писал JetBlue как Jetblue!

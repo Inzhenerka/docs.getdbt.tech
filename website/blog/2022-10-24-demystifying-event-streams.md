@@ -1,6 +1,6 @@
 ---
-title: "Demystifying event streams: Transforming events into tables with dbt"
-description: "Pulling data directly out of application databases is commonplace in the MDS, but also risky. Apps change quickly, and application teams might update database schemas in unexpected ways, leading to pipeline failures, data quality issues, data delivery slow-downs. There is a better way. In this blog post, Charlie Summers (Merit) describes how their organization transforms application event streams into analytics-ready tables, more resilient to event scheme changes."
+title: "Разгадка потоков событий: Преобразование событий в таблицы с помощью dbt"
+description: "Извлечение данных напрямую из баз данных приложений является обычной практикой в MDS, но также и рискованной. Приложения быстро меняются, и команды разработчиков могут обновлять схемы баз данных неожиданными способами, что приводит к сбоям в конвейерах, проблемам с качеством данных, замедлению доставки данных. Есть более безопасный способ. В этом блоге Чарли Саммерс (Merit) описывает, как их организация преобразует потоки событий приложений в таблицы, готовые для аналитики, более устойчивые к изменениям схемы событий."
 slug: demystifying-event-streams
 
 authors: [charlie_summers]
@@ -12,98 +12,98 @@ date: 2022-11-04
 is_featured: true
 ---
 
-Let’s discuss how to convert events from an event-driven microservice architecture into relational tables in a <Term id="data-warehouse">warehouse</Term> like Snowflake. Here are a few things we’ll address:
+Давайте обсудим, как преобразовать события из архитектуры микросервисов, управляемой событиями, в реляционные таблицы в <Term id="data-warehouse">хранилище данных</Term>, таком как Snowflake. Вот несколько вопросов, которые мы рассмотрим:
 
-- Why you may want to use an architecture like this
-- How to structure your event messages
-- How to use dbt macros to make it easy to ingest new event streams
+- Почему вам может понадобиться использовать такую архитектуру
+- Как структурировать ваши сообщения о событиях
+- Как использовать макросы dbt, чтобы упростить загрузку новых потоков событий
 
 <!--truncate-->
 
-## Event Streams at Merit
+## Потоки событий в Merit
 
-At Merit, we’re building the leading verified identity platform. One key focus of our platform is data quality. Quality problems lead to first responders unable to check into disaster sites or parents unable to access ESA funds. In this blog post we’ll dive into how we tackled one source of quality issues: directly relying on upstream database schemas.
+В Merit мы создаем ведущую платформу проверенной идентификации. Одним из ключевых аспектов нашей платформы является качество данных. Проблемы с качеством приводят к тому, что спасатели не могут зарегистрироваться на местах бедствий, а родители не могут получить доступ к средствам ESA. В этом блоге мы углубимся в то, как мы справились с одним из источников проблем с качеством: прямой зависимостью от схем баз данных.
 
-Under the hood, the Merit platform consists of a series of microservices. Each of these microservices has its own database. We use Snowflake as our data warehouse where we build dashboards both for internal use and for customers.
+В основе платформы Merit лежит серия микросервисов. Каждый из этих микросервисов имеет свою собственную базу данных. Мы используем Snowflake в качестве нашего хранилища данных, где создаем панели как для внутреннего использования, так и для клиентов.
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/merit-platform.png)
 
-In the past we relied upon an <Term id="etl" /> tool (Stitch) to pull data out of microservice databases and into Snowflake. This data would become the main dbt sources used by our report models in BI.
+Ранее мы полагались на инструмент <Term id="etl" /> (Stitch) для извлечения данных из баз данных микросервисов и загрузки их в Snowflake. Эти данные становились основными источниками dbt, используемыми нашими отчетными моделями в BI.
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/merit-platform-stitch.png)
 
-This approach worked well, but as engineering velocity increased, we came up with a new policy that required we rethink this approach: **no service should directly access another microservice’s database**. This rule empowers microservices to change their database schemas however they like without worrying about breaking other systems.
+Этот подход работал хорошо, но по мере увеличения скорости разработки мы выработали новую политику, которая потребовала пересмотра этого подхода: **ни одна служба не должна напрямую обращаться к базе данных другого микросервиса**. Это правило позволяет микросервисам изменять свои схемы баз данных, как им угодно, не беспокоясь о нарушении работы других систем.
 
-Modern <Term id="etl" /> tools like Fivetran and Stitch can flexibly handle schema changes - for example, if a new column is created they can propagate that creation to Snowflake. However, BI tools and dbt models aren’t typically written this way. For example, if a column your BI tool filters on has a name change in the upstream database, that filter will become useless and customers will complain.
+Современные инструменты <Term id="etl" />, такие как Fivetran и Stitch, могут гибко обрабатывать изменения схемы - например, если создается новый столбец, они могут передать это создание в Snowflake. Однако инструменты BI и модели dbt обычно не пишутся таким образом. Например, если столбец, по которому ваш инструмент BI фильтрует данные, изменяет имя в исходной базе данных, этот фильтр станет бесполезным, и клиенты будут жаловаться.
 
-The approach we used before required over-communicating about schema changes. Engineers would need to talk to Data before any change or it could risk a data outage. Tools that provide column-level <Term id="data-lineage">lineage</Term> can improve detecting how schema changes affect dashboards. But a migration is still required should a used column be updated by a schema change.
+Прежний подход требовал чрезмерного общения о изменениях схемы. Инженеры должны были общаться с командой данных перед любым изменением, иначе это могло привести к сбою данных. Инструменты, предоставляющие <Term id="data-lineage">происхождение данных</Term> на уровне столбцов, могут улучшить обнаружение того, как изменения схемы влияют на панели. Но все равно требуется миграция, если используемый столбец обновляется изменением схемы.
 
-This old approach frequently resulted in either busted dashboards or delayed schema changes. These issues were the exact reason engineering implemented the new policy.
+Старый подход часто приводил либо к поломанным панелям, либо к задержкам в изменениях схемы. Эти проблемы были именно той причиной, по которой инженеры внедрили новую политику.
 
-The core challenge is contractual: in our old approach the contract between engineering and data was the database schema. But the database schema was intended to be a tool to help the microservice efficiently store and query data, not a contract.
+Основная проблема заключается в контракте: в нашем старом подходе контрактом между инженерией и данными была схема базы данных. Но схема базы данных предназначалась для того, чтобы помочь микросервису эффективно хранить и запрашивать данные, а не быть контрактом.
 
-So our solution was to start using an intentional contract: **Events**.
+Поэтому наше решение заключалось в том, чтобы начать использовать намеренный контракт: **События**.
 
-What are Events? Events are facts about what happened within your service. For example, somebody logged in or a new user was created. At Merit (and at many companies), we use an Event-Driven Architecture. That means that microservices primarily communicate information through events, often leveraging messaging platforms like Kafka.
+Что такое События? События - это факты о том, что произошло в вашем сервисе. Например, кто-то вошел в систему или был создан новый пользователь. В Merit (и во многих компаниях) мы используем архитектуру, управляемую событиями. Это означает, что микросервисы в основном обмениваются информацией через события, часто используя платформы обмена сообщениями, такие как Kafka.
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/merit-platform-kafka.png)
 
-Microservices consume messages from others that they’re interested in. We choose to use **thick messages** that store as much information as possible about each event - this means that consuming microservices can store and refer to event data instead of requesting fresh data from microservices. For distributed systems nerds: this improves Availability at the cost of Consistency.
+Микросервисы потребляют сообщения от других, которые их интересуют. Мы выбираем использовать **толстые сообщения**, которые хранят как можно больше информации о каждом событии - это означает, что потребляющие микросервисы могут хранить и ссылаться на данные событий вместо запроса свежих данных от микросервисов. Для любителей распределенных систем: это улучшает Доступность за счет Согласованности.
 
-Event schemas can still change, just like database schemas, but the expectation is that they are already a contract between this microservice and other systems. And the sole intention of events is to be this contract - unlike database schemas which are also used by microservices internally to store and query data. So, when an event schema changes, there already is a meeting between that team and all teams that consume the event - now Data is just another team at the meeting.
+Схемы событий все еще могут изменяться, как и схемы баз данных, но ожидается, что они уже являются контрактом между этим микросервисом и другими системами. И единственное намерение событий - быть этим контрактом, в отличие от схем баз данных, которые также используются микросервисами для внутреннего хранения и запроса данных. Поэтому, когда схема события изменяется, уже проводится встреча между этой командой и всеми командами, которые потребляют событие - теперь Данные просто еще одна команда на встрече.
 
-## Events as Contracts
+## События как контракты
 
-Each event output by a microservice is inserted into a single Kafka topic with a well-defined schema. This schema is managed as part of the [Kafka Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html). The Schema Registry doesn’t strictly enforce that events comply with the topic’s schema, but any microservice that produces an event that does not comply with the schema will cause downstream failures - a high-priority bug. These bad events are replayed with the correct schema when the microservice is fixed.
+Каждое событие, выходящее из микросервиса, вставляется в одну тему Kafka с четко определенной схемой. Эта схема управляется как часть [Реестра схем Kafka](https://docs.confluent.io/platform/current/schema-registry/index.html). Реестр схем не строго требует, чтобы события соответствовали схеме темы, но любой микросервис, который производит событие, не соответствующее схеме, вызовет сбои в нижестоящих системах - это ошибка высокого приоритета. Эти неверные события воспроизводятся с правильной схемой, когда микросервис исправлен.
 
-We use [Avro](https://avro.apache.org/) to encode all of our event schemas. We also tried out [Protobuf](https://developers.google.com/protocol-buffers), but found that the Avro tooling was a bit better for Kafka.
+Мы используем [Avro](https://avro.apache.org/) для кодирования всех наших схем событий. Мы также пробовали [Protobuf](https://developers.google.com/protocol-buffers), но обнаружили, что инструменты Avro немного лучше подходят для Kafka.
 
-Event schema design (what should the data contract be?) is a deep topic that we can only touch on briefly here. At a high level, we must design for change. A schema will almost always be tweaked and tuned over time as your product changes.
+Проектирование схемы событий (каким должен быть контракт данных?) - это глубокая тема, которую мы можем лишь кратко затронуть здесь. На высоком уровне мы должны проектировать с учетом изменений. Схема почти всегда будет корректироваться и настраиваться по мере изменения вашего продукта.
 
-As an example, consider a LicenseCreated event. The internal License data model might have several boolean fields in its schema such as IsValid, IsCurrent, IsRestricted, etc. We would recommend instead modeling a License with a single Status field that has a VARCHAR representing the status of the License. New values are easier to add to a VARCHAR than adding or removing boolean fields.
+Например, рассмотрим событие LicenseCreated. Внутренняя модель данных License может иметь несколько булевых полей в своей схеме, таких как IsValid, IsCurrent, IsRestricted и т.д. Мы бы рекомендовали вместо этого моделировать License с одним полем Status, которое имеет VARCHAR, представляющий статус License. Новые значения легче добавить в VARCHAR, чем добавлять или удалять булевые поля.
 
-One very useful feature of the Kafka Schema Registry is it can restrict changes that aren’t compatible with old schema versions. For example, if a data type is changed from an INT to a VARCHAR it will throw an error as the new schema is added. This can be an extra line of defense as schemas change. [Read more about this awesome feature here](https://docs.confluent.io/platform/current/schema-registry/avro.html).
+Одной из очень полезных функций Реестра схем Kafka является возможность ограничивать изменения, которые не совместимы со старыми версиями схем. Например, если тип данных изменяется с INT на VARCHAR, это вызовет ошибку при добавлении новой схемы. Это может быть дополнительной линией защиты по мере изменения схем. [Подробнее об этой замечательной функции здесь](https://docs.confluent.io/platform/current/schema-registry/avro.html).
 
-## OMG Contract
+## Контракт OMG
 
-So we started consuming events from Kafka into Snowflake using [Kafka’s Snowflake Connector](https://docs.snowflake.com/en/user-guide/kafka-connector.html).
+Итак, мы начали потреблять события из Kafka в Snowflake, используя [Коннектор Snowflake для Kafka](https://docs.snowflake.com/en/user-guide/kafka-connector.html).
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/merit-platform-kafka-load.png)
 
-The Snowflake Connector creates a new <Term id="table" /> for every Kafka topic and adds a new row for every event. In each row there’s a record_metadata column and a record_content column. Each column is a variant type in Snowflake.
+Коннектор Snowflake создает новую <Term id="table" /> для каждой темы Kafka и добавляет новую строку для каждого события. В каждой строке есть столбец record_metadata и столбец record_content. Каждый столбец имеет тип variant в Snowflake.
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/kafka-topic-table.png)
 
-Since we use **thick messages** we actually can consider ourselves done. The messages have as much information as the underlying database, so we could make queries against tables like the above.
+Поскольку мы используем **толстые сообщения**, мы можем считать, что наша работа завершена. Сообщения содержат столько же информации, сколько и базовая база данных, поэтому мы могли бы выполнять запросы к таким таблицам, как эта.
 
-However, working with these <Term id="json" /> blobs is much less convenient than a relational table for the following reasons:
+Однако работа с этими <Term id="json" /> блоками менее удобна, чем с реляционной таблицей, по следующим причинам:
 
-1. There may be multiple topics related to the same domain model (ex: Users or Customers). So there may be a CustomerCreated topic, a CustomerDeleted topic, a CustomerUpdated topic, and so on. We need to know to join between these tables to determine what the latest Customer data is.
-1. We must know whether an event implies a create, an update, or a delete.
-1. We must be aware of the ordering of events - the latest update will include the most up-to-date state unless there’s a delete. This can lead to some gnarly time logic that must be considered across all models.
-    1. One challenge is partial updates - we disallow those currently so that we never need to recreate the state of a domain model across multiple json blobs.
-    1. Distributed systems folks will identify another problem: relying on timing. Due to clock skew, we can’t guarantee that event A’s timestamp being earlier than another B’s means that A occurred before B. If both messages are sent on the same Kafka topic then Kafka can ensure ordering (if configured properly), but we don’t want to limit all events to using the same topic. So we choose to ignore this problem since we have relatively low traffic and low machine volume compared to the Googles and Facebooks of the world. We can also verify the likelihood of clock skew affecting our data by looking for events with the same identifying ID happening within the same second - it doesn’t happen often for us.
+1. Может быть несколько тем, связанных с одной и той же моделью домена (например, Пользователи или Клиенты). Таким образом, может быть тема CustomerCreated, тема CustomerDeleted, тема CustomerUpdated и так далее. Нам нужно знать, как объединять эти таблицы, чтобы определить, каковы последние данные о Клиенте.
+2. Мы должны знать, подразумевает ли событие создание, обновление или удаление.
+3. Мы должны учитывать порядок событий - последнее обновление будет включать наиболее актуальное состояние, если только не произошло удаление. Это может привести к сложной временной логике, которую необходимо учитывать во всех моделях.
+    1. Одной из проблем являются частичные обновления - мы в настоящее время запрещаем их, чтобы нам никогда не приходилось воссоздавать состояние модели домена через несколько json блоков.
+    2. Любители распределенных систем заметят еще одну проблему: зависимость от времени. Из-за расхождения часов мы не можем гарантировать, что временная метка события A, предшествующая другой B, означает, что A произошло до B. Если оба сообщения отправляются в одной теме Kafka, то Kafka может обеспечить порядок (если настроено правильно), но мы не хотим ограничивать все события использованием одной темы. Поэтому мы выбираем игнорировать эту проблему, так как у нас относительно низкий трафик и низкий объем машин по сравнению с Google и Facebook. Мы также можем проверить вероятность влияния расхождения часов на наши данные, ища события с одинаковым идентификационным номером, происходящие в течение одной секунды - это не происходит часто у нас.
 
-Instead of repeatedly working with the above challenges, we decided to create a relational layer on top of the raw event streams. This takes the form of [dbt macros](/docs/build/jinja-macros) that handle all of the above problems.
+Вместо того чтобы постоянно работать с вышеуказанными проблемами, мы решили создать реляционный слой поверх сырых потоков событий. Это принимает форму [макросов dbt](/docs/build/jinja-macros), которые решают все вышеуказанные проблемы.
 
-In order to make the dbt macros easier to write, we requested that engineering add some metadata to all of their events. This formalized the contract between engineering and data - any domain models that don’t comply with the contract will not be able to be used in reports unless the engineering team themself builds a custom pipeline. We named this the Obvious Model Generation (OMG) Contract since providing the metadata leads to obvious domain model generation. And we liked the acronym.
+Чтобы упростить написание макросов dbt, мы попросили инженеров добавить некоторую метаинформацию ко всем их событиям. Это формализовало контракт между инженерией и данными - любые модели домена, не соответствующие контракту, не смогут использоваться в отчетах, если только команда инженеров сама не построит пользовательский конвейер. Мы назвали это Контрактом Очевидного Генерирования Моделей (OMG), так как предоставление метаинформации приводит к очевидному генерированию моделей домена. И нам понравилась аббревиатура.
 
-The OMG contract states that every Kafka message related to a domain model:
-1. Must have its topic name added to a dbt variable associated with that domain model in our dbt_project.yml
-1. Must have a single uniquely identifying field for each object. We provide a default - id - and a way to override it in our dbt_project.yml. We currently disallow composite ids, but they wouldn’t be too hard to support in the future.
-1. Must have a field `changeType` set to one of the following values: INSERT, UPDATE, DELETE.
-1. If an INSERT or UPDATE, it must specify a field **data** that encodes the state of the domain model object after the change.
-1. If a DELETE, it must specify a field `deletedID` that is set to the identifying field for the deleted domain model object.
+Контракт OMG гласит, что каждое сообщение Kafka, связанное с моделью домена:
+1. Должно иметь свое имя темы, добавленное в переменную dbt, связанную с этой моделью домена в нашем dbt_project.yml
+2. Должно иметь одно уникальное идентифицирующее поле для каждого объекта. Мы предоставляем значение по умолчанию - id - и способ его переопределения в нашем dbt_project.yml. В настоящее время мы запрещаем составные идентификаторы, но их несложно будет поддержать в будущем.
+3. Должно иметь поле `changeType`, установленное в одно из следующих значений: INSERT, UPDATE, DELETE.
+4. Если это INSERT или UPDATE, оно должно указывать поле **data**, которое кодирует состояние объекта модели домена после изменения.
+5. Если это DELETE, оно должно указывать поле `deletedID`, которое установлено в идентифицирующее поле для удаленного объекта модели домена.
 
-We now can run obvious model generation streams processing on all data that complies with the OMG contract.
+Теперь мы можем запускать обработку потоков генерации очевидных моделей на всех данных, соответствующих контракту OMG.
 
 ![](/img/blog/2022-10-24-demystifying-event-streams/omg-contract.png)
 
-## Generic table pipelines via dbt macros 
+## Универсальные конвейеры таблиц через макросы dbt
 
-After solidifying the OMG contract, we built the macros to execute obvious model generation. We wanted to make these as generic as possible while also following good engineering practices. We ended up building three macros that together process event streams into tables. All three macros take in `streams_var` - a list of all the event stream tables related to this domain model. We pull streams_var in from dbt_project.yml. We also take in `streams_schema` which defaults to ‘streams’ but allows overriding for our internal testing.
+После закрепления контракта OMG мы создали макросы для выполнения очевидного генерирования моделей. Мы хотели сделать их как можно более универсальными, следуя при этом хорошим инженерным практикам. В итоге мы создали три макроса, которые вместе обрабатывают потоки событий в таблицы. Все три макроса принимают `streams_var` - список всех таблиц потоков событий, связанных с этой моделью домена. Мы извлекаем streams_var из dbt_project.yml. Мы также принимаем `streams_schema`, который по умолчанию равен 'streams', но позволяет переопределять для нашего внутреннего тестирования.
 
-The first model is called `stream_model_extract_columns` which iterates through every row in the event stream tables to identify all of the columns that will be part of the domain model table.
+Первая модель называется `stream_model_extract_columns`, которая проходит через каждую строку в таблицах потоков событий, чтобы определить все столбцы, которые будут частью таблицы модели домена.
 
 ```sql
 {%- macro stream_model_extract_columns_macro(streams_var, streams_schema='streams') -%}
@@ -124,7 +124,7 @@ FROM
 {%- endmacro -%}
 ```
 
-The second macro is called `stream_model_latest_snapshot`. It includes the logic to identify the latest state of every domain model object in the table, applying deletes when it finds them.
+Второй макрос называется `stream_model_latest_snapshot`. Он включает логику для определения последнего состояния каждого объекта модели домена в таблице, применяя удаления, когда они обнаруживаются.
 
 ```sql
 {%- macro stream_model_latest_snapshot_macro(streams_var, streams_schema='streams') -%}
@@ -163,7 +163,7 @@ selectedStream AS (
 {%- endmacro -%}
 ```
 
-The final macro is called `stream_model` and it coordinates the usage of the first two. Particularly, it uses [run_query()](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query) to run the first macro, then uses the results to execute the final query which leverages the second macro.
+Последний макрос называется `stream_model`, и он координирует использование первых двух. В частности, он использует [run_query()](https://docs.getdbt.com/reference/dbt-jinja-functions/run_query) для выполнения первого макроса, затем использует результаты для выполнения окончательного запроса, который использует второй макрос.
 
 ```sql
 {%- macro stream_model_macro(streams_var, streams_schema='streams') -%}
@@ -199,13 +199,13 @@ SELECT * FROM dynamicStream
 {%- endmacro -%}
 ```
 
-Now all we need to do is call the final macro in a dbt model and provide the list specified as a variable in `dbt_project.yml`. This file is in `src_container.sql`:
+Теперь все, что нам нужно сделать, это вызвать последний макрос в модели dbt и предоставить список, указанный как переменная в `dbt_project.yml`. Этот файл находится в `src_container.sql`:
 
 ```sql
 {{ stream_model_macro(var('container')) }}
 ```
 
-In `src_container.yml` we explicitly set and have tests for the columns we expect to be associated with this model. This is the first time we introduce the actual column names anywhere in our dbt code.
+В `src_container.yml` мы явно задаем и тестируем столбцы, которые мы ожидаем ассоциировать с этой моделью. Это первый раз, когда мы вводим фактические имена столбцов в нашем коде dbt.
 
 ```yaml
 ---
@@ -262,16 +262,16 @@ models:
           - not_null
 ```
 
-## Future ideas
+## Идеи на будущее
 
-We learned a lot from both working with event streams and building these macros.
+Мы многому научились, работая с потоками событий и создавая эти макросы.
 
-One consideration that we haven’t discussed yet is [materialization](https://docs.getdbt.com/docs/build/materializations) strategy. Since event stream tables are append-only, this is a natural fit for incremental models. At Merit, we haven’t worked much with incremental models, so we’re opting to start with views. As we roll this out to production models we’ll be doing a ton of performance testing to figure out the perfect materialization strategy for us.
+Одним из соображений, которые мы еще не обсуждали, является стратегия [материализации](https://docs.getdbt.com/docs/build/materializations). Поскольку таблицы потоков событий только добавляются, это естественно подходит для инкрементных моделей. В Merit мы не так много работали с инкрементными моделями, поэтому мы решили начать с представлений. По мере того, как мы будем внедрять это в производственные модели, мы будем проводить множество тестов производительности, чтобы определить идеальную стратегию материализации для нас.
 
-We also plan on adding a dbt test that alerts whenever the columns of any domain model table changes. This may indicate that an unexpected change has happened to an event schema, which could affect dashboards.
+Мы также планируем добавить тест dbt, который будет предупреждать, когда столбцы любой таблицы модели домена изменяются. Это может указывать на то, что произошло неожиданное изменение схемы события, что может повлиять на панели.
 
-These were certainly the most complicated dbt macros that we’ve built so far. This has inspired us to build a test framework to make sure that macros work as expected - including features like mocking run_query() calls. We’re considering open sourcing this framework - if you’re interested then let us know!
+Эти макросы, безусловно, были самыми сложными, которые мы построили на данный момент. Это вдохновило нас на создание тестовой среды, чтобы убедиться, что макросы работают как ожидается - включая такие функции, как имитация вызовов run_query(). Мы рассматриваем возможность открытого исходного кода этой среды - если вам это интересно, дайте нам знать!
 
-## Let's talk!
+## Давайте поговорим!
 
-We’ve used dbt macros to transform event streams into tables so that we don’t need our data pipelines to rely directly on database schemas. I’ll be talking about this more at Coalesce 2022 - come check out my talk [Demystifying event streams: Transforming events into tables with dbt](https://coalesce.getdbt.com/agenda/demystifying-event-streams-transforming-events-into-tables-with-dbt). You can also reach out to me in the dbt slack (@Charlie Summers) or [LinkedIn](https://www.linkedin.com/in/charliesummers/).
+Мы использовали макросы dbt для преобразования потоков событий в таблицы, чтобы наши конвейеры данных не зависели напрямую от схем баз данных. Я буду говорить об этом подробнее на Coalesce 2022 - приходите на мой доклад [Разгадка потоков событий: Преобразование событий в таблицы с помощью dbt](https://coalesce.getdbt.com/agenda/demystifying-event-streams-transforming-events-into-tables-with-dbt). Вы также можете связаться со мной в slack dbt (@Charlie Summers) или [LinkedIn](https://www.linkedin.com/in/charliesummers/).

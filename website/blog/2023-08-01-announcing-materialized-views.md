@@ -1,6 +1,6 @@
 ---
-title: "Optimizing Materialized Views with dbt"
-description: "In dbt v1.6, we introduce support for materialized views. In this blog post, Amy will review how to use them in your workflow"
+title: "Оптимизация материализованных представлений с помощью dbt"
+description: "В dbt v1.6 мы представляем поддержку материализованных представлений. В этом блоге Эми расскажет, как использовать их в вашем рабочем процессе"
 slug: announcing-materialized-views
 
 authors: [amy_chen]
@@ -12,24 +12,23 @@ date: 2023-08-03
 is_featured: true
 ---
 :::note 
-This blog post was updated on December 18, 2023 to cover the support of MVs on dbt-bigquery 
-and updates on how to test MVs. 
+Этот блог был обновлен 18 декабря 2023 года, чтобы охватить поддержку MVs на dbt-bigquery и обновления по тестированию MVs. 
 :::
 
 
-## Introduction
+## Введение
 
-The year was 2020. I was a kitten-only household, and dbt Labs was still Fishtown Analytics. A enterprise customer I was working with, Jetblue, asked me for help running their dbt models every 2 minutes to meet a 5 minute SLA.
+Год был 2020. Я жила в доме, где были только котята, а dbt Labs все еще называлась Fishtown Analytics. Один из корпоративных клиентов, с которым я работала, Jetblue, попросил меня помочь запускать их модели dbt каждые 2 минуты, чтобы соответствовать SLA в 5 минут.
 
-After getting over the initial terror, we talked through the use case and soon realized there was a better option. Together with my team, I created [lambda views](https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457) to meet the need.
+После преодоления первоначального ужаса мы обсудили случай использования и вскоре поняли, что есть лучший вариант. Вместе с моей командой я создала [lambda views](https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457), чтобы удовлетворить потребность.
 
-Flash forward to 2023. I’m writing this as my giant dog snores next to me (don’t worry the cats have multiplied as well). Jetblue has outgrown lambda views due to performance constraints (a view can only be so performant) and we are at another milestone in dbt’s journey to support streaming. What. a. time.
+Перенесемся в 2023 год. Я пишу это, пока мой огромный пес храпит рядом со мной (не волнуйтесь, коты тоже размножились). Jetblue переросла lambda views из-за ограничений производительности (представление может быть только настолько производительным), и мы находимся на очередной вехе в пути dbt к поддержке потоковой передачи. Какое время!
 
-Today we are announcing that we now support Materialized Views in dbt. So, what does that mean?
+Сегодня мы объявляем, что теперь поддерживаем материализованные представления в dbt. Итак, что это значит?
 
 <!--truncate-->
 
-Materialized views are now an out of the box materialization in your dbt project once you upgrade to the latest version of dbt v1.6 on these following adapters:
+Материализованные представления теперь являются готовой материализацией в вашем проекте dbt, как только вы обновитесь до последней версии dbt v1.6 на следующих адаптерах:
 
 - [dbt-postgres](/reference/resource-configs/postgres-configs#materialized-views)
 - [dbt-redshift](/reference/resource-configs/redshift-configs#materialized-views)
@@ -37,15 +36,13 @@ Materialized views are now an out of the box materialization in your dbt project
 - [dbt-databricks](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
 - [dbt-materialize*](/reference/resource-configs/materialize-configs#incremental-models-materialized-views)
 - [dbt-trino*](/reference/resource-configs/trino-configs#materialized-view)
-- [dbt-bigquery (available on 1.7)](/reference/resource-configs/bigquery-configs#materialized-views)
+- [dbt-bigquery (доступно в 1.7)](/reference/resource-configs/bigquery-configs#materialized-views)
 
-*These adapters have supported materialized views in their adapter prior 1.6.
+*Эти адаптеры поддерживали материализованные представления в своих адаптерах до версии 1.6.
 
-Just like you would materialize your sql model as  `table` or `view`  today, you can use `materialized_view` in your model configuration, dbt_project.yml, and resources.yml files. At release, python models will not be supported.
+Так же, как вы сегодня материализуете свою SQL-модель как `table` или `view`, вы можете использовать `materialized_view` в конфигурации вашей модели, dbt_project.yml и resources.yml файлах. На момент выпуска python модели не будут поддерживаться.
 
-
-
-For Postgres/Redshift/Databricks/Bigquery
+Для Postgres/Redshift/Databricks/Bigquery
 
 ```sql
 {{
@@ -56,7 +53,7 @@ config(
 
 ```
 
-For Snowflake:
+Для Snowflake:
 ```sql
 {{
 config(
@@ -65,62 +62,60 @@ config(
 }}
 ```
 
-
 :::note
-We are only supporting dynamic tables on Snowflake, not Snowflake’s materialized views (for a comparison between Snowflake Dynamic Tables and Materialized Views, refer [docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-comparison#dynamic-tables-compared-to-materialized-views). Dynamic tables are better suited for continuous transformations due to functionality like the ability to join, union, and aggregate on base tables, views , and other dynamic tables. Due to those features, they are also more aligned with what other data platforms are calling Materialized Views. For the sake of simplicity, when I refer to materialized views in this blog, I mean dynamic tables in Snowflake.
+Мы поддерживаем только динамические таблицы на Snowflake, а не материализованные представления Snowflake (для сравнения между Snowflake Dynamic Tables и Materialized Views, обратитесь к [документации](https://docs.snowflake.com/en/user-guide/dynamic-tables-comparison#dynamic-tables-compared-to-materialized-views). Динамические таблицы лучше подходят для непрерывных преобразований благодаря функциональности, такой как возможность объединения, объединения и агрегации на базовых таблицах, представлениях и других динамических таблицах. Благодаря этим функциям они также больше соответствуют тому, что другие платформы данных называют материализованными представлениями. Для простоты, когда я упоминаю материализованные представления в этом блоге, я имею в виду динамические таблицы в Snowflake.
 :::
 
-Now that we support materialized views: how do you fit them into your dbt workflow? It’s easy to imagine a world of unregulated computation because you didn’t put in proper guardrails and now you have materialized views running rampant unbeknownst to you in your data platform.
+Теперь, когда мы поддерживаем материализованные представления: как вы интегрируете их в свой рабочий процесс dbt? Легко представить мир нерегулируемых вычислений, потому что вы не установили надлежащие ограничения, и теперь у вас есть материализованные представления, которые работают без вашего ведома на вашей платформе данных.
 
-Materialized views, just like any other materialization, fit a need and you should utilize them while taking into consideration the additional complexity they will add to your project. They are a tool in your analytics engineering toolbox, one of many.
+Материализованные представления, как и любая другая материализация, удовлетворяют потребность, и вы должны использовать их, учитывая дополнительную сложность, которую они добавят в ваш проект. Это инструмент в вашем наборе инструментов аналитической инженерии, один из многих.
 
-In this blog, we will go over when to pull this tool out of your toolbox, how to wield it successfully, and how to promote materialized views with governance in mind. Now this is a new functionality and I expect this to be the first of many posts to come, defining our best practices (or even redefining them). Also I will not be discussing dbt’s interactions upstream from the data platform like how to manage your Kafka topics using dbt, but would highly recommend [this post from Charlie Summers](https://docs.getdbt.com/blog/demystifying-event-streams) if that’s something you’re interested in.
+В этом блоге мы рассмотрим, когда использовать этот инструмент, как успешно его использовать и как продвигать материализованные представления с учетом управления. Это новая функциональность, и я ожидаю, что это будет первый из многих постов, определяющих наши лучшие практики (или даже переопределяющих их). Также я не буду обсуждать взаимодействие dbt с платформой данных на более высоком уровне, например, как управлять вашими темами Kafka с помощью dbt, но настоятельно рекомендую [этот пост от Чарли Саммерса](https://docs.getdbt.com/blog/demystifying-event-streams), если это вас интересует.
 
-Additionally, if you want to get a more detailed understanding of your data platform’s support of materialized views, I recommend checking out dbt’s and your data platform’s documentation site. This blog post is intended to be a high level, platform agnostic overview to get you started.
+Кроме того, если вы хотите получить более детальное понимание поддержки материализованных представлений вашей платформой данных, я рекомендую ознакомиться с сайтом документации dbt и вашей платформы данных. Этот блог предназначен для предоставления общего обзора, не зависящего от платформы, чтобы помочь вам начать.
 
-## What are Materialized Views?
+## Что такое материализованные представления?
 
-Starting out with, **what are materialized views (MVs)?** While specific features will vary by data platform, materialized views at their core are database objects that have stored the results of a query as a physically materialized table. What makes them distinct from a regular table is that the data in a materialized view is periodically refreshed to reflect the latest changes in the underlying table. Because they’re precomputed and the results are stored, you have faster query times when accessing them because you aren’t recomputing the data from scratch. This is great when you have low latency requirements for your data pipelines.
+Начнем с того, **что такое материализованные представления (MVs)?** Хотя конкретные функции могут различаться в зависимости от платформы данных, материализованные представления в своей основе являются объектами базы данных, которые хранят результаты запроса в виде физически материализованной таблицы. Что отличает их от обычной таблицы, так это то, что данные в материализованном представлении периодически обновляются, чтобы отражать последние изменения в базовой таблице. Поскольку они предварительно вычислены и результаты хранятся, вы получаете более быстрое время выполнения запросов при доступе к ним, потому что вы не пересчитываете данные с нуля. Это отлично подходит, когда у вас есть требования к низкой задержке для ваших конвейеров данных.
 
-Now you might have noticed that MVs sound a lot like incremental models, and you are not wrong! It can be worthwhile to think of materialized views as a successor of sorts to incremental models. In fact, depending on your needs and data platform of choice, you might wish to replace all of your incremental dbt models with materialized view models. By doing this, you will no longer have to manually craft specific incremental strategies, detailing how dbt should update the underlying table. Awesome, right?
+Теперь вы могли заметить, что MVs звучат очень похоже на инкрементные модели, и вы не ошибаетесь! Стоит рассматривать материализованные представления как своего рода преемника инкрементных моделей. Фактически, в зависимости от ваших потребностей и выбранной платформы данных, вы можете захотеть заменить все ваши инкрементные модели dbt на модели материализованных представлений. Делая это, вам больше не придется вручную разрабатывать конкретные инкрементные стратегии, подробно описывая, как dbt должен обновлять базовую таблицу. Здорово, правда?
 
-The tradeoff (outside of any data platform specific ones) is that you will have less fine-grained control over the incremental logic and orchestration. This is because you are handing defining the logic of what and how to update the existing table over to the data platform to perform for you.
+Компромисс (помимо любых специфичных для платформы данных) заключается в том, что у вас будет меньше тонкого контроля над инкрементной логикой и оркестрацией. Это потому, что вы передаете определение логики того, что и как обновлять существующую таблицу, платформе данных, чтобы она выполняла это за вас.
 
-Other factors to consider when deciding on when/how to use a materialized view:
-- What are the costs associated with running the materialized view versus a batched incremental model? (this will vary depending on your data platform as some will require different compute nodes)
-- Does your data platform support joins, aggregations, and window functions on MVs if you need them?
-- What are the latency needs of your development environment? In production? (If not near real time, you can make the choice between a batch incremental model or a MV with a longer refresh schedule.)
-- How often do your upstream dependencies update? If your answer is `not frequent`, you may not need a MV.
-- How large is your dataset?(It might be cheaper to use MVs for extremely large datasets)
-- How often do you need your query refreshed? What are your downstream dependencies and their stakeholders? (If near real time is important, MVs might be the right choice).
-- Do you have real time machine learning models training or applications using your transformed dataset?
+Другие факторы, которые следует учитывать при принятии решения о том, когда/как использовать материализованное представление:
+- Каковы затраты, связанные с запуском материализованного представления по сравнению с пакетной инкрементной моделью? (это будет варьироваться в зависимости от вашей платформы данных, так как некоторые из них потребуют различных вычислительных узлов)
+- Поддерживает ли ваша платформа данных объединения, агрегации и оконные функции на MVs, если они вам нужны?
+- Каковы потребности в задержке вашей среды разработки? В производстве? (Если не в режиме реального времени, вы можете выбрать между пакетной инкрементной моделью или MV с более длительным расписанием обновлений.)
+- Как часто обновляются ваши вышестоящие зависимости? Если ваш ответ `не часто`, вам может не понадобиться MV.
+- Насколько велик ваш набор данных? (Может быть дешевле использовать MVs для очень больших наборов данных)
+- Как часто вам нужно обновлять ваш запрос? Каковы ваши нижестоящие зависимости и их заинтересованные стороны? (Если режим реального времени важен, MVs могут быть правильным выбором).
+- Есть ли у вас модели машинного обучения в реальном времени или приложения, использующие ваш преобразованный набор данных?
 
-## Materialized Views in the dbt Workflow
+## Материализованные представления в рабочем процессе dbt
 
-### Development
+### Разработка
 
-When we talk about using materialized views in development, the question to think about is not so much “should you execute your dbt models as materialized views in your sandbox?,” but rather “should you schedule them to refresh in your sandbox?”. For development, you do need to create them and test them out in your sandbox but how do you do this in a way that doesn’t drive up your cloud bill unnecessarily? Or keeping a post-it note on your laptop as a reminder to drop all of the running materialized views in your sandbox before you sign off? Let’s talk about it!
+Когда мы говорим об использовании материализованных представлений в разработке, вопрос, который стоит обдумать, заключается не столько в том, "должны ли вы выполнять свои модели dbt как материализованные представления в своей песочнице?", сколько в том, "должны ли вы планировать их обновление в своей песочнице?". Для разработки вам нужно создать их и протестировать в своей песочнице, но как сделать это так, чтобы не увеличивать счет за облачные услуги? Или не оставлять стикер на вашем ноутбуке с напоминанием удалить все работающие материализованные представления в вашей песочнице перед тем, как выйти? Давайте поговорим об этом!
 
-Outside of the scheduling part, development will be pretty standard. Your pipeline is likely going to look something like this:
+Помимо части планирования, разработка будет довольно стандартной. Ваш конвейер, вероятно, будет выглядеть примерно так:
 
-<Lightbox src="/img/blog/2023-08-01-announcing-materialized-views/streaming-pipeline.png" title="A Real Time Pipeline" />
+<Lightbox src="/img/blog/2023-08-01-announcing-materialized-views/streaming-pipeline.png" title="Конвейер в реальном времени" />
 
-This is assuming you have a near real time pipeline where you are pulling from a streaming data source like a Kafka Topic via an ingestion tool of your choice like Snowpipe for Streaming into your data platform. After your data is in the data platform, you will:
+Это предполагает, что у вас есть конвейер почти в реальном времени, где вы извлекаете данные из потокового источника данных, такого как Kafka Topic, через инструмент загрузки по вашему выбору, например, Snowpipe для потоковой передачи в вашу платформу данных. После того, как ваши данные находятся на платформе данных, вы:
 
-1. Create the dbt model with the SQL transformation logic that you need.
-2. Look at the logic and answer these questions:
-    1. Does my data platform support the functionality I need in materialized views?
-    2. How often do you need the data refreshed? Do you need any flexibility in that?
-    3. How am I promoting this into production? Either you will run the transformation logic in the production environment (recommended) and create a separate object or promote the object created from development.
+1. Создайте модель dbt с необходимой логикой преобразования SQL.
+2. Посмотрите на логику и ответьте на эти вопросы:
+    1. Поддерживает ли моя платформа данных функциональность, которая мне нужна в материализованных представлениях?
+    2. Как часто вам нужно обновлять данные? Нужна ли вам какая-либо гибкость в этом?
+    3. Как я продвигаю это в производство? Либо вы будете запускать логику преобразования в производственной среде (рекомендуется) и создавать отдельный объект, либо продвигать объект, созданный в процессе разработки.
 
+В зависимости от вашего ответа, это решит, хотите ли вы материализованное представление в первую очередь (в отличие от представления, таблицы или инкрементной модели). Если вы решили, что материализованное представление соответствует вашим потребностям, по умолчанию не планируйте обновление. Вы можете выполнять ручные обновления по мере необходимости. Почему так? В вашей среде разработки вы, вероятно, проверяете три вещи: зависимости, логику SQL и результат преобразования. Все это можно протестировать, создав материализованное представление без планирования и выполняя ручные обновления.
 
-Depending on your answer, this will decide if you want a materialized view in the first place (versus a view, table, or incremental model). If you have decided on a materialized view as meeting your needs, by default do not schedule a refresh. You can run manual refreshes as needed. Why’s that? In your development environment, you are likely validating three things: the dependencies, the SQL logic, and the transformation output. All of those can be tested by creating a materialized view without scheduling and running manually refreshes.
+Ваша конфигурация во время разработки:
 
-Your configuration during development:
+Для Postgres:
 
-For Postgres:
-
-Every time you run a `dbt run`, that will result in a manual refresh unless you set the `on_configuration_change` to `continue` which will skip running the model.
+Каждый раз, когда вы выполняете `dbt run`, это приведет к ручному обновлению, если вы не установите `on_configuration_change` в `continue`, что пропустит выполнение модели.
 
 ```sql
 {{
@@ -131,7 +126,7 @@ config(
 }}
 ```
 
-For Redshift:
+Для Redshift:
 
 ```sql
 {{
@@ -142,7 +137,7 @@ config(
 )
 }}
 ```
-For Bigquery
+Для Bigquery
 ```sql 
 {{
 config(
@@ -155,7 +150,7 @@ config(
 }}
 ```
 
-For Databricks:
+Для Databricks:
 
 ```sql
 {{
@@ -165,13 +160,13 @@ config(
 }}
 ```
 
-By default, materialized views are not refreshed on a schedule on Databricks in this materialization. To set up scheduling, you can use a post-hook to alter the MV with a cron schedule that will run in Databricks Workflows. That could look like something like this
+По умолчанию, материализованные представления не обновляются по расписанию на Databricks в этой материализации. Чтобы настроить расписание, вы можете использовать post-hook для изменения MV с расписанием cron, которое будет выполняться в Databricks Workflows. Это может выглядеть примерно так:
 
 ```sql
 post_hook = 'ALTER MATERIALIZED VIEW {{this}} ADD SCHEDULE CRON "0 0 0 * * ? *" AT TIME ZONE "America/Los_Angeles";'
 ```
 
-For Snowflake:
+Для Snowflake:
 
 ```sql
 {{
@@ -184,22 +179,21 @@ config(
 }}
 ```
 
-Now if you do need to more fully build out your development pipeline (making sure scheduling/syncs do happen), you can schedule but make sure to drop the materialized views when you are done with them. I encourage you to invest in an operations macro that drops all MVs in the schema that you use as your sandbox and run it as needed. You could even create a dbt Cloud job to manage that. This way, you don’t have any stray MVs running in your sandbox, consuming credits unnecessarily.
+Теперь, если вам нужно более полно построить ваш конвейер разработки (убедившись, что планирование/синхронизация действительно происходят), вы можете запланировать, но убедитесь, что удаляете материализованные представления, когда закончите с ними. Я призываю вас инвестировать в макрос операций, который удаляет все MVs в схеме, которую вы используете в качестве своей песочницы, и запускать его по мере необходимости. Вы даже можете создать задание dbt Cloud для управления этим. Таким образом, у вас не будет никаких случайных MVs, работающих в вашей песочнице, потребляющих кредиты без необходимости.
 
-### Testing
+### Тестирование
 
-Now let’s dive into the second question: how do you test? In development and QA, this will look the same as any tests you might have while developing your batch pipelines. You can run `dbt build` or  `dbt test` and then have the tests run after execution as validation. But in production, what changes? 
+Теперь давайте углубимся во второй вопрос: как тестировать? В разработке и QA это будет выглядеть так же, как и любые тесты, которые у вас могут быть при разработке ваших пакетных конвейеров. Вы можете запустить `dbt build` или `dbt test`, а затем тесты будут выполняться после выполнения в качестве проверки. Но что меняется в производстве?
 
-I recommend that you update any tests applied to a materialized view/dynamic table with the
-[store_failures_as](/reference/resource-configs/store_failures_as) configuration set to true and materialized as a view. This allows you to create a view that will provide all the rows that failed your test at time of query. Please note that this does not provide a historical look. You can also create alerting onto the view if it fails your expectations. 
+Я рекомендую обновить любые тесты, применяемые к материализованному представлению/динамической таблице, с конфигурацией [store_failures_as](/reference/resource-configs/store_failures_as), установленной в true и материализованной как представление. Это позволяет создать представление, которое будет предоставлять все строки, которые не прошли ваш тест на момент запроса. Обратите внимание, что это не предоставляет исторический обзор. Вы также можете создать оповещения на представление, если оно не соответствует вашим ожиданиям.
 
-In order to promote materialized views into production, the process will look very much like it did with your incremental models. Use [CI jobs](https://docs.getdbt.com/docs/deploy/ci-jobs) with defer so you can build them into your QA environment. For existing MVs without changes, we can skip and defer to the production objects.
+Чтобы продвигать материализованные представления в производство, процесс будет выглядеть так же, как и с вашими инкрементными моделями. Используйте [CI jobs](https://docs.getdbt.com/docs/deploy/ci-jobs) с defer, чтобы вы могли встроить их в вашу среду QA. Для существующих MVs без изменений мы можем пропустить и отложить до производственных объектов.
 
-### Production
+### Производство
 
-When you feel satisfied with your development and testing, for data platforms that offer scheduling via our dbt configurations, you have two options: hardcode the refresh cadence or write in conditional logic based on the environment for the refresh cadence. I recommend using the latter.
+Когда вы будете удовлетворены своей разработкой и тестированием, для платформ данных, которые предлагают планирование через наши конфигурации dbt, у вас есть два варианта: жестко закодировать частоту обновления или написать условную логику на основе среды для частоты обновления. Я рекомендую использовать последний вариант.
 
-The code for having a conditional in your config block looks like this if you want to include in a macro for either the lag or other fields (snowflake_warehouse, auto_refresh,etc):
+Код для включения условия в ваш блок конфигурации выглядит так, если вы хотите включить в макрос для либо задержки, либо других полей (snowflake_warehouse, auto_refresh и т.д.):
 
 ```sql
 {% macro target_lag_environment() %}
@@ -219,12 +213,12 @@ config(
 }}
 ```
 
-You will want a very long lag for development; I recommend the cadence you drop and refresh your development environment. Here I just chose my two favorite numbers.
+Вы захотите очень долгую задержку для разработки; я рекомендую частоту, с которой вы удаляете и обновляете вашу среду разработки. Здесь я просто выбрала свои два любимых числа.
 
-For orchestration, if your materialized views aren’t able to auto refresh, you can use dbt cloud to orchestrate your refreshes. The beauty of materialized views is that dbt will be able to provide the dependency/testing/documentation but also skip or rerun the models as configured, enabling you to version control your logic. Reasonable guardrails for the modern data stack. ✨
+Для оркестрации, если ваши материализованные представления не могут автоматически обновляться, вы можете использовать dbt cloud для оркестрации ваших обновлений. Прелесть материализованных представлений в том, что dbt сможет предоставить зависимость/тестирование/документацию, а также пропустить или повторно выполнить модели в соответствии с конфигурацией, позволяя вам версионировать вашу логику. Разумные ограничения для современной стек данных. ✨
 
-Depending on how you orchestrate your materialized views, you can either run the testing in production as part of a scheduled job (with dbt test or dbt build).
+В зависимости от того, как вы оркестрируете свои материализованные представления, вы можете либо запускать тестирование в производстве в рамках запланированного задания (с dbt test или dbt build).
 
-## Conclusion
+## Заключение
 
-Well, I’m excited for everyone to remove the lines in your packages.yml that installed your experimental package (at least if you’re using it for MVs) and start to get your hands dirty. We are still new in our journey and I look forward to hearing all the things you are creating and how we can better our best practices in this.
+Ну что ж, я рада, что все вы сможете удалить строки в вашем packages.yml, которые устанавливали ваш экспериментальный пакет (по крайней мере, если вы используете его для MVs) и начать погружаться в работу. Мы все еще находимся в начале нашего пути, и я с нетерпением жду, чтобы услышать о всех вещах, которые вы создаете, и о том, как мы можем улучшить наши лучшие практики в этом.

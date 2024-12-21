@@ -1,6 +1,6 @@
 ---
-title: "Create dbt Documentation and Tests 10x faster with ChatGPT"
-description: "You can use ChatGPT to infer the context of verbosely named fields from database table schemas."
+title: "Создавайте документацию и тесты для dbt в 10 раз быстрее с ChatGPT"
+description: "Вы можете использовать ChatGPT для определения контекста полей с длинными названиями из схем таблиц базы данных."
 slug: create-dbt-documentation-10x-faster-with-ChatGPT
 
 authors: [pedro_brito_de_sa]
@@ -12,19 +12,19 @@ date: 2023-07-18
 is_featured: true
 ---
 
-Whether you are creating your pipelines into dbt for the first time or just adding a new model once in a while, **good documentation and testing should always be a priority** for you and your team. Why do we avoid it like the plague then? Because it’s a hassle having to write down each individual field, its description in layman terms and figure out what tests should be performed to ensure the data is fine and dandy. How can we make this process faster and less painful?
+Независимо от того, создаете ли вы свои конвейеры в dbt впервые или просто добавляете новую модель время от времени, **хорошая документация и тестирование всегда должны быть приоритетом** для вас и вашей команды. Почему же мы избегаем этого как чумы? Потому что это хлопотно — записывать каждое отдельное поле, его описание простыми словами и выяснять, какие тесты следует провести, чтобы убедиться, что данные в порядке. Как мы можем сделать этот процесс быстрее и менее болезненным?
 
-By now, everyone knows the wonders of the GPT models for code generation and pair programming so this shouldn’t come as a surprise. But **ChatGPT really shines** at inferring the context of verbosely named fields from database table schemas. So in this post I am going to help you 10x your documentation and testing speed by using ChatGPT to do most of the leg work for you.
+К настоящему времени все знают о чудесах моделей GPT для генерации кода и парного программирования, так что это не должно быть сюрпризом. Но **ChatGPT действительно выделяется** в определении контекста полей с длинными названиями из схем таблиц базы данных. Поэтому в этом посте я помогу вам ускорить создание документации и тестов в 10 раз, используя ChatGPT для выполнения большей части работы за вас.
 
 <!--truncate-->
 
-As a one-person Analytics team at [Sage](http://www.hellosage.com/) I had to create our dbt pipelines from the ground up. This meant 30+ tables of internal facts and dimensions + external data into a Staging Layer, plus all of the following layers of augmented models and Mart tables. After the fact, we are talking about 3500+ lines of YAML that I was NOT excited to get started on. Fortunately for me, this was February 2023 and ChatGPT had just come out. And boy, was I glad to have it. After a good dose of “prompt engineering” I managed to get most of my documentation and tests written out, only needing a few extra tweaks.
+Будучи единственным аналитиком в [Sage](http://www.hellosage.com/), мне пришлось создавать наши конвейеры dbt с нуля. Это означало более 30 таблиц внутренних фактов и измерений + внешние данные в слое Staging, плюс все последующие слои расширенных моделей и таблиц Mart. В итоге мы говорим о более чем 3500 строк YAML, которые я не был в восторге начинать. К счастью для меня, это был февраль 2023 года, и ChatGPT только что вышел. И, о боже, как я был рад этому. После хорошей дозы "инженерии подсказок" мне удалось получить большую часть моей документации и тестов, требуя лишь небольших доработок.
 
-Writing this article as of July 2023, and now powered by GPT-4 and not GPT 3.5, it is already easier to get the same results I did, so here are my learnings that I hope everyone can replicate.
+Пишу эту статью в июле 2023 года, и теперь, с поддержкой GPT-4, а не GPT 3.5, уже легче получить те же результаты, что и я, поэтому вот мои выводы, которые, надеюсь, каждый сможет повторить.
 
-## Use verbose tables with verbose fields
+## Используйте подробные таблицы с подробными полями
 
-ChatGPT can only infer so much, so tables with names and fields that resemble encryption keys are unlikely to be good for this approach. In this example we are going to use this table:
+ChatGPT может сделать только столько, поэтому таблицы с именами и полями, которые напоминают ключи шифрования, вряд ли будут хороши для этого подхода. В этом примере мы будем использовать эту таблицу:
 
 ```sql
 create or replace TRANSIENT TABLE STAGING.BASE.STG_STAFF_MEMBER (
@@ -42,22 +42,21 @@ create or replace TRANSIENT TABLE STAGING.BASE.STG_STAFF_MEMBER (
       ENTERPRISEID VARCHAR(16777216),
       ISDELETED BOOLEAN
 );
-
 ```
 
 ---
 
-I copied this definition from Snowflake, and I would recommend that you always include both the name and type of the fields to get better results. This is especially helpful if you want to make sure ChatGPT correctly distinguishes between text, number, boolean or array fields, which may not be clear from the name alone.
+Я скопировал это определение из Snowflake и рекомендую всегда включать как имя, так и тип полей, чтобы получить лучшие результаты. Это особенно полезно, если вы хотите убедиться, что ChatGPT правильно различает текстовые, числовые, булевые или массивные поля, что может быть не очевидно только по имени.
 
-## Start out with simple prompts
+## Начинайте с простых подсказок
 
-We all know how ChatGPT can digest very complex prompts, but as this is a tool for you to get the best results for your use case, I would recommend starting with simple, but specific, prompts.
+Мы все знаем, как ChatGPT может обрабатывать очень сложные подсказки, но поскольку это инструмент для получения наилучших результатов для вашего случая использования, я бы рекомендовал начинать с простых, но конкретных подсказок.
 
-Opening ChatGPT with GPT4, my first prompt is usually along these lines:
+Открывая ChatGPT с GPT4, моя первая подсказка обычно выглядит так:
 
-<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image1.png" title="ChatGPT request for YAML file" />
+<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image1.png" title="Запрос ChatGPT для YAML файла" />
 
-And the output of this simple prompt is nothing short of amazing:
+И результат этой простой подсказки просто потрясающий:
 
 ```yaml
 version: 2
@@ -114,28 +113,28 @@ models:
               values: ['true', 'false']
 ```
 
-Back in my day (5 months ago), ChatGPT with GPT 3.5 didn’t have much context on what a dbt-style YAML file was, so the result was a funky, non-dbt YAML format. If you are using GPT 3.5 and the results you get from the first prompt don’t compile in dbt, I would recommend an extra step I took which is to pass your understanding of what a dbt-style YAML file is. You can do this simply by copy-pasting a piece of a publicly available YAML file like [this one from the Jaffle Shop example](https://github.com/dbt-labs/jaffle_shop/blob/main/models/schema.yml), or a piece of YAML from your own code base.
+В мое время (5 месяцев назад) ChatGPT с GPT 3.5 не имел большого контекста о том, что такое YAML файл в стиле dbt, поэтому результат был странным, не dbt-форматом YAML. Если вы используете GPT 3.5 и результаты, которые вы получаете от первой подсказки, не компилируются в dbt, я бы рекомендовал дополнительный шаг, который я предпринял, чтобы передать ваше понимание того, что такое YAML файл в стиле dbt. Вы можете сделать это, просто скопировав и вставив часть общедоступного YAML файла, например, [этого из примера Jaffle Shop](https://github.com/dbt-labs/jaffle_shop/blob/main/models/schema.yml), или часть YAML из вашей собственной кодовой базы.
 
-A prompt for it would look something like:
+Подсказка для этого может выглядеть так:
 
-<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image2.png" title="ChatGPT request to memorize dbt-style YAML" />
+<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image2.png" title="Запрос ChatGPT на запоминание YAML в стиле dbt" />
 
-## Specify details on generic tests in your prompts
+## Уточняйте детали о стандартных тестах в ваших подсказках
 
-dbt has four built-in generic tests: unique, not_null, accepted_values and relationships. My approach to adding details on these to the prompts is one of ‘more is better’, as in it’s faster to just delete tests that I don’t need in certain fields than having to add them manually.
+dbt имеет четыре встроенных стандартных теста: unique, not_null, accepted_values и relationships. Мой подход к добавлению деталей к этим тестам в подсказках заключается в том, что "больше — лучше", так как быстрее просто удалить тесты, которые мне не нужны в определенных полях, чем добавлять их вручную.
 
-ChatGPT will throw unique and not_null tests for mostly all columns that have ‘id’ in their name, and in my experience it adds them to a few more columns than it should, which is usually quick to fix.
+ChatGPT добавит тесты unique и not_null для большинства столбцов, в названии которых есть 'id', и, по моему опыту, он добавляет их в несколько больше столбцов, чем следует, что обычно быстро исправляется.
 
-Accepted_values and relationships are slightly trickier but the model can be adjusted to account for these in fairly simple ways. My tips are:
+Accepted_values и relationships немного сложнее, но модель можно настроить, чтобы учитывать их довольно простыми способами. Мои советы:
 
-- accepted_values: add extra detail to the schema like an extra keyword like ‘CATEGORICAL’ after the data type
-- relationships: bind the relationships to fields with specific names. For better results, pass on a list of valid table names from your schema that it can refer to.
+- accepted_values: добавьте дополнительную деталь к схеме, например, дополнительное ключевое слово, такое как 'CATEGORICAL', после типа данных
+- relationships: связывайте отношения с полями с конкретными именами. Для лучших результатов передайте список допустимых имен таблиц из вашей схемы, к которым она может обращаться.
 
-One way of doing this is with a prompt like this:
+Один из способов сделать это — использовать подсказку, подобную этой:
 
-<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image3.png" title="ChatGPT request to write dbt-style YAML with generic tests" />
+<Lightbox src="/img/blog/2023-07-17-GPT-and-dbt-test/image3.png" title="Запрос ChatGPT на написание YAML в стиле dbt с общими тестами" />
 
-Which results in the following output:
+Что приводит к следующему результату:
 
 ```yaml
 version: 2
@@ -166,7 +165,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['Job Title 1', 'Job Title 2', 'Job Title 3'] # replace these with actual job titles
+              values: ['Job Title 1', 'Job Title 2', 'Job Title 3'] # замените эти значения на фактические должности
       - name: LASTNAME
         description: The last name of the staff member.
         tests:
@@ -187,13 +186,13 @@ models:
         description: Identifier for the community of the staff member.
         tests:
           - relationships:
-              to: STAGING.COMMUNITY.ID # replace with actual reference table
+              to: STAGING.COMMUNITY.ID # замените на фактическую таблицу ссылок
               field: ID
       - name: ENTERPRISEID
         description: Identifier for the enterprise of the staff member.
         tests:
           - relationships:
-              to: STAGING.ENTERPRISE.ID # replace with actual reference table
+              to: STAGING.ENTERPRISE.ID # замените на фактическую таблицу ссылок
               field: ID
       - name: ISDELETED
         description: Boolean value indicating if the staff member record is deleted.
@@ -202,12 +201,12 @@ models:
               values: ['true', 'false']
 ```
 
-Even though it doesn’t magically guess the categories of your variables or your relationships, it is definitely helpful to have some placeholders in the right places.
+Хотя он не угадывает магически категории ваших переменных или ваши отношения, он определенно полезен для наличия некоторых заполнителей в нужных местах.
 
-As an add-on, giving the model a short description of the data models and the tables you are working with will help it fine tune your results.
+В качестве дополнения, предоставление модели краткого описания моделей данных и таблиц, с которыми вы работаете, поможет ей лучше настроить ваши результаты.
 
-## Wrap-Up
+## Заключение
 
-Creating documentation is still a very manual job, and this approach only works for one table at a time (maybe you can be the one leveraging the OpenAI API and creating a webapp that processes multiple tables at once?). However, ChatGPT can clearly cut a lot of time in these tasks.
+Создание документации все еще остается очень ручной работой, и этот подход работает только для одной таблицы за раз (возможно, вы можете быть тем, кто использует API OpenAI и создает веб-приложение, которое обрабатывает несколько таблиц одновременно?). Однако ChatGPT явно может сократить много времени на эти задачи.
 
-I hope that these simple tips help you be more motivated and efficient in creating documentation and tests for your data models. And remember: verbosity in - verbosity out!
+Надеюсь, эти простые советы помогут вам быть более мотивированными и эффективными в создании документации и тестов для ваших моделей данных. И помните: многословие на входе — многословие на выходе!

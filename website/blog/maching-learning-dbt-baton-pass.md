@@ -1,6 +1,6 @@
 ---
-title: "dbt + Machine Learning: What makes a great baton pass?"
-description: "Working with machine learning in dbt can be clunky. Explore three tool paths that makes the baton pass between analytics engineering & machine learning smooth."
+title: "dbt + Машинное обучение: Что делает передачу эстафеты успешной?"
+description: "Работа с машинным обучением в dbt может быть неудобной. Исследуйте три пути, которые делают передачу эстафеты между аналитической инженерией и машинным обучением более плавной."
 slug: maching-learning-dbt-baton-pass
 
 authors: [sung_chung, izzy_erekson]
@@ -11,156 +11,155 @@ hide_table_of_contents: false
 date: 2022-03-10
 is_featured: true
 ---
-_Special Thanks: Emilie Schario, Matt Winkler_
+_Особая благодарность: Emilie Schario, Matt Winkler_
 
-dbt has done a great job of building an elegant, common interface between data engineers, analytics engineers, and any data-y role, by uniting our work on SQL. This unification of tools and workflows creates interoperability between what would normally be distinct teams within the data organization. 
+dbt отлично справляется с созданием элегантного, общего интерфейса между инженерами данных, аналитическими инженерами и любыми другими ролями, связанными с данными, объединяя нашу работу на SQL. Это объединение инструментов и рабочих процессов создает интероперабельность между теми, что обычно были бы отдельными командами в организации данных.
 
-I like to call this interoperability a “baton pass.” Like in a relay race, there are clear handoff points & explicit ownership at all stages of the process. But there’s one baton pass that’s still relatively painful and undefined: the handoff between machine learning (ML) engineers and analytics engineers. 
+Я люблю называть эту интероперабельность "передачей эстафеты". Как в эстафетной гонке, здесь есть четкие точки передачи и явное владение на всех этапах процесса. Но есть одна передача эстафеты, которая все еще относительно болезненна и не определена: передача между инженерами машинного обучения (ML) и аналитическими инженерами.
 
-In my experience, the initial collaboration workflow between ML engineering & analytics engineering starts off strong but eventually becomes muddy during the maintenance phase. This eventually leads to projects becoming unusable and forgotten.
+По моему опыту, начальный рабочий процесс сотрудничества между ML-инженерами и аналитическими инженерами начинается хорошо, но в конечном итоге становится неясным на этапе поддержки. Это в конечном итоге приводит к тому, что проекты становятся непригодными для использования и забытыми.
 
-In this article, we’ll explore a real-life baton pass between ML engineering and analytics engineering and highlighting where things went wrong.
+В этой статье мы исследуем реальную передачу эстафеты между ML-инженерами и аналитическими инженерами, подчеркивая, где все пошло не так.
 
 <!--truncate-->
 
-By doing so, we can hopefully solve this breakdown by answering questions like:
+Таким образом, мы надеемся решить этот сбой, ответив на такие вопросы, как:
 
-- Do we need a better Jupyter notebook?
-- Should we increase the SQL surface area to build ML models?
-- Should we leave that to non-SQL interfaces(Python/Scala/etc.)?
-- Does this have to be an either/or future?
+- Нужен ли нам лучший Jupyter notebook?
+- Должны ли мы увеличить площадь SQL для построения моделей ML?
+- Должны ли мы оставить это для интерфейсов, не связанных с SQL (Python/Scala и т.д.)?
+- Должно ли это быть либо/или в будущем?
 
-Whatever the interface evolves into, it must center people, create a low bar and high ceiling, and focus on outcomes and not the mystique of high learning curves.
+Как бы ни развивался интерфейс, он должен быть ориентирован на людей, создавать низкий порог и высокий потолок, и фокусироваться на результатах, а не на мистике высоких кривых обучения.
 
-**TL;DR: There’s an ownership problem in the ML engineering & analytics engineering workflow. Luckily, the Modern Data Stack is making this baton pass smoother. This post will walk you through a recent project where I was able to see firsthand how these systems can work together to provide models that are built for long term accuracy and maintainability.**
+**Кратко: В рабочем процессе ML-инженеров и аналитических инженеров есть проблема владения. К счастью, современный стек данных делает эту передачу эстафеты более плавной. Этот пост проведет вас через недавний проект, где я смог увидеть из первых рук, как эти системы могут работать вместе, чтобы предоставлять модели, построенные для долгосрочной точности и поддерживаемости.**
 
-## What does a baton pass look like today?
+## Как выглядит передача эстафеты сегодня?
 
-As an analytics engineer, I was paired with a ML engineer to determine when a customer will churn and what actions we could take to prevent it. We labored over a solution, the mechanics kind of worked, we presented to business stakeholders that wanted this, and 1 month later we were hopeful but skeptical. New data changes caused model drift, so the ML engineer logged a ticket for the data engineer/analytics engineer to fix…3 months later, no one remembered we did this. Does this sound familiar?
+Как аналитический инженер, я был в паре с ML-инженером, чтобы определить, когда клиент уйдет, и какие действия мы могли бы предпринять, чтобы предотвратить это. Мы трудились над решением, механика вроде бы работала, мы представили это бизнес-стейкхолдерам, которые этого хотели, и через месяц мы были полны надежд, но скептичны. Новые изменения данных вызвали дрейф модели, поэтому ML-инженер зарегистрировал тикет для инженера данных/аналитического инженера, чтобы исправить это... 3 месяца спустя никто не помнил, что мы это делали. Звучит знакомо?
 
-This happens because the “normal” way of doing things lacks long-term & explicit ownership. But how do these breakdowns happen?
+Это происходит потому, что "нормальный" способ делать вещи не имеет долгосрочного и явного владения. Но как происходят эти сбои?
 
-### Here’s what happened
+### Вот что произошло
 
-After some initial planning, I knew we had this raw data living somewhere in our <Term id="data-warehouse" />. It was easy to make sense of this starting point for our work together. I wrote dbt transformations to massage this raw data and joined a couple <Term id="table">tables</Term> together based on intuition of what variables mattered: daily active usage, number of users, amount paid, historical usage, etc.
+После некоторого начального планирования я знал, что у нас есть эти сырые данные, хранящиеся где-то в нашем <Term id="data-warehouse" />. Было легко понять эту отправную точку для нашей совместной работы. Я написал преобразования dbt, чтобы обработать эти сырые данные и объединил несколько <Term id="table">таблиц</Term> вместе, основываясь на интуиции о том, какие переменные важны: ежедневное активное использование, количество пользователей, сумма оплаты, историческое использование и т.д.
 
-The ML engineer stepped in from here. She was used to doing her statistics and preprocessing in python [pandas](https://pandas.pydata.org/) and [scikit-learn](https://scikit-learn.org/stable/index.html). Before she opened up her Jupyter notebook, we had a heart-to-heart conversation and realized the same work could be done through dbt. Preprocessing could be done through this [open source dbt package](https://github.com/omnata-labs/dbt-ml-preprocessing/tree/1.1.0/#dbt-ml-preprocessing) and there were plenty of others like it in the [package registry](https://hub.getdbt.com/).
+Здесь вступила в дело ML-инженер. Она привыкла выполнять свою статистику и предварительную обработку в python [pandas](https://pandas.pydata.org/) и [scikit-learn](https://scikit-learn.org/stable/index.html). Прежде чем она открыла свой Jupyter notebook, мы провели откровенный разговор и поняли, что ту же работу можно выполнить через dbt. Предварительная обработка могла быть выполнена через этот [пакет dbt с открытым исходным кодом](https://github.com/omnata-labs/dbt-ml-preprocessing/tree/1.1.0/#dbt-ml-preprocessing), и было много других подобных в [регистре пакетов](https://hub.getdbt.com/).
 
-![image of table with macro names and connector compatibility](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/macro-names.png)
+![изображение таблицы с именами макросов и совместимостью коннекторов](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/macro-names.png)
 
-The ML engineer got the preprocessing steps (think: one-hot encoding, feature scaling, imputation) finalized. She used SQL to read the dbt models (tables) into a Jupyter notebook to perform model training. After iterating on the machine learning models and tracking model fit (think: AUC/Precision/Recall (for classification)), she ran the model over dbt-created tables and output the predicted results as a table in the database. To keep documentation clean, she [configured a source](/docs/build/sources) within the dbt project to reflect this predicted results table. It wasn’t intuitive, but it was better than leaving it out of dbt docs.
+ML-инженер завершила шаги предварительной обработки (подумайте: one-hot кодирование, масштабирование признаков, импутация). Она использовала SQL для чтения моделей dbt (таблиц) в Jupyter notebook для выполнения обучения модели. После итерации над моделями машинного обучения и отслеживания соответствия модели (подумайте: AUC/Precision/Recall (для классификации)), она запустила модель на таблицах, созданных dbt, и вывела предсказанные результаты в виде таблицы в базе данных. Чтобы поддерживать документацию в чистоте, она [настроила источник](/docs/build/sources) в проекте dbt, чтобы отразить эту таблицу с предсказанными результатами. Это было не интуитивно, но лучше, чем оставлять это вне документации dbt.
 
-Finally, she created a dashboard on top of this table to publicize model accuracy over time to end users. To schedule this, we went to the data engineer to string together the above in [Airflow](https://discourse.getdbt.com/t/orchestrating-fivetran-and-dbt-with-airflow/2079) everyday at 8am and called it done.
+Наконец, она создала дашборд поверх этой таблицы, чтобы опубликовать точность модели с течением времени для конечных пользователей. Чтобы запланировать это, мы обратились к инженеру данных, чтобы связать все вышеперечисленное в [Airflow](https://discourse.getdbt.com/t/orchestrating-fivetran-and-dbt-with-airflow/2079) каждый день в 8 утра и назвали это завершенным.
 
-### Core Behaviors and Results (Where things went wrong)
+### Основные действия и результаты (где все пошло не так)
 
-Let’s parse out the job-to-be-done we’re seeing in our story.
+Давайте разберем задачу, которую мы видим в нашей истории.
 
-![Image flowchart of the story's Jobs to be Done workflow](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/JTBD-workflow.png)
+![Изображение блок-схемы рабочего процесса Jobs to be Done из истории](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/JTBD-workflow.png)
 
-| Jobs to be Done | Intended Results | Role |
+| Jobs to be Done | Ожидаемые результаты | Роль |
 | --- | --- | --- |
-| Extract and load raw data into database | SQL-ready data | Data Engineer |
-| Transforming data for business user consumption | Data is coherent to make decisions from | Analytics Engineer, ML engineer |
-| Working with structured, tabular data | Unified and practical workflow | Analytics Engineer, ML engineer |
-| Working in SQL | Unified and practical workflow | Analytics Engineer, ML engineer |
-| Equipping users with documentation to understand how data outputs are created and how to use them | Trust and context for data | Analytics Engineer, ML engineer |
-| Testing transformed data outputs | Trusted data | Analytics Engineer |
-| Testing pre-processing data outputs | Trusted data | ML engineer |
-| Training and deploying machine learning models(primarily in python) | Make predictive decisions | ML engineer |
-| Testing and maintaining machine learning table outputs over time | Prove predicted results match reality even when data inputs change over time | Data Engineer, Analytics Engineer, ML engineer ??? |
+| Извлечение и загрузка сырых данных в базу данных | Данные, готовые для SQL | Инженер данных |
+| Преобразование данных для потребления бизнес-пользователями | Данные понятны для принятия решений | Аналитический инженер, ML-инженер |
+| Работа с структурированными, табличными данными | Унифицированный и практичный рабочий процесс | Аналитический инженер, ML-инженер |
+| Работа в SQL | Унифицированный и практичный рабочий процесс | Аналитический инженер, ML-инженер |
+| Обеспечение пользователей документацией для понимания того, как создаются выходные данные и как их использовать | Доверие и контекст для данных | Аналитический инженер, ML-инженер |
+| Тестирование преобразованных выходных данных | Доверенные данные | Аналитический инженер |
+| Тестирование выходных данных предварительной обработки | Доверенные данные | ML-инженер |
+| Обучение и развертывание моделей машинного обучения (в основном на python) | Принятие предсказательных решений | ML-инженер |
+| Тестирование и поддержка выходных данных таблиц машинного обучения с течением времени | Доказательство того, что предсказанные результаты соответствуют реальности, даже когда входные данные меняются с течением времени | Инженер данных, Аналитический инженер, ML-инженер ??? |
 
-Our story starts with unity and a baton pass develops over time until we end with what looks more like playing hot potato. The building narrative is something I was proud of with my fellow ML engineer. The maintenance and validation of the machine learning output workflow is something we weren’t proud of. This happened because we were missing something critical: **we weren’t united on who should do what in the long term** (think: source data changes cascaded through the transformation->pre-processing->training steps->monitoring performance.) No wonder business users shrugged their shoulders at our results after 1 month because we assumed the other role would hold that baton pass forever.
+Наша история начинается с единства, и передача эстафеты развивается с течением времени, пока мы не заканчиваем тем, что больше похоже на игру в горячую картошку. Развивающийся нарратив - это то, чем я гордился вместе с моим коллегой ML-инженером. Поддержка и валидация рабочего процесса вывода машинного обучения - это то, чем мы не гордились. Это произошло потому, что нам не хватало чего-то критически важного: **мы не были едины в том, кто должен делать что в долгосрочной перспективе** (подумайте: изменения исходных данных каскадно проходят через шаги преобразования->предварительной обработки->обучения->мониторинга производительности). Неудивительно, что бизнес-пользователи пожимали плечами на наши результаты через месяц, потому что мы предполагали, что другая роль будет держать эту эстафету навсегда.
 
-Let’s make this simple:
+Давайте упростим это:
 
-- **“Who makes data AND machine learning pipelines maintainable over time when data changes?”**
+- **"Кто делает данные И машинные обучающие конвейеры поддерживаемыми с течением времени, когда данные меняются?"**
 
-If we get this question right, it makes answering this question easier: **“How do we get people to use our work?”**
+Если мы правильно ответим на этот вопрос, это упростит ответ на следующий вопрос: **"Как заставить людей использовать нашу работу?"**
 
-## How are tools evolving to heal the gap between analytics engineering & machine learning?
+## Как инструменты развиваются, чтобы устранить разрыв между аналитической инженерией и машинным обучением?
 
-Let’s focus this question even more: What’s being done about the “maintenance over time” problem in our workflow? What would your team have done differently?
+Давайте сосредоточим этот вопрос еще больше: Что делается для решения проблемы "поддержки с течением времени" в нашем рабочем процессе? Что бы ваша команда сделала иначе?
 
-### Build a better notebook experience that makes dbt and python more interoperable
+### Создание лучшего опыта работы с ноутбуками, который делает dbt и python более совместимыми
 
-Gluing together notebooks and dbt isn’t the most elegant experience today. It’d be nice to schedule notebooks in sync with my dbt jobs. All so I can better diagnose my problems in ML model drift.
+Связывание ноутбуков и dbt сегодня не самое элегантное решение. Было бы неплохо планировать ноутбуки в синхронизации с моими заданиями dbt. Все это для того, чтобы я мог лучше диагностировать свои проблемы с дрейфом модели ML.
 
 #### Hex
 
-• [Hex](https://docs.hex.tech/product-docs): Notebook experience with quality of life improvements. SQL query results can be read in as dataframes after running. dbt integration to verify data quality during development. Build parameterized data apps and give audiences one less context switch to a BI dashboard.
+• [Hex](https://docs.hex.tech/product-docs): Опыт работы с ноутбуками с улучшением качества жизни. Результаты SQL-запросов могут быть прочитаны как фреймы данных после выполнения. Интеграция dbt для проверки качества данных во время разработки. Создание параметризованных приложений для данных и предоставление аудитории одного контекста меньше для переключения на BI-дэшборд.
 
 #### Modelbit
 
-- [Modelbit](https://www.modelbit.com/): Bring your own notebook with a huge quality of life improvement - enable dbt to call versioned ML models as external functions in SQL.
+- [Modelbit](https://www.modelbit.com/): Принесите свой собственный ноутбук с огромным улучшением качества жизни - позвольте dbt вызывать версионированные модели ML как внешние функции в SQL.
 
-#### How would this change my story?
+#### Как это изменило бы мою историю?
 
-My ML engineer would know the quality of input data created by dbt before starting machine learning development. I could schedule this notebook in sync with my dbt jobs and know instantly if my **ML model drift is caused by data quality vs. model logic.** 
-Also, I would create a data app (in Hex) where users plug in different input scenarios that feed into the predictive model. Even better, I could track versions of my ML models deployed over time in Modelbit + Hex and deploy ML external functions as [dbt macros](/docs/build/jinja-macros)
- (by the way: how is this not more normal?!).
+Мой ML-инженер знал бы качество входных данных, созданных dbt, прежде чем начинать разработку машинного обучения. Я мог бы запланировать этот ноутбук в синхронизации с моими заданиями dbt и мгновенно узнать, вызван ли мой **дрейф модели ML качеством данных или логикой модели.** 
+Кроме того, я бы создал приложение для данных (в Hex), где пользователи вводят различные сценарии ввода, которые подаются в предсказательную модель. Еще лучше, я мог бы отслеживать версии моих развернутых моделей ML с течением времени в Modelbit + Hex и развертывать внешние функции ML как [макросы dbt](/docs/build/jinja-macros)
+ (кстати: почему это не более нормально?!).
 
-![Image showing the notebook and dbt synchronization](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/notebook-dbt-sync.png)
+![Изображение, показывающее синхронизацию ноутбука и dbt](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/notebook-dbt-sync.png)
 
-![Screenshot of code snippet for modelbit api integration](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/modelbit-api.png)
+![Скриншот фрагмента кода для интеграции API modelbit](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/modelbit-api.png)
 
-#### What are the tradeoffs?
+#### Каковы компромиссы?
 
-I’d still have to export my predictive results back to the database and configure them as sources for dbt docs(depends if Modelbit is involved). People wouldn’t know at a glance the <Term id="data-lineage">data lineage</Term> to power this notebook. But my gut tells me the tradeoff would be worth it because the ML engineer knows where to start problem solving even if the solution wasn’t readily available through SQL.
+Мне все равно пришлось бы экспортировать свои предсказательные результаты обратно в базу данных и настраивать их как источники для документации dbt (зависит от того, вовлечен ли Modelbit). Люди не знали бы с первого взгляда <Term id="data-lineage">происхождение данных</Term>, чтобы запитать этот ноутбук. Но мое чутье подсказывает мне, что компромисс стоил бы того, потому что ML-инженер знает, с чего начать решение проблемы, даже если решение не было доступно через SQL.
 
-### Bring machine learning to the SQL workflow
+### Принесите машинное обучение в рабочий процесс SQL
 
-What if…SQL could do more than what we think it can or even should?
+Что если... SQL может делать больше, чем мы думаем, или даже должен?
 
 #### MindsDB
 
-- [MindsDB](https://mindsdb.com/): Open source layer on top of a database using SQL syntax to create predictive models. Machine learning computation takes place in the MindsDB layer.
+- [MindsDB](https://mindsdb.com/): Открытый исходный слой поверх базы данных, использующий синтаксис SQL для создания предсказательных моделей. Вычисления машинного обучения происходят в слое MindsDB.
 
 #### Continual
 
-- [Continual](https://docs.continual.ai/dbt-example/): Directly create a dbt model to predict your results. Evaluates ML models to use based on your dbt model configuration. [Machine learning computation takes place in this layer and data warehouses where applicable (think: Snowpark API, Databricks)](https://docs.continual.ai/architecture/#relationship-to-your-data-warehouse).
+- [Continual](https://docs.continual.ai/dbt-example/): Непосредственно создайте модель dbt, чтобы предсказать ваши результаты. Оценивает модели ML для использования на основе вашей конфигурации модели dbt. [Вычисления машинного обучения происходят в этом слое и в хранилищах данных, где это применимо (подумайте: Snowpark API, Databricks)](https://docs.continual.ai/architecture/#relationship-to-your-data-warehouse).
 
 #### Bigquery ML
 
-- [BigQuery ML](https://cloud.google.com/bigquery-ml/docs/introduction): Use BigQuery-specific syntax to create machine learning models within the database and apply them as functions to your SQL to predict results. You get to [import your own TensorFlow](https://cloud.google.com/bigquery-ml/docs/making-predictions-with-imported-tensorflow-models#importing_models)
- models!
+- [BigQuery ML](https://cloud.google.com/bigquery-ml/docs/introduction): Используйте специфичный для BigQuery синтаксис для создания моделей машинного обучения в базе данных и применяйте их как функции к вашему SQL для предсказания результатов. Вы можете [импортировать свои собственные модели TensorFlow](https://cloud.google.com/bigquery-ml/docs/making-predictions-with-imported-tensorflow-models#importing_models)!
 
 #### Redshift ML
 
-- [Redshift ML](https://aws.amazon.com/redshift/features/redshift-ml/): Use Redshift-specific syntax to create machine learning models within the database and apply them as functions to your SQL to predict results. You get to bring your own models too!
+- [Redshift ML](https://aws.amazon.com/redshift/features/redshift-ml/): Используйте специфичный для Redshift синтаксис для создания моделей машинного обучения в базе данных и применяйте их как функции к вашему SQL для предсказания результатов. Вы также можете приносить свои собственные модели!
 
-#### How would this change my story?
+#### Как это изменило бы мою историю?
 
-My ML engineer and I would get to unite on SQL even more. Wherever the pipeline broke in the (<Term id="elt" />-ML) process, **SQL would be our entry-point together** to figure out the problem. For simple machine learning problems (e.g., linear regression, classification), I would more easily understand and even own the full pipeline – with the advice and review of my ML engineer of course. And for Continual, I would elegantly add my machine learning model as an exposure (see below).
+Мой ML-инженер и я могли бы еще больше объединиться на SQL. Где бы ни сломался конвейер в процессе (<Term id="elt" />-ML), **SQL был бы нашей точкой входа вместе**, чтобы выяснить проблему. Для простых задач машинного обучения (например, линейная регрессия, классификация) я бы легче понимал и даже владел полным конвейером – конечно, с советом и проверкой моего ML-инженера. И для Continual я бы элегантно добавил свою модель машинного обучения как экспозицию (см. ниже).
 
-Beyond fixing problems once they arise, this workflow would avoid much of the complexity involved in building ML Ops pipelines: massive amounts of [extra infrastructure](https://dl.acm.org/doi/10.5555/2969442.2969519) (think: where does my python code run?). As a ML engineer, I want to live in a world where I can manage exploration, training, versioning, and inference from one control plane. **In-warehouse ML has the potential to make that real.**
+Помимо исправления проблем, как только они возникают, этот рабочий процесс избежал бы многих сложностей, связанных с построением конвейеров ML Ops: огромного количества [дополнительной инфраструктуры](https://dl.acm.org/doi/10.5555/2969442.2969519) (подумайте: где выполняется мой код на python?). Как ML-инженер, я хочу жить в мире, где я могу управлять исследованием, обучением, версионированием и выводом из одной контрольной плоскости. **ML в хранилище имеет потенциал сделать это реальностью.**
 
-![Image of lineage graph for unified machine learning and analytics engineering DAG expressed in SQL](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/lineage-graph.png)
+![Изображение графа происхождения для унифицированного DAG машинного обучения и аналитической инженерии, выраженного в SQL](/img/blog/2022-02-18-machine-learning-dbt-baton-pass/lineage-graph.png)
 
-#### What are the tradeoffs?
+#### Каковы компромиссы?
 
-This wouldn’t solve for the ML engineer and her desire to inject custom ML models into this workflow without major effort (think: Jupyter notebooks if Continual isn’t her cup of tea). Also, if I wanted to build analyses on top of these predictions…I’d still have to configure them as sources in my dbt project (still a bit clunky). But my gut tells me the tradeoff would be worth it. Our shared SQL interface maintains ML models for months in a reality where fixing problems in SQL is easier than SQL, python, notebooks, BI dashboard (think: cognitive overload).
+Это не решило бы проблему для ML-инженера и ее желания внедрять пользовательские модели ML в этот рабочий процесс без значительных усилий (подумайте: Jupyter notebooks, если Continual не ее чашка чая). Кроме того, если бы я хотел строить анализы поверх этих предсказаний... мне все равно пришлось бы настраивать их как источники в моем проекте dbt (все еще немного неудобно). Но мое чутье подсказывает мне, что компромисс стоил бы того. Наш общий интерфейс SQL поддерживает модели ML в течение месяцев в реальности, где исправление проблем в SQL проще, чем SQL, python, ноутбуки, BI-дэшборд (подумайте: когнитивная перегрузка).
 
-### Make dbt integrate with multi-lingual support
+### Сделайте dbt интегрируемым с поддержкой нескольких языков
 
-It may be worth having python scripts live side by side dbt jobs and configurations. I can get better lineage and have one less tool to context switch to.
+Возможно, стоит иметь скрипты на python, живущие рядом с заданиями и конфигурациями dbt. Я могу получить лучшее происхождение и иметь один инструмент меньше для переключения контекста.
 
-#### What are the tradeoffs of this tool path?
+#### Каковы компромиссы этого пути инструментов?
 
-When things would go wrong, it’d still be a messy jumble to figure out how SQL changes inform python changes and vice versa. And I would need to care about which infrastructure my python code is running on. But my gut tells me the tradeoff would be worth it because there’d be less notebooks to schedule, and it’d be easier to align machine learning logic to dbt logic.
+Когда что-то пойдет не так, это все равно будет беспорядочной путаницей, чтобы выяснить, как изменения в SQL информируют изменения в python и наоборот. И мне нужно будет заботиться о том, на какой инфраструктуре выполняется мой код на python. Но мое чутье подсказывает мне, что компромисс стоил бы того, потому что было бы меньше ноутбуков для планирования, и было бы легче согласовать логику машинного обучения с логикой dbt.
 
-## What outcomes matter?
+## Какие результаты имеют значение?
 
-This is the part of the story where you want me to declare a winner, but there isn’t one because I see a future where all of them can win.
+Это та часть истории, где вы хотите, чтобы я объявил победителя, но его нет, потому что я вижу будущее, где все они могут победить.
 
-What matters to me is what matters to you: “Which tradeoffs matter to get me enjoying working with my teammates and fixing problems more easily in my ELT-ML pipeline?”
+Что важно для меня, так это то, что важно для вас: "Какие компромиссы имеют значение, чтобы я мог наслаждаться работой с моими коллегами и легче исправлять проблемы в моем конвейере ELT-ML?"
 
-My hope is that:
+Моя надежда заключается в том, что:
 
-- When something goes wrong, it’s clearer where to start solving
-- People are excited about baton passing work back and forth, less playing hot potato
-- People have deep pride in a predictive analytics workflow that works
-- Everyone gets to work on more interesting problems than clunkily fixing a machine learning pipeline across 5 browser tabs
-- **And most importantly, people use our collective gosh darn work to make real decisions**
+- Когда что-то идет не так, становится яснее, с чего начать решение
+- Люди рады передавать работу туда и обратно, меньше играя в горячую картошку
+- Люди глубоко гордятся рабочим процессом предсказательной аналитики, который работает
+- Все могут работать над более интересными проблемами, чем неуклюжее исправление конвейера машинного обучения через 5 вкладок браузера
+- **И самое главное, люди используют нашу коллективную работу, чтобы принимать реальные решения**
 
-I’m less interested in the tools than understanding if this problem is one we can agree is painful enough to solve in the first place. Is this your story? Which future excites you? Which scares you?
+Меня меньше интересуют инструменты, чем понимание того, является ли эта проблема той, с которой мы можем согласиться, что она достаточно болезненна, чтобы ее решить в первую очередь. Это ваша история? Какое будущее вас вдохновляет? Какое пугает?

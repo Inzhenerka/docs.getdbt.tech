@@ -1,6 +1,6 @@
 ---
-title: "COALESCE SQL function: Why we love it"
-description: "The COALESCE SQL function is an incredibly useful function that allows you to fill in unhelpful blank values that may show up in your data."
+title: "Функция COALESCE в SQL: Почему мы её любим"
+description: "Функция COALESCE в SQL — это невероятно полезная функция, которая позволяет заполнить бесполезные пустые значения, которые могут появиться в ваших данных."
 slug: coalesce-sql-love-letter
 
 authors: [kira_furuichi]
@@ -12,37 +12,37 @@ date: 2022-05-08
 is_featured: false
 ---
 
-It’s inevitable in the field of analytics engineering: you’re going to encounter moments when there’s mysterious or unhelpful blank values in your data. Null values surely have their time and place, but when you need those null values filled with more meaningful data, COALESCE comes to the rescue.
+В области аналитической инженерии неизбежно столкновение с моментами, когда в ваших данных появляются загадочные или бесполезные пустые значения. Null-значения, безусловно, имеют своё время и место, но когда вам нужно, чтобы эти null-значения были заполнены более значимыми данными, на помощь приходит COALESCE.
 
-COALESCE is an incredibly useful function that allows you to fill in unhelpful blank values that may show up in your data. In the words of analytics engineer [Lauren Benezra](https://docs.getdbt.com/author/lauren_benezra), you will probably almost never see a data model that doesn’t use COALESCE somewhere.
+COALESCE — это невероятно полезная функция, которая позволяет заполнить бесполезные пустые значения, которые могут появиться в ваших данных. Как говорит аналитический инженер [Лорен Бенезра](https://docs.getdbt.com/author/lauren_benezra), вы, вероятно, почти никогда не увидите модель данных, которая не использует COALESCE где-то.
 
 <!--truncate-->
 
-> **What is a SQL Function?**
-> At a high level, a function takes an input (or multiple inputs) and returns a manipulation of those inputs. Some common SQL functions are [EXTRACT](https://docs.getdbt.com/blog/extract-sql-love-letter/), [LOWER](https://docs.getdbt.com/blog/lower-sql-love-letter/), and [DATEDIFF](https://docs.getdbt.com/blog/datediff-sql-love-letter/). For example, the LOWER function takes a string value and returns an all lower-case version of that input string.
+> **Что такое SQL-функция?**
+> На высоком уровне функция принимает входные данные (или несколько входных данных) и возвращает манипуляцию с этими данными. Некоторые распространённые SQL-функции — это [EXTRACT](https://docs.getdbt.com/blog/extract-sql-love-letter/), [LOWER](https://docs.getdbt.com/blog/lower-sql-love-letter/) и [DATEDIFF](https://docs.getdbt.com/blog/datediff-sql-love-letter/). Например, функция LOWER принимает строковое значение и возвращает его в виде строки в нижнем регистре.
 
-## How to use the COALESCE function
+## Как использовать функцию COALESCE
 
-In formal terms, using the COALESCE function on a series of values will return the first non-null value. 
+В формальных терминах, использование функции COALESCE на серии значений вернёт первое ненулевое значение.
 
-The general syntax for using the COALESCE function looks like the following:
+Общий синтаксис для использования функции COALESCE выглядит следующим образом:
 
 ```sql
 coalesce(<input_1>, <input_2>,...<input_n>)
 ```
 
-You can have as many input values/columns to the COALESCE function as you like, but remember: order is important here since the first non-null value is the one that is returned. In practice, you’ll likely only ever use the COALESCE function with two inputs: a column and the value you want to fill null values of that column with.
+Вы можете использовать столько входных значений/столбцов для функции COALESCE, сколько захотите, но помните: порядок здесь важен, так как возвращается первое ненулевое значение. На практике вы, вероятно, будете использовать функцию COALESCE только с двумя входными данными: столбцом и значением, которым вы хотите заполнить null-значения этого столбца.
 
-> **See it in action:**
-> The COALESCE function is used in the [surrogate_key](https://docs.getdbt.com/blog/sql-surrogate-keys) macro to replace null column values.
+> **Посмотрите, как это работает:**
+> Функция COALESCE используется в макросе [surrogate_key](https://docs.getdbt.com/blog/sql-surrogate-keys) для замены null-значений столбца.
 
-### Data warehouse support for the COALESCE function
+### Поддержка функции COALESCE в хранилищах данных
 
-Most, if not all, modern data warehouses support the COALESCE function; [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_COALESCE.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/coalesce.html), [Postgres](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-coalesce/), and [Databricks](https://docs.databricks.com/sql/language-manual/functions/coalesce.html) all support the COALESCE function. In addition, the syntax to use COALESCE is the same across all of them.
+Большинство, если не все, современные хранилища данных поддерживают функцию COALESCE; [Google BigQuery](https://cloud.google.com/bigquery/docs/reference/standard-sql/conditional_expressions#coalesce), [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/dg/r_COALESCE.html), [Snowflake](https://docs.snowflake.com/en/sql-reference/functions/coalesce.html), [Postgres](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-coalesce/) и [Databricks](https://docs.databricks.com/sql/language-manual/functions/coalesce.html) все поддерживают функцию COALESCE. Кроме того, синтаксис использования COALESCE одинаков для всех них.
 
-## COALESCE SQL function example
+## Пример использования функции COALESCE в SQL
 
-Let’s look at an actual example using COALESCE. Below, we have an `orders` <Term id="table" /> with three column values: an `order_id`, `order_date`, and `order_status`.
+Давайте рассмотрим реальный пример использования COALESCE. Ниже у нас есть таблица `orders` с тремя значениями столбцов: `order_id`, `order_date` и `order_status`.
 
 | **order_id** | **order_date** | **order_status** |
 | ------------ | -------------- | ---------------- |
@@ -50,9 +50,9 @@ Let’s look at an actual example using COALESCE. Below, we have an `orders` <Te
 | 34553        | 2020-04-23     | returned         |
 | 78411        | 2022-06-06     |                  |
 
-If you do a little exploration on this table, you would see that there are only two unique values for `order_status`: NULL and `returned`. As we said before, null values have their time and place, but if you first look at this table, the null value for an order could mean many things–has the order been processed? Was the order successful? 
+Если вы немного исследуете эту таблицу, вы увидите, что для `order_status` есть только два уникальных значения: NULL и `returned`. Как мы уже говорили, null-значения имеют своё время и место, но если вы впервые смотрите на эту таблицу, null-значение для заказа может означать многое — был ли заказ обработан? Был ли заказ успешным?
 
-In this `orders` table, you can assume here that any NULL `order_status` value means that the order was not returned. To make this more clear to anyone who looks at this table, you can utilize a COALESCE function to return a newer, more readable `order_status`.
+В этой таблице `orders` вы можете предположить, что любое значение NULL в `order_status` означает, что заказ не был возвращён. Чтобы сделать это более понятным для любого, кто смотрит на эту таблицу, вы можете использовать функцию COALESCE, чтобы вернуть более новое, более читаемое `order_status`.
 
 ```sql
 select
@@ -62,7 +62,7 @@ select
 from {{ ref('orders') }}
 ```
 
-Running this query would return the following:
+Выполнение этого запроса вернёт следующее:
 
 | **order_id** | **order_date** | **order_status** |
 | ------------ | -------------- | ---------------- |
@@ -70,15 +70,15 @@ Running this query would return the following:
 | 34553        | 2020-04-23     | returned         |
 | 78411        | 2022-06-06     | not_returned     |
 
-Now, there are no null values in the `order_status` column since any null value was replaced by a `not_returned` string. Order 34553’s `order_status` remained unchanged because its original `order_status` was the first non-null value passed in the COALESCE function. By providing more context into what these null values mean, anyone who looks at this table can quickly understand the order status for a specific order.
+Теперь в столбце `order_status` нет null-значений, так как любое null-значение было заменено строкой `not_returned`. Статус заказа 34553 остался неизменным, потому что его исходный `order_status` был первым ненулевым значением, переданным в функцию COALESCE. Предоставляя больше контекста о том, что означают эти null-значения, любой, кто смотрит на эту таблицу, может быстро понять статус заказа для конкретного заказа.
 
-> **To replace or not to replace:**
-> COALESCE has a straightforward use case—fill missing values with values you specify—but you also want to ensure you’re not changing non-empty values when using it. This is where the order of the input values to the COALESCE function are important: from left to right, the first non-null value is the one that’s returned.
+> **Заменять или не заменять:**
+> COALESCE имеет простое применение — заполнение отсутствующих значений указанными вами значениями, но вы также хотите убедиться, что не изменяете непустые значения при его использовании. Здесь важен порядок входных значений для функции COALESCE: слева направо, первое ненулевое значение — это то, которое возвращается.
 
-## Why we love it
+## Почему мы её любим
 
-We checked our data team’s dbt project, and we used the COALESCE function over 100 times. We like the COALESCE function so much we named the [annual data conference on analytics engineering](https://coalesce.getdbt.com/) after it.
+Мы проверили проект dbt нашей команды данных и использовали функцию COALESCE более 100 раз. Мы настолько любим функцию COALESCE, что назвали [ежегодную конференцию по аналитической инженерии](https://coalesce.getdbt.com/) в её честь.
 
-At its core, the COALESCE function is an efficient way to fill in missing column values with values you specify. You can additionally use COALESCE across most, if not all, modern data warehouses and there’s [no tricky cross-database syntax like there is for DATEADD](https://docs.getdbt.com/blog/sql-dateadd).
+В своей основе функция COALESCE — это эффективный способ заполнения отсутствующих значений столбцов указанными вами значениями. Вы также можете использовать COALESCE в большинстве, если не во всех, современных хранилищах данных, и нет [сложного синтаксиса для разных баз данных, как это бывает с DATEADD](https://docs.getdbt.com/blog/sql-dateadd).
 
-Thank you COALESCE for always finding our moments of emptiness, and filling them with valuable stuff.
+Спасибо, COALESCE, за то, что всегда находишь наши моменты пустоты и заполняешь их ценными данными.

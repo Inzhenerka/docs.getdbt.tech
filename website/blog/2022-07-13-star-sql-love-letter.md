@@ -1,6 +1,6 @@
 ---
-title: "A star (generator) is born"
-description: "One of the macros dbt utils offers is the `star` generator. This dbt macro is one of our favorites because it lets you select all the fields you want without writing the columns you don't."
+title: "Рождение звезды (генератора)"
+description: "Один из макросов, предлагаемых dbt utils, — это генератор `star`. Этот макрос dbt — один из наших любимых, потому что он позволяет выбрать все нужные поля, не прописывая те, которые не нужны."
 slug: star-sql-love-letter
 
 authors: [kira_furuichi]
@@ -12,8 +12,7 @@ date: 2022-05-23
 is_featured: true
 ---
 
-
-We’ve likely been here: Table A has 56 columns and we want to select all but one of them (`column_56`). So here we go, let’s get started…
+Мы все, вероятно, были в такой ситуации: Таблица A содержит 56 столбцов, и мы хотим выбрать все, кроме одного из них (`column_56`). Итак, начнем...
 
 ```sql
 select
@@ -24,23 +23,23 @@ select
 from {{ ref('table_a') }}
 ```
 
-At this point, you realize your will to continue typing out the next 52 columns has essentially dwindled down to nothing and you’re probably questioning the life choices that led you here.
+В этот момент вы понимаете, что ваше желание продолжать набирать оставшиеся 52 столбца практически исчезло, и вы, вероятно, начинаете сомневаться в жизненных решениях, которые привели вас сюда.
 
-But what if there was a way to make these 56+ lines of code come down to a handful? Well, that’s where a handy [dbt macro](/docs/build/jinja-macros) comes into play.
+Но что, если бы был способ сократить эти 56+ строк кода до нескольких? Вот тут-то и приходит на помощь удобный [макрос dbt](/docs/build/jinja-macros).
 
 <!--truncate-->
 
-## The `star` dbt macro
+## Макрос `star` в dbt
 
-dbt supports [dbt_utils](https://github.com/dbt-labs/dbt-utils), a [package of macros and tests](https://docs.getdbt.com/docs/build/packages) that data folks can use to help them write more <Term id="dry" /> code in their dbt project. One of the macros dbt utils offers is the `star` generator.
+dbt поддерживает [dbt_utils](https://github.com/dbt-labs/dbt-utils), [пакет макросов и тестов](https://docs.getdbt.com/docs/build/packages), который специалисты по данным могут использовать, чтобы писать более <Term id="dry" /> код в своем проекте dbt. Один из макросов, предлагаемых dbt utils, — это генератор `star`.
 
-This macro:
+Этот макрос:
 
-* Generates a comma-separated list of all fields that exist in the `from` [relation](https://docs.getdbt.com/reference/dbt-classes#relation) and excludes any fields listed in an `except` argument,
-* Can optionally add a prefix to all generated fields using the `relation_alias`  argument,
-* And also concatenate prefixes and/or suffixes to all generated fields using the  `prefix` and `suffix` arguments
+* Генерирует список всех полей, разделенных запятыми, которые существуют в [отношении](https://docs.getdbt.com/reference/dbt-classes#relation) `from` и исключает любые поля, указанные в аргументе `except`,
+* Может по желанию добавить префикс ко всем сгенерированным полям, используя аргумент `relation_alias`,
+* А также может добавлять префиксы и/или суффиксы ко всем сгенерированным полям, используя аргументы `prefix` и `suffix`.
 
-So what does this mean for the example from above? Instead of writing out all 55 columns, you can use the `star` macro to select all fields except the column you don’t want:
+Что это значит для приведенного выше примера? Вместо того чтобы прописывать все 55 столбцов, вы можете использовать макрос `star`, чтобы выбрать все поля, кроме того, которое вам не нужно:
 
 ```sql
 select
@@ -48,20 +47,20 @@ select
 from {{ ref('table_a') }}
 ```
 
-This dbt model compiles to:
+Эта модель dbt компилируется в:
 
 ```sql
 select
 	column_1,
 	column_2,
-	…, --imagine we weren’t lazy and wrote out all other columns
+	…, --представьте, что мы не были ленивыми и прописали все остальные столбцы
 	column_55
 from table_a
 ```
 
-With the `star` macro, all of the columns except `column_56` are generated in a comma-separated list within the `select` statement. What was once 56+ lines of tedious, mind-numbing SQL becomes 3 lines using the `star` macro. You can also exclude multiple columns by passing in the column names to the `except` argument.
+С помощью макроса `star` все столбцы, кроме `column_56`, генерируются в виде списка, разделенного запятыми, в операторе `select`. То, что раньше было 56+ строками утомительного, монотонного SQL, становится 3 строками с использованием макроса `star`. Вы также можете исключить несколько столбцов, передав их имена в аргумент `except`.
 
-If you want to alias all fields in a model with the same alias without having to explicitly rename them all, you can also use the `star` macro with the `relation_alias` argument passed in:
+Если вы хотите присвоить всем полям в модели один и тот же псевдоним, не переименовывая их явно, вы также можете использовать макрос `star` с переданным аргументом `relation_alias`:
 
 ```sql
 select
@@ -69,15 +68,14 @@ select
 from {{ ref('table_a') }}
 ```
 
-Now, this will return all fields from `table_a` with the `my_new_alias.field_name` naming format.
+Теперь это вернет все поля из `table_a` с форматом именования `my_new_alias.field_name`.
 
-[Under the hood](https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/star.sql), the `star` macro is actually using another dbt utils macro ([get_filtered_columns_in_relation](https://github.com/dbt-labs/dbt-utils#get_filtered_columns_in_relation-source)) to loop through fields to either select, alias, and/or append some string values to them.
+[Под капотом](https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/star.sql) макрос `star` на самом деле использует другой макрос dbt utils ([get_filtered_columns_in_relation](https://github.com/dbt-labs/dbt-utils#get_filtered_columns_in_relation-source)), чтобы перебрать поля для их выбора, присвоения псевдонимов и/или добавления к ним строковых значений.
 
-## Why we love the `star` macro
+## Почему мы любим макрос `star`
 
-It’s no hidden fact: the Data Team at dbt Labs loves to use dbt util’s macros and tests when appropriate. We like dbt utils so much we created a March Madness Utils Bracket for them (not taking questions at this time) and we used the `star` macro alone over 30 times in our internal dbt repository.
+Это не секрет: команда данных в dbt Labs любит использовать макросы и тесты dbt utils, когда это уместно. Мы настолько любим dbt utils, что создали для них турнир March Madness Utils Bracket (вопросы не принимаются в данный момент) и использовали макрос `star` более 30 раз в нашем внутреннем репозитории dbt.
 
 ![](/img/blog/2022-07-13-star-sql-love-letter/utils-madness-1.png)
 
-
-Overall, the `star` macro is a great way to dip your toes into the dbt utils package, write DRY code, and reduce your carpal tunnel.
+В целом, макрос `star` — отличный способ начать использовать пакет dbt utils, писать DRY код и уменьшить риск развития туннельного синдрома.

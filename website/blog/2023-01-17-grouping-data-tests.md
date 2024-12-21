@@ -1,6 +1,6 @@
 ---
-title: "Power up your data quality with grouped checks"
-description: "Which of these numbers doesn't belong? [-1, 0, 1, null]. You can't judge data quality without data context, so our tools should enable as much context as possible."
+title: "Улучшите качество данных с помощью групповых проверок"
+description: "Какое из этих чисел не подходит? [-1, 0, 1, null]. Нельзя оценить качество данных без контекста, поэтому наши инструменты должны предоставлять как можно больше контекста."
 slug: grouping-data-tests
 
 authors: [emily_riederer]
@@ -11,59 +11,59 @@ hide_table_of_contents: false
 date: 2023-01-17
 is_featured: true
 ---
-Imagine you were responsible for monitoring the safety of a subway system. Where would you begin? Most likely, you'd start by thinking about the key risks like collision or derailment, contemplate what causal factors like scheduling software and track conditions might contribute to bad outcomes, and institute processes and metrics to detect if those situations arose. What you wouldn't do is blindly apply irrelevant industry standards like testing for problems with the landing gear (great for planes, irrelevant for trains) or obsessively worry about low probability events like accidental teleportation before you'd locked down the fundamentals. 
+Представьте, что вы отвечаете за мониторинг безопасности системы метро. С чего бы вы начали? Скорее всего, вы начнете с размышлений о ключевых рисках, таких как столкновение или сход с рельсов, подумаете о причинных факторах, таких как программное обеспечение для планирования и состояние путей, которые могут привести к плохим результатам, и установите процессы и метрики для обнаружения таких ситуаций. Вы бы не стали слепо применять нерелевантные отраслевые стандарты, такие как тестирование проблем с шасси (отлично для самолетов, неактуально для поездов) или чрезмерно беспокоиться о маловероятных событиях, таких как случайная телепортация, прежде чем вы бы не закрепили основы.
 
-When thinking about real-world scenarios, we're naturally inclined to think about key risks and mechanistic causes. However, in the more abstract world of data, many of our data tests often gravitate towards one of two extremes: applying rote out-of-the-box tests (nulls, PK-FK relationships, etc.) from the world of traditional database management or playing with exciting new toys that promise to catch our wildest errors with anomaly detection and artificial intelligence. 
+Когда мы думаем о реальных сценариях, мы естественно склонны думать о ключевых рисках и механистических причинах. Однако в более абстрактном мире данных многие наши тесты данных часто склоняются к одной из двух крайностей: применению шаблонных тестов (null, PK-FK отношения и т.д.) из мира традиционного управления базами данных или игре с новыми инструментами, которые обещают поймать наши самые дикие ошибки с помощью обнаружения аномалий и искусственного интеллекта.
 
-Between these two extremes lies a gap where human intelligence goes. Analytics engineers can create more effective tests by embedding their understanding of how the data was created, and especially how this data can go awry (a topic I've [written about previously](https://emilyriederer.com/post/data-error-gen/)). While such expressive tests will be unique to our domain, modest tweaks to our mindset can help us implement them with our standard tools. This post demonstrates how the simple act of conducting tests _by group_ can expand the universe of possible tests, boost the sensitivity of the existing suite, and help keep our data "on track". This feature is [now available in dbt-utils](https://github.com/dbt-labs/dbt-utils#grouping-in-tests). 
+Между этими двумя крайностями лежит разрыв, который заполняется человеческим интеллектом. Инженеры аналитики могут создавать более эффективные тесты, внедряя свое понимание того, как были созданы данные, и особенно как эти данные могут пойти наперекосяк (тема, о которой я [писала ранее](https://emilyriederer.com/post/data-error-gen/)). Хотя такие выразительные тесты будут уникальны для нашей области, скромные изменения в нашем мышлении могут помочь нам реализовать их с помощью наших стандартных инструментов. Этот пост демонстрирует, как простое проведение тестов _по группам_ может расширить вселенную возможных тестов, повысить чувствительность существующего набора и помочь держать наши данные "на правильном пути". Эта функция [теперь доступна в dbt-utils](https://github.com/dbt-labs/dbt-utils#grouping-in-tests).
 
 <!--truncate-->
 
-## Grouped checks
+## Групповые проверки
 
-Group-based checks can be important for fully articulating good "business rules" against which to assess data quality. For example, groups could reflect either computationally-relevant dimensions of the <Term id="etl" /> process (e.g. data loaded from different sources) or semantically-relevant dimensions of the real-world process that our data captures (e.g. repeated measures pertaining to many individual customers, patients, product lines, etc.) Such checks can make existing tests more rigorous while others are only expressible at the grouped level.
+Проверки на основе групп могут быть важны для полного формулирования хороших "бизнес-правил", по которым можно оценивать качество данных. Например, группы могут отражать либо вычислительно значимые измерения процесса <Term id="etl" /> (например, данные, загруженные из разных источников), либо семантически значимые измерения реального процесса, который наши данные фиксируют (например, повторяющиеся измерения, относящиеся к многим отдельным клиентам, пациентам, продуктовым линиям и т.д.). Такие проверки могут сделать существующие тесты более строгими, в то время как другие могут быть выражены только на уровне групп.
 
-### Only expressible
-Some types of checks can only be expressed by group. For example, in a dataset containing train schedules across a transit system, an `ARRIVAL_TIME` field might not be unique; however, it would (hopefully) always be unique for a specific `TRACK` and `STATION`! 
+### Только выражаемые
+Некоторые типы проверок могут быть выражены только по группам. Например, в наборе данных, содержащем расписания поездов по всей транспортной системе, поле `ARRIVAL_TIME` может не быть уникальным; однако оно (надеемся) всегда будет уникальным для конкретного `TRACK` и `STATION`!
 
-### More rigorous
-Consider a recency check (i.e. that the maximum date represented in the data is appropriately close to the present); if the data loads from multiple sources (e.g. tickets purchases through web, a mobile app, or a station kiosk), a check of the maximum date could pass the check if any one source loaded, but unless the data is grouped by source and _each_ group's maximum date is checked, stale data could go undetected.
+### Более строгие
+Рассмотрим проверку актуальности (т.е. что максимальная дата, представленная в данных, соответствует настоящему времени); если данные загружаются из нескольких источников (например, покупка билетов через веб, мобильное приложение или киоск на станции), проверка максимальной даты может пройти, если загружен хотя бы один источник, но если данные не сгруппированы по источнику и не проверена максимальная дата _каждой_ группы, устаревшие данные могут остаться незамеченными.
 
-## Case study: NYC subway data
+## Исследование: данные метро Нью-Йорка
 
-To demonstrate the utility (or, should I say, necessity) of group-level checks, let's consider some real-world open data from the [NYC subway system](http://web.mta.info/developers/turnstile.html) which I can always count on to have plenty of data quality quirks (which, to be clear, I do not say as a criticism; there's nothing unexpected about this in real-world "data as residue" data.). Cumulative entries through each turnstile across all subway stations are recorded 4x daily, creating a structure with one record for each turnstile and timestamp combination. 
+Чтобы продемонстрировать полезность (или, лучше сказать, необходимость) проверок на уровне групп, давайте рассмотрим некоторые реальные открытые данные из [системы метро Нью-Йорка](http://web.mta.info/developers/turnstile.html), на которые я всегда могу рассчитывать, чтобы обнаружить множество особенностей качества данных (что, чтобы было ясно, я не говорю как критику; в реальном мире "данные как остаток" это не является неожиданностью). Кумулятивные записи через каждый турникет на всех станциях метро фиксируются 4 раза в день, создавая структуру с одной записью для каждой комбинации турникета и временной метки.
 
-Of course, the information we want out of this data is probably not the cumulative count through some turnstile from some arbitrary start date but rather the station-level entries during a given period. So, in our transformations, we would take a lagged difference of the cumulative entries by turnstile and aggregate that up to the station-level. Just collating data from 5,000 sensors – what could go wrong, right? 
+Конечно, информация, которую мы хотим получить из этих данных, вероятно, не является кумулятивным счетом через какой-то турникет с какой-то произвольной начальной даты, а скорее записями на уровне станции за определенный период. Таким образом, в наших преобразованиях мы бы взяли отложенную разницу кумулятивных записей по турникету и агрегировали бы это на уровне станции. Просто собирая данные с 5000 датчиков – что может пойти не так, верно?
 
-However, that seemingly trivial lagged-difference transformation makes two key assumptions: the cumulative entries are <Term id="monotonically-increasing"/> _by turnstile_ and every time period observations is present _for every turnstile_.
+Однако это, казалось бы, тривиальное преобразование с отложенной разницей делает два ключевых предположения: кумулятивные записи <Term id="monotonically-increasing"/> _по турникету_ и каждое временное наблюдение присутствует _для каждого турникета_.
 
-These conditions illustrate the two benefits of grouped checks we mentioned before: monotonicity can only be assessed after grouping by turnstile (there's no reason the cumulative entry count should only go up when comparing observations across different turnstiles), and although the presence of given timestamps _could_ be checked at the dataset level, it is substantially more rigorous when checked at the individual sensor level. 
+Эти условия иллюстрируют две выгоды от групповых проверок, которые мы упомянули ранее: монотонность может быть оценена только после группировки по турникету (нет причин, по которым кумулятивный счет записей должен только увеличиваться при сравнении наблюдений по разным турникетам), и хотя наличие данных временных меток _может_ быть проверено на уровне набора данных, это значительно более строго, когда проверяется на уровне отдельного датчика.
 
-So what do we discover when we validate our data by group?
+Итак, что мы обнаруживаем, когда проверяем наши данные по группам?
 
-Testing for monotonicity, we find many poorly behaved turnstiles. Unlike the well-behaved dark blue line, other turnstiles seem to _decrement_ versus _increment_ with each rotation while still others cyclically increase and plummet to zero – perhaps due to maintenance events, replacements, or glitches in communication with the central server.
+Проверяя монотонность, мы находим много плохо работающих турникетов. В отличие от хорошо работающей темно-синей линии, другие турникеты, кажется, _уменьшаются_ вместо _увеличения_ с каждым оборотом, в то время как другие циклически увеличиваются и падают до нуля – возможно, из-за событий технического обслуживания, замен или сбоев в связи с центральным сервером.
 
-<Lightbox src="/img/blog/2023-01-17-grouping-data-tests/1-monotonicity.png" title="Cumulative Entries by Turnstile for 3 Turnstiles" alt="A chart with three lines: one in dark blue trending up and to the right, one in light blue trending down and to the right, and one in very light blue which tracks up and then suddenly drops, repeating in a sawtooth pattern."/>
+<Lightbox src="/img/blog/2023-01-17-grouping-data-tests/1-monotonicity.png" title="Кумулятивные записи по турникету для 3 турникетов" alt="График с тремя линиями: одна темно-синяя, направленная вверх и вправо, одна светло-синяя, направленная вниз и вправо, и одна очень светло-синяя, которая идет вверх, а затем внезапно падает, повторяясь в виде зубчатого узора."/>
 
-Similarly, while no expected timestamp is missing from the data altogether, a more rigorous test of timestamps _by turnstile_ reveals between roughly 50-100 missing observations for any given period.
+Аналогично, хотя ни одна ожидаемая временная метка не отсутствует в данных полностью, более строгая проверка временных меток _по турникету_ выявляет от 50 до 100 отсутствующих наблюдений за любой данный период.
 
-<Lightbox src="/img/blog/2023-01-17-grouping-data-tests/2-missing.png" title="Number of Missing Turnstiles by Recording Time Period" alt="A dot plot showing 50-100 turnstiles are missing entries for each period between January and May, the range shown on the x axis."/>
+<Lightbox src="/img/blog/2023-01-17-grouping-data-tests/2-missing.png" title="Количество отсутствующих турникетов по времени записи" alt="Точечный график, показывающий, что 50-100 турникетов отсутствуют для каждого периода между январем и маем, диапазон показан на оси x."/>
 
-_Check out this [GitHub gist](https://gist.github.com/emilyriederer/4dcc6a05ea53c82db175e15f698a1fb6) to replicate these views locally._
+_Посмотрите этот [GitHub gist](https://gist.github.com/emilyriederer/4dcc6a05ea53c82db175e15f698a1fb6), чтобы воспроизвести эти представления локально._
 
-## Right-sizing grouped checks
+## Оптимизация групповых проверок
 
-If the power of grouped checks comes from our knowledge of the underlying systems, this same knowledge can guide our understanding of their limitations and when grouped checks aren't the right answer. 
+Если сила групповых проверок исходит из нашего знания о базовых системах, то это же знание может направлять наше понимание их ограничений и когда групповые проверки не являются правильным ответом.
 
-Just like we can't inspect every tie on our railroad track, grouped checks represent a tradeoff between effort (both cognitive and computational!) and value. They are most effective when groups are related to specific points of friction in our pipeline which we are unable to test or control what happens further upstream. 
+Так же, как мы не можем осмотреть каждую шпалу на нашей железнодорожной линии, групповые проверки представляют собой компромисс между усилиями (как когнитивными, так и вычислительными!) и ценностью. Они наиболее эффективны, когда группы связаны с конкретными точками трения в нашем конвейере, которые мы не можем протестировать или контролировать, что происходит дальше по потоку.
 
-Not all groupings are equally likely to break the data. In the subway example, turnstile-level failures are likely because each individual turnstile is _independently_ involved in data collection and can break in its own unique ways. However, if we were working with clickstream data for our online ticket portal, the data collection process is centralized, so it would be unlikely for ETL to break in customer-specific ways and it would be cumbersome to execute checks by customer.
+Не все группировки одинаково вероятно нарушат данные. В примере с метро, сбои на уровне турникетов вероятны, потому что каждый отдельный турникет _независимо_ участвует в сборе данных и может ломаться по-своему. Однако, если бы мы работали с данными о кликах для нашего онлайн-портала продажи билетов, процесс сбора данных централизован, поэтому маловероятно, что ETL сломается по-особенному для каждого клиента, и было бы обременительно выполнять проверки по клиентам.
 
-Even when grouped checks have merit, their need might be a "code smell" that suggests we could instead be doing simpler checks further upstream. Since grouped checks are most often needed to counteract the blending of multiple <Term id="data-lineage">data lineages</Term>, where possible they could be rewritten as more typical tests applied to each branch of the lineage before consolidation. For example, it would be nice if we could check for monotonicity before aggregating sensor data. However, when we lack control of those upstream processes, grouped checks offer a practical alternative.
+Даже когда групповые проверки имеют смысл, их необходимость может быть "запахом кода", который указывает на то, что мы могли бы вместо этого выполнять более простые проверки дальше по потоку. Поскольку групповые проверки чаще всего необходимы для противодействия смешиванию нескольких <Term id="data-lineage">происхождений данных</Term>, где это возможно, их можно переписать как более типичные тесты, применяемые к каждой ветви происхождения до консолидации. Например, было бы неплохо, если бы мы могли проверить монотонность до агрегирования данных датчиков. Однако, когда у нас нет контроля над этими процессами выше по потоку, групповые проверки предлагают практическую альтернативу.
 
-## Now in dbt-utils!
+## Теперь в dbt-utils!
 
-If you're intrigued by the prospect of grouped checks, it's now possible to [run these tests from dbt-utils](https://github.com/dbt-labs/dbt-utils#grouping-in-tests). The 1.0.0 release [brings grouping in tests to all relevant tests](https://www.emilyriederer.com/post/grouping-data-quality-update/), specifically:
+Если вас заинтересовала перспектива групповых проверок, теперь можно [запускать эти тесты из dbt-utils](https://github.com/dbt-labs/dbt-utils#grouping-in-tests). Выпуск 1.0.0 [добавляет группировку в тесты для всех релевантных тестов](https://www.emilyriederer.com/post/grouping-data-quality-update/), в частности:
 
 - equal_rowcount()
 - fewer_rows_than()
@@ -73,7 +73,7 @@ If you're intrigued by the prospect of grouped checks, it's now possible to [run
 - sequential_values()
 - non_null_proportion()
 
-Each check now has a `group_by_columns` argument which accepts one or more column names. For example, to check for a valid daily record for each turnstile in each station, we could add to our `schema.yml` file:
+Каждая проверка теперь имеет аргумент `group_by_columns`, который принимает одно или несколько имен столбцов. Например, чтобы проверить наличие действительной ежедневной записи для каждого турникета на каждой станции, мы могли бы добавить в наш файл `schema.yml`:
 
 ```yaml
 models:
@@ -83,11 +83,11 @@ models:
           datepart: day
           field: recorded_at
           interval: 1
-          # Check for recency for each turnstile_id at each station_id
+          # Проверка актуальности для каждого turnstile_id на каждой station_id
           group_by_columns:
             - station_id
             - turnstile_id
 ```
 
-## Conclusion
-And what should you do if your new data tests fail? This actually reveals the final benefit of hypothesis-driven checks: because you are testing for the failure of specific systems or processes, test results will direct your debugging attention towards the root cause of your data issue! Instead of embarking on a directionless quest, you'll immediately know where in your pipeline to focus your attention to get your system back on track.
+## Заключение
+И что делать, если ваши новые тесты данных не проходят? Это на самом деле раскрывает последнюю выгоду от проверок, основанных на гипотезах: поскольку вы тестируете на сбой конкретных систем или процессов, результаты тестов направят ваше внимание на отладку к коренной причине вашей проблемы с данными! Вместо того чтобы отправляться в бесцельный поиск, вы сразу узнаете, на каком этапе вашего конвейера сосредоточить внимание, чтобы вернуть вашу систему на правильный путь.

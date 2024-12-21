@@ -1,6 +1,6 @@
 ---
-title: "How We Calculate Time on Task, the Business Hours Between Two Dates"
-description: "An overview of how to calculate the Time on Task metric, the number of business hours between two dates, in SQL."
+title: "Как мы рассчитываем время выполнения задачи, рабочие часы между двумя датами"
+description: "Обзор того, как рассчитать метрику времени выполнения задачи, количество рабочих часов между двумя датами, с помощью SQL."
 slug: measuring-business-hours-sql-time-on-task
 
 authors: [dave_connors]
@@ -12,114 +12,113 @@ date: 2022-02-03
 is_featured: false
 ---
 
-Measuring the number of business hours between two dates using SQL is one of those classic problems that sounds simple yet has [plagued analysts since time immemorial](https://www.sqlteam.com/forums/topic.asp?TOPIC_ID=74645).
+Измерение количества рабочих часов между двумя датами с использованием SQL — это одна из тех классических задач, которая звучит просто, но [мучает аналитиков с незапамятных времен](https://www.sqlteam.com/forums/topic.asp?TOPIC_ID=74645).
 
-This comes up in a couple places at dbt Labs:
+Эта задача возникает в нескольких местах в dbt Labs:
 
-* Calculating the time it takes for a support ticket to be solved
-* Measuring team performance against response time SLAs
+* Расчет времени, необходимого для решения заявки в службу поддержки
+* Измерение производительности команды в соответствии с соглашениями об уровне обслуживания (SLA) по времени ответа
 
-We internally refer to this at "Time on Task," and it can be a critical data point for customer or client facing teams. Thankfully our tools for calculating Time on Task have improved just a little bit since 2006.
+Внутри компании мы называем это "время выполнения задачи", и это может быть критически важной точкой данных для команд, работающих с клиентами. К счастью, наши инструменты для расчета времени выполнения задачи немного улучшились с 2006 года.
 
-Even still, you've got to do some pretty gnarly SQL or dbt gymnastics to get this right, including:
+Тем не менее, вам придется выполнить довольно сложные SQL или dbt-манипуляции, чтобы сделать это правильно, включая:
 
-1. Figuring out how to exclude nights and weekends from your SQL calculations
-2. Accounting for holidays using a custom holiday calendar
-3. Accommodating for changes in business hour schedules
+1. Определение, как исключить ночи и выходные из ваших SQL-расчетов
+2. Учет праздников с использованием пользовательского календаря праздников
+3. Приспособление к изменениям в расписании рабочих часов
 
-This piece will provide an overview of how and critically *why* to calculate Time on Task and how we use it here at dbt Labs.
+Эта статья предоставит обзор того, как и, что важно, *почему* рассчитывать время выполнения задачи и как мы используем его здесь, в dbt Labs.
 
 <!--truncate-->
 
-## Two strategies to calculate Time on Task
+## Две стратегии расчета времени выполнения задачи
 
-1. One size fits all with nested macros
+1. Универсальное решение с вложенными макросами
 
-This solution allowed us to create a one-line [dbt macro](/docs/build/jinja-macros) to account for most common Time On Task use cases by having a series of nested macros behind the scenes.
+Это решение позволило нам создать однострочный [dbt макрос](/docs/build/jinja-macros), чтобы учесть большинство распространенных случаев использования времени выполнения задачи, имея серию вложенных макросов за кулисами.
 
-This strategy does a great job in being able to account for nights, weekends and custom holidays, but lacks the flexibility to accommodate changes in business hours, so we've transitioned off of it to the 2nd option:
+Эта стратегия отлично справляется с учетом ночей, выходных и пользовательских праздников, но не обладает гибкостью для учета изменений в рабочих часах, поэтому мы перешли на второй вариант:
 
-2. Bespoke and customizable with a subquery
+2. Индивидуальное и настраиваемое решение с подзапросом
 
-Our current production Time on Task calculation is able to be both powerful and flexible by bringing in a construct you rarely see at dbt Labs - a _[gasp]_ <Term id="subquery" />. By using an <Term id="grain">hourly-grain</Term> date <Term id="table" />, you are able to standardize your organization's unique definition of business hours vs. non business hours in a fully customizable way.
+Наш текущий расчет времени выполнения задачи может быть как мощным, так и гибким благодаря использованию конструкции, которую вы редко видите в dbt Labs - _[ах]_ <Term id="subquery" />. Используя <Term id="grain">часовой уровень</Term> таблицы дат <Term id="table" />, вы можете стандартизировать уникальное определение рабочих часов вашей организации по сравнению с нерабочими часами полностью настраиваемым способом.
 
-You can find example code for each of these approaches in [an example repo](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/master/business-hours).
+Вы можете найти пример кода для каждого из этих подходов в [примере репозитория](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/master/business-hours).
 
-After we’ve walked through the mechanics of calculating Time on Task, we’ll spend some time thinking about how and why to use this metric in your reporting. Time on Task can be a huge boon for operational reporting, but like any metric it has inherent strengths and weaknesses in terms of reflecting actual business value.
+После того как мы пройдем через механику расчета времени выполнения задачи, мы потратим некоторое время на размышления о том, как и почему использовать эту метрику в ваших отчетах. Время выполнения задачи может быть огромным подспорьем для операционной отчетности, но, как и любая метрика, она имеет свои сильные и слабые стороны с точки зрения отражения реальной бизнес-ценности.
 
-We’ve put together a series of questions to ask yourself to make sure that you are optimizing Time on Task for the problems it is best suited to solve.
+Мы составили серию вопросов, которые вы должны задать себе, чтобы убедиться, что вы оптимизируете время выполнения задачи для решения тех проблем, для которых оно лучше всего подходит.
 
-## The one size fits all solution: nested macros
+## Универсальное решение: вложенные макросы
 
-Our first approach to calculating Time on Task relied upon tying together a series of macros. Specifically, as we diagram below, we needed a way to model non-working time to properly remove it from a standard `date_diff` calculation.
+Наш первый подход к расчету времени выполнения задачи основывался на связывании серии макросов. В частности, как мы показываем ниже, нам нужен был способ моделирования нерабочего времени, чтобы правильно исключить его из стандартного расчета `date_diff`.
 
-This approach works great for the case where we have a standard business schedule, but falls flat when we want to bring in more complex, real world applications.
+Этот подход отлично работает в случае, когда у нас есть стандартное рабочее расписание, но не подходит, когда мы хотим учесть более сложные, реальные приложения.
 
-Let’s assume that your customer support team always works Monday to Friday, and from 8am to 8pm, and your schedule looks something like this:
+Предположим, что ваша команда поддержки клиентов всегда работает с понедельника по пятницу, с 8 утра до 8 вечера, и ваше расписание выглядит примерно так:
 
 ![image alt text](/img/blog/2022-01-12-time-on-task/image_0.png)
 
-And let’s say you have a few tickets that come in, and your team works through them diligently, as always:
+И предположим, что у вас есть несколько заявок, которые поступают, и ваша команда усердно работает над ними, как всегда:
 
 ![image alt text](/img/blog/2022-01-12-time-on-task/image_1.png)
 
-Our schedule-aware metric should only capture the non-grey time:
+Наша метрика, учитывающая расписание, должна захватывать только несерое время:
 
 ![image alt text](/img/blog/2022-01-12-time-on-task/image_2.png)
 
-How do we get there? For any of these tickets, the general formula to get the answer we want can be boiled down to subtracting non-working time from the total amount of time between the dates (i.e. a regular ol’ datediff):
+Как мы можем этого добиться? Для любой из этих заявок общая формула для получения нужного нам ответа сводится к вычитанию нерабочего времени из общего количества времени между датами (т.е. обычный `datediff`):
 
 ![image alt text](/img/blog/2022-01-12-time-on-task/image_3.png)
 
-Those blocks of non-working time can be broken down into two sections: overnights and weekends. But how can we dynamically count the number of overnights or weekend days? Enter the weekday macro!
+Эти блоки нерабочего времени можно разбить на две части: ночное время и выходные. Но как мы можем динамически подсчитать количество ночей или выходных дней? Встречайте макрос для будних дней!
 
-### How to exclude weekends?
+### Как исключить выходные?
 
-Building off the excellent [work](https://help.looker.com/hc/en-us/articles/360023861113-How-to-Count-Only-Weekdays-Between-Two-Dates) of the intrepid staff over at Looker, we created a macro that returns the number of weekdays between two dates. It works by calculating the number of calendar days between two timestamps, then subtracting the number of Saturdays and Sundays from that result. So, for a ticket created on a Monday, closed on Tuesday, the `weekdays_between` macro returns 1. For a ticket opened on a Thursday, closed on the following Monday, this macro returns 2!
+Основываясь на отличной [работе](https://help.looker.com/hc/en-us/articles/360023861113-How-to-Count-Only-Weekdays-Between-Two-Dates) смелых сотрудников Looker, мы создали макрос, который возвращает количество будних дней между двумя датами. Он работает, вычисляя количество календарных дней между двумя временными метками, а затем вычитая количество суббот и воскресений из этого результата. Таким образом, для заявки, созданной в понедельник и закрытой во вторник, макрос `weekdays_between` возвращает 1. Для заявки, открытой в четверг и закрытой в следующий понедельник, этот макрос возвращает 2!
 
-This ends up being helpful twice - the result of the weekdays macro is the same as the number of overnights between two dates, which is effectively the first half of our non-working time formula. Multiplying the number of weekdays between the two dates by the daily window of non-working time gets us the number of overnight hours (in our example, this window is 8pm - 8am, or 12 hours).
+Это оказывается полезным дважды - результат макроса для будних дней совпадает с количеством ночей между двумя датами, что фактически является первой половиной нашей формулы нерабочего времени. Умножение количества будних дней между двумя датами на дневное окно нерабочего времени дает нам количество ночных часов (в нашем примере это окно с 8 вечера до 8 утра, или 12 часов).
 
-We can use this result to measure the number of weekend days between the two dates – subtracting the number of weekdays from the total number of days between the two dates gives you the number of weekend days. Let’s focus on our example ticket that was opened on Friday and closed on Monday to explain:
+Мы можем использовать этот результат для измерения количества выходных дней между двумя датами — вычитая количество будних дней из общего количества дней между двумя датами, вы получаете количество выходных дней. Давайте сосредоточимся на нашем примере заявки, которая была открыта в пятницу и закрыта в понедельник, чтобы объяснить:
 
 ![image alt text](/img/blog/2022-01-12-time-on-task/image_4.png)
 
-You might have already picked up the huge caveat here — a consistent schedule is baked into this calculation, and that’s usually not the case. Throw in a public holiday, or a new hire in a different time zone, and suddenly these calculations stop reflecting reality! Some edge cases and how we deal with them:
+Вы, возможно, уже заметили огромную оговорку здесь — в этом расчете заложено постоянное расписание, и это обычно не так. Добавьте государственный праздник или нового сотрудника в другом часовом поясе, и внезапно эти расчеты перестают отражать реальность! Некоторые крайние случаи и как мы с ними справляемся:
 
+### Что если заявка поступает вне рабочих часов?
 
-### What if a ticket comes in outside business hours?
+Ранее у нас было обходное решение, встроенное в саму таблицу заявок! Мы поддерживаем модель `all_business_hours` в нашем проекте, используя макрос `date_spine` из dbt_utils. Это создает таблицу на уровне часа, и мы добавляем пользовательский булевый столбец, который указывает, находится ли этот час в нашем рабочем окне с 8 утра до 8 вечера. Затем мы соединяем это с нашими данными о заявках и для каждой временной метки заявки создаем новый столбец, который возвращает *следующий доступный рабочий час.*
 
-In the past, we had a workaround baked into the ticket table itself! We maintain a `all_business_hours` model in our project using the `date_spine` macro from dbt_utils. This creates a table at the hour level, and we add a custom boolean column that indicates whether that hour is within our 8am - 8pm working hour window. We then join this to our ticket data, and for each ticket timestamp of interest, create a new column that returns *the next available business hour.*
+Таким образом, для любой временной метки, которая уже находится в рабочих часах, как в приведенном выше примере, столбец timestamp_business идентичен, но для любой заявки, которая поступает вне рабочих часов, он возвращает первый рабочий час следующего дня - т.е. заявка, сделанная поздно вечером в среду, имеет временную метку start_business в 8:00 утра в четверг. Это позволяет нам выполнять эти расчеты только на временных метках, которые появляются в наших рабочих часах.
 
-So for any timestamp that is already in business hours like the above example, the timestamp_business column is identical, but for any ticket that comes in outside business hours, it returns the first business hour of the following day - i.e. a ticket made late Wednesday night has a start_business timestamp of 8:00am on Thursday. This allows us to only ever perform these calculations on timestamps that appear within our working hours.
+### А как насчет праздников?
 
-### What about holidays?
+Мы поддерживаем [файл семян](/docs/build/seeds) в нашем проекте, который содержит даты праздников на следующие 5 лет или около того - мы соединяем это с нашей таблицей date_dim на уровне часа и включаем праздники в упомянутый выше булевый столбец. Таким образом, любая заявка, поступившая в праздничный день, быстро перемещается к началу следующего рабочего дня. Это не идеальное решение, поэтому интересно услышать, как это решается в других местах!
 
-We maintain a [seed file](/docs/build/seeds) in our project that has the dates of holidays for the next 5 years or so - we join this to our hour-level date_dim table, and incorporate holidays into the boolean column mentioned above. This way, any ticket that comes in on a holiday gets fast forwarded to the beginning of the next working day. Not a perfect solution, so curious to hear how this is handled elsewhere!
+## Настраиваемый вариант: индивидуальный календарь + подзапрос
 
-## The customizable option: a bespoke calendar + subquery
+Наш первый подход к измерению недавно потребовал корректировки, когда изменились наши рабочие часы. Сразу стало очевидно, что эта башня из макросов была слишком сложной для анализа и не позволяла легко вносить необходимые изменения. Мы решили отказаться от всего этого и упростить с помощью редкого (для нас!) использования коррелированного подзапроса.
 
-Our first measurement approach recently needed to be adjusted when our business hours changed. It was immediately obvious that this Jenga-tower of macros was too difficult to parse and did not easily accommodate the changes we needed to make. We decided to scrap the whole thing and simplify with the rare (for us!) use of a correlated subquery.
+### Как мы учли изменения в рабочих часах
+Мы поняли, что, поскольку мы уже поддерживаем таблицу измерений дат на уровне часа, используя [макрос datespine из dbt_utils](https://github.com/dbt-labs/dbt-utils/blob/0.7.4/macros/sql/date_spine.sql), как упоминалось выше, мы могли бы настроить булевый `is_business_hour`, чтобы отразить изменения в расписаниях с течением времени. Затем мы можем использовать таблицу на уровне часа, чтобы правильно контролировать агрегацию без чрезмерно сложных макросов. Варианты для достижения этого были:
 
-### How we accounted for changing business hours
-We realized that since we were already maintaining an hourly-grain date dimension table using the [datespine macro from dbt_utils](https://github.com/dbt-labs/dbt-utils/blob/0.7.4/macros/sql/date_spine.sql), as mentioned above, we could adjust the boolean `is_business_hour` to reflect the changing schedules over time. Then, we can use the hourly grain table to control the aggregation properly without overly complex macros. The options to accomplish that were:
+1. Присоединиться непосредственно к таблице на уровне часа, агрегировать после факта
 
-1. Join directly to the hour-grain table, aggregate after the fact
+2. Использовать подзапрос для выполнения агрегации
 
-2. Use a subquery to perform the aggregation
+Учитывая, что мы фактически рассчитывали несколько из этих метрик на одной таблице заявок (например, время до первого касания, время до первого закрытия, время до последнего касания и т.д.), прямое соединение вызвало бы *много* конкурирующего разветвления, которое мы решили было бы слишком сложно управлять.
 
-Given that we were actually calculating several of these metrics on one single table of tickets (think: time to first touch, time to first close, time to last touch, etc), direct joining would cause *a lot* of competing fanout that we decided would be too difficult to manage.
+Как правило, команда dbt Labs предпочитает использовать <Term id="cte">CTE</Term>, а не подзапросы, но это был один из немногих случаев, когда преимущества, казалось, перевешивали недостатки. Подзапрос позволил нам выполнять расчет рабочих часов на любых двух полях даты без изменения уровня нашей модели заявок.
 
-Generally speaking, the dbt Labs team tends to opt for use of <Term id="cte">CTEs</Term> rather than subqueries, but this was one of the few times where the benefits seemed to outweigh the tradeoffs. A subquery allowed us to perform our business hours calculation on any two date fields without changing the grain of our tickets model.
+Вот пример, чтобы объяснить наш подход с подзапросом: если рабочие часы для нашей команды с 8:00 до 20:00, и заявка была открыта в 8:46 утра во вторник, закрыта в 1:13 дня в среду по расписанию с 8 до 8, чтобы измерить рабочие часы с момента открытия до закрытия, вам нужно включить:
 
-Here’s an example to explain our subquery approach:If working hours for our team are 8AM - 8PM, and a ticket was opened at 8:46 AM Tues, closed 1:13PM Wed on an 8-8 schedule to measure the business hours from open to close, you’d need to include:
+* 14 минут (8:46 утра - 9:00 утра) +
 
-* 14 minutes (8:46 AM - 9AM) +
+* 16 часов (9:00 утра - 8:00 вечера во вторник + 8:00 утра - 1:00 дня в среду) +
 
-* 16 hours (9AM-8PM Tues + 8am-1pm Wed) +
+* 13 минут (1:00 дня - 1:13 дня)
 
-* 13 min (1PM - 1:13PM)
-
-Which reduces down to:
+Что сокращается до:
 
 ```
 
@@ -135,34 +134,34 @@ from table
 
 ```
 
-## What's the value of accurately measuring business hours?
+## Какова ценность точного измерения рабочих часов?
 
-Let’s step back and think about what utility these metrics actually have. What is the benefit of having a schedule-sensitive metric versus just doing a simple date_diff() function and finding the total elapsed time?
+Давайте отступим и подумаем, какую пользу эти метрики действительно имеют. В чем преимущество наличия метрики, чувствительной к расписанию, по сравнению с простым использованием функции date_diff() и нахождением общего времени, прошедшего с момента начала?
 
-I've found business-adjusted time measures to be helpful in a few ways:
+Я обнаружил, что меры времени, скорректированные с учетом бизнеса, полезны в нескольких отношениях:
 
-1. SLA metrics
+1. Метрики SLA
 
-    1. Answering questions like "what percent of tickets are responded to within 15 working minutes?" are great applications of these metrics!
+    1. Ответы на вопросы типа "какой процент заявок обрабатывается в течение 15 рабочих минут?" — отличные примеры применения этих метрик!
 
-2. Is my staff using their time well?
+2. Эффективно ли мои сотрудники используют свое время?
 
-3. What is the capacity of an FTE to get through the work we have?
+3. Какова пропускная способность одного сотрудника для выполнения имеющейся у нас работы?
 
-4. How many more FTEs will I need to hire to get through the inbound work?
+4. Сколько еще сотрудников мне нужно нанять, чтобы справиться с входящей работой?
 
-5. Did that process/tooling change I made have any significant impact on how well my team can do their jobs?
+5. Оказало ли изменение процесса/инструментов, которое я сделал, значительное влияние на то, насколько хорошо моя команда может выполнять свою работу?
 
-### What business-adjusted time measures won’t tell you
+### Что не скажут вам меры времени, скорректированные с учетом бизнеса
 
-1. Was my customer frustrated by how long this took? (A ticket might have taken your team a couple hours of working time, but if the elapsed time went overnight or over the weekend, it still feels that long to the customer!)
+1. Был ли мой клиент разочарован тем, сколько времени это заняло? (Заявка могла занять у вашей команды пару часов рабочего времени, но если общее время прошло ночью или в выходные, клиент все равно чувствует, что это заняло столько времени!)
 
-    1. If they were, am I communicating the expectations for response time well enough to my customers?
+    1. Если они были, достаточно ли хорошо я сообщаю клиентам ожидания по времени ответа?
 
-So is there utility in measuring these metrics in a way that takes working hours into account? I think so! But as mentioned in our [slack community a while back](https://getdbt.slack.com/archives/C0VLZPLAE/p1606928499154300), doing so in isolation doesn’t give you the whole story of how your customers are feeling when interacting with your team. A great quote from community member James Weakley:
+Так есть ли польза в измерении этих метрик таким образом, чтобы учитывать рабочие часы? Я думаю, что да! Но, как упоминалось в нашем [сообществе Slack некоторое время назад](https://getdbt.slack.com/archives/C0VLZPLAE/p1606928499154300), делать это в изоляции не дает полной картины того, что чувствуют ваши клиенты при взаимодействии с вашей командой. Отличная цитата от члена сообщества Джеймса Уикли:
 
-> "Any measures that take the support team's schedules into account are process measures rather than outcome measures. In other words, they are very useful for workforce planning or process improvement, but anyone who has logged support cases with large companies will know that they won't correlate with customer happiness as they are far too easy to game."
+> "Любые меры, которые учитывают расписание команды поддержки, являются мерами процесса, а не мерами результата. Другими словами, они очень полезны для планирования рабочей силы или улучшения процессов, но любой, кто регистрировал заявки в службу поддержки крупных компаний, знает, что они не коррелируют с удовлетворенностью клиентов, так как их слишком легко манипулировать."
 
-I totally agree with James here, and think these metrics are most useful when they are answering specific questions about your tools and processes. They can’t tell you much about what the customer is feeling, which is why they should be paired with schedule-agnostic metrics that actually tell you what it’s like from the customer’s perspective (as well as with direct customer satisfaction measures like surveys!).
+Я полностью согласен с Джеймсом здесь и считаю, что эти метрики наиболее полезны, когда они отвечают на конкретные вопросы о ваших инструментах и процессах. Они не могут много сказать о том, что чувствует клиент, поэтому их следует сочетать с метриками, не зависящими от расписания, которые действительно показывают, как это выглядит с точки зрения клиента (а также с прямыми мерами удовлетворенности клиентов, такими как опросы!).
 
-Special thanks to Claire Carroll and Erica Louie for helping on this work! Some sample data and code for both approaches can be found in [this repo](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/master/business-hours).
+Особая благодарность Клэр Кэрролл и Эрике Луи за помощь в этой работе! Некоторые образцы данных и кода для обоих подходов можно найти в [этом репозитории](https://github.com/dbt-labs/dbt-labs-experimental-features/tree/master/business-hours).

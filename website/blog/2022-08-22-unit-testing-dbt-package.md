@@ -1,6 +1,6 @@
 ---
-title: "An introduction to unit testing your dbt Packages"
-description: "Traditionally, integration tests have been the primary strategy for testing dbt Packages. In this post, Yu Ishikawa walks us through adding in unit testing as well."
+title: "Введение в модульное тестирование ваших dbt пакетов"
+description: "Традиционно, интеграционные тесты были основной стратегией тестирования dbt пакетов. В этом посте Ю Исикава расскажет, как добавить модульное тестирование."
 slug: unit-testing-dbt-packages
 authors: [yu_ishikawa]
 tags: [dbt tutorials]
@@ -10,31 +10,31 @@ date: 2022-08-25
 is_featured: true
 ---
 
-_Editors note - this post assumes working knowledge of dbt Package development. For an introduction to dbt Packages check out [So You Want to Build a dbt Package](https://docs.getdbt.com/blog/so-you-want-to-build-a-package)._
+_Примечание редактора - этот пост предполагает знание разработки dbt пакетов. Для введения в dbt пакеты ознакомьтесь с [So You Want to Build a dbt Package](https://docs.getdbt.com/blog/so-you-want-to-build-a-package)._
 
-It’s important to be able to test any dbt Project, but it’s even more important to make sure you have robust testing if you are developing a [dbt Package](https://docs.getdbt.com/docs/build/packages).
+Важно уметь тестировать любой dbt проект, но еще важнее убедиться в наличии надежного тестирования, если вы разрабатываете [dbt пакет](https://docs.getdbt.com/docs/build/packages).
 
-I love dbt Packages, because it makes it easy to extend dbt’s functionality and create reusable analytics resources. Even better, we can find and share dbt Packages which others developed, finding great packages in [dbt hub](https://hub.getdbt.com/). However, it is a bit difficult to develop complicated dbt macros, because dbt on top of [Jinja2](https://palletsprojects.com/p/jinja/) is lacking some of the functionality you’d expect for software development - like unit testing.
+Я люблю dbt пакеты, потому что они упрощают расширение функциональности dbt и создание повторно используемых аналитических ресурсов. Еще лучше, мы можем находить и делиться dbt пакетами, разработанными другими, находя отличные пакеты на [dbt hub](https://hub.getdbt.com/). Однако разработка сложных dbt макросов может быть затруднительной, потому что dbt на базе [Jinja2](https://palletsprojects.com/p/jinja/) не обладает некоторыми функциями, которые вы ожидаете в разработке программного обеспечения, такими как модульное тестирование.
 
-In this article, I would like to share options for unit testing your dbt Package - first through discussing the commonly used pattern of integration testing and then by showing how we can implement unit tests as part of our testing arsenal.
+В этой статье я хотел бы поделиться вариантами модульного тестирования вашего dbt пакета - сначала обсудив часто используемый паттерн интеграционного тестирования, а затем показав, как мы можем внедрить модульные тесты в наш арсенал тестирования.
 <!--truncate-->
 
-## Unit Testing vs. Integration Testing
+## Модульное тестирование vs. Интеграционное тестирование
 
-Unit testing and integration testing are two common paradigms in create well-tested code. For a great deep dive into the difference between the two check out [this article](https://circleci.com/blog/unit-testing-vs-integration-testing/) from the CircleCI team. At a high level:
+Модульное тестирование и интеграционное тестирование - это два общих подхода к созданию хорошо протестированного кода. Для глубокого погружения в различия между ними ознакомьтесь с [этой статьей](https://circleci.com/blog/unit-testing-vs-integration-testing/) от команды CircleCI. На высоком уровне:
 
-- **Integration tests** are tests which operate against the entire integrated project or application.
-- **Unit tests** are tests which verify a single element within a software project, such as an individual function or macro.
+- **Интеграционные тесты** - это тесты, которые работают с целым интегрированным проектом или приложением.
+- **Модульные тесты** - это тесты, которые проверяют отдельный элемент в проекте программного обеспечения, такой как отдельная функция или макрос.
 
-Many dbt Packages use integration tests as their primary testing methodology. For example [dbt-utils](https://github.com/dbt-labs/dbt-utils) has [the integration_tests directory](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests) so that we can run integration tests by using the generic tests and macros contained within the package. The integration tests directory is essentially a standard dbt project within the dbt-utils package that is tested much the same way any dbt project would be.
+Многие dbt пакеты используют интеграционные тесты как основную методологию тестирования. Например, [dbt-utils](https://github.com/dbt-labs/dbt-utils) имеет [каталог integration_tests](https://github.com/dbt-labs/dbt-utils/tree/main/integration_tests), чтобы мы могли запускать интеграционные тесты, используя общие тесты и макросы, содержащиеся в пакете. Каталог интеграционных тестов по сути является стандартным dbt проектом внутри пакета dbt-utils, который тестируется так же, как и любой другой dbt проект.
 
-To use the integration tests - you’d simply run `dbt test` within the `integration_tests` directory. The tests execute as normal - meaning you can use your favorite methods of running CI against your dbt project to ensure that your integration tests are passing.
+Чтобы использовать интеграционные тесты, вы просто запускаете `dbt test` в каталоге `integration_tests`. Тесты выполняются как обычно, что означает, что вы можете использовать свои любимые методы запуска CI для вашего dbt проекта, чтобы убедиться, что ваши интеграционные тесты проходят.
 
-Integration tests can help give you peace of mind that your package is performing as expected - but they have some drawbacks. Macros and generic tests frequently call other macros and the deeper dependency calls get, the more difficult it becomes to debug your macros using only integration tests.
+Интеграционные тесты могут помочь вам быть уверенными, что ваш пакет работает как ожидается, но у них есть некоторые недостатки. Макросы и общие тесты часто вызывают другие макросы, и чем глубже становятся вызовы зависимостей, тем сложнее становится отлаживать ваши макросы, используя только интеграционные тесты.
 
-In this scenario it can be helpful to go beyond integration tests and implement unit tests for your macros. These unit tests can be run with a [dbt run operation](https://docs.getdbt.com/reference/commands/run-operation). Let’s take a look at a quick example of how this can be done.
+В этой ситуации может быть полезно выйти за рамки интеграционных тестов и внедрить модульные тесты для ваших макросов. Эти модульные тесты можно запускать с помощью [dbt run operation](https://docs.getdbt.com/reference/commands/run-operation). Давайте рассмотрим быстрый пример того, как это можно сделать.
 
-Consider a dbt Package called dbt_sample_package . We would like to implement a simple macro to create a string literal from a string text in a macro named `to_literal` in the file `macros/to_literal.sql`.
+Рассмотрим dbt пакет под названием dbt_sample_package. Мы хотели бы реализовать простой макрос для создания строкового литерала из текстовой строки в макросе с именем `to_literal` в файле `macros/to_literal.sql`.
 
 ```sql
 -- macros/to_literal.sql
@@ -47,9 +47,9 @@ Consider a dbt Package called dbt_sample_package . We would like to implement a 
 
 ---
 
-To implement a unit testing macro corresponding to the `to_literal` macro we can create a macro to test our original macro in `integration_tests/macros/test_to_literal.sql`.
+Чтобы реализовать макрос модульного тестирования, соответствующий макросу `to_literal`, мы можем создать макрос для тестирования нашего оригинального макроса в `integration_tests/macros/test_to_literal.sql`.
 
-Then we call the `to_literal` macro in the testing macro. and if the result isn’t the same as expected, we raise an error using the [exceptions.raise_compiler_error macro](https://docs.getdbt.com/reference/dbt-jinja-functions/exceptions).
+Затем мы вызываем макрос `to_literal` в тестовом макросе, и если результат не соответствует ожидаемому, мы вызываем ошибку с помощью макроса [exceptions.raise_compiler_error](https://docs.getdbt.com/reference/dbt-jinja-functions/exceptions).
 
 ```sql
 -- integration_tests/macros/test_to_literal.sql
@@ -68,7 +68,7 @@ Then we call the `to_literal` macro in the testing macro. and if the result isn�
 
 ---
 
-By doing that, we can call the testing macro in the dbt project of integration tests using `dbt run-operation`.
+Таким образом, мы можем вызвать тестовый макрос в dbt проекте интеграционных тестов, используя `dbt run-operation`.
 
 ```shell
 dbt run-operation test_to_literal
@@ -76,7 +76,7 @@ dbt run-operation test_to_literal
 
 ---
 
-If we want to run all tests with a single command, it would be good to bundle them in a macro. Moreover, we can call the macro with `dbt run-operation`.
+Если мы хотим запустить все тесты одной командой, было бы хорошо объединить их в макрос. Более того, мы можем вызвать макрос с помощью `dbt run-operation`.
 
 ```sql
 -- integration_tests/macros/run_unit_tests.sql
@@ -91,9 +91,9 @@ If we want to run all tests with a single command, it would be good to bundle th
 
 ---
 
-## Unit tests for multiple adapters
+## Модульные тесты для нескольких адаптеров
 
-Your dbt Package may support multiple adapters. If you are a postgres user, you understand that the preceding `to_literal` macro doesn’t work on postgres because the expression to deal with string literal is different. So, we have to implement a macro to handle a special case of postgres. Now, we implement the subsequent macro called `postgres__to_literal` in `macros/to_literal.sql` in addition to the implementation above.
+Ваш dbt пакет может поддерживать несколько адаптеров. Если вы пользователь postgres, вы понимаете, что предыдущий макрос `to_literal` не работает на postgres, потому что выражение для работы со строковым литералом отличается. Поэтому мы должны реализовать макрос для обработки особого случая postgres. Теперь мы реализуем следующий макрос под названием `postgres__to_literal` в `macros/to_literal.sql` в дополнение к вышеуказанной реализации.
 
 ```sql
 -- macros/to_literal.sql
@@ -118,7 +118,7 @@ Your dbt Package may support multiple adapters. If you are a postgres user, you 
 
 ---
 
-You may think of how we can implement unit testing macros efficiently. We can use the [the adapter.dispatch macro](https://docs.getdbt.com/reference/dbt-jinja-functions/dispatch) even in unit testing macros. As we separate the behavior for postgres, we can implement an independent unit testing macro for postgres as well.
+Вы можете подумать, как мы можем эффективно реализовать макросы модульного тестирования. Мы можем использовать [макрос adapter.dispatch](https://docs.getdbt.com/reference/dbt-jinja-functions/dispatch) даже в макросах модульного тестирования. Поскольку мы разделяем поведение для postgres, мы можем также реализовать независимый макрос модульного тестирования для postgres.
 
 ```sql
 -- integration_tests/macros/test_to_literal.sql
@@ -155,27 +155,27 @@ You may think of how we can implement unit testing macros efficiently. We can us
 
 ---
 
-We can then select unit tests based on the specified adapter. Let’s assume we have different dbt profiles corresponding to BigQuery and postgres. By specifying a dbt profile based on the adapter, we can select what testing macros are called internally.
+Затем мы можем выбирать модульные тесты на основе указанного адаптера. Предположим, у нас есть разные dbt профили, соответствующие BigQuery и postgres. Указав dbt профиль на основе адаптера, мы можем выбрать, какие тестовые макросы вызываются внутренне.
 
 ```shell
-# Run unit tests on BigQuery
+# Запуск модульных тестов на BigQuery
 dbt run-operation run_unit_tests --profile bigquery
-# `default__test_to_literal` is internally called.
+# `default__test_to_literal` вызывается внутренне.
 
-# Run unit tests on postgres
+# Запуск модульных тестов на postgres
 dbt run-operation run_unit_tests --profile postgres
-# `postgres__test_to_literal` is internally called.
+# `postgres__test_to_literal` вызывается внутренне.
 ```
 
 ---
 
-## Introducing dbt-unittest
+## Введение в dbt-unittest
 
-It’s historically been a challenge to do unit testing in your dbt packaging as Jinja2 doesn’t offer a built-in unit testing feature. But, we have good news: dbt provides the `exceptions.raise_compiler_error` macro so that we raise errors within a `dbt run-operation`. Using this, I implemented a dbt Package called [yu-iskw/dbt-unittest](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/), which is inspired by [python’s unittest module](https://docs.python.org/3/library/unittest.html), to enhance unit testing of dbt Package development.
+Исторически сложилось так, что выполнение модульного тестирования в вашем dbt пакете было сложной задачей, так как Jinja2 не предлагает встроенной функции модульного тестирования. Но у нас есть хорошие новости: dbt предоставляет макрос `exceptions.raise_compiler_error`, чтобы мы могли вызывать ошибки в `dbt run-operation`. Используя это, я реализовал dbt пакет под названием [yu-iskw/dbt-unittest](https://hub.getdbt.com/yu-iskw/dbt_unittest/latest/), который вдохновлен [модулем unittest в Python](https://docs.python.org/3/library/unittest.html), чтобы улучшить модульное тестирование в разработке dbt пакетов.
 
 [GitHub - yu-iskw/dbt-unittest: A dbt Package provides macros for unit testing](https://github.com/yu-iskw/dbt-unittest)
 
-Using this, we can re-implement the example using the `dbt_unittest.assert_equals` macro and the implementation gets much simpler.
+Используя это, мы можем переосуществить пример, используя макрос `dbt_unittest.assert_equals`, и реализация становится намного проще.
 
 ```sql
 -- integration_tests/macros/test_to_literal.sql
@@ -204,16 +204,16 @@ Using this, we can re-implement the example using the `dbt_unittest.assert_equal
 
 ---
 
-I practiced the idea even in the development of `yu-iskw/dbt-unittest`. The actual testing macros are located [here](https://github.com/yu-iskw/dbt-unittest/tree/main/integration_tests/macros/tests). Moreover, we are able to implement the continuous integration workflow as regular software development. For instance, I implemented [a workflow with GitHub Actions](https://github.com/yu-iskw/dbt-unittest/blob/main/.github/workflows/unit-tests.yml). It enables me to notice there is something wrong with changes.
+Я применил эту идею даже в разработке `yu-iskw/dbt-unittest`. Фактические тестовые макросы находятся [здесь](https://github.com/yu-iskw/dbt-unittest/tree/main/integration_tests/macros/tests). Более того, мы можем реализовать рабочий процесс непрерывной интеграции как в обычной разработке программного обеспечения. Например, я реализовал [рабочий процесс с GitHub Actions](https://github.com/yu-iskw/dbt-unittest/blob/main/.github/workflows/unit-tests.yml). Это позволяет мне заметить, если что-то не так с изменениями.
 
-Aside from that, it would be great to take a look at other dbt Packages for integration testing and unit testing on dbt hub. For instance, [the dbt_datamocktool package](https://hub.getdbt.com/mjirv/dbt_datamocktool/latest/) is another useful package for unit testing dbt projects. We can create mock CSV seeds to stand in for the sources and refs that your models use and test that the model produces the desired output. That would be useful to mock testing data for your dbt project.
+Кроме того, было бы здорово взглянуть на другие dbt пакеты для интеграционного и модульного тестирования на dbt hub. Например, [пакет dbt_datamocktool](https://hub.getdbt.com/mjirv/dbt_datamocktool/latest/) - это еще один полезный пакет для модульного тестирования dbt проектов. Мы можем создавать фиктивные CSV семена, чтобы заменить источники и ссылки, которые используют ваши модели, и тестировать, что модель производит желаемый результат. Это было бы полезно для создания фиктивных тестовых данных для вашего dbt проекта.
 
-## Summary
+## Резюме
 
-In this article we’ve:
+В этой статье мы:
 
-- Introduced two approaches for testing your dbt Packages
-- Demonstrated a simple unit testing example
-- Shown how you can use existing tools to help build out your unit testing capabilities
+- Представили два подхода к тестированию ваших dbt пакетов
+- Продемонстрировали простой пример модульного тестирования
+- Показали, как вы можете использовать существующие инструменты для расширения ваших возможностей модульного тестирования
 
-Hopefully this is helpful to you in your dbt Package development journey.
+Надеюсь, это будет полезно вам в вашем пути разработки dbt пакетов.

@@ -1,6 +1,6 @@
 ---
-title: "The Spiritual Alignment of dbt + Airflow"
-description: "Airflow and dbt are often framed as either / or, but in practice I've experienced them to play extremely well together."
+title: "Духовное согласование dbt + Airflow"
+description: "Airflow и dbt часто рассматриваются как взаимоисключающие, но на практике они отлично работают вместе."
 slug: dbt-airflow-spiritual-alignment
 
 authors: [sung_chung]
@@ -12,201 +12,197 @@ date: 2021-11-29
 is_featured: true
 ---
 
-Airflow and dbt are often framed as either / or:
+Airflow и dbt часто рассматриваются как взаимоисключающие:
 
-You either build SQL transformations using Airflow’s SQL database operators (like [SnowflakeOperator](https://airflow.apache.org/docs/apache-airflow-providers-snowflake/stable/operators/snowflake.html)), or develop them in a dbt project.
+Вы либо строите SQL-трансформации, используя SQL-операторы базы данных Airflow (например, [SnowflakeOperator](https://airflow.apache.org/docs/apache-airflow-providers-snowflake/stable/operators/snowflake.html)), либо разрабатываете их в проекте dbt.
 
-You either orchestrate dbt models in Airflow, or you deploy them using dbt Cloud.
+Вы либо оркестрируете модели dbt в Airflow, либо развертываете их, используя dbt Cloud.
 
-In my experience, these are false dichotomies, that sound great as hot takes but don’t really help us do our jobs as data people.
+На мой взгляд, это ложные дихотомии, которые звучат эффектно, но на самом деле не помогают нам выполнять нашу работу как специалистам по данным.
 
 <!--truncate-->
 
-In my days as a data consultant and now as a member of the dbt Labs Solutions Architecture team, I’ve frequently seen Airflow, dbt Core & dbt Cloud ([via the official provider](https://registry.astronomer.io/providers/dbt-cloud?type=Operators&utm_campaign=Monthly+Product+Updates&utm_medium=email&_hsmi=208603877&utm_content=208603877&utm_source=hs_email)) blended as needed, based on the needs of a specific data pipeline, or a team’s structure and skillset.
+В своей практике в качестве консультанта по данным и теперь как член команды архитектуры решений dbt Labs, я часто видел, как Airflow, dbt Core и dbt Cloud ([через официальный провайдер](https://registry.astronomer.io/providers/dbt-cloud?type=Operators&utm_campaign=Monthly+Product+Updates&utm_medium=email&_hsmi=208603877&utm_content=208603877&utm_source=hs_email)) комбинируются по мере необходимости, в зависимости от потребностей конкретного конвейера данных или структуры и навыков команды.
 
-More fundamentally, I think it’s important to call out that Airflow + dbt are **spiritually aligned** in purpose. They both exist to facilitate clear communication across data teams, in service of producing trustworthy data.
+Более фундаментально, я считаю важным отметить, что Airflow + dbt **духовно согласованы** в своей цели. Они оба существуют для облегчения четкой коммуникации между командами данных, в служении производству надежных данных.
 
-Let’s dive a bit deeper into that spiritual alignment, hone in on a couple cases where they play nicely, and then dive into the nitty gritty of which combination of Airflow + dbt might be right for your team.
+Давайте углубимся в это духовное согласование, рассмотрим несколько случаев, когда они хорошо работают вместе, а затем погрузимся в детали, чтобы определить, какая комбинация Airflow + dbt может быть подходящей для вашей команды.
 
-## Where Airflow + dbt align
+## Где Airflow + dbt согласуются
 
-Let’s walk through a hypothetical scenario I’d run into as a consultant, to illustrate how Airflow + dbt operate on a parallel spiritual wavelength.
+Давайте рассмотрим гипотетический сценарий, с которым я сталкивался как консультант, чтобы проиллюстрировать, как Airflow + dbt работают на параллельной духовной волне.
 
-TL;DR: they both provide **common interfaces** that data teams can use to get on the same page.
+Кратко: они оба предоставляют **общие интерфейсы**, которые команды данных могут использовать, чтобы быть на одной волне.
 
-The intricacies of when I’ve found each to be useful (Airflow alone, Airflow w/ dbt Core or Cloud, dbt Core or Cloud alone) is in _which team members_ need to get on the same page—I’ll get to that in the next section.
+Тонкости того, когда я находил каждый из них полезным (только Airflow, Airflow с dbt Core или Cloud, только dbt Core или Cloud), заключаются в том, _какие члены команды_ должны быть на одной волне — об этом я расскажу в следующем разделе.
 
-### From the Airflow side
+### Со стороны Airflow
 
-A client has 100 data pipelines running via a cron job in a GCP (Google Cloud Platform) virtual machine, every day at 8am.
+У клиента есть 100 конвейеров данных, работающих через cron job в виртуальной машине GCP (Google Cloud Platform) каждый день в 8 утра.
 
-It was simple to set up, but then the conversation started flowing:
+Это было просто настроить, но затем начались вопросы:
 
-* “Where am I going to put logs?”  In a Google Cloud Storage bucket.
-* “Where can I view history in a <Term id="table" /> format?”  Let’s export log events into BigQuery.
-* “I have to create log alerts to notify people of failures.”  Let’s use GCP’s logging alerts to send emails.
-* “When something fails, how do you rerun from the point of failure?”  Let’s mangle the production script.
+* "Куда я буду помещать логи?" В корзину Google Cloud Storage.
+* "Где я могу просмотреть историю в формате <Term id="table" />?" Давайте экспортируем события логов в BigQuery.
+* "Мне нужно создать оповещения о логах, чтобы уведомлять людей о сбоях." Давайте используем оповещения GCP для отправки писем.
+* "Когда что-то идет не так, как перезапустить с точки сбоя?" Давайте изменим производственный скрипт.
 
-Over time, you end up building a bunch of pieces that Airflow provides out of the box.
+Со временем вы начинаете строить множество компонентов, которые Airflow предоставляет из коробки.
 
-But what makes one come alive as a data engineer—is it fine-tuning logging and making sure that the basic overhead of your pipeline works, or is it getting trustworthy data to the people you’re working with?
+Но что делает вас настоящим инженером данных — это тонкая настройка логирования и обеспечение работы базовой инфраструктуры вашего конвейера, или это получение надежных данных для людей, с которыми вы работаете?
 
-Airflow solves those same problems, but in a publicly-verifiable and trusted way—it provides **a common interface** by which data teams can get on the same page about overall data pipeline health. And that common interface is configured in code + version-controlled.
+Airflow решает те же проблемы, но в публично проверяемом и надежном виде — он предоставляет **общий интерфейс**, с помощью которого команды данных могут быть на одной волне относительно общего состояния здоровья конвейера данных. И этот общий интерфейс настраивается в коде и контролируется версией.
 
-### From the dbt side
+### Со стороны dbt
 
-That pipeline above included a plethora of [data transformation](https://www.getdbt.com/analytics-engineering/transformation/) jobs, built in various ways.
+Этот конвейер включал множество [трансформаций данных](https://www.getdbt.com/analytics-engineering/transformation/), построенных различными способами.
 
-They were often written in naked python scripts that only ran a SQL query + wrote data to BigQuery. These stored procedure-like SQL scripts required:
+Они часто писались в виде простых скриптов на Python, которые только выполняли SQL-запрос и записывали данные в BigQuery. Эти SQL-скрипты, подобные хранимым процедурам, требовали:
 
-* Writing boilerplate <Term id="ddl" /> (`CREATE TABLE` etc * 1000)
-* Managing schema names between production and dev environments
-* Manually managing dependencies between scripts
+* Написания шаблонного <Term id="ddl" /> (`CREATE TABLE` и т.д. * 1000)
+* Управления именами схем между производственной и дев-средами
+* Ручного управления зависимостями между скриптами
 
-Again, this is **pretty easy to set up**, but it doesn’t get to the heart of the matter: getting trusted data to the people that you care about.
+Снова, это **довольно легко настроить**, но это не решает основную задачу: получение надежных данных для людей, которые вам важны.
 
-It _kind of works_, but you need it to _really work_ in a way that’s publicly observable + verifiable via testing.
+Это _как бы работает_, но вам нужно, чтобы это _действительно работало_ в публично наблюдаемом и проверяемом виде через тестирование.
 
-I have never encountered a client writing a script to auto-generate DDL, or writing boilerplate tests for SQL—no one wants these to be their job.
+Я никогда не встречал клиента, который писал бы скрипт для автоматической генерации DDL или писал бы шаблонные тесты для SQL — никто не хочет, чтобы это было их работой.
 
-So like Airflow for pipeline orchestration, dbt does these things out of the box for the data transformation layer.
+Так что, как и Airflow для оркестрации конвейеров, dbt делает это из коробки для слоя трансформации данных.
 
-dbt provides a **common interface** where data teams can get on the same page about the business logic + run status of data transformations—again, in a way that’s configured in code + version-controlled.
+dbt предоставляет **общий интерфейс**, где команды данных могут быть на одной волне относительно бизнес-логики и статуса выполнения трансформаций данных — снова, в виде, который настраивается в коде и контролируется версией.
 
-> If you’re curious about the migration path from a stored procedure-based transformation workflow to modular data modeling in dbt, check out my colleagues Sean McIntyre + Pat Kearns writing on [migrating to an ELT pipeline](https://getdbt.com/analytics-engineering/case-for-elt-workflow/).
+> Если вам интересно узнать о пути миграции от рабочего процесса на основе хранимых процедур к модульному моделированию данных в dbt, ознакомьтесь с работами моих коллег Шона МакИнтайра и Пэта Кернса о [миграции к ELT-конвейеру](https://getdbt.com/analytics-engineering/case-for-elt-workflow/).
 
-## A note on data team roles for Airflow + dbt
+## Заметка о ролях команд данных для Airflow + dbt
 
-In my experience, these tech decisions also boil down to the **[data team structure](https://www.getdbt.com/data-teams/data-org-structure-examples/)** you’re building around, and specifically the **skills** + **training** baked into that structure.
+На мой взгляд, эти технические решения также сводятся к **[структуре команды данных](https://www.getdbt.com/data-teams/data-org-structure-examples/)**, которую вы строите, и конкретно к **навыкам** и **обучению**, заложенным в эту структуру.
 
-Tools are cheap relative to hiring + training, so I’ve most often seen tool decisions made by the availability of staff + training support, rather than the technical specs or features of the tools themselves. So let’s peek into what roles are required to build around dbt and Airflow (these same skills would also roughly map to any other orchestration tool).
+Инструменты дешевы по сравнению с наймом и обучением, поэтому я чаще всего видел, что решения о выборе инструментов принимаются на основе доступности персонала и поддержки обучения, а не технических характеристик или функций самих инструментов. Давайте заглянем, какие роли требуются для работы с dbt и Airflow (эти же навыки также примерно соответствуют любому другому инструменту оркестрации).
 
-Many of us define roles like [data engineer](https://www.getdbt.com/data-teams/hiring-data-engineer/), [analytics engineer](https://getdbt.com/what-is-analytics-engineering/) and data analyst differently.  
+Многие из нас по-разному определяют роли, такие как [инженер данных](https://www.getdbt.com/data-teams/hiring-data-engineer/), [инженер аналитики](https://getdbt.com/what-is-analytics-engineering/) и аналитик данных.
 
-So instead of getting bogged down in defining roles, let’s focus on hard skills I’ve seen in practice.
+Поэтому вместо того, чтобы зацикливаться на определении ролей, давайте сосредоточимся на практических навыках, которые я видел на практике.
 
-![airflow and dbt skills required](/img/blog/airflow-dbt-skills.png "airflow and dbt skills required")
+![требуемые навыки для airflow и dbt](/img/blog/airflow-dbt-skills.png "требуемые навыки для airflow и dbt")
 
-The common skills needed for implementing any flavor of dbt (Core or Cloud) are:
+Общие навыки, необходимые для реализации любого варианта dbt (Core или Cloud), включают:
 
-* SQL: ‘nuff said
-* YAML: required to generate config files for [writing tests on data models](/docs/build/data-tests)
-* [Jinja](/guides/using-jinja): allows you to write DRY code (using [macros](/docs/build/jinja-macros), for loops, if statements, etc)
+* SQL: без комментариев
+* YAML: требуется для генерации конфигурационных файлов для [написания тестов на модели данных](/docs/build/data-tests)
+* [Jinja](/guides/using-jinja): позволяет писать DRY-код (используя [макросы](/docs/build/jinja-macros), циклы for, if-выражения и т.д.)
 
-YAML + Jinja can be learned pretty quickly, but SQL is the non-negotiable you’ll need to get started.
+YAML и Jinja можно выучить довольно быстро, но SQL — это обязательный навык, который вам понадобится для начала.
 
-SQL skills are generally shared by data people + engineers, which makes SQL-based transformations (as in dbt) a ripe common interface for collaboration.
+Навыки SQL обычно разделяются между специалистами по данным и инженерами, что делает трансформации на основе SQL (как в dbt) подходящим общим интерфейсом для сотрудничества.
 
-To layer on Airflow, you’ll need more software or infrastructure engineering-y skills to build + deploy your pipelines: Python, Docker, Bash (for using the Airflow CLI), Kubernetes, Terraform and secrets management.
+Чтобы добавить Airflow, вам понадобятся более инженерные навыки в области программного обеспечения или инфраструктуры для построения и развертывания ваших конвейеров: Python, Docker, Bash (для использования CLI Airflow), Kubernetes, Terraform и управление секретами.
 
-## How Airflow + dbt play nicely
+## Как Airflow + dbt хорошо работают вместе
 
-Knowing that this toolbelt (Airflow + dbt) provides sustenance to the same spiritual needs (public observability, configuration as code, version control etc), how might one decide when and where to deploy them?
+Зная, что этот набор инструментов (Airflow + dbt) удовлетворяет те же духовные потребности (публичная наблюдаемость, конфигурация как код, контроль версий и т.д.), как можно решить, когда и где их развернуть?
 
-> This is the same sensibility expressed in the [dbt viewpoint](/community/resources/viewpoint) in 2016, the closest thing to a founding blog post as exists for dbt. ]
+> Это та же самая чувствительность, выраженная в [точке зрения dbt](/community/resources/viewpoint) в 2016 году, наиболее близкой к основополагающему блогу для dbt.
 
-I usually think in terms of how I want my job to look when things go wrong—am I equipped to do the debugging, and is it clear who to pass the baton to, to fix the issue (if it’s not me)?
+Я обычно думаю о том, как я хочу, чтобы моя работа выглядела, когда что-то идет не так — готов ли я к отладке, и понятно ли, кому передать эстафету для исправления проблемы (если это не я)?
 
-A couple examples:
+Пара примеров:
 
-### Pipeline observability for analysts
+### Наблюдаемость конвейера для аналитиков
 
-If your team’s dbt users are analysts rather than engineers, they still may need to be able to dig into the root cause of a failing dbt [source freshness test](/docs/build/sources).
+Если пользователи dbt в вашей команде — это аналитики, а не инженеры, им все равно может понадобиться возможность углубиться в коренную причину сбоя теста [свежести источника](/docs/build/sources) dbt.
 
-Having your upstream extract + load jobs configured in Airflow means that analysts can pop open the Airflow UI to monitor for issues (as they would a GUI-based <Term id="etl">ETL tool</Term>), rather than opening a ticket or bugging an engineer in Slack. The Airflow UI provides the common interface that analysts need to self-serve, up to the point of action needing to be taken.
+Если ваши задачи извлечения и загрузки настроены в Airflow, аналитики могут открыть интерфейс Airflow для мониторинга проблем (как они бы сделали в инструменте <Term id="etl">ETL</Term> на основе GUI), вместо того чтобы открывать тикет или беспокоить инженера в Slack. Интерфейс Airflow предоставляет общий интерфейс, который аналитики могут использовать для самостоятельного обслуживания, до момента, когда нужно предпринять действия.
 
-![airflow dashboard](/img/blog/airflow-dbt-dashboard.png "airflow dashboard")
+![панель управления airflow](/img/blog/airflow-dbt-dashboard.png "панель управления airflow")
 
-### Transformation observability for engineers
+### Наблюдаемость трансформаций для инженеров
 
-When a dbt run fails within an Airflow pipeline, an engineer monitoring the overall pipeline will likely not have the business context to understand why the individual model or test failed—they were probably not the one who built it.
+Когда выполнение dbt завершается сбоем в конвейере Airflow, инженер, отслеживающий общий конвейер, вероятно, не будет иметь бизнес-контекста, чтобы понять, почему отдельная модель или тест завершились сбоем — они, вероятно, не были теми, кто их создавал.
 
-dbt provides common programmatic interfaces (the [dbt Cloud Admin + Metadata APIs](/docs/dbt-cloud-apis/overview), and [.json-based artifacts](/reference/artifacts/dbt-artifacts) in the case of dbt Core) that provide the context needed for the engineer to self-serve—either by rerunning from a point of failure or reaching out to the owner.
+dbt предоставляет общие программные интерфейсы (API администратора и метаданных dbt Cloud и артефакты на основе .json в случае dbt Core), которые предоставляют контекст, необходимый инженеру для самостоятельного обслуживания — либо путем повторного запуска с точки сбоя, либо обращения к владельцу.
 
-## Why I ❤️ dbt Cloud + Airflow
+## Почему я ❤️ dbt Cloud + Airflow
 
-dbt Core is a fantastic framework for developing data transformation + testing logic. It is less fantastic as a shared interface for data analysts + engineers to collaborate **_on production runs of transformation jobs_**.
+dbt Core — это фантастическая платформа для разработки логики трансформации данных и тестирования. Она менее фантастична как общий интерфейс для совместной работы аналитиков данных и инженеров **_на производственных запусках трансформационных задач_**.
 
-dbt Labs and the Astronomer team has been hard at work with co-developing some options for dbt Core, and [a new dbt Cloud Provider](https://registry.astronomer.io/providers/dbt-cloud) for those using dbt Cloud that's ready for use by all OSS Airflow users. The best choice for you will depend on things like the resources available to your team, the complexity of your use case, and how long your implementation might need to be supported.
+Команда dbt Labs и команда Astronomer усердно работают над совместной разработкой некоторых опций для dbt Core и [нового провайдера dbt Cloud](https://registry.astronomer.io/providers/dbt-cloud) для тех, кто использует dbt Cloud, который готов к использованию всеми пользователями OSS Airflow. Лучший выбор для вас будет зависеть от таких факторов, как доступные ресурсы вашей команды, сложность вашего случая использования и как долго может потребоваться поддержка вашей реализации.
 
-This tool picks up that baton, and provides a common interface where teams can configure runs + debug issues in production jobs.
+Этот инструмент подхватывает эстафету и предоставляет общий интерфейс, где команды могут настраивать запуски и отлаживать проблемы в производственных задачах.
 
-If you productionalize your dbt runs in Airflow using the dbt Core operator, you run into the same `SQL wrapped in Python` communication challenge I mentioned at the top: the analyst who built the transformation logic is in the dark about the production run workflow, which is spiritually the thing we’re trying to avoid here.
+Если вы производите свои запуски dbt в Airflow, используя оператор dbt Core, вы сталкиваетесь с той же проблемой `SQL, обернутого в Python`, о которой я упоминал в начале: аналитик, который создал логику трансформации, не знает о рабочем процессе производственного запуска, что духовно является тем, чего мы пытаемся избежать здесь.
 
 ### dbt Core + Airflow
 
-Let’s take a look at an example, from GitLab’s [dbt_full_refresh](https://gitlab.com/gitlab-data/analytics/-/blob/master/dags/transformation/dbt_full_refresh.py) Airflow pipeline.
+Давайте рассмотрим пример из Airflow-конвейера [dbt_full_refresh](https://gitlab.com/gitlab-data/analytics/-/blob/master/dags/transformation/dbt_full_refresh.py) GitLab.
 
-If this task fails in the Airflow pipeline, there are a number of aspects of the pipeline to debug: was it an issue with Kubernetes or secrets, the Docker image, or the dbt transformation code itself?
+Если эта задача завершается сбоем в конвейере Airflow, существует ряд аспектов конвейера, которые нужно отладить: была ли это проблема с Kubernetes или секретами, образом Docker или самим кодом трансформации dbt?
 
-An analyst will be in the dark when attempting to debug this, and will need to rely on an engineer to tap them on the shoulder in the event that the issue lies with dbt.
+Аналитик будет в неведении при попытке отладки этого и будет нуждаться в помощи инженера, чтобы выяснить, в чем проблема, если она связана с dbt.
 
-This can be perfectly ok, in the event your data team is structured for data engineers to exclusively own dbt modeling duties, but that’s a quite uncommon org structure pattern from what I’ve seen. And if you have easy solutions for this analyst-blindness problem, I’d love to hear them.
+Это может быть вполне приемлемо, если ваша команда данных структурирована так, чтобы инженеры данных исключительно занимались моделированием dbt, но это довольно редкий шаблон структуры организации, который я видел. И если у вас есть простые решения для этой проблемы слепоты аналитиков, я был бы рад их услышать.
 
-Once the data has been ingested, dbt Core can be used to model it for consumption. Most of the time, users choose to either:
-Use the dbt Core CLI+ [BashOperator](https://registry.astronomer.io/providers/apache-airflow/modules/bashoperator) with Airflow (If you take this route, you can use an external secrets manager to manage credentials externally), or
-Use the [KubernetesPodOperator](https://registry.astronomer.io/providers/kubernetes/modules/kubernetespodoperator) for each dbt job, as data teams have at places like [Gitlab](https://gitlab.com/gitlab-data/analytics/-/blob/master/dags/transformation/dbt_trusted_data.py#L72) and [Snowflake](https://www.snowflake.com/blog/migrating-airflow-from-amazon-ec2-to-kubernetes/).
+После того как данные были загружены, dbt Core может быть использован для их моделирования для потребления. Большинство пользователей выбирают один из следующих вариантов:
+Использовать CLI dbt Core + [BashOperator](https://registry.astronomer.io/providers/apache-airflow/modules/bashoperator) с Airflow (если вы выберете этот путь, вы можете использовать внешний менеджер секретов для управления учетными данными внешне), или
+Использовать [KubernetesPodOperator](https://registry.astronomer.io/providers/kubernetes/modules/kubernetespodoperator) для каждой задачи dbt, как это делают команды данных в таких местах, как [Gitlab](https://gitlab.com/gitlab-data/analytics/-/blob/master/dags/transformation/dbt_trusted_data.py#L72) и [Snowflake](https://www.snowflake.com/blog/migrating-airflow-from-amazon-ec2-to-kubernetes/).
 
-Both approaches are equally valid; the right one will depend on the team and use case at hand.
+Оба подхода одинаково допустимы; правильный будет зависеть от команды и конкретного случая использования.
 
-|  | Dependency management | Overhead | Flexibility | Infrastructure Overhead |
+|  | Управление зависимостями | Накладные расходы | Гибкость | Накладные расходы на инфраструктуру |
 |---|---|---|---|---|
-| dbt Core CLI + BashOperator | Medium | Low | Medium | Low |
-| Kubernetes Pod Operator | Very Easy | Medium | High | Medium |
+| dbt Core CLI + BashOperator | Средний | Низкий | Средний | Низкий |
+| Kubernetes Pod Operator | Очень простой | Средний | Высокий | Средний |
 |  |  |  |  |  |
 
-If you have DevOps resources available to you, and your team is comfortable with concepts like Kubernetes pods and containers, you can use the KubernetesPodOperator to run each job in a Docker image so that you never have to think about Python dependencies. Furthermore, you’ll create a library of images containing your dbt models that can be run on any containerized environment. However, setting up development environments, CI/CD, and managing the arrays of containers can mean a lot of overhead for some teams. Tools like the [astro-cli](https://github.com/astronomer/astro-cli) can make this easier, but at the end of the day, there’s no getting around the need for Kubernetes resources for the Gitlab approach.
+Если у вас есть ресурсы DevOps и ваша команда комфортно работает с такими концепциями, как поды Kubernetes и контейнеры, вы можете использовать KubernetesPodOperator для запуска каждой задачи в образе Docker, чтобы вам никогда не приходилось думать о зависимостях Python. Более того, вы создадите библиотеку образов, содержащих ваши модели dbt, которые могут быть запущены в любой контейнеризированной среде. Однако настройка сред разработки, CI/CD и управление массивами контейнеров могут означать значительные накладные расходы для некоторых команд. Инструменты, такие как [astro-cli](https://github.com/astronomer/astro-cli), могут облегчить это, но в конечном итоге, не обойтись без ресурсов Kubernetes для подхода Gitlab.
 
-If you’re just looking to get started or just don’t want to deal with containers, using the BashOperator to call the dbt Core CLI can be a great way to begin scheduling your dbt workloads with Airflow.
+Если вы только начинаете или просто не хотите иметь дело с контейнерами, использование BashOperator для вызова CLI dbt Core может быть отличным способом начать планирование ваших рабочих нагрузок dbt с помощью Airflow.
 
-It’s important to note that whichever approach you choose, this is just a first step; your actual production needs may have more requirements. If you need granularity and dependencies between your dbt models, like the team at [Updater does, you may need to deconstruct the entire dbt DAG in Airflow.](https://www.astronomer.io/guides/airflow-dbt#use-case-2-dbt-airflow-at-the-model-level) If you’re okay managing some extra dependencies, but want to maximize control over what abstractions you expose to your end users, you may want to use the [GoCardlessProvider](https://github.com/gocardless/airflow-dbt), which wraps the BashOperator and dbt Core CLI.
+Важно отметить, что независимо от выбранного вами подхода, это всего лишь первый шаг; ваши реальные производственные потребности могут иметь больше требований. Если вам нужна гранулярность и зависимости между вашими моделями dbt, как это делает команда в [Updater, вам может потребоваться деконструировать весь DAG dbt в Airflow.](https://www.astronomer.io/guides/airflow-dbt#use-case-2-dbt-airflow-at-the-model-level) Если вы готовы управлять некоторыми дополнительными зависимостями, но хотите максимизировать контроль над тем, какие абстракции вы предоставляете своим конечным пользователям, вы можете использовать [GoCardlessProvider](https://github.com/gocardless/airflow-dbt), который оборачивает BashOperator и CLI dbt Core.
 
-#### Rerunning jobs from failure
+#### Повторный запуск задач с точки сбоя
 
-Until recently, one of the biggest drawbacks of any of the approaches above was the inability to rerun a job from the point of failure — there was no simple way to do it. As of dbt 1.0, however, dbt now supports the ability to rerun jobs from failure, which should provide a significant quality-of-life improvement.
+До недавнего времени одним из самых больших недостатков любого из вышеупомянутых подходов была невозможность повторного запуска задачи с точки сбоя — не было простого способа сделать это. Однако с версии dbt 1.0 dbt теперь поддерживает возможность повторного запуска задач с точки сбоя, что должно значительно улучшить качество жизни.
 
-In the past, if you ran 100 dbt models and 1 of them failed, it’d be cumbersome. You’d either have to rerun all 100 or hard-code rerunning the failed model.
+Раньше, если вы запускали 100 моделей dbt и одна из них завершалась сбоем, это было бы обременительно. Вам пришлось бы либо перезапустить все 100, либо жестко закодировать повторный запуск сбойной модели.
 
+Один из примеров этого — `dbt run –select <manually-selected-failed-model>`.
 
-One example of this is ‘dbt run –select `<manually-selected-failed-model>`.
+Теперь вы можете использовать следующую команду:
 
+`dbt build –select result:error+ –defer –state <previous_state_artifacts>` … и это все!
 
-Instead you can now use the following command:
+Вы можете увидеть больше примеров [здесь](https://docs.getdbt.com/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci).
 
-`dbt build –select result:error+ –defer –state <previous_state_artifacts>` … and that’s it!
-
-
-You can see more examples [here](https://docs.getdbt.com/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci).
-
-
-This means that whether you’re actively developing or you simply want to rerun a scheduled job (because of, say, permission errors or timeouts in your database), you now have a unified approach to doing both.
+Это означает, что независимо от того, активно ли вы разрабатываете или просто хотите повторно запустить запланированную задачу (из-за, скажем, ошибок разрешений или тайм-аутов в вашей базе данных), теперь у вас есть единый подход для выполнения обоих.
 
 ![airflow dbt run select](/img/blog/2021-11-29-dbt-airflow-spiritual-alignment/airflow-dbt-run-select.png)
 
-[In an Airflow context](https://registry.astronomer.io/dags/dbt-core-run-from-failure-pattern), you can use this command with TriggerRules to make it so that, in the event that your initial model fails, you can keep rerunning it from the point of failure without leaving the Airflow UI. This can be especially convenient when the reason your model fails isn't related to the model code itself (permissions for certain schemas, bad data, etc.)
+[В контексте Airflow](https://registry.astronomer.io/dags/dbt-core-run-from-failure-pattern), вы можете использовать эту команду с TriggerRules, чтобы в случае сбоя вашей начальной модели вы могли продолжать повторный запуск с точки сбоя, не покидая интерфейс Airflow. Это может быть особенно удобно, когда причина сбоя вашей модели не связана с самим кодом модели (разрешения для определенных схем, плохие данные и т.д.)
 
 ![airflow dbt run select](/img/blog/2021-11-29-dbt-airflow-spiritual-alignment/dbt-airflow-tree-graph.png)
 
 ### dbt Cloud + Airflow
 
-#### Using the dbt Cloud Provider
+#### Использование провайдера dbt Cloud
 
-With the new dbt Cloud Provider, you can use Airflow to orchestrate and monitor your dbt Cloud jobs without any of the overhead of dbt Core. Out of the box, the dbt Cloud provider comes with:
+С новым провайдером dbt Cloud вы можете использовать Airflow для оркестрации и мониторинга ваших задач dbt Cloud без каких-либо накладных расходов dbt Core. Из коробки провайдер dbt Cloud поставляется с:
 
-An operator that allows you to both run a predefined job in dbt Cloud and download an artifact from a dbt Cloud job.
-A hook that gives you a secure way to leverage Airflow’s connection manager to connect to dbt Cloud. The Operator leverages the hook, but you can also [use the hook directly in a Taskflow function or PythonOperator](https://registry.astronomer.io/dags/dbt-cloud-operational-check) if there’s custom logic you need that isn’t covered in the Operator.
+Оператором, который позволяет вам как запускать предопределенную задачу в dbt Cloud, так и загружать артефакт из задачи dbt Cloud.
+Хуком, который предоставляет вам безопасный способ использовать менеджер подключений Airflow для подключения к dbt Cloud. Оператор использует хук, но вы также можете [использовать хук напрямую в функции Taskflow или PythonOperator](https://registry.astronomer.io/dags/dbt-cloud-operational-check), если есть пользовательская логика, которая вам нужна и не покрыта в Операторе.
 
-A sensor that allows you to poll for a job completion. You can use this [for workloads where you want to ensure your dbt job has run before continuing on with your DAG](https://registry.astronomer.io/dags/fivetran-dbt-cloud-census).
-TL;DR - This combines the end-to-end visibility of everything (from ingestion through data modeling) that you know and love in Airflow with the rich and intuitive interface of dbt Cloud.
+Сенсором, который позволяет вам опрашивать завершение задачи. Вы можете использовать это [для рабочих нагрузок, где вы хотите убедиться, что ваша задача dbt выполнена перед продолжением вашего DAG](https://registry.astronomer.io/dags/fivetran-dbt-cloud-census).
+Кратко - это сочетает в себе сквозную видимость всего (от извлечения до моделирования данных), которую вы знаете и любите в Airflow, с богатым и интуитивно понятным интерфейсом dbt Cloud.
 
-#### Setting up Airflow and dbt Cloud
+#### Настройка Airflow и dbt Cloud
 
-To set up Airflow and dbt Cloud, you can follow the step by step instructions: [here](https://docs.getdbt.com/guides/orchestration/airflow-and-dbt-cloud/2-setting-up-airflow-and-dbt-cloud)
+Чтобы настроить Airflow и dbt Cloud, вы можете следовать пошаговым инструкциям: [здесь](https://docs.getdbt.com/guides/orchestration/airflow-and-dbt-cloud/2-setting-up-airflow-and-dbt-cloud)
 
-If your task errors or fails in any of the above use cases, you can view the logs within dbt Cloud (think: data engineers can trust analytics engineers to resolve errors).
+Если ваша задача выдает ошибку или завершается сбоем в любом из вышеупомянутых случаев использования, вы можете просмотреть логи в dbt Cloud (подумайте: инженеры данных могут доверять аналитикам для решения ошибок).
 
-This creates a much more natural baton pass, and clarity on who needs to fix what.
+Это создает гораздо более естественную передачу эстафеты и ясность в том, кто должен исправить что.
 
-And if my goal is to ship trusted data, I opt for that simplicity + clarity every time.
+И если моя цель — доставить надежные данные, я выбираю эту простоту и ясность каждый раз.
 
-But there are no right or wrong decisions here! Any combination of tools that solves the problem of delivering trusted data for your team is the right choice.
+Но здесь нет правильных или неправильных решений! Любая комбинация инструментов, которая решает проблему доставки надежных данных для вашей команды, является правильным выбором.

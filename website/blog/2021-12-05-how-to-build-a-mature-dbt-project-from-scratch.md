@@ -1,6 +1,6 @@
 ---
-title: "How to Build a Mature dbt Project from Scratch"
-description: "A guide to how to start and evolve a dbt project."
+title: "Как создать зрелый проект dbt с нуля"
+description: "Руководство по началу и развитию проекта dbt."
 slug: how-to-build-a-mature-dbt-project-from-scratch
 
 authors: [dave_connors]
@@ -12,201 +12,201 @@ date: 2021-12-06
 is_featured: true
 ---
 
-# Building a Mature dbt Project from Scratch
+# Создание зрелого проекта dbt с нуля
 
-> *[We would love to have] A maturity curve of an end-to-end dbt implementation for each version of dbt .... There are so many features in dbt now but it'd be great to understand, "what is the minimum set of dbt features/components that need to go into a base-level dbt implementation?...and then what are the things that are extra credit?"*
--*Will Weld on dbt Community Slack*
+> *[Мы бы хотели иметь] кривую зрелости для реализации dbt от начала до конца для каждой версии dbt .... Сейчас в dbt так много функций, но было бы здорово понять, "какой минимальный набор функций/компонентов dbt должен быть в базовой реализации dbt?... а что является дополнительным бонусом?"*
+-*Will Weld на dbt Community Slack*
 
-One question we hear time and time again is this - what does it look like to progress through the different stages of maturity on a dbt project?
+Один из вопросов, который мы слышим снова и снова, - как выглядит прогресс через различные стадии зрелости в проекте dbt?
 
-When Will posed this question on Slack, it got me thinking about what it would take to create a framework for dbt project maturity.
+Когда Уилл задал этот вопрос в Slack, я задумался о том, что потребуется для создания структуры зрелости проекта dbt.
 <!--truncate-->
-As an analytics engineer on the professional services team at dbt Labs, my teammates and I have had the unique opportunity to work on an unusually high number of dbt projects at organizations ranging from tiny startups to Fortune 500 companies and everything in between. From this vantage point, we have gained a unique understanding of the dbt adoption curve - how companies actually implement and expand their usage of dbt.
+Как аналитический инженер в команде профессиональных услуг в dbt Labs, мои коллеги и я имели уникальную возможность работать над необычно большим количеством проектов dbt в организациях, начиная от крошечных стартапов и заканчивая компаниями из списка Fortune 500 и всем, что между ними. С этой точки зрения мы получили уникальное понимание кривой принятия dbt - как компании фактически внедряют и расширяют использование dbt.
 
-With every new engagement, we find ourselves working in a project with a unique mix of data challenges. With the explosion in popularity of dbt, and the constant release of new features and capabilities available in the tool, it’s really easy for data teams to go down the rabbit hole of dbt’s shiniest new features before prioritizing the simple ones that will likely be the most immediately impactful to their organization.
+С каждым новым проектом мы сталкиваемся с уникальным набором проблем с данными. С ростом популярности dbt и постоянным выпуском новых функций и возможностей, доступных в инструменте, командам данных очень легко увлечься самыми новыми функциями dbt, прежде чем приоритизировать простые, которые, вероятно, окажут наибольшее немедленное воздействие на их организацию.
 
-A lot of teams find themselves in this position because getting the organizational buy-in for the tool is actually the *easy* part. Folks have a lot of freedom to go ahead to try out dbt, but once you get started it can be hard to know whether you are taking advantage of all the dbt features that would be right for your project.
+Многие команды оказываются в этой ситуации, потому что получение организационной поддержки для инструмента на самом деле является *легкой* частью. У людей есть много свободы, чтобы попробовать dbt, но как только вы начнете, может быть трудно понять, используете ли вы все функции dbt, которые подходят для вашего проекта.
 
-In working alongside teams on their dbt journey, we’ve noticed that there tend to be distinct stages of dbt usage that organizations progress through. We’ve come to think of these stages as representing **dbt project maturity. **
+Работая вместе с командами на их пути с dbt, мы заметили, что существует тенденция к различным стадиям использования dbt, через которые проходят организации. Мы начали думать об этих стадиях как о представлении **зрелости проекта dbt.**
 
-We can break the concept of maturity down into two categories. The first is** feature** **completeness**, or the number of distinct dbt features you are using. The other is** feature depth**,  the level of sophistication within the use of individual features. For example, adding the source feature to your project would be increasing the completeness of your project, but adding the source freshness feature to the sources you already defined would be a way to add depth to your project. Walking along this matrix we can watch a teeny tiny baby project grow into a fully mature production grade dbt pipeline.
+Мы можем разбить концепцию зрелости на две категории. Первая - это **полнота функций**, или количество различных функций dbt, которые вы используете. Другая - это **глубина функций**, уровень сложности в использовании отдельных функций. Например, добавление функции источника в ваш проект увеличит полноту вашего проекта, но добавление функции свежести источника к уже определенным источникам будет способом добавить глубину вашему проекту. Пройдя по этой матрице, мы можем наблюдать, как крошечный проект вырастает в полностью зрелый производственный конвейер dbt.
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_0.png)
 
-**How do we do this?**
+**Как мы это делаем?**
 
-Let’s pretend that we are an analytics engineer at Seeq Wellness, a hypothetical EHR (electronic health record!) company, and we want to try out dbt to model our patient, doctor and claims data for a critical KPI dashboard. We’re going to create a new dbt project together, and walk through the stages of development, incrementally adding key dbt features as we go along.  
+Давайте представим, что мы аналитический инженер в Seeq Wellness, гипотетической компании EHR (электронные медицинские записи), и мы хотим попробовать dbt для моделирования данных о пациентах, врачах и претензиях для критической панели KPI. Мы создадим новый проект dbt вместе и пройдем через стадии разработки, постепенно добавляя ключевые функции dbt по мере продвижения.
 
-[We’ve developed a repository](https://github.com/dbt-labs/dbt-project-maturity) that traces the progress in this project; **for each step along the maturity curve**, there is a subfolder in that repo with a **fully functional version of our dbt project** at that stage. We’ve also included some sample raw data to add to your warehouse so you can run these projects yourself! You can use this repository to **benchmark the maturity of your own dbt project**.
+[Мы разработали репозиторий](https://github.com/dbt-labs/dbt-project-maturity), который отслеживает прогресс в этом проекте; **для каждого шага на кривой зрелости** в этом репозитории есть подпапка с **полностью функциональной версией нашего проекта dbt** на этом этапе. Мы также включили некоторые образцы необработанных данных, чтобы добавить их в ваш склад, чтобы вы могли запустить эти проекты самостоятельно! Вы можете использовать этот репозиторий, чтобы **оценить зрелость вашего собственного проекта dbt**.
 
-## Caveats and Assumptions
+## Предостережения и предположения
 
-**This is an art, not science!**
+**Это искусство, а не наука!**
 
-*There are real life use cases where some features get introduced into projects out of the order described here, and that is perfectly reasonable. There are often justifiable reasons to introduce more advanced dbt features earlier in the development cycle.*
+*Существуют реальные случаи, когда некоторые функции вводятся в проекты не в том порядке, который описан здесь, и это вполне разумно. Часто есть обоснованные причины для введения более продвинутых функций dbt на более ранних этапах цикла разработки.*
 
-**You are the pace setter**
+**Вы задаете темп**
 
-*There is no sense of timescale in this presentation! Some teams may mature their project in weeks rather than months. It's more important to think about ***_how_*** features build upon themselves (and each other) rather than ***_how quickly_*** they do so.*
+*В этой презентации нет ощущения временной шкалы! Некоторые команды могут развивать свой проект за недели, а не месяцы. Важно думать о том, ***_как_*** функции строятся друг на друге (и друг с другом), а не о том, ***_как быстро_*** они это делают.*
 
-## Level 1 - Infancy - Running your first model
+## Уровень 1 - Младенчество - Запуск вашей первой модели
 
-**Key Outcomes**
+**Ключевые результаты**
 
-* Create your first [model](/docs/build/sql-models)
+* Создайте свою первую [модель](/docs/build/sql-models)
 
-* Execute your first [dbt run](/reference/commands/run)
+* Выполните свой первый [dbt run](/reference/commands/run)
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_1.png)
 
-**Themes and Goals**
+**Темы и цели**
 
-Now, I definitely have no authority to speak on what it takes to raise a child, but I understand that a big part of caring for an infant has to do with taking care of its inputs and outputs. The same can be said about a dbt project in this stage!
+Теперь я, конечно, не имею полномочий говорить о том, что нужно для воспитания ребенка, но я понимаю, что большая часть заботы о младенце связана с заботой о его входах и выходах. То же самое можно сказать о проекте dbt на этом этапе!
 
-The goal here is to learn the very basics of interacting with a dbt project; feeding it SQL, getting data objects out of it. We will build on this later, but right now, the important thing to do is create a model in dbt, give dbt a command, and see that it properly produces the <Term id="view" /> or <Term id="table" /> in our warehouse that we expect.
+Цель здесь - изучить самые основы взаимодействия с проектом dbt; кормить его SQL, получать из него объекты данных. Мы будем строить на этом позже, но сейчас важно создать модель в dbt, дать dbt команду и увидеть, что она правильно создает <Term id="view" /> или <Term id="table" /> в нашем хранилище, как мы и ожидали.
 
-In addition to learning the basic pieces of dbt, we're familiarizing ourselves with the modern, version-controlled analytics engineering workflow, and experimenting with how it feels to use it at our organization.
+Помимо изучения основных элементов dbt, мы знакомимся с современным, контролируемым версиями рабочим процессом аналитической инженерии и экспериментируем с тем, как это ощущается в нашей организации.
 
-If we decide not to do this, we end up missing out on what the dbt workflow has to offer. If you want to learn more about why we think analytics engineering with dbt is the way to go, I  encourage you to read the [dbt Viewpoint](/community/resources/viewpoint#analytics-is-collaborative)!
+Если мы решим этого не делать, мы упустим то, что предлагает рабочий процесс dbt. Если вы хотите узнать больше о том, почему мы считаем, что аналитическая инженерия с dbt - это правильный путь, я рекомендую вам прочитать [dbt Viewpoint](/community/resources/viewpoint#analytics-is-collaborative)!
 
-In order to learn the basics, we’re going to [port over the SQL file](/guides/refactoring-legacy-sql) that powers our existing "patient_claim_summary" report that we use in our KPI dashboard in parallel to our old transformation process. We’re not ripping out the old plumbing just yet. In doing so, we're going to try dbt on for size and get used to interfacing with a dbt project.
+Чтобы изучить основы, мы собираемся [перенести SQL файл](/guides/refactoring-legacy-sql), который питает наш существующий отчет "patient_claim_summary", который мы используем в нашей панели KPI параллельно с нашим старым процессом трансформации. Мы пока не собираемся вырывать старую сантехнику. Делая это, мы попробуем dbt на размер и привыкнем к взаимодействию с проектом dbt.
 
-**Project Appearance**
+**Внешний вид проекта**
 
-We have one single SQL model in our models folder, and really, that's it. At this stage, the README and dbt_project.yml are just artifacts from the [dbt init command](/reference/commands/init), and don’t yet have specific documentation or configuration. At this stage of our journey, we just want to get up and running with a functional dbt project.
+У нас есть одна единственная SQL модель в нашей папке моделей, и, честно говоря, это все. На этом этапе README и dbt_project.yml - это просто артефакты от [dbt init command](/reference/commands/init), и они еще не имеют конкретной документации или конфигурации. На этом этапе нашего пути мы просто хотим запустить и работать с функциональным проектом dbt.
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_2.png)
 
-The most important thing we’re introducing when your project is an infant is the modern, version-controlled, collaborative approach to analytics that dbt offers. The thrill of executing your first successful dbt run is all you need to do to understand how dbt can be massively impactful to your analytics team.
+Самое важное, что мы вводим, когда ваш проект является младенцем, это современный, контролируемый версиями, совместный подход к аналитике, который предлагает dbt. Волнение от выполнения вашего первого успешного dbt run - это все, что вам нужно, чтобы понять, как dbt может оказать огромное влияние на вашу аналитическую команду.
 
-## Level 2 - Toddlerhood - Building Modular Data Models
+## Уровень 2 - Детство - Создание модульных моделей данных
 
-**Key Outcomes**
+**Ключевые результаты**
 
-* Configure your first [sources](/docs/build/sources)
+* Настройте свои первые [источники](/docs/build/sources)
 
-* Introduce modularity with [\{\{ ref() \}\}](/reference/dbt-jinja-functions/ref) and [\{\{ source() \}\}](/reference/dbt-jinja-functions/source)
+* Введите модульность с помощью [\{\{ ref() \}\}](/reference/dbt-jinja-functions/ref) и [\{\{ source() \}\}](/reference/dbt-jinja-functions/source)
 
-* [Document](/docs/build/documentation) and [test](/docs/build/data-tests) your first models
+* [Документируйте](/docs/build/documentation) и [тестируйте](/docs/build/data-tests) свои первые модели
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_3.png)
 
-**Themes and Goals**
+**Темы и цели**
 
-Now that we're comfortable translating SQL into a model from our infant project, it's time to teach our project to take its very first steps.
+Теперь, когда мы освоились с переводом SQL в модель из нашего младенческого проекта, пришло время научить наш проект делать свои первые шаги.
 
-Specifically, now is when it's useful to introduce **_modularity_** to our project.
+Конкретно, сейчас полезно ввести **_модульность_** в наш проект.
 
-We’re going to:
+Мы собираемся:
 
-* Break out reused code into separate models and use [\{\{ ref() }}](/reference/dbt-jinja-functions/ref) to build dependencies
+* Разбить повторно используемый код на отдельные модели и использовать [\{\{ ref() }}](/reference/dbt-jinja-functions/ref) для построения зависимостей
 
-* Use the[ \{\{ source() \}\}](/reference/commands/source) macro to declare our raw data dependencies
+* Использовать макрос [\{\{ source() \}\}](/reference/commands/source) для объявления наших необработанных данных
 
-* Dip our toes into testing and documenting our models
+* Погрузиться в тестирование и документирование наших моделей
 
-**Project Appearance**
+**Внешний вид проекта**
 
-Let's check in on the growth of [our project](https://github.com/dbt-labs/dbt-project-maturity/tree/main/2-toddlerhood). We've broken some of our logic into its own model — our original script had repetitive logic in <Term id="subquery">subqueries</Term>, now it's following a key principle of analytics engineering: <Term id="dry">Don't Repeat Yourself (DRY)</Term>. For more information on how to refactor your SQL queries for Modularity - check out our [free on-demand course](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
+Давайте проверим рост [нашего проекта](https://github.com/dbt-labs/dbt-project-maturity/tree/main/2-toddlerhood). Мы разбили часть нашей логики на собственную модель — наш оригинальный скрипт имел повторяющуюся логику в <Term id="subquery">подзапросах</Term>, теперь он следует ключевому принципу аналитической инженерии: <Term id="dry">Не повторяй себя (DRY)</Term>. Для получения дополнительной информации о том, как рефакторить ваши SQL-запросы для модульности, ознакомьтесь с нашим [бесплатным курсом по запросу](https://learn.getdbt.com/courses/refactoring-sql-for-modularity).
 
-We also added our first [YML files](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Here, we have one yml file to [configure our sources](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml), and one one yml file to [describe our models](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). We're just starting with basic declarations of our sources, <Term id="primary-key" /> testing using dbt built in tests, and a model-level description -- these are the first steps of a project just learning to walk!
+Мы также добавили наши первые [YML файлы](https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/). Здесь у нас есть один yml файл для [настройки наших источников](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/source.yml) и один yml файл для [описания наших моделей](https://github.com/dbt-labs/dbt-project-maturity/blob/main/2-toddlerhood/models/schema.yml). Мы только начинаем с базовых деклараций наших источников, <Term id="primary-key" /> тестирования с использованием встроенных тестов dbt и описания на уровне модели — это первые шаги проекта, только начинающего ходить!
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_4.png)
 
-Leveling up from infant to toddler is a huge jump in terms of feature completeness! By adding in sources and refs, we’ve really started to take advantage of what makes dbt special.
+Переход от младенца к ребенку — это огромный скачок в плане полноты функций! Добавив источники и ссылки, мы действительно начали использовать то, что делает dbt особенным.
 
-## Level 3 - Childhood - Developing Standards for Code Collaboration and Maintainability
+## Уровень 3 - Детство - Разработка стандартов для совместной работы с кодом и поддерживаемости
 
-**Key Outcomes**
+**Ключевые результаты**
 
-* Standardize [project structure](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355), [SQL style guide](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md) and [model naming conventions](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) in a contribution guide
+* Стандартизируйте [структуру проекта](https://discourse.getdbt.com/t/how-we-structure-our-dbt-projects/355), [стиль SQL](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md) и [конвенции именования моделей](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) в руководстве по вкладу
 
-* Develop testing and documentation requirements
+* Разработайте требования к тестированию и документации
 
-* Create a PR template to ensure quality and consistency
+* Создайте шаблон PR для обеспечения качества и согласованности
 
-* [Deploy your project](/docs/deploy/deployments)!
+* [Разверните ваш проект](/docs/deploy/deployments)!
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_5.png)
 
-**Themes and Goals**
+**Темы и цели**
 
-We made a huge jump in our feature completeness in the last stage - now it’s time to think about getting the project ready to be used by multiple developers and even deployed into production. The best way to ensure consistency as we start collaborating is to define standards for how we write code and model data then enforce them in the review process. From the data team's perspective, we shouldn't be able to infer who wrote what line of code because one of our teammates uses the dreaded leading comma. Analytics code is an asset, and should be treated as production grade software. 
+Мы сделали огромный скачок в нашей полноте функций на последнем этапе - теперь пришло время подумать о подготовке проекта к использованию несколькими разработчиками и даже к развертыванию в производстве. Лучший способ обеспечить согласованность, когда мы начинаем сотрудничать, - это определить стандарты того, как мы пишем код и моделируем данные, а затем применять их в процессе проверки. С точки зрения команды данных, мы не должны быть в состоянии определить, кто написал ту или иную строку кода, потому что один из наших коллег использует ужасную ведущую запятую. Аналитический код - это актив, и его следует рассматривать как программное обеспечение производственного уровня.
 
-**Project Appearance**
+**Внешний вид проекта**
 
-We've added project-level documentation to [our repo](https://github.com/dbt-labs/dbt-project-maturity/tree/main/3-childhood) for developers to review as they get started in this project. This generally includes:
+Мы добавили документацию на уровне проекта в [наш репозиторий](https://github.com/dbt-labs/dbt-project-maturity/tree/main/3-childhood) для разработчиков, чтобы они могли ознакомиться с ней, начиная работу над этим проектом. Это обычно включает:
 
-1. A [contribution and SQL style guide](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/CONTRIBUTING.md).
+1. [Руководство по вкладу и стиль SQL](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/CONTRIBUTING.md).
 
-2. A [README](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/README.md) with a set up guide with project-specific resources and links out to general  dbt resources.
+2. [README](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/README.md) с руководством по настройке с проектно-специфическими ресурсами и ссылками на общие ресурсы dbt.
 
-3. A [pull request template](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/.github/pull_request_template.md) to make sure we're checking new code against these guidelines every time we want to add new modeling work!
+3. [Шаблон запроса на слияние](https://github.com/dbt-labs/dbt-project-maturity/blob/main/3-childhood/.github/pull_request_template.md), чтобы убедиться, что мы проверяем новый код на соответствие этим руководствам каждый раз, когда хотим добавить новую работу по моделированию!
 
-Let's look at our models — we went from a early stage DAG, starting to get a feel for modularity, to a clean, standardized and logically organized DAG — we can now see logical layers of modeling that correspond to the file tree structure we saw before — we can even see the model naming conventions lining up with these layers (stg, int, fct). Defining the standards in how we organize our models in our project level has resulted in a cleaner, easier to understand DAG too!
+Давайте посмотрим на наши модели — мы перешли от ранней стадии DAG, начинаем чувствовать модульность, к чистому, стандартизированному и логически организованному DAG — теперь мы можем видеть логические слои моделирования, которые соответствуют структуре файлового дерева, которую мы видели ранее — мы даже можем видеть, как конвенции именования моделей выстраиваются в соответствии с этими слоями (stg, int, fct). Определение стандартов в том, как мы организуем наши модели на уровне проекта, привело к более чистому, более понятному DAG!
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_6.png)
 
-Even though we haven't changed the function of a lot of our features *codifying and standardizing the use of these features is a huge step forward for project maturity.* Getting to this level of maturity is when we generally start to think about running this project in production. With these guardrails in place, we can be confident our project isn’t going to fall out of bed at night and hurt itself -- it’s ready to take on a little bit of independence!
+Хотя мы не изменили функцию многих наших функций, *кодификация и стандартизация использования этих функций - это огромный шаг вперед для зрелости проекта.* Достигнув этого уровня зрелости, мы обычно начинаем думать о запуске этого проекта в производстве. С этими ограждениями мы можем быть уверены, что наш проект не упадет с кровати ночью и не поранится — он готов взять на себя немного независимости!
 
-## Level 4 - Adolescence - Increasing Flexibility
+## Уровень 4 - Подростковый возраст - Увеличение гибкости
 
-**Key Outcomes**
+**Ключевые результаты**
 
-* Leverage code from dbt [packages](/docs/build/packages)
+* Используйте код из dbt [пакетов](/docs/build/packages)
 
-* Increase model flexibility and scope of project
+* Увеличьте гибкость модели и охват проекта
 
-* Reduce dbt production build times with [advanced materializations](/docs/build/materializations)
+* Сократите время сборки dbt в производстве с помощью [продвинутых материализаций](/docs/build/materializations)
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_7.png)
 
-**Themes and Goals**
+**Темы и цели**
 
-Wow, our project is growing up fast — it's heading off into the world, learning new things, getting into trouble (don't worry that's just normal teen stuff). Our project is finally starting to think about its place in the world and in the greater dbt ecosystem. It's also starting to get buy-in from our stakeholders, and they want *more. *At this stage, learning how to do some more advanced tricks with dbt can allow us to think beyond the business logic we’re defining, and instead think more about *how *that business logic is built. Where can we make this project more efficient? How can we start serving up more information *about* our data to our stakeholders?
+Вау, наш проект быстро растет — он отправляется в мир, учится новому, попадает в неприятности (не волнуйтесь, это просто нормальные подростковые вещи). Наш проект наконец-то начинает задумываться о своем месте в мире и в большом сообществе dbt. Он также начинает получать поддержку от наших заинтересованных сторон, и они хотят *больше.* На этом этапе изучение более продвинутых трюков с dbt может позволить нам думать не только о бизнес-логике, которую мы определяем, но и о том, *как* эта бизнес-логика строится. Где мы можем сделать этот проект более эффективным? Как мы можем начать предоставлять больше информации *о* наших данных нашим заинтересованным сторонам?
 
-I want to also call out that a "feature" to introduce at this stage is engagement with the [dbt community](https://www.getdbt.com/community/) — in reality, I'm hopeful that we'd have been doing that this whole time, but thinking about opening up your projects to community-supported packages, as well as using the braintrust in the community Slack as a jumping off point for solving some of your data problems starts to really blossom around this point in the project lifecycle.
+Я также хочу отметить, что "функция", которую следует ввести на этом этапе, - это взаимодействие с [сообществом dbt](https://www.getdbt.com/community/) — на самом деле, я надеюсь, что мы делали это все это время, но мысль об открытии ваших проектов для поддерживаемых сообществом пакетов, а также использование коллективного разума в сообществе Slack в качестве отправной точки для решения некоторых ваших проблем с данными начинает действительно расцветать на этом этапе жизненного цикла проекта.
 
-**Project Appearance**
+**Внешний вид проекта**
 
-We can see the major development at [this stage](https://github.com/dbt-labs/dbt-project-maturity/tree/main/4-adolescence) is adding additional models that make our original claims report a lot more flexible -- we had only shown our users a subset of patient and doctor information in our fact model. Now, we have a more Kimball-ish-style marts setup, and we can leave selecting the dimensions up to our BI tool.
+Мы можем видеть основное развитие на [этом этапе](https://github.com/dbt-labs/dbt-project-maturity/tree/main/4-adolescence) - добавление дополнительных моделей, которые делают наш оригинальный отчет о претензиях гораздо более гибким — мы показывали нашим пользователям только подмножество информации о пациентах и врачах в нашей фактической модели. Теперь у нас есть более Kimball-стильная настройка рынков, и мы можем оставить выбор измерений на наше BI-решение.
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_8.png)
 
-Other enhancements not seen in the DAG at this stage include new custom macros to make SQL writing more dynamic and less repetitive. We can also see a packages.yml file, and we can start leveraging tests, macros, and even models developed by the dbt community. Leveraging package code is a key way to shrink our development time! We've also leveled up to using incremental logic for our largest data sets to speed up our runs and deliver insights faster. We're also interested in surfacing a little bit of the metadata from our project  — we can start by enhancing our marts with data about its recency by enabling the source freshness feature. Knowing that the data in our dashboard is up to date and reliable can massively improve consumer confidence in our stack.
+Другие улучшения, не видимые в DAG на этом этапе, включают новые пользовательские макросы, чтобы сделать написание SQL более динамичным и менее повторяющимся. Мы также можем видеть файл packages.yml, и мы можем начать использовать тесты, макросы и даже модели, разработанные сообществом dbt. Использование кода пакетов - это ключевой способ сократить наше время разработки! Мы также перешли на использование инкрементальной логики для наших самых больших наборов данных, чтобы ускорить наши запуски и быстрее предоставлять инсайты. Мы также заинтересованы в предоставлении немного метаданных из нашего проекта — мы можем начать с улучшения наших рынков данными о их актуальности, включив функцию свежести источника. Знание того, что данные в нашей панели актуальны и надежны, может значительно повысить уверенность потребителей в нашем стеке.
 
-We've spent this level focused on deepening and optimizing our feature set — we haven't introduced much more feature completeness except for SQL macros and the use of packages. Now, we're strong enough dbt developers that our time and energy is focused on taking a step back from making this project work to thinking about how to make it work *well*.
+Мы провели этот уровень, сосредоточившись на углублении и оптимизации нашего набора функций — мы не ввели много новой полноты функций, за исключением SQL макросов и использования пакетов. Теперь мы достаточно сильные разработчики dbt, чтобы наше время и энергия были сосредоточены на том, чтобы сделать шаг назад от того, чтобы заставить этот проект работать, к тому, чтобы подумать о том, как заставить его работать *хорошо*.
 
-## Level 5 - Adulthood - Solidifying Relationships
+## Уровень 5 - Взрослость - Укрепление отношений
 
-**Key Outcomes**
+**Ключевые результаты**
 
-* Formalize dbt’s relationship to BI with [exposures](/docs/build/exposures)!
+* Формализуйте отношения dbt с BI с помощью [exposures](/docs/build/exposures)!
 
-* Advanced use of metadata
+* Продвинутое использование метаданных
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_9.png)
 
-**Themes and Goals**
+**Темы и цели**
 
-In adulthood, we're turning our gaze even further inward. Our dbt project itself is independent enough to start asking itself the big questions! What does it mean to be a dbt project in the year 2021? How have I been changing? How am I relating to my peers?
+Во взрослом возрасте мы еще больше обращаем внимание внутрь. Наш проект dbt сам по себе достаточно независим, чтобы начать задавать себе большие вопросы! Что значит быть проектом dbt в 2021 году? Как я менялся? Как я отношусь к своим сверстникам?
 
-At this point, like we started to do in adolescence, we are going to focus on thinking about dbt-as-a-product, and how that product interacts with the rest of our stack. We are sinking our roots a layer deeper.
+На этом этапе, как мы начали делать в подростковом возрасте, мы сосредоточимся на том, чтобы думать о dbt как о продукте и о том, как этот продукт взаимодействует с остальной частью нашего стека. Мы углубляем наши корни на уровень глубже.
 
-**Project Appearance**
+**Внешний вид проекта**
 
-We see the biggest jump from the previous stage in the [macros folder](https://github.com/dbt-labs/dbt-project-maturity/tree/main/5-adulthood/macros). By introducing advanced macros that go beyond simple SQL templating, we’re able to have dbt deepen its relationship to our warehouse. Now we can have dbt manage things like custom schema behavior, run post hooks to drop retired models and dynamically orchestrate object permission controls; dbt itself can become your command post for warehouse management.
+Мы видим самый большой скачок с предыдущего этапа в [папке макросов](https://github.com/dbt-labs/dbt-project-maturity/tree/main/5-adulthood/macros). Введя продвинутые макросы, которые выходят за рамки простого шаблонирования SQL, мы можем позволить dbt углубить свои отношения с нашим хранилищем. Теперь мы можем позволить dbt управлять такими вещами, как поведение пользовательских схем, запуск пост-хуков для удаления устаревших моделей и динамическое управление контролем доступа к объектам; dbt сам может стать вашим командным постом для управления хранилищем.
 
-Additionally, we’ve added an exposures file to formally define the use of our marts models in our BI tool. Exposures are the most mature way to declare the data team's contracts with data consumers. We now have close to end-to-end awareness of the <Term id="data-lineage">data lineage</Term> — we know what data our project depends on, whether it's fresh, how it is transformed in our dbt models, and finally where it’s consumed in reports. Now, we can also know which of our key reports are impacted if and when we hit an error at any point in this flow.
+Кроме того, мы добавили файл exposures, чтобы формально определить использование наших моделей рынков в нашем BI-инструменте. Exposures - это самый зрелый способ заявить о контрактах команды данных с потребителями данных. Теперь у нас есть почти полное понимание <Term id="data-lineage">происхождения данных</Term> — мы знаем, от каких данных зависит наш проект, свежи ли они, как они трансформируются в наших моделях dbt и, наконец, где они потребляются в отчетах. Теперь мы также можем знать, какие из наших ключевых отчетов затронуты, если и когда мы сталкиваемся с ошибкой на любом этапе этого потока.
 
-That end to end awareness is visible on the DAG too — we can see the dashboard we declared in our exposures file here in orange!
+Это полное понимание видно и на DAG — мы можем видеть панель, которую мы объявили в нашем файле exposures, здесь в оранжевом цвете!
 
 ![image alt text](/img/blog/building-a-mature-dbt-project-from-scratch/image_10.png)
 
-Making the jump to thinking about metadata is a really powerful way to find areas for improvement in your project. For example, you can develop macros to measure things like your test coverage, and test to model ratio. You can look into packages like dbt_meta_testing to ensure your hitting minimum testing and documentation requirements.
+Переход к размышлениям о метаданных - это действительно мощный способ найти области для улучшения в вашем проекте. Например, вы можете разработать макросы для измерения таких вещей, как покрытие тестами и соотношение тестов к моделям. Вы можете изучить пакеты, такие как dbt_meta_testing, чтобы убедиться, что вы достигаете минимальных требований к тестированию и документации.
 
-If you're on cloud, you can do all of these and more in a more programmatic way with the metadata API — you can dig into model runtimes and bottlenecks, and leverage exposures directly in your BI tool to bring that metadata to your end users! Neat!
+Если вы используете облако, вы можете делать все это и многое другое более программным способом с помощью API метаданных — вы можете углубиться в время выполнения моделей и узкие места, и использовать exposures непосредственно в вашем BI-инструменте, чтобы донести эти метаданные до ваших конечных пользователей! Круто!
 
-## Conclusion
+## Заключение
 
-Life is truly a highway. We’ve traced the growth of the Seeq Wellness dbt project from birth to mid-life crisis, and we have so much growing left to do. Hopefully you can use this framework as a jumping off point to find areas in your own projects where it could stand to grow up a bit. We would love to hear from you in the repo if there are any questions, disagreements, or enhancements you’d like to see here! Another huge thank you to Will Weld, who was instrumental in developing this framework!
+Жизнь действительно как шоссе. Мы проследили рост проекта dbt Seeq Wellness от рождения до кризиса среднего возраста, и у нас еще так много роста впереди. Надеюсь, вы сможете использовать эту структуру в качестве отправной точки, чтобы найти области в ваших собственных проектах, где они могли бы немного повзрослеть. Мы будем рады услышать от вас в репозитории, если у вас есть какие-либо вопросы, разногласия или улучшения, которые вы хотели бы здесь увидеть! Еще раз огромное спасибо Уиллу Уэлду, который сыграл ключевую роль в разработке этой структуры!

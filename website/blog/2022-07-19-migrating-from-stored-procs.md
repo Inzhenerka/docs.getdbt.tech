@@ -1,6 +1,6 @@
 ---
-title: "Migrating from Stored Procedures to dbt"
-description: "Stored procedures are great, but they eventually become hard to scale. dbt fixes that, but the migration process can seem daunting. Matt Winkler demystifies the process in this blog!"
+title: "Миграция от хранимых процедур к dbt"
+description: "Хранимые процедуры — это здорово, но со временем они становятся трудными для масштабирования. dbt решает эту проблему, но процесс миграции может показаться сложным. Мэтт Уинклер развеивает мифы об этом процессе в своем блоге!"
 slug: migrating-from-stored-procs
 
 authors: [matt_winkler]
@@ -12,88 +12,90 @@ date: 2022-07-20
 is_featured: true
 ---
 
-Stored procedures are widely used throughout the data warehousing world. They’re great for encapsulating complex transformations into units that can be scheduled and respond to conditional logic via parameters. However, as teams continue building their transformation logic using the stored procedure approach, we see more data downtime, increased data warehouse costs, and incorrect / unavailable data in production. All of this leads to more stressed and unhappy developers, and consumers who have a hard time trusting their data.
+Хранимые процедуры широко используются в мире хранилищ данных. Они отлично подходят для инкапсуляции сложных преобразований в единицы, которые можно планировать и которые могут реагировать на условную логику через параметры. Однако, по мере того как команды продолжают строить свою логику преобразования, используя подход с хранимыми процедурами, мы наблюдаем больше простоев данных, увеличение затрат на хранилище данных и некорректные/недоступные данные в производстве. Все это приводит к большему стрессу и неудовлетворенности разработчиков, а также к потребителям, которым трудно доверять своим данным.
 
-If your team works heavily with stored procedures, and you ever find yourself with the following or related issues:
+Если ваша команда активно работает с хранимыми процедурами, и вы когда-либо сталкивались со следующими или похожими проблемами:
 
-- dashboards that aren’t refreshed on time
-- It feels too slow and risky to modify pipeline code based on requests from your data consumers
-- It’s hard to trace the origins of data in your production reporting
+- дашборды не обновляются вовремя
+- Изменение кода конвейера на основе запросов от ваших потребителей данных кажется слишком медленным и рискованным
+- Трудно отследить происхождение данных в вашем производственном отчете
 
-It’s worth considering if an alternative approach with dbt might help.
+Стоит рассмотреть, может ли альтернативный подход с dbt помочь.
 
 <!--truncate-->
 
-## Why use modular dbt models instead of stored procedures?
+## Почему использовать модульные модели dbt вместо хранимых процедур?
 
-We work with many analytics teams to refactor their stored procedure code into dbt. Many of them come in thinking that the upfront effort to modernize their approach to [data transformation](https://www.getdbt.com/analytics-engineering/transformation/) will be too much to justify. However, we see that in the long term this isn’t the case. 
+Мы работаем со многими аналитическими командами, чтобы рефакторить их код хранимых процедур в dbt. Многие из них приходят с мыслью, что первоначальные усилия по модернизации их подхода к [преобразованию данных](https://www.getdbt.com/analytics-engineering/transformation/) будут слишком велики, чтобы их оправдать. Однако в долгосрочной перспективе это не так.
 
-For example, a dbt Cloud user achieved the following results when moving away from the stored procedure approach:
+Например, один из пользователей dbt Cloud достиг следующих результатов, отказавшись от подхода с хранимыми процедурами:
 
-### Improved Uptime
+### Улучшенное время безотказной работы
 
-Before migrating to dbt, the team was spending 6 - 8 hours per day on pipeline refreshes, making their investment in their data warehouse essentially worthless during that downtime. After migration, their uptime increased from 65% to 99.9%. This also has a drastic impact on data consumers’ confidence in the underlying pipelines.
+До миграции на dbt команда тратила 6-8 часов в день на обновление конвейеров, что делало их инвестиции в хранилище данных практически бесполезными в течение этого времени простоя. После миграции их время безотказной работы увеличилось с 65% до 99,9%. Это также значительно повлияло на уверенность потребителей данных в надежности конвейеров.
 
-### Tackling New Use Cases
-Further, the team was able to support new mission-critical use cases, which simply wouldn’t have been possible had the team continued using the same techniques they had historically.
+### Решение новых задач
 
-Now that we’ve discussed why moving from stored procs to dbt can make sense for many analytics teams, let’s discuss how the process works in a bit more detail.
+Кроме того, команда смогла поддерживать новые критически важные задачи, которые просто не были бы возможны, если бы команда продолжала использовать те же методы, что и раньше.
 
-## What are the problems with stored procedures?
-Some of the drawbacks to using stored procedures may not have been apparent historically, but they come to light when we consider modern expectations of data pipelines such as transparent documentation, testability, and reusability of code. For one, stored procedures don’t lend themselves well to documenting data flow, as the intermediate steps are a black box. Secondly, this also means that your stored procedures aren’t very testable. Finally, we often see logic from intermediate steps in one stored procedure copied almost line-for-line to others! This creates extra bloat across a development team’s codebase, which drags down team efficiency. 
+Теперь, когда мы обсудили, почему переход от хранимых процедур к dbt может иметь смысл для многих аналитических команд, давайте обсудим, как этот процесс работает более подробно.
 
-We might visualize this situation as something like this: 
+## Какие проблемы связаны с хранимыми процедурами?
 
-![Diagram of what a stored procedure data flow would look like. Hint: it's complicated](/img/blog/2022-07-19-migrating-from-stored-procs/stored-procs-diagram.png)
+Некоторые недостатки использования хранимых процедур могли быть неочевидны в прошлом, но они становятся явными, когда мы рассматриваем современные ожидания от конвейеров данных, такие как прозрачная документация, тестируемость и повторное использование кода. Во-первых, хранимые процедуры плохо подходят для документирования потока данных, так как промежуточные шаги являются черным ящиком. Во-вторых, это также означает, что ваши хранимые процедуры не очень тестируемы. Наконец, мы часто видим, что логика из промежуточных шагов одной хранимой процедуры почти дословно копируется в другие! Это создает дополнительную нагрузку на кодовую базу команды разработчиков, что снижает эффективность команды.
 
-## Why consider dbt as an alternative?
+Мы можем визуализировать эту ситуацию следующим образом:
 
-dbt offers an approach that is self-documenting, testable, and encourages code reuse during development. One of the most important elements of working in dbt is embracing modularity when approaching data pipelines. In dbt, each business object managed by a data pipeline is defined in a separate model (think: orders data). These models are flexibly grouped into layers to reflect the progression from raw to consumption ready data. Working in this way, we create reusable components which helps avoid duplicating data and confusion among development teams. 
+![Диаграмма того, как может выглядеть поток данных в хранимой процедуре. Подсказка: это сложно](/img/blog/2022-07-19-migrating-from-stored-procs/stored-procs-diagram.png)
 
-With dbt, we work towards creating simpler, more transparent data pipelines like this:
+## Почему стоит рассмотреть dbt как альтернативу?
 
-![Diagram of what data flows look like with dbt. It's easier to trace lineage in this setup.](/img/blog/2022-07-19-migrating-from-stored-procs/dbt-diagram.png)
+dbt предлагает подход, который самодокументируется, тестируем и поощряет повторное использование кода в процессе разработки. Один из самых важных элементов работы в dbt — это принятие модульности при подходе к конвейерам данных. В dbt каждый бизнес-объект, управляемый конвейером данных, определяется в отдельной модели (например, данные о заказах). Эти модели гибко группируются в слои, чтобы отразить прогрессию от сырых данных до готовых к потреблению. Работая таким образом, мы создаем повторно используемые компоненты, что помогает избежать дублирования данных и путаницы среди команд разработчиков.
 
-Tight [version control integration](https://docs.getdbt.com/docs/best-practices#version-control-your-dbt-project) is an added benefit of working with dbt. By leveraging the power of git-based tools, dbt enables you to integrate and test changes to transformation pipelines much faster than you can with other approaches. We often see teams who work in stored procedures making changes to their code without any notion of tracking those changes over time. While that’s more of an issue with the team’s chosen workflow than a problem with stored procedures per se, it does reflect how legacy tooling makes analytics work harder than necessary.
+С dbt мы стремимся создавать более простые и прозрачные конвейеры данных, такие как этот:
 
-## Methodologies for migrating from stored procedures to dbt
+![Диаграмма того, как выглядят потоки данных с dbt. В этой настройке легче отследить происхождение.](/img/blog/2022-07-19-migrating-from-stored-procs/dbt-diagram.png)
 
-Whether you’re working with T-SQL, PL/SQL, BTEQ, or some other SQL dialect, the process of migrating from the stored procedure approach to the dbt approach can typically be broken down into similar steps. Over the years, we’ve worked with many customers to convert confusing and hard-to-manage stored procedure code into modular dbt pipelines. Through our work, we’ve arrived at a few key best practices in undertaking this process, which we present below.
+Тесная [интеграция с системой контроля версий](https://docs.getdbt.com/docs/best-practices#version-control-your-dbt-project) является дополнительным преимуществом работы с dbt. Используя мощь инструментов на основе git, dbt позволяет интегрировать и тестировать изменения в конвейерах преобразования данных гораздо быстрее, чем с другими подходами. Мы часто видим, как команды, работающие с хранимыми процедурами, вносят изменения в свой код без какого-либо представления о том, как отслеживать эти изменения со временем. Хотя это больше проблема выбранного командой рабочего процесса, чем проблема самих хранимых процедур, это отражает то, как устаревшие инструменты усложняют работу с аналитикой.
 
-If you’re interested in diving into further detail on this topic, please visit our [companion guide](https://docs.getdbt.com/guides/migration/tools/migrating-from-stored-procedures/1-migrating-from-stored-procedures) to learn more in-depth information about the refactoring process.
+## Методологии миграции от хранимых процедур к dbt
 
-### Step 0: Understand a bit about how dbt works
+Независимо от того, работаете ли вы с T-SQL, PL/SQL, BTEQ или каким-либо другим диалектом SQL, процесс миграции от подхода с хранимыми процедурами к подходу с dbt обычно можно разбить на аналогичные шаги. За эти годы мы работали с многими клиентами, чтобы преобразовать запутанный и трудный для управления код хранимых процедур в модульные конвейеры dbt. В ходе нашей работы мы пришли к нескольким ключевым лучшим практикам в этом процессе, которые мы представляем ниже.
 
-If this is your first time running dbt, you may want to start with the [Introduction to dbt](https://docs.getdbt.com/docs/introduction) and the [Getting Started tutorial](https://docs.getdbt.com/tutorial/setting-up) before diving into refactoring. If you’re already familiar with building dbt models and pipelines, feel free to dive in!
+Если вас интересует более детальная информация по этой теме, пожалуйста, посетите наше [сопроводительное руководство](https://docs.getdbt.com/guides/migration/tools/migrating-from-stored-procedures/1-migrating-from-stored-procedures), чтобы узнать более подробную информацию о процессе рефакторинга.
 
-### Step 1: Understand how dbt and stored procedures are different
+### Шаг 0: Понять, как работает dbt
 
-Most folks who have written Stored Procedures in the past think about the world in terms of a stateful process that progresses line-by-line. You start out creating your <Term id="table">tables</Term>, and then use <Term id="dml" /> to insert, update, and delete data, continually applying operations to the same base table throughout the course of a transformation. 
+Если вы впервые запускаете dbt, вам может быть полезно начать с [Введения в dbt](https://docs.getdbt.com/docs/introduction) и [Учебника по началу работы](https://docs.getdbt.com/tutorial/setting-up) перед тем, как углубляться в рефакторинг. Если вы уже знакомы с созданием моделей и конвейеров dbt, можете сразу приступать!
 
-On the other hand, dbt takes a declarative approach to managing datasets by using SELECT statements to describe the set of data that should make up the table. The tables (or <Term id="view">views</Term>) defined in this way represent each stage or unit of transformation work, and are assembled into a [Directed Acyclic Graph (DAG)](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful) to determine the order in which each statement runs. As we’ll see, this achieves the same ends as procedural transformations, but instead of applying many operations to one dataset, we take a more modular approach. This makes it MUCH easier to reason about, document, and test transformation pipelines.
+### Шаг 1: Понять, чем dbt отличается от хранимых процедур
 
-### Step 2: Plan how to convert your stored procedure to dbt code
+Большинство людей, которые писали хранимые процедуры в прошлом, думают о мире в терминах процесса с состоянием, который прогрессирует построчно. Вы начинаете с создания своих <Term id="table">таблиц</Term>, а затем используете <Term id="dml" /> для вставки, обновления и удаления данных, постоянно применяя операции к одной и той же базовой таблице в течение всего процесса преобразования.
 
-In general, we've found that the recipe presented below is an effective conversion process. 
+С другой стороны, dbt использует декларативный подход к управлению наборами данных, используя операторы SELECT для описания набора данных, который должен составлять таблицу. Таблицы (или <Term id="view">представления</Term>), определенные таким образом, представляют каждую стадию или единицу работы по преобразованию и собираются в [ориентированный ациклический граф (DAG)](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful), чтобы определить порядок выполнения каждого оператора. Как мы увидим, это достигает тех же целей, что и процедурные преобразования, но вместо применения множества операций к одному набору данных мы используем более модульный подход. Это делает гораздо проще рассуждать о конвейерах преобразования, документировать их и тестировать.
 
-1. Map data flows in the stored procedure
-2. Identify raw source data
-3. Create a staging layer on top of raw sources for initial data transformations such as data type casting, renaming, etc.
-4. Replace hard-coded table references with dbt [source()](/docs/build/sources) and [ref()](https://docs.getdbt.com/reference/dbt-jinja-functions/ref) statements. This enables 1) ensuring things are run in the right order and 2) automatic documentation!
-5. Map INSERTS and UPDATES in the stored procedure to SELECT in dbt models
-6. Map DELETES in the stored procedure to WHERE filters in dbt models
-7. If necessary, use [variables](/docs/build/project-variables) in dbt to dynamically assign values at runtime, similar to arguments passed to a stored procedure.
-8. Iterate on your process to refine the dbt [DAG](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful) further. You could continue optimizing forever, but typically we find a good stopping point when the outputs from the stored procedure and final dbt models are at parity.
+### Шаг 2: Планирование конвертации вашей хранимой процедуры в код dbt
 
-Sometimes, we find ourselves confronted with code that’s so complex, the end user isn’t able to understand exactly what it’s doing. In these cases, it may not be possible to perform an apples-to-apples mapping of the process embedded in the original stored procedure, and it’s actually more efficient to scrap the whole thing and focus on working backwards to reproduce the desired output in dbt. Note the section on auditing results below as a key success driver in this situation.
+В общем, мы обнаружили, что представленный ниже рецепт является эффективным процессом конверсии.
 
-### Step 3: Execute
+1. Картирование потоков данных в хранимой процедуре
+2. Идентификация исходных данных
+3. Создание уровня подготовки поверх исходных данных для начальных преобразований данных, таких как приведение типов данных, переименование и т.д.
+4. Замена жестко закодированных ссылок на таблицы на операторы dbt [source()](/docs/build/sources) и [ref()](https://docs.getdbt.com/reference/dbt-jinja-functions/ref). Это позволяет 1) гарантировать, что все выполняется в правильном порядке, и 2) автоматическую документацию!
+5. Картирование операторов INSERT и UPDATE в хранимой процедуре на SELECT в моделях dbt
+6. Картирование операторов DELETE в хранимой процедуре на фильтры WHERE в моделях dbt
+7. При необходимости использование [переменных](/docs/build/project-variables) в dbt для динамического назначения значений во время выполнения, аналогично аргументам, передаваемым в хранимую процедуру.
+8. Итерация вашего процесса для дальнейшего уточнения dbt [DAG](https://docs.getdbt.com/docs/introduction#what-makes-dbt-so-powerful). Вы можете продолжать оптимизацию бесконечно, но обычно мы находим хорошую точку остановки, когда выходные данные из хранимой процедуры и окончательные модели dbt находятся в паритете.
 
-Where the magic happens :). Jon “Natty” Natkins is developing a very robust how-to guide to walk through an example refactoring process from the ground up. To give a taste, we’ll show what the first few steps of the recipe described above look like in action, mapping from the original Stored Procedure approach to our new one using dbt. 
+Иногда мы сталкиваемся с кодом, который настолько сложен, что конечный пользователь не может точно понять, что он делает. В таких случаях может быть невозможно выполнить точное сопоставление процесса, встроенного в оригинальную хранимую процедуру, и на самом деле более эффективно отказаться от всего этого и сосредоточиться на работе в обратном направлении, чтобы воспроизвести желаемый результат в dbt. Обратите внимание на раздел об аудите результатов ниже как на ключевой фактор успеха в этой ситуации.
 
-#### Stored procedure approach (using SQL server code):
+### Шаг 3: Выполнение
 
-1. Define a temp table selecting data from a raw table and insert some data into it
+Где происходит магия :). Джон "Нэтти" Наткинс разрабатывает очень подробное руководство, чтобы пройти через пример процесса рефакторинга с нуля. Чтобы дать представление, мы покажем, как выглядят первые несколько шагов описанного выше рецепта в действии, переходя от оригинального подхода с хранимыми процедурами к нашему новому подходу с использованием dbt.
+
+#### Подход с хранимыми процедурами (с использованием кода SQL Server):
+
+1. Определение временной таблицы, выбирая данные из сырой таблицы и вставляя в нее некоторые данные
 
 ```sql
 IF OBJECT_ID('tempdb..#temp_orders') IS NOT NULL DROP TABLE #temp_orders
@@ -106,7 +108,7 @@ IF OBJECT_ID('tempdb..#temp_orders') IS NOT NULL DROP TABLE #temp_orders
    INTO   #temp_orders
 ```
 
-2. Run another INSERT from a second raw table
+2. Выполнение другой вставки из второй сырой таблицы
 
 ```sql
    INSERT INTO #temp_orders(messageid,orderid,sk_id, client)
@@ -117,7 +119,7 @@ IF OBJECT_ID('tempdb..#temp_orders') IS NOT NULL DROP TABLE #temp_orders
    INTO    #temp_orders
 ```
 
-3. Run a DELETE on the temp table to get rid of test data that lives in production
+3. Выполнение удаления во временной таблице, чтобы избавиться от тестовых данных, которые находятся в производстве
 
 ```sql
    DELETE tmp
@@ -128,16 +130,15 @@ IF OBJECT_ID('tempdb..#temp_orders') IS NOT NULL DROP TABLE #temp_orders
    WHERE ISNULL(tmp.is_test_record,'false') = 'true'
 ```
 
-We often see this process go on for quite some time (think: 1,000s of lines of code). To recap, the issues with this approach are:
+Мы часто видим, что этот процесс продолжается довольно долго (подумайте: 1000 строк кода). Чтобы подытожить, проблемы с этим подходом заключаются в следующем:
 
-- Tracing the data flow becomes REALLY hard because the code is a) really long and b) not documented automatically.
-- The process is stateful - Our example #temp_orders table evolves throughout the process, which means we have to juggle several different factors if we want to adjust it.
-- It’s not easy to test.
+- Отслеживание потока данных становится ОЧЕНЬ сложным, потому что код а) действительно длинный и б) не документируется автоматически.
+- Процесс имеет состояние - наша примерная таблица #temp_orders эволюционирует в течение процесса, что означает, что нам нужно жонглировать несколькими различными факторами, если мы хотим его изменить.
+- Это не легко тестировать.
 
-#### dbt approach
+#### Подход dbt
 
-
-1. Identify the raw source tables, and then map each of the INSERT statements above into separate dbt models, and include an automatically generated WHERE statement to eliminate the test records from the third step above.
+1. Идентификация исходных таблиц, а затем картирование каждого из операторов INSERT выше в отдельные модели dbt, и включение автоматически сгенерированного оператора WHERE для устранения тестовых записей из третьего шага выше.
 
 ```sql
 — orders_staging_model_a.sql
@@ -164,7 +165,7 @@ cleaned as (
 select * from cleaned
 ```
 
-2. Write tests on the models to ensure our code is working at the proper grain
+2. Написание тестов на модели, чтобы убедиться, что наш код работает на правильном уровне
 
 ```sql
 version: 2
@@ -178,7 +179,7 @@ models:
           - not_null
 ```
 
-3. UNION the models together 
+3. Объединение моделей
 
 ```sql
 {{
@@ -199,27 +200,27 @@ unioned as (
 select * from unioned
 ```
 
-We’ve just created a modular, documentable, and testable approach to manage the same transformations as an alternative. 
+Мы только что создали модульный, документируемый и тестируемый подход для управления теми же преобразованиями в качестве альтернативы.
 
-![A dbt DAG that shows the output of the code you just implemented](/img/blog/2022-07-19-migrating-from-stored-procs/dbt-approach-model.png)
+![DAG dbt, который показывает результат кода, который вы только что реализовали](/img/blog/2022-07-19-migrating-from-stored-procs/dbt-approach-model.png)
 
-### Step 4: Audit your results
+### Шаг 4: Аудит ваших результатов
 
-Any time you introduce a change to a technical process, it’s essential to check your results. Fortunately, dbt Labs maintains the [audit helper package](https://hub.getdbt.com/dbt-labs/audit_helper/0.0.2/) with exactly this use case in mind. The audit helper enables you to perform operations such as comparing row counts, and row by row validation on a table that’s updated by a legacy stored procedure to one that’s the result of a dbt pipeline in order to make sure the two are exactly the same (or, within a reasonable % deviation). This way, you have confidence that your new dbt pipeline is accomplishing the same goals of the transformation pipeline that existed before.
+Каждый раз, когда вы вносите изменения в технический процесс, важно проверить ваши результаты. К счастью, dbt Labs поддерживает [пакет помощника аудита](https://hub.getdbt.com/dbt-labs/audit_helper/0.0.2/), специально предназначенный для этого случая использования. Помощник аудита позволяет выполнять операции, такие как сравнение количества строк и построчная проверка таблицы, обновляемой устаревшей хранимой процедурой, с таблицей, являющейся результатом конвейера dbt, чтобы убедиться, что они точно такие же (или в пределах разумного отклонения в процентах). Таким образом, вы можете быть уверены, что ваш новый конвейер dbt достигает тех же целей, что и существовавший ранее конвейер преобразования.
 
-## Summary
+## Резюме
 
-We’ve highlighted several of the pain points of working with stored procedures (mainly the lack of traceability and data testing) and how the dbt approach can help. Well documented, modular, testable code makes for happy engineers and happy business users alike :handshake:. It also helps us save time and money by making pipelines more reliable and easy to update. 
+Мы выделили несколько болевых точек работы с хранимыми процедурами (в основном отсутствие отслеживаемости и тестирования данных) и как подход dbt может помочь. Хорошо документированный, модульный, тестируемый код делает счастливыми как инженеров, так и бизнес-пользователей :handshake:. Это также помогает нам экономить время и деньги, делая конвейеры более надежными и легкими для обновления.
 
-Over time, this approach is much more extensible than continuing to stack code on top of an unwieldy process. It’s also automatically documented, and using tests ensures the pipeline is resilient to changes over time. We continue mapping the data flow from the existing stored procedure to the dbt data pipeline, iterating until we achieve the same outputs as before. 
+Со временем этот подход гораздо более расширяем, чем продолжение наращивания кода поверх громоздкого процесса. Он также автоматически документируется, и использование тестов гарантирует, что конвейер устойчив к изменениям со временем. Мы продолжаем картировать поток данных от существующей хранимой процедуры к конвейеру данных dbt, итеративно до тех пор, пока не достигнем тех же выходных данных, что и раньше.
 
-We’d love to hear your feedback! You can find us on [slack](https://www.getdbt.com/community/), [github](https://github.com/dbt-labs/dbt-core), or [reach out](https://www.getdbt.com/contact/) to our sales team. 
+Мы будем рады услышать ваши отзывы! Вы можете найти нас в [slack](https://www.getdbt.com/community/), [github](https://github.com/dbt-labs/dbt-core) или [связаться](https://www.getdbt.com/contact/) с нашей командой продаж.
 
-## Appendix
+## Приложение
 
-dbt Labs has developed a number of related resources you can use to learn more about working in dbt, and comparing our approach to others in the Analytics ecosystem.
+dbt Labs разработала ряд связанных ресурсов, которые вы можете использовать, чтобы узнать больше о работе в dbt и сравнить наш подход с другими в экосистеме аналитики.
 
-- [Refactoring legacy SQL to dbt](https://docs.getdbt.com/tutorial/refactoring-legacy-sql)
-- [The case for the ELT workflow](https://www.getdbt.com/analytics-engineering/case-for-elt-workflow/)
-- [Refactoring SQL for modularity](https://learn.getdbt.com/courses/refactoring-sql-for-modularity)
-- [Data modeling techniques for modularity](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/)
+- [Рефакторинг устаревшего SQL в dbt](https://docs.getdbt.com/tutorial/refactoring-legacy-sql)
+- [Аргументы в пользу рабочего процесса ELT](https://www.getdbt.com/analytics-engineering/case-for-elt-workflow/)
+- [Рефакторинг SQL для модульности](https://learn.getdbt.com/courses/refactoring-sql-for-modularity)
+- [Техники моделирования данных для модульности](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/)

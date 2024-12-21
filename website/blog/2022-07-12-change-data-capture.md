@@ -1,6 +1,6 @@
 ---
-title: "Strategies for change data capture in dbt"
-description: "Capturing a historical view of your data is complex. Grace Goheen walks you through how to do it in this blog!"
+title: "Стратегии захвата изменений данных в dbt"
+description: "Захват исторического представления ваших данных — это сложная задача. Грейс Гохин расскажет, как это сделать в этом блоге!"
 slug: change-data-capture
 
 authors: [grace_goheen]
@@ -12,61 +12,60 @@ date: 2022-07-14
 is_featured: true
 ---
 
+Существует множество причин, по которым вы, как инженер по аналитике, можете захотеть зафиксировать полную историю версий данных:
 
-There are many reasons you, as an analytics engineer, may want to capture the complete version history of data:
+- Вы работаете в отрасли с очень высокими стандартами управления данными
+- Вам нужно отслеживать крупные OKR с течением времени, чтобы отчитываться перед заинтересованными сторонами
+- Вы хотите создать окно для просмотра истории с прямой и обратной совместимостью
 
-- You’re in an industry with a very high standard for data governance
-- You need to track big OKRs over time to report back to your stakeholders
-- You want to build a window to view history with both forward and backward compatibility
-
-These are often high-stakes situations! So accuracy in tracking changes in your data is key.
+Это часто ситуации с высокими ставками! Поэтому точность в отслеживании изменений в ваших данных имеет ключевое значение.
 
 <!--truncate-->
 
-If you’ve encountered this problem before, you know it’s a tricky one. dbt is [idempotent](https://discourse.getdbt.com/t/understanding-idempotent-data-transformations/518) - it recreates <Term id="table">tables</Term> at runtime with the `CREATE TABLE AS` syntax. Because of this, the ability to access a full picture of historical outputs isn't intrinsic to dbt.
+Если вы сталкивались с этой проблемой раньше, вы знаете, что она непростая. dbt является [идемпотентным](https://discourse.getdbt.com/t/understanding-idempotent-data-transformations/518) — он воссоздает <Term id="table">таблицы</Term> во время выполнения с помощью синтаксиса `CREATE TABLE AS`. Из-за этого возможность доступа к полной картине исторических выходных данных не является внутренней функцией dbt.
 
-Let’s imagine a specific scenario. Joanne is an analytics engineer for a large e-commerce company. The head of sales just messaged her the following question:
+Давайте представим конкретный сценарий. Джоанна — инженер по аналитике в крупной компании электронной коммерции. Руководитель отдела продаж только что отправил ей следующее сообщение:
 
-“Can you tell me the income for January 2022 for all clothing products?”
+"Можешь сказать мне доход за январь 2022 года по всем товарам одежды?"
 
-On the surface, this may seem like a simple question. But what if the calculation of income has changed since January 2022? Should Joanne calculate the income using the current formula or the formula that was used in January 2022? What if the source data for January changed after the month closed? Should Joanne use the source data as it was on January 30th, 2022 or the source data as it is now?
+На первый взгляд, это может показаться простым вопросом. Но что, если расчет дохода изменился с января 2022 года? Должна ли Джоанна рассчитывать доход, используя текущую формулу, или формулу, которая использовалась в январе 2022 года? Что, если исходные данные за январь изменились после закрытия месяца? Должна ли Джоанна использовать исходные данные, как они были на 30 января 2022 года, или как они есть сейчас?
 
-All of these questions bubble up to our main theme: *How can you capture historical versions of our data using dbt?*
+Все эти вопросы подводят нас к основной теме: *Как вы можете зафиксировать исторические версии наших данных, используя dbt?*
 
-Sorry, Joanne. The TL;DR is - “it depends.”
+Извините, Джоанна. Краткий ответ — "это зависит от обстоятельств".
 
-When I first encountered this problem, it took time and effort to:
+Когда я впервые столкнулась с этой проблемой, это потребовало времени и усилий, чтобы:
 
-1. think through the possible solutions
+1. обдумать возможные решения
 
-and
+и
 
-2. determine which solution best suited my needs
+2. определить, какое решение лучше всего подходит для моих нужд
 
-The goal of this article is to eliminate step one – to provide you with a menu of solutions I’ve encountered so you can spend less time ideating and more time considering the nuances of your specific use-case.
+Цель этой статьи — устранить первый шаг — предоставить вам меню решений, с которыми я столкнулась, чтобы вы могли тратить меньше времени на генерацию идей и больше времени на рассмотрение нюансов вашего конкретного случая использования.
 
-I’ll start by discussing a basic version of the scenario I first encountered – a ⚠️ misapplication ⚠️ of dbt’s snapshot functionality. Then, I’ll outline a couple of solutions:
+Я начну с обсуждения базовой версии сценария, с которым я впервые столкнулась — ⚠️ неправильного применения ⚠️ функциональности снимков dbt. Затем я изложу несколько решений:
 
-- **Downstream Incremental Model**: Build an incremental model downstream of the model which contains your business logic to “grab” every point-in-time version
-- **Upstream Snapshots**: Build snapshots on all of your sources to capture changes in your raw data and calculate all versions of history every time you execute a `dbt run`
+- **Инкрементальная модель ниже по потоку**: Построить инкрементальную модель ниже по потоку от модели, содержащей вашу бизнес-логику, чтобы "захватить" каждую версию на момент времени
+- **Снимки выше по потоку**: Создать снимки всех ваших источников, чтобы зафиксировать изменения в ваших сырых данных и вычислить все версии истории каждый раз, когда вы выполняете `dbt run`
 
-Finally, I’ll discuss the pros and cons of each solution to give you a head start on step two.
+Наконец, я обсужу плюсы и минусы каждого решения, чтобы дать вам фору на втором шаге.
 
-## Scenario
+## Сценарий
 
-Let’s return to Joanne. Using dbt and her favorite BI tool, Joanne has created an income report to track monthly income for each product category.
+Вернемся к Джоанне. Используя dbt и свой любимый инструмент BI, Джоанна создала отчет о доходах для отслеживания ежемесячного дохода по каждой категории продуктов.
 
-You can imagine her DAG as shown below, where `fct_income` captures income per month for each product category.
+Вы можете представить ее DAG, как показано ниже, где `fct_income` фиксирует доход за месяц для каждой категории продуктов.
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/fct-income-dag.png)
 
-Joanne executes a `dbt run` on January 30th, 2022 and queries the resulting table:
+Джоанна выполняет `dbt run` 30 января 2022 года и делает запрос к полученной таблице:
 
 ```sql
 select * from fct_income where month_year = "January 2022"
 ```
 
-She gets the following output:
+Она получает следующий вывод:
 
 | month_year | product_category | income | run_timestamp |
 |:---:|:---:|:---:|:---:|
@@ -74,7 +73,7 @@ She gets the following output:
 | January 2022 | electronics | 200 | 01/30/22 12:00:00 |
 | January 2022 | books | 100 | 01/30/22 12:00:00 |
 
-But a few days later, her source data changes for January - a manufacturing cost was dated incorrectly, and now has been updated in the source. Joanne executes a `dbt run` again on February 3rd. Now when she queries `fct_income`, she gets the following output:
+Но через несколько дней ее исходные данные за январь изменяются — производственная стоимость была неправильно датирована и теперь обновлена в источнике. Джоанна снова выполняет `dbt run` 3 февраля. Теперь, когда она делает запрос к `fct_income`, она получает следующий вывод:
 
 | month_year | product_category | income | run_timestamp |
 |:---:|:---:|:---:|:---:|
@@ -82,7 +81,7 @@ But a few days later, her source data changes for January - a manufacturing cost
 | January 2022 | electronics | **150** | 02/03/22 16:00:00 |
 | January 2022 | books | **200** | 02/03/22 16:00:00 |
 
-A few days later, Joanne finds a bug in her `dbt code`. She fixes the bug and executes a dbt run again on February 10th. Now, when she queries `fct_income`, she gets the following output:
+Через несколько дней Джоанна находит ошибку в своем `dbt коде`. Она исправляет ошибку и снова выполняет dbt run 10 февраля. Теперь, когда она делает запрос к `fct_income`, она получает следующий вывод:
 
 | month_year | product_category | income | run_timestamp |
 |:---:|:---:|:---:|:---:|
@@ -90,13 +89,13 @@ A few days later, Joanne finds a bug in her `dbt code`. She fixes the bug and ex
 | January 2022 | electronics | **152** | 02/10/22 08:00:00 |
 | January 2022 | books | **202** | 02/10/22 08:00:00 |
 
-When the head of sales messages Joanne the following question: “Can you tell me the income for January 2022 for all clothing products?”, she’s unsure which number to give: 100, 50, or 52.
+Когда руководитель отдела продаж отправляет Джоанне следующий вопрос: "Можешь сказать мне доход за январь 2022 года по всем товарам одежды?", она не уверена, какое число дать: 100, 50 или 52.
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/income-meme.png)
 
-Because of this complexity, she decides to capture the history of her income report so that she can easily swap between versions in her BI tool.
+Из-за этой сложности она решает зафиксировать историю своего отчета о доходах, чтобы она могла легко переключаться между версиями в своем BI-инструменте.
 
-Her goal is to capture **all** versions of the `fct_income` model for January. Something like this:
+Ее цель — зафиксировать **все** версии модели `fct_income` за январь. Что-то вроде этого:
 
 | month_year | product_category | income | run_timestamp |
 |:---:|:---:|:---:|:---:|
@@ -110,10 +109,10 @@ Her goal is to capture **all** versions of the `fct_income` model for January. S
 | January 2022 | electronics | 152 | 02/10/22 08:00:00 |
 | January 2022 | books | 202 | 02/10/22 08:00:00 |
 
-In order to achieve this **long table of history**, she decides to start [snapshotting](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) her final model, `fct_income`.
+Чтобы достичь этой **длинной таблицы истории**, она решает начать [создание снимков](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) своей финальной модели, `fct_income`.
 
-:::caution Don't be like Joanne
-I'm including the code samples for completeness, but remember: the method described in this scenario of snapshotting a final model contradicts dbt Labs' best practices. Either of the solutions detailed later is a better approach.
+:::caution Не будь как Джоанна
+Я включаю примеры кода для полноты картины, но помните: метод, описанный в этом сценарии, противоречит лучшим практикам dbt Labs. Любое из решений, описанных далее, является более подходящим подходом.
 :::
 
 ```sql
@@ -137,7 +136,7 @@ from {{ ref('fct_income') }}
 {% endsnapshot %}
 ```
 
-The output of `snapshot_fct_income` looks like this:
+Вывод `snapshot_fct_income` выглядит следующим образом:
 
 | id | month_year | product_category | income | run_timestamp | dbt_valid_from | dbt_valid_to |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -151,19 +150,19 @@ The output of `snapshot_fct_income` looks like this:
 | January 2022 - electronics | January 2022 | electronics | 152 | 02/10/22 08:00:00 | 02/10/22 08:00:00 | NULL |
 | January 2022 - books | January 2022 | books | 202 | 02/10/22 08:00:00 | 02/10/22 08:00:00 | NULL |
 
-Each month now has multiple versions of income, and the sales department is responsible for determining which version is “correct.”
+Теперь у каждого месяца есть несколько версий дохода, и отдел продаж несет ответственность за определение, какая версия является "правильной".
 
-In order to keep track of which version has been marked as “correct” by the sales department, Joanne creates a seed file to capture which version of the `fct_income` model is the correct one for each month. The output of her seed `income_report_versions` looks like this:
+Чтобы отслеживать, какая версия была отмечена как "правильная" отделом продаж, Джоанна создает файл семян, чтобы зафиксировать, какая версия модели `fct_income` является правильной для каждого месяца. Вывод ее семени `income_report_versions` выглядит следующим образом:
 
 | month_year | correct_version | comment |
 |:---:|:---:|:---:|
-| January 2022 | 02/10/22 08:00:00 | Approved by Lucy |
+| January 2022 | 02/10/22 08:00:00 | Утверждено Люси |
 
-Her final DAG now looks like this:
+Ее финальный DAG теперь выглядит так:
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/income-report-versions-dag.png)
 
-She's snapshotting `fct_income`, joining the seed file with the snapshot, then exposing the final output to her BI tool. The final output of `stg_snapshot_fct_income` looks like this:
+Она создает снимки `fct_income`, объединяет файл семян со снимком, а затем предоставляет конечный вывод в свой BI-инструмент. Конечный вывод `stg_snapshot_fct_income` выглядит следующим образом:
 
 | month_year | product_category | income | run_timestamp | correct_version |
 |:---:|:---:|:---:|:---:|:---:|
@@ -177,20 +176,20 @@ She's snapshotting `fct_income`, joining the seed file with the snapshot, then e
 | January 2022 | electronics | 152 | 02/10/22 08:00:00 | TRUE |
 | January 2022 | books | 202 | 02/10/22 08:00:00 | TRUE |
 
-This method *technically* works. Joanne can track what she needs:
+Этот метод *технически* работает. Джоанна может отслеживать то, что ей нужно:
 
-- source data changes
-- business logic changes
+- изменения в исходных данных
+- изменения в бизнес-логике
 
-And she can easily switch versions by adding a filter on her BI layer.
+И она может легко переключать версии, добавляя фильтр на своем BI-уровне.
 
-However, this method causes long job times and adds potentially unnecessary complexity – one of the reasons our [best practices](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots#snapshot-query-best-practices) recommend only using snapshots to track changes in your source data, rather than your final models.
+Однако этот метод вызывает длительное время выполнения задач и добавляет потенциально ненужную сложность — одна из причин, по которой наши [лучшие практики](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots#snapshot-query-best-practices) рекомендуют использовать снимки только для отслеживания изменений в ваших исходных данных, а не в ваших финальных моделях.
 
-Below, you’ll find two solutions that are more effective than snapshotting a final model, as well as the pros and cons of each method.
+Ниже вы найдете два решения, которые более эффективны, чем создание снимков финальной модели, а также плюсы и минусы каждого метода.
 
-## Solution #1: Downstream Incremental Model
+## Решение №1: Инкрементальная модель ниже по потоку
 
-Instead of using snapshots, Joanne could create an [incremental model](https://docs.getdbt.com/docs/build/incremental-models) downstream of `fct_income` to “grab” every point-in-time version of `fct_income` – let’s call this incremental model `int_income_history` and assume it has the following config block:
+Вместо использования снимков Джоанна могла бы создать [инкрементальную модель](https://docs.getdbt.com/docs/build/incremental-models) ниже по потоку от `fct_income`, чтобы "захватить" каждую версию на момент времени `fct_income` — давайте назовем эту инкрементальную модель `int_income_history` и предположим, что она имеет следующий блок конфигурации:
 
 ```sql
 {{
@@ -200,9 +199,9 @@ Instead of using snapshots, Joanne could create an [incremental model](https://d
 }}
 ```
 
-By materializing `int_income_history` as incremental but *not* including a `unique_key` config, dbt will only execute `INSERT` statements – new rows will be added, but old rows will remain unchanged.
+Материализуя `int_income_history` как инкрементальную, но *не* включая конфигурацию `unique_key`, dbt будет выполнять только `INSERT`-запросы — новые строки будут добавляться, но старые строки останутся неизменными.
 
-The rest of `int_income_history` would look like this:
+Остальная часть `int_income_history` будет выглядеть так:
 
 ```sql
 ...
@@ -215,15 +214,15 @@ from {{ ref('fct_income') }}
 {% endif %}
 ```
 
-There are a few additional configs that Joanne might find helpful:
+Существует несколько дополнительных конфигураций, которые Джоанна может найти полезными:
 
-- she can use the `on_schema_change` config to handle schema changes if  new columns are added and/or deleted from `fct_income`
-- she can also set the `full_refresh` config to false in order to prevent accidental loss of the historical data
-- she can build this table in a custom `schema` if she wants to enforce specific role-based permissions for this historical table
-- she can specify a time-grain `unique_key` if she wants to reduce the amount of versions being captured
-    - for example, if she only wants to capture the final version of each day she could set `unique_key = date_trunc('day', run_timestamp)`. This is excluded from the example below, as we are making the assumption that Joanne does indeed want to capture every version of `fct_income`
+- она может использовать конфигурацию `on_schema_change`, чтобы обрабатывать изменения схемы, если новые столбцы добавляются и/или удаляются из `fct_income`
+- она также может установить конфигурацию `full_refresh` в значение false, чтобы предотвратить случайную потерю исторических данных
+- она может создать эту таблицу в пользовательской `schema`, если она хочет обеспечить определенные разрешения на основе ролей для этой исторической таблицы
+- она может указать временной `unique_key`, если она хочет уменьшить количество фиксируемых версий
+    - например, если она хочет фиксировать только финальную версию каждого дня, она может установить `unique_key = date_trunc('day', run_timestamp)`. Это исключено из примера ниже, так как мы предполагаем, что Джоанна действительно хочет фиксировать каждую версию `fct_income`
 
-The final config block for `int_income_history` might look something like this:
+Финальный блок конфигурации для `int_income_history` может выглядеть примерно так:
 
 ```sql
 {{
@@ -236,11 +235,11 @@ The final config block for `int_income_history` might look something like this:
 }}
 ```
 
-As a final step, Joanne would create `fct_income_history` to join in the seed file to determine which versions are “correct”. Her new DAG looks like this, where `int_income_history` is an incremental model without a unique key:
+В качестве последнего шага Джоанна создаст `fct_income_history`, чтобы объединить файл семян и определить, какие версии являются "правильными". Ее новый DAG выглядит так, где `int_income_history` является инкрементальной моделью без уникального ключа:
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/int-income-history-dag.png)
 
-The final output of `fct_income_history` would look identical to `stg_snapshot_fct_income` from her initial approach:
+Конечный вывод `fct_income_history` будет идентичен `stg_snapshot_fct_income` из ее первоначального подхода:
 
 | month_year | product_category | income | run_timestamp | correct_version |
 |:---:|:---:|:---:|:---:|:---:|
@@ -254,17 +253,17 @@ The final output of `fct_income_history` would look identical to `stg_snapshot_f
 | January 2022 | electronics | 152 | 02/10/22 08:00:00 | TRUE |
 | January 2022 | books | 202 | 02/10/22 08:00:00 | TRUE |
 
-## Solution #2: Upstream Snapshots
+## Решение №2: Снимки выше по потоку
 
-Alternatively, Joanne could snapshot her source data and add flexibility to her modeling so that all historical versions are calculated *at the same time*. Let’s look at our example.
+Альтернативно, Джоанна могла бы создать снимки своих исходных данных и добавить гибкость в свою модель, чтобы все исторические версии вычислялись *одновременно*. Давайте рассмотрим наш пример.
 
-Joanne could track changes in the source data by adding snapshots directly on top of her raw data.
+Джоанна могла бы отслеживать изменения в исходных данных, добавляя снимки непосредственно поверх своих сырых данных.
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/snapshots-dag.png)
 
-This would *change the <Term id="grain" />* of these `stg_` tables, so she would see a row for each version of each field. The staging models will contain the history of each record.
+Это *изменило бы <Term id="grain" />* этих `stg_` таблиц, так что она увидела бы строку для каждой версии каждого поля. Модели на этапе подготовки будут содержать историю каждой записи.
 
-Remember the source data change Joanne noticed — a manufacturing cost was dated incorrectly (Junkuary 2022 instead of January 2022). With this solution, the `costs_snapshot` model will pick up this change:
+Помните об изменении исходных данных, которое заметила Джоанна — производственная стоимость была неправильно датирована (Junkuary 2022 вместо January 2022). С этим решением модель `costs_snapshot` зафиксирует это изменение:
 
 ```sql
 {% snapshot costs_snapshot %}
@@ -289,33 +288,33 @@ select * from {{ source('source', 'costs') }}
 | 1 | Junkuary 2022 | 50 | 01/15/22 12:00:00 | 01/15/22 12:00:00 | 02/03/22 12:00:00 |
 | 1 | January 2022 | 50 | 02/03/22 12:00:00 | 02/03/22 12:00:00 | NULL |
 
-:::note Note
-Because snapshots only capture changes detected at the time the dbt snapshot command is executed, it is technically possible to miss some changes to your source data. You will have to consider how often you want to run this snapshot command in order to capture the history you need.
+:::note Примечание
+Поскольку снимки фиксируют только изменения, обнаруженные в момент выполнения команды dbt snapshot, технически возможно пропустить некоторые изменения в ваших исходных данных. Вам придется учитывать, как часто вы хотите выполнять эту команду snapshot, чтобы зафиксировать необходимую историю.
 :::
 
-The original `fct_income` model now calculates the income for each version of source data, every time Joanne executes a `dbt run`. In other words, the downstream `fct_` models are **version-aware**. Because of this, Joanne changes the name of `fct_income` to `fct_income_history` to be more descriptive.
+Оригинальная модель `fct_income` теперь вычисляет доход для каждой версии исходных данных каждый раз, когда Джоанна выполняет `dbt run`. Другими словами, модели `fct_` ниже по потоку **осведомлены о версиях**. Из-за этого Джоанна меняет название `fct_income` на `fct_income_history`, чтобы быть более описательной.
 
-In order to track changes in business logic, she can apply each version of logic to the relevant records and union together.
+Чтобы отслеживать изменения в бизнес-логике, она может применить каждую версию логики к соответствующим записям и объединить их вместе.
 
-Remember the bug Joanne found in her dbt code. With this solution, she can track this change in business logic in the `stg_costs` model:
+Помните об ошибке, которую Джоанна нашла в своем dbt коде. С этим решением она может отслеживать это изменение в бизнес-логике в модели `stg_costs`:
 
 ```sql
--- apply the old logic for any records that were valid on or before the logic change
+-- применить старую логику для всех записей, которые были действительны до или в момент изменения логики
 select
 	cost_id,
 	...,
-	cost + tax as final_cost, -- old logic
+	cost + tax as final_cost, -- старая логика
         1 || ‘-’ || dbt_valid_from as version
 from costs_snapshot
 where dbt_valid_from <= to_timestamp('02/10/22 08:00:00')
 
 union all
 
--- apply the new logic for any records that were valid after the logic change
+-- применить новую логику для всех записей, которые были действительны после изменения логики
 select
 	cost_id,
 	...,
-	cost as final_cost, -- new logic
+	cost as final_cost, -- новая логика
         2 || ‘-’ || dbt_valid_from as version
 from costs_snapshot
 where to_timestamp('02/10/22 08:00:00') between dbt_valid_to and coalesce(dbt_valid_from, to_timestamp('01/01/99 00:00:00'))
@@ -326,17 +325,17 @@ where to_timestamp('02/10/22 08:00:00') between dbt_valid_to and coalesce(dbt_va
 | 1 | January 2022 | 50 | 1 | 51 | 1 - 02/03/22 12:00:00 |
 | 1 | January 2022 | 50 | 1 | 50 | 1 - 02/03/22 12:00:00 |
 
-The contents of the seed `income_report_versions` would look slightly different to match the change in version definition:
+Содержимое семени `income_report_versions` будет выглядеть немного иначе, чтобы соответствовать изменению в определении версии:
 
 | month_year | correct_version | comment |
 |:---:|:---:|:---:|
-| January 2022 | 2 - 02/03/22 12:00:00 | Approved by Lucy |
+| January 2022 | 2 - 02/03/22 12:00:00 | Утверждено Люси |
 
-After joining in the seed file (check out [Tackling the complexity of joining snapshots](https://docs.getdbt.com/blog/joining-snapshot-complexity)), her new DAG looks like this:
+После объединения с файлом семян (ознакомьтесь с [Решение сложности объединения снимков](https://docs.getdbt.com/blog/joining-snapshot-complexity)), ее новый DAG выглядит так:
 
 ![](/img/blog/2022-07-12-change-data-capture-metrics/final-dag.png)
 
-The final output of `fct_income_history` would accomplish the same goal as `stg_snapshot_fct_income` from her initial approach:
+Конечный вывод `fct_income_history` достигнет той же цели, что и `stg_snapshot_fct_income` из ее первоначального подхода:
 
 | month_year | product_category | income | version | correct_version |
 |:---:|:---:|:---:|:---:|:---:|
@@ -350,31 +349,31 @@ The final output of `fct_income_history` would accomplish the same goal as `stg_
 | January 2022 | electronics | 152 | 2 - 02/03/22 12:00:00 | TRUE |
 | January 2022 | books | 202 | 2 - 02/03/22 12:00:00 | TRUE |
 
-## Final thoughts
+## Заключительные мысли
 
-Both of these solutions allow Joanne to achieve her desired output – a table containing all versions of income for a given month – while improving the workflow and the efficiency of the final model.
+Оба этих решения позволяют Джоанне достичь желаемого результата — таблицы, содержащей все версии дохода за данный месяц — при этом улучшая рабочий процесс и эффективность финальной модели.
 
-However, each has its advantages and disadvantages.
+Однако у каждого из них есть свои преимущества и недостатки.
 
-**Solution #1: Downstream Incremental Model**
+**Решение №1: Инкрементальная модель ниже по потоку**
 
-| Pros | Cons |
+| Плюсы | Минусы |
 |:---:|:---:|
-| incremental models without unique keys are fast | this isn't really the intended use of the incremental <Term id="materialization" /> |
-|  | Joanne has no way to re-calculate prior versions if her historical table is accidentally lost |
+| инкрементальные модели без уникальных ключей работают быстро | это не совсем то, для чего предназначена инкрементальная <Term id="materialization" /> |
+|  | у Джоанны нет возможности пересчитать предыдущие версии, если ее историческая таблица случайно потеряна |
 
-**Solution #2: Upstream Snapshots**
+**Решение №2: Снимки выше по потоку**
 
-| Pros | Cons |
+| Плюсы | Минусы |
 |:---:|:---:|
-| Joanne doesn't have to worry about losing historical data | snapshots are highly complex and require more institutional knowledge for Joanne's team |
-|  | every time Joanne wants to make a code change that affects her calculations, she'll have to remember to apply the change to each set of relevant records and union the outputs together |
+| Джоанна не должна беспокоиться о потере исторических данных | снимки очень сложны и требуют больше институциональных знаний для команды Джоанны |
+|  | каждый раз, когда Джоанна хочет внести изменения в код, которые влияют на ее вычисления, ей придется помнить о применении изменений к каждому набору соответствующих записей и объединении выходных данных |
 
-When deciding between the two solutions, you should consider the following:
+При выборе между двумя решениями вам следует учитывать следующее:
 
-- How often is your source data changing?
-- How many bug fixes do you anticipate?
-- How fast do you need this job to be?
-- How much visibility do you need into why a change in historic values occurred?
+- Как часто меняются ваши исходные данные?
+- Сколько исправлений ошибок вы ожидаете?
+- Насколько быстро вам нужно, чтобы эта задача выполнялась?
+- Насколько вам нужна видимость того, почему произошло изменение исторических значений?
 
-💡 What do you think? Is there another, more optimal, solution?
+💡 Что вы думаете? Есть ли другое, более оптимальное решение?

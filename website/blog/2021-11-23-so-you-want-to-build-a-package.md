@@ -1,6 +1,6 @@
 ---
-title: "So You Want to Build a dbt Package"
-description: "Packages are the easiest way for a dbt user to contribute code to the dbt community."
+title: "Итак, вы хотите создать пакет dbt"
+description: "Пакеты — это самый простой способ для пользователя dbt внести код в сообщество dbt."
 slug: so-you-want-to-build-a-package
 
 authors: [amy_chen]
@@ -12,22 +12,21 @@ date: 2021-11-29
 is_featured: true
 ---
 
+Пакеты — это самый простой способ для пользователя dbt внести код в сообщество dbt. Это убеждение, которое я поддерживаю как человек, который вносит вклад в пакеты и помог многим партнерам создать свои собственные во время моей работы в dbt Labs.
 
-Packages are the easiest way for a dbt user to contribute code to the dbt community. This is a belief that I hold close as someone who is a contributor to packages and has helped many partners create their own during my time here at dbt Labs.
+Причина проста: пакеты, как неотъемлемая часть dbt, следуют нашему принципу создания аналитическими инженерами и для них. Их легко установить, они доступны, и в конце концов, это просто SQL (с добавлением git и jinja). Вы можете либо поделиться своим пакетом с сообществом, либо использовать его среди своих команд в вашей организации.
 
-The reason is simple: packages, as an inherent part of dbt, follow our principle of being built by and for analytics engineers. They’re easy to install, accessible and at the end of the day, it’s just SQL (with sprinklings of git and jinja). You can either share your package with the community or just use it among your teams at your org.
-
-So I challenge you after reading this article to test out your skillsets, think about the code that you find yourself reusing again and again, and build a package. Packages can be as complex as you would want; it’s just SQL hidden in the mix of reusable macros and expansive testing frameworks. So let’s get started on your journey.
+Поэтому я бросаю вам вызов: после прочтения этой статьи проверьте свои навыки, подумайте о коде, который вы снова и снова используете, и создайте пакет. Пакеты могут быть настолько сложными, насколько вы хотите; это просто SQL, скрытый в смеси переиспользуемых макросов и обширных тестовых фреймворков. Давайте начнем ваше путешествие.
 <!--truncate-->
-**What is a package even?**
+**Что такое пакет?**
 
-If you’re considering making a package, you probably already know what one is but let’s take a quick review to help structure our thinking. A dbt package is basically a mini-dbt project. The only mandatory file that it requires is a dbt_project.yml to validate that it’s a dbt package (same as any dbt project). It can contain macros that help you write something in SQL in significantly less lines. It could contain models that help you model your SaaS dataset in a manner of minutes (I’m looking at you, Fivetran Salesforce package). But in dbt land, you could literally take one project (say Jaffle shop) and install it as a package to your project, regardless of whether it's from the Hub or not.
+Если вы рассматриваете возможность создания пакета, вы, вероятно, уже знаете, что это такое, но давайте быстро повторим, чтобы структурировать наше мышление. Пакет dbt — это, по сути, мини-проект dbt. Единственный обязательный файл, который он требует, это dbt_project.yml, чтобы подтвердить, что это пакет dbt (так же, как и любой проект dbt). Он может содержать макросы, которые помогают вам писать что-то на SQL в значительно меньшем количестве строк. Он может содержать модели, которые помогают вам моделировать ваш SaaS набор данных за считанные минуты (я смотрю на вас, пакет Fivetran Salesforce). Но в мире dbt вы можете буквально взять один проект (скажем, Jaffle shop) и установить его как пакет в ваш проект, независимо от того, из Hub он или нет.
 
-Packages are a way to share code in dbt without ever having to copy and paste (or *email* :screaming face:).
+Пакеты — это способ делиться кодом в dbt, не прибегая к копированию и вставке (или *отправке по электронной почте* :смайл в ужасе:).
 
-Let’s break down the [dateadd macro](https://github.com/dbt-labs/dbt-utils/blob/0.1.20/macros/cross_db_utils/dateadd.sql) from the dbt_utils macro to show you the process that created this fantastic macro.
+Давайте разберем [макрос dateadd](https://github.com/dbt-labs/dbt-utils/blob/0.1.20/macros/cross_db_utils/dateadd.sql) из макроса dbt_utils, чтобы показать вам процесс, который создал этот замечательный макрос.
 
-The problem: Analysts often need to add an interval to a timestamp/date. To make this cross-database and standardized across a project, a macro is needed.
+Проблема: Аналитикам часто нужно добавить интервал к временной метке/дате. Чтобы сделать это кросс-базовым и стандартизированным по всему проекту, нужен макрос.
 
 ```sql
 
@@ -39,7 +38,7 @@ The problem: Analysts often need to add an interval to a timestamp/date. To make
 
 ```
 
-In this section, we are using the [dispatch](/reference/dbt-jinja-functions/dispatch) Jinja reference to enable the right macro from the rest of the file is called (since they are specific to the adapter) when a user called the macro. This means the user doesn’t have to think about what to call based on the adapter, they just need to call one macro, dbt handles it all behind the scene.
+В этом разделе мы используем [dispatch](/reference/dbt-jinja-functions/dispatch) Jinja, чтобы включить правильный макрос из остальной части файла (так как они специфичны для адаптера), когда пользователь вызывает макрос. Это означает, что пользователю не нужно думать о том, что вызывать в зависимости от адаптера, ему нужно просто вызвать один макрос, dbt все обработает за кулисами.
 
 ```sql
 
@@ -59,7 +58,7 @@ In this section, we are using the [dispatch](/reference/dbt-jinja-functions/disp
 
 ```
 
-In this macro, we are providing a default way to create a dateadd. This is the first macro to be used unless an adapter specific one is needed.
+В этом макросе мы предоставляем стандартный способ создания dateadd. Это первый макрос, который будет использоваться, если не требуется специфичный для адаптера.
 
 ```sql
 
@@ -81,7 +80,7 @@ In this macro, we are providing a default way to create a dateadd. This is the f
 
 {% endmacro %}
 
-{# redshift should use default instead of postgres #}
+{# redshift должен использовать default вместо postgres #}
 
 {% macro redshift__dateadd(datepart, interval, from_date_or_timestamp) %}
 
@@ -91,123 +90,122 @@ In this macro, we are providing a default way to create a dateadd. This is the f
 
 ```
 
-Here we have macros that are adapter specific. The dispatch function that we called in our first macro will help dbt know which one to point to.
+Здесь у нас есть макросы, специфичные для адаптера. Функция dispatch, которую мы вызвали в нашем первом макросе, поможет dbt понять, на какой из них указать.
 
-Now, that wasn’t so bad, right?
+Теперь это было не так уж плохо, верно?
 
-**Intentions**
+**Намерения**
 
-Before embarking on any great adventure, you should always have an idea of why you’re going on this journey. For package creation, intentions generally fall into two categories: **technical and social. **
+Перед тем как отправиться в любое великое приключение, вы всегда должны иметь представление о том, почему вы отправляетесь в это путешествие. Для создания пакета намерения обычно делятся на две категории: **технические и социальные.**
 
-Technically, you have something reusable that you want to share. Awesome things that fit in that bucket can look like:
+Технически, у вас есть что-то переиспользуемое, чем вы хотите поделиться. Замечательные вещи, которые подходят под эту категорию, могут выглядеть так:
 
-* Macros that you use very often for your projects: [dbt_utils](https://github.com/dbt-labs/dbt-utils/blob/0.7.3/macros/cross_db_utils/dateadd.sql)
+* Макросы, которые вы очень часто используете для своих проектов: [dbt_utils](https://github.com/dbt-labs/dbt-utils/blob/0.7.3/macros/cross_db_utils/dateadd.sql)
 
-* Tests that you find valuable: [dbt_expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest)
+* Тесты, которые вы находите ценными: [dbt_expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest)
 
-* Methods to expand on dbt’s core functionality: [dbt_artifacts](https://hub.getdbt.com/tailsdotcom/dbt_artifacts/latest)
+* Методы для расширения основной функциональности dbt: [dbt_artifacts](https://hub.getdbt.com/tailsdotcom/dbt_artifacts/latest)
 
-* Ways to push dbt transformations outside of the box: [dbt_ml](https://hub.getdbt.com/kristeligt-dagblad/dbt_ml/latest)
+* Способы выведения трансформаций dbt за рамки: [dbt_ml](https://hub.getdbt.com/kristeligt-dagblad/dbt_ml/latest)
 
-* Standard methods of modeling a SaaS data source: [Salesforce](https://hub.getdbt.com/fivetran/salesforce/latest)
+* Стандартные методы моделирования источника данных SaaS: [Salesforce](https://hub.getdbt.com/fivetran/salesforce/latest)
 
-I’ve even written a macro that alters the union_relations macro to a specific use case (unioning two massive tables in an incremental manner). Analytics often means that there is a lot of reusable code, across organizations and verticals.
+Я даже написал макрос, который изменяет макрос union_relations для конкретного случая использования (объединение двух массивных таблиц инкрементным образом). Аналитика часто означает, что существует много переиспользуемого кода, как в организациях, так и в вертикалях.
 
-Socially, you want to contribute to dbt. By using dbt, you are inherently part of our open source community. This means you are benefiting from the community contributions made from those prior to you and those after. So what better way to show your appreciation than contributing your knowledge, to help dbt continuously improve. Contributions help you validate your dbt expertise, both to yourself and the greater community. Creating a dbt package is a great vehicle to provide an opinionated way to use dbt. You can help define industry standards across projects, for yourself and the community. And all of this done without requiring python knowledge.
+Социально, вы хотите внести вклад в dbt. Используя dbt, вы по сути являетесь частью нашего сообщества с открытым исходным кодом. Это означает, что вы получаете выгоду от вклада сообщества, сделанного теми, кто был до вас, и теми, кто будет после. Так что какой лучший способ выразить свою признательность, чем внести свой вклад в знания, чтобы помочь dbt постоянно улучшаться. Вклады помогают вам подтвердить свою экспертизу в dbt, как для себя, так и для более широкого сообщества. Создание пакета dbt — отличный способ предоставить мнение о том, как использовать dbt. Вы можете помочь определить отраслевые стандарты в проектах, как для себя, так и для сообщества. И все это без необходимости знания Python.
 
-**Requirements:**
+**Требования:**
 
-But Amy, you just said that anyone with SQL and dbt knowledge can create a package.
+Но Эми, ты только что сказала, что любой, кто знает SQL и dbt, может создать пакет.
 
-I didn’t lie but I want to be specific about what skillsets you want to be comfortable with or expect to hone in as you develop your package:
+Я не соврала, но хочу быть конкретной в том, с какими навыками вы хотите быть комфортными или ожидать их развития, создавая свой пакет:
 
-* High level of SQL knowledge
+* Высокий уровень знаний SQL
 
-* Understanding of git, especially with semantic versioning and git maintenance
+* Понимание git, особенно семантического версионирования и обслуживания git
 
-* Knowledge of dbt (think 300s levels where you have fully built out a dbt project)
+* Знание dbt (уровень 300, где вы полностью построили проект dbt)
 
-* Proficient with Jinja
+* Владение Jinja
 
-* Have used dbt packages in the past
+* Использование пакетов dbt в прошлом
 
-* If you’re making a public package, an high-level understanding of how open source works
+* Если вы создаете публичный пакет, высокоуровневое понимание того, как работает open source
 
-**Flavors of Packages**
+**Варианты пакетов**
 
-dbt Packages can come in a variety of flavors; let’s break down your options:
+Пакеты dbt могут быть разных видов; давайте разберем ваши варианты:
 
-* **Public vs Private**
+* **Публичные vs Приватные**
 
-Now, generally speaking, we encourage contributions to our open source community so we always want to recommend sharing your package publicly. You can host your package on our[ Packages Hub](https://hub.getdbt.com/) to showcase alongside your fellow experts. But we understand sometimes there is the knowledge that you might want to share in a more controlled manner. You can make your package private in git so only those you have granted access to it can install the package in their dbt project. This often means including additional credentials during installation via using env_vars.
+Вообще говоря, мы поощряем вклад в наше сообщество с открытым исходным кодом, поэтому всегда рекомендуем делиться своим пакетом публично. Вы можете разместить свой пакет на нашем [Packages Hub](https://hub.getdbt.com/), чтобы продемонстрировать его вместе с вашими коллегами-экспертами. Но мы понимаем, что иногда есть знания, которыми вы хотите поделиться более контролируемым образом. Вы можете сделать свой пакет приватным в git, чтобы только те, кому вы предоставили доступ, могли установить пакет в свой проект dbt. Это часто означает включение дополнительных учетных данных во время установки с использованием env_vars.
 
-* **Content**
+* **Содержание**
 
-    * We have found that our most popular packages are configurable so keep in mind how customizable you want to be. Packages containing macros are by far the leading packages installed but modeling SaaS datasets has a very specific and still helpful space. So what is your package solving for? Is it going to be usable across different platforms or just Snowflake specific?
+    * Мы обнаружили, что наши самые популярные пакеты настраиваемы, поэтому имейте в виду, насколько настраиваемым вы хотите быть. Пакеты, содержащие макросы, являются лидерами среди установленных пакетов, но моделирование наборов данных SaaS имеет очень специфическое и все еще полезное пространство. Так что решает ваш пакет? Он будет использоваться на разных платформах или только для Snowflake?
 
-* **Documentation **
+* **Документация**
 
-This is basically pineapple on pizza. It’s an alternative use case where you might be installing another project on your own to gain access to the documentation and potentially internal team models. I reference this approach in my ([repo discourse post](https://discourse.getdbt.com/t/how-to-configure-your-dbt-repository-one-or-many/2121)). This will likely not be a public package but you will treat the project just like a package in this use case.
+Это, по сути, ананас на пицце. Это альтернативный случай использования, когда вы можете установить другой проект самостоятельно, чтобы получить доступ к документации и, возможно, внутренним моделям команды. Я упоминаю этот подход в своем ([посте на форуме](https://discourse.getdbt.com/t/how-to-configure-your-dbt-repository-one-or-many/2121)). Это, вероятно, не будет публичным пакетом, но вы будете обращаться с проектом так же, как с пакетом в этом случае использования.
 
-**How to create a package**
+**Как создать пакет**
 
-**
-**Now let’s get to the fun part. Starting out high level, what does the workflow look like?
+Теперь давайте перейдем к интересной части. Начнем с высокого уровня, как выглядит рабочий процесс?
 
-**The workflow **
+**Рабочий процесс**
 
-Here is a diagram that shows the workflow. You might notice that this looks a lot like how you might work on a dbt project and you would be absolutely right. Once again, you just need to know dbt and SQL to create a package :)
+Вот диаграмма, показывающая рабочий процесс. Вы можете заметить, что это очень похоже на то, как вы могли бы работать над проектом dbt, и вы абсолютно правы. Еще раз, вам просто нужно знать dbt и SQL, чтобы создать пакет :)
 
 ![image alt text](/img/blog/how_to_build_a_package_image_0.png)
 
-Now let’s deep dive into what happens in this flow.
+Теперь давайте углубимся в то, что происходит в этом потоке.
 
-**Develop**
+**Разработка**
 
-This is where you create the foundation.
+Здесь вы создаете основу.
 
-1. Start out with creating a dbt Project in Github (you can use other git providers if you plan to make a private package). All it needs to include is a `dbt_project.yml` to be installed as a package.
+1. Начните с создания проекта dbt в Github (вы можете использовать других провайдеров git, если планируете сделать пакет приватным). Все, что нужно включить, это `dbt_project.yml`, чтобы его можно было установить как пакет.
 
-2. Add in your package contents. This means your models and macros. Don’t forget to declare the vars in your dbt_project.yml file if you have any specific configurations.
+2. Добавьте содержимое вашего пакета. Это означает ваши модели и макросы. Не забудьте объявить переменные в вашем файле dbt_project.yml, если у вас есть какие-либо специфические конфигурации.
 
-As you’re going through these steps, keep in mind how configurable you want your code to be. Does your code follow [dbt best practices](https://discourse.getdbt.com/t/your-essential-dbt-project-checklist/1377)? If it’s cross-platform, have you taken into account the various SQL dialects? Also if your package relies on any existing dbt packages, are you tying it to a specific version? [For more information on developing your package, check out our docs site. ](https://docs.getdbt.com/docs/guides/building-packages#3-develop-your-package)If you want assistance from the community, the [#packages-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) channel is a fantastic place to start.
+Проходя эти шаги, имейте в виду, насколько настраиваемым вы хотите сделать ваш код. Следует ли ваш код [лучшим практикам dbt](https://discourse.getdbt.com/t/your-essential-dbt-project-checklist/1377)? Если он кросс-платформенный, учли ли вы различные диалекты SQL? Также, если ваш пакет зависит от существующих пакетов dbt, привязываете ли вы его к определенной версии? [Для получения дополнительной информации о разработке вашего пакета, ознакомьтесь с нашим сайтом документации.](https://docs.getdbt.com/docs/guides/building-packages#3-develop-your-package) Если вам нужна помощь от сообщества, канал [#packages-ecosystem](https://getdbt.slack.com/archives/CU4MRJ7QB) — отличное место для начала.
 
-**Testing **
+**Тестирование**
 
-After you have developed your core code, it’s time to [add integration tests](https://docs.getdbt.com/docs/guides/building-packages#4-add-integration-tests). This is a great thing to do because this confirms your assumptions and gives you and any contributors to your package a baseline of how the package should work. Our [audit-helper](https://github.com/dbt-labs/dbt-audit-helper/tree/master/integration_tests) package has some fantastic cross-platform integrations tests. Be sure to also install your package into an existing dbt project to validate that it works.
+После того как вы разработали свой основной код, пришло время [добавить интеграционные тесты](https://docs.getdbt.com/docs/guides/building-packages#4-add-integration-tests). Это отличная вещь, потому что она подтверждает ваши предположения и дает вам и любым участникам вашего пакета базовый уровень того, как пакет должен работать. Наш пакет [audit-helper](https://github.com/dbt-labs/dbt-audit-helper/tree/master/integration_tests) имеет отличные кросс-платформенные интеграционные тесты. Обязательно также установите ваш пакет в существующий проект dbt, чтобы подтвердить, что он работает.
 
-**Document**
+**Документирование**
 
-We, at dbt Labs, have a strongly held belief that good code is documented so make sure to document any models or macros. Update the Readme with the package’s use cases, how to use it, and specifics on what it contains. Take a look at the [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) package as an example of exemplary documentation. You want to make sure to cover what a user might need to know to use this package and debug any errors.
+Мы в dbt Labs твердо убеждены, что хороший код документирован, поэтому обязательно документируйте любые модели или макросы. Обновите Readme с описанием случаев использования пакета, как его использовать и спецификой того, что он содержит. Посмотрите на пакет [dbt-expectations](https://hub.getdbt.com/calogica/dbt_expectations/latest/) как на пример отличной документации. Вы хотите убедиться, что охватили все, что может понадобиться пользователю для использования этого пакета и устранения любых ошибок.
 
-**Community Contribution **
+**Вклад сообщества**
 
-If you plan to create a public package, I highly recommend implementing a contribution process. This will help users contribute to your code and continue to expand its usage (yay open source!). To create a trusted process, be sure to include the following elements:
+Если вы планируете создать публичный пакет, я настоятельно рекомендую внедрить процесс внесения вклада. Это поможет пользователям вносить вклад в ваш код и продолжать расширять его использование (ура, open source!). Чтобы создать надежный процесс, обязательно включите следующие элементы:
 
-* [Pull Request](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository) and [Issue Templates](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository) to help users contribute with guidance. This prevents unnecessary back and forth and helps set up productive conversations. It will help you help users debug issues and encourage folks to contribute to your package.
+* [Шаблоны Pull Request](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository) и [Шаблоны Issues](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository), чтобы помочь пользователям вносить вклад с руководством. Это предотвращает ненужные переписки и помогает наладить продуктивные разговоры. Это поможет вам помочь пользователям устранять проблемы и поощрять людей вносить вклад в ваш пакет.
 
-* Declare a reasonable SLA. Be transparent with how quickly you can respond to pull requests and issues.
+* Объявите разумное SLA. Будьте прозрачны в том, как быстро вы можете отвечать на pull requests и issues.
 
-* Define your [code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) if you have multiple maintainers to automate reviewers
+* Определите своих [владельцев кода](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners), если у вас несколько сопровождающих, чтобы автоматизировать рецензентов.
 
-A mindset to have here is setting up a framework that encourages people to join in. This will make it a lot easier for you and your users to reap the benefits of collective knowledge.
+Мышление, которое стоит иметь здесь, заключается в создании структуры, которая поощряет людей присоединяться. Это значительно упростит вам и вашим пользователям получение преимуществ коллективных знаний.
 
-**Publish**
+**Публикация**
 
-Now that all the work is done, it’s time to take the stage. This is the part of the workflow where you will make the repo public if necessary and [add to have it added to our Hub site](https://docs.getdbt.com/docs/guides/building-packages#7-add-the-package-to-hubgetdbtcom). Be sure to tell folks what you have done in dbt Slack in the #i-made-this channel or social media.
+Теперь, когда вся работа сделана, пришло время выйти на сцену. Это часть рабочего процесса, где вы сделаете репозиторий публичным, если это необходимо, и [добавите его на наш сайт Hub](https://docs.getdbt.com/docs/guides/building-packages#7-add-the-package-to-hubgetdbtcom). Обязательно расскажите людям, что вы сделали, в dbt Slack в канале #i-made-this или в социальных сетях.
 
-**Maintain **
+**Поддержка**
 
-Now, this is actually the section that package maintainers tell me is the hardest. You want to make sure to keep up with dbt core versions as well as make sure to respond to open pull requests and issues with transparency. You also might have users who are asking questions about your packages in a part of the slack community that you don’t see. This is why it’s so key to have a good process for contribution during the community contribution section of the workflow. One package maintainer told me he just regularly keyword searches in dbt Slack to catch stray questions about his package. So be clear on communication and this will make life so much easier in terms of the community element. In terms of keeping dbt core versions up to date, luckily for you, v1 is coming out and this means the end of breaking changes. That being said, it would be good to keep in mind a maintenance schedule, say every 2 months to keep your package updated to date with the latest and greatest.
+Теперь, это на самом деле раздел, который сопровождающие пакетов говорят мне, что является самым сложным. Вы хотите убедиться, что поддерживаете актуальность версий dbt core, а также отвечаете на открытые pull requests и issues с прозрачностью. У вас также могут быть пользователи, которые задают вопросы о ваших пакетах в части сообщества slack, которую вы не видите. Вот почему так важно иметь хороший процесс для внесения вклада в разделе вклада сообщества рабочего процесса. Один сопровождающий пакета сказал мне, что он просто регулярно ищет ключевые слова в dbt Slack, чтобы поймать случайные вопросы о своем пакете. Так что будьте ясны в общении, и это значительно упростит жизнь с точки зрения элемента сообщества. С точки зрения поддержания актуальности версий dbt core, к счастью для вас, выходит версия v1, и это означает конец ломающих изменений. Тем не менее, было бы хорошо иметь в виду график обслуживания, скажем, каждые 2 месяца, чтобы поддерживать ваш пакет в актуальном состоянии с последними и лучшими обновлениями.
 
-**My challenge to you**
+**Мой вызов вам**
 
-Share your knowledge. There are never too many voices in an open-source community. Join the [#packages-ecoystem](https://getdbt.slack.com/archives/CU4MRJ7QB) channel to speak with maintainers of packages.
+Поделитесь своими знаниями. В сообществе с открытым исходным кодом никогда не бывает слишком много голосов. Присоединяйтесь к каналу [#packages-ecoystem](https://getdbt.slack.com/archives/CU4MRJ7QB), чтобы пообщаться с сопровождающими пакетов.
 
-Check out the hub for ideas on gaps you might see. Maybe there’s an [existing package with an issue you have a solution for](https://github.com/dbt-labs/dbt-utils/issues). Contributing to an existing package is a great way to get started.
+Посмотрите на hub для идей о пробелах, которые вы можете заметить. Возможно, есть [существующий пакет с проблемой, для которой у вас есть решение](https://github.com/dbt-labs/dbt-utils/issues). Внесение вклада в существующий пакет — отличный способ начать.
 
- I’m excited to see what you create.
+Я с нетерпением жду, что вы создадите.
 
-**Thank yous!**
+**Благодарности!**
 
-Many thanks to our package creators and maintainers that allow me to interview them and pick their brain about packages best practices: Anders, Joe Markiewicz, Claus Herther, Mateusz Klimek, Jeremy Cohen
+Большое спасибо нашим создателям и сопровождающим пакетов, которые позволили мне интервьюировать их и изучить их мнение о лучших практиках работы с пакетами: Андерс, Джо Маркевич, Клаус Хертер, Матеуш Климек, Джереми Коэн.

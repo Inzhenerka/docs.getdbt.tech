@@ -1,6 +1,6 @@
 ---
-title: "What's a Primary Key and Why Do We Test Them?"
-description: "Let’s dive deep into: what primary keys are, which cloud analytics warehouses support them, and how you can test them in your warehouse to enforce uniqueness"
+title: "Что такое первичный ключ и зачем мы их тестируем?"
+description: "Давайте углубимся в тему: что такое первичные ключи, какие облачные аналитические хранилища их поддерживают и как вы можете тестировать их в вашем хранилище для обеспечения уникальности"
 slug: primary-key-testing
 authors: [sanjana_sen,jason_ganz,david_krevitt] 
 
@@ -12,55 +12,51 @@ is_featured: true
 
 ---
 
-We’ve all done it: fanned out data during a join to produce duplicate records (sometimes duplicated in multiple).  
+Мы все это делали: расширяли данные во время объединения, создавая дублирующиеся записи (иногда дублирующиеся в нескольких экземплярах).
 
-That time when historical revenue numbers doubled on Monday? Classic fanout. 
+Тот случай, когда исторические данные о доходах удвоились в понедельник? Классический пример расширения.
 
-Could it have been avoided? Yes, very simply: by defining the uniqueness <Term id="grain" /> for a <Term id="table" /> with a primary key and enforcing it with a dbt test.
+Можно ли было этого избежать? Да, очень просто: определив уникальность <Term id="grain" /> для <Term id="table" /> с помощью первичного ключа и обеспечив её с помощью теста dbt.
 
-So let’s dive deep into: what primary keys are, which cloud analytics warehouses support them, and how you can test them in your warehouse to enforce uniqueness.
+Итак, давайте углубимся в тему: что такое первичные ключи, какие облачные аналитические хранилища их поддерживают и как вы можете тестировать их в вашем хранилище для обеспечения уникальности.
 
 <!--truncate-->
 
 <WistiaVideo id="hnkw6j7m2t" />
 
-## What’s a primary key?
+## Что такое первичный ключ?
 
-A <Term id="primary-key" /> is a column in your database that exists to uniquely identify a single row.
+<Term id="primary-key" /> — это столбец в вашей базе данных, который существует для уникальной идентификации одной строки.
 
-Primary keys are _critical_ to data modeling. Without a primary key, you’ll find yourself constantly struggling to identify duplicate rows and define the expected grain of your tables. 
+Первичные ключи _критически важны_ для моделирования данных. Без первичного ключа вы постоянно будете сталкиваться с проблемами идентификации дублирующихся строк и определения ожидаемой зернистости ваших таблиц.
 
-There is just about no more ironclad law in the land of analytics than `you must have a primary key on every table`. 
+Нет более железного закона в мире аналитики, чем `у вас должен быть первичный ключ в каждой таблице`.
 
+## Зачем мы тестируем первичные ключи?
 
-## Why do we test primary keys?
+Но что происходит, когда пустые или дублирующиеся данные попадают в ваши первичные ключи? Как я упоминал в начале, это может создать настоящую панику.
 
-But what happens when blank or duplicate data finds its way into your primary keys? As I mentioned up top, it can create quite a firedrill.
+Недопустимые данные, попадающие в ваши первичные ключи, являются одной из _самых_ больших проблем с данными — это может привести к тому, что строки будут удалены или неправильно подсчитаны, и в ваших данных появятся всевозможные странные результаты. Это одна из самых распространенных причин срочных головных болей в мире аналитики.
 
-Invalid data getting into your primary keys is one of _the_ biggest data problems - it can lead to rows getting dropped or miscounted and for all kinds of weird results to pop into your data. It’s one of the most common causes of time-sensitive headaches in analytic-land.
+Это, конечно, то, что делает ваши первичные ключи такими мощными. Видите ли, большинство случаев, когда первичные ключи нарушаются, происходит из-за:
 
-This is, of course, what makes your primary keys so powerful. See, most of the time that primary keys get messed up, they do so because:
+* Есть строки, где первичный ключ равен null
+* Есть строки, где первичный ключ не уникален (дублирующиеся значения)
 
-* There are rows where the primary key is null
-* There are rows where the primary key is not unique (duplicate values)
+Как вы увидите ниже в разделе «поддержка PK в хранилищах», некоторые хранилища позволяют вам определять первичные ключи, но не будут обеспечивать ни отсутствие null, ни уникальность значений. Поэтому мы тестируем.
 
-As you’ll see below in the “warehouse support for PKs” section, while some warehouses allow you to define primary keys, but will not enforce either not-nullness or uniqueness on values. So, we test.
+В те времена, когда тестирование данных не было обычным делом, вы часто узнавали, что у вас есть проблемы с первичными ключами, когда вы (или, что хуже, ваш начальник) замечали, что отчет неверен. Это приводило к множеству ненужных переживаний и потере доверия к данным.
 
-In the days before testing your data was commonplace, you often found out that you had issues in your primary keys by you (or worse, your boss) noticing that a report was off. This has lead to a lot of unnecessary angst and loss of trust in data.
+## Как тестировать первичные ключи с помощью dbt
 
+Сегодня вы можете добавить два простых [теста dbt](/docs/build/data-tests) к вашим первичным ключам и быть уверенными, что вы поймаете подавляющее большинство проблем в ваших данных.
 
-## How to test primary keys with dbt
-
-Today, you can add two simple [dbt tests](/docs/build/data-tests) onto your primary keys and feel secure that you are going to catch the vast majority of problems in your data.
-
-Not surprisingly, these two tests correspond to the two most common errors found on your primary keys, and are usually the first tests that teams testing data with dbt implement:
-
-
+Неудивительно, что эти два теста соответствуют двум наиболее распространенным ошибкам, обнаруживаемым в ваших первичных ключах, и обычно являются первыми тестами, которые команды, тестирующие данные с помощью dbt, внедряют:
 
 * [Not_null](https://docs.getdbt.com/reference/resource-properties/tests#not_null)
 * [Unique](https://docs.getdbt.com/reference/resource-properties/tests#unique)
 
-These tests are specified inline in your models’ .yml configuration files, so you can define a batch of tests across models from one file.  Put together, a `not_null` + `unique` test would look like so:
+Эти тесты указываются в конфигурационных файлах .yml ваших моделей, так что вы можете определить набор тестов для моделей из одного файла. Вместе тесты `not_null` + `unique` будут выглядеть так:
 
 ```
 
@@ -80,64 +76,56 @@ models:
 
 ```
 
-It really is as simple as adding those two tests to the primary keys of all of your tables, and then you have a built-in safeguard against bad data in your primary keys.
+Это действительно так просто, как добавление этих двух тестов к первичным ключам всех ваших таблиц, и у вас будет встроенная защита от плохих данных в ваших первичных ключах.
 
-Having tests configured and running in production using the [`dbt test`](https://docs.getdbt.com/reference/commands/test) command unlocks your ability to do things like [send Slack alerts](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-slack-notifications) on test failures, so you’ll be the first to know when PK issues arise. 
+Наличие тестов, настроенных и работающих в производственной среде с использованием команды [`dbt test`](https://docs.getdbt.com/reference/commands/test), открывает возможность делать такие вещи, как [отправка уведомлений в Slack](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-slack-notifications) при сбоях тестов, так что вы будете первыми, кто узнает о проблемах с PK.
 
+## Поддерживает ли ваше хранилище первичные ключи?
 
-## Does your warehouse support primary keys?
+Поддерживает ли ваше хранилище вообще _первичные ключи_? Если да, то как вы можете узнать, установлены ли первичные ключи для таблицы и какие это ключи?
 
-Does your warehouse even _support_ primary keys at all? If it does, how can you actually find out if a table has a primary key set, and what that primary key is?
+Давайте рассмотрим поддержку первичных ключей и доступ к ним на основных облачных платформах <Term id="data-warehouse" />.
 
-Let’s walk through primary key support + access across the major cloud <Term id="data-warehouse" /> platforms.
+### Краткий обзор поддержки первичных ключей в хранилищах
 
+BigQuery и Databricks не поддерживают первичные ключи, Redshift и Snowflake поддерживают первичные ключи, но не полностью их обеспечивают, а Postgres полностью поддерживает и обеспечивает первичные ключи.
 
-### TL;DR on primary key support across warehouses
+Это означает, что в основных аналитических хранилищах _тестирование данных_ (с использованием инструмента, такого как dbt) для обеспечения ваших первичных ключей крайне важно для обеспечения качества аналитических данных.
 
-BigQuery + Databricks don’t support primary keys, Redshift + Snowflake support primary keys but don’t enforce them fully, and Postgres fully supports + enforces primary keys. 
+Redshift, Snowflake и Postgres позволяют вам запрашивать списки столбцов первичных ключей из таблиц информационной схемы вашей базы данных. Читайте дальше для получения подробной информации и ссылок на соответствующую документацию.
 
-This means that across major analytics warehouses, _data testing_ (using a tool like dbt) to enforce your primary keys is super important for ensuring analytics data quality.
+### Первичные ключи в BigQuery
 
-Redshift, Snowflake and Postgres allow you to query primary key column lists from your database’s information schema tables. Read on for the gritty details + links to appropriate docs.
+BigQuery не имеет концепции ограничений первичного ключа для таблиц, поэтому вместо этого вы захотите использовать [суррогатные ключи](/blog/sql-surrogate-keys) в dbt для определения вашего первичного ключа для таблицы.
 
+### Первичные ключи в Databricks
 
-### BigQuery primary keys
+Databricks Delta SQL не поддерживает первичные ключи в классическом смысле SQL, и вместо этого предлагает то, что они называют [ограничениями](https://docs.databricks.com/delta/delta-constraints.html) для полей (`not null` является одним из них).
 
-BigQuery does not have a concept of primary key constraints for tables, so instead you’ll want to use [surrogate keys](/blog/sql-surrogate-keys) in dbt to define your primary key for a table.
+Аналогично BigQuery, <Term id="surrogate-key">суррогатные ключи</Term> могут быть использованы для обхода этого ограничения.
 
+### Первичные ключи в Redshift
 
-### Databricks primary keys
+Amazon Redshift позволяет устанавливать первичные ключи как [ограничение таблицы](https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html) (что помогает с оптимизацией запросов), однако эти ограничения фактически не обеспечиваются самим хранилищем.
 
-Databricks Delta SQL does not support primary keys in a classic SQL sense, and instead offers what they call [constraints](https://docs.databricks.com/delta/delta-constraints.html) for fields (`not null` being one of them).  
+Вы можете затем запрашивать эти ограничения из таблиц `information_schema.table_constraints` и `information_schema.key_column_usage`.
 
-Similarly to BigQuery, <Term id="surrogate-key">surrogate keys</Term> can be used to get around this limitation.
+В конечном итоге, это ваша ответственность проверять уникальность и отсутствие null в ваших данных, чтобы гарантировать, что ваши ограничения таблицы действительно обеспечены (см. раздел тестирования в конце этого поста).
 
+### Первичные ключи в Snowflake
 
-### Redshift primary keys
+Snowflake поддерживает команду [SHOW PRIMARY KEYS](https://docs.snowflake.com/en/sql-reference/sql/show-primary-keys.html), которая позволяет вам запрашивать первичные ключи для ваших таблиц.
 
-Amazon Redshift allows you to set primary keys as a [table constraint](https://docs.aws.amazon.com/redshift/latest/dg/t_Defining_constraints.html) (which helps with query optimization), however these constraints are not actually enforced by the warehouse itself.
+Обратите внимание, что первичные ключи в Snowflake являются чисто декларативными — ни уникальность, ни ограничения на отсутствие null не обеспечиваются. Однако Snowflake поддерживает отдельное ограничение `not null`, которое может быть применено к столбцу и обеспечивается. Тем не менее, вам все равно нужно будет убедиться, что значения вашего столбца первичного ключа действительно уникальны (см. раздел тестирования внизу).
 
-You can then query these constraints out of the `information_schema.table_constraints` + `information_schema.key_column_usage` tables.
+### Первичные ключи в Postgres
 
-It’s ultimately up to you to check for uniqueness + not null-ness in your data, to ensure that your table constraints are actually enforced (see testing section at the bottom of this post).
+Postgres полностью поддерживает первичные ключи, что означает, что он обеспечивает уникальность и отсутствие null в таблицах с первичными ключами.
 
+Это имеет большой смысл, учитывая основное использование Postgres как базы данных приложений, где первичные ключи *действительно* должны вести себя как первичные ключи, в отличие от вышеупомянутых хранилищ данных, которые обычно не используются для питания приложений.
 
-### Snowflake primary keys
+Вы можете запрашивать столбцы первичных ключей из административных таблиц `pg_index` и `pg_attribute`.
 
-Snowflake supports a command of [SHOW PRIMARY KEYS](https://docs.snowflake.com/en/sql-reference/sql/show-primary-keys.html), which allows you to query out primary keys for your tables.
+## Начали ли вы тестировать первичные ключи?
 
-Note that Snowflake primary keys are purely declarative--neither uniqueness nor non-nullness constraints are enforced. However, Snowflake supports a separate `not null` constraint that can be applied to column that is enforced. Regardless, you'll still want to ensure your primary key column values are actually unique (see testing section at the bottom.)
-
-
-### Postgres primary keys
-
-Postgres does fully support primary keys, meaning it enforces uniqueness and not null constraints on tables with primary keys. 
-
-This makes a ton of sense given Postgres’ primary use as an application database, where primary keys *really* need behave like primary keys, as opposed to the data warehouses above that aren’t generally being used to power applications.
-
-You can query out primary key columns from the `pg_index` and `pg_attribute` admin tables.
-
-
-## Have you started testing primary keys yet?
-
-If you’re looking for a deeper dive on testing primary keys, definitely check out the [dbt Fundamentals course](https://learn.getdbt.com/courses/dbt-fundamentals), which includes a full section with examples + practice on data testing in dbt.
+Если вы ищете более глубокое погружение в тестирование первичных ключей, обязательно ознакомьтесь с [курсом dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals), который включает полный раздел с примерами и практикой тестирования данных в dbt.

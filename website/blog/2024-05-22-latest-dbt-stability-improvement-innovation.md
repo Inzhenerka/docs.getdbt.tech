@@ -1,6 +1,6 @@
 ---
-title: "How we're making sure you can confidently switch to the \"Latest\" release track in dbt Cloud"
-description: "Over the past 6 months, we've laid a stable foundation for continuously improving dbt."
+title: "Как мы обеспечиваем уверенный переход на трек релизов \"Latest\" в dbt Cloud"
+description: "За последние 6 месяцев мы заложили стабильную основу для непрерывного улучшения dbt."
 slug: latest-dbt-stability
 
 authors: [michelle_ark, chenyu_li, colin_rogers]
@@ -16,114 +16,114 @@ import Latest from '/snippets/_release-stages-from-versionless.md'
 
 <Latest/>
 
-As long as dbt Cloud has existed, it has required users to select a version of dbt Core to use under the hood in their jobs and environments. This made sense in the earliest days, when dbt Core minor versions often included breaking changes. It provided a clear way for everyone to know which version of the underlying runtime they were getting.
+С момента появления dbt Cloud пользователи должны были выбирать версию dbt Core для использования в своих задачах и средах. Это имело смысл в первые дни, когда минорные версии dbt Core часто включали изменения, нарушающие совместимость. Это обеспечивало ясность в том, какую версию базового времени выполнения они получали.
 
-However, this came at a cost. While bumping a project's dbt version *appeared* as simple as selecting from a dropdown, there was real effort required to test the compatibility of the new version against existing projects, package dependencies, and adapters. On the other hand, putting this off meant foregoing access to new features and bug fixes in dbt.
+Однако это имело свою цену. Хотя обновление версии dbt в проекте *казалось* простым, как выбор из выпадающего списка, на самом деле требовались усилия для тестирования совместимости новой версии с существующими проектами, зависимостями пакетов и адаптерами. С другой стороны, откладывание этого означало отказ от доступа к новым функциям и исправлениям ошибок в dbt.
 
-But no more. Today, we're ready to announce the general availability of a new option in dbt Cloud: [**the "Latest" release track.**](/docs/dbt-versions/cloud-release-tracks)
+Но теперь это в прошлом. Сегодня мы готовы объявить о доступности новой опции в dbt Cloud: [**трек релизов "Latest".**](/docs/dbt-versions/cloud-release-tracks)
 
 <!--truncate-->
 
-For customers, this means less maintenance overhead, faster access to bug fixes and features, and more time to focus on what matters most: building trusted data products. This will be our stable foundation for improvement and innovation in dbt Cloud. 
+Для клиентов это означает меньше затрат на обслуживание, более быстрый доступ к исправлениям ошибок и функциям, и больше времени для сосредоточения на самом важном: создании надежных продуктов данных. Это будет нашей стабильной основой для улучшений и инноваций в dbt Cloud.
 
-But we wanted to go a step beyond just making this option available to you. In this blog post, we aim to shed a little light on the extensive work we've done to ensure that using the "Latest" release track is a stable and reliable experience for the thousands of customers who rely daily on dbt Cloud.
+Но мы хотели пойти дальше, чем просто сделать эту опцию доступной для вас. В этом блоге мы стремимся пролить свет на обширную работу, которую мы проделали, чтобы использование трека релизов "Latest" было стабильным и надежным опытом для тысяч клиентов, которые ежедневно полагаются на dbt Cloud.
 
-## How we safely deploy dbt upgrades to Cloud
+## Как мы безопасно внедряем обновления dbt в Cloud
 
-We've put in place a rigorous, best-in-class suite of tests and control mechanisms to ensure that all changes to dbt under the hood are fully vetted before they're deployed to customers of dbt Cloud.
+Мы внедрили строгий, лучший в своем классе набор тестов и контрольных механизмов, чтобы гарантировать, что все изменения в dbt под капотом полностью проверены перед их развертыванием для клиентов dbt Cloud.
 
-This pipeline has in fact been in place since January! It's how we've already been shipping continuous changes to the hundreds of customers who've selected the "Latest" release track while it's been in Beta and Preview. In that time, this process has enabled us to prevent multiple regressions before they were rolled out to any customers.
+Этот конвейер на самом деле действует с января! Именно так мы уже поставляем непрерывные изменения сотням клиентов, которые выбрали трек релизов "Latest", пока он был в бета-версии и предварительном просмотре. За это время этот процесс позволил нам предотвратить множество регрессий до их развертывания для клиентов.
 
-We're very confident in the robustness of this process**. We also know that we'll need to continue building trust with time.** We're sharing details about this work in the spirit of transparency and to build that trust.
+Мы очень уверены в надежности этого процесса. Мы также знаем, что нам нужно продолжать строить доверие со временем. Мы делимся деталями этой работы в духе прозрачности и для укрепления этого доверия.
 
-Any new change to dbt-core and adapters goes through the following steps before it's available to customers in dbt Cloud:
+Любое новое изменение в dbt-core и адаптерах проходит следующие шаги, прежде чем оно станет доступным для клиентов в dbt Cloud:
 
-<Lightbox src="/img/blog/2024-05-22-latest-dbt/testing-deploy-pipeline.png" title="Testing and deploy pipeline" />
+<Lightbox src="/img/blog/2024-05-22-latest-dbt/testing-deploy-pipeline.png" title="Тестирование и конвейер развертывания" />
 
-### **Step 1: Unit & functional tests in dbt Core + adapters**
+### **Шаг 1: Модульные и функциональные тесты в dbt Core + адаптерах**
 
-First up is a battery of thousands of tests that we run dozens of times per day. No change, in either dbt-core or in the [data platform adapters](https://docs.getdbt.com/docs/trusted-adapters) supported by dbt Cloud, is merged until it has passed this full suite of tests. 
+Первым делом идет батарея из тысяч тестов, которые мы запускаем десятки раз в день. Ни одно изменение, ни в dbt-core, ни в [адаптерах платформ данных](https://docs.getdbt.com/docs/trusted-adapters), поддерживаемых dbt Cloud, не сливается, пока не пройдет этот полный набор тестов.
 
-Here, *unit tests* test internal components in isolation from one another, and *functional tests* represent edge cases in expected behavior under known conditions.
+Здесь *модульные тесты* проверяют внутренние компоненты в изоляции друг от друга, а *функциональные тесты* представляют крайние случаи ожидаемого поведения в известных условиях.
 
-For adapters, tests also ensure that the full matrix of data platform features continue to work as expected: BigQuery partitioning + incremental strategies, Snowflake data types + model contracts, Redshift sort keys — so on and so forth.
+Для адаптеров тесты также гарантируют, что полная матрица функций платформ данных продолжает работать как ожидалось: разбиение на разделы в BigQuery + стратегии инкрементного обновления, типы данных Snowflake + контракты моделей, ключи сортировки Redshift и так далее.
 
-### Step 2: **Smoke testing**
+### Шаг 2: **Smoke-тестирование**
 
-Next, we create a Docker image with the latest dbt changes installed alongside each adapter supported in dbt Cloud. We run an additional suite of end-to-end tests on this image across a matrix of supported adapters, test projects that represent real-world complexity, popular third-party packages, and typical dbt user workflows. In doing so, this phase of testing also ensures that the latest version of dbt does not break compatibility with frequently relied-upon dbt packages. 
+Далее мы создаем образ Docker с установленными последними изменениями dbt вместе с каждым адаптером, поддерживаемым в dbt Cloud. Мы запускаем дополнительный набор сквозных тестов на этом образе по матрице поддерживаемых адаптеров, тестовых проектов, представляющих реальную сложность, популярных сторонних пакетов и типичных рабочих процессов пользователей dbt. Таким образом, этот этап тестирования также гарантирует, что последняя версия dbt не нарушает совместимость с часто используемыми пакетами dbt.
 
-This breadth of testing provides early detection of any regressions that might have been introduced by our changes to dbt-core, changes by adapter maintainers, or any of their dependencies and drivers — using the exact installed versions that would be deployed to dbt Cloud. Crucially, this helps safeguard us from breaking changes in third-party software. 
+Эта широта тестирования обеспечивает раннее обнаружение любых регрессий, которые могли быть введены нашими изменениями в dbt-core, изменениями от поддерживающих адаптеры или любыми их зависимостями и драйверами — используя точно установленные версии, которые будут развернуты в dbt Cloud. Это критически важно для защиты от изменений, нарушающих совместимость, в стороннем программном обеспечении.
 
-### Step 3: **dbt Cloud service tests**
+### Шаг 3: **Тесты сервисов dbt Cloud**
 
-Before the new image version goes live, we ensure that all dbt changes are cross-compatible with every dbt Cloud service that depends on Core functionality, including areas such as the Cloud IDE, the Cloud CLI, scheduled job runs, CI, and connection testing. 
+Прежде чем новая версия образа станет доступной, мы убеждаемся, что все изменения dbt совместимы с каждым сервисом dbt Cloud, который зависит от функциональности Core, включая такие области, как Cloud IDE, Cloud CLI, запланированные запуски задач, CI и тестирование соединений.
 
-For each dbt Cloud service, we run a testing suite that consists of:
+Для каждого сервиса dbt Cloud мы запускаем набор тестов, который состоит из:
 
-- Unit and integration specific tests to behaviour of each dbt Cloud service
-- End-to-end headless browser testing for our UI-heavier applications
-- Compatibility for each adapter with that service
+- Модульных и интеграционных тестов, специфичных для поведения каждого сервиса dbt Cloud
+- Сквозного тестирования безголового браузера для наших приложений с более тяжелым интерфейсом
+- Совместимости каждого адаптера с этим сервисом
 
-This step provides further depth in testing the interplay between dbt Core and dbt Cloud application-specific functionality, covering cases such as linting SQL that has an ephemeral reference, or resolving cross-project refs across multi-project ["dbt Mesh"](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-1-intro) deployments.
+Этот шаг обеспечивает дополнительную глубину тестирования взаимодействия между dbt Core и специфической функциональностью приложений dbt Cloud, охватывая такие случаи, как линтинг SQL с эфемерной ссылкой или разрешение межпроектных ссылок в многопроектных развертываниях ["dbt Mesh"](https://docs.getdbt.com/best-practices/how-we-mesh/mesh-1-intro).
 
-### Step 4: **Canary deployment**
+### Шаг 4: **Канареечное развертывание**
 
-Once *all* the aforementioned tests have passed, we roll out the latest deployment to a small subset (5%) of accounts, including our own Internal Analytics project.
+Как только *все* вышеупомянутые тесты пройдены, мы развертываем последнюю версию для небольшой подгруппы (5%) аккаунтов, включая наш собственный проект внутренней аналитики.
 
-These "canary" deployments are continually monitored against a set of precise observability metrics. Metrics we monitor include overall job error and cancellation rates to ensure they don't deviate from our expectations relative to a stable baseline. Any anomaly immediately alerts us, and we can shut off the canary in a matter of seconds, keeping all accounts on the last stable version.
+Эти "канареечные" развертывания постоянно мониторятся по набору точных метрик наблюдаемости. Метрики, которые мы отслеживаем, включают общие показатели ошибок и отмены задач, чтобы убедиться, что они не отклоняются от наших ожиданий относительно стабильной базы. Любая аномалия немедленно предупреждает нас, и мы можем отключить канареечное развертывание за считанные секунды, сохраняя все аккаунты на последней стабильной версии.
 
-### Step 5: Phased **rollout**
+### Шаг 5: **Постепенное развертывание**
 
-Once the canary deployment has been proven to run stably for at least 24 hours, we mark it as eligible for all accounts to upgrade in their next scheduled deployment of dbt Cloud.
+Как только канареечное развертывание доказало свою стабильность в течение как минимум 24 часов, мы отмечаем его как готовое для обновления всех аккаунтов при их следующем запланированном развертывании dbt Cloud.
 
 :::info
 
-Even with a robust testing, deployment, and monitoring system in place, it will never be impossible for a breaking change to make it through — just as in any other SaaS application.
+Даже при наличии надежной системы тестирования, развертывания и мониторинга, никогда не будет невозможно, чтобы изменение, нарушающее совместимость, прошло — как и в любом другом SaaS-приложении.
 
-If this does happen, we commit to identifying and rolling back any breaking changes as quickly as possible. Under the new testing and deployment model in dbt Cloud, we are able to roll back erroneous releases in less than an hour.
+Если это произойдет, мы обязуемся как можно быстрее выявить и откатить любые изменения, нарушающие совместимость. В рамках новой модели тестирования и развертывания в dbt Cloud мы можем откатить ошибочные релизы менее чем за час.
 
-All incidents are retrospected to make sure we not only identify and fix the root cause(s), but also promptly put in place testing, automation, and quality gates to ensure that the same problem never happens again.
+Все инциденты анализируются, чтобы убедиться, что мы не только выявляем и исправляем коренные причины, но и оперативно внедряем тестирование, автоматизацию и контроль качества, чтобы гарантировать, что та же проблема никогда не повторится.
 
 :::
 
-The outcome of this process is that, when you select the "Latest" release track in dbt Cloud, the time between an improvement being made to dbt Core and you *safely* getting access to it in your projects is a matter of days — rather than months of waiting for the next dbt Core release, on top of any additional time it may have taken to actually carry out the upgrade.
+Результатом этого процесса является то, что, когда вы выбираете трек релизов "Latest" в dbt Cloud, время между улучшением в dbt Core и его *безопасным* доступом в ваших проектах составляет считанные дни — вместо месяцев ожидания следующего релиза dbt Core, плюс любое дополнительное время, которое могло потребоваться для фактического выполнения обновления.
 
-We’re pleased to say that, at the time of writing (May 2, 2024), since the beta launch of the "Latest" release track in dbt Cloud in March, **we have not had any functional regressions reach customers**, while we’ve also been shipping multiple improvements to dbt functionality every day. This is a foundation that we aim to build on for the foreseeable future.
+Мы рады сообщить, что на момент написания (2 мая 2024 года), с момента бета-запуска трека релизов "Latest" в dbt Cloud в марте, **у нас не было ни одной функциональной регрессии, достигшей клиентов**, в то время как мы также ежедневно поставляем множество улучшений функциональности dbt. Это основа, на которой мы намерены строить в обозримом будущем.
 
-## Stability as a feature
+## Стабильность как функция
 
-A rigorous testing pipeline in dbt Cloud is crucial, but real ongoing stability required some deeper changes in the dbt framework itself. We take our responsibility as the maintainers of dbt Core seriously, as well the open-source ecosystem around it.
+Строгий конвейер тестирования в dbt Cloud имеет решающее значение, но для реальной постоянной стабильности требовались более глубокие изменения в самом фреймворке dbt. Мы серьезно относимся к нашей ответственности как к хранителям dbt Core, а также к экосистеме с открытым исходным кодом вокруг него.
 
-We've taken a longer release cycle for the upcoming release of dbt Core v1.8 to revisit some of the "do later" design choices we made in the past — specifically around adapter compatibility, behaviour change management, and metadata artifacts.
+Мы выбрали более длительный цикл релизов для предстоящего выпуска dbt Core v1.8, чтобы пересмотреть некоторые из "сделать позже" проектных решений, которые мы принимали в прошлом — в частности, в отношении совместимости адаптеров, управления изменениями поведения и артефактов метаданных.
 
-### **Decoupling the adapter interface**
+### **Разделение интерфейса адаптера**
 
-The adapter interface — i.e. how dbt Core actually connects to a third-party data platform — has historically been somewhat of a pain point. Adapter maintainers have often been *required to make* reactive changes when there's been an update to dbt Core.
+Интерфейс адаптера — то есть, как dbt Core фактически подключается к сторонней платформе данных — исторически был некоторой болью. Поддерживающие адаптеры часто *были вынуждены вносить* реактивные изменения, когда происходило обновление dbt Core.
 
-To solve that, we've released a new set of interfaces that are entirely independent of the `dbt-core` library: [`dbt-adapters==1.0.0`](https://github.com/dbt-labs/dbt-adapters). From now on, any changes to `dbt-adapters` will be backward and forward-compatible. This also decouples adapter maintenance from the regular release cadence of dbt Core — meaning maintainers get full control over when they ship implementations of new adapter-powered features.
+Чтобы решить эту проблему, мы выпустили новый набор интерфейсов, которые полностью независимы от библиотеки `dbt-core`: [`dbt-adapters==1.0.0`](https://github.com/dbt-labs/dbt-adapters). С этого момента любые изменения в `dbt-adapters` будут обратно и вперед совместимыми. Это также отделяет обслуживание адаптеров от регулярного цикла релизов dbt Core — что означает, что поддерживающие адаптеры получают полный контроль над тем, когда они выпускают реализации новых функций, поддерживаемых адаптерами.
 
-Note that adapters running in dbt Cloud **must** be [migrated to the new decoupled architecture](https://github.com/dbt-labs/dbt-adapters/discussions/87) as a baseline in order to support the new "Latest" release track.
+Обратите внимание, что адаптеры, работающие в dbt Cloud, **должны** быть [перенесены на новую разделенную архитектуру](https://github.com/dbt-labs/dbt-adapters/discussions/87) в качестве основы для поддержки нового трека релизов "Latest".
 
-### Managing behavior changes: stability as a feature
+### Управление изменениями поведения: стабильность как функция
 
-We all want the benefits of a stable, actively maintained product. Occasionally the dbt Labs team sees the opportunity for a change to default behaviour that we believe is more sensible, more secure, more helpful — just better in some way — but which would come as a change to users who have grown accustomed to the existing behaviour.
+Мы все хотим преимуществ стабильного, активно поддерживаемого продукта. Иногда команда dbt Labs видит возможность для изменения поведения по умолчанию, которое, по нашему мнению, более разумно, более безопасно, более полезно — просто лучше в каком-то смысле — но которое будет изменением для пользователей, привыкших к существующему поведению.
 
-To accommodate both groups in these scenarios, we've extended dbt to support project-level behavior flags. These can be used to *opt into* or *opt out of* changes to default behavior. From now on, backward-incompatible changes to dbt functionality will be implemented behind a flag with a default value that preserves the legacy behavior. After a few months, the new behavior will become the default — but only after some proactive communication with customers and external package maintainers.
+Чтобы удовлетворить обе группы в этих сценариях, мы расширили dbt, чтобы поддерживать флаги поведения на уровне проекта. Эти флаги могут использоваться для *включения* или *отключения* изменений в поведении по умолчанию. С этого момента изменения в функциональности dbt, несовместимые с предыдущими версиями, будут реализованы за флагом с значением по умолчанию, сохраняющим старое поведение. Через несколько месяцев новое поведение станет стандартным — но только после некоторой проактивной коммуникации с клиентами и внешними поддерживающими пакетами.
 
-The same behavior change flags will naturally extend to dbt packages, which are fundamentally just dbt projects. This allows package maintainers to ensure that behavior doesn't change unexpectedly as a result of changes to dbt Core. For more details, check out our user documentation on [legacy behaviors](https://docs.getdbt.com/reference/global-configs/legacy-behaviors#behaviors), as well as our [contributor documentation](https://github.com/dbt-labs/dbt-core/blob/main/docs/eli64/behavior-change-flags.md) for introducing behavior changes safely.
+Те же флаги изменения поведения естественным образом распространятся на пакеты dbt, которые по сути являются просто проектами dbt. Это позволяет поддерживающим пакеты гарантировать, что поведение не изменится неожиданно в результате изменений в dbt Core. Для получения более подробной информации ознакомьтесь с нашей пользовательской документацией по [устаревшим поведениям](https://docs.getdbt.com/reference/global-configs/legacy-behaviors#behaviors), а также с нашей [документацией для участников](https://github.com/dbt-labs/dbt-core/blob/main/docs/eli64/behavior-change-flags.md) для безопасного введения изменений в поведении.
 
-### Stability for metadata artifacts
+### Стабильность для артефактов метаданных
 
-Lastly, we’ve revisited our process around artifact interfaces. These are the workhorses of many integrations in the dbt ecosystem: those maintained by dbt Labs, by third-party vendors, or just homegrown at a particular organization. While these schemas have been versioned and well-defined since dbt Core v1.0, they have changed in many of the minor releases since.
+Наконец, мы пересмотрели наш процесс вокруг интерфейсов артефактов. Это рабочие лошадки многих интеграций в экосистеме dbt: тех, которые поддерживаются dbt Labs, сторонними поставщиками или просто самодельными в конкретной организации. Хотя эти схемы были версионированы и хорошо определены с момента выхода dbt Core v1.0, они изменялись во многих минорных релизах с тех пор.
 
-We’ve now [formalized our development best practices](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/artifacts/README.md#making-changes-to-dbtartifacts) to strongly prefer minor schema evolutions over major breaking changes. We’ve also put [checks in place](https://github.com/dbt-labs/dbt-core/blob/main/.github/workflows/check-artifact-changes.yml) to ensure we’re not unintentionally introducing breaking changes to artifacts, thus avoiding disruption to integrations across the ecosystem.
+Теперь мы [формализовали наши лучшие практики разработки](https://github.com/dbt-labs/dbt-core/blob/main/core/dbt/artifacts/README.md#making-changes-to-dbtartifacts), чтобы сильно предпочитать незначительные эволюции схемы вместо крупных изменений, нарушающих совместимость. Мы также внедрили [проверки](https://github.com/dbt-labs/dbt-core/blob/main/.github/workflows/check-artifact-changes.yml), чтобы гарантировать, что мы не вводим непреднамеренно изменения, нарушающие совместимость, в артефакты, тем самым избегая сбоев в интеграциях по всей экосистеме.
 
-## Our commitment
+## Наше обязательство
 
-In conclusion, we’re putting a lot of new muscle behind our commitments to dbt Cloud customers, the dbt Community, and the broader ecosystem:
+В заключение, мы вкладываем много новых усилий в наши обязательства перед клиентами dbt Cloud, сообществом dbt и широкой экосистемой:
 
-- **Continuous updates**: The "Latest" release track in dbt Cloud simplifies the update process, ensuring you always have the latest features and bug fixes without the maintenance overhead.
-- **A rigorous new testing and deployment process**: Our new testing pipeline ensures that every update is carefully vetted against documented interfaces, Cloud-supported adapters, and popular packages before it reaches you. This process minimizes the risk of regressions — and has now been successful at entirely preventing them for hundreds of customers over multiple months.
-- **A commitment to stability**: We’ve reworked our approaches to adapter interfaces, behaviour change management, and metadata artifacts to give you more stability and control.
+- **Непрерывные обновления**: Трек релизов "Latest" в dbt Cloud упрощает процесс обновления, гарантируя, что у вас всегда есть последние функции и исправления ошибок без затрат на обслуживание.
+- **Строгий новый процесс тестирования и развертывания**: Наш новый конвейер тестирования гарантирует, что каждое обновление тщательно проверяется на соответствие задокументированным интерфейсам, поддерживаемым в Cloud адаптерам и популярным пакетам, прежде чем оно достигнет вас. Этот процесс минимизирует риск регрессий — и уже успешно полностью предотвращает их для сотен клиентов на протяжении нескольких месяцев.
+- **Обязательство к стабильности**: Мы пересмотрели наши подходы к интерфейсам адаптеров, управлению изменениями поведения и артефактам метаданных, чтобы предоставить вам больше стабильности и контроля.
 
-As we continue to enhance dbt Cloud, our commitment remains firm: to provide a stable, dependable platform that allows our users to spend less time on maintenance overhead and focus on creating value.
+По мере того, как мы продолжаем улучшать dbt Cloud, наше обязательство остается твердым: предоставлять стабильную, надежную платформу, которая позволяет нашим пользователям тратить меньше времени на обслуживание и сосредоточиться на создании ценности.

@@ -1,6 +1,6 @@
 ---
-title: "How we cut our tests by 80% while increasing data quality: the power of aggregating test failures in dbt"
-description: "A singular data quality test just failed...whew things are still ok — when *many* dbt tests fail, how do you make those failures actionable? Noah explores how aggregating test failures in dbt led to more informative, actionable, and self-service testing initiatives for end data users."
+title: "Как мы сократили количество тестов на 80%, повысив качество данных: сила агрегации сбоев тестов в dbt"
+description: "Один тест на качество данных только что провалился... фух, все еще в порядке — но когда *многие* тесты dbt проваливаются, как сделать эти сбои действенными? Ной исследует, как агрегация сбоев тестов в dbt привела к более информативным, действенным и самообслуживаемым тестовым инициативам для конечных пользователей данных."
 slug: aggregating-test-failures-with-dbt
 
 authors: [noah_kennedy]
@@ -12,27 +12,27 @@ date: 2023-01-24
 is_featured: true
 ---
 
-Testing the quality of data in your warehouse is an important aspect in any mature data pipeline. One of the biggest blockers for developing a successful data quality pipeline is aggregating test failures and successes in an informational and actionable way. However, ensuring actionability can be challenging. If ignored, test failures can clog up a pipeline and create unactionable noise, rendering your testing infrastructure ineffective.
+Тестирование качества данных в вашем хранилище — важный аспект любой зрелой конвейерной обработки данных. Одним из самых больших препятствий для разработки успешного конвейера качества данных является агрегация сбоев и успехов тестов в информативной и действенной форме. Однако обеспечение действенности может быть сложной задачей. Если игнорировать, сбои тестов могут засорить конвейер и создать неэффективный шум, делая вашу инфраструктуру тестирования неэффективной.
 
 <!--truncate-->
 
-Producing a data quality framework that allows stakeholders to take action on test failures is challenging. Without an actionable framework, data quality tests can backfire — one failing test becomes two becomes ten and suddenly you have too many test failures to act on any of them.
+Создание структуры качества данных, которая позволяет заинтересованным сторонам принимать меры по устранению сбоев тестов, является сложной задачей. Без действенной структуры тесты на качество данных могут обернуться против вас — один провалившийся тест превращается в два, затем в десять, и внезапно у вас слишком много сбоев тестов, чтобы действовать по ним.
 
-Recently, we overhauled our testing framework. We cut the number of tests down by 80% to create a more mature framework that includes metadata and emphasizes actionability. Our system for managing data quality is a three step process, described below:
+Недавно мы полностью пересмотрели нашу тестовую структуру. Мы сократили количество тестов на 80%, чтобы создать более зрелую структуру, включающую метаданные и подчеркивающую действенность. Наша система управления качеством данных состоит из трех этапов, описанных ниже:
 
-1. Leveraging the contextual knowledge of stakeholders, writing specific, high quality data tests, perpetuating test failure results into aliased models for easy access. 
-1. Aggregating test failure results using Jinja macros and pre-configured metadata to pull together high level summary tables. 
-1. Building views on top of the base table to split tests by owner or severity, and creating visualizations using our tool of choice.
+1. Использование контекстуальных знаний заинтересованных сторон, написание конкретных, высококачественных тестов данных, распространение результатов сбоев тестов в алиасные модели для легкого доступа.
+2. Агрегация результатов сбоев тестов с использованием макросов Jinja и предварительно настроенных метаданных для создания сводных таблиц высокого уровня.
+3. Создание представлений на основе базовой таблицы для разделения тестов по владельцу или серьезности и создание визуализаций с использованием нашего инструмента выбора.
 
-_It should be noted that this framework is for dbt v1.0+ on BigQuery. Small adaptations are likely necessary to make this framework run on a different setup._
+_Следует отметить, что эта структура предназначена для dbt v1.0+ на BigQuery. Небольшие адаптации, вероятно, необходимы для запуска этой структуры в другой среде._
 
-## Specific, high quality data tests
+## Конкретные, высококачественные тесты данных
 
-When we talk about high quality data tests, we aren’t just referencing high quality code, but rather the informational quality of our testing framework and their corresponding error messages. Originally, we theorized that any test that cannot be acted upon is a test that should not be implemented. Later, we realized there is a time and place for tests that should receive attention at a critical mass of failures. All we needed was a higher specificity system: tests should have an explicit severity ranking associated with them, equipped to filter out the noise of common, but low concern, failures. Each test should also mesh into established [RACI](https://project-management.com/understanding-responsibility-assignment-matrix-raci-matrix/) guidelines that state which groups tackle what failures, and what constitutes a critical mass.
+Когда мы говорим о высококачественных тестах данных, мы имеем в виду не только высококачественный код, но и информационное качество нашей тестовой структуры и соответствующих сообщений об ошибках. Изначально мы предполагали, что любой тест, по которому нельзя принять меры, не должен быть реализован. Позже мы поняли, что есть время и место для тестов, которые должны получать внимание при критической массе сбоев. Все, что нам нужно, это система с более высокой степенью специфичности: тесты должны иметь явную оценку серьезности, чтобы отфильтровать шум от общих, но незначительных сбоев. Каждый тест также должен соответствовать установленным [RACI](https://project-management.com/understanding-responsibility-assignment-matrix-raci-matrix/) руководствам, которые определяют, какие группы решают какие сбои и что составляет критическую массу.
 
-To ensure that tests are always acted upon, we implement tests differently depending on the user groups that must act when a test fails. This led us to have two main classes of tests — Data Integrity Tests (called [Generic Tests](https://docs.getdbt.com/docs/build/tests) in dbt docs) and Context Driven Tests (called [Singular Tests](https://docs.getdbt.com/docs/build/tests#singular-data-tests) in dbt docs), with varying levels of severity across both test classes.
+Чтобы гарантировать, что тесты всегда будут выполняться, мы реализуем тесты по-разному в зависимости от групп пользователей, которые должны действовать, когда тест проваливается. Это привело к тому, что у нас появилось два основных класса тестов — Тесты Целостности Данных (называемые [Generic Tests](https://docs.getdbt.com/docs/build/tests) в документации dbt) и Контекстно-Зависимые Тесты (называемые [Singular Tests](https://docs.getdbt.com/docs/build/tests#singular-data-tests) в документации dbt), с различными уровнями серьезности в обоих классах тестов.
 
-Data Integrity tests (Generic Tests)  are simple — they’re tests akin to a uniqueness check or not null constraint. These tests are usually actionable by the data platform team rather than subject matter experts. We define Data Integrity tests in our YAML files, similar to how they are [outlined by dbt’s documentation on generic tests](https://docs.getdbt.com/docs/build/tests). They look something like this —
+Тесты Целостности Данных (Generic Tests) просты — это тесты, подобные проверке уникальности или ограничению not null. Эти тесты обычно могут быть выполнены командой платформы данных, а не экспертами в предметной области. Мы определяем Тесты Целостности Данных в наших YAML-файлах, аналогично тому, как они [описаны в документации dbt по общим тестам](https://docs.getdbt.com/docs/build/tests). Они выглядят примерно так —
 
 ```yaml
 version: 2
@@ -47,9 +47,9 @@ models:
           - not_null:
               alias: id__not_null
 ```
-<center><i>Example Data Integrity Tests in a YAML file — the alias argument is an important piece that will be touched on later.</i></center><br />
+<center><i>Пример Тестов Целостности Данных в YAML-файле — аргумент alias является важной частью, о которой будет сказано позже.</i></center><br />
 
-Context Driven Tests are more complex and look a lot more like models. Essentially, they’re data models that select bad data or records we don’t want, defined as SQL files that live in the `dbt/tests` directory. An example is shown below —
+Контекстно-Зависимые Тесты более сложны и больше похожи на модели. По сути, это модели данных, которые выбирают плохие данные или записи, которые мы не хотим, определенные как SQL-файлы, которые находятся в каталоге `dbt/tests`. Пример показан ниже —
 
 ```sql
 {{ config(
@@ -65,19 +65,19 @@ FROM
     {{ ref('customer') }}
 WHERE purchase_date < '1900-01-01'
 ```
-<center><i>The above test selects all customers who have made a purchase before 1900. The idea is that any customer that exists before 1900 probably isn't real.</i></center><br />
+<center><i>Вышеприведенный тест выбирает всех клиентов, которые совершили покупку до 1900 года. Идея заключается в том, что любой клиент, существующий до 1900 года, вероятно, нереален.</i></center><br />
 
-Importantly, we leverage [Test Aliasing](https://docs.getdbt.com/reference/resource-configs/alias) to ensure that our tests all follow a standard and predictable naming convention; our naming convention for Data Integrity tests is *table_name_ _column_name__test_name*, and our naming convention for Context Driven Tests is *ad_hoc__test_name*. Finally, to ensure all of our tests can then be aggregated, we modify the `dbt_project.yml` file  and [set the `store_failures` tag to ‘TRUE’](https://docs.getdbt.com/reference/resource-configs/store_failures), thus persisting test failures into SQL tables.
+Важно, что мы используем [Алиас Теста](https://docs.getdbt.com/reference/resource-configs/alias), чтобы гарантировать, что все наши тесты следуют стандартной и предсказуемой схеме именования; наша схема именования для Тестов Целостности Данных — *table_name_ _column_name__test_name*, а для Контекстно-Зависимых Тестов — *ad_hoc__test_name*. Наконец, чтобы гарантировать, что все наши тесты могут быть агрегированы, мы модифицируем файл `dbt_project.yml` и [устанавливаем тег `store_failures` в ‘TRUE’](https://docs.getdbt.com/reference/resource-configs/store_failures), таким образом сохраняя сбои тестов в SQL-таблицах.
 
-At this point in development, we have Data Integrity Tests defined in the YAML and Context Driven Tests defined as SQL files. Tests are specific, actionable, and realistic, and each comes with an idea of severity, and a group of users who care when it fails. All of our tests are aliased according to a specific naming convention so that we know the table names they will put data into, and we have modified our dbt project config to set `store_failures` true for all tests.
+На этом этапе разработки у нас есть Тесты Целостности Данных, определенные в YAML, и Контекстно-Зависимые Тесты, определенные как SQL-файлы. Тесты конкретны, действенны и реалистичны, и каждый из них сопровождается идеей о серьезности и группой пользователей, которым важно, когда он проваливается. Все наши тесты имеют алиасы в соответствии с определенной схемой именования, чтобы мы знали, в какие таблицы они будут помещать данные, и мы модифицировали конфигурацию нашего проекта dbt, чтобы установить `store_failures` в true для всех тестов.
 
-## Test aggregation using metadata
+## Агрегация тестов с использованием метаданных
 
-Our next step is to define test metadata for each of our tests. The reason for this is twofold. First, we want to ensure that in later visualization steps, we can attach a description and a more human-readable name to the test. Second, having a metadata file allows us to attach all sorts of extra information to tests: who owns the test, how severe it is, and if the test is active or inactive, just to name a few.
+Наш следующий шаг — определить метаданные тестов для каждого из наших тестов. Причина этого двояка. Во-первых, мы хотим убедиться, что на последующих этапах визуализации мы можем прикрепить описание и более читаемое имя к тесту. Во-вторых, наличие файла метаданных позволяет нам прикрепить к тестам всевозможную дополнительную информацию: кто владеет тестом, насколько он серьезен, и активен ли тест или неактивен, чтобы назвать несколько.
 
-Our metadata is stored in a [seed file](https://docs.getdbt.com/docs/build/seeds). The only required field here is the `test_alias`, which acts as a <Term id="primary-key"/> to link the metadata to the name of the test failures table. We also include the test severity, the test owner, a test description, and several other fields that act as filters for future aggregation tables.
+Наши метаданные хранятся в [файле семян](https://docs.getdbt.com/docs/build/seeds). Единственное обязательное поле здесь — `test_alias`, которое действует как <Term id="primary-key"/> для связывания метаданных с именем таблицы сбоев тестов. Мы также включаем серьезность теста, владельца теста, описание теста и несколько других полей, которые действуют как фильтры для будущих агрегированных таблиц.
 
-After defining our metadata Seed file, we begin the process of aggregating our data. We aggregate our data by defining a base model that joins our test failure results (now stored in a separate schema) with the metadata we defined. Below is an example of what that code looks like —
+После определения нашего файла метаданных Seed мы начинаем процесс агрегации наших данных. Мы агрегируем наши данные, определяя базовую модель, которая объединяет результаты сбоев тестов (теперь хранящиеся в отдельной схеме) с определенными нами метаданными. Ниже приведен пример того, как выглядит этот код —
 
 ```sql
 {{ config(
@@ -115,20 +115,20 @@ FROM metadata m
 LEFT JOIN failures f on m.test_alias = f.table_suffix
 WHERE m.is_active is TRUE
 ```
-<center><i>Example Metadata + Test Failure Aggregation Base Model.</i></center><br />
+<center><i>Пример Базовой Модели Агрегации Метаданных + Сбоев Тестов.</i></center><br />
 
-Some key components:
+Некоторые ключевые компоненты:
 
-- We materialize our base model as incremental, set `full_refresh` to *false* within the `dbt_project.yml`, and partition our table by date to ensure that we keep historical data.
-- We use BigQuery, which allows [wild card selectors](https://cloud.google.com/bigquery/docs/querying-wildcard-tables) and makes our life much easier. If you’re using a different framework, you most likely need to write a loop using Jinja.
-- Since we have an expected naming convention, we can split the `test_alias` to get components like table name or column name if we desire.
+- Мы материализуем нашу базовую модель как инкрементальную, устанавливаем `full_refresh` в *false* в `dbt_project.yml` и разделяем нашу таблицу по дате, чтобы гарантировать сохранение исторических данных.
+- Мы используем BigQuery, который позволяет [выборку с помощью подстановочных знаков](https://cloud.google.com/bigquery/docs/querying-wildcard-tables) и значительно упрощает нашу жизнь. Если вы используете другую платформу, вам, скорее всего, нужно будет написать цикл с использованием Jinja.
+- Поскольку у нас есть ожидаемая схема именования, мы можем разделить `test_alias`, чтобы получить такие компоненты, как имя таблицы или имя столбца, если это необходимо.
 
-Now that our base model is developed, we have a central point of truth that aggregates all of our data tests into one location, complete with metadata that gives more insight into the test, as well as who owns it. Our final step is leveraging our base table to gain added insights from our tests.
+Теперь, когда наша базовая модель разработана, у нас есть центральная точка истины, которая агрегирует все наши тесты данных в одном месте, с метаданными, которые дают больше информации о тесте, а также о том, кто им владеет. Наш последний шаг — использование нашей базовой таблицы для получения дополнительных сведений из наших тестов.
 
-## Finishing touches and conclusions
+## Завершающие штрихи и выводы
 
-With our finalized data quality base table, there are many other options for cleaning up our framework or creating visualizations. Our team uses the base table in a few main ways.
+С нашей окончательной базовой таблицей качества данных существует множество других вариантов для очистки нашей структуры или создания визуализаций. Наша команда использует базовую таблицу несколькими основными способами.
 
-First, we create views on top of the base table that filter down by test owner. We strongly believe that test noise is the biggest risk towards the success of a quality framework. Creating specific views is like giving each team a magnifying glass that lets them zoom into only the tests they care about. We also have a dashboard, currently in Google Looker Studio, that shows historical test failures with a suite of filters to let users magnify high severity tests and constructs machine-composed example queries for users to select failing records. When a test fails, a business analyst can copy and paste a query from the dashboard and get all the relevant information.
+Во-первых, мы создаем представления на основе базовой таблицы, которые фильтруются по владельцу теста. Мы твердо верим, что шум тестов является самым большим риском для успеха качественной структуры. Создание конкретных представлений похоже на предоставление каждой команде увеличительного стекла, которое позволяет им увеличивать только те тесты, которые их интересуют. У нас также есть панель управления, в настоящее время в Google Looker Studio, которая показывает исторические сбои тестов с набором фильтров, позволяющих пользователям увеличивать тесты с высокой серьезностью и создавать машинно-составленные примерные запросы для пользователей, чтобы выбрать провалившиеся записи. Когда тест проваливается, бизнес-аналитик может скопировать и вставить запрос с панели управления и получить всю соответствующую информацию.
 
-As with any framework, it’s always a work in progress — we still encounter issues with noise in our tests, and still struggle to wrangle our users to care when a test fails. However, we’ve found that this data framework works exceptionally well at enabling data users to create and deploy their own tests. All they need to do is submit a pull request with SQL code that flags bad data, and write one line of metadata.
+Как и в любой структуре, это всегда работа в процессе — мы все еще сталкиваемся с проблемами шума в наших тестах и все еще боремся с тем, чтобы наши пользователи заботились о сбоях тестов. Однако мы обнаружили, что эта структура данных работает исключительно хорошо, позволяя пользователям данных создавать и развертывать свои собственные тесты. Все, что им нужно сделать, это отправить pull-запрос с SQL-кодом, который отмечает плохие данные, и написать одну строку метаданных.

@@ -1,6 +1,6 @@
 ---
-title: "From the Slack Archives: When Backend Devs Spark Joy for Data Folks"
-description: "An overview of an interesting community slack thread about the relationship between data folks and backend developers"
+title: "Из архивов Slack: Когда бэкенд-разработчики приносят радость аналитикам"
+description: "Обзор интересной темы в сообществе Slack о взаимоотношениях между аналитиками и бэкенд-разработчиками"
 slug: when-backend-devs-spark-joy
 
 authors: [kira_furuichi]
@@ -12,63 +12,63 @@ date: 2022-04-05
 is_featured: true
 ---
 
-*"I forgot to mention we dropped that column and created a new one for it!”*
+*"Я забыл упомянуть, что мы удалили этот столбец и создали новый для него!"*
 
-*“Hmm, I’m actually not super sure why `customer_id` is passed as an int and not a string.”*
+*“Хм, я на самом деле не совсем уверен, почему `customer_id` передается как int, а не как строка.”*
 
-*“The <Term id="primary-key" /> for that <Term id="table" /> is actually the `order_id`, not the `id` field.”*
+*“<Term id="primary-key" /> для этой <Term id="table" /> на самом деле `order_id`, а не поле `id`.”*
 
-I think many analytics engineers, including myself, have been on the receiving end of some of these comments from their backend application developers. 
+Думаю, многие аналитики, включая меня, получали подобные комментарии от своих бэкенд-разработчиков.
 
-Backend developers work incredibly hard. They create the database and tables that drive the heart of many businesses. In their efforts, they can sometimes overlook, forget, or not understand their impact on analytics work. However, when backend developers do understand and implement the technical and logistical requirements from data teams, *they can spark joy*.
+Бэкенд-разработчики работают невероятно усердно. Они создают базы данных и таблицы, которые являются сердцем многих бизнесов. В своих усилиях они иногда могут упустить из виду, забыть или не понять, как их работа влияет на аналитику. Однако, когда бэкенд-разработчики понимают и реализуют технические и логистические требования от аналитических команд, *они могут приносить радость*.
 
-So what makes strong collaboration possible between analytics engineers and backend application developers?
+Так что же делает возможным сильное сотрудничество между аналитиками и бэкенд-разработчиками?
 
 <!--truncate-->
 
-![A screenshot of the conversation that started the thread](/img/blog/2022-04-05-when-backend-devs-spark-joy/slack_thread_screenshot.png)
-*A screenshot of the conversation that started the thread*
+![Скриншот разговора, который начал тему](/img/blog/2022-04-05-when-backend-devs-spark-joy/slack_thread_screenshot.png)
+*Скриншот разговора, который начал тему*
 
-## When the pieces fall into place
+## Когда все части становятся на свои места
 
-A [recent slack thread](https://getdbt.slack.com/archives/C0VLZPLAE/p1643161237258600) in the dbt Community slack went over some of the technical and logistical aspects that can lead to happy data folks. Here were some of my favorite rules of the road that backend developers can follow to help them enjoy a quieter Slack.
+[Недавняя тема в Slack](https://getdbt.slack.com/archives/C0VLZPLAE/p1643161237258600) в сообществе dbt охватила некоторые технические и логистические аспекты, которые могут привести к радости аналитиков. Вот некоторые из моих любимых правил, которым могут следовать бэкенд-разработчики, чтобы наслаждаться более тихим Slack.
 
-### Signs the data is sparking joy
+### Признаки того, что данные приносят радость
 
-**All tables have a primary key.**
+**Все таблицы имеют первичный ключ.**
 
-Having columns in your tables that uniquely identify each row is fundamental to analytics work. [Primary keys](https://docs.getdbt.com/blog/primary-key-testing) ensure there are no duplicates in the data, ultimately allowing for accurate counts. This is especially important for backend application database tables, since many organizations consider those tables to be their “source of truth” for backend application data. It’s even better when primary key fields are clearly identifiable in backend application tables!
+Наличие столбцов в ваших таблицах, которые уникально идентифицируют каждую строку, является основополагающим для аналитической работы. [Первичные ключи](https://docs.getdbt.com/blog/primary-key-testing) гарантируют отсутствие дубликатов в данных, что в конечном итоге позволяет получать точные подсчеты. Это особенно важно для таблиц баз данных бэкенд-приложений, поскольку многие организации считают эти таблицы своим "источником истины" для данных бэкенд-приложений. Еще лучше, когда поля первичных ключей четко идентифицируются в таблицах бэкенд-приложений!
 
-**Time-based fields are passed as timestamps, not dates.**
+**Поля, основанные на времени, передаются как временные метки, а не даты.**
 
-Time-based fields, such as when an account is created or an order is placed, should be passed as timestamps. This format provides the most flexibility and granularity for analytics engineers and end business users. Timestamps can be made into accurate dates, date type fields cannot be made into accurate timestamps. Bonus points: When backend application tables have accurate `created_at` and `updated_at` fields, it’s a win for everyone.
+Поля, основанные на времени, такие как когда создан аккаунт или размещен заказ, должны передаваться как временные метки. Этот формат обеспечивает наибольшую гибкость и детализацию для аналитиков и конечных бизнес-пользователей. Временные метки могут быть преобразованы в точные даты, поля типа дата не могут быть преобразованы в точные временные метки. Дополнительные очки: когда таблицы бэкенд-приложений имеют точные поля `created_at` и `updated_at`, это победа для всех.
 
-**There are consistent naming conventions for tables and fields.**
+**Существуют согласованные соглашения об именах для таблиц и полей.**
 
-Having a consistent method to name tables and fields for backend data is incredibly important for the readability and scalability of both backend application tables and data models.
+Наличие согласованного метода именования таблиц и полей для бэкенд-данных невероятно важно для читаемости и масштабируемости как таблиц бэкенд-приложений, так и моделей данных.
 
-**Soft deletes FTW.**
+**Мягкое удаление — это круто.**
 
-In a soft delete, data is noted as deleted in a type of `deleted_at`/`is_deleted` field. A hard delete performs a true deletion which ultimately removes the row from the table. Soft deletes and fields that specify whether rows were removed provide a true record of what is happening to the data. They establish greater context into backend application data and help analytics engineers ensure higher data quality.
+При мягком удалении данные отмечаются как удаленные в поле типа `deleted_at`/`is_deleted`. Жесткое удаление выполняет истинное удаление, которое в конечном итоге удаляет строку из таблицы. Мягкие удаления и поля, указывающие, были ли строки удалены, предоставляют истинную запись о том, что происходит с данными. Они обеспечивают больший контекст в данных бэкенд-приложений и помогают аналитикам обеспечивать более высокое качество данных.
 
-**Data is passed as the proper type.**
+**Данные передаются в правильном типе.**
 
-Fields that are strings should be strings! And ints should be ints! Completing funky casts of fields in your data models is sometimes inevitable, but limiting where those complexities happen makes data modeling more intuitive.
+Поля, которые являются строками, должны быть строками! А int должны быть int! Выполнение странных преобразований полей в ваших моделях данных иногда неизбежно, но ограничение мест, где происходят эти сложности, делает моделирование данных более интуитивным.
 
-> “I looked back at the list above and I didn't see 'proper data typing' explicitly called out. I've seen so many cases of strings when it should be an int or a decimal or date or whatever else.” - [a comment in the slack thread from Josh Andrews](https://getdbt.slack.com/archives/C0VLZPLAE/p1643305705280300?thread_ts=1643161237.258600&cid=C0VLZPLAE)
+> “Я посмотрел на список выше и не увидел, чтобы 'правильная типизация данных' была явно указана. Я видел так много случаев, когда строки должны быть int или decimal или date или чем-то еще.” - [комментарий в теме Slack от Джоша Эндрюса](https://getdbt.slack.com/archives/C0VLZPLAE/p1643305705280300?thread_ts=1643161237.258600&cid=C0VLZPLAE)
 
-### Signs that operations are sparking joy
+### Признаки того, что операции приносят радость
 
-**Communication and collaboration before releases is the norm.**
+**Коммуникация и сотрудничество перед релизами — это норма.**
 
-Analytics engineers can catch release changes that may break their models prior to release by having routine communication with backend developers. Consider monitoring or reviewing PRs for backend work to understand the magic beneath the hood! In addition, collaboration between backend and analytics teams can encourage backend developers to establish a mindset where they frequently think about how their work will impact downstream analytics.
+Аналитики могут выявить изменения в релизах, которые могут сломать их модели до релиза, благодаря регулярной коммуникации с бэкенд-разработчиками. Рассмотрите возможность мониторинга или проверки PR для бэкенд-работы, чтобы понять магию под капотом! Кроме того, сотрудничество между бэкенд- и аналитическими командами может побудить бэкенд-разработчиков установить менталитет, при котором они часто думают о том, как их работа повлияет на последующую аналитику.
 
-**Don’t forget the documentation.**
+**Не забывайте о документации.**
 
-Regularly maintained and well-written documentation for backend application database tables helps analytics engineers and backend developers alike unpack complex data and data models. Documentation for backend application database tables might look like an entity relationship diagram (ERD) or an ERD supplemented with a living text-document providing greater detail into tables and fields. Furthermore, strong documentation helps analytics engineers write more descriptive [documentation for source models in dbt](/docs/build/sources#testing-and-documenting-sources).
+Регулярно обновляемая и хорошо написанная документация для таблиц баз данных бэкенд-приложений помогает как аналитикам, так и бэкенд-разработчикам разбираться в сложных данных и моделях данных. Документация для таблиц баз данных бэкенд-приложений может выглядеть как диаграмма отношений сущностей (ERD) или ERD, дополненная живым текстовым документом, предоставляющим больше деталей о таблицах и полях. Более того, сильная документация помогает аналитикам писать более описательную [документацию для исходных моделей в dbt](/docs/build/sources#testing-and-documenting-sources).
 
-## A match made in heaven
+## Идеальное сочетание
 
-Maintaining a strong and collaborative relationship with your backend application developers *is hard*. Forming the technical and logistical requirements that satisfy both parties is also challenging. However, taking the time to clearly define and understand why these requirements should exist is extremely rewarding and worth every difficult conversation. When done right, this kind of collaboration can lead to better partnership, more readable data models, higher quality data, and happier team members.
+Поддержание сильных и совместных отношений с вашими бэкенд-разработчиками *сложно*. Формирование технических и логистических требований, которые удовлетворяют обе стороны, также является вызовом. Однако потраченное время на четкое определение и понимание, почему эти требования должны существовать, чрезвычайно вознаграждает и стоит каждой сложной беседы. Когда все сделано правильно, такое сотрудничество может привести к лучшему партнерству, более читаемым моделям данных, более качественным данным и более счастливым членам команды.
 
-Want to read more about what makes data modeling a joy? Make sure to join the [dbt Community slack](https://www.getdbt.com/community/join-the-community/)!
+Хотите узнать больше о том, что делает моделирование данных радостью? Обязательно присоединяйтесь к [сообществу dbt в Slack](https://www.getdbt.com/community/join-the-community/)!

@@ -1,6 +1,6 @@
 ---
-title: "Deprecation of dbt Server"
-description: "Announcing the deprecation of dbt Server and what you need to know"
+title: "Устаревание dbt Server"
+description: "Объявление об устаревании dbt Server и что вам нужно знать"
 slug: deprecation-of-dbt-server
 
 authors: [roxi_dahlke]
@@ -12,16 +12,16 @@ date: 2024-01-15
 is_featured: false
 ---
 
-## Summary
+## Резюме
 
-We’re announcing that [dbt Server](https://github.com/dbt-labs/dbt-server) is officially deprecated and will no longer be maintained by dbt Labs going forward. You can continue to use the repository and fork it for your needs. We’re also looking for a maintainer of the repository from our community! If you’re interested, please reach out by opening an issue in the [repository](https://github.com/dbt-labs/dbt-server/issues).
+Мы объявляем, что [dbt Server](https://github.com/dbt-labs/dbt-server) официально устарел и больше не будет поддерживаться dbt Labs. Вы можете продолжать использовать репозиторий и форкать его для своих нужд. Мы также ищем поддерживающего из нашего сообщества! Если вы заинтересованы, пожалуйста, свяжитесь с нами, открыв issue в [репозитории](https://github.com/dbt-labs/dbt-server/issues).
 
-## Why are we deprecating dbt Server?
+## Почему мы устаряем dbt Server?
 
-At dbt Labs, we are continually working to build rich experiences that help our users scale collaboration around data. To achieve this vision, we need to take moments to think about which products are contributing to this goal, and sometimes make hard decisions about the ones that are not, so that we can focus on enhancing the most impactful ones. 
+В dbt Labs мы постоянно работаем над созданием богатых возможностей, которые помогают нашим пользователям масштабировать сотрудничество вокруг данных. Чтобы достичь этой цели, нам нужно время от времени обдумывать, какие продукты способствуют этой цели, и иногда принимать трудные решения о тех, которые не способствуют, чтобы мы могли сосредоточиться на улучшении самых значимых.
 
-dbt Server previously supported our legacy Semantic Layer, which was [fully deprecated in December 2023](https://docs.getdbt.com/docs/dbt-versions/release-notes/Dec-2023/legacy-sl). In October 2023, we introduced the GA of the revamped dbt Semantic Layer with [significant improvements](https://www.getdbt.com/blog/build-centralize-and-deliver-consistent-metrics-with-the-dbt-semantic-layer), made possible by the [acquisition of Transform](https://www.getdbt.com/blog/dbt-acquisition-transform) and the integration of [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow) into dbt. 
+Ранее dbt Server поддерживал наш устаревший Семантический слой, который был [полностью устаревшим в декабре 2023 года](https://docs.getdbt.com/docs/dbt-versions/release-notes/Dec-2023/legacy-sl). В октябре 2023 года мы представили GA обновленного Семантического слоя dbt с [значительными улучшениями](https://www.getdbt.com/blog/build-centralize-and-deliver-consistent-metrics-with-the-dbt-semantic-layer), ставшими возможными благодаря [приобретению Transform](https://www.getdbt.com/blog/dbt-acquisition-transform) и интеграции [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow) в dbt.
 
-The dbt Semantic Layer is now fully independent of dbt Server and operates on MetricFlow Server, a powerful new proprietary technology designed for enhanced scalability. We’re incredibly excited about the new updates and encourage you to check out our [documentation](https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl), as well as [this blog](https://www.getdbt.com/blog/how-the-dbt-semantic-layer-works) on how the product works.
+Семантический слой dbt теперь полностью независим от dbt Server и работает на MetricFlow Server, мощной новой проприетарной технологии, разработанной для улучшенной масштабируемости. Мы невероятно рады новым обновлениям и рекомендуем вам ознакомиться с нашей [документацией](https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl), а также [этим блогом](https://www.getdbt.com/blog/how-the-dbt-semantic-layer-works) о том, как работает продукт.
 
-The deprecation of dbt Server and updates to the Semantic Layer signify the evolution of the dbt ecosystem towards more focus on in product and out-of-the-box experiences around connectivity, scale, and flexibility. We are excited that you are along with us on this journey. 
+Устаревание dbt Server и обновления Семантического слоя означают эволюцию экосистемы dbt в сторону большего внимания к встроенным и готовым к использованию возможностям в области подключения, масштабируемости и гибкости. Мы рады, что вы с нами на этом пути.

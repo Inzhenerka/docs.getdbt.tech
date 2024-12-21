@@ -1,6 +1,6 @@
 ---
-title: "The Exact GitHub Pull Request Template We Use at dbt Labs"
-description: "Having a GitHub PR template is one of the most important and frequently overlooked aspects of creating an efficient and scalable dbt-centric analytics workflow."
+title: "Точный шаблон запроса на слияние GitHub, который мы используем в dbt Labs"
+description: "Наличие шаблона PR GitHub — один из самых важных и часто упускаемых из виду аспектов создания эффективного и масштабируемого аналитического рабочего процесса, ориентированного на dbt."
 slug: analytics-pull-request-template
 
 authors: [jess_williams]
@@ -12,244 +12,238 @@ date: 2021-11-29
 is_featured: false
 ---
 
-Having a GitHub pull request template is one of the most important and frequently overlooked aspects of creating an efficient and scalable dbt-centric analytics workflow. Opening a pull request is the final step of your modeling process - a process which typically involves a lot of complex work! 
+Наличие шаблона запроса на слияние (PR) GitHub — один из самых важных и часто упускаемых из виду аспектов создания эффективного и масштабируемого аналитического рабочего процесса, ориентированного на dbt. Открытие запроса на слияние — это финальный шаг в вашем процессе моделирования, который обычно включает в себя много сложной работы!
 
-For you, the dbt developer, the pull request (PR for short) serves as a final checkpoint in your modeling process, ensuring that no key elements are missing from your code or project. 
+Для вас, разработчика dbt, запрос на слияние (сокращенно PR) служит финальной проверкой в вашем процессе моделирования, гарантируя, что в вашем коде или проекте не отсутствуют ключевые элементы.
 
 <!--truncate-->
 
-For the reviewer, it lets them know what it is they are reviewing before laying eyes on any code. Most importantly, the PR template sets a standard for your team so that PRs can be both submitted and reviewed with ease.
+Для рецензента это позволяет понять, что именно они будут проверять, еще до того, как они увидят код. Самое главное, шаблон PR устанавливает стандарт для вашей команды, чтобы PR могли быть как отправлены, так и проверены с легкостью.
 
-On dbt Labs’ Professional Services team, our [analytics engineers](https://getdbt.com/what-is-analytics-engineering/) frequently work in pairs on client projects, meaning two AEs are writing and reviewing PRs against the same repo. 
+В команде профессиональных услуг dbt Labs наши [аналитические инженеры](https://getdbt.com/what-is-analytics-engineering/) часто работают в парах над проектами клиентов, что означает, что два аналитических инженера пишут и проверяют PR в одном и том же репозитории.
 
-Now imagine you are paired with 2-3 different people on 2-3 projects. Absent some structure, the chances of everyone following thorough and repeatable PR writing/review processes is extremely slim. 
+Теперь представьте, что вы работаете с 2-3 разными людьми над 2-3 проектами. Без какой-либо структуры шансы на то, что все будут следовать тщательным и повторяемым процессам написания/проверки PR, крайне малы.
 
-Let’s jump into the exact PR template we use internally at dbt Labs. 
+Давайте перейдем к точному шаблону PR, который мы используем внутри dbt Labs.
 
-
-## The GitHub PR template we use
+## Шаблон PR GitHub, который мы используем
 
 <WistiaVideo id="r3u04isgxf" />
 
-Our PR template ([view markdown file in GitHub](https://github.com/dbt-labs/dbt-init/blob/master/starter-project/.github/pull_request_template.md)) is composed of 6 sections: 
+Наш шаблон PR ([посмотреть файл markdown на GitHub](https://github.com/dbt-labs/dbt-init/blob/master/starter-project/.github/pull_request_template.md)) состоит из 6 разделов:
 
-* Description & motivation
-* To-do before merge (optional)
-* Screenshots
-* Validation of models
-* Changes to existing models
-* Checklist
+* Описание и мотивация
+* Задачи перед слиянием (опционально)
+* Скриншоты
+* Валидация моделей
+* Изменения в существующих моделях
+* Контрольный список
 
-### How and why this GitHub PR template works
+### Как и почему работает этот шаблон PR GitHub
 
-Having each of these sections written down significantly limits the communication overhead on our team, and limits the chances of us shipping low-quality analytics code. Let's explore how to use each section and its benefits.
+Наличие каждого из этих разделов значительно снижает нагрузку на коммуникацию в нашей команде и уменьшает шансы на отправку некачественного аналитического кода. Давайте рассмотрим, как использовать каждый раздел и его преимущества.
 
-#### Description & motivation:
+#### Описание и мотивация:
 
-This is the intro to your PR and should allow the reviewer to quickly be able to understand the reason for opening this PR. If your actual code is the “how”, the description is the “what” and “why.”  As an example from a recent project:
+Это введение в ваш PR, которое должно позволить рецензенту быстро понять причину открытия этого PR. Если ваш фактический код — это «как», то описание — это «что» и «почему». Пример из недавнего проекта:
 
-> Example: This PR updates the channel mapping for Google Adwords data based on this Google Sheet. This mimics the mapping used for sessions and will be used in our final attribution modeling to look at ROAS.  
+> Пример: Этот PR обновляет сопоставление каналов для данных Google Adwords на основе этой таблицы Google. Это имитирует сопоставление, используемое для сессий, и будет использоваться в нашей финальной модели атрибуции для анализа ROAS.
 
-> This PR also adds a stg table for the `final_url_report` from Adwords. This is currently only being used to map `utm_medium` and `utm_source` to `campaign_id` and `ad_group_id` to then derive a channel. This is not yet being used as an input to the Adwords package due to limitations in the data that is configured and available via Adwords. We may choose to incorporate that later.  
+> Этот PR также добавляет stg таблицу для `final_url_report` из Adwords. В настоящее время она используется только для сопоставления `utm_medium` и `utm_source` с `campaign_id` и `ad_group_id`, чтобы затем определить канал. Это пока не используется в качестве входных данных для пакета Adwords из-за ограничений в данных, которые настроены и доступны через Adwords. Мы можем решить включить это позже.
 
-> The main purpose of this PR was to update the channel mapping for an attribution model. I could have quickly written “updated channel mapping” and called it a day. But, knowing that I would likely need to reference this mapping again at some point in the future, I added this link to the google sheet where we initially built the mapping.
+> Основная цель этого PR заключалась в обновлении сопоставления каналов для модели атрибуции. Я мог бы быстро написать «обновлено сопоставление каналов» и на этом закончить. Но, зная, что мне, вероятно, потребуется снова обратиться к этому сопоставлению в будущем, я добавил эту ссылку на таблицу Google, где мы изначально создали сопоставление.
 
-Remember, you know more about this PR **right now** than you will in a couple of months. If you or your team ships 30+ PRs and need to go back to one of those early ones to reference something, you’re going to be bummed when your description says “added a model”. 
+Помните, вы знаете об этом PR **сейчас** больше, чем будете знать через пару месяцев. Если вы или ваша команда отправите более 30 PR и вам нужно будет вернуться к одному из них, чтобы что-то уточнить, вы будете разочарованы, если ваше описание будет просто «добавлена модель».
 
+#### Скриншоты:
 
-#### Screenshots:
+Здесь мы добавляем соответствующие разделы из нашего DAG! Это одна из моих любимых функций dbt, так как я очень визуальный ученик. Поэтому, когда я открываю PR, я быстро просматриваю соответствующие разделы DAG (также известного как граф зависимостей), чтобы помочь мне концептуализировать моделирование.
 
-This is where we add the relevant sections from our DAG! This is one of my favorite features of dbt, as I’m a very visual learner. So when I open a PR, I take a quick look at the relevant sections of the DAG (aka dependency graph) to help me conceptualize the modeling.
+![dbt dag check](/img/blog/pr-template-dag-check.png "проверка DAG dbt")
 
-![dbt dag check](/img/blog/pr-template-dag-check.png "dbt DAG check")
+Проверка таких вещей, как модульность и 1:1 отношения между источниками и моделями на стадии, гораздо проще выполняется визуально через DAG, чем попытка взглянуть на код и визуализировать отношения.
 
-Checking for things like modularity and 1:1 relationships between sources and staging models is much easier done visually via the DAG than trying to look at code and visualize the relationships. 
+> Примечание: мои коллеги Кристин Бергер и Рэнди Питчер опубликовали отличный обзор [техники модульного моделирования данных](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/), если вам интересно узнать больше.
 
-> Note: my colleagues Christine Berger + Randy Pitcher published an excellent walkthrough of [modular data modeling technique](https://www.getdbt.com/analytics-engineering/modular-data-modeling-technique/) if you’re interested in learning more.
+#### Валидация моделей:
 
+Этот раздел должен показать что-то, что подтверждает, что ваша модель делает то, что вы намеревались. Это может быть [тест dbt](/docs/build/data-tests), такой как уникальность или отсутствие null, или это может быть ad-hoc запрос, который вы написали для проверки ваших данных. Вот скриншот из тестового запуска на локальной ветке разработки:
 
-#### Validation of models:
+![test validation](/img/blog/pr-template-test-validation.png "валидация теста dbt")
 
-This section should show something to confirm that your model is doing what you intended it to do. This could be a [dbt test](/docs/build/data-tests) like uniqueness or not null, or could be an ad-hoc query that you wrote to validate your data. Here is a screenshot from a test run on a local development branch:
+Добавление тестов на уникальность показывает, что вы продумали <Term id="grain" /> каждой из ваших моделей, а затем гарантирует, что эти предположения остаются верными со временем.
 
-![test validation](/img/blog/pr-template-test-validation.png "dbt test validation")
+Включив скриншот вашего тестового запуска dbt здесь, вы подтверждаете, что выполнили работу.
 
-Adding uniqueness tests shows that you have put thought into the <Term id="grain" /> of each of your models, and then ensures that those assumptions hold true over time. 
+#### Изменения в существующих моделях:
 
-By including a screenshot of your dbt test run here, you are confirming that you have done the work.
+Это место для оставления инструкций после слияния. Возможно, вы обновили свою существующую [инкрементальную модель](https://docs.getdbt.com/docs/build/incremental-models) с дополнительной колонкой и вам нужно выполнить [полное обновление](https://docs.getdbt.com/docs/build/incremental-models#how-do-i-rebuild-an-incremental-model).
 
-#### Changes to existing models:
+Или, возможно, у вас есть соответствующий PR для вашего BI инструмента, который нужно объединить, чтобы учесть изменения в моделировании dbt.
 
-This is a place to leave post-merge instructions. Maybe you updated your existing [incremental model](https://docs.getdbt.com/docs/build/incremental-models) with an additional column and need to run a [full refresh](https://docs.getdbt.com/docs/build/incremental-models#how-do-i-rebuild-an-incremental-model). 
+#### Контрольный список:
 
-Or, maybe you have a corresponding PR for your BI tool that needs to be merged to accommodate your dbt modeling changes.
+Контрольный список запуска, вероятно, является самой важной частью шаблона PR — он гарантирует, что вы следовали шагам контроля качества, необходимым для отправки вашего PR в производство.
 
+**Мой запрос на слияние представляет собой одну логическую часть работы:**
 
-#### Checklist:
+Каждый PR должен представлять собой связное тело работы — конкретную модель fct или постановку определенного источника данных. Если у вас возникают трудности с сужением и описанием **_того, что_** делает ваш PR, возможно, он слишком широк.
 
-The launch checklist is probably the most important piece of the PR template—it ensures that you’ve followed the QC steps required to push your PR into production.
+Это также значительно облегчает работу вашему рецензенту. Проверка PR с несколькими, несвязанными концепциями чрезвычайно сложна и требует много времени.
 
-**My pull request represents one logical piece of work:**
+**Мои коммиты связаны с запросом на слияние и выглядят чисто.**
 
-Each PR should represent a cohesive body of work—a specific fct model, or staging a particular data source. If you’re having trouble narrowing down and describing **_the thing_** your PR does, it may be too broad. 
-
-This also makes things much easier on your reviewer. Reviewing a PR with multiple, unrelated concepts is extremely challenging and time consuming. 
-
-**My commits are related to the pull request and look clean.**
-
-Think of yourself! What if you need to roll back a change, but in a moment of post-coding fogginess, you made a massive commit of unrelated concepts that “updated all the things”. Woof.
+Подумайте о себе! Что, если вам нужно будет откатить изменение, но в момент пост-кодовой затуманенности вы сделали массивный коммит несвязанных концепций, который «обновил все». Уф.
 
 ![woof](/img/blog/pr-template-woof.gif "woof")
 
-**My SQL follows the [dbt Labs style guide](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md).**
+**Мой SQL следует [стилевому руководству dbt Labs](https://github.com/dbt-labs/corp/blob/master/dbt_style_guide.md).**
 
-By standardizing the way your team writes code, your reviewer is able to spend less time picking apart each team member’s individual styling nuances and more time reviewing the actual code. 
+Стандартизируя способ написания кода вашей командой, ваш рецензент может тратить меньше времени на разбор нюансов стиля каждого члена команды и больше времени на проверку фактического кода.
 
-**I have added appropriate tests and documentation to any new models.**
+**Я добавил соответствующие тесты и документацию к любым новым моделям.**
 
-By default, all new models should have _at least_ unique and not null tests on the <Term id="primary-key" />. 
+По умолчанию все новые модели должны иметь _как минимум_ тесты на уникальность и отсутствие null на <Term id="primary-key" />.
 
-Documentation follows the same reasoning as the PR description. You will know more **right now** about the intricacies of these models than you will after you’ve developed 50 more models in the coming months.
+Документация следует той же логике, что и описание PR. Вы будете знать больше **сейчас** о тонкостях этих моделей, чем после того, как разработаете еще 50 моделей в ближайшие месяцы.
 
-**I have [materialized my models](https://docs.getdbt.com/docs/build/materializations) appropriately.**
+**Я [материализовал свои модели](https://docs.getdbt.com/docs/build/materializations) соответствующим образом.**
 
-This is all about performance. Our ultimate goal is to model data such that end users can easily and efficiently query the resulting database objects.
+Это все о производительности. Наша конечная цель — моделировать данные так, чтобы конечные пользователи могли легко и эффективно запрашивать полученные объекты базы данных.
 
-![choose your materializations wisely](/img/blog/pr-template-fct-meme.jpeg "choose your materializations wisely")
+![выбирайте материализации с умом](/img/blog/pr-template-fct-meme.jpeg "выбирайте материализации с умом")
 
+**Я обновил файл README.**  
+Последнее, но не менее важное — README. Это не нужно обновлять с каждым PR.
 
-**I have updated the README file.**  
-Last but not least, the README. This doesn’t need to be updated with every single PR. 
+В общем, ваш README содержит информацию о таких вещах, как как начать вносить вклад в ваш проект dbt, к кому обратиться за доступом к базе данных, дополнительные ресурсы для разработки и т.д. Если что-то из этого изменится в результате вашего PR, обязательно обновите README!
 
-In general, your README contains information about things such as how to get going with contributing to your dbt project, who to go to for database access, additional development resources, etc. If any of this changes as a result of your PR, make sure to update the README!
+## Добавление полного шаблона PR GitHub в ваш репозиторий
 
-
-## Adding the full GitHub PR template to your repository
-
-If you haven’t already picked it up from GitHub, the full markdown code of the dbt Labs PR template is below. After copying the PR template to your clipboard, let's walk through how to add it to your repository.
+Если вы еще не взяли его с GitHub, полный код markdown шаблона PR dbt Labs приведен ниже. После копирования шаблона PR в буфер обмена, давайте пройдемся по тому, как добавить его в ваш репозиторий.
 
 ```
 
 &lt;!---
 
-Provide a short summary in the Title above. Examples of good PR titles:
+Предоставьте краткое резюме в заголовке выше. Примеры хороших заголовков PR:
 
-* "Feature: add so-and-so models"
+* "Функция: добавить такие-то модели"
 
-* "Fix: deduplicate such-and-such"
+* "Исправление: удалить дубликаты таких-то"
 
-* "Update: dbt version 0.13.0"
+* "Обновление: версия dbt 0.13.0"
 
 -->
 
-## Description & motivation
+## Описание и мотивация
 
 &lt;!---
 
-Describe your changes, and why you're making them. Is this linked to an open
+Опишите ваши изменения и почему вы их делаете. Это связано с открытым
 
-issue, a Trello card, or another pull request? Link it here.
+вопросом, карточкой Trello или другим запросом на слияние? Ссылка здесь.
 
 -->
 
-## To-do before merge
+## Задачи перед слиянием
 
 &lt;!---
 
-(Optional -- remove this section if not needed)
+(Опционально — удалите этот раздел, если он не нужен)
 
-Include any notes about things that need to happen before this PR is merged, e.g.:
+Включите любые заметки о вещах, которые должны произойти до слияния этого PR, например:
 
-- [ ] Change the base branch
+- [ ] Изменить базовую ветку
 
-- [ ] Update dbt Cloud jobs
+- [ ] Обновить задания dbt Cloud
 
-- [ ] Ensure PR #56 is merged
+- [ ] Убедиться, что PR #56 объединен
 
 -->
 
-## Screenshots:
+## Скриншоты:
 
 &lt;!---
 
-Include a screenshot of the relevant section of the updated DAG. You can access
+Включите скриншот соответствующего раздела обновленного DAG. Вы можете получить доступ
 
-your version of the DAG by running `dbt docs generate && dbt docs serve`.
+к вашей версии DAG, запустив `dbt docs generate && dbt docs serve`.
 
 -->
 
-## Validation of models:
+## Валидация моделей:
 
 &lt;!---
 
-Include any output that confirms that the models do what is expected. This might
+Включите любой вывод, который подтверждает, что модели делают то, что ожидается. Это может
 
-be a link to an in-development dashboard in your BI tool, or a query that
+быть ссылка на разрабатываемую панель в вашем BI инструменте или запрос, который
 
-compares an existing model with a new one.
+сравнивает существующую модель с новой.
 
 -->
 
-## Changes to existing models:
+## Изменения в существующих моделях:
 
 &lt;!---
 
-Include this section if you are changing any existing models. Link any related
+Включите этот раздел, если вы изменяете какие-либо существующие модели. Ссылка на любые связанные
 
-pull requests on your BI tool, or instructions for merge (e.g. whether old
+запросы на слияние в вашем BI инструменте или инструкции для слияния (например, следует ли
 
-models should be dropped after merge, or whether a full-refresh run is required)
+удалить старые модели после слияния или требуется ли полное обновление)
 
 -->
 
-## Checklist:
+## Контрольный список:
 
 &lt;!---
 
-This checklist is mostly useful as a reminder of small things that can easily be
+Этот контрольный список в основном полезен как напоминание о мелочах, которые легко
 
-forgotten – it is meant as a helpful tool rather than hoops to jump through.
+забыть — он предназначен как полезный инструмент, а не как препятствия для преодоления.
 
-Put an `x` in all the items that apply, make notes next to any that haven't been
+Поставьте `x` во всех пунктах, которые применимы, сделайте заметки рядом с любыми, которые не были
 
-addressed, and remove any items that are not relevant to this PR.
+учтены, и удалите любые пункты, которые не относятся к этому PR.
 
 -->
 
-- [ ] My pull request represents one logical piece of work.
+- [ ] Мой запрос на слияние представляет собой одну логическую часть работы.
 
-- [ ] My commits are related to the pull request and look clean.
+- [ ] Мои коммиты связаны с запросом на слияние и выглядят чисто.
 
-- [ ] My SQL follows the style guide.
+- [ ] Мой SQL следует стилевому руководству.
 
-- [ ] I have materialized my models appropriately.
+- [ ] Я материализовал свои модели соответствующим образом.
 
-- [ ] I have added appropriate tests and documentation to any new models.
+- [ ] Я добавил соответствующие тесты и документацию к любым новым моделям.
 
-- [ ] I have updated the README file.
+- [ ] Я обновил файл README.
 
 {%- if project.warehouse == 'redshift' %}
 
-- [ ] I have added sort and dist keys to models materialized as tables.
+- [ ] Я добавил ключи сортировки и распределения к моделям, материализованным как таблицы.
 
-- [ ] I have validated the SQL in any late-binding views.
+- [ ] Я проверил SQL в любых представлениях с поздним связыванием.
 
 {% endif %}
 
 ```
 
-### Create a markdown file
+### Создание markdown файла
 
-Copy the full PR template text above and copy it into your favorite text editor. Once you’ve done that, export the document as an `.md` file.
+Скопируйте полный текст шаблона PR выше и вставьте его в ваш любимый текстовый редактор. После этого экспортируйте документ как файл `.md`.
 
-### Add the `.md` file to your GitHub repository
+### Добавление файла `.md` в ваш репозиторий GitHub
 
-Now that you have your pull request template markdown file, navigate to the main page of your repository on GitHub. Above the list of files, using the **Add file** dropdown, click on **Create new file**. 
+Теперь, когда у вас есть файл markdown шаблона запроса на слияние, перейдите на главную страницу вашего репозитория на GitHub. Над списком файлов, используя выпадающее меню **Add file**, нажмите **Create new file**.
 
-Once the file is added, name it whatever you want to make it clear that it’s your pull request template. A good name for the file might be `pull_request_template.md`.
+После добавления файла назовите его так, чтобы было понятно, что это ваш шаблон запроса на слияние. Хорошее имя для файла может быть `pull_request_template.md`.
 
-### And that’s it!
+### И это все!
 
-With that, you now have a pull request template in your GitHub repository that can help your team follow analytics engineering best practices.
+Теперь у вас есть шаблон запроса на слияние в вашем репозитории GitHub, который может помочь вашей команде следовать лучшим практикам аналитического инжиниринга.
 
-To dive deeper into how we use it as part of the analytics engineering workflow, check out the free [dbt Fundamentals on-demand course](https://learn.getdbt.com/courses/dbt-fundamentals).
+Чтобы глубже погрузиться в то, как мы используем его как часть рабочего процесса аналитического инжиниринга, ознакомьтесь с бесплатным [курсом dbt Fundamentals по запросу](https://learn.getdbt.com/courses/dbt-fundamentals).

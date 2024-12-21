@@ -1,6 +1,6 @@
 ---
-title: "Slim CI/CD with Bitbucket Pipelines for dbt Core"
-description: "How to set up slim CI/CD outside of dbt Cloud"
+title: "Упрощенный CI/CD с Bitbucket Pipelines для dbt Core"
+description: "Как настроить упрощенный CI/CD вне dbt Cloud"
 slug: slim-ci-cd-with-bitbucket-pipelines
 
 authors: [simon_podhajsky]
@@ -14,56 +14,55 @@ keywords:
   - dbt core pipeline, slim ci pipeline, slim cd pipeline, bitbucket
 ---
 
-
-:::info Set up CI/CD with dbt Cloud
-This blog is specifically tailored for dbt Core users. If you're using dbt Cloud and your Git provider doesn't have a native dbt Cloud integration (like BitBucket), follow the [Customizing CI/CD with custom pipelines guide](/guides/custom-cicd-pipelines?step=3) to set up CI/CD.
+:::info Настройка CI/CD с dbt Cloud
+Этот блог специально предназначен для пользователей dbt Core. Если вы используете dbt Cloud и ваш Git-провайдер не имеет встроенной интеграции с dbt Cloud (например, BitBucket), следуйте [руководству по настройке CI/CD с пользовательскими конвейерами](/guides/custom-cicd-pipelines?step=3) для настройки CI/CD.
 :::
 
-Continuous Integration (CI) sets the system up to test everyone’s pull request before merging. Continuous Deployment (CD) deploys each approved change to production. “Slim CI” refers to running/testing only the changed code, [thereby saving compute](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603). In summary, CI/CD automates dbt pipeline testing and deployment.
+Непрерывная интеграция (CI) настраивает систему для тестирования каждого pull request перед слиянием. Непрерывное развертывание (CD) развертывает каждое одобренное изменение в производственной среде. "Упрощенный CI" означает запуск/тестирование только измененного кода, [тем самым экономя вычислительные ресурсы](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603). Вкратце, CI/CD автоматизирует тестирование и развертывание dbt конвейеров.
 
-[dbt Cloud](https://www.getdbt.com/), a much beloved method of dbt deployment, [supports GitHub- and Gitlab-based CI/CD](https://blog.getdbt.com/adopting-ci-cd-with-dbt-cloud/) out of the box. It doesn’t support Bitbucket, AWS CodeCommit/CodeDeploy, or any number of other services, but you need not give up hope even if you are tethered to an unsupported platform.
+[dbt Cloud](https://www.getdbt.com/), популярный метод развертывания dbt, [поддерживает CI/CD на основе GitHub и Gitlab](https://blog.getdbt.com/adopting-ci-cd-with-dbt-cloud/) из коробки. Он не поддерживает Bitbucket, AWS CodeCommit/CodeDeploy или другие сервисы, но даже если вы привязаны к неподдерживаемой платформе, не стоит отчаиваться.
 
-Although this article uses Bitbucket Pipelines as the compute service and Bitbucket Downloads as the storage service, this article should serve as a blueprint for creating a dbt-based Slim CI/CD *anywhere*. The idea is always the same:
+Хотя в этой статье используется Bitbucket Pipelines в качестве вычислительного сервиса и Bitbucket Downloads в качестве сервиса хранения, эта статья должна служить шаблоном для создания dbt-основанного упрощенного CI/CD *где угодно*. Идея всегда одна и та же:
 
 <!--truncate-->
 
-1. Deploy your product and save the deployment artifacts.
-2. Use the artifacts to allow dbt to determine the stateful changes and run only those (thereby achieving “slimness”).
+1. Разверните ваш продукт и сохраните артефакты развертывания.
+2. Используйте артефакты, чтобы позволить dbt определить изменения состояния и запустить только их (тем самым достигая "упрощенности").
 
-## Overview of steps
+## Обзор шагов
 
-To accomplish this, we’ll need to prepare three parts of our pipeline to work together:
+Для достижения этого нам нужно подготовить три части нашего конвейера для совместной работы:
 
-1. Database access - ensure that our warehouse has users, roles and permissions to run our pipelines
-2. Repository preparation - setup our repository and build our automation based on our git platform provider’s (in this example, Bitbucket) capabilities
-3. Bitbucket (or other platform) environment - configure our environment with the necessary secrets and variables to run our workflow 
+1. Доступ к базе данных - убедитесь, что в нашем хранилище есть пользователи, роли и разрешения для запуска наших конвейеров.
+2. Подготовка репозитория - настройте наш репозиторий и создайте нашу автоматизацию на основе возможностей нашего провайдера git-платформы (в этом примере Bitbucket).
+3. Среда Bitbucket (или другой платформы) - настройте нашу среду с необходимыми секретами и переменными для запуска нашего рабочего процесса.
 
-## Step 1: Database preparation
+## Шаг 1: Подготовка базы данных
 
-In general, we want the following:
+В общем, мы хотим следующее:
 
-1. Create a CI user with proper grants in your database, including the ability to create the schema(s) they’ll write to (`create on [dbname]`).
-2. Create a production user with proper grants in your database.
+1. Создайте CI-пользователя с соответствующими правами в вашей базе данных, включая возможность создавать схемы, в которые они будут записывать (`create on [dbname]`).
+2. Создайте производственного пользователя с соответствующими правами в вашей базе данных.
 
-The specifics will differ based on the database type you’re using. To see what constitutes “proper grants”, please consult the dbt Discourse classic “[The exact grant statements we use in a dbt project](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)” and Matt Mazur’s “[Wrangling dbt Database Permissions](https://mattmazur.com/2018/06/12/wrangling-dbt-database-permissions/)”.
+Конкретные детали будут различаться в зависимости от типа используемой базы данных. Чтобы узнать, что составляет "соответствующие права", пожалуйста, обратитесь к классической статье dbt Discourse "[Точные операторы grant, которые мы используем в проекте dbt](https://discourse.getdbt.com/t/the-exact-grant-statements-we-use-in-a-dbt-project/430)" и статье Мэтта Мазура "[Управление разрешениями базы данных dbt](https://mattmazur.com/2018/06/12/wrangling-dbt-database-permissions/)".
 
-In my case, I created:
+В моем случае я создал:
 
-1. A `dev_ci` Postgres user which had been granted a previously created `role_dev` role (same as all other development users). `role_dev` has connect and create grants on the database.
-2. A `dbt_bitbucket` user which has been granted a previously created `role_prod` role (same as dbt Cloud production environment). The `role_prod` role must have write access to your production schemas.
+1. Пользователя `dev_ci` в Postgres, которому была предоставлена ранее созданная роль `role_dev` (такая же, как у всех других пользователей разработки). `role_dev` имеет права на подключение и создание в базе данных.
+2. Пользователя `dbt_bitbucket`, которому была предоставлена ранее созданная роль `role_prod` (такая же, как в производственной среде dbt Cloud). Роль `role_prod` должна иметь права на запись в ваши производственные схемы.
 
 ```sql
 create role role_dev;
 
 grant create on database [dbname] to role_dev;
 
--- Grant all permissions required for the development role
+-- Предоставить все необходимые разрешения для роли разработки
 
 create role role_prod;
 
 grant create on database [dbname] to role_prod;
 
--- Grant all permissions required for the production role
+-- Предоставить все необходимые разрешения для производственной роли
 
 create role dev_ci with login password [password];
 
@@ -80,9 +79,9 @@ create role dbt_bitbucket with login password [password];
 grant role_prod to dbt_bitbucket;
 ```
 
-### Role Masking
+### Маскирование ролей
 
-Finally - and this might be a Postgres-only step - I had to make sure that the regularly scheduled dbt Cloud jobs connected with a `dbt_cloud` user with a `role_prod` grant would be able to drop and re-create views and tables during their run, which they could not if `dbt_bitbucket` had previously created and owned them. To do that, I needed to [mask both roles](https://dba.stackexchange.com/a/295736):
+Наконец, и это может быть шагом только для Postgres, мне нужно было убедиться, что регулярно запланированные задания dbt Cloud, подключенные с пользователем `dbt_cloud` с предоставленной ролью `role_prod`, смогут удалять и воссоздавать представления и таблицы во время их выполнения, чего они не могли бы сделать, если бы `dbt_bitbucket` ранее создал и владел ими. Для этого мне нужно было [замаскировать обе роли](https://dba.stackexchange.com/a/295736):
 
 ```sql
 alter role dbt_bitbucket set role role_prod;
@@ -90,27 +89,27 @@ alter role dbt_bitbucket set role role_prod;
 alter role dbt_cloud set role role_prod;
 ```
 
-That way, any tables and views created by either user would be owned by “user” role_prod.
+Таким образом, любые таблицы и представления, созданные любым из пользователей, будут принадлежать роли "user" role_prod.
 
-## Step 2: Repository preparation
+## Шаг 2: Подготовка репозитория
 
-Next, we’ll need to configure the repository. Within the repo, we’ll need to configure:
+Далее нам нужно настроить репозиторий. Внутри репозитория нам нужно настроить:
 
-1. The pipeline environment
-2. The database connections
-3. The pipeline itself
+1. Среду конвейера
+2. Подключения к базе данных
+3. Сам конвейер
 
-### Pipeline environment: requirements.txt
+### Среда конвейера: requirements.txt
 
-You’ll need at least your dbt adapter-specific package, ideally pinned to a version. Mine is just:
+Вам понадобится как минимум ваш dbt адаптер-специфичный пакет, желательно закрепленный за версией. Мой выглядит так:
 
 ```yaml
 dbt-[adapter] ~= 1.0
 ```
 
-### Database connections: profiles.yml
+### Подключения к базе данных: profiles.yml
 
-You shouldn’t ever commit secrets in a plain-text file, but you can reference environmental variables (which we’ll securely define in Step 3).
+Вы никогда не должны коммитить секреты в файл в открытом виде, но вы можете ссылаться на переменные окружения (которые мы безопасно определим на Шаге 3).
 
 ```yaml
 your_project:
@@ -138,20 +137,20 @@ your_project:
       keepalives_idle: 0
 ```
 
-### Pipeline itself: bitbucket-pipelines.yml
+### Сам конвейер: bitbucket-pipelines.yml
 
-This is where you’ll define the steps that your pipeline will take. In our case, we’ll use the Bitbucket Pipelines format, but the approach will be similar for other providers.
+Здесь вы определите шаги, которые будет выполнять ваш конвейер. В нашем случае мы будем использовать формат Bitbucket Pipelines, но подход будет аналогичным для других провайдеров.
 
-There are two pipelines we need to configure:
+Нам нужно настроить два конвейера:
 
-1. Continuous Deployment (CD) pipeline, which will deploy and also store the production run artifacts
-2. Continuous Integration (CI) pipeline, which will retrieve them for state-aware testing runs in development
+1. Конвейер непрерывного развертывания (CD), который будет развертывать и также сохранять артефакты производственного запуска
+2. Конвейер непрерывной интеграции (CI), который будет извлекать их для тестовых запусков с учетом состояния в разработке
 
-[The entire file is accessible in a Gist](https://gist.github.com/shippy/78c2f5b124b70f31b2cef81c9017c8fd), but we’ll take it step-by-step to explain what we’re doing and why.
+[Весь файл доступен в Gist](https://gist.github.com/shippy/78c2f5b124b70f31b2cef81c9017c8fd), но мы разберем его шаг за шагом, чтобы объяснить, что мы делаем и почему.
 
-### Continuous Deployment: Transform by latest master and keep the artifacts
+### Непрерывное развертывание: Преобразование по последнему мастеру и сохранение артефактов
 
-Each pipeline is a speedrun of setting up the environment and the database connections, then running what needs to be run. In this case, we also save the artifacts to a place we can retrieve them from - here, it’s the Bitbucket Downloads service, but it could just as well be AWS S3 or another file storage service.
+Каждый конвейер — это быстрая настройка среды и подключений к базе данных, затем выполнение того, что нужно выполнить. В этом случае мы также сохраняем артефакты в место, откуда мы можем их извлечь — здесь это сервис Bitbucket Downloads, но это также может быть AWS S3 или другой сервис хранения файлов.
 
 ```yaml
 image: python:3.8
@@ -163,7 +162,7 @@ pipelines:
           name: Deploy to production
           caches:
             - pip
-          artifacts:  # Save the dbt run artifacts for the next step (upload)
+          artifacts:  # Сохраните артефакты выполнения dbt для следующего шага (загрузка)
             - target/*.json
           script:
             - python -m pip install -r requirements.txt
@@ -183,57 +182,58 @@ pipelines:
                 FILENAME: 'target/*.json'
 ```
 
-Reading the file over, you can see that we:
+Читая файл, вы можете увидеть, что мы:
 
-1. Set the container image to Python 3.8
-2. Specify that we want to execute the workflow on each change to the branch called main (if yours is called something different, you’ll want to change this)
-3. Specify that this pipeline is a two-step process
-4. Specify that in the first step called “Deploy to production”, we want to:
-    1. Use whatever pip cache is available, if any
-    2. Keep whatever <Term id="json" /> files are generated in this step in target/
-    3. Run the dbt setup by first installing dbt as defined in requirements.txt, then adding `profiles.yml` to the location dbt expects them in, and finally running `dbt deps` to install any dbt packages
-    4. Run `dbt seed`, `run`, and `snapshot`, all with `prod` as specified target
-5. Specify that in the first step called “Upload artifacts for slim CI runs”, we want to use the Bitbucket “pipe” (pre-defined action) to authenticate with environment variables and upload all files that match the glob `target/*.json`.
+1. Устанавливаем образ контейнера на Python 3.8
+2. Указываем, что хотим выполнять рабочий процесс при каждом изменении в ветке main (если ваша называется иначе, вам нужно будет изменить это)
+3. Указываем, что этот конвейер — это двухэтапный процесс
+4. Указываем, что на первом этапе, называемом "Deploy to production", мы хотим:
+    1. Использовать любой доступный кэш pip, если он есть
+    2. Сохранить любые файлы <Term id="json" />, сгенерированные на этом этапе, в target/
+    3. Запустить настройку dbt, сначала установив dbt, как определено в requirements.txt, затем добавив `profiles.yml` в место, где dbt ожидает их, и, наконец, запустив `dbt deps` для установки любых пакетов dbt
+    4. Запустить `dbt seed`, `run` и `snapshot`, все с указанной целью `prod`
+5. Указываем, что на первом этапе, называемом "Upload artifacts for slim CI runs", мы хотим использовать "pipe" Bitbucket (предопределенное действие) для аутентификации с помощью переменных окружения и загрузки всех файлов, соответствующих шаблону `target/*.json`.
 
-In summary, anytime anything is pushed to main, we’ll ensure our production database reflects the dbt transformation, and we’ve saved the resulting artifacts to defer to.
+Вкратце, каждый раз, когда что-то отправляется в main, мы гарантируем, что наша производственная база данных отражает преобразование dbt, и мы сохранили полученные артефакты для последующего использования.
 
-> ❓ **What are artifacts and why should I defer to them?** dbt artifacts are metadata of the last run - what models and tests were defined, which ones ran successfully, and which failed. If a future dbt run is set to ***defer*** to this metadata, it means that it can select models and tests to run based on their state, including and especially their difference from the reference metadata. See [Artifacts](https://docs.getdbt.com/reference/artifacts/dbt-artifacts), [Selection methods: “state”](https://docs.getdbt.com/reference/node-selection/methods#state), and [Caveats to state comparison](https://docs.getdbt.com/reference/node-selection/state-comparison-caveats) for details.
+> ❓ **Что такое артефакты и почему я должен на них полагаться?** Артефакты dbt — это метаданные последнего запуска — какие модели и тесты были определены, какие успешно выполнены, а какие провалились. Если будущий запуск dbt настроен на ***отложенное выполнение*** по этим метаданным, это означает, что он может выбирать модели и тесты для выполнения на основе их состояния, включая и особенно их различие от эталонных метаданных. См. [Артефакты](https://docs.getdbt.com/reference/artifacts/dbt-artifacts), [Методы выбора: "state"](https://docs.getdbt.com/reference/node-selection/methods#state) и [Ограничения сравнения состояния](https://docs.getdbt.com/reference/node-selection/state-comparison-caveats) для подробностей.
 
-### Slim Continuous Integration: Retrieve the artifacts and do a state-based run
+### Упрощенная непрерывная интеграция: Извлечение артефактов и выполнение на основе состояния
 
-The Slim CI pipeline looks similar to the CD pipeline, with a couple of differences explained in the code comments. As discussed earlier, it’s the deferral to the artifacts is that makes our CI run “slim”.
+Упрощенный CI-конвейер выглядит аналогично CD-конвейеру, с несколькими отличиями, объясненными в комментариях к коду. Как обсуждалось ранее, именно отложенное выполнение по артефактам делает наш CI-запуск "упрощенным".
 
 ```yaml
 pipelines:
   pull-requests:
-    '**':  # run on any branch that’s referenced by a pull request
+    '**':  # запуск на любой ветке, на которую ссылается pull request
       - step:
           name: Set up and build
           caches:
             - pip
           script:
-            # Set up dbt environment + dbt packages. Rather than passing
-            # profiles.yml to dbt commands explicitly, we'll store it where dbt
-            # expects it:
+            # Настройка среды dbt + пакетов dbt. Вместо передачи
+            # profiles.yml в команды dbt явно, мы сохраним его там, где dbt
+            # ожидает его:
             - python -m pip install -r requirements.txt
             - mkdir ~/.dbt
             - cp .ci/profiles.yml ~/.dbt/profiles.yml
             - dbt deps
  
-            # The following step downloads dbt artifacts from the Bitbucket
-            # Downloads, if available. (They are uploaded there by the CD
-            # process -- see "Upload artifacts for slim CI runs" step above.)
+            # Следующий шаг загружает артефакты dbt из Bitbucket
+            # Downloads, если они доступны. (Они загружаются туда процессом CD
+            # — см. шаг "Upload artifacts for slim CI runs" выше.)
             #
-            # curl loop ends with "|| true" because we want downstream steps to
-            # always run, even if the download fails. Running with "-L" to
-            # follow the redirect to S3, -s to suppress output, --fail to avoid
-            # outputting files if curl for whatever reason fails and confusing
-            # the downstream conditions.
+            # Цикл curl заканчивается "|| true", потому что мы хотим, чтобы
+            # последующие шаги всегда выполнялись, даже если загрузка не удалась.
+            # Запуск с "-L" для следования за перенаправлением на S3, -s для
+            # подавления вывода, --fail для предотвращения вывода файлов, если
+            # curl по какой-либо причине не удается и запутывает
+            # последующие условия.
             #
-            # ">-" converts newlines into spaces in a multiline YAML entry. This
-            # does mean that individual bash commands have to be terminated with
-            # a semicolon in order not to conflict with flow keywords (like
-            # for-do-done or if-else-fi).
+            # ">-" преобразует переводы строк в пробелы в многострочной записи YAML.
+            # Это означает, что отдельные команды bash должны заканчиваться
+            # точкой с запятой, чтобы не конфликтовать с ключевыми словами потока
+            # (например, for-do-done или if-else-fi).
             - >-
               export API_ROOT="https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_FULL_NAME/downloads";
               mkdir target-deferred/;
@@ -250,65 +250,65 @@ pipelines:
                 export DBT_FLAGS="";
               fi
  
-            # Finally, run dbt commands with the appropriate flag that depends
-            # on whether state deferral is available. (We're skipping `dbt
-            # snapshot` because only production role can write to it and it's
-            # not set up otherwise.)
+            # Наконец, запустите команды dbt с соответствующим флагом, который
+            # зависит от того, доступно ли отложенное выполнение состояния.
+            # (Мы пропускаем `dbt snapshot`, потому что только производственная
+            # роль может записывать в него, и он не настроен иначе.)
             - dbt seed
             - dbt run $DBT_FLAGS
             - dbt test $DBT_FLAGS
 ```
 
-In short, we:
+Вкратце, мы:
 
-1. Set up the pipeline trigger condition to trigger on any pull request
-2. Set up dbt
-3. Retrieve the files from Bitbucket Downloads via API and credentials
-4. Set flags for state deferral if the retrieval was successful
-5. Run dbt with the default target (which we’d defined in `profiles.yml` as `ci`)
+1. Настраиваем условие триггера конвейера для запуска на любом pull request
+2. Настраиваем dbt
+3. Извлекаем файлы из Bitbucket Downloads через API и учетные данные
+4. Устанавливаем флаги для отложенного выполнения состояния, если извлечение было успешным
+5. Запускаем dbt с целевым значением по умолчанию (которое мы определили в `profiles.yml` как `ci`)
 
-## Step 3: Bitbucket environment preparation
+## Шаг 3: Подготовка среды Bitbucket
 
-Finally, we need to setup the environment so that all the steps requiring authentication can succeed, this includes:
+Наконец, нам нужно настроить среду так, чтобы все шаги, требующие аутентификации, могли быть выполнены успешно, это включает:
 
-1. Database authentication - for dbt communicating with the warehouse
-2. Bitbucket Downloads authentication - for storing our dbt artifacts
+1. Аутентификацию базы данных - для dbt, взаимодействующего с хранилищем
+2. Аутентификацию Bitbucket Downloads - для хранения наших артефактов dbt
 
-As with the earlier steps, these specific instructions are for Bitbucket but the basic principles apply to any other platform.
+Как и в предыдущих шагах, эти конкретные инструкции предназначены для Bitbucket, но основные принципы применимы к любой другой платформе.
 
-### Database authentication
+### Аутентификация базы данных
 
-1. Determine the values of all of the variables in `.ci/profiles.yml` (`DB_{CI,PROD}_{HOST,PORT,USER,PWD,DBNAME,SCHEMA}`)
-2. Go to Repository > Repository Settings > Repository Variables in Bitbucket and define them there, making sure to store any confidential values as “Secured”.
+1. Определите значения всех переменных в `.ci/profiles.yml` (`DB_{CI,PROD}_{HOST,PORT,USER,PWD,DBNAME,SCHEMA}`)
+2. Перейдите в Repository > Repository Settings > Repository Variables в Bitbucket и определите их там, убедившись, что любые конфиденциальные значения хранятся как "Secured".
 
-![Bitbucket repository variables settings screenshot](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-2.png)
+![Скриншот настроек переменных репозитория Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-2.png)
 
-### Bitbucket Downloads authentication
+### Аутентификация Bitbucket Downloads
 
-1. Go to Personal Settings > App Passwords in Bitbucket and create a Bitbucket App Password with scope `repository:write`.
-2. Go to Repository > Repository Settings > Repository Variables and define the following:
-    1. `BITBUCKET_USERNAME`, which is not your sign-up e-mail, but rather the username found by clicking your avatar in the top left > Personal settings > Account settings page, under Bitbucket Profile Settings.
-    2. `BITBUCKET_APP_PASSWORD`, making sure to store it as “Secured”
+1. Перейдите в Personal Settings > App Passwords в Bitbucket и создайте пароль приложения Bitbucket с областью `repository:write`.
+2. Перейдите в Repository > Repository Settings > Repository Variables и определите следующее:
+    1. `BITBUCKET_USERNAME`, который не является вашим e-mail для регистрации, а является именем пользователя, найденным, нажав на ваш аватар в левом верхнем углу > Personal settings > Account settings page, в разделе Bitbucket Profile Settings.
+    2. `BITBUCKET_APP_PASSWORD`, убедившись, что он хранится как "Secured"
 
-![Bitbucket repository app password scope settings screenshot](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-1.png)
+![Скриншот настроек области пароля приложения Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-1.png)
 
-### Enable Bitbucket Pipelines
+### Включение Bitbucket Pipelines
 
-Lastly, under Repository > Repository Settings > Pipelines Settings, check “Enable Pipelines”.
+Наконец, в разделе Repository > Repository Settings > Pipelines Settings, отметьте "Enable Pipelines".
 
-![Bitbucket Pipeline Settings enabling screenshot](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-3.png)
+![Скриншот включения настроек конвейера Bitbucket](/img/blog/2022-04-14-add-ci-cd-to-bitbucket/2022-04-14-add-ci-cd-to-bitbucket-image-3.png)
 
-## Step 4: Test
+## Шаг 4: Тестирование
 
-You’re all done! Now it’s time to test that things work:
+Вы все сделали! Теперь пришло время проверить, что все работает:
 
-1. Push a change to your main branch. This should trigger a Pipeline. Check that it’s successful.
-2. File a Pull Request with a change to a single model / addition of a single test. Check that only that model/test ran.
+1. Отправьте изменение в вашу основную ветку. Это должно запустить конвейер. Убедитесь, что он успешен.
+2. Создайте Pull Request с изменением одной модели / добавлением одного теста. Убедитесь, что была запущена только эта модель/тест.
 
-## Conclusion
+## Заключение
 
-It’s important to remember that CI/CD is a convenience, not a panacea. You must still devise the model logic and determine the appropriate tests. Some things it can do, though: catch more mistakes early, make sure that the database always reflects the most up-to-date code, and decrease the friction in collaboration. By automating the steps that should *always* be taken, it frees you up to think about the unusual steps required (e.g., do your changes to [incremental models](https://docs.getdbt.com/docs/build/incremental-models) require an additional deployment with `--full-refresh`?) and reduces the amount of review that others’ actions necessitate.
+Важно помнить, что CI/CD — это удобство, а не панацея. Вы все равно должны разрабатывать логику модели и определять соответствующие тесты. Однако CI/CD может помочь: поймать больше ошибок на ранней стадии, убедиться, что база данных всегда отражает самый актуальный код, и уменьшить трение в сотрудничестве. Автоматизируя шаги, которые должны *всегда* выполняться, вы освобождаете себя для размышлений о необычных шагах, которые требуются (например, требуют ли ваши изменения в [инкрементальных моделях](https://docs.getdbt.com/docs/build/incremental-models) дополнительного развертывания с `--full-refresh`?) и уменьшаете объем проверки, которую требуют действия других.
 
-Plus, it’s a good time, and it’s fun to watch the test lights turn green. Ding!
+Кроме того, это хорошее время, и приятно наблюдать, как тестовые индикаторы становятся зелеными. Динь!
 
 ![wild-child-yes.gif](https://c.tenor.com/wemr0g_Do8IAAAAC/wild-child-yes.gif)

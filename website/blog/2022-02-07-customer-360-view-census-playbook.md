@@ -1,6 +1,6 @@
 ---
-title: "The JaffleGaggle Story: Data Modeling for a Customer 360 View"
-description: "The core challenge of building a customer 360 view is identity resolution. How do you map individual users of a freemium product to potential customer accounts?"
+title: "История JaffleGaggle: Моделирование данных для обзора клиентов 360"
+description: "Основная задача построения обзора клиентов 360 заключается в разрешении идентичности. Как сопоставить отдельных пользователей freemium-продукта с потенциальными клиентскими аккаунтами?"
 slug: customer-360-view-identity-resolution
 
 authors: [donny_flynn]
@@ -12,120 +12,120 @@ date: 2022-02-08
 is_featured: true
 ---
 
-*Editor's note: In this tutorial, Donny walks through the fictional story of a SaaS company called JaffleGaggle, who needs to group their freemium individual users into company accounts (aka a customer 360 view) in order to drive their product-led growth efforts.*
+*Примечание редактора: В этом руководстве Донни рассказывает вымышленную историю SaaS-компании под названием JaffleGaggle, которой необходимо сгруппировать своих индивидуальных пользователей freemium в аккаунты компаний (так называемый обзор клиентов 360), чтобы стимулировать рост, основанный на продукте.*
 
-*You can follow along with Donny's data modeling technique for identity resolution in [this dbt project repo](https://github.com/dflynn20/jaffle_gaggle). It includes a set of demo CSV files, which you can use as [dbt seeds](https://docs.getdbt.com/docs/build/seeds) to test Donny's project for yourself.*
+*Вы можете следовать технике моделирования данных Донни для разрешения идентичности в [этом репозитории проекта dbt](https://github.com/dflynn20/jaffle_gaggle). Он включает набор демонстрационных CSV-файлов, которые вы можете использовать как [семена dbt](https://docs.getdbt.com/docs/build/seeds), чтобы протестировать проект Донни самостоятельно.*
 
 <!--truncate-->
 
-**Before we begin: a quick note on Jaffles**
+**Прежде чем мы начнем: небольшое примечание о Jaffles**
 
-If you’ve been in the sphere of dbt, you probably know the lore of the Jaffle shop. If not, I’d recommend taking a second to look at Claire Carroll’s [README for the original Jaffle Shop demo project](https://github.com/dbt-labs/jaffle_shop) (otherwise this playbook is probably going to be a little weird, but still useful, to read).
+Если вы были в сфере dbt, вы, вероятно, знаете легенду о магазине Jaffle. Если нет, я бы рекомендовал потратить минуту на ознакомление с [README для оригинального демонстрационного проекта Jaffle Shop](https://github.com/dbt-labs/jaffle_shop) от Клэр Кэрролл (в противном случае это руководство может показаться немного странным, но все же полезным для чтения).
 
-In short, a jaffle is:
+Кратко, jaffle это:
 
-> "A toasted sandwich with crimped, sealed edges. Invented in Bondi in 1949, the humble jaffle is an Australian classic. The sealed edges allow jaffle-eaters to enjoy liquid fillings inside the sandwich, which reach temperatures close to the core of the earth during cooking. Often consumed at home after a night out, the most classic filling is tinned spaghetti, while my personal favourite is leftover beef stew with melted cheese."
+> "Поджаренный сэндвич с запечатанными краями. Изобретен в Бонди в 1949 году, скромный jaffle является австралийской классикой. Запечатанные края позволяют любителям jaffle наслаждаться жидкими начинками внутри сэндвича, которые достигают температур, близких к ядру Земли, во время приготовления. Часто употребляется дома после ночной прогулки, самая классическая начинка — консервированные спагетти, а мой личный фаворит — оставшееся тушеное мясо с расплавленным сыром."
 
-![freshly-toasted jaffles](/img/blog/2022-02-08-customer-360-view/image_0.jpg)
+![свежеподжаренные jaffles](/img/blog/2022-02-08-customer-360-view/image_0.jpg)
 
-*See above: Tasty, tasty jaffles.*
+*Смотрите выше: Вкусные, вкусные jaffles.*
 
-Jaffle Shop is a demo repo referenced in [dbt’s Getting Started Guide](/guides), and its jaffles hold a special place in the dbt community’s hearts, as well as on Data Twitter™.
+Jaffle Shop — это демонстрационный репозиторий, упомянутый в [Руководстве по началу работы с dbt](/guides), и его jaffles занимают особое место в сердцах сообщества dbt, а также на Data Twitter™.
 
-![jaffles on data twitter](/img/blog/2022-02-08-customer-360-view/image_1.png)
+![jaffles на Data Twitter](/img/blog/2022-02-08-customer-360-view/image_1.png)
 
-So, I thought it only apt to build on the collective reverence for these tasty, crunchy snacks to talk about customer 360 views.
+Поэтому я подумал, что будет уместно использовать коллективное уважение к этим вкусным, хрустящим закускам, чтобы поговорить об обзорах клиентов 360.
 
-## What's a customer 360?
-A customer 360 is a fancy way of saying that you have a holistic dataset that lets understand your customers’ behavior. It involves being able to link together all of the different kinds of data you collect about customers via identity resolution, which we’ll talk through later in this tutorial.
+## Что такое обзор клиентов 360?
+Обзор клиентов 360 — это модный способ сказать, что у вас есть целостный набор данных, который позволяет понять поведение ваших клиентов. Это включает в себя возможность связать все различные виды данных, которые вы собираете о клиентах, через разрешение идентичности, о котором мы поговорим позже в этом руководстве.
 
-This can be challenging because people move companies, create new accounts with different email addresses, or the same company might have different associated workspaces (gaggles 🦢 in our case).
+Это может быть сложно, потому что люди меняют компании, создают новые аккаунты с разными адресами электронной почты, или одна и та же компания может иметь разные связанные рабочие пространства (в нашем случае — gaggles 🦢).
 
-All this to say, creating a customer 360 view is a powerful way to gain understanding of your customers and users, but can come with challenges (which we’ll help you work through).
+Все это говорит о том, что создание обзора клиентов 360 — это мощный способ получить понимание ваших клиентов и пользователей, но это может сопровождаться трудностями (с которыми мы поможем вам справиться).
 
-**Meet JaffleGaggle, our fictitious company**
+**Познакомьтесь с JaffleGaggle, нашей вымышленной компанией**
 
-In our fictitious data world for today’s example, a B2B company saw that people really loved a thing (e.g. jaffles) and found a way to scale that beloved thing into a business. **Enter JaffleGaggle.**
+В нашем вымышленном мире данных для сегодняшнего примера, B2B-компания увидела, что людям действительно нравится одна вещь (например, jaffles) и нашла способ масштабировать эту любимую вещь в бизнес. **Встречайте JaffleGaggle.**
 
-There are two parts of JaffleGaggle’s product:
+Продукт JaffleGaggle состоит из двух частей:
 
-1. **A feed of jaffle recipes**, supported with functionality that lets you order all the ingredients you need to make late-night jaffles at home.
+1. **Лента рецептов jaffle**, поддерживаемая функциональностью, которая позволяет заказывать все ингредиенты, необходимые для приготовления ночных jaffles дома.
 
-2. **Social groups** to foster bonding among a company’s teams (lovingly called a Gaggle) where coworkers can invite each other with a free email for virtual jaffle hours.
+2. **Социальные группы** для укрепления связей среди команд компании (ласково называемые Gaggle), где коллеги могут приглашать друг друга с помощью бесплатной электронной почты для виртуальных часов jaffle.
 
-JaffleGaggle is growing rapidly and has just bought a CRM (yay!), but it’s currently empty (less yay 😟). By the end of this guide, you and the JaffleGaggle data team will know how to use dbt to model account, user, and event data from usage of their application and aggregate it into their warehouse, to upload to a CRM for use by the sales team.
+JaffleGaggle быстро растет и только что приобрела CRM (ура!), но он пока пуст (меньше ура 😟). К концу этого руководства вы и команда данных JaffleGaggle узнаете, как использовать dbt для моделирования данных аккаунтов, пользователей и событий из использования их приложения и агрегировать их в своем хранилище, чтобы загрузить в CRM для использования командой продаж.
 
-As people invite more of their peers to their Gaggle, they’re able to unlock even more recipes and jaffles.
+По мере того, как люди приглашают больше своих коллег в свою Gaggle, они могут разблокировать еще больше рецептов и jaffles.
 
-![a live look at jafflegaggle](/img/blog/2022-02-08-customer-360-view/jafflegaggle_screenshot.png)
+![живой взгляд на jafflegaggle](/img/blog/2022-02-08-customer-360-view/jafflegaggle_screenshot.png)
 
-**Seen above**: One of the many, many delicious jaffle recipes that await teams on JaffleGaggle.
+**Видно выше**: Один из многих, многих вкусных рецептов jaffle, которые ждут команды на JaffleGaggle.
 
-OK, now that we’ve got you hungry for some tasty, tasty jaffles, here’s what this has to do with data and product led-growth (aka PLG).
+Хорошо, теперь, когда мы заставили вас захотеть вкусных, вкусных jaffles, вот что это имеет общего с данными и ростом, основанным на продукте (так называемым PLG).
 
-## How a customer 360 view supports product-led growth
+## Как обзор клиентов 360 поддерживает рост, основанный на продукте
 
-JaffleGaggle is, like many startups, focused on signing companies to annual contracts so they can raise Venture Capital funding (at an insane multiple). To do so, they want to build out their sales motion to target companies with active gaggles.
+JaffleGaggle, как и многие стартапы, сосредоточена на подписании компаний на годовые контракты, чтобы они могли привлечь венчурное финансирование (по безумной оценке). Для этого они хотят развивать свои продажи, чтобы нацелиться на компании с активными gaggles.
 
-JaffleGaggle has to keep track of information about their interactions with their customers and the businesses they belong to, including data to enable to sales team to answer a few key questions:
+JaffleGaggle должна отслеживать информацию о своих взаимодействиях с клиентами и бизнесами, к которым они принадлежат, включая данные, которые позволят команде продаж ответить на несколько ключевых вопросов:
 
-* How has a user been interacting with the platform?
-* How many workspaces are associated with a company?
-* Who are the company’s power users that should be reached out to?
+* Как пользователь взаимодействовал с платформой?
+* Сколько рабочих пространств связано с компанией?
+* Кто из пользователей компании является активным и с кем следует связаться?
 
-All of these questions require aggregating + syncing data from application usage, workspace information, and orders into the CRM for the sales team to have at their fingertips.
+Все эти вопросы требуют агрегации и синхронизации данных из использования приложения, информации о рабочих пространствах и заказах в CRM, чтобы команда продаж имела их под рукой.
 
-This aggregation process requires an analytics warehouse, as all of these things need to be synced together outside of the application database itself to incorporate other data sources (billing / events information, past touchpoints in the CRM, etc). Thus, we can create our fancy customer 360 within JaffleGaggle’s <Term id="data-warehouse" />, which is a standard project for a B2B company’s data team.
+Этот процесс агрегации требует аналитического хранилища, так как все эти вещи нужно синхронизировать вместе вне базы данных приложения, чтобы включить другие источники данных (информация о биллинге/событиях, прошлые точки взаимодействия в CRM и т.д.). Таким образом, мы можем создать наш модный обзор клиентов 360 в <Term id="data-warehouse" /> JaffleGaggle, что является стандартным проектом для команды данных B2B-компании.
 
-**Diving into data modeling**
+**Погружение в моделирование данных**
 
-In this playbook, I’ll take you along on JaffleGaggle’s journey to build a customer 360 view using dbt so they (and you, too) can supercharge their PLG strategy with better data (and spread the love of jaffles everywhere).
+В этом руководстве я проведу вас по пути JaffleGaggle к созданию обзора клиентов 360 с использованием dbt, чтобы они (и вы тоже) могли усилить свою стратегию PLG с помощью лучших данных (и распространить любовь к jaffles повсюду).
 
-The data structure breaks down as follows:
+Структура данных разбивается следующим образом:
 
 * 823 gaggles
-* 5,781 users (unique by email, can only be associated with one gaggle)
-* 120,307 events (‘recipe_viewed’, ‘recipe_favorited’, or ‘order_placed’)
+* 5,781 пользователей (уникальных по электронной почте, могут быть связаны только с одним gaggle)
+* 120,307 событий (‘recipe_viewed’, ‘recipe_favorited’ или ‘order_placed’)
 
-Let’s get rolling.
+Давайте начнем.
 
-> Builder Beware! If this was an actual event stream, it would be much better to leverage [incremental models based on timestamp](/docs/build/incremental-models), but because it’s a playground project, I did not.
+> Внимание, строители! Если бы это был реальный поток событий, было бы гораздо лучше использовать [инкрементальные модели на основе временной метки](/docs/build/incremental-models), но поскольку это проект-песочница, я этого не сделал.
 
-## Step 1: Define our entities
+## Шаг 1: Определите наши сущности
 
-For a freemium product like this one, where users only sign up with their email address, it’s best practice to use the email domain for users as the unique identifier for accounts. There could be multiple gaggles associated with a singular corporate email domain, thus belonging to a singular account.
+Для freemium-продукта, такого как этот, где пользователи регистрируются только с помощью своего адреса электронной почты, лучшей практикой является использование домена электронной почты для пользователей в качестве уникального идентификатора для аккаунтов. Может быть несколько gaggles, связанных с одним корпоративным доменом электронной почты, таким образом, принадлежащих одному аккаунту.
 
-Below, I’ll break down the DAG at each step of our process so you can see how it builds all together.
+Ниже я разберу DAG на каждом этапе нашего процесса, чтобы вы могли увидеть, как все это строится вместе.
 
-To use our CRM, we’ll need to **upload data for the following**:
+Для использования нашего CRM нам нужно **загрузить данные для следующего**:
 
-* **Contacts** (contacts that are unique by email address)
+* **Контакты** (контакты, уникальные по адресу электронной почты)
 
-![contacts in the dbt DAG](/img/blog/2022-02-08-customer-360-view/image_2.png)
+![контакты в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_2.png)
 
-* **Gaggles** (understanding the activity of a workspace)
+* **Gaggles** (понимание активности рабочего пространства)
 
-![gaggles in the dbt DAG](/img/blog/2022-02-08-customer-360-view/image_3.png)
+![gaggles в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_3.png)
 
-* **Accounts** (companies our sales team can track and prioritize)
+* **Аккаунты** (компании, которые наша команда продаж может отслеживать и приоритизировать)
 
-![accounts in the dbt DAG](/img/blog/2022-02-08-customer-360-view/image_4.png)
+![аккаунты в dbt DAG](/img/blog/2022-02-08-customer-360-view/image_4.png)
 
-## Step 2: Model the contact
+## Шаг 2: Моделирование контакта
 
-We’ll start at the lowest level, which are the contacts the sales team wants to reach out to, and we will then work our way up to the account. To do so, we’ll focus on three steps:
+Мы начнем с самого низкого уровня, который представляют собой контакты, с которыми команда продаж хочет связаться, и затем будем двигаться вверх к аккаунту. Для этого мы сосредоточимся на трех шагах:
 
-1. Performing the email domain extraction from the email
+1. Выполнение извлечения домена электронной почты из электронной почты
 
-2. Flagging personal emails
+2. Пометка личных электронных писем
 
-3. Creating a column for corporate emails
+3. Создание столбца для корпоративных электронных писем
 
-After we complete these steps, we’ll also cover a "human in the loop" step to ensure data integrity at the modelling stage. All of this put together will help guarantee that, when contacting a user, the sales team has all of the relevant product usage information at their fingertips.
+После выполнения этих шагов мы также рассмотрим шаг "человек в цикле", чтобы обеспечить целостность данных на этапе моделирования. Все это вместе поможет гарантировать, что при обращении к пользователю у команды продаж будет вся соответствующая информация о использовании продукта под рукой.
 
-### Step 2.1: Extract email domain from an email
+### Шаг 2.1: Извлечение домена электронной почты из электронной почты
 
-For this step, take a look at a snippet from [`models/staging/stg_users.sql`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/staging/stg_users.sql) below. In it, we **perform the email domain extraction from the email**.
+Для этого шага взгляните на фрагмент из [`models/staging/stg_users.sql`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/staging/stg_users.sql) ниже. В нем мы **выполняем извлечение домена электронной почты из электронной почты**.
 
 ```
     select
@@ -141,30 +141,29 @@ For this step, take a look at a snippet from [`models/staging/stg_users.sql`](ht
     from source
 ```
 
-We defined the email domain extraction as a [macro](/docs/build/jinja-macros) called [`extract_email_domain`](https://github.com/dflynn20/jaffle_gaggle/blob/main/macros/extract_email_domain.sql), which we call in line 18 (which you can find in the pullout below).
+Мы определили извлечение домена электронной почты как [макрос](/docs/build/jinja-macros) под названием [`extract_email_domain`](https://github.com/dflynn20/jaffle_gaggle/blob/main/macros/extract_email_domain.sql), который мы вызываем на строке 18 (которую вы можете найти в приведенном ниже фрагменте).
 
-This uses a regex to capture the text to the right of the ‘@’ character and makes sure to only use the lowercase email parameter before extracting the domain. This is because email domains aren’t case sensitive, but SQL is (see users 2954 and 3140 in the [seed data](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/raw_user.csv) for an example).
-
+Этот макрос использует регулярное выражение для захвата текста справа от символа ‘@’ и гарантирует использование только параметра электронной почты в нижнем регистре перед извлечением домена. Это потому, что домены электронной почты не чувствительны к регистру, но SQL чувствителен (см. пользователей 2954 и 3140 в [данных семян](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/raw_user.csv) для примера).
 
 ```
 {% macro extract_email_domain(email) %}
 
-{# This is the SQL to extract the email domain in the Snowflake Flavor of SQL #}
+{# Это SQL для извлечения домена электронной почты в формате SQL Snowflake #}
 
 	regexp_substr(lower({{ email }}), '@(.*)', 1, 1, 'e',1)
 
 {% endmacro %}
 ```
 
-> Builder Beware! Notice we didn’t check for improperly formatted emails, like periods at the end of the domain or whitespaces. Make sure you check your dataset to see if this is a valid assumption.
+> Внимание, строители! Обратите внимание, что мы не проверяли неправильно отформатированные электронные письма, такие как точки в конце домена или пробелы. Убедитесь, что вы проверили свой набор данных, чтобы увидеть, является ли это допустимым предположением.
 
-Generally, it’d be useful to leverage a regular expression to strip and pull down an email address. However, because this is a B2B use case, not all email domains are created equal. We want to make sure we flag personal emails so they’re treated differently than the corporate emails our sales team will reach out to (this makes sales outreach more productive, and ensures we aren’t contacting people more than once).
+В общем, было бы полезно использовать регулярное выражение для удаления и извлечения адреса электронной почты. Однако, поскольку это B2B-кейс, не все домены электронной почты созданы равными. Мы хотим убедиться, что помечаем личные электронные письма, чтобы они обрабатывались иначе, чем корпоративные электронные письма, к которым наша команда продаж будет обращаться (это делает продажи более продуктивными и гарантирует, что мы не будем обращаться к людям более одного раза).
 
-**Tip:** If you’re building out a definition like "personal email domains" for the first time, I strongly recommend building alignment upfront with the rest of the business. . Understanding the impact and having a shared understanding of these kinds of definitions reduces friction and allows you to [run your data team like a product team](https://locallyoptimistic.com/post/run-your-data-team-like-a-product-team/) rather than responding to ad hoc service requests.
+**Совет:** Если вы впервые создаете определение, такое как "домены личных электронных писем", я настоятельно рекомендую заранее согласовать его с остальной частью бизнеса. Понимание воздействия и наличие общего понимания таких определений снижает трение и позволяет вам [управлять вашей командой данных как продуктовой командой](https://locallyoptimistic.com/post/run-your-data-team-like-a-product-team/), а не отвечать на разовые запросы на обслуживание.
 
-### Step 2.2: Flag personal emails
+### Шаг 2.2: Пометка личных электронных писем
 
-Next, we can **flag personal emails** with [`models/jafflegaggle_contacts.sql`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_contacts.sql), which calls another macro at the top of the file to pull in the personal emails we would like to exclude:
+Далее мы можем **пометить личные электронные письма** с помощью [`models/jafflegaggle_contacts.sql`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_contacts.sql), который вызывает другой макрос в начале файла, чтобы подтянуть личные электронные письма, которые мы хотели бы исключить:
 
 ```
 {% macro get_personal_emails() %}
@@ -174,13 +173,13 @@ Next, we can **flag personal emails** with [`models/jafflegaggle_contacts.sql`](
 {% endmacro %}
 ```
 
-One of the great things about writing this as a macro in dbt is that the data team can easily reuse this file in other places in the codebase.
+Одним из замечательных аспектов написания этого как макроса в dbt является то, что команда данных может легко повторно использовать этот файл в других местах в кодовой базе.
 
-Doing so improves consistency and makes sure additions or deletions to this personal email list are up to date.
+Это улучшает согласованность и гарантирует, что добавления или удаления в этом списке личных электронных писем актуальны.
 
-### Step 2.3: Create a column for corporate email
+### Шаг 2.3: Создание столбца для корпоративных электронных писем
 
-Next, we’ll **create a column for corporate email** that will be null if an email domain is personal, also in the same `jafflegaggle_contacts` model:
+Далее мы **создадим столбец для корпоративных электронных писем**, который будет пустым, если домен электронной почты является личным, также в той же модели `jafflegaggle_contacts`:
 
 ```
 iff(users.email_domain in {{ personal_emails }}, null, users.email_domain)
@@ -188,9 +187,9 @@ iff(users.email_domain in {{ personal_emails }}, null, users.email_domain)
            as corporate_email
 ```
 
-> Builder beware! Not all of these treatments are exhaustive. You might encounter country suffixes on email domains or other domains entirely. Be sure to check for your own use case, and add the columns that make the most sense in your scenario.
+> Внимание, строители! Не все эти обработки являются исчерпывающими. Вы можете столкнуться с суффиксами стран на доменах электронной почты или другими доменами. Убедитесь, что вы проверили свой собственный случай использования и добавили столбцы, которые имеют наибольший смысл в вашем сценарии.
 
-The other aspects to this users model are related to the event data we reference in the event stream. For example, the `order_placed` event is broken out in a <Term id="cte" /> because it’s important to our use case at JaffleGaggle (it’s the basis for getting that dough 💰).
+Другие аспекты этой модели пользователей связаны с данными событий, на которые мы ссылаемся в потоке событий. Например, событие `order_placed` разбивается в <Term id="cte" />, потому что оно важно для нашего случая использования в JaffleGaggle (это основа для получения той самой прибыли 💰).
 
 ```
 order_events as (
@@ -209,17 +208,17 @@ order_events as (
 ),
 ```
 
-By the end of the `jafflegaggle_contacts` model, we have a unified <Term id="view" /> of events by user email, with personal email domains filtered out.
+К концу модели `jafflegaggle_contacts` у нас есть унифицированное <Term id="view" /> событий по электронной почте пользователя, с отфильтрованными личными доменами электронной почты.
 
-### Step 2.4: Merging duplicate contacts
+### Шаг 2.4: Объединение дублирующихся контактов
 
-> Definition: When I write "Human in the Loop" I mean that operational people at the company are contributing to data integrity at the modelling stage and reviewing data for quality. This is very important for making sure that the domain knowledge is used in the CRM definitions.
+> Определение: Когда я пишу "Человек в цикле", я имею в виду, что операционные люди в компании вносят вклад в целостность данных на этапе моделирования и проверяют данные на качество. Это очень важно для того, чтобы доменные знания использовались в определениях CRM.
 
-I intentionally left out two seed files, one of which [`data/merged_user.csv`](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/merged_user.csv) contains users the JaffleGaggle team have identified as the same person.
+Я намеренно оставил два файла семян, один из которых [`data/merged_user.csv`](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/merged_user.csv) содержит пользователей, которых команда JaffleGaggle идентифицировала как одного и того же человека.
 
-To track this, the team decided to track the old user email and the new user email as one. Oftentimes, in a CRM’s data schema, there’s a built-in treatment for handling merged entities.
+Чтобы отслеживать это, команда решила отслеживать старый адрес электронной почты пользователя и новый адрес электронной почты как один. Часто в схеме данных CRM есть встроенная обработка для работы с объединенными сущностями.
 
-However, since JaffleGaggle just started building out their infrastructure for a CRM, this CSV file exists to map old user emails to new (this example for Constance Rohr, userId 6759):
+Однако, поскольку JaffleGaggle только начала строить свою инфраструктуру для CRM, этот CSV-файл существует для сопоставления старых адресов электронной почты с новыми (этот пример для Констанс Рор, userId 6759):
 
 ```
 old_email, new_email
@@ -227,28 +226,28 @@ old_email, new_email
 constancerohr@icloud.com,constancerohr@outlaws.com
 ```
 
-So what does this do for duplicate contacts?  On line 100 of `jafflegaggle_contacts`, we left join to that `merged_user` seed file to map old emails to new:
+Итак, что это делает для дублирующихся контактов? На строке 100 `jafflegaggle_contacts` мы выполняем левое соединение с этим файлом семян `merged_user`, чтобы сопоставить старые электронные письма с новыми:
 
 ```
 left join {{ ref('merged_user') }}
 ```
 
-Now to generate dbt docs and view our DAG, we can run:
+Теперь, чтобы сгенерировать dbt docs и просмотреть наш DAG, мы можем выполнить:
 
 > `dbt docs generate`
 > `dbt docs serve`
 
-This gives us access to the DAG for `jafflegaggle_contacts.sql` which can serve as the source of truth for the JaffleGaggle Ops team about where the analytics definitions live for the contacts in the system.
+Это дает нам доступ к DAG для `jafflegaggle_contacts.sql`, который может служить источником истины для команды Ops JaffleGaggle о том, где находятся аналитические определения для контактов в системе.
 
-![jafflegaggle contacts DAG](/img/blog/2022-02-08-customer-360-view/image_6.png)
+![DAG контактов jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_6.png)
 
-## Step 3: Model the Gaggle
+## Шаг 3: Моделирование Gaggle
 
-Working our way up to accounts, we arrive at the Gaggle, which is the traditional B2B workspace equivalent. This is important to understand how many users are associated with a workspace and when/what their activity has been.
+Продвигаясь вверх к аккаунтам, мы приходим к Gaggle, который является традиционным эквивалентом рабочего пространства B2B. Это важно для понимания того, сколько пользователей связано с рабочим пространством и когда/какова была их активность.
 
-For example, the NFL Rams (who *love* jaffles) moved from St. Louis to Los Angeles, changing their company email domain in the process. For the JaffleGaggle sales team, it’s important that the changed email domain does not change the identity resolution for gaggles and Accounts in the process.
+Например, NFL Rams (которые *обожают* jaffles) переехали из Сент-Луиса в Лос-Анджелес, изменив свой корпоративный домен электронной почты в процессе. Для команды продаж JaffleGaggle важно, чтобы измененный домен электронной почты не изменял разрешение идентичности для gaggles и аккаунтов в процессе.
 
-If we don’t successfully do this merge when a corporate domain changes (e.g. `rams.sl` and `rams.la`), we’ll end up with two rows for the same gaggle_id (i.e. 1187), when we really just want one. The [`merged_company_domain` seed file](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/merged_company_domain.csv) + a left join in the `final_merged` CTE of the [`jafflegaggle_facts`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_facts.sql) model solves this problem for us.
+Если мы не успешно выполним это объединение, когда корпоративный домен изменится (например, `rams.sl` и `rams.la`), у нас будет две строки для одного и того же gaggle_id (т.е. 1187), когда на самом деле нам нужна только одна. Файл семян [`merged_company_domain`](https://github.com/dflynn20/jaffle_gaggle/blob/main/data/merged_company_domain.csv) + левое соединение в модели `final_merged` CTE [`jafflegaggle_facts`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_facts.sql) решает эту проблему для нас.
 
 ```
 old_email, new_email
@@ -256,9 +255,9 @@ old_email, new_email
 rams.sl,rams.la
 ```
 
-> Builder beware! As is flagged in the comments of the `jafflegaggle_facts` file, this assumes that there is only one non-personal email domain per workspace. If this is not the case, we would need to establish rules for what to do among gaggles with multiple companies within, such as performing attribution to the corresponding corporate email addresses of the users within each Gaggle.
+> Внимание, строители! Как указано в комментариях к файлу `jafflegaggle_facts`, это предполагает, что существует только один некорпоративный домен электронной почты на рабочее пространство. Если это не так, нам нужно будет установить правила для того, что делать среди gaggles с несколькими компаниями внутри, например, выполнять атрибуцию к соответствующим корпоративным адресам электронной почты пользователей в каждом Gaggle.
 
-We also **aggregate information on the entire Gaggle**, including users who don’t have a company domain. This is found in the CTE named `gaggle_total_facts`.
+Мы также **агрегируем информацию о всей Gaggle**, включая пользователей, у которых нет корпоративного домена. Это можно найти в CTE под названием `gaggle_total_facts`.
 
 ```
 gaggle_total_facts as (
@@ -285,27 +284,27 @@ gaggle_total_facts as (
 ),
 ```
 
-I know, that’s a ton of code. Check out the dbt docs for the project for an explanation of the fields. Here’s the output of final `jafflegaggle_facts` <Term id="table" />:
+Я знаю, это много кода. Ознакомьтесь с dbt docs для проекта, чтобы получить объяснение полей. Вот вывод финальной таблицы `jafflegaggle_facts`:
 
-![jafflegaggle facts query output screenshot](/img/blog/2022-02-08-customer-360-view/image_7.png)
+![вывод запроса фактов jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_7.png)
 
-Referring to the DAG from the dbt docs, you can see how we are already benefiting from merging at the user level for analytics information related to `jafflegaggle_contacts`.
+Ссылаясь на DAG из dbt docs, вы можете увидеть, как мы уже получаем выгоду от объединения на уровне пользователей для аналитической информации, связанной с `jafflegaggle_contacts`.
 
-![DAG of gaggle modeling](/img/blog/2022-02-08-customer-360-view/image_8.png)
+![DAG моделирования gaggle](/img/blog/2022-02-08-customer-360-view/image_8.png)
 
-We also use an upstream table of `stg_gaggles` which pulls in information about the creation of the Gaggle and its name.
+Мы также используем восходящую таблицу `stg_gaggles`, которая подтягивает информацию о создании Gaggle и его имени.
 
-## Step 4: Model the Account
+## Шаг 4: Моделирование аккаунта
 
-We have modelled the contacts and the gaggles, so we are at the account level now.
+Мы смоделировали контакты и gaggles, так что теперь мы на уровне аккаунта.
 
-We want to **join the characteristics for different gaggles that share the same company email address domain** so we can use operational analytics to create a customer 360 view for the sales team to prioritize outreach efforts. 🙌
+Мы хотим **объединить характеристики для разных gaggles, которые имеют один и тот же домен корпоративной электронной почты**, чтобы мы могли использовать операционную аналитику для создания обзора клиентов 360 для команды продаж, чтобы приоритизировать усилия по взаимодействию. 🙌
 
-By looking at the dbt docs, we see that every model is an upstream source for [`jafflegaggle_corporate_accounts`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_corporate_accounts.sql).
+Посмотрев на dbt docs, мы видим, что каждая модель является восходящим источником для [`jafflegaggle_corporate_accounts`](https://github.com/dflynn20/jaffle_gaggle/blob/main/models/jafflegaggle_corporate_accounts.sql).
 
-![jagglegaggle corporate accounts](/img/blog/2022-02-08-customer-360-view/image_9.png)
+![корпоративные аккаунты jafflegaggle](/img/blog/2022-02-08-customer-360-view/image_9.png)
 
-At this level we **coalesce the company for the merged domain** as we did with the `merged_users` previously. Here’s the code for this step:
+На этом уровне мы **объединяем компанию для объединенного домена**, как мы сделали с `merged_users` ранее. Вот код для этого шага:
 
 ```
 select
@@ -321,19 +320,19 @@ select
    group by 1
 ```
 
-Note: This is not the only place where we reference the `merged_company_domain` file. We also need to reference this in the case where there are distinct gaggles with the old and new corporate domains, such as the Thrashers and the Jets.
+Примечание: Это не единственное место, где мы ссылаемся на файл `merged_company_domain`. Нам также нужно ссылаться на это в случае, если существуют различные gaggles со старыми и новыми корпоративными доменами, такими как Thrashers и Jets.
 
-Here is an output of the final corporate accounts table:
+Вот вывод финальной таблицы корпоративных аккаунтов:
 
-![corporate accounts table](/img/blog/2022-02-08-customer-360-view/image_10.png)
+![таблица корпоративных аккаунтов](/img/blog/2022-02-08-customer-360-view/image_10.png)
 
-### Step 4.1: Identify power users for an account
+### Шаг 4.1: Идентификация активных пользователей для аккаунта
 
-Now imagine the sales operations team has identified the accounts they want to reach out to. They’ll also need to identify who they should contact to upgrade the account to paid.
+Теперь представьте, что команда по операциям продаж определила аккаунты, к которым они хотят обратиться. Им также нужно будет определить, с кем они должны связаться, чтобы обновить аккаунт до платного.
 
-Ideally, this is a jaffle-loving office manager who created the account, who has been the most active, and who has placed the most orders.
+В идеале, это офис-менеджер, обожающий jaffle, который создал аккаунт, был самым активным и сделал наибольшее количество заказов.
 
-Great news for the sales team! We can identify those folks using the following CTE to identify the top users for each account.
+Отличные новости для команды продаж! Мы можем идентифицировать этих людей, используя следующий CTE для идентификации лучших пользователей для каждого аккаунта.
 
 ```
 corporate_power_users as (
@@ -357,48 +356,48 @@ corporate_power_users as (
 ),
 ```
 
-In almost every CRM, there’s a supported Lookup functionality, which means a record includes a property linked to another related record. As long as the `user_id` is marked as an external and unique id for the contact object in the CRM, this can be set from the model here.
+В почти каждом CRM есть поддерживаемая функция поиска, что означает, что запись включает свойство, связанное с другой связанной записью. Пока `user_id` помечен как внешний и уникальный идентификатор для объекта контакта в CRM, это можно установить из модели здесь.
 
-**Building the JaffleGaggle empire of your dreams**
+**Построение империи JaffleGaggle вашей мечты**
 
-Congrats! If you’ve made it this far, you should be well on your way to establishing the JaffleGaggle empire you’ve always dreamed of. Since we covered a lot of ground in this tutorial, here’s a summary of all the steps together:
+Поздравляем! Если вы дошли до этого момента, вы должны быть на пути к созданию империи JaffleGaggle, о которой вы всегда мечтали. Поскольку мы охватили много материала в этом руководстве, вот краткое изложение всех шагов вместе:
 
-1. **Define your entities**
+1. **Определите ваши сущности**
 
-2. **Model the contact**
+2. **Моделируйте контакт**
 
-    1. Perform the email domain extraction from the email
+    1. Выполните извлечение домена электронной почты из электронной почты
 
-    2. Flag personal emails
+    2. Пометьте личные электронные письма
 
-    3. Create a column for corporate emails
+    3. Создайте столбец для корпоративных электронных писем
 
-    4. Add in your human in the loop logic
+    4. Добавьте вашу логику "человек в цикле"
 
-3. **Model your Gaggle** to summarize each group and aggregate that information for workspaces, or other relevant user groups.
+3. **Моделируйте ваш Gaggle**, чтобы обобщить каждую группу и агрегировать эту информацию для рабочих пространств или других соответствующих групп пользователей.
 
-    5. Add in human in the loop merging logic
+    5. Добавьте логику объединения "человек в цикле"
 
-4. **Model your account** to join the characteristics for different user groups with the same company email domain.
+4. **Моделируйте ваш аккаунт**, чтобы объединить характеристики для разных групп пользователей с одним и тем же доменом корпоративной электронной почты.
 
-    6. Add in human in the loop merging logic
+    6. Добавьте логику объединения "человек в цикле"
 
-If we wanted to take it a step further we could:
+Если мы хотим пойти дальше, мы могли бы:
 
-* Create a model for gaggles based solely on personal emails, who might consider moving to paid
-* Create another layer of breakdown that uses `user_gaggle` or `gaggle_domain`
+* Создать модель для gaggles, основанную исключительно на личных электронных письмах, которые могут рассмотреть возможность перехода на платный
+* Создать еще один уровень разбивки, который использует `user_gaggle` или `gaggle_domain`
 
-In terms of data architecture, there are four things you need to do to get this productionized:
+С точки зрения архитектуры данных, есть четыре вещи, которые вам нужно сделать, чтобы это было реализовано в производстве:
 
-1. Use [reverse ETL](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/#what-is-reverse-etl) to get these fact tables synced to the CRM
-2. Track payment or subscription information for which accounts are currently paying
-3. Leverage <Term id="etl" />/<Term id="elt" /> to get CRM data back into the data warehouse
-4. Design for how you can extend the current merging solution
+1. Используйте [обратный ETL](https://www.getdbt.com/analytics-engineering/use-cases/operational-analytics/#what-is-reverse-etl), чтобы синхронизировать эти таблицы фактов с CRM
+2. Отслеживайте информацию о платежах или подписках для аккаунтов, которые в настоящее время платят
+3. Используйте <Term id="etl" />/<Term id="elt" />, чтобы вернуть данные CRM в хранилище данных
+4. Разработайте, как вы можете расширить текущее решение по объединению
 
-![customer 360 view architecture diagram](/img/blog/2022-02-08-customer-360-view/image_11.png)
+![диаграмма архитектуры обзора клиентов 360](/img/blog/2022-02-08-customer-360-view/image_11.png)
 
-If you’ve made it this far, you’ve gone from having three raw source tables to a business-specific source of truth within your own data warehouse featuring human-in-the-loop identity resolution, email domain dbt macro magic, and best practices for operationalizing B2B product-led growth. You most definitely deserve a jaffle. 🥪
+Если вы дошли до этого момента, вы прошли путь от трех исходных таблиц до бизнес-специфического источника истины в вашем собственном хранилище данных с разрешением идентичности "человек в цикле", магией макросов dbt для доменов электронной почты и лучшими практиками для операционализации роста B2B, основанного на продукте. Вы определенно заслуживаете jaffle. 🥪
 
-DM me in [dbt Community Slack](https://www.getdbt.com/community/join-the-community) (I’m *@Donny Flynn (Census)*) if you want to learn more about JaffleGaggle, PLG, reverse ETL, or how I created these random datasets. 😊
+Напишите мне в [dbt Community Slack](https://www.getdbt.com/community/join-the-community) (я *@Donny Flynn (Census)*), если хотите узнать больше о JaffleGaggle, PLG, обратном ETL или о том, как я создал эти случайные наборы данных. 😊
 
-PS: @clrclr don’t hate me. 🙏🏻
+PS: @clrclr, не ненавидь меня. 🙏🏻

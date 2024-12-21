@@ -1,6 +1,6 @@
 ---
-title: "How to Configure Your dbt Repository (One or Many)?"
-description: "At dbt Labs, as more folks adopt dbt, we have started to see more and more use cases that push the boundaries of our established best practices."
+title: "Как настроить ваш dbt репозиторий (один или несколько)?"
+description: "В dbt Labs, по мере того как все больше людей начинают использовать dbt, мы начали замечать все больше и больше случаев использования, которые расширяют границы наших установленных лучших практик."
 slug: how-to-configure-your-dbt-repository-one-or-many
 canonical_url: https://discourse.getdbt.com/t/how-to-configure-your-dbt-repository-one-or-many/2121
 
@@ -13,150 +13,150 @@ date: 2021-02-09
 is_featured: false
 ---
 
-At dbt Labs, as more folks adopt dbt, we have started to see more and more use cases that push the boundaries of our established best practices. This is especially true to those adopting dbt in the enterprise space.
+В dbt Labs, по мере того как все больше людей начинают использовать dbt, мы начали замечать все больше и больше случаев использования, которые расширяют границы наших установленных лучших практик. Это особенно актуально для тех, кто внедряет dbt в корпоративной среде.
 
-After two years of helping companies from 20-10,000+ employees implement dbt & dbt Cloud, the below is my best attempt to answer the question: “Should I have one repository for my dbt project or many?” Alternative title: “To mono-repo or not to mono-repo, that is the question!”
+После двух лет помощи компаниям с численностью сотрудников от 20 до 10 000+ в реализации dbt и dbt Cloud, ниже я постараюсь ответить на вопрос: "Должен ли у меня быть один репозиторий для моего dbt проекта или несколько?" Альтернативное название: "Быть или не быть монорепозиторию, вот в чем вопрос!"
 
 <!--truncate-->
 
-Before we jump into specific structures, I want to start by emphasizing that our guiding principle has always been that **simpler is better**, especially when you are getting started! It should also be noted that everything presented below builds upon Jeremy’s excellent write up on this [from a few years back](https://discourse.getdbt.com/t/should-i-have-an-organisation-wide-project-a-monorepo-or-should-each-work-flow-have-their-own/666/2). That is the prerequisite to this article.
+Прежде чем мы перейдем к конкретным структурам, я хочу начать с того, что подчеркну: наш руководящий принцип всегда был в том, что **проще — лучше**, особенно когда вы только начинаете! Также следует отметить, что все, что представлено ниже, основывается на отличной статье Джереми [несколько лет назад](https://discourse.getdbt.com/t/should-i-have-an-organisation-wide-project-a-monorepo-or-should-each-work-flow-have-their-own/666/2). Это является предпосылкой к этой статье.
 
-Before we get started, we need to take inventory. Consider the workflow and teams that will be using dbt.
+Прежде чем мы начнем, нам нужно провести инвентаризацию. Рассмотрите рабочий процесс и команды, которые будут использовать dbt.
 
-**From a workflow perspective, consider:**
+**С точки зрения рабочего процесса, рассмотрите:**
 
-*   What will the review process look like at your organization?
-    *   Who can approve pull requests?
-    *   Who will be able to merge code to production?
-*   For more complex environments who have a dev/qa/prod git branching paradigm:
-    *   Who has access to the objects created in the dev environment? In the qa environment?
-    *   Who needs to be alerted when code has been released to the qa branch?
-    *   Who is responsible for promoting objects from dev to qa? From qa to prod?
+*   Как будет выглядеть процесс рецензирования в вашей организации?
+    *   Кто может утверждать pull-запросы?
+    *   Кто сможет сливать код в продакшн?
+*   Для более сложных сред, которые имеют парадигму ветвления dev/qa/prod в git:
+    *   Кто имеет доступ к объектам, созданным в dev-среде? В qa-среде?
+    *   Кого нужно уведомлять, когда код был выпущен в qa-ветку?
+    *   Кто отвечает за продвижение объектов из dev в qa? Из qa в prod?
 
-**From a people or team perspective, consider:**
+**С точки зрения людей или команды, рассмотрите:**
 
-*   How do teams using dbt usually work together?
+*   Как команды, использующие dbt, обычно работают вместе?
     
-*   Do those teams have different code styles, review processes, and chief maintainers?
+*   Есть ли у этих команд разные стили кода, процессы рецензирования и главные поддерживающие?
     
-*   Do the teams using dbt ever use the same data sources? Is the raw data located somewhere that all teams using dbt will have access to?
+*   Используют ли команды, использующие dbt, одни и те же источники данных? Находятся ли сырые данные в месте, к которому все команды, использующие dbt, будут иметь доступ?
     
-*   Is there SQL that one team should have access to but another team should not? Can folks see the SQL behind the object creation?
+*   Есть ли SQL, к которому одна команда должна иметь доступ, а другая нет? Могут ли люди видеть SQL за созданием объекта?
     
-*   Are there objects that one team is responsible for that other teams are the consumers of?
+*   Есть ли объекты, за которые одна команда отвечает, а другие команды являются их потребителями?
     
 
-The answers to these questions should help you navigate through the four options detailed below. I also want to make it clear: the options I’m about to show you will likely be influenced by your data team(s) size but that should not be the only factor to consider. I have seen a team of 30 folks use option 1 and a team of 10 use option 3. It is truly dependent on what your priorities lay.
+Ответы на эти вопросы должны помочь вам сориентироваться среди четырех вариантов, описанных ниже. Я также хочу прояснить: варианты, которые я собираюсь вам показать, вероятно, будут зависеть от размера вашей команды данных, но это не должно быть единственным фактором для рассмотрения. Я видел команду из 30 человек, использующую вариант 1, и команду из 10 человек, использующую вариант 3. Это действительно зависит от ваших приоритетов.
 
-**Note:** One repository in this context equates to one dbt project with one dbt\_project.yml. It does not need to have a 1:1 relationship with a dbt cloud project.
+**Примечание:** Один репозиторий в этом контексте эквивалентен одному dbt проекту с одним dbt\_project.yml. Он не должен иметь 1:1 отношение с проектом в dbt cloud.
 
-## Option 1: One Repository
+## Вариант 1: Один репозиторий
 ------------------------------------------------------
 
-![one repository](/img/blog/monorepo-52954083da8268c53f27a578b4b5722b35803b03_2_624x439.png)
+![один репозиторий](/img/blog/monorepo-52954083da8268c53f27a578b4b5722b35803b03_2_624x439.png)
 
-This is the most common structure we see for dbt repository configuration. Though the illustration separates models by business unit, all of the SQL files are stored and organized in a single repository.
+Это самая распространенная структура, которую мы видим для конфигурации dbt репозитория. Хотя иллюстрация разделяет модели по бизнес-единицам, все SQL файлы хранятся и организованы в одном репозитории.
 
-**Strengths**
+**Преимущества**
 
-*   Easy to share and maintain the same core business logic
-*   Full dependency <Term id="data-lineage">lineage</Term> - your dbt generated DAG encompasses all of your [data transformations](https://www.getdbt.com/analytics-engineering/transformation/) for your entire company
+*   Легко делиться и поддерживать одну и ту же основную бизнес-логику
+*   Полная зависимость <Term id="data-lineage">линейности</Term> - ваш сгенерированный dbt DAG охватывает все ваши [преобразования данных](https://www.getdbt.com/analytics-engineering/transformation/) для всей вашей компании
 
-**Weaknesses**
+**Недостатки**
 
-*   Too many people! Your repository could have a lot of concurrently open issues/pull requests.
-*   Too many models! Your analyst is now wading through hundreds of files when their team only works on one business unit’s modeling
-*   Pull Request approval can be challenging (who has approval for which team? who approves changes to core models used across teams?)
+*   Слишком много людей! В вашем репозитории может быть много одновременно открытых проблем/pull-запросов.
+*   Слишком много моделей! Ваш аналитик теперь пробирается через сотни файлов, когда их команда работает только над моделированием одной бизнес-единицы
+*   Утверждение Pull Request может быть сложным (кто имеет право утверждать для какой команды? кто утверждает изменения в основных моделях, используемых всеми командами?)
 
-This is our most time tested option and our most recommended. However, we have started to see folks “size out” of this approach. While it’s difficult to define qualitatively when your team has outgrown this model, these are some factors to consider that might push you to consider alternative options:
+Это наш самый проверенный временем вариант и наш самый рекомендуемый. Однако мы начали замечать, что люди "перерастают" этот подход. Хотя сложно определить качественно, когда ваша команда переросла эту модель, вот некоторые факторы, которые могут подтолкнуть вас к рассмотрению альтернативных вариантов:
 
-*   Your project has 500+ models and the time it takes to compile your dbt project hinders the workflow of your developer\*
-*   Your git workflow is starting to become cumbersome because there are too many hands in the pot in terms of who needs to approve what
+*   В вашем проекте более 500 моделей, и время, необходимое для компиляции вашего dbt проекта, мешает рабочему процессу вашего разработчика\*
+*   Ваш git рабочий процесс начинает становиться громоздким, потому что слишком много людей вовлечены в процесс утверждения
 
-\*We are making significant efforts to improve this on larger projects but this is something to keep in mind.
+\*Мы прилагаем значительные усилия для улучшения этого на более крупных проектах, но это то, что следует иметь в виду.
 
-## Option 2: Separate Team Repository with One Shared Repository
+## Вариант 2: Отдельный репозиторий команды с одним общим репозиторием
 --------------------------------------------------------------------------------------------------------------------------------
 
-![separate repository](/img/blog/monorepo-3d6f91c1ab275d953417d2239f66e8f81bad7078_2_600x217.png)
+![отдельный репозиторий](/img/blog/monorepo-3d6f91c1ab275d953417d2239f66e8f81bad7078_2_600x217.png)
 
-This is one of the first structures we see people move toward when they “outgrow” the mono repo: there is one “core” repository that is incorporated into team specific repositories as a package. If you aren’t familiar with packages, [see the documentation](https://docs.getdbt.com/docs/build/packages/) for more information.
+Это одна из первых структур, к которой люди переходят, когда они "перерастают" монорепозиторий: есть один "основной" репозиторий, который включается в командные репозитории как пакет. Если вы не знакомы с пакетами, [см. документацию](https://docs.getdbt.com/docs/build/packages/) для получения дополнительной информации.
 
-How would the above function? While each team would work in their own repository, they would put shared items into the shared repository which is then installed in as a package to their repository. Some common things to put into that shared repository would be:
+Как будет функционировать вышеуказанное? В то время как каждая команда будет работать в своем собственном репозитории, они будут помещать общие элементы в общий репозиторий, который затем устанавливается как пакет в их репозиторий. Некоторые общие вещи, которые можно поместить в этот общий репозиторий, включают:
 
-*   a core `dim_customers` model that is relevant across marketing and finance departments.
-*   `all_days` or calendar model that defines your specific business logics around your financial year calendar and company holidays.
-*   Macros to be used across your business units. Things like date conversions, seed files to help segment company wide attributes, etc.
-*   Shared sources (sources.yml files + staging models for those sources)
+*   основную модель `dim_customers`, которая актуальна для маркетинговых и финансовых отделов.
+*   модель `all_days` или календарь, который определяет вашу специфическую бизнес-логику вокруг вашего финансового года и корпоративных праздников.
+*   Макросы, которые будут использоваться в ваших бизнес-единицах. Такие вещи, как преобразования дат, seed файлы для сегментации атрибутов компании и т.д.
+*   Общие источники (файлы sources.yml + модели стадий для этих источников)
 
-What doesn’t go into that shared repository?
+Что не входит в этот общий репозиторий?
 
-*   Models specific to the team (things like `fct_transactions` or `fct_ads`) would live in the unique team repos.
-*   Team specific logic (things like if you have different definitions of what revenue is, etc)
+*   Модели, специфичные для команды (такие как `fct_transactions` или `fct_ads`), будут находиться в уникальных репозиториях команды.
+*   Логика, специфичная для команды (например, если у вас есть разные определения того, что такое доход и т.д.)
 
-**Strengths**
+**Преимущества**
 
-*   Easier approval workflows in terms of team-specific models
-*   Easier to control user permissions (especially if you have sensitive data or SQL)
-*   Fewer people contributing to each repository
+*   Более простые рабочие процессы утверждения в отношении моделей, специфичных для команды
+*   Легче контролировать разрешения пользователей (особенно если у вас есть конфиденциальные данные или SQL)
+*   Меньше людей, вносящих вклад в каждый репозиторий
 
-**Weaknesses**
+**Недостатки**
 
-*   Hard to decide what goes into the Shared Repository
-*   Maintaining downstream dependencies of macros and models. There is a need to create a CI/CD process that assures changes in the shared repository will not negatively impact the downstream repositories. It’s possible that you will have to introduce [semantic versioning](https://en.wikipedia.org/wiki/Software_versioning) to mitigate miscommunication about breaking changes.
-*   Incomplete lineage/documentation for objects not the shared repository
+*   Трудно решить, что должно войти в Общий Репозиторий
+*   Поддержание зависимостей вниз по потоку макросов и моделей. Необходимо создать процесс CI/CD, который гарантирует, что изменения в общем репозитории не окажут негативного влияния на репозитории вниз по потоку. Возможно, вам придется ввести [семантическое версионирование](https://en.wikipedia.org/wiki/Software_versioning), чтобы смягчить недопонимание о нарушающих изменениях.
+*   Неполная линейность/документация для объектов, не входящих в общий репозиторий
 
-This is the option I recommend the most when one must stray away from Option 2. This follows our [dbt viewpoint](/community/resources/viewpoint#analytics-is-collaborative) the best in terms of dry code and collaboration as opposed to Option 3 & 4.
+Это вариант, который я рекомендую чаще всего, когда необходимо отклониться от Варианта 2. Это лучше всего соответствует нашему [взгляду dbt](/community/resources/viewpoint#analytics-is-collaborative) в отношении сухого кода и сотрудничества по сравнению с Вариантами 3 и 4.
 
-## Option 3: Completely Separate Repositories
+## Вариант 3: Полностью отдельные репозитории
 ------------------------------------------------------------------------------------------
 
-![completely separate repos](/img/blog/monorepo-7f6c787766d980479e44a0419e845bc2fc80fa1a_2_296x390.png)
+![полностью отдельные репозитории](/img/blog/monorepo-7f6c787766d980479e44a0419e845bc2fc80fa1a_2_296x390.png)
 
-Then, there is the “don’t allow any overlap” complete separation of repositories within a single organization.
+Затем есть "не допускать никакого перекрытия" полное разделение репозиториев в рамках одной организации.
 
-**Strengths**
+**Преимущества**
 
-*   Simple approval process
-*   Fitting if different teams have separate Snowflake Accounts/Redshift instances
+*   Простой процесс утверждения
+*   Подходит, если у разных команд есть отдельные учетные записи Snowflake/экземпляры Redshift
 
-**Weaknesses**
+**Недостатки**
 
-*   Easy to create duplicate business logic or out of sync business logic between repositories
-    *   A less than ideal work around: consumers from other teams can subscribe to another team’s releases to be aware of changes.
-*   Non-collaborative approach
-*   Incomplete lineage/documentation of company wide data transformations
+*   Легко создать дублирующуюся бизнес-логику или несинхронизированную бизнес-логику между репозиториями
+    *   Менее идеальный обходной путь: потребители из других команд могут подписаться на выпуски другой команды, чтобы быть в курсе изменений.
+*   Неколлаборативный подход
+*   Неполная линейность/документация преобразований данных на уровне компании
 
-There is a time and a place where this makes sense but you start to lose the reusability of code that is one of dbt’s biggest strengths! Unless there is a really good security reason behind this and a true separation of analytics needs across the teams, this approach is the one we recommend avoiding as much as possible.
+Есть время и место, где это имеет смысл, но вы начинаете терять повторное использование кода, которое является одной из самых больших сильных сторон dbt! Если только нет действительно веской причины безопасности для этого и истинного разделения аналитических потребностей между командами, этот подход мы рекомендуем избегать как можно больше.
 
-## Option 4: Separate Team Repositories + One Documentation Repository
+## Вариант 4: Отдельные репозитории команд + один репозиторий документации
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-![separate team repositories](/img/blog/monorepo-275ba0c84ef31370a57f125ac13a0cbcb808af9a_2_600x365.png)
+![отдельные репозитории команд](/img/blog/monorepo-275ba0c84ef31370a57f125ac13a0cbcb808af9a_2_600x365.png)
 
-This approach is nearly identical to the former (completely separate repositories) but solves one of the weaknesses (“incomplete lineage/documentation”) by introducing an additional repository. If you need something akin to Option 3, this is the better approach.
+Этот подход почти идентичен предыдущему (полностью отдельные репозитории), но решает одну из слабых сторон ("неполная линейность/документация") путем введения дополнительного репозитория. Если вам нужно что-то вроде Варианта 3, это лучший подход.
 
-**Strengths**
+**Преимущества**
 
-*   Creates a project to provide an overview of the entire organization’s dbt projects\*
-*   Simple maintenance
-*   Takes advantage of the strengths from `completely separate repositories` (see above example)
+*   Создает проект, предоставляющий обзор всех dbt проектов организации\*
+*   Простое обслуживание
+*   Использует преимущества `полностью отдельных репозиториев` (см. выше пример)
 
-**Weaknesses**
+**Недостатки**
 
-*   Creates an extraneous project for administrative oversight
-*   Does not prevent conflicting business logic or duplicate macros
-*   All models must have unique names across all packages
+*   Создает лишний проект для административного надзора
+*   Не предотвращает конфликтующую бизнес-логику или дублирование макросов
+*   Все модели должны иметь уникальные имена во всех пакетах
 
-\*\* The project will include the information from the dbt projects but might be missing information that is pulled from your <Term id="data-warehouse" /> if you are on multiple Snowflake accounts/Redshift instances. This is because dbt is only able to query the information schema from that one connection.
+\*\* Проект будет включать информацию из dbt проектов, но может отсутствовать информация, которая извлекается из вашего <Term id="data-warehouse" />, если вы используете несколько учетных записей Snowflake/экземпляров Redshift. Это связано с тем, что dbt может запрашивать схему информации только из этого одного соединения.
 
-## So… to mono-repo or not to mono-repo?
+## Итак... быть или не быть монорепозиторию?
 -------------------------------------------------------------------------------
 
-All of the above configurations “work”. And as detailed, they each solve for a different use case and business priority. At the end of the day, you need to choose what makes sense for your team today and what your team will need 6 months from now. My recommendations are:
+Все вышеперечисленные конфигурации "работают". И, как подробно описано, каждая из них решает разные случаи использования и бизнес-приоритеты. В конце концов, вам нужно выбрать то, что имеет смысл для вашей команды сегодня и что ваша команда будет нуждаться через 6 месяцев. Мои рекомендации:
 
-1.  Ask the above questions.
-2.  Figure out what may be a pain point in the future and try to plan for it from the beginning.
-3.  Don’t over-complicate things until you have the right reason. As I said in my Coalesce talk: **don’t drag your skeletons from one closet to another** 💀!
+1.  Задайте вышеуказанные вопросы.
+2.  Определите, что может стать проблемой в будущем, и постарайтесь планировать это с самого начала.
+3.  Не усложняйте вещи, пока у вас нет на это веской причины. Как я сказал в своем выступлении на Coalesce: **не перетаскивайте свои скелеты из одного шкафа в другой** 💀!
 
-**Note:** Our attempt in writing guides like this and [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview) aren’t to try to convince you that our way is right; it is to hopefully save you the hundreds of hours it has taken us to form those opinions!
+**Примечание:** Наша попытка написать такие руководства, как это и [Как мы структурируем наши dbt проекты](/best-practices/how-we-structure/1-guide-overview), не заключается в том, чтобы убедить вас, что наш путь правильный; это, надеюсь, сэкономит вам сотни часов, которые потребовались нам, чтобы сформировать эти мнения!

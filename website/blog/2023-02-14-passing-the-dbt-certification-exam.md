@@ -1,6 +1,6 @@
 ---
-title: Tips and advice to study for, and pass, the dbt Certification exam
-description: So you want to make it *official*? Callie and Jade, analytics engineering at Montreal Analytics, share their advice on passing the dbt Certification Exam.
+title: Советы и рекомендации по подготовке и сдаче экзамена на сертификацию dbt
+description: Хотите сделать это *официально*? Кэлли и Джейд, инженеры аналитики из Montreal Analytics, делятся своими советами по успешной сдаче экзамена на сертификацию dbt.
 slug: tips-for-the-dbt-certification-exam
 authors: [callie_white, jade_milaney]
 tags: [analytics craft]
@@ -8,71 +8,70 @@ hide_table_of_contents: false
 date: 2023-02-16
 is_featured: true
 ---
-The [new dbt Certification Program](https://www.getdbt.com/blog/dbt-certification-program) has been created by dbt Labs to codify the data development best practices that enable safe, confident, and impactful use of dbt. Taking the Certification allows dbt users to get recognized for the skills they’ve honed, and stand out to organizations seeking dbt expertise.
+[Новая программа сертификации dbt](https://www.getdbt.com/blog/dbt-certification-program) была создана dbt Labs для кодификации лучших практик разработки данных, которые обеспечивают безопасное, уверенное и значимое использование dbt. Сертификация позволяет пользователям dbt получить признание за свои навыки и выделиться среди организаций, ищущих экспертов по dbt.
 
-Over the last few months, [Montreal Analytics](https://www.montrealanalytics.com/), a full-stack data consultancy servicing organizations across North America, has had over 25 dbt Analytics Engineers become certified, earning them the 2022 dbt Platinum Certification award.
+За последние несколько месяцев [Montreal Analytics](https://www.montrealanalytics.com/), консалтинговая компания полного цикла в области данных, обслуживающая организации по всей Северной Америке, сертифицировала более 25 инженеров аналитики dbt, что принесло им награду dbt Platinum Certification 2022 года.
 
-In this article, two Montreal Analytics consultants, Jade and Callie, discuss their experience in taking, and passing, the dbt Certification exam to help guide others looking to study for, and pass the exam.
+В этой статье два консультанта из Montreal Analytics, Джейд и Кэлли, обсуждают свой опыт сдачи и успешного прохождения экзамена на сертификацию dbt, чтобы помочь другим, кто хочет подготовиться и сдать экзамен.
 <!--truncate-->
 
-## What brought you to the exam?
+## Что привело вас к экзамену?
 
-**Jade (J):** I’m a newly minted Montreal Analytics Analytics Engineer coming from a background as a data analyst with a few months of dbt experience. My last company used some basic dbt in their BI implementation, not so far as tests or snapshots, but I have some exposure(s) (pun intended). I decided to take the exam to build up my knowledge as a Junior Analytics Engineer and to give future clients confidence in my skills.
+**Джейд (J):** Я недавно стала инженером аналитики в Montreal Analytics, имея опыт работы аналитиком данных и несколько месяцев опыта работы с dbt. В моей предыдущей компании использовали базовые функции dbt в реализации BI, не доходя до тестов или снимков, но у меня был некоторый опыт. Я решила сдать экзамен, чтобы углубить свои знания как младший инженер аналитики и вселить уверенность в своих навыках у будущих клиентов.
 
-**Callie (C):** As an experienced Analytics Engineer with 4 years of dbt experience, dating back to late 2018, 5 years of experience across the Modern Data Stack, and an overall 6 years of a career spent in data, I approached the new dbt test with an ‘old school’ dbt repertoire and years of ingrained bad habits. I have been through the whole evolution of dbt’s growth, and so I wanted to take the exam to polish up my skills, showcase Montreal Analytics’ dbt expertise, and earn that shiny badge for my LinkedIn profile.
+**Кэлли (C):** Как опытный инженер аналитики с 4 годами опыта работы с dbt, начиная с конца 2018 года, 5 годами опыта работы с Modern Data Stack и в целом 6 годами карьеры в области данных, я подошла к новому тесту dbt с "олдскульным" репертуаром dbt и годами укоренившихся плохих привычек. Я прошла через всю эволюцию роста dbt, и поэтому хотела сдать экзамен, чтобы отточить свои навыки, продемонстрировать экспертность Montreal Analytics в dbt и получить этот блестящий значок для своего профиля в LinkedIn.
 
-## How did you prepare for the exam?
+## Как вы готовились к экзамену?
 
-**J:** To prepare for the exam, I built up a practice dbt project. All consultants do this as part of Montreal Analytics onboarding process, and this project allowed me to practice implementing sources and tests, refactoring SQL models, and debugging plenty of error messages. Additionally, I reviewed the [Certification Study Guide](https://www.getdbt.com/assets/uploads/dbt_certificate_study_guide.pdf) and attended group learning sessions.
+**J:** Чтобы подготовиться к экзамену, я создала практический проект dbt. Все консультанты делают это в рамках процесса адаптации в Montreal Analytics, и этот проект позволил мне попрактиковаться в реализации источников и тестов, рефакторинге SQL-моделей и отладке множества сообщений об ошибках. Кроме того, я изучила [Руководство по подготовке к сертификации](https://www.getdbt.com/assets/uploads/dbt_certificate_study_guide.pdf) и посещала групповые учебные сессии.
 
-**C:** To prepare for the exam I reviewed the official dbt Certification Study Guide and the [official dbt docs](https://docs.getdbt.com/), and attended group study and learning sessions that were hosted by Montreal Analytics for all employees interested in taking the exam. As a group, we prioritized subjects that we felt less familiar with; for the first cohort of test takers this was mainly newer topics that haven’t yet become integral to a typical dbt project, such as [doc blocks](https://docs.getdbt.com/docs/build/documentation#using-docs-blocks) and [configurations versus properties](https://docs.getdbt.com/reference/configs-and-properties). These sessions mainly covered the highlights and common “gotchas” that are experienced using these techniques. The sessions were moderated by a team member who had already successfully completed the dbt Certification, but operated in a very collaborative environment, so everyone could provide additional information, ask questions to the group, and provide feedback to other members of our certification taking group.
+**C:** Для подготовки к экзамену я изучила официальное Руководство по подготовке к сертификации dbt и [официальную документацию dbt](https://docs.getdbt.com/), а также посещала групповые учебные сессии, организованные Montreal Analytics для всех сотрудников, заинтересованных в сдаче экзамена. В группе мы уделяли приоритетное внимание темам, с которыми мы были менее знакомы; для первой группы сдающих это были в основном новые темы, которые еще не стали неотъемлемой частью типичного проекта dbt, такие как [блоки документации](https://docs.getdbt.com/docs/build/documentation#using-docs-blocks) и [конфигурации против свойств](https://docs.getdbt.com/reference/configs-and-properties). Эти сессии в основном охватывали основные моменты и распространенные "подводные камни", с которыми сталкиваются при использовании этих техник. Сессии модерировались членом команды, который уже успешно прошел сертификацию dbt, но проходили в очень совместной среде, так что каждый мог предоставить дополнительную информацию, задать вопросы группе и дать обратную связь другим членам нашей группы по сертификации.
 
-I felt comfortable with the breadth of my dbt knowledge and had familiarity with most topics. However in my day-to-day implementation, I am often reliant on documentation or copying and pasting specific configurations in order to get the correct settings. Therefore, my focus was on memorizing important criteria for *how to use* certain features, particularly on the order/nesting of how the key YAML files are configured (dbt_project.yml, table.yml, source.yml).
+Я чувствовала себя уверенно в широте своих знаний о dbt и была знакома с большинством тем. Однако в моей повседневной реализации я часто полагаюсь на документацию или копирование и вставку конкретных конфигураций, чтобы получить правильные настройки. Поэтому я сосредоточилась на запоминании важных критериев *как использовать* определенные функции, особенно на порядке/вложенности настройки ключевых YAML-файлов (dbt_project.yml, table.yml, source.yml).
 
-## How did the test go?
+## Как прошел тест?
 
-**J:** With a cup of coffee I started my exam in high spirits and high stress. I had never taken a proctored exam before, so going into this I had to adjust to being on camera while taking a test and in general taking a test in my living room felt strange!
+**J:** С чашкой кофе я начала свой экзамен в хорошем настроении и с высоким уровнем стресса. Я никогда раньше не сдавала экзамен под наблюдением, поэтому мне пришлось привыкнуть к тому, что я на камере во время теста, и в целом сдавать тест в своей гостиной было странно!
 
-The first few questions were trickier than I’d anticipated, and my heart started beating a little faster as a result. I found the build-list questions, five lines of code to create a valid YAML or SQL file that accomplishes a certain task, particularly difficult.
+Первые несколько вопросов оказались сложнее, чем я ожидала, и мое сердце начало биться немного быстрее. Я нашла вопросы на составление списка, пять строк кода для создания допустимого YAML или SQL-файла, выполняющего определенную задачу, особенно сложными.
 
-The exam consists of 65 questions, usually containing multiple parts, so by 90 minutes in I started to get tired. I’d flagged several questions and went back to check on those before submitting. At the time, I thought I answered about 60% of these questions right? Having lost my coffee buzz and with shaky confidence I submitted the test to see my result. Failed.
+Экзамен состоит из 65 вопросов, обычно содержащих несколько частей, поэтому через 90 минут я начала уставать. Я отметила несколько вопросов и вернулась, чтобы проверить их перед отправкой. На тот момент я думала, что ответила правильно на около 60% этих вопросов? Потеряв бодрость от кофе и с дрожащей уверенностью, я отправила тест, чтобы увидеть свой результат. Не сдала.
 
-**C:** In advance of test day I did spend extra time making sure that I had an appropriate environment for taking the test; I booked a study room at my local library that had absolutely nothing on the walls, was completely quiet, and had a solid internet connection so that I wouldn’t have to be stressed about any details on that front.
+**C:** В преддверии дня теста я потратила дополнительное время, чтобы убедиться, что у меня есть подходящая обстановка для сдачи теста; я забронировала учебную комнату в местной библиотеке, где на стенах не было ничего, было совершенно тихо и было надежное интернет-соединение, чтобы мне не пришлось беспокоиться о каких-либо деталях в этом отношении.
 
-I had been informed of the discrete option multiple choice questions, but those threw me off and shook my confidence. The total “major” question (ie. Question 5) was composed of a certain number of smaller sub-questions (ie. Question 5a-e). If you answered the first sub-question correctly, it served you the second sub-question. If you answered the second sub-question correctly, it moved to the third sub-question. If you got any of the sub-questions incorrect the page navigated to the next major question and you lost the point for the whole major question. There was no indication for how many sub-questions were in each major question, therefore regardless of how many questions I answered correctly, I never knew if it moved to the next major question because I was wrong, or because I had answered all the questions.
+Меня предупредили о вариантах множественного выбора с дискретными опциями, но они сбили меня с толку и пошатнули мою уверенность. Общий "основной" вопрос (например, Вопрос 5) состоял из определенного количества меньших подвопросов (например, Вопрос 5a-e). Если вы правильно ответили на первый подвопрос, вам предлагался второй подвопрос. Если вы правильно ответили на второй подвопрос, переходили к третьему подвопросу. Если вы ошиблись в любом из подвопросов, страница переходила к следующему основному вопросу, и вы теряли балл за весь основной вопрос. Не было указано, сколько подвопросов в каждом основном вопросе, поэтому, независимо от того, сколько вопросов я ответила правильно, я никогда не знала, перешла ли я к следующему основному вопросу, потому что я ошиблась, или потому что ответила на все вопросы.
 
-Otherwise, the questions required considerable focus to flush out the differences between them as there were often only small differences between the answer options. However, once I identified what the differences were between answer options I felt that it was pretty easy for me to choose the most correct option.
+В остальном, вопросы требовали значительной концентрации, чтобы выявить различия между ними, так как часто между вариантами ответов были лишь небольшие различия. Однако, как только я определила, в чем заключаются различия между вариантами ответов, мне было довольно легко выбрать наиболее правильный вариант.
 
-The questions that personally tripped me were things that I had expected to trip me up. These had the common theme of being technical terminology for specific techniques that I know how to use, but couldn’t speak the same official language that the test was using. An example is distinguishing slowly-changing data type(s) and their implementation in dbt.
+Вопросы, которые лично меня сбили с толку, были теми, которые я ожидала, что меня собьют. Они имели общую тему технической терминологии для конкретных техник, которые я знаю, как использовать, но не могла говорить на том же официальном языке, который использовал тест. Примером является различение медленно изменяющихся типов данных и их реализация в dbt.
 
-Additionally, I got tripped up on the official names for test types — what was previously known as “schema/data tests” are now referred to as “generic” or “singular tests”. dbt Labs changed their naming conventions during the dbt 1.0.0 upgrade, so I was more familiar with the [old naming conventions](https://docs.getdbt.com/guides/legacy/writing-custom-generic-tests).
+Кроме того, я запуталась в официальных названиях типов тестов — то, что ранее было известно как "схема/тесты данных", теперь называется "общими" или "единичными тестами". dbt Labs изменили свои соглашения о наименовании во время обновления dbt 1.0.0, поэтому я была более знакома с [старыми соглашениями о наименовании](https://docs.getdbt.com/guides/legacy/writing-custom-generic-tests).
 
-## Thoughts after taking the test?
+## Мысли после сдачи теста?
 
-**J:** Personal experience has taught me that the first thing to do when you’ve failed a test is to get yourself a treat. I took myself to my favorite bakery; got a walk in and a Boston Cream donut. Now I could properly reflect on how the test went, and prepare for round two.
+**J:** Личный опыт научил меня, что первое, что нужно сделать, когда вы провалили тест, это побаловать себя. Я отправилась в свою любимую пекарню; прогулялась и купила пончик с бостонским кремом. Теперь я могла правильно обдумать, как прошел тест, и подготовиться ко второму раунду.
 
-**C:** After the test I immediately turned Slack back on, answered client questions, and got back to work. Check, done, and moving on.
+**C:** После теста я сразу же включила Slack, ответила на вопросы клиентов и вернулась к работе. Готово, сделано, и двигаемся дальше.
 
-The test felt as I had expected; I knew I hadn’t aced it because I had prioritized my actual dbt work over memorizing for a test I only needed 65% to pass. I was confident that my practical experience, along with brushing up on some specifics would get me a pass.
+Тест прошел так, как я ожидала; я знала, что не сдала его на отлично, потому что я отдавала приоритет своей реальной работе с dbt над заучиванием для теста, для которого мне нужно было всего 65%, чтобы пройти. Я была уверена, что мой практический опыт, наряду с освежением некоторых специфических моментов, обеспечит мне прохождение.
 
-A huge proportion of a role in data is weighing the cost versus benefit of a task. Does the value of the insight gained from the data justify the effort and cost of modeling that data? What’s the acceptable error threshold? What’s the priority in comparison to other tasks that could be done? I applied the same principle to completing my dbt Certification.
+Большая часть роли в данных заключается в оценке стоимости по сравнению с выгодой от задачи. Оправдывает ли ценность полученного из данных инсайта усилия и стоимость моделирования этих данных? Каков допустимый порог ошибки? Каков приоритет по сравнению с другими задачами, которые можно выполнить? Я применила тот же принцип к завершению своей сертификации dbt.
 
-## Retaking the dbt Certification exam
+## Повторная сдача экзамена на сертификацию dbt
 
-**J:** Getting ready for my second attempt, I leaned heavily on the dbt documentation and reference pages; I focused on debugging errors and schema generation, but the goal here was mostly to build up my confidence. A colleague and I built flashcards (decks [1](https://quizlet.com/ca/718959401/dbt-study-terms-and-practice-qs-flash-cards/) and [2](https://quizlet.com/ca/720366359/dbt-certification-prep-2-flash-cards/)) to help with this, working on recall of commands, error types, configurations, and properties. The extra hours and flash cards combined with pep talks from my team members had me feeling ready to go.
+**J:** Готовясь ко второй попытке, я сильно опиралась на документацию и справочные страницы dbt; я сосредоточилась на отладке ошибок и генерации схем, но основная цель здесь была в том, чтобы повысить свою уверенность. Мы с коллегой создали карточки (колоды [1](https://quizlet.com/ca/718959401/dbt-study-terms-and-practice-qs-flash-cards/) и [2](https://quizlet.com/ca/720366359/dbt-certification-prep-2-flash-cards/)) для помощи в этом, работая над запоминанием команд, типов ошибок, конфигураций и свойств. Дополнительные часы и карточки в сочетании с поддержкой от членов моей команды заставили меня чувствовать себя готовой.
 
-Test taking is a skill. As Callie says, "Academic-type test taking is its own skill that has huge emotional factors and has not been made for the way everyone’s brain works best."
+Сдача тестов — это навык. Как говорит Кэлли, "Сдача академических тестов — это отдельный навык, который имеет огромные эмоциональные факторы и не был создан для того, как работает мозг каждого человека".
 
-With a deep breath, and a big cup of water — it’s 2:30pm two weeks later and I’m retaking the exam. Same set up as before with some tricky questions, especially the build list ones. I’m thankful I studied debugging errors and schemas because that came up a few times. I answer the questions confidently and flag 12 to look at again before I submit the exam at 3:45pm.
-Passed.
+С глубоким вдохом и большой чашкой воды — сейчас 14:30, две недели спустя, и я пересдаю экзамен. Та же обстановка, что и раньше, с некоторыми сложными вопросами, особенно на составление списка. Я благодарна, что изучила отладку ошибок и схемы, потому что это несколько раз встречалось. Я уверенно отвечаю на вопросы и отмечаю 12, чтобы пересмотреть их перед отправкой экзамена в 15:45.
+Сдала.
 
-Now, the first thing you must do when you’ve passed a test is to get yourself a treat — it’s Boston Cream time!
+Теперь, первое, что нужно сделать, когда вы сдали тест, это побаловать себя — время для бостонского крема!
 
-## Now that you’re dbt official, where to next?
+## Теперь, когда вы официально сертифицированы dbt, что дальше?
 
-**C:** I’m continuing on the same path, but with the shiny badge prominently posted on my LinkedIn profile along with the certifications of my teammates. The validation of having an external party verify that I know the key best practices in the primary data tool I use and that I can be trusted to implement a successful dbt project is great.
+**C:** Я продолжаю идти по тому же пути, но с блестящим значком, заметно размещенным в моем профиле LinkedIn вместе с сертификатами моих коллег. Подтверждение того, что внешняя сторона проверила, что я знаю ключевые лучшие практики в основном инструменте работы с данными, который я использую, и что мне можно доверить успешную реализацию проекта dbt, — это здорово.
 
-Standards and best practices are very important, but a test is a measure at a single point in time of a rapidly evolving industry. It’s also a measure of my test-taking abilities, my stress levels, and other things unrelated to my skill in data modeling; I wouldn’t be a good analyst if I didn’t recognize the faults of a measurement. I’m glad to have this check mark completed, but I will continue to stay up to date with changes, learn new data skills and techniques, and find ways to continue being a holistically helpful teammate to my colleagues and clients.
+Стандарты и лучшие практики очень важны, но тест — это измерение в одной точке времени в быстро развивающейся отрасли. Это также измерение моих способностей к сдаче тестов, уровня стресса и других вещей, не связанных с моими навыками в моделировании данных; я не была бы хорошим аналитиком, если бы не признала недостатки измерения. Я рада, что этот пункт выполнен, но я продолжу оставаться в курсе изменений, изучать новые навыки и техники работы с данными и находить способы продолжать быть всесторонне полезным коллегой для своих коллег и клиентов.
 
-
-You can learn more about the dbt Certification [here](https://www.getdbt.com/blog/dbt-certification-program/).
+Вы можете узнать больше о сертификации dbt [здесь](https://www.getdbt.com/blog/dbt-certification-program/).

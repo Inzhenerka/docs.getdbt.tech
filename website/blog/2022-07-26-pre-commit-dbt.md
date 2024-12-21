@@ -1,6 +1,6 @@
 ---
-title: "Enforcing rules at scale with pre-commit-dbt"
-description: "Making sure everyone is following best practices on large dbt projects is hard. How can you enforce rules at scale? Benoit Perigaud shares a dbt package to help you do just that."
+title: "Применение правил в масштабе с помощью pre-commit-dbt"
+description: "Убедиться, что все следуют лучшим практикам в крупных проектах dbt, сложно. Как можно применять правила в масштабе? Бенуа Перигод делится пакетом dbt, который поможет вам в этом."
 slug: enforcing-rules-pre-commit-dbt
 authors: [benoit_perigaud]
 tags: [analytics craft]
@@ -10,46 +10,46 @@ date: 2022-08-03
 is_featured: true
 ---
 
-*Editor's note — since the creation of this post, the package pre-commit-dbt's ownership has moved to another team and it has been renamed to [dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint). A redirect has been set up, meaning that the code example below will still work. It is also  possible to replace `repo: https://github.com/offbi/pre-commit-dbt` with `repo: https://github.com/dbt-checkpoint/dbt-checkpoint` in your `.pre-commit-config.yaml` file.*
+*Примечание редактора — с момента создания этого поста, владение пакетом pre-commit-dbt перешло к другой команде, и он был переименован в [dbt-checkpoint](https://github.com/dbt-checkpoint/dbt-checkpoint). Настроен редирект, что означает, что приведенный ниже пример кода все еще будет работать. Также можно заменить `repo: https://github.com/offbi/pre-commit-dbt` на `repo: https://github.com/dbt-checkpoint/dbt-checkpoint` в вашем файле `.pre-commit-config.yaml`.*
 
-At dbt Labs, we have [best practices](https://docs.getdbt.com/docs/best-practices) we like to follow for the development of dbt projects. One of them, for example, is that all models should have at least `unique` and `not_null` tests on their primary key. But how can we enforce rules like this?
+В dbt Labs у нас есть [лучшие практики](https://docs.getdbt.com/docs/best-practices), которым мы предпочитаем следовать при разработке проектов dbt. Одна из них, например, заключается в том, что все модели должны иметь как минимум тесты `unique` и `not_null` на их первичный ключ. Но как мы можем применять такие правила?
 
-That question becomes difficult to answer in large dbt projects. Developers might not follow the same conventions. They might not be aware of past decisions, and reviewing pull requests in git can become more complex. When dbt projects have hundreds of models, it's hard to know which models do not have any tests defined and aren't enforcing your conventions. 
+Этот вопрос становится трудным для ответа в крупных проектах dbt. Разработчики могут не следовать одним и тем же соглашениям. Они могут не знать о прошлых решениях, и проверка pull-запросов в git может стать более сложной. Когда в проектах dbt сотни моделей, трудно понять, какие модели не имеют определенных тестов и не соблюдают ваши соглашения.
 
 <!--truncate-->
 
-One potential solution is to leverage the open-source package [pre-commit-dbt](https://github.com/offbi/pre-commit-dbt), created by dbt community members, that can be used to automatically run tests before committing files to git or as part of CI steps. In this article, I'll walk you through the strategy I use to implement this package and enforce rules at scale.
+Одно из возможных решений — использовать пакет с открытым исходным кодом [pre-commit-dbt](https://github.com/offbi/pre-commit-dbt), созданный членами сообщества dbt, который может использоваться для автоматического запуска тестов перед фиксацией файлов в git или как часть шагов CI. В этой статье я расскажу вам о стратегии, которую я использую для внедрения этого пакета и применения правил в масштабе.
 
-## What are pre-commit and pre-commit-dbt?
+## Что такое pre-commit и pre-commit-dbt?
 
-pre-commit is a framework that can be used to automatically run tests before committing files to git, leveraging git hooks. 
+pre-commit — это фреймворк, который может использоваться для автоматического запуска тестов перед фиксацией файлов в git, используя хуки git.
 
-In our case, we will use the ability of pre-commit to run automated tests but I will also explain below how to use it with the flags `--all-files` or `--files` to leverage the same tests on a predefined list of dbt models.
+В нашем случае мы будем использовать возможность pre-commit для запуска автоматических тестов, но я также объясню ниже, как использовать его с флагами `--all-files` или `--files`, чтобы использовать те же тесты на предопределенном списке моделей dbt.
 
-On the other hand, pre-commit-dbt defines dbt specific tests and actions (called [hooks](https://github.com/offbi/pre-commit-dbt/blob/main/HOOKS.md)) for the [pre-commit](https://pre-commit.com/) framework.
+С другой стороны, pre-commit-dbt определяет специфические для dbt тесты и действия (называемые [хуками](https://github.com/offbi/pre-commit-dbt/blob/main/HOOKS.md)) для фреймворка [pre-commit](https://pre-commit.com/).
 
-There are currently over 20 tests that have been created but here 2 examples that we will leverage:
+В настоящее время создано более 20 тестов, но вот 2 примера, которые мы будем использовать:
 
-- `check-model-has-tests`: Check the model has a number of tests.
-- `check-model-has-properties-file`: Check the model has a properties file (also called schema file).
+- `check-model-has-tests`: Проверяет, что у модели есть определенное количество тестов.
+- `check-model-has-properties-file`: Проверяет, что у модели есть файл свойств (также называемый файлом схемы).
 
-## Implementing pre-commit-dbt & adding tests
+## Внедрение pre-commit-dbt и добавление тестов
 
-Let’s take the example of a project with more than 300 models. Dozens of people have committed to the project, a PR review process is in place, but sometimes, with multiple models in the same PR, tracking if tests have been added or not is not easy and we know that not all models are tested today even if they should.
+Давайте рассмотрим пример проекта с более чем 300 моделями. Десятки людей внесли свой вклад в проект, процесс проверки PR установлен, но иногда, с несколькими моделями в одном PR, отслеживание того, были ли добавлены тесты или нет, не так просто, и мы знаем, что не все модели тестируются сегодня, даже если они должны.
 
-To remediate this let’s follow those 4 steps:
+Чтобы исправить это, давайте следовать этим 4 шагам:
 
-![Flow graph that describes the steps in defining a strategy for implementing this package on a dbt project with more than 300 models.](/img/blog/2022-07-26-pre-commit-dbt/define-strategy.png)
+![График потока, описывающий шаги в определении стратегии для внедрения этого пакета в проект dbt с более чем 300 моделями.](/img/blog/2022-07-26-pre-commit-dbt/define-strategy.png)
 
-### 1. Define our rules and create a pre-commit config file
+### 1. Определите наши правила и создайте файл конфигурации pre-commit
 
-pre-commit-dbt provides a range of tests that can be run on the models of our dbt project. In the case of a project which has existed for some time and which might not be entirely following best practices, I would recommend selecting a small subset of tests, fixing the project and adding more tests later on.
+pre-commit-dbt предоставляет ряд тестов, которые можно запускать на моделях нашего проекта dbt. В случае проекта, который существует уже некоторое время и который может не полностью следовать лучшим практикам, я бы рекомендовал выбрать небольшой набор тестов, исправить проект и добавить больше тестов позже.
 
-In our example, let’s just start by saying that we want:
-- all our models to have been added to a YAML file
-- all our models to include some tests
+В нашем примере давайте просто начнем с того, что мы хотим:
+- чтобы все наши модели были добавлены в YAML файл
+- чтобы все наши модели включали некоторые тесты
 
-To configure pre-commit, we have to create a file called `.pre-commit-config.yaml` at the root of our dbt project and add the following content:
+Чтобы настроить pre-commit, мы должны создать файл с именем `.pre-commit-config.yaml` в корне нашего проекта dbt и добавить следующее содержимое:
 
 ```yaml
 repos:
@@ -65,62 +65,63 @@ repos:
     files: ^models/
 ```
 
-A few notes about this file:
-- We start with a dbt-docs-generate to ensure that the command `dbt docs generate` is run before checking our models. This is required because pre-commit-dbt reads from the artifacts `catalog.json` and `manifest.json` and those files can be generated by generating the documentation
-- The `files` argument is a regular expression. `^models/` is going to apply the test to all our models whose path starts with `models`, i.e. all the models of our project. If we wanted to run the test only for the models in the mart folder, we could write `^models/mart`. There are a few handy tools online to define and test regular expressions; one of them is https://regex101.com/
-- We could also provide values for the parameter `exclude` if we wanted to exclude specific files or folders
-- We could have added a parameter to the hook `check-model-has-tests` to mention how many tests each model is supposed to have (see [here](https://github.com/offbi/pre-commit-dbt/blob/main/HOOKS.md#check-model-has-tests))
+Несколько замечаний по этому файлу:
+- Мы начинаем с dbt-docs-generate, чтобы убедиться, что команда `dbt docs generate` выполняется перед проверкой наших моделей. Это необходимо, потому что pre-commit-dbt читает из артефактов `catalog.json` и `manifest.json`, и эти файлы могут быть сгенерированы при генерации документации.
+- Аргумент `files` — это регулярное выражение. `^models/` будет применять тест ко всем нашим моделям, путь которых начинается с `models`, т.е. ко всем моделям нашего проекта. Если бы мы хотели запустить тест только для моделей в папке mart, мы могли бы написать `^models/mart`. Существует несколько удобных инструментов онлайн для определения и тестирования регулярных выражений; один из них — https://regex101.com/
+- Мы также могли бы предоставить значения для параметра `exclude`, если бы хотели исключить определенные файлы или папки.
+- Мы могли бы добавить параметр к хуку `check-model-has-tests`, чтобы указать, сколько тестов должна иметь каждая модель (см. [здесь](https://github.com/offbi/pre-commit-dbt/blob/main/HOOKS.md#check-model-has-tests)).
 
-Now that we have defined our configuration file, the next step will depend on whether we are using dbt via dbt Cloud or dbt Core via the CLI.
+Теперь, когда мы определили наш конфигурационный файл, следующий шаг будет зависеть от того, используем ли мы dbt через dbt Cloud или dbt Core через CLI.
 
-If we are using dbt Cloud, let’s jump to [step 4](#4-make-it-part-of-the-periodic-checks), where we will set up pre-commit-dbt as part of the CI process, otherwise, with dbt Core we can go to step 2.
+Если мы используем dbt Cloud, давайте перейдем к [шагу 4](#4-make-it-part-of-the-periodic-checks), где мы настроим pre-commit-dbt как часть процесса CI, в противном случае, с dbt Core мы можем перейти к шагу 2.
 
-### 2. Understand the scope of the changes required
+### 2. Понять объем необходимых изменений
 
-With our configuration file created, we can now set up our computer to do some checks locally.
+С созданным конфигурационным файлом мы теперь можем настроить наш компьютер для выполнения некоторых проверок локально.
 
-#### Activating a Python virtual environment
+#### Активация виртуальной среды Python
 
-If we are using dbt in a Python virtual environment, let’s activate this environment. If not, we should really create a Python virtual environment ([more info here](https://docs.python.org/3/library/venv.html)) and activate it before installing pre-commit.
+Если мы используем dbt в виртуальной среде Python, давайте активируем эту среду. Если нет, нам действительно следует создать виртуальную среду Python ([подробнее здесь](https://docs.python.org/3/library/venv.html)) и активировать ее перед установкой pre-commit.
 
-We could technically skip this step but might then end up getting issues on our computer with different Python packages conflicting with each other.
+Технически мы могли бы пропустить этот шаг, но тогда можем столкнуться с проблемами на нашем компьютере из-за конфликтов различных пакетов Python.
 
-#### Installing and running pre-commit
+#### Установка и запуск pre-commit
 
-Once in the Python virtual environment, installing pre-commit is as straightforward as running `python -m pip install pre-commit`.
+Находясь в виртуальной среде Python, установка pre-commit так же проста, как выполнение команды `python -m pip install pre-commit`.
 
-A normal next step after installing pre-commit is to run a `pre-commit install` to install the git hooks and run tests automatically, but in our case, let’s wait a bit! We will cover this in step 4.
+Обычно следующим шагом после установки pre-commit является выполнение `pre-commit install` для установки хуков git и автоматического запуска тестов, но в нашем случае давайте немного подождем! Мы рассмотрим это на шаге 4.
 
-Instead, we can do a `pre-commit run --all-files`, which will run all the tests defined in our configuration file on all the files in our dbt project.
+Вместо этого мы можем выполнить `pre-commit run --all-files`, который запустит все тесты, определенные в нашем конфигурационном файле, на всех файлах в нашем проекте dbt.
 
-![Animation showing the output in the Terminal after running the above commands](/img/blog/2022-07-26-pre-commit-dbt/pre-commit-run-all-files.gif)
+![Анимация, показывающая вывод в Терминале после выполнения вышеуказанных команд](/img/blog/2022-07-26-pre-commit-dbt/pre-commit-run-all-files.gif)
 
-In my case, I can see that my model called `customers.sql` has not been added to any YAML file and has no test defined.
+В моем случае я вижу, что моя модель с именем `customers.sql` не была добавлена в какой-либо YAML файл и не имеет определенного теста.
 
-In the case of a large project, the number of issues might be much bigger. If we use zsh as our shell, wildcard expansion can be used and we could run `pre-commit run --files models/mart/*` if we wanted to run all the checks only in the models stored under mart.
+В случае крупного проекта количество проблем может быть намного больше. Если мы используем zsh в качестве оболочки, можно использовать расширение подстановочных знаков, и мы могли бы выполнить `pre-commit run --files models/mart/*`, если бы хотели запустить все проверки только для моделей, хранящихся в mart.
 
-### 3. Decide what needs to be fixed immediately
+### 3. Решите, что нужно исправить немедленно
 
-Once we have the list of models that either don’t exist in the YAML files or that don’t have any test defined, we can decide if we want to fix all of them at once or not.
+Как только у нас есть список моделей, которые либо не существуют в YAML файлах, либо не имеют определенного теста, мы можем решить, хотим ли мы исправить все их сразу или нет.
 
-What we will see in step 4 is that even if not all models are fixed at once, the CI step and the git hooks can lead to better project hygiene, forcing every model that is being modified to be tested.
+Что мы увидим на шаге 4, так это то, что даже если не все модели исправлены сразу, шаг CI и хуки git могут привести к лучшей гигиене проекта, заставляя каждую модель, которая модифицируется, быть протестированной.
 
-In my example above, with just one model to fix, it is easy to create a PR with the changes, but if hundreds of models show up, you might decide to only fix the most important ones at first (your mart for example) and fix the other ones later on.
+В моем примере выше, с одной моделью для исправления, легко создать PR с изменениями, но если появятся сотни моделей, вы можете решить сначала исправить только самые важные из них (например, ваш mart) и исправить остальные позже.
 
-### 4. Make it part of the periodic checks
-The last step of our flow is to make those pre-commit checks part of the day-to-day activities, running on the dbt models that are newly created or modified. That way, even if we don’t fix all our models at once, if they get modified at some points, tests will need to be added for the PR to be merged.
+### 4. Сделайте это частью периодических проверок
 
-Adding periodic pre-commit checks can be done in 2 different ways, through CI (Continuous Integration) actions, or as git hooks when running dbt locally
+Последний шаг нашего потока — сделать эти проверки pre-commit частью повседневной деятельности, выполняя их на моделях dbt, которые создаются или модифицируются заново. Таким образом, даже если мы не исправим все наши модели сразу, если они будут модифицированы в какой-то момент, тесты должны быть добавлены, чтобы PR был объединен.
 
-#### a) Adding pre-commit-dbt to the CI flow (works for dbt Cloud and dbt Core users)
+Добавление периодических проверок pre-commit можно сделать двумя способами: через действия CI (непрерывной интеграции) или как хуки git при локальном запуске dbt.
 
-The example below will assume GitHub actions as the CI engine but similar behavior could be achieved in any other CI tool.
+#### a) Добавление pre-commit-dbt в поток CI (работает для пользователей dbt Cloud и dbt Core)
 
-As described before, we need to run a `dbt docs generate` in order to create updated <Term id="json" /> artifacts used in the pre-commit hooks.
+Пример ниже будет предполагать использование GitHub actions в качестве движка CI, но аналогичное поведение можно достичь в любом другом инструменте CI.
 
-For that reason, we will need our CI step to execute this command, which will require setting up a `profiles.yml` file providing dbt the information to connect to the data warehouse. Profiles files will be different for each data warehouse ([example here](https://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)).
+Как описано ранее, нам нужно выполнить `dbt docs generate`, чтобы создать обновленные артефакты <Term id="json" />, используемые в хуках pre-commit.
 
-In our case, let’s create a file called `profiles.yml` at the root of our dbt project, with the following information:
+По этой причине нам нужно, чтобы наш шаг CI выполнял эту команду, что потребует настройки файла `profiles.yml`, предоставляющего dbt информацию для подключения к хранилищу данных. Файлы профилей будут различаться для каждого хранилища данных ([пример здесь](https://docs.getdbt.com/reference/warehouse-profiles/snowflake-profile)).
+
+В нашем случае давайте создадим файл с именем `profiles.yml` в корне нашего проекта dbt со следующей информацией:
 
 ```yaml
 ​​jaffle_shop:
@@ -137,9 +138,9 @@ In our case, let’s create a file called `profiles.yml` at the root of our dbt 
       threads: 4
 ```
 
-We don’t want to save the password of our user in a clear text file. For that purpose, we use the ability to read it from an environment variable. The next step is to save the value of our password as a secret in GitHub. In our GitHub repository, under Settings > Security > Secrets > Action, let’s create a secret called DB_PASSWORD to store our sensitive password.
+Мы не хотим сохранять пароль нашего пользователя в открытом текстовом файле. Для этой цели мы используем возможность считывать его из переменной окружения. Следующий шаг — сохранить значение нашего пароля как секрет в GitHub. В нашем репозитории GitHub, в разделе Settings > Security > Secrets > Action, давайте создадим секрет с именем DB_PASSWORD для хранения нашего конфиденциального пароля.
 
-Finally, we can create a new YAML file to define our GitHub action. e.g. `.github/workflows/pre_commit_checks.yml` The name is not important but this file must be saved  under the folders `.github/workflows/` (create those if they don’t exist yet)
+Наконец, мы можем создать новый YAML файл для определения нашего действия GitHub. Например, `.github/workflows/pre_commit_checks.yml`. Имя не важно, но этот файл должен быть сохранен в папках `.github/workflows/` (создайте их, если они еще не существуют).
 
 ```yaml
 name: pre-commit-check
@@ -159,7 +160,7 @@ jobs:
         os: ['ubuntu-latest']
         python-version: [3.8]
 
-    # Set environment variables used throughout workflow
+    # Установить переменные окружения, используемые в течение всего рабочего процесса
     env:
       DBT_PROFILES_DIR: .
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -169,30 +170,30 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-    # Using bash and pip to install dbt and pre-commit
-    # Update the dbt installation command to include the adapter you need
+    # Использование bash и pip для установки dbt и pre-commit
+    # Обновите команду установки dbt, чтобы включить адаптер, который вам нужен
       - name: Install dbt and pre-commit
         shell: bash -l {0}
         run: |
           python -m pip install dbt-postgres pre-commit
 
-    # This action will output all the files that are being created and modified in our PR
+    # Это действие выведет все файлы, которые создаются и модифицируются в нашем PR
       - name: Get changed files
         id: get_file_changes
         uses: trilom/file-changes-action@v1.2.4
         with:
           output: ' '
 
-    # Transforming the output of get_file_changes to a string we can use for our next step
-    # We want to take in account both new files and files that have been modified
+    # Преобразование вывода get_file_changes в строку, которую мы можем использовать для наших следующих шагов
+    # Мы хотим учитывать как новые файлы, так и файлы, которые были изменены
       - name: Get changed .sql files in /models to lint
         id: get_files_to_lint
         shell: bash -l {0}
         run: |
-          # Set the command in the $() brackets as an output to use in later steps
+          # Установите команду в $() в качестве вывода для использования на следующих шагах
           echo "::set-output name=files::$(
-          # Issue where grep regular expressions don't work as expected on the
-          # Github Actions shell, check dbt/models/ folder
+          # Проблема, когда регулярные выражения grep не работают как ожидалось в
+          # оболочке Github Actions, проверьте папку dbt/models/
           echo \
           $(echo ${{ steps.get_file_changes.outputs.files_modified }} |
           tr -s ' ' '\n' |
@@ -204,67 +205,66 @@ jobs:
           tr -s '\n' ' ')
           )"
 
-    # Finally run pre-commit
+    # Наконец, запустите pre-commit
       - name: Run pre-commit
         shell: bash -l {0}
         run: |
           pre-commit run --files ${{ steps.get_files_to_lint.outputs.files }}
 ```
 
-The code is documented and should be self-explanatory, in a nutshell, we perform the following steps:
-- Mention that this action and all the steps should be run for every PR to main
-- Retrieve the code from our PR
-- Install dbt and pre-commit
-- Identify the files modified in our PR and format them as a list of models separated by spaces
-- Execute a `pre-commit run --files` on the models we just modified or created
+Код документирован и должен быть самодостаточным, в двух словах, мы выполняем следующие шаги:
+- Указываем, что это действие и все шаги должны выполняться для каждого PR в main
+- Извлекаем код из нашего PR
+- Устанавливаем dbt и pre-commit
+- Определяем файлы, измененные в нашем PR, и форматируем их как список моделей, разделенных пробелами
+- Выполняем `pre-commit run --files` на моделях, которые мы только что изменили или создали
 
-Once we push those changes to our repo to a custom branch and create a PR to main, we see the following:
+Как только мы отправим эти изменения в наш репозиторий в пользовательскую ветку и создадим PR в main, мы увидим следующее:
 
-The GitHub action is running:
+Действие GitHub выполняется:
 
-![Screenshot of a GitHub action executing on a PR that is running the pre-commit-check test](/img/blog/2022-07-26-pre-commit-dbt/testing-running.png)
+![Скриншот выполнения действия GitHub на PR, который выполняет тест pre-commit-check](/img/blog/2022-07-26-pre-commit-dbt/testing-running.png)
 
-The step fails because I missed some tests and it tells me what model is failing:
+Шаг не удается, потому что я пропустил некоторые тесты, и он сообщает мне, какая модель не проходит:
 
-![Screenshot of the errors logs for the failed pre-commit-check test on the PR shown previously](/img/blog/2022-07-26-pre-commit-dbt/error-logs.png)
+![Скриншот журналов ошибок для неудачного теста pre-commit-check на ранее показанном PR](/img/blog/2022-07-26-pre-commit-dbt/error-logs.png)
 
-The result of the check is also shown in the PR directly:
+Результат проверки также показан непосредственно в PR:
 
-![Screenshot of the failed test shown directly in the PR "checks" interface](/img/blog/2022-07-26-pre-commit-dbt/checks-failed.png)
+![Скриншот неудачного теста, показанного непосредственно в интерфейсе "проверок" PR](/img/blog/2022-07-26-pre-commit-dbt/checks-failed.png)
 
+С этой информацией я теперь могу вернуться в dbt, задокументировать свою модель customers и отправить эти новые изменения в свой репозиторий для выполнения другой проверки.
 
-With that information, I could now go back to dbt, document my model customers and push those new changes to my repo for another check to be performed.
+Мы могли бы настроить правила, которые предотвращают любые изменения, если действие GitHub не удается. В качестве альтернативы, этот шаг действия может быть определен как просто информационный.
 
-We could set up rules that prevent any change to be merged if the GitHub action fails. Alternatively, this action step can be defined as merely informational. 
+#### b) Установка хуков git pre-commit (для пользователей dbt Core)
 
-#### b) Installing the pre-commit git hooks (for dbt Core users)
+Если мы разрабатываем локально с помощью dbt Core CLI, мы также могли бы выполнить `pre-commit install`, чтобы установить хуки git. Это означает, что каждый раз, когда мы хотим зафиксировать код в git, хуки pre-commit будут выполняться и будут предотвращать фиксацию, если какой-либо шаг не удастся.
 
-If we develop locally with the dbt Core CLI, we could also execute `pre-commit install` to install the git hooks. What it means then is that every time we want to commit code in git, the pre-commit hooks will run and will prevent us from committing if any step fails.
+Если мы хотим зафиксировать код без выполнения всех шагов pre-hook, мы могли бы использовать переменную окружения SKIP или флаг git `--no-verify`, как описано [в документации](https://pre-commit.com/#temporarily-disabling-hooks). (например, мы могли бы захотеть пропустить автоматическое `dbt docs generate` локально, чтобы предотвратить его выполнение при каждой фиксации и полагаться на его ручное выполнение время от времени)
 
-If we want to commit code without performing all the steps of the pre-hook we could use the environment variable SKIP or the git flag `--no-verify` as described [in the documentation](https://pre-commit.com/#temporarily-disabling-hooks). (e.g. we might want to skip the auto `dbt docs generate` locally to prevent it from running at every commit and rely on running it manually from time to time) 
+И если мы установим хуки и поймем, что они нам больше не нужны, нам просто нужно удалить папку `.git/hooks/`.
 
-And if we install the hooks and realize that we don’t want them anymore, we just need to delete the folder `.git/hooks/`
+#### c) Итак, тесты в CI или хуки git локально?
 
-#### c) So tests in CI, or git hooks locally?
+Эти две конфигурации не являются взаимоисключающими, а дополняющими друг друга.
+- Установка хуков локально гарантирует, что все наши модели следуют нашим соглашениям еще до их отправки в наш репозиторий, гарантируя, что шаг CI пройдет успешно.
+- А действие GitHub в качестве теста CI — это отличная защита для людей, использующих IDE dbt Cloud или локальных разработчиков, которые либо не установили хуки, либо пытались отправить изменения с флагом `--no-verify`.
 
-Those two configurations are not exclusive but complementary. 
-- Having the hooks set up locally ensures that all our models follow our conventions even before pushing them to our repo, ensuring that the CI step will pass correctly.
-- And the GitHub action as CI test is a great safeguard for people using the dbt Cloud IDE or local developers who either have not installed the hooks or tried to push changes with the `--no-verify` flag
+![Мем, который гласит "Почему бы не оба?"](/img/blog/2022-07-26-pre-commit-dbt/why-not-both-meme.png)
 
-![A meme that reads "Why not both?"](/img/blog/2022-07-26-pre-commit-dbt/why-not-both-meme.png)
+## Развитие этого решения
 
-## Taking this solution further
+Теперь у нас есть процесс, чтобы гарантировать, что правила, которые мы устанавливаем в отношении тестирования, требуемого в наших моделях dbt, применяются через автоматизированные шаги.
 
-We now have a process to ensure that the rules we are setting around testing required in our dbt models are enforced through automated steps.
+Что дальше? Возвращаясь к диаграмме в начале этого поста, мы теперь можем подумать о новых правилах, которые мы хотим автоматизировать, и изменить наш файл pre-commit и действия GitHub, чтобы повысить качество нашего проекта dbt.
 
-What next? Going back to the diagram at the beginning of this post, we can now think of new rules we want to automate and modify our pre-commit file and GitHub actions to increase the quality of our dbt project. 
+Важно, однако, помнить о хорошем балансе между установлением достаточного количества правил и автоматизацией для обеспечения хорошего качества проекта и установлением слишком большого их количества, отнимая время от более ценной работы и потенциально замедляя общий процесс разработки аналитики.
 
-It is important though to keep in mind a good balance between setting enough rules and automation to ensure a project of good quality and setting too many of them, taking time from more value-added work and potentially slowing down the overall analytics development process.
+![Диаграмма, которая добавляет дополнительные шаги к оригинальной диаграмме, показанной в начале статьи. Это решение включает циклический шаг для непрерывного добавления новых правил и использования линтера SQL.](/img/blog/2022-07-26-pre-commit-dbt/next-strategy.png)
 
-![A diagram that adds additional steps to the original diagram shown in the beginning of the article. This solution includes a cyclical step for continuously adding new rules and leveraging a SQL linter.](/img/blog/2022-07-26-pre-commit-dbt/next-strategy.png)
+- Мы могли бы, например, добавить SQLFluff в качестве линтера SQL, чтобы показать нам, какой код SQL не соответствует установленным нами правилам.
+- Или мы могли бы добавить больше проверок pre-commit-dbt, таких как check-model-name-contract, чтобы убедиться, что все наши имена моделей соответствуют правильной конвенции именования.
+- Или мы могли бы добавить проверку наших YAML файлов, чтобы убедиться, что они все правильно отступлены.
 
-- We could for example add SQLFluff as a SQL Linter to show us what SQL code is not following the rules that we have defined
-- Or we could add more pre-commit-dbt checks like check-model-name-contract to make sure that all our model names are following the correct naming convention
-- Or we could add a check on our YAML files to verify if they are all indented correctly
-
-If you have any questions about this process or want to share how you are using pre-commit and CI to increase the quality of your dbt project, feel free to jump in dbt Slack and post in [#i-made-this](https://getdbt.slack.com/archives/C01NH3F2E05) or  [#dbt-deployment-and-orchestration](https://getdbt.slack.com/archives/CMZ2Q9MA9) !
+Если у вас есть вопросы об этом процессе или вы хотите поделиться, как вы используете pre-commit и CI для повышения качества вашего проекта dbt, не стесняйтесь присоединяться к dbt Slack и публиковать в [#i-made-this](https://getdbt.slack.com/archives/C01NH3F2E05) или [#dbt-deployment-and-orchestration](https://getdbt.slack.com/archives/CMZ2Q9MA9)!

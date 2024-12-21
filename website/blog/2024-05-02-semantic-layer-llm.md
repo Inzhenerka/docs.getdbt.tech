@@ -1,6 +1,6 @@
 ---
-title: "Conversational Analytics: A Natural Language Interface to your Snowflake Data"
-description: "A tutorial on building a natural language interface to your Snowflake data using dbt Cloud Semantic Layer with Snowflake Cortex and Streamlit"
+title: "Аналитика на естественном языке: Интерфейс для данных Snowflake"
+description: "Учебник по созданию интерфейса на естественном языке для данных Snowflake с использованием семантического слоя dbt Cloud, Snowflake Cortex и Streamlit"
 slug: semantic-layer-cortex
 
 authors: [doug_guthrie]
@@ -12,42 +12,42 @@ date: 2024-05-02
 is_featured: true
 ---
 
-## Introduction
+## Введение
 
-As a solutions architect at dbt Labs, my role is to help our customers and prospects understand how to best utilize the dbt Cloud platform to solve their unique data challenges.  That uniqueness presents itself in different ways - organizational maturity, data stack, team size and composition, technical capability, use case, or some combination of those.  With all those differences though, there has been one common thread throughout most of my engagements:  Generative AI and Large Language Models (LLMs).  Data teams are either 1) proactively thinking about applications for it in the context of their work or 2) being pushed to think about it by their stakeholders.  It has become the elephant in every single (zoom) room I find myself in.
+Как архитектор решений в dbt Labs, моя роль заключается в том, чтобы помогать нашим клиентам и потенциальным клиентам понять, как лучше всего использовать платформу dbt Cloud для решения их уникальных задач с данными. Эта уникальность проявляется по-разному — зрелость организации, стек данных, размер и состав команды, технические возможности, случаи использования или их комбинация. Однако, несмотря на все эти различия, в большинстве моих взаимодействий присутствует одна общая нить: генеративный ИИ и большие языковые модели (LLM). Команды по работе с данными либо 1) проактивно думают о применении этих технологий в контексте своей работы, либо 2) их подталкивают к этому их заинтересованные стороны. Это стало "слоном в комнате" в каждом (zoom) разговоре, в котором я участвую.
 
 <!--truncate-->
 
-<Lightbox src="/img/blog/2024-05-02-semantic-layer-llm/gen-ai-everywhere.png" width="85%" title="Gen AI Everywhere!" />
+<Lightbox src="/img/blog/2024-05-02-semantic-layer-llm/gen-ai-everywhere.png" width="85%" title="Генеративный ИИ повсюду!" />
 
-Clearly, this technology is not going away. There are already countless number of use cases and applications already showing very real improvements to efficiency, productivity, and creativity. Inspired by the common problem faced by data teams I'm talking to, I built a [Streamlit app](https://dbt-semantic-layer.streamlit.app/) which uses Snowflake Cortex and the dbt Semantic Layer to answer free-text questions accurately and consistently. You can preview examples of the questions it's able to answer below:
+Очевидно, что эта технология никуда не исчезнет. Уже существует бесчисленное количество случаев использования и приложений, которые демонстрируют очень реальные улучшения в эффективности, продуктивности и креативности. Вдохновленный общей проблемой, с которой сталкиваются команды по работе с данными, я создал [приложение Streamlit](https://dbt-semantic-layer.streamlit.app/), которое использует Snowflake Cortex и семантический слой dbt для точного и последовательного ответа на вопросы в свободной форме. Вы можете просмотреть примеры вопросов, на которые оно способно ответить, ниже:
 
 <LoomVideo id='3b5cc878ef53488583691c390159007d?t=0' />
 
-## Why Build This
+## Зачем это строить
 
-So, why build this and what makes it different?
+Итак, зачем строить это и чем оно отличается?
 
-- The outcome of an application like this aligns incredibly well with the mandate of most data teams - empower stakeholders by providing them with the data they need, in a medium they can consume, all while considering aspects of trust, governance, and accuracy
-- The accuracy component is the very unique value proposition of an application like this relative to any other solution out there that purports to write SQL from a text prompt (check out some early benchmarks [here](https://www.getdbt.com/blog/semantic-layer-as-the-data-interface-for-llms)).  The reason for that is we’re not asking the LLM to write a SQL query, which is prone to hallucinating tables, columns, or just SQL that’s not valid. Instead, it generates a highly structured [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow) request. MetricFlow is the underlying piece of technology in the semantic layer that will translate that request to SQL based on the semantics you’ve defined in your dbt project.
-- If I’m being honest, it’s also an incredibly valuable tool to show our customers and prospects!
+- Результат такого приложения невероятно хорошо соответствует мандату большинства команд по работе с данными — предоставлять заинтересованным сторонам данные, которые им нужны, в формате, который они могут потреблять, при этом учитывая аспекты доверия, управления и точности.
+- Компонент точности является уникальным предложением ценности такого приложения по сравнению с любым другим решением, которое утверждает, что пишет SQL из текстового запроса (ознакомьтесь с ранними тестами [здесь](https://www.getdbt.com/blog/semantic-layer-as-the-data-interface-for-llms)). Причина в том, что мы не просим LLM написать SQL-запрос, что может привести к ошибкам в таблицах, столбцах или просто к недействительному SQL. Вместо этого он генерирует высокоструктурированный запрос [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow). MetricFlow — это основная технология в семантическом слое, которая переводит этот запрос в SQL на основе семантики, определенной в вашем проекте dbt.
+- Если быть честным, это также невероятно ценный инструмент для демонстрации нашим клиентам и потенциальным клиентам!
 
-## The Tech
+## Технологии
 
-The application uses [dbt Cloud’s Semantic Layer](https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl) alongside [Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/overview) and [Streamlit](https://docs.snowflake.com/en/developer-guide/streamlit/about-streamlit) to power a natural language interface that enables users to retrieve data from their Snowflake platforms by simply asking questions like “What is total revenue by month in 2024?”.  Before we go too deep, let’s review what these tools are:
+Приложение использует [семантический слой dbt Cloud](https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl) вместе с [Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/overview) и [Streamlit](https://docs.snowflake.com/en/developer-guide/streamlit/about-streamlit) для создания интерфейса на естественном языке, который позволяет пользователям получать данные из их платформ Snowflake, просто задавая вопросы, такие как "Каков общий доход по месяцам в 2024 году?". Прежде чем углубляться, давайте рассмотрим, что это за инструменты:
 
-|  | **Semantic Layer** | **Snowflake Cortex** | **Streamlit** |
+|  | **Семантический слой** | **Snowflake Cortex** | **Streamlit** |
 |---|---|---|---|
-| What Is it? | Acts as an intermediary between a customer’s data platform and the various consumption points within their organization taking in requests and translating them into SQL. | Fully managed Snowflake service that offers machine learning and AI solutions, including LLM Functions and ML Functions. | Open-source Python framework that enables the rapid development of interactive web application |
-| Why Use It? | Ensure consistent self-service access to metrics in downstream data tools and applications, eliminating the need for duplicate coding and, more importantly, ensuring that any stakeholder is working from the same, trusted metric definitions, regardless of their tool of  choice or technical capability. | Provides a seamless experience for interacting with LLMs, all from within your Snowflake account. | Declarative approach to building data-driven applications, allowing developers to focus on the core functionality rather than spending excessive time on frontend development. |
+| Что это? | Действует как посредник между платформой данных клиента и различными точками потребления в его организации, принимая запросы и переводя их в SQL. | Полностью управляемый сервис Snowflake, предлагающий решения для машинного обучения и ИИ, включая функции LLM и ML. | Открытая Python-фреймворк, позволяющая быстро разрабатывать интерактивные веб-приложения. |
+| Зачем использовать? | Обеспечивает согласованный доступ к метрикам в инструментах и приложениях для работы с данными, устраняя необходимость в дублировании кода и, что более важно, гарантируя, что любой заинтересованный работает с одними и теми же, проверенными определениями метрик, независимо от их инструмента или технических возможностей. | Обеспечивает бесшовный опыт взаимодействия с LLM, все из вашего аккаунта Snowflake. | Декларативный подход к созданию приложений, основанных на данных, позволяющий разработчикам сосредоточиться на основной функциональности, а не тратить чрезмерное время на разработку интерфейса. |
 
-## Prerequisites
+## Предварительные условия
 
 ### Snowflake
 
-Within Snowflake, you’ll need the following:
+В Snowflake вам потребуется следующее:
 
-The required privileges for Snowflake Cortex are laid out in detail [here](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#required-privileges), but at a high level you’ll need to grant the `SNOWFLAKE.CORTEX_USER` database role to the user(s) accessing any of the functions available via Cortex.  For example:
+Необходимые привилегии для Snowflake Cortex подробно описаны [здесь](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#required-privileges), но в общих чертах вам нужно будет предоставить роль `SNOWFLAKE.CORTEX_USER` пользователю(ям), имеющим доступ к любым функциям, доступным через Cortex. Например:
 
 ```sql
 use role accountadmin;
@@ -58,23 +58,23 @@ grant database role snowflake.cortex_user to role cortex_user_role;
 grant role cortex_user_role to user some_user;
 ```
 
-To create streamlit apps within Snowflake, you need to grant the `CREATE STREAMLIT` privilege.  An example script is below:
+Для создания приложений Streamlit в Snowflake вам нужно предоставить привилегию `CREATE STREAMLIT`. Пример скрипта ниже:
 
 ```sql
--- If you want all roles to create Streamlit apps, run
+-- Если вы хотите, чтобы все роли могли создавать приложения Streamlit, выполните
 grant usage on database <database_name> to role public;
 grant usage on schema <database_name>.<schema_name> to role public;
 grant create streamlit on schema <database_name>.<schema_name> to role public;
 grant create stage on schema <database_name>.<schema_name> to role public;
 
--- Don't forget to grant USAGE on a warehouse (if you can).
+-- Не забудьте предоставить USAGE на склад (если можете).
 grant usage on warehouse <warehouse_name> to role public;
 
--- If you only want certain roles to create Streamlit apps, 
--- change the role name in the above commands.
+-- Если вы хотите, чтобы только определенные роли могли создавать приложения Streamlit,
+-- измените имя роли в командах выше.
 ```
 
-Additionally, you’ll need to set up a network rule, an external access integration, and a UDF that makes a request to the dbt Cloud Semantic Layer.  Be mindful of the values you have in your network rule and UDF - they'll need to correspond to the host where your dbt Cloud account is [deployed](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-graphql#dbt-semantic-layer-graphql-api).
+Кроме того, вам нужно будет настроить сетевое правило, интеграцию внешнего доступа и UDF, который делает запрос к семантическому слою dbt Cloud. Обратите внимание на значения в вашем сетевом правиле и UDF — они должны соответствовать хосту, где развернут ваш аккаунт dbt Cloud [развернут](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-graphql#dbt-semantic-layer-graphql-api).
 
 ```sql
 grant create network rule on schema <database_name>.<schema_name> to role public;
@@ -106,21 +106,21 @@ grant ownership on secret dbt_cloud_service_token to role public;
 grant usage on secret dbt_cloud_service_token to role public;
 ```
 
-The UDFs are called out individually in further sections below.
+UDF описаны отдельно в дальнейших разделах ниже.
 
 ### dbt Cloud
 
-Within dbt Cloud, you’ll need the following (more detail can be found [here](https://docs.getdbt.com/docs/use-dbt-semantic-layer/quickstart-sl#prerequisites)):
+В dbt Cloud вам потребуется следующее (подробности можно найти [здесь](https://docs.getdbt.com/docs/use-dbt-semantic-layer/quickstart-sl#prerequisites)):
 
-- Have a dbt Cloud Team or Enterprise account. Suitable for both Multi-tenant and Single-tenant deployment.
-- Have both your production and development [environments](https://docs.getdbt.com/docs/dbt-cloud-environments) running dbt version 1.6 or higher.
-- Create a successful job run in the environment where you [configure the Semantic Layer](https://docs.getdbt.com/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer).
+- Иметь командный или корпоративный аккаунт dbt Cloud. Подходит как для многопользовательского, так и для однопользовательского развертывания.
+- Иметь как производственные, так и разработческие [среды](https://docs.getdbt.com/docs/dbt-cloud-environments), работающие на версии dbt 1.6 или выше.
+- Создать успешный запуск задания в среде, где вы [настраиваете семантический слой](https://docs.getdbt.com/docs/use-dbt-semantic-layer/setup-sl#set-up-dbt-semantic-layer).
 
-## The Code
-There are several components to the application that are worth calling out here individually: retrieving your project’s semantics (specifically metrics and dimensions) when the application loads, examples that guide the LLM to what valid and invalid output looks like, parsing the output to a structured object, and then using that output as an argument in the UDF we built earlier that makes a request to the Semantic Layer.
+## Код
+Существует несколько компонентов приложения, которые стоит выделить отдельно: получение семантики вашего проекта (в частности, метрик и измерений) при загрузке приложения, примеры, которые направляют LLM на то, как выглядит допустимый и недопустимый вывод, разбор вывода в структурированный объект, а затем использование этого вывода в качестве аргумента в UDF, который мы создали ранее, чтобы сделать запрос к семантическому слою.
 
-### Retrieving Semantics
-When we create our prompt for the LLM, we’ll need to pass in the relevant metrics and dimensions that have been defined in our dbt project.  Without this, the LLM wouldn’t have the relevant information to parse when a user asks their particular question.  Additionally, this is an external request to dbt Cloud’s Semantic Layer API, so we’ll need to use an existing UDF.  Again, make sure you update the url to match your deployment type.  Also, note that we're using the external access integration and secret that we created earlier.
+### Получение семантики
+Когда мы создаем наш запрос для LLM, нам нужно передать соответствующие метрики и измерения, которые были определены в нашем проекте dbt. Без этого LLM не будет иметь соответствующей информации для разбора, когда пользователь задает свой конкретный вопрос. Кроме того, это внешний запрос к API семантического слоя dbt Cloud, поэтому нам нужно использовать существующий UDF. Опять же, убедитесь, что вы обновили URL, чтобы он соответствовал вашему типу развертывания. Также обратите внимание, что мы используем интеграцию внешнего доступа и секрет, которые мы создали ранее.
 
 ```sql
 create or replace function retrieve_sl_metadata()
@@ -158,10 +158,10 @@ def main():
     token = _snowflake.get_generic_secret_string('cred')
     session.headers = {'Authorization': f'Bearer {token}'}
 
-    # TODO: Update for your environment ID
+    # TODO: Обновите для вашего ID среды
     payload = {"query": query, "variables": {"environmentId": 1}}
 
-    # TODO: Update for your deployment type
+    # TODO: Обновите для вашего типа развертывания
     response = session.post("https://semantic-layer.cloud.getdbt.com/api/graphql", json=payload)
     response.raise_for_status()
     return response.json()
@@ -171,15 +171,15 @@ $$;
 grant usage on function retrieve_sl_metadata() to role public;
 ```
 
-Couple of things to note about the code above:
+Несколько моментов, на которые стоит обратить внимание в коде выше:
 
-- Make sure you update the code to include your environment ID and your URL that’s specific to your [deployment type](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-graphql#dbt-semantic-layer-graphql-api).
-You could modify the function to accept arguments for payload, variables, query, etc. to make it more dynamic and satisfy other use cases outside of this one.
-- Once the data has been returned, we’re going to use streamlit’s [session state](https://docs.streamlit.io/develop/api-reference/caching-and-state/st.session_state) feature to store the dbt project’s defined metrics and dimensions.  This feature will allow us to make multiple calls without having to continually retrieve this metadata.
+- Убедитесь, что вы обновили код, чтобы включить ваш ID среды и ваш URL, который специфичен для вашего [типа развертывания](https://docs.getdbt.com/docs/dbt-cloud-apis/sl-graphql#dbt-semantic-layer-graphql-api).
+Вы можете изменить функцию, чтобы она принимала аргументы для payload, variables, query и т.д., чтобы сделать ее более динамичной и удовлетворить другие случаи использования, кроме этого.
+- После того как данные были возвращены, мы будем использовать функцию [session state](https://docs.streamlit.io/develop/api-reference/caching-and-state/st.session_state) Streamlit для хранения определенных метрик и измерений проекта dbt. Эта функция позволит нам делать несколько вызовов без необходимости постоянно получать эти метаданные.
 
-### Creating Examples
+### Создание примеров
 
-Aside from using the metrics and dimensions that we retrieved in the step above, we’re also going to use in the prompt, examples of questions a user would ask and what the corresponding output should look like.  This allows us to “train” the LLM and ensure we can accommodate the various ways people ask questions.  An example of this is guiding the LLM in how it can structure SQL used in a where clause when a question is time-based (e.g. “Give me year-to-date revenue by department”).  An example of this might look like:
+Помимо использования метрик и измерений, которые мы получили на предыдущем шаге, мы также будем использовать в запросе примеры вопросов, которые пользователь может задать, и как должен выглядеть соответствующий вывод. Это позволяет нам "обучать" LLM и гарантировать, что мы можем учитывать различные способы, которыми люди задают вопросы. Примером этого является руководство для LLM о том, как он может структурировать SQL, используемый в условии where, когда вопрос основан на времени (например, "Дайте мне доход с начала года по отделам"). Пример этого может выглядеть так:
 
 ```python
 {
@@ -203,10 +203,10 @@ Aside from using the metrics and dimensions that we retrieved in the step above,
 }
 ```
 
-There is a tradeoff with this approach though that is worth mentioning - the examples we use to guide the LLM will be used in the prompt and thus increase the number of tokens processed, which is how Snowflake’s Cortex functions measure compute cost.  For some context, the LLM used in this application is mistral-8x7b, which charges .22 Credits / 1M Tokens and has a context window of 32,000 tokens.
+Однако стоит упомянуть о компромиссе с этим подходом — примеры, которые мы используем для руководства LLM, будут использоваться в запросе и, таким образом, увеличат количество обрабатываемых токенов, что является мерой вычислительных затрат функций Cortex Snowflake. Для контекста, LLM, используемая в этом приложении, — это mistral-8x7b, которая взимает 0.22 кредита за 1 миллион токенов и имеет контекстное окно в 32,000 токенов.
 
-### Structured Object Parsing
-Another important piece to this application is parsing the output from the LLM into a structured object, specifically a [Pydantic model](https://docs.pydantic.dev/latest/concepts/models/).  As I was building out this application, I continually ran into problems with the LLM.  The problem was not providing correct responses, which it did, but responses that had the same structure and continuity from question to question.  Even trying very explicit instructions in the prompt like “Only return relevant metrics and dimensions” or “Do not explain your output in any way”, I continued to receive output that made it hard to parse and then extract the relevant information to form an appropriate request to the semantic layer.  This led me to LangChain and the [PydanticOutputParser](https://python.langchain.com/docs/modules/model_io/output_parsers/types/pydantic/), which allowed me to specify an arbitrary Pydantic Model and make the output from the LLM conform to that schema.
+### Разбор структурированного объекта
+Еще одна важная часть этого приложения — разбор вывода из LLM в структурированный объект, в частности, модель [Pydantic](https://docs.pydantic.dev/latest/concepts/models/). В процессе создания этого приложения я постоянно сталкивался с проблемами с LLM. Проблема заключалась не в предоставлении правильных ответов, которые она давала, а в ответах, которые имели одинаковую структуру и непрерывность от вопроса к вопросу. Даже при попытке очень явных инструкций в запросе, таких как "Возвращайте только соответствующие метрики и измерения" или "Не объясняйте свой вывод никаким образом", я продолжал получать вывод, который затруднял разбор и извлечение соответствующей информации для формирования подходящего запроса к семантическому слою. Это привело меня к LangChain и [PydanticOutputParser](https://python.langchain.com/docs/modules/model_io/output_parsers/types/pydantic/), который позволил мне указать произвольную модель Pydantic и заставить вывод из LLM соответствовать этой схеме.
 
 ```python
 class Query(BaseModel):
@@ -217,11 +217,11 @@ class Query(BaseModel):
     limit: Optional[int] = None
 ```
 
-The beauty of this approach is that I can create the individual attributes that form a query, like `metrics` or `groupBy`, and create individual Pydantic models for each of those that map to the schema that the GraphQL API expects.  Once I get it into this format, it becomes very easy to create the API request to finally return data from my snowflake warehouse that answers the question the user asked.
+Прелесть этого подхода в том, что я могу создать отдельные атрибуты, которые формируют запрос, такие как `metrics` или `groupBy`, и создать отдельные модели Pydantic для каждого из них, которые соответствуют схеме, ожидаемой API GraphQL. Как только я получаю это в таком формате, становится очень легко создать API-запрос, чтобы наконец вернуть данные из моего хранилища Snowflake, которые отвечают на вопрос, заданный пользователем.
 
-### Retrieving Data
+### Получение данных
 
-Once my `Query` object has been created, I can use that output to both form the GraphQL query and the relevant variables to be used in the payload.  This payload will be the argument we pass to the UDF that we created earlier to 1) create a query via the Semantic Layer and 2) using that query ID, poll until a completion event and return the data back to the Streamlit application.  This is again an external request to the dbt Cloud Semantic Layer so a UDF will be used.
+Как только мой объект `Query` создан, я могу использовать этот вывод для формирования GraphQL-запроса и соответствующих переменных, которые будут использоваться в полезной нагрузке. Эта полезная нагрузка будет аргументом, который мы передаем в UDF, который мы создали ранее, чтобы 1) создать запрос через семантический слой и 2) используя этот ID запроса, опрашивать до завершения события и вернуть данные обратно в приложение Streamlit. Это снова внешний запрос к семантическому слою dbt Cloud, поэтому будет использоваться UDF.
 
 ```sql
 create or replace function submit_sl_request(payload string)
@@ -291,8 +291,8 @@ $$;
 grant usage on function submit_sl_request(string) to role public;
 ```
 
-## Wrapping Up
+## Завершение
 
-Building this application has been an absolute blast for multiple reasons.  First, we’ve been able to use it internally within the SA org to demonstrate how the semantic layer works.  It provides yet another [integration](https://docs.getdbt.com/docs/cloud-integrations/avail-sl-integrations) point that further drives home the fundamental value prop of using the Semantic Layer.  Secondly, and more importantly, it has served as an example to those customers thinking about (or being pushed to think about) how they can best utilize these technologies to further their goals.  Finally, I’ve been able to be heads down, hands on keyboard learning about all of these interesting technologies and stepping back into the role of builder is something I will never turn down!
+Создание этого приложения было невероятно увлекательным по нескольким причинам. Во-первых, мы смогли использовать его внутри организации SA для демонстрации работы семантического слоя. Это предоставляет еще одну [интеграцию](https://docs.getdbt.com/docs/cloud-integrations/avail-sl-integrations), которая еще больше подчеркивает основное предложение ценности использования семантического слоя. Во-вторых, и что более важно, оно служило примером для тех клиентов, которые думают (или их подталкивают к мысли) о том, как они могут наилучшим образом использовать эти технологии для достижения своих целей. Наконец, я смог погрузиться в изучение всех этих интересных технологий и вернуться к роли создателя — это то, от чего я никогда не откажусь!
 
-Finally, to see the entire code, from Snowflake to Streamlit, check out the repo [here](https://github.com/dpguthrie/dbt-sl-cortex-streamlit-blog/tree/main?tab=readme-ov-file).
+Наконец, чтобы увидеть весь код, от Snowflake до Streamlit, ознакомьтесь с репозиторием [здесь](https://github.com/dpguthrie/dbt-sl-cortex-streamlit-blog/tree/main?tab=readme-ov-file).

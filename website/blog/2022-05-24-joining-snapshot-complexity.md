@@ -1,6 +1,6 @@
 ---
-title: "Tackling the complexity of joining snapshots"
-description: "Tracking changes in your dataset over time by joining snapshots can be a complex proces. Learn how to tackle that complexity with Lauren Benezra"
+title: "Решение проблемы сложности объединения снимков"
+description: "Отслеживание изменений в вашем наборе данных с течением времени путем объединения снимков может быть сложным процессом. Узнайте, как справиться с этой сложностью с Лорен Бенезра"
 slug: joining-snapshot-complexity
 
 authors: [lauren_benezra]
@@ -12,26 +12,26 @@ date: 2022-05-26
 is_featured: true
 ---
 
-Let’s set the scene. You are an [analytics engineer](https://www.getdbt.com/what-is-analytics-engineering/) at your company. You have several relational datasets flowing through your warehouse, and, of course, you can easily access and transform these <Term id="table">tables</Term> through dbt. You’ve joined together the tables appropriately and have near-real time reporting on the relationships for each `entity_id` as it currently exists. 
+Давайте представим ситуацию. Вы — [инженер по аналитике](https://www.getdbt.com/what-is-analytics-engineering/) в вашей компании. У вас есть несколько реляционных наборов данных, поступающих в ваш хранилище, и, конечно, вы можете легко получить доступ к этим <Term id="table">таблицам</Term> и преобразовать их с помощью dbt. Вы правильно объединили таблицы и имеете почти в реальном времени отчеты о связях для каждого `entity_id`, как они существуют в данный момент.
 
-But, at some point, your stakeholder wants to know how each entity is changing over time. Perhaps, it is important to understand the trend of a product throughout its lifetime. You need the history of each `entity_id` across all of your datasets, because each related table is updated on its own timeline. 
+Но в какой-то момент ваш заинтересованный пользователь хочет знать, как каждый объект изменяется с течением времени. Возможно, важно понять тенденцию продукта на протяжении его жизненного цикла. Вам нужна история каждого `entity_id` во всех ваших наборах данных, потому что каждая связанная таблица обновляется по своему собственному графику.
 
-What is your first thought? Well, you’re a seasoned analytics engineer and you *know* the good people of dbt Labs have a solution for you. And then it hits you — the answer is [snapshots](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots)!
+Какая ваша первая мысль? Ну, вы опытный инженер по аналитике и *знаете*, что хорошие люди из dbt Labs имеют решение для вас. И тут вас осеняет — ответ в [снимках](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots)!
 
 <!--truncate-->
 
-### What are snapshots and where do they get complex?
+### Что такое снимки и где они становятся сложными?
 
-Snapshots provide a picture of changes throughout history — a snapshot-in-time, if you will. When a value in a row of a raw table is updated, a new row is added to your snapshot-table, building a historical record of your data. 
+Снимки предоставляют картину изменений на протяжении истории — снимок во времени, если хотите. Когда значение в строке сырой таблицы обновляется, новая строка добавляется в вашу таблицу-снимок, создавая историческую запись ваших данных.
 
-Here’s an example of a dataset. 
+Вот пример набора данных.
 
 | entity_id | important_status | updated_at |
 | --- | --- | --- |
 | 1 | available | 2021-11-15 16:00:0000 |
 | 2 | not_available | 2021-11-15 15:30:0000 |
 
-When you apply a snapshot to this data, you’ll see the history of the data, and the `valid_from` and `valid_to` timestamps to capture when the row values were valid, and the values during those timespans.  
+Когда вы применяете снимок к этим данным, вы увидите историю данных, а также временные метки `valid_from` и `valid_to`, чтобы зафиксировать, когда значения строк были действительными, и значения в эти периоды времени.
 
 | entity_id | important_status | dbt_valid_from | dbt_valid_to |
 | --- | --- | --- | --- |
@@ -40,11 +40,11 @@ When you apply a snapshot to this data, you’ll see the history of the data, an
 | 1 | not_available | 2021-10-01 10:00:000 | 2021-11-10 08:00:000 |
 | 2 | not_available | 2021-11-15 15:30:0000 | NULL  |
 
-Snapshots are incredibly useful, but they do add a bit of complexity for joining tables downstream because you’ve added multiple rows of history per id. What happens when you have 10 snapshots that you want to join together, and you want to capture the history of all the datasets? 
+Снимки невероятно полезны, но они добавляют немного сложности при объединении таблиц вниз по потоку, потому что вы добавили несколько строк истории на каждый id. Что происходит, когда у вас есть 10 снимков, которые вы хотите объединить, и вы хотите зафиксировать историю всех наборов данных?
 
-Consider the complexity of the problem: you’ve successfully captured the history of all your tables using snapshots. You have `history_table_1` and `history_table_2`, and you want to join on a common key, `product_id`. However, we cannot just join on the primary key because each table has several rows of history for the same id, all valid across different timespans. 
+Рассмотрим сложность проблемы: вы успешно зафиксировали историю всех ваших таблиц, используя снимки. У вас есть `history_table_1` и `history_table_2`, и вы хотите объединить их по общему ключу, `product_id`. Однако мы не можем просто объединить по первичному ключу, потому что каждая таблица имеет несколько строк истории для одного и того же id, все действительные в разные временные промежутки.
 
-`history_table_1`: 
+`history_table_1`:
 
 | product_id | important_status | dbt_valid_from | dbt_valid_to |
 | --- | --- | --- | --- |
@@ -63,55 +63,55 @@ Consider the complexity of the problem: you’ve successfully captured the histo
 | 1 | B | 1B | pending | 2021-11-10 10:00:000 | 2021-11-15 15:30:0000 |
 | 2 | C | 2C | available | 2021-11-10 15:00:0000 | NULL  |
 
-This doesn’t look so bad. How complex can this get? Let’s take a look at the math. Say `historical_table_1` has _x_ historical rows per `product_id`, and _y_ ids total. That’s _x*y = n_ rows of data. `historical_table_2` has _z_  historical rows per `product_id`, and _w_ ids (_z*w = m_ rows). The subsequent join on `product_id` then [changes the complexity](https://www.freecodecamp.org/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/) from _O(n)_ to _O(n\*m)_ very quickly (_x\*y\*z\*w_ possibilities!). The complexity continues to increase as we join together more and more historical tables. 
+Это не выглядит так уж плохо. Насколько это может быть сложно? Давайте посмотрим на математику. Скажем, `historical_table_1` имеет _x_ исторических строк на `product_id`, и _y_ id всего. Это _x*y = n_ строк данных. `historical_table_2` имеет _z_ исторических строк на `product_id`, и _w_ id (_z*w = m_ строк). Последующее объединение по `product_id` затем [изменяет сложность](https://www.freecodecamp.org/news/big-o-notation-why-it-matters-and-why-it-doesnt-1674cfa8a23c/) с _O(n)_ на _O(n\*m)_ очень быстро (_x\*y\*z\*w_ возможностей!). Сложность продолжает увеличиваться по мере объединения все большего количества исторических таблиц.
 
-I know what you’re thinking — what a mess! Can’t we just join everything together, and snapshot the resulting table? This is not a bad thought. It would save you the trouble of thinking through a problem with _O(n\*m\*a\*b\*c\*d\*...\*q)_ complexity. And in some cases, this may capture all the history you need! 
+Я знаю, о чем вы думаете — какой беспорядок! Не можем ли мы просто все объединить и сделать снимок полученной таблицы? Это не такая уж плохая мысль. Это избавило бы вас от необходимости продумывать проблему с _O(n\*m\*a\*b\*c\*d\*...\*q)_ сложностью. И в некоторых случаях это может зафиксировать всю историю, которая вам нужна!
 
-However, it does not provide a solution to the problem initially posed. The historical records track when each table is valid, rather than when the joined table is valid, and this history for each dataset will only be reflected when you snapshot each table, and then join them, rather than joining and subsequently snapshotting the table. The `valid_from` and `valid_to` built into the joined-then-snapshotted table will only be built from `updated_at` timestamps where the joined table is updated, and thus changes in the underlying data may not be captured. We want to understand when the records are truly valid across all tables, meaning we need to take into account the valid timestamps from each individual dataset. 
+Однако это не предоставляет решения проблемы, поставленной изначально. Исторические записи отслеживают, когда каждая таблица действительна, а не когда действительна объединенная таблица, и эта история для каждого набора данных будет отражена только тогда, когда вы сделаете снимок каждой таблицы, а затем объедините их, а не объедините и затем сделаете снимок таблицы. `valid_from` и `valid_to`, встроенные в объединенную-затем-снимочную таблицу, будут построены только из временных меток `updated_at`, где обновляется объединенная таблица, и, следовательно, изменения в исходных данных могут не быть зафиксированы. Мы хотим понять, когда записи действительно действительны во всех таблицах, что означает, что нам нужно учитывать действительные временные метки из каждого отдельного набора данных.
 
-Okay so we’ve ruled out the easy way to solve this question. So let’s tackle that _O(n\*m\*a\*b\*c\*d\*...\*q)_ problem! We can do it. 
+Хорошо, мы исключили легкий способ решения этого вопроса. Так что давайте решим эту проблему _O(n\*m\*a\*b\*c\*d\*...\*q)_! Мы можем это сделать.
 
-### The action plan for our solution
+### План действий для нашего решения
 
-Ultimately, our goal is to capture the history for the `product_id` and join the rows that are valid at the same time. As a result, we can get a view of our data at a given point in time that accurately represents the valid state of any given date. 
+В конечном итоге наша цель — зафиксировать историю для `product_id` и объединить строки, которые действительны в одно и то же время. В результате мы можем получить представление о наших данных в данный момент времени, которое точно представляет действительное состояние на любую заданную дату.
 
-For `historical_table_1` and `historical_table_2`, we will join on `product_id` where `historical_table_1.valid_from` to `historical_table_1.valid_to` has overlapping time with `historical_table_2.valid_from` to `historical_table_2.valid_to`. 
+Для `historical_table_1` и `historical_table_2` мы будем объединять по `product_id`, где `historical_table_1.valid_from` до `historical_table_1.valid_to` имеет пересекающееся время с `historical_table_2.valid_from` до `historical_table_2.valid_to`.
 
-This boils down to the following steps: 
+Это сводится к следующим шагам:
 
-1. Get rid of dupes if needed
-2. Snapshot your data tables 
-3. Future-proof your `valid_to` dates
-4. Join your non-matching grain tables to build a fanned out spine containing the grain ids onto which we will join the rest of the data
-5. Join the snapshots to the data spine on the appropriate id in overlapping timespans, narrowing the valid timespans per row as more tables are joined
-6. Clean up your columns in final <Term id="cte" />
-7. Optional addition of global variable to filter to current values only 
+1. Избавьтесь от дубликатов, если это необходимо
+2. Сделайте снимок ваших таблиц данных
+3. Защитите ваши даты `valid_to` на будущее
+4. Объедините ваши таблицы с несовпадающим зерном, чтобы построить разветвленный стержень, содержащий зерновые id, к которым мы будем присоединять остальные данные
+5. Присоедините снимки к стержню данных по соответствующему id в пересекающихся временных промежутках, сужая действительные временные промежутки на строку по мере присоединения большего количества таблиц
+6. Очистите ваши столбцы в финальной <Term id="cte" />
+7. Необязательное добавление глобальной переменной для фильтрации только текущих значений
 
-So let’s dive in! Head first! Step 1 is outlined in this blog post: [How to deduplicate partial duplicates](https://docs.getdbt.com/blog/how-we-remove-partial-duplicates). It only needs to be implemented if you are dealing with dupes in your data. If you don’t have duplicates in your data (wow! send me the number of your Data Engineer *ASAP*), you can skip this step. 
+Итак, давайте погрузимся! С головой! Шаг 1 описан в этом блоге: [Как удалить частичные дубликаты](https://docs.getdbt.com/blog/how-we-remove-partial-duplicates). Его нужно реализовать только в том случае, если вы имеете дело с дубликатами в ваших данных. Если у вас нет дубликатов в данных (вау! пришлите мне номер вашего инженера по данным *СРОЧНО*), вы можете пропустить этот шаг.
 
 ![backtothefuture.gif](/img/blog/2022-05-24-joining-snapshot-complexity/backtothefuture.gif)
 
-## Step 1: Ensure your data tables are duplicate free
+## Шаг 1: Убедитесь, что ваши таблицы данных не содержат дубликатов
 
-:::important What happens in this step? 
-Step 1 walks you through how to build a surrogate key from column values using a macro, and then removing said duplicates from your data. No duplicates? Skip to Step 2.
+:::important Что происходит на этом шаге?
+Шаг 1 проведет вас через процесс создания суррогатного ключа из значений столбцов с помощью макроса, а затем удаления этих дубликатов из ваших данных. Нет дубликатов? Перейдите к Шагу 2.
 :::
 
-Why is this step important? Because you’ll be joining so many rows on the same id, and the valid timestamps for each row will determine the exact place to join one table to another. We cannot do this accurately with duplicates! (But also, you should be checking for dupes anyway because we are analytics engineers, right?)
+Почему этот шаг важен? Потому что вы будете объединять так много строк по одному и тому же id, и действительные временные метки для каждой строки будут определять точное место для объединения одной таблицы с другой. Мы не можем сделать это точно с дубликатами! (Но также, вы должны проверять на наличие дубликатов в любом случае, потому что мы инженеры по аналитике, верно?)
 
 ![clean-data-meme.png](/img/blog/2022-05-24-joining-snapshot-complexity/clean-data-meme.png)
 
-See [this blog post for deduping partial duplicates](https://docs.getdbt.com/blog/how-we-remove-partial-duplicates)!
+Смотрите [этот блог для удаления частичных дубликатов](https://docs.getdbt.com/blog/how-we-remove-partial-duplicates)!
 
-## Step 2: Snapshot your data
+## Шаг 2: Сделайте снимок ваших данных
 
-:::important What happens in this step? 
-Step 2 walks you through how to snapshot your data. The example provided assumes you went through Step 1, but if you skipped that step, just snapshot your data based on the links provided below.
+:::important Что происходит на этом шаге?
+Шаг 2 проведет вас через процесс создания снимка ваших данных. Пример предполагает, что вы прошли Шаг 1, но если вы пропустили этот шаг, просто сделайте снимок ваших данных, основываясь на ссылках, предоставленных ниже.
 :::
 
-Do you know how to snapshot data? It is a simple Jinja block with some configs specified. There are so many explanations of how to implement these, so I’m not going to bore you. But you know I’ll throw you some links. [Boom.](https://blog.getdbt.com/track-data-changes-with-dbt-snapshots/) [And foobar!](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots)
+Знаете ли вы, как сделать снимок данных? Это простой блок Jinja с некоторыми указанными конфигурациями. Существует так много объяснений, как реализовать это, поэтому я не буду вас утомлять. Но вы знаете, что я дам вам несколько ссылок. [Бум.](https://blog.getdbt.com/track-data-changes-with-dbt-snapshots/) [И фубар!](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots)
 
-You can snapshot by checking your `change_id` if you’ve implemented the removing-dupes logic from Step 1, or using the timestamp strategy, if you have a reliable timestamp.
+Вы можете сделать снимок, проверяя ваш `change_id`, если вы реализовали логику удаления дубликатов из Шага 1, или используя стратегию временных меток, если у вас есть надежная временная метка.
 
 ```sql
 {% snapshot snp_product %}
@@ -127,16 +127,16 @@ select * from {{ ref('base_product') }}
 {% endsnapshot %}
 ```
 
-## Step 3: Future-proof your timestamps
+## Шаг 3: Защитите ваши временные метки на будущее
 
-:::important What happens in this step?
-Step 3 walks you through how to replace your snapshot `valid_to = NULL` value with a future-proof date to ensure smooth sailing through the snapshot joins.
+:::important Что происходит на этом шаге?
+Шаг 3 проведет вас через процесс замены значения `valid_to = NULL` в вашем снимке на дату, защищенную на будущее, чтобы обеспечить плавное объединение снимков.
 :::
 
-Now that you’ve deduped and you’ve snapped, you need to future-proof! This is a step you cannot skip, because the joins we will do in the next steps will rely on `valid_to` to contain a date, rather than a `NULL`. 
+Теперь, когда вы удалили дубликаты и сделали снимок, вам нужно защитить будущее! Это шаг, который нельзя пропустить, потому что объединения, которые мы будем делать на следующих шагах, будут полагаться на `valid_to`, чтобы содержать дату, а не `NULL`.
 
-:::note Note 
-This is a great place to set a global variable! You can define your future-proof variable in the dbt_project.yml file. 
+:::note Примечание
+Это отличное место для установки глобальной переменной! Вы можете определить вашу переменную, защищенную на будущее, в файле dbt_project.yml.
 :::
 
 ```jsx
@@ -144,23 +144,23 @@ vars:
  future_proof_date: '9999-12-31'
 ```
 
-And coalesce!
+И используйте coalesce!
 
 ```sql
 coalesce(dbt_valid_to, cast('{{ var("future_proof_date") }}' as timestamp)) as valid_to
 ```
 
-You will thank yourself later for building in a global variable. Adding important global variables will set your future-self up for success. Now, you can filter all your data to the current state by just filtering on `where valid_to = future_proof_date`*.* You can also ensure that all the data-bears with their data-paws in the data-honey jar are referencing the **same** `future_proof_date`, rather than `9998-12-31`, or `9999-12-31`, or `10000-01-01`, which will inevitably break something eventually. You know it will; don’t argue with me! Global vars for the win!
+Вы поблагодарите себя позже за создание глобальной переменной. Добавление важных глобальных переменных обеспечит успех вашего будущего "я". Теперь вы можете фильтровать все ваши данные до текущего состояния, просто фильтруя по `where valid_to = future_proof_date`. Вы также можете убедиться, что все "медведи данных" с их "лапами данных" в "банке данных" ссылаются на **одну и ту же** `future_proof_date`, а не на `9998-12-31`, или `9999-12-31`, или `10000-01-01`, что в конечном итоге что-то сломает. Вы знаете, что это произойдет; не спорьте со мной! Глобальные переменные для победы!
 
-## Step 4: Join your tables together to build a fanned out id spine
+## Шаг 4: Объедините ваши таблицы, чтобы построить разветвленный стержень id
 
-:::important What happens in this step?
-Step 4 walks you through how to do your first join, in which you need to fan out the data spine to the finest grain possible and to include the id onto which we will join the rest of the data. This step is crucial to joining the snapshots in subsequent steps.
+:::important Что происходит на этом шаге?
+Шаг 4 проведет вас через процесс выполнения первого объединения, в котором вам нужно разветвить стержень данных до самого тонкого зерна и включить id, к которому мы будем присоединять остальные данные. Этот шаг имеет решающее значение для объединения снимков на последующих шагах.
 :::
 
-Let’s look at how we’d do this with an example. You may have many events associated with a single `product_id`. Each `product_id` may have several `order_ids`, and each `order_id` may have another id associated with it. Which means that the grain of each table needs to be identified. The point here is that we need to build in an id at the finest grain. To do so, we’ll add in a [dbt_utils.generate_surrogate_key](https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/generate_surrogate_key.sql) in the staging models that live on top of the snapshot tables. 
+Давайте посмотрим, как мы это сделаем на примере. У вас может быть много событий, связанных с одним `product_id`. Каждый `product_id` может иметь несколько `order_ids`, и каждый `order_id` может иметь другой id, связанный с ним. Это означает, что зерно каждой таблицы должно быть идентифицировано. Суть здесь в том, что нам нужно построить id на самом тонком зерне. Для этого мы добавим [dbt_utils.generate_surrogate_key](https://github.com/dbt-labs/dbt-utils/blob/main/macros/sql/generate_surrogate_key.sql) в модели стадирования, которые находятся поверх таблиц снимков.
 
-Then, in your joining model, let’s add a CTE to build out our spine with our ids of these different grains. 
+Затем, в вашей модели объединения, давайте добавим CTE, чтобы построить наш стержень с нашими id этих разных зерен.
 
 ```sql
 build_spine as (
@@ -178,7 +178,7 @@ left join
 ... )
 ```
 
-The result will be all the columns from your first table, fanned out as much as possible by the added `id` columns. We will use these `id` columns to join the historical data from our tables. It is extremely important to note that if you have tables as part of this pattern that are captured at the same grain as the original table, you **do not** want to join in that table and id as part of the spine. It will fan-out _too much_ and cause duplicates in your data. Instead, simply join the tables with the same grain as the original table (in this case, `historical_table_1` on `product_id`) in the next step, using the macro. 
+Результатом будут все столбцы из вашей первой таблицы, разветвленные как можно больше за счет добавленных столбцов `id`. Мы будем использовать эти столбцы `id`, чтобы присоединить исторические данные из наших таблиц. Крайне важно отметить, что если у вас есть таблицы, которые являются частью этого шаблона и захватываются на том же зерне, что и исходная таблица, вы **не** хотите присоединять эту таблицу и id как часть стержня. Это разветвится _слишком сильно_ и вызовет дубликаты в ваших данных. Вместо этого просто присоедините таблицы с тем же зерном, что и исходная таблица (в данном случае, `historical_table_1` по `product_id`) на следующем шаге, используя макрос.
 
 | product_id | important_status | dbt_valid_from | dbt_valid_to | product_order_id |
 | --- | --- | --- | --- | --- |
@@ -190,26 +190,26 @@ The result will be all the columns from your first table, fanned out as much as 
 | 1 | not_available | 2021-10-01 10:00:000 | 2021-11-10 08:00:000 | 1B |
 | 2 | not_available | 2021-11-15 15:30:0000 | NULL  | 2C |
 
-## Step 5: Join your snapshots onto id spine
+## Шаг 5: Присоедините ваши снимки к стержню id
 
-:::important What happens in this step? 
-Step 5 walks you through the logic of the snapshot join, and the macro that will make the joins simpler.
+:::important Что происходит на этом шаге?
+Шаг 5 проведет вас через логику объединения снимков и макрос, который упростит объединения.
 :::
 
-Now, I’m going to recommend you build individual CTEs with one join at a time. Why do we build a CTE with a single join, rather than all the joins in one? So many reasons, but there are two big ones.
+Теперь я рекомендую вам строить отдельные CTE с одним объединением за раз. Почему мы строим CTE с одним объединением, а не все объединения в одном? Так много причин, но есть две большие.
 
-- **First**, this is complicated. You will need to troubleshoot, and the easiest way to enable troubleshooting is to separate your join logic in individual CTEs. By building your code this way, you can easily throw a `select * from last_cte` to check that your logic is doing what you think it should be doing before adding more complex joins.
-- **Second**, you are using the `valid_from` and `valid_to` values of each newly joined table to determine the new `valid_from` and `valid_to` timestamps for the resulting table – where both rows are valid within the same timespans. While you could accomplish this in one big massive join, it will become very complex and difficult to troubleshoot when you run into funky results.
+- **Во-первых**, это сложно. Вам нужно будет устранять неполадки, и самый простой способ сделать это — разделить логику объединения на отдельные CTE. Построив ваш код таким образом, вы можете легко добавить `select * from last_cte`, чтобы проверить, что ваша логика делает то, что вы думаете, прежде чем добавлять более сложные объединения.
+- **Во-вторых**, вы используете значения `valid_from` и `valid_to` каждой вновь присоединенной таблицы, чтобы определить новые `valid_from` и `valid_to` временные метки для результирующей таблицы — где обе строки действительны в одни и те же временные промежутки. Хотя вы могли бы сделать это в одном большом массивном объединении, это станет очень сложным и трудным для устранения неполадок, когда вы столкнетесь с странными результатами.
 
-### <Term id="dry">DRY</Term> — it’s macro time!
+### <Term id="dry">DRY</Term> — время макросов!
 
-This macro finishes your join CTE, which allows you to add columns from the new table you’re joining before calling the macro. It also assumes you’ve replaced your `valid_to = NULL` with an actual date type with an actual date that indicates a row is currently valid.
+Этот макрос завершает ваш CTE объединения, что позволяет вам добавлять столбцы из новой таблицы, которую вы присоединяете, перед вызовом макроса. Он также предполагает, что вы заменили ваши `valid_to = NULL` на фактический тип даты с фактической датой, указывающей, что строка в настоящее время действительна.
 
-Your parameters are `cte_join`, the table that is creating the spine of your final model, `cte_join_on`, which is the new table you’re joining onto the spine. The `valid_to` and `valid_from` values for both of these tables, and the ids onto which you are joining (named twice in case they have different column names, but in most instances these two parameters will be the same name).
+Ваши параметры: `cte_join`, таблица, создающая стержень вашей финальной модели, `cte_join_on`, которая является новой таблицей, которую вы присоединяете к стержню. Значения `valid_to` и `valid_from` для обеих этих таблиц, и id, по которым вы присоединяетесь (названы дважды на случай, если у них разные имена столбцов, но в большинстве случаев эти два параметра будут иметь одно и то же имя).
 
 ```sql
--- requires any extra columns from table_join_on to be listed prior to using this macro.
--- assumes we have replaced instances of valid_to = null with a future_proof_date = '9999-12-31'.
+-- требует, чтобы любые дополнительные столбцы из table_join_on были перечислены до использования этого макроса.
+-- предполагает, что мы заменили случаи valid_to = null на future_proof_date = '9999-12-31'.
  
 {% macro join_snapshots(cte_join, cte_join_on, cte_join_valid_to,
    cte_join_valid_from, cte_join_on_valid_to, cte_join_on_valid_from,
@@ -232,9 +232,9 @@ Your parameters are `cte_join`, the table that is creating the spine of your fin
 {% endmacro %}
 ```
 
-The joining logic finds where the ids match and where the timestamps overlap between the two tables. We use the **greatest** `valid_from` and the **least** `valid_to` between the two tables to ensure that the new, narrowed timespan for the row is when the rows from both tables are valid. _**Update: Special thank you to Allyn Opitz for simplifying this join logic! It's so much prettier now.**_
+Логика объединения находит, где id совпадают и где временные метки пересекаются между двумя таблицами. Мы используем **наибольший** `valid_from` и **наименьший** `valid_to` между двумя таблицами, чтобы гарантировать, что новый, суженный временной промежуток для строки — это когда строки из обеих таблиц действительны. _**Обновление: Особая благодарность Аллину Опицу за упрощение этой логики объединения! Теперь она выглядит намного красивее.**_
 
-You should see something like this as your end result:
+Вы должны увидеть что-то вроде этого в качестве конечного результата:
 
 | product_id | product_order_id | order_id | important_status | order_status | greatest_valid_from | least_valid_to |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -246,32 +246,32 @@ You should see something like this as your end result:
 | 1 | 1B | B | not_available | pending | 2021-10-01 10:00:000 | 2021-11-10 08:00:000 |
 | 2 | 2C | C | not_available | available | 2021-11-15 15:30:0000 | 9999-12-31 |
 
-### Continue joining on your tables, and narrowing your valid timespans.
+### Продолжайте присоединять ваши таблицы и сужать ваши действительные временные промежутки.
 
-Using the produced valid timestamps from the previous join as your new spine timestamps, continue joining the rest of your snapshots in this manner.
+Используя полученные действительные временные метки из предыдущего объединения в качестве ваших новых временных меток стержня, продолжайте присоединять остальные ваши снимки таким образом.
 
-## Step 6: Clean up your final table with a CTE (duh!)
+## Шаг 6: Очистите вашу финальную таблицу с помощью CTE (конечно!)
 
-:::important What happens in this step? 
-Step 6 is to finish your code with a final, cleaned up CTE.
+:::important Что происходит на этом шаге?
+Шаг 6 — это завершение вашего кода с финальным, очищенным CTE.
 :::
 
-Your final CTE of your table should list only the columns that you want to keep. Clean up all the timestamp columns, and rename the narrowed `valid_from` and `valid_to` from your final join to the appropriate name.
+Ваш финальный CTE вашей таблицы должен перечислять только те столбцы, которые вы хотите сохранить. Очистите все столбцы временных меток и переименуйте суженные `valid_from` и `valid_to` из вашего финального объединения в соответствующее имя.
 
-## Step 7: Optional -- add global variable for building historical vs current
+## Шаг 7: Необязательно — добавьте глобальную переменную для построения исторических данных против текущих
 
-:::important What happens in this step?
-Step 7 walks you through the option of building in a global variable to run only the most current data.
+:::important Что происходит на этом шаге?
+Шаг 7 проведет вас через возможность добавления глобальной переменной для запуска только самых актуальных данных.
 :::
 
-It could be useful to add a current records only variable to run your project. This is a fast way to skip the historical data, without having to build out new models, or filter on your historical table. You can have a separate job set up to target a new schema, and build tables with current data only, that are ready for the present-day reports. You’ll know this is right for your project if you a BI tool that doesn’t love to filter on big, history-filled tables (like Tableau), but would prefer to have easily accessible, ready to run tables. To build in this feature, add a global variable in the *dbt_project.yml,* so your `future_proof_date` has a friend:
+Может быть полезно добавить переменную только для текущих записей, чтобы запустить ваш проект. Это быстрый способ пропустить исторические данные, не создавая новые модели или фильтруя вашу историческую таблицу. Вы можете настроить отдельную задачу для целевой новой схемы и построить таблицы только с текущими данными, которые готовы для отчетов на сегодняшний день. Вы поймете, что это подходит для вашего проекта, если у вас есть BI-инструмент, который не любит фильтровать большие таблицы с историей (например, Tableau), но предпочитает иметь легко доступные, готовые к запуску таблицы. Чтобы встроить эту функцию, добавьте глобальную переменную в *dbt_project.yml*, чтобы у вашей `future_proof_date` был друг:
 
 ```jsx
 future_proof_date: '9999-12-31'
 current_records_only: true
 ```
 
-And add a Jinja-if to your staging models, so that you’re asking your project to only build the data that is current, without having to override your snapshots:
+И добавьте Jinja-if в ваши модели стадирования, чтобы ваш проект запрашивал только построение данных, которые актуальны, без необходимости переопределять ваши снимки:
 
 ```sql
 {% if var("current_records_only") %}
@@ -281,6 +281,6 @@ where valid_to = cast('{{ var("future_proof_date") }}' as timestamp)
 {% endif %}
 ```
 
-## Parting thoughts
+## Заключительные мысли
 
-Friend, you're an absolute star. You’ve determined that you need to join several snapshots when each entity is in a valid state, which comes with a fair amount of complexity! With this logic we’ve broken down the problem into a few steps: getting rid of duplicates, snapshotting your data, replacing your currently-valid rows with a future-proof date, building your first join to complete the fanned out data spine, joining onto your data spine across valid timestamps, and then repeating this logic using a macro. After you join your first historical data to your data spine, be sure to check the results. One weird line of code can cause a mess of problems with all this complexity, so always check results along the way. Well done, be well, you’re doing a great job!
+Друг, ты абсолютная звезда. Вы определили, что вам нужно объединить несколько снимков, когда каждый объект находится в действительном состоянии, что связано с изрядной долей сложности! С этой логикой мы разбили проблему на несколько шагов: избавление от дубликатов, создание снимков ваших данных, замена ваших в настоящее время действительных строк на дату, защищенную на будущее, построение вашего первого объединения для завершения разветвленного стержня данных, присоединение к вашему стержню данных по действительным временным меткам, а затем повторение этой логики с использованием макроса. После того, как вы присоедините ваши первые исторические данные к вашему стержню данных, обязательно проверьте результаты. Одна странная строка кода может вызвать массу проблем с этой сложностью, поэтому всегда проверяйте результаты на протяжении всего процесса. Отличная работа, будьте здоровы, вы делаете отличную работу!

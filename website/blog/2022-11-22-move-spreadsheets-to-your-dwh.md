@@ -1,6 +1,6 @@
 ---
-title: "How to move data from spreadsheets into your data warehouse"
-description: "A thankless, humble, and inevitable task: getting spreadsheet data into your data warehouse. Let's look at some of the different options, and the pros and cons of each."
+title: "Как перенести данные из электронных таблиц в ваш хранилище данных"
+description: "Неблагодарная, скромная и неизбежная задача: загрузка данных из электронных таблиц в ваше хранилище данных. Давайте рассмотрим некоторые из различных вариантов и их плюсы и минусы."
 slug: moving-spreadsheet-data
 
 authors: [joel_labes]
@@ -12,52 +12,52 @@ date: 2022-11-23
 is_featured: true
 ---
 
-Once your <Term id="data-warehouse"/> is built out, the vast majority of your data will have come from other SaaS tools, internal databases, or customer data platforms (CDPs). But there’s another unsung hero of the analytics engineering toolkit: the humble spreadsheet.
+После того как ваше <Term id="data-warehouse"/> будет построено, подавляющее большинство ваших данных будет поступать из других SaaS-инструментов, внутренних баз данных или платформ данных клиентов (CDP). Но есть еще один незамеченный герой в наборе инструментов аналитической инженерии: скромная электронная таблица.
 
-Spreadsheets are the Swiss army knife of data processing. They can add extra context to otherwise inscrutable application identifiers, be the only source of truth for bespoke processes from other divisions of the business, or act as the translation layer between two otherwise incompatible tools.
+Электронные таблицы — это швейцарский нож обработки данных. Они могут добавлять дополнительный контекст к иначе непонятным идентификаторам приложений, быть единственным источником истины для уникальных процессов из других подразделений бизнеса или служить слоем перевода между двумя несовместимыми инструментами.
 
-Because of spreadsheets’ importance as the glue between many business processes, there are different tools to load them into your data warehouse and each one has its own pros and cons, depending on your specific use case.
+Из-за важности электронных таблиц как связующего звена между многими бизнес-процессами существуют различные инструменты для их загрузки в ваше хранилище данных, и каждый из них имеет свои плюсы и минусы в зависимости от вашего конкретного случая использования.
 
 <!--truncate-->
 
-In general, there are a few questions to ask yourself about your data before choosing one of these tools:
+В общем, перед выбором одного из этих инструментов стоит задать себе несколько вопросов о ваших данных:
 
-- Who at your company will be loading the data?
-- Does it have a consistent format?
-- How frequently will it change?
-- How big is the dataset?
-- Do changes need to be tracked?
-- Where are the files coming from?
+- Кто в вашей компании будет загружать данные?
+- Имеет ли они постоянный формат?
+- Как часто они будут изменяться?
+- Каков размер набора данных?
+- Нужно ли отслеживать изменения?
+- Откуда поступают файлы?
 
-Let’s have a look at some of the offerings to help you get your spreadsheets into your data warehouse.
+Давайте рассмотрим некоторые из предложений, которые помогут вам загрузить ваши электронные таблицы в ваше хранилище данных.
 
 ## dbt seeds
 
-dbt comes with an inbuilt csv loader ([seeds](https://docs.getdbt.com/docs/build/seeds)) to populate your data warehouse with any files you put inside of your project’s `seeds` folder. It will automatically infer data types from your file’s contents, but you can always override it by [providing explicit instructions in your dbt_project.yml](https://docs.getdbt.com/reference/resource-configs/column_types) file.
+dbt поставляется с встроенным загрузчиком csv ([seeds](https://docs.getdbt.com/docs/build/seeds)), который позволяет заполнять ваше хранилище данных любыми файлами, которые вы помещаете в папку `seeds` вашего проекта. Он автоматически определяет типы данных из содержимого вашего файла, но вы всегда можете переопределить это, [предоставив явные инструкции в вашем файле dbt_project.yml](https://docs.getdbt.com/reference/resource-configs/column_types).
 
-However, since dbt creates these tables by inserting rows one at a time, it doesn’t perform well at scale (there’s no hard limit but aim for hundreds of rows rather than thousands). [The dbt docs](https://docs.getdbt.com/docs/build/seeds#faqs) suggest using seeds for “files that contain business-specific logic, for example, a list of country codes or user IDs of employees.”
+Однако, поскольку dbt создает эти таблицы, вставляя строки по одной, он не работает эффективно в больших масштабах (нет жесткого ограничения, но стремитесь к сотням строк, а не тысячам). [Документация dbt](https://docs.getdbt.com/docs/build/seeds#faqs) предлагает использовать seeds для "файлов, содержащих бизнес-логику, например, список кодов стран или идентификаторов пользователей сотрудников."
 
-A big benefit of using seeds is that your file will be checked into source control, allowing you to easily see when the file was updated and retrieve deleted data if necessary.
+Большим преимуществом использования seeds является то, что ваш файл будет проверен в системе контроля версий, что позволит вам легко увидеть, когда файл был обновлен, и восстановить удаленные данные, если это необходимо.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Small files such as mapping employee identifiers to employees
-- Infrequently modified files such as mapping country codes to country names
-- Data that would benefit from source control
-- Programmatic control of data types
+- Небольших файлов, таких как сопоставление идентификаторов сотрудников с сотрудниками
+- Редко изменяемых файлов, таких как сопоставление кодов стран с названиями стран
+- Данных, которые выиграют от контроля версий
+- Программного контроля типов данных
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Files greater than 1MB in size
-- Files that need regular updates
+- Файлов размером более 1 МБ
+- Файлов, которые нуждаются в регулярных обновлениях
 
-## ETL tools
+## ETL инструменты
 
-An obvious choice if you have data to load into your warehouse would be your existing [ETL tool](https://www.getdbt.com/analytics-engineering/etl-tools-a-love-letter/) such as Fivetran or Stitch, which I'll dive into in this section. Below is a summary table highlighting the core benefits and drawbacks of certain <Term id="etl" /> tooling options for getting spreadsheet data in your data warehouse.
+Очевидным выбором, если у вас есть данные для загрузки в хранилище, будет ваш существующий [ETL инструмент](https://www.getdbt.com/analytics-engineering/etl-tools-a-love-letter/), такой как Fivetran или Stitch, о которых я расскажу в этом разделе. Ниже приведена сводная таблица, подчеркивающая основные преимущества и недостатки некоторых вариантов <Term id="etl" /> инструментов для загрузки данных из электронных таблиц в ваше хранилище данных.
 
-### Summary table
+### Сводная таблица
 
-| Option/connector | Data updatable after load |  Configurable data types | Multiple tables per schema | Good for large datasets |
+| Опция/коннектор | Данные обновляемы после загрузки | Настраиваемые типы данных | Несколько таблиц на схему | Хорошо для больших наборов данных |
 | --- | --- | --- | --- | --- |
 | dbt seeds | ✅ | ✅ | ✅ | ❌ |
 | Fivetran Browser Upload | ✅ | ✅ | ✅ | ✅ |
@@ -68,128 +68,128 @@ An obvious choice if you have data to load into your warehouse would be your exi
 
 ### Fivetran browser upload
 
-[Fivetran’s browser uploader](https://fivetran.com/docs/files/browser-upload) does exactly what it says on the tin: you upload a file to their web portal and it creates a table containing that data in a predefined schema in your warehouse. With a visual interface to modify data types, it’s easy for anyone to use. And with an account type with the permission to only upload files, you don’t need to worry about your stakeholders accidentally breaking anything either.
+[Загрузчик браузера Fivetran](https://fivetran.com/docs/files/browser-upload) делает именно то, что заявлено: вы загружаете файл в их веб-портал, и он создает таблицу, содержащую эти данные в предопределенной схеме в вашем хранилище. С визуальным интерфейсом для изменения типов данных, это легко для любого пользователя. И с учетной записью, имеющей разрешение только на загрузку файлов, вам не нужно беспокоиться о том, что ваши заинтересованные стороны случайно что-то сломают.
 
-<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/fivetran-uploader-1.png" title="Converting data types from text to dates and numbers is easy in the visual editor" />
+<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/fivetran-uploader-1.png" title="Преобразование типов данных из текста в даты и числа легко в визуальном редакторе" />
 
-<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/fivetran-uploader-2.png" title="Picking the matching date format from a list of options to convert them to a standardized format" />
+<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/fivetran-uploader-2.png" title="Выбор подходящего формата даты из списка опций для их преобразования в стандартизированный формат" />
 
-A nice benefit of the uploader is support for updating data in the table over time. If a file with the same name and same columns is uploaded, any new records will be added, and existing records (per the <Term id="primary-key"/>) will be updated.
+Приятным преимуществом загрузчика является поддержка обновления данных в таблице со временем. Если загружается файл с тем же именем и теми же столбцами, любые новые записи будут добавлены, а существующие записи (по <Term id="primary-key"/>) будут обновлены.
 
-However, keep in mind that there is no source control on these changes or a to revert them; you might want to consider [snapshotting changes](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) in dbt if that’s a concern.
+Однако имейте в виду, что на эти изменения нет контроля версий или возможности их отмены; возможно, вам стоит рассмотреть возможность [снимка изменений](https://docs.getdbt.com/docs/building-a-dbt-project/snapshots) в dbt, если это вызывает беспокойство.
 
-Also, Fivetran won’t delete records once they’re created, so the only way to remove records created using this process is by manually [deleting](https://docs.getdbt.com/terms/dml#delete) them from your warehouse. If you have an ad-hoc connector, consider having an automated process to drop these tables regularly, especially if you have PII management concerns.
+Также Fivetran не будет удалять записи после их создания, поэтому единственный способ удалить записи, созданные с помощью этого процесса, — это вручную [удалить](https://docs.getdbt.com/terms/dml#delete) их из вашего хранилища. Если у вас есть разовый коннектор, рассмотрите возможность автоматического удаления этих таблиц регулярно, особенно если у вас есть проблемы с управлением PII.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Files that are frequently updated by someone
-- Allowing anyone in the company to upload files
-- Ad-hoc data loads
-- Updating a table instead of creating a new one
-- Basic data type changes (including handling currency columns)
-- Larger files
+- Файлов, которые часто обновляются кем-то
+- Позволяет любому в компании загружать файлы
+- Разовые загрузки данных
+- Обновление таблицы вместо создания новой
+- Основные изменения типов данных (включая обработку столбцов валют)
+- Большие файлы
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Tracking changes to data
-- Complex type mappings
+- Отслеживания изменений в данных
+- Сложных сопоставлений типов
 
 ### Fivetran Google Sheets connector
 
-The main benefit of connecting to Google Sheets instead of a static spreadsheet should be obvious—teammates can change the sheet from anywhere and new records will be loaded into your warehouse automatically. [Fivetran’s Google Sheets connector](https://fivetran.com/docs/files/google-sheets) requires some additional initial configuration, but collaborative editing can make the effort worthwhile.
+Основное преимущество подключения к Google Sheets вместо статической электронной таблицы должно быть очевидным — коллеги могут изменять лист из любого места, и новые записи будут автоматически загружены в ваше хранилище. [Коннектор Google Sheets от Fivetran](https://fivetran.com/docs/files/google-sheets) требует некоторой дополнительной начальной настройки, но совместное редактирование может сделать усилия стоящими.
 
-Instead of syncing all cells in a sheet, you create a [named range](https://fivetran.com/docs/files/google-sheets/google-sheets-setup-guide) and connect Fivetran to that range. Each Fivetran connector can only read a single range—if you have multiple tabs then you’ll need to create multiple connectors, each with its own schema and table in the target warehouse. When a sync takes place, it will [truncate](https://docs.getdbt.com/terms/ddl#truncate) and reload the table from scratch as there is no primary key to use for matching.
+Вместо синхронизации всех ячеек в листе вы создаете [именованный диапазон](https://fivetran.com/docs/files/google-sheets/google-sheets-setup-guide) и подключаете Fivetran к этому диапазону. Каждый коннектор Fivetran может читать только один диапазон — если у вас несколько вкладок, вам нужно будет создать несколько коннекторов, каждый со своей схемой и таблицей в целевом хранилище. Когда происходит синхронизация, таблица будет [усечена](https://docs.getdbt.com/terms/ddl#truncate) и загружена заново, так как нет первичного ключа для сопоставления.
 
-<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/google-sheets-uploader.png" title="Creating a named range in Google Sheets to sync via the Fivetran Google Sheets Connector" />
+<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/google-sheets-uploader.png" title="Создание именованного диапазона в Google Sheets для синхронизации через Fivetran Google Sheets Connector" />
 
-Beware of inconsistent data types though—if someone types text into a column that was originally numeric, Fivetran will automatically convert the column to a string type which might cause issues in your downstream transformations. [The recommended workaround](https://fivetran.com/docs/files/google-sheets#typetransformationsandmapping) is to explicitly cast your types in [staging models](https://docs.getdbt.com/best-practices/how-we-structure/2-staging) to ensure that any undesirable records are converted to null.
+Остерегайтесь несоответствий типов данных — если кто-то введет текст в столбец, который изначально был числовым, Fivetran автоматически преобразует столбец в строковый тип, что может вызвать проблемы в ваших последующих преобразованиях. [Рекомендуемое решение](https://fivetran.com/docs/files/google-sheets#typetransformationsandmapping) — явно приводить ваши типы в [моделях подготовки](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), чтобы гарантировать, что любые нежелательные записи будут преобразованы в null.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Large, long-lived documents
-- Files that are updated by many people (and somewhat often)
+- Больших, долгоживущих документов
+- Файлов, которые обновляются многими людьми (и довольно часто)
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Ad-hoc loads—you need to create an entire schema for every connected spreadsheet, and preparing the sheet is a fiddly process
-- Tracking changes to data
-- Documents with many tabs
+- Разовых загрузок — вам нужно создать целую схему для каждой подключенной электронной таблицы, и подготовка листа — это кропотливый процесс
+- Отслеживания изменений в данных
+- Документов с множеством вкладок
 
 ### Fivetran Google Drive connector
 
-I’m a big fan of [Fivetran’s Google Drive connector](https://fivetran.com/docs/files/google-drive); in the past I’ve used it to streamline a lot of weekly reporting. It allows stakeholders to use a tool they’re already familiar with (Google Drive) instead of dealing with another set of credentials. Every file uploaded into a specific folder on Drive (or [Box, or consumer Dropbox](https://fivetran.com/docs/files/magic-folder)) turns into a table in your warehouse.
+Я большой поклонник [коннектора Google Drive от Fivetran](https://fivetran.com/docs/files/google-drive); в прошлом я использовал его для упрощения многих еженедельных отчетов. Он позволяет заинтересованным сторонам использовать инструмент, с которым они уже знакомы (Google Drive), вместо того чтобы иметь дело с другим набором учетных данных. Каждый файл, загруженный в определенную папку на Drive (или [Box, или потребительский Dropbox](https://fivetran.com/docs/files/magic-folder)), превращается в таблицу в вашем хранилище.
 
-<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/google-drive-uploader.png" title="Fivetran will add each of these csv files to a single schema in your warehouse, making it ideal for regular uploads" />
+<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/google-drive-uploader.png" title="Fivetran добавит каждый из этих csv файлов в одну схему в вашем хранилище, что делает его идеальным для регулярных загрузок" />
 
-Like the Google Sheets connector, the data types of the columns are determined automatically. Dates, in particular, are finicky though—if you can control your input data, try to get it into [ISO 8601 format](https://xkcd.com/1179/) to minimize the amount of cleanup you have to do on the other side.
+Как и в случае с коннектором Google Sheets, типы данных столбцов определяются автоматически. Даты, в частности, капризны — если вы можете контролировать ваши входные данные, постарайтесь привести их в формат [ISO 8601](https://xkcd.com/1179/), чтобы минимизировать количество очистки, которую вам придется делать на другой стороне.
 
-I used two macros in the dbt_utils package ([get_relations_by_pattern](https://github.com/dbt-labs/dbt-utils#get_relations_by_pattern-source) and [union_relations](https://github.com/dbt-labs/dbt-utils#union_relations-source)) to combine weekly exports from other tools into a single [model](/docs/build/models) for easy cleanup in a staging model. Make sure you grant your transformer account permission to access all tables in the schema (including future ones) to avoid having to manually intervene after every new file is uploaded.
+Я использовал два макроса из пакета dbt_utils ([get_relations_by_pattern](https://github.com/dbt-labs/dbt-utils#get_relations_by_pattern-source) и [union_relations](https://github.com/dbt-labs/dbt-utils#union_relations-source)), чтобы объединить еженедельные экспорты из других инструментов в одну [модель](/docs/build/models) для легкой очистки в модели подготовки. Убедитесь, что вы предоставили вашей учетной записи трансформатора разрешение на доступ ко всем таблицам в схеме (включая будущие), чтобы избежать необходимости вручную вмешиваться после каждой новой загрузки файла.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Allowing anyone in the company to upload files
-- Weekly exports from another tool
-- Large files
-- Many files (each will be created as another table in a single schema, unlike the Google Sheets integration)
+- Позволяет любому в компании загружать файлы
+- Еженедельные экспорты из другого инструмента
+- Большие файлы
+- Множество файлов (каждый будет создан как еще одна таблица в одной схеме, в отличие от интеграции Google Sheets)
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Data that needs to be updated after load
-- Custom type mappings (without further processing in dbt)
+- Данных, которые нужно обновить после загрузки
+- Пользовательских сопоставлений типов (без дальнейшей обработки в dbt)
 
 ### Stitch Google Sheets integration
 
-[The Google Sheets integration by Stitch](https://www.stitchdata.com/docs/integrations/saas/google-sheets) is a little more straightforward to set up than Fivetran’s as it imports the entire sheet without requiring you to configure named ranges. Beyond that, it works in the same way with the same benefits and the same drawbacks.
+[Интеграция Google Sheets от Stitch](https://www.stitchdata.com/docs/integrations/saas/google-sheets) немного проще в настройке, чем у Fivetran, так как она импортирует весь лист без необходимости настраивать именованные диапазоны. Помимо этого, она работает так же, с теми же преимуществами и недостатками.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Large, long-lived documents
-- Files that are updated by many people
+- Больших, долгоживущих документов
+- Файлов, которые обновляются многими людьми
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Ad-hoc loads—you need to create an entire schema for every connected spreadsheet
-- Tracking changes to data
-- Documents with many tabs
+- Разовых загрузок — вам нужно создать целую схему для каждой подключенной электронной таблицы
+- Отслеживания изменений в данных
+- Документов с множеством вкладок
 
 ### Airbyte Google Sheets connector
 
-Airbyte, an open source and cloud ETL tool, [supports a Google Sheets source connector](https://airbytehq.github.io/integrations/sources/google-sheets/) very similar to Stitch’s and Fivetran’s integration. You’ll need to authenticate your Google Account using an OAuth or a service account key and provide the link of the Google Sheet you want to pull into your data warehouse. Note that all sheet columns are loaded as strings, so you will need to explicitly cast them in a downstream model. Airbyte’s connector here also supports both full refreshes and appends.
+Airbyte, инструмент ETL с открытым исходным кодом и облачным решением, [поддерживает коннектор источника Google Sheets](https://airbytehq.github.io/integrations/sources/google-sheets/), очень похожий на интеграцию Stitch и Fivetran. Вам нужно будет аутентифицировать вашу учетную запись Google с помощью OAuth или ключа учетной записи службы и предоставить ссылку на Google Sheet, который вы хотите загрузить в ваше хранилище данных. Обратите внимание, что все столбцы листа загружаются как строки, поэтому вам нужно будет явно приводить их в последующей модели. Коннектор Airbyte также поддерживает как полные обновления, так и добавления.
 
-#### Good fit for:
+#### Хорошо подходит для:
 
-- Large, long-lived documents
-- Files that are updated by many people
-- Teams that may be on a budget
+- Больших, долгоживущих документов
+- Файлов, которые обновляются многими людьми
+- Команд, которые могут быть ограничены в бюджете
 
-#### Not a good fit for:
+#### Не подходит для:
 
-- Non-string type data you want preserved in your raw source tables in your data warehouse
+- Данных нестрокового типа, которые вы хотите сохранить в ваших исходных таблицах в хранилище данных
 
-## Native warehouse integrations
+## Родные интеграции хранилищ данных
 
-Each of the major data warehouses also has native integrations to import spreadsheet data. While the fundamentals are the same, there are some differences amongst the various warehousing vendors.
+Каждое из основных хранилищ данных также имеет родные интеграции для импорта данных из электронных таблиц. Хотя основы одинаковы, существуют некоторые различия между различными поставщиками хранилищ данных.
 
 ### Snowflake
 
-Snowflake’s options are robust and user-friendly, offering both a [web-based loader](https://docs.snowflake.com/en/user-guide/data-load-web-ui.html) as well as [a bulk importer](https://docs.snowflake.com/en/user-guide/data-load-bulk.html). The web loader is suitable for small to medium files (up to 50MB) and can be used for specific files, all files in a folder, or files in a folder that match a given pattern. It’s also the most provider-agnostic, with support for Amazon S3, Google Cloud Storage, Azure and the local file system.
+Опции Snowflake надежны и удобны для пользователя, предлагая как [веб-загрузчик](https://docs.snowflake.com/en/user-guide/data-load-web-ui.html), так и [массовый импортер](https://docs.snowflake.com/en/user-guide/data-load-bulk.html). Веб-загрузчик подходит для небольших и средних файлов (до 50 МБ) и может использоваться для конкретных файлов, всех файлов в папке или файлов в папке, которые соответствуют заданному шаблону. Он также является наиболее независимым от поставщика, поддерживая Amazon S3, Google Cloud Storage, Azure и локальную файловую систему.
 
-<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/snowflake-uploader.png" title="Snowflake’s web-based Load Data Wizard via the Snowflake Blog https://www.snowflake.com/blog/tech-tip-getting-data-snowflake/" />
+<Lightbox src="/img/blog/2022-11-22-move-spreadsheets-to-your-dwh/snowflake-uploader.png" title="Веб-мастер загрузки данных Snowflake через блог Snowflake https://www.snowflake.com/blog/tech-tip-getting-data-snowflake/" />
 
 ### BigQuery
 
-BigQuery only supports importing data from external sources hosted by Google such as Google Drive and Google Cloud Storage (as BigQuery and Sheets are both Google products, BigQuery is the only platform on this list that has a native integration that doesn't require 3rd-party tooling). The data it references isn’t copied into BigQuery but can be referenced in queries as though it was. If needed, you can write a copy to BigQuery or just leave it as an external source. The team at supercooldata has written [a great how-to guide on setting up Google Sheets with BigQuery](https://blog.supercooldata.com/working-with-sheets-in-bigquery/).
+BigQuery поддерживает импорт данных только из внешних источников, размещенных Google, таких как Google Drive и Google Cloud Storage (поскольку BigQuery и Sheets являются продуктами Google, BigQuery — единственная платформа в этом списке, которая имеет родную интеграцию, не требующую сторонних инструментов). Данные, на которые он ссылается, не копируются в BigQuery, но могут быть использованы в запросах, как если бы они были. Если необходимо, вы можете записать копию в BigQuery или просто оставить ее как внешний источник. Команда supercooldata написала [отличное руководство по настройке Google Sheets с BigQuery](https://blog.supercooldata.com/working-with-sheets-in-bigquery/).
 
 ### Redshift
 
-Unsurprisingly for an AWS product, Redshift prefers to [import CSV files from S3](https://docs.aws.amazon.com/redshift/latest/dg/tutorial-loading-data.html). As with Snowflake, this is achieved with the COPY command, and you can easily control which file(s) are imported from the source bucket. Using S3 as a source compared to a web-based loader or Google Drive means this option isn’t as user-friendly for non-technical folks, but is still a great option to sync files that are automatically generated from other tools.
+Как и ожидалось для продукта AWS, Redshift предпочитает [импортировать CSV-файлы из S3](https://docs.aws.amazon.com/redshift/latest/dg/tutorial-loading-data.html). Как и в случае с Snowflake, это достигается с помощью команды COPY, и вы можете легко контролировать, какие файлы импортируются из исходного бакета. Использование S3 в качестве источника по сравнению с веб-загрузчиком или Google Drive означает, что этот вариант не так удобен для пользователей, не обладающих техническими навыками, но все же является отличным вариантом для синхронизации файлов, которые автоматически генерируются другими инструментами.
 
 ### Databricks
 
-Databricks also supports [pulling in data, such as spreadsheets, from external cloud sources](https://docs.databricks.com/external-data/index.html) like Amazon S3 and Google Cloud Storage. In addition, the ability to [load data via a simple UI](https://docs.databricks.com/ingestion/add-data/index.html) within Databricks is currently in public preview.
+Databricks также поддерживает [загрузку данных, таких как электронные таблицы, из внешних облачных источников](https://docs.databricks.com/external-data/index.html), таких как Amazon S3 и Google Cloud Storage. Кроме того, возможность [загрузки данных через простой интерфейс](https://docs.databricks.com/ingestion/add-data/index.html) в Databricks в настоящее время находится в публичной предварительной версии.
 
-## Conclusion
+## Заключение
 
-Beyond the options we’ve already covered, there’s an entire world of other tools that can load data from your spreadsheets into your data warehouse. This is a living document, so if your preferred method isn't listed then please [open a PR](https://github.com/dbt-labs/docs.getdbt.com) and I'll check it out.
+Помимо уже рассмотренных вариантов, существует целый мир других инструментов, которые могут загружать данные из ваших электронных таблиц в ваше хранилище данных. Это живой документ, поэтому, если ваш предпочтительный метод не указан, пожалуйста, [откройте PR](https://github.com/dbt-labs/docs.getdbt.com), и я его рассмотрю.
 
-The most important things to consider are your files’ origins and formats—if you need your colleagues to upload files on a regular basis then try to provide them with a more user-friendly process; but if you just need two computers to talk to each other, or it’s a one-off file that will hardly ever change, then a more technical integration is totally appropriate.
+Наиболее важные вещи, которые следует учитывать, — это происхождение и формат ваших файлов. Если вам нужно, чтобы ваши коллеги регулярно загружали файлы, постарайтесь предоставить им более удобный процесс; но если вам просто нужно, чтобы два компьютера общались друг с другом, или это разовый файл, который вряд ли когда-либо изменится, то более техническая интеграция вполне уместна.

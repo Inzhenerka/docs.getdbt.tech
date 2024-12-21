@@ -1,6 +1,6 @@
 ---
-title: "How Hybrid Mesh unlocks dbt collaboration at scale"
-description: A deep-dive into the Hybrid Mesh pattern for enabling collaboration between domain teams using dbt Core and dbt Cloud. 
+title: "Как гибридная Mesh разблокирует масштабное сотрудничество в dbt"
+description: Подробное изучение паттерна гибридной Mesh для обеспечения сотрудничества между доменными командами, использующими dbt Core и dbt Cloud.
 slug: hybrid-mesh
 authors: [jason_ganz]
 tags: [analytics craft]
@@ -9,81 +9,80 @@ date: 2024-09-30
 is_featured: true
 ---
 
-One of the most important things that dbt does is unlock the ability for teams to collaborate on creating and disseminating organizational knowledge.
+Одной из самых важных функций dbt является возможность для команд сотрудничать в создании и распространении организационных знаний.
 
-In the past, this primarily looked like a team working in one dbt Project to create a set of transformed objects in their data platform.
+Ранее это выглядело как работа команды в одном проекте dbt для создания набора преобразованных объектов в их платформе данных.
 
-As dbt was adopted by larger organizations and began to drive workloads at a global scale, it became clear that we needed mechanisms to allow teams to operate independently from each other, creating and sharing data models across teams &mdash; [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro).
+Когда dbt был принят более крупными организациями и начал управлять рабочими нагрузками в глобальном масштабе, стало ясно, что нам нужны механизмы, позволяющие командам работать независимо друг от друга, создавая и делясь моделями данных между командами &mdash; [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro).
 
 <!-- truncate -->
 
-dbt Mesh is powerful because it allows teams to operate _independently_ and _collaboratively_, each team free to build on their own but contributing to a larger, shared set of data outputs.
+dbt Mesh мощен, потому что позволяет командам работать _независимо_ и _совместно_, каждая команда свободна строить свои собственные модели, но при этом вносит вклад в более крупный, общий набор данных.
 
-The flexibility of dbt Mesh means that it can support [a wide variety of patterns and designs](/best-practices/how-we-mesh/mesh-3-structures). Today, let’s dive into one pattern that is showing promise as a way to enable teams working on very different dbt deployments to work together.
+Гибкость dbt Mesh означает, что он может поддерживать [широкий спектр паттернов и дизайнов](/best-practices/how-we-mesh/mesh-3-structures). Сегодня давайте углубимся в один из паттернов, который показывает перспективы как способ объединения команд, работающих над очень разными развертываниями dbt.
 
-## How Hybrid Mesh enables collaboration between dbt Core and dbt Cloud teams
+## Как гибридная Mesh обеспечивает сотрудничество между командами dbt Core и dbt Cloud
 
-**_Scenario_** &mdash; A company with a central data team uses dbt Core. The setup is working well for that team. They want to scale their impact to enable faster decision-making, organization-wide. The current dbt Core setup isn't well suited for onboarding a larger number of less-technical, nontechnical, or less-frequent contributors. 
+**_Сценарий_** &mdash; Компания с центральной командой данных использует dbt Core. Эта настройка хорошо работает для этой команды. Они хотят расширить свое влияние, чтобы ускорить принятие решений по всей организации. Текущая настройка dbt Core не подходит для вовлечения большего числа менее технических, нетехнических или менее частых участников.
 
-**_The goal_** &mdash; Enable three domain teams of less-technical users to leverage and extend the central data models, with full ownership over their domain-specific dbt models.
+**_Цель_** &mdash; Позволить трем доменным командам менее технических пользователей использовать и расширять центральные модели данных, полностью владея своими доменно-специфичными моделями dbt.
 
-    - **Central data team:** Data engineers comfortable using dbt Core and the command line interface (CLI), building and maintaining foundational data models for the entire organization.
+- **Центральная команда данных:** Инженеры данных, комфортно работающие с dbt Core и интерфейсом командной строки (CLI), создающие и поддерживающие основные модели данных для всей организации.
 
-    - **Domain teams:** Data analysts comfortable working in SQL but not using the CLI and prefer to start working right away without managing local dbt Core installations or updates. The team needs to build transformations specific to their business context. Some of these users may have tried dbt in the past, but they were not able to successfully onboard to the central team's setup.
+- **Доменные команды:** Аналитики данных, комфортно работающие с SQL, но не использующие CLI и предпочитающие сразу приступить к работе без управления локальными установками или обновлениями dbt Core. Команда должна строить преобразования, специфичные для их бизнес-контекста. Некоторые из этих пользователей могли пробовать dbt в прошлом, но не смогли успешно адаптироваться к настройке центральной команды.
 
-**_Solution: Hybrid Mesh_** &mdash; Data teams can use dbt Mesh to connect projects *across* dbt Core and dbt Cloud, creating a workflow where everyone gets to work in their preferred environment while creating a shared lineage that allows for visibility, validation, and ownership across the data pipeline. 
+**_Решение: Гибридная Mesh_** &mdash; Команды данных могут использовать dbt Mesh для соединения проектов *между* dbt Core и dbt Cloud, создавая рабочий процесс, в котором каждый работает в предпочитаемой среде, создавая общую линию, которая позволяет видеть, проверять и владеть данными по всему конвейеру данных.
 
-Each team will fully own its dbt code, from development through deployment, using the product that is appropriate to their needs and capabilities _while sharing data products across teams using both dbt Core and dbt Cloud._
+Каждая команда будет полностью владеть своим кодом dbt, от разработки до развертывания, используя продукт, соответствующий их потребностям и возможностям, _при этом делясь продуктами данных между командами, использующими как dbt Core, так и dbt Cloud._
 
-<Lightbox src="/img/blog/2024-09-30-hybrid-mesh/hybrid-mesh.png" width="75%" title="A before and after diagram highlighting how a Hybrid Mesh allows central data teams using dbt Core to work with domain data teams using dbt Cloud." />
+<Lightbox src="/img/blog/2024-09-30-hybrid-mesh/hybrid-mesh.png" width="75%" title="Диаграмма до и после, подчеркивающая, как гибридная Mesh позволяет центральным командам данных, использующим dbt Core, работать с доменными командами данных, использующими dbt Cloud." />
 
-Creating a Hybrid Mesh is mostly the same as creating any other [dbt Mesh](/guides/mesh-qs?step=1) workflow &mdash; there are a few considerations but mostly _it just works_. We anticipate it will continue to see adoption as more central data teams look to onboard their downstream domain teams. 
+Создание гибридной Mesh в основном такое же, как создание любого другого рабочего процесса [dbt Mesh](/guides/mesh-qs?step=1) &mdash; есть несколько соображений, но в основном _это просто работает_. Мы ожидаем, что она продолжит внедряться, поскольку все больше центральных команд данных стремятся вовлечь свои нижестоящие доменные команды.
 
-A Hybrid Mesh can be adopted as a stable long-term pattern, or as an intermediary while you perform a [migration from dbt Core to dbt Cloud](/guides/core-cloud-2?step=1).
+Гибридная Mesh может быть принята как стабильный долгосрочный паттерн или как промежуточный этап, пока вы выполняете [миграцию с dbt Core на dbt Cloud](/guides/core-cloud-2?step=1).
 
-## How to build a Hybrid Mesh
-Enabling a Hybrid Mesh is as simple as a few additional steps to import the metadata from your Core project into dbt Cloud. Once you’ve done this, you should be able to operate your dbt Mesh like normal and all of our [standard recommendations](/best-practices/how-we-mesh/mesh-1-intro) still apply. 
+## Как построить гибридную Mesh
+Включение гибридной Mesh так же просто, как несколько дополнительных шагов для импорта метаданных из вашего проекта Core в dbt Cloud. После этого вы сможете управлять своей dbt Mesh как обычно, и все наши [стандартные рекомендации](/best-practices/how-we-mesh/mesh-1-intro) по-прежнему применимы.
 
-### Step 1: Prepare your Core project for access through dbt Mesh
+### Шаг 1: Подготовьте ваш проект Core для доступа через dbt Mesh
 
-Configure public models to serve as stable interfaces for downstream dbt Projects.
+Настройте публичные модели, чтобы они служили стабильными интерфейсами для нижестоящих проектов dbt.
 
-- Decide which models from your Core project will be accessible in your Mesh. For more information on how to configure public access for those models, refer to the [model access page.](/docs/collaborate/govern/model-access)
-- Optionally set up a [model contract](/docs/collaborate/govern/model-contracts) for all public models for better governance.
-- Keep dbt Core and dbt Cloud projects in separate repositories to allow for a clear separation between upstream models managed by the dbt Core team and the downstream models handled by the dbt Cloud team.
+- Решите, какие модели из вашего проекта Core будут доступны в вашей Mesh. Для получения дополнительной информации о том, как настроить публичный доступ для этих моделей, обратитесь к [странице доступа к моделям.](/docs/collaborate/govern/model-access)
+- При необходимости настройте [контракт модели](/docs/collaborate/govern/model-contracts) для всех публичных моделей для лучшего управления.
+- Держите проекты dbt Core и dbt Cloud в отдельных репозиториях, чтобы обеспечить четкое разделение между моделями верхнего уровня, управляемыми командой dbt Core, и моделями нижнего уровня, обрабатываемыми командой dbt Cloud.
 
-### Step 2: Mirror each "producer" Core project in dbt Cloud 
-This allows dbt Cloud to know about the contents and metadata of your project, which in turn allows for other projects to access its models.
+### Шаг 2: Отразите каждый "производящий" проект Core в dbt Cloud
+Это позволяет dbt Cloud знать о содержимом и метаданных вашего проекта, что, в свою очередь, позволяет другим проектам получать доступ к его моделям.
 
-- [Create a dbt Cloud account](https://www.getdbt.com/signup/) and a dbt project for each upstream Core project.
-  - Note: If you have [environment variables](/docs/build/environment-variables) in your project, dbt Cloud environment variables must be prefixed with `DBT_ `(including `DBT_ENV_CUSTOM_ENV_` or `DBT_ENV_SECRET`). Follow the instructions in [this guide](https://docs.getdbt.com/guides/core-to-cloud-1?step=8#environment-variables) to convert them for dbt Cloud.
-- Each upstream Core project has to have a production [environment](/docs/dbt-cloud-environments) in dbt Cloud. You need to configure credentials and environment variables in dbt Cloud just so that it will resolve relation names to the same places where your dbt Core workflows are deploying those models.
-- Set up a [merge job](/docs/deploy/merge-jobs) in a production environment to run `dbt parse`. This will enable connecting downstream projects in dbt Mesh by producing the necessary [artifacts](/reference/artifacts/dbt-artifacts) for cross-project referencing.
-  - Optional: Set up a regular job to run `dbt build` instead of using a merge job for `dbt parse`, and centralize your dbt orchestration by moving production runs to dbt Cloud. Check out [this guide](/guides/core-to-cloud-1?step=9) for more details on converting your production runs to dbt Cloud.
-- Optional: Set up a regular job (for example, daily) to run `source freshness` and `docs generate`. This will hydrate dbt Cloud with additional metadata and enable features in [dbt Explorer](/docs/collaborate/explore-projects) that will benefit both teams, including [Column-level lineage](/docs/collaborate/column-level-lineage).
+- [Создайте учетную запись dbt Cloud](https://www.getdbt.com/signup/) и проект dbt для каждого верхнего проекта Core.
+  - Примечание: Если у вас есть [переменные окружения](/docs/build/environment-variables) в вашем проекте, переменные окружения dbt Cloud должны иметь префикс `DBT_` (включая `DBT_ENV_CUSTOM_ENV_` или `DBT_ENV_SECRET`). Следуйте инструкциям в [этом руководстве](https://docs.getdbt.com/guides/core-to-cloud-1?step=8#environment-variables), чтобы преобразовать их для dbt Cloud.
+- Каждый верхний проект Core должен иметь производственную [среду](/docs/dbt-cloud-environments) в dbt Cloud. Вам нужно настроить учетные данные и переменные окружения в dbt Cloud, чтобы он разрешал имена отношений в те же места, где ваши рабочие процессы dbt Core развертывают эти модели.
+- Настройте [merge job](/docs/deploy/merge-jobs) в производственной среде для выполнения `dbt parse`. Это позволит подключать нижестоящие проекты в dbt Mesh, создавая необходимые [артефакты](/reference/artifacts/dbt-artifacts) для перекрестных ссылок между проектами.
+  - По желанию: Настройте регулярную задачу для выполнения `dbt build` вместо использования merge job для `dbt parse`, и централизуйте вашу оркестрацию dbt, переместив производственные запуски в dbt Cloud. Ознакомьтесь с [этим руководством](/guides/core-to-cloud-1?step=9) для получения более подробной информации о преобразовании ваших производственных запусков в dbt Cloud.
+- По желанию: Настройте регулярную задачу (например, ежедневно) для выполнения `source freshness` и `docs generate`. Это наполнит dbt Cloud дополнительными метаданными и включит функции в [dbt Explorer](/docs/collaborate/explore-projects), которые будут полезны обеим командам, включая [линейность на уровне столбцов](/docs/collaborate/column-level-lineage).
 
-### Step 3: Create and connect your downstream projects to your Core project using dbt Mesh
-Now that dbt Cloud has the necessary information about your Core project, you can begin setting up your downstream projects, building on top of the public models from the project you brought into Cloud in [Step 2](#step-2-mirror-each-producer-core-project-in-dbt-cloud). To do this:
-- Initialize each new downstream dbt Cloud project and create a [`dependencies.yml` file](/docs/collaborate/govern/project-dependencies#use-cases). 
-- In that `dependencies.yml` file, add the dbt project name from the `dbt_project.yml` of the upstream project(s). This sets up cross-project references between different dbt projects:
+### Шаг 3: Создайте и подключите ваши нижестоящие проекты к вашему проекту Core с использованием dbt Mesh
+Теперь, когда dbt Cloud имеет необходимую информацию о вашем проекте Core, вы можете начать настройку ваших нижестоящих проектов, строя их на основе публичных моделей из проекта, который вы перенесли в Cloud на [Шаге 2](#step-2-mirror-each-producer-core-project-in-dbt-cloud). Для этого:
+- Инициализируйте каждый новый нижестоящий проект dbt Cloud и создайте файл [`dependencies.yml`](/docs/collaborate/govern/project-dependencies#use-cases).
+- В этом файле `dependencies.yml` добавьте имя проекта dbt из `dbt_project.yml` верхнего проекта(ов). Это устанавливает перекрестные ссылки между различными проектами dbt:
 
     ```yaml
-    # dependencies.yml file in dbt Cloud downstream project
+    # файл dependencies.yml в нижестоящем проекте dbt Cloud
     projects:
     - name: upstream_project_name
     ```
-- Use [cross-project references](/reference/dbt-jinja-functions/ref#ref-project-specific-models) for public models in upstream project. Add [version](/reference/dbt-jinja-functions/ref#versioned-ref) to references of versioned models:
+- Используйте [перекрестные ссылки](/reference/dbt-jinja-functions/ref#ref-project-specific-models) для публичных моделей в верхнем проекте. Добавьте [версию](/reference/dbt-jinja-functions/ref#versioned-ref) к ссылкам на версионные модели:
   ```yaml
   select * from {{ ref('upstream_project_name', 'monthly_revenue') }}
   ```
 
-And that’s all it takes! From here, the domain teams that own each dbt Project can build out their models to fit their own use cases. You can now build out your Hybrid Mesh however you want, accessing the full suite of dbt Cloud features.
-- Orchestrate your Mesh to ensure timely delivery of data products and make them available to downstream consumers.
-- Use [dbt Explorer](/docs/collaborate/explore-projects) to trace the lineage of your data back to its source.
-- Onboard more teams and connect them to your Mesh.
-- Build [semantic models](/docs/build/semantic-models) and [metrics](/docs/build/metrics-overview) into your projects to query them with the [dbt Semantic Layer](https://www.getdbt.com/product/semantic-layer).
+И это все, что нужно! С этого момента доменные команды, которые владеют каждым проектом dbt, могут разрабатывать свои модели в соответствии с их собственными случаями использования. Теперь вы можете строить свою гибридную Mesh так, как хотите, используя полный набор функций dbt Cloud.
+- Оркестрируйте вашу Mesh, чтобы обеспечить своевременную доставку продуктов данных и сделать их доступными для нижестоящих потребителей.
+- Используйте [dbt Explorer](/docs/collaborate/explore-projects), чтобы отслеживать происхождение ваших данных до их источника.
+- Вовлекайте больше команд и подключайте их к вашей Mesh.
+- Стройте [семантические модели](/docs/build/semantic-models) и [метрики](/docs/build/metrics-overview) в ваши проекты, чтобы запрашивать их с помощью [семантического слоя dbt](https://www.getdbt.com/product/semantic-layer).
 
+## Заключение
 
-## Conclusion
-
-In a world where organizations have complex and ever-changing data needs, there is no one-size fits all solution. Instead, data practitioners need flexible tooling that meets them where they are. The Hybrid Mesh presents a model for this approach, where teams that are comfortable and getting value out of dbt Core can collaborate frictionlessly with domain teams on dbt Cloud.
+В мире, где у организаций сложные и постоянно меняющиеся потребности в данных, нет универсального решения. Вместо этого специалистам по данным нужны гибкие инструменты, которые соответствуют их текущим потребностям. Гибридная Mesh представляет собой модель для такого подхода, где команды, которые комфортно работают и получают ценность от dbt Core, могут беспрепятственно сотрудничать с доменными командами на dbt Cloud.

@@ -1,6 +1,6 @@
 ---
-title: "The (Missing) Role of Design in Analytics"
-description: "Opportunities to make the shift from building dashboards to designing analytical applications."
+title: "Роль (или её отсутствие) дизайна в аналитике"
+description: "Возможности перехода от создания дашбордов к проектированию аналитических приложений."
 slug: design-for-analytics-towards-analytical-applications
 
 authors: [seth_rosen]
@@ -12,151 +12,147 @@ date: 2021-11-29
 is_featured: false
 ---
 
-If you’ve spoken to me lately, follow me on [Twitter](https://twitter.com/sethrosen), or have taken my order at [Wendy’s](https://i.ytimg.com/vi/_oMc4eD9-XM/maxresdefault.jpg), you probably know how much I hate traditional dashboards. My dad, a psychotherapist, has been working with me to get to the root of my upbringing that led to this deep-rooted feeling.
+Если вы недавно общались со мной, следите за мной в [Twitter](https://twitter.com/sethrosen) или принимали мой заказ в [Wendy’s](https://i.ytimg.com/vi/_oMc4eD9-XM/maxresdefault.jpg), вы, вероятно, знаете, как сильно я ненавижу традиционные дашборды. Мой отец, психотерапевт, работает со мной, чтобы добраться до корней моего воспитания, которые привели к этому глубоко укоренившемуся чувству.
 
 <!--truncate-->
 
-As it turns out, the cause of my feelings towards traditional dashboarding are actually quite obvious. Before entering the field of data, I spent my entire career as a product manager working alongside user experience designers and engineers on cross-functional product teams.
+Как оказалось, причина моих чувств к традиционным дашбордам на самом деле довольно очевидна. До того, как я пришел в сферу данных, я всю свою карьеру работал менеджером продукта, сотрудничая с дизайнерами пользовательского опыта и инженерами в кросс-функциональных продуктовых командах.
 
-When building software, getting users to actually use the product is no easy feat. The smallest amount of friction can cause a user to abandon the flow. Add enough friction to any product and users and engagement will drop dramatically.  As analysts, we know this intuitively. We are constantly measuring retention, cohorts, and engagement within our business.
+При создании программного обеспечения заставить пользователей действительно использовать продукт — задача не из легких. Малейшее трение может заставить пользователя отказаться от использования. Добавьте достаточно трения в любой продукт, и пользователи и вовлеченность резко упадут. Как аналитики, мы интуитивно это понимаем. Мы постоянно измеряем удержание, когорты и вовлеченность в нашем бизнесе.
 
-These principles also apply to analytics. The more friction there is in analytics and the less we focus on the user, the less our output will be used. So it makes me wonder why, within the field of data, is design thinking often so absent?
+Эти принципы также применимы к аналитике. Чем больше трения в аналитике и чем меньше мы фокусируемся на пользователе, тем меньше будет использоваться наш результат. Поэтому мне интересно, почему в области данных дизайн-мышление часто так отсутствует?
 
+## Почему нам не хватает дизайн-мышления в аналитике?
 
-## Why are we lacking design thinking in analytics?
+В общих чертах, дизайн обычно не является приоритетом для команд данных. Есть несколько основных причин, которые я вижу на поверхности:
 
-Painting with broad strokes, design is generally not something that is a top priority for data teams. There are a few primary reasons that I see off the top:
+1. Команды данных думают в рамках ограничений своих текущих инструментов, а не идеального пользовательского опыта.
+2. Традиционные дашборды стали настолько товарными, что существует восприятие, что любой может создать хорошие.
+3. Существует убеждение, что аналитика заканчивается на визуализации данных, а не на пользовательском опыте.
+4. Существует общее заблуждение, что общий вид и ощущение не имеют значения в аналитике данных.
+5. Заказчики часто просят "дашборд", когда на самом деле им нужно что-то другое (с большей функциональностью).
 
-1. Data teams think within the limitations of their current tools, not the ideal user experience.
-2. Traditional Dashboards have become so commoditized that there is a perception that anyone can build good ones.
-3. There is a belief that analytics ends at the data visualization, not the user experience.
-4. There is a general misconception that the overall look and feel does not matter in data analytics.
-5. Stakeholders often ask for a “dashboard” when they actually need something else (with more functionality).
+Эти причины в основном сводятся к тому, что команды данных работают как сервисные команды, а не как [продуктовые команды](https://locallyoptimistic.com/post/run-your-data-team-like-a-product-team/) — когда вы всегда даете смазку самому скрипучему колесу, невозможно приложить стратегические усилия, которые требует дизайн-мышление.
 
-These more or less boil down to data teams running like service teams rather than [product teams](https://locallyoptimistic.com/post/run-your-data-team-like-a-product-team/)—when you always give the squeakiest wheel the grease, it’s impossible to put in the strategic effort that design thinking requires.
+Одно из решений, которое я предложил в 2019 году, — это нанять [менеджера по продуктам данных](https://www.hashpath.com/2019/11/why-your-organization-may-need-a-data-product-manager/), что, похоже, набирает обороты. Но что бы этот человек на самом деле делал?
 
-One solution I proposed back in 2019 is hiring a [data product manager](https://www.hashpath.com/2019/11/why-your-organization-may-need-a-data-product-manager/), which seems to be picking up a bit of steam. But what would that person actually do?
-
- I have attempted to sum the solutions to these complex issues into a table of overly-simplified do’s and don’ts:
-
-<table>
-  <tr>
-   <td>Don’t</td>
-   <td>Do</td>
-  </tr>
-  <tr>
-   <td>Think only within the constraints of your current tooling.</td>
-   <td>First define the ideal user experience, irrespective of tooling.</td>
-  </tr>
-  <tr>
-   <td>Think users can simply build their own solution given a self-service interface.</td>
-   <td>Recognize that hard ongoing problems require a design-focused analyst.</td>
-  </tr>
-  <tr>
-   <td>Stop at the data visualization.</td>
-   <td>Think about how to group visualizations, the interactions, and purpose-built exploratory flows.</td>
-  </tr>
-  <tr>
-   <td>Ignore look and feel.</td>
-   <td>Think about the overall aesthetics of your output.</td>
-  </tr>
-  <tr>
-   <td>Just respond to tickets and user requests.</td>
-   <td>Truly try to understand the problem and design the appropriate solution.</td>
-  </tr>
-</table>
-
-## The Full-Stack Analyst and Analytical Applications
-
-An analyst who can gather the necessary data, transform it into the analytics-ready format, and understand & analyze it is an incredible asset to your team. An analyst who can also build a user experience around it is unstoppable.
-
-If you think about the workflow for an analyst, a simple process might go something like this:
-
-1. Initial exploratory analysis and ad-hoc queries
-2. Model data in dbt
-3. Build out data visualizations
-4. Write tests/monitor performance
-
-But, you might also consider adding the following to your workflow.
-
-1. Build user stories and use cases: Work with the end-user to understand exactly why they need the data and what decisions they need to make. Generally speaking, do not ask them to define the solution. That’s your job.
-2. Build out wireframes and user flows: A very quick sketch of the end-user experience can be shared for discussion. This might get some really great feedback about how the user may end up using the data.
-3. Build out the user interface: Break free from the traditional dashboard design and implement the design which truly solves the pain.
-
-In order to realize the full potential of the ["full stack analyst"](https://roundup.getdbt.com/p/seth-rosen-topcoat)”, we must apply the principles of design to be part of our workflows. We should shift our thinking from making traditional dashboards to building user-centric [analytical applications](https://towardsdatascience.com/the-analytical-application-stack-eead8ce6b70).
-
-This simple shift from thinking in “dashboards” towards thinking in “analytical applications” is one of the key changes which has helped me be more design-focused.
-
-Here are a few examples:
-
+Я попытался суммировать решения этих сложных вопросов в таблице чрезмерно упрощенных "не делай" и "делай":
 
 <table>
   <tr>
-   <td><strong>Traditional Dashboards</strong></td>
-   <td><strong>Analytical Applications</strong></td>
+   <td>Не делай</td>
+   <td>Делай</td>
   </tr>
   <tr>
-   <td>Built for generic use cases</td>
-   <td>Purpose-built for specific use cases</td>
+   <td>Думай только в рамках ограничений текущих инструментов.</td>
+   <td>Сначала определите идеальный пользовательский опыт, независимо от инструментов.</td>
   </tr>
   <tr>
-   <td>Standard dashboard interactions</td>
-   <td>Interactive based on the desired workflow</td>
+   <td>Думай, что пользователи могут просто создать свое собственное решение, имея интерфейс самообслуживания.</td>
+   <td>Признайте, что сложные постоянные проблемы требуют аналитика, ориентированного на дизайн.</td>
   </tr>
   <tr>
-   <td>Fixed, static layout</td>
-   <td>Dynamic layout determined by logic</td>
+   <td>Остановитесь на визуализации данных.</td>
+   <td>Думайте о том, как группировать визуализации, взаимодействия и целенаправленные исследовательские потоки.</td>
   </tr>
   <tr>
-   <td>Each element is a tile</td>
-   <td>Elements can be grouped and purposefully-arranged</td>
+   <td>Игнорируйте внешний вид и ощущения.</td>
+   <td>Думайте о общей эстетике вашего результата.</td>
   </tr>
   <tr>
-   <td>Filters are global</td>
-   <td>Users have preferences and their own defaults</td>
-  </tr>
-  <tr>
-   <td>Minimal software development lifecycle</td>
-   <td>Strong SDLC to promote user trust</td>
-  </tr>
-  <tr>
-   <td>Look and feel are ignored</td>
-   <td>Custom look and feel to match company products</td>
-  </tr>
-  <tr>
-   <td>Low bar for performance</td>
-   <td>High bar for performance</td>
+   <td>Просто отвечайте на тикеты и запросы пользователей.</td>
+   <td>Действительно постарайтесь понять проблему и разработать соответствующее решение.</td>
   </tr>
 </table>
 
+## Полноценный аналитик и аналитические приложения
 
-## An Example: Weather Applications
+Аналитик, который может собрать необходимые данные, преобразовать их в формат, готовый для аналитики, и понять и проанализировать их, является невероятным ресурсом для вашей команды. Аналитик, который также может создать пользовательский опыт вокруг этого, неостановим.
 
-Let’s take a look at one of the OG analytical applications: the weather forecast.
+Если вы подумаете о рабочем процессе аналитика, простой процесс может выглядеть примерно так:
 
-Like most people, I rely on weather apps to make all sorts of decisions throughout the day. We are fortunate  to have very smart and talented user experience designers working on these apps.
+1. Первоначальный исследовательский анализ и разовые запросы
+2. Моделирование данных в dbt
+3. Создание визуализаций данных
+4. Написание тестов/мониторинг производительности
 
-[![twitter screenshot](/img/blog/analyst-ux-twitter.png)](https://twitter.com/sethrosen/status/1455176609288396807)
+Но вы также можете рассмотреть возможность добавления следующего в ваш рабочий процесс.
 
-Here are a few examples from AccuWeather and the decisions it enables me to make:
+1. Создание пользовательских историй и сценариев использования: Работайте с конечным пользователем, чтобы понять, почему именно им нужны данные и какие решения они должны принять. В общем, не просите их определять решение. Это ваша работа.
+2. Создание каркасов и пользовательских потоков: Очень быстрый набросок пользовательского опыта может быть представлен для обсуждения. Это может дать действительно отличную обратную связь о том, как пользователь может в конечном итоге использовать данные.
+3. Создание пользовательского интерфейса: Освободитесь от традиционного дизайна дашбордов и реализуйте дизайн, который действительно решает проблему.
 
-![weather app screenshots](/img/blog/analyst-ux-weather.png)
+Чтобы реализовать весь потенциал ["полноценного аналитика"](https://roundup.getdbt.com/p/seth-rosen-topcoat), мы должны применять принципы дизайна как часть наших рабочих процессов. Мы должны изменить наше мышление от создания традиционных дашбордов к созданию ориентированных на пользователя [аналитических приложений](https://towardsdatascience.com/the-analytical-application-stack-eead8ce6b70).
 
-While the data being presented in the weather app could technically be presented in any dashboarding tool, the designers of this app agonized about every screen, interaction, and component to build a bespoke experience.  
+Этот простой переход от мышления в "дашбордах" к мышлению в "аналитических приложениях" является одним из ключевых изменений, которые помогли мне быть более ориентированным на дизайн.
 
-When it is done right, the user has everything they need to make quick decisions and take appropriate actions.
+Вот несколько примеров:
 
-It’s worth noting this simple weather app is purpose-built for everyday weather situations. There are some use cases where highly specific information may be needed by a particular subset of users.
+<table>
+  <tr>
+   <td><strong>Традиционные дашборды</strong></td>
+   <td><strong>Аналитические приложения</strong></td>
+  </tr>
+  <tr>
+   <td>Созданы для общих сценариев использования</td>
+   <td>Целенаправленно созданы для конкретных сценариев использования</td>
+  </tr>
+  <tr>
+   <td>Стандартные взаимодействия с дашбордом</td>
+   <td>Интерактивные на основе желаемого рабочего процесса</td>
+  </tr>
+  <tr>
+   <td>Фиксированная, статическая компоновка</td>
+   <td>Динамическая компоновка, определяемая логикой</td>
+  </tr>
+  <tr>
+   <td>Каждый элемент — это плитка</td>
+   <td>Элементы могут быть сгруппированы и целенаправленно расположены</td>
+  </tr>
+  <tr>
+   <td>Фильтры глобальные</td>
+   <td>Пользователи имеют предпочтения и свои собственные настройки по умолчанию</td>
+  </tr>
+  <tr>
+   <td>Минимальный жизненный цикл разработки программного обеспечения</td>
+   <td>Сильный SDLC для повышения доверия пользователей</td>
+  </tr>
+  <tr>
+   <td>Внешний вид и ощущения игнорируются</td>
+   <td>Индивидуальный внешний вид и ощущения, соответствующие продуктам компании</td>
+  </tr>
+  <tr>
+   <td>Низкая планка производительности</td>
+   <td>Высокая планка производительности</td>
+  </tr>
+</table>
 
-For example, surfers want different information. Ultimately, they may want an overall "Surf or don't surf" recommendation. Additionally, pilots could never simply rely on AccuWeather. These use cases warrant their own user-centered, purpose-built experiences.
+## Пример: Приложения для прогноза погоды
 
+Давайте рассмотрим одно из оригинальных аналитических приложений: прогноз погоды.
 
-## The missing piece of the puzzle
+Как и большинство людей, я полагаюсь на приложения для прогноза погоды, чтобы принимать всевозможные решения в течение дня. Нам повезло, что над этими приложениями работают очень умные и талантливые дизайнеры пользовательского опыта.
 
-While a design process can help you build better analytics output, there is still a missing part of the analytics stack to enable true user-centered design.
+[![скриншот твиттера](/img/blog/analyst-ux-twitter.png)](https://twitter.com/sethrosen/status/1455176609288396807)
 
-How would you, today, build out a weather-like application?
+Вот несколько примеров от AccuWeather и решений, которые они позволяют мне принимать:
 
-Traditional dashboarding tools limit the user experience and prevent purpose-built applications from being created. Luckily our tools are evolving to meet the needs of the data consumer.
+![скриншоты приложения погоды](/img/blog/analyst-ux-weather.png)
 
-I encourage you to explore these new tools as much as possible and to work design into your analytics workflows. I’m always up for chatting, especially about this - my DMs are always open on [Twitter](https://twitter.com/sethrosen).
+Хотя данные, представленные в приложении погоды, технически могут быть представлены в любом инструменте для создания дашбордов, дизайнеры этого приложения тщательно продумали каждый экран, взаимодействие и компонент, чтобы создать уникальный опыт.
+
+Когда это сделано правильно, у пользователя есть все, что нужно, чтобы быстро принимать решения и предпринимать соответствующие действия.
+
+Стоит отметить, что это простое приложение для прогноза погоды целенаправленно создано для повседневных погодных ситуаций. Существуют некоторые сценарии использования, где может потребоваться очень специфическая информация для определенной группы пользователей.
+
+Например, серферы хотят получить другую информацию. В конечном итоге они могут захотеть получить общее "Серфить или не серфить" рекомендацию. Кроме того, пилоты никогда не смогут просто полагаться на AccuWeather. Эти сценарии использования требуют своих собственных ориентированных на пользователя, целенаправленно созданных опытов.
+
+## Недостающий элемент головоломки
+
+Хотя процесс проектирования может помочь вам создать лучший аналитический результат, в аналитическом стеке все еще отсутствует часть, которая позволяет реализовать истинно ориентированный на пользователя дизайн.
+
+Как бы вы сегодня создали приложение, похожее на прогноз погоды?
+
+Традиционные инструменты для создания дашбордов ограничивают пользовательский опыт и препятствуют созданию целенаправленных приложений. К счастью, наши инструменты развиваются, чтобы удовлетворить потребности потребителей данных.
+
+Я призываю вас как можно больше исследовать эти новые инструменты и внедрять дизайн в ваши аналитические рабочие процессы. Я всегда готов пообщаться, особенно на эту тему — мои личные сообщения всегда открыты в [Twitter](https://twitter.com/sethrosen).

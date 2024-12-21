@@ -1,6 +1,6 @@
 ---
-title: "Introducing the dbt Cloud API Postman Collection: a tool to help you scale your account management"
-description: "Discover powerful dbt Cloud endpoints with this postman collection put together by Solution Architect Matt Winkler."
+title: "Представляем коллекцию Postman для API dbt Cloud: инструмент для масштабирования управления аккаунтами"
+description: "Откройте для себя мощные конечные точки dbt Cloud с этой коллекцией Postman, созданной архитектором решений Мэттом Уинклером."
 slug: dbt-cloud-api-postman-collection-announcement
 
 authors: [matt_winkler]
@@ -11,95 +11,95 @@ hide_table_of_contents: false
 date: 2022-05-10
 is_featured: true
 ---
->:question: Who is this for:
->This is for advanced users of dbt Cloud that are interested in expanding their knowledge of the dbt API via an interactive Postman Collection. We only suggest diving into this once you have a strong knowledge of dbt + dbt Cloud. You have a couple of options to review the collection:
+>:question: Для кого это:
+>Это для опытных пользователей dbt Cloud, которые хотят расширить свои знания об API dbt с помощью интерактивной коллекции Postman. Мы рекомендуем углубляться в это только после того, как у вас будет прочное знание dbt + dbt Cloud. У вас есть несколько вариантов для изучения коллекции:
 >
->* get a live version of the collection via [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/14183654-892ae7dc-e6a2-4165-8b57-1545dd69e4aa?action=collection%2Ffork&collection-url=entityId%3D14183654-892ae7dc-e6a2-4165-8b57-1545dd69e4aa%26entityType%3Dcollection%26workspaceId%3D048d09df-b9b5-4794-ad11-d0453ec3ecc4).
->* check out the [collection documentation](https://documenter.getpostman.com/view/14183654/UyxohieD#93c57cbf-3cb9-4c14-8c9a-278c19c5d6f1) to learn how to use it.
+>* получите актуальную версию коллекции через [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/14183654-892ae7dc-e6a2-4165-8b57-1545dd69e4aa?action=collection%2Ffork&collection-url=entityId%3D14183654-892ae7dc-e6a2-4165-8b57-1545dd69e4aa%26entityType%3Dcollection%26workspaceId%3D048d09df-b9b5-4794-ad11-d0453ec3ecc4).
+>* ознакомьтесь с [документацией коллекции](https://documenter.getpostman.com/view/14183654/UyxohieD#93c57cbf-3cb9-4c14-8c9a-278c19c5d6f1), чтобы узнать, как ее использовать.
 
-The dbt Cloud API has well-documented endpoints for creating, triggering and managing dbt Cloud jobs. But there are other endpoints that aren’t well documented yet, and they’re extremely useful for end-users. These endpoints exposed by the API enable organizations not only to orchestrate jobs, but to manage their dbt Cloud accounts programmatically. This creates some really interesting capabilities for organizations to scale their dbt Cloud implementations.
+API dbt Cloud имеет хорошо документированные конечные точки для создания, запуска и управления заданиями dbt Cloud. Но есть и другие конечные точки, которые еще не так хорошо документированы, но они чрезвычайно полезны для конечных пользователей. Эти конечные точки, предоставляемые API, позволяют организациям не только оркестрировать задания, но и управлять своими аккаунтами dbt Cloud программно. Это создает действительно интересные возможности для организаций по масштабированию их внедрений dbt Cloud.
 
-The main goal of this article is to spread awareness of these endpoints as the docs are being built & show you how to use them. 
+Основная цель этой статьи — распространить информацию об этих конечных точках, пока документация еще создается, и показать вам, как их использовать.
 
 <!--truncate-->
 
-You can use this blog post as an entry point to this [postman collection](https://documenter.getpostman.com/view/14183654/UVsSNiXC#auth-info-7ad22661-8807-406b-aec0-34a46b671aac) to help you automate previously manual tasks, such as managing dbt Cloud account infrastructure, creating dbt Cloud projects, database connections, and managing users.
+Вы можете использовать этот пост в блоге как точку входа в эту [коллекцию Postman](https://documenter.getpostman.com/view/14183654/UVsSNiXC#auth-info-7ad22661-8807-406b-aec0-34a46b671aac), чтобы помочь вам автоматизировать ранее ручные задачи, такие как управление инфраструктурой аккаунта dbt Cloud, создание проектов dbt Cloud, подключений к базам данных и управление пользователями.
 
-Please keep in mind that the collection is not an evergreen doc. We are actively developing and updating the API endpoints used to interact with dbt Cloud, so endpoint urls and / or expected request formats may change. Each endpoint in the collection provides comment capabilities, so please notify us there if something looks amiss.
+Пожалуйста, имейте в виду, что коллекция не является постоянно актуальной документацией. Мы активно разрабатываем и обновляем конечные точки API, используемые для взаимодействия с dbt Cloud, поэтому URL-адреса конечных точек и/или ожидаемые форматы запросов могут измениться. Каждая конечная точка в коллекции предоставляет возможности для комментариев, поэтому, пожалуйста, сообщайте нам там, если что-то выглядит неправильно.
 
-With all of that being said, why should dbt users care about automating dbt Cloud account management?
+С учетом всего сказанного, почему пользователям dbt стоит заботиться об автоматизации управления аккаунтами dbt Cloud?
 
-## What problems does programmatic dbt Cloud account management solve?
+## Какие проблемы решает программное управление аккаунтами dbt Cloud?
 
-When first learning dbt Cloud and operating at a smaller scale, most end users tend to favor manual, GUI based workflows for creating and managing their account infrastructure. Many of our customers start off this way, but they usually end up running into these bottlenecks as the number of jobs and projects multiplies. Here are some examples of the kind of bottlenecks I hear our growing customers talk about.
+При первом изучении dbt Cloud и работе в меньшем масштабе большинство конечных пользователей склонны предпочитать ручные, основанные на графическом интерфейсе рабочие процессы для создания и управления инфраструктурой своих аккаунтов. Многие из наших клиентов начинают с этого, но обычно они сталкиваются с этими узкими местами по мере увеличения количества заданий и проектов. Вот некоторые примеры узких мест, о которых я слышу от наших растущих клиентов.
 
-- “I find myself wasting time manually clicking through the UI to manage infrastructure, especially after deploying more than a handful of projects and environments.”
-- “I don’t have peace of mind that my production environment is configured exactly as intended. If a new team member deletes or changes something, I have to run a fire drill to fix it.”
-- “My organization requires me to run any environmental configuration changes through code review and version control.”
+- «Я трачу время на ручное прокликивание интерфейса для управления инфраструктурой, особенно после развертывания более чем нескольких проектов и сред.»
+- «Я не уверен, что моя производственная среда настроена именно так, как задумано. Если новый член команды удалит или изменит что-то, мне придется устраивать пожарную тревогу, чтобы это исправить.»
+- «Моя организация требует, чтобы я проводил любые изменения конфигурации среды через код-ревью и контроль версий.»
 
-We usually advise our customers to leverage API requests to automate these typically manual tasks, and you should, too!
+Мы обычно советуем нашим клиентам использовать API-запросы для автоматизации этих обычно ручных задач, и вам тоже стоит!
 
-## Closing Thoughts
+## Заключительные мысли
 
-Beyond the day-to-day process of managing their dbt Cloud accounts, many organizations benefit from being able to quickly replicate environments as they experiment with new dbt features and development patterns. Governance is another benefit of managing infrastructure in code, as resource definitions can be version controlled and inspected by the relevant teams before changes go live. These concepts are high on our minds as we look to provide additional capabilities to our customers in their use of dbt Cloud. Happy APIing!
+Помимо повседневного процесса управления своими аккаунтами dbt Cloud, многие организации получают выгоду от возможности быстро реплицировать среды, экспериментируя с новыми функциями и шаблонами разработки dbt. Управление — еще одно преимущество управления инфраструктурой в коде, так как определения ресурсов могут быть подвержены контролю версий и проверке соответствующими командами до того, как изменения вступят в силу. Эти концепции занимают важное место в наших мыслях, когда мы стремимся предоставить дополнительные возможности нашим клиентам в их использовании dbt Cloud. Удачного использования API!
 
-*Below this you’ll find a series of example requests - use these to guide you or [check out the Postman Collection](https://dbtlabs.postman.co/workspace/Team-Workspace~520c7ac4-3895-4779-8bc3-9a11b5287c1c/request/12491709-23cd2368-aa58-4c9a-8f2d-e8d56abb6b1dlinklink) to try it out yourself.*
+*Ниже вы найдете серию примеров запросов — используйте их для ориентира или [ознакомьтесь с коллекцией Postman](https://dbtlabs.postman.co/workspace/Team-Workspace~520c7ac4-3895-4779-8bc3-9a11b5287c1c/request/12491709-23cd2368-aa58-4c9a-8f2d-e8d56abb6b1dlinklink), чтобы попробовать самостоятельно.*
 
-## Appendix 
+## Приложение
 
-### Examples of how to use the Postman Collection
+### Примеры использования коллекции Postman
 
-Let’s run through some examples on how to make good use of this Postman Collection.
+Давайте рассмотрим несколько примеров, как эффективно использовать эту коллекцию Postman.
 
-#### Migrating dbt Cloud Projects
+#### Миграция проектов dbt Cloud
 
-One common question we hear from customers is “How can we migrate resources from one dbt Cloud project to another?” Often, they’ll create a development project, in which users have access to the UI and can manually make changes, and then migrate selected resources from the development project to a production project once things are ready.
+Один из часто задаваемых вопросов от клиентов: «Как мы можем мигрировать ресурсы из одного проекта dbt Cloud в другой?» Часто они создают проект разработки, в котором пользователи имеют доступ к интерфейсу и могут вносить изменения вручную, а затем мигрируют выбранные ресурсы из проекта разработки в производственный проект, когда все готово.
 
-There are several reasons one might want to do this, including: 
+Есть несколько причин, по которым это может понадобиться, включая:
 
-- Probably the most common is separating dev/test/prod environments across dbt Cloud projects to enable teams to build manually in a development project, and then automatically migrate those environments & jobs to a production project.
-- Building “starter projects” they can deploy as templates for new teams onboarding to dbt from a learning standpoint.
-- Some particularly security conscious customers may require version control and governance processes to run before any change to infrastructure, including their dbt Cloud accounts.
+- Вероятно, самая распространенная — это разделение сред разработки/тестирования/производства между проектами dbt Cloud, чтобы команды могли вручную строить в проекте разработки, а затем автоматически мигрировать эти среды и задания в производственный проект.
+- Создание «стартовых проектов», которые они могут развернуть в качестве шаблонов для новых команд, осваивающих dbt с точки зрения обучения.
+- Некоторые особенно заботящиеся о безопасности клиенты могут требовать, чтобы процессы контроля версий и управления проходили перед любыми изменениями в инфраструктуре, включая их аккаунты dbt Cloud.
 
-Below, we show an example of migrating an environment and a job definition from a development project to a production project. Note that this assumes you already have both projects set up. You could take this automation process even further by creating new projects with repository and database connections via the API as well. Please refer to the collection for additional details.
+Ниже мы показываем пример миграции среды и определения задания из проекта разработки в производственный проект. Обратите внимание, что это предполагает, что у вас уже настроены оба проекта. Вы можете продвинуть этот процесс автоматизации еще дальше, создавая новые проекты с подключениями к репозиторию и базе данных через API. Пожалуйста, обратитесь к коллекции для получения дополнительных деталей.
 
-**Before you start**: Make sure to [get your API key](https://docs.getdbt.com/docs/dbt-cloud/dbt-cloud-api/user-tokens) and add it to the Authentication Header of your requests.
+**Прежде чем начать**: Убедитесь, что вы [получили свой API-ключ](https://docs.getdbt.com/docs/dbt-cloud/dbt-cloud-api/user-tokens) и добавили его в заголовок аутентификации ваших запросов.
 
-Our example contains the following elements:
+Наш пример содержит следующие элементы:
 
-![This diagram depicts how an API request works. The diagram depicts a Dev project and a Prod project. The Dev project contains two environments: a development and deployment environment. The deployment project contains a job. The diagram shows the deployment environment that contains the job being copied over to the Prod Project via API request.](/img/blog/2022-04-19-dbt-cloud-postman-collection/example-cloud-environment.png)
+![Эта диаграмма показывает, как работает API-запрос. Диаграмма изображает проект разработки и проект производства. Проект разработки содержит две среды: среду разработки и развертывания. Проект развертывания содержит задание. Диаграмма показывает, как среда развертывания, содержащая задание, копируется в производственный проект через API-запрос.](/img/blog/2022-04-19-dbt-cloud-postman-collection/example-cloud-environment.png)
 
-### Setup
+### Настройка
 
-Create a “development” and a “production” project in dbt Cloud using the UI
-Set up a [data warehouse connection](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-your-database) and [repository connection](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-configuring-repositories)
+Создайте проект «разработка» и проект «производство» в dbt Cloud с помощью интерфейса
+Настройте [подключение к хранилищу данных](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/connecting-your-database) и [подключение к репозиторию](https://docs.getdbt.com/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-configuring-repositories)
 
-#### Pull the environment from the development project
+#### Извлечение среды из проекта разработки
 
-All of this information is obtainable from the API (see the postman collection), but you can also identify the correct IDs to use from the URL when logged in to dbt Cloud:
+Вся эта информация доступна из API (см. коллекцию Postman), но вы также можете определить правильные идентификаторы для использования из URL, когда вы вошли в dbt Cloud:
 
-![A screenshot of the dbt Cloud browser, with the URL highlighted as an example of where to find the correct ID number](/img/blog/2022-04-19-dbt-cloud-postman-collection/dbt-cloud-api-ID.png)
+![Скриншот браузера dbt Cloud, с выделенным URL в качестве примера, где найти правильный номер ID](/img/blog/2022-04-19-dbt-cloud-postman-collection/dbt-cloud-api-ID.png)
 
-- Account ID: 28885
-- Project ID: 86704
-- Environment ID: 75286
+- ID аккаунта: 28885
+- ID проекта: 86704
+- ID среды: 75286
 
-We’ll send a GET request to
+Мы отправим GET-запрос на
 
 https://cloud.getdbt.com/api/v3/accounts/28885/projects/86704/environments/75286/
 
-#### Push the environment to the production project
+#### Перенос среды в производственный проект
 
-We take the response from the GET request above, and then to the following: 
+Мы берем ответ от GET-запроса выше и затем делаем следующее:
 
-1. Adjust some of the variables for the new environment:
-    - Change the the value of the “project_id” field from 86704 to 86711
-    - Change the value of the “name” field from “dev-staging” to “production–api-generated”
-    - Set the “custom_branch” field to “main”
+1. Настраиваем некоторые переменные для новой среды:
+    - Изменяем значение поля «project_id» с 86704 на 86711
+    - Изменяем значение поля «name» с «dev-staging» на «production–api-generated»
+    - Устанавливаем поле «custom_branch» на «main»
 
-2. Send the POST request shown below to: https://cloud.getdbt.com/api/v3/accounts/28885/projects/86711/environments/
+2. Отправляем POST-запрос, показанный ниже, на: https://cloud.getdbt.com/api/v3/accounts/28885/projects/86711/environments/
 
-**Request body**:
+**Тело запроса**:
 
 ```
 {
@@ -116,21 +116,21 @@ We take the response from the GET request above, and then to the following:
 }
 ```
 
-3. Note the environment ID returned in the response, as we’ll use to create a dbt Cloud job in the next step 
+3. Обратите внимание на ID среды, возвращенный в ответе, так как мы будем использовать его для создания задания dbt Cloud на следующем шаге
 
-#### Pull the job definition from the dev project
+#### Извлечение определения задания из проекта разработки
 
-We send a GET request to:
+Мы отправляем GET-запрос на:
 
 https://cloud.getdbt.com/api/v2/accounts/28885/jobs/72025/
 
-#### Push the job definition to the prod project
-1. Adjust some of the variables for the new job:
-    - Remove the “created_at”, “updated_at”, and “is_deferrable” fields. [Defer](https://docs.getdbt.com/reference/node-selection/defer) logic is out of scope for this post.
-    - Change the value of the “name” field to “production-run–api-generated”
-2. Sent the POST request shown below to https://cloud.getdbt.com/api/v2/accounts/28885/jobs/
+#### Перенос определения задания в производственный проект
+1. Настраиваем некоторые переменные для нового задания:
+    - Удаляем поля «created_at», «updated_at» и «is_deferrable». Логика [отложенного выполнения](https://docs.getdbt.com/reference/node-selection/defer) выходит за рамки этого поста.
+    - Изменяем значение поля «name» на «production-run–api-generated»
+2. Отправляем POST-запрос, показанный ниже, на https://cloud.getdbt.com/api/v2/accounts/28885/jobs/
 
-**Request body**:
+**Тело запроса**:
 
 ```
 {
@@ -175,10 +175,10 @@ https://cloud.getdbt.com/api/v2/accounts/28885/jobs/72025/
            }
        },
        "generate_sources": false,
-       "cron_humanized": "Every hour",
+       "cron_humanized": "Каждый час",
        "next_run": null,
        "next_run_humanized": null
    }
 ```
 
-And we’re done! We now have the basic mechanics in place for migrating dbt Cloud Objects.
+И мы закончили! Теперь у нас есть базовые механизмы для миграции объектов dbt Cloud.
