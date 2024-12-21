@@ -2,7 +2,7 @@
 title: "О функции source"
 sidebar_label: "source"
 id: "source"
-description: "Прочитайте это руководство, чтобы понять функцию source Jinja в dbt."
+description: "Прочтите это руководство, чтобы понять функцию source в Jinja в dbt."
 ---
 
 ```sql
@@ -12,7 +12,7 @@ select * from {{ source("source_name", "table_name") }}
 ## Определение
 
 Эта функция:
-- Возвращает [Relation](/reference/dbt-classes#relation) для [source](/docs/build/sources)
+- Возвращает [Relation](/reference/dbt-classes#relation) для [источника](/docs/build/sources)
 - Создает зависимости между источником и текущей моделью, что полезно для документации и [выбора узлов](/reference/node-selection/syntax)
 - Компилируется в полное имя объекта в базе данных
 
@@ -43,7 +43,7 @@ sources:
 
 </File>
 
-Выбор из источника в модели:
+Выборка из источника в модели:
 
 <File name='models/orders.sql'>
 

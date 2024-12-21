@@ -3,15 +3,15 @@ title: "batch_size"
 id: "batch-size"
 sidebar_label: "batch_size"
 resource_types: [models]
-description: "dbt использует `batch_size` для определения размера партий при выполнении модели с микропартиями."
+description: "dbt использует `batch_size` для определения размера пакетов при запуске микропакетной инкрементальной модели."
 datatype: hour | day | month | year
 ---
 
-Доступно в [последней версии dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
+Доступно в [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9 и выше.
 
 ## Определение
 
-Конфигурация `batch_size` определяет, насколько велики партии при выполнении микропартии. Допустимые значения: `hour`, `day`, `month` или `year`. Вы можете настроить `batch_size` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, файле свойств YAML или блоке конфигурации.
+Конфигурация `batch_size` определяет размер пакетов при запуске микропакета. Допустимые значения: `hour`, `day`, `month` или `year`. Вы можете настроить `batch_size` для [модели](/docs/build/models) в вашем файле `dbt_project.yml`, YAML-файле свойств или блоке конфигурации.
 
 ## Примеры
 
@@ -29,7 +29,7 @@ models:
 ```
 </File>
 
-Пример в файле свойств YAML:
+Пример в YAML-файле свойств:
 
 <File name='models/properties.yml'>
 
@@ -42,7 +42,7 @@ models:
 
 </File>
 
-Пример в блоке конфигурации SQL модели:
+Пример в блоке конфигурации SQL-модели:
 
 <File name="models/user_sessions.sql">
 

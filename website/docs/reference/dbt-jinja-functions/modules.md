@@ -2,15 +2,15 @@
 title: "О переменной modules"
 sidebar_label: "modules"
 id: "modules"
-description: "Переменные jinja `modules` содержат полезные модули Python для работы с данными."
+description: "Переменная `modules` в jinja содержит полезные модули Python для работы с данными."
 ---
 
 Переменная `modules` в контексте Jinja содержит полезные модули Python для работы с данными.
 
 ## datetime
-Эта переменная указывает на модуль Python [datetime](https://docs.python.org/3/library/datetime.html), который поддерживает сложную логику работы с датами и временем.
+Эта переменная является указателем на модуль Python [datetime](https://docs.python.org/3/library/datetime.html), который поддерживает сложную логику работы с датами и временем.
 
-Она включает контексты модулей `date`, `datetime`, `time`, `timedelta` и `tzinfo`.
+Она включает в себя контексты модулей `date`, `datetime`, `time`, `timedelta` и `tzinfo`.
 
 **Использование**
 
@@ -18,12 +18,12 @@ description: "Переменные jinja `modules` содержат полезн
 {% set now = modules.datetime.datetime.now() %}
 {% set three_days_ago_iso = (now - modules.datetime.timedelta(3)).isoformat() %}
 ```
-Этот модуль будет возвращать текущую дату и время при каждой оценке Jinja. 
-Для даты и времени начала выполнения см. 
+Этот модуль будет возвращать текущую дату и время при каждом выполнении Jinja. 
+Для получения даты и времени начала выполнения, пожалуйста, смотрите
 [run_started_at](/reference/dbt-jinja-functions/run_started_at).
 
 ## pytz
-Эта переменная указывает на модуль Python [pytz](https://pypi.org/project/pytz/), который поддерживает логику часовых поясов.
+Эта переменная является указателем на модуль Python [pytz](https://pypi.org/project/pytz/), который поддерживает логику работы с часовыми поясами.
 
 **Использование**
 
@@ -34,7 +34,7 @@ description: "Переменные jinja `modules` содержат полезн
 ```
 
 ## re
-Эта переменная указывает на модуль Python [re](https://docs.python.org/3/library/re.html), который поддерживает регулярные выражения.
+Эта переменная является указателем на модуль Python [re](https://docs.python.org/3/library/re.html), который поддерживает регулярные выражения.
 
 **Использование**
 
@@ -46,13 +46,13 @@ description: "Переменные jinja `modules` содержат полезн
 {% set is_match = re.match(s3_path_pattern, my_string, re.IGNORECASE) %}
 {% if not is_match %}
     {%- do exceptions.raise_compiler_error(
-        my_string ~ ' не является допустимым s3 путем'
+        my_string ~ ' is not a valid s3 path'
     ) -%}
 {% endif %}
 ```
 
 ## itertools
-Эта переменная указывает на модуль Python [itertools](https://docs.python.org/3/library/itertools.html), который включает полезные функции для работы с итераторами (циклами, списками и т.д.).
+Эта переменная является указателем на модуль Python [itertools](https://docs.python.org/3/library/itertools.html), который включает полезные функции для работы с итераторами (циклами, списками и т.п.).
 
 Поддерживаемые функции:
 - `count`
@@ -89,3 +89,4 @@ description: "Переменные jinja `modules` содержат полезн
   (2, 'y')
   (2, 'z')
 ```
+

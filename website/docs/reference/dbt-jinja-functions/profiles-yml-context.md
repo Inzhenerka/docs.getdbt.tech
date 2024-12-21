@@ -1,11 +1,12 @@
 ---
-title: "Контекст profiles.yml"
+title: "О контексте profiles.yml"
 sidebar_label: "Контекст profiles.yml"
 id: "profiles-yml-context"
 description: "Используйте эти методы контекста для настройки ресурсов в файле `profiles.yml`."
 ---
 
-Следующие методы контекста доступны при настройке ресурсов в файле `profiles.yml`.
+Следующие методы контекста доступны при настройке
+ресурсов в файле `profiles.yml`.
 
 **Доступные методы контекста:**
 - [env_var](/reference/dbt-jinja-functions/env_var)

@@ -4,23 +4,23 @@ sidebar_label: "this"
 id: "this"
 description: "Представляет текущую модель в базе данных."
 keywords: 
-  - отношение, объект отношения, эта функция, этот jinja, this.database, this.schema, this.identifier
+  - relation, relation object, this function, this jinja, this.database, this.schema, this.identifier
 meta:
   label: 'this'
 ---
 
 `this` — это представление текущей модели в базе данных. Это полезно, когда:
-- Определяете оператор `where` в [инкрементальных моделях](/docs/build/incremental-models)
-- Используете [предварительные или последующие хуки](/reference/resource-configs/pre-hook-post-hook)
+- Определяется оператор `where` в [инкрементальных моделях](/docs/build/incremental-models)
+- Используются [pre или post хуки](/reference/resource-configs/pre-hook-post-hook)
 
-`this` является [Relation](/reference/dbt-classes#relation), и, как таковой, свойства, такие как `{{ this.database }}` и `{{ this.schema }}`, компилируются как ожидается. 
-  - Примечание &mdash; До версии dbt v1.6, IDE dbt Cloud возвращает `request` в качестве результата `{{ ref.identifier }}`.
+`this` является [Relation](/reference/dbt-classes#relation), и, как таковой, свойства, такие как `{{ this.database }}` и `{{ this.schema }}`, компилируются как ожидается.
+  - Примечание &mdash; До версии dbt v1.6, dbt Cloud IDE возвращает `request` как результат `{{ ref.identifier }}`.
 
-`this` можно рассматривать как эквивалент `ref('<текущая_модель>')`, и это удобный способ избежать циклических зависимостей.
+`this` можно рассматривать как эквивалент `ref('<the_current_model>')`, и это удобный способ избежать циклических зависимостей.
 
 ## Примеры
 
-### Настройка инкрементальных моделей
+### Конфигурирование инкрементальных моделей
 
 <File name='models/stg_events.sql'>
 

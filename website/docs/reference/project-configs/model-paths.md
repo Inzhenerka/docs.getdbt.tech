@@ -12,10 +12,10 @@ model-paths: [directorypath]
 </File>
 
 ## Определение
-Необязательно указывать пользовательский список директорий, в которых находятся [модели](/docs/build/models), [источники](/docs/build/sources) и [модульные тесты](/docs/build/unit-tests).
+При необходимости укажите пользовательский список директорий, где находятся [модели](/docs/build/models), [источники](/docs/build/sources) и [модульные тесты](/docs/build/unit-tests).
 
 ## По умолчанию
-По умолчанию dbt будет искать модели и источники в директории `models`. Например, `model-paths: ["models"]`. 
+По умолчанию dbt будет искать модели и источники в директории `models`. Например, `model-paths: ["models"]`.
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -24,20 +24,20 @@ path="model-paths"
 absolute="/Users/username/project/models"
 />
 
-- ✅ **Делайте:**
-  - Используйте относительный путь:
+- ✅ **Рекомендуется**
+  - Использовать относительный путь:
     ```yml
     model-paths: ["models"]
     ```
 
-- ❌ **Не делайте:**
-  - Избегайте абсолютных путей:
+- ❌ **Не рекомендуется:**
+  - Избегать абсолютных путей:
     ```yml
     model-paths: ["/Users/username/project/models"]
     ```
 
 ## Примеры
-### Используйте подкаталог с именем `transformations` вместо `models`
+### Использование поддиректории с именем `transformations` вместо `models`
 
 <File name='dbt_project.yml'>
 

@@ -5,16 +5,16 @@ id: "run_query"
 description: "Используйте макрос `run_query` для выполнения запросов и получения результатов."
 ---
 
-Макрос `run_query` предоставляет удобный способ выполнения запросов и получения их результатов. Это обертка вокруг [блока операторов](/reference/dbt-jinja-functions/statement-blocks), который более гибкий, но также более сложный в использовании.
+Макрос `run_query` предоставляет удобный способ выполнения запросов и получения их результатов. Это обертка вокруг [блока statement](/reference/dbt-jinja-functions/statement-blocks), который более гибкий, но также более сложный в использовании.
 
 __Аргументы__:
  * `query`: SQL-запрос для выполнения
 
-Возвращает объект [Table](https://agate.readthedocs.io/page/api/table.html) с результатом запроса. Если указанный запрос не возвращает результатов (например, <Term id="ddl" />, <Term id="dml" /> или запрос на обслуживание), то возвращаемое значение будет `none`.
+Возвращает объект [Table](https://agate.readthedocs.io/page/api/table.html) с результатом запроса. Если указанный запрос не возвращает результаты (например, <Term id="ddl" />, <Term id="dml" /> или запрос на обслуживание), то возвращаемое значение будет `none`.
 
 **Примечание:** Макрос `run_query` не начнет транзакцию автоматически - если вы хотите выполнить ваш запрос внутри транзакции, пожалуйста, используйте операторы `begin` и `commit` по мере необходимости.
 
-:::info Используете run_query в первый раз?
+:::info Впервые используете run_query?
 Посмотрите раздел руководства по началу работы о [использовании Jinja](/guides/using-jinja#dynamically-retrieve-the-list-of-payment-methods) для примера работы с результатами макроса `run_query`!
 :::
 
@@ -26,12 +26,10 @@ __Аргументы__:
 {% set results = run_query('select 1 as id') %}
 {% do results.print_table() %}
 
--- сделайте что-то с `results` здесь...
+-- выполните что-то с `results` здесь...
 ```
 
 </File>
-
-
 
 <File name='macros/run_grants.sql'>
 
@@ -48,7 +46,7 @@ __Аргументы__:
 
 </File>
 
-Вот пример использования этого (хотя если вы используете `run_query` для возврата значений столбца, посмотрите макрос [get_column_values](https://github.com/dbt-labs/dbt-utils#get_column_values-source) в пакете dbt-utils).
+Вот пример использования этого (хотя если вы используете `run_query` для возврата значений столбца, ознакомьтесь с макросом [get_column_values](https://github.com/dbt-labs/dbt-utils#get_column_values-source) в пакете dbt-utils).
 
 <File name='models/my_model.sql'>
 
@@ -62,7 +60,7 @@ order by 1
 {% set results = run_query(payment_methods_query) %}
 
 {% if execute %}
-{# Вернуть первый столбец #}
+{# Возвращаем первый столбец #}
 {% set results_list = results.columns[0].values() %}
 {% else %}
 {% set results_list = [] %}
@@ -80,8 +78,7 @@ group by 1
 ```
 </File>
 
-
-Вы также можете использовать `run_query` для выполнения SQL-запросов, которые не являются операторами select.
+Вы также можете использовать `run_query` для выполнения SQL-запросов, которые не являются select-запросами.
 
 <File name='macros/run_vacuum.sql'>
 
@@ -98,16 +95,15 @@ group by 1
 
 </File>
 
-
-Используйте фильтр `length`, чтобы проверить, вернул ли `run_query` какие-либо строки или нет. Убедитесь, что вы обернули логику в блок [if execute](/reference/dbt-jinja-functions/execute), чтобы избежать неожиданных результатов во время разбора. 
+Используйте фильтр `length`, чтобы проверить, вернул ли `run_query` какие-либо строки. Убедитесь, что логика обернута в блок [if execute](/reference/dbt-jinja-functions/execute), чтобы избежать неожиданного поведения во время парсинга.
 
 ```sql
 {% if execute %}
 {% set results = run_query(payment_methods_query) %}
 {% if results|length > 0 %}
-  	-- сделайте что-то с `results` здесь...
+  	-- выполните что-то с `results` здесь...
 {% else %}
-    -- выполните резервный вариант здесь...
+    -- выполните резервное действие здесь...
 {% endif %}
 {% endif %}
 ```

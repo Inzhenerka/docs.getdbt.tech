@@ -11,16 +11,15 @@ clean-targets: [directorypath]
 
 </File>
 
-
 ## Определение
-Необязательно указывать пользовательский список директорий, которые будут удалены командой `dbt clean` [command](/reference/commands/clean). В этот список следует включать только директории, содержащие артефакты (например, скомпилированные файлы, логи, установленные пакеты).
+При необходимости укажите пользовательский список каталогов, которые будут удалены командой `dbt clean` [command](/reference/commands/clean). Таким образом, в этот список следует включать только каталоги, содержащие артефакты (например, скомпилированные файлы, логи, установленные пакеты).
 
-## По умолчанию
+## Значение по умолчанию
 Если эта конфигурация не включена в ваш файл `dbt_project.yml`, команда `clean` удалит файлы в вашем [target-path](/reference/global-configs/json-artifacts).
 
 ## Примеры
 
-### Удаление пакетов и скомпилированных файлов в рамках `dbt clean` (рекомендуется) {#remove-packages-and-compiled-files-as-part-of-dbt-clean}
+### Удаление пакетов и скомпилированных файлов в рамках `dbt clean` (предпочтительно) {#remove-packages-and-compiled-files-as-part-of-dbt-clean}
 
 Чтобы удалить пакеты, а также скомпилированные файлы, включите значение вашей конфигурации [packages-install-path](/reference/project-configs/packages-install-path) в конфигурацию `clean-targets`.
 
@@ -36,10 +35,9 @@ clean-targets:
 
 Теперь выполните команду `dbt clean`.
 
-Обе директории `target` и `dbt_packages` будут удалены.
+Оба каталога, `target` и `dbt_packages`, будут удалены.
 
-Примечание: это конфигурация в [стартовом проекте dbt](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml), который создается командой `init`.
-
+Примечание: это конфигурация в [стартовом проекте](https://github.com/dbt-labs/dbt-starter-project/blob/HEAD/dbt_project.yml) dbt, который создается командой `init`.
 
 ### Удаление `logs` при выполнении `dbt clean`
 
