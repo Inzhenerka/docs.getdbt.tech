@@ -1,3 +1,3 @@
-[comment: For context, the section title used for this snippet is "Schemas and databases" ]: # 
+[comment: Для контекста, заголовок раздела, используемый для этого фрагмента, — "Схемы и базы данных"]: #
 
-When selecting the catalog and the schema, make sure the user has read and write access to both. This selection does not limit your ability to query the catalog. Instead, they serve as the default location for where tables and views are materialized. In addition, the Trino connector used in the catalog must support creating tables. This _default_ can be changed later from within your dbt project.
+При выборе каталога и схемы убедитесь, что у пользователя есть права на чтение и запись для обоих. Этот выбор не ограничивает вашу возможность выполнять запросы к каталогу. Вместо этого они служат местоположением по умолчанию для материализации таблиц и представлений. Кроме того, коннектор Trino, используемый в каталоге, должен поддерживать создание таблиц. Это _значение по умолчанию_ можно изменить позже в вашем проекте dbt.

@@ -1,1 +1,1 @@
-General configurations provide broader operational settings applicable across multiple resource types. Like resource-specific configurations, these can also be set in the project file, property files, or within resource-specific files.
+Общие конфигурации предоставляют более широкие операционные настройки, применимые к нескольким типам ресурсов. Как и конфигурации, специфичные для ресурсов, они также могут быть заданы в файле проекта, файлах свойств или в файлах, специфичных для ресурсов.

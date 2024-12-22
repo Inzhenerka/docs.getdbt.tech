@@ -1,2 +1,1 @@
-
-dbt Cloud is available in both single (virtual private) and multi-tenant configurations.
+dbt Cloud доступен как в одноарендной (виртуальной частной), так и в многоарендной конфигурациях.

@@ -1,9 +1,8 @@
-You can enable bidirectional dependencies across projects so these relationships can go in either direction, meaning that the `jaffle_finance` project can add a new model that depends on any public models produced by the `jaffle_marketing` project, so long as the new dependency doesn't introduce any node-level cycles. dbt checks for cycles across projects and raises errors if any are detected.
+Вы можете включить двунаправленные зависимости между проектами, чтобы эти связи могли идти в любом направлении. Это означает, что проект `jaffle_finance` может добавить новую модель, которая зависит от любых публичных моделей, созданных проектом `jaffle_marketing`, при условии, что новая зависимость не вводит циклы на уровне узлов. dbt проверяет наличие циклов между проектами и выдает ошибки, если они обнаружены.
 
+При настройке проектов, которые зависят друг от друга, важно делать это пошагово. Каждый проект должен выполняться и создавать публичные модели, прежде чем исходный проект-производитель сможет взять зависимость от исходного проекта-потребителя. Например, порядок действий для простой настройки из двух проектов будет следующим:
 
-When setting up projects that depend on each other, it's important to do so in a stepwise fashion. Each project must run and produce public models before the original producer project can take a dependency on the original consumer project. For example, the order of operations would be as follows for a simple two-project setup:
-
-1. The `project_a` project runs in a deployment environment and produces public models.
-2. The `project_b` project adds `project_a` as a dependency.
-3. The `project_b` project runs in a deployment environment and produces public models.
-4. The `project_a` project adds `project_b` as a dependency.
+1. Проект `project_a` выполняется в среде развертывания и создает публичные модели.
+2. Проект `project_b` добавляет `project_a` в качестве зависимости.
+3. Проект `project_b` выполняется в среде развертывания и создает публичные модели.
+4. Проект `project_a` добавляет `project_b` в качестве зависимости.

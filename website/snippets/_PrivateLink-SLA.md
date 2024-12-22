@@ -1,1 +1,1 @@
-dbt Labs will work on your behalf to complete the PrivateLink setup. Please allow 3-5 business days for this process to complete. Support will contact you when the endpoint is available.
+dbt Labs будет работать от вашего имени для завершения настройки PrivateLink. Пожалуйста, выделите 3-5 рабочих дней на завершение этого процесса. Поддержка свяжется с вами, когда конечная точка будет доступна.

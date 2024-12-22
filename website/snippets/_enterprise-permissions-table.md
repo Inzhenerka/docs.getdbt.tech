@@ -1,120 +1,119 @@
+Разрешения:
 
-Permissions: 
+* Разрешения на уровне аккаунта &mdash; Разрешения, связанные с управлением аккаунтом dbt Cloud. Например, выставление счетов и настройки аккаунта.
+* Разрешения на уровне проекта &mdash; Разрешения, связанные с проектами в dbt Cloud. Например, репозитории и доступ к dbt Cloud IDE или dbt Cloud CLI.
 
-* Account-level permissions &mdash; Permissions related to the management of the dbt Cloud account. For example, billing and account settings.
-* Project-level permissions &mdash; Permissions related to the projects in dbt Cloud. For example, repos and access to the dbt Cloud IDE or dbt Cloud CLI. 
+### Роли аккаунта
+Роли аккаунта позволяют управлять аккаунтом dbt Cloud и настраивать параметры аккаунта (например, создание сервисных токенов, приглашение пользователей и настройка SSO). Они также предоставляют разрешения на уровне проекта. Роль **Администратор аккаунта** является наивысшим уровнем доступа, который вы можете назначить.
 
-### Account roles
-Account roles enable you to manage the dbt Cloud account and manage the account settings (for example, generating service tokens, inviting users, and configuring SSO). They also provide project-level permissions. The **Account Admin** role is the highest level of access you can assign.  
+Ключ:
 
-Key:
+* (W)rite &mdash; Создание нового или изменение существующего. Включает `отправку`, `создание`, `удаление`, `распределение`, `изменение` и `разработку`.
+* (R)ead &mdash; Может просматривать, но не может создавать или изменять какие-либо поля.
 
-* (W)rite &mdash; Create new or modify existing. Includes `send`, `create`, `delete`, `allocate`, `modify`, and `develop`.
-* (R)ead &mdash; Can view but can not create or change any fields.
-
-#### Account permissions for account roles
+#### Разрешения на уровне аккаунта для ролей аккаунта
 
 <SortableTable>
 
 {`
-| Account-level permission| Account Admin | Billing admin |  Manage marketplace apps | Project creator | Security admin | Viewer | 
-|:-------------------------|:-------------:|:------------:|:-------------------------:|:---------------:|:--------------:|:------:| 
-| Account settings        |     W         |      -        |            -              |        R        |       R        |   R    |
-| Audit logs              |     R         |      -        |            -              |        -        |       R        |   R    |
-| Auth provider           |     W         |      -        |            -              |        -        |       W        |   R    |
-| Billing                 |     W         |       W       |            -              |        -        |       -        |   R    |
-| Connections             |     W         |      -        |            -              |        W        |       -        |   -    |
-| Groups                  |     W         |      -        |            -              |        R        |       W        |   R    |
-| Invitations             |     W         |      -        |            -              |        W        |       W        |   R    |
-| IP restrictions         |     W         |      -        |            -              |        -        |       W        |   R    |
-| Licenses                |     W         |      -        |            -              |        W        |       W        |   R    |
-| Marketplace app         |     -         |      -        |            W              |        -        |       -        |   -    |
-| Members                 |     W         |      -        |            -              |        W        |       W        |   R    |
-| Project (create)        |     W         |      -        |            -              |        W        |       -        |   -    |
-| Public models           |     R         |       R       |            -              |        R        |       R        |   R    |
-| Service tokens          |     W         |      -        |            -              |        -        |       R        |   R    |
-| Webhooks                |     W         |      -        |            -              |        -        |       -        |   -    |
+| Разрешение на уровне аккаунта | Администратор аккаунта | Администратор по выставлению счетов | Управление приложениями на маркетплейсе | Создатель проекта | Администратор безопасности | Наблюдатель | 
+|:-----------------------------|:----------------------:|:----------------------------------:|:--------------------------------------:|:-----------------:|:--------------------------:|:-----------:| 
+| Настройки аккаунта           |           W            |                  -                 |                    -                   |         R         |            R               |      R      |
+| Журналы аудита               |           R            |                  -                 |                    -                   |         -         |            R               |      R      |
+| Провайдер аутентификации     |           W            |                  -                 |                    -                   |         -         |            W               |      R      |
+| Выставление счетов           |           W            |                  W                 |                    -                   |         -         |            -               |      R      |
+| Подключения                  |           W            |                  -                 |                    -                   |         W         |            -               |      -      |
+| Группы                       |           W            |                  -                 |                    -                   |         R         |            W               |      R      |
+| Приглашения                  |           W            |                  -                 |                    -                   |         W         |            W               |      R      |
+| Ограничения по IP            |           W            |                  -                 |                    -                   |         -         |            W               |      R      |
+| Лицензии                     |           W            |                  -                 |                    -                   |         W         |            W               |      R      |
+| Приложение на маркетплейсе   |           -            |                  -                 |                    W                   |         -         |            -               |      -      |
+| Участники                    |           W            |                  -                 |                    -                   |         W         |            W               |      R      |
+| Проект (создание)            |           W            |                  -                 |                    -                   |         W         |            -               |      -      |
+| Публичные модели             |           R            |                  R                 |                    -                   |         R         |            R               |      R      |
+| Сервисные токены             |           W            |                  -                 |                    -                   |         -         |            R               |      R      |
+| Вебхуки                      |           W            |                  -                 |                    -                   |         -         |            -               |      -      |
 `}
 
 </SortableTable>
 
-#### Project permissions for account roles
- 
- <SortableTable>
+#### Разрешения на уровне проекта для ролей аккаунта
 
-{`
-|Project-level permission | Account Admin | Billing admin | Project creator | Security admin | Viewer | 
-|:-------------------------|:-------------:|:-------------:|:---------------:|:--------------:|:------:| 
-| Environment credentials |       W       |      -        |       W         |       -        |   R    |
-| Custom env. variables   |       W       |      -        |       W         |       -        |   R    |
-| Data platform configurations|   W       |      -        |       W         |       -        |   R    |
-| Develop (IDE or CLI)       | W       |      -        |       W         |       -        |   -    |
-| Environments            |       W       |      -        |       W         |       -        |   R    |
-| Jobs                    |       W       |      -        |       W         |       -        |   R    |
-| Metadata GraphQL API access |   R       |      -        |       R         |       -        |   R    |
-| Permissions             |       W       |      -        |       W         |       W        |   R    |
-| Projects                |       W       |      -        |       W         |       R        |   R    |
-| Repositories            |       W       |      -        |       W         |       -        |   R    |
-| Runs                    |       W       |      -        |       W         |       -        |   R    |
-| Semantic Layer config   |       W       |      -        |       W         |       v        |   R    |
-`}
-
-</SortableTable>
-
-### Project role permissions
- 
-The project roles enable you to work within the projects in various capacities. They primarily provide access to project-level permissions such as repos and the IDE or dbt Cloud CLI, but may also provide some account-level permissions.
-
-Key:
-
-* (W)rite &mdash; Create new or modify existing. Includes `send`, `create`, `delete`, `allocate`, `modify`, and `develop`.
-* (R)ead &mdash; Can view but can not create or change any fields.
-
-#### Account permissions for project roles
- 
 <SortableTable>
 
 {`
-| Account-level permission | Admin | Analyst | Database admin | Developer | Git Admin | Job admin | Job runner  | Job viewer  | Metadata (Discovery API only) | Semantic Layer | Stakeholder | Team admin | Webhook |
-|--------------------------|:-----:|:-------:|:--------------:|:---------:|:---------:|:---------:|:-----------:|:-----------:|:--------:|:--------------:|:-----------:|:----------:|:-------:|  
-| Account settings         |   R   |    -    |      R         |     -     |     R     |     -     |     -       |      -      |    -     |        -       |      -      |     R      |    -    |
-| Auth provider            |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |    -    |
-| Billing                  |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |    -    |
-| Connections              |   R   |    R    |      R         |     R     |     R     |     R     |     -       |      -      |    -     |        -       |      R      |     R      |    -    |
-| Groups                   |   R   |    -    |      R         |     R     |     R     |     -     |     -       |      -      |    -     |        -       |      R      |     R      |    -    |
-| Invitations              |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      R      |     R      |    -    |
-| Licenses                 |   W   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |    -     |        -       |      -      |     R      |    -    |
-| Members                  |   W   |    -    |      R         |     R     |     R     |     -     |     -       |      -      |    -     |        -       |      R      |     R      |    -    |
-| Project (create)         |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |    -    |
-| Public models            |   R   |    R    |      R         |     R     |     R     |     R     |     -       |      R      |     R    |        R       |      R      |     R      |    R    |
-| Service tokens           |   -   |    -    |      -         |     -     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |    -    |
-| Webhooks                 |   W   |    -    |      -         |     W     |     -     |     -     |     -       |      -      |    -     |        -       |      -      |     -      |    W    |
+| Разрешение на уровне проекта | Администратор аккаунта | Администратор по выставлению счетов | Создатель проекта | Администратор безопасности | Наблюдатель | 
+|:-----------------------------|:----------------------:|:----------------------------------:|:-----------------:|:--------------------------:|:-----------:| 
+| Учетные данные окружения     |           W            |                  -                 |         W         |            -               |      R      |
+| Пользовательские переменные окружения |       W       |                  -                 |         W         |            -               |      R      |
+| Конфигурации платформы данных|           W            |                  -                 |         W         |            -               |      R      |
+| Разработка (IDE или CLI)     |           W            |                  -                 |         W         |            -               |      -      |
+| Окружения                    |           W            |                  -                 |         W         |            -               |      R      |
+| Задания                      |           W            |                  -                 |         W         |            -               |      R      |
+| Доступ к Metadata GraphQL API|           R            |                  -                 |         R         |            -               |      R      |
+| Разрешения                   |           W            |                  -                 |         W         |            W               |      R      |
+| Проекты                      |           W            |                  -                 |         W         |            R               |      R      |
+| Репозитории                  |           W            |                  -                 |         W         |            -               |      R      |
+| Запуски                      |           W            |                  -                 |         W         |            -               |      R      |
+| Конфигурация семантического слоя |       W            |                  -                 |         W         |            v               |      R      |
 `}
 
 </SortableTable>
 
-#### Project permissions for project roles
+### Разрешения ролей проекта
+
+Роли проекта позволяют работать в рамках проектов в различных качествах. Они в основном предоставляют доступ к разрешениям на уровне проекта, таким как репозитории и IDE или dbt Cloud CLI, но могут также предоставлять некоторые разрешения на уровне аккаунта.
+
+Ключ:
+
+* (W)rite &mdash; Создание нового или изменение существующего. Включает `отправку`, `создание`, `удаление`, `распределение`, `изменение` и `разработку`.
+* (R)ead &mdash; Может просматривать, но не может создавать или изменять какие-либо поля.
+
+#### Разрешения на уровне аккаунта для ролей проекта
+
+<SortableTable>
+
+{`
+| Разрешение на уровне аккаунта | Администратор | Аналитик | Администратор базы данных | Разработчик | Администратор Git | Администратор заданий | Исполнитель заданий | Наблюдатель заданий | Метаданные (только Discovery API) | Семантический слой | Заинтересованное лицо | Администратор команды | Вебхук |
+|------------------------------|:-------------:|:--------:|:-------------------------:|:-----------:|:-----------------:|:---------------------:|:-------------------:|:-------------------:|:-------------------------------:|:------------------:|:---------------------:|:---------------------:|:------:|  
+| Настройки аккаунта           |       R       |    -     |            R              |      -      |         R         |          -            |          -          |          -          |               -                 |         -          |           -           |           R           |   -    |
+| Провайдер аутентификации     |       -       |    -     |            -              |      -      |         -         |          -            |          -          |          -          |               -                 |         -          |           -           |           -           |   -    |
+| Выставление счетов           |       -       |    -     |            -              |      -      |         -         |          -            |          -          |          -          |               -                 |         -          |           -           |           -           |   -    |
+| Подключения                  |       R       |    R     |            R              |      R      |         R         |          R            |          -          |          -          |               -                 |         -          |           R           |           R           |   -    |
+| Группы                       |       R       |    -     |            R              |      R      |         R         |          -            |          -          |          -          |               -                 |         -          |           R           |           R           |   -    |
+| Приглашения                  |       W       |    R     |            R              |      R      |         R         |          R            |          -          |          R          |               -                 |         -          |           R           |           R           |   -    |
+| Лицензии                     |       W       |    R     |            R              |      R      |         R         |          R            |          -          |          R          |               -                 |         -          |           -           |           R           |   -    |
+| Участники                    |       W       |    -     |            R              |      R      |         R         |          -            |          -          |          -          |               -                 |         -          |           R           |           R           |   -    |
+| Проект (создание)            |       -       |    -     |            -              |      -      |         -         |          -            |          -          |          -          |               -                 |         -          |           -           |           -           |   -    |
+| Публичные модели             |       R       |    R     |            R              |      R      |         R         |          R            |          -          |          R          |               R                 |         R          |           R           |           R           |   R    |
+| Сервисные токены             |       -       |    -     |            -              |      -      |         -         |          -            |          -          |          -          |               -                 |         -          |           -           |           -           |   -    |
+| Вебхуки                      |       W       |    -     |            -              |      W      |         -         |          -            |          -          |          -          |               -                 |         -          |           -           |           -           |   W    |
+`}
+
+</SortableTable>
+
+#### Разрешения на уровне проекта для ролей проекта
 
 <SortableTable> 
 
 {`
-|Project-level permission  | Admin | Analyst | Database admin | Developer | Git Admin | Job admin | Job runner  | Job viewer  | Metadata (Discovery API only) | Semantic Layer | Stakeholder | Team admin | Webhook |
-|--------------------------|:-----:|:-------:|:--------------:|:---------:|:---------:|:---------:|:-----------:|:-----------:|:---------------------------------------:|:--------------:|:-----------:|:----------:|:-------:|  
-| Environment credentials  |   W  |    W     |       W        |     W     |     R     |     W     |    -        |      -      |                  -                      |        -       |     R       |     R      |   -     |
-| Custom env. variables    |   W  |    W     |       W        |     W     |     W     |     W     |     -       |      R      |                  -                      |        -       |     R       |     W      |   -     |
-| Data platform configs    |   W   |    W    |       W        |     W     |     R     |     W     |     -       |      -      |                  -                      |       -        |     R       |     R      |    -    |
-| Develop (IDE or CLI)     |   W   |    W    |       -        |     W     |     -     |     -     |     -       |      -      |                  -                      |       -        |     -       |      -     |    -    |
-| Environments             |   W   |    R    |       R        |     R     |     R     |     W     |      -      |      R      |                  -                      |       -        |     R       |     R      |    -    |
-| Jobs                     |   W   |    R*   |       R*       |     R*    |     R*    |     W     |      R      |      R      |                  -                      |       -        |     R       |     R*     |    -    |
-| Metadata GraphQL API access| R   |    R    |       R        |     R     |     R     |     R     |      -      |      R      |                  R                      |       -        |     R       |     R      |    -    |
-| Permissions              |   W   |    -    |       R        |     R     |     R     |     -     |      -      |      -      |                  -                      |       -        |     -       |     R      |    -    |
-| Projects                 |   W   |    W    |       W        |     W     |     W     |     R     |      -      |      R      |                  -                      |       -        |     R       |     W      |    -    |
-| Repositories             |   W   |   -     |       R        |     R     |     W     |     -     |      -      |      -      |                  -                      |       -        |     R       |     R      |    -    |
-| Runs                     |   W   |    R*   |       R*       |     R*    |     R*    |     W     |      W      |      R      |                  -                      |       -        |     R       |     R*     |    -    |
-| Semantic Layer config    |   W   |    R    |       W        |     R     |     R     |     R     |      -      |      -      |                  -                      |        W       |     R       |     R      |    -    |
+| Разрешение на уровне проекта | Администратор | Аналитик | Администратор базы данных | Разработчик | Администратор Git | Администратор заданий | Исполнитель заданий | Наблюдатель заданий | Метаданные (только Discovery API) | Семантический слой | Заинтересованное лицо | Администратор команды | Вебхук |
+|------------------------------|:-------------:|:--------:|:-------------------------:|:-----------:|:-----------------:|:---------------------:|:-------------------:|:-------------------:|:---------------------------------:|:------------------:|:---------------------:|:---------------------:|:------:|  
+| Учетные данные окружения     |       W       |    W     |            W              |      W      |         R         |          W            |          -          |          -          |                 -                 |         -          |           R           |           R           |   -    |
+| Пользовательские переменные окружения |   W       |    W     |            W              |      W      |         W         |          W            |          -          |          R          |                 -                 |         -          |           R           |           W           |   -    |
+| Конфигурации платформы данных|       W       |    W     |            W              |      W      |         R         |          W            |          -          |          -          |                 -                 |         -          |           R           |           R           |   -    |
+| Разработка (IDE или CLI)     |       W       |    W     |            -              |      W      |         -         |          -            |          -          |          -          |                 -                 |         -          |           -           |           -           |   -    |
+| Окружения                    |       W       |    R     |            R              |      R      |         R         |          W            |          -          |          R          |                 -                 |         -          |           R           |           R           |   -    |
+| Задания                      |       W       |    R*    |            R*             |      R*     |         R*        |          W            |          R          |          R          |                 -                 |         -          |           R           |           R*          |   -    |
+| Доступ к Metadata GraphQL API|       R       |    R     |            R              |      R      |         R         |          R            |          -          |          R          |                 R                 |         -          |           R           |           R           |   -    |
+| Разрешения                   |       W       |    -     |            R              |      R      |         R         |          -            |          -          |          -          |                 -                 |         -          |           -           |           R           |   -    |
+| Проекты                      |       W       |    W     |            W              |      W      |         W         |          R            |          -          |          R          |                 -                 |         -          |           R           |           W           |   -    |
+| Репозитории                  |       W       |    -     |            R              |      R      |         W         |          -            |          -          |          -          |                 -                 |         -          |           R           |           R           |   -    |
+| Запуски                      |       W       |    R*    |            R*             |      R*     |         R*        |          W            |          W          |          R          |                 -                 |         -          |           R           |           R*          |   -    |
+| Конфигурация семантического слоя |   W       |    R     |            W              |      R      |         R         |          R            |          -          |          -          |                 -                 |         W          |           R           |           R           |   -    |
 
 `}
 
 </SortableTable>
 
-\* These permissions are `R`ead-only by default, but may be changed to `W`rite with [environment permissions](/docs/cloud/manage-access/environment-permissions#environments-and-roles).
+\* Эти разрешения по умолчанию являются `R`ead-only, но могут быть изменены на `W`rite с помощью [разрешений окружения](/docs/cloud/manage-access/environment-permissions#environments-and-roles).

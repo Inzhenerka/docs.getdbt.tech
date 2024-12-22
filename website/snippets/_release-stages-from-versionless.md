@@ -1,5 +1,5 @@
-:::note Versionless is now the "latest" release track
+:::note "Версия без номера" теперь называется "последний" релизный трек
 
-This blog post was updated on December 04, 2024 to rename "versionless" to the "latest" release track allowing for the introduction of less-frequent release tracks. Learn more about [Release Tracks](/docs/dbt-versions/cloud-release-tracks) and how to use them.
+Этот пост в блоге был обновлён 4 декабря 2024 года, чтобы переименовать "версию без номера" в "последний" релизный трек, что позволяет вводить менее частые релизные треки. Узнайте больше о [Релизных треках](/docs/dbt-versions/cloud-release-tracks) и о том, как их использовать.
 
 :::

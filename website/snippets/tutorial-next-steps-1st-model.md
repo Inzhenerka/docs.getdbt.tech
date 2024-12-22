@@ -1,7 +1,7 @@
-Before moving on from building your first models, make a change and see how it affects your results:
+Прежде чем двигаться дальше после создания ваших первых моделей, внесите изменения и посмотрите, как это повлияет на ваши результаты:
 
-* Write some bad SQL to cause an error — can you debug the error?
-* Run only a single model at a time. For more information, see [Syntax overview](/reference/node-selection/syntax).
-* Group your models with a `stg_` prefix into a `staging` subdirectory. For example,  `models/staging/stg_customers.sql`.
-  * Configure your `staging` models to be views.
-  * Run only the `staging` models.
+* Напишите некорректный SQL, чтобы вызвать ошибку — сможете ли вы отладить ошибку?
+* Запустите только одну модель за раз. Для получения дополнительной информации смотрите [Обзор синтаксиса](/reference/node-selection/syntax).
+* Сгруппируйте ваши модели с префиксом `stg_` в подкаталог `staging`. Например, `models/staging/stg_customers.sql`.
+  * Настройте ваши `staging` модели как представления (views).
+  * Запустите только `staging` модели.

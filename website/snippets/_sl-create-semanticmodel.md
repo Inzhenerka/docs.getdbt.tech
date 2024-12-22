@@ -1,29 +1,29 @@
-The following steps describe how to set up semantic models. Semantic models consist of [entities](/docs/build/entities), [dimensions](/docs/build/dimensions), and [measures](/docs/build/measures).  
+Следующие шаги описывают, как настроить семантические модели. Семантические модели состоят из [сущностей](/docs/build/entities), [измерений](/docs/build/dimensions) и [мер](/docs/build/measures).
 
-We highly recommend you read the overview of what a [semantic model](/docs/build/semantic-models) is before getting started. If you're working in the [Jaffle shop example](https://github.com/dbt-labs/jaffle-sl-template), delete the `orders.yml` config or delete the .yml extension so it's ignored during parsing. **We'll be rebuilding it step by step in this example.**
+Мы настоятельно рекомендуем вам прочитать обзор того, что такое [семантическая модель](/docs/build/semantic-models), прежде чем начать. Если вы работаете с [примером Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template), удалите конфигурацию `orders.yml` или удалите расширение .yml, чтобы оно игнорировалось при разборе. **Мы будем восстанавливать его шаг за шагом в этом примере.**
 
-If you're following the guide in your own project, pick a model that you want to build a semantic manifest from and fill in the config values accordingly.
+Если вы следуете руководству в своем собственном проекте, выберите модель, из которой вы хотите создать семантический манифест, и заполните значения конфигурации соответствующим образом.
 
-1. Create a new yml config file for the orders model, such as `orders.yml`.
+1. Создайте новый конфигурационный файл yml для модели orders, например, `orders.yml`.
 
-It's best practice to create semantic models in the `/models/semantic_models` directory in your project. Semantic models are nested under the `semantic_models` key. First, fill in the name and appropriate metadata, map it to a model in your dbt project, and specify model defaults. For now, `default_agg_time_dimension` is the only supported default.
+Лучше всего создавать семантические модели в каталоге `/models/semantic_models` вашего проекта. Семантические модели вложены под ключом `semantic_models`. Сначала заполните имя и соответствующие метаданные, сопоставьте его с моделью в вашем проекте dbt и укажите значения по умолчанию для модели. На данный момент `default_agg_time_dimension` является единственным поддерживаемым значением по умолчанию.
 
 ```yaml
 semantic_models:
-  #The name of the semantic model.
+  # Имя семантической модели.
   - name: orders
     defaults:
       agg_time_dimension: ordered_at
     description: |
-      Order fact table. This table is at the order grain with one row per order. 
-    #The name of the dbt model and schema
+      Таблица фактов заказов. Эта таблица на уровне заказа с одной строкой на заказ.
+    # Имя модели dbt и схема
     model: ref('orders')
   ```
 
-2. Define your entities. These are the keys in your table that MetricFlow will use to join other semantic models. These are usually columns like `customer_id`, `order_id`, and so on.
+2. Определите ваши сущности. Это ключи в вашей таблице, которые MetricFlow будет использовать для соединения с другими семантическими моделями. Обычно это такие столбцы, как `customer_id`, `order_id` и так далее.
 
 ```yaml
-  #Entities. These usually correspond to keys in the table.
+  # Сущности. Обычно они соответствуют ключам в таблице.
     entities:
       - name: order_id
         type: primary
@@ -35,32 +35,32 @@ semantic_models:
         expr: customer_id
   ```
 
-3. Define your dimensions and measures. Dimensions are properties of the records in your table that are non-aggregatable. They provide categorical or time-based context to enrich metrics. Measures are the building block for creating metrics. They are numerical columns that MetricFlow aggregates to create metrics.
+3. Определите ваши измерения и меры. Измерения — это свойства записей в вашей таблице, которые не подлежат агрегации. Они предоставляют категориальный или временной контекст для обогащения метрик. Меры — это строительные блоки для создания метрик. Это числовые столбцы, которые MetricFlow агрегирует для создания метрик.
 
 ```yaml
-    #Measures. These are the aggregations on the columns in the table.
+    # Меры. Это агрегации по столбцам в таблице.
     measures: 
       - name: order_total
-        description: The total revenue for each order.
+        description: Общий доход по каждому заказу.
         agg: sum
       - name: order_count
         expr: 1
         agg: sum
       - name: tax_paid
-        description: The total tax paid on each order. 
+        description: Общая сумма налога, уплаченного по каждому заказу.
         agg: sum
       - name: customers_with_orders
-        description: Distinct count of customers placing orders
+        description: Уникальное количество клиентов, размещающих заказы
         agg: count_distinct
         expr: customer_id
       - name: locations_with_orders
-        description: Distinct count of locations with order
+        description: Уникальное количество мест с заказами
         expr: location_id
         agg: count_distinct
       - name: order_cost
-        description: The cost for each order item. Cost is calculated as a sum of the supply cost for each order item. 
+        description: Стоимость каждого элемента заказа. Стоимость рассчитывается как сумма стоимости поставки для каждого элемента заказа.
         agg: sum
-  #Dimensions. Either categorical or time. These add additional context to metrics. The typical querying pattern is Metric by Dimension.  
+  # Измерения. Либо категориальные, либо временные. Они добавляют дополнительный контекст к метрикам. Типичный шаблон запроса — Метрика по Измерению.
     dimensions:
       - name: ordered_at
         type: time
@@ -75,19 +75,19 @@ semantic_models:
         type: categorical  
 ```
 
-Putting it all together, a complete semantic model configurations based on the order model would look like the following example:
+Объединяя все вместе, полная конфигурация семантической модели на основе модели заказа будет выглядеть следующим образом:
 
 ```yaml
 semantic_models:
-  #The name of the semantic model.
+  # Имя семантической модели.
   - name: orders
     defaults:
       agg_time_dimension: ordered_at
     description: |
-      Order fact table. This table is at the order grain with one row per order. 
-    #The name of the dbt model and schema
+      Таблица фактов заказов. Эта таблица на уровне заказа с одной строкой на заказ.
+    # Имя модели dbt и схема
     model: ref('orders')
-    #Entities. These usually corespond to keys in the table.
+    # Сущности. Обычно они соответствуют ключам в таблице.
     entities:
       - name: order_id
         type: primary
@@ -97,29 +97,29 @@ semantic_models:
       - name: customer
         type: foreign
         expr: customer_id
-    #Measures. These are the aggregations on the columns in the table.
+    # Меры. Это агрегации по столбцам в таблице.
     measures: 
       - name: order_total
-        description: The total revenue for each order.
+        description: Общий доход по каждому заказу.
         agg: sum
       - name: order_count
         expr: 1
         agg: sum
       - name: tax_paid
-        description: The total tax paid on each order. 
+        description: Общая сумма налога, уплаченного по каждому заказу.
         agg: sum
       - name: customers_with_orders
-        description: Distinct count of customers placing orders
+        description: Уникальное количество клиентов, размещающих заказы
         agg: count_distinct
         expr: customer_id
       - name: locations_with_orders
-        description: Distinct count of locations with order
+        description: Уникальное количество мест с заказами
         expr: location_id
         agg: count_distinct
       - name: order_cost
-        description: The cost for each order item. Cost is calculated as a sum of the supply cost for each order item. 
+        description: Стоимость каждого элемента заказа. Стоимость рассчитывается как сумма стоимости поставки для каждого элемента заказа.
         agg: sum
-    #Dimensions. Either categorical or time. These add additional context to metrics. The typical querying pattern is Metric by Dimension.  
+    # Измерения. Либо категориальные, либо временные. Они добавляют дополнительный контекст к метрикам. Типичный шаблон запроса — Метрика по Измерению.
     dimensions:
       - name: ordered_at
         type: time
@@ -135,16 +135,16 @@ semantic_models:
 ```
 
 :::tip
-If you're familiar with writing SQL, you can think of dimensions as the columns you would group by and measures as the columns you would aggregate.
+Если вы знакомы с написанием SQL, вы можете думать об измерениях как о столбцах, по которым вы бы группировали, а о мерах как о столбцах, которые вы бы агрегировали.
 
 ```sql
 select
-  metric_time_day,  -- time
-  country,  -- categorical dimension
-  sum(revenue_usd) -- measure
+  metric_time_day,  -- время
+  country,  -- категориальное измерение
+  sum(revenue_usd) -- мера
 from
-  snowflake.fact_transactions  -- sql table
-group by metric_time_day, country  -- dimensions
+  snowflake.fact_transactions  -- SQL таблица
+group by metric_time_day, country  -- измерения
   ```
 
 :::

@@ -1,63 +1,63 @@
-## Types of environments
+## Типы окружений
 
-In dbt Cloud, there are two types of environments:
-- **Deployment environment** &mdash; Determines the settings used when jobs created within that environment are executed.<br></br>
-    Types of deployment environments:
-    - General
-    - Staging
-    - Production
-- **Development environment** &mdash; Determines the settings used in the dbt Cloud IDE or dbt Cloud CLI, for that particular project. 
+В dbt Cloud существуют два типа окружений:
+- **Окружение развертывания** &mdash; Определяет настройки, используемые при выполнении задач, созданных в этом окружении.<br></br>
+    Типы окружений развертывания:
+    - Общее
+    - Стадия
+    - Производство
+- **Окружение разработки** &mdash; Определяет настройки, используемые в dbt Cloud IDE или dbt Cloud CLI для конкретного проекта.
 
-Each dbt Cloud project can only have a single development environment but can have any number of deployment environments.
+Каждый проект в dbt Cloud может иметь только одно окружение разработки, но может иметь любое количество окружений развертывания.
 
-|| Development  | Staging | Deployment |
+|| Разработка  | Стадия | Развертывание |
 |------| --- | --- | --- |
-| **Determines settings for** | dbt Cloud IDE or dbt Cloud CLI | dbt Cloud Job runs | dbt Cloud Job runs |
-| **How many can I have in my project?** | 1 | Any number | Any number |
+| **Определяет настройки для** | dbt Cloud IDE или dbt Cloud CLI | Запуски задач dbt Cloud | Запуски задач dbt Cloud |
+| **Сколько можно иметь в проекте?** | 1 | Любое количество | Любое количество |
 
 :::note 
-For users familiar with development on dbt Core, each environment is roughly analogous to an entry in your `profiles.yml` file, with some additional information about your repository to ensure the proper version of code is executed. More info on dbt core environments [here](/docs/core/dbt-core-environments).
+Для пользователей, знакомых с разработкой на dbt Core, каждое окружение примерно аналогично записи в вашем файле `profiles.yml`, с дополнительной информацией о вашем репозитории, чтобы гарантировать выполнение правильной версии кода. Подробнее об окружениях dbt core [здесь](/docs/core/dbt-core-environments).
 :::
 
-## Common environment settings
+## Общие настройки окружения
 
-Both development and deployment environments have a section called **General Settings**, which has some basic settings that all environments will define:
+Как окружения разработки, так и развертывания имеют раздел под названием **Общие настройки**, который содержит некоторые базовые настройки, которые определяются для всех окружений:
 
-| Setting | Example Value | Definition | Accepted Values |
+| Настройка | Пример значения | Определение | Допустимые значения |
 | --- | --- | --- | --- |
-| Name | Production  | The environment name  | Any string! |
-| Environment Type | Deployment | The type of environment | [Deployment, Development] |
-| dbt Version | 1.4 (latest) | The dbt version used  | Any dbt version in the dropdown |
-| Default to Custom Branch | ☑️ | Determines whether to use a branch other than the repository’s default  | See below |
-| Custom Branch | dev | Custom Branch name | See below |
+| Имя | Производство  | Имя окружения  | Любая строка! |
+| Тип окружения | Развертывание | Тип окружения | [Развертывание, Разработка] |
+| Версия dbt | 1.4 (последняя) | Используемая версия dbt  | Любая версия dbt из выпадающего списка |
+| По умолчанию использовать пользовательскую ветку | ☑️ | Определяет, использовать ли ветку, отличную от основной ветки репозитория  | См. ниже |
+| Пользовательская ветка | dev | Имя пользовательской ветки | См. ниже |
 
-:::note About dbt version
+:::note О версии dbt
 
-dbt Cloud allows users to select a [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing dbt version upgrades at the cadence that makes sense for their team.
+dbt Cloud позволяет пользователям выбирать [треки релизов](/docs/dbt-versions/cloud-release-tracks), чтобы получать обновления версий dbt с частотой, которая подходит их команде.
 :::
 
-### Custom branch behavior
+### Поведение пользовательской ветки
 
-By default, all environments will use the default branch in your repository (usually the `main` branch) when accessing your dbt code. This is overridable within each dbt Cloud Environment using the **Default to a custom branch** option. This setting will have slightly different behavior depending on the environment type:
+По умолчанию все окружения будут использовать основную ветку в вашем репозитории (обычно это ветка `main`) при доступе к вашему коду dbt. Это можно изменить в каждом окружении dbt Cloud с помощью опции **По умолчанию использовать пользовательскую ветку**. Эта настройка будет иметь немного разное поведение в зависимости от типа окружения:
 
-- **Development**: determines which branch in the dbt Cloud IDE or dbt Cloud CLI developers create branches from and open PRs against.
-- **Deployment:** determines the branch is cloned during job executions for each environment.
+- **Разработка**: определяет, из какой ветки в dbt Cloud IDE или dbt Cloud CLI разработчики создают ветки и открывают PR.
+- **Развертывание:** определяет, какая ветка клонируется во время выполнения задач для каждого окружения.
 
-For more info, check out this [FAQ page on this topic](/faqs/Environments/custom-branch-settings)!
+Для получения дополнительной информации ознакомьтесь с этой [страницей FAQ по этой теме](/faqs/Environments/custom-branch-settings)!
 
-### Extended attributes
+### Расширенные атрибуты
 
 :::note 
-Extended attributes are are currently _not_ supported for SSH tunneling
+Расширенные атрибуты в настоящее время _не_ поддерживаются для SSH-туннелирования
 :::
 
-Extended attributes allows users to set a flexible [profiles.yml](/docs/core/connect-data-platform/profiles.yml) snippet in their dbt Cloud Environment settings. It provides users with more control over environments (both deployment and development) and extends how dbt Cloud connects to the data platform within a given environment.
+Расширенные атрибуты позволяют пользователям задавать гибкий фрагмент [profiles.yml](/docs/core/connect-data-platform/profiles.yml) в настройках окружения dbt Cloud. Это предоставляет пользователям больше контроля над окружениями (как развертывания, так и разработки) и расширяет возможности подключения dbt Cloud к платформе данных в заданном окружении.
 
-Extended attributes are set at the environment level, and can partially override connection or environment credentials, including any custom environment variables. You can set any YAML attributes that a dbt adapter accepts in its `profiles.yml`.
+Расширенные атрибуты задаются на уровне окружения и могут частично переопределять учетные данные подключения или окружения, включая любые пользовательские переменные окружения. Вы можете задать любые YAML-атрибуты, которые адаптер dbt принимает в своем `profiles.yml`.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/extended-attributes.jpg" width="95%" title="Extended Attributes helps users add profiles.yml attributes to dbt Cloud Environment settings using a free form text box." /> <br />
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/extended-attributes.jpg" width="95%" title="Расширенные атрибуты помогают пользователям добавлять атрибуты profiles.yml в настройки окружения dbt Cloud, используя текстовое поле свободной формы." /> <br />
 
-The following code is an example of the types of attributes you can add in the **Extended Attributes** text box:
+Следующий код является примером типов атрибутов, которые вы можете добавить в текстовое поле **Расширенные атрибуты**:
 
 ```yaml
 dbname: jaffle_shop      
@@ -67,18 +67,15 @@ username: alice
 password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'
 ```
 
-#### Extended Attributes don't mask secret values
-We recommend avoiding setting secret values to prevent visibility in the text box and logs. A common workaround is to wrap extended attributes in [environment variables](/docs/build/environment-variables). In the earlier example, `password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'` will get a value from the `DBT_ENV_SECRET_PASSWORD` environment variable at runtime.
+#### Расширенные атрибуты не скрывают секретные значения
+Мы рекомендуем избегать установки секретных значений, чтобы предотвратить их видимость в текстовом поле и журналах. Общий обходной путь заключается в оборачивании расширенных атрибутов в [переменные окружения](/docs/build/environment-variables). В предыдущем примере `password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'` получит значение из переменной окружения `DBT_ENV_SECRET_PASSWORD` во время выполнения.
 
-#### How extended attributes work
-If you're developing in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), [dbt Cloud CLI](/docs/cloud/cloud-cli-installation), or [orchestrating job runs](/docs/deploy/deployments), extended attributes parses through the provided YAML and extracts the `profiles.yml` attributes. For each individual attribute:
+#### Как работают расширенные атрибуты
+Если вы разрабатываете в [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud), [dbt Cloud CLI](/docs/cloud/cloud-cli-installation) или [организуете выполнение задач](/docs/deploy/deployments), расширенные атрибуты анализируют предоставленный YAML и извлекают атрибуты `profiles.yml`. Для каждого отдельного атрибута:
 
-- If the attribute exists in another source (such as your project settings), it will replace its value (like environment-level values) in the profile. It also overrides any custom environment variables (if not itself wired using the syntax described for secrets above)
+- Если атрибут существует в другом источнике (например, в настройках вашего проекта), он заменит его значение (например, значения на уровне окружения) в профиле. Он также переопределяет любые пользовательские переменные окружения (если сам не подключен с использованием описанного выше синтаксиса для секретов).
 
-- If the attribute doesn't exist, it will add the attribute or value pair to the profile.
+- Если атрибут не существует, он добавит атрибут или пару значений в профиль.
 
-#### Only the **top-level keys** are accepted in extended attributes
-This means that if you want to change a specific sub-key value, you must provide the entire top-level key as a JSON block in your resulting YAML. For example, if you want to customize a particular field within a [service account JSON](/docs/core/connect-data-platform/bigquery-setup#service-account-json) for your BigQuery connection (like 'project_id' or 'client_email'), you need to provide an override for the entire top-level `keyfile_json` main key/attribute using extended attributes. Include the sub-fields as a nested JSON block.
-
-
-
+#### Только **ключи верхнего уровня** принимаются в расширенных атрибутах
+Это означает, что если вы хотите изменить конкретное значение под-ключа, вы должны предоставить весь ключ верхнего уровня в виде JSON-блока в вашем итоговом YAML. Например, если вы хотите настроить определенное поле в [JSON учетной записи службы](/docs/core/connect-data-platform/bigquery-setup#service-account-json) для вашего подключения BigQuery (например, 'project_id' или 'client_email'), вам нужно предоставить переопределение для всего ключа/атрибута верхнего уровня `keyfile_json`, используя расширенные атрибуты. Включите под-поля в виде вложенного JSON-блока.

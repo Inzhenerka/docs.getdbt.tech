@@ -1,9 +1,9 @@
-:::info Limited to certain Enterprise tiers
+:::info Доступно только для определённых уровней Enterprise
 
-The PrivateLink feature is available on the following dbt Cloud Enterprise tiers:
- * Business Critical 
+Функция PrivateLink доступна на следующих уровнях dbt Cloud Enterprise:
+ * Business Critical
  * Virtual Private
 
-To learn more about these tiers, contact us at [sales@getdbt.com](mailto:sales@getdbt.com).
+Чтобы узнать больше об этих уровнях, свяжитесь с нами по адресу [sales@getdbt.com](mailto:sales@getdbt.com).
 
 :::

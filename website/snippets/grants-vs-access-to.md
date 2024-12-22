@@ -1,9 +1,8 @@
-
 :::info Note
-The `grants` config and the `grant_access_to` config are distinct.
+Конфигурации `grants` и `grant_access_to` различны.
 
-- **`grant_access_to`:** Enables you to set up authorized views. When configured, dbt provides an authorized view access to show partial information from other datasets, without providing end users with full access to those underlying datasets. For more information, see ["BigQuery configurations: Authorized views"](/reference/resource-configs/bigquery-configs#authorized-views)
-- **`grants`:** Provides specific permissions to users, groups, or service accounts for managing access to datasets you're producing with dbt. For more information, see ["Resource configs: grants"](/reference/resource-configs/grants)
+- **`grant_access_to`:** Позволяет настроить авторизованные представления. При настройке dbt предоставляет доступ к авторизованному представлению для отображения частичной информации из других наборов данных, не предоставляя конечным пользователям полного доступа к этим исходным наборам данных. Для получения дополнительной информации см. ["Конфигурации BigQuery: Авторизованные представления"](/reference/resource-configs/bigquery-configs#authorized-views)
+- **`grants`:** Предоставляет конкретные разрешения пользователям, группам или сервисным аккаунтам для управления доступом к наборам данных, которые вы создаете с помощью dbt. Для получения дополнительной информации см. ["Конфигурации ресурсов: grants"](/reference/resource-configs/grants)
 
-You can use the two features together: "authorize" a view model with the `grants_access_to` configuration, and then add `grants` to that view model to share its query results (and _only_ its query results) with other users, groups, or service accounts.
+Вы можете использовать обе функции вместе: "авторизовать" модель представления с помощью конфигурации `grant_access_to`, а затем добавить `grants` к этой модели представления, чтобы поделиться результатами её запросов (и _только_ результатами её запросов) с другими пользователями, группами или сервисными аккаунтами.
 :::

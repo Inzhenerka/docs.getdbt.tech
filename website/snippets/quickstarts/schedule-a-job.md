@@ -1,57 +1,52 @@
-## Commit your changes
+## Зафиксируйте ваши изменения
 
-Now that you've built your customer model, you need to commit the changes you made to the project so that the repository has your latest code.
+Теперь, когда вы создали модель клиента, вам нужно зафиксировать изменения, которые вы внесли в проект, чтобы репозиторий содержал ваш последний код.
 
-**If you edited directly in the protected primary branch:**<br />
-1. Click the **Commit and sync git** button. This action prepares your changes for commit.
-2. A modal titled **Commit to a new branch** will appear.
-3. In the modal window, name your new branch `add-customers-model`. This branches off from your primary branch with your new changes.
-4. Add a commit message, such as "Add customers model, tests, docs" and and commit your changes.
-5. Click **Merge this branch to main** to add these changes to the main branch on your repo.
+**Если вы редактировали непосредственно в защищенной основной ветке:**<br />
+1. Нажмите кнопку **Commit and sync git**. Это действие подготовит ваши изменения для фиксации.
+2. Появится модальное окно с заголовком **Commit to a new branch**.
+3. В модальном окне назовите вашу новую ветку `add-customers-model`. Эта ветка будет ответвлением от вашей основной ветки с вашими новыми изменениями.
+4. Добавьте сообщение о фиксации, например, "Add customers model, tests, docs" и зафиксируйте ваши изменения.
+5. Нажмите **Merge this branch to main**, чтобы добавить эти изменения в основную ветку вашего репозитория.
 
+**Если вы создали новую ветку перед редактированием:**<br />
+1. Поскольку вы уже ответвились от основной защищенной ветки, перейдите в **Version Control** слева.
+2. Нажмите **Commit and sync**, чтобы добавить сообщение.
+3. Добавьте сообщение о фиксации, например, "Add customers model, tests, docs."
+4. Нажмите **Merge this branch to main**, чтобы добавить эти изменения в основную ветку вашего репозитория.
 
-**If you created a new branch before editing:**<br />
-1. Since you already branched out of the primary protected branch, go to  **Version Control** on the left.
-2. Click **Commit and sync** to add a message.
-3. Add a commit message, such as "Add customers model, tests, docs."
-4. Click **Merge this branch to main** to add these changes to the main branch on your repo.
+## Разверните dbt
 
-## Deploy dbt
+Используйте Планировщик dbt Cloud, чтобы уверенно развернуть ваши производственные задания и встроить наблюдаемость в ваши процессы. Вы научитесь создавать среду развертывания и запускать задание в следующих шагах.
 
-Use dbt Cloud's Scheduler to deploy your production jobs confidently and build observability into your processes. You'll learn to create a deployment environment and run a job in the following steps.
+### Создайте среду развертывания
 
-### Create a deployment environment
+1. В верхнем левом углу выберите **Deploy**, затем нажмите **Environments**.
+2. Нажмите **Create Environment**.
+3. В поле **Name** напишите название вашей среды развертывания. Например, "Production."
+4. В поле **dbt Version** выберите последнюю версию из выпадающего списка.
+5. В разделе **Deployment connection** введите название набора данных, который вы хотите использовать в качестве целевого, например, "Analytics". Это позволит dbt строить и работать с этим набором данных. Для некоторых хранилищ данных целевой набор данных может называться "схемой".
+6. Нажмите **Save**.
 
-1. In the upper left, select **Deploy**, then click **Environments**.
-2. Click **Create Environment**.
-3. In the **Name** field, write the name of your deployment environment. For example, "Production."
-4. In the **dbt Version** field, select the latest version from the dropdown.
-5. Under **Deployment connection**, enter the name of the dataset you want to use as the target, such as "Analytics". This will allow dbt to build and work with that dataset. For some data warehouses, the target dataset may be referred to as a "schema".
-6. Click **Save**.
+### Создайте и запустите задание
 
-### Create and run a job
+Задания — это набор команд dbt, которые вы хотите запускать по расписанию. Например, `dbt build`.
 
-Jobs are a set of dbt commands that you want to run on a schedule. For example, `dbt build`.
+По мере того как бизнес `jaffle_shop` привлекает больше клиентов, и эти клиенты создают больше заказов, вы увидите больше записей, добавленных в ваши исходные данные. Поскольку вы материализовали модель `customers` как таблицу, вам нужно будет периодически перестраивать вашу таблицу, чтобы данные оставались актуальными. Это обновление произойдет, когда вы запустите задание.
 
-As the `jaffle_shop` business gains more customers, and those customers create more orders, you will see more records added to your source data. Because you materialized the `customers` model as a table, you'll need to periodically rebuild your table to ensure that the data stays up-to-date. This update will happen when you run a job.
-
-1. After creating your deployment environment, you should be directed to the page for a new environment. If not, select **Deploy** in the upper left, then click **Jobs**.
-2. Click **Create one** and provide a name, for example, "Production run", and link to the Environment you just created.
-3. Scroll down to the **Execution Settings** section.
-4. Under **Commands**, add this command as part of your job if you don't see it:
+1. После создания вашей среды развертывания вы должны быть перенаправлены на страницу новой среды. Если нет, выберите **Deploy** в верхнем левом углу, затем нажмите **Jobs**.
+2. Нажмите **Create one** и укажите имя, например, "Production run", и свяжите с только что созданной средой.
+3. Прокрутите вниз до раздела **Execution Settings**.
+4. В разделе **Commands** добавьте эту команду как часть вашего задания, если вы ее не видите:
    * `dbt build`
-5. Select the **Generate docs on run** checkbox to automatically [generate updated project docs](/docs/collaborate/build-and-view-your-docs) each time your job runs. 
-6. For this exercise, do _not_ set a schedule for your project to run &mdash; while your organization's project should run regularly, there's no need to run this example project on a schedule. Scheduling a job is sometimes referred to as _deploying a project_.
-7. Select **Save**, then click **Run now** to run your job.
-8. Click the run and watch its progress under "Run history."
-9. Once the run is complete, click **View Documentation** to see the docs for your project.
+5. Выберите флажок **Generate docs on run**, чтобы автоматически [генерировать обновленную документацию проекта](/docs/collaborate/build-and-view-your-docs) каждый раз, когда выполняется ваше задание.
+6. Для этого упражнения _не_ устанавливайте расписание для выполнения вашего проекта &mdash; хотя проект вашей организации должен выполняться регулярно, нет необходимости запускать этот пример проекта по расписанию. Планирование задания иногда называют _развертыванием проекта_.
+7. Выберите **Save**, затем нажмите **Run now**, чтобы запустить ваше задание.
+8. Нажмите на выполнение и наблюдайте за его прогрессом в разделе "Run history."
+9. После завершения выполнения нажмите **View Documentation**, чтобы увидеть документацию вашего проекта.
 
+Поздравляем 🎉! Вы только что развернули ваш первый проект dbt!
 
-Congratulations 🎉! You've just deployed your first dbt project!
-
-
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Runs/failed-prod-run" />
-
-

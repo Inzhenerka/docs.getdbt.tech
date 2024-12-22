@@ -1,5 +1,5 @@
-Before moving on from testing, make a change and see how it affects your results:
+Прежде чем двигаться дальше от тестирования, внесите изменения и посмотрите, как это повлияет на ваши результаты:
 
-* Write a test that fails, for example, omit one of the order statuses in the `accepted_values` list. What does a failing test look like? Can you debug the failure?
-* Run the tests for one model only. If you grouped your `stg_` models into a directory, try running the tests for all the models in that directory.
-* Use a [docs block](/docs/build/documentation#using-docs-blocks) to add a Markdown description to a model.
+* Напишите тест, который не пройдет, например, исключите один из статусов заказа из списка `accepted_values`. Как выглядит неудачный тест? Можете ли вы отладить ошибку?
+* Запустите тесты только для одной модели. Если вы сгруппировали свои модели с префиксом `stg_` в отдельную директорию, попробуйте запустить тесты для всех моделей в этой директории.
+* Используйте [блок документации](/docs/build/documentation#using-docs-blocks), чтобы добавить описание в формате Markdown к модели.

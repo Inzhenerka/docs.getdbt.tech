@@ -1,1 +1,1 @@
-**Note:** Make sure to set the environment to "Production" so you can take advantage of features like dbt Explorer and cross-project references. Refer to [Set product environment](/docs/deploy/deploy-environments#set-as-production-environment) for details.
+**Примечание:** Убедитесь, что вы установили среду на "Production", чтобы воспользоваться такими функциями, как dbt Explorer и перекрестные ссылки между проектами. Подробности смотрите в разделе [Установка среды продукта](/docs/deploy/deploy-environments#set-as-production-environment).

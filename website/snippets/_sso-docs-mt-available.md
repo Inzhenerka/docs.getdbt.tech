@@ -1,7 +1,7 @@
-:::info Enterprise feature
+:::info Функция для Enterprise
 
-This guide describes a feature of the dbt Cloud Enterprise plan. If you’re interested in learning more about an Enterprise plan, contact us at [sales@getdbt.com](mailto:sales@getdbt.com).
+Это руководство описывает функцию плана dbt Cloud Enterprise. Если вы хотите узнать больше о плане Enterprise, свяжитесь с нами по адресу [sales@getdbt.com](mailto:sales@getdbt.com).
 
-These SSO configuration documents apply to multi-tenant Enterprise deployments only.
+Эти документы по настройке SSO применимы только к многопользовательским развертываниям Enterprise.
 
 :::

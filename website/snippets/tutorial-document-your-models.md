@@ -1,6 +1,6 @@
-Adding [documentation](/docs/build/documentation) to your project allows you to describe your models in rich detail, and share that information with your team. Here, we're going to add some basic documentation to our project.
+Добавление [документации](/docs/build/documentation) в ваш проект позволяет подробно описывать ваши модели и делиться этой информацией с вашей командой. Здесь мы добавим базовую документацию в наш проект.
 
-1. Update your `models/schema.yml` file to include some descriptions, such as those below.
+1. Обновите ваш файл `models/schema.yml`, чтобы включить в него некоторые описания, как показано ниже.
 
     <File name='models/schema.yml'>
 
@@ -9,30 +9,30 @@ Adding [documentation](/docs/build/documentation) to your project allows you to 
 
     models:
       - name: customers
-        description: One record per customer
+        description: Одна запись на каждого клиента
         columns:
           - name: customer_id
-            description: Primary key
+            description: Первичный ключ
             tests:
               - unique
               - not_null
           - name: first_order_date
-            description: NULL when a customer has not yet placed an order.
+            description: NULL, если клиент еще не сделал заказ.
 
       - name: stg_customers
-        description: This model cleans up customer data
+        description: Эта модель очищает данные о клиентах
         columns:
           - name: customer_id
-            description: Primary key
+            description: Первичный ключ
             tests:
               - unique
               - not_null
 
       - name: stg_orders
-        description: This model cleans up order data
+        description: Эта модель очищает данные о заказах
         columns:
           - name: order_id
-            description: Primary key
+            description: Первичный ключ
             tests:
               - unique
               - not_null
@@ -50,4 +50,4 @@ Adding [documentation](/docs/build/documentation) to your project allows you to 
 
     </File>
 
-2. Run `dbt docs generate` to generate the documentation for your project. dbt introspects your project and your warehouse to generate a <Term id="json" /> file with rich documentation about your project.
+2. Запустите `dbt docs generate`, чтобы сгенерировать документацию для вашего проекта. dbt анализирует ваш проект и ваш склад данных, чтобы создать <Term id="json" /> файл с подробной документацией о вашем проекте.

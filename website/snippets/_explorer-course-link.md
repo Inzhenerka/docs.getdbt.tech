@@ -1,3 +1,3 @@
-:::info  On-demand learning
-If you enjoy video courses, check out our [dbt Explorer on-demand course](https://learn.getdbt.com/learn/course/dbt-explorer) and learn how to best explore your dbt project(s)!
+:::info Обучение по запросу
+Если вам нравятся видеокурсы, ознакомьтесь с нашим [курсом dbt Explorer по запросу](https://learn.getdbt.com/learn/course/dbt-explorer) и узнайте, как лучше всего исследовать ваш(и) проект(ы) dbt!
 :::

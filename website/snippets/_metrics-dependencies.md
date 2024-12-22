@@ -1,15 +1,15 @@
-## Dependencies
+## Зависимости
 
-Metric nodes will reflect dependencies on semantic models based on their _measures_. However, dependencies based on filters should not be reflected in:
+Узлы метрик будут отражать зависимости от семантических моделей на основе их _мер_. Однако зависимости, основанные на фильтрах, не должны отражаться в:
 
-- [dbt selection syntax](/reference/node-selection/syntax)
-- Visualization of the <Term id="dag">DAG</Term> in dbt-docs and the [integrated development environment](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (IDE).
+- [синтаксисе выбора dbt](/reference/node-selection/syntax)
+- Визуализации <Term id="dag">DAG</Term> в dbt-docs и [интегрированной среде разработки](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) (IDE).
 
-This is because metrics need to source nodes for their `depends_on` attribute from a few different places:
+Это связано с тем, что метрики должны получать узлы для своего атрибута `depends_on` из нескольких различных источников:
 
-- `RATIO` and `DERIVED` type metrics should reference `Metric.type_params.input_metrics`.
-- `SIMPLE` <!--and `CUMULATIVE`--> type metrics should reference `Metric.type_params.measure`.
+- Метрики типа `RATIO` и `DERIVED` должны ссылаться на `Metric.type_params.input_metrics`.
+- Метрики типа `SIMPLE` <!--и `CUMULATIVE`--> должны ссылаться на `Metric.type_params.measure`.
 
-For example, when you run the command `dbt list --select my_semantic_model+`, it will show you the metrics that belong to the specified semantic model.
+Например, когда вы выполняете команду `dbt list --select my_semantic_model+`, она покажет вам метрики, которые принадлежат указанной семантической модели.
 
-But there's a condition: Only the metrics that actually use measures or derived metrics from that semantic model will be included in the list. In other words, if a metric only uses a dimension from the semantic model in its filters, it won't be considered as part of that semantic model.
+Но есть условие: будут включены только те метрики, которые действительно используют меры или производные метрики из этой семантической модели. Другими словами, если метрика использует только измерение из семантической модели в своих фильтрах, она не будет считаться частью этой семантической модели.

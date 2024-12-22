@@ -1,24 +1,21 @@
-You can use the following modes to configure the behavior when performing indirect selection (with `eager` mode as the default). Test exclusion is always greedy: if ANY parent is explicitly excluded, the test will be excluded as well.
+Вы можете использовать следующие режимы для настройки поведения при выполнении косвенного выбора (по умолчанию используется режим `eager`). Исключение тестов всегда жадное: если ЛЮБОЙ родитель явно исключен, тест также будет исключен.
 
-:::tip Building subsets of a DAG
-The `buildable` and `cautious` modes can be useful when you're only building a subset of your DAG, and you want to avoid test failures in `eager` mode caused by unbuilt resources. You can also achieve this with [deferral](/reference/node-selection/defer).
+:::tip Создание подмножеств DAG
+Режимы `buildable` и `cautious` могут быть полезны, когда вы строите только подмножество вашего DAG и хотите избежать сбоев тестов в режиме `eager`, вызванных не построенными ресурсами. Вы также можете достичь этого с помощью [отложенного выполнения](/reference/node-selection/defer).
 :::
 
+#### Режим Eager
 
+По умолчанию запускает тесты, если любой из родительских узлов выбран, независимо от того, выполнены ли все зависимости. Это включает ЛЮБЫЕ тесты, которые ссылаются на выбранные узлы. Модели будут построены, если они зависят от выбранной модели. В этом режиме любые тесты, зависящие от не построенных ресурсов, вызовут ошибку.
 
-#### Eager mode
+#### Режим Buildable
 
-By default, runs tests if any of the parent nodes are selected, regardless of whether all dependencies are met. This includes ANY tests that reference the selected nodes. Models will be built if they depend on the selected model. In this mode, any tests depending on unbuilt resources will raise an error.
+Запускает только те тесты, которые ссылаются на выбранные узлы (или их предков). Этот режим немного более инклюзивен, чем `cautious`, включая тесты, ссылки которых находятся в пределах выбранных узлов (или их предков). Этот режим полезен, когда тест зависит от модели _и_ прямого предка этой модели, например, для подтверждения, что агрегирование имеет те же итоги, что и его входные данные.
 
-#### Buildable mode
+#### Режим Cautious
 
-Only runs tests that refer to selected nodes (or their ancestors). This mode is slightly more inclusive than `cautious` by including tests whose references are each within the selected nodes (or their ancestors). This mode is useful when a test depends on a model _and_ a direct ancestor of that model, like confirming an aggregation has the same totals as its input.
+Гарантирует, что тесты выполняются и модели строятся только тогда, когда все необходимые зависимости выбранных моделей выполнены. Ограничивает тесты только теми, которые исключительно ссылаются на выбранные узлы. Тесты будут выполнены только в том случае, если все узлы, от которых они зависят, выбраны, что предотвращает выполнение тестов, если один или несколько их родительских узлов не выбраны и, следовательно, не построены.
 
-#### Cautious mode
+#### Режим Empty
 
-Ensures that tests are executed and models are built only when all necessary dependencies of the selected models are met. Restricts tests to only those that exclusively reference selected nodes. Tests will only be executed if all the nodes they depend on are selected, which prevents tests from running if one or more of its parent nodes are unselected and, consequently, unbuilt.
-
-#### Empty mode
-
-Restricts the build to only the selected node and ignores any indirect dependencies, including tests. It doesn't execute any tests, whether they are directly attached to the selected node or not. The empty mode does not include any tests and is automatically used for [interactive compilation](/reference/commands/compile#interactive-compile).
-
+Ограничивает сборку только выбранным узлом и игнорирует любые косвенные зависимости, включая тесты. Он не выполняет никаких тестов, независимо от того, прикреплены ли они непосредственно к выбранному узлу или нет. Режим empty не включает никаких тестов и автоматически используется для [интерактивной компиляции](/reference/commands/compile#interactive-compile).

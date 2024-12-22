@@ -1,21 +1,21 @@
-Now that you've created your first semantic model, it's time to define your first metric! You can define metrics with the dbt Cloud IDE or command line.
+Теперь, когда вы создали свою первую семантическую модель, пришло время определить вашу первую метрику! Вы можете определить метрики с помощью dbt Cloud IDE или командной строки.
 
-MetricFlow supports different metric types like [conversion](/docs/build/conversion), [simple](/docs/build/simple), [ratio](/docs/build/ratio), [cumulative](/docs/build/cumulative), and [derived](/docs/build/derived). It's recommended that you read the [metrics overview docs](/docs/build/metrics-overview) before getting started.
+MetricFlow поддерживает различные типы метрик, такие как [конверсия](/docs/build/conversion), [простая](/docs/build/simple), [отношение](/docs/build/ratio), [накопительная](/docs/build/cumulative) и [производная](/docs/build/derived). Рекомендуется ознакомиться с [документацией по обзору метрик](/docs/build/metrics-overview) перед началом работы.
 
-1. You can define metrics in the same YAML files as your semantic models or create a new file. If you want to create your metrics in a new file, create another directory called `/models/metrics`. The file structure for metrics can become more complex from here if you need to further organize your metrics, for example, by data source or business line.
+1. Вы можете определять метрики в тех же YAML-файлах, что и ваши семантические модели, или создать новый файл. Если вы хотите создать метрики в новом файле, создайте другую директорию под названием `/models/metrics`. Структура файлов для метрик может стать более сложной, если вам нужно дополнительно организовать ваши метрики, например, по источнику данных или бизнес-направлению.
 
-2. The example metric we'll create is a simple metric that refers directly to the `order_total` measure, which will be implemented as a `sum()` function in SQL. Again, if you're working in the Jaffle shop sandbox, we recommend deleting the original `orders.yml` file, or removing the .yml extension so it's ignored during parsing. We'll be rebuilding the `order_total` metric from scratch. If you're working in your own project, create a simple metric like the one below using one of the measures you created in the previous step.
+2. Пример метрики, которую мы создадим, — это простая метрика, которая напрямую ссылается на меру `order_total`, которая будет реализована как функция `sum()` в SQL. Если вы работаете в песочнице Jaffle shop, мы рекомендуем удалить оригинальный файл `orders.yml` или удалить расширение .yml, чтобы он игнорировался при разборе. Мы будем заново создавать метрику `order_total` с нуля. Если вы работаете в своем собственном проекте, создайте простую метрику, как показано ниже, используя одну из мер, созданных на предыдущем шаге.
 
 ```yaml
 metrics:
   - name: order_total
-    description: Sum of total order amount. Includes tax + revenue.
+    description: Сумма общей стоимости заказа. Включает налог + доход.
     type: simple
     label: Order Total
     type_params:
       measure: order_total
 ```
 
-3. Save your code, and in the next section, you'll validate your configs before committing them to your repository.
+3. Сохраните ваш код, и в следующем разделе вы проверите ваши конфигурации перед тем, как зафиксировать их в вашем репозитории.
 
-To continue building out your metrics based on your organization's needs, refer to the [Build your metrics](/docs/build/build-metrics-intro) for detailed info on how to define different metric types and semantic models.
+Чтобы продолжить создание метрик в соответствии с потребностями вашей организации, обратитесь к [Создание ваших метрик](/docs/build/build-metrics-intro) для получения подробной информации о том, как определять различные типы метрик и семантические модели.

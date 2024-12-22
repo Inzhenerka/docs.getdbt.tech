@@ -1,22 +1,22 @@
-This section explains how you can perform a job run in your deployment environment in dbt Cloud to materialize and deploy your metrics. Currently, the deployment environment is only supported.
+Этот раздел объясняет, как вы можете выполнить запуск задания в вашей среде развертывания в dbt Cloud для материализации и развертывания ваших метрик. В настоящее время поддерживается только среда развертывания.
 
-1. Once you’ve [defined your semantic models and metrics](/guides/sl-snowflake-qs?step=10), commit and merge your metric changes in your dbt project. 
-2. In dbt Cloud, create a new [deployment environment](/docs/deploy/deploy-environments#create-a-deployment-environment) or use an existing environment on dbt 1.6 or higher.
-    * Note &mdash; Deployment environment is currently supported (_development experience coming soon_)
-3. To create a new environment, navigate to **Deploy** in the navigation menu, select **Environments**, and then select **Create new environment**.
-4. Fill in your deployment credentials with your Snowflake username and password. You can name the schema anything you want. Click **Save** to create your new production environment.
-5. [Create a new deploy job](/docs/deploy/deploy-jobs#create-and-schedule-jobs) that runs in the environment you just created. Go back to the **Deploy** menu, select **Jobs**, select **Create job**, and click **Deploy job**.
-6. Set the job to run a `dbt parse` job to parse your projects and generate a [`semantic_manifest.json` artifact](/reference/artifacts/sl-manifest) file. Although running `dbt build` isn't required, you can choose to do so if needed.
-7. Run the job by clicking the **Run now** button. Monitor the job's progress in real-time through the **Run summary** tab. 
+1. Как только вы [определили свои семантические модели и метрики](/guides/sl-snowflake-qs?step=10), зафиксируйте и объедините изменения метрик в вашем проекте dbt.
+2. В dbt Cloud создайте новую [среду развертывания](/docs/deploy/deploy-environments#create-a-deployment-environment) или используйте существующую среду на dbt версии 1.6 или выше.
+    * Примечание &mdash; В настоящее время поддерживается только среда развертывания (_опыт разработки скоро появится_)
+3. Чтобы создать новую среду, перейдите в **Deploy** в навигационном меню, выберите **Environments**, а затем выберите **Create new environment**.
+4. Заполните свои учетные данные для развертывания, указав имя пользователя и пароль Snowflake. Вы можете назвать схему как угодно. Нажмите **Save**, чтобы создать новую производственную среду.
+5. [Создайте новое задание развертывания](/docs/deploy/deploy-jobs#create-and-schedule-jobs), которое будет выполняться в только что созданной среде. Вернитесь в меню **Deploy**, выберите **Jobs**, выберите **Create job** и нажмите **Deploy job**.
+6. Настройте задание на выполнение `dbt parse` для разбора ваших проектов и генерации файла артефакта [`semantic_manifest.json`](/reference/artifacts/sl-manifest). Хотя выполнение `dbt build` не требуется, вы можете выбрать его выполнение, если это необходимо.
+7. Запустите задание, нажав кнопку **Run now**. Отслеживайте прогресс выполнения задания в реальном времени через вкладку **Run summary**.
 
-    Once the job completes successfully, your dbt project, including the generated documentation, will be fully deployed and available for use in your production environment. If any issues arise, review the logs to diagnose and address any errors.
+    После успешного завершения задания ваш проект dbt, включая сгенерированную документацию, будет полностью развернут и доступен для использования в вашей производственной среде. Если возникнут какие-либо проблемы, просмотрите логи, чтобы диагностировать и устранить ошибки.
 
 <details>
 
-<summary>What’s happening internally?</summary>
+<summary>Что происходит внутри?</summary>
 
-- Merging the code into your main branch allows dbt Cloud to pull those changes and build the definition in the manifest produced by the run. <br />
-- Re-running the job in the deployment environment helps materialize the models, which the metrics depend on, in the data platform. It also makes sure that the manifest is up to date.<br />
-- The Semantic Layer APIs pull in the most recent manifest and enables your integration to extract metadata from it.
+- Объединение кода в вашу основную ветку позволяет dbt Cloud подтянуть эти изменения и построить определение в манифесте, созданном в результате выполнения. <br />
+- Повторный запуск задания в среде развертывания помогает материализовать модели, от которых зависят метрики, на платформе данных. Это также гарантирует, что манифест актуален.<br />
+- API семантического слоя подтягивают самый последний манифест и позволяют вашей интеграции извлекать метаданные из него.
 
 </details>

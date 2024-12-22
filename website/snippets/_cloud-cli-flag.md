@@ -1,5 +1,5 @@
-:::info Preview functionality
+:::info Функциональность предварительного просмотра
 
-A [preview](/docs/dbt-versions/product-lifecycles#dbt-cloud) of the dbt Cloud CLI is currently available. Share feedback or request features you'd like to see on the [dbt community Slack](https://getdbt.slack.com/archives/C05M77P54FL).
+[Предварительная версия](/docs/dbt-versions/product-lifecycles#dbt-cloud) dbt Cloud CLI в настоящее время доступна. Поделитесь своими отзывами или запросите функции, которые вы хотели бы видеть, в [Slack-сообществе dbt](https://getdbt.slack.com/archives/C05M77P54FL).
 
-::: 
+:::

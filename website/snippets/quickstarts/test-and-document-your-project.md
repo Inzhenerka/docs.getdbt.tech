@@ -1,15 +1,14 @@
-## Add tests to your models
+## Добавьте тесты к вашим моделям
 
 <Snippet path="tutorial-add-tests-to-models" />
 
-## Document your models
+## Документируйте ваши модели
 
 <Snippet path="tutorial-document-your-models" />
 
-3. Click the book icon in the Develop interface to launch documentation in a new tab.
+3. Нажмите на значок книги в интерфейсе Develop, чтобы открыть документацию в новой вкладке.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Docs/long-descriptions" />
 <FAQ path="Docs/sharing-documentation" />
-

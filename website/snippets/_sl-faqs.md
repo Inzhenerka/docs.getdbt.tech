@@ -1,57 +1,57 @@
-<DetailsToggle alt_header="Is the dbt Semantic Layer open source?">
+<DetailsToggle alt_header="Является ли dbt Semantic Layer открытым исходным кодом?">
 
-The dbt Semantic Layer is proprietary; however, some components of the dbt Semantic Layer are open source, such as dbt-core and MetricFlow.
+dbt Semantic Layer является проприетарным; однако некоторые компоненты dbt Semantic Layer имеют открытый исходный код, такие как dbt-core и MetricFlow.
 
-dbt Cloud Developer or dbt Core users can define metrics in their project, including a local dbt Core project, using the dbt Cloud IDE, dbt Cloud CLI, or dbt Core CLI. However, to experience the universal dbt Semantic Layer and access those metrics using the API or downstream tools, users must be on a dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing/) plan.
+Пользователи dbt Cloud Developer или dbt Core могут определять метрики в своем проекте, включая локальный проект dbt Core, используя dbt Cloud IDE, dbt Cloud CLI или dbt Core CLI. Однако, чтобы воспользоваться универсальным dbt Semantic Layer и получить доступ к этим метрикам через API или инструменты, пользователи должны быть на тарифном плане dbt Cloud [Team или Enterprise](https://www.getdbt.com/pricing/).
 
-Refer to <a href="https://docs.getdbt.com/docs/cloud/billing">Billing</a> for more information.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="How can open-source users use the dbt Semantic Layer?">
-
-The dbt Semantic Layer requires the use of the dbt Cloud-provided service for coordinating query requests. Open source users who don’t use dbt Cloud can currently work around the lack of a service layer. They can do this by running `mf query --explain` in the command line. This command generates SQL code, which they can then use in their current systems for running and managing queries.
-  
-As we refine MetricFlow’s API layers, some users may find it easier to set up their own custom service layers for managing query requests. This is not currently recommended, as the API boundaries around MetricFlow are not sufficiently well-defined for broad-based community use
+Обратитесь к разделу <a href="https://docs.getdbt.com/docs/cloud/billing">Billing</a> для получения дополнительной информации.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Why is my query limited to 100 rows in the dbt Cloud CLI?">
+<DetailsToggle alt_header="Как пользователи с открытым исходным кодом могут использовать dbt Semantic Layer?">
 
-The default `limit` for query issues from the dbt Cloud CLI is 100 rows. We set this default to prevent returning unnecessarily large data sets as the dbt Cloud CLI is typically used to query the dbt Semantic Layer during the development process, not for production reporting or to access large data sets. For most workflows, you only need to return a subset of the data.
-  
-However, you can change this limit if needed by setting the `--limit` option in your query. For example, to return 1000 rows, you can run `dbt sl list metrics --limit 1000`.
+dbt Semantic Layer требует использования предоставляемого dbt Cloud сервиса для координации запросов. Пользователи с открытым исходным кодом, которые не используют dbt Cloud, в настоящее время могут обойти отсутствие сервисного слоя. Они могут сделать это, запустив `mf query --explain` в командной строке. Эта команда генерирует SQL-код, который они затем могут использовать в своих текущих системах для выполнения и управления запросами.
 
-</DetailsToggle>
-
-<DetailsToggle alt_header="Can I reference MetricFlow queries inside dbt models?">
-
-dbt relies on Jinja macros to compile SQL, while MetricFlow is Python-based and does direct SQL rendering targeting at a specific dialect. MetricFlow does not support pass-through rendering of Jinja macros, so we can’t easily reference MetricFlow queries inside of dbt models.
-  
-Beyond the technical challenges that could be overcome, we see Metrics as the leaf node of your DAG, and a place for users to consume metrics. If you need to do additional transformation on top of a metric, this is usually a sign that there is more modeling that needs to be done. 
+По мере того как мы совершенствуем API-слои MetricFlow, некоторые пользователи могут найти более простым создание собственных пользовательских сервисных слоев для управления запросами. Это в настоящее время не рекомендуется, так как границы API вокруг MetricFlow недостаточно хорошо определены для широкого использования в сообществе.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I create tables in my data platform using MetricFlow?">
+<DetailsToggle alt_header="Почему мой запрос ограничен 100 строками в dbt Cloud CLI?">
 
-You can use the upcoming feature, Exports, which will allow you to create a [pre-defined](/docs/build/saved-queries) MetricFlow query as a table in your data platform. This feature will be available to dbt Cloud customers only. This is because MetricFlow is primarily for query rendering while dispatching the relevant query and performing any DDL is the domain of the service layer on top of MetricFlow.
+По умолчанию `limit` для запросов из dbt Cloud CLI составляет 100 строк. Мы установили это значение по умолчанию, чтобы предотвратить возврат излишне больших наборов данных, так как dbt Cloud CLI обычно используется для запросов к dbt Semantic Layer в процессе разработки, а не для производственных отчетов или доступа к большим наборам данных. Для большинства рабочих процессов вам нужно вернуть только подмножество данных.
 
-</DetailsToggle>
-
-<DetailsToggle alt_header="How do I migrate from the legacy Semantic Layer to the new one?">
-
-If you're using the legacy Semantic Layer, we highly recommend you [upgrade your dbt version](/docs/dbt-versions/upgrade-dbt-version-in-cloud) to dbt v1.6 or higher to use the new dbt Semantic Layer. Refer to the dedicated [migration guide](/guides/sl-migration) for more info.
+Однако вы можете изменить этот лимит, если это необходимо, установив параметр `--limit` в вашем запросе. Например, чтобы вернуть 1000 строк, вы можете выполнить `dbt sl list metrics --limit 1000`.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="How are you storing my data?">
+<DetailsToggle alt_header="Могу ли я ссылаться на запросы MetricFlow внутри моделей dbt?">
 
-User data passes through the Semantic Layer on its way back from the warehouse. dbt Labs ensures security by authenticating through the customer's data warehouse. Currently, we don't cache data for the long term, but it might temporarily stay in the system for up to 10 minutes, usually less. In the future, we'll introduce a caching feature that allows us to cache data on our infrastructure for up to 24 hours.
+dbt полагается на макросы Jinja для компиляции SQL, в то время как MetricFlow основан на Python и выполняет прямую рендеринг SQL, ориентированную на конкретный диалект. MetricFlow не поддерживает сквозную рендеринг макросов Jinja, поэтому мы не можем легко ссылаться на запросы MetricFlow внутри моделей dbt.
+
+Помимо технических сложностей, которые можно было бы преодолеть, мы видим метрики как конечный узел вашего DAG и место для потребления метрик пользователями. Если вам нужно выполнить дополнительную трансформацию поверх метрики, это обычно является признаком того, что требуется больше моделирования.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Is there a dbt Semantic Layer discussion hub?">
+<DetailsToggle alt_header="Могу ли я создавать таблицы в моей платформе данных с помощью MetricFlow?">
 
-Yes absolutely! Join the [dbt Slack community](https://getdbt.slack.com) and [#dbt-cloud-semantic-layer slack channel](https://getdbt.slack.com/archives/C046L0VTVR6) for all things related to the dbt Semantic Layer.
+Вы можете использовать предстоящую функцию, Exports, которая позволит вам создать [предопределенный](/docs/build/saved-queries) запрос MetricFlow в виде таблицы в вашей платформе данных. Эта функция будет доступна только клиентам dbt Cloud. Это связано с тем, что MetricFlow в первую очередь предназначен для рендеринга запросов, в то время как выполнение соответствующего запроса и выполнение любых DDL является задачей сервисного слоя поверх MetricFlow.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Как мне перейти с устаревшего Semantic Layer на новый?">
+
+Если вы используете устаревший Semantic Layer, мы настоятельно рекомендуем вам [обновить вашу версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud) до dbt v1.6 или выше, чтобы использовать новый dbt Semantic Layer. Обратитесь к специальному [руководству по миграции](/guides/sl-migration) для получения дополнительной информации.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Как вы храните мои данные?">
+
+Данные пользователей проходят через Semantic Layer на пути обратно из хранилища. dbt Labs обеспечивает безопасность, аутентифицируясь через хранилище данных клиента. В настоящее время мы не кэшируем данные на длительный срок, но они могут временно оставаться в системе до 10 минут, обычно меньше. В будущем мы введем функцию кэширования, которая позволит нам кэшировать данные на нашей инфраструктуре до 24 часов.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Существует ли центр обсуждений dbt Semantic Layer?">
+
+Да, конечно! Присоединяйтесь к [сообществу dbt в Slack](https://getdbt.slack.com) и каналу [#dbt-cloud-semantic-layer в Slack](https://getdbt.slack.com/archives/C046L0VTVR6) для обсуждения всех вопросов, связанных с dbt Semantic Layer.
 
 </DetailsToggle>

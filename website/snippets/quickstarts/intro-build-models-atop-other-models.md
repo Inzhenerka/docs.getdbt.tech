@@ -1,5 +1,5 @@
-As a best practice in SQL, you should separate logic that cleans up your data from logic that transforms your data. You have already started doing this in the existing query by using common table expressions (CTEs).
+Как лучшая практика в SQL, следует разделять логику, которая очищает ваши данные, от логики, которая трансформирует ваши данные. Вы уже начали делать это в существующем запросе, используя общие табличные выражения (CTE).
 
-Now you can experiment by separating the logic out into separate models and using the [ref](/reference/dbt-jinja-functions/ref) function to build models on top of other models:
+Теперь вы можете поэкспериментировать, разделив логику на отдельные модели и используя функцию [ref](/reference/dbt-jinja-functions/ref) для построения моделей на основе других моделей:
 
-<Lightbox src="/img/dbt-dag.png" title="The DAG we want for our dbt project" />
+<Lightbox src="/img/dbt-dag.png" title="Граф, который мы хотим для нашего проекта dbt" />

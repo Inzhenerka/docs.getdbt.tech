@@ -1,138 +1,138 @@
 import SLEnvVars from '/snippets/_sl-env-vars.md';
 
-You must be part of the Owner group and have the correct [license](/docs/cloud/manage-access/seats-and-users) and [permissions](/docs/cloud/manage-access/enterprise-permissions) to set up the Semantic Layer at the environment and project level.
-- Enterprise plan:
-  - Developer license with Account Admin permissions, or
-  - Owner with a Developer license, assigned Project Creator, Database Admin, or Admin permissions.
-- Team plan: Owner with a Developer license.
-- Free trial: You are on a free trial of the Team plan as an Owner, which means you have access to the dbt Semantic Layer.
+Вы должны быть частью группы владельцев и иметь соответствующую [лицензию](/docs/cloud/manage-access/seats-and-users) и [разрешения](/docs/cloud/manage-access/enterprise-permissions), чтобы настроить Семантический слой на уровне окружения и проекта.
+- План Enterprise:
+  - Лицензия разработчика с разрешениями администратора учетной записи, или
+  - Владелец с лицензией разработчика, назначенными разрешениями создателя проекта, администратора базы данных или администратора.
+- План Team: Владелец с лицензией разработчика.
+- Бесплатная пробная версия: Вы находитесь на бесплатной пробной версии плана Team в качестве владельца, что означает, что у вас есть доступ к Семантическому слою dbt.
 
-### 1. Select environment
+### 1. Выберите окружение
 
-Select the environment where you want to enable the Semantic Layer:
+Выберите окружение, в котором вы хотите включить Семантический слой:
 
-1. Navigate to **Account settings** in the navigation menu.
-2. On the **Settings** left sidebar, select the specific project you want to enable the Semantic Layer for.
-3. In the **Project details** page, navigate to the **Semantic Layer** section. Select **Configure Semantic Layer**.
+1. Перейдите в **Настройки учетной записи** в навигационном меню.
+2. В левой боковой панели **Настройки** выберите конкретный проект, для которого вы хотите включить Семантический слой.
+3. На странице **Детали проекта** перейдите в раздел **Семантический слой**. Выберите **Настроить Семантический слой**.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/new-sl-configure.jpg" width="70%" title="Semantic Layer section in the 'Project Details' page"/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/new-sl-configure.jpg" width="70%" title="Раздел Семантического слоя на странице 'Детали проекта'"/>
 
-4. In the **Set Up Semantic Layer Configuration** page, select the deployment environment you want for the Semantic Layer and click **Save**. This provides administrators with the flexibility to choose the environment where the Semantic Layer will be enabled.
+4. На странице **Настройка конфигурации Семантического слоя** выберите окружение развертывания, которое вы хотите для Семантического слоя, и нажмите **Сохранить**. Это предоставляет администраторам гибкость в выборе окружения, в котором будет включен Семантический слой.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-select-env.jpg" width="75%" title="Select the deployment environment to run your Semantic Layer against."/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-select-env.jpg" width="75%" title="Выберите окружение развертывания для работы вашего Семантического слоя."/>
 
-### 2. Add a credential and create service tokens
+### 2. Добавьте учетные данные и создайте сервисные токены
 
-The dbt Semantic Layer uses [service tokens](/docs/dbt-cloud-apis/service-tokens) for authentication which are tied to an underlying data platform credential that you configure. The credential configured is used to execute queries that the Semantic Layer issues against your data platform. 
+Семантический слой dbt использует [сервисные токены](/docs/dbt-cloud-apis/service-tokens) для аутентификации, которые связаны с учетными данными платформы данных, которые вы настраиваете. Настроенные учетные данные используются для выполнения запросов, которые Семантический слой отправляет вашей платформе данных.
 
-This credential controls the physical access to underlying data accessed by the Semantic Layer, and all access policies set in the data platform for this credential will be respected.
+Эти учетные данные контролируют физический доступ к данным, к которым обращается Семантический слой, и все политики доступа, установленные на платформе данных для этих учетных данных, будут соблюдаться.
 
-| Feature | Team plan | Enterprise plan |
+| Функция | План Team | План Enterprise |
 | --- | :---: | :---: |
-| Service tokens | Can create multiple service tokens linked to one credential. | Can use multiple credentials and link multiple service tokens to each credential. Note that you cannot link a single service token to more than one credential. |
-| Credentials per project | One credential per project. | Can [add multiple](#4-add-more-credentials) credentials per project. |
-| Link multiple service tokens to a single credential | ✅ | ✅ |
+| Сервисные токены | Можно создать несколько сервисных токенов, связанных с одними учетными данными. | Можно использовать несколько учетных данных и связывать несколько сервисных токенов с каждым из них. Обратите внимание, что вы не можете связать один сервисный токен с более чем одними учетными данными. |
+| Учетные данные на проект | Одни учетные данные на проект. | Можно [добавить несколько](#4-add-more-credentials) учетных данных на проект. |
+| Связать несколько сервисных токенов с одними учетными данными | ✅ | ✅ |
 
-*If you're on a Team plan and need to add more credentials, consider upgrading to our [Enterprise plan](https://www.getdbt.com/contact). Enterprise users can refer to [Add more credentials](#4-add-more-credentials) for detailed steps on adding multiple credentials.*
+*Если вы находитесь на плане Team и вам нужно добавить больше учетных данных, рассмотрите возможность перехода на наш [план Enterprise](https://www.getdbt.com/contact). Пользователи Enterprise могут обратиться к [Добавить больше учетных данных](#4-add-more-credentials) для получения подробных шагов по добавлению нескольких учетных данных.*
 
-#### 1.  Select deployment environment
-   - After selecting the deployment environment, you should see the **Credentials & service tokens** page. 
-   - Click the **Add Semantic Layer credential** button. 
+#### 1. Выберите окружение развертывания
+   - После выбора окружения развертывания вы должны увидеть страницу **Учетные данные и сервисные токены**.
+   - Нажмите кнопку **Добавить учетные данные Семантического слоя**.
 
-#### 2. Configure credential
-   - In the **1. Add credentials** section, enter the credentials specific to your data platform that you want the Semantic Layer to use.
-   - Use credentials with minimal privileges. The Semantic Layer requires read access to the schema(s) containing the dbt models used in your semantic models for downstream applications
+#### 2. Настройте учетные данные
+   - В разделе **1. Добавить учетные данные** введите учетные данные, специфичные для вашей платформы данных, которые вы хотите использовать в Семантическом слое.
+   - Используйте учетные данные с минимальными привилегиями. Семантический слой требует доступа на чтение к схемам, содержащим модели dbt, используемые в ваших семантических моделях для последующих приложений.
    - <SLEnvVars/>
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-credential.jpg" width="55%" title="Add credentials and map them to a service token. " />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-credential.jpg" width="55%" title="Добавьте учетные данные и свяжите их с сервисным токеном." />
 
-#### 3. Create or link service tokens
-   - If you have permission to create service tokens, you’ll see the [**Map new service token** option](/docs/use-dbt-semantic-layer/setup-sl#map-service-tokens-to-credentials) after adding the credential. Name the token, set permissions to 'Semantic Layer Only' and 'Metadata Only', and click **Save**. 
-   - Once the token is generated, you won't be able to view this token again, so make sure to record it somewhere safe.
-   - If you don’t have access to create service tokens, you’ll see a message prompting you to contact your admin to create one for you. Admins can create and link tokens as needed.
-   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-credential-no-service-token.jpg" width="70%" title="If you don’t have access to create service tokens, you can create a credential and contact your admin to create one for you." />
+#### 3. Создайте или свяжите сервисные токены
+   - Если у вас есть разрешение на создание сервисных токенов, вы увидите [**Опцию сопоставления нового сервисного токена**](/docs/use-dbt-semantic-layer/setup-sl#map-service-tokens-to-credentials) после добавления учетных данных. Назовите токен, установите разрешения на 'Только Семантический слой' и 'Только метаданные', и нажмите **Сохранить**.
+   - После генерации токена вы не сможете просмотреть его снова, поэтому убедитесь, что сохранили его в безопасном месте.
+   - Если у вас нет доступа для создания сервисных токенов, вы увидите сообщение с просьбой связаться с вашим администратором для создания токена. Администраторы могут создавать и связывать токены по мере необходимости.
+   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-credential-no-service-token.jpg" width="70%" title="Если у вас нет доступа для создания сервисных токенов, вы можете создать учетные данные и связаться с вашим администратором для создания токена." />
 
 :::info
-- Team plans can create multiple service tokens that link to a single underlying credential, but each project can only have one credential.
-- Enterprise plans can [add multiple credentials](#4-add-more-credentials) and map those to service tokens for tailored access.
+- Планы Team могут создавать несколько сервисных токенов, связанных с одними учетными данными, но каждый проект может иметь только одни учетные данные.
+- Планы Enterprise могут [добавить несколько учетных данных](#4-add-more-credentials) и сопоставить их с сервисными токенами для более точного доступа.
 
-<a href="https://www.getdbt.com/contact" style={{ color: 'white', backgroundColor: '#66c2c2', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none', display: 'inline-block' }}>Book a free live demo</a> to discover the full potential of dbt Cloud Enterprise.
+<a href="https://www.getdbt.com/contact" style={{ color: 'white', backgroundColor: '#66c2c2', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none', display: 'inline-block' }}>Записаться на бесплатную живую демонстрацию</a>, чтобы открыть для себя весь потенциал dbt Cloud Enterprise.
 :::
 
-### 3. View connection detail
-1. Go back to the **Project details** page for connection details to connect to downstream tools.
-2. Copy and share the environment ID, service token, host, as well as the service token name to the relevant teams for BI connection set up. If your tool uses the GraphQL API, save the GraphQL API host information instead of the JDBC URL. 
+### 3. Просмотр деталей подключения
+1. Вернитесь на страницу **Детали проекта** для получения деталей подключения к инструментам последующей обработки.
+2. Скопируйте и поделитесь ID окружения, сервисным токеном, хостом, а также именем сервисного токена с соответствующими командами для настройки подключения BI. Если ваш инструмент использует GraphQL API, сохраните информацию о хосте GraphQL API вместо URL JDBC.
 
-    For info on how to connect to other integrations, refer to [Available integrations](/docs/cloud-integrations/avail-sl-integrations).
+    Для информации о том, как подключиться к другим интеграциям, обратитесь к [Доступные интеграции](/docs/cloud-integrations/avail-sl-integrations).
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-configure-example.jpg" width="50%" title="After configuring, you'll be provided with the connection details to connect to you downstream tools." />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-configure-example.jpg" width="50%" title="После настройки вы получите детали подключения для подключения к вашим инструментам последующей обработки." />
 
-### 4. Add more credentials <Lifecycle status="enterprise"/>
-dbt Cloud Enterprise plans can optionally add multiple credentials and map them to service tokens, offering more granular control and tailored access for different teams, which can then be shared to relevant teams for BI connection setup. These credentials control the physical access to underlying data accessed by the Semantic Layer.
+### 4. Добавьте больше учетных данных <Lifecycle status="enterprise"/>
+Планы dbt Cloud Enterprise могут дополнительно добавлять несколько учетных данных и связывать их с сервисными токенами, предлагая более детальный контроль и адаптированный доступ для различных команд, которые затем могут быть переданы соответствующим командам для настройки подключения BI. Эти учетные данные контролируют физический доступ к данным, к которым обращается Семантический слой.
 
-We recommend configuring credentials and service tokens to reflect your teams and their roles. For example, create tokens or credentials that align with your team's needs, such as providing access to finance-related schemas to the Finance team.
+Мы рекомендуем настраивать учетные данные и сервисные токены в соответствии с вашими командами и их ролями. Например, создавайте токены или учетные данные, которые соответствуют потребностям вашей команды, например, предоставляя доступ к схемам, связанным с финансами, для финансовой команды.
 
-<Expandable alt_header="Considerations for linking credentials">
+<Expandable alt_header="Соображения по связыванию учетных данных">
 
-- Admins can link multiple service tokens to a single credential within a project, but each service token can only be linked to one credential per project.
-- When you send a request through the APIs, the service token of the linked credential will follow access policies of the underlying view and tables used to build your semantic layer requests.
+- Администраторы могут связывать несколько сервисных токенов с одними учетными данными в проекте, но каждый сервисный токен может быть связан только с одними учетными данными на проект.
+- Когда вы отправляете запрос через API, сервисный токен связанного учетного данных будет следовать политикам доступа к представлениям и таблицам, используемым для построения ваших запросов семантического слоя.
 - <SLEnvVars/>
 </Expandable>
 
-#### 1. Add more credentials
-- After configuring your environment, on the **Credentials & service tokens** page, click the **Add Semantic Layer credential** button to create multiple credentials and map them to a service token. <br />
-- In the **1. Add credentials** section, fill in the data platform's credential fields. We recommend using “read-only” credentials.
-   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-credential.jpg" width="55%" title="Add credentials and map them to a service token. " />
+#### 1. Добавьте больше учетных данных
+- После настройки вашего окружения на странице **Учетные данные и сервисные токены** нажмите кнопку **Добавить учетные данные Семантического слоя**, чтобы создать несколько учетных данных и связать их с сервисным токеном. <br />
+- В разделе **1. Добавить учетные данные** заполните поля учетных данных платформы данных. Мы рекомендуем использовать учетные данные с правами "только для чтения".
+   <Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-credential.jpg" width="55%" title="Добавьте учетные данные и свяжите их с сервисным токеном." />
 
-#### 2. Map service tokens to credentials
-- In the **2. Map new service token** section, [map a service token to the credential](/docs/use-dbt-semantic-layer/setup-sl#map-service-tokens-to-credentials) you configured in the previous step. dbt Cloud automatically selects the service token permission set you need (Semantic Layer Only and Metadata Only).
-- To add another service token during configuration, click **Add Service Token**. 
-- You can link more service tokens to the same credential later on in the **Semantic Layer Configuration Details** page. To add another service token to an existing Semantic Layer configuration, click **Add service token** under the **Linked service tokens** section.
-- Click **Save** to link the service token to the credential. Remember to copy and save the service token securely, as it won't be viewable again after generation.
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-credentials-service-token.jpg" width="90%" title="Use the configuration page to manage multiple credentials or link or unlink service tokens for more granular control."/>
+#### 2. Сопоставьте сервисные токены с учетными данными
+- В разделе **2. Сопоставить новый сервисный токен** [сопоставьте сервисный токен с учетными данными](/docs/use-dbt-semantic-layer/setup-sl#map-service-tokens-to-credentials), которые вы настроили на предыдущем шаге. dbt Cloud автоматически выбирает набор разрешений для сервисного токена, который вам нужен (Только Семантический слой и Только метаданные).
+- Чтобы добавить еще один сервисный токен во время настройки, нажмите **Добавить сервисный токен**.
+- Вы можете связать больше сервисных токенов с теми же учетными данными позже на странице **Детали конфигурации Семантического слоя**. Чтобы добавить еще один сервисный токен к существующей конфигурации Семантического слоя, нажмите **Добавить сервисный токен** в разделе **Связанные сервисные токены**.
+- Нажмите **Сохранить**, чтобы связать сервисный токен с учетными данными. Не забудьте скопировать и сохранить сервисный токен в безопасном месте, так как он не будет доступен для просмотра после генерации.
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-credentials-service-token.jpg" width="90%" title="Используйте страницу конфигурации для управления несколькими учетными данными или связывания или отвязывания сервисных токенов для более детального контроля."/>
 
-#### 3. Delete credentials
-- To delete a credential, go back to the **Credentials & service tokens** page.
-- Under **Linked Service Tokens**, click **Edit** and, select **Delete Credential** to remove a credential.
+#### 3. Удалите учетные данные
+- Чтобы удалить учетные данные, вернитесь на страницу **Учетные данные и сервисные токены**.
+- В разделе **Связанные сервисные токены** нажмите **Редактировать** и выберите **Удалить учетные данные**, чтобы удалить учетные данные.
 
-   When you delete a credential, any service tokens mapped to that credential in the project will no longer work and will break for any end users.
+   Когда вы удаляете учетные данные, любые сервисные токены, связанные с этими учетными данными в проекте, перестанут работать и будут недоступны для конечных пользователей.
 
-## Delete configuration
-You can delete the entire Semantic Layer configuration for a project. Note that deleting the Semantic Layer configuration will remove all credentials and unlink all service tokens to the project. It will also cause all queries to the Semantic Layer to fail.
+## Удаление конфигурации
+Вы можете удалить всю конфигурацию Семантического слоя для проекта. Обратите внимание, что удаление конфигурации Семантического слоя удалит все учетные данные и отвяжет все сервисные токены от проекта. Это также приведет к сбою всех запросов к Семантическому слою.
 
-Follow these steps to delete the Semantic Layer configuration for a project:
+Следуйте этим шагам, чтобы удалить конфигурацию Семантического слоя для проекта:
 
-1. Navigate to the **Project details** page.
-2. In the **Semantic Layer** section, select **Delete Semantic Layer**. 
-3. Confirm the deletion by clicking **Yes, delete semantic layer** in the confirmation pop up.
+1. Перейдите на страницу **Детали проекта**.
+2. В разделе **Семантический слой** выберите **Удалить Семантический слой**.
+3. Подтвердите удаление, нажав **Да, удалить семантический слой** в всплывающем окне подтверждения.
 
-To re-enable the dbt Semantic Layer setup in the future, you will need to recreate your setup configurations by following the [previous steps](#set-up-dbt-semantic-layer). If your semantic models and metrics are still in your project, no changes are needed. If you've removed them, you'll need to set up the YAML configs again.
+Чтобы повторно включить настройку Семантического слоя dbt в будущем, вам нужно будет воссоздать ваши конфигурации, следуя [предыдущим шагам](#set-up-dbt-semantic-layer). Если ваши семантические модели и метрики все еще находятся в вашем проекте, никаких изменений не требуется. Если вы их удалили, вам нужно будет снова настроить конфигурации YAML.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-delete-config.jpg" width="90%" title="Delete the Semantic Layer configuration for a project."/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-delete-config.jpg" width="90%" title="Удалите конфигурацию Семантического слоя для проекта."/>
 
-## Additional configuration
+## Дополнительная конфигурация
 
- The following are the additional flexible configurations for Semantic Layer credentials.
+ Следующие дополнительные гибкие конфигурации для учетных данных Семантического слоя.
 
-### Map service tokens to credentials
-- After configuring your environment, you can map additional service tokens to the same credential if you have the required [permissions](/docs/cloud/manage-access/about-user-access#permission-sets).
-- Go to the **Credentials & service tokens** page and click the **+Add Service Token** button in the **Linked Service Tokens** section.
-- Type the service token name and select the permission set you need (Semantic Layer Only and Metadata Only).
-- Click **Save** to link the service token to the credential.
-- Remember to copy and save the service token securely, as it won't be viewable again after generation.
+### Сопоставьте сервисные токены с учетными данными
+- После настройки вашего окружения вы можете сопоставить дополнительные сервисные токены с теми же учетными данными, если у вас есть необходимые [разрешения](/docs/cloud/manage-access/about-user-access#permission-sets).
+- Перейдите на страницу **Учетные данные и сервисные токены** и нажмите кнопку **+Добавить сервисный токен** в разделе **Связанные сервисные токены**.
+- Введите имя сервисного токена и выберите необходимый набор разрешений (Только Семантический слой и Только метаданные).
+- Нажмите **Сохранить**, чтобы связать сервисный токен с учетными данными.
+- Не забудьте скопировать и сохранить сервисный токен в безопасном месте, так как он не будет доступен для просмотра после генерации.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-service-token.gif" title="Map additional service tokens to a credential." />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-add-service-token.gif" title="Сопоставьте дополнительные сервисные токены с учетными данными." />
 
-### Unlink service tokens
-- Unlink a service token from the credential by clicking **Unlink** under the **Linked service tokens** section. If you try to query the Semantic Layer with an unlinked credential, you'll experience an error in your BI tool because no valid token is mapped.
+### Отвяжите сервисные токены
+- Отвяжите сервисный токен от учетных данных, нажав **Отвязать** в разделе **Связанные сервисные токены**. Если вы попытаетесь выполнить запрос к Семантическому слою с отвязанными учетными данными, вы столкнетесь с ошибкой в вашем BI-инструменте, так как не будет сопоставлен действительный токен.
 
-### Manage from service token page
-**View credential from service token**
-- View your Semantic Layer credential directly by navigating to the **API tokens** and then **Service tokens** page. 
-- Select the service token to view the credential it's linked to. This is useful if you want to know which service tokens are mapped to credentials in your project.
+### Управление со страницы сервисных токенов
+**Просмотр учетных данных из сервисного токена**
+- Просмотрите ваши учетные данные Семантического слоя напрямую, перейдя на страницу **API токены**, а затем **Сервисные токены**.
+- Выберите сервисный токен, чтобы просмотреть учетные данные, с которыми он связан. Это полезно, если вы хотите узнать, какие сервисные токены сопоставлены с учетными данными в вашем проекте.
 
-#### Create a new service token
-- From the **Service tokens** page, create a new service token and map it to the credential(s) (assuming the semantic layer permission exists). This is useful if you want to create a new service token and directly map it to a credential in your project.
-- Make sure to select the correct permission set for the service token (Semantic Layer Only and Metadata Only).
+#### Создайте новый сервисный токен
+- На странице **Сервисные токены** создайте новый сервисный токен и сопоставьте его с учетными данными (при условии, что разрешение на семантический слой существует). Это полезно, если вы хотите создать новый сервисный токен и напрямую сопоставить его с учетными данными в вашем проекте.
+- Убедитесь, что выбрали правильный набор разрешений для сервисного токена (Только Семантический слой и Только метаданные).
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-create-service-token-page.jpg" width="100%" title="Create a new service token and map credentials directly on the separate 'Service tokens page'."/>
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-create-service-token-page.jpg" width="100%" title="Создайте новый сервисный токен и сопоставьте учетные данные напрямую на отдельной странице 'Сервисные токены'."/>

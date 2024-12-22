@@ -1,4 +1,3 @@
-
 :::info
-Starting from [the dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9, defining snapshots in a `.sql` file using a config block is a legacy method. You can define snapshots in YAML format using the latest [snapshot-specific configurations](/docs/build/snapshots#configuring-snapshots). For new snapshots, we recommend using these latest configs. If applying them to existing snapshots, you'll need to [migrate](#snapshot-configuration-migration) over.
+Начиная с [трека "Latest" релизов dbt Cloud](/docs/dbt-versions/cloud-release-tracks) и dbt Core версии 1.9, определение снимков в файле `.sql` с использованием блока конфигурации является устаревшим методом. Вы можете определять снимки в формате YAML, используя последние [конфигурации, специфичные для снимков](/docs/build/snapshots#configuring-snapshots). Для новых снимков мы рекомендуем использовать эти последние конфигурации. Если вы применяете их к существующим снимкам, вам потребуется [мигрировать](#snapshot-configuration-migration).
 :::

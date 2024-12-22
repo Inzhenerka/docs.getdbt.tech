@@ -1,9 +1,9 @@
-:::important Upgrade to access the latest dbt Semantic Layer
+:::important Обновитесь, чтобы получить доступ к последней версии dbt Semantic Layer
 
-The dbt Semantic Layer has undergone a [significant revamp](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), introducing new features such as dbt Semantic Layer APIs. The APIs integrate with data applications, such as Tableau and Google Sheets, to query metrics and unlock insights.
+dbt Semantic Layer претерпел [значительные изменения](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), включая введение новых функций, таких как API dbt Semantic Layer. Эти API интегрируются с приложениями для работы с данными, такими как Tableau и Google Sheets, для выполнения запросов к метрикам и получения инсайтов.
 
-For users of the dbt Semantic Layer on version 1.5 or lower &mdash; Support for dbt Metrics and the legacy dbt Semantic Layer ends on December 15th, 2023. To access the latest features, migrate to the updated version using the [dbt Semantic Layer migration guide](/guides/sl-migration).
+Для пользователей dbt Semantic Layer версии 1.5 или ниже &mdash; Поддержка dbt Metrics и устаревшего dbt Semantic Layer заканчивается 15 декабря 2023 года. Чтобы получить доступ к последним функциям, перейдите на обновленную версию, используя [руководство по миграции dbt Semantic Layer](/guides/sl-migration).
 
-After December 15th, dbt Labs will no longer support these deprecated features, they will be removed from the dbt Cloud user interface, and their documentation removed from the docs site.
+После 15 декабря dbt Labs больше не будет поддерживать эти устаревшие функции, они будут удалены из пользовательского интерфейса dbt Cloud, а их документация будет удалена с сайта документации.
 
 :::

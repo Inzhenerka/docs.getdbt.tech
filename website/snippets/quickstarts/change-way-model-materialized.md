@@ -1,9 +1,9 @@
-One of the most powerful features of dbt is that you can change the way a model is materialized in your warehouse, simply by changing a configuration value.  You can change things between tables and views by changing a keyword rather than writing the data definition language (DDL) to do this behind the scenes.
+Одной из самых мощных функций dbt является возможность изменять способ материализации модели в вашем хранилище данных, просто изменяя значение конфигурации. Вы можете переключаться между таблицами и представлениями, изменяя ключевое слово, вместо того чтобы писать язык определения данных (DDL) для выполнения этого за кулисами.
 
-By default, everything gets created as a view. You can override that at the directory level so everything in that directory will materialize to a different materialization.
+По умолчанию все создается как представление. Вы можете переопределить это на уровне директории, чтобы все в этой директории материализовалось по-другому.
 
-1. Edit your `dbt_project.yml` file.
-    - Update your project `name` to:
+1. Отредактируйте ваш файл `dbt_project.yml`.
+    - Обновите имя вашего проекта на:
       <File name='dbt_project.yml'>
 
       ```yaml
@@ -11,7 +11,7 @@ By default, everything gets created as a view. You can override that at the dire
       ```
 
       </File>
-    - Configure `jaffle_shop` so everything in it will be materialized as a table; and configure `example` so everything in it will be materialized as a view. Update your `models` config block to:
+    - Настройте `jaffle_shop` так, чтобы все в нем материализовалось как таблица; и настройте `example` так, чтобы все в нем материализовалось как представление. Обновите блок конфигурации `models` следующим образом:
 
       <File name='dbt_project.yml'>
 
@@ -24,14 +24,14 @@ By default, everything gets created as a view. You can override that at the dire
       ```
 
       </File>
-    - Click **Save**.
+    - Нажмите **Сохранить**.
 
-2. Enter the `dbt run` command. Your `customers` model should now be built as a table!
+2. Введите команду `dbt run`. Ваша модель `customers` теперь должна быть построена как таблица!
     :::info
-    To do this, dbt had to first run a `drop view` statement (or API call on BigQuery), then a `create table as` statement.
+    Для этого dbt сначала должен был выполнить оператор `drop view` (или API вызов на BigQuery), затем оператор `create table as`.
     :::
 
-3. Edit `models/customers.sql`  to override the `dbt_project.yml` for the `customers` model only by adding the following snippet to the top, and click **Save**:  
+3. Отредактируйте `models/customers.sql`, чтобы переопределить `dbt_project.yml` только для модели `customers`, добавив следующий фрагмент в начало, и нажмите **Сохранить**:
 
     <File name='models/customers.sql'>
 
@@ -54,11 +54,11 @@ By default, everything gets created as a view. You can override that at the dire
 
     </File>
 
-4. Enter the `dbt run` command. Your model, `customers`, should now build as a view. 
-   - BigQuery users need to run `dbt run --full-refresh` instead of `dbt run` to full apply materialization changes.
-5. Enter the `dbt run --full-refresh` command for this to take effect in your warehouse.
+4. Введите команду `dbt run`. Ваша модель `customers` теперь должна быть построена как представление.
+   - Пользователям BigQuery необходимо выполнить `dbt run --full-refresh` вместо `dbt run`, чтобы полностью применить изменения материализации.
+5. Введите команду `dbt run --full-refresh`, чтобы изменения вступили в силу в вашем хранилище данных.
 
-### FAQs
+### Часто задаваемые вопросы
 
 <FAQ path="Models/available-materializations" />
 <FAQ path="Project/which-materialization" />

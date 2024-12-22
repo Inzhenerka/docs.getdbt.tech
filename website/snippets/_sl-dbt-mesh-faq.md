@@ -1,11 +1,11 @@
-When using the dbt Semantic Layer in a [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) setting, we recommend the following:
+При использовании Семантического слоя dbt в контексте [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), мы рекомендуем следующее:
 
-- You have one standalone project that contains your semantic models and metrics.
-- Then as you build your Semantic Layer, you can [cross-reference dbt models](/docs/collaborate/govern/project-dependencies) across your various projects or packages to create your semantic models using the [two-argument `ref` function](/reference/dbt-jinja-functions/ref#ref-project-specific-models)( `ref('project_name', 'model_name')`).
-- Your dbt Semantic Layer project serves as a global source of truth across the rest of your projects.
+- У вас должен быть один автономный проект, который содержит ваши семантические модели и метрики.
+- Затем, по мере создания Семантического слоя, вы можете [перекрестно ссылаться на модели dbt](/docs/collaborate/govern/project-dependencies) в различных проектах или пакетах, чтобы создавать свои семантические модели, используя [функцию `ref` с двумя аргументами](/reference/dbt-jinja-functions/ref#ref-project-specific-models) (`ref('project_name', 'model_name')`).
+- Ваш проект Семантического слоя dbt служит глобальным источником истины для остальных ваших проектов.
 
-#### Usage example 
-For example, let's say you have a public model (`fct_orders`) that lives in the `jaffle_finance` project. As you build your semantic model, use the following syntax to ref the model:
+#### Пример использования
+Например, предположим, у вас есть публичная модель (`fct_orders`), которая находится в проекте `jaffle_finance`. При создании вашей семантической модели используйте следующий синтаксис для ссылки на модель:
 
 <File name="models/metrics/semantic_model_name.yml">
 
@@ -15,16 +15,16 @@ semantic_models:
     defaults:
       agg_time_dimension: first_ordered_at
     description: |
-      Customer grain mart that aggregates customer orders.
+      Март на уровне клиентов, агрегирующий заказы клиентов.
     model: ref('jaffle_finance', 'fct_orders') # ref('project_name', 'model_name')
     entities:
-      ...rest of configuration...
+      ...остальная часть конфигурации...
     dimensions:
-      ...rest of configuration...
+      ...остальная часть конфигурации...
     measures:
-      ...rest of configuration...
+      ...остальная часть конфигурации...
 ```
 </File>
 
-Notice that in the `model` parameter, we're using the `ref` function with two arguments to reference the public model `fct_orders` defined in the `jaffle_finance` project.
+Обратите внимание, что в параметре `model` мы используем функцию `ref` с двумя аргументами для ссылки на публичную модель `fct_orders`, определенную в проекте `jaffle_finance`.  
 <br />

@@ -1,6 +1,1 @@
-[comment: For context, the section title used for this snippet is "Roles in Starburst Enterprise" ]: #
-
-If connecting to a Starburst Enterprise cluster with built-in access controls
-enabled, you must specify a role using the format detailed in [Additional
-parameters](#additional-parameters). If a role is not specified, the default
-role for the provided username is used.
+Если вы подключаетесь к кластеру Starburst Enterprise с включенными встроенными средствами управления доступом, необходимо указать роль, используя формат, описанный в разделе [Дополнительные параметры](#additional-parameters). Если роль не указана, будет использована роль по умолчанию для предоставленного имени пользователя.

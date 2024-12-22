@@ -1,5 +1,5 @@
 ---
-title: "Написание вкладов"
+title: "Вклад в документацию"
 id: "contributing-writing"
 ---
 

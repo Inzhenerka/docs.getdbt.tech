@@ -1,8 +1,8 @@
-- Have a dbt Cloud Team or Enterprise account.
-   - Available on all [tenant configurations](/docs/cloud/about-cloud/tenancy). Single-tenant accounts should contact your account representative for setup.
-- Ensure your production and development environments are on a [supported dbt version](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
-- Use Snowflake, BigQuery, Databricks, or Redshift.
--  Create a successful run in the environment where you configure the Semantic Layer. 
-   - **Note:** Semantic Layer supports querying in Deployment environments; development querying is coming soon.
-- Understand [MetricFlow's](/docs/build/about-metricflow) key concepts powering the dbt Semantic Layer.  
-- Note that the dbt Semantic Layer doesn't support SSH tunneling for [Postgres or Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb) connections.  It also doesn't support using [Single sign-on (SSO)](/docs/cloud/manage-access/sso-overview) for [production credentials](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), though SSO is supported for development user accounts.
+- Иметь командный или корпоративный аккаунт dbt Cloud.
+   - Доступно на всех [конфигурациях арендаторов](/docs/cloud/about-cloud/tenancy). Владельцам одноарендаторных аккаунтов следует связаться с представителем своего аккаунта для настройки.
+- Убедитесь, что ваши производственные и разработческие среды используют [поддерживаемую версию dbt](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+- Используйте Snowflake, BigQuery, Databricks или Redshift.
+- Создайте успешный запуск в среде, где вы настраиваете Семантический слой.
+   - **Примечание:** Семантический слой поддерживает запросы в средах развертывания; поддержка запросов в средах разработки появится в ближайшее время.
+- Понимать ключевые концепции [MetricFlow](/docs/build/about-metricflow), которые лежат в основе Семантического слоя dbt.
+- Обратите внимание, что Семантический слой dbt не поддерживает SSH-туннелирование для подключений [Postgres или Redshift](/docs/cloud/connect-data-platform/connect-redshift-postgresql-alloydb). Также он не поддерживает использование [единого входа (SSO)](/docs/cloud/manage-access/sso-overview) для [производственных учетных данных](/docs/dbt-cloud-apis/service-tokens#permissions-for-service-account-tokens), хотя SSO поддерживается для учетных записей пользователей разработки.

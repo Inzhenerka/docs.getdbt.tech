@@ -1,7 +1,7 @@
-:::caution Available for dbt Cloud Enterprise
+:::caution Доступно для dbt Cloud Enterprise
 
-Connecting an Azure DevOps cloud account is available for organizations using the dbt Cloud Enterprise tier. 
+Подключение облачного аккаунта Azure DevOps доступно для организаций, использующих уровень dbt Cloud Enterprise.
 
-dbt Cloud's native Azure DevOps integration does not support Azure DevOps Server (on-premise). Instead, you can [import a project by git URL](/docs/cloud/git/import-a-project-by-git-url) to connect to an Azure DevOps Server.
+Нативная интеграция dbt Cloud с Azure DevOps не поддерживает Azure DevOps Server (локальный). Вместо этого вы можете [импортировать проект по git URL](/docs/cloud/git/import-a-project-by-git-url) для подключения к Azure DevOps Server.
 
 :::

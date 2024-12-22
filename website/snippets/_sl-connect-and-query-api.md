@@ -1,10 +1,10 @@
-The Google Sheets integration allows you to query your metrics using Google Sheets. This section will guide you on how to connect and use the Google Sheets integration. 
+Интеграция с Google Sheets позволяет выполнять запросы к вашим метрикам с использованием Google Sheets. Этот раздел поможет вам подключиться и использовать интеграцию с Google Sheets.
 
-To query your metrics using Google Sheets:
-1. Make sure you have a [Gmail](http://gmail.com/) account.
-2. To set up Google Sheets and query your metrics, follow the detailed instructions on [Google Sheets integration](/docs/cloud-integrations/semantic-layer/gsheets).
-3. Start exploring and querying metrics!
-   - Query a metric, like `order_total`, and filter it with a dimension, like `order_date`. 
-   - You can also use the `group_by` parameter to group your metrics by a specific dimension.
+Чтобы выполнять запросы к вашим метрикам с помощью Google Sheets:
+1. Убедитесь, что у вас есть учетная запись [Gmail](http://gmail.com/).
+2. Чтобы настроить Google Sheets и выполнять запросы к вашим метрикам, следуйте подробным инструкциям по [интеграции с Google Sheets](/docs/cloud-integrations/semantic-layer/gsheets).
+3. Начните исследовать и выполнять запросы к метрикам!
+   - Выполните запрос к метрике, например, `order_total`, и отфильтруйте ее по измерению, например, `order_date`.
+   - Вы также можете использовать параметр `group_by`, чтобы группировать ваши метрики по определенному измерению.
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-gsheets.jpg" width="90%" title="Use the dbt Semantic Layer's Google Sheet integration to query metrics with a Query Builder menu."  />
+<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-gsheets.jpg" width="90%" title="Используйте интеграцию Google Sheets с семантическим слоем dbt для выполнения запросов к метрикам с помощью меню Query Builder."  />

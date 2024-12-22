@@ -1,8 +1,7 @@
+:::tip Представляем новый Семантический слой dbt 🎉
 
-:::tip Introducing the new dbt Semantic Layer 🎉
+Семантический слой dbt был переиздан с [значительными улучшениями](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), что делает его более эффективным для определения и запроса метрик.
 
-The dbt Semantic Layer has been re-released with [significant improvements](https://www.getdbt.com/blog/dbt-semantic-layer-whats-next/), making it more efficient to define and query metrics. 
-
-The new version is available in [public beta](/docs/dbt-versions/release-notes/Aug-2023/sl-revamp-beta#public-beta) and introduces [MetricFlow](/docs/build/about-metricflow), an essential component. It also includes new semantic elements, better governance, improved efficiency, easier data access, and new dbt Semantic Layer APIs.
+Новая версия доступна в [публичной бета-версии](/docs/dbt-versions/release-notes/Aug-2023/sl-revamp-beta#public-beta) и вводит [MetricFlow](/docs/build/about-metricflow), важный компонент. Она также включает новые семантические элементы, улучшенное управление, повышенную эффективность, более легкий доступ к данным и новые API Семантического слоя dbt.
 
 :::

@@ -1,8 +1,7 @@
+:::info Версии моделей, версии dbt_project.yml и версии .yml
 
-:::info Model versions, dbt_project.yml versions, and .yml versions
+Обратите внимание, что [версии моделей](/docs/collaborate/govern/model-versions) отличаются от [версий dbt_project.yml](/reference/project-configs/version#dbt_projectyml-versions) и [версий файлов свойств .yml](/reference/project-configs/version#yml-property-file-versions).
 
-Take note that [model versions](/docs/collaborate/govern/model-versions) are different from [dbt_project.yml versions](/reference/project-configs/version#dbt_projectyml-versions) and [.yml property file versions](/reference/project-configs/version#yml-property-file-versions).
-
-Model versions is a _feature_ that enables better governance and data model management by allowing you to track changes and updates to models over time. dbt_project.yml versions refer to the compatibility of the dbt project with a specific version of dbt. Version numbers within .yml property files inform how dbt parses those YAML files. The latter two are completely optional starting from dbt v1.5.
+Версии моделей — это _функция_, которая позволяет улучшить управление и контроль моделей данных, позволяя отслеживать изменения и обновления моделей с течением времени. Версии dbt_project.yml относятся к совместимости проекта dbt с определенной версией dbt. Номера версий в файлах свойств .yml указывают, как dbt интерпретирует эти YAML файлы. Последние два являются полностью необязательными, начиная с dbt версии 1.5.
 
 :::

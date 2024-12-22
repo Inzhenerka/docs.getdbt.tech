@@ -1,12 +1,12 @@
-You can now delete the files that dbt created when you initialized the project:
+Теперь вы можете удалить файлы, которые dbt создал при инициализации проекта:
 
-1. Delete the `models/example/` directory.
-2. Delete the `example:` key from your `dbt_project.yml` file, and any configurations that are listed under it.
+1. Удалите директорию `models/example/`.
+2. Удалите ключ `example:` из вашего файла `dbt_project.yml`, а также любые конфигурации, которые перечислены под ним.
 
     <File name='dbt_project.yml'>
 
     ```yaml
-    # before
+    # до
     models:
       jaffle_shop:
         +materialized: table
@@ -19,7 +19,7 @@ You can now delete the files that dbt created when you initialized the project:
     <File name='dbt_project.yml'>
 
     ```yaml
-    # after
+    # после
     models:
       jaffle_shop:
         +materialized: table
@@ -27,9 +27,9 @@ You can now delete the files that dbt created when you initialized the project:
 
     </File>
 
-3. Save your changes.
+3. Сохраните изменения.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
 <FAQ path="Models/removing-deleted-models" />
 <FAQ path="Troubleshooting/unused-model-configurations" />

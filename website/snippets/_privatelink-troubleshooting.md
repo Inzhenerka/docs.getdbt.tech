@@ -1,54 +1,54 @@
-## Troubleshooting
+## Устранение неполадок
 
-If the PrivateLink endpoint has been provisioned and configured in dbt Cloud, but connectivity is still failing, check the following in your networking setup to ensure requests and responses can be successfully routed between dbt Cloud and the backing service.
+Если конечная точка PrivateLink была создана и настроена в dbt Cloud, но подключение все еще не работает, проверьте следующее в вашей сетевой конфигурации, чтобы убедиться, что запросы и ответы могут успешно маршрутизироваться между dbt Cloud и поддерживающим сервисом.
 
-### Configuration
+### Конфигурация
 
-Start with the configuration:
+Начните с конфигурации:
 
-<Expandable alt_header="1. NLB Security Group">
+<Expandable alt_header="1. Группа безопасности NLB">
 
-The Network Load Balancer (NLB) associated with the VPC Endpoint Service must either not have an associated Security Group or the Security Group must have a rule that allows requests from the appropriate dbt Cloud _private CIDR(s)_. Note that this differs from the static public IPs listed on the dbt Cloud Connection page. dbt Support can provide the correct private CIDR(s) upon request.
-   - **Note***: To test if this is the issue, temporarily adding an allow rule of `10.0.0.0/8` should allow connectivity until the rule can be refined to a smaller CIDR
-
-</Expandable>
-
-<Expandable alt_header="2. NLB Listener and Target Group">
-
-Check that there is a Listener connected to the NLB that matches the port that dbt Cloud is trying to connect to. This Listener must have a configured action to forward to a Target Group with targets that point to your backing service. At least one (but preferably all) of these targets must be **Healthy**. Unhealthy targets could suggest that the backing service is, in fact, unhealthy or that the service is protected by a Security Group that doesn't allow requests from the NLB.
+Сетевой балансировщик нагрузки (NLB), связанный с сервисом конечной точки VPC, не должен иметь связанную группу безопасности, либо группа безопасности должна иметь правило, разрешающее запросы от соответствующих _частных CIDR_ dbt Cloud. Обратите внимание, что это отличается от статических публичных IP-адресов, указанных на странице подключения dbt Cloud. Поддержка dbt может предоставить правильные частные CIDR по запросу.
+   - **Примечание***: Чтобы проверить, является ли это проблемой, временное добавление правила разрешения `10.0.0.0/8` должно позволить подключение до тех пор, пока правило не будет уточнено до меньшего CIDR.
 
 </Expandable>
 
-<Expandable alt_header="3. Cross-zone Load Balancing">
+<Expandable alt_header="2. Слушатель NLB и целевая группа">
 
-Check that _Cross-zone load balancing_ is enabled for your NLB (check the **Attributes** tab of the NLB in the AWS console). If this is disabled, and the zones that dbt Cloud is connected to are misaligned with the zones where the service is running, requests may not be able to be routed correctly. Enabling cross-zone load balancing will also make the connection more resilient in the case of a failover in a zone outage scenario. Cross-zone connectivity may incur additional data transfer charges, though this should be minimal for requests from dbt Cloud.
-
-</Expandable>
-
-<Expandable alt_header="4. Routing tables and ACLs">
-
-If all the above check out, it may be possible that requests are not routing correctly within the private network. This could be due to a misconfiguration in the VPCs routing tables or access control lists. Review these settings with your network administrator to ensure that requests can be routed from the VPC Endpoint Service to the backing service and that the response can be returned to the VPC Endpoint Service. One way to test this is to create a VPC endpoint in another VPC in your network to test that connectivity is working independent of dbt's connection.
+Проверьте, что к NLB подключен слушатель, который соответствует порту, к которому dbt Cloud пытается подключиться. Этот слушатель должен иметь настроенное действие для пересылки в целевую группу с целями, указывающими на ваш поддерживающий сервис. По крайней мере одна (но предпочтительно все) из этих целей должна быть **здоровой**. Нездоровые цели могут указывать на то, что поддерживающий сервис действительно нездоров или что сервис защищен группой безопасности, которая не позволяет запросы от NLB.
 
 </Expandable>
 
-### Monitoring
+<Expandable alt_header="3. Балансировка нагрузки между зонами">
 
-To help isolate connection issues over a PrivateLink connection from dbt Cloud, there are a few monitoring sources that can be used to verify request activity. Requests must first be sent to the endpoint to see anything in the monitoring. Contact dbt Support to understand when connection testing occurred or request new connection attempts. Use these times to correlate with activity in the following monitoring sources.
-
-<Expandable alt_header="VPC Endpoint Service Monitoring">
-
-In the AWS Console, navigate to VPC -> Endpoint Services. Select the Endpoint Service being tested and click the **Monitoring** tab. Update the time selection to include when test connection attempts were sent. If there is activity in the _New connections_ and _Bytes processed_ graphs, then requests have been received by the Endpoint Service, suggesting that the dbt endpoint is routing properly.
+Проверьте, включена ли _балансировка нагрузки между зонами_ для вашего NLB (проверьте вкладку **Атрибуты** NLB в консоли AWS). Если это отключено, и зоны, к которым подключен dbt Cloud, не совпадают с зонами, где работает сервис, запросы могут не маршрутизироваться корректно. Включение балансировки нагрузки между зонами также сделает подключение более устойчивым в случае отказа в сценарии отключения зоны. Межзонная связь может повлечь дополнительные расходы на передачу данных, хотя это должно быть минимальным для запросов от dbt Cloud.
 
 </Expandable>
 
-<Expandable alt_header="NLB Monitoring">
+<Expandable alt_header="4. Таблицы маршрутизации и ACL">
 
-In the AWS Console, navigate to EC2 -> Load Balancers. Select the Network Load Balancer (NLB) being tested and click the **Monitoring** tab. Update the time selection to include when test connection attempts were sent. If there is activity in the _New flow count_ and _Processed bytes_ graphs, then requests have been received by the NLB from the Endpoint Service, suggesting the NLB Listener, Target Group, and Security Group are correctly configured.
+Если все вышеперечисленное проверено, возможно, что запросы неправильно маршрутизируются внутри частной сети. Это может быть связано с неправильной конфигурацией таблиц маршрутизации VPC или списков контроля доступа. Проверьте эти настройки с вашим сетевым администратором, чтобы убедиться, что запросы могут быть маршрутизированы от сервиса конечной точки VPC к поддерживающему сервису и что ответ может быть возвращен к сервису конечной точки VPC. Один из способов проверить это — создать конечную точку VPC в другой VPC в вашей сети, чтобы проверить, что подключение работает независимо от подключения dbt.
 
 </Expandable>
 
-<Expandable alt_header="VPC Flow Logs">
+### Мониторинг
 
-VPC Flow Logs can provide various helpful information for requests being routed through your VPCs, though they can sometimes be challenging to locate and interpret. Flow logs can be written to either S3 or CloudWatch Logs, so determine the availability of these logs for your VPC and query them accordingly. Flow logs record the Elastic Network Interface (ENI) ID, source and destination IP and port, and whether the request was accepted or rejected by the security group and/or network ACL. This can be useful in understanding if a request arrived at a certain network interface and whether that request was accepted, potentially illuminating overly restrictive rules. For more information on accessing and interpreting VPC Flow Logs, see the related [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html).
+Чтобы помочь изолировать проблемы с подключением через соединение PrivateLink из dbt Cloud, есть несколько источников мониторинга, которые можно использовать для проверки активности запросов. Сначала запросы должны быть отправлены на конечную точку, чтобы увидеть что-либо в мониторинге. Свяжитесь с поддержкой dbt, чтобы узнать, когда проводилось тестирование подключения, или запросите новые попытки подключения. Используйте эти временные метки для корреляции с активностью в следующих источниках мониторинга.
+
+<Expandable alt_header="Мониторинг сервиса конечной точки VPC">
+
+В консоли AWS перейдите в VPC -> Endpoint Services. Выберите тестируемый сервис конечной точки и нажмите вкладку **Monitoring**. Обновите временной интервал, чтобы включить время, когда были отправлены попытки тестового подключения. Если есть активность в графиках _New connections_ и _Bytes processed_, значит, запросы были получены сервисом конечной точки, что предполагает, что конечная точка dbt маршрутизируется правильно.
+
+</Expandable>
+
+<Expandable alt_header="Мониторинг NLB">
+
+В консоли AWS перейдите в EC2 -> Load Balancers. Выберите тестируемый сетевой балансировщик нагрузки (NLB) и нажмите вкладку **Monitoring**. Обновите временной интервал, чтобы включить время, когда были отправлены попытки тестового подключения. Если есть активность в графиках _New flow count_ и _Processed bytes_, значит, запросы были получены NLB от сервиса конечной точки, что предполагает, что слушатель NLB, целевая группа и группа безопасности настроены правильно.
+
+</Expandable>
+
+<Expandable alt_header="Логи потоков VPC">
+
+Логи потоков VPC могут предоставить различную полезную информацию о запросах, маршрутизируемых через ваши VPC, хотя иногда их может быть сложно найти и интерпретировать. Логи потоков могут записываться либо в S3, либо в CloudWatch Logs, поэтому определите доступность этих логов для вашей VPC и запросите их соответствующим образом. Логи потоков записывают идентификатор сетевого интерфейса (ENI), исходный и целевой IP и порт, а также информацию о том, был ли запрос принят или отклонен группой безопасности и/или сетевым ACL. Это может быть полезно для понимания, прибыл ли запрос на определенный сетевой интерфейс и был ли этот запрос принят, что может выявить чрезмерно ограничительные правила. Для получения дополнительной информации о доступе и интерпретации логов потоков VPC см. соответствующую [документацию AWS](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html).
 
 </Expandable>

@@ -1,6 +1,6 @@
-:::info dbt Copilot available in beta
+:::info dbt Copilot доступен в бета-версии
 
-<span>Use [dbt Copilot](/docs/cloud/dbt-copilot), available in beta, to generate {props.resource} in the dbt Cloud IDE only.</span><br /><br />
+<span>Используйте [dbt Copilot](/docs/cloud/dbt-copilot), доступный в бета-версии, чтобы генерировать {props.resource} только в dbt Cloud IDE.</span><br /><br />
 
-To use dbt Copilot, you must have an active dbt Cloud Enterprise account and either agree to use dbt Labs' OpenAI key or provide your own Open AI API key. Register [here](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to the Account team to join the private beta.
+Чтобы использовать dbt Copilot, у вас должна быть активная учетная запись dbt Cloud Enterprise, и вы должны либо согласиться использовать ключ OpenAI от dbt Labs, либо предоставить свой собственный ключ Open AI API. Зарегистрируйтесь [здесь](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) или свяжитесь с командой по работе с клиентами, чтобы присоединиться к закрытой бета-версии.
 :::

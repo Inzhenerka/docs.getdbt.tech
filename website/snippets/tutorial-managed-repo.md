@@ -1,8 +1,8 @@
 <Snippet path="available-git-providers" />
 
-To set up a managed repository:
+Чтобы настроить управляемый репозиторий:
 
-1. Under "Setup a repository", select **Managed**.
-2. Type a name for your repo such as `bbaggins-dbt-quickstart`
-3. Click **Create**. It will take a few seconds for your repository to be created and imported.
-4. Once you see the "Successfully imported repository," click **Continue**.
+1. В разделе "Настроить репозиторий" выберите **Управляемый**.
+2. Введите имя для вашего репозитория, например, `bbaggins-dbt-quickstart`.
+3. Нажмите **Создать**. Создание и импорт вашего репозитория займет несколько секунд.
+4. Как только вы увидите сообщение "Репозиторий успешно импортирован", нажмите **Продолжить**.

@@ -1,16 +1,15 @@
+Начиная с 2024 года, когда вы выбираете [трассу обновлений в dbt Cloud](/docs/dbt-versions/cloud-release-tracks) для получения постоянных обновлений версии dbt, dbt будет игнорировать конфигурацию `require-dbt-version`.
 
-Starting in 2024, when you select a [release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) to receive ongoing dbt version upgrades, dbt will ignore the `require-dbt-version` config.
+dbt Labs стремится к отсутствию критических изменений для кода в проектах dbt, с постоянными релизами в dbt Cloud и новыми версиями dbt Core. Мы также рекомендуем следующие лучшие практики:
 
-dbt Labs is committed to zero breaking changes for code in dbt projects, with ongoing releases to dbt Cloud and new versions of dbt Core. We also recommend these best practices:
+<Expandable alt_header="Установка пакетов dbt">
 
-<Expandable alt_header="Installing dbt packages" >
-
-If you install dbt packages for use in your project, whether the package is maintained by your colleagues or a member of the open source dbt community, we recommend pinning the package to a specific revision or `version` boundary. Since v1.7, dbt manages this out-of-the-box by _locking_ the version/revision of packages in development in order to guarantee predictable builds in production. To learn more, refer to [Predictable package installs](/reference/commands/deps#predictable-package-installs).
+Если вы устанавливаете пакеты dbt для использования в вашем проекте, будь то пакет, поддерживаемый вашими коллегами или членом сообщества с открытым исходным кодом dbt, мы рекомендуем закрепить пакет на определенной ревизии или границе `version`. Начиная с версии v1.7, dbt управляет этим из коробки, _блокируя_ версию/ревизию пакетов в разработке, чтобы гарантировать предсказуемые сборки в производстве. Чтобы узнать больше, обратитесь к [Предсказуемая установка пакетов](/reference/commands/deps#predictable-package-installs).
 
 </Expandable>
-<Expandable alt_header="Maintaining dbt packages" >
+<Expandable alt_header="Поддержка пакетов dbt">
 
-If you maintain dbt packages, whether on behalf of your colleagues or members of the open source community, we recommend writing defensive code that checks to verify that other required packages and global macros are available. For example, if your package depends on the availability of a `date_spine` macro in the global `dbt` namespace, you can write:
+Если вы поддерживаете пакеты dbt, будь то от имени ваших коллег или членов сообщества с открытым исходным кодом, мы рекомендуем писать защитный код, который проверяет наличие других необходимых пакетов и глобальных макросов. Например, если ваш пакет зависит от наличия макроса `date_spine` в глобальном пространстве имен `dbt`, вы можете написать:
 
 <File name="models/some_days.sql">
 

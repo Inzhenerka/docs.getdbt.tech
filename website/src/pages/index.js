@@ -95,7 +95,7 @@ function Home() {
             <p>
               Если вы заметили неточность или хотите
               помочь улучшить перевод, присылайте правки в
-              <a href="https://github.com/Inzhenerka/docs.getdbt.tech" style={{marginLeft: '5px'}}>репозиторий</a>.
+              <a href="https://github.com/Inzhenerka/docs.getdbt.tech" style={{marginLeft: '5px'}}>репозиторий</a> или в <a href="https://t.me/inzhenerkatech_sup" style={{marginLeft: '5px'}}>поддержку</a>.
             </p>
           </section>
 

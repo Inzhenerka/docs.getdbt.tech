@@ -1,9 +1,9 @@
-Adding [tests](/docs/build/data-tests) to a project helps validate that your models are working correctly.
+Добавление [тестов](/docs/build/data-tests) в проект помогает убедиться, что ваши модели работают правильно.
 
-To add tests to your project:
+Чтобы добавить тесты в ваш проект:
 
-1. Create a new YAML file in the `models` directory, named `models/schema.yml`
-2. Add the following contents to the file:
+1. Создайте новый YAML-файл в директории `models`, назвав его `models/schema.yml`.
+2. Добавьте в файл следующее содержимое:
 
     <File name='models/schema.yml'>
 
@@ -46,16 +46,16 @@ To add tests to your project:
 
     </File>
 
-3. Run `dbt test`, and confirm that all your tests passed.
+3. Запустите `dbt test` и убедитесь, что все ваши тесты прошли успешно.
 
-When you run `dbt test`, dbt iterates through your YAML files, and constructs a query for each test. Each query will return the number of records that fail the test. If this number is 0, then the test is successful.
+Когда вы запускаете `dbt test`, dbt проходит по вашим YAML-файлам и создает запрос для каждого теста. Каждый запрос вернет количество записей, которые не прошли тест. Если это число равно 0, то тест считается успешным.
 
-#### FAQs
+#### Часто задаваемые вопросы
 
-<FAQ path="Tests/available-tests" alt_header="What tests are available for me to use in dbt? Can I add my own custom tests?" />
+<FAQ path="Tests/available-tests" alt_header="Какие тесты доступны для использования в dbt? Могу ли я добавить свои собственные тесты?" />
 <FAQ path="Tests/test-one-model" />
 <FAQ path="Runs/failed-tests" />
-<FAQ path="Project/schema-yml-name" alt_header="Does my test file need to be named `schema.yml`?" />
+<FAQ path="Project/schema-yml-name" alt_header="Должен ли мой файл с тестами называться `schema.yml`?" />
 <FAQ path="Project/why-version-2" />
 <FAQ path="Tests/recommended-tests" />
 <FAQ path="Tests/when-to-test" />
