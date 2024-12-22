@@ -10,6 +10,7 @@ import allBlogData from './../../.docusaurus/docusaurus-plugin-content-blog/defa
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useDateTimeFormat } from '@docusaurus/theme-common/internal';
 import { getSpotlightMember } from '../utils/get-spotlight-member';
+import { getInzhenerkaPromo } from '../utils/get-inzhenerka-promo';
 
 const bannerAnimation = require('@site/static/img/banner-white.svg');
 
@@ -65,9 +66,9 @@ function Home() {
   // If found, update section to show community spotlight member
   // Otherwise, show featured resource
   const spotlightMember = getSpotlightMember(communitySpotlightMember);
-  if (spotlightMember) {
-    spotlightSection = spotlightMember;
-  }
+
+  // Set Inzhenerka promo instead of community members
+  spotlightSection = getInzhenerkaPromo() || spotlightSection;
 
   return (
     <>
@@ -90,13 +91,14 @@ function Home() {
               Сайт является переведенной версией
               оригинальной документации по dbt. Мы приглашаем всех желающих
               вносить правки и улучшения в перевод, чтобы сделать его ещё точнее и
-              полезнее для сообщества.
-            </p>
-            <p>
-              Если вы заметили неточность или хотите
+              полезнее для сообщества. Если вы заметили неточность или хотите
               помочь улучшить перевод, присылайте правки в
               <a href="https://github.com/Inzhenerka/docs.getdbt.tech" style={{marginLeft: '5px'}}>репозиторий</a> или в <a href="https://t.me/inzhenerkatech_sup" style={{marginLeft: '5px'}}>поддержку</a>.
             </p>
+            <div>
+              Сайт полностью дублирует оригинальный, поэтому для перевода любой страницы достаточно заменить
+              адрес <b>https://docs.getdbt.com</b> на <b>https://docs.getdbt<span style={{color: '#ff6849'}}>.tech</span></b>.
+            </div>
           </section>
 
           <section
