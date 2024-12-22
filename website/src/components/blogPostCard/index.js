@@ -17,7 +17,7 @@ function BlogPostCard({ postMetaData }) {
           <p>
             {createPostPreview(description, 140)}
           </p>
-          <Link className={styles.ctaLink} to={useBaseUrl(link)}>Read more</Link>
+          <Link className={styles.ctaLink} to={useBaseUrl(link)}>Подробнее</Link>
         </div>
       </article>
     </div>

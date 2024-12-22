@@ -23,9 +23,15 @@ if (!process.env.CONTEXT || process.env.CONTEXT == "production") {
 
 let { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME } = process.env;
 
-let metatags = [];
-// If Not Current Branch, do not index site
-if (GIT_BRANCH !== "current") {
+let metatags = [{
+  tagName: "meta",
+  attributes: {
+    name: "yandex-verification",
+    content: "cab1b133f804e289",
+  },
+}];
+// If Not main Branch, do not index site
+if (GIT_BRANCH !== "main") {
   metatags.push({
     tagName: "meta",
     attributes: {
@@ -81,14 +87,14 @@ var siteSettings = {
 //    },
     announcementBar: {
       id: "biweekly-demos",
-      content: "Не пропусти инновационные тренажеры для аналитиков и инженеров данных!",
+      content: "Получи бесплатный доступ к симулятору Data Warehouse Analytics Engineer на базе dbt",
       backgroundColor: "#047377",
       textColor: "#fff",
       isCloseable: true,
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://inzhenerka.tech/working-with-data",
+      "https://inzhenerka.tech/dbt",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
@@ -160,7 +166,7 @@ var siteSettings = {
           items: [
             {
               label: "Обучение",
-              href: "https://inzhenerka.tech/dbt",
+              href: "https://inzhenerka.tech/working-with-data",
             },
             {
               label: "Лучшие практики",
