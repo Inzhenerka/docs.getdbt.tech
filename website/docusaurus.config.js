@@ -30,16 +30,6 @@ let metatags = [{
     content: "cab1b133f804e289",
   },
 }];
-// If Not main Branch, do not index site
-if (GIT_BRANCH !== "main") {
-  metatags.push({
-    tagName: "meta",
-    attributes: {
-      name: "robots",
-      content: "noindex",
-    },
-  });
-}
 
 console.log("DEBUG: CONTEXT =", process.env.CONTEXT);
 console.log("DEBUG: DEPLOY_URL =", process.env.DEPLOY_URL);

@@ -71,9 +71,9 @@ function Home() {
 
   return (
     <>
-      <Head>
-      </Head>
-      <Layout permalink="/">
+      <Layout permalink="/" description="Документация, гайды и руководства по dbt на русском языке">
+        <Head>
+        </Head>
         <div
           className="container container--fluid home"
           style={{ padding: "0", background: "#FFF" }}
