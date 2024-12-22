@@ -1,14 +1,17 @@
 version: 1
 frontend:
   phases:
-    build:
+    preBuild:
       commands:
         - cd website
         - make install
+    build:
+      commands:
         - make build
   artifacts:
-    baseDirectory: /website/build/
+    baseDirectory: "/website/build/"
     files:
       - "**/*"
   cache:
-    paths: []
+    paths:
+      - "node_modules/**/*"
