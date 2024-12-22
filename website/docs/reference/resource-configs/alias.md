@@ -100,7 +100,7 @@ seeds:
 
 <TabItem value="snapshot" label="Снапшоты">
 
-Настройте псевдоним для снапшота в вашем файле `dbt_project.yml` или блоке конфигурации.
+Настройте псевдоним для снапшота в вашем файле `dbt_project.yml`, файле `snapshots/snapshot_name.yml` или блоке конфигурации.
 
 Следующие примеры демонстрируют, как задать псевдоним для снапшота с именем `your_snapshot` как `the_best_snapshot`.
 
@@ -116,18 +116,17 @@ snapshots:
 ```
 </File>
 
-В файле `snapshots/properties.yml`:
+В файле `snapshots/snapshot_name.yml`:
 
-<File name='snapshots/properties.yml'>
+<File name='snapshots/snapshot_name.yml'>
 
 ```yml
 version: 2
 
 snapshots:
-  - name: your_snapshot
+  - name: your_snapshot_name
     config:
       alias: the_best_snapshot
-```
 </File>
 
 В файле `snapshots/your_snapshot.sql`:
@@ -184,11 +183,12 @@ models:
 ```sql
 {{ config(
     alias="unique_order_id_test",
-    severity="error",
+    severity="error"
+) }}
 ```
 </File>
 
-При использовании [`store_failures_as`](/reference/resource-configs/store_failures_as), это вернет имя `analytics.finance.orders_order_id_unique_order_id_test` в базе данных.
+При использовании [`store_failures_as`](/reference/resource-configs/store_failures_as), это вернет имя `analytics.dbt_test__audit.orders_order_id_unique_order_id_test` в базе данных.
 
 </TabItem>
 </Tabs>

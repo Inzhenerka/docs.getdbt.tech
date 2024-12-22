@@ -28,7 +28,7 @@ models:
 
 <TabItem value="seeds" label="Сиды">
 
-Настройте пользовательскую схему в вашем файле `dbt_project.yml`.
+Настройте [пользовательскую](/docs/build/custom-schemas#understanding-custom-schemas) схему в вашем файле `dbt_project.yml`.
 
 Например, если у вас есть сид, который должен быть размещен в отдельной схеме под названием `mappings`, вы можете настроить это следующим образом:
 
@@ -56,9 +56,11 @@ seeds:
 
 <VersionBlock firstVersion="1.9">
 
-Укажите пользовательскую схему для снапшота в вашем файле `dbt_project.yml` или файле конфигурации.
+Укажите [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas)) для снапшота в вашем файле `dbt_project.yml` или файле конфигурации.
 
 Например, если у вас есть снапшот, который вы хотите загрузить в схему, отличную от целевой схемы, вы можете настроить это следующим образом:
+
+In a `dbt_project.yml` file:
 
 <File name='dbt_project.yml'>
 
@@ -70,6 +72,21 @@ snapshots:
 ```
 </File>
 
+In a `snapshots/snapshot_name.yml` file:
+
+<File name='snapshots/snapshot_name.yml'>
+
+```yaml
+version: 2
+
+snapshots:
+  - name: snapshot_name
+    [config](/reference/resource-properties/config):
+      schema: snapshots
+```
+
+</File>
+
 Это приведет к тому, что сгенерированное отношение будет находиться в схеме `snapshots`, так что полное имя отношения будет `analytics.snapshots.your_snapshot` вместо стандартной целевой схемы.
 
 </VersionBlock>
@@ -78,16 +95,21 @@ snapshots:
 
 <TabItem value="saved-queries" label="Сохраненные запросы">
 
+Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a [saved query](/docs/build/saved-queries#parameters) in your `dbt_project.yml` or YAML file.
+
 <File name='dbt_project.yml'>
 ```yml
 saved-queries:
   +schema: metrics
 ```
 </File>
+
+This would result in the saved query being stored in the `metrics` schema.
+
 </TabItem>
 <TabItem value="tests" label="Тест">
 
-Настройте схему для хранения результатов тестов в вашем файле `dbt_project.yml`.
+Настройте [свою схему](/docs/build/custom-schemas#understanding-custom-schemas) для хранения результатов тестов в вашем файле `dbt_project.yml`.
 
 Например, чтобы сохранить результаты тестов в определенной схеме, вы можете настроить это следующим образом:
 

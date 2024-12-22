@@ -3,14 +3,14 @@ title: "Настройка Dremio"
 description: "Прочтите это руководство, чтобы узнать о настройке хранилища Dremio в dbt."
 meta:
   maintained_by: Dremio
-  authors: 'Dremio (ранее Fabrice Etanchaud)'
+  authors: 'Dremio'
   github_repo: 'dremio/dbt-dremio'
   pypi_package: 'dbt-dremio'
-  min_core_version: 'v1.2.0'
-  cloud_support: Не поддерживается
+  min_core_version: 'v1.8.0'
+  cloud_support: Not Supported
   min_supported_version: 'Dremio 22.0'
-  slack_channel_name: 'n/a'
-  slack_channel_link: 'https://www.getdbt.com/community'
+  slack_channel_name: 'db-dremio'
+  slack_channel_link: '[https://www.getdbt.com/community](https://getdbt.slack.com/archives/C049G61TKBK)'
   platform_name: 'Dremio'
   config_page: '/reference/resource-configs/no-configs'
 ---
@@ -36,10 +36,6 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 * Убедитесь, что вы используете версию 22.0 или более позднюю.
 * Убедитесь, что на системе, на которой вы запускаете dbt, установлена версия Python 3.9.x или более поздняя.
-* Включите эти ключи поддержки в вашем кластере Dremio:
-  * `dremio.iceberg.enabled`
-  * `dremio.iceberg.ctas.enabled`
-  * `dremio.execution.support_unlimited_splits`
 
   См. <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/advanced-administration/support-settings/#support-keys">Ключи поддержки</a> в документации Dremio для получения инструкций.
 * Если вы хотите использовать TLS для защиты соединения между dbt и Dremio Software, настройте полное шифрование канала в вашем кластере Dremio. Для инструкций см. <a target="_blank" rel="noopener noreferrer" href="https://docs.dremio.com/software/deployment/wire-encryption-config/">Настройка шифрования канала</a>.
@@ -84,7 +80,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 [project name]:
   outputs:
     dev:
-      cloud_host: https://api.dremio.cloud
+      cloud_host: api.dremio.cloud
       cloud_project_id: [project ID]
       object_storage_source: [name]
       object_storage_path: [path]
@@ -160,7 +156,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 | Конфигурация | Обязательна? | Значение по умолчанию | Описание |
 | --- | --- | --- | --- |
-| `cloud_host` | Да | `https://api.dremio.cloud` | Контрольная плоскость США: `https://api.dremio.cloud`<br></br>Контрольная плоскость ЕС: `https://api.eu.dremio.cloud` |
+| `cloud_host` | Да | `api.dremio.cloud` | Контрольная плоскость США: `api.dremio.cloud`<br></br>Контрольная плоскость ЕС: `api.eu.dremio.cloud` |
 | `user` | Да | Нет | Адрес электронной почты, используемый в качестве имени пользователя в Dremio Cloud | 
 | `pat` | Да | Нет | Персональный токен доступа для аутентификации. См. [Персональные токены доступа](https://docs.dremio.com/cloud/security/authentication/personal-access-token/) для получения инструкций о получении токена. | 
 | `cloud_project_id` | Да | Нет | ID проекта Sonar, в котором выполняются преобразования. | 

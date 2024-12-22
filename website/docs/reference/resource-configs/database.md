@@ -55,7 +55,7 @@ seeds:
 
 <VersionBlock firstVersion="1.9">
 
-Укажите пользовательскую базу данных для снапшота в вашем файле `dbt_project.yml` или конфигурационном файле.
+Укажите пользовательскую базу данных для снапшота в вашем файле `dbt_project.yml`, `snapshot.yml` или конфигурационном файле.
 
 Например, если у вас есть снапшот, который вы хотите загрузить в базу данных, отличную от целевой, вы можете настроить его следующим образом:
 
@@ -66,6 +66,20 @@ snapshots:
   your_project:
     your_snapshot:
       +database: snapshots
+```
+</File>
+
+Or in a `snapshot_name.yml` file:
+
+<File name='snapshots/snapshot_name.yml'>
+
+```yaml
+version: 2
+
+snapshots:
+  - name: snapshot_name
+    [config](/reference/resource-properties/config):
+      database: snapshots
 ```
 </File>
 

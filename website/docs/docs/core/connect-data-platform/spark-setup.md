@@ -25,6 +25,8 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Если вы подключаетесь к Databricks через ODBC-драйвер, потребуется `pyodbc`. В зависимости от вашей системы, вы можете установить его отдельно или через pip. Подробности установки для различных ОС смотрите в [wiki `pyodbc`](https://github.com/mkleehammer/pyodbc/wiki/Install).
 
+Если вы подключаетесь к Databricks через ODBC-драйвер, потребуется библиотека `pyodbc`. В зависимости от вашей системы вы можете установить её отдельно или через pip. Подробности установки для разных операционных систем смотрите на странице [вики `pyodbc`](https://github.com/mkleehammer/pyodbc/wiki/Install).
+
 Если вы подключаетесь к кластеру Spark через общие методы thrift или http, потребуется `PyHive`.
 
 ```zsh
