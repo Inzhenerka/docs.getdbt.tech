@@ -7119,8 +7119,8 @@
             "relative_dir": "guides",
             "source_hash": "bd02ce56eae9b2363e9d90248c1896a8d963020271571df6632824c2387498c1",
             "source_size_kb": 32.6435546875,
-            "target_hash": "e8540f63513093d2aab6a1efb37f9ca342b066cf39d4d1fec1e6325fb5751c2a",
-            "target_size_kb": 51.353515625,
+            "target_hash": "576dc1e3629b63cccd7b4960c88f99128af2651f876f7256fa78fab1a7c8f569",
+            "target_size_kb": 51.3447265625,
             "translated_at": "2024-12-21T00:30:59.422291+00:00",
             "translated_source_hash": "bd02ce56eae9b2363e9d90248c1896a8d963020271571df6632824c2387498c1",
             "translated_target_hash": "e8540f63513093d2aab6a1efb37f9ca342b066cf39d4d1fec1e6325fb5751c2a"
@@ -7389,8 +7389,8 @@
             "relative_dir": "guides",
             "source_hash": "073a8c2144db28820b996b9ba1a152e104d84f214fcc492223991cab41426336",
             "source_size_kb": 11.599609375,
-            "target_hash": "8323e462c27e5079b016857b813bce00b1562cb7dfdb4fdc4320bcd705bf68bc",
-            "target_size_kb": 17.6484375,
+            "target_hash": "dd97f4c9885baa38f3418926d77c63bdd6045208eed0bfa4c84bfa57546957f3",
+            "target_size_kb": 17.63671875,
             "translated_at": "2024-12-21T00:44:22.573641+00:00",
             "translated_source_hash": "073a8c2144db28820b996b9ba1a152e104d84f214fcc492223991cab41426336",
             "translated_target_hash": "8323e462c27e5079b016857b813bce00b1562cb7dfdb4fdc4320bcd705bf68bc"
@@ -7944,8 +7944,8 @@
             "relative_dir": "reference",
             "source_hash": "29d5c39a9c7225369a004cf3579df9e7c99780da727481b6048d3dabddafd9d5",
             "source_size_kb": 2.7080078125,
-            "target_hash": "cfecdf28243e40edffc6ac007ea41a2c233ac0567ce361afc255c675ae113e83",
-            "target_size_kb": 3.9189453125,
+            "target_hash": "98e10261691dddfaa8a3a7b14594227cb8c3214e7e96333468641d3d3e2e1698",
+            "target_size_kb": 3.9423828125,
             "translated_at": "2024-12-21T01:16:50.014680+00:00",
             "translated_source_hash": "29d5c39a9c7225369a004cf3579df9e7c99780da727481b6048d3dabddafd9d5",
             "translated_target_hash": "cfecdf28243e40edffc6ac007ea41a2c233ac0567ce361afc255c675ae113e83"
