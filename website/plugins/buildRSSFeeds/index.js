@@ -10,7 +10,7 @@ module.exports = function buildRSSFeedsPlugin() {
     async loadContent() {
 
       // Skip generating RSS feeds in non-production environments
-      if (process.env.VERCEL_ENV !== "production") {
+      if (process.env.NODE_ENV !== "production") {
         console.log('RSS Feeds are only generated in production. Skipping creation of RSS Feed.')
         return null
       }
