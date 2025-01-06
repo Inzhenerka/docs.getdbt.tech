@@ -989,6 +989,7 @@ const sidebarSettings = {
             "reference/resource-configs/target_database",
             "reference/resource-configs/target_schema",
             "reference/resource-configs/updated_at",
+            "reference/resource-configs/snapshots-jinja-legacy",
           ],
         },
         {
