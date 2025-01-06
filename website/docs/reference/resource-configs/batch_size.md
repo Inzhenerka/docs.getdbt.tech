@@ -48,7 +48,8 @@ Example in sql model config block:
 
 ```sql
 {{ config(
-    lookback='day
+    materialized='incremental',
+    batch_size='day'
 ) }}
 ```
 
