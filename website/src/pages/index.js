@@ -155,39 +155,39 @@ function Home() {
             </div>
           </section>
 
-          <section className="from-the-blog">
-            <h2>Последние статьи из блогов</h2>
-            <PostCarousel blogPostData={recentBlogData} />
-          </section>
-
           <section className="from-the-community">
-            <h2>От сообщества dbt</h2>
+            <h2>Сообщество dbt</h2>
             <div className="grid--3-col">
               <div>
                 <Card
-                  title="Присоединяйтесь к сообществу"
-                  body="Общайтесь со специалистами по данным со всего мира."
-                  link="/community/join"
+                  title="dbt & modern data stack"
+                  body="Главное русскоязычное сообщество по dbt. Помощь по любым вопросам"
+                  link="https://t.me/dbt_users"
+                  icon="dbt-bit"
+                />
+              </div>
+              <div>
+                <Card
+                  title="Data Engineers"
+                  body="Большое сообщество инженеров данных. Чат с профессионалами"
+                  link="https://t.me/hadoopusers"
+                  icon="postgres"
+                />
+              </div>
+              <div>
+                <Card
+                  title="Это разве аналитика?"
+                  body="Анализ данных и визуализация, интересные ссылки, вакансии, уроки, юмор и личный опыт"
+                  link="https://t.me/eto_analytica"
                   icon="smiley-face"
                 />
               </div>
-              <div>
-                <Card
-                  title="Станьте контрибьютером"
-                  body="Помогайте создавать ресурсы, которые сообщество использует для решения сложных задач."
-                  link="/community/contribute"
-                  icon="pencil-paper"
-                />
-              </div>
-              <div>
-                <Card
-                  title="Пакеты dbt с открытым исходным кодом"
-                  body="Выведите ваш dbt-проект на новый уровень с пакетами, созданными сообществом."
-                  link="https://hub.getdbt.com/"
-                  icon="packages"
-                />
-              </div>
             </div>
+          </section>
+
+          <section className="from-the-blog">
+            <h2>Последние статьи из блогов</h2>
+            <PostCarousel blogPostData={recentBlogData} />
           </section>
 
           <section className="like-a-pro">
@@ -196,15 +196,15 @@ function Home() {
               <div>
                 <Card
                   title="Лучшие практики"
-                  body="Изучите проверенные стратегии для внедрения лучших практик аналитики."
+                  body="Изучите проверенные стратегии для внедрения лучших практик аналитики"
                   link="/best-practices"
                   icon="guides"
                 />
               </div>
               <div>
                 <Card
-                  title="Форум сообщества"
-                  body="Получайте помощь и делитесь знаниями на форуме."
+                  title="Форум dbt Discourse"
+                  body="Получай помощь и делись знаниями на международном форуме"
                   link="/community/forum"
                   icon="discussions"
                 />
@@ -212,7 +212,7 @@ function Home() {
               <div>
                 <Card
                   title="Онлайн-курсы"
-                  body="Структурированные курсы для глубокого погружения в темы аналитики и инженерии."
+                  body="Структурированные курсы для глубокого погружения в темы аналитики и инженерии"
                   link="https://inzhenerka.tech/working-with-data"
                   icon="computer"
                 />
