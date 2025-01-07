@@ -40,7 +40,7 @@ console.log("DEBUG: metatags = ", metatags);
 var siteSettings = {
   baseUrl: "/",
   tagline: "Документация, гайды и руководства по dbt на русском языке",
-  title: "Документация dbt",
+  title: "Документация dbt - перевод официального сайта на русский",
   url: SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
