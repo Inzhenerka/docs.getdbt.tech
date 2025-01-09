@@ -191,6 +191,14 @@ The results of this query are used to determine whether the source is fresh or n
 
 <Lightbox src="/img/docs/building-a-dbt-project/snapshot-freshness.png" title="Uh oh! Not everything is as fresh as we'd like!"/>
 
+### Build models based on source freshness
+
+dbt has a feature to [check the freshness](https://docs.getdbt.com/docs/build/sources#declaring-source-freshness) (how up to date) of a specific source. This functionality is specifically designed for sources and does not apply to models.
+
+Neither `dbt source freshness` nor `dbt test` will perform any freshness checking of models. This is intentional because, in a typical dbt project, raw data usually comes in as sources. Your models then transform this data by selecting from those sources. If your source data is fresh, there's generally no need to perform freshness checks on your models as well.
+
+However, dbt does however does provide the flexibility for users to create their own [generic tests](https://docs.getdbt.com/docs/build/tests#generic-tests) that they can then apply to models.
+
 ### Filter
 
 Some databases can have tables where a filter over certain columns are required, in order prevent a full scan of the table, which could be costly. In order to do a freshness check on such tables a `filter` argument can be added to the configuration, e.g. `filter: _etl_loaded_at >= date_sub(current_date(), interval 1 day)`. For the example above, the resulting query would look like

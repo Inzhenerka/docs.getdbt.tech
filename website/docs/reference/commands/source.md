@@ -12,6 +12,16 @@ The `dbt source` command provides subcommands that are useful when working with 
 
 If your dbt project is [configured with sources](/docs/build/sources), then the `dbt source freshness` command will query all of your defined source tables, determining the "freshness" of these tables. If the tables are stale (based on the `freshness` config specified for your sources) then dbt will report a warning or error accordingly. If a source <Term id="table" /> is in a stale state, then dbt will exit with a nonzero exit code.
 
+You can also use [source freshness](/docs/deploy/source-freshness) commands help make sure the data you get is new and not old or outdated. 
+
+#### Configure source freshness
+
+You can configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
+
+import SourcefreshnessTable from '/snippets/_selecting_source_freshness.md';
+
+<SourcefreshnessTable />
+
 ### Specifying sources to snapshot
 
 By default, `dbt source freshness` will calculate freshness information for all of the sources in your project. To snapshot freshness for a subset of these sources, use the `--select` flag.
@@ -76,3 +86,15 @@ Snapshots of source freshness can be used to understand:
 This command can be run manually to determine the state of your source data freshness at any time. It is also recommended that you run this command on a schedule, storing the results of the freshness snapshot at regular intervals. These longitudinal snapshots will make it possible to be alerted when source data freshness SLAs are violated, as well as understand the trend of freshness over time.
 
 dbt Cloud makes it easy to snapshot source freshness on a schedule, and provides a dashboard out of the box indicating the state of freshness for all of the sources defined in your project. For more information on snapshotting freshness in dbt Cloud, check out the [docs](/docs/build/sources#source-data-freshness).
+
+### Source freshness commands
+
+Source freshness commands ensure you're receiving the most up-to-date, relevant, and accurate information. 
+
+Some of the typical commands you can use are:
+
+| **Command**                                                                 | **Description**                  | 
+| ----------------------------------------------------------------------------| ---------------------------------|
+|[`source_status`](/reference/node-selection/methods#the-source_status-method)|dbt generates the [`sources.json`](/reference/artifacts/sources-json) artifact, which includes execution times and [`max_loaded_at`](/reference/artifacts/sources-json#top-level-keys) timestamps for dbt sources.|
+|[`state:modified`](/reference/node-selection/methods#state)                  |Used to select nodes by comparing them to a previous version of the same project, represented by a [manifest](/reference/artifacts/manifest-json).|
+|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |If your dbt project includes configured sources, the dbt source freshness command will query all your defined source tables to determine their "freshness."|
