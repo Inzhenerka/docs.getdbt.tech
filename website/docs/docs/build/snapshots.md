@@ -437,103 +437,100 @@ Snapshot <Term id="table">tables</Term> will be created as a clone of your sourc
 
 In dbt Core v1.9+ (or available sooner in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks)):
 - These column names can be customized to your team or organizational conventions using the [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names) config.
-ess)
 - Use the [`dbt_valid_to_current` config](/reference/resource-configs/dbt_valid_to_current) to set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date such as `9999-12-31`). By default, this value is `NULL`. When set, dbt will use this specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table.
 - Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config to track deleted records as new rows with the `dbt_is_deleted` meta field when using the `hard_deletes='new_record'` field.
 
 
-| Field          | Meaning | Usage |
-| -------------- | ------- | ----- |
-| dbt_valid_from | The timestamp when this snapshot row was first inserted | This column can be used to order the different "versions" of a record. |
-| dbt_valid_to   | The timestamp when this row became invalidated. <br /> For current records, this is `NULL` by default <VersionBlock firstVersion="1.9"> or the value specified in `dbt_valid_to_current`.</VersionBlock> | The most recent snapshot record will have `dbt_valid_to` set to `NULL` <VersionBlock firstVersion="1.9"> or the specified value. </VersionBlock> |
-| dbt_scd_id     | A unique key generated for each snapshotted record. | This is used internally by dbt |
-| dbt_updated_at | The updated_at timestamp of the source record when this snapshot row was inserted. | This is used internally by dbt |
-| dbt_is_deleted | A boolean value indicating if the record has been deleted. `True` if deleted, `False` otherwise. | Added when `hard_deletes='new_record'` is configured. This is used internally by dbt |
+| Field          | <div style={{width:'250px'}}>Meaning</div> | Notes | Example|
+| -------------- | ------- | ----- | ------- |
+| `dbt_valid_from` | The timestamp when this snapshot row was first inserted and became valid. | This column can be used to order the different "versions" of a record. | `snapshot_meta_column_names: {dbt_valid_from: start_date}` |
+| `dbt_valid_to`   | The timestamp when this row became invalidated. For current records, this is `NULL` by default or the value specified in `dbt_valid_to_current`. | The most recent snapshot record will have `dbt_valid_to` set to `NULL` or the specified value.  | `snapshot_meta_column_names: {dbt_valid_to: end_date}` |
+| `dbt_scd_id`     | A unique key generated for each snapshot row. | This is used internally by dbt. | `snapshot_meta_column_names: {dbt_scd_id: scd_id}` |
+| `dbt_updated_at` | The `updated_at` timestamp of the source record when this snapshot row was inserted. | This is used internally by dbt. | `snapshot_meta_column_names: {dbt_updated_at: modified_date}` |
+| `dbt_is_deleted` | A string value indicating if the record has been deleted. (`True` if deleted, `False` if not deleted). |Added when `hard_deletes='new_record'` is configured.  | `snapshot_meta_column_names: {dbt_is_deleted: is_deleted}` |
+
+All of these column names can be customized using the `snapshot_meta_column_names` config. Refer to this [example](/reference/resource-configs/snapshot_meta_column_names#example) for more details.
 
 *The timestamps used for each column are subtly different depending on the strategy you use:
 
-For the `timestamp` strategy, the configured `updated_at` column is used to populate the `dbt_valid_from`, `dbt_valid_to` and `dbt_updated_at` columns.
+- For the `timestamp` strategy, the configured `updated_at` column is used to populate the `dbt_valid_from`, `dbt_valid_to` and `dbt_updated_at` columns.
 
-<details>
-<summary>  Details for the timestamp strategy </summary>
+  <Expandable alt_header="Sample results for the timestamp strategy">
 
-Snapshot query results at `2024-01-01 11:00`
+  Snapshot query results at `2024-01-01 11:00`
 
-| id | status  | updated_at       |
-| -- | ------- | ---------------- |
-| 1        | pending | 2024-01-01 10:47 |
+  | id | status  | updated_at       |
+  | -- | ------- | ---------------- |
+  | 1        | pending | 2024-01-01 10:47 |
 
-Snapshot results (note that `11:00` is not used anywhere):
+  Snapshot results (note that `11:00` is not used anywhere):
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| 1        | pending | 2024-01-01 10:47 | 2024-01-01 10:47 |                  | 2024-01-01 10:47 |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
+  | 1        | pending | 2024-01-01 10:47 | 2024-01-01 10:47 |                  | 2024-01-01 10:47 |
 
-Query results at `2024-01-01 11:30`:
+  Query results at `2024-01-01 11:30`:
 
-| id | status  | updated_at       |
-| -- | ------- | ---------------- |
-| 1  | shipped | 2024-01-01 11:05 |
+  | id | status  | updated_at       |
+  | -- | ------- | ---------------- |
+  | 1  | shipped | 2024-01-01 11:05 |
 
-Snapshot results (note that `11:30` is not used anywhere):
+  Snapshot results (note that `11:30` is not used anywhere):
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 |
-| 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 |                  | 2024-01-01 11:05 |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
+  | 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 |
+  | 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 |                  | 2024-01-01 11:05 |
 
-Snapshot results with `hard_deletes='new_record'`:
+  Snapshot results with `hard_deletes='new_record'`:
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
-|----|---------|------------------|------------------|------------------|------------------|----------------|
-| 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 | False          |
-| 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 | 2024-01-01 11:20 | 2024-01-01 11:05 | False          |
-| 1  | deleted | 2024-01-01 11:20 | 2024-01-01 11:20 |                  | 2024-01-01 11:20 | True           |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
+  |----|---------|------------------|------------------|------------------|------------------|----------------|
+  | 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 | False          |
+  | 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 | 2024-01-01 11:20 | 2024-01-01 11:05 | False          |
+  | 1  | deleted | 2024-01-01 11:20 | 2024-01-01 11:20 |                  | 2024-01-01 11:20 | True           |
 
 
-</details>
+  </Expandable>
 
-<br/>
+- For the `check` strategy, the current timestamp is used to populate each column. If configured, the `check` strategy uses the `updated_at` column instead, as with the timestamp strategy.
 
-For the `check` strategy, the current timestamp is used to populate each column. If configured, the `check` strategy uses the `updated_at` column instead, as with the timestamp strategy.
+  <Expandable alt_header="Sample results for the check strategy">
 
-<details>
-<summary>  Details for the check strategy </summary>
+  Snapshot query results at `2024-01-01 11:00`
 
-Snapshot query results at `2024-01-01 11:00`
+  | id | status  |
+  | -- | ------- |
+  | 1  | pending |
 
-| id | status  |
-| -- | ------- |
-| 1  | pending |
+  Snapshot results:
 
-Snapshot results:
+  | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- |
+  | 1  | pending | 2024-01-01 11:00 |                  | 2024-01-01 11:00 |
 
-| id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- |
-| 1  | pending | 2024-01-01 11:00 |                  | 2024-01-01 11:00 |
+  Query results at `2024-01-01 11:30`:
 
-Query results at `2024-01-01 11:30`:
+  | id | status  |
+  | -- | ------- |
+  | 1  | shipped |
 
-| id | status  |
-| -- | ------- |
-| 1  | shipped |
+  Snapshot results:
 
-Snapshot results:
+  | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | --- | ------- | ---------------- | ---------------- | ---------------- |
+  | 1   | pending | 2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 |
+  | 1   | shipped | 2024-01-01 11:30 |                  | 2024-01-01 11:30 |
 
-| id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| --- | ------- | ---------------- | ---------------- | ---------------- |
-| 1   | pending | 2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 |
-| 1   | shipped | 2024-01-01 11:30 |                  | 2024-01-01 11:30 |
+  Snapshot results with `hard_deletes='new_record'`:
 
-Snapshot results with `hard_deletes='new_record'`:
+  | id | status  |  dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
+  |----|---------|------------------|------------------|------------------|----------------|
+  | 1  | pending |  2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 | False          |
+  | 1  | shipped | 2024-01-01 11:30 | 2024-01-01 11:40 | 2024-01-01 11:30 | False          |
+  | 1  | deleted |  2024-01-01 11:40 |                  | 2024-01-01 11:40 | True           |
 
-| id | status  |  dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
-|----|---------|------------------|------------------|------------------|----------------|
-| 1  | pending |  2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 | False          |
-| 1  | shipped | 2024-01-01 11:30 | 2024-01-01 11:40 | 2024-01-01 11:30 | False          |
-| 1  | deleted |  2024-01-01 11:40 |                  | 2024-01-01 11:40 | True           |
-
-</details>
+  </Expandable>
 
 ## Configure snapshots in versions 1.8 and earlier
 
