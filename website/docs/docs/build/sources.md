@@ -193,7 +193,7 @@ The results of this query are used to determine whether the source is fresh or n
 
 ### Build models based on source freshness
 
-dbt has a feature to [check the freshness](https://docs.getdbt.com/docs/build/sources#declaring-source-freshness) (how up to date) of a specific source. This functionality is specifically designed for sources and does not apply to models.
+dbt has a feature to [check the freshness](/docs/build/sources#declaring-source-freshness) (how up to date) of a specific source. This functionality is specifically designed for sources and does not apply to models.
 
 Neither `dbt source freshness` nor `dbt test` will perform any freshness checking of models. This is intentional because, in a typical dbt project, raw data usually comes in as sources. Your models then transform this data by selecting from those sources. If your source data is fresh, there's generally no need to perform freshness checks on your models as well.
 
