@@ -753,8 +753,8 @@ const sidebarSettings = {
           },
           items: [
             "docs/cloud-integrations/active-and-auto-exposures",
-            "docs/cloud-integrations/active-exposures",
             "docs/cloud-integrations/auto-exposures",
+            "docs/cloud-integrations/active-exposures",
           ],
         },
         {
