@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/docs/cloud-integrations/configure-auto-exposures",
+      "destination": "/docs/cloud-integrations/active-and-auto-exposures",
+      "permanent": true
+    },
+    {
       "source": "/faqs/API/rotate-token",
       "destination": "/docs/dbt-cloud-apis/service-tokens#service-token-update",
       "permanent": true

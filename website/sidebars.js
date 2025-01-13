@@ -538,7 +538,7 @@ const sidebarSettings = {
                 id: "docs/collaborate/auto-exposures",
               },
               items: [
-                "docs/collaborate/auto-exposures",
+                "docs/collaborate/about-auto-exposures",
                 "docs/collaborate/data-tile",
                 "docs/collaborate/model-query-history",
               ],
@@ -743,7 +743,19 @@ const sidebarSettings = {
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
-        "docs/cloud-integrations/configure-auto-exposures",
+        {
+          type: "category",
+          label: "Active and auto exposures",
+          link: {
+            type: "doc",
+            id: "docs/cloud-integrations/active-and-auto-exposures",
+          },
+          items: [
+            "docs/cloud-integrations/active-and-auto-exposures",
+            "docs/cloud-integrations/active-exposures",
+            "docs/cloud-integrations/auto-exposures",
+          ],
+        },
         {
           type: "category",
           label: "Snowflake Native App",

@@ -13,9 +13,9 @@ Many data applications integrate with dbt Cloud, enabling you to leverage the po
 <div className="grid--3-col">
 
 <Card
-    title="Configure auto-exposures"
-    body="Import and auto-generate exposures from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
-    link="/docs/cloud-integrations/configure-auto-exposures"
+    title="Auto and active exposures"
+    body="Import and auto-generate exposures from dashboards and understand how models are used in downstream tools and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs."
+    link="docs/cloud-integrations/active-and-auto-exposures"
     icon="dbt-bit"/>
 
 <Card
