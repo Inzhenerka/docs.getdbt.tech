@@ -18,9 +18,7 @@ You can also use [source freshness](/docs/deploy/source-freshness) commands help
 
 You can configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
 
-import SourcefreshnessTable from '/snippets/_selecting_source_freshness.md';
-
-<SourcefreshnessTable />
+<Lightbox src="/img/docs/dbt-cloud/select-source-freshness.png" title="Selecting source freshness"/>
 
 ### Specifying sources to snapshot
 
