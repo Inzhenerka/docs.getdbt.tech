@@ -15,7 +15,17 @@ Auto exposures help data teams optimize their efficiency and ensure data quality
 - Importing and auto-generating exposures based on Tableau dashboards, with user-defined curation.
 - Enabling [active exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, improving timeliness and reducing costs. 
   - Active exposures is essentially a way to ensure that your Tableau extracts are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments)
-  - For more info on the differences between auto-exposures and active exposures, see [Auto exposures and active exposures](#auto-exposures-and-active-exposures).
+  - For more info on the differences between auto-exposures and active exposures, see the next section, [What's the difference between auto exposures and active exposures?](#whats-the-difference-between-auto-exposures-and-active-exposures).
+
+<Expandable alt_header="What's the difference between auto exposures and active exposures?">
+
+| Feature | Auto exposures | Active exposures <Lifecycle status="beta"/> |
+| ---- | ---- | ---- |
+| Purpose | Automatically brings downstream assets (like Tableau workbooks) into your dbt lineage. | Proactively refreshes the underlying data sources (like Tableau extracts) during scheduled dbt jobs. |
+| Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
+| Location  | Exposed in [dbt Explorer](/docs/collaborate/explore-projects) | Exposed in [dbt Cloud scheduler](/docs/deploy/deployments) |
+| Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
+</Expandable>
 
 :::info Tableau Server
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
@@ -87,15 +97,6 @@ dbt Cloud imports everything in the collection(s) and you can continue to [view 
 import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 <ViewExposures/>
-
-## Auto exposures and active exposures
-
-| Feature | Auto-exposures | Active exposures <Lifecycle status="beta"/> |
-| ---- | ---- | ---- |
-| Purpose | Automatically brings downstream assets (like Tableau workbooks) into your dbt lineage. | Proactively refreshes the underlying data sources (like Tableau extracts) during scheduled dbt jobs. |
-| Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
-| Location  | dbt Explorer | dbt Cloud scheduler |
-| Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
 
 ## Active exposures <Lifecycle status="beta"/>
 

@@ -10,10 +10,11 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 
 With active exposures, you can now use dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
-- Active exposures integrate with auto exposures and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+- Active exposures integrate with [auto exposures](/docs/cloud-integrations/auto-exposures) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+  - Auto exposures is a way to automatically bring downstream assets (like Tableau workbooks) into your [dbt Explorer lineage](/docs/collaborate/explore-projects).
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
-What's the difference between auto-exposures and active exposures?
+<Expandable alt_header="What's the difference between auto exposures and active exposures?">
 
 | Feature | Auto exposures | Active exposures <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
@@ -22,7 +23,9 @@ What's the difference between auto-exposures and active exposures?
 | Location  | Exposed in [dbt Explorer](/docs/collaborate/explore-projects) | Exposed in [dbt Cloud scheduler](/docs/deploy/deployments) |
 | Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
 
-### Prerequisites
+</Expandable>
+
+## Prerequisites
 
 To enable active exposures, you should meet the following:
 
@@ -31,9 +34,6 @@ To enable active exposures, you should meet the following:
 3. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 4. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
 5. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
-6. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled. 
-   - If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
-   - Currently, you can only connect to a single Tableau site on the same server.
 
 ## Set up active exposures
 
