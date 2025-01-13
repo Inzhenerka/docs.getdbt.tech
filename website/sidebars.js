@@ -506,6 +506,7 @@ const sidebarSettings = {
             "docs/deploy/webhooks",
             "docs/deploy/artifacts",
             "docs/deploy/source-freshness",
+            "docs/deploy/active-and-auto-exposures",
           ],
         },
         "docs/deploy/deployment-tools",
@@ -535,7 +536,7 @@ const sidebarSettings = {
               label: "Model consumption",
               link: {
                 type: "doc",
-                id: "docs/collaborate/auto-exposures",
+                id: "docs/collaborate/about-auto-exposures",
               },
               items: [
                 "docs/collaborate/about-auto-exposures",
