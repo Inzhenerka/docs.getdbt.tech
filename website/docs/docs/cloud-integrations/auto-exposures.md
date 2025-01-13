@@ -16,6 +16,10 @@ Auto-exposures help data teams optimize their efficiency and ensure data quality
 - Importing and auto-generating exposures based on Tableau dashboards, with user-defined curation.
 - Enabling [active exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, improving timeliness and reducing costs. For more info on the differences between auto-exposures and active exposures, see [Auto exposures and active exposures](#auto-exposures-and-active-exposures).
 
+:::info Tableau Server
+If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
+:::
+
 ## Set up auto exposures
 
 Set up auto exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#set-up-in-dbt-cloud) to ensure that your BI tools (like Tableau) extracts are updated regularly.

@@ -17,6 +17,7 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 - Maintain high-quality code and data in production
 - Gain visibility into the [health](/docs/collaborate/data-tile) of deployment jobs, models, and tests
 - Uses [exports](/docs/use-dbt-semantic-layer/exports) to write [saved queries](/docs/build/saved-queries) in your data platform for reliable and fast metric reporting
+- Use [Auto-exposures](/docs/cloud-integrations/auto-exposures) and [active exposures](/docs/cloud-integrations/active-exposures) to understand how models are used in downstream tools and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs.
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
 
