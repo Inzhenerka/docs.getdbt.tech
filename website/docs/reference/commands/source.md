@@ -95,6 +95,6 @@ Some of the typical commands you can use are:
 
 | **Command**                                                                 | **Description**                  | 
 | ----------------------------------------------------------------------------| ---------------------------------|
-|[`source_status`](/reference/node-selection/methods#the-source_status-method)|dbt generates the [`sources.json`](/reference/artifacts/sources-json) artifact, which includes execution times and [`max_loaded_at`](/reference/artifacts/sources-json#top-level-keys) timestamps for dbt sources.|
+|[`source_status`](/reference/node-selection/methods#source_status) | dbt generates the [`sources.json`](/reference/artifacts/sources-json) artifact, which includes execution times and [`max_loaded_at`](/reference/artifacts/sources-json#top-level-keys) timestamps for dbt sources.|
 |[`state:modified`](/reference/node-selection/methods#state)                  |Used to select nodes by comparing them to a previous version of the same project, represented by a [manifest](/reference/artifacts/manifest-json).|
 |[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |If your dbt project includes configured sources, the dbt source freshness command will query all your defined source tables to determine their "freshness."|
