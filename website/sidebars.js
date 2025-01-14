@@ -979,6 +979,7 @@ const sidebarSettings = {
           items: [
             "reference/snapshot-properties",
             "reference/snapshot-configs",
+            "reference/resource-configs/snapshots-jinja-legacy",
             "reference/resource-configs/check_cols",
             "reference/resource-configs/dbt_valid_to_current",
             "reference/resource-configs/hard-deletes",
@@ -989,7 +990,6 @@ const sidebarSettings = {
             "reference/resource-configs/target_database",
             "reference/resource-configs/target_schema",
             "reference/resource-configs/updated_at",
-            "reference/resource-configs/snapshots-jinja-legacy",
           ],
         },
         {

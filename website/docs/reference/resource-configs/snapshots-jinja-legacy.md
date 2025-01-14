@@ -4,13 +4,97 @@ description: Read about legacy snapshot jinja blocks and how to migrate to the u
 sidebar: Legacy snapshot jinja block
 ---
 
-For dbt versions 1.8 and earlier, you were able to configure snapshots using jinja blocks in your .sql files. Configuring snapshots using jinja blocks is considered legacy syntax and was replaced with a YAML-based configuration in dbt Cloud Versionless and dbt v1.9 for faster and more efficient management.
+From dbt versions 1.8 and earlier, you were able to configure snapshots using jinja blocks in your `.sql` files. Configuring snapshots this way is considered legacy syntax. It was replaced with a YAML-based configuration in [dbt Cloud's "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 for faster and more efficient management. 
 
-This page details how to use those legacy configurations and provides a path to migrate to the more efficient YAML configuration introduced in dbt Cloud Versionless and dbt v1.9.
+This page details how to use the legacy SQL-based configurations and provides a path to migrate to the more efficient YAML configuration. For new snapshots, we recommend using these latest YAML-based configs. If applying them to existing snapshots, you'll need to [migrate over](/reference/snapshot-configs#snapshot-configuration-migration).
 
-## Snapshot configuration
+The following table outlines the differences between the legacy SQL-based syntax and the updated YAML-based syntax.
 
-Although there's a more performant method, you may still want to use the legacy way to define your snapshots if it suits your needs. This page will list out the types of jinja blocks suitable for snapshots and how to migrate from the legacy way to the updated method:
+| Snapshot syntax | Description |  Example |
+| --------------- | ----------- |  ------- |
+| [SQL-based](#sql-based-snapshot-syntax) | Legacy syntax for defining snapshots in `.sql` files within a snapshot jinja block. Available in dbt v1.8 and earlier. <!-- Found in `snapshots` directory.<br /><br /> - Avoid defining multiple resources in one file to improve performance. <br /> - Suitable for legacy snapshots.<br /> - Useful for very light transformations, however creating a separate ephemeral model for transformations is best practice and more maintainable.  --> |`{% snapshot orders_snapshot %}` in a `.sql` file using `{{ config() }}` |
+| [YAML-based](#yaml-based-snapshot-syntax) | Updated syntax for defining snapshot configurations in YAML files. Found in `snapshots.yml`. Available in dbt Cloud's "Latest" release track and dbt v1.9 and later.<!-- <br /><br /> - More performant and easier to manage.<br /> - Useful for new snapshots or existing snapshots that need to be migrated.<br /> - Use an ephemeral model for transformations and reference with `relation` field. --> |`snapshots.yml`|
+
+### SQL-based snapshot syntax
+Legacy syntax for defining snapshots in `.sql` files within a snapshot Jinja block, typically located in your `snapshots` directory.
+
+#### Use cases
+
+- Defining multiple resources in a single file, though it can significantly slow down parsing and compilation.
+- Useful for existing snapshots already using this syntax.
+- Suitable for performing very light transformations (but creating a separate ephemeral model for transformations is recommended for better maintainability).
+
+#### Example
+
+In this example, we created a snapshot in the `snapshots` directory and used the `{{ config() }}` block within the jinja block to define the snapshot configuration.
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{{ config(
+    target_database='analytics',
+    target_schema='snapshots',
+    unique_key='id',
+    strategy='timestamp',
+    updated_at='updated_at'
+) }}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+</File>
+
+### YAML-based snapshot syntax
+Updated syntax for defining snapshot configurations in YAML files.
+
+#### Use cases
+
+- More performant and easier to manage.
+- Ideal for new snapshots or existing snapshots that need to be [migrated](/reference/snapshot-configs#snapshot-configuration-migration).
+- Create transformations separate from the snapshot file by creating an ephemeral model and referencing it in the snapshot using the `relation` field.
+
+#### Example
+
+In this example, we created a snapshot in the `snapshots` directory (and separately an ephemeral model in the `models` directory). We then used the [`ref` function](/reference/dbt-jinja-functions/ref) to reference the ephemeral model in the `snapshots.yml` file in the `relation` field.
+
+<File name='snapshots.yml'>
+
+```yaml
+snapshots:
+ - name: orders_snapshot
+   relation: ref('orders_ephemeral')
+   config:
+     unique_key: id
+     strategy: timestamp
+     updated_at: updated_at
+```
+</File>
+
+In this second example, we used the `relation` field to reference the source table using the [`source` function](/reference/dbt-jinja-functions/source).
+
+<File name="snapshot/orders_snapshot.yaml">
+
+```yaml
+snapshots:
+  - name: orders_snapshot
+    relation: source('jaffle_shop', 'orders')
+    config:
+      schema: snapshots
+      database: analytics
+      unique_key: id
+      strategy: timestamp
+      updated_at: updated_at
+      dbt_valid_to_current: "to_date('9999-12-31')"
+
+```
+</File>
+
+## Legacy snapshot configuration
+
+Although there's a more performant method, you may still want to use the legacy way to define your snapshots if it suits your needs. This page will list out the types of configurations suitable for snapshots and how to migrate from the legacy way to the updated method:
 
 - List out each header so there's a high-level overview of what's covered
 
@@ -55,26 +139,6 @@ Use general configurations for broader operational settings applicable across mu
 ) }}
 ```
 
-#### Apply configurations to one snapshot only
-Use config blocks if you need to apply a configuration to one snapshot only.
-
-<File name='snapshots/postgres_app/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-    {{
-        config(
-          unique_key='id',
-          strategy='timestamp',
-          updated_at='updated_at'
-        )
-    }}
-    -- Pro-Tip: Use sources in snapshots!
-    select * from {{ source('jaffle_shop', 'orders') }}
-{% endsnapshot %}
-```
-</File>
-
 ## Snapshot strategies
 Snapshot "strategies" define how dbt knows if a row has changed. There are two strategies built-in to dbt that require the `strategy` parameter:
 
@@ -104,7 +168,6 @@ select ...
 
 {% endsnapshot %}
 ```
-
 
 ### Timestamp
 The timestamp strategy uses an `updated_at` field to determine if a row has changed. If the configured `updated_at` column for a row is more recent than the last time the snapshot ran, then dbt will invalidate the old record and record the new one. If the timestamps are unchanged, then dbt will not take any action.
@@ -202,7 +265,31 @@ The check strategy is useful for tables which do not have a reliable `updated_at
 </File>
 </Expandable>
 
-## updated_at
+## Examples
+
+This section outlines some examples of how to apply configurations to snapshots using the legacy method.
+
+### Apply configurations to one snapshot only
+Use config blocks if you need to apply a configuration to one snapshot only.
+
+<File name='snapshots/postgres_app/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+    {{
+        config(
+          unique_key='id',
+          strategy='timestamp',
+          updated_at='updated_at'
+        )
+    }}
+    -- Pro-Tip: Use sources in snapshots!
+    select * from {{ source('jaffle_shop', 'orders') }}
+{% endsnapshot %}
+```
+</File>
+
+### Using the updated_at parameter
 
 The `updated_at` parameter is required if using the timestamp strategy. The `updated_at` parameter is a column within the results of your snapshot query that represents when the record row was last updated.
 
@@ -216,65 +303,61 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
 ```
 </File>
 
+- #### Using a column name `updated_at`:
+  <File name='snapshots/orders.sql'>
 
-#### Examples
-<Expandable alt_header="Use a column name updated_at">
+  ```sql
+  {% snapshot orders_snapshot %}
 
-<File name='snapshots/orders.sql'>
+  {{
+      config(
+        target_schema='snapshots',
+        unique_key='id',
 
-```sql
-{% snapshot orders_snapshot %}
+        strategy='timestamp',
+        updated_at='updated_at'
+      )
+  }}
 
-{{
-    config(
-      target_schema='snapshots',
-      unique_key='id',
+  select * from {{ source('jaffle_shop', 'orders') }}
 
-      strategy='timestamp',
-      updated_at='updated_at'
-    )
-}}
+  {% endsnapshot %}
+  ```
+  </File>
 
-select * from {{ source('jaffle_shop', 'orders') }}
+- #### Coalescing two columns to create a reliable `updated_at` column:
+  
+  Consider a data source that only has an `updated_at` column filled in when a record is updated (so a `null` value indicates that the record hasn't been updated after it was created).
+  
+  Since the `updated_at` configuration only takes a column name, rather than an expression, you should update your snapshot query to include the coalesced column.
 
-{% endsnapshot %}
-```
-</File>
-</Expandable>
+  <File name='snapshots/orders.sql'>
 
-<Expandable alt_header="Coalesce two columns to create a reliable updated_at column">
-Consider a data source that only has an updated_at column filled in when a record is updated (so a null value indicates that the record hasn't been updated after it was created).
+  ```sql
+  {% snapshot orders_snapshot %}
 
-Since the updated_at configuration only takes a column name, rather than an expression, you should update your snapshot query to include the coalesced column.
+  {{
+      config(
+        target_schema='snapshots',
+        unique_key='id',
 
-<File name='snapshots/orders.sql'>
+        strategy='timestamp',
+        updated_at='updated_at_for_snapshot'
+      )
+  }}
 
-```sql
-{% snapshot orders_snapshot %}
+  select
+      *,
+      coalesce(updated_at, created_at) as updated_at_for_snapshot
 
-{{
-    config(
-      target_schema='snapshots',
-      unique_key='id',
+  from {{ source('jaffle_shop', 'orders') }}
 
-      strategy='timestamp',
-      updated_at='updated_at_for_snapshot'
-    )
-}}
+  {% endsnapshot %}
+  ```
+  </File>
 
-select
-    *,
-    coalesce(updated_at, created_at) as updated_at_for_snapshot
-
-from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-</File>
-</Expandable>
-
-## unique_key
-A column name or expression that is unique for the inputs of a snapshot. dbt uses [`unique_key`](/reference/resource-configs/unique_key) to match records between a result set and an existing snapshot, so that changes can be captured correctly.
+### Using the unique_key parameter
+The `unique_key` is a column name or expression that is unique for the inputs of a snapshot. dbt uses [`unique_key`](/reference/resource-configs/unique_key) to match records between a result set and an existing snapshot, so that changes can be captured correctly.
 
 <File name='snapshots/orders.sql'>
 
@@ -287,122 +370,75 @@ A column name or expression that is unique for the inputs of a snapshot. dbt use
 
 #### Examples
 
-<Expandable alt_header="Use an id column as a unique key">
+- Using an `id` column as a unique key
 
-<File name='snapshots/orders.sql'>
+  <File name='snapshots/orders.sql'>
 
-```sql
-{{
-    config(
-      unique_key="id"
-    )
-}}
-```
-</File>
-</Expandable>
+  ```sql
+  {{
+      config(
+        unique_key="id"
+      )
+  }}
+  ```
+  </File>
 
-You can also write this in yaml. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a config block, as above).
+  You can also write this in YAML. This might be a good idea if multiple snapshots share the same `unique_key` (though we prefer to apply this configuration in a config block, as above).
 
+- #### Using a combination of two columns as a unique key
 
-<Expandable alt_header="Use a combination of two columns as a unique key">
+  This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (e.g. '-') to ensure uniqueness.
 
-This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (e.g. '-') to ensure uniqueness.
+  <File name='snapshots/transaction_items_snapshot.sql'>
 
-<File name='snapshots/transaction_items_snapshot.sql'>
+  ```sql
+  {% snapshot transaction_items_snapshot %}
 
-```sql
-{% snapshot transaction_items_snapshot %}
+      {{
+          config(
+            unique_key="transaction_id||'-'||line_item_id",
+            ...
+          )
+      }}
 
-    {{
-        config(
-          unique_key="transaction_id||'-'||line_item_id",
-          ...
-        )
-    }}
+  select
+      transaction_id||'-'||line_item_id as id,
+      *
+  from {{ source('erp', 'transactions') }}
 
-select
-    transaction_id||'-'||line_item_id as id,
-    *
-from {{ source('erp', 'transactions') }}
+  {% endsnapshot %}
+  ```
 
-{% endsnapshot %}
-```
-</File>
+  </File>
 
-Though, it's probably a better idea to construct this column in your query and use that as the `unique_key`:
+  Though, it's probably a better idea to construct this column in your query and use that as the `unique_key`:
 
-<File name='snapshots/transaction_items_snapshot.sql'>
+    <File name='snapshots/transaction_items_snapshot.sql'>
 
-```sql
-{% snapshot transaction_items_snapshot %}
+    ```sql
+    {% snapshot transaction_items_snapshot %}
 
-    {{
-        config(
-          unique_key="id",
-          ...
-        )
-    }}
+        {{
+            config(
+              unique_key="id",
+              ...
+            )
+        }}
 
-select
-    transaction_id || '-' || line_item_id as id,
-    *
-from {{ source('erp', 'transactions') }}
+    select
+        transaction_id || '-' || line_item_id as id,
+        *
+    from {{ source('erp', 'transactions') }}
 
-{% endsnapshot %}
-```
-</File>
-</Expandable>
+    {% endsnapshot %}
+    ```
+    </File>
 
-## invalidate_hard_deletes
-
-Opt-in feature to enable invalidating hard deleted records while snapshotting the query.
-
-By default the feature is disabled.
-
-<File name='snapshots/orders.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-    {{
-        config(
-          target_schema='snapshots',
-          strategy='timestamp',
-          unique_key='id',
-          updated_at='updated_at',
-          invalidate_hard_deletes=True,
-        )
-    }}
-
-    select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-</File>
-
-## Pre hook and post hook
-A SQL statement (or list of SQL statements) to be run before or after a model, seed, or snapshot is built.
-
-Pre- and post-hooks can also call macros that return SQL statements. 
-
-In this example, we use the | symbol to separate two different formatting options for SQL statements in pre-hooks and post-hooks. The first option (without brackets) accepts a single SQL statement as a string, while the second (with brackets) accepts multiple SQL statements as an array of strings. Replace SQL-STATEMENT with your SQL.
-
-```sql
-{% snapshot snapshot_name %}
-{{ config(
-    pre_hook="SQL-statement" | ["SQL-statement"],
-    post_hook="SQL-statement" | ["SQL-statement"],
-) }}
-
-select ...
-
-{% end_snapshot %}
-```
 ## Migrate from legacy to update
 
 This page outlines the steps you need to follow to convert legacy jinja block snapshot configurations into the updaetd YAML-based configuration format.
 
-### Why use the updated YAML spec?
+Why use the updated YAML spec?
 
 - Performance: YAML-based configurations are processed faster by dbt, leading to improved performance, especially during parsing and compilation.
 - Maintainability: Centralizing configuration in YAML makes it easier to manage and update snapshot settings without editing the SQL logic directly.
@@ -413,58 +449,68 @@ Note: In versions prior to v1.9, the target_schema (required) and target_databas
 
 ### How to migrate
 
-1. Move any configurations currently written within the jinja block (like unique_key, strategy, updated_at, and so on) into the YAML file. The configurations are structured similarly to how you would define a model in dbt_project.yml. 
+1. Move any configurations currently written within the jinja block (like unique_key, strategy, updated_at, and so on) into the YAML file.
+   
+   The configurations are structured similarly to how you would define a model in `dbt_project.yml.` 
 
-Here's an example conversion:
+    Here's an example conversion:
 
-```yaml
-# snapshots.yml
-snapshots:
-  - name: orders_snapshot
-    schema: snapshots
-    unique_key: id
-    strategy: timestamp
-    updated_at: updated_at
- ```
-Note: The unique_key, strategy, and updated_at fields must match the settings previously defined in your jinja block.
+    <File name='snapshots.yml'>
+      ```yaml
+      snapshots:
+        - name: orders_snapshot
+          schema: snapshots
+          unique_key: id
+          strategy: timestamp
+          updated_at: updated_at
+      ```
+      </File>
+
+Note: The `unique_key`, strategy, and `updated_at` fields must match the settings previously defined in your jinja block.
 
 2. Before removing the old jinja block, run the dbt snapshot command using the new YAML configuration to confirm that the snapshot behaves as expected.
-	- Verify that the data is processed correctly (e.g., no data loss or incorrect records).
+	- Verify that the data is processed correctly (for example,no data loss or incorrect records).
 	- Make surethe performance is either the same or improved compared to the old configuration.
 	- After running the new snapshot, inspect the snapshot tables in your data warehouse to confirm the new snapshot records match the old data. 
 
-3. Once you’ve confirmed that the new YAML configuration works properly, safely remove the old snapshot jinja block from your .sql file. This keeps your codebase clean and fully migrated to the new method.
+3. Once you’ve confirmed that the new YAML configuration works properly, safely remove the old snapshot jinja block from your `.sql` file. This keeps your codebase clean and fully migrated to the new method.
 
 4. If your snapshots require more complex transformations, consider using an ephemeral model to handle the transformations before referencing it in the snapshot. An ephemeral model can encapsulate transformations and simplify the snapshot query itself.
 
-Example of using an ephemeral model:
+    Example of using an ephemeral model:
 
-```
-yaml
-# models/ephemeral/orders_ephemeral.sql
-{{
-  config(materialized='ephemeral')
-}}
-select * from {{ source('jaffle_shop', 'orders') }}
+    <File name='models/ephemeral/orders_ephemeral.sql'>
 
-# snapshots.yml
-snapshots:
-  - name: orders_snapshot
-    relation: ref('orders_ephemeral')
-    target_schema: snapshots
-    unique_key: id
-    strategy: timestamp
-    updated_at: updated_at
- ```
+    ```sql
+    {{
+      config(materialized='ephemeral')
+    }}
+    select * from {{ source('jaffle_shop', 'orders') }}
+    ```
+    </File>
+
+    Example of the snapshot YAML configuration referencing the ephemeral model:
+
+    <File name='snapshots.yml'>
+
+    ```yaml
+    snapshots:
+      - name: orders_snapshot
+        relation: ref('orders_ephemeral')
+        target_schema: snapshots
+        unique_key: id
+        strategy: timestamp
+        updated_at: updated_at
+    ```
+    </File>
  
-## Full migration example
+### Full migration example
 Here’s a complete example of migrating from a legacy jinja block snapshot to a YAML-based snapshot configuration:
 
-```yaml
+#### Legacy method (jinja block)
+<File name='snapshots/orders_snapshot.sql'>
 
-# Legacy method (jinja block)
-
-snapshots/orders_snapshot.sql
+```sql
 {% snapshot orders_snapshot %}
 {{
     config(
@@ -476,16 +522,21 @@ snapshots/orders_snapshot.sql
 }}
 select * from {{ source('jaffle_shop', 'orders') }}
 {% endsnapshot %}
+```
+ </File>
 
-# New method (YAML configuration)
+#### Recommended method (YAML configuration)
 
-snapshots.yml
+<File name='snapshots.yml'>
+
+```yaml
 snapshots:
   - name: orders_snapshot
     schema: snapshots
     unique_key: id
     strategy: timestamp
     updated_at: updated_at
- ```
- 
+  ```
+ </File>
+
 By following these steps, you can smoothly transition from legacy jinja-based snapshots to the modern, more efficient YAML-based configurations.
