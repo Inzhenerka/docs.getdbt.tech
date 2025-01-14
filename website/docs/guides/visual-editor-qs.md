@@ -14,11 +14,11 @@ recently_updated: true
 
 :::note beta feature
 
-The Visual Editor is currently in a limited beta. [Contact us](https://www.getdbt.com/contact/) if you're interested in becoming a part of it. Features currently in the beta are subject to change or removal.
+The Visual Editor is currently in a limited beta. [Contact us](https://www.getdbt.com/contact/) if you're interested in joining it. Features currently in the beta are subject to change or removal.
 
 :::
 
-The dbt Cloud Visual Editor offers a quick and simple way for anyone to build models for analytics, no background in analytics engineering required! In this guide, you will learn about:
+The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering required! In this guide, you will learn about:
 
 - Accessing the Visual Editor and creating a new model
 - How to navigate the interface
@@ -39,7 +39,7 @@ To use the Visual Editor, you must meet the following prerequisites:
 
 :::note
 
-The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your own data, but the Jaffle Shop offers a full-featured project that's useful for testing dbt features. Ask your dbt Cloud administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project before you begin, or you will not be able to reference the source models.
+The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your data, but the Jaffle Shop offers a full-featured project useful for testing dbt features. Ask your dbt Cloud administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project before you begin, or you will be unable to reference the source models.
 
 :::
 
@@ -47,7 +47,7 @@ The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaf
 
 To access the Visual Editor:
 
-1. From the **main menu**, click **Develop**. If you do not see the **Develop** option, ensure you have selected a **Project** from the menu.
+1. Click **Develop** from the main menu. If you do not see the **Develop** option, ensure you have selected a **Project** from the menu.
 2. Click **Visual Editor**.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-main-menu.png" width="90%" title="Visual Editor in the main menu."/>
@@ -58,14 +58,14 @@ To access the Visual Editor:
 
 ## Navigating the interface
 
-The Visual editor is comprised of a series of menus activated by clicking icons that surround the border of the larger canvas. With none of the menu items activated, the workspace looks like this:
+The Visual editor comprises a series of menus activated by clicking icons surrounding the border of the larger canvas. With none of the menu items activated, the workspace looks like this:
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-screen.png" width="90%" title="The Visual Editor canvas. The number items are defined in this section." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-screen.png" width="90%" title="The Visual Editor canvas. The number of items is defined in this section." />
 
-Click on an icon to expand it's section or execute an action depending on it's purpose. The options are as follows:
+Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
 
-1. The model's title. This defaults to "Untitled" but can be edited at any time by clicking on it.
-2. The **Operators** menu that contains the building blocks of [creating a model](#create-a-model) with the editor. 
+1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
+2. The **Operators** menu contains the building blocks of [creating a model](#create-a-model) with the editor. 
 3. The **SQL code** area that displays the [SQL that compiles your model](#sql-code).
 4. The **Runs and previews** that displays [run data and previews data](#runs-and-previews) for individual operators.
 5. The **Commit history** display.
@@ -73,37 +73,37 @@ Click on an icon to expand it's section or execute an action depending on it's p
 7. The navigation tab that has icons for (from top to bottom):
     - Zoom in
     - Zoom out
-    - Center the model to fit to screen
+    - Center the model to fit the screen
     - Auto-layout option for the individual operator tiles
 8. The **Run** command executes `dbt run` for the model.
-9. This button is initially, a **Commit** command for your integrated Git provider. Changes to "Open pull request" once changes are committed. This will not appear until a change is made that would require a commit. 
+9. This button is, initially, a **Commit** command for your integrated Git provider. Changes will be made to "Open pull request" once changes are committed. This will not appear until a change is made requiring a commit. 
 
 ## Create a model
 
-This section will walk you through creating a model with operators using sample data from the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) project. With this guide, you will create a basic model that transforms two datasets to build a view repeat customer purchases while you consider a loyalty program for your shop. 
+This section will walk you through creating a model with operators using sample data from the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) project. With this guide, you will create a basic model that transforms two datasets to build a view of repeat customer purchases while you consider a loyalty program for your shop. 
 
 The operators are the heart of your model. They determine what data will be transformed and how. Click the **+** icon to open the operator menu.
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/operators.png" width="90%" title="The operators menu on the side of the Visual Editor canvas." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/operators.png" width="90%" title="The operator’s menu on the side of the Visual Editor canvas." />
 
-Read more about the [individual operators](/docs/cloud/visual-editor-interface#operators) to understand the basic purpose of each. Keep in mind that the model you're creating relies on existing models, and that the term will mostly be used to reference the model operator in this section.
+Read more about the [individual operators](/docs/cloud/visual-editor-interface#operators) to understand the basic purpose of each. Keep in mind that the model you're creating relies on existing models and that the term will primarily be used to reference the model operator in this section.
 
 ### Operator tiles
 
-The operators are drag-and-drop from their menu to the canvas and each of them will create a tile when dropped.
+The operators are drag-and-drop from their menu to the canvas, and when they are dropped they will create a tile.
 
-The tiles have the same basic setup with different fields depending on their function. All of the operators except for **Model** require they be connected to another tile before they can be configured. Once configured, they' have the same basic layout.
+The tiles have the same basic setup with different fields depending on their function. All operators except for **Model** must be connected to another tile before configuring. Once configured, they’ll have the same basic layout.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/operator-tile.png" width="90%" title="An operator tile with configurations filled out." />
 
 1. **The connectors:** Click-and-drag to the connector on another operator to link them.
 2. **The title:** Click to change. The examples in this guide will remain default. 
-3. **Play icon and menu:** Preview the data at any point in it's transofrmation by clicking the tiles play icon. The dropdown menu contains the optiont to **Delete** a tile. 
-4. **Column icon:** The number next to it represents the number of columns in the data at that point in it's transformation.
+3. **Play icon and menu:** Preview the data at any point in its transformation by clicking the tiles play icon. The dropdown menu contains the option to **Delete** a tile. 
+4. **Column icon:** The number next to it represents the number of columns in the data at that point in its transformation.
 
 :::tip
 
-Make operator tile titles unique compared to your column names to avoid confusion. Same for any aliases you create.
+Make operator tile titles unique compared to your column names to avoid confusion, and the same applies to any aliases you create.
 
 :::
 
@@ -123,21 +123,21 @@ You now have your first data source!
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/two-model-operators.png" width="90%" title="Two model operators in te canvas."/>
 
-Now you have two source data models and are ready to start transforming the data!
+Now, you have two source data models and are ready to transform the data!
 
 :::tip
 
-Don't see a source model you're looking for? Ask your dbt admins to ensure it's been recently run and that it hasn't gone stale.
+Don't see a source model you're looking for? Ask your dbt admins to ensure it's been run recently and hasn't gone stale.
 
 :::
 
 ### Create a join
 
-1. From the **Operators** menu, drag the **Join** operator on to the canvas to the right of the source models. 
+1. From the **Operators** menu, drag the **Join** operator onto the canvas to the right of the source models. 
     
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/join-not-connected.png" width="90%" title="A join that has not been connected to the models" />
 
-2. Click-and-drag a line from the **+** connector below the `L` on the join border to the **+** on the `stg_orders` model. Do the same for the `R` connector to the `stg_order_items` model.
+2. Click and drag a line from the **+** connector below the `L` on the join border to the **+** on the `stg_orders` model. Do the same for the `R` connector to the `stg_order_items` model.
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/join-connected.png" width="90%" title="The join is connected to two model operators." />
 
@@ -161,11 +161,11 @@ Your work in the Visual Editor is automatically saved as you progress, so if you
 
 ## Enhance your model
 
-You've got the basics going with your Visual Editor model! It has succesfully joined two source models, but you need to futher transform the data to get what you need. A list of customers who buy a lot of repeat items as you consider a loyalty club rewards program.
+You've got the basics going with your Visual Editor model! It has successfully joined two source models, but you need to further transform the data to get what you need. A list of customers who buy repeat items as you consider a loyalty club rewards program.
 
 ### Aggregate data
 
-There are multiple options for transforming your data including custom formulas, filters, and unions. Keep it simple for no and add an aggregation operator to tell you which of your customers are buying the most repeat products.
+Multiple options for transforming your data include custom formulas, filters, and unions. Keep it simple and add an aggregation operator to tell you which customers buy the most repeat products.
 
 1. Drag the **Aggregation** operator over to the right of the join.
 2. Connect the aggregation operator to the join operator. 
@@ -178,17 +178,17 @@ There are multiple options for transforming your data including custom formulas,
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/aggregation.png" width="90%" title="The configured aggregation operator tile." />
 
-6. Press the **Play icon** and preview the data. You're starting to see the results you're looking for, but the data is scattered. Let's clean it up a bit further.
+6. Click the **Play icon** to preview the data. You're starting to see the results you're looking for, but the data is scattered. Let's clean it up a bit more.
 
 :::tip
 
-As your model growns, you can zoom in and out to view what you need. Click and hold in empty canvas space to drag your setup across the screen. Click the **Fit view** icon to see your entire model on the screen. Click the **Auto layout** icon to auto arrange the tiles efficiently. 
+As your model grows, you can zoom in and out to view your needs. Click and hold in empty canvas space to drag your setup across the screen. Click the **Fit view** icon to see your entire model on the screen. Click the **Auto layout** icon to auto-arrange the tiles efficiently. 
 
 :::
 
 ### Add some order
 
-There's a lot of data there. Dozens of customers buying hundreds of products. You're going to sort it so the customers are listed ascending by CUSTOMER_ID number with the products they've bought the most listed in descending order. 
+There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
 
 1. Drag the **Order** operator over to the right of the **Aggregation** tile and connec them.
 2. Click **Configure order**.
@@ -200,7 +200,7 @@ There's a lot of data there. Dozens of customers buying hundreds of products. Yo
 
 :::tip
 
-Want to practice on your own? Try adding a **Filter** operator that removes any items with less than 10 sales for any given customer ID. Be sure to run the preview and verify the data is correct.
+Want to practice on your own? Try adding a **Filter** operator that removes items with less than 10 sales for any customer ID. Be sure to run the preview and verify the data is correct.
 
 :::
 
@@ -210,7 +210,7 @@ Now that you've built a model that results in the data you want, it's time to ru
 
 ### Run
 
-To run your model, all you need to do is click the big **Run** button. With the Visual Editor, there is no command line and no need to memorize a list of commands, there is only **Run**. Click it and you will see the results populate in the **Runs and previews** pane.
+To run your model, you only need to click the big **Run** button. With the Visual Editor, there is no command line and no need to memorize a list of commands; there is only **Run**. Click it to see the results populate in the **Runs and previews** pane.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/run-results.png" width="90%" title="The results of a successful run in the 'Runs and previews' pane." />
 
@@ -220,7 +220,7 @@ This will [materialize](/docs/build/materializations) the data as a `view` in yo
 
 ### Git commit
 
-The models built in the Visual Editor are a part of your larger dbt project. They are stored in the `visual_editor` folder of your `/models` directory. This is all done automatically, you don't have to configure any paths or directories. 
+The models built in the Visual Editor are a part of your larger dbt project. They are stored in the `visual_editor` folder of your `/models` directory. This is all done automatically; you don't have to configure any paths or directories. 
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-model-folder.png" width="90%" title="Example of the Visual Editors model path in GitHub." />
 
@@ -228,19 +228,20 @@ However, it won't be created in your Git repo until you commit your first model.
 
 1. Click **Commit** in the top right.
     - If you've already created a commit and wish to make more, click the arrow next to **Create a pull request** to see the **Commit** option.
-2. Fill out the **Description** field with information about your model. If it's long, the pull request will be created with part of it in the title and the rest of it in the body. That's ok! You can correct it during the PR creation process. 
+2. Fill out the **Description** field with information about your model. If it's long, part of it will be included in the pull request title, and the rest will be in the body. That's okay! You can correct it during the PR creation process. 
 3. Click **Commmit**. 
-4. The **Commit** button will change to **Create a pull request**. You can add more commits, but for now click the **Create a pull request** button and you will be redirected to your Git provider in a new tab.
+4. The **Commit** button will change to **Create a pull request**. You can add more commits, but click the **Create a pull request** button for now. You will then be redirected to your Git provider in a new tab.
 
 The following examples use GitHub as the provider:
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/demo-model-github.png" width="90%" title="Example of the screen you're taken to in GitHub when you create a pull request from the Visual Editor." />
 
 5. Click **Create pull request** in the GitHub window.
-6. Fill out the **Add a title** and **Add a description** fields. If your description is split between both, copy the entire contents to the description field and give it a shorter title.
+6. Complete the **Add a title** and **Add a description** fields. If your description is split between both, copy all the contents to the description field and give it a shorter title.
 7. Click **Create pull request**.
 
-You've just submitted your first model from the Visual Editor for review. Once approved and merged, the model will be included in your organizations project and run whenever `dbt run` is executed in any environments it is in. You're now on your way to becoming an expert in data transformation!
+You've just submitted your first model from the Visual Editor for review. Once approved and merged, the model will be included in your organization’s project and run whenever `dbt run` is executed in any environment it is in. You're now on your way to becoming an expert in data transformation!
+
 
 
 
