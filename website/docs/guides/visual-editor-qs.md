@@ -18,7 +18,7 @@ The Visual Editor is currently in a limited beta. [Contact us](https://www.getdb
 
 :::
 
-The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering required! In this guide, you will learn about:
+The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering is required! In this guide, you will learn about:
 
 - Accessing the Visual Editor and creating a new model
 - How to navigate the interface
