@@ -121,7 +121,7 @@ You now have your first data source!
 
 4. Drag a new **Model** operator to the canvas below the first and repeat the previous steps, but this time set the source model to `stg_order_items`.
 
-    <Lightbox src="/img/docs/dbt-cloud/visual-editor/two-model-operators.png" width="90%" title="Two model operators in te canvas."/>
+    <Lightbox src="/img/docs/dbt-cloud/visual-editor/two-model-operators.png" width="90%" title="Two model operators in the canvas."/>
 
 Now, you have two source data models and are ready to transform the data!
 
