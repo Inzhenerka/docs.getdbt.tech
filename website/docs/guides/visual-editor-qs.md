@@ -65,7 +65,7 @@ The Visual editor comprises a series of menus activated by clicking icons surrou
 Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
 
 1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
-2. The **Operators** menu contains the building blocks of [creating a model](#create-a-model) with the editor. 
+2. The **Operators** menu contains the building blocks of creating a model with the editor. 
 3. The **SQL code** area that displays the [SQL that compiles your model](#sql-code).
 4. The **Runs and previews** that displays [run data and previews data](#runs-and-previews) for individual operators.
 5. The **Commit history** display.
