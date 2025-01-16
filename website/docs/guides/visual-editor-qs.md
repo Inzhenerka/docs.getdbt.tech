@@ -65,7 +65,7 @@ The Visual editor comprises a series of menus activated by clicking icons surrou
 Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
 
 1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
-2. The **Operators** menu contains the building blocks of creating a model with the editor. 
+2. The **Operators** toolbar contains the building blocks of creating a model with the editor. 
 3. The **SQL code** area displays the SQL that compiles your model.
 4. The **Runs and previews** that displays run data and previews data for individual operators.
 5. The **Commit history** display.
@@ -76,7 +76,7 @@ Click on an icon to expand its section or execute an action depending on its pur
     - Center the model to fit the screen
     - Auto-layout option for the individual operator tiles
 8. The **Run** command executes `dbt run` for the model.
-9. This button is initially a **Commit** command for your integrated Git provider. Changes will be made to "Open pull request" once changes are committed. This will not appear until a change is made requiring a commit. 
+9. This button is initially a **Commit** command for your integrated Git provider. It will change to "Open pull request" once your first commit is made. The button will not initially appear until you begin working in the canvas area.
 
 ## Create a model
 
@@ -107,7 +107,7 @@ Make operator tile titles unique compared to your column names to avoid confusio
 
 :::
 
-### Create your source models
+### Create your model with pre-existing data
 
 To get started:
 
@@ -117,17 +117,17 @@ To get started:
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/one-model-operator.png" width="90%" title="A single model operator." />
 
-You now have your first data source!
+You now have your first model in Visual Editor!
 
 4. Drag a new **Model** operator to the canvas below the first and repeat the previous steps, but this time set the source model to `stg_order_items`.
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/two-model-operators.png" width="90%" title="Two model operators in the canvas."/>
 
-Now, you have two source data models and are ready to transform the data!
+Now, you have two models and are ready to transform the data!
 
 :::tip
 
-Don't see a source model you're looking for? Ask your dbt admins to ensure it's been run recently and hasn't gone stale.
+Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure it's been run recently and hasn't gone stale.
 
 :::
 
@@ -161,7 +161,7 @@ Your work in the Visual Editor is automatically saved as you progress, so if you
 
 ## Enhance your model
 
-You've got the basics going with your Visual Editor model! It has successfully joined two source models, but you need to further transform the data to get what you need. A list of customers who buy repeat items as you consider a loyalty club rewards program.
+You've got the basics going with your Visual Editor model! It has successfully joined two pre-existing models, but you need to transform the data further to get what you need. A list of customers who buy repeat items as you consider a loyalty club rewards program.
 
 ### Aggregate data
 
