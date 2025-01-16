@@ -229,7 +229,7 @@ However, it won't be created in your Git repo until you commit your first model.
 1. Click **Commit** in the top right.
     - If you've already created a commit and wish to make more, click the arrow next to **Create a pull request** to see the **Commit** option.
 2. Fill out the **Description** field with information about your model. If it's long, part of it will be included in the pull request title, and the rest will be in the body. That's okay! You can correct it during the PR creation process. 
-3. Click **Commmit**. 
+3. Click **Commit**. 
 4. The **Commit** button will change to **Create a pull request**. You can add more commits, but click the **Create a pull request** button for now. You will then be redirected to your Git provider in a new tab.
 
 The following examples use GitHub as the provider:
