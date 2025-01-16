@@ -242,7 +242,11 @@ The following examples use GitHub as the provider:
 
 You've just submitted your first model from the Visual Editor for review. Once approved and merged, the model will be included in your organization’s project and run whenever `dbt run` is executed in any environment it is in. You're now on your way to becoming an expert in data transformation!
 
+:::tip
 
+Want to take your skills to the next level? Try taking the SQL output from your Visual Editor model and using it to create a model in the [IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud). 
+
+:::
 
 
 </div>
