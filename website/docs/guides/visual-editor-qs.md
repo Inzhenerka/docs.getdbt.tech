@@ -66,7 +66,7 @@ Click on an icon to expand its section or execute an action depending on its pur
 
 1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
 2. The **Operators** menu contains the building blocks of creating a model with the editor. 
-3. The **SQL code** area that displays the [SQL that compiles your model](#sql-code).
+3. The **SQL code** area displays the SQL that compiles your model.
 4. The **Runs and previews** that displays run data and previews data for individual operators.
 5. The **Commit history** display.
 6. The **Explorer** view of your model. 
