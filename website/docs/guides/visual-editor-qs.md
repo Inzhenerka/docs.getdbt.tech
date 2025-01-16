@@ -76,7 +76,7 @@ Click on an icon to expand its section or execute an action depending on its pur
     - Center the model to fit the screen
     - Auto-layout option for the individual operator tiles
 8. The **Run** command executes `dbt run` for the model.
-9. This button is, initially, a **Commit** command for your integrated Git provider. Changes will be made to "Open pull request" once changes are committed. This will not appear until a change is made requiring a commit. 
+9. This button is initially a **Commit** command for your integrated Git provider. Changes will be made to "Open pull request" once changes are committed. This will not appear until a change is made requiring a commit. 
 
 ## Create a model
 
