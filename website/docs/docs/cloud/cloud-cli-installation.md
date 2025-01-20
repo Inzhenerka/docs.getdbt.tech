@@ -326,3 +326,14 @@ If you've ran a dbt command and receive a <code>Session occupied</code> error, y
 The Cloud CLI allows only one command that writes to the data warehouse at a time. If you attempt to run multiple write commands simultaneously (for example, `dbt run` and `dbt build`), you will encounter a `stuck session` error. To resolve this, cancel the specific invocation by passing its ID to the cancel command. For more information, refer to [parallel execution](/reference/dbt-commands#parallel-execution).
 
 </DetailsToggle>
+
+## Limitations
+
+The dbt Cloud CLI does not currently support relative paths - for example:
+
+```yaml
+# repository_root/my_dbt_project_in_a_subdirectory/packages.yml
+
+packages:
+  - local: ../shared_macros
+```
