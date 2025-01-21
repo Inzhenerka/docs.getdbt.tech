@@ -8,7 +8,9 @@ sidebar: Legacy snapshot configurations
 
 From dbt versions 1.8 and earlier, you were able to configure [snapshots](/docs/build/snapshots) using jinja blocks in your `.sql` files. This is considered legacy syntax and was replaced with a [YAML-based configuration](/reference/snapshot-configs#configuring-snapshots) in [dbt Cloud's "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 for faster and more efficient management. 
 
-This page details how to use the legacy SQL-based configurations and provides a path to migrate to the more efficient YAML configuration. For new snapshots, we recommend using these latest YAML-based configs. If applying them to existing snapshots, you'll need to [migrate over](/reference/snapshot-configs#snapshot-configuration-migration).
+However, there are situations where you might still need to use the legacy syntax for snapshots in any dbt version or release track. This page details how you can use the legacy SQL-based configurations and provides a path to migrate to the more efficient YAML configuration. 
+
+For new snapshots, we recommend using these latest YAML-based configs. If applying them to existing snapshots, you'll need to [migrate over](/reference/snapshot-configs#snapshot-configuration-migration).
 
 The following outlines the differences between the legacy SQL-based syntax and the updated YAML-based syntax:
 

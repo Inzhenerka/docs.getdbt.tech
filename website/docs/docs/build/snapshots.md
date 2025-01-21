@@ -40,7 +40,7 @@ This order is now in the "shipped" state, but we've lost the information about w
 In dbt versions 1.8 and earlier, snapshots are `select` statements, defined within a snapshot block in a `.sql` file (typically in your `snapshots` directory or any other directory). This is considered a legacy syntax that allows for defining multiple resources in a single file and can slow down parsing and compilation. You'll also need to configure your snapshot to tell dbt how to detect record changes.
 
 - For more information about configuring snapshots in dbt versions 1.8 and earlier, examples, and [migration steps](/reference/resource-configs/snapshots-jinja-legacy#migrate-legacy-snapshot-configs) &mdash; refer to the [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy) page. 
-- For faster and more efficient management, consider [choosing the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or the [latest version of dbt Core](/docs/dbt-versions/core), which introduces an updated snapshot configuration syntax that optimizes performance.
+- For faster and more efficient management, consider [choosing the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or the [latest version of dbt Core](/docs/dbt-versions/core), which uses a more ergonomic snapshot configuration syntax that also speeds up parsing and compilation.
 
 The following example shows how to configure a snapshot using the legacy syntax:
 
