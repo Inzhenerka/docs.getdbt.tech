@@ -1,22 +1,20 @@
 ---
-title: Legacy snapshot jinja block
+title: Legacy snapshot configurations
 description: Read about legacy snapshot jinja blocks and how to migrate to the updated syntax
-sidebar: Legacy snapshot jinja block
+sidebar: Legacy snapshot configurations
 ---
 
-From dbt versions 1.8 and earlier, you were able to configure snapshots using jinja blocks in your `.sql` files. Configuring snapshots this way is considered legacy syntax. It was replaced with a YAML-based configuration in [dbt Cloud's "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 for faster and more efficient management. 
+# Legacy snapshot configuration <Lifecycle status='legacy' />
+
+From dbt versions 1.8 and earlier, you were able to configure [snapshots](/docs/build/snapshots) using jinja blocks in your `.sql` files. This is considered legacy syntax and was replaced with a [YAML-based configuration](/reference/snapshot-configs#configuring-snapshots) in [dbt Cloud's "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt v1.9 for faster and more efficient management. 
 
 This page details how to use the legacy SQL-based configurations and provides a path to migrate to the more efficient YAML configuration. For new snapshots, we recommend using these latest YAML-based configs. If applying them to existing snapshots, you'll need to [migrate over](/reference/snapshot-configs#snapshot-configuration-migration).
 
-The following table outlines the differences between the legacy SQL-based syntax and the updated YAML-based syntax.
+The following outlines the differences between the legacy SQL-based syntax and the updated YAML-based syntax:
 
-| Snapshot syntax | Description |  Example |
-| --------------- | ----------- |  ------- |
-| [SQL-based](#sql-based-snapshot-syntax) | Legacy syntax for defining snapshots in `.sql` files within a snapshot jinja block. Available in dbt v1.8 and earlier. <!-- Found in `snapshots` directory.<br /><br /> - Avoid defining multiple resources in one file to improve performance. <br /> - Suitable for legacy snapshots.<br /> - Useful for very light transformations, however creating a separate ephemeral model for transformations is best practice and more maintainable.  --> |`{% snapshot orders_snapshot %}` in a `.sql` file using `{{ config() }}` |
-| [YAML-based](#yaml-based-snapshot-syntax) | Updated syntax for defining snapshot configurations in YAML files. Found in `snapshots.yml`. Available in dbt Cloud's "Latest" release track and dbt v1.9 and later.<!-- <br /><br /> - More performant and easier to manage.<br /> - Useful for new snapshots or existing snapshots that need to be migrated.<br /> - Use an ephemeral model for transformations and reference with `relation` field. --> |`snapshots.yml`|
+<Expandable alt_header="SQL-based snapshot syntax">
 
-### SQL-based snapshot syntax
-Legacy syntax for defining snapshots in `.sql` files within a snapshot Jinja block, typically located in your `snapshots` directory.
+Legacy syntax for defining snapshots in `.sql` files within a snapshot Jinja block, typically located in your `snapshots` directory. Available in dbt v1.8 and earlier.
 
 #### Use cases
 
@@ -46,9 +44,11 @@ select * from {{ source('jaffle_shop', 'orders') }}
 {% endsnapshot %}
 ```
 </File>
+</Expandable>
 
-### YAML-based snapshot syntax
-Updated syntax for defining snapshot configurations in YAML files.
+<Expandable alt_header="YAML-based snapshot syntax">
+
+Updated syntax for defining snapshot configurations in YAML files. Found in `snapshots.yml`. Available in dbt Cloud's "Latest" release track and dbt v1.9 and later.
 
 #### Use cases
 
@@ -91,15 +91,20 @@ snapshots:
 
 ```
 </File>
+</Expandable>
 
-## Legacy snapshot configuration
+## Snapshot configurations
 
-Although there's a more performant method, you may still want to use the legacy way to define your snapshots if it suits your needs. This page will list out the types of configurations suitable for snapshots and how to migrate from the legacy way to the updated method:
+Although you can use the more performant YAML-based configuration, you might still want to use the legacy configuration to define your snapshots if it suits your needs.
 
-- List out each header so there's a high-level overview of what's covered
+Snapshots can be configured in two main ways: 
+- Using [snapshot-specific configurations](#snapshot-specific-configurations)
+- Or using [general configurations](#general-configuration) 
 
-### Resource-specific configurations
-Resource-specific configurations are applicable to only one dbt resource type rather than multiple resource types. You can define these settings in the project file (`dbt_project.yml`), a property file (`models/properties.yml` for models, similarly for other resources), or within the resource’s file using the `{{ config() }}` macro.
+These configurations allow you to control how dbt detects changes in your data and where snapshots are stored. Both types of configurations can coexist in your project in the same `config` block (or from your `dbt_project.yml` file or `properties.yaml` file). You can also configure snapshots using [strategies](#snapshot-strategies), which define how dbt knows if a row has changed.
+
+### Snapshot specific configurations
+Snapshot-specific configurations are applicable to only one dbt resource type rather than multiple resource types. You can define these settings within the resource’s file using the `{{ config() }}` macro (as well as in the project file (`dbt_project.yml`) or a property file (`models/properties.yml` for models, similarly for other resources)).
 
 <File name='snapshots/orders_snapshot.sql'>
 
@@ -107,13 +112,13 @@ Resource-specific configurations are applicable to only one dbt resource type ra
 { % snapshot orders_snapshot %}
 
 {{ config(
-    target_schema="<string>",
-    target_database="<string>",
-    unique_key="<column_name_or_expression>",
-    strategy="timestamp" | "check",
-    updated_at="<column_name>",
-    check_cols=["<column_name>"] | "all"
-    invalidate_hard_deletes : true | false
+    [target_schema](/reference/resource-configs/target_schema)="<string>",
+    [target_database](/reference/resource-configs/target_database)="<string>",
+    [unique_key](/reference/resource-configs/unique_key)="<column_name_or_expression>",
+    [strategy](/reference/resource-configs/strategy)="timestamp" | "check",
+    [updated_at](/reference/resource-configs/updated_at)="<column_name>",
+    [check_cols](/reference/resource-configs/check_cols)=["<column_name>"] | "all"
+    [invalidate_hard_deletes](/reference/resource-configs/check_cols) : true | false
 ) 
 }}
 
@@ -126,55 +131,33 @@ select * from {{ source('jaffle_shop', 'orders') }}
 ### General configuration
 Use general configurations for broader operational settings applicable across multiple resource types. Like resource-specific configurations, these can also be set in the project file, property files, or within resource-specific files using a config block.
 
-```sql
+<File name='snapshots/snapshot.sql'>
 
+```sql
 {{ config(
-    enabled=true | false,
-    tags="<string>" | ["<string>"],
-    alias="<string>", 
-    pre_hook="<sql-statement>" | ["<sql-statement>"],
-    post_hook="<sql-statement>" | ["<sql-statement>"]
-    persist_docs={<dict>}
-    grants={<dict>}
+    [enabled](/reference/resource-configs/check_cols)=true | false,
+    [tags](/reference/resource-configs/tags)="<string>" | ["<string>"],
+    [alias](/reference/resource-configs/alias)="<string>", 
+    [pre_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"],
+    [post_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"]
+    [persist_docs](/reference/resource-configs/persist_docs)={<dict>}
+    [grants](/reference/resource-configs/grants)={<dict>}
 ) }}
 ```
+</File>
 
-## Snapshot strategies
+### Snapshot strategies
 Snapshot "strategies" define how dbt knows if a row has changed. There are two strategies built-in to dbt that require the `strategy` parameter:
 
-- Timestamp — Uses an updated_at column to determine if a row has changed.
-- Check — Compares a list of columns between their current and historical values to determine if a row has changed. Uses the `check_cols` parameter.
+- [Timestamp](/reference/resource-configs/snapshots-jinja-legacy?strategy=timestamp#snapshot-strategies) &mdash; Uses an `updated_at` column to determine if a row has changed.
+- [Check](/reference/resource-configs/snapshots-jinja-legacy?strategy=check#snapshot-strategies) &mdash; Compares a list of columns between their current and historical values to determine if a row has changed. Uses the `check_cols` parameter.
 
-```sql
-{% snapshot [snapshot_name](snapshot_name) %}
+<Tabs queryString="strategy">
+<TabItem value="timestamp" label="Timestamp" id="timestamp">
 
-{{ config(
-  strategy="timestamp",
-  updated_at="column_name"
-) }}
-
-select ...
-
-{% endsnapshot %}
-```
-
-```sql
-{% snapshot [snapshot_name](snapshot_name) %}
-
-{{ config(
-  strategy="check",
-  check_cols=[column_name] | "all"
-) }}
-
-{% endsnapshot %}
-```
-
-### Timestamp
 The timestamp strategy uses an `updated_at` field to determine if a row has changed. If the configured `updated_at` column for a row is more recent than the last time the snapshot ran, then dbt will invalidate the old record and record the new one. If the timestamps are unchanged, then dbt will not take any action.
 
 #### Example
-
-<Expandable alt_header="Timestamp strategy">
 
 <File name='snapshots/timestamp_example.sql'>
 
@@ -195,11 +178,13 @@ The timestamp strategy uses an `updated_at` field to determine if a row has chan
 {% endsnapshot %}
 ```
 </File>
+</TabItem>
 
-</Expandable>
+<TabItem value="check" label="Check" id="check">
 
-### Check
 The check strategy is useful for tables which do not have a reliable `updated_at` column. It requires the `check_cols` parameter, which is a list of columns within the results of your snapshot query to check for changes. Alternatively, use all columns using the all value (however this may be less performant).
+
+#### Example
 
 <File name='snapshots/check_example.sql'>
 
@@ -264,12 +249,128 @@ The check strategy is useful for tables which do not have a reliable `updated_at
 ```
 </File>
 </Expandable>
+</TabItem>
+</Tabs>
+
+## Configure snapshots
+
+In dbt versions 1.8 and earlier, snapshots are `select` statements, defined within a snapshot block in a `.sql` file (typically in your `snapshots` directory or any other directory). You'll also need to configure your snapshot to tell dbt how to detect record changes.
+
+The following table outlines the configurations available for snapshots in versions 1.8 and earlier:
+
+| Config | Description | Required? | Example |
+| ------ | ----------- | --------- | ------- |
+| [target_database](/reference/resource-configs/target_database) | The database that dbt should render the snapshot table into | No | analytics |
+| [target_schema](/reference/resource-configs/target_schema) | The schema that dbt should render the snapshot table into | Yes | snapshots |
+| [strategy](/reference/resource-configs/strategy) | The snapshot strategy to use. One of `timestamp` or `check` | Yes | timestamp |
+| [unique_key](/reference/resource-configs/unique_key) | A <Term id="primary-key" /> column or expression for the record | Yes | id |
+| [check_cols](/reference/resource-configs/check_cols) | If using the `check` strategy, then the columns to check | Only if using the `check` strategy | ["status"] |
+| [updated_at](/reference/resource-configs/updated_at) | If using the `timestamp` strategy, the timestamp column to compare | Only if using the `timestamp` strategy | updated_at |
+| [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) | Find hard deleted records in source, and set `dbt_valid_to` current time if no longer exists | No | True |
+
+- A number of other configurations are also supported (e.g. `tags` and `post-hook`), check out the full list [here](/reference/snapshot-configs).
+- Snapshots can be configured from both your `dbt_project.yml` file and a `config` block, check out the [configuration docs](/reference/snapshot-configs) for more information.
+- Note: BigQuery users can use `target_project` and `target_dataset` as aliases for `target_database` and `target_schema`, respectively.
+
+## Add snapshot to a project
+
+To add a snapshot to your project:
+
+1. Create a file in your `snapshots` directory with a `.sql` file extension, e.g. `snapshots/orders.sql`
+2. Use a `snapshot` block to define the start and end of a snapshot:
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{% endsnapshot %}
+```
+
+</File>
+
+3. Write a `select` statement within the snapshot block (tips for writing a good snapshot query are below). This select statement defines the results that you want to snapshot over time. You can use `sources` or `refs` here.
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+4. Check whether the result set of your query includes a reliable timestamp column that indicates when a record was last updated. For our example, the `updated_at` column reliably indicates record changes, so we can use the `timestamp` strategy. If your query result set does not have a reliable timestamp, you'll need to instead use the `check` strategy — more details on this in the next step.
+
+5. Add configurations to your snapshot using a `config` block. You can also configure your snapshot from your `dbt_project.yml` file ([docs](/reference/snapshot-configs)).
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{{
+    config(
+      target_database='analytics',
+      target_schema='snapshots',
+      unique_key='id',
+
+      strategy='timestamp',
+      updated_at='updated_at',
+    )
+}}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+6. Run the `dbt snapshot` [command](/reference/commands/snapshot). For our example, a new table will be created at `analytics.snapshots.orders_snapshot`. You can change the `target_database` configuration, the `target_schema` configuration and the name of the snapshot (as defined in `{% snapshot .. %}`) will change how dbt names this table.
+
+```
+dbt snapshot
+Running with dbt=1.8.0
+
+15:07:36 | Concurrency: 8 threads (target='dev')
+15:07:36 |
+15:07:36 | 1 of 1 START snapshot snapshots.orders_snapshot...... [RUN]
+15:07:36 | 1 of 1 OK snapshot snapshots.orders_snapshot..........[SELECT 3 in 1.82s]
+15:07:36 |
+15:07:36 | Finished running 1 snapshots in 0.68s.
+
+Completed successfully
+
+Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
+```
+
+7. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](#snapshot-meta-fields) as described earlier.
+
+8. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
+
+9. Select from the `snapshot` in downstream models using the `ref` function.
+
+<File name='models/changed_orders.sql'>
+
+```sql
+select * from {{ ref('orders_snapshot') }}
+```
+
+</File>
+
+10. Snapshots are only useful if you run them frequently &mdash; schedule the `snapshot` command to run regularly.
+
 
 ## Examples
 
 This section outlines some examples of how to apply configurations to snapshots using the legacy method.
 
-### Apply configurations to one snapshot only
+<Expandable alt_header="Apply configurations to one snapshot only">
+
 Use config blocks if you need to apply a configuration to one snapshot only.
 
 <File name='snapshots/postgres_app/orders_snapshot.sql'>
@@ -288,8 +389,9 @@ Use config blocks if you need to apply a configuration to one snapshot only.
 {% endsnapshot %}
 ```
 </File>
+</Expandable>
 
-### Using the updated_at parameter
+<Expandable alt_header="Using the updated_at parameter">
 
 The `updated_at` parameter is required if using the timestamp strategy. The `updated_at` parameter is a column within the results of your snapshot query that represents when the record row was last updated.
 
@@ -302,6 +404,8 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
 ) }}
 ```
 </File>
+
+#### Examples
 
 - #### Using a column name `updated_at`:
   <File name='snapshots/orders.sql'>
@@ -355,8 +459,10 @@ The `updated_at` parameter is required if using the timestamp strategy. The `upd
   {% endsnapshot %}
   ```
   </File>
+</Expandable>
 
-### Using the unique_key parameter
+<Expandable alt_header="Using the unique_key parameter">
+
 The `unique_key` is a column name or expression that is unique for the inputs of a snapshot. dbt uses [`unique_key`](/reference/resource-configs/unique_key) to match records between a result set and an existing snapshot, so that changes can be captured correctly.
 
 <File name='snapshots/orders.sql'>
@@ -433,27 +539,33 @@ The `unique_key` is a column name or expression that is unique for the inputs of
     {% endsnapshot %}
     ```
     </File>
+</Expandable>
 
-## Migrate from legacy to update
+## Migrate legacy snapshot configs
 
-This page outlines the steps you need to follow to convert legacy jinja block snapshot configurations into the updaetd YAML-based configuration format.
+This section outlines the steps you need to follow to migrate legacy jinja block snapshot configurations into the updated YAML-based configuration format.
 
 Why use the updated YAML spec?
 
-- Performance: YAML-based configurations are processed faster by dbt, leading to improved performance, especially during parsing and compilation.
-- Maintainability: Centralizing configuration in YAML makes it easier to manage and update snapshot settings without editing the SQL logic directly.
-- Consistency: YAML configuration aligns snapshot definitions with other dbt resources, such as models and seeds, leading to a more consistent project structure.
+- YAML-based configurations are processed faster by dbt, leading to improved performance, especially during parsing and compilation.
+- Centralizing configuration in YAML makes it easier to manage and update snapshot settings without editing the SQL logic directly.
+- YAML configuration aligns snapshot definitions with other dbt resources, such as models and seeds, leading to a more consistent project structure.
 
-
-Note: In versions prior to v1.9, the target_schema (required) and target_database (optional) configurations defined a single schema or database to build a snapshot across users and environment. This created problems when testing or developing a snapshot, as there was no clear separation between development and production environments. In v1.9, target_schema became optional, allowing snapshots to be environment-aware. By default, without target_schema or target_database defined, snapshots now use the generate_schema_name or generate_database_name macros to determine where to build. Developers can still set a custom location with schema and database configs, consistent with other resource types.
+#### Considerations
+- In versions prior to v1.9, the `target_schema` (required) and `target_database` (optional) configurations defined a single schema or database to build a snapshot across users and environment. This created problems when testing or developing a snapshot, as there was no clear separation between development and production environments. 
+- In v1.9, `target_schema` became optional, allowing snapshots to be environment-aware. 
+- By default, without `target_schema` or `target_database` defined, snapshots now use the `generate_schema_name` or `generate_database_name` macros to determine where to build. 
+- Developers can still set a custom location with schema and database configs, consistent with other resource types.
 
 ### How to migrate
+The latest YAML-based configuration syntax is best suited for new snapshots. If you're migrating existing snapshots, consider the following steps:
 
-1. Move any configurations currently written within the jinja block (like unique_key, strategy, updated_at, and so on) into the YAML file.
-   
-   The configurations are structured similarly to how you would define a model in `dbt_project.yml.` 
+1.  Migrate the previous snapshot to the new table schema and values.
+    - Create a backup copy of your snapshots.
+    - Use `alter` statements as needed (or a script to apply `alter` statements) to ensure table consistency.
+2. Convert any configurations currently written within the jinja block (like `unique_key`, `strategy`, `updated_at`, and so on) into the YAML file structure, one at a time and testing as you go.
 
-    Here's an example conversion:
+   The configurations are structured similarly to how you would define a model in `dbt_project.yml.`:
 
     <File name='snapshots.yml'>
       ```yaml
@@ -466,16 +578,16 @@ Note: In versions prior to v1.9, the target_schema (required) and target_databas
       ```
       </File>
 
-Note: The `unique_key`, strategy, and `updated_at` fields must match the settings previously defined in your jinja block.
+    Note: The `unique_key`, strategy, and `updated_at` fields must match the settings previously defined in your jinja block.
 
-2. Before removing the old jinja block, run the dbt snapshot command using the new YAML configuration to confirm that the snapshot behaves as expected.
-	- Verify that the data is processed correctly (for example,no data loss or incorrect records).
-	- Make surethe performance is either the same or improved compared to the old configuration.
+3. Before removing the old jinja block, run the `dbt snapshot` command using the new YAML configuration to confirm that the snapshot behaves as expected.
+	- Verify that the data is processed correctly (for example, no data loss or incorrect records).
+	- Make sure the performance is either the same or improved compared to the old configuration.
 	- After running the new snapshot, inspect the snapshot tables in your data warehouse to confirm the new snapshot records match the old data. 
 
-3. Once you’ve confirmed that the new YAML configuration works properly, safely remove the old snapshot jinja block from your `.sql` file. This keeps your codebase clean and fully migrated to the new method.
+4. Once you’ve confirmed that the new YAML configuration works properly, safely remove the old snapshot jinja block from your `.sql` file. This keeps your codebase clean and fully migrated to the new method.
 
-4. If your snapshots require more complex transformations, consider using an ephemeral model to handle the transformations before referencing it in the snapshot. An ephemeral model can encapsulate transformations and simplify the snapshot query itself.
+5. If your snapshots require more complex transformations, consider using an ephemeral model to handle the transformations before referencing it in the snapshot. An ephemeral model can encapsulate transformations and simplify the snapshot query itself.
 
     Example of using an ephemeral model:
 
