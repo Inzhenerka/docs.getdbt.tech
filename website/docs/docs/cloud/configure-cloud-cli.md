@@ -124,6 +124,8 @@ As a tip, most command-line tools have a `--help` flag to show available command
 - `dbt run --help`: Lists the flags available for the `run` command
 :::
  
+### Considerations
+
 import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
 <CloudCliRelativePath />
