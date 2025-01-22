@@ -329,11 +329,6 @@ The Cloud CLI allows only one command that writes to the data warehouse at a tim
 
 ## Limitations
 
-The dbt Cloud CLI does not currently support relative paths - for example:
+import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
-```yaml
-# repository_root/my_dbt_project_in_a_subdirectory/packages.yml
-
-packages:
-  - local: ../shared_macros
-```
+<CloudCliRelativePath />
