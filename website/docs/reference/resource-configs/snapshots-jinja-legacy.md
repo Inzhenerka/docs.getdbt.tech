@@ -278,7 +278,7 @@ The following table outlines the configurations available for snapshots in versi
 
 To add a snapshot to your project:
 
-1. Create a file in your `snapshots` directory with a `.sql` file extension, e.g. `snapshots/orders.sql`
+1. Create a file in your `snapshots` directory with a `.sql` file extension. For example,`snapshots/orders.sql`
 2. Use a `snapshot` block to define the start and end of a snapshot:
 
 <File name='snapshots/orders_snapshot.sql'>
