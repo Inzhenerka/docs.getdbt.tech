@@ -495,7 +495,7 @@ The `unique_key` is a column name or expression that is unique for the inputs of
 
 - #### Using a combination of two columns as a unique key
 
-  This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (e.g. '-') to ensure uniqueness.
+  This configuration accepts a valid column expression. As such, you can concatenate two columns together as a unique key if required. It's a good idea to use a separator (like, '-') to ensure uniqueness.
 
   <File name='snapshots/transaction_items_snapshot.sql'>
 
