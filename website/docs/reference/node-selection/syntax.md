@@ -21,6 +21,8 @@ dbt's node selection syntax makes it possible to run only specific resources in 
 We use the terms <a href="https://en.wikipedia.org/wiki/Vertex_(graph_theory)">"nodes"</a> and "resources" interchangeably. These encompass all the models, tests, sources, seeds, snapshots, exposures, and analyses in your project. They are the objects that make up dbt's DAG (directed acyclic graph).
 :::
 
+The `--select` and `--selector` arguments are similar in that they both allow you to select resources. To understand the difference, see [Differences between `--select` and `--selector`](/reference/node-selection/yaml-selectors#difference-between---select-and---selector).
+
 ## Specifying resources
 
 By default, `dbt run` executes _all_ of the models in the dependency graph; `dbt seed` creates all seeds, `dbt snapshot` performs every snapshot. The `--select` flag is used to specify a subset of nodes to execute.
@@ -102,6 +104,8 @@ dbt run --select "path:marts/finance,tag:nightly,config.materialized:table"
 As your selection logic gets more complex, and becomes unwieldly to type out as command-line arguments,
 consider using a [yaml selector](/reference/node-selection/yaml-selectors). You can use a predefined definition with the `--selector` flag.
 Note that when you're using `--selector`, most other flags (namely `--select` and `--exclude`) will be ignored.
+
+The `--select` and `--selector` arguments are similar in that they both allow you to select resources. To understand the difference between `--select` and `--selector` arguments, see [this section](/reference/node-selection/yaml-selectors#difference-between---select-and---selector) for more details.
 
 ### Troubleshoot with the `ls` command
 
