@@ -536,14 +536,12 @@ limit 10
 </TabItem>
 
 <TabItem value="eg7" label=" Export to CSV">
-
-Add the `--csv file_name.csv` flag to export the results of your query to a csv.
+ 
+Add the `--csv file_name.csv` flag to export the results of your query to a csv. The `--csv` flag is available in dbt Core only and not supported in dbt Cloud.
 
 **Query**
 
 ```bash
-# In dbt Cloud
-dbt sl query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --csv query_example.csv
 
 # In dbt Core
 mf query --metrics order_total --group-by metric_time,is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' --csv query_example.csv
