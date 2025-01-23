@@ -211,8 +211,9 @@ For using cross-DB macros, teradata-utils as a macro namespace will not be used,
 
   ##### <a name="hash"></a>hash
 
-  `Hash` macro needs an `md5` function implementation. Teradata doesn't support `md5` natively. You need to install a User Defined Function (UDF) and optionally specify `md5_udf` [variable](/docs/build/project-variables).  <br> 
-   If not specified the code defaults to using `GLOBAL_FUNCTIONS.hash_md5`. See the following instructions on how to install the custom UDF:
+  `Hash` macro needs an `md5` function implementation. Teradata doesn't support `md5` natively. You need to install a User Defined Function (UDF) and optionally specify `md5_udf` [variable](/docs/build/project-variables).
+   
+  If not specified the code defaults to using `GLOBAL_FUNCTIONS.hash_md5`. See the following instructions on how to install the custom UDF:
   1. Download the md5 UDF implementation from Teradata (registration required): https://downloads.teradata.com/download/extensibility/md5-message-digest-udf.
   1. Unzip the package and go to `src` directory.
   1. Start up `bteq` and connect to your database.
@@ -250,11 +251,12 @@ dbt-teradata 1.8.0 and later versions support unit tests, enabling you to valida
 ## Limitations
 
 ### Browser authentication
-* When running a dbt job with logmech set to "browser", the initial authentication opens a browser window where you must enter your username and password.<br>
-* After authentication, this window remains open, requiring you to manually switch back to the dbt console.<br>
-* For every subsequent connection, a new browser tab briefly opens, displaying the message "TERADATA BROWSER AUTHENTICATION COMPLETED," and silently reuses the existing session.<br>
-* However, the focus stays on the browser window, so you’ll need to manually switch back to the dbt console each time.<br>
-* This behavior is the default functionality of the teradatasql driver and cannot be avoided at this time.<br>
+
+* When running a dbt job with logmech set to "browser", the initial authentication opens a browser window where you must enter your username and password.
+* After authentication, this window remains open, requiring you to manually switch back to the dbt console.
+* For every subsequent connection, a new browser tab briefly opens, displaying the message "TERADATA BROWSER AUTHENTICATION COMPLETED," and silently reuses the existing session.
+* However, the focus stays on the browser window, so you’ll need to manually switch back to the dbt console each time.
+* This behavior is the default functionality of the teradatasql driver and cannot be avoided at this time.
 * To prevent session expiration and the need to re-enter credentials, ensure the authentication browser window stays open until the job is complete.
 
 ### Transaction mode
@@ -270,4 +272,4 @@ The adapter was originally created by [Doug Beatty](https://github.com/dbeatty10
 
 ## License
 
-The adapter is published using Apache-2.0 License. Refer to the [terms and conditions](https://github.com/dbt-labs/dbt-core/blob/main/License.md) to understand items such as creating derivative work and the support model. 
+The adapter is published using Apache-2.0 License. Refer to the [terms and conditions](https://github.com/dbt-labs/dbt-core/blob/main/License.md) to understand items such as creating derivative work and the support model.  
