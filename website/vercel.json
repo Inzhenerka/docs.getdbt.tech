@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/docs/cloud/about-cloud/dark-mode",
+      "destination": "/docs/cloud/about-cloud/change-your-dbt-cloud-theme",
+      "permanent": true
+    },
+    {
       "source": "/docs/collaborate/git/managed-repository",
       "destination": "/docs/cloud/git/managed-repository",
       "permanent": true

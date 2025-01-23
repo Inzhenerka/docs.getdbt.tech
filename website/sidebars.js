@@ -26,12 +26,12 @@ const sidebarSettings = {
       label: "About dbt Cloud",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
       items: [
-        "docs/cloud/about-cloud/dbt-cloud-features",
         "docs/cloud/about-cloud/architecture",
-        "docs/cloud/about-cloud/tenancy",
-        "docs/cloud/about-cloud/access-regions-ip-addresses",
         "docs/cloud/about-cloud/browsers",
-        "docs/cloud/about-cloud/dark-mode",
+        "docs/cloud/about-cloud/change-your-dbt-cloud-theme",
+        "docs/cloud/about-cloud/dbt-cloud-features",
+        "docs/cloud/about-cloud/access-regions-ip-addresses",
+        "docs/cloud/about-cloud/tenancy",    
       ],
     }, // About dbt Cloud directory
     {
