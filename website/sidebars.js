@@ -26,12 +26,12 @@ const sidebarSettings = {
       label: "About dbt Cloud",
       link: { type: "doc", id: "docs/cloud/about-cloud/dbt-cloud-features" },
       items: [
-        "docs/cloud/about-cloud/dbt-cloud-features",
         "docs/cloud/about-cloud/architecture",
-        "docs/cloud/about-cloud/tenancy",
-        "docs/cloud/about-cloud/access-regions-ip-addresses",
         "docs/cloud/about-cloud/browsers",
-        "docs/cloud/about-cloud/dark-mode",
+        "docs/cloud/about-cloud/change-your-dbt-cloud-theme",
+        "docs/cloud/about-cloud/dbt-cloud-features",
+        "docs/cloud/about-cloud/access-regions-ip-addresses",
+        "docs/cloud/about-cloud/tenancy",    
       ],
     }, // About dbt Cloud directory
     {
@@ -253,6 +253,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/tidb-setup",
                 "docs/core/connect-data-platform/upsolver-setup",
                 "docs/core/connect-data-platform/vertica-setup",
+                "docs/core/connect-data-platform/watsonx-presto-setup",
                 "docs/core/connect-data-platform/yellowbrick-setup",
               ],
             },
@@ -899,6 +900,7 @@ const sidebarSettings = {
         "reference/resource-configs/teradata-configs",
         "reference/resource-configs/upsolver-configs",
         "reference/resource-configs/vertica-configs",
+        "reference/resource-configs/watsonx-presto-config",
         "reference/resource-configs/yellowbrick-configs",
       ],
     },
