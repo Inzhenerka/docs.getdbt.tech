@@ -53,7 +53,7 @@ At Level 1, SQL comprehension tools use a **parser** to translate SQL code into 
 
 Before we dive into the specific technologies, we should define a key concept in computer science that’s very relevant to understanding how this entire process works under the hood: an [**Intermediate Representation (IR)**](https://en.wikipedia.org/wiki/Intermediate_representation). When code is executed on a computer, it has to be translated from the human-readable code we write to the machine-readable code that actually does the work that the higher-level code specifies, in a process called *compiling*. As a part of this process, your code will be translated into a number of different objects as the program runs; each of these is called an *intermediate representation.*
 
-To provide an example / analogy that will be familiar to dbt users, think about what your intermediate models are in the context of your dbt DAG — a translated form of your source data created in the process of synthesizing your final data marts. These models are effectively an sintermediate representation. We’re going to talk about a few different types of IRs in this post, so it’s useful to know about them now before we get too deep!
+To provide an example / analogy that will be familiar to dbt users, think about what your intermediate models are in the context of your dbt DAG — a translated form of your source data created in the process of synthesizing your final data marts. These models are effectively an intermediate representation. We’re going to talk about a few different types of IRs in this post, so it’s useful to know about them now before we get too deep!
 
 ### Parsers
 
@@ -104,7 +104,7 @@ By parsing this query according to the rules of the SQL language, we get somethi
 
 <Lightbox src="/img/blog/2025-01-24-sql-comprehension-technologies/sql_syntax_tree.png" title="This is a simplified syntax tree — This was made by hand, and may not be exactly what the output of a real SQL parser looks like!" width="85%" />
 
-The syntax trees produced by parsers are a very valuable type of intermediate representation; with a syntax tree, you can power features like syntax validation, code linting, and code formatting, since those tools only need knowledge the *syntax* of the code you’ve written to work.
+The syntax trees produced by parsers are a very valuable type of intermediate representation; with a syntax tree, you can power features like syntax validation, code linting, and code formatting, since those tools only need knowledge of the *syntax* of the code you’ve written to work.
 
 However, parsers also dutifully parse *syntactically correct code* that *means nothing at all*. To illustrate this, consider the [famous sentence](https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously) developed by linguistics + philosophy professor Noam Chomsky:
 
@@ -161,10 +161,10 @@ This plan can be very helpful for you as a developer, especially if it’s avail
 **Compilers** are programs that translate high-level language to low-level language. *Parsers* and *binders* together constitute compilers.
 :::
 
-Taken together, a parser plus a binder constitute a *compiler,* a program that takes in high-level code (one that is optimized for human readability, like SQL) and outputs low-level code (one that is optimized for machine readability + execution).  In SQL compilers, this output is the logical plan. The diagram below shows the entire process of compilation.
+Taken together, a parser plus a binder constitute a *compiler,* a program that takes in high-level code (one that is optimized for human readability, like SQL) and outputs low-level code (one that is optimized for machine readability + execution).  In SQL compilers, this output is the logical plan.
 
 
-A compiler definitionally gives you a deeper understanding of the behavior of the query than a parser alone. We’re now able to trace the data flows and operations that we were abstractly expressing when we initially wrote our SQL query. The compiler incrementally enriches its understanding of the original SQL string and results in a logical plan, which provides static analysis and validation of you SQL logic.
+A compiler definitionally gives you a deeper understanding of the behavior of the query than a parser alone. We’re now able to trace the data flows and operations that we were abstractly expressing when we initially wrote our SQL query. The compiler incrementally enriches its understanding of the original SQL string and results in a logical plan, which provides static analysis and validation of your SQL logic.
 
 We are however, not all the way down the rabbit hole —  a compiler-produced logical plan contains the full instructions for how to execute a piece of code, but doesn’t have any sense of how to actually execute these steps! There’s one more translation required for the rubber to fully meet the motherboard.
 
@@ -191,7 +191,7 @@ join b on a.id = b.a_id
 join c on b.id = c.b_id
 ```
 
-The logical plan will contain steps to join the tables together as defined in SQL — great! Let’s suppose, however, that table `a` is an several orders of magnitude larger than each of the other two. In that case, the order of joining makes a huge difference in the performance of the query! If we join `a` and `b` first, then the result `ab` with `c`, we end up scanning the entirety of the extremely large table `a` twice. If instead we join `b` and `c` first, and join the much smaller result `bc` with table `a` , we get the same result of `abc` at a fraction of the cost!
+The logical plan will contain steps to join the tables together as defined in SQL — great! Let’s suppose, however, that table `a` is several orders of magnitude larger than each of the other two. In that case, the order of joining makes a huge difference in the performance of the query! If we join `a` and `b` first, then the result `ab` with `c`, we end up scanning the entirety of the extremely large table `a` twice. If instead we join `b` and `c` first, and join the much smaller result `bc` with table `a` , we get the same result of `abc` at a fraction of the cost!
 
 Layering in the knowledge of the physical characteristics of the objects referenced in a query to ensure efficient execution is the job of the optimization and planning stage.
 
@@ -211,7 +211,7 @@ Think about what your data platform of choice has to do when you submit a valida
 A query engine can **execute** a *physical plan* and return tabular data
 :::
 
-Once a physical plan is generated, all that’s left to do is run it! The database engine executes the physical plan, and fetches, combines, and aggregates your data into the format described by your SQL code. The way that the engine accomplishes can vary significantly depending on the architecture of your database! Some databases are “single node” in that there is a single computer doing all the work; others are “distributed” and can federate the work across many working compute nodes.
+Once a physical plan is generated, all that’s left to do is run it! The database engine executes the physical plan, and fetches, combines, and aggregates your data into the format described by your SQL code. The way that the engine accomplishes this can vary significantly depending on the architecture of your database! Some databases are “single node” in that there is a single computer doing all the work; others are “distributed” and can federate the work across many working compute nodes.
 
 In general, the engine must:
 
@@ -219,7 +219,7 @@ In general, the engine must:
 
 2. **Read Data Into Memory** &mdash; The tables referenced are then scanned as efficiently as possible, and the rows are processed. This may happen in partial stages depending on whether the tasks are distributed or happening within one single node
 
-3. **Execute Operations** &mdash; Once the required data is read into memory, it flows through a pipeline of the nodes in your physical plan. There is more than 50 years of work in building optimizations for these steps as applied to different data structures and in-memory representations; everything from row-oriented databases, to columnar, to time series to geo-spatial to graph. But fundamentally, there are 5 common operation:
+3. **Execute Operations** &mdash; Once the required data is read into memory, it flows through a pipeline of the nodes in your physical plan. There is more than 50 years of work in building optimizations for these steps as applied to different data structures and in-memory representations; everything from row-oriented databases, to columnar, to time series to geo-spatial to graph. But fundamentally, there are 5 common operations:
 
     1. **Projection** &mdash; Extract only the columns or expressions that the user requested needed (e.g. `order_id`).
 
