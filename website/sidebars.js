@@ -339,7 +339,15 @@ const sidebarSettings = {
               link: { type: "doc", id: "docs/build/data-tests" },
               items: ["docs/build/data-tests", "docs/build/unit-tests"],
             },
-            "docs/build/documentation",
+            {
+              type: "category",
+              label: "Documentation",
+              link: { type: "doc", id: "docs/build/documentation" },
+              items: [
+                "docs/build/documentation",
+                "docs/build/generate-documentation",  
+              ],
+            },
             "docs/build/snapshots",
             "docs/build/seeds",
             "docs/build/jinja-macros",

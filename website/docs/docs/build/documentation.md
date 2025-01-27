@@ -30,6 +30,17 @@ dbt provides a way to generate documentation for your dbt project. The documenta
 
 Importantly, dbt also provides a way to add **descriptions** to models, columns, sources, and more, to further enhance your documentation.
 
+| Feature | Static documentation (dbt Docs) | Team collaboration (dbt Explorer) |
+| --- | --- | --- |
+| Access | Run locally with dbt docs serve. | Always updated with job runs in Cloud. |
+| Speed of updates | Requires generating docs after runs. | Automatically synced after each job. |
+| Rich metadata navigation | Basic metadata and lineage filtering. | Interactive lineage and filtering. |
+| Hosting | Self-host or serve locally. | Hosted in the Cloud, secure and managed. |
+
+For details on how to generate and view documentation, see [Generate and view documentation](/docs/build/generate-documentation).
+
+dbt Docs, available on developer plans or dbt Core users, generates a website from your dbt project using the dbt docs generate command. It provides a central location to view your project's resources, such as models, tests, and lineage — and helps you understand the data in your warehouse.
+
 ## Adding descriptions to your project
 To add descriptions to your project, use the `description:` key in the same files where you declare [tests](/docs/build/data-tests), like so:
 
@@ -59,21 +70,7 @@ models:
 
 </File>
 
-## Generating project documentation
-
-The default documentation experience in dbt Cloud is [dbt Explorer](/docs/collaborate/explore-projects), available on [Team or Enterprise plans](https://www.getdbt.com/pricing/). Use dbt Explorer to view your project's resources (such as models, tests, and metrics), its [metadata](/docs/collaborate/explore-projects#generate-metadata), and their lineage to gain a better understanding of its latest production state.
-
-dbt Cloud developer and dbt Core users can use [dbt Docs](/docs/collaborate/build-and-view-your-docs#dbt-docs), which generates basic documentation, but doesn't offer the same speed, metadata, or visibility as dbt Explorer. 
-
-Generate documentation for your project by following these steps:
-
-1. Run `dbt docs generate` — this command tells dbt to compile relevant information about your dbt project and warehouse into `manifest.json` and `catalog.json` files, respectively. 
-2. Ensure you've created the models with `dbt run` to view the documentation for all columns, not just those described in your project.
-3. Run `dbt docs serve` if you're developing locally to use these `.json` files to populate a local website.
-
-To view a resource, its metadata, and what commands are needed in dbt Explorer, refer to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
-
-## FAQs
+### FAQs
 <FAQ path="Project/example-projects" alt_header="Are there any example dbt documentation sites?"/>
 <FAQ path="Docs/document-all-columns" />
 <FAQ path="Docs/long-descriptions" />
@@ -190,48 +187,3 @@ up to page views and sessions.
 ```
 
 </File>
-
-## Navigating the documentation site
-
-Use [dbt Explorer](/docs/collaborate/explore-projects) for a richer documentation experience and more interactive experience for understanding your project's resources and lineage. Available on [Team or Enterprise plans](https://www.getdbt.com/pricing/).
-
-For additional details on how to explore your lineage and navigate your resources, refer to [dbt Explorer](/docs/collaborate/explore-projects).
-
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="100%" title="Example of resource details" />
-
-<Expandable alt_header="For dbt Docs">
-If you're using the dbt Docs interface, you can navigate to the documentation for a specific model. That might look something like this:
-
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/f2221dc-Screen_Shot_2018-08-14_at_6.29.55_PM.png" title="Auto-generated documentation for a dbt model"/>
-
-Here, you can see a representation of the project structure, a markdown description for a model, and a list of all of the columns (with documentation) in the model.
-
-From the dbt Docs page, you can click the green button in the bottom-right corner of the webpage to expand a "mini-map" of your DAG. This pane (shown below) will display the immediate parents and children of the model that you're exploring.
-
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ec77c45-Screen_Shot_2018-08-14_at_6.31.56_PM.png" title="Opening the DAG mini-map"/>
-
-In this example, the `fct_subscription_transactions` model only has one direct parent. By clicking the "Expand" button in the top-right corner of the window, we can pivot the graph horizontally and view the full <Term id="data-lineage">lineage</Term> for our model. This lineage is filterable using the `--select` and `--exclude` flags, which are consistent with the semantics of [model selection syntax](/reference/node-selection/syntax). Further, you can right-click to interact with the DAG, jump to documentation, or share links to your graph visualization with your coworkers.
-
-<Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ac97fba-Screen_Shot_2018-08-14_at_6.35.14_PM.png" title="The full lineage for a dbt model"/>
-
-</Expandable>
-
-## Deploying the documentation site
-
-With dbt Cloud, use [dbt Explorer](/docs/collaborate/explore-projects) automatically retrieves the metadata updates after each job run in the production or staging deployment environment so it always has the latest results for your project &mdash; meaning it's always automatically updated after each job run.
-
-:::caution Security
-
-The `dbt docs serve` command is only intended for local/development hosting of the documentation site. Please use one of the methods listed below (or similar) to ensure that your documentation site is hosted securely!
-
-:::
-
-#### For dbt Docs users
-
-dbt's documentation website was built to make it easy to host on the web. The site is "static,” meaning you don't need any "dynamic" servers to serve the docs. You can host your documentation in several ways:
-
-* Use [dbt Cloud's](/docs/collaborate/build-and-view-your-docs) default documentation experience with [dbt Explorer](/docs/collaborate/explore-projects).
-* Host on [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html) (optionally [with IP access restrictions](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-3))
-* Publish with [Netlify](https://discourse.getdbt.com/t/publishing-dbt-docs-to-netlify/121)
-* Use your own web server like Apache/Nginx
-
