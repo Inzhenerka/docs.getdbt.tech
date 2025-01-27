@@ -194,8 +194,8 @@ const sidebarSettings = {
               link: { type: "doc", id: "docs/core/installation-overview" },
               items: [
                 "docs/core/installation-overview",
-                "docs/core/pip-install",
                 "docs/core/docker-install",
+                "docs/core/pip-install",
                 "docs/core/source-install",
               ],
             },
