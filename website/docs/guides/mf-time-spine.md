@@ -137,21 +137,16 @@ This time spine YAML file configures the `time_spine` property so MetricFlow can
 
 For the time spine table you created, let's run it and validate the output.
 
-1. Run the time spine model to create the table:
+1. Run the time spine model to create the table and validate the output:
    ```bash
    dbt run --select time_spine_daily
    ```
 
-2. Validate the output by querying the generated table:
-   ```sql
-   select * from your_project_schema.time_spine_daily
-   ```
-
-3. Check that the table:
+2. Check that the table:
    - Contains one row per day.
    - Covers the date range you want (5 years back to 30 days forward)
 
-4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
+3. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
    
    Let's say you have a `revenue` metric defined. You can query the table/metrics using the following command:
 
@@ -162,7 +157,7 @@ For the time spine table you created, let's run it and validate the output.
     This will output results similar to the following in the dbt Cloud IDE:
     <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.jpg" title="Validate the time spine output in dbt Cloud IDE" />
 
-5. Double check that the results are correct and returning the expected data.
+4. Double check that the results are correct and returning the expected data.
 
 ## Add additional granularities (optional)
 
