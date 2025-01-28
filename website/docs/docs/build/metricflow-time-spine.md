@@ -10,11 +10,23 @@ tags: [Metrics, Semantic Layer]
 
 It's common in analytics engineering to have a date dimension or "time spine" table as a base table for different types of time-based joins and aggregations. The structure of this table is typically a base column of daily or hourly dates, with additional columns for other time grains, like fiscal quarters, defined based on the base column. You can join other tables to the time spine on the base column to calculate metrics like revenue at a point in time, or to aggregate to a specific time grain.
 
-## Prerequisites
-MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins:
+To use MetricFlow with time-based metrics and dimensions, you _must_ provide a time spine table. This table serves as the foundation for time-based joins and aggregations. You can either:
 
-- At least one time spine table &mdash; Define one [time spine table](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
-- YAML configuration &mdash; Configure each time spine table in a YAML file to define how MetricFlow recognizes and uses its columns.
+- Create a time spine SQL table from scratch (check out the [example time spine tables](#example-time-spine-tables) section for examples), or
+- Use an existing table in your project, like a `dim_date` table
+
+And once you have a time spine table, you need to configure it in YAML to tell MetricFlow how to use it.
+
+
+:::tip
+Check out our mini guide on [how to create a time spine table](/guides/mf-time-spine) to get started!
+:::
+
+## Prerequisites
+MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. This means you need to:
+
+- Define at least one [time spine table](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
+- [Configure each time spine table in a YAML file](#configuring-time-spine-in-yaml) to define how MetricFlow recognizes and uses its columns.
 
  MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
 
@@ -32,6 +44,7 @@ To see the generated SQL for the metric and dimension types that use time spine 
  
  Some things to note when configuring time spine models:
 
+- Make sure you already have a time spine SQL table defined in your project.
 - Add the configurations under the `time_spine` key for that [model's properties](/reference/model-properties), just as you would add a description or tests.
 - You only need to configure time-spine models that the Semantic Layer should recognize.
 - At a minimum, define a time-spine table for a daily grain.
@@ -152,6 +165,13 @@ Note that if you're migrating from a `metricflow_time_spine.sql` file:
 - We recommend having a time spine at the finest grain used in any of your dimensions to avoid unexpected errors. For example, if you have dimensions at an hourly grain, you should have a time spine at an hourly grain.
 
 ## Example time spine tables
+
+The following examples show how to create time spine tables at different granularities:
+
+- [Daily](#daily)
+- [Daily (BigQuery)](#daily-bigquery)
+- [Hourly](#hourly)
+
 
 ### Daily
 
