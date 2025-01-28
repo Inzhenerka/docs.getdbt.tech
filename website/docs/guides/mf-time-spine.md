@@ -105,7 +105,7 @@ models:
 
 This time spine YAML file:
 - Defines `date_day` as the base column for daily granularity.
-- Adds [tests](/docs/build/tests) for uniqueness and non-null values.
+- Adds [tests](/docs/build/data-tests) for uniqueness and non-null values.
 - Configures `time_spine` properties so MetricFlow can use the table
 
 ### Using an existing dim_date table
@@ -151,7 +151,7 @@ For the time spine table you created, let's run it and validate the output.
    - Contains one row per day.
    - Covers the date range you want (5 years back to 30 days forward)
 
-4. (Optional) If you have [metrics](/docs/build/metrics) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
+4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
    
    Let's say you have a `revenue` metric defined. You can query the table/metrics using the following command:
 
@@ -249,9 +249,9 @@ Congratulations 🎉! You've set up a time spine and are ready to bring the bene
 Here are some additional resources to help you continue your journey:
 
 - [MetricFlow time spine](/docs/build/metricflow-time-spine)
-- [dbt Semantic Layer](/docs/use-dbt-semantic-layer)
-- [Build metrics](/docs/build/metrics)
-- [Quickstart with dbt Semantic Layer](/guides/quickstart-dbt-semantic-layer)
+- [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl)
+- [Build metrics](/docs/build/metrics-overview)
+- [Quickstart with dbt Semantic Layer](/guides/sl-snowflake-qs?step=1)
 
 </ConfettiTrigger>
 
