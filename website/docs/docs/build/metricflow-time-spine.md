@@ -10,7 +10,13 @@ tags: [Metrics, Semantic Layer]
 
 It's common in analytics engineering to have a date dimension or "time spine" table as a base table for different types of time-based joins and aggregations. The structure of this table is typically a base column of daily or hourly dates, with additional columns for other time grains, like fiscal quarters, defined based on the base column. You can join other tables to the time spine on the base column to calculate metrics like revenue at a point in time, or to aggregate to a specific time grain.
 
-MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. MetricFlow will join against the time-spine model for the following types of metrics and dimensions:
+## Prerequisites
+MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins:
+
+- At least one time spine table &mdash; Define one [time spine table](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
+- YAML configuration &mdash; Configure each time spine table in a YAML file to define how MetricFlow recognizes and uses its columns.
+
+ MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
 
 - [Cumulative metrics](/docs/build/cumulative)
 - [Metric offsets](/docs/build/derived#derived-metric-offset)
@@ -18,7 +24,7 @@ MetricFlow requires you to define at least one dbt model which provides a time-s
 - [Slowly Changing Dimensions](/docs/build/dimensions#scd-type-ii)
 - [Metrics](/docs/build/metrics-overview) with the `join_to_timespine` configuration set to true
 
-To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=True` flag when querying the Semantic Layer to return the compiled SQL.
+To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=true` flag when querying the Semantic Layer to return the compiled SQL.
 
 ## Configuring time spine in YAML
 
