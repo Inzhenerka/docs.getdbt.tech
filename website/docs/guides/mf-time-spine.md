@@ -3,7 +3,7 @@ title: "Quickstart with MetricFlow time spine"
 id: "mf-time-spine"
 level: 'Intermediate'
 icon: 'guides'
-tags: ['dbt Cloud','Quickstart']
+tags: ['Quickstart']
 hide_table_of_contents: true
 recently_updated: true
 ---
