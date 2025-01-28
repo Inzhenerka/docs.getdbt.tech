@@ -191,26 +191,3 @@ from {{ source('jaffle_shop', 'orders') }}
 </File>
 </VersionBlock>
 
-##  Using updated_at with check strategy
-
-When using the check strategy, dbt verifies the rows in the source table based on a timestamp column to determine freshness. By default, it uses the `updated_at` column if it's explicitly configured. If the `updated_at` column isn't configured, dbt falls back to using the current timestamp for all rows.
-
-Check out the following example showing how to configure the `updated_at` column for the check strategy:
-
-```yaml
-sources:
-  - name: my_source
-    tables:
-      - name: my_table
-        freshness:
-          warn_after: {count: 12, period: hour}
-          error_after: {count: 24, period: hour}
-          strategy: check
-          updated_at: updated_at_column_name
-```
-
-In this example:
-
-- `strategy`: check tells dbt to use the `updated_at` column for verifying row freshness.
-- `updated_at`: `updated_at_column_name` explicitly sets the column (`pdated_at_column_name`) to be used for the freshness checks.
-If the `updated_at_column_name` column isn't present in the source table, dbt will fall back to the current timestamp for all rows.
