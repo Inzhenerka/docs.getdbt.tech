@@ -319,8 +319,10 @@ var siteSettings = {
       swcJsMinimizer: true,
       swcHtmlMinimizer: true,
       lightningCssMinimizer: true,
-      // rspackBundler: true,
       mdxCrossCompilerCache: true,
+      // rspackBundler currently not working with custom webpack plugin
+      // Disabling custom webpack plugin results in api-v2/v3 pages erroring out
+      // rspackBundler: true,
       // Coming in v3.8.0
       // ssgWorkerThreads: true,
     },
