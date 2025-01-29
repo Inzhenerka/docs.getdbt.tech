@@ -51,13 +51,17 @@ function QuickstartList({ quickstartData }) {
     // Create a new URLSearchParams object from the current URL search string
     const params = new URLSearchParams(location.search);
 
-    // Remove existing 'tags' and 'level' parameters to avoid duplicates
+    // Remove existing 'tags' and 'level' parameters
     params.delete('tags');
     params.delete('level');
 
-    // Append new 'tags' and 'level' values from the current state
-    selectedTags.forEach(tag => params.append('tags', tag.value));
-    selectedLevel.forEach(level => params.append('level', level.value));
+    // Join multiple tags and levels with commas
+    if (selectedTags.length > 0) {
+      params.set('tags', selectedTags.map(tag => tag.value).join(','));
+    }
+    if (selectedLevel.length > 0) {
+      params.set('level', selectedLevel.map(level => level.value).join(','));
+    }
 
     // Construct the new URL
     const newUrl = `${window.location.pathname}?${params.toString()}`;
@@ -85,11 +89,15 @@ function QuickstartList({ quickstartData }) {
   // This allows the filters to be sharable via URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const tagsFromUrl = params.getAll('tags').map(tag => ({ value: tag, label: tag }));
-    const levelsFromUrl = params.getAll('level').map(level => ({ value: level, label: level }));
+    const tagsFromUrl = params.get('tags')
+      ? params.get('tags').split(',').map(tag => ({ value: tag, label: tag }))
+      : [];
+    const levelsFromUrl = params.get('level')
+      ? params.get('level').split(',').map(level => ({ value: level, label: level }))
+      : [];
     setSelectedTags(tagsFromUrl);
     setSelectedLevel(levelsFromUrl);
-  }, [location.search]); // Added location.search to dependency array
+  }, [location.search]);
 
   useEffect(() => {
     updateUrlParams(selectedTags, selectedLevel);
