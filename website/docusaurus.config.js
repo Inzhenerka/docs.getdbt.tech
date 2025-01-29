@@ -269,7 +269,7 @@ var siteSettings = {
   plugins: [
     [path.resolve("plugins/insertMetaTags"), { metatags }],
     path.resolve("plugins/svg"),
-    // path.resolve("plugins/customWebpackConfig"),
+    path.resolve("plugins/customWebpackConfig"),
     [
       path.resolve("plugins/buildGlobalData"),
       { versionedPages, versionedCategories },
