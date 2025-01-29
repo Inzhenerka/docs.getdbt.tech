@@ -7,7 +7,8 @@
     "test": "npx jest --watch",
     "lint": "eslint --cache",
     "lintAll": "eslint . --fix",
-    "prepare": "cd .. && husky install"
+    "prepare": "cd .. && husky install",
+    "genDocs": "docusaurus gen-api-docs all"
   },
   "dependencies": {
     "@docusaurus/core": "3.7.0",
@@ -25,6 +26,7 @@
     "clsx": "^1.1.1",
     "color": "^3.1.2",
     "core-js": "^3.20.0",
+    "docusaurus-theme-openapi-docs": "^4.3.3",
     "feed": "^4.2.2",
     "file-loader": "^6.2.0",
     "fs": "0.0.2",
