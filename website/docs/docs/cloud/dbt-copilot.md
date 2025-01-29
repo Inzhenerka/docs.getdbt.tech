@@ -6,7 +6,7 @@ pagination_next: "docs/cloud/enable-dbt-copilot"
 pagination_prev: null
 ---
 
-# About dbt Copilot <Lifecycle status='beta'/> 
+# About dbt Copilot <Lifecycle status="enterprise, beta" /> 
 
 dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. dbt Copilot embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 
