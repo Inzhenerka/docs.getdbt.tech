@@ -6,9 +6,9 @@ import Layout from '@theme/Layout';
 import Hero from '@site/src/components/hero';
 import QuickstartGuideCard from '../quickstartGuideCard';
 import styles from './styles.module.css';
-import { SelectDropdown } from '../selectDropdown';
 import SearchInput from '../searchInput';
 import { useHistory, useLocation } from '@docusaurus/router';
+import { CheckboxGroup } from '../checkboxGroup';
 
 const quickstartTitle = 'Guides';
 const quickstartDescription = 'dbt Cloud is the fastest and most reliable way to deploy your dbt jobs and dbt Core is a powerful open-source tool for data transformations. With the help of a sample project, learn how to quickly start using dbt and one of the most common data platforms.';
@@ -146,10 +146,20 @@ function QuickstartList({ quickstartData }) {
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`container ${styles.quickstartFilterContainer} `}>
           {tagOptions && tagOptions.length > 0 && (
-            <SelectDropdown options={tagOptions} onChange={setSelectedTags} value={selectedTags} isMulti placeHolder={'Filter by topic'} />
+            <CheckboxGroup
+              options={tagOptions}
+              selectedValues={selectedTags}
+              onChange={setSelectedTags}
+              label="Filter by topic"
+            />
           )}
           {levelOptions && levelOptions.length > 0 && (
-            <SelectDropdown options={levelOptions} onChange={setSelectedLevel} value={selectedLevel} isMulti placeHolder={'Filter by level'} />
+            <CheckboxGroup
+              options={levelOptions}
+              selectedValues={selectedLevel}
+              onChange={setSelectedLevel}
+              label="Filter by level"
+            />
           )}
           <SearchInput onChange={(value) => setSearchInput(value)} placeholder='Search Guides' />
         </div>

@@ -1,0 +1,39 @@
+.checkboxGroup {
+  padding: 0 !important;
+  gap: 1rem;
+}
+
+.label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
+}
+
+.viewMoreButton {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: #0066cc;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.viewMoreButton:hover {
+  text-decoration: underline;
+} 
