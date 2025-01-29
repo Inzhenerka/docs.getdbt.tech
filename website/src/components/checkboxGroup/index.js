@@ -1,16 +1,30 @@
-import React from 'react';
-import styles from './styles.module.css';
+import React from "react";
+import styles from "./styles.module.css";
 
 export function CheckboxGroup({ options, selectedValues, onChange, label }) {
   const [showAll, setShowAll] = React.useState(false);
-  
+
   const displayedOptions = showAll ? options : options.slice(0, 3);
   const hasMoreOptions = options.length > 3;
 
+  const allSelected = options.length === selectedValues.length;
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      // Deselect all
+      onChange([]);
+    } else {
+      // Select all
+      onChange(options);
+    }
+  };
+
   const handleCheckboxChange = (option) => {
-    const isCurrentlySelected = selectedValues.some(item => item.value === option.value);
+    const isCurrentlySelected = selectedValues.some(
+      (item) => item.value === option.value
+    );
     const newValues = isCurrentlySelected
-      ? selectedValues.filter(item => item.value !== option.value)
+      ? selectedValues.filter((item) => item.value !== option.value)
       : [...selectedValues, option];
     onChange(newValues);
   };
@@ -23,7 +37,9 @@ export function CheckboxGroup({ options, selectedValues, onChange, label }) {
           <label key={option.value} className={styles.checkboxLabel}>
             <input
               type="checkbox"
-              checked={selectedValues.some(item => item.value === option.value)}
+              checked={selectedValues.some(
+                (item) => item.value === option.value
+              )}
               onChange={() => handleCheckboxChange(option)}
               className={styles.checkbox}
             />
@@ -32,13 +48,18 @@ export function CheckboxGroup({ options, selectedValues, onChange, label }) {
         ))}
       </div>
       {hasMoreOptions && (
-        <button 
-          className={styles.viewMoreButton} 
+        <button
+          className={styles.viewMoreButton}
           onClick={() => setShowAll(!showAll)}
         >
-          {showAll ? 'View Less' : `View More (${options.length - 3})`}
+          {showAll ? "- View less" : `+ View more (${options.length - 3})`}
         </button>
       )}
+      <div className={styles.selectAllContainer}>
+        <button className={styles.selectAllButton} onClick={handleSelectAll}>
+          {allSelected ? "Deselect all" : "Select all"}
+        </button>
+      </div>
     </div>
   );
-} 
+}

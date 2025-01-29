@@ -31,7 +31,9 @@
 }
 
 .quickstartFilterContainer  {
-
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .quickstartFilterContainer > div:first-child {

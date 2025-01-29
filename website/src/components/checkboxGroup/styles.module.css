@@ -25,15 +25,35 @@
 }
 
 .viewMoreButton {
-  margin-top: 8px;
   background: none;
-  border: none;
-  color: #0066cc;
   cursor: pointer;
-  padding: 4px 8px;
-  font-size: 14px;
+  padding: 4px 12px;
+  font-size: 16px;
+  border: none;
+  text-decoration: underline;
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-base);
 }
 
 .viewMoreButton:hover {
   text-decoration: underline;
+}
+
+.selectAllContainer {
+  margin-bottom: 0.5rem;
+}
+
+.selectAllButton {
+  background: none;
+  cursor: pointer;
+  padding: 4px 12px;
+  font-size: 16px;
+  border: none;
+  text-decoration: underline;
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-base);
+}
+
+.selectAllButton:hover {
+
 } 
