@@ -251,9 +251,7 @@ var siteSettings = {
           //showLastUpdateAuthor: false,
 
           sidebarCollapsible: true,
-          exclude: [
-            'hover-terms.md'
-          ]
+          exclude: ["hover-terms.md"],
         },
         blog: {
           blogTitle: "Developer Blog | dbt Developer Hub",
@@ -313,6 +311,10 @@ var siteSettings = {
     { rel: "icon", href: "/img/favicon.png", type: "image/png" },
     { rel: "icon", href: "/img/favicon.svg", type: "image/svg+xml" },
   ],
+  future: {
+    v4: true, // opt-in for Docusaurus v4 planned changes
+    experimental_faster: true, // turns Docusaurus Faster on globally
+  },
 };
 
 // If versions json file found, add versions dropdown to nav
