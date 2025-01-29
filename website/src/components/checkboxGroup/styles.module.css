@@ -39,8 +39,11 @@
   text-decoration: underline;
 }
 
-.selectAllContainer {
-  margin-bottom: 0.5rem;
+.buttonContainer {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .selectAllButton {

@@ -66,7 +66,7 @@ function QuickstartList({ quickstartData }) {
   // Handle all filters
   const handleDataFilter = () => {
     const filteredGuides = quickstartData.filter((guide) => {
-      const tagsMatch = selectedTags.length === 0 || (Array.isArray(guide?.data?.tags) && selectedTags.every((tag) =>
+      const tagsMatch = selectedTags.length === 0 || (Array.isArray(guide?.data?.tags) && selectedTags.some((tag) =>
         guide?.data?.tags.includes(tag.value)
       ));
       const levelMatch = selectedLevel.length === 0 || (guide?.data?.level && selectedLevel.some((level) =>
@@ -161,8 +161,8 @@ function QuickstartList({ quickstartData }) {
               label="Filter by level"
             />
           )}
-          <SearchInput onChange={(value) => setSearchInput(value)} placeholder='Search Guides' />
-        </div>
+{/*           <SearchInput onChange={(value) => setSearchInput(value)} placeholder='Search Guides' />
+ */}        </div>
         <div className={`container ${styles.quickstartCardContainer} `}>
           {filteredData && filteredData.length > 0 ? (
             <>

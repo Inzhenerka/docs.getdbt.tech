@@ -47,6 +47,8 @@ export function CheckboxGroup({ options, selectedValues, onChange, label }) {
           </label>
         ))}
       </div>
+
+      <div className={styles.buttonContainer}>
       {hasMoreOptions && (
         <button
           className={styles.viewMoreButton}
@@ -55,7 +57,6 @@ export function CheckboxGroup({ options, selectedValues, onChange, label }) {
           {showAll ? "- View less" : `+ View more (${options.length - 3})`}
         </button>
       )}
-      <div className={styles.selectAllContainer}>
         <button className={styles.selectAllButton} onClick={handleSelectAll}>
           {allSelected ? "Deselect all" : "Select all"}
         </button>
