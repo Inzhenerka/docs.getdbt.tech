@@ -43,7 +43,6 @@
     "react-is": "^18.1.0",
     "react-select": "^5.7.5",
     "react-tooltip": "^4.2.21",
-    "redoc": "^2.3.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^3.0.1",
     "sanitize-html": "^2.8.0",
