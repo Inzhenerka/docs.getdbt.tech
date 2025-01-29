@@ -59,8 +59,11 @@ function QuickstartList({ quickstartData }) {
     selectedTags.forEach(tag => params.append('tags', tag.value));
     selectedLevel.forEach(level => params.append('level', level.value));
 
-    // Update the URL with the new search parameters
-    history.replace({ search: params.toString() });
+    // Construct the new URL
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    // Update the URL without causing a page reload or scroll
+    window.history.pushState({}, '', newUrl);
   };
 
   // Handle all filters
@@ -150,7 +153,7 @@ function QuickstartList({ quickstartData }) {
               options={tagOptions}
               selectedValues={selectedTags}
               onChange={setSelectedTags}
-              label="Choose a topic"
+              label="Filter by topic"
             />
           )}
           {levelOptions && levelOptions.length > 0 && (
@@ -158,7 +161,7 @@ function QuickstartList({ quickstartData }) {
               options={levelOptions}
               selectedValues={selectedLevel}
               onChange={setSelectedLevel}
-              label="Choose a level"
+              label="Choose a topic"
             />
           )}
           <button 

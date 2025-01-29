@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 export function CheckboxGroup({ options, selectedValues, onChange, label }) {
   const [showAll, setShowAll] = React.useState(false);
 
+  // Show all options if showAll is true, otherwise show only a set amount in this case 3
   const displayedOptions = showAll ? options : options.slice(0, 3);
   const hasMoreOptions = options.length > 3;
 
