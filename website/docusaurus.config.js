@@ -312,7 +312,6 @@ var siteSettings = {
     { rel: "icon", href: "/img/favicon.svg", type: "image/svg+xml" },
   ],
   future: {
-    v4: true, // opt-in for Docusaurus v4 planned changes
     experimental_faster: true, // turns Docusaurus Faster on globally
   },
 };
