@@ -268,7 +268,7 @@ var siteSettings = {
   ],
   plugins: [
     [path.resolve("plugins/insertMetaTags"), { metatags }],
-    path.resolve("plugins/customWebpackConfig"),
+    // path.resolve("plugins/customWebpackConfig"),
     [
       path.resolve("plugins/buildGlobalData"),
       { versionedPages, versionedCategories },
@@ -311,7 +311,7 @@ var siteSettings = {
     { rel: "icon", href: "/img/favicon.svg", type: "image/svg+xml" },
   ],
   future: {
-    // Enables Docusaurus Faster
+    // Enables all Docusaurus Faster features
     // experimental_faster: true,
     experimental_faster: {
       swcJsLoader: true,
@@ -321,7 +321,8 @@ var siteSettings = {
       mdxCrossCompilerCache: true,
       // rspackBundler currently not working with custom webpack plugin
       // Disabling custom webpack plugin results in api-v2/v3 pages erroring out
-      // rspackBundler: true,
+      rspackBundler: true,
+
       // Coming in v3.8.0
       // ssgWorkerThreads: true,
     },
