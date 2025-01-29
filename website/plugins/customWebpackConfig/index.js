@@ -21,7 +21,7 @@ module.exports = function customWebpackConfigPlugin() {
               process.versions.node || '0.0.0',
             ),
           }),
-          new NodePolyfillPlugin(),
+          new NodePolyfillPlugin({}),
         ],
         module: {
           rules: [
