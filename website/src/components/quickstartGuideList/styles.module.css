@@ -1,9 +1,11 @@
 .quickstartCardSection {
     display: flex;
+    align-items: flex-start;
     flex-direction: row;
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 .quickstartHero h1 {
@@ -27,18 +29,23 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1rem;
-    padding: 2rem 1rem 5rem;
 }
 
 .quickstartFilterContainer  {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    max-width: 340px;
+    outline: 1px solid #EFF2F3;
+    border-radius: 10px;
+    box-shadow: 0px 11px 24px rgba(138, 138, 138, .1);
+    padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out;
 }
 
-.quickstartFilterContainer > div:first-child {
-    padding: 0;
-}
 
 @media (max-width: 996px) {
     .quickstartCardContainer, .quickstartFilterContainer {
