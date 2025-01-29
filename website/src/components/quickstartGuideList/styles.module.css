@@ -46,6 +46,21 @@
     transition: all 0.2s ease-in-out;
 }
 
+.clearAllFiltersButton {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    margin-top: 16px;
+    color: var(--ifm-font-color-base);
+    font-family: var(--ifm-font-family-base);
+  }
+  
+  .clearAllFiltersButton:hover {
+    background: #f5f5f5;
+  }
+
 
 @media (max-width: 996px) {
     .quickstartCardContainer, .quickstartFilterContainer {

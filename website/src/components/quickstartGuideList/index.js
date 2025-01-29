@@ -161,8 +161,16 @@ function QuickstartList({ quickstartData }) {
               label="Filter by level"
             />
           )}
-{/*           <SearchInput onChange={(value) => setSearchInput(value)} placeholder='Search Guides' />
- */}        </div>
+          <button 
+            className={styles.clearAllFiltersButton}
+            onClick={() => {
+              setSelectedTags([]);
+              setSelectedLevel([]);
+            }}
+          >
+            Clear all
+          </button>
+        </div>
         <div className={`container ${styles.quickstartCardContainer} `}>
           {filteredData && filteredData.length > 0 ? (
             <>
