@@ -26,18 +26,6 @@ export default function QuickstartGuideCard({ frontMatter }) {
       <span to={`/guides/${id}`} className={styles.start}>
         Start <span className={styles.right_arrow}>{rightArrow}</span>
       </span>
-
-      {(tags || level) && (
-        <div className={styles.tag_container}>
-          {tags &&
-            tags.map((tag, i) => (
-              <div className={styles.tag} key={i}>
-                {tag}
-              </div>
-            ))}
-          {level && <div className={styles.tag}>{level}</div>}
-        </div>
-      )}
     </Link>
   );
 }
