@@ -143,7 +143,7 @@ function QuickstartList({ quickstartData }) {
         }))}
         callToActionsTitle={'Popular guides'}
       />
-      <section id='quickstart-card-section'>
+      <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`container ${styles.quickstartFilterContainer} `}>
           {tagOptions && tagOptions.length > 0 && (
             <SelectDropdown options={tagOptions} onChange={setSelectedTags} value={selectedTags} isMulti placeHolder={'Filter by topic'} />

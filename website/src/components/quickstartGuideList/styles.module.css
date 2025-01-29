@@ -1,3 +1,11 @@
+.quickstartCardSection {
+    display: flex;
+    flex-direction: row;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+
 .quickstartHero h1 {
     font-size: clamp(var(--ifm-h1-font-size) * 0.9375, 1vw, var(--ifm-h1-font-size));
     --ifm-h1-font-size: 3rem;
@@ -23,10 +31,7 @@
 }
 
 .quickstartFilterContainer  {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 1rem;
-    padding-top: 4rem;
+
 }
 
 .quickstartFilterContainer > div:first-child {
