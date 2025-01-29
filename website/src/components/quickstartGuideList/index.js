@@ -6,12 +6,37 @@ import Layout from '@theme/Layout';
 import Hero from '@site/src/components/hero';
 import QuickstartGuideCard from '../quickstartGuideCard';
 import styles from './styles.module.css';
-import SearchInput from '../searchInput';
-import { useHistory, useLocation } from '@docusaurus/router';
+import { useLocation } from '@docusaurus/router';
 import { CheckboxGroup } from '../checkboxGroup';
 
 const quickstartTitle = 'Browse our guides';
 const quickstartDescription = 'dbt Cloud is the fastest and most reliable way to deploy your dbt jobs and dbt Core is a powerful open-source tool for data transformations. With the help of a sample project, learn how to quickly start using dbt and one of the most common data platforms.';
+
+// Add these new constants
+const GUIDE_SECTIONS = {
+  RECENT: { title: 'Recently Updated', key: 'recent' },
+  NEWEST: { title: 'Newest', key: 'newest' },
+  MOST_POPULAR: { title: 'Most Popular', key: 'popular' }
+};
+
+// Contains the categorized guides
+const GuideSection = ({ title, guides }) => {
+  if (!guides || guides.length === 0) return null;
+  
+  return (
+    <div className={styles.guideSection}>
+      <h2>{title}</h2>
+      <div className={styles.quickstartCardContainer}>
+        {guides.slice(0, 6).map((guide) => (
+          <QuickstartGuideCard 
+            frontMatter={guide.data} 
+            key={guide.data.id || guide.index} 
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function QuickstartList({ quickstartData }) {
   const { siteConfig } = useDocusaurusContext();
@@ -19,7 +44,6 @@ function QuickstartList({ quickstartData }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  const history = useHistory();
   const location = useLocation();
 
   // Build meta title from quickstartTitle and docusaurus config site title
@@ -109,6 +133,24 @@ function QuickstartList({ quickstartData }) {
     handleDataFilter();
   }, [selectedTags, selectedLevel, searchInput]); // Added searchInput to dependency array
 
+  // Function to organize guides by section
+  const organizedGuides = useMemo(() => {
+    if (selectedTags.length > 0 || selectedLevel.length > 0 || searchInput) {
+      return {
+        filtered: filteredData
+      };
+    }
+
+    return {
+      recent: filteredData.filter(guide => guide.data.recently_updated && guide.data.tags),
+      newest: filteredData
+        .filter(guide => guide.data.date)
+        .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+        .slice(0, 6),
+      popular: filteredData.filter(guide => guide.data.popular).slice(0, 6)
+    };
+  }, [filteredData, selectedTags, selectedLevel, searchInput]);
+
   return (
     <Layout>
       <Head>
@@ -152,16 +194,31 @@ function QuickstartList({ quickstartData }) {
             Clear all
           </button>
         </div>
-        <div className={`container ${styles.quickstartCardContainer} `}>
+        <div>
           {filteredData && filteredData.length > 0 ? (
             <>
-              {filteredData.map((guide) => (
-                <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
-              ))}
+              {!selectedTags.length && !selectedLevel.length && !searchInput ? (
+                <>
+                  {Object.values(GUIDE_SECTIONS).map(({ title, key }) => (
+                    <GuideSection
+                      key={key}
+                      title={title}
+                      guides={organizedGuides[key]}
+                    />
+                  ))}
+                </>
+              ) : (
+                // Show filtered results without sections when filters are applied
+                <div className={styles.quickstartCardContainer}>
+                  {filteredData.map((guide) => (
+                    <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
+                  ))}
+                </div>
+              )}
             </>
-          ) :
+          ) : (
             <p>No quickstarts are available with the selected filters.</p>
-          }
+          )}
         </div>
       </section>
     </Layout>
