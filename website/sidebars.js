@@ -296,17 +296,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/git-commit-signing",
             "docs/cloud/dbt-cloud-ide/lint-format",
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
-            {
-              type: "category",
-              label: "dbt Copilot",
-              link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-              items: [
-                "docs/cloud/dbt-copilot",
-                "docs/cloud/enable-dbt-copilot",
-                "docs/cloud/use-dbt-copilot",
-                "docs/cloud/dbt-copilot-data",
-              ],
-            },
+            "docs/cloud/dbt-cloud-ide/develop-copilot",
           ],
         },
         {
@@ -322,6 +312,18 @@ const sidebarSettings = {
         },
         ],
       },
+      {
+        type: "category",
+        label: "Accelerate with dbt Copilot",
+        collapsed: true,
+        link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+        items: [
+          "docs/cloud/dbt-copilot",
+          "docs/cloud/enable-dbt-copilot",
+          "docs/cloud/use-dbt-copilot",
+          "docs/cloud/dbt-copilot-data",
+          ],
+        },
       {
       type: "category",
       label: "Build dbt projects",

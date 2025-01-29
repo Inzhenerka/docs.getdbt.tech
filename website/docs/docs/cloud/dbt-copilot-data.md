@@ -4,7 +4,7 @@ sidebar_label: "dbt Copilot privacy"
 description: "dbt Copilot is a powerful AI engine to help you deliver data that works." 
 ---
 
-# dbt Copilot privacy and data <Lifecycle status='beta'/>
+# dbt Copilot privacy and data <Lifecycle status="enterprise, beta" /> 
 
 dbt Labs is committed to protecting your privacy and data. This page provides information about how the dbt Copilot AI engine handles your data.
 

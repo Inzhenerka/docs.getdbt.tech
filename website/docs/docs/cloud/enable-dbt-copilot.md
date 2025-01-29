@@ -4,7 +4,7 @@ sidebar_label: "Enable dbt Copilot"
 description: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your development." 
 ---
 
-# Enable dbt Copilot <Lifecycle status='beta'/>
+# Enable dbt Copilot <Lifecycle status="enterprise, beta" /> 
 
 This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging AI to speed up your development and allowing you to focus on delivering quality data.
 
