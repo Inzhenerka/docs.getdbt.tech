@@ -252,7 +252,7 @@ var siteSettings = {
 
           sidebarCollapsible: true,
           exclude: ["hover-terms.md"],
-          docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
+          // docItemComponent: "@theme/ApiItem", // For API Docs
         },
         blog: {
           blogTitle: "Developer Blog | dbt Developer Hub",
@@ -278,22 +278,22 @@ var siteSettings = {
     path.resolve("plugins/buildSpotlightIndexPage"),
     path.resolve("plugins/buildQuickstartIndexPage"),
     path.resolve("plugins/buildRSSFeeds"),
-    [
-      "docusaurus-plugin-openapi-docs",
-      {
-        id: "api", // plugin id
-        docsPluginId: "classic", // configured for preset-classic
-        config: {
-          petstore: {
-            specPath:
-              "https://raw.githubusercontent.com/dbt-labs/dbt-cloud-openapi-spec/master/openapi-v3.yaml",
-            outputDir: "docs/dbt-cloud/api-v3-test",
-          },
-        },
-      },
-    ],
+    // [
+    //   "docusaurus-plugin-openapi-docs",
+    //   {
+    //     id: "api", // plugin id
+    //     docsPluginId: "classic", // configured for preset-classic
+    //     config: {
+    //       petstore: {
+    //         specPath:
+    //           "https://raw.githubusercontent.com/dbt-labs/dbt-cloud-openapi-spec/master/openapi-v3.yaml",
+    //         outputDir: "docs/dbt-cloud/api-v3-test",
+    //       },
+    //     },
+    //   },
+    // ],
   ],
-  themes: ["docusaurus-theme-openapi-docs"],
+  // themes: ["docusaurus-theme-openapi-docs"],
   scripts: [
     {
       src: "https://code.jquery.com/jquery-3.4.1.min.js",
