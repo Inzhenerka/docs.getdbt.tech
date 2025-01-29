@@ -269,7 +269,7 @@ var siteSettings = {
   plugins: [
     [path.resolve("plugins/insertMetaTags"), { metatags }],
     path.resolve("plugins/svg"),
-    path.resolve("plugins/customWebpackConfig"),
+    // path.resolve("plugins/customWebpackConfig"),
     [
       path.resolve("plugins/buildGlobalData"),
       { versionedPages, versionedCategories },
@@ -312,7 +312,18 @@ var siteSettings = {
     { rel: "icon", href: "/img/favicon.svg", type: "image/svg+xml" },
   ],
   future: {
-    experimental_faster: true, // turns Docusaurus Faster on globally
+    // Enables Docusaurus Faster
+    // experimental_faster: true,
+    experimental_faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      // rspackBundler: true,
+      mdxCrossCompilerCache: true,
+      // Coming in v3.8.0
+      // ssgWorkerThreads: true,
+    },
   },
 };
 
