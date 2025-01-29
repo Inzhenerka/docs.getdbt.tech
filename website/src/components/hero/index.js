@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './styles.module.css';
 
-function Hero({ heading, subheading, showGraphic = false, customStyles = {}, classNames = '', colClassNames = '', callToActionsTitle, callToActions = [] }) {
+function Hero({ heading, subheading, showGraphic = false, customStyles = {}, classNames = '', colClassNames = '', callToActionsTitle, callToActions = [], lightBackground = false }) {
   return (
-    <header className={` ${styles.Hero} container-fluid ${classNames ? classNames : ''}`} style={customStyles && customStyles}>
+    <header className={` ${styles.Hero} container-fluid ${lightBackground ? styles.lightBackground : ''} ${classNames ? classNames : ''}`} style={customStyles && customStyles}>
       {showGraphic && (
         <div className={styles.showGraphic}></div>
       )}
