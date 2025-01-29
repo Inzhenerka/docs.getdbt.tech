@@ -150,7 +150,7 @@ function QuickstartList({ quickstartData }) {
               options={tagOptions}
               selectedValues={selectedTags}
               onChange={setSelectedTags}
-              label="Filter by topic"
+              label="Choose a topic"
             />
           )}
           {levelOptions && levelOptions.length > 0 && (
@@ -158,7 +158,7 @@ function QuickstartList({ quickstartData }) {
               options={levelOptions}
               selectedValues={selectedLevel}
               onChange={setSelectedLevel}
-              label="Filter by level"
+              label="Choose a level"
             />
           )}
           <button 
