@@ -252,7 +252,6 @@ var siteSettings = {
 
           sidebarCollapsible: true,
           exclude: ["hover-terms.md"],
-          // docItemComponent: "@theme/ApiItem", // For API Docs
         },
         blog: {
           blogTitle: "Developer Blog | dbt Developer Hub",
