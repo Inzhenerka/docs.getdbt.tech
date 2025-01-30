@@ -13,6 +13,6 @@ import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 
 <CopilotResources/>
 
-## Generate and edit code <Lifecycle status='beta'/>
+## Generate and edit code
 
 <CopilotEditCode/>
