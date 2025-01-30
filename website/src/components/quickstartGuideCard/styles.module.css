@@ -122,6 +122,11 @@
 .leftInfo {
   display: flex;
   align-items: center;
+  gap: 0.375rem
+}
+
+.backButton {
+  color: var(--ifm-menu-color);
 }
 
 .infoContainer .tag_container {

@@ -57,17 +57,8 @@ export function QuickstartGuideTitle({ frontMatter }) {
 
   return (
     <div className={styles.infoContainer}>
+          <Link className={styles.backButton} to="/guides">Back to guides</Link>
       <div className={styles.leftInfo}>
-        <div>
-          <button 
-            onClick={toggleFavorite}
-            className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ''}`}
-            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-          >
-            
-            {getSvgIcon('fa-star')}
-          </button>
-        </div>
         {recently_updated && (
           <span className={styles.recently_updated}>Updated</span>
         )}
@@ -89,6 +80,16 @@ export function QuickstartGuideTitle({ frontMatter }) {
           {level && <div className={styles.tag}>{level}</div>}
         </div>
       )}
+              <div>
+          <button 
+            onClick={toggleFavorite}
+            className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ''}`}
+            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          >
+            
+            {getSvgIcon('fa-star')}
+          </button>
+        </div>
     </div>
   );
 }
