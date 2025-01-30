@@ -22,9 +22,9 @@ const GuideSection = ({ title, guides }) => {
   
   return (
     <div className={styles.guideSection}>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
       <div className={styles.quickstartCardContainer}>
-        {guides.slice(0, 6).map((guide) => (
+        {guides.map((guide) => (
           <QuickstartGuideCard 
             frontMatter={guide.data} 
             key={guide.data.id || guide.index} 
