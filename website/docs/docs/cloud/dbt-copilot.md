@@ -12,7 +12,7 @@ dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integ
 
 With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), and [semantic models](/docs/build/semantic-models) for you with the click of a button.
 
-<!-->
+<!--
 :::tip Beta feature
 dbt Copilot is designed to _help_ developers generate documentation, tests, and semantic models, as well as [code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, in dbt Cloud. It's available in beta, in the dbt Cloud IDE only.
 
