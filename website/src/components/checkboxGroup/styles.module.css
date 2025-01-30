@@ -19,11 +19,42 @@
 .checkboxLabel {
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
   cursor: pointer;
 }
 
 .checkbox {
-  margin-right: 0.5rem;
+  /* Hide the default checkbox */
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #6B7280;
+  border-radius: 4px;
+  margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-color: #6B7280; 
+  border-color: #6B7280;
+}
+
+.checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox:hover {
+  border-color: #6B7280;
 }
 
 .viewMoreButton {

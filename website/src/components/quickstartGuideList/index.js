@@ -87,8 +87,13 @@ function QuickstartList({ quickstartData }) {
       params.set('level', selectedLevel.map(level => level.value).join(','));
     }
 
-    // Construct the new URL
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    // Get the query string
+    const queryString = params.toString();
+
+    // Construct the new URL - only add '?' if there are actually query parameters
+    const newUrl = queryString 
+      ? `${window.location.pathname}?${queryString}`
+      : window.location.pathname;
 
     // Update the URL without causing a page reload or scroll
     window.history.pushState({}, '', newUrl);
