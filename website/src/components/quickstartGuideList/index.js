@@ -123,9 +123,15 @@ function QuickstartList({ quickstartData }) {
   };
 
   const handleDataFilter = () => {
+    // If no filters are selected, reset to original data
+    if (Object.values(selectedFilters).every(selected => !selected?.length)) {
+      setFilteredData(quickstartData);
+      return;
+    }
+
     const filteredGuides = quickstartData.filter((guide) => {
       return Object.entries(selectedFilters).every(([filterKey, selected]) => {
-        if (selected.length === 0) return true;
+        if (!selected?.length) return true;
         
         const config = FILTER_CONFIGS[filterKey];
         const guideValue = guide?.data?.[config.frontMatterKey];
@@ -181,16 +187,16 @@ function QuickstartList({ quickstartData }) {
       };
     }
 
-    // Create an object with keys for each category
+    // When no filters are active, use the original quickstartData instead of filteredData
     return CONFIG?.categories?.reduce((acc, category) => {
       return {
         ...acc,
-        [normalizeTitle(category.title)]: filteredData.filter(guide => 
+        [normalizeTitle(category.title)]: quickstartData.filter(guide => 
           category.guides?.includes(guide.data.id)
         )
       };
     }, {}) || {};
-  }, [filteredData, selectedFilters]);
+  }, [filteredData, selectedFilters, quickstartData]);
 
   return (
     <Layout>
@@ -228,7 +234,10 @@ function QuickstartList({ quickstartData }) {
           ))}
           <button 
             className={styles.clearAllFiltersButton}
-            onClick={() => setSelectedFilters({})}
+            onClick={() => {
+              setSelectedFilters({});
+              setFilteredData(quickstartData); // Reset filteredData to original data
+            }}
           >
             Clear all
           </button>
@@ -236,7 +245,8 @@ function QuickstartList({ quickstartData }) {
         <div>
           {filteredData && filteredData.length > 0 ? (
             <>
-              {!Object.keys(selectedFilters).length ? (
+              {Object.values(selectedFilters).every(selected => !selected?.length) ? (
+                // Show categorized view when no filters are selected
                 <>
                   {CONFIG?.categories?.map((category) => (
                     <GuideSection
