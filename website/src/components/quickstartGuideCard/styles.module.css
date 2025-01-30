@@ -209,5 +209,14 @@
   color: #ffd700;
 }
 
-
-
+.copy-popup {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #047377;
+  color: rgb(236, 236, 236);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 9999;
+}

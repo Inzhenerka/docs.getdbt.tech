@@ -53,11 +53,43 @@ export function QuickstartGuideTitle({ frontMatter }) {
     }
     
     setIsFavorite(!isFavorite);
+
+    // Remove existing popup if it exists
+    const existingPopup = document.querySelector('.copy-popup');
+    if (existingPopup) {
+      document.body.removeChild(existingPopup);
+    }
+
+    // Create and show the popup
+    const popup = document.createElement('div');
+    popup.classList.add('copy-popup');
+    popup.innerText = isFavorite ? 'Guide removed from favorites!' : 'Guide added to favorites!';
+    document.body.appendChild(popup);
+
+    // Add close button
+    const closeButton = document.createElement('span');
+    closeButton.classList.add('close-button');
+    closeButton.innerHTML = ' &times;';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.marginLeft = '8px';
+    closeButton.addEventListener('click', () => {
+      if (document.body.contains(popup)) {
+        document.body.removeChild(popup);
+      }
+    });
+    popup.appendChild(closeButton);
+
+    // Remove popup after 3 seconds
+    setTimeout(() => {
+      if (document.body.contains(popup)) {
+        document.body.removeChild(popup);
+      }
+    }, 3000);
   };
 
   return (
     <div className={styles.infoContainer}>
-          <Link className={styles.backButton} to="/guides">Back to guides</Link>
+      <Link className={styles.backButton} to="/guides">Back to guides</Link>
       <div className={styles.leftInfo}>
         {recently_updated && (
           <span className={styles.recently_updated}>Updated</span>
@@ -80,16 +112,15 @@ export function QuickstartGuideTitle({ frontMatter }) {
           {level && <div className={styles.tag}>{level}</div>}
         </div>
       )}
-              <div>
-          <button 
-            onClick={toggleFavorite}
-            className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ''}`}
-            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-          >
-            
-            {getSvgIcon('fa-star')}
-          </button>
-        </div>
+      <div>
+        <button 
+          onClick={toggleFavorite}
+          className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ''}`}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          {getSvgIcon('fa-star')}
+        </button>
+      </div>
     </div>
   );
 }
