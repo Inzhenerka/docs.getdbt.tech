@@ -65,6 +65,7 @@ function QuickstartList({ quickstartData }) {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
+  const [favorites, setFavorites] = useState([]);
 
   // Replace individual filter states with a single object
   const getFilterOptions = (filterKey) => {
@@ -198,6 +199,15 @@ function QuickstartList({ quickstartData }) {
     }, {}) || {};
   }, [filteredData, selectedFilters, quickstartData]);
 
+  // Add this useEffect to load favorites
+  useEffect(() => {
+    const favoriteIds = JSON.parse(localStorage.getItem('favoriteGuides') || '[]');
+    const favoriteGuides = quickstartData.filter(guide => 
+      favoriteIds.includes(guide.data.id)
+    );
+    setFavorites(favoriteGuides);
+  }, [quickstartData]);
+
   return (
     <Layout>
       <Head>
@@ -249,6 +259,12 @@ function QuickstartList({ quickstartData }) {
               {Object.values(selectedFilters).every(selected => !selected?.length) ? (
                 // Show categorized view when no filters are selected
                 <>
+                  {favorites.length > 0 && (
+                    <GuideSection
+                      title="Favorites"
+                      guides={favorites}
+                    />
+                  )}
                   {CONFIG?.categories?.map((category) => (
                     <GuideSection
                       key={normalizeTitle(category.title)}
