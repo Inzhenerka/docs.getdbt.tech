@@ -7,12 +7,9 @@ categories:
       - athena
       - azure-synapse-analytics
       - bigquery
-  - title: New
-    guides:
-      - adapter-creation
-      - guide-id-3
   - title: Most popular
     guides:
-      - guide-id-4
-      - guide-id-5
+      - core-to-cloud-3
+      - set-up-your-databricks-dbt-project
+      - debug-errors
 --- 
