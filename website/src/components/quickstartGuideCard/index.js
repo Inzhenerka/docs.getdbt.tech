@@ -17,7 +17,7 @@ export default function QuickstartGuideCard({ frontMatter }) {
       )}
       {icon && getIconType(icon, styles.icon)}
 
-      <h3>{title}</h3>
+      <p>{title}</p>
 
       {time_to_complete && (
         <span className={styles.time_to_complete}>{time_to_complete}</span>

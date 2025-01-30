@@ -177,7 +177,7 @@ function QuickstartList({ quickstartData }) {
               options={tagOptions}
               selectedValues={selectedTags}
               onChange={setSelectedTags}
-              label="Filter by topic"
+              label="Choose a topic"
             />
           )}
           {levelOptions && levelOptions.length > 0 && (
