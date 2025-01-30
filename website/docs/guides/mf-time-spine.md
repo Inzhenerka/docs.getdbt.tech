@@ -90,7 +90,7 @@ Now that you've created the SQL file, configure it in YAML so MetricFlow can rec
 ```yaml
 models:
   - name: time_spine_daily
-    description: A time spine with one row per day, ranging from 2000-01-01 to 2030-01-01.
+    description: A time spine with one row per day, ranging from 5 years in the past to 30 days into the future.
     time_spine:
       standard_granularity_column: date_day  # The base column used for time joins
     columns:
