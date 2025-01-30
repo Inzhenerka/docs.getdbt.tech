@@ -8,7 +8,7 @@ import CopilotResources from '/snippets/_use-copilot-resources.md';
 import CopilotEditCode from '/snippets/_use-copilot-edit-code.md';
 import CopilotVE from '/snippets/_use-copilot-ve.md';
 
-# Use dbt Copilot <Lifecycle status="enterprise, beta" /> 
+# Use dbt Copilot <Lifecycle status="enterprise" /> 
 
 Use dbt Copilot to generate documentation, tests, semantic models, and code from scratch, giving you the flexibility to modify or fix generated code.
 
@@ -22,7 +22,7 @@ This page explains how to use dbt Copilot to:
 
 <CopilotResources/>
 
-## Generate and edit SQL inline <Lifecycle status='beta'/>
+## Generate and edit SQL inline
 
 <CopilotEditCode/>
 
