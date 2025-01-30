@@ -55,11 +55,18 @@
     margin-top: 16px;
     color: var(--ifm-font-color-base);
     font-family: var(--ifm-font-family-base);
+    font-size: 1rem;
   }
   
   .clearAllFiltersButton:hover {
-    background: #f5f5f5;
+    background: #067377;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
   }
+
+    [data-theme='dark'] .clearAllFiltersButton {
+    color: #fff;
+    }
 
   .guideSection {
     margin-bottom: 2rem;
