@@ -8,15 +8,12 @@ import QuickstartGuideCard from '../quickstartGuideCard';
 import styles from './styles.module.css';
 import { useLocation } from '@docusaurus/router';
 import { CheckboxGroup } from '../checkboxGroup';
+import { frontMatter as CONFIG } from '@site/docs/guides/_config.md?raw';
 
-const quickstartTitle = 'Browse our guides';
-const quickstartDescription = 'dbt Cloud is the fastest and most reliable way to deploy your dbt jobs and dbt Core is a powerful open-source tool for data transformations. With the help of a sample project, learn how to quickly start using dbt and one of the most common data platforms.';
-
-// Add these new constants
-const GUIDE_SECTIONS = {
-  RECENT: { title: 'Recently Updated', key: 'recent' },
-  NEWEST: { title: 'Newest', key: 'newest' },
-  MOST_POPULAR: { title: 'Most Popular', key: 'popular' }
+// Helper function to normalize title into a key
+// Eliminates the need to manually update the key for each category
+const normalizeTitle = (title) => {
+  return title.toLowerCase().replace(/\s+/g, '-');
 };
 
 // Contains the categorized guides
@@ -40,14 +37,17 @@ const GuideSection = ({ title, guides }) => {
 
 function QuickstartList({ quickstartData }) {
   const { siteConfig } = useDocusaurusContext();
+  
+  const title = CONFIG?.title;
+  const description = CONFIG?.description;
+  
+  const metaTitle = `${title}${siteConfig?.title ? ` | ${siteConfig.title}` : ''}`;
+
   const [filteredData, setFilteredData] = useState(() => quickstartData);
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
-
-  // Build meta title from quickstartTitle and docusaurus config site title
-  const metaTitle = `${quickstartTitle}${siteConfig?.title ? ` | ${siteConfig.title}` : ''}`;
 
   // UseMemo to prevent re-rendering on every filter change
   // Get tag options
@@ -141,14 +141,15 @@ function QuickstartList({ quickstartData }) {
       };
     }
 
-    return {
-      recent: filteredData.filter(guide => guide.data.recently_updated && guide.data.tags),
-      newest: filteredData
-        .filter(guide => guide.data.date)
-        .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
-        .slice(0, 6),
-      popular: filteredData.filter(guide => guide.data.popular).slice(0, 6)
-    };
+    // Create an object with keys for each category
+    return CONFIG?.categories?.reduce((acc, category) => {
+      return {
+        ...acc,
+        [normalizeTitle(category.title)]: filteredData.filter(guide => 
+          category.guides?.includes(guide.data.id)
+        )
+      };
+    }, {}) || {};
   }, [filteredData, selectedTags, selectedLevel, searchInput]);
 
   return (
@@ -156,11 +157,14 @@ function QuickstartList({ quickstartData }) {
       <Head>
         <title>{metaTitle}</title>
         <meta property="og:title" content={metaTitle} />
-        <meta property="og:description" content={quickstartDescription} />
+        <meta 
+          property="og:description" 
+          content={description} 
+        />
       </Head>
       <Hero
-        heading={quickstartTitle}
-        subheading={quickstartDescription}
+        heading={title}
+        subheading={description}
         showGraphic={false}
         customStyles={{ marginBottom: 0 }}
         classNames={styles.quickstartHero}
@@ -199,11 +203,11 @@ function QuickstartList({ quickstartData }) {
             <>
               {!selectedTags.length && !selectedLevel.length && !searchInput ? (
                 <>
-                  {Object.values(GUIDE_SECTIONS).map(({ title, key }) => (
+                  {CONFIG?.categories?.map((category) => (
                     <GuideSection
-                      key={key}
-                      title={title}
-                      guides={organizedGuides[key]}
+                      key={normalizeTitle(category.title)}
+                      title={category.title}
+                      guides={organizedGuides[normalizeTitle(category.title)]}
                     />
                   ))}
                 </>
