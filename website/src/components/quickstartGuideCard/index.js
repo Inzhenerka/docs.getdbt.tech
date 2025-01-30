@@ -65,7 +65,7 @@ export function QuickstartGuideTitle({ frontMatter }) {
             aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
             
-            {getSvgIcon('fa-star-solid')}
+            {getSvgIcon('fa-star')}
           </button>
         </div>
         {recently_updated && (
