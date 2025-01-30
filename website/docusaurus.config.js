@@ -269,7 +269,7 @@ var siteSettings = {
   ],
   plugins: [
     [path.resolve("plugins/insertMetaTags"), { metatags }],
-    // path.resolve("plugins/customWebpackConfig"),
+    path.resolve("plugins/customWebpackConfig"),
     [
       path.resolve("plugins/buildGlobalData"),
       { versionedPages, versionedCategories },
@@ -278,22 +278,7 @@ var siteSettings = {
     path.resolve("plugins/buildSpotlightIndexPage"),
     path.resolve("plugins/buildQuickstartIndexPage"),
     path.resolve("plugins/buildRSSFeeds"),
-    // [
-    //   "docusaurus-plugin-openapi-docs",
-    //   {
-    //     id: "api", // plugin id
-    //     docsPluginId: "classic", // configured for preset-classic
-    //     config: {
-    //       petstore: {
-    //         specPath:
-    //           "https://raw.githubusercontent.com/dbt-labs/dbt-cloud-openapi-spec/master/openapi-v3.yaml",
-    //         outputDir: "docs/dbt-cloud/api-v3-test",
-    //       },
-    //     },
-    //   },
-    // ],
   ],
-  // themes: ["docusaurus-theme-openapi-docs"],
   scripts: [
     {
       src: "https://code.jquery.com/jquery-3.4.1.min.js",
@@ -337,7 +322,10 @@ var siteSettings = {
       mdxCrossCompilerCache: true,
       // rspackBundler currently not working with custom webpack plugin
       // Disabling custom webpack plugin results in api-v2/v3 pages erroring out
-      rspackBundler: true,
+      // Rspack has a way to use the same Node polyfill used in webpack plugin
+      // https://v0.rspack.dev/guide/tech/nodejs
+      // Need to find a way to replace webpack plugin with custom Rspack plugin
+      // rspackBundler: true,
 
       // Coming in v3.8.0
       // ssgWorkerThreads: true,
