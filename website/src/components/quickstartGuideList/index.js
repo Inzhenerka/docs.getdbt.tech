@@ -35,6 +35,24 @@ const GuideSection = ({ title, guides }) => {
   )
 }
 
+// New filters can be added here following the same pattern as tags and level
+// Please reach out to the web team if you have questions
+const FILTER_CONFIGS = {
+  tags: {
+    urlParam: 'tags',
+    frontMatterKey: 'tags',
+    label: 'Choose a topic',
+    isArray: true, // tags is an array in frontmatter
+  },
+  level: {
+    urlParam: 'level',
+    frontMatterKey: 'level',
+    label: 'Choose a level',
+    isArray: false, // level is a single string in frontmatter
+  },
+  
+};
+
 function QuickstartList({ quickstartData }) {
   const { siteConfig } = useDocusaurusContext();
   
@@ -44,103 +62,120 @@ function QuickstartList({ quickstartData }) {
   const metaTitle = `${title}${siteConfig?.title ? ` | ${siteConfig.title}` : ''}`;
 
   const [filteredData, setFilteredData] = useState(() => quickstartData);
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState({});
   const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
 
-  // UseMemo to prevent re-rendering on every filter change
-  // Get tag options
-  // Populated from the tags frontmatter array
-  const tagOptions = useMemo(() => {
-    const tags = new Set();
-    quickstartData.forEach(guide =>
-      guide?.data?.tags?.forEach(tag => tags.add(tag))
-    );
-    // Sort alphabetically
-    return Array.from(tags).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())).map(tag => ({ value: tag, label: tag }));
+  // Replace individual filter states with a single object
+  const getFilterOptions = (filterKey) => {
+    const config = FILTER_CONFIGS[filterKey];
+    const values = new Set();
+    
+    quickstartData.forEach(guide => {
+      const frontMatterValue = guide?.data?.[config.frontMatterKey];
+      if (config.isArray) {
+        frontMatterValue?.forEach(value => values.add(value));
+      } else if (frontMatterValue) {
+        values.add(frontMatterValue);
+      }
+    });
+    
+    return Array.from(values)
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .map(value => ({ value, label: value }));
+  };
+
+  // Memoize filter options to prevent unnecessary recalculations
+  const filterOptions = useMemo(() => {
+    // Iterate through each filter type (tags, level, etc.) defined in FILTER_CONFIGS
+    return Object.keys(FILTER_CONFIGS).reduce((acc, filterKey) => ({
+      ...acc,
+      // For each filter type, generate an array of available options
+      // by calling getFilterOptions which extracts unique values from quickstartData
+      [filterKey]: getFilterOptions(filterKey)
+    }), {});
   }, [quickstartData]);
 
-  // Get level options
-  // Populated by the level frontmatter string
-  const levelOptions = useMemo(() => {
-    const levels = new Set();
-    quickstartData.forEach(guide =>
-      guide?.data?.level && levels.add(guide.data.level)
-    );
-    return Array.from(levels).map(level => ({ value: level, label: level }));
-  }, [quickstartData]);
-
-  const updateUrlParams = (selectedTags, selectedLevel) => {
-    // Create a new URLSearchParams object from the current URL search string
+  const updateUrlParams = (filters) => {
     const params = new URLSearchParams(location.search);
+    
+    // Clear existing filter params
+    Object.keys(FILTER_CONFIGS).forEach(key => {
+      params.delete(FILTER_CONFIGS[key].urlParam);
+    });
 
-    // Remove existing 'tags' and 'level' parameters
-    params.delete('tags');
-    params.delete('level');
+    // Add new filter params
+    Object.entries(filters).forEach(([key, selected]) => {
+      if (selected?.length > 0) {
+        params.set(
+          FILTER_CONFIGS[key].urlParam,
+          selected.map(item => item.value).join(',')
+        );
+      }
+    });
 
-    // Join multiple tags and levels with commas
-    if (selectedTags.length > 0) {
-      params.set('tags', selectedTags.map(tag => tag.value).join(','));
-    }
-    if (selectedLevel.length > 0) {
-      params.set('level', selectedLevel.map(level => level.value).join(','));
-    }
-
-    // Get the query string
     const queryString = params.toString();
-
-    // Construct the new URL - only add '?' if there are actually query parameters
     const newUrl = queryString 
       ? `${window.location.pathname}?${queryString}`
       : window.location.pathname;
 
-    // Update the URL without causing a page reload or scroll
     window.history.pushState({}, '', newUrl);
   };
 
-  // Handle all filters
   const handleDataFilter = () => {
     const filteredGuides = quickstartData.filter((guide) => {
-      const tagsMatch = selectedTags.length === 0 || (Array.isArray(guide?.data?.tags) && selectedTags.some((tag) =>
-        guide?.data?.tags.includes(tag.value)
-      ));
-      const levelMatch = selectedLevel.length === 0 || (guide?.data?.level && selectedLevel.some((level) =>
-        guide?.data?.level === level.value
-      ));
-      const titleMatch = searchInput === '' || guide?.data?.title?.toLowerCase().includes(searchInput.toLowerCase());
-      return tagsMatch && levelMatch && titleMatch;
+      return Object.entries(selectedFilters).every(([filterKey, selected]) => {
+        if (selected.length === 0) return true;
+        
+        const config = FILTER_CONFIGS[filterKey];
+        const guideValue = guide?.data?.[config.frontMatterKey];
+        
+        if (config.isArray) {
+          return selected.some(item => guideValue?.includes(item.value));
+        }
+        return selected.some(item => guideValue === item.value);
+      });
     });
     setFilteredData(filteredGuides);
   };
 
-  // Reads the current URL params applied and sets the selected tags and levels
-  // This allows the filters to be sharable via URL
+  // Read URL params
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const tagsFromUrl = params.get('tags')
-      ? params.get('tags').split(',').map(tag => ({ value: tag, label: tag }))
-      : [];
-    const levelsFromUrl = params.get('level')
-      ? params.get('level').split(',').map(level => ({ value: level, label: level }))
-      : [];
-    setSelectedTags(tagsFromUrl);
-    setSelectedLevel(levelsFromUrl);
+    const filtersFromUrl = {};
+    
+    // Only add filters that actually exist in the URL
+    Object.keys(FILTER_CONFIGS).forEach(filterKey => {
+      const config = FILTER_CONFIGS[filterKey];
+      const paramValue = params.get(config.urlParam);
+      if (paramValue) {
+        filtersFromUrl[filterKey] = paramValue.split(',').map(value => ({ 
+          value, 
+          label: value 
+        }));
+      }
+    });
+    
+    setSelectedFilters(filtersFromUrl);
   }, [location.search]);
 
   useEffect(() => {
-    updateUrlParams(selectedTags, selectedLevel);
-  }, [selectedTags, selectedLevel]);
+    updateUrlParams(selectedFilters);
+  }, [selectedFilters]);
 
   // Separating out useEffects because we want to run handleDataFilter after the URL params are set
   // Also just good practice to separate out side effects with different functions
   useEffect(() => {
     handleDataFilter();
-  }, [selectedTags, selectedLevel, searchInput]); // Added searchInput to dependency array
+  }, [selectedFilters]);
 
   // Function to organize guides by section
   const organizedGuides = useMemo(() => {
-    if (selectedTags.length > 0 || selectedLevel.length > 0 || searchInput) {
+    // Check if any filters are actually selected (not just initialized)
+    const hasActiveFilters = Object.values(selectedFilters)
+      .some(selected => selected && selected.length > 0);
+
+    if (hasActiveFilters) {
       return {
         filtered: filteredData
       };
@@ -155,7 +190,7 @@ function QuickstartList({ quickstartData }) {
         )
       };
     }, {}) || {};
-  }, [filteredData, selectedTags, selectedLevel, searchInput]);
+  }, [filteredData, selectedFilters]);
 
   return (
     <Layout>
@@ -177,28 +212,23 @@ function QuickstartList({ quickstartData }) {
       />
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`container ${styles.quickstartFilterContainer} `}>
-          {tagOptions && tagOptions.length > 0 && (
-            <CheckboxGroup
-              options={tagOptions}
-              selectedValues={selectedTags}
-              onChange={setSelectedTags}
-              label="Choose a topic"
-            />
-          )}
-          {levelOptions && levelOptions.length > 0 && (
-            <CheckboxGroup
-              options={levelOptions}
-              selectedValues={selectedLevel}
-              onChange={setSelectedLevel}
-              label="Choose a topic"
-            />
-          )}
+          {Object.entries(FILTER_CONFIGS).map(([key, config]) => (
+            filterOptions[key]?.length > 0 && (
+              <CheckboxGroup
+                key={key}
+                options={filterOptions[key]}
+                selectedValues={selectedFilters[key] || []}
+                onChange={(selected) => setSelectedFilters(prev => ({
+                  ...prev,
+                  [key]: selected
+                }))}
+                label={config.label}
+              />
+            )
+          ))}
           <button 
             className={styles.clearAllFiltersButton}
-            onClick={() => {
-              setSelectedTags([]);
-              setSelectedLevel([]);
-            }}
+            onClick={() => setSelectedFilters({})}
           >
             Clear all
           </button>
@@ -206,7 +236,7 @@ function QuickstartList({ quickstartData }) {
         <div>
           {filteredData && filteredData.length > 0 ? (
             <>
-              {!selectedTags.length && !selectedLevel.length && !searchInput ? (
+              {!Object.keys(selectedFilters).length ? (
                 <>
                   {CONFIG?.categories?.map((category) => (
                     <GuideSection
