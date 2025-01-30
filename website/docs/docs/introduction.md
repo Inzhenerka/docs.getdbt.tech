@@ -7,6 +7,8 @@ pagination_prev: null
 
 <Snippet path="what-is-dbt-intro" />
 
+## Test <Lifecycle status='enterprise'/>
+
 dbt compiles and runs your analytics code against your data platform, enabling you and your team to collaborate on a single source of truth for metrics, insights, and business definitions. This single source of truth, combined with the ability to define tests for your data, reduces errors when logic changes, and alerts you when issues arise.
 
 <Lightbox src="/img/docs/cloud-overview.jpg" width="60%" title="dbt works alongside your ingestion, visualization, and other data tools, so you can transform data directly in your cloud data platform." />
@@ -25,7 +27,8 @@ You can learn about plans and pricing on [www.getdbt.com](https://www.getdbt.com
 
 Learn more about [dbt Cloud features](/docs/cloud/about-cloud/dbt-cloud-features) and try one of the [dbt Cloud quickstarts](/docs/get-started-dbt).
 
-### dbt Core
+### dbt Core <Lifecycle status='beta'/>
+
 
 [dbt Core](/docs/core/about-core-setup) is an open-source tool that enables data practitioners to transform data and is suitable for users who prefer to manually set up dbt and locally maintain it. You can [install dbt Core](/docs/core/installation-overview) through the command line. Learn more with the [quickstart for dbt Core](https://docs.getdbt.com/guides/codespace?step=1).
 
