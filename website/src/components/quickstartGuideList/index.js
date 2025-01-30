@@ -218,6 +218,7 @@ function QuickstartList({ quickstartData }) {
       />
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`container ${styles.quickstartFilterContainer} `}>
+          <h3>Filter by</h3>
           {Object.entries(FILTER_CONFIGS).map(([key, config]) => (
             filterOptions[key]?.length > 0 && (
               <CheckboxGroup
