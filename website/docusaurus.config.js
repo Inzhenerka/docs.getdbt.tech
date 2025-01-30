@@ -321,9 +321,9 @@ var siteSettings = {
       mdxCrossCompilerCache: true,
       // rspackBundler currently not working with custom webpack plugin
       // Disabling custom webpack plugin results in api-v2/v3 pages erroring out
-      // Rspack has a way to use the same Node polyfill used in webpack plugin
-      // https://v0.rspack.dev/guide/tech/nodejs
-      // Need to find a way to replace webpack plugin with custom Rspack plugin
+      // When trying to enable rspackBundler again, we need to:
+      // - Upgrade 'node-polyfill-webpack-plugin' package to latest version
+      // - Update our custom webpack plugin to resolve the errors on api-v2/v3 pages
       // rspackBundler: true,
 
       // Coming in v3.8.0
