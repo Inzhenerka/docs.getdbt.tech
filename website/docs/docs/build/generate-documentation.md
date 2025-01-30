@@ -25,15 +25,15 @@ Generate and view documentation in a couple of ways:
 * **Smaller teams or local development**: Use [dbt Docs](#dbt-docs) to [generate](#generating-project-documentation) and view documentation that contains lineage and metadata for smaller teams or local development. Available for dbt Core users and dbt Cloud developer plans.
 
 
-## Generating project documentation
+## Generate project documentation
 
 Generate documentation for your project by following these steps:
 
 1. Run `dbt docs generate` — this command tells dbt to compile relevant information about your dbt project and warehouse into `manifest.json` and `catalog.json` files, respectively. 
-2. Ensure you've created the models with `dbt run` to view the documentation for all columns, not just those described in your project.
+2. Ensure you've created the models with `dbt run` or `dbt build`to view the documentation for all columns, not just those described in your project.
 3. Run `dbt docs serve` if you're developing locally to use these `.json` files to populate a local website.
 
-To view a resource, its metadata, and what commands are needed in dbt Explorer, refer to [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for more details.
+See [generate metadata](/docs/collaborate/explore-projects#generate-metadata) for details on the commands needed to generate metadata for dbt Explorer.
 
 ### How to view your documentation
 
