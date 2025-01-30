@@ -208,7 +208,7 @@ models:
     ... rest of the daily time spine config ...
 
 - name: time_spine_hourly
-    description: A time spine with one row per hour, ranging from 2000-01-01 to 2030-01-01.
+    description: A time spine with one row per hour, ranging from four years ago to today.
     time_spine:
       standard_granularity_column: date_hour
     columns:
