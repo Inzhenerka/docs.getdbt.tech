@@ -3,16 +3,19 @@ import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
 import getIconType from "../../utils/get-icon-type";
 import getSvgIcon from "../../utils/get-svg-icon";
+import { isRecentlyUpdated } from "../../utils/get-recently-updated";
 
 export default function QuickstartGuideCard({ frontMatter }) {
-  const { id, title, time_to_complete, icon, tags, level, recently_updated } =
+  const { id, title, time_to_complete, icon, last_updated } =
     frontMatter;
 
   const rightArrow = getSvgIcon('fa-arrow-right')
+  
+  const isRecent = isRecentlyUpdated(last_updated);
 
   return (
     <Link to={`/guides/${id}`} className={styles.quickstartCard}>
-      {recently_updated && (
+      {isRecent && (
         <span className={styles.recently_updated}>Updated</span>
       )}
       {icon && getIconType(icon, styles.icon)}
@@ -32,7 +35,7 @@ export default function QuickstartGuideCard({ frontMatter }) {
 
 // Component that handles the information under the title on the quickstart guide page
 export function QuickstartGuideTitle({ frontMatter }) {
-  const { id, time_to_complete, tags, level, recently_updated } = frontMatter;
+  const { id, time_to_complete, tags, level, last_updated } = frontMatter;
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -87,11 +90,13 @@ export function QuickstartGuideTitle({ frontMatter }) {
     }, 3000);
   };
 
+  const isRecent = isRecentlyUpdated(last_updated);
+
   return (
     <div className={styles.infoContainer}>
       <Link className={styles.backButton} to="/guides">Back to guides</Link>
       <div className={styles.leftInfo}>
-        {recently_updated && (
+        {isRecent && (
           <span className={styles.recently_updated}>Updated</span>
         )}
         {time_to_complete && (
