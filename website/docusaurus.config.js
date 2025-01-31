@@ -319,12 +319,7 @@ var siteSettings = {
       swcHtmlMinimizer: true,
       lightningCssMinimizer: true,
       mdxCrossCompilerCache: true,
-      // rspackBundler currently not working with custom webpack plugin
-      // Disabling custom webpack plugin results in api-v2/v3 pages erroring out
-      // When trying to enable rspackBundler again, we need to:
-      // - Upgrade 'node-polyfill-webpack-plugin' package to latest version
-      // - Update our custom webpack plugin to resolve the errors on api-v2/v3 pages
-      // rspackBundler: true,
+      rspackBundler: true,
 
       // Coming in v3.8.0
       // ssgWorkerThreads: true,
