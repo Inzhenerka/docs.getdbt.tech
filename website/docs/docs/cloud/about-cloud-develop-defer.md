@@ -37,10 +37,13 @@ When using defer, it compares artifacts from the most recent successful producti
 
 To enable defer in the dbt Cloud IDE, toggle the **Defer to production** button on the command bar. Once enabled, dbt Cloud will:
 
-1. Pull down the most recent manifest from the Production environment for comparison
-2. Pass the `--defer` flag to the command (for any command that accepts the flag)
+1. Configure deploy jobs across all three staging environments.
 
-For example, if you were to start developing on a new branch with [nothing in your development schema](/reference/node-selection/defer#usage), edit a single model, and run `dbt build -s state:modified` &mdash;  only the edited model would run. Any `{{ ref() }}` functions will point to the production location of the referenced models.
+Once a Staging environment exists in a project, dbt Cloud immediately uses it to resolve cross-project references for downstream projects, without falling back to Production. This ensures that dbt Cloud consistently relies on metadata from the Staging environment, even if no successful runs have occurred in the configured Staging environment.
+
+2. Pass the `--defer` flag to the command (for any command that accepts the flag).
+
+If you were to start developing on a new branch with [nothing in your development schema](/reference/node-selection/defer#usage), edit a single model, and run `dbt build -s state:modified` &mdash;  only the edited model would run. Any `{{ ref() }}` functions will point to the production location of the referenced models.
 
 <Lightbox src="/img/docs/dbt-cloud/defer-toggle.jpg" width="100%" title="Select the 'Defer to production' toggle on the bottom right of the command bar to enable defer in the dbt Cloud IDE."/>
 
