@@ -345,7 +345,7 @@ const sidebarSettings = {
               link: { type: "doc", id: "docs/build/documentation" },
               items: [
                 "docs/build/documentation",
-                "docs/build/generate-documentation",  
+                "docs/build/view-documentation",  
               ],
             },
             "docs/build/snapshots",
