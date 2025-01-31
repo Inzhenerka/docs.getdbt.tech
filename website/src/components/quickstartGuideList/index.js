@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -97,7 +97,7 @@ function QuickstartList({ quickstartData }) {
     }), {});
   }, [quickstartData]);
 
-  const updateUrlParams = (filters) => {
+  const updateUrlParams = useCallback((filters) => {
     const params = new URLSearchParams(location.search);
     
     // Clear existing filter params
@@ -121,9 +121,9 @@ function QuickstartList({ quickstartData }) {
       : window.location.pathname;
 
     window.history.pushState({}, '', newUrl);
-  };
+  }, [location.search]);
 
-  const handleDataFilter = () => {
+  const handleDataFilter = useCallback(() => {
     // If no filters are selected, reset to original data
     if (Object.values(selectedFilters).every(selected => !selected?.length)) {
       setFilteredData(quickstartData);
@@ -144,7 +144,7 @@ function QuickstartList({ quickstartData }) {
       });
     });
     setFilteredData(filteredGuides);
-  };
+  }, [quickstartData, selectedFilters]);
 
   // Read URL params
   useEffect(() => {
@@ -168,13 +168,13 @@ function QuickstartList({ quickstartData }) {
 
   useEffect(() => {
     updateUrlParams(selectedFilters);
-  }, [selectedFilters]);
+  }, [selectedFilters, location.pathname]);
 
   // Separating out useEffects because we want to run handleDataFilter after the URL params are set
   // Also just good practice to separate out side effects with different functions
   useEffect(() => {
     handleDataFilter();
-  }, [selectedFilters]);
+  }, [selectedFilters, quickstartData]);
 
   // Function to organize guides by section
   const organizedGuides = useMemo(() => {
