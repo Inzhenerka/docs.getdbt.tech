@@ -6,12 +6,12 @@ id: "view-documentation"
 
 dbt provides an intuitive and scalable way to write, version-control, and share documentation for your dbt models. You can write [descriptions](/docs/build/documentation#adding-descriptions-to-your-project) (in plain text or markdown) for each resource, and then generate and view documentation to gain shared context for your dbt project.
 
-You can view documentation in a couple of ways, depending on your needs:
+You can view documentation in two complementary ways, depending on your needs:
 
 | Option | Description | Availability |
 |------|-------------|--------------|
 | [**dbt Docs**](#dbt-docs) | Generates a static website with model lineage, metadata, and documentation that can be hosted on S3, Netlify, or your own web server. | dbt Core or dbt Cloud Developer plans |
-| [**dbt Explorer**](/docs/collaborate/explore-projects) | Recommended and the default documentation experience in dbt Cloud which provides a dynamic, real-time interface with richer [metadata](/docs/collaborate/explore-projects#generate-metadata), customizable views, deep insight into your project and resources, and collaborative tools. | dbt Cloud Team or Enterprise plans |
+| [**dbt Explorer**](/docs/collaborate/explore-projects) | Recommended and the default documentation experience in dbt Cloud. Builds on dbt Docs to provide a dynamic, real-time interface with richer [metadata](/docs/collaborate/explore-projects#generate-metadata), customizable views, deep insight into your project and resources, and collaborative tools. | dbt Cloud Team or Enterprise plans |
 
 ## Navigating your documentation
 The following sections describe how to navigate your documentation in dbt Explorer and dbt Docs.
