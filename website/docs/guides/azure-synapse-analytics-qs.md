@@ -5,7 +5,7 @@ level: 'Beginner'
 icon: 'azure-synapse-analytics'
 hide_table_of_contents: true
 tags: ['dbt Cloud','Quickstart']
-recently_updated: true
+last_updated: "2025-10-04"
 ---
 
 <div style={{maxWidth: '900px'}}>
