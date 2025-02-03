@@ -20,18 +20,18 @@
   color: var(--ifm-color-primary);
 } 
 
-:global(.guides-carousel) :global(.slick-slide) {
+.carouselContainer :global(.guides-carousel) :global(.slick-slide) {
     max-width: 400px;
     margin: 0 auto;
 }
   
-:global(.guides-carousel) :global(.slick-slide > div) {
+.carouselContainer :global(.guides-carousel) :global(.slick-slide > div) {
     height: 100%;
     display: flex;
     justify-content: center;
 }
 
-:global(.swiper-button-next.swiper-button-disabled),
-:global(.swiper-button-prev.swiper-button-disabled) {
+.carouselContainer :global(.swiper-button-next.swiper-button-disabled),
+.carouselContainer :global(.swiper-button-prev.swiper-button-disabled) {
     opacity: 0;
 }
