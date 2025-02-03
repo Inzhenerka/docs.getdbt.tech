@@ -167,7 +167,8 @@
 @media (max-width: 996px) {
   .infoContainer {
     gap: 1rem;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
   }
   .infoContainer > * {
     border: none;
