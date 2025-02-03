@@ -30,12 +30,8 @@ To join the private beta, [register your interest](https://docs.google.com/forms
 Before accessing the editor, you should have a dbt Cloud project already set up. This includes a Git repository, data platform connection, environments, and developer credentials. If you don't have this set up, please contact your dbt Cloud Admin.
 
 To access the visual editor:
-- Type in the following URL, replacing the ACCOUNT_ID and ENVIRONMENT_ID with your own account and environment ID: `https://ACCESS_URL/visual-editor/ACCOUNT_ID/env/ENVIRONMENT_ID/`
-  - The environment ID must have had runs that generated catalogs in it.
 
-- For example, if my region is North America multi-tenant, account ID is 10, environment ID with a generated catalog run is 100, my URL should be:
-
-  - `https://cloud.getdbt.com/visual-editor/10/env/100/`
+- Navigate to the left hand side panel and click **Develop**. From the menu, select **Visual Editor**.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Visual editor interface that contains a node toolbar and canvas." />
 
