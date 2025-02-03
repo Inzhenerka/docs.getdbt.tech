@@ -9,6 +9,7 @@ import styles from './styles.module.css';
 import { useLocation } from '@docusaurus/router';
 import { CheckboxGroup } from '../checkboxGroup';
 import { frontMatter as CONFIG } from '@site/docs/guides/_config.md?raw';
+import GuidesCarousel from '@site/src/components/guidesCarousel';
 
 // Helper function to normalize title into a key
 // Eliminates the need to manually update the key for each category
@@ -23,14 +24,18 @@ const GuideSection = ({ title, guides }) => {
   return (
     <div className={styles.guideSection}>
       <h3>{title}</h3>
-      <div className={styles.quickstartCardContainer}>
-        {guides.map((guide) => (
-          <QuickstartGuideCard 
-            frontMatter={guide.data} 
-            key={guide.data.id || guide.index} 
-          />
-        ))}
-      </div>
+      {guides.length > 3 ? (
+        <GuidesCarousel guidesData={guides.map(guide => guide.data)} />
+      ) : (
+        <div className={styles.quickstartCardContainer}>
+          {guides.map((guide) => (
+            <QuickstartGuideCard 
+              frontMatter={guide.data} 
+              key={guide.data.id || guide.index} 
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

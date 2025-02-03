@@ -7,6 +7,7 @@ categories:
       - athena
       - azure-synapse-analytics
       - bigquery
+      - starburst-galaxy
   - title: Most popular
     guides:
       - core-to-cloud-3

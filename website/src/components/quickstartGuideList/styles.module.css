@@ -30,6 +30,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1rem;
+    padding: 1rem 1rem;
 }
 
 .quickstartFilterContainer {
@@ -43,6 +44,8 @@
     display: flex;
     flex-direction: column;
     text-decoration: none !important;
+    position: sticky;
+    top: 10px;
 }
 
 .quickstartFilterContainer h3 {
@@ -77,6 +80,10 @@
 
   .guideSection {
     margin-bottom: 2rem;
+  }
+
+  .guideSection h3 {
+    margin-bottom: 0;
   }
 
 @media (max-width: 996px) {

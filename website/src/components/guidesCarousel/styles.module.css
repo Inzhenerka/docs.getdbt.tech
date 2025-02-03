@@ -1,0 +1,37 @@
+
+.carouselContainer :global(.swiper) {
+  padding: 1rem 1rem;
+}
+
+.carouselContainer :global(.swiper-slide) {
+  height: auto;
+  display: grid;
+  width: calc(33.333% - .5rem) !important;
+}
+
+
+.carouselContainer :global(.swiper-wrapper) {
+  gap: 1rem;
+}
+
+/* Style navigation arrows */
+.carouselContainer :global(.swiper-button-next),
+.carouselContainer :global(.swiper-button-prev) {
+  color: var(--ifm-color-primary);
+} 
+
+:global(.guides-carousel) :global(.slick-slide) {
+    max-width: 400px;
+    margin: 0 auto;
+}
+  
+:global(.guides-carousel) :global(.slick-slide > div) {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+:global(.swiper-button-next.swiper-button-disabled),
+:global(.swiper-button-prev.swiper-button-disabled) {
+    opacity: 0;
+}
