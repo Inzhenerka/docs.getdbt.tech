@@ -31,7 +31,7 @@ Before accessing the editor, you should have a dbt Cloud project already set up.
 
 To access the visual editor:
 
-- Navigate to the left hand side panel and click **Develop**. From the menu, select **Visual Editor**.
+- Navigate to the left hand side panel.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Visual editor." />
 
