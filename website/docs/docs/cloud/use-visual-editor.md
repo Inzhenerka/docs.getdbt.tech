@@ -34,7 +34,7 @@ To access the visual editor:
 - Navigate to the left hand side panel.
 - Click **Develop** and then select **Visual Editor**.
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Visual editor." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/visual-editor.png" width="80%" title="Access Visual Editor by selecting 'Develop' from the navigation menu." />
 
 ## Create a model
 To create a dbt SQL model, click on **Create a new model** and perform the following steps. Note that you can't create source models in the visual editor. This is because you need to have production run with sources already created.
