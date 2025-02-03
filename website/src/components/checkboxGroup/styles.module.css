@@ -90,18 +90,21 @@
 }
 
 .selectAllButton {
-  background: none;
+  padding: 8px 16px;
+  border: 1px solid #6B7280;
+  border-radius: 4px;
+  background: transparent;
   cursor: pointer;
-  font-size: 1rem;
-  border: none;
-  text-decoration: underline;
   color: var(--ifm-font-color-base);
   font-family: var(--ifm-font-family-base);
+  font-size: 1rem;
 }
 
 .selectAllButton:hover {
-  color: rgb(4, 115, 119);
-} 
+  background: #067377;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
 
 [data-theme='dark'] .selectAllButton {
   color: #fff;
