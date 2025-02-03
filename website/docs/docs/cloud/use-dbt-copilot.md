@@ -26,6 +26,10 @@ This page explains how to use dbt Copilot to:
 
 <CopilotEditCode/>
 
-## Generate SQL expressions for models
+## Generate and build models
+
+dbt Copilot seamlessly integrates with the [Visual Editor](/docs/cloud/visual-editor), a drag-and-drop experience that helps you build your visual models, by helping you generate SQL expressions or fully build models using natural language prompts.
+
+Before you being, make sure you can access the [Visual Editor](/docs/cloud/use-visual-editor#access-visual-editor).
 
 <CopilotVE/>
