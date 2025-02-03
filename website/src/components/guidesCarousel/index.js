@@ -6,9 +6,7 @@ import { Navigation } from 'swiper';
 import 'swiper/css/navigation';
 import styles from './styles.module.css';
 
-function GuidesCarousel({ guidesData }) {
-  const showNavigation = guidesData.length > 3;
-
+function GuidesCarousel({ guidesData, showNavigation }) {
   return (
     <div className={styles.carouselContainer}>
       <Swiper

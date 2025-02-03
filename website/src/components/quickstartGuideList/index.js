@@ -24,20 +24,12 @@ const GuideSection = ({ title, guides }) => {
   return (
     <div className={styles.guideSection}>
       <h3>{title}</h3>
-      {guides.length > 3 ? (
-        <GuidesCarousel guidesData={guides.map(guide => guide.data)} />
-      ) : (
-        <div className={styles.quickstartCardContainer}>
-          {guides.map((guide) => (
-            <QuickstartGuideCard 
-              frontMatter={guide.data} 
-              key={guide.data.id || guide.index} 
-            />
-          ))}
-        </div>
-      )}
+      <GuidesCarousel 
+        guidesData={guides.map(guide => guide.data)}
+        showNavigation={guides.length > 3}
+      />
     </div>
-  )
+  );
 }
 
 // New filters can be added here following the same pattern as tags and level
