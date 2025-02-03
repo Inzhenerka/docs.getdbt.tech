@@ -63,6 +63,7 @@ function QuickstartList({ quickstartData }) {
   const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
   const [favorites, setFavorites] = useState([]);
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   // Replace individual filter states with a single object
   const getFilterOptions = (filterKey) => {
@@ -224,31 +225,38 @@ function QuickstartList({ quickstartData }) {
         lightBackground={true}
       />
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
-        <div className={`container ${styles.quickstartFilterContainer} `}>
-          <h3>Filter by</h3>
-          {Object.entries(FILTER_CONFIGS).map(([key, config]) => (
-            filterOptions[key]?.length > 0 && (
-              <CheckboxGroup
-                key={key}
-                options={filterOptions[key]}
-                selectedValues={selectedFilters[key] || []}
-                onChange={(selected) => setSelectedFilters(prev => ({
-                  ...prev,
-                  [key]: selected
-                }))}
-                label={config.label}
-              />
-            )
-          ))}
-          <button 
-            className={styles.clearAllFiltersButton}
-            onClick={() => {
-              setSelectedFilters({});
-              setFilteredData(quickstartData); // Reset filteredData to original data
-            }}
-          >
-            Clear all
-          </button>
+        <div className={`container ${styles.quickstartFilterContainer}`}>
+          <div className={styles.filterHeader} onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
+            <h3>Filter by</h3>
+            <button className={`${styles.expandButton} ${isFilterExpanded ? styles.expanded : ''}`}>
+              <span className={styles.arrow}>▼</span>
+            </button>
+          </div>
+          <div className={`${styles.filterContent} ${isFilterExpanded ? styles.expanded : ''}`}>
+            {Object.entries(FILTER_CONFIGS).map(([key, config]) => (
+              filterOptions[key]?.length > 0 && (
+                <CheckboxGroup
+                  key={key}
+                  options={filterOptions[key]}
+                  selectedValues={selectedFilters[key] || []}
+                  onChange={(selected) => setSelectedFilters(prev => ({
+                    ...prev,
+                    [key]: selected
+                  }))}
+                  label={config.label}
+                />
+              )
+            ))}
+            <button 
+              className={styles.clearAllFiltersButton}
+              onClick={() => {
+                setSelectedFilters({});
+                setFilteredData(quickstartData);
+              }}
+            >
+              Clear all
+            </button>
+          </div>
         </div>
         <div>
           {filteredData && filteredData.length > 0 ? (
