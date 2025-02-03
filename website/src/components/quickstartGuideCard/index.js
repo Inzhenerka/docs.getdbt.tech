@@ -95,7 +95,7 @@ export function QuickstartGuideTitle({ frontMatter }) {
   return (
     <div className={styles.infoContainer}>
       <Link className={styles.backButton} to="/guides">Back to guides</Link>
-      <div className={styles.leftInfo}>
+     
         {isRecent && (
           <span className={styles.recently_updated}>Updated</span>
         )}
@@ -104,7 +104,7 @@ export function QuickstartGuideTitle({ frontMatter }) {
             {getSvgIcon('fa-clock')} {time_to_complete}
           </span>
         )}
-      </div>
+
 
       {(tags || level) && (
         <div className={styles.tag_container}>
