@@ -369,7 +369,7 @@ snapshots:
 
 In this example:
 
-- `check_cols: updated_at` makes sure that only the `updated_at` column triggers new snapshots
+- `check_cols: updated_at` makes sure that only the `updated_at` column triggers new snapshots.
 - If `updated_at` isn’t set, then dbt automatically falls back to [using the current timestamp](#sample-results-for-the-check-strategy) to track changes.
 
 ### Hard deletes (opt-in)
