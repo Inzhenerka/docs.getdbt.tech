@@ -346,14 +346,14 @@ snapshots:
 
 </VersionBlock>
 
-####  Example usage with `check_cols: updated_at`
+####  Example usage with `updated_at`
 
-When using the `check` strategy, dbt tracks changes by comparing values in `check_cols`. You can use an `updated_at` column to detect when a row has changed.
+When using the `check` strategy, dbt tracks changes by comparing values in `check_cols`. By default, dbt uses the timestamp to update `dbt_updated_at`, `dbt_valid_from` and `dbt_valid_to` fields. Optionally you can set an `updated_at` column:
 
-- If `check_cols: updated_at` is set, dbt only tracks changes in that column.
-- If `updated_at` isn't included, dbt defaults to using the current timestamp.
+- If `updated_at` is configured, the `check` strategy uses this column instead, as with the timestamp strategy.
+- If `updated_at` value is null, dbt defaults to using the current timestamp.
 
-Check out the following example, which shows how to use the `check` strategy with `updated_at` using `check_cols`:
+Check out the following example, which shows how to use the `check` strategy with `updated_at`:
 
 ```yaml
 snapshots:
@@ -364,13 +364,16 @@ snapshots:
       unique_key: order_id
       strategy: check
       check_cols:
-        - updated_at
+        - status
+        - is_cancelled
+      updated_at: updated_at
 ```
 
 In this example:
 
-- `check_cols: updated_at` makes sure that only the `updated_at` column triggers new snapshots.
+- If there is any change in at least one of the specified `check_cols`, then a new row is created in the snapshot. If the provided `updated_at` column value is not null, it will be used; otherwise, the timestamp will be used"
 - If `updated_at` isn’t set, then dbt automatically falls back to [using the current timestamp](#sample-results-for-the-check-strategy) to track changes.
+- Use this approach when your `updated_at` column isn't reliable for tracking record updates, but you still want to use it - rather than the snapshot's execution time - whenever row changes are detected.
 
 ### Hard deletes (opt-in)
 
