@@ -9,6 +9,17 @@
   width: calc(33.333% - .5rem) !important;
 }
 
+@media (max-width: 1024px) {
+  .carouselContainer :global(.swiper-slide) {
+    width: calc(50% - .5rem) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .carouselContainer :global(.swiper-slide) {
+    width: 100% !important;
+  }
+}
 
 .carouselContainer :global(.swiper-wrapper) {
   gap: 1rem;

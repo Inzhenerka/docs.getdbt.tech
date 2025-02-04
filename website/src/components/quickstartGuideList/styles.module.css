@@ -26,6 +26,22 @@
     margin: 0 auto;
 }
 
+.quickstartCardWrapper {
+   width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .quickstartCardWrapper {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .quickstartCardWrapper {
+    width: 100%;
+  }
+}
+
 .quickstartCardContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -91,7 +107,7 @@
 
 @media (max-width: 768px) {
     .quickstartCardContainer, .quickstartFilterContainer {
-        grid-template-columns: 1fr;
+        grid-template-columns: 2fr;
     }
 }
 

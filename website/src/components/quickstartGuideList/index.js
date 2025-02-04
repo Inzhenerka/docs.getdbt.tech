@@ -258,7 +258,7 @@ function QuickstartList({ quickstartData }) {
             </button>
           </div>
         </div>
-        <div>
+        <div className={styles.quickstartCardWrapper}>
           {filteredData && filteredData.length > 0 ? (
             <>
               {Object.values(selectedFilters).every(selected => !selected?.length) ? (

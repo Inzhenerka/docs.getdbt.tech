@@ -10,9 +10,18 @@ function GuidesCarousel({ guidesData, showNavigation }) {
   return (
     <div className={styles.carouselContainer}>
       <Swiper
-        slidesPerView={3}
         navigation={showNavigation}
         modules={showNavigation ? [Navigation] : []}
+        slidesPerView={1}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        }}
+
       >
         {guidesData.map((frontMatter) => (
           <SwiperSlide key={frontMatter.id || frontMatter.index}>
