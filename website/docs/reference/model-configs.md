@@ -30,17 +30,35 @@ import ConfigGeneral from '/snippets/_config-description-general.md';
 
 <File name='dbt_project.yml'>
 
+<VersionBlock lastVersion="1.8">
+
 ```yaml
 models:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
     [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
-    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
     [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
-
 ```
 
+</VersionBlock>
 
+<VersionBlock firstVersion="1.9">
+
+```yaml
+models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)[materialized](/reference/resource-configs/materialized): <materialization_name>
+    [+](/reference/resource-configs/plus-prefix)[sql_header](/reference/resource-configs/sql_header): <string>
+    [+](/reference/resource-configs/plus-prefix)[on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+    [+](/reference/resource-configs/plus-prefix)[unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+    [+](/reference/resource-configs/plus-prefix)[batch_size](/reference/resource-configs/batch-size): day | hour | month | year
+    [+](/reference/resource-configs/plus-prefix)[begin](/reference/resource-configs/begin): "<ISO formatted date or datetime (like, "2024-01-15T12:00:00Z")>"
+    [+](/reference/resource-configs/plus-prefix)[lookback](/reference/resource-configs/lookback): <integer>
+    [+](/reference/resource-configs/plus-prefix)[concurrent_batches](/reference/resource-properties/concurrent_batches): true | false
+```
+
+</VersionBlock>
 </File>
 
 </TabItem>
@@ -49,6 +67,24 @@ models:
 <TabItem value="property-yaml">
 
 <File name='models/properties.yml'>
+
+<VersionBlock lastVersion="1.8">
+
+```yaml
+version: 2
+
+models:
+  - name: [<model-name>]
+    config:
+      [materialized](/reference/resource-configs/materialized): <materialization_name>
+      [sql_header](/reference/resource-configs/sql_header): <string>
+      [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # only for materialized views on supported adapters
+      [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+
+```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
 
 ```yaml
 version: 2
@@ -60,17 +96,22 @@ models:
       [sql_header](/reference/resource-configs/sql_header): <string>
       [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views on supported adapters
       [unique_key](/reference/resource-configs/unique_key): <column_name_or_expression>
+      [batch_size](/reference/resource-configs/batch-size): day | hour | month | year
+      [begin](/reference/resource-configs/begin): "<ISO formatted date or datetime (like, "2024-01-15T12:00:00Z")>"
+      [lookback](/reference/resource-configs/lookback): <integer>
+      [concurrent_batches](/reference/resource-properties/concurrent_batches): true | false
 
 ```
-
+</VersionBlock>
 </File>
 
 </TabItem>
 
-
 <TabItem value="config">
 
 <File name='models/<model_name>.sql'>
+
+<VersionBlock lastVersion="1.8">
 
 ```sql
 
@@ -82,6 +123,26 @@ models:
 ) }}
 
 ```
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+```sql
+
+{{ config(
+    [materialized](/reference/resource-configs/materialized)="<materialization_name>",
+    [sql_header](/reference/resource-configs/sql_header)="<string>"
+    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views for supported adapters
+    [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
+    [batch_size](/reference/resource-configs/batch-size)='day' | 'hour' | 'month' | 'year'
+    [begin](/reference/resource-configs/begin)="<ISO formatted date or datetime (like, "2024-01-15T12:00:00Z")>"
+    [lookback](/reference/resource-configs/lookback)= <integer>
+    [concurrent_batches](/reference/resource-properties/concurrent_batches)= true | false
+) }}
+
+```
+
+</VersionBlock>
 
 </File>
 
