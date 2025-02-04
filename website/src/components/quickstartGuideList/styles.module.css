@@ -66,12 +66,20 @@
     background: #fff;
 }
 
+[data-theme='dark'] .quickstartFilterContainer {
+  background: #262A38;
+}
+
 .quickstartFilterContainer h3 {
     font-size: 1.25rem;
     font-weight: 300;
     margin-bottom: 0;
     font-size: 1.25rem;
     color: #262A38;
+}
+
+[data-theme='dark'] .quickstartFilterContainer h3 {
+  color: #fff;
 }
 
 .clearAllFiltersButton {
@@ -93,9 +101,9 @@
     transition: all 0.2s ease-in-out;
   }
 
-    [data-theme='dark'] .clearAllFiltersButton {
+  [data-theme='dark'] .clearAllFiltersButton {
     color: #fff;
-    }
+  }
 
   .guideSection {
     margin-bottom: 2rem;
