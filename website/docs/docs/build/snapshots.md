@@ -373,7 +373,7 @@ In this example:
 
 - If there is any change in at least one of the specified `check_cols`, then a new row is created in the snapshot. If the provided `updated_at` column value is not null, it will be used; otherwise, the timestamp will be used.
 - If `updated_at` isn’t set, then dbt automatically falls back to [using the current timestamp](#sample-results-for-the-check-strategy) to track changes.
-- Use this approach when your `updated_at` column isn't reliable for tracking record updates, but you still want to use it - rather than the snapshot's execution time - whenever row changes are detected.
+- Use this approach when your `updated_at` column isn't reliable for tracking record updates, but you still want to use it &mdash; rather than the snapshot's execution time &mdash; whenever row changes are detected.
 
 ### Hard deletes (opt-in)
 
