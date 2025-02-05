@@ -20,6 +20,10 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "max-age=0, s-maxage=86400 stale-while-revalidate"
         }
       ]
     }
