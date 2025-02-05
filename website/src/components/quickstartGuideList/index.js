@@ -64,6 +64,7 @@ function QuickstartList({ quickstartData }) {
   const location = useLocation();
   const [favorites, setFavorites] = useState([]);
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Replace individual filter states with a single object
   const getFilterOptions = (filterKey) => {
@@ -206,6 +207,18 @@ function QuickstartList({ quickstartData }) {
     setFavorites(favoriteGuides);
   }, [quickstartData]);
 
+  // Scroll listener for mobile filter
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolledUp = window.scrollY < (window.lastScrollY || 0);
+      window.lastScrollY = window.scrollY;
+      setIsScrolled(scrolledUp);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -225,7 +238,7 @@ function QuickstartList({ quickstartData }) {
         lightBackground={true}
       />
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
-        <div className={`container ${styles.quickstartFilterContainer}`}>
+        <div className={`container ${styles.quickstartFilterContainer} ${isScrolled ? styles.scrolled : ''} ${isFilterExpanded ? styles.expanded : ''}`}>
           <div className={styles.filterHeader} onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
             <h3>Filter by</h3>
             <button className={`${styles.expandButton} ${isFilterExpanded ? styles.expanded : ''}`}>

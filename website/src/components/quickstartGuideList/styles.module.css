@@ -64,6 +64,7 @@
     top: 100px;
     z-index: 10;
     background: #fff;
+    transition: top 0.3s ease;
 }
 
 [data-theme='dark'] .quickstartFilterContainer {
@@ -116,6 +117,20 @@
 @media (max-width: 768px) {
     .quickstartCardContainer, .quickstartFilterContainer {
         grid-template-columns: 2fr;
+    }
+
+    .quickstartFilterContainer {
+        padding: 1rem;
+        max-width: 100%;
+        top: 10px;
+    }
+
+    .quickstartFilterContainer.scrolled {
+        top: 100px;
+    }
+
+    .quickstartFilterContainer.expanded {
+        top: 10px !important;
     }
 }
 
