@@ -303,7 +303,7 @@ Given the config, the data test runs on a different Snowflake virtual warehouse 
 
 #### Add a description to generic and singular tests
 
-Starting from dbt v1.9 (and also versionless in dbt Cloud), you can add [descriptions](/reference/resource-properties/description) to both generic and singular tests.
+Starting from dbt v1.9 (and also versionless in dbt Cloud), you can add [descriptions](/reference/resource-properties/data-tests#description) to both generic and singular tests.
 
 For a generic test, add the description inline with the existing YAML:
 
