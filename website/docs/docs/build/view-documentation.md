@@ -4,7 +4,7 @@ description: "Learn how robust documentation for your dbt models helps stakehold
 id: "view-documentation"
 ---
 
-dbt provides an intuitive and scalable way to write, version-control, and share documentation for your dbt models. You can write [descriptions](/docs/build/documentation#adding-descriptions-to-your-project) (in plain text or markdown) for each resource, and then generate and view documentation to gain shared context for your dbt project.
+dbt provides intuitive and scalable tools for viewing your dbt documentation. Detailed documentation is essential for your developers and other stakeholders to gain shared context for your dbt project.
 
 You can view documentation in two complementary ways, depending on your needs:
 
