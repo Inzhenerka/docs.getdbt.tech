@@ -25,7 +25,7 @@ To access dbt Explorer, navigate to the **Explore** option in the dbt Cloud navi
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of dbt Explorer's resource details page and its lineage." />
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Access dbt Explorer from dbt Cloud by clicking Explore in the navigation."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>
 
 </DocCarousel>
 
@@ -82,4 +82,4 @@ dbt Docs was built to make it easy to host on the web. The site is "static," mea
 * Use your own web server like Apache/Nginx
 * If you're on a dbt Cloud Developer plan, see [Build and view your docs with dbt Cloud](/docs/collaborate/build-and-view-your-docs#dbt-docs) to learn how to deploy your documentation site.
 
-Interested in using dbt Explorer for the complete dbt documentation experience, sign up for a free trial of dbt Cloud or contact us. 
+Interested in using dbt Explorer for the complete dbt documentation experience, sign up for a free [dbt Cloud trial](https://www.getdbt.com/signup) or [contact us](https://www.getdbt.com/contact). 
