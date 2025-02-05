@@ -3,7 +3,7 @@ title: "lookback"
 id: "lookback"
 sidebar_label: "lookback"
 resource_types: [models]
-description: "dbt uses `lookback` to determine how many 'batches' of `batch_size` to reprocess when a microbatch incremental model is running incrementally."
+description: "Configure `lookback` to determine how many 'batches' of `batch_size` to reprocess when a dbt microbatch incremental model runs incrementally" 
 datatype: int
 ---
 
