@@ -737,7 +737,6 @@ const sidebarSettings = {
         },
       ],
     },
-
     {
       type: "category",
       label: "dbt Cloud integrations",
@@ -753,7 +752,19 @@ const sidebarSettings = {
           },
           items: [
             "docs/cloud-integrations/active-and-auto-exposures",
-            "docs/cloud-integrations/auto-exposures",
+            {
+              type: "category",
+              label: "Auto exposures",
+              link: {
+                type: "doc",
+                id: "docs/cloud-integrations/auto-exposures",
+              },
+              items: [
+                "docs/cloud-integrations/auto-exposures",
+                "docs/cloud-integrations/auto-exposures-tableau",
+                "docs/cloud-integrations/auto-exposures-pbi",
+              ],
+            },
             "docs/cloud-integrations/active-exposures",
           ],
         },
