@@ -1,5 +1,5 @@
 ---
-title: "Documentation"
+title: "About documentation"
 description: "Learn how good documentation for your dbt models helps stakeholders discover and understand your datasets."
 id: "documentation"
 pagination_next: "docs/build/view-documentation"
@@ -36,8 +36,7 @@ The following sections describe how to [add descriptions](#adding-descriptions-t
 
 ## Adding descriptions to your project
 
-Before generating documentation, you'll need to add [descriptions](/reference/resource-properties/description) to your project resources.
-To add descriptions to your project, use the `description:` key in the same files where you declare [tests](/docs/build/data-tests), like so:
+Before generating documentation, add [descriptions](/reference/resource-properties/description) to your project resources. Add the `description:` key to the same YAML files where you declare [tests](/docs/build/data-tests). For example:
 
 <File name='models/<filename>.yml'>
 
@@ -80,23 +79,24 @@ Generate documentation for your project by following these steps:
 2. Ensure you've created the models with `dbt run` or `dbt build` to view the documentation for all columns, not just those described in your project.
 3. Run the `dbt docs serve` [command](/reference/commands/cmd-docs#dbt-docs-serve) if you're developing locally to use these `.json` files to populate a local website.
 
-After adding descriptions and generating documentation, dbt provides two complementary ways to [view documentation](/docs/build/view-documentation):
+dbt provides two complementary ways to [view documentation](/docs/build/view-documentation), and your descriptions, after it's generated:
 
-- [**dbt Docs**:](/docs/build/view-documentation#dbt-docs) A static documentation site with model lineage, metadata, and documentation that can be hosted on S3, Netlify, or your own web server. Available on dbt Core or dbt Cloud Developer plans.
+- [**dbt Docs**:](/docs/build/view-documentation#dbt-docs) A static documentation site with model lineage, metadata, and documentation that can be hosted on your web server (like S3 or Netlify). Available for dbt Core or dbt Cloud Developer plans.
 - [**dbt Explorer**](/docs/collaborate/explore-projects): Builds upon dbt Docs to provide a dynamic, real-time interface with enhanced metadata, customizable views, deeper project insights, and collaboration tools. Available on dbt Cloud Team or Enterprise plans.
 
-For more details on how to view documentation, see [View documentation](/docs/build/view-documentation).
+See [View documentation](/docs/build/view-documentation) to get the most out of your dbt project's documentation.
 
 ## Using docs blocks
 
-Docs blocks can contain arbitrary markdown, but they must be uniquely named. 
+Docs blocks provide a robust method for documenting models and other resources using Jinja and markdown. Docs block files can contain arbitrary markdown, but they must be uniquely named. 
 
 ### Syntax
-To declare a docs block, use the jinja `docs` tag. Their names may contain:
-- uppercase and lowercase letters (A-Z, a-z)
-- digits (0-9)
-- underscores (_)
-- can't start with a digit.
+To declare a docs block, use the Jinja `docs` tag. Their names may contain:
+
+- Can't start with a digit
+- Uppercase and lowercase letters (A-Z, a-z)
+- Digits (0-9)
+- Underscores (_)
 
 <File name='events.md'>
 
