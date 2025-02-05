@@ -43,7 +43,7 @@ For additional details and instructions on how to explore your lineage, navigate
 
 ### dbt Docs
 
-If you're using the dbt Docs interface, available on dbt Core or dbt Cloud Developer plans, you can navigate to the documentation for a specific model. That might look something like this:
+dbt Docs provides valuable insights into your dbt Core or dbt Cloud Developer plan projects. The interface enables you to navigate to the documentation for specific models. That might look something like this:
 
 <Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/f2221dc-Screen_Shot_2018-08-14_at_6.29.55_PM.png" title="Auto-generated documentation for a dbt model"/>
 
