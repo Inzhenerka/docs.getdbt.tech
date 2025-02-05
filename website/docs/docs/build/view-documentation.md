@@ -59,7 +59,7 @@ In this example, the `fct_subscription_transactions` model only has one direct p
 
 ## Deploying the documentation site
 
-Effortlessly deploy documentation in dbt Explorer or dbt Docs to view your project documentation and make it available to your team to collaborate.
+Effortlessly deploy documentation in dbt Explorer or dbt Docs to make it available to your teams.
 
 :::caution Security
 
