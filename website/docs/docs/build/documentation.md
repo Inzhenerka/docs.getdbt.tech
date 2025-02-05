@@ -92,6 +92,8 @@ Docs blocks provide a robust method for documenting models and other resources u
 
 ### Syntax
 To declare a docs block, use the Jinja `docs` tag. Their names may contain:
+
+- Can't start with a digit
 - Uppercase and lowercase letters (A-Z, a-z)
 - Digits (0-9)
 - Underscores (_)
