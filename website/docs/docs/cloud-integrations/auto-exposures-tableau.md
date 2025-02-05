@@ -1,31 +1,14 @@
 ---
 title: "Auto exposures in Tableau"
 sidebar_label: "Auto exposures in Tableau"
-description: "Import and auto-generate exposures from dashboards and understand how models are used in downstream tools for a richer lineage."
+description: "Import and auto-generate exposures from Tableau dashboards, helping you understand how models are used in downstream tools for a richer downstream lineage"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
 # Auto exposures <Lifecycle status="enterprise" />
 
-As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto exposures integrates natively with Tableau and [auto-generates downstream lineage](#view-auto-exposures) in [dbt Explorer](/docs/collaborate/explore-projects) for a richer experience.
+Auto exposures integrates natively with Tableau and [auto-generates downstream lineage](#view-auto-exposures) in [dbt Explorer](/docs/collaborate/explore-projects) for a richer experience.
 
-Auto exposures help data teams optimize their efficiency and ensure data quality by:
-
-- Helping users understand how their models are used in downstream analytics tools to inform investments and reduce incidents — ultimately building trust and confidence in data products.
-- Importing and auto-generating exposures based on Tableau dashboards, with user-defined curation.
-- Enabling [active exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, improving timeliness and reducing costs. 
-  - Active exposures is essentially a way to ensure that your Tableau extracts are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments)
-  - For more info on the differences between auto-exposures and active exposures, see the next section, [What's the difference between auto exposures and active exposures?](#whats-the-difference-between-auto-exposures-and-active-exposures).
-
-<Expandable alt_header="What's the difference between auto exposures and active exposures?">
-
-| Feature | Auto exposures | Active exposures <Lifecycle status="beta"/> |
-| ---- | ---- | ---- |
-| Purpose | Automatically brings downstream assets (like Tableau workbooks) into your dbt lineage. | Proactively refreshes the underlying data sources (like Tableau extracts) during scheduled dbt jobs. |
-| Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
-| Location  | Exposed in [dbt Explorer](/docs/collaborate/explore-projects) | Exposed in [dbt Cloud scheduler](/docs/deploy/deployments) |
-| Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
-</Expandable>
 
 :::info Tableau Server
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.

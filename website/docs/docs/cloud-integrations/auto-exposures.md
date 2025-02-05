@@ -15,4 +15,21 @@ Auto exposures help data teams optimize their efficiency and ensure data quality
 - Importing and auto-generating exposures based on your BI tools' dashboards, with user-defined curation.
 - Enabling [active exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. 
   - Active exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous section](/docs/cloud-integrations/active-and-auto-exposures) for more info on the differences between auto-exposures and active exposures.
-- 
+
+Select the following card to learn how to set up and view auto exposures in Tableau or Power BI.
+
+<div className="grid--2-col">
+
+<Card
+    title="Auto exposures in Tableau"
+    link="/docs/cloud-integrations/auto-exposures-tableau"
+    body="Import and auto-generate exposures from Tableau dashboards, helping you understand how models are used in downstream tools for a richer downstream lineage."
+    icon="tableau-software"/>
+
+<Card
+    title="Auto exposures in Power BI (preview)"
+    link="/docs/cloud-integrations/auto-exposures-power-bi"
+    body="Import and auto-generate exposures from Power BI dashboards. This helps you understand how models are used in downstream tools for a richer downstream lineage."
+    icon="pbi"/>
+
+</div>
