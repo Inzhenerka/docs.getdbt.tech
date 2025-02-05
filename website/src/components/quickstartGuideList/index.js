@@ -238,7 +238,7 @@ function QuickstartList({ quickstartData }) {
         lightBackground={true}
       />
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
-        <div className={`container ${styles.quickstartFilterContainer} ${isScrolled ? styles.scrolled : ''} ${isFilterExpanded ? styles.expanded : ''}`}>
+        <div className={`${styles.quickstartFilterContainer} ${isScrolled ? styles.scrolled : ''} ${isFilterExpanded ? styles.expanded : ''}`}>
           <div className={styles.filterHeader} onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
             <h3>Filter by</h3>
             <button className={`${styles.expandButton} ${isFilterExpanded ? styles.expanded : ''}`}>

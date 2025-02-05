@@ -6,23 +6,19 @@
 .carouselContainer :global(.swiper-slide) {
   height: auto;
   display: grid;
-  width: calc(33.333% - .5rem) !important;
+  width: fit-content;
 }
 
-@media (max-width: 1024px) {
-  .carouselContainer :global(.swiper-slide) {
-    width: calc(50% - .5rem) !important;
-  }
+.carouselContainer :global(.swiper-pagination) {
+  bottom: -5px;
 }
 
-@media (max-width: 768px) {
-  .carouselContainer :global(.swiper-slide) {
-    width: 100% !important;
-  }
+.carouselContainer :global(.swiper-pagination-bullet) {
+  background: var(--ifm-color-primary);
 }
 
 .carouselContainer :global(.swiper-wrapper) {
-  gap: 1rem;
+
 }
 
 .carouselContainer :global(.swiper-button-next),
@@ -30,18 +26,3 @@
   color: var(--ifm-color-primary);
 } 
 
-.carouselContainer :global(.guides-carousel) :global(.slick-slide) {
-    max-width: 400px;
-    margin: 0 auto;
-}
-  
-.carouselContainer :global(.guides-carousel) :global(.slick-slide > div) {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.carouselContainer :global(.swiper-button-next.swiper-button-disabled),
-.carouselContainer :global(.swiper-button-prev.swiper-button-disabled) {
-    opacity: 0;
-}
