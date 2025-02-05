@@ -95,7 +95,6 @@ To declare a docs block, use the Jinja `docs` tag. Their names may contain:
 - Uppercase and lowercase letters (A-Z, a-z)
 - Digits (0-9)
 - Underscores (_)
-- can't start with a digit.
 
 <File name='events.md'>
 
