@@ -81,8 +81,8 @@
 
 .quickstartCard .recently_updated {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: .5rem;
+  left: 2.5rem;
 }
 
 .quickstartCard .tag_container {
@@ -195,13 +195,34 @@
   fill: currentColor;
 }
 
-.favoriteButton:hover {
+.favoriteButton:hover, .cardFavoriteButton:hover {
   color: var(  --color-green-blue);
 }
 
-.favoriteButton.favorited {
+.favoriteButton.favorited, .cardFavoriteButton.favorited {
   color: #ffd700;
 }
+
+.cardFavoriteButton svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.cardFavoriteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
 
 .copy-popup {
   position: fixed;

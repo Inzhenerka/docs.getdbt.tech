@@ -7,9 +7,55 @@ import { isRecentlyUpdated } from "../../utils/get-recently-updated";
 
 export default function QuickstartGuideCard({ frontMatter }) {
   const { id, title, time_to_complete, icon, last_updated } = frontMatter;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    // Check if this guide is in favorites when component mounts
+    const favorites = JSON.parse(
+      localStorage.getItem("favoriteGuides") || "[]"
+    );
+    setIsFavorite(favorites.includes(id));
+  }, [id]);
+
+  const toggleFavorite = (e) => {
+    // Prevent navigation when clicking the favorite button
+    e.preventDefault();
+    
+    const favorites = JSON.parse(
+      localStorage.getItem("favoriteGuides") || "[]"
+    );
+
+    if (isFavorite) {
+      const newFavorites = favorites.filter((fav) => fav !== id);
+      localStorage.setItem("favoriteGuides", JSON.stringify(newFavorites));
+    } else {
+      favorites.push(id);
+      localStorage.setItem("favoriteGuides", JSON.stringify(favorites));
+    }
+
+    setIsFavorite(!isFavorite);
+
+    // Popup handling code...
+    const existingPopup = document.querySelector(".copy-popup");
+    if (existingPopup) {
+      document.body.removeChild(existingPopup);
+    }
+
+    const popup = document.createElement("div");
+    popup.classList.add("copy-popup");
+    popup.innerText = isFavorite
+      ? "Guide removed from favorites!"
+      : "Guide added to favorites!";
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      if (document.body.contains(popup)) {
+        document.body.removeChild(popup);
+      }
+    }, 3000);
+  };
 
   const rightArrow = getSvgIcon("fa-arrow-right");
-
   const isRecent = isRecentlyUpdated(last_updated);
 
   return (
@@ -17,7 +63,16 @@ export default function QuickstartGuideCard({ frontMatter }) {
       {isRecent && <span className={styles.recently_updated}>Updated</span>}
       {icon && getIconType(icon, styles.icon)}
 
-      <p>{title}</p>
+      <div className={styles.cardHeader}>
+        <p>{title}</p>
+        <button
+          onClick={toggleFavorite}
+          className={`${styles.cardFavoriteButton} ${isFavorite ? styles.favorited : ""}`}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          {getSvgIcon("fa-star")}
+        </button>
+      </div>
 
       {time_to_complete && (
         <span className={styles.time_to_complete}>{time_to_complete}</span>
