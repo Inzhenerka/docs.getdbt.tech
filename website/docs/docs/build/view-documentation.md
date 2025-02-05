@@ -1,6 +1,6 @@
 ---
 title: "View documentation"
-description: "Learn how good documentation for your dbt models helps stakeholders discover and understand your datasets."
+description: "Learn how robust documentation for your dbt models helps stakeholders discover and understand your datasets."
 id: "view-documentation"
 ---
 
