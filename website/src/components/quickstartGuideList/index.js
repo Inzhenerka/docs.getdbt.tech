@@ -10,6 +10,7 @@ import { useLocation } from '@docusaurus/router';
 import { CheckboxGroup } from '../checkboxGroup';
 import { frontMatter as CONFIG } from '@site/docs/guides/_config.md?raw';
 import GuidesCarousel from '@site/src/components/guidesCarousel';
+import SearchInput from '../searchInput';
 
 // Helper function to normalize title into a key
 // Eliminates the need to manually update the key for each category
@@ -123,6 +124,9 @@ function QuickstartList({ quickstartData }) {
   }, [location.search]);
 
   const handleDataFilter = useCallback(() => {
+    // Reset search when filters change
+    setSearchInput('');
+    
     // If no filters are selected, reset to original data
     if (Object.values(selectedFilters).every(selected => !selected?.length)) {
       setFilteredData(quickstartData);
@@ -177,7 +181,19 @@ function QuickstartList({ quickstartData }) {
 
   // Function to organize guides by section
   const organizedGuides = useMemo(() => {
-    // Check if any filters are actually selected (not just initialized)
+    // First check if there's a search term
+    if (searchInput.trim()) {
+      const searchLower = searchInput.toLowerCase();
+      const searchResults = quickstartData.filter((guide) => {
+        const title = guide.data.title?.toLowerCase() || '';
+        return title.includes(searchLower)
+      });
+      return {
+        filtered: searchResults
+      };
+    }
+
+    // Then check if any filters are actually selected
     const hasActiveFilters = Object.values(selectedFilters)
       .some(selected => selected && selected.length > 0);
 
@@ -187,7 +203,7 @@ function QuickstartList({ quickstartData }) {
       };
     }
 
-    // When no filters are active, use the original quickstartData instead of filteredData
+    // When no filters are active and no search term, use the original categorized view
     return CONFIG?.categories?.reduce((acc, category) => {
       return {
         ...acc,
@@ -196,7 +212,7 @@ function QuickstartList({ quickstartData }) {
         )
       };
     }, {}) || {};
-  }, [filteredData, selectedFilters, quickstartData]);
+  }, [filteredData, selectedFilters, quickstartData, searchInput]);
 
   // Add this useEffect to load favorites
   useEffect(() => {
@@ -219,6 +235,11 @@ function QuickstartList({ quickstartData }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle search input
+  const handleSearch = useCallback((searchTerm) => {
+    setSearchInput(searchTerm);
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -236,7 +257,15 @@ function QuickstartList({ quickstartData }) {
         customStyles={{ marginBottom: 0 }}
         classNames={styles.quickstartHero}
         lightBackground={true}
-      />
+      >
+          <SearchInput
+            value={searchInput}
+            onChange={handleSearch}
+            placeholder="Search guides..."
+            className={styles.searchInput}
+          />
+   
+      </Hero>
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`${styles.quickstartFilterContainer} ${isScrolled ? styles.scrolled : ''} ${isFilterExpanded ? styles.expanded : ''}`}>
           <div className={styles.filterHeader} onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
@@ -272,36 +301,45 @@ function QuickstartList({ quickstartData }) {
           </div>
         </div>
         <div className={styles.quickstartCardWrapper}>
-          {filteredData && filteredData.length > 0 ? (
-            <>
-              {Object.values(selectedFilters).every(selected => !selected?.length) ? (
-                // Show categorized view when no filters are selected
-                <>
-                  {favorites.length > 0 && (
-                    <GuideSection
-                      title="Favorites"
-                      guides={favorites}
-                    />
-                  )}
-                  {CONFIG?.categories?.map((category) => (
-                    <GuideSection
-                      key={normalizeTitle(category.title)}
-                      title={category.title}
-                      guides={organizedGuides[normalizeTitle(category.title)]}
-                    />
-                  ))}
-                </>
-              ) : (
-                // Show filtered results without sections when filters are applied
-                <div className={styles.quickstartCardContainer}>
-                  {filteredData.map((guide) => (
-                    <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
-                  ))}
-                </div>
-              )}
-            </>
+          {searchInput.trim() ? (
+            // Show search results
+            organizedGuides.filtered?.length > 0 ? (
+              <div className={styles.quickstartCardContainer}>
+                {organizedGuides.filtered.map((guide) => (
+                  <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
+                ))}
+              </div>
+            ) : (
+              <p>No guides found matching your search.</p>
+            )
+          ) : Object.values(selectedFilters).some(selected => selected?.length > 0) ? (
+            // Show filtered results
+            filteredData.length > 0 ? (
+              <div className={styles.quickstartCardContainer}>
+                {filteredData.map((guide) => (
+                  <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
+                ))}
+              </div>
+            ) : (
+              <p>No quickstarts are available with the selected filters.</p>
+            )
           ) : (
-            <p>No quickstarts are available with the selected filters.</p>
+            // Show categorized view
+            <>
+              {favorites.length > 0 && (
+                <GuideSection
+                  title="Favorites"
+                  guides={favorites}
+                />
+              )}
+              {CONFIG?.categories?.map((category) => (
+                <GuideSection
+                  key={normalizeTitle(category.title)}
+                  title={category.title}
+                  guides={organizedGuides[normalizeTitle(category.title)]}
+                />
+              ))}
+            </>
           )}
         </div>
       </section>
