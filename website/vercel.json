@@ -2,8 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/blog/making-dbt-cloud-api-calls-using-dbt-cloud-cli",
+      {
+      "source": "/blog/dbt-cloud-api-postman-collection-announcement",
       "destination": "/docs/dbt-cloud-apis/overview",
       "permanent": true
     },
