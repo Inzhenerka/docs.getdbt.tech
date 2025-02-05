@@ -37,7 +37,6 @@ The following sections describe how to [add descriptions](#adding-descriptions-t
 ## Adding descriptions to your project
 
 Before generating documentation, add [descriptions](/reference/resource-properties/description) to your project resources. Add the `description:` key to the same YAML files where you declare [tests](/docs/build/data-tests). For example:
-To add descriptions to your project, use the `description:` key in the same files where you declare [tests](/docs/build/data-tests), like so:
 
 <File name='models/<filename>.yml'>
 
