@@ -132,7 +132,7 @@ models:
 {{ config(
     [materialized](/reference/resource-configs/materialized)="<materialization_name>",
     [sql_header](/reference/resource-configs/sql_header)="<string>"
-    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail #only for materialized views for supported adapters
+    [on_configuration_change](/reference/resource-configs/on_configuration_change): apply | continue | fail # Only for materialized views for supported adapters
     [unique_key](/reference/resource-configs/unique_key)='column_name_or_expression'
     [batch_size](/reference/resource-configs/batch-size)='day' | 'hour' | 'month' | 'year'
     [begin](/reference/resource-configs/begin)="<ISO formatted date or datetime (like, "2024-01-15T12:00:00Z")>"
