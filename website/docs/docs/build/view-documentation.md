@@ -32,7 +32,7 @@ To access dbt Explorer, navigate to the **Explore** option in the dbt Cloud navi
 dbt Explorer offers users a comprehensive suite of features to enhance data project navigation and understanding, like:
 
 - Interactive lineage visualization to visualize your project's DAG to understand relationships between resources. 
-- Comprehensive resource search bar with filters to help find project resources efficiently and quickly.
+- Resource search bar with comprehensive filters to help find project resources efficiently and quickly.
 - Model performance insights to access metadata on dbt Cloud runs for in-depth analysis of model performance and quality. 
 - Project recommendations to receive suggestions to improve test coverage and documentation across your data estate. 
 - Data health signals to monitor the health and performance of each resource through data health indicators. 
