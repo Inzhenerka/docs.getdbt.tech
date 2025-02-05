@@ -92,7 +92,7 @@ Docs blocks can contain arbitrary markdown, but they must be uniquely named.
 
 ### Syntax
 To declare a docs block, use the Jinja `docs` tag. Their names may contain:
-- uppercase and lowercase letters (A-Z, a-z)
+- Uppercase and lowercase letters (A-Z, a-z)
 - Digits (0-9)
 - Underscores (_)
 - can't start with a digit.
