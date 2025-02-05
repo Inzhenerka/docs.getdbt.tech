@@ -63,7 +63,7 @@ dbt Explorer reflects all the lineage defined within the dbt project. Our vision
 
 </Expandable>
 
-<Expandable alt_header="Why does the dbt Explorer not show details that were there previously?" >
+<Expandable alt_header="Why did previously visible data in dbt Explorer disappear?" >
 
 The dbt Explorer will delete any stale data after 3 months so you want to ensure that you are running jobs with the necessary commands more frequently than that. 
 
