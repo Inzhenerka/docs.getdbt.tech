@@ -33,7 +33,7 @@ Navigate the dbt Explorer overview page to access your project's resources and m
 - **Auto-exposures** &mdash; [Set up and view auto-exposures](/docs/collaborate/auto-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/collaborate/data-health-signals) for each resource to understand its health and performance.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="100%" title="Access dbt Explorer from dbt Cloud by clicking Explore in the navigation."/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>
 
 ## Generate metadata
 
