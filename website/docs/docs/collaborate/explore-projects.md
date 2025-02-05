@@ -45,6 +45,8 @@ dbt Explorer uses the metadata provided by the [Discovery API](/docs/dbt-cloud-a
 - To view a resource and its metadata, you must define the resource in your project and run a job in the production or staging environment.
 - The resulting metadata depends on the [commands](/docs/deploy/job-commands) executed by the jobs.
 
+Note that dbt Explorer automatically deletes stale metadata after 3 months if no jobs were run to refresh it. To avoid this, make sure you schedule jobs to run more frequently than 3 months with the necessary commands.
+
 | To view in Explorer | You must successfully run |
 |---------------------|---------------------------|
 | All metadata        |  [dbt build](/reference/commands/build), [dbt docs generate](/reference/commands/cmd-docs), and [dbt source freshness](/reference/commands/source#dbt-source-freshness) together as part of the same job in the environment
