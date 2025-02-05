@@ -49,7 +49,7 @@ If you're using the dbt Docs interface, available on dbt Core or dbt Cloud Devel
 
 Here, you can see a representation of the project structure, a markdown description for a model, and a list of all of the columns (with documentation) in the model.
 
-From the dbt Docs page, you can click the green button in the bottom-right corner of the webpage to expand a "mini-map" of your DAG. This pane (shown below) will display the immediate parents and children of the model that you're exploring.
+From the dbt Docs page, click the green button in the bottom-right corner of the webpage to expand a "mini-map" of your DAG. This pane displays the immediate parents and children of the model that you're exploring.
 
 <Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ec77c45-Screen_Shot_2018-08-14_at_6.31.56_PM.png" title="Opening the DAG mini-map"/>
 
