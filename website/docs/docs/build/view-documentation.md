@@ -70,7 +70,7 @@ The `dbt docs serve` command is only intended for local/development hosting of t
 ### dbt Explorer <Lifecycle status="team,enterprise" />
 
 
-dbt Explorer automatically updates documentation after each production or staging job run using the metadata generated after each job run. This means it always has the latest results for your project &mdash; no manual deployment needed. For details on how dbt Explorer uses metadata to automatically update documentation, refer to [Generate metadata](/docs/collaborate/explore-projects#generate-metadata). 
+dbt Explorer automatically updates documentation after each production or staging job run using the metadata generated. This means it always has the latest results for your project with no manual deployment required. For details on how dbt Explorer uses metadata to automatically update documentation, refer to [Generate metadata](/docs/collaborate/explore-projects#generate-metadata). 
 
 To learn how to deploy your documentation site, see [Build and view your docs with dbt Cloud](/docs/collaborate/build-and-view-your-docs).
 
