@@ -82,4 +82,4 @@ dbt Docs was built to make it easy to host on the web. The site is "static," mea
 * Use your own web server like Apache/Nginx
 * If you're on a dbt Cloud Developer plan, see [Build and view your docs with dbt Cloud](/docs/collaborate/build-and-view-your-docs#dbt-docs) to learn how to deploy your documentation site.
 
-For a more seamless experience, use [dbt Explorer](/docs/collaborate/explore-projects) as the recommended documentation experience in dbt Cloud. 
+Interested in using dbt Explorer for the complete dbt documentation experience, sign up for a free trial of dbt Cloud or contact us. 
