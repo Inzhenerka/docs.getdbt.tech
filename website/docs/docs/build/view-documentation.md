@@ -23,7 +23,7 @@ To access dbt Explorer, navigate to the **Explore** option in the dbt Cloud navi
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of resource details" />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-model-details.png" width="95%" title="Example of dbt Explorer's resource details page and its lineage." />
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Access dbt Explorer from dbt Cloud by clicking Explore in the navigation."/>
 
