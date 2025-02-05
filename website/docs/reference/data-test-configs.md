@@ -182,6 +182,7 @@ version: 2
     tests:
       - <test_name>: # Actual name of the test. For example, dbt_utils.equality
           name: # Human friendly name for the test. For example, equality_fct_test_coverage
+          description: "markdown formatting"
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [enabled](/reference/resource-configs/enabled): true | false
@@ -197,6 +198,7 @@ version: 2
         tests:
           - <test_name>:
               name: 
+              description: "markdown formatting"
               <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [enabled](/reference/resource-configs/enabled): true | false
