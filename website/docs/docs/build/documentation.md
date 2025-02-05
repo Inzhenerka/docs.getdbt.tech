@@ -91,7 +91,7 @@ For more details on how to view documentation, see [View documentation](/docs/bu
 Docs blocks can contain arbitrary markdown, but they must be uniquely named. 
 
 ### Syntax
-To declare a docs block, use the jinja `docs` tag. Their names may contain:
+To declare a docs block, use the Jinja `docs` tag. Their names may contain:
 - uppercase and lowercase letters (A-Z, a-z)
 - digits (0-9)
 - underscores (_)
