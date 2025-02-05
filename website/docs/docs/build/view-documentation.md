@@ -57,7 +57,7 @@ In this example, the `fct_subscription_transactions` model only has one direct p
 
 <Lightbox src="/img/docs/building-a-dbt-project/testing-and-documentation/ac97fba-Screen_Shot_2018-08-14_at_6.35.14_PM.png" title="The full lineage for a dbt model"/>
 
-## Deploying the documentation site
+## Deploy the documentation site
 
 Effortlessly deploy documentation in dbt Explorer or dbt Docs to make it available to your teams.
 
