@@ -79,7 +79,7 @@ Generate documentation for your project by following these steps:
 2. Ensure you've created the models with `dbt run` or `dbt build` to view the documentation for all columns, not just those described in your project.
 3. Run the `dbt docs serve` [command](/reference/commands/cmd-docs#dbt-docs-serve) if you're developing locally to use these `.json` files to populate a local website.
 
-After adding descriptions and generating documentation, dbt provides two complementary ways to [view documentation](/docs/build/view-documentation):
+dbt provides two complementary ways to [view documentation](/docs/build/view-documentation), and your descriptions, after it's generated:
 
 - [**dbt Docs**:](/docs/build/view-documentation#dbt-docs) A static documentation site with model lineage, metadata, and documentation that can be hosted on S3, Netlify, or your own web server. Available on dbt Core or dbt Cloud Developer plans.
 - [**dbt Explorer**](/docs/collaborate/explore-projects): Builds upon dbt Docs to provide a dynamic, real-time interface with enhanced metadata, customizable views, deeper project insights, and collaboration tools. Available on dbt Cloud Team or Enterprise plans.
