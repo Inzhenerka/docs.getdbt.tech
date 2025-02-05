@@ -84,7 +84,7 @@ dbt provides two complementary ways to [view documentation](/docs/build/view-doc
 - [**dbt Docs**:](/docs/build/view-documentation#dbt-docs) A static documentation site with model lineage, metadata, and documentation that can be hosted on your web server (like S3 or Netlify). Available for dbt Core or dbt Cloud Developer plans.
 - [**dbt Explorer**](/docs/collaborate/explore-projects): Builds upon dbt Docs to provide a dynamic, real-time interface with enhanced metadata, customizable views, deeper project insights, and collaboration tools. Available on dbt Cloud Team or Enterprise plans.
 
-For more details on how to view documentation, see [View documentation](/docs/build/view-documentation).
+See [View documentation](/docs/build/view-documentation) to get the most out of your dbt project's documentation.
 
 ## Using docs blocks
 
