@@ -13,6 +13,14 @@
   bottom: -5px;
 }
 
+.carouselContainer :global(.swiper-button-prev) {
+  left: 20px;
+}
+
+.carouselContainer :global(.swiper-button-next) {
+  right: 20px;
+}
+
 .carouselContainer :global(.swiper-pagination-bullet) {
   background: var(--ifm-color-primary);
 }
