@@ -18,17 +18,17 @@ export default function QuickstartGuideCard({ frontMatter, onFavoriteUpdate }) {
   }, [id]);
 
   const toggleFavorite = (e) => {
-    // Prevent navigation when clicking the favorite button
     e.preventDefault();
     
     const newFavoriteState = !isFavorite;
     setIsFavorite(newFavoriteState);
 
+    // Update parent state and localStorage
     if (onFavoriteUpdate) {
       onFavoriteUpdate(id, newFavoriteState);
     }
 
-    // Popup handling code...
+    // Popup handling
     const existingPopup = document.querySelector(".copy-popup");
     if (existingPopup) {
       document.body.removeChild(existingPopup);

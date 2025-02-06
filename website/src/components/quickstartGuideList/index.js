@@ -249,6 +249,7 @@ function QuickstartList({ quickstartData }) {
   const handleFavoriteUpdate = useCallback((guideId, isFavorited) => {
     console.log('handleFavoriteUpdate called:', { guideId, isFavorited });
     
+    // Get current favorites from localStorage
     const favoriteIds = JSON.parse(localStorage.getItem('favoriteGuides') || '[]');
     console.log('Current favoriteIds:', favoriteIds);
     
@@ -259,7 +260,10 @@ function QuickstartList({ quickstartData }) {
       newFavoriteIds = favoriteIds.filter(id => id !== guideId);
     }
     
-    // Immediately update the favorites state
+    // Update localStorage with new favorites
+    localStorage.setItem('favoriteGuides', JSON.stringify(newFavoriteIds));
+    
+    // Update state with new favorites
     const newFavorites = quickstartData.filter(guide => 
       newFavoriteIds.includes(guide.data.id)
     );
