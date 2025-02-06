@@ -87,7 +87,7 @@ version: 2
     tests:
       - <test_name>: # # Actual name of the test. For example, dbt_utils.equality
           name: # Human friendly name for the test. For example, equality_fct_test_coverage
-          description: "markdown formatting"
+          [description](/reference/resource-properties/description): "markdown formatting"
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [fail_calc](/reference/resource-configs/fail_calc): <string>
