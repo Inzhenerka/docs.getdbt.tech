@@ -31,7 +31,7 @@ const GuideSection = ({ title, guides, onFavoriteUpdate }) => {
       <GuidesCarousel 
         key={carouselKey}
         guidesData={guides.map(guide => guide.data)}
-        showNavigation={guides.length > 3}
+        showNavigation={guides.length > 2}
         onFavoriteUpdate={onFavoriteUpdate}
       />
     </div>
