@@ -13,7 +13,7 @@ function GuidesCarousel({ guidesData, showNavigation, onFavoriteUpdate }) {
       <Swiper
         navigation={showNavigation}
         modules={[Navigation, Pagination]}
-        slidesPerView={2}
+        slidesPerView={1}
         spaceBetween={16}
         pagination={{ clickable: true }}
         breakpoints={{

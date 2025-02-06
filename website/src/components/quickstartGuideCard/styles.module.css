@@ -11,6 +11,12 @@
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .quickstartCard {
+    max-width: 100%;
+  }
+}
+
 .quickstartCard:hover {
   transform: translateY(-7px);
   outline: 2px solid var(  --color-green-blue);
