@@ -7,7 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import styles from './styles.module.css';
 
-function GuidesCarousel({ guidesData, showNavigation }) {
+function GuidesCarousel({ guidesData, showNavigation, onFavoriteUpdate }) {
   return (
     <div className={styles.carouselContainer}>
       <Swiper
@@ -30,7 +30,10 @@ function GuidesCarousel({ guidesData, showNavigation }) {
       >
         {guidesData.map((frontMatter) => (
           <SwiperSlide key={frontMatter.id || frontMatter.index}>
-            <QuickstartGuideCard frontMatter={frontMatter} />
+            <QuickstartGuideCard 
+              frontMatter={frontMatter} 
+              onFavoriteUpdate={onFavoriteUpdate}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

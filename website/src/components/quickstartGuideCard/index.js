@@ -5,7 +5,7 @@ import getIconType from "../../utils/get-icon-type";
 import getSvgIcon from "../../utils/get-svg-icon";
 import { isRecentlyUpdated } from "../../utils/get-recently-updated";
 
-export default function QuickstartGuideCard({ frontMatter }) {
+export default function QuickstartGuideCard({ frontMatter, onFavoriteUpdate }) {
   const { id, title, time_to_complete, icon, last_updated } = frontMatter;
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -21,19 +21,12 @@ export default function QuickstartGuideCard({ frontMatter }) {
     // Prevent navigation when clicking the favorite button
     e.preventDefault();
     
-    const favorites = JSON.parse(
-      localStorage.getItem("favoriteGuides") || "[]"
-    );
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
 
-    if (isFavorite) {
-      const newFavorites = favorites.filter((fav) => fav !== id);
-      localStorage.setItem("favoriteGuides", JSON.stringify(newFavorites));
-    } else {
-      favorites.push(id);
-      localStorage.setItem("favoriteGuides", JSON.stringify(favorites));
+    if (onFavoriteUpdate) {
+      onFavoriteUpdate(id, newFavoriteState);
     }
-
-    setIsFavorite(!isFavorite);
 
     // Popup handling code...
     const existingPopup = document.querySelector(".copy-popup");
@@ -43,7 +36,7 @@ export default function QuickstartGuideCard({ frontMatter }) {
 
     const popup = document.createElement("div");
     popup.classList.add("copy-popup");
-    popup.innerText = isFavorite
+    popup.innerText = !newFavoriteState
       ? "Guide removed from favorites!"
       : "Guide added to favorites!";
     document.body.appendChild(popup);

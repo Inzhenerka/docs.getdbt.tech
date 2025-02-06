@@ -19,15 +19,20 @@ const normalizeTitle = (title) => {
 };
 
 // Contains the categorized guides
-const GuideSection = ({ title, guides }) => {
+const GuideSection = ({ title, guides, onFavoriteUpdate }) => {
+  // Key to force re-render of GuidesCarousel when guides change
+  const carouselKey = useMemo(() => guides?.map(g => g.data.id).join('-'), [guides]);
+  
   if (!guides || guides.length === 0) return null;
   
   return (
     <div className={styles.guideSection}>
       <h3>{title}</h3>
       <GuidesCarousel 
+        key={carouselKey}
         guidesData={guides.map(guide => guide.data)}
         showNavigation={guides.length > 3}
+        onFavoriteUpdate={onFavoriteUpdate}
       />
     </div>
   );
@@ -212,7 +217,7 @@ function QuickstartList({ quickstartData }) {
         )
       };
     }, {}) || {};
-  }, [filteredData, selectedFilters, quickstartData, searchInput]);
+  }, [filteredData, selectedFilters, quickstartData, searchInput, favorites]);
 
   // Add this useEffect to load favorites
   useEffect(() => {
@@ -239,6 +244,42 @@ function QuickstartList({ quickstartData }) {
   const handleSearch = useCallback((searchTerm) => {
     setSearchInput(searchTerm);
   }, []);
+
+  // Handler for favorites with immediate state update
+  const handleFavoriteUpdate = useCallback((guideId, isFavorited) => {
+    console.log('handleFavoriteUpdate called:', { guideId, isFavorited });
+    
+    const favoriteIds = JSON.parse(localStorage.getItem('favoriteGuides') || '[]');
+    console.log('Current favoriteIds:', favoriteIds);
+    
+    let newFavoriteIds;
+    if (isFavorited) {
+      newFavoriteIds = [...favoriteIds, guideId];
+    } else {
+      newFavoriteIds = favoriteIds.filter(id => id !== guideId);
+    }
+    
+    // Immediately update the favorites state
+    const newFavorites = quickstartData.filter(guide => 
+      newFavoriteIds.includes(guide.data.id)
+    );
+    console.log('New favorites:', newFavorites);
+    
+    setFavorites(newFavorites);
+  }, [quickstartData]);
+
+  // Separate favorites section render
+  const renderFavoritesSection = () => {
+    if (!favorites || favorites.length === 0) return null;
+    
+    return (
+      <GuideSection
+        title="Favorites"
+        guides={favorites}
+        onFavoriteUpdate={handleFavoriteUpdate}
+      />
+    );
+  };
 
   return (
     <Layout>
@@ -306,7 +347,11 @@ function QuickstartList({ quickstartData }) {
             organizedGuides.filtered?.length > 0 ? (
               <div className={styles.quickstartCardContainer}>
                 {organizedGuides.filtered.map((guide) => (
-                  <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
+                  <QuickstartGuideCard 
+                    frontMatter={guide.data} 
+                    key={guide.data.id || guide.index}
+                    onFavoriteUpdate={handleFavoriteUpdate}
+                  />
                 ))}
               </div>
             ) : (
@@ -317,7 +362,11 @@ function QuickstartList({ quickstartData }) {
             filteredData.length > 0 ? (
               <div className={styles.quickstartCardContainer}>
                 {filteredData.map((guide) => (
-                  <QuickstartGuideCard frontMatter={guide.data} key={guide.data.id || guide.index} />
+                  <QuickstartGuideCard 
+                    frontMatter={guide.data} 
+                    key={guide.data.id || guide.index}
+                    onFavoriteUpdate={handleFavoriteUpdate}
+                  />
                 ))}
               </div>
             ) : (
@@ -326,17 +375,13 @@ function QuickstartList({ quickstartData }) {
           ) : (
             // Show categorized view
             <>
-              {favorites.length > 0 && (
-                <GuideSection
-                  title="Favorites"
-                  guides={favorites}
-                />
-              )}
+              {renderFavoritesSection()}
               {CONFIG?.categories?.map((category) => (
                 <GuideSection
                   key={normalizeTitle(category.title)}
                   title={category.title}
                   guides={organizedGuides[normalizeTitle(category.title)]}
+                  onFavoriteUpdate={handleFavoriteUpdate}
                 />
               ))}
             </>
