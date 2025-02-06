@@ -1,11 +1,11 @@
 ## View auto-exposures
 
-After setting up auto-exposures in dbt Cloud, you can view them in dbt Explorer for a richer experience:
-1. Navigate to dbt Explorer by clicking on the **Explore** link in the navigation.
-2. From the **Overview** page, you can view auto-exposures from a couple of places:
-   - [Exposures menu](#exposures-menu)
-   - [File tree](#file-tree)
-   - [Project lineage](#project-lineage)
+After setting up auto-exposures in dbt Cloud, you can view them in dbt Explorer for a richer experience.
+
+Navigate to dbt Explorer by clicking on the **Explore** link in the navigation. From the **Overview** page, you can view auto-exposures from a couple of places:
+- [Exposures menu](#exposures-menu)
+- [File tree](#file-tree)
+- [Project lineage](#project-lineage)
 
 ### Exposures menu
 View auto exposures from the **Exposures** menu item under **Resources**. This menu provides a comprehensive list of all the exposures so you can quickly access and manage them. The menu displays the following information:
