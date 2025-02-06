@@ -268,7 +268,7 @@ You can use the dbt Cloud CLI with Power User for dbt Core and dbt Cloud by foll
 The Power User extension will handle installing the Cloud CLI on your behalf.
   
   
-## Limitations
+## Considerations
 
 import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
