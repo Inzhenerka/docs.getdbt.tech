@@ -37,6 +37,7 @@
   color:#262A38;
   font-size: 1.2rem;
   line-height: 1.2;
+  margin-bottom: 0.5rem;
 }
 
 [data-theme='dark'] .quickstartCard p {
@@ -77,12 +78,6 @@
 
 [data-theme='dark'] .quickstartCard .start .right_arrow svg {
   fill: #fff;
-}
-
-.quickstartCard .recently_updated {
-  position: absolute;
-  top: .5rem;
-  left: 2.5rem;
 }
 
 .quickstartCard .tag_container {

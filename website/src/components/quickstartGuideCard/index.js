@@ -53,11 +53,11 @@ export default function QuickstartGuideCard({ frontMatter, onFavoriteUpdate }) {
 
   return (
     <Link to={`/guides/${id}`} className={styles.quickstartCard}>
-      {isRecent && <span className={styles.recently_updated}>Updated</span>}
       {icon && getIconType(icon, styles.icon)}
 
       <div className={styles.cardHeader}>
         <p>{title}</p>
+        {isRecent && <span className={styles.recently_updated}>Updated</span>}
         <button
           onClick={toggleFavorite}
           className={`${styles.cardFavoriteButton} ${isFavorite ? styles.favorited : ""}`}
