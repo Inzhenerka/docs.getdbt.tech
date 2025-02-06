@@ -44,8 +44,6 @@ In both cases, `test_type` checks a property of the test itself. These are forms
 
 To visualize these methods, suppose you have `model_a`, `model_b`, and `model_c` and associated data tests. The following illustrates which tests will be run when you execute `dbt build` with the various indirect selection modes:
 
-This is updated test content on the page which should appear on new deploy.
-
 <DocCarousel slidesPerView={1}>
 
 <Lightbox src src="/img/docs/reference/indirect-selection-dbt-build.png" width="85%" title="dbt build" />
