@@ -5,7 +5,7 @@ id: "teradata-configs"
 
 ## General
 
-* *Set `quote_columns`* - to prevent a warning, make sure to explicitly set a value for `quote_columns` in your `dbt_project.yml`. See the [doc on quote_columns](https://docs.getdbt.com/reference/resource-configs/quote_columns) for more information.
+* *Set `quote_columns`* - to prevent a warning, make sure to explicitly set a value for `quote_columns` in your `dbt_project.yml`. See the [doc on quote_columns](/reference/resource-configs/quote_columns) for more information.
 
   ```yaml
   seeds:
@@ -123,7 +123,7 @@ id: "teradata-configs"
 
   For details, see [CREATE TABLE documentation](https://docs.teradata.com/r/76g1CuvvQlYBjb2WPIuk3g/B6Js16DRQVwPDjgJ8rz7hg).
 
-* `with_statistics` - should statistics be copied from the base table, e.g.:
+* `with_statistics` - should statistics be copied from the base table. For example:
     ```yaml
     {{
       config(
@@ -270,7 +270,7 @@ For example, in the `snapshots/snapshot_example.sql` file:
 
 Grants are supported in dbt-teradata adapter with release version 1.2.0 and above. You can use grants to manage access to the datasets you're producing with dbt. To implement these permissions, define grants as resource configs on each model, seed, or snapshot. Define the default grants that apply to the entire project in your `dbt_project.yml`, and define model-specific grants within each model's SQL or YAML file.
 
-for e.g. :
+For example:
   models/schema.yml
   ```yaml
   models:
@@ -280,7 +280,7 @@ for e.g. :
           select: ['user_a', 'user_b']
   ```
 
-Another e.g. for adding multiple grants:
+Another example for adding multiple grants:
 
   ```yaml
   models:
@@ -295,8 +295,8 @@ Another e.g. for adding multiple grants:
 
 Refer to [grants](/reference/resource-configs/grants) for more information on Grants.
 
-## Query Band
-Query Band in dbt-teradata can be set on three levels:
+## Query band
+Query band in dbt-teradata can be set on three levels:
 1. Profiles level: In the `profiles.yml` file, the user can provide `query_band` using the following example:
 
     ```yaml 
@@ -401,9 +401,6 @@ These steps collectively ensure that the valid_history strategy effectively mana
         2  | PERIOD(TIMESTAMP)[2024-03-01 00:00:00.0, 2024-03-12 00:00:00.0]    | A          | x1
         2  | PERIOD(TIMESTAMP)[2024-03-12 00:00:00.0, 9999-12-31 23:59:59.9999] | C          | x1
   ```
-  
-
-
 
 ## Common Teradata-specific tasks
 * *collect statistics* - when a table is created or modified significantly, there might be a need to tell Teradata to collect statistics for the optimizer. It can be done using `COLLECT STATISTICS` command. You can perform this step using dbt's `post-hooks`, e.g.:
