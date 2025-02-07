@@ -4,11 +4,9 @@ description: "Learn about the 'microbatch' strategy for incremental models."
 id: "incremental-microbatch"
 ---
 
-# About microbatch incremental models <Lifecycle status="beta" />
+:::info
 
-:::info Microbatch
-
-The new `microbatch` strategy is available in beta for [dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9. 
+Available in beta for [dbt Cloud "Latest"](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9 or higher.
 
 If you use a custom microbatch macro, set a [distinct behavior flag](/reference/global-configs/behavior-changes#custom-microbatch-strategy) in your `dbt_project.yml` to enable batched execution. If you don't have a custom microbatch macro, you don't need to set this flag as dbt will handle microbatching automatically for any model using the [microbatch strategy](#how-microbatch-compares-to-other-incremental-strategies).
 
