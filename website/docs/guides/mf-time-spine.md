@@ -45,8 +45,6 @@ The time spine table is a dbt model that generates a series of dates (or timesta
 {{
     config(
         materialized = 'table',
-        schema = 'marts',
-        alias = 'time_spine_daily'
     )
 }}
 
@@ -96,9 +94,6 @@ models:
     columns:
       - name: date_day
         description: The base date column for daily granularity
-        tests:
-          - not_null
-          - unique
         granularity: day
 ```
 </File>
