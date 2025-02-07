@@ -6,9 +6,9 @@ sidebar_label: Change your dbt Cloud theme
 image: /img/docs/dbt-cloud/using-dbt-cloud/light-vs-dark.png
 ---
 
-# Change your dbt Cloud theme <Lifecycle status="preview" />
+# Change your dbt Cloud theme 
 
-dbt Cloud supports **Light mode** (default), **Dark mode**, and **System mode** (respects your browser's theme for light or dark mode) under the **Theme** section of your user profile. You can seamlessly switch between these modes directly from the profile menu, customizing your viewing experience.
+dbt Cloud supports **Light mode** (default), **Dark mode**, and **System mode** (respects your browser's theme for light or dark mode) under the **Theme** section of your user profile and is available for all [plans](https://www.getdbt.com/pricing). You can seamlessly switch between these modes directly from the profile menu, customizing your viewing experience.
 
 Your selected theme is stored in your user profile, ensuring a consistent experience across dbt Cloud.
 
@@ -17,7 +17,6 @@ Theme selection applies across all areas of dbt Cloud, including the [IDE](/docs
 ## Prerequisites
 
 - You have a dbt Cloud account. If you don’t, try [dbt Cloud for free!](https://www.getdbt.com/signup)
-- Dark mode is currently available on the Developer plan and will gradually be made available for all [plans](https://www.getdbt.com/pricing) in the future. Stay tuned for updates.
 
 ## Change themes in dbt Cloud
 
