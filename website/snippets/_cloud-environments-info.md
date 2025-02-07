@@ -25,11 +25,12 @@ Both development and deployment environments have a section called **General Set
 
 | Setting | Example Value | Definition | Accepted Values |
 | --- | --- | --- | --- |
-| Name | Production  | The environment name  | Any string! |
-| Environment Type | Deployment | The type of environment | [Deployment, Development] |
-| dbt Version | 1.4 (latest) | The dbt version used  | Any dbt version in the dropdown |
-| Default to Custom Branch | ☑️ | Determines whether to use a branch other than the repository’s default  | See below |
-| Custom Branch | dev | Custom Branch name | See below |
+| Environment name | Production  | The environment name  | Any string! |
+| Environment type | Deployment | The type of environment | Deployment, Development|
+| Set deployment type | PROD |  Designates the deployment environment type. | Production, Staging, General | 
+| dbt version | Latest | dbt Cloud automatically upgrades the dbt version running in this environment, based on the [release track](/docs/dbt-versions/cloud-release-tracks) you select. | Lastest, Compatible, Extended |
+| Only run on a custom branch | ☑️ | Determines whether to use a branch other than the repository’s default  | See below |
+| Custom branch | dev | Custom Branch name | See below |
 
 :::note About dbt version
 
@@ -48,7 +49,7 @@ For more info, check out this [FAQ page on this topic](/faqs/Environments/custom
 ### Extended attributes
 
 :::note 
-Extended attributes are are currently _not_ supported for SSH tunneling
+Extended attributes are currently _not_ supported for SSH tunneling
 :::
 
 Extended attributes allows users to set a flexible [profiles.yml](/docs/core/connect-data-platform/profiles.yml) snippet in their dbt Cloud Environment settings. It provides users with more control over environments (both deployment and development) and extends how dbt Cloud connects to the data platform within a given environment.
