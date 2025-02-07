@@ -14,11 +14,6 @@ recently_updated: true
 
 This guide explains how to configure a time spine using the [dbt Semantic Layer Jaffle shop example project](https://github.com/dbt-labs/jaffle-sl-template) as a reference. 
 
-### Prerequisites
-Before you start, make sure you have:
-
-- A dbt project set up. If you don't have one, follow the [Quickstart guides](/guides?tags=Quickstart) guide to help you get started.
-
 ### What is a time spine?
 
 A [time spine](/docs/build/metricflow-time-spine) is essential for time-based joins and aggregations in MetricFlow, the engine that powers the dbt Semantic Layer. It can be created from scratch or configured using an existing table (like a `dim_date` table).
@@ -29,6 +24,11 @@ To use MetricFlow with time-based metrics and dimensions, you must provide a tim
 - Use an existing table in your project, like a `dim_date` table
 
 And once you have a time spine table, you need to configure it in YAML to tell MetricFlow how to use it. This guide will show you how to do both!
+
+### Prerequisites
+Before you start, make sure you have:
+
+- A dbt project set up. If you don't have one, follow the [Quickstart guides](/guides?tags=Quickstart) guide to help you get started.
 
 ## Add a time spine SQL model
 
