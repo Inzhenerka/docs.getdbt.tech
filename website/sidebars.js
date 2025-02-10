@@ -297,7 +297,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
             {
           type: "category",
-          label: "dbt Cloud visual editor",
+          label: "dbt Cloud Visual Editor",
           collapsed: true,
           link: { type: "doc", id: "docs/cloud/visual-editor" },
           items: [
