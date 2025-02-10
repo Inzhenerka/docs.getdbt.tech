@@ -124,7 +124,7 @@ SQL linting in CI lints all the changed SQL files in your project (compared to t
 
 ### Manually set up SQL linting in CI
 
-If you don't have access to [SQL linting in CI](/docs/deploy/continuous-integration#sql-linting), you can still run SQLFluff as part of your own action or pipeline. The following steps walk you through setting up a CI job using SQLFluff to scan your code for linting errors. If you don't already have SQLFluff rules defined, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
+You can run SQLFluff as part of your pipeline even if you don't have access to [SQL linting in CI](/docs/deploy/continuous-integration#sql-linting). The following steps walk you through setting up a CI job using SQLFluff to scan your code for linting errors. If you're new to SQLFluff rules in dbt Cloud, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
 
 ### 1. Create a YAML file to define your pipeline
 
