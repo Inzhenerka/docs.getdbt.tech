@@ -29,51 +29,67 @@ To temporarily adjust session properties for a specific dbt model or a group of 
 
 ## Connector properties
 
-IBM watsonx.data SaaS/Software support various connector properties to manage how your data is represented. These properties are particularly useful for file-based connectors like Hive.
+IBM watsonx.data SaaS/Software supports various Spark-specific connector properties to control data representation, execution performance, and storage format.
 
-For information on what is supported for each data source, refer to the following resources:
+For more details on supported configurations for each data source, refer to:
+
 - [watsonx.data SaaS Catalog](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-reg_database)
 - [watsonx.data Software Catalog](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=components-adding-data-source)
 
+### **Extra Configuration**
 
-## File format configuration
+The `dbt-watsonx-spark` adapter allows additional configurations to be set in the catalog profile:
 
-File-based connectors, such as Hive and Iceberg, allow customization of table materialization, data formats, and partitioning strategies in dbt models. The following examples demonstrate how to configure these options for each connector.
+- `Catalog:` Specifies the catalog to use for the Spark connection. The plugin can automatically detect the file format type `(Iceberg, Hive, or Delta)` based on the catalog type.
+- `use_ssl:` Enables SSL encryption for secure connections.
 
-### Hive Configuration
+Example configuration:
 
-Hive supports specifying file formats and partitioning strategies using the properties parameter in dbt models. The example below demonstrates how to create a partitioned table stored in Parquet format:
+```yaml
+project_name:
+  target: "dev"
+  outputs:
+    dev:
+      type: watsonx_spark
+      method: http
+      schema: [schema name]
+      host: [hostname]
+      uri: [uri]
+      catalog: [catalog name]
+      use_ssl: false
+      auth:
+        instance: [Watsonx.data Instance ID]
+        user: [username]
+        apikey: [apikey]
+```
+
+---
+
+### **File Format Configuration**
+
+The supported file formats depend on the catalog type:
+
+- **Iceberg Catalog:** Supports **Iceberg** tables.
+- **Hive Catalog:** Supports **Hive** tables.
+- **Delta Lake Catalog:** Supports **Delta** tables.
+- **Hudi Catalog:** Supports **Hudi** tables.
+
+The plugin **automatically** detects the file format type based on the catalog specified in the configuration.
+
+
+
+By specifying file format dbt models. Example:
 
 ```sql
 {{
   config(
     materialized='table',
-    properties={
-      "format": "'PARQUET'", -- Specifies the file format
-      "partitioned_by": "ARRAY['id']", -- Defines the partitioning column(s)
-    }
+    file_format='iceberg' or 'hive' or 'delta' or 'hudi'
   )
 }}
 ```
 
-For more details about Hive table creation and supported properties, refer to the [Hive connector documentation](https://sparkdb.io/docs/current/connector/hive.html#create-a-managed-table).
-
-### Iceberg Configuration
-
-Iceberg supports defining file formats and advanced partitioning strategies to optimize query performance. The following example demonstrates how to create a ORC table partitioned using a bucketing strategy:
-
-```sql
-{{
-  config(
-    materialized='table',
-    properties={
-      "format": "'ORC'", -- Specifies the file format
-      "partitioning": "ARRAY['bucket(id, 2)']", -- Defines the partitioning strategy
-    }
-  )
-}}
-```
-For more information about Iceberg table creation and supported configurations, refer to the [Iceberg connector documentation](https://sparkdb.io/docs/current/connector/iceberg.html#create-table).
+**For more details**, refer to the [documentation.](https://spark.apache.org/docs/3.5.3/sql-ref-syntax.html#sql-syntax)
 
 
 ## Seeds and prepared statements
@@ -89,12 +105,27 @@ For further information on configuring materializations, refer to the [dbt mater
 
 The `dbt-watsonx-spark` adapter enables you to create and update tables through table materialization, making it easier to work with data in watsonx.data Spark.
 
+### **View**
+
+The adapter automatically creates views by default if no materialization is explicitly specified.
+
+### **Incremental**
+
+Incremental materialization is supported but requires additional configuration for partitioning and performance tuning.
+
 #### Recommendations
 - **Check Permissions:** Ensure that the necessary permissions for table creation are enabled in the catalog or schema.
-- **Check Connector Documentation:** Review watsonx.data Spark [data ingestion in watsonx.data](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=data-overview-ingestion) to ensure it supports table creation and modification.
+- **Check Connector Documentation:** Review watsonx.data Spark [data ingestion in watsonx.data](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=data-overview-ingestion) to ensure it supports table 
+creation and modification.
 
 ## Unsupported features
-The following features are not supported by the `dbt-watsonx-spark` adapter
-- Incremental Materialization
-- Materialized Views
-- Snapshots
+Despite its extensive capabilities, the `dbt-watsonx-spark` adapter has some limitations:
+
+- **Incremental Materialization**: Supported but requires additional configuration for partitioning and performance tuning.
+- **Materialized Views**: Not natively supported in Spark SQL within Watsonx.data.
+- **Snapshots**: Not supported due to Spark’s lack of built-in snapshot functionality.
+- **Performance Considerations**:
+  - Large datasets may require tuning of Spark configurations such as shuffle partitions and memory allocation.
+  - Some transformations may be expensive due to Spark’s in-memory processing model.
+
+By understanding these capabilities and constraints, users can maximize the effectiveness of dbt with Watsonx.data Spark for scalable data transformations and analytics.
