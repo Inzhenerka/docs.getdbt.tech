@@ -14,7 +14,7 @@ If `--defer-state` is not specified, deferral will use the artifacts supplied by
 
 If both the flag and env var are provided, the flag takes precedence.
 
-#### Notes:
+#### Notes
 - The `--state` artifacts must be of schema versions that are compatible with the currently running dbt version.
 - These are powerful, complex features. Read about [known caveats and limitations](/reference/node-selection/state-comparison-caveats) to state comparison.
 
@@ -31,7 +31,7 @@ Another element of job state is the `result` of a prior dbt invocation. After ex
 The following dbt commands produce `run_results.json` artifacts whose results can be referenced in subsequent dbt invocations:  
 - `dbt run`
 - `dbt test`
-- `dbt build` (new in dbt version v0.21.0)
+- `dbt build`
 - `dbt seed` 
 
 After issuing one of the above commands, you can reference the results by adding a selector to a subsequent command as follows: 
