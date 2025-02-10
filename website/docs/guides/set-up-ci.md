@@ -117,11 +117,12 @@ If you create a seed to exclude groups of models from a specific test, remember 
 
 By [linting](/docs/cloud/dbt-cloud-ide/lint-format#lint) your project during CI, you can ensure that code styling standards are consistently enforced, without spending human time nitpicking comma placement.
 
-Enable [SQL linting for your CI job](/docs/deploy/continuous-integration#sql-linting) to invoke [SQLFluff](https://docs.sqlfluff.com/en/stable/), a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors.
+Seamlessly enable [SQL linting for your CI job](/docs/deploy/continuous-integration#sql-linting) with dbt Cloud to invoke [SQLFluff](https://docs.sqlfluff.com/en/stable/), a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors.
 
 SQL linting in CI lints all the changed SQL files in your project (compared to the last deferred production state). Available on [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) and dbt Cloud [Team or Enterprise accounts](https://www.getdbt.com/pricing). 
 
-If you don’t have access to SQL linting in CI, 
+
+### Manually set up SQL linting in CI
 
 If you don't have access to [SQL linting in CI](/docs/deploy/continuous-integration#sql-linting), you can still run SQLFluff as part of your own action or pipeline. The following steps walk you through setting up a CI job using SQLFluff to scan your code for linting errors. If you don't already have SQLFluff rules defined, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
 
