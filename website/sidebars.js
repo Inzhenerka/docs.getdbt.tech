@@ -296,6 +296,17 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/lint-format",
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
             {
+          type: "category",
+          label: "dbt Cloud visual editor",
+          collapsed: true,
+          link: { type: "doc", id: "docs/cloud/visual-editor" },
+          items: [
+            "docs/cloud/visual-editor",
+            "docs/cloud/use-visual-editor",
+            "docs/cloud/visual-editor-interface",
+          ],
+        },
+            {
               type: "category",
               label: "dbt Copilot",
               link: { type: "doc", id: "docs/cloud/dbt-copilot" },
