@@ -36,7 +36,7 @@ For more details on supported configurations for each data source, refer to:
 - [watsonx.data SaaS Catalog](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-reg_database)
 - [watsonx.data Software Catalog](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=components-adding-data-source)
 
-### **Extra Configuration**
+### Extra configuration
 
 The `dbt-watsonx-spark` adapter allows additional configurations to be set in the catalog profile:
 
