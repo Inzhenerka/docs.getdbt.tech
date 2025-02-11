@@ -316,7 +316,7 @@ const sidebarSettings = {
           items: [
             "docs/cloud/visual-editor",
             "docs/cloud/visual-editor-interface", 
-            "docs/cloud/visual-editor-interface",
+            "docs/cloud/use-visual-editor",
           ],
         },
         ],
