@@ -4,7 +4,7 @@ description: "Learn how to configure state selection in dbt."
 pagination_next: "reference/node-selection/state-comparison-caveats"
 ---
 
-State and defer can be set by environment variables as well as CLI flags:
+State and [defer](/reference/node-selection/defer) can be set by environment variables as well as CLI flags:
 
 - `--state` or `DBT_STATE`: file path
 - `--defer` or `DBT_DEFER`: boolean
