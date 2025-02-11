@@ -65,7 +65,7 @@ project_name:
 
 ---
 
-### **File Format Configuration**
+### File format configuration
 
 The supported file formats depend on the catalog type:
 
