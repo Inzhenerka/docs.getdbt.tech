@@ -105,7 +105,7 @@ For further information on configuring materializations, refer to the [dbt mater
 
 The `dbt-watsonx-spark` adapter enables you to create and update tables through table materialization, making it easier to work with data in watsonx.data Spark.
 
-### **View**
+### View
 
 The adapter automatically creates views by default if no materialization is explicitly specified.
 
