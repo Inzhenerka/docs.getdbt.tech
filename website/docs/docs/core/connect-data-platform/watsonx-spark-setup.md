@@ -106,7 +106,7 @@ The following profile fields are optional to set up. They let you configure your
 | `connect_timeout`        | Timeout for establishing a connection (in seconds).          | `5`                               |
 | `connect_retries`        | Number of retry attempts for connection failures.            | `3`                               |
 
-## Limitations & Considerations
+## Limitations and considerations
 
 - **Supports only HTTP**: No support for ODBC, Thrift, or session-based connections.
 - **Limited dbt Cloud Support**: Not fully compatible with dbt Cloud.
