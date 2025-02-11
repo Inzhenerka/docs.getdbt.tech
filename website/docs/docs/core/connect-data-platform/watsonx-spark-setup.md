@@ -86,7 +86,7 @@ The following profile fields are required to configure watsonx.data Spark connec
 | `user`     | Required                      | Your watsonx.data username                                                | `user@example.com`|
 | `apikey`   | Required                      | Your API key. For more info on [SaaS](https://www.ibm.com/docs/en/software-hub/5.1.x?topic=started-generating-api-keys), For [Software](https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#manage-user-keys)                                                       | `API key`        |
 
-### Schemas and Catalogs
+### Schemas and catalogs
 
 When selecting the catalog, ensure the user has read and write access. This selection does not limit your ability to query into the schema spcified/created but also serves as the default location for materialized `tables`, `views`, and `incremental`.
 
