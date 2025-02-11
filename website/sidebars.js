@@ -1109,9 +1109,21 @@ const sidebarSettings = {
             "reference/node-selection/set-operators",
             "reference/node-selection/methods",
             "reference/node-selection/putting-it-together",
-            "reference/node-selection/state-comparison-caveats",
             "reference/node-selection/yaml-selectors",
             "reference/node-selection/test-selection-examples",
+            {
+              type: "category",
+              label: "About state selection",
+              link: {
+                type: "doc",
+                id: "reference/node-selection/state-selection",
+              },
+              items: [
+                "reference/node-selection/state-selection",
+                "reference/node-selection/configure-state",
+                "reference/node-selection/state-comparison-caveats",
+              ],
+            },
           ],
         },
         {
