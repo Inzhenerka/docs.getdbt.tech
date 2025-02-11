@@ -109,7 +109,7 @@ The `dbt-watsonx-spark` adapter enables you to create and update tables through 
 
 The adapter automatically creates views by default if no materialization is explicitly specified.
 
-### **Incremental**
+### Incremental
 
 Incremental materialization is supported but requires additional configuration for partitioning and performance tuning.
 
