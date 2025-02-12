@@ -1,6 +1,6 @@
 ---
 title: Browse our guides
-description: dbt Cloud is the fastest and most reliable way to deploy your dbt jobs and dbt Core is a powerful open-source tool for data transformations. With the help of a sample project, learn how to quickly start using dbt and one of the most common data platforms.
+description: dbt Cloud is the fastest and most reliable way to deploy dbt for scalable data transformation, while dbt Core powers open-source transformation workflows. Together, they provide a seamless analytics engineering experience. Explore our step-by-step guides, quickstart tutorials, and troubleshooting resources to get started with dbt and your data platform.
 categories:
   - title: dbt Quickstarts
     guides:
