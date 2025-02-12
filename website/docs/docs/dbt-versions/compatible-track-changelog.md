@@ -22,6 +22,10 @@ For more information, see [release tracks](/docs/dbt-versions/cloud-release-trac
 
 Release date: February 12, 2025
 
+### dbt Cloud 
+
+These changes reflect capabilities that are only available in dbt Cloud.
+
 ### Features
 
 - Filter out external exposures in dbt compare
