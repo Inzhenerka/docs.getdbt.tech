@@ -179,7 +179,7 @@ models:
       - name: column_name
         tests:
           - unique:
-            description: markdown_string
+              description: markdown_string
 ```
 </File>
 
@@ -498,7 +498,7 @@ models:
     columns:
       - name: order_id
         tests:
-            - unique:
+          - unique:
               description: "The order_id is unique for every row in the orders model"
 ```
 </File>

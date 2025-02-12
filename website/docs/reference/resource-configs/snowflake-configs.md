@@ -17,7 +17,7 @@ The dbt-snowflake adapter supports the Iceberg table format. It is available for
 
 - [Table](/docs/build/materializations#table)
 - [Incremental](/docs/build/materializations#incremental)
-- [Dynamic](#dynamic-tables) 
+- [Dynamic Table](#dynamic-tables) 
 
 For now, to create Iceberg tables, you must implement a [behavior flag](/reference/global-configs/behavior-changes) due to performance impact related to using Iceberg tables. Snowflake does not support `is_iceberg` on the `Show Objects` query, which dbt depends on for metadata.
 
@@ -336,6 +336,15 @@ Find more information about dynamic table limitations in Snowflake's [docs](http
 For dbt limitations, these dbt features are not supported:
 - [Model contracts](/docs/collaborate/govern/model-contracts)
 - [Copy grants configuration](/reference/resource-configs/snowflake-configs#copying-grants)
+
+### Troubleshooting dynamic tables
+
+If your dynamic table model fails to rerun with the following error message after the initial execution:
+
+```sql
+SnowflakeDynamicTableConfig.__init__() missing 6 required positional arguments: 'name', 'schema_name', 'database_name', 'query', 'target_lag', and 'snowflake_warehouse'
+```
+Ensure that `QUOTED_IDENTIFIERS_IGNORE_CASE` on your account is set to `FALSE`. 
 
 ## Temporary tables
 
