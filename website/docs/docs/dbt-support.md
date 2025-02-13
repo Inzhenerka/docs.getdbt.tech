@@ -19,6 +19,17 @@ If you're developing on the command line (CLI) and have questions or need some h
 
 The global dbt Support team is available to dbt Cloud customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the dbt Cloud navigation.
 
+### dbt Cloud support AI widget
+The Ask dbt Support widget is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud useres and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
+
+The Ask dbt Support AI widget is separate from the [dbt Copilot feature](/docs/cloud/dbt-copilot). dbt Copilot helps with model building and query generation, whereas the Ask dbt Support focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect the AI support widget's availability.
+
+:::info
+Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or reaching out to the Support team.
+:::
+
+### Support plans and resources
+
 We want to help you work through implementing and utilizing dbt Cloud at your organization. Have a question you can't find an answer to in [our docs](https://docs.getdbt.com/) or [the Community Forum](https://discourse.getdbt.com/)? Our Support team is here to `dbt help` you!
 
 - **Enterprise plans** &mdash; Priority [support](#severity-level-for-enterprise-support), options for custom support coverage hours, implementation assistance, dedicated management, and dbt Labs security reviews depending on price point.
