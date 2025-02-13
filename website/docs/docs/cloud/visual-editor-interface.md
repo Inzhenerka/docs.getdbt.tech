@@ -40,7 +40,7 @@ Here the following operators are available:
 #### Input
 	- **Input model**: Select the model and columns you want to use.
 
-**Transform**
+#### Transform
 	- **Join**: Define the join conditions and choose columns from both tables.
 	- **Select**: Pick the columns you need from the model.
 	- **Aggregate**: Specify the aggregation functions and the columns they apply to.
