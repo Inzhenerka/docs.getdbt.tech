@@ -37,7 +37,7 @@ The operator toolbar above the canvas contains the different transformation oper
 
 Here the following operators are available:
 
-**Input**
+#### Input
 	- **Input model**: Select the model and columns you want to use.
 
 **Transform**
