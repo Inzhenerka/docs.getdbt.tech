@@ -19,13 +19,13 @@ If you're developing on the command line (CLI) and have questions or need some h
 
 The global dbt Support team is available to dbt Cloud customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the dbt Cloud navigation.
 
-### dbt Cloud support AI widget
-The Ask dbt Support widget is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud useres and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
+### Ask dbt Support AI widget
+Ask dbt Support is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud useres and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
 
-The Ask dbt Support AI widget is separate from the [dbt Copilot feature](/docs/cloud/dbt-copilot). dbt Copilot helps with model building and query generation, whereas the Ask dbt Support focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect the AI support widget's availability.
+The Ask dbt Support AI widget is separate from the [dbt Copilot feature](/docs/cloud/dbt-copilot). dbt Copilot helps with model building and query generation, whereas Ask dbt Support focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect Ask dbt Support's availability.
 
 :::info
-Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or reaching out to the Support team.
+Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or [reaching](mailto:support@getdbt.com) out to the Support team.
 :::
 
 ### Support plans and resources
