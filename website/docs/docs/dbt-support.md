@@ -22,7 +22,7 @@ The global dbt Support team is available to dbt Cloud customers by [email](mailt
 ### Ask Support Assistant
 Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud users and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
 
-The Support Assistant AI widget is separate from the [dbt Copilot feature](/docs/cloud/dbt-copilot). dbt Copilot helps with model building and query generation, whereas Ask dbt Support focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect Ask dbt Support's availability.
+The Support Assistant AI widget is separate from [dbt Copilot](/docs/cloud/dbt-copilot), a powerful AI-engine that helps with code generation to accelerate your analytics workflows. Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect Support Assistant's availability.
 
 :::info
 Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or [reaching](mailto:support@getdbt.com) out to the Support team.
