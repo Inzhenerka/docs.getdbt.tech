@@ -19,10 +19,10 @@ If you're developing on the command line (CLI) and have questions or need some h
 
 The global dbt Support team is available to dbt Cloud customers by [email](mailto:support@getdbt.com) or by clicking **Create a support ticket** through the dbt Cloud navigation.
 
-### Ask Support Assistant
-Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud users and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
+### Ask dbt Support Assistant
+dbt Support Assistant is an AI widget that provides instant, AI-generated responses to common questions. This feature is available to dbt Cloud users and can help answer troubleshooting questions, provide quick explanations, or link to relevant documentation. 
 
-The Support Assistant AI widget is separate from [dbt Copilot](/docs/cloud/dbt-copilot), a powerful AI-engine that helps with code generation to accelerate your analytics workflows. Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect Support Assistant's availability.
+The dbt Support Assistant AI widget is separate from [dbt Copilot](/docs/cloud/dbt-copilot), a powerful AI-engine that helps with code generation to accelerate your analytics workflows. dbt Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect dbt Support Assistant's availability.
 
 :::info
 Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or [reaching](mailto:support@getdbt.com) out to the Support team.
