@@ -9,6 +9,22 @@
     gap: 2rem;
 }
 
+.quickstartHeroCol  {
+  min-width: 840px;
+  width: 100%;
+  padding: 0 1rem !important;
+}
+
+@media (max-width: 840px) {
+  .quickstartHeroCol  {
+    min-width: 0;
+  }
+}
+
+.searchInput {
+  margin-top: 2rem !important;
+}
+
 .quickstartHero h1 {
     font-size: clamp(var(--ifm-h1-font-size) * 0.9375, 1vw, var(--ifm-h1-font-size));
     --ifm-h1-font-size: 3rem;

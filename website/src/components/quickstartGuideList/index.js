@@ -301,13 +301,14 @@ function QuickstartList({ quickstartData }) {
         showGraphic={false}
         customStyles={{ marginBottom: 0 }}
         classNames={styles.quickstartHero}
+        colClassNames={styles.quickstartHeroCol}
         lightBackground={true}
       >
           <SearchInput
             value={searchInput}
             onChange={handleSearch}
             placeholder="Search guides..."
-            className={styles.searchInput}
+            classNames={styles.searchInput}
           />
    
       </Hero>
