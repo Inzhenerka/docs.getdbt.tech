@@ -66,7 +66,7 @@ Available on [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks)
 
 When [enabled for your CI job](/docs/deploy/ci-jobs#set-up-ci-jobs), dbt invokes [SQLFluff](https://sqlfluff.com/) which is a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors. 
 
-By default, SQL linting lints all the changed SQL files in your project (compared to the last deferred production state). Note that [snapshots](/docs/build/snapshots) can be defined in YAML _and_ `.sql` files, but its SQL isn't lintable and can cause errors during linting. To avoid having SQLFluff try to lint snapshot files, add the snapshots directory to your `.sqlfluffignore` file (for example `snapshots/`). Refer to [snapshot linting](/docs/cloud/dbt-cloud-ide/lint-format#snapshot-linting) for more information.
+By default, SQL linting lints all the changed SQL files in your project (compared to the last deferred production state). Note that [snapshots](/docs/build/snapshots) can be defined in YAML _and_ `.sql` files, but its SQL isn't lintable and can cause errors during linting. To prevent SQLFluff from linting snapshot files, add the snapshots directory to your `.sqlfluffignore` file (for example `snapshots/`). Refer to [snapshot linting](/docs/cloud/dbt-cloud-ide/lint-format#snapshot-linting) for more information.
 
 If the linter runs into errors, you can specify whether dbt should stop running the job on error or continue running it on error. When failing jobs, it helps reduce compute costs by avoiding builds for pull requests that don't meet your SQL code quality CI check.
 
