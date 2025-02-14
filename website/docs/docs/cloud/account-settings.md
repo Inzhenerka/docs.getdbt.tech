@@ -14,7 +14,7 @@ The following sections describe the different **Account settings** available fro
 
 dbt Cloud Git repository caching is enabled by default for all new Enterprise accounts, improving reliability by allowing dbt Cloud to use a cached copy of your repo if cloning fails. 
 
-See the next section more details on repo caching, retention, and more.
+See the next section for  more details on repo caching, retention, and more.
 :::
 
 At the start of every [job](/docs/deploy/jobs) run, dbt Cloud clones the project's Git repository so it has the latest versions of your project's code and runs `dbt deps` to install your dependencies. 
