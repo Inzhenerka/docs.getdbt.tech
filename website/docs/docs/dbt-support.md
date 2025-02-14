@@ -25,7 +25,7 @@ dbt Support Assistant is an AI widget that provides instant, AI-generated respon
 The dbt Support Assistant AI widget is separate from [dbt Copilot](/docs/cloud/dbt-copilot), a powerful AI-engine that helps with code generation to accelerate your analytics workflows. dbt Support Assistant focuses on answering documentation and troubleshooting-related questions. Enabling or disabling AI features in dbt Cloud won't affect dbt Support Assistant's availability.
 
 :::info
-Note that AI-generated responses may not always be accurate. If you receive unexpected or incorrect information, we recommend verifying details in our documentation or [reaching](mailto:support@getdbt.com) out to the Support team.
+We recommend validating information received in AI responses for any scenario using our documentation. Please [contact support](mailto:support@getdbt.com) to report incorrect information provided by the Support Assistant.
 :::
 
 ### Support plans and resources
