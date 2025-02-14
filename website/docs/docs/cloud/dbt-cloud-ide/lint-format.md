@@ -82,7 +82,7 @@ To configure your own linting rules:
 #### Snapshot linting
 By default, dbt Cloud lints all modified `.sql` files in your project, including snapshots. [Snapshots](/docs/build/snapshots) can be defined in YAML _and_ `.sql` files, but their SQL isn't lintable and can cause errors during linting.
 
-To avoid having SQLFluff try to lint snapshot files, add the snapshots directory to your `.sqlfluffignore` file (for example `snapshots/`).
+To prevent SQLFluff from linting snapshot files, add the snapshots directory to your `.sqlfluffignore` file (for example `snapshots/`).
 
 Note that you should explicitly exclude snapshots in your `.sqlfluffignore` file since dbt Cloud doesn't automatically ignore snapshots on the backend.
 
