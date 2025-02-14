@@ -1,6 +1,8 @@
 ---
 title: "Packages"
 id: "packages"
+description:  "dbt packages help modularize code and transform data efficiently."
+keywords: [dbt package, private package, dbt private package, dbt data transformation, dbt clone, add dbt package]
 ---
 
 
@@ -18,9 +20,10 @@ In dbt, libraries like these are called _packages_. dbt's packages are so powerf
   * Models to understand [Redshift](https://hub.getdbt.com/dbt-labs/redshift/latest/) privileges.
   * Macros to work with data loaded by [Stitch](https://hub.getdbt.com/dbt-labs/stitch_utils/latest/).
 
-dbt _packages_ are in fact standalone dbt projects, with models and macros that tackle a specific problem area. As a dbt user, by adding a package to your project, the package's models and macros will become part of your own project. This means:
+dbt _packages_ are in fact standalone dbt projects, with models, macros, and other resources that tackle a specific problem area. As a dbt user, by adding a package to your project, all of the package's resources will become part of your own project. This means:
 * Models in the package will be materialized when you `dbt run`.
 * You can use `ref` in your own models to refer to models from the package.
+* You can use `source` to refer to sources in the package.
 * You can use macros in the package in your own project.
 * It's important to note that defining and installing dbt packages is different from [defining and installing Python packages](/docs/build/python-models#using-pypi-packages)
 
@@ -30,7 +33,7 @@ import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 <UseCaseInfo/>
 
 ## How do I add a package to my project?
-1. Add a file named <VersionBlock firstVersion="1.6"> `dependencies.yml` or </VersionBlock> `packages.yml` to your dbt project. This should be at the same level as your `dbt_project.yml` file.
+1. Add a file named `dependencies.yml` or `packages.yml` to your dbt project. This should be at the same level as your `dbt_project.yml` file.
 2. Specify the package(s) you wish to add using one of the supported syntaxes, for example:
 
 <File>
@@ -80,8 +83,10 @@ packages:
     version: [">=0.7.0", "<0.8.0"]
 ```
 
+`dbt deps` "pins" each package by default. See ["Pinning packages"](#pinning-packages) for details.
+
 Where possible, we recommend installing packages via dbt Hub, since this allows dbt to handle duplicate dependencies. This is helpful in situations such as:
-* Your project uses both the dbt-utils and Snowplow packages; and the Snowplow package _also_ uses the dbt-utils package.
+* Your project uses both the dbt-utils and Snowplow packages, and the Snowplow package _also_ uses the dbt-utils package.
 * Your project uses both the Snowplow and Stripe packages, both of which use the dbt-utils package.
 
 In comparison, other package installation methods are unable to handle the duplicate dbt-utils package. 
@@ -137,13 +142,7 @@ packages:
     revision: 4e28d6da126e2940d17f697de783a717f2503188
 ```
 
-We **strongly recommend** "pinning" your package to a specific release by specifying a release name.
-
-If you do not provide a revision, or if you use `master`, then any updates to the package will be incorporated into your project the next time you run `dbt deps`. While we generally try to avoid making breaking changes to these packages, they are sometimes unavoidable. Pinning a package revision helps prevent your code from changing without your explicit approval.
-
-To find the latest release for a package, navigate to the `Releases` tab in the relevant GitHub repository. For example, you can find all of the releases for the dbt-utils package [here](https://github.com/dbt-labs/dbt-utils/releases).
-
-As of v0.14.0, dbt will warn you if you install a package using the `git` syntax without specifying a version (see below).
+By default, `dbt deps` "pins" each package. See ["Pinning packages"](#pinning-packages) for details.
 
 ### Internally hosted tarball URL
 
@@ -158,12 +157,77 @@ packages:
 
 Where `name: 'dbt_utils'` specifies the subfolder of `dbt_packages` that's created for the package source code to be installed within.
 
-### Private packages
+## Private packages
 
-#### SSH Key Method (Command Line only)
+### Native private packages <Lifecycle status='beta'/> 
+
+dbt Cloud supports private packages from [supported](#prerequisites) Git repos leveraging an existing [configuration](/docs/cloud/git/git-configuration-in-dbt-cloud) in your environment. Previously, you had to configure a [token](#git-token-method) to retrieve packages from your private repos.
+
+#### Prerequisites
+
+- To use native private packages, you must have one of the following Git providers configured in the **Integrations** section of your **Account settings**:
+  - [GitHub](/docs/cloud/git/connect-github)
+  - [Azure DevOps](/docs/cloud/git/connect-azure-devops)
+    - Private packages only work within a single Azure DevOps project. If your repositories are in different projects within the same organization, you can't reference them in the `private` key at this time.
+    - For Azure DevOps, use the `org/repo` path (not the `org_name/project_name/repo_name` path) with the project tier inherited from the integrated source repository.
+  - Support for GitLab is coming soon.
+
+#### Configuration
+
+Use the `private` key in your `packages.yml` or `dependencies.yml` to clone package repos using your existing dbt Cloud Git integration without having to provision an access token or create a dbt Cloud environment variable. 
+
+
+<File name="packages.yml">
+
+```yaml
+packages:
+  - private: dbt-labs/awesome_repo # your-org/your-repo path
+  - package: normal packages
+  [...]
+```
+</File>
+
+:::tip Azure DevOps considerations
+
+- Private packages currently only work if the package repository is in the same Azure DevOps project as the source repo.
+- Use the `org/repo` path (not the normal ADO `org_name/project_name/repo_name` path) in the `private` key. 
+- Repositories in different Azure DevOps projects is currently not supported until a future update.
+
+You can use private packages by specifying `org/repo` in the `private` key:
+
+<File name="packages.yml">
+
+```yaml
+packages:
+  - private: my-org/my-repo # Works if your ADO source repo and package repo are in the same project
+```
+</File>
+:::
+
+You can pin private packages similar to regular dbt packages:
+
+```yaml
+packages:
+  - private: dbt-labs/awesome_repo
+    revision: "0.9.5" # Pin to a tag, branch, or complete 40-character commit hash
+  
+```
+
+If you are using multiple Git integrations, disambiguate by adding the provider key:
+
+```yaml
+packages:
+  - private: dbt-labs/awesome_repo
+    provider: "github" # GitHub and Azure are currently supported. GitLab is coming soon.
+
+```
+
+With this method, you can retrieve private packages from an integrated Git provider without any additional steps to connect. 
+
+### SSH key method (command line only)
 If you're using the Command Line, private packages can be cloned via SSH and an SSH key.
 
-When you use SSH keys to authenticate to your git remote server, you don’t need to supply your username and password each time. Read more about SSH keys, how to generate them, and how to add them to your git provider here: [Github](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) and [GitLab](https://docs.gitlab.com/ee/ssh/).
+When you use SSH keys to authenticate to your git remote server, you don’t need to supply your username and password each time. Read more about SSH keys, how to generate them, and how to add them to your git provider here: [Github](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) and [GitLab](https://docs.gitlab.com/ee/user/ssh.html).
 
 
 <File name='packages.yml'>
@@ -178,12 +242,19 @@ packages:
 If you're using dbt Cloud, the SSH key method will not work, but you can use the [HTTPS Git Token Method](https://docs.getdbt.com/docs/build/packages#git-token-method).
 
 
-#### Git Token Method
+### Git token method
+
+:::note
+
+dbt Cloud has [native support](#native-private-packages) for Git hosted private packages with GitHub and Azure DevOps (GitLab coming soon). If you are using a supported [integrated Git environment](/docs/cloud/git/git-configuration-in-dbt-cloud), you no longer need to configure Git tokens to retrieve private packages. 
+
+:::
+
 This method allows the user to clone via HTTPS by passing in a git token via an environment variable. Be careful of the expiration date of any token you use, as an expired token could cause a scheduled run to fail. Additionally, user tokens can create a challenge if the user ever loses access to a specific repo.
 
 
-:::info dbt Cloud Usage
-If you are using dbt Cloud, you must adhere to the naming conventions for environment variables. Environment variables in dbt Cloud must be prefixed with either `DBT_` or <VersionBlock lastVersion="1.5">`DBT_ENV_SECRET_`</VersionBlock><VersionBlock firstVersion="1.6">`DBT_ENV_SECRET`</VersionBlock>. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
+:::info dbt Cloud usage
+If you are using dbt Cloud, you must adhere to the naming conventions for environment variables. Environment variables in dbt Cloud must be prefixed with either `DBT_` or `DBT_ENV_SECRET`. Environment variables keys are uppercased and case sensitive. When referencing `{{env_var('DBT_KEY')}}` in your project's code, the key must match exactly the variable defined in dbt Cloud's UI.
 :::
 
 In GitHub:
@@ -247,7 +318,7 @@ Read more about creating a Personal Access Token [here](https://confluence.atlas
 
 
 
-#### Configure subdirectory for packaged projects
+## Configure subdirectory for packaged projects
 
 In general, dbt expects `dbt_project.yml` to be located as a top-level file in a package. If the packaged project is instead nested in a subdirectory—perhaps within a much larger mono repo—you can optionally specify the folder path as `subdirectory`. dbt will attempt a [sparse checkout](https://git-scm.com/docs/git-sparse-checkout) of just the files located within that subdirectory. Note that you must be using a recent version of `git` (`>=2.26.0`).
 
@@ -303,6 +374,17 @@ When you update a version or revision in your `packages.yml` file, it isn't auto
 When you remove a package from your `packages.yml` file, it isn't automatically deleted from your dbt project, as it still exists in your `dbt_packages/` directory. If you want to completely uninstall a package, you should either:
 * delete the package directory in `dbt_packages/`;  or
 * run `dbt clean` to delete _all_ packages (and any compiled models), followed by `dbt deps`.
+
+### Pinning packages
+
+Beginning with v1.7, running [`dbt deps`](/reference/commands/deps) "pins" each package by creating or updating the `package-lock.yml` file in the _project_root_ where `packages.yml` is recorded. 
+
+- The `package-lock.yml` file contains a record of all packages installed.
+- If subsequent `dbt deps` runs contain no changes to `dependencies.yml` or `packages.yml`, dbt-core installs from `package-lock.yml`. 
+
+For example, if you use a branch name, the `package-lock.yml` file pins to the head commit. If you use a version range, it pins to the latest release. In either case, subsequent commits or versions will **not** be installed. To get new commits or versions, run `dbt deps --upgrade` or add `package-lock.yml` to your .gitignore file.
+
+As of v0.14.0, dbt will warn you if you install a package using the `git` syntax without specifying a revision (see below).
 
 ### Configuring packages
 You can configure the models and seeds in a package from the `dbt_project.yml` file, like so:

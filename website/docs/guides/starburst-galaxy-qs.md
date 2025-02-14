@@ -202,8 +202,8 @@ To query the Jaffle Shop data with Starburst Galaxy, you need to create tables u
     If this role is not listed for you, choose the role you selected in [Connect Starburst Galaxy to the Amazon S3 bucket](#connect-to-s3-bucket) when you added location privilege for your S3 bucket.
 3. Click **Clusters** on the left sidebar.
 4. Find your cluster in the **View clusters** table and click **Connection info**. Choose **dbt** from the **Select client** dropdown. Keep the **Connection information** modal open. You will use details from that modal in dbt Cloud.
-5. In another browser tab, log in to [dbt Cloud](https://cloud.getdbt.com/).
-6. Create a new project in dbt Cloud. From Account settings (using the gear menu in the top right corner), click **+ New Project**.
+5. In another browser tab, log in to [dbt Cloud](/docs/cloud/about-cloud/access-regions-ip-addresses).
+6. Create a new project in dbt Cloud. Click on your account name in the left side menu, select **Account settings**, and click **+ New Project**.
 7. Enter a project name and click **Continue**.
 8. Choose **Starburst** as your connection and click **Next**.
 9. Enter the **Settings** for your new project:
@@ -414,7 +414,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 #### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 </div>

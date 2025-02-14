@@ -101,7 +101,7 @@ In this quickstart guide, you'll learn how to use dbt Cloud with [Microsoft Fabr
 
 ## Connect dbt Cloud to Microsoft Fabric
 
-1. Create a new project in dbt Cloud. From **Account settings** (using the gear menu in the top right corner), click **+ New Project**.
+1. Create a new project in dbt Cloud. Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
 2. Enter a project name and click **Continue**.
 3. Choose **Fabric** as your connection and click **Next**.
 4. In the **Configure your environment** section, enter the **Settings** for your new project:
@@ -314,7 +314,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 #### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 </div>

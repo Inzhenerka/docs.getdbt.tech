@@ -29,17 +29,19 @@ We highly recommend using the `Production` environment type for the final, sourc
 
 To create a new dbt Cloud deployment environment, navigate to **Deploy** -> **Environments** and then click **Create Environment**. Select **Deployment** as the environment type. The option will be greyed out if you already have a development environment.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-deploy-env.jpg" width="85%" title="Navigate to Deploy ->  Environments to create a deployment environment" />
+<Lightbox src="/img/docs/dbt-cloud/cloud-configuring-dbt-cloud/create-deploy-env.png" width="85%" title="Navigate to Deploy ->  Environments to create a deployment environment" />
 
 ### Set as production environment
 
 In dbt Cloud, each project can have one designated deployment environment, which serves as its production environment. This production environment is _essential_ for using features like dbt Explorer and cross-project references. It acts as the source of truth for the project's production state in dbt Cloud.
 
-<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings.jpg" width="70%" title="Set your production environment as the default environment in your Environment Settings"/>
+<Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/prod-settings-1.png" width="100%" title="Set your production environment as the default environment in your Environment Settings"/>
 
 ### Semantic Layer
 
-For Semantic Layer-eligible customers, the next section of environment settings is the Semantic Layer configurations. [The Semantic Layer setup guide](/docs/use-dbt-semantic-layer/setup-sl) has the most up-to-date setup instructions!
+For customers using the dbt Semantic Layer, the next section of environment settings is the Semantic Layer configurations. [The Semantic Layer setup guide](/docs/use-dbt-semantic-layer/setup-sl) has the most up-to-date setup instructions.
+
+You can also leverage the dbt Job scheduler to [validate your semantic nodes in a CI job](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
 
 ## Staging environment
 
@@ -55,13 +57,10 @@ Some customers prefer to connect Development and Staging to their `main` branch 
 
 ### Why use a staging environment
 
-There are two primary motivations for using a Staging environment:
+These are the primary motivations for using a Staging environment:
 1. An additional validation layer before changes are deployed into Production. You can deploy, test, and explore your dbt models in Staging.
 2. Clear isolation between development workflows and production data. It enables developers to work in metadata-powered ways, using features like deferral and cross-project references, without accessing data in production deployments.
-
-:::info Coming soon: environment-level permissions
-Provide developers with the ability to create, edit, and trigger ad hoc jobs in the Staging environment, while keeping the Production environment locked down.
-:::
+3. Provide developers with the ability to create, edit, and trigger ad hoc jobs in the Staging environment, while keeping the Production environment locked down using [environment-level permissions](/docs/cloud/manage-access/environment-permissions). 
 
 **Conditional configuration of sources** enables you to point to "prod" or "non-prod" source data, depending on the environment you're running in. For example, this source will point to `<DATABASE>.sensitive_source.table_with_pii`, where `<DATABASE>` is dynamically resolved based on an environment variable.
 
@@ -110,20 +109,20 @@ We recommend that the data warehouse credentials be for a dedicated user or serv
 
 This section determines the exact location in your warehouse dbt should target when building warehouse objects! This section will look a bit different depending on your warehouse provider.
 
-For all warehouses, use [extended attributes](/docs/deploy/deploy-environments#extended-attributes) to override missing or inactive (grayed-out) settings.
+For all warehouses, use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings.
 
 <WHCode>
 
 
 <div warehouse="Postgres">
 
-This section will not appear if you are using Postgres, as all values are inferred from the project's connection. Use [extended attributes](/docs/deploy/deploy-environments#extended-attributes) to override these values.
+This section will not appear if you are using Postgres, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
 
 </div>
 
 <div warehouse="Redshift">
 
-This section will not appear if you are using Redshift, as all values are inferred from the project's connection. Use [extended attributes](/docs/deploy/deploy-environments#extended-attributes) to override these values.
+This section will not appear if you are using Redshift, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
 
 </div>
 
@@ -141,13 +140,13 @@ This section will not appear if you are using Redshift, as all values are inferr
 
 <div warehouse="Bigquery">
 
-This section will not appear if you are using Bigquery, as all values are inferred from the project's connection. Use [extended attributes](/docs/deploy/deploy-environments#extended-attributes) to override these values.
+This section will not appear if you are using Bigquery, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
 
 </div>
 
 <div warehouse="Spark">
 
-This section will not appear if you are using Spark, as all values are inferred from the project's connection. Use [extended attributes](/docs/deploy/deploy-environments#extended-attributes) to override these values.
+This section will not appear if you are using Spark, as all values are inferred from the project's connection. Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override these values.
 
 </div>
 
@@ -167,6 +166,8 @@ This section will not appear if you are using Spark, as all values are inferred 
 ### Deployment credentials
 
 This section allows you to determine the credentials that should be used when connecting to your warehouse. The authentication methods may differ depending on the warehouse and dbt Cloud tier you are on.
+
+For all warehouses, use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings. For credentials, we recommend wrapping extended attributes in [environment variables](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`) to avoid displaying the secret value in the text box and the logs.
 
 <WHCode>
 
@@ -221,6 +222,8 @@ This section allows you to determine the credentials that should be used when co
 
 - **Dataset**: Target dataset
 
+Use [extended attributes](/docs/dbt-cloud-environments#extended-attributes) to override missing or inactive (grayed-out) settings. For credentials, we recommend wrapping extended attributes in [environment variables](/docs/build/environment-variables) (`password: '{{ env_var(''DBT_ENV_SECRET_PASSWORD'') }}'`) to avoid displaying the secret value in the text box and the logs.
+
 </div>
 
 <div warehouse="Spark">
@@ -246,6 +249,12 @@ This section allows you to determine the credentials that should be used when co
 </div>
 
 </WHCode>
+
+## Delete an environment
+
+import DeleteEnvironment from '/snippets/_delete-environment.md';
+
+<DeleteEnvironment />
 
 ## Related docs
 

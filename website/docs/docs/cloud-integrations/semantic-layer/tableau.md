@@ -5,10 +5,7 @@ tags: [Semantic Layer]
 sidebar_label: "Tableau"
 ---
 
-
-The Tableau integration allows you to use worksheets to query the Semantic Layer directly and produce your dashboards with trusted data.  
-
-This integration provides a live connection to the dbt Semantic Layer through Tableau Desktop or Tableau Server.
+The Tableau integration allows you to use worksheets to query the dbt Semantic Layer directly and produce your dashboards with trusted data. It provides a live connection to the dbt Semantic Layer through Tableau Desktop or Tableau Server.
 
 ## Prerequisites
 
@@ -49,8 +46,8 @@ Alternatively, you can follow these steps to install the Connector:
 ## Using the integration
 
 1. **Authentication** &mdash; Once you authenticate, the system will direct you to the data source page.
-2. **Access all Semantic Layer Objects** &mdash; Use the "ALL" data source to access all the metrics, dimensions, and entities configured in your dbt Semantic Layer. Note that the "METRICS_AND_DIMENSIONS" data source has been deprecated and replaced by "ALL".
-3. **Access saved queries** &mdash; You can optionally access individual [saved queries](/docs/build/saved-queries) that you've defined. These will also show up as unique data sources when you log in.
+2. **Access all Semantic Layer Objects** &mdash; Use the "ALL" data source to access all the metrics, dimensions, and entities configured in your dbt Semantic Layer. Note that the "METRICS_AND_DIMENSIONS" data source has been deprecated and replaced by "ALL". Be sure to use a live connection since extracts are not supported at this time. 
+3. **Access saved queries** &mdash; You can optionally access individual [saved queries](/docs/build/saved-queries) that you've defined. These will also show up as unique data sources when you log in. 
 4. **Access worksheet** &mdash; From your data source selection, go directly to a worksheet in the bottom left-hand corner.
 5. **Query metrics and dimensions** &mdash; Then, you'll find all the metrics, dimensions, and entities that are available to query on the left side of your window based on your selection.
 
@@ -80,7 +77,6 @@ Visit the [Tableau documentation](https://help.tableau.com/current/pro/desktop/e
 ## Unsupported functionality
 
 The following Tableau features aren't supported at this time, however, the dbt Semantic Layer may support some of this functionality in a future release:
-
 - Updating the data source page
 - Using "Extract" mode to view your data
 - Unioning Tables
@@ -91,6 +87,7 @@ The following Tableau features aren't supported at this time, however, the dbt S
 - Filtering on a Date Part time dimension for a Cumulative metric type
 - Changing your date dimension to use "Week Number"
 - Performing joins between tables that the dbt Semantic Layer creates. It handles joins for you, so there's no need to join components in the dbt Semantic Layer. Note, that you _can_ join tables from the dbt Semantic Layer to ones outside your data platform.
+- The Tableau integration doesn't currently display descriptive labels defined in your `metrics` configuration, meaning custom labels won't be visible when those metrics are imported/queried into Tableau. 
   
 ## FAQs
 <FAQ path="Troubleshooting/sl-alpn-error" />

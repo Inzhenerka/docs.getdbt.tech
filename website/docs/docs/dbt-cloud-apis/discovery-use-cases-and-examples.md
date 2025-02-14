@@ -25,7 +25,7 @@ For performance use cases, people typically query the historical or latest appli
 
 It’s helpful to understand how long it takes to build models (tables) and tests to execute during a dbt run. Longer model build times result in higher infrastructure costs and fresh data arriving later to stakeholders. Analyses like these can be in observability tools or ad-hoc queries, like in a notebook.
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.jpg" width="200%" title="Model timing visualization in dbt Cloud"/>
+<Lightbox src="/img/docs/dbt-cloud/discovery-api/model-timing.png" width="200%" title="Model timing visualization in dbt Cloud"/>
 
 <details>
 <summary>Example query with code</summary>
@@ -495,7 +495,7 @@ Graph example:
 
 ### Are my data sources fresh?
 
-Checking [source freshness](/docs/build/sources#snapshotting-source-data-freshness) allows you to ensure that sources loaded and used in your dbt project are compliant with expectations. The API provides the latest metadata about source loading and information about the freshness check criteria.
+Checking [source freshness](/docs/build/sources#source-data-freshness) allows you to ensure that sources loaded and used in your dbt project are compliant with expectations. The API provides the latest metadata about source loading and information about the freshness check criteria.
 
 <Lightbox src="/img/docs/dbt-cloud/discovery-api/source-freshness-page.png" width="75%" title="Source freshness page in dbt Cloud"/>
 
@@ -584,8 +584,6 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 </details>
 
-<VersionBlock firstVersion="1.5">
-
 ### How is this model contracted and versioned?
 
 To enforce the shape of a model's definition, you can define contracts on models and their columns. You can also specify model versions to keep track of discrete stages in its evolution and use the appropriate one.
@@ -627,8 +625,6 @@ query {
 ```
 
 </details>
-
-</VersionBlock>
 
 ## Discovery
 
@@ -908,11 +904,9 @@ Graph example:
 
 -->
 
-<VersionBlock firstVersion="1.6">
-
 ### Which metrics are available?
 
-You can define and query metrics using the [dbt Semantic Layer](/docs/build/about-metricflow), use them for documentation purposes (like for a data catalog), and calculate aggregations (like in a BI tool that doesn’t query the SL). To learn more, refer to [Get started with MetricFlow](/docs/build/sl-getting-started).
+You can define and query metrics using the [dbt Semantic Layer](/docs/build/about-metricflow), use them for documentation purposes (like for a data catalog), and calculate aggregations (like in a BI tool that doesn’t query the SL).
 
 <details>
 <summary>Example query</summary>
@@ -943,10 +937,6 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 
 </details>
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.5">
 
 ## Governance
 
@@ -1041,8 +1031,6 @@ query ($environmentId: BigInt!, $first: Int!) {
 ```
 </details>
 
-</VersionBlock>
-
 ## Development
 
 You can use the Discovery API to understand dataset changes and usage and gauge impacts to inform project definition. Below are example questions and queries you can run.
@@ -1052,7 +1040,7 @@ For development use cases, people typically query the historical or latest defin
 ### How is this model or metric used in downstream tools?
 [Exposures](/docs/build/exposures) provide a method to define how a model or metric is actually used in dashboards and other analytics tools and use cases. You can query an exposure’s definition to see how project nodes are used and query its upstream lineage results to understand the state of the data used in it, which powers use cases like a freshness and quality status tile.
 
-<Lightbox src="/img/docs/dbt-cloud/discovery-api/data-freshness-metadata.jpg" width="25%" title="Status tiles in dbt Cloud"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Embed data health tiles in your dashboards to distill trust signals for data consumers." />
 
 
 <details>

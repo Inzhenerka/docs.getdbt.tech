@@ -26,7 +26,8 @@ models/marts
 
 ✅ **Group by department or area of concern.** If you have fewer than 10 or so marts you may not have much need for subfolders, so as with the intermediate layer, don’t over-optimize too early. If you do find yourself needing to insert more structure and grouping though, use useful business concepts here. In our marts layer, we’re no longer worried about source-conformed data, so grouping by departments (marketing, finance, etc.) is the most common structure at this stage.
 
-✅ **Name by entity.** Use plain English to name the file based on the concept that forms the grain of the mart `customers`, `orders`. Note that for pure marts, there should not be a time dimension (`orders_per_day`) here, that is typically best captured via metrics.
+✅ **Name by entity.** Use plain English to name the file based on the concept that forms the grain of the mart’s `customers`, `orders`. Marts that don't include any time-based rollups (pure marts) should not have a time dimension (`orders_per_day`) here, typically best captured via metrics.
+
 
 ❌ **Build the same concept differently for different teams.** `finance_orders` and `marketing_orders` is typically considered an anti-pattern. There are, as always, exceptions — a common pattern we see is that, finance may have specific needs, for example reporting revenue to the government in a way that diverges from how the company as a whole measures revenue day-to-day. Just make sure that these are clearly designed and understandable as _separate_ concepts, not departmental views on the same concept: `tax_revenue` and `revenue` not `finance_revenue` and `marketing_revenue`.
 
@@ -133,3 +134,7 @@ The most important aspect of marts is that they contain all of the useful data a
 ### Marts: Other considerations
 
 - **Troubleshoot via tables.** While stacking views and ephemeral models up until our marts — only building data into the warehouse at the end of a chain when we have the models we really want end users to work with — is ideal in production, it can present some difficulties in development. Particularly, certain errors may seem to be surfacing in our later models that actually stem from much earlier dependencies in our model chain (ancestor models in our DAG that are built before the model throws the errors). If you’re having trouble pinning down where or what a database error is telling you, it can be helpful to temporarily build a specific chain of models as tables so that the warehouse will throw the error where it’s actually occurring.
+
+### The dbt Semantic Layer and marts
+
+Our structural recommendations are impacted quite a bit by whether or not you’re using the dbt Semantic Layer. If you're using the Semantic Layer, we recommend a more normalized approach to your marts. If you're not using the Semantic Layer, we recommend a more denormalized approach that has become typical in dbt projects. For the full list of recommendations on structure, naming, and organization in the Semantic Layer, check out the [How we build our metrics](/best-practices/how-we-build-our-metrics/semantic-layer-1-intro) guide, particularly the [Refactoring an existing rollup](/best-practices/how-we-build-our-metrics/semantic-layer-8-refactor-a-rollup) section.

@@ -2,7 +2,7 @@
 title: "dbt Explorer FAQs"
 sidebar_label: "dbt Explorer FAQs"
 description: "Learn more with the FAQs about dbt Explorer, how it works, how to interact with it, and more."
-pagination_next: null
+pagination_next: "docs/collaborate/auto-exposures"
 ---
 
 [dbt Explorer](/docs/collaborate/explore-projects) is dbt Cloud’s new knowledge base and lineage visualization experience. It offers an interactive and high-level view of your company’s entire data estate, where you can dive deep into the context you need to understand and improve lineage so your teams can trust the data they’re using to make decisions.
@@ -63,6 +63,11 @@ dbt Explorer reflects all the lineage defined within the dbt project. Our vision
 
 </Expandable>
 
+<Expandable alt_header="Why did previously visible data in dbt Explorer disappear?" >
+
+dbt Explorer automatically deletes stale metadata after 3 months if no jobs were run to refresh it. To avoid this, make sure you schedule jobs to run more frequently than 3 months with the necessary commands.
+
+</Expandable>
 
 ## Key features 
 
@@ -169,5 +174,13 @@ Yes, users with read-only access can use the dbt Explorer. Specific feature avai
 <Expandable alt_header="Is there an easy way to share useful dbt Explorer content with people outside of dbt Cloud?" >
 
 The ability to embed and share views is being evaluated as a potential future capability. 
+
+</Expandable>
+
+<Expandable alt_header=" Is dbt Explorer accessible from other areas inside dbt Cloud?" >
+
+Yes, you can [access dbt Explorer from various dbt Cloud features](/docs/collaborate/access-from-dbt-cloud), ensuring you have a seamless experience navigating between resources and lineage in your project.
+
+While the primary way to access dbt Explorer is through the **Explore** link in the navigation, you can also access it from the [dbt Cloud IDE](/docs/collaborate/access-from-dbt-cloud#dbt-cloud-ide), [the lineage tab in jobs](/docs/collaborate/access-from-dbt-cloud#lineage-tab-in-jobs), and the [model timing tab in jobs](/docs/collaborate/access-from-dbt-cloud#model-timing-tab-in-jobs).
 
 </Expandable>

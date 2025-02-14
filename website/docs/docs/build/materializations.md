@@ -1,6 +1,6 @@
 ---
 title: "Materializations"
-description: "Read this tutorial to learn how to use materializations when building in dbt."
+description: "Configure materializations in dbt to control how the SQL is run and resulting data is stored."
 id: "materializations"
 pagination_next: "docs/build/incremental-models"
 ---
@@ -18,7 +18,11 @@ You can also configure [custom materializations](/guides/create-new-materializat
 
 
 ## Configuring materializations
-By default, dbt models are materialized as "views". Models can be configured with a different materialization by supplying the `materialized` configuration parameter as shown below.
+By default, dbt models are materialized as "views". Models can be configured with a different materialization by supplying the [`materialized` configuration](/reference/resource-configs/materialized) parameter as shown in the following tabs.
+
+<Tabs>
+
+<TabItem value="Project file">
 
 <File name='dbt_project.yml'>
 
@@ -49,6 +53,10 @@ models:
 
 </File>
 
+</TabItem>
+
+<TabItem value="Model file">
+
 Alternatively, materializations can be configured directly inside of the model sql files. This can be useful if you are also setting [Performance Optimization] configs for specific models (for example, [Redshift specific configurations](/reference/resource-configs/redshift-configs) or [BigQuery specific configurations](/reference/resource-configs/bigquery-configs)).
 
 <File name='models/events/stg_event_log.sql'>
@@ -62,6 +70,29 @@ from ...
 ```
 
 </File>
+
+</TabItem>
+
+<TabItem value="Property file">
+
+Materializations can also be configured in the model's `properties.yml` file.  The following example shows the `table` materialization type. For a complete list of materialization types, refer to [materializations](/docs/build/materializations#materializations).
+
+<File name='models/properties.yml'>
+
+```yaml
+version: 2
+
+models:
+  - name: events
+    config:
+      materialized: table
+```
+
+</File>
+
+</TabItem>
+
+</Tabs>
 
 ## Materializations
 
@@ -94,7 +125,8 @@ When using the `table` materialization, your model is rebuilt as a <Term id="tab
     * Use incremental models when your `dbt run`s are becoming too slow (i.e. don't start with incremental models)
 
 ### Ephemeral
-`ephemeral` models are not directly built into the database. Instead, dbt will interpolate the code from this model into dependent models as a common <Term id="table" /> expression.
+`ephemeral` models are not directly built into the database. Instead, dbt will interpolate the code from an ephemeral model into its dependent models using a common table expression (<Term id="cte" />). You can control the identifier for this CTE using a [model alias](/docs/build/custom-aliases), but dbt will always prefix the model identifier with `__dbt__cte__`.
+
 * **Pros:**
     * You can still write reusable logic
   - Ephemeral models can help keep your <Term id="data-warehouse" /> clean by reducing clutter (also consider splitting your models across multiple schemas by [using custom schemas](/docs/build/custom-schemas)).
@@ -110,7 +142,7 @@ When using the `table` materialization, your model is rebuilt as a <Term id="tab
 
 ### Materialized View
 
-The `materialized view` materialization allows the creation and maintenance of materialized views in the target database.
+The `materialized_view` materialization allows the creation and maintenance of materialized views in the target database.
 Materialized views are a combination of a view and a table, and serve use cases similar to incremental models.
 
 * **Pros:**

@@ -17,19 +17,16 @@ You must have proper permissions to invite new users:
 
 ## Invite new users
 
-1. In your dbt Cloud account, select the gear menu in the upper right corner and then select **Account Settings**.
-2. From the left sidebar, select **Users**.
-
-<Lightbox src="/img/docs/dbt-cloud/access-control/users-screen.png" title="The user screen in the Account Settings page"/>
-
-3. Click on **Invite Users**.
+1. In your dbt Cloud account, select your account name in the bottom left corner. Then select **Account settings**.
+2. Under **Settings**, select **Users**.
+3. Click on **Invite users**.
 
 <Lightbox src="/img/docs/dbt-cloud/access-control/invite-users.png" width="60%" title="The invite users pane"/>
 
-4. In the **Email Addresses** field, enter the email addresses of the users you would like to invite separated by comma, semicolon, or a new line.
+4. In the **Email Addresses** field, enter the email addresses of the users you want to invite separated by a comma, semicolon, or a new line.
 5. Select the license type for the batch of users from the **License** dropdown.
-6. Select the group(s) you would like the invitees to belong to.
-7. Click **Send Invitations**.
+6. Select the group(s) you want the invitees to belong to.
+7. Click **Send invitations**.
     - If the list of invitees exceeds the number of licenses your account has available, you will receive a warning when you click **Send Invitations** and the invitations will not be sent. 
 
 
@@ -69,7 +66,7 @@ Once the user completes this process, their email and user information will popu
 
 * Is there a limit to the number of users I can invite? _Your ability to invite users is limited to the number of licenses you have available._
 * Why are users are clicking the invitation link and getting an `Invalid Invitation Code` error? _We have seen scenarios where embedded secure link technology (such as enterprise Outlooks [Safe Link](https://learn.microsoft.com/en-us/microsoft-365/security/office-365-security/safe-links-about?view=o365-worldwide) feature) can result in errors when clicking on the email link. Be sure to include the `getdbt.com` URL in the allowlists for these services._
-* Can I have a mixure of users with SSO and username/password authentication? _Once SSO is enabled, you will no longer be able to add local users. If you have contractors or similar contingent workers, we recommend you add them to your SSO service._
+* Can I have a mixture of users with SSO and username/password authentication? _Once SSO is enabled, you will no longer be able to add local users. If you have contractors or similar contingent workers, we recommend you add them to your SSO service._
 * What happens if I need to resend the invitation? _From the Users page, click on the invite record, and you will be presented with the option to resend the invitation._
 * What can I do if I entered an email address incorrectly? _From the Users page, click on the invite record, and you will be presented with the option to revoke it. Once revoked, generate a new invitation to the correct email address._
 

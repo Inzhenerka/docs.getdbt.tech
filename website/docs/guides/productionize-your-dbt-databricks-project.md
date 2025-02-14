@@ -57,7 +57,7 @@ Let’s [create a job](/docs/deploy/deploy-jobs#create-and-schedule-jobs) in dbt
     - This will allow the job to inherit the catalog, schema, credentials, and environment variables defined in [Set up your dbt project with Databricks](/guides/set-up-your-databricks-dbt-project).
 4. Under **Execution Settings**
     - Check the **Generate docs on run** checkbox to configure the job to automatically generate project docs each time this job runs. This will ensure your documentation stays evergreen as models are added and modified.
-    - Select the **Run on source freshness** checkbox to configure dbt [source freshness](/docs/deploy/source-freshness) as the first step of this job. Your sources will need to be configured to [snapshot freshness information](/docs/build/sources#snapshotting-source-data-freshness) for this to drive meaningful insights.
+    - Select the **Run on source freshness** checkbox to configure dbt [source freshness](/docs/deploy/source-freshness) as the first step of this job. Your sources will need to be configured to [snapshot freshness information](/docs/build/sources#source-data-freshness) for this to drive meaningful insights.
     
     Add the following three **Commands:**
     - `dbt source freshness`
@@ -109,7 +109,7 @@ The deployment monitor in dbt Cloud offers a higher-level view of your run histo
 
 <Lightbox src="/img/guides/databricks-guides/deployment_monitor_dbx.png" width="85%" title="The Deployment Monitor Shows Job Status Over Time Across Environments" />
 
-By adding [status tiles](/docs/deploy/dashboard-status-tiles) to your BI dashboards, you can give stakeholders visibility into the health of your data pipeline without leaving their preferred interface. Status tiles instill confidence in your data and help prevent unnecessary inquiries or context switching. To implement dashboard status tiles, you'll need to have dbt docs with [exposures](/docs/build/exposures) defined.
+By adding [data health tiles](/docs/collaborate/data-tile) to your BI dashboards, you can give stakeholders visibility into the health of your data pipeline without leaving their preferred interface. Data tiles instill confidence in your data and help prevent unnecessary inquiries or context switching. To implement dashboard status tiles, you'll need to have dbt docs with [exposures](/docs/build/exposures) defined.
 
 ## Set up notifications
 

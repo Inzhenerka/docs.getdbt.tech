@@ -56,7 +56,7 @@ The sample body's values are hard-coded and not reflective of your project, but 
 
 ## Store secrets 
 
-In the next step, you will need the Webhook Secret Key from the prior step, and a dbt Cloud [user token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens). 
+In the next step, you will need the Webhook Secret Key from the prior step, and a dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens). 
 
 Zapier allows you to [store secrets](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps), which prevents your keys from being displayed in plaintext in the Zap code. You will be able to access them via the [StoreClient utility](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
@@ -105,7 +105,7 @@ run_id = hook_data['runId']
 account_id = full_body['accountId']
 
 # Fetch run info from the dbt Cloud Admin API
-url = f'https://cloud.getdbt.com/api/v2/accounts/{account_id}/runs/{run_id}/?include_related=["run_steps"]'
+url = f'https://YOUR_ACCESS_URL/api/v2/accounts/{account_id}/runs/{run_id}/?include_related=["run_steps"]'
 headers = {'Authorization': f'Token {api_token}'}
 run_data_response = requests.get(url, headers=headers)
 run_data_response.raise_for_status()
@@ -136,7 +136,7 @@ for step in run_data_results['run_steps']:
       # Remove timestamp and any colour tags
       full_log = re.sub('\x1b?\[[0-9]+m[0-9:]*', '', full_log)
     
-      summary_start = re.search('(?:Completed with \d+ errors? and \d+ warnings?:|Database Error|Compilation Error|Runtime Error)', full_log)
+      summary_start = re.search('(?:Completed with \d+ error.* and \d+ warnings?:|Database Error|Compilation Error|Runtime Error)', full_log)
     
       line_items = re.findall('(^.*(?:Failure|Error) in .*\n.*\n.*)', full_log, re.MULTILINE)
     

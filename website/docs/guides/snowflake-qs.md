@@ -46,7 +46,7 @@ You can also watch the [YouTube video on dbt and Snowflake](https://www.youtube.
 
 ## Create a new Snowflake worksheet 
 1. Log in to your trial Snowflake account. 
-2. In the Snowflake UI, click **+ Worksheet** in the upper right corner to create a new worksheet.
+2. In the Snowflake UI, click **+ Create** in the left-hand corner, underneath the Snowflake logo, which opens a dropdown. Select the first option, **SQL Worksheet**. 
 
 ## Load data 
 The data used here is stored as CSV files in a public S3 bucket and the following steps will guide you through how to prepare your Snowflake account for that data and upload it.
@@ -142,7 +142,7 @@ There are two ways to connect dbt Cloud to Snowflake. The first option is Partne
 <Tabs>
 <TabItem value="partner-connect" label="Use Partner Connect" default>
 
-Using Partner Connect allows you to create a complete dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [a managed repository](/docs/collaborate/git/managed-repository), [environments](/docs/build/custom-schemas#managing-environments), and credentials.
+Using Partner Connect allows you to create a complete dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [a managed repository](/docs/cloud/git/managed-repository), [environments](/docs/build/custom-schemas#managing-environments), and credentials.
 
 1. In the Snowflake UI, click on the home icon in the upper left corner. In the left sidebar, select **Data Products**. Then, select **Partner Connect**. Find the dbt tile by scrolling or by searching for dbt in the search bar. Click the tile to connect to dbt.
 
@@ -170,7 +170,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 
 5. After you have filled out the form and clicked **Complete Registration**, you will be logged into dbt Cloud automatically.
 
-6. From your **Account Settings** in dbt Cloud (using the gear menu in the upper right corner), choose the "Partner Connect Trial" project and select **snowflake** in the overview table. Select edit and update the fields **Database** and **Warehouse** to be `analytics` and `transforming`, respectively.
+6. Go to the left side menu and click your account name, then select **Account settings**, choose the "Partner Connect Trial" project, and select **snowflake** in the overview table. Select edit and update the fields **Database** and **Warehouse** to be `analytics` and `transforming`, respectively.
 
 <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt Cloud - Snowflake Project Overview" />
 
@@ -180,7 +180,7 @@ Using Partner Connect allows you to create a complete dbt account with your [Sno
 <TabItem value="manual-connect" label="Connect manually">
 
 
-1. Create a new project in dbt Cloud. From **Account settings** (using the gear menu in the top right corner), click **+ New Project**.
+1. Create a new project in dbt Cloud. Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
 2. Enter a project name and click **Continue**.
 3. For the warehouse, click **Snowflake** then **Next** to set up your connection.
 
@@ -229,6 +229,26 @@ Now that you have a repository configured, you can initialize your project and s
         select * from raw.jaffle_shop.customers
         ```
     - In the command line bar at the bottom, enter `dbt run` and click **Enter**. You should see a `dbt run succeeded` message.
+
+:::info
+If you receive an insufficient privileges error on Snowflake at this point, it may be because your Snowflake role doesn't have permission to access the raw source data, to build target tables and views, or both. 
+
+To troubleshoot, use a role with sufficient privileges (like `ACCOUNTADMIN`) and run the following commands in Snowflake. 
+
+**Note**: Replace `snowflake_role_name` with the role you intend to use. If you launched dbt Cloud with Snowflake Partner Connect, use `pc_dbt_role` as the role.
+
+```
+grant all on database raw to role snowflake_role_name;
+grant all on database analytics to role snowflake_role_name;
+
+grant all on schema raw.jaffle_shop to role snowflake_role_name;
+grant all on schema raw.stripe to role snowflake_role_name;
+
+grant all on all tables in database raw to role snowflake_role_name;
+grant all on future tables in database raw to role snowflake_role_name;
+```
+
+:::
 
 ## Build your first model
 
@@ -408,7 +428,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 #### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 ## Build models on top of sources

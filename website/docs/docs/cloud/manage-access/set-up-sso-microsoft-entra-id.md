@@ -37,7 +37,7 @@ Log into the Azure portal for your organization. Using the [**Microsoft Entra ID
 | **Name** | dbt Cloud |
 | **Supported account types** | Accounts in this organizational directory only _(single tenant)_ |
 
-4. Configure the **Redirect URI**. The table below shows the appropriate Redirect URI values for single-tenant and multi-tenant deployments. For most enterprise use-cases, you will want to use the single-tenant Redirect URI. Replace `YOUR_AUTH0_URI` with the [appropriate Auth0 URI](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) for your region and plan.
+4. Configure the **Redirect URI**. The table below shows the appropriate Redirect URI values for single-tenant and multi-tenant deployments. For most enterprise use-cases, you will want to use the single-tenant Redirect URI. Replace `YOUR_AUTH0_URI` with the [appropriate Auth0 URI](/docs/cloud/manage-access/sso-overview#auth0-uris) for your region and plan.
 
 | Application Type | Redirect URI |
 | ----- | ----- |
@@ -59,7 +59,14 @@ Depending on your Microsoft Entra ID settings, your App Registration page might 
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-redirect-uri.png" title="Configuring a Redirect URI"/>
 
-### Azure <-> dbt Cloud User and Group mapping
+### Azure &lt;-&gt; dbt Cloud User and Group mapping
+
+:::important
+
+There is a [limitation](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#important-caveats-for-this-functionality) on the number of groups Azure will emit (capped at 150) via the SSO token, meaning if a user belongs to more than 150 groups, it will appear as though they belong to none. To prevent this, configure [group assignments](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal?pivots=portal) with the dbt Cloud app in Azure and set a [group claim](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-group-claims#add-group-claims-to-tokens-for-saml-applications-using-sso-configuration) so Azure emits only the relevant groups.
+
+:::
+
 
 The Azure users and groups you will create in the following steps are mapped to groups created in dbt Cloud based on the group name. Reference the docs on [enterprise permissions](enterprise-permissions) for additional information on how users, groups, and permission sets are configured in dbt Cloud.
 
@@ -120,17 +127,18 @@ To complete setup, follow the steps below in the dbt Cloud application.
 
 ### Supplying credentials
 
-25. Click the gear icon at the top right and select **Profile settings**. To the left, select **Single Sign On** under **Account Settings**.
-26. Click the **Edit** button and supply the following SSO details:
+25. From dbt Cloud, click on your account name in the left side menu and select **Account settings**.
+26. Click **Single sign-on** from the menu.
+27. Click the **Edit** button and supply the following SSO details:
 
 | Field | Value |
 | ----- | ----- |
 | **Log&nbsp;in&nbsp;with** | Microsoft Entra ID Single Tenant |
-| **Client&nbspID** | Paste the **Application (client) ID** recorded in the steps above |
-| **Client&nbsp;Secret** | Paste the **Client Secret** (remember to use the Secret Value instead of the Secret ID) recorded in the steps above; <br />**Note:** When the client secret expires, an Entra ID admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
+| **Client&nbsp;ID** | Paste the **Application (client) ID** recorded in the steps above |
+| **Client&nbsp;Secret** | Paste the **Client Secret** (remember to use the Secret Value instead of the Secret ID) from the steps above; <br />**Note:** When the client secret expires, an Entra ID admin will have to generate a new one to be pasted into dbt Cloud for uninterrupted application access. |
 | **Tenant&nbsp;ID** | Paste the **Directory (tenant ID)** recorded in the steps above |
 | **Domain** | Enter the domain name for your Azure directory (such as `fishtownanalytics.com`). Only use the primary domain; this won't block access for other domains. |
-| **Slug** | Enter your desired login slug. Users will be able to log into dbt Cloud by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/manage-access/sso-overview#auth0-multi-tenant-uris) for your region and plan. Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company. |
+| **Slug** | Enter your desired login slug. Users will be able to log into dbt Cloud by navigating to `https://YOUR_ACCESS_URL/enterprise-login/LOGIN-SLUG`, replacing `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/cloud/manage-access/sso-overview#auth0-uris) for your region and plan. Login slugs must be unique across all dbt Cloud accounts, so pick a slug that uniquely identifies your company. |
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/azure/azure-cloud-sso.png" title="Configuring Entra ID AD SSO in dbt Cloud" />
 

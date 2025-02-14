@@ -6,7 +6,7 @@ id: "custom-databases"
 
 :::info A word on naming
 
-Different warehouses have different names for "logical databases". The information in this document covers "databases" on Snowflake, Redshift, and Postgres, as well as "projects" on BigQuery.
+Different warehouses have different names for _logical databases_. The information in this document covers "databases" on Snowflake, Redshift, and Postgres; "projects" on BigQuery; and "catalogs" on Databricks Unity Catalog.
 
 The values `project` and `database` are interchangeable in BigQuery project configurations.
 
@@ -89,16 +89,18 @@ import WhitespaceControl from '/snippets/_whitespace-control.md';
 
 <WhitespaceControl/>
 
-<VersionBlock firstVersion="1.6">
-
 ### Managing different behaviors across packages
 
 See docs on macro `dispatch`: ["Managing different global overrides across packages"](/reference/dbt-jinja-functions/dispatch)
-
-</VersionBlock>
 
 ## Considerations
 
 ### BigQuery
 
 When dbt opens a BigQuery connection, it will do so using the `project_id` defined in your active `profiles.yml` target. This `project_id` will be billed for the queries that are executed in the dbt run, even if some models are configured to be built in other projects.
+
+## Related docs
+
+- [Customize dbt models database, schema, and alias](/guides/customize-schema-alias?step=1) to learn how to customize dbt models database, schema, and alias
+- [Custom schema](/docs/build/custom-schemas) to learn how to customize dbt model schema
+- [Custom aliases](/docs/build/custom-aliases) to learn how to customize dbt model alias name

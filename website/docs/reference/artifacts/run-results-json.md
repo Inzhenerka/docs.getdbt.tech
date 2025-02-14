@@ -3,16 +3,20 @@ title: "Run results JSON file"
 sidebar_label: "Run results"
 ---
 
-**Current schema**: [`v5`](https://schemas.getdbt.com/dbt/run-results/v5/index.html)
+**Current schema**: [`v6`](https://schemas.getdbt.com/dbt/run-results/v6/index.html)
 
  **Produced by:**
  [`build`](/reference/commands/build)
+ [`clone`](/reference/commands/clone)
  [`compile`](/reference/commands/compile)
  [`docs generate`](/reference/commands/cmd-docs)
+ [`retry`](/reference/commands/retry)
  [`run`](/reference/commands/run)
  [`seed`](/reference/commands/seed)
+ [`show`](/reference/commands/show)
  [`snapshot`](/reference/commands/snapshot)
- [`test`](/reference/commands/test) <VersionBlock firstVersion="1.6">[`run-operation`](/reference/commands/run-operation) </VersionBlock>
+ [`test`](/reference/commands/test) 
+ [`run-operation`](/reference/commands/run-operation)
  
 
 This file contains information about a completed invocation of dbt, including timing and status info for each node (model, test, etc) that was executed. In aggregate, many `run_results.json` can be combined to calculate average model runtime, test failure rates, the number of record changes captured by snapshots, etc.
@@ -36,13 +40,12 @@ Each entry in `results` is a [`Result` object](/reference/dbt-classes#result-obj
 - `execution_time`: Total time spent executing this node
 - `timing`: Array that breaks down execution time into steps (often `compile` + `execute`)
 - `message`: How dbt will report this result on the CLI, based on information returned from the database
-import RowsAffected from '/snippets/_run-result.md'; 
+
+import RowsAffected from '/snippets/_run-result.md';
 
 <RowsAffected/>
 
 <!-- this partial comes from https://github.com/dbt-labs/docs.getdbt.com/tree/current/website/snippets/_run-result-->
-
-<VersionBlock firstVersion="1.7">
 
 The run_results.json includes three attributes related to the `applied` state that complement `unique_id`:
 
@@ -193,5 +196,3 @@ Here's a printed snippet from the `run_results.json`:
     }
   ],
 ```
-
-</VersionBlock>

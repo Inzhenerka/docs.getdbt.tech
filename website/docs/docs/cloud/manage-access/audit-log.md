@@ -9,16 +9,16 @@ pagination_prev: "docs/cloud/manage-access/about-user-access"
 
 To review actions performed by people in your organization, dbt provides logs of audited user and system events in real time. The audit log appears as events happen and includes details such as who performed the action, what the action was, and when it was performed. You can use these details to troubleshoot access issues, perform security audits, or analyze specific events. 
 
-You must be an **Account Admin** to access the audit log and this feature is only available on Enterprise plans.
+You must be an **Account Admin** or an **Account Viewer** to access the audit log and this feature is only available on Enterprise plans.
 
 The dbt Cloud audit log stores all the events that occurred in your organization in real-time, including:
 
 - For events within 90 days, the dbt Cloud audit log has a selectable date range that lists events triggered.
-- For events beyond 90 days, **Account Admins** can [export all events](#exporting-logs) by using **Export All**.
+- For events beyond 90 days, **Account Admins** and **Account Viewers** can [export all events](#exporting-logs) by using **Export All**.
 
 ## Accessing the audit log
 
-To access the audit log, click the gear icon in the top right, then click **Audit Log**.
+To access the audit log, click on your account name in the left side menu and select **Account settings**.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-menu.png" width="30%" title="Audit log menu"/>
 
@@ -32,7 +32,7 @@ On the audit log page, you will see a list of various events and their associate
 
 ### Event details
 
-Click the event card to see the details about the activity that triggered the event. This view provides important details, including when it happened and what type of event was triggered. For example, if someone changes the settings for a job, you can use the event details to see which job was changed (type of event: `job_definition.Changed`), by whom (person who triggered the event: `actor`), and when (time it was triggered: `created_at_utc`). For types of events and their descriptions, see [Events in audit log](#events-in-audit-log).
+Click the event card to see the details about the activity that triggered the event. This view provides important details, including when it happened and what type of event was triggered. For example, if someone changes the settings for a job, you can use the event details to see which job was changed (type of event: `job_definition.Changed`), by whom (person who triggered the event: `actor`), and when (time it was triggered: `created_at_utc`). For types of events and their descriptions, see [Events in audit log](#audit-log-events).
 
 The event details provide the key factors of an event:
 
@@ -60,10 +60,9 @@ The audit log supports various events for different objects in dbt Cloud. You wi
 | Event Name                 | Event Type                               | Description                                            |
 | -------------------------- | ---------------------------------------- | ------------------------------------------------------ |
 | Auth Provider Changed      | auth_provider.Changed          | Authentication provider settings changed               |
-| Credential Login Failed    | auth.CredentialsLoginFailed    | User login via username and password failed            |
 | Credential Login Succeeded | auth.CredentialsLoginSucceeded | User successfully logged in with username and password |
 | SSO Login Failed           | auth.SsoLoginFailed            | User login via SSO failed                              |
-| SSO Login Succeeded        | auth.SsoLoginSucceeded         | User successfully logged in via SSO  
+| SSO Login Succeeded        | auth.SsoLoginSucceeded         | User successfully logged in via SSO                    |
 
 ### Environment
 
@@ -94,7 +93,7 @@ The audit log supports various events for different objects in dbt Cloud. You wi
 | ------------- | ----------------------------- | ------------------------------ |
 | Group Added   | user_group.Added   | New Group successfully created |
 | Group Changed | user_group.Changed | Group settings changed         |
-| Group Removed | user_group.Changed | Group successfully removed     |
+| Group Removed | user_group.Removed | Group successfully removed     |
 
 ### User
 
@@ -103,9 +102,11 @@ The audit log supports various events for different objects in dbt Cloud. You wi
 | Invite Added                 | invite.Added              | User invitation added and sent to the user      |
 | Invite Redeemed              | invite.Redeemed           | User redeemed invitation                        |
 | User Added to Account        | account.UserAdded         | New user added to the account                   |
-| User Added to Group          | user_group_user.Added     | An existing user is added to a group            |
-| User Removed from Account    | account.UserRemoved       | User removed from the account
-| User Removed from Group      | user_group_user.Removed   | An existing user is removed from a group        |
+| User Added to Group          | user_group_user.Added     | An existing user was added to a group            |
+| User Removed from Account    | account.UserRemoved       | User removed from the account                  |
+| User Removed from Group      | user_group_user.Removed   | An existing user was removed from a group        |
+| User License Created         | user_license.added        | A new user license was consumed                  |
+| User License Removed         | user_license.removed      | A user license was removed from the seat count   |
 | Verification Email Confirmed | user.jit.email.Confirmed  | Email verification confirmed by user            |
 | Verification Email Sent      | user.jit.email.Sent       | Email verification sent to user created via JIT |
 
@@ -150,11 +151,64 @@ The audit log supports various events for different objects in dbt Cloud. You wi
 
 ### Credentials
 
-| Event Name                       | Event Type                    | Description                      |
-| -------------------------------- | ----------------------------- | -------------------------------- |
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
 | Credentials Added to Project     | credentials.Added   | Project credentials added        |
 | Credentials Changed in Project   | credentials.Changed | Credentials changed in project   |
 | Credentials Removed from Project | credentials.Removed | Credentials removed from project |
+
+
+### Git integration
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| GitLab Application Changed        | gitlab_application.changed    | GitLab configuration in dbt Cloud changed |
+
+### Webhooks
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| Webhook Subscriptions Added      | webhook_subscription.added    | New webhook configured in settings |
+| Webhook Subscriptions Changed    | webhook_subscription.changed  | Existing webhook configuration altered |
+| Webhook Subscriptions Removed    | webhook_subscription.removed  | Existing webhook deleted  |
+
+
+### Semantic Layer
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| Semantic Layer Config Added      | semantic_layer_config.added   | Semantic Layer config added |
+| Semantic Layer Config Changed      | semantic_layer_config.changed  | Semantic Layer config (not related to credentials) changed |
+| Semantic Layer Config Removed    | semantic_layer_config.removed   | Semantic Layer config removed |
+| Semantic Layer Credentials Added | semantic_layer_credentials.added   | Semantic Layer credentials added |
+| Semantic Layer Credentials Changed| semantic_layer_credentials.changed   | Semantic Layer credentials changed. Does not trigger semantic_layer_config.changed|
+| Semantic Layer Credentials Removed| semantic_layer_credentials.removed   | Semantic Layer credentials removed |
+
+### Extended attributes
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| Extended Attribute Added         | extended_attributes.added     | Extended attribute added to a project |
+| Extended Attribute Changed       | extended_attributes.changed   | Extended attribute changed or removed |
+
+
+### Account-scoped personal access token
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| Account Scoped Personal Access Token Created | account_scoped_pat.created | An account-scoped PAT was created |
+| Account Scoped Personal Access Token Deleted | account_scoped_pat.deleted | An account-scoped PAT was deleted | 
+
+### IP restrictions
+
+| Event Name                       | Event Type                    | Description            |
+| -------------------------------- | ----------------------------- | -----------------------|
+| IP Restrictions Toggled          | ip_restrictions.toggled       | IP restrictions feature enabled or disabled |
+| IP Restrictions Rule Added       | ip_restrictions.rule.added    | IP restriction rule created |
+| IP Restrictions Rule Changed     | ip_restrictions.rule.changed   | IP restriction rule edited |
+| IP Restrictions Rule Removed     | ip_restrictions.rule.removed   | IP restriction rule deleted |
+
+
 
 ## Searching the audit log
 
@@ -170,13 +224,6 @@ You can use the audit log to export all historical audit results for security, c
 
 - **For events within 90 days** &mdash; dbt Cloud will automatically display the 90-day selectable date range. Select **Export Selection** to download a CSV file of all the events that occurred in your organization within 90 days.
 
-- **For events beyond 90 days** &mdash; Select **Export All**. The Account Admin will receive an email link to download a CSV file of all the events that occurred in your organization.
+- **For events beyond 90 days** &mdash; Select **Export All**. The Account Admin or Account Viewer will receive an email link to download a CSV file of all the events that occurred in your organization.
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/audit-log-section.jpg" width="95%" title="View audit log export options"/>
-
-### Azure Single-tenant
-
-For users deployed in [Azure single tenant](/docs/cloud/about-cloud/tenancy), while the **Export All** button isn't available, you can conveniently use specific APIs to access all events:
-
-- [Get recent audit log events CSV](/dbt-cloud/api-v3#/operations/Get%20Recent%20Audit%20Log%20Events%20CSV) &mdash; This API returns all events in a single CSV without pagination.
-- [List recent audit log events](/dbt-cloud/api-v3#/operations/List%20Recent%20Audit%20Log%20Events) &mdash; This API returns a limited number of events at a time, which means you will need to paginate the results.

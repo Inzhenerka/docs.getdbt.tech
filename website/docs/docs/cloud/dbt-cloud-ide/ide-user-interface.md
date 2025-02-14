@@ -35,7 +35,7 @@ The IDE streamlines your workflow, and features a popular user interface layout 
       * Added (A) — The IDE detects added files
       * Deleted (D) — The IDE detects deleted files.
 
-<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-command-bar.jpg" width="90%" title="Use the Command bar to write dbt commands, toggle 'Defer', and view the current IDE status"/>
+<Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-command-bar.jpg" width="100%" title="Use the Command bar to write dbt commands, toggle 'Defer', and view the current IDE status"/>
 
 5. **Command bar &mdash;**  The Command bar, located in the lower left of the IDE, is used to invoke [dbt commands](/reference/dbt-commands). When a command is invoked, the associated logs are shown in the Invocation History Drawer.
 
@@ -63,17 +63,8 @@ The IDE features some delightful tools and layouts to make it easier for you to 
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/version-control-options-menu.png" width="30%" title="Right-click edited files to access Version Control Options menu"/>
 
-<VersionBlock lastVersion="1.5">
 
-   - Keep in mind that although you can't delete unmerged local branches in the IDE using this menu, you can [reclone your repository](/docs/cloud/dbt-cloud-ide/ide-user-interface#modals-and-menus), which deletes your local branches and refreshes with the current remote branches, effectively removing the deleted ones.
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.6">
-
-  - Use the **Prune branches** option to remove local branches that have already been deleted from the remote repository. Selecting this triggers a [pop-up modal](#prune-branches-modal), where you can confirm the deletion of the specific local branches, keeping your branch management tidy. Note, prune will not delete the branch you've currently checked out.
-
-</VersionBlock>
+  - Use the **Prune branches** option to remove local branches that have already been deleted from the remote repository. Selecting this triggers a [pop-up modal](#prune-branches-modal), where you can confirm the deletion of the specific local branches, keeping your branch management tidy. Note that this won't delete the branch you're currently on. Pruning branches isn't available for [managed repositories](/docs/cloud/git/managed-repository) because they don't have a typical remote setup, which prevents remote branch deletion. 
 
 ## Additional editing features
 
@@ -116,15 +107,19 @@ Starting from dbt v1.6 or higher, when you save changes to a model, you can comp
 
 3. **Build button &mdash;** The build button allows users to quickly access dbt commands related to the active model in the File Editor. The available commands include dbt build, dbt test, and dbt run, with options to include only the current resource, the resource and its upstream dependencies, the resource, and its downstream dependencies, or the resource with all dependencies. This menu is available for all executable nodes.
 
-4. **Format button &mdash;** The editor has a **Format** button that can reformat the contents of your files. For SQL files, it uses either `sqlfmt` or `sqlfluff`, and for Python files, it uses `black`.
+4. **Lint button** &mdash; The **Lint** button runs the [linter](/docs/cloud/dbt-cloud-ide/lint-format) on the active file in the File Editor. The linter checks for syntax errors and style issues in your code and displays the results in the **Code quality** tab.
 
-5. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
+5. **dbt Copilot** <Lifecycle status="enterprise"/> &mdash; [dbt Copilot](/docs/cloud/dbt-copilot) is a powerful artificial intelligence engine that can generate documentation, tests, and semantic models for you. dbt Copilot is available in the IDE for Enterprise plans.
+
+6. **Results tab &mdash;** The Results console tab displays the most recent Preview results in tabular format. 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/results-console-tab.jpg" width="90%" title="Preview results show up in the Results console tab"/>
 
-6. **Compiled Code tab &mdash;** The Compile button triggers a compile invocation that generates compiled code, which is displayed in the Compiled Code tab.
+7. **Code quality tab** &mdash; The Code Quality tab displays the results of the linter on the active file in the File Editor. It allows you to view code errors, provides code quality visibility and management, and displays the SQLFluff version used.
+
+8. **Compiled Code tab &mdash;** The Compile generates the compiled code when the Compile button is executed. The Compiled Code tab displays the compiled SQL code for the active file in the File Editor.
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/compiled-code-console-tab.jpg" width="90%" title="Compile results show up in the Compiled Code tab"/>
 
-7. **Lineage tab &mdash;** The Lineage tab in the File Editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG).
+9. **Lineage tab &mdash;** The Lineage tab in the File Editor displays the active model's lineage or  <Term id="dag" />. By default, it shows two degrees of lineage in both directions (`2+model_name+2`), however, you can change it to +model+ (full DAG). To use the lineage:
     - Double-click a node in the DAG to open that file in a new tab
     - Expand or shrink the DAG using node selection syntax.
     - Note, the `--exclude` flag isn't supported.
@@ -167,11 +162,11 @@ Use menus and modals to interact with IDE and access useful options to help your
 
 - #### File Search
   You can easily search for and navigate between files using the File Navigation menu, which can be accessed by pressing Command-O or Control-O or clicking on the 🔍 icon in the File Explorer.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-file-search-with-save.jpg" width="90%" title="The Command History returns a log and detail of all your dbt Cloud invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-file-search-with-save.jpg" width="100%" title="The Command History returns a log and detail of all your dbt Cloud invocations."/>
 
 - #### Global Command Palette
   The Global Command Palette provides helpful shortcuts to interact with the IDE, such as git actions, specialized dbt commands, and compile, and preview actions, among others. To open the menu, use Command-P or Control-P.
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-global-command-palette-with-save.jpg" width="90%" title="The Command History returns a log and detail of all your dbt Cloud invocations."/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-global-command-palette-with-save.jpg" width="100%" title="The Command History returns a log and detail of all your dbt Cloud invocations."/>
 
 - #### IDE Status modal
   The IDE Status modal shows the current error message and debug logs for the server. This also contains an option to restart the IDE. Open this by clicking on the IDE Status button.
@@ -189,13 +184,9 @@ Use menus and modals to interact with IDE and access useful options to help your
   The Change Branch modal allows users to switch git branches in the IDE. It can be accessed through the **Change Branch** link or the **Git actions** button under the **Version control** menu.
   <Lightbox src="/img/docs/dbt-cloud/cloud-ide/change-branch-modal.png" width="90%" title="The Commit Changes modal is how users change their branch."/>
 
-<VersionBlock firstVersion="1.6">
-
 - #### Prune branches modal
-  The Prune branches modal allows users to delete local branches that have been deleted from the remote repository, keeping your branch management tidy. This is accessible through the **Git actions** button under the [**Version control** menu](#editing-features). Note, prune will not delete the branch you've currently checked out.
+  The Prune branches modal allows users to delete local branches that have been deleted from the remote repository, keeping your branch management tidy. This is accessible through the **Git actions** button under the [**Version control** menu](#editing-features). Note that this won't delete the branch you're currently on. Pruning branches isn't available for managed repositories because they don't have a typical remote setup, which prevents remote branch deletion.
   <Lightbox src="/img/docs/dbt-cloud/cloud-ide/prune-branch-modal.jpg" width="60%" title="The Prune branches modal allows users to delete local branches that have already been deleted from the remote repository."/>
-
-</VersionBlock>
 
 - #### Revert Uncommitted Changes modal
   The Revert Uncommitted Changes modal is how users revert changes in the IDE. This is accessible via the `Revert File` option above the Version Control Options menu, or via the Git Actions button when there are saved, uncommitted changes in the IDE.
@@ -206,7 +197,7 @@ Use menus and modals to interact with IDE and access useful options to help your
 
   * Toggling between dark or light mode for a better viewing experience
   * Restarting the IDE
-  * Fully recloning your repository to refresh your git state and view status details
+  * Rollback your repo to remote, to refresh your git state and view status details
   * Viewing status details, including the IDE Status modal.
 
-  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.jpg" width="85%" title="Access the IDE Options menu to switch to dark or light mode, restart the IDE, reclone your repo, or view the IDE status"/>
+  <Lightbox src="/img/docs/dbt-cloud/cloud-ide/ide-options-menu-with-save.jpg" width="90%" title="Access the IDE Options menu to switch to dark or light mode, restart the IDE, rollback to remote, or view the IDE status"/>

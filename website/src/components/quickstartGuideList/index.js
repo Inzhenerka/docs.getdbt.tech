@@ -48,9 +48,18 @@ function QuickstartList({ quickstartData }) {
   }, [quickstartData]);
 
   const updateUrlParams = (selectedTags, selectedLevel) => {
-    const params = new URLSearchParams();
+    // Create a new URLSearchParams object from the current URL search string
+    const params = new URLSearchParams(location.search);
+
+    // Remove existing 'tags' and 'level' parameters to avoid duplicates
+    params.delete('tags');
+    params.delete('level');
+
+    // Append new 'tags' and 'level' values from the current state
     selectedTags.forEach(tag => params.append('tags', tag.value));
     selectedLevel.forEach(level => params.append('level', level.value));
+
+    // Update the URL with the new search parameters
     history.replace({ search: params.toString() });
   };
 
@@ -89,6 +98,30 @@ function QuickstartList({ quickstartData }) {
     handleDataFilter();
   }, [selectedTags, selectedLevel, searchInput]); // Added searchInput to dependency array
 
+  // Set the featured guides that will show as CTAs in the hero section
+  // The value of the tag must match a tag in the frontmatter of the guides in order for the filter to apply after clicking
+  const heroCTAs = [
+    {
+      title: 'Quickstart guides',
+      value: 'Quickstart'
+    },
+    {
+      title: 'Use Jinja to improve your SQL code',
+      value: 'Jinja'
+    },
+    {
+      title: 'Orchestration',
+      value: 'Orchestration'
+    },
+  ];
+
+  // Function to handle CTA clicks
+  const handleCallToActionClick = (value) => {
+    const params = new URLSearchParams(location.search);
+    params.set('tags', value);
+    history.replace({ search: params.toString() });
+  };
+
   return (
     <Layout>
       <Head>
@@ -102,6 +135,13 @@ function QuickstartList({ quickstartData }) {
         showGraphic={false}
         customStyles={{ marginBottom: 0 }}
         classNames={styles.quickstartHero}
+        callToActions={heroCTAs.map(guide => ({
+          title: guide.title,
+          href: guide.href,
+          onClick: () => handleCallToActionClick(guide.value),
+          newTab: guide.newTab
+        }))}
+        callToActionsTitle={'Popular guides'}
       />
       <section id='quickstart-card-section'>
         <div className={`container ${styles.quickstartFilterContainer} `}>
@@ -126,7 +166,7 @@ function QuickstartList({ quickstartData }) {
         </div>
       </section>
     </Layout>
-  )
+  );
 }
 
 export default QuickstartList;

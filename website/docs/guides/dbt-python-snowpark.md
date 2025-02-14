@@ -262,7 +262,7 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
 ## Configure dbt Cloud
 
-1. We are going to be using [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) to set up a dbt Cloud account. Using this method will allow you to spin up a fully fledged dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [managed repository](/docs/collaborate/git/managed-repository), environments, and credentials already established.
+1. We are going to be using [Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect.html) to set up a dbt Cloud account. Using this method will allow you to spin up a fully fledged dbt account with your [Snowflake connection](/docs/cloud/connect-data-platform/connect-snowflake), [managed repository](/docs/cloud/git/managed-repository), environments, and credentials already established.
 2. Navigate out of your worksheet back by selecting **home**.
 3. In Snowsight, confirm that you are using the **ACCOUNTADMIN** role.
 4. Navigate to the **Data Products** **> Partner Connect**. Find **dbt** either by using the search bar or navigating the **Data Integration**. Select the **dbt** tile.
@@ -282,11 +282,11 @@ We need to obtain our data source by copying our Formula 1 data into Snowflake t
 
 9. Select **Complete Registration**. You should now be redirected to your dbt Cloud account, complete with a connection to your Snowflake account, a deployment and a development environment, and a sample job.
 
-10. To help you version control your dbt project, we have connected it to a [managed repository](/docs/collaborate/git/managed-repository), which means that dbt Labs will be hosting your repository for you. This will give you access to a Git workflow without you having to create and host the repository yourself. You will not need to know Git for this workshop; dbt Cloud will help guide you through the workflow. In the future, when you’re developing your own project, [feel free to use your own repository](/docs/cloud/git/connect-github). This will allow you to learn more about features like [Slim CI](/docs/deploy/continuous-integration) builds after this workshop.
+10. To help you version control your dbt project, we have connected it to a [managed repository](/docs/cloud/git/managed-repository), which means that dbt Labs will be hosting your repository for you. This will give you access to a Git workflow without you having to create and host the repository yourself. You will not need to know Git for this workshop; dbt Cloud will help guide you through the workflow. In the future, when you’re developing your own project, [feel free to use your own repository](/docs/cloud/git/connect-github). This will allow you to learn more about features like [Slim CI](/docs/deploy/continuous-integration) builds after this workshop.
 
 ## Change development schema name navigate the IDE
 
-1. First we are going to change the name of our default schema to where our dbt models will build. By default, the name is `dbt_`. We will change this to `dbt_<YOUR_NAME>` to create your own personal development schema. To do this, select **Profile Settings** from the gear icon in the upper right.
+1. First we are going to change the name of our default schema to where our dbt models will build. By default, the name is `dbt_`. We will change this to `dbt_<YOUR_NAME>` to create your own personal development schema. To do this, click on your account name in the left side menu and select **Account settings**.
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" title="Settings menu"/>
 
@@ -395,7 +395,7 @@ In this step, we’ll need to create a development branch and set up project lev
     - `materialized` &mdash; Tells dbt how to materialize models when compiling the code before it pushes it down to Snowflake. All models in the `marts` folder will be built as tables.
     - `tags` &mdash; Applies tags at a directory level to all models. All models in the `aggregates` folder will be tagged as `bi` (abbreviation for business intelligence).
     - `docs` &mdash; Specifies the `node_color` either by the plain color name or a hex value.
-5. [Materializations](/docs/build/materializations) are strategies for persisting dbt models in a warehouse, with `tables` and `views` being the most commonly utilized types. By default, all dbt models are materialized as views and other materialization types can be configured in the `dbt_project.yml` file or in a model itself. It’s very important to note *Python models can only be materialized as tables or incremental models.* Since all our Python models exist under `marts`, the following portion of our `dbt_project.yml` ensures no errors will occur when we run our Python models. Starting with [dbt version 1.4](/docs/dbt-versions/core-upgrade/upgrading-to-v1.4#updates-to-python-models), Python files will automatically get materialized as tables even if not explicitly specified.
+5. [Materializations](/docs/build/materializations) are strategies for persisting dbt models in a warehouse, with `tables` and `views` being the most commonly utilized types. By default, all dbt models are materialized as views and other materialization types can be configured in the `dbt_project.yml` file or in a model itself. It’s very important to note *Python models can only be materialized as tables or incremental models.* Since all our Python models exist under `marts`, the following portion of our `dbt_project.yml` ensures no errors will occur when we run our Python models. Starting with [dbt version 1.4](/docs/dbt-versions/core-upgrade/Older%20versions/upgrading-to-v1.4#updates-to-python-models), Python files will automatically get materialized as tables even if not explicitly specified.
 
     ```yaml
     marts:     
@@ -1858,7 +1858,7 @@ We are going to revisit 2 areas of our project to understand our documentation:
 - `intermediate.md` file
 - `dbt_project.yml` file
 
-To start, let’s look back at our `intermediate.md` file. We can see that we provided multi-line descriptions for the models in our intermediate models using [docs blocks](/docs/collaborate/documentation#using-docs-blocks). Then we reference these docs blocks in our `.yml` file. Building descriptions with doc blocks in Markdown files gives you the ability to format your descriptions with Markdown and are particularly helpful when building long descriptions, either at the column or model level. In our `dbt_project.yml`, we added `node_colors` at folder levels.
+To start, let’s look back at our `intermediate.md` file. We can see that we provided multi-line descriptions for the models in our intermediate models using [docs blocks](/docs/build/documentation#using-docs-blocks). Then we reference these docs blocks in our `.yml` file. Building descriptions with doc blocks in Markdown files gives you the ability to format your descriptions with Markdown and are particularly helpful when building long descriptions, either at the column or model level. In our `dbt_project.yml`, we added `node_colors` at folder levels.
 
 1. To see all these pieces come together, execute this in the command bar:
 

@@ -36,23 +36,23 @@ The following are the prerequisites for dbt Cloud and Snowflake.
 ### Snowflake
 
 - You have **ACCOUNTADMIN** access in Snowflake.
-- Your Snowflake account must have access to the Native App/SPCS integration (PrPr until Summit) and NA/SPCS configurations (PuPr at end of June). If you're unsure, please check with your Snowflake account manager.
-- The Snowflake account must be in an AWS Region or Azure region. 
+- Your Snowflake account must have access to the Native App/SPCS integration and NA/SPCS configurations (Public Preview planned at end of June). If you're unsure, please check with your Snowflake account manager.
+- The Snowflake account must be in an AWS Region. Azure is not currently supported for Native App/SPCS integration. 
+- You have access to Snowflake Cortex through your Snowflake permissions and [Snowflake Cortex is available in your region](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#availability). Without this, Ask dbt will not work.
 
 ## Set up the configuration for Ask dbt
 
 Configure dbt Cloud and Snowflake Cortex to power the **Ask dbt** chatbot.
 
 1. In dbt Cloud, browse to your Semantic Layer configurations. 
-    1. From the gear menu, select **Account settings**. In the left sidebar, select **Projects** and choose your dbt project from the project list. 
+
+    1. Navigate to the left hand side panel and click your account name. From there, select **Account settings**. 
+    1. In the left sidebar, select **Projects** and choose your dbt project from the project list. 
+
     1. In the **Project details** panel, click the **Edit Semantic Layer Configuration** link (which is below the **GraphQL URL** option). 
 1. In the **Semantic Layer Configuration Details** panel, identify the Snowflake credentials (which you'll use to access Snowflake Cortex) and the environment against which the Semantic Layer is run. Save the username, role, and the environment in a temporary location to use later on. 
 
     <Lightbox src="/img/docs/cloud-integrations/semantic_layer_configuration.png" width="100%" title="Semantic Layer credentials"/>
-
-1. Identify the default database the environment is connecting to. 
-    1. Select **Deploy > Environments** from the top navigation bar. From the environments list, select the one that was identified in the **Semantic Layer Configuration Details** panel. 
-    1. On the environment's page, click **Settings**. Scroll to the section **Deployment connection**. The listed database is the default for your environment and is also where you will create the schema. Save this information in a temporary location to use later on. 
 
 1. In Snowflake, verify that your SL and deployment user has been granted permission to use Snowflake Cortex. For more information, refer to [Required Privileges](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#required-privileges) in the Snowflake docs. 
     
@@ -67,19 +67,11 @@ Configure dbt Cloud and Snowflake Cortex to power the **Ask dbt** chatbot.
 
     Make sure to replace `SNOWFLAKE.CORTEX_USER`, `DEPLOYMENT_USER`, and `SL_USER` with the appropriate strings for your environment.
 
-1. Create a schema `dbt_sl_llm` in the deployment database. The deployment user needs write access to create the necessary tables in this schema and the SL user needs only read access to it. Open a Snowflake SQL worksheet and run these statements: 
-
-    ```sql
-    create schema YOUR_DEPLOYMENT_DATABASE.dbt_sl_llm;
-    grant select on schema dbt_sl_llm to role SL_USER;
-    ```
-
-    Make sure to replace `YOUR_DEPLOYMENT_DATABASE` and `SL_USER` with the appropriate strings for your environment.
-
 ## Configure dbt Cloud 
-Collect three pieces of information from dbt Cloud to set up the application. 
+Collect the following pieces of information from dbt Cloud to set up the application. 
 
-1. From the gear menu in dbt Cloud, select **Account settings**. In the left sidebar, select **API tokens > Service tokens**. Create a service token with access to all the projects you want to access in the dbt Snowflake Native App. Grant these permission sets: 
+1. Navigate to the left-hand side panel and click your account name. From there, select **Account settings**. Then click **API tokens > Service tokens**. Create a service token with access to all the projects you want to access in the dbt Snowflake Native App. Grant these permission sets: 
+    - **Manage marketplace apps**
     - **Job Admin**
     - **Metadata Only**
     - **Semantic Layer Only**
@@ -155,5 +147,10 @@ Check that the SL user has been granted access to the `dbt_sl_llm` schema and ma
 
 <Expandable alt_header="Need to update the dbt configuration options used by the Native App" >
 
-If there's been an update to the dbt Cloud account ID, access URL, or API service token, you need to update the configuration for the dbt Snowflake Native App. In Snowflake, navigate to the app's configuration page and delete the existing configurations. Add the new configuration and then run `CALL app_public.restart_ap ();` in the application database in Snowsight. 
+If there's been an update to the dbt Cloud account ID, access URL, or API service token, you need to update the configuration for the dbt Snowflake Native App. In Snowflake, navigate to the app's configuration page and delete the existing configurations. Add the new configuration and then run `CALL app_public.restart_app();` in the application database in Snowsight. 
+</Expandable>
+
+<Expandable alt_header="Are environment variables supported in the Native App?" >
+
+[Environment variables](/docs/build/environment-variables), like `{{env_var('DBT_WAREHOUSE') }}` aren’t supported in the dbt Semantic Layer yet. To use the 'Ask dbt' feature, you must use the actual credentials instead.
 </Expandable>

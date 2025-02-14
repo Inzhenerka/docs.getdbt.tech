@@ -1,6 +1,6 @@
 ---
 title: "SQL models"
-description: "Read this tutorial to learn how to use SQL models when building in dbt."
+description: "SQL models are the building blocks of your dbt project."
 id: "sql-models"
 ---
 
@@ -260,13 +260,13 @@ Additionally, the `ref` function encourages you to write modular transformations
 
 ## Testing and documenting models
 
-You can also document and test models &mdash; skip ahead to the section on [testing](/docs/build/data-tests) and [documentation](/docs/collaborate/documentation) for more information.
+You can also document and test models &mdash; skip ahead to the section on [testing](/docs/build/data-tests) and [documentation](/docs/build/documentation) for more information.
 
 ## Additional FAQs
 <FAQ path="Project/example-projects" alt_header="Are there any example dbt models?" />
 <FAQ path="Models/configurable-model-path" />
 <FAQ path="Models/model-custom-schemas" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Models/removing-deleted-models" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 <FAQ path="Models/insert-records" />
