@@ -13,18 +13,13 @@ datatype: string
 
 Set the `begin` config to the timestamp value at which your [microbatch incremental model](/docs/build/incremental-microbatch) data should begin &mdash; at the point the data becomes relevant for the microbatch model.  You can configure `begin` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block. The value for `begin` must be a string representing an ISO-formatted date _or_ date and time.
 
-## Examples
-
-The following examples set `2024-01-01 00:00:00` as the `begin` config for the `user_sessions` model.
-
-:::tip Did you know? 
+:::tip Set `begin` to use relative dates
 
 If you'd like to configure `begin` to use relative dates, you can use [`modules.datetime`](/reference/dbt-jinja-functions/modules#datetime) and [`modules.pytz`](/reference/dbt-jinja-functions/modules#pytz) to dynamically specify relative timestamps, such as yesterday's date or the start of the current week.
 
 For example, to set `begin` to yesterday's date...
 
 ```sql
--- confirming with Grace/core team
 {{
     config(
         materialized = 'incremental',
@@ -38,6 +33,10 @@ For example, to set `begin` to yesterday's date...
 }}
 ```
 :::
+
+## Examples
+
+The following examples set `2024-01-01 00:00:00` as the `begin` config for the `user_sessions` model.
 
 Example in the `dbt_project.yml` file:
 
