@@ -17,6 +17,28 @@ Set the `begin` config to the timestamp value at which your [microbatch incremen
 
 The following examples set `2024-01-01 00:00:00` as the `begin` config for the `user_sessions` model.
 
+:::tip Did you know? 
+
+If you'd like to configure `begin` to use relative dates, you can use [`modules.datetime`](/reference/dbt-jinja-functions/modules#datetime) and [`modules.pytz`](/reference/dbt-jinja-functions/modules#pytz) to dynamically specify relative timestamps, such as yesterday's date or the start of the current week.
+
+For example, to set `begin` to yesterday's date...
+
+```sql
+-- confirming with Grace/core team
+{{
+    config(
+        materialized = 'incremental',
+        incremental_strategy='microbatch',
+        unique_key = 'run_id',
+        begin=(modules.datetime.datetime.utcnow() - modules.datetime.timedelta(days=1)).isoformat(),
+        event_time='created_at',
+        batch_size='day',
+        snowflake_warehouse = set_warehouse_config('large')
+    )
+}}
+```
+:::
+
 Example in the `dbt_project.yml` file:
 
 <File name='dbt_project.yml'>
