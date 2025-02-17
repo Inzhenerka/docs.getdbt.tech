@@ -30,7 +30,7 @@ For example, to set `begin` to yesterday's date...
         materialized = 'incremental',
         incremental_strategy='microbatch',
         unique_key = 'run_id',
-        begin=(modules.datetime.datetime.utcnow() - modules.datetime.timedelta(days=1)).isoformat(),
+        begin=(modules.datetime.datetime.now() - modules.datetime.timedelta(1)).isoformat(),
         event_time='created_at',
         batch_size='day',
         snowflake_warehouse = set_warehouse_config('large')
