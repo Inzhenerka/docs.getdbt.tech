@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## February 2025
 
-- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) has improved stability by increasing the default `execute_timeout` in GraphQL from 10 seconds to 30 seconds to reduce test flakiness (inconsistent test results). This is particularly useful for the "execute query sync" endpoint. 
+- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) has improved stability by increasing the default `execute_timeout` in GraphQL from 10 seconds to 30 seconds to reduce test flakiness (inconsistent test results). This is useful for endpoints like the "execute query sync". 
 - **New**: The [Azure DevOps](/docs/cloud/git/connect-azure-devops) integration for Git now supports [Entra service principal apps](/docs/cloud/git/setup-service-principal) on dbt Cloud Enterprise accounts. Microsoft is enforcing MFA across user accounts, including service users, which will impact existing app integrations. This is a phased rollout, and dbt Labs recommends [migrating to a service principal](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) on existing integrations once the option becomes available in your account.
 
 ## January 2025
