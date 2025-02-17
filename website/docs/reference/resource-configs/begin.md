@@ -17,7 +17,7 @@ Set the `begin` config to the timestamp value at which your [microbatch incremen
 
 If you'd like to configure `begin` to use relative dates, you can use [`modules.datetime`](/reference/dbt-jinja-functions/modules#datetime) and [`modules.pytz`](/reference/dbt-jinja-functions/modules#pytz) to dynamically specify relative timestamps, such as yesterday's date or the start of the current week.
 
-For example, to set `begin` to yesterday's date...
+For example, to set `begin` to yesterday's date:
 
 ```sql
 {{
@@ -28,7 +28,6 @@ For example, to set `begin` to yesterday's date...
         begin=(modules.datetime.datetime.now() - modules.datetime.timedelta(1)).isoformat(),
         event_time='created_at',
         batch_size='day',
-        snowflake_warehouse = set_warehouse_config('large')
     )
 }}
 ```
