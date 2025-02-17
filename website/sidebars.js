@@ -308,6 +308,17 @@ const sidebarSettings = {
             },
           ],
         },
+        {
+          type: "category",
+          label: "dbt Cloud Visual Editor",
+          collapsed: true,
+          link: { type: "doc", id: "docs/cloud/visual-editor" },
+          items: [
+            "docs/cloud/visual-editor",
+            "docs/cloud/visual-editor-interface", 
+            "docs/cloud/use-visual-editor",
+          ],
+        },
         ],
       },
       {
@@ -1141,8 +1152,9 @@ const sidebarSettings = {
               link: { type: "doc", id: "reference/global-configs/adapter-behavior-changes" },
               items: [
                 "reference/global-configs/adapter-behavior-changes",
-                "reference/global-configs/redshift-changes",
                 "reference/global-configs/databricks-changes",
+                "reference/global-configs/redshift-changes",                      
+                "reference/global-configs/snowflake-changes",
               ],
             },
             {
