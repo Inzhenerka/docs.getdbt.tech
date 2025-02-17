@@ -17,7 +17,7 @@ Set the `begin` config to the timestamp value at which your [microbatch incremen
 
 The following examples set `2024-01-01 00:00:00` as the `begin` config for the `user_sessions` model.
 
-#### Example in the `dbt_project.yml` file:
+#### Example in the `dbt_project.yml` file
 
 <File name='dbt_project.yml'>
 
@@ -29,7 +29,7 @@ models:
 ```
 </File>
 
-#### Example in a properties YAML file:
+#### Example in a properties YAML file
 
 <File name='models/properties.yml'>
 
@@ -42,7 +42,7 @@ models:
 
 </File>
 
-#### Example in sql model config block:
+#### Example in sql model config block
 
 <File name="models/user_sessions.sql">
 
