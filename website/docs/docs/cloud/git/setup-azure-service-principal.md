@@ -11,9 +11,7 @@ sidebar_label: "Set up service principal"
 
 :::note
 
-You can use these instructions to create a service principal app. The service principal feature is being gradually rolled out to dbt Cloud accounts, so it may not be available in all accounts. 
-
-If you need to configure dbt Cloud and Azure DevOps but don't see the **Service principal** option in your account settings, use the [**Service user**](/docs/cloud/git/setup-service-user) configuration for now. You can easily [migrate to a service principal](#migrate-to-service-principal) when available for your account.
+If this is your first time setting up an Entra app as a service principal, refer to the [Microsoft documentation](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal) for any prerequisite steps you may need to take to prepare. 
 
 :::
 
@@ -44,7 +42,7 @@ A Microsoft Entra ID admin needs to perform the following steps:
 4. Provide a name for your app. We recommend using, "dbt Labs Azure DevOps app".
 5. Select **Accounts in any organizational directory (Any Entra ID directory - Multitenant)** as the Supported Account Types.
 Many customers ask why they need to select Multitenant instead of Single Tenant, and they frequently get this step wrong. Microsoft considers Azure DevOps (formerly called Visual Studio) and Microsoft Entra ID separate tenants, and for the Entra ID application to work properly, you must select Multitenant.
-6. Set **Redirect URI (optional)** to **Web**. Copy and paste the Redirect URI from dbt Cloud into the next field.  To find the Redirect URI in dbt Cloud:
+6. Set **Redirect URI** to **Web**. Copy and paste the Redirect URI from dbt Cloud into the next field.  To find the Redirect URI in dbt Cloud:
     1. In dbt Cloud, navigate to **Account Settings** -> **Integrations**.
     2. Click the **edit icon** next to **Azure DevOps**.
     3. Copy the first **Redirect URIs** value which looks like `https://<YOUR_ACCESS_URL>/complete/azure_active_directory` and does NOT end with `service_user`.
@@ -84,18 +82,6 @@ An Entra ID admin needs to provide your new app access to Azure DevOps:
 3. Click **Add a permission**.
 4. Select **Azure DevOps**.
 5. Select the **user_impersonation** permission. This is the only permission available for Azure DevOps.
-
-## Add a role to service principal
-
-This section will require an Azure admin to complete.
-
-To add a role to your service principal:
-1. In your Azure account, navigate to **Subscriptions** and select an existing subscription.
-2. From the left-side menu, click **Access Control (IAM)** -> **Add** -> **Add role assignment**.
-3. From the **Role** tab, select a role with appropriate permissions to assign the service principal.
-4. Continue to the **Members** tab and assign access to **User, group, or service principal**.
-5. Click ***Select members** and find your app in the search bar. 
-6. Once your app has been selected, click **Review and Assign**.
 
 ## Connect Azure DevOps to your new app
 
