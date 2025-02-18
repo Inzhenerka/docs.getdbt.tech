@@ -2,9 +2,10 @@
 title: "Enable dbt Copilot" 
 sidebar_label: "Enable dbt Copilot" 
 description: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your development." 
+intro_text: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your development."
 ---
 
-# Enable dbt Copilot <Lifecycle status="enterprise, beta" /> 
+# Enable dbt Copilot <Lifecycle status="enterprise" /> 
 
 This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging AI to speed up your development and allowing you to focus on delivering quality data.
 
@@ -21,14 +22,10 @@ This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging
 dbt Copilot is only available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
 
 1. Navigate to **Account settings** in the navigation menu.
-
 2. Under **Settings**, confirm the account you're enabling.
-
 3. Click **Edit** in the top right corner.
-
 4. Enable the **Enable account access to AI-powered features** option.
-
-5. Click **Save**. You should now have the dbt Copilot AI engine enabled for use.
+5. Click **Save**. You should now have the dbt Copilot AI engine enabled for use
 
 Note: To disable (only after enabled), repeat steps 1 to 3, toggle off in step 4, and repeat step 5.
 

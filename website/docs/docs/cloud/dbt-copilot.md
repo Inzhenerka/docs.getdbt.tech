@@ -3,7 +3,7 @@ title: "About dbt Copilot"
 sidebar_label: "About dbt Copilot" 
 description: "dbt Copilot is a powerful AI engine designed to accelerate your analytics workflows throughout your entire ADLC." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
-pagination_prev: null
+intro_text: "dbt Copilot is a powerful AI engine that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster."
 ---
 
 # About dbt Copilot <Lifecycle status="enterprise" /> 
@@ -12,20 +12,26 @@ dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integ
 
 With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button.
 
-<!--
-:::tip Beta feature
-dbt Copilot is designed to _help_ developers generate documentation, tests, and semantic models, as well as [code](/docs/cloud/use-dbt-copilot#generate-and-edit-code) using natural language, in dbt Cloud. It's available in beta, in the dbt Cloud IDE only.
-
-To use dbt Copilot, you must have an active [dbt Cloud Enterprise account](https://www.getdbt.com/pricing) and either agree to use dbt Labs' OpenAI key or provide your own Open AI API key. [Register here](https://docs.google.com/forms/d/e/1FAIpQLScPjRGyrtgfmdY919Pf3kgqI5E95xxPXz-8JoVruw-L9jVtxg/viewform) or reach out to the Account team if you're interested in joining the private beta.
+:::tip
+dbt Copilot is available in the dbt Cloud IDE to Enterprise accounts. If you're interested in using dbt Copilot, [reach out to dbt Labs](https://www.getdbt.com/contact) and we'll help you get started!
 :::
--->
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
 
-<!--
-## Feedback
+## How dbt Copilot works
 
-Please note: Always review AI-generated code and content as it may produce incorrect results. The features and/or functionality of dbt Copilot may be added or eliminated as part of the beta trial.
+:::tip
+dbt Copilot accelerates, but doesn’t replace, your analytics development lifecycle. It helps deliver better data products faster, but always review AI-generated content, as it may be incorrect.
+:::
 
-To give feedback, please contact your dbt Labs account team. We appreciate your feedback and suggestions as we improve dbt Copilot.
--->
+dbt Copilot enhances efficiency by automating repetitive tasks while ensuring data privacy and security. It works as follows:
+
+- Access dbt Copilot through the dbt Cloud IDE to generate documentation, tests, semantic models, or SQL code using natural language prompts.
+- dbt Copilot gathers metadata (like column names, model SQL, documentation) but never accesses row-level warehouse data.
+- The metadata and user prompts are sent to the AI provider (in this case, OpenAI) through API calls for processing.
+- The AI-generated content is returned to dbt Cloud for you to review, edit, and save within your project files.
+- dbt Copilot does not use warehouse data to train AI models.
+- No sensitive data persists on dbt Labs' systems, except for usage data.
+- You can request the deletion of personal or sensitive data within 30 days.
+
+WE CAN ADD ARCHITECTURAL DIAGRAM HERE
