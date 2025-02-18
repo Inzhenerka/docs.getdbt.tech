@@ -20,6 +20,9 @@ This page explains how to use dbt Copilot to:
 - [Generate SQL expressions for models](#generate-and-build-models) &mdash; Use dbt Copilot to generate SQL expressions for models in the [Visual Editor](/docs/cloud/use-visual-editor).
 - [Generate models](#generate-models) &mdash; Use dbt Copilot to generate models in the [Visual Editor](/docs/cloud/use-visual-editor) with natural language prompts.
 
+ADD INFO HERE ABOUT USAGE METRICS command
+- confirm that this is only available in the IDE
+
 ## Generate resources
 
 <CopilotResources/>
