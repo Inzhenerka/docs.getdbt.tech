@@ -13,7 +13,7 @@ datatype: string
 
 Set the `begin` config to the timestamp value at which your [microbatch incremental model](/docs/build/incremental-microbatch) data should begin &mdash; at the point the data becomes relevant for the microbatch model.  
 
-You can configure `begin` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block. The value for `begin` must be a string representing an ISO-formatted date _or_ date and time _or_ [relative dates](#set-begin-to-use-relative-dates). Check out the [examples](#examples) in the next section for more details.
+You can configure `begin` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block. The value for `begin` must be a string representing an ISO-formatted date, _or_ date and time, _or_ [relative dates](#set-begin-to-use-relative-dates). Check out the [examples](#examples) in the next section for more details.
 
 ## Examples
 
