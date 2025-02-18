@@ -2,6 +2,7 @@
 title: "dbt Copilot FAQs" 
 sidebar_label: "dbt Copilot FAQs" 
 description: "Answers to common questions about dbt Copilot."
+intro_text: "Learn the answers to common questions about dbt Copilot."
 ---
 
 # dbt Copilot FAQs <Lifecycle status="enterprise" /> 
