@@ -313,19 +313,6 @@ const sidebarSettings = {
         ],
       },
       {
-        type: "category",
-        label: "Accelerate with dbt Copilot",
-        collapsed: true,
-        link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-        items: [
-          "docs/cloud/dbt-copilot",
-          "docs/cloud/enable-dbt-copilot",
-          "docs/cloud/use-dbt-copilot",
-          "docs/cloud/dbt-copilot-faqs",
-          "docs/cloud/dbt-copilot-data",
-          ],
-        },
-      {
       type: "category",
       label: "Build dbt projects",
       collapsed: true,
@@ -763,7 +750,19 @@ const sidebarSettings = {
         },
       ],
     },
-
+    {
+      type: "category",
+      label: "dbt Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/dbt-copilot-faqs",
+        "docs/cloud/dbt-copilot-data",
+        ],
+      },
     {
       type: "category",
       label: "dbt Cloud integrations",
