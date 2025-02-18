@@ -308,6 +308,17 @@ const sidebarSettings = {
             },
           ],
         },
+        {
+          type: "category",
+          label: "dbt Cloud Visual Editor",
+          collapsed: true,
+          link: { type: "doc", id: "docs/cloud/visual-editor" },
+          items: [
+            "docs/cloud/visual-editor",
+            "docs/cloud/visual-editor-interface", 
+            "docs/cloud/use-visual-editor",
+          ],
+        },
         ],
       },
       {
@@ -1110,9 +1121,21 @@ const sidebarSettings = {
             "reference/node-selection/set-operators",
             "reference/node-selection/methods",
             "reference/node-selection/putting-it-together",
-            "reference/node-selection/state-comparison-caveats",
             "reference/node-selection/yaml-selectors",
             "reference/node-selection/test-selection-examples",
+            {
+              type: "category",
+              label: "About state selection",
+              link: {
+                type: "doc",
+                id: "reference/node-selection/state-selection",
+              },
+              items: [
+                "reference/node-selection/state-selection",
+                "reference/node-selection/configure-state",
+                "reference/node-selection/state-comparison-caveats",
+              ],
+            },
           ],
         },
         {
@@ -1130,8 +1153,9 @@ const sidebarSettings = {
               link: { type: "doc", id: "reference/global-configs/adapter-behavior-changes" },
               items: [
                 "reference/global-configs/adapter-behavior-changes",
-                "reference/global-configs/redshift-changes",
                 "reference/global-configs/databricks-changes",
+                "reference/global-configs/redshift-changes",                      
+                "reference/global-configs/snowflake-changes",
               ],
             },
             {
