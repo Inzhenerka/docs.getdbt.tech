@@ -75,7 +75,7 @@ dbt Copilot uses AI to generate documentation, tests, metrics, and semantic mode
 - No sensitive data persists on dbt Labs' systems, except for usage data.
 - Clients can request the deletion of personal or sensitive data within 30 days.
 
-For more details, check out [dbt Copilot privacy](/docs/cloud/dbt-copilot-privacy).
+For more details, check out [dbt Copilot privacy](/docs/cloud/dbt-copilot-data).
 </Expandable>
 
 ## Limitations 
