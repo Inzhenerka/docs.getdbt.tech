@@ -894,6 +894,13 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Platform-specific configs",
+      link: {
+        type: "generated-index",
+        title: "Platform-specific configs",
+        description:
+          "Platform-specific configs are used to configure the dbt project for a specific database platform.",
+        slug: "/reference/resource-configs/resource-configs",
+      },
       items: [
         "reference/resource-configs/athena-configs",
         "reference/resource-configs/impala-configs",
