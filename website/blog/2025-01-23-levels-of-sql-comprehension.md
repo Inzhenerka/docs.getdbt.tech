@@ -149,7 +149,7 @@ In introducing these concepts, we’re still just scratching the surface. There'
 - How this is all going to roll into a step change in the experience of working with data
 - What it means for doing great data work
 
-To learn more, check out [The key technologies behind SQL Comprehension](sql-comprehension-technologies). 
+To learn more, check out [The key technologies behind SQL Comprehension](/blog/sql-comprehension-technologies). 
 
 Over the coming days, you'll hear more about all of this from the dbt Labs team - both familiar faces and our new friends from SDF Labs.
 
