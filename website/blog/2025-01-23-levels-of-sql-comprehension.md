@@ -13,7 +13,7 @@ is_featured: true
 ---
 
 ::: note
-This is part one of a series, for the second article, see [The key technologies behind SQL Comprehension](sql-comprehension-technologies)
+This is part one of a series, for the second article, see [The key technologies behind SQL Comprehension](/blog/sql-comprehension-technologies) 
 :::
 
 
