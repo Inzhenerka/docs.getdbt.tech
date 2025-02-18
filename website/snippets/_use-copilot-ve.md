@@ -21,7 +21,7 @@ To use dbt Copilot in the Visual Editor to generate SQL expressions:
 To use dbt Copilot to generate and build models with natural language prompts:
 
 1. Click on the dbt Copilot icon in Visual Editor.
-2. In the dbt Copilot prompt box, enter your prompt in natural language for dbt Copilot to build the model(s) you want. You can also use the example prompts provided to get started.
+2. In the dbt Copilot prompt box, enter your prompt in natural language for dbt Copilot to build the model(s) you want. You can reference existing models using the `@` symbol. For example, to build a model that calculates the total price of orders, you can enter `@orders` in the prompt and it'll use the `orders` model as a source.
 3. Click **Generate** and dbt Copilot generates a summary of the model(s) you want to build.
    <Lightbox src="/img/docs/dbt-cloud/copilot-generate.jpg" width="40%" title="Enter a prompt in the dbt Copilot prompt box to build models using natural language" />
 4. Click **Apply** to generate the model(s) in the Visual Editor.
