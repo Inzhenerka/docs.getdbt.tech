@@ -12,7 +12,7 @@ date: 2025-01-23
 is_featured: true
 ---
 
-::: note
+:::note
 This is part one of a series, for the second article, see [The key technologies behind SQL Comprehension](/blog/sql-comprehension-technologies) 
 :::
 
