@@ -28,10 +28,3 @@ For more information, read the complete [Cloud IDE guide](/docs/cloud/dbt-cloud-
 
 - [IDE user interface](/docs/cloud/dbt-cloud-ide/ide-user-interface)
 - [Keyboard shortcuts](/docs/cloud/dbt-cloud-ide/keyboard-shortcuts)
-
-
-select * from {{
-semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
-group_by=[Dimension('metric_time').grain('month'),'customer__customer_type'],
-where="{{ Dimension('metric_time').grain('month')  }} >= '2017-03-09' AND {{ Dimension('customer__customer_type' }} in ('new') AND {{ Entity('order_id') }} = 10")
-}}
