@@ -195,10 +195,12 @@ The results of this query are used to determine whether the source is fresh or n
 
 Our best practice recommendation is to use [data source freshness](/docs/build/sources#declaring-source-freshness). This will allow settings to be transfered into a `.yml` file where source freshness is defined on [model level](/reference/resource-properties/freshness).
 
-By using the commands in the following order, you can have one hourly job which will rebuild models based on your source freshness which are indicated in the `model.yml `files:
+To build models based on source freshness in dbt:
 
-1. `dbt source freshness`
-2. `dbt build --select "source_status:fresher+"`
+1. Run `dbt source freshness` to check the freshness of your sources.
+2. Use the `dbt build --select source_status:fresher+` command to build and test models downstream of fresher sources.
+
+By using the commands in that order, it ensures models are updated based on the latest data.
 
 Additionally, [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots) can be set to 30 minutes to check for source freshness and then run a job which rebuilds every 1 hour. This will retrieve all the models and rebuild them in one go if their source freshness has expired. For more information, refer to [Source freshness snapshot frequency](/docs/deploy/source-freshness#source-freshness-snapshot-frequency).
 

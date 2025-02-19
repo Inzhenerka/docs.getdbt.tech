@@ -14,9 +14,49 @@ If your dbt project is [configured with sources](/docs/build/sources), then the 
 
 You can also use [source freshness](/docs/deploy/source-freshness) commands help make sure the data you get is new and not old or outdated. 
 
-#### Configure source freshness
+### Configure source freshness
 
-You can configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
+To configure source freshness in dbt:
+
+- Add a `freshness` block to your source in the .yml file.
+- Specify `warn_after` and `error_after` thresholds.
+- Include `loaded_at_field` for each table.
+- Use the `dbt source freshness` command to check freshness.
+
+<File name='models/<filename>.yml'>
+
+```yaml
+
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+
+    freshness:
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 24, period: hour}
+
+    loaded_at_field: _etl_loaded_at
+
+    tables:
+      - name: customers
+
+      - name: orders
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 12, period: hour}
+          filter: datediff('day', _etl_loaded_at, current_timestamp) < 2
+
+      - name: product_skus
+        freshness: null
+
+```
+</File>
+
+This helps to monitor data pipeline health.
+
+You can also configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
 
 <Lightbox src="/img/docs/dbt-cloud/select-source-freshness.png" title="Selecting source freshness"/>
 
@@ -93,6 +133,6 @@ Some of the typical commands you can use are:
 
 | **Command**                                                                 | **Description**                  | 
 | ----------------------------------------------------------------------------| ---------------------------------|
-|[`source_status`](/reference/node-selection/methods#source_status) | dbt generates the [`sources.json`](/reference/artifacts/sources-json) artifact, which includes execution times and [`max_loaded_at`](/reference/artifacts/sources-json#top-level-keys) timestamps for dbt sources.|
-|[`state:modified`](/reference/node-selection/methods#state)                  |Used to select nodes by comparing them to a previous version of the same project, represented by a [manifest](/reference/artifacts/manifest-json).|
-|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |If your dbt project includes configured sources, the dbt source freshness command will query all your defined source tables to determine their "freshness."|
+|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Checks the "freshness" for all sources.|
+|[`dbt source freshness --output target/source_freshness.json](/reference/commands/source#configuring-source-freshness-output)|Output of freshness information to a different path|
+|`dbt source freshness --select "source:snowplow"`|Checks the "freshness" for specific sources|
