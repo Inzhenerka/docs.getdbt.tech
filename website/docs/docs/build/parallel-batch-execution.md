@@ -1,5 +1,5 @@
 ---
-title: "Parallel batch execution"
+title: "Parallel microbatch execution"
 sidebar_label: "Parallel batch execution"
 description: "Learn about the 'parallel batch execution' strategy for incremental models."
 intro_text: "Use parallel batch execution to process your microbatch models faster."
