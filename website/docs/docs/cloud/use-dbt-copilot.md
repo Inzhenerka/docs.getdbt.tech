@@ -20,8 +20,20 @@ This page explains how to use dbt Copilot to:
 - [Generate SQL expressions for models](#generate-and-build-models) &mdash; Use dbt Copilot to generate SQL expressions for models in the [Visual Editor](/docs/cloud/use-visual-editor).
 - [Generate models](#generate-models) &mdash; Use dbt Copilot to generate models in the [Visual Editor](/docs/cloud/use-visual-editor) with natural language prompts.
 
-ADD INFO HERE ABOUT USAGE METRICS command
-- confirm that this is only available in the IDE
+## Usage metrics
+Usage metrics calculate the number of times (actions?) you use dbt Copilot in a given time period. To view your usage metrics, run the following command in the dbt Cloud IDE:
+
+```bash
+dbt copilot usage-metrics  -- made up command and to be confirmed
+```
+
+To view usage metrics for a specific time period, use ..... For example:
+
+```bash
+dbt copilot usage-metrics --start-date 2024-01-01 --end-date 2024-01-31  -- made up command and to be confirmed
+```
+
+- is this only available in the IDE?
 
 ## Generate resources
 
