@@ -6,7 +6,6 @@ level: 'Beginner'
 icon: 'athena'
 hide_table_of_contents: true
 tags: ['Amazon','Athena', 'dbt Cloud','Quickstart']
-last_updated: '2025-01-29'
 ---
 
 <div style={{maxWidth: '900px'}}>
