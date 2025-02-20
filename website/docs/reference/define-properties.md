@@ -38,9 +38,9 @@ These properties are:
 - [`docs`](/reference/resource-configs/docs)
 - [`columns`](/reference/resource-properties/columns)
 - [`quote`](/reference/resource-properties/quote)
-- [`source` properties](/reference/source-properties) (e.g. `loaded_at_field`, `freshness`)
-- [`exposure` properties](/reference/exposure-properties) (e.g. `type`, `maturity`)
-- [`macro` properties](/reference/macro-properties) (e.g. `arguments`)
+- [`source` properties](/reference/source-properties) (for example, `loaded_at_field`, `freshness`)
+- [`exposure` properties](/reference/exposure-properties) (for example, `type`, `maturity`)
+- [`macro` properties](/reference/macro-properties) (for example, `arguments`)
 
 import Example from '/snippets/_configs-properties.md'  ;
 
