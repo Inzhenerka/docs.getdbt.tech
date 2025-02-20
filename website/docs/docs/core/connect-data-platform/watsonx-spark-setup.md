@@ -16,7 +16,11 @@ meta:
   config_page: /reference/resource-configs/watsonx-Spark-config
 ---
 
-**The `dbt-watsonx-spark` adapter allows you to use dbt to transform and manage data on IBM watsonx.data Spark, leveraging its distributed SQL query engine capabilities.**
+import SetUpPages from '/snippets/_setup-pages-intro.md';
+
+<SetUpPages meta={frontMatter.meta}/>
+
+The `dbt-watsonx-spark` adapter allows you to use dbt to transform and manage data on IBM watsonx.data Spark, leveraging its distributed SQL query engine capabilities.
 
 Before proceeding, ensure you have the following:
 - An active IBM watsonx.data, For [IBM Cloud (SaaS)](https://cloud.ibm.com/docs/watsonxdata?topic=watsonxdata-getting-started). For [Software](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=installing-watsonxdata-developer-version)
@@ -37,7 +41,6 @@ python -m pip install dbt-core dbt-watsonx-spark
 
 ## Configuring `dbt-watsonx-spark`
 For IBM watsonx.data-specific configuration, refer to [IBM watsonx.data configs.](https://www.ibm.com/docs/en/watsonx/watsonxdata/2.1.x?topic=spark-configuration-setting-up-your-profile)
-
 
 ## Connecting to IBM watsonx.data Spark
 
