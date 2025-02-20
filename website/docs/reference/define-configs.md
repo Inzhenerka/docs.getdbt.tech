@@ -4,7 +4,7 @@ sidebar_label: Define configs
 intro_text: "Learn how to define configurations for your resources in a dbt project"
 description: "Learn how to define configurations for your resources in a dbt project"
 pagination_previous: "reference/configs-and-properties"
-pagination_next: "reference/configs-properties"
+pagination_next: "reference/define-properties"
 ---
 
 Depending on the resource type, you can define configurations in a dbt project and also in an installed package by:
