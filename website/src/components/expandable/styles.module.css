@@ -59,6 +59,10 @@
     margin-right: 8px;
 }
 
+details[open] :local(.toggle)::before {
+  transform: rotate(225deg); /* this rotates the chevron down */
+}
+
 :local(.toggleDown)::before {
     transform: rotate(225deg); /* Downward arrow */
 }
