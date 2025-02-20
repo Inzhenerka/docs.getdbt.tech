@@ -98,7 +98,7 @@ The tiles have the same basic setup with different fields depending on their fun
 
 1. **The connectors:** Click-and-drag to the connector on another operator to link them.
 2. **The title:** Click to change. The examples in this guide will remain default. 
-3. **Play icon and menu:** Preview the data at any point in its transformation by clicking the tiles play icon. The dropdown menu contains the option to **Delete** a tile. 
+3. **Play icon and menu:** Preview the data at any point in its transformation by clicking the tile's **play icon**. The dropdown menu contains the option to **Delete** a tile. 
 4. **Column icon:** The number next to it represents the number of columns in the data at that point in its transformation.
 
 :::tip
