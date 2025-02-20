@@ -107,7 +107,7 @@ Make operator tile titles unique compared to your column names to avoid confusio
 
 :::
 
-### Create your model with pre-existing data
+### Create your model from pre-existing models
 
 To get started:
 
