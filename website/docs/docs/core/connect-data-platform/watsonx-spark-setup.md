@@ -75,7 +75,7 @@ Copy and paste the connection details in the profiles.yml file that is located i
 
 The following profile fields are required to configure watsonx.data Spark connections:
 
-| Option     | Required/Optional           | Description                                                               | Example           |
+| Option     | Required/Optional             |  <div style={{width:'200px'}}>Description</div>                           | <div style={{width:'200px'}}>Example</div>         |
 | ---------- | ----------------------------- | ------------------------------------------------------------------------- | ----------------- |
 | `method`   | Required |    Specifies the connection method to the spark query server. Use `http`.    | `http`            |
 | `schema`   | Required|    To choose an existing schema within spark engine or create a new schema.  | `spark_schema`    |
