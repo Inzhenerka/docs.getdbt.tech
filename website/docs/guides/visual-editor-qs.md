@@ -147,7 +147,7 @@ Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure
 6. Click **Select and rename columns** and click **Configure columns**
 select the following columns:
     - From `stg_orders` click `ORDER_ID` and `CUSTOMER_ID`.
-    - From `stg_order` click `PRODUCT_ID`.
+    - From `stg_order_items` click `PRODUCT_ID`.
     - Note: These will appear in the order they are clicked.
 7. You've now built your join! Test it by clicking the **Play icon** in the top right corner of the join tile. Your data will populate in the **Runs and previews** pane.
 
