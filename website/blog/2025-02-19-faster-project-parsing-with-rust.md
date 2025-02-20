@@ -10,6 +10,9 @@ hide_table_of_contents: false
 
 date: 2025-02-19
 is_featured: true
+
+# TODO: Delete before PR merge, testing social image previews
+image: img/dbt-dag.png
 ---
 Remember how dbt felt when you had a small project? You pressed enter and stuff just happened immediately? We're bringing that back.
 
