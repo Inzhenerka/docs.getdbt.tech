@@ -45,7 +45,7 @@ If you're a frequent user of `relationships` tests or data tests, or frequently 
 dbt run -s "state:modified"
 dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
-### Manifest overwritten in subsequent parses
+### Overwrites the `manifest.json`
 
 dbt overwrites the `manifest.json` file during parsing, which means when you reference`--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
 
