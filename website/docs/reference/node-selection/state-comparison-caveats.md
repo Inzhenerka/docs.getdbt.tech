@@ -46,6 +46,22 @@ dbt run -s "state:modified"
 dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
 
+### Manifest overwritten in subsequent parses
+
+dbt now overwrites the `manifest.json` file during parsing. This means, if you're referencing `--state` information from the `target/ directory`, you may encounter a warning indicating that the saved manifest was not found, since the `manifest.json` is overwritten during parsing.
+
+<Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
+
+During the next run, the `target/manifest.json` is overwritten. Following this, it's read again to detect changes, but no changes are found. 
+
+Additionally, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
+
+#### Workaround 
+
+- Move the manifest from the `target/` folder to a dedicated folder such as `state/` between step 2 of the run, and in step 4 of the run, use the command `mkdir state && mv target/manifest.json state/manifest.json`.
+- Write the manifest to a different `--target-path` in step 2 or step 4 of the run.
+- Pass the `--no-write-json` flag during step 4 of the run: `dbt --no-write-json ls --select state:modified --state target`.
+
 ### False positives
 
 <VersionBlock firstVersion="1.9">
