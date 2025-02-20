@@ -74,4 +74,4 @@ Let me be clear: I do not think you should put 100,000 models into your project!
 
 Speed is just one benefit to come from this integration, and pales in comparison to, say, [the importance of logical plans](https://roundup.getdbt.com/p/the-power-of-a-plan-how-logical-plans). But it sure is fun!
 
-The teams are still hard at work integrating the two tools, and we'll have more to share on how the developer experience will change thanks to SDF's tech at our March event.
+The teams are still hard at work integrating the two tools, and we'll have more to share on how the developer experience will change thanks to SDF's tech at our [Developer Day event in March](https://www.getdbt.com/resources/webinars/dbt-developer-day).
