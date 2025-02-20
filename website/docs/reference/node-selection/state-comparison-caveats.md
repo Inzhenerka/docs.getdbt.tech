@@ -47,7 +47,7 @@ dbt test -s "state:modified" --exclude "test_name:relationships"
 ```
 ### Manifest overwritten in subsequent parses
 
-dbt now overwrites the `manifest.json` file during parsing. This means, if you're referencing `--state` information from the `target/ directory`, you may encounter a warning indicating that the saved manifest was not found, since the `manifest.json` is overwritten during parsing.
+dbt overwrites the `manifest.json` file during parsing, which means when you reference`--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
 
 <Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
 
