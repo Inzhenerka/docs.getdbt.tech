@@ -328,6 +328,8 @@ joel_labes:
       url: https://twitter.com/joellabes
   name: Joel Labes
   organization: dbt Labs
+  page: true
+  title: Senior Developer Experience Advocate
 jonathan_natkins:
   description: Natty also writes about startups, equity, data, and more in his Substack called [Semi-Structured](http://semistructured.substack.com/).
   image_url: /img/blog/authors/jonathan-natkins.jpeg
