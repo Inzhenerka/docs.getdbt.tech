@@ -161,7 +161,7 @@ Your work in the Visual Editor is automatically saved as you progress, so if you
 
 ## Enhance your model
 
-You've got the basics going with your Visual Editor model! It has successfully joined two pre-existing models, but you need to transform the data further to get what you need. A list of customers who buy repeat items as you consider a loyalty club rewards program.
+You've got the basics going with your Visual Editor model! It has successfully joined two pre-existing models, but you want to transform the data further to get what you need: a list of customers who buy repeat items as you consider a loyalty club rewards program.
 
 ### Aggregate data
 
