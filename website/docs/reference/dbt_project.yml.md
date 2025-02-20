@@ -1,8 +1,9 @@
 ---
 description: "Reference guide for configuring the dbt_project.yml file."
+intro_text: "The dbt_project.yml file is a required file for all dbt projects. It contains important information that tells dbt how to operate your project."
 ---
 
-Every [dbt project](/docs/build/projects) needs a `dbt_project.yml` file — this is how dbt knows a directory is a dbt project. It also contains important information that tells dbt how to operate your project.
+Every [dbt project](/docs/build/projects) needs a `dbt_project.yml` file — this is how dbt knows a directory is a dbt project. It also contains important information that tells dbt how to operate your project. It works as follows:
 
 - dbt uses [YAML](https://yaml.org/) in a few different places. If you're new to YAML, it would be worth learning how arrays, dictionaries, and strings are represented.
 
@@ -94,6 +95,27 @@ vars:
 
 ```
 
+</File>
+
+## The `+` prefix
+
+dbt demarcates between a folder name and a configuration by using a `+` prefix before the configuration name. The `+` prefix is used for configs _only_ and applies to `dbt_project.yml` under the corresponding resource key. It doesn't apply to:
+- `config()` Jinja macro within a resource file
+- config property in a `.yml` file.
+
+For example, `marketing`, `paid_ads`, and `google` are folder names, whereas `+materialized` is a configuration being applied to those folder and all folders nested below them.
+
+<File name="dbt_project.yml">
+
+```yaml
+models:
+  jaffle_shop:
+    marketing:
+      +materialized: view
+      paid_ads:
+        google:
+          +materialized: table
+```
 </File>
 
 ## Naming convention
