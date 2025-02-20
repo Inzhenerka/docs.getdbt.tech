@@ -240,7 +240,7 @@ The following examples use GitHub as the provider:
 6. Complete the **Add a title** and **Add a description** fields. If your description is split between both, copy all the contents to the description field and give it a shorter title.
 7. Click **Create pull request**.
 
-You've just submitted your first model from the Visual Editor for review. Once approved and merged, the model will be included in your organization’s project and run whenever `dbt run` is executed in any environment it is in. You're now on your way to becoming an expert in data transformation!
+You've just submitted your first model from the Visual Editor for review. Once approved and merged, the model will be included in your organization’s project and run whenever `dbt run` is executed in any environment your model is in. You're now on your way to becoming an expert in data transformation!
 
 :::tip
 
