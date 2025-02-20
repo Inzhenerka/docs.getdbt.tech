@@ -58,7 +58,7 @@ To access the Visual Editor:
 
 ## Navigating the interface
 
-The Visual editor comprises a series of menus activated by clicking icons surrounding the border of the larger canvas. With none of the menu items activated, the workspace looks like this:
+The Visual Editor comprises a series of menus activated by clicking icons surrounding the border of the larger canvas. With none of the menu items activated, the workspace looks like this:
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-screen.png" width="90%" title="The Visual Editor canvas. The number of items is defined in this section." />
 
