@@ -197,7 +197,7 @@ As your model grows, you can zoom in and out to view your needs. Click and hold 
 There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
 
 1. Drag the **Order** operator over to the right of the **Aggregation** tile and connec them.
-2. Click the pencil **edit icon**.
+2. Click the **pencil edit icon**.
 3. In the **Sort order** field click **Select column** and click `Aggregation1.CUSTOMER_ID` from the dropdown. Set it to `Asc`. 
 4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
 5. Press the **Play icon** to preview the new data.
