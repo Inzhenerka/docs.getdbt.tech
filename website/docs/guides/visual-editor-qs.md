@@ -30,6 +30,7 @@ The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to
 
 To use the Visual Editor, you must meet the following prerequisites:
 
+- Be on an [Enterprise dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions#enterprise-plan).
 - Your account must have the following configured:
     - A data warehouse connection
     - Integration with a Git provider
@@ -39,7 +40,7 @@ To use the Visual Editor, you must meet the following prerequisites:
 
 :::note
 
-The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your own data, but the Jaffle Shop offers a full-featured project useful for testing dbt features. Ask your dbt Cloud administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project before you begin, or you will be unable to reference the source models.
+The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your own data, but the Jaffle Shop offers a full-featured project useful for testing dbt features. Ask your dbt Cloud administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project in your `Production` environment before you begin, or you will be unable to reference the source models.
 
 :::
 
@@ -65,16 +66,16 @@ The Visual Editor comprises a series of menus activated by clicking icons surrou
 Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
 
 1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
-2. The **Operators** toolbar contains the building blocks of creating a model with the editor. 
+2. The **Operators** toolbar contains the building blocks for creating a model with the editor. 
 3. The **SQL code** area displays the SQL that compiles your model.
 4. The **Runs and previews** that displays run data and previews data for individual operators.
 5. The **Commit history** display.
-6. The **Explorer** view of your model. 
-7. The navigation tab that has icons for (from top to bottom):
+6. The navigation tab that has icons for (from top to bottom):
     - Zoom in
     - Zoom out
     - Center the model to fit the screen
     - Auto-layout option for the individual operator tiles
+7. The [Copilot](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your dbt Visual Editor models.
 8. The **Run** command executes `dbt run` for the model.
 9. This button is initially a **Commit** command for your integrated Git provider. It will change to "Open pull request" once your first commit is made. The button will not initially appear until you begin working in the canvas area.
 
@@ -84,9 +85,14 @@ This section will walk you through creating a model with operators using sample 
 
 The operators are the heart of your model. They determine what data will be transformed and how. Click the **+** icon to open the operator menu.
 
+Operators are divided into three types:
+- **Input:** Input operators configure the source data.
+- **Transform:** Transform operators change and shape your data.
+- **Output:** Output operators determine your models name and location.
+
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/operators.png" width="90%" title="The operator’s menu on the side of the Visual Editor canvas." />
 
-Read more about the [individual operators](/docs/cloud/visual-editor-interface#operators) to understand the basic purpose of each. Keep in mind that the model you're creating relies on existing models and that the term will primarily be used to reference the model operator in this section.
+Read more about the [individual operators](/docs/cloud/visual-editor-interface#operators) to understand the basic purpose of each. The dbt model created by the Visual Editor builds off of existing models. In this guide, there will be input (source) models and an output model (what you are building) which will be _your model_.  
 
 ### Operator tiles
 
@@ -111,23 +117,23 @@ Make operator tile titles unique compared to your column names to avoid confusio
 
 To get started:
 
-1. Expand the **Operators** menu and drag the **Model** operator over to the canvas.
-2. Click **Configure model** and then select the source `stg_models` from the dropdown. 
-3. Click the **Output all columns** option.
+1. Expand the **Operators** menu and drag the **Input Model** operator over to the canvas.
+2. Click **Choose a model** and then select the source `stg_models` from the dropdown. 
+3. Click the **Select model** option in the window that lists the columns.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/one-model-operator.png" width="90%" title="A single model operator." />
 
-You now have your first model in Visual Editor!
+You now have your first input model in Visual Editor!
 
-4. Drag a new **Model** operator to the canvas below the first and repeat the previous steps, but this time set the source model to `stg_order_items`.
+4. Drag a new **Input Model** operator to the canvas below the first and repeat the previous steps, but this time set the source model to `stg_order_items`.
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/two-model-operators.png" width="90%" title="Two model operators in the canvas."/>
 
-Now, you have two models and are ready to transform the data!
+Now, you have two input models and are ready to transform the data!
 
 :::tip
 
-Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure it's been run recently and hasn't gone stale.
+Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure it's been run in your Production environment recently and hasn't gone stale.
 
 :::
 
@@ -141,7 +147,7 @@ Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure
 
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/join-connected.png" width="90%" title="The join is connected to two model operators." />
 
-3. In the **Join** tile, click **Configure join condition.**
+3. In the **Join** tile, click **Configure inputs.**
 4. Set the **Join type** to `Inner`.
 5. In the pair of dropdowns, set both `stg_orders` and `stg_order_items` to `ORDER_ID`.
 6. Click **Select and rename columns** and click **Configure columns**
@@ -161,7 +167,7 @@ Your work in the Visual Editor is automatically saved as you progress, so if you
 
 ## Enhance your model
 
-You've got the basics going with your Visual Editor model! It has successfully joined two pre-existing models, but you want to transform the data further to get what you need: a list of customers who buy repeat items as you consider a loyalty club rewards program.
+You've got the basics going with your Visual Editor model! It has successfully joined two pre-existing input models, but you want to transform the data further to get what you need: a list of customers who buy repeat items as you consider a loyalty club rewards program.
 
 ### Aggregate data
 
@@ -191,7 +197,7 @@ As your model grows, you can zoom in and out to view your needs. Click and hold 
 There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
 
 1. Drag the **Order** operator over to the right of the **Aggregation** tile and connec them.
-2. Click **Configure order**.
+2. Click the pencil **edit icon**.
 3. In the **Sort order** field click **Select column** and click `Aggregation1.CUSTOMER_ID` from the dropdown. Set it to `Asc`. 
 4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
 5. Press the **Play icon** to preview the new data.
@@ -201,6 +207,25 @@ There's a lot of data there. Dozens of customers are buying hundreds of products
 :::tip
 
 Want to practice on your own? Try adding a **Filter** operator that removes items with less than 10 sales for any customer ID. Be sure to run the preview and verify the data is correct.
+
+:::
+
+## Configure your output model
+
+Now that you've built your model, you need to customize the output name and location:
+1. Drag the **Output Model** operator to the right of your **Order** operator. 
+2. Connect the **Order** and **Output Model** operators.
+3. The **Output Model** configuration will default to the name of your Visual Editor project and the default models directory. Click the **pencil edit icon** to configure the optional fields:
+    - Edit the **Model name** field if you want the name to be different than that of your project.
+    - Edit the **File path** if you have a custom directory for your Visual Editor models. 
+    - Hover over a column name and click the **-** icon to remove it from the output model.
+4. Click the **play icon** to preview your final model. 
+
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/output-model.png" width="90%" title="The output model configures your final model's name and location." />
+
+:::tip Model locations
+
+It might be a good idea to customize the location for Visual Editor models to keep them separate from other dbt Cloud models. Check with your dbt admins to get best practices and ideas for Visual Editor model locations and naming conventions.
 
 :::
 
@@ -217,6 +242,12 @@ To run your model, you only need to click the big **Run** button. With the Visua
 This will [materialize](/docs/build/materializations) the data as a `view` in your developer schema in the database. Once the model has been merged with your project and `dbt run` is executed in your Staging or Production environments, it will be materialized as a view in their related schemas. 
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/preview-data.png" width="90%" title="Preview of the transformed data in Snowflake." />
+
+:::tip
+
+Have dbt [Copilot](/docs/cloud/dbt-copilot) enabled for your dbt Cloud Enterprise account? Clear the board and try using natural language to build the model in this guide without manually configuring any operators.
+
+:::
 
 ### Git commit
 
