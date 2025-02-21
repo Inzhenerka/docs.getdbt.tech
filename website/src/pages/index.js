@@ -176,10 +176,50 @@ function Home() {
               </div>
               <div>
                 <Card
-                  title="Это разве аналитика?"
-                  body="Анализ данных и визуализация, интересные ссылки, вакансии, уроки, юмор и личный опыт"
-                  link="https://t.me/eto_analytica"
-                  icon="smiley-face"
+                    title="Это разве аналитика?"
+                    body="Анализ данных и визуализация, интересные ссылки, вакансии, уроки, юмор и личный опыт"
+                    link="https://t.me/eto_analytica"
+                    icon="smiley-face"
+                />
+              </div>
+              <div>
+                <Card
+                    title="Data & IT Career"
+                    body="Карьера в дата-профессиях и в ИТ в общем"
+                    link="https://t.me/data_career"
+                    icon="rocket"
+                />
+              </div>
+              <div>
+                <Card
+                    title="Data Whisperer"
+                    body="Navigating the Big Data Landscape"
+                    link="https://t.me/data_whisperer"
+                    icon="star"
+                />
+              </div>
+              <div>
+                <Card
+                    title="Дашбордец"
+                    body="Уютный канал про дашборды - от бизнес-анализа до реализации на BI"
+                    link="https://t.me/dashboardets"
+                    icon="guides"
+                />
+              </div>
+              <div>
+                <Card
+                    title="Data Events"
+                    body="Ивенты по Big Data, DE, BI, AI, ML, DS, DA, etc"
+                    link="https://t.me/data_events"
+                    icon="calendar"
+                />
+              </div>
+              <div>
+                <Card
+                    title="Data engineering events"
+                    body="Data engineering events 👷‍♂️👷"
+                    link="https://t.me/DE_events"
+                    icon="calendar"
                 />
               </div>
             </div>
