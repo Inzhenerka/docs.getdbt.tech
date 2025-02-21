@@ -89,7 +89,7 @@ The operators are the heart of your model. They determine what data will be tran
 Operators are divided into three types:
 - **Input:** Input operators configure the source data.
 - **Transform:** Transform operators change and shape your data.
-- **Output:** Output operators determine your models name and location.
+- **Output:** Output operators define your model name and location.
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/operators.png" width="90%" title="The operator’s menu on the side of the Visual Editor canvas." />
 
