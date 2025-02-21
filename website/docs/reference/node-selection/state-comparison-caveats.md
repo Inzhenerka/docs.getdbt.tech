@@ -55,7 +55,9 @@ During the next run, the `target/manifest.json` is overwritten. Following this, 
 
 Additionally, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
 
-#### Workaround 
+#### Recommendation
+
+To avoid having the `manifest.json` overwritten before dbt reads it for change detection, you can update your workflow in one of the following ways:
 
 - Move the manifest from the `target/` folder to a dedicated folder such as `state/` between step 2 of the run, and in step 4 of the run, use the command `mkdir state && mv target/manifest.json state/manifest.json`.
 - Write the manifest to a different `--target-path` in step 2 or step 4 of the run.
