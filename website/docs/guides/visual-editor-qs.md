@@ -31,12 +31,12 @@ The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to
 To use the Visual Editor, you must meet the following prerequisites:
 
 - Be on an [Enterprise dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions#enterprise-plan).
-- Your account must have the following configured:
+- You have the following configured on your account:
     - A data warehouse connection
     - Integration with a Git provider
-- Source models for the Visual Editor must have been run at least once
-- You must have a `developer` license
-- You must have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**. 
+- Source models for the Visual Editor must have been run at least once in production.
+- You have a `developer` license.
+- You have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**. 
 
 :::note
 
