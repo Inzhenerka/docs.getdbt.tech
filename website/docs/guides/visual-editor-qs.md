@@ -38,7 +38,7 @@ To use the Visual Editor, you must meet the following prerequisites:
 - You have a `developer` license
 - You have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**
 
-:::note
+:::note Prerequisite for using the Jaffle Shop
 
 The examples in this guide use the [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) GitHub repo sample project. You can use your own data, but the Jaffle Shop offers a full-featured project useful for testing dbt features. Ask your dbt Cloud administrator about importing it to a project in your environment. They must also execute `dbt run` on the Jaffle Shop project in your `Production` environment before you begin, or you will be unable to reference the source models.
 
