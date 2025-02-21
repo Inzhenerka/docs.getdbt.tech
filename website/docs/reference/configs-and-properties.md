@@ -1,7 +1,7 @@
 ---
 title: Configs, properties, what are they?
 sidebar_label: Configs and properties
-intro_text: "Clarify the difference between properties and configs in dbt: properties describe resources, while configs control how dbt builds them in the warehouse"
+intro_text: "Clarify the difference between properties and configs in dbt: properties describe resources, while configs control how dbt builds them in the warehouse."
 description: "Clarify the difference between properties and configs in dbt: properties describe resources, while configs control how dbt builds them in the warehouse"
 pagination_next: "reference/define-configs"
 ---
