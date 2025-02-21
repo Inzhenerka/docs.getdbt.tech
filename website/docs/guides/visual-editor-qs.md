@@ -21,22 +21,22 @@ The Visual Editor is currently in a limited beta. [Contact us](https://www.getdb
 The dbt Cloud Visual Editor offers a quick and straightforward way for anyone to build analytics models, no background in analytics engineering is required! In this guide, you will learn about:
 
 - Accessing the Visual Editor and creating a new model
-- How to navigate the interface
-- How to build a model using operators
-- How to commit your changes to Git
+- Navigating the interface
+- Building a model using operators
+- Committing your changes to Git
 - Locating your Visual Editor model and data
 
 ## Prerequisites
 
 To use the Visual Editor, you must meet the following prerequisites:
 
-- Be on an [Enterprise dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions#enterprise-plan).
+- Be on an [Enterprise dbt Cloud account](/faqs/Accounts/cloud-upgrade-instructions#enterprise-plan)
 - You have the following configured on your account:
     - A data warehouse connection
     - Integration with a Git provider
-- Source models for the Visual Editor must have been run at least once in production.
-- You have a `developer` license.
-- You have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**. 
+- Source models for the Visual Editor must have been run at least once in production
+- You have a `developer` license
+- You have credentials configured for your data warehouse and Git provider in the **Your profile** section of the **Account settings**
 
 :::note
 
