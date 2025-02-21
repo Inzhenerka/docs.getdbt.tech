@@ -231,7 +231,11 @@ It might be a good idea to customize the location for Visual Editor models to ke
 
 ## Run and share your model
 
-Now that you've built a model that results in the data you want, it's time to run it and push it to your Git repo.
+Now that you've built a model that results in the data you want, it's time to run it and push it to your Git repo. Before you run your model, keep a few items in mind:
+
+- When you run previews (at any stage in the process) it does not affect the state in your warehouse. So, you can test and develop in the Visual Editor without impacting anything outside of the dbt Cloud Development environment.
+- When you're ready to use this mode in a downstream tool, you can run it to materialize it in your data warehouse development schema.
+- Once your model is ready for production and be used by others or orchestrated, commit it and open a PR.
 
 ### Run
 
