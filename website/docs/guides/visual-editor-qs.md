@@ -74,6 +74,7 @@ Click on an icon to expand its section or execute an action depending on its pur
     - Zoom in
     - Zoom out
     - Center the model to fit the screen
+    - Zoom to selection (the operator selected on or off screen will be zoomed and centered)
     - Auto-layout option for the individual operator tiles
 7. The [Copilot](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your dbt Visual Editor models.
 8. The **Run** command executes `dbt run` for the model.
