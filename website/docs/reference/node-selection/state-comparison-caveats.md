@@ -59,7 +59,7 @@ Additionally, it's not recommended to set `--state` and `--target-path` to the s
 
 To avoid having the `manifest.json` overwritten before dbt reads it for change detection, you can update your workflow in one of the following ways:
 
-- Move the manifest from the `target/` folder to a dedicated folder such as `state/` between step 2 of the run, and in step 4 of the run, use the command `mkdir state && mv target/manifest.json state/manifest.json`.
+- Move the manifest from the `target/` folder to a dedicated folder such as `state/` between the build stage, where dbt would generate the `target/manifest.json` and, instead of comparing the current state with the previous one (for example using `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified`), use the command `mkdir state && mv target/manifest.json state/manifest.json`.
 - Write the manifest to a different `--target-path` in step 2 or step 4 of the run.
 - Pass the `--no-write-json` flag during step 4 of the run: `dbt --no-write-json ls --select state:modified --state target`.
 
