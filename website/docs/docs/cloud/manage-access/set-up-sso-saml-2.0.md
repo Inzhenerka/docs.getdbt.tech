@@ -87,7 +87,7 @@ them to complete setup in dbt Cloud.
 
 - Identity Provider Issuer
 - Identity Provider SSO Url
-- X.509 Certificate
+- X.509 Certificate (PEM format required)
 
 ### Finish setup
 
@@ -421,7 +421,7 @@ the new integration. Keep these values somewhere safe, as you will need them to 
 
 - Issuer URL
 - SAML 2.0 Endpoint (HTTP)
-- X.509 Certificate
+- X.509 Certificate (PEM format required)
 
 ### Finish setup
 
