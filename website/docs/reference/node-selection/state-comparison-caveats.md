@@ -51,7 +51,7 @@ dbt overwrites the `manifest.json` file during parsing, which means when you ref
 
 <Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
 
-During the next run, the `target/manifest.json` is overwritten. Following this, it's read again to detect changes, but no changes are found. 
+During the next run, the `target/manifest.json` is overwritten. Following this, the `target/manifest.json` is read again to detect changes, but no changes are found. 
 
 Additionally, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
 
