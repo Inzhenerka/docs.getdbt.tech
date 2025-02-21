@@ -51,7 +51,7 @@ To access the Visual Editor:
 1. Click **Develop** from the main menu. If you do not see the **Develop** option, ensure you have selected a **Project** from the menu.
 2. Click **Visual Editor**.
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-main-menu.png" width="90%" title="Visual Editor in the main menu."/>
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-main-menu.png" width="60%" title="Visual Editor in the Develop section of the main menu."/>
 
 3. From the right side, click **Get started** and then click **Create new model**.
 
