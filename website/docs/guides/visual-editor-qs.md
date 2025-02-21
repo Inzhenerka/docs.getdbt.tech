@@ -197,7 +197,7 @@ As your model grows, you can zoom in and out to view your needs. Click and hold 
 There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
 
 1. Drag the **Order** operator over to the right of the **Aggregation** tile and connec them.
-2. Click the pencil **edit icon**.
+2. Click the **pencil edit icon**.
 3. In the **Sort order** field click **Select column** and click `Aggregation1.CUSTOMER_ID` from the dropdown. Set it to `Asc`. 
 4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
 5. Press the **Play icon** to preview the new data.
@@ -225,7 +225,7 @@ Now that you've built your model, you need to customize the output name and loca
 
 :::tip Model locations
 
-It might be a good idea to customize the location for Visual Editor models to keep them separate from other dbt Cloud models. Check with your dbt admins to get best practices and ideas for Visual Editor model locations and naming conventions.
+You can customize the location for Visual Editor models to keep them separate from other dbt Cloud models. Check with your dbt admins for best practices and ideas for Visual Editor model locations and naming conventions.
 
 :::
 
@@ -233,9 +233,9 @@ It might be a good idea to customize the location for Visual Editor models to ke
 
 Now that you've built a model that results in the data you want, it's time to run it and push it to your Git repo. Before you run your model, keep a few items in mind:
 
-- When you run previews (at any stage in the process) it does not affect the state in your warehouse. So, you can test and develop in the Visual Editor without impacting anything outside of the dbt Cloud Development environment.
+- When you run previews (at any stage in the process), it does not affect the state of your warehouse. So, you can test and develop in the Visual Editor without impacting anything outside of the dbt Cloud Development environment.
 - When you're ready to use this mode in a downstream tool, you can run it to materialize it in your data warehouse development schema.
-- Once your model is ready for production and be used by others or orchestrated, commit it and open a PR.
+- Once your model is ready for production and ready to be used by others or orchestrated, commit it and open a PR.
 
 ### Run
 
