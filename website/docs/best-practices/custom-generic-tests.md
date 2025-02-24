@@ -102,7 +102,9 @@ With one line of code, you've just created a test! In this example, `users` will
 
 ## Add description to generic data test logic
 
-To add a description to the definition of a generic data test, you need to include the description key under the `macros:` section. Here's an example:
+You can add a description to the definition of a generic data test by including the `description` key under the `macros:` section, which is the Jinja macro that provides the core logic for a data test. You can add descriptions directly to the macro, including descriptions for macro arguments.
+
+Here's an example:
 
 ```yaml
 macros:
@@ -120,7 +122,7 @@ macros:
 In this example:
 
 - The macro definition is called `test_not_empty_string.`
-- A description is provided at the macro level, explaining what the test does and any relevant notes (for example, deprecation status).
+- We've provided a description at the macro level, explaining what the test does and any relevant notes (for example, deprecation status).
 - Each argument (like `model`, `column_name`) also includes a description to clarify its purpose.
 
 ### Generic tests with additional arguments
