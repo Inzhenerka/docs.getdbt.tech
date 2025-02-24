@@ -83,7 +83,7 @@ Indexes are not supported by Microsoft Fabric Data Warehouse. Any Indexes provid
 
 ## Grants with auto provisioning
 
-Grants with auto provisioning is not supported by Microsoft Fabric Synapse Data Warehouse at this time.
+Grants with auto provisioning is not supported by Microsoft Fabric Data Warehouse at this time.
 
 ## Incremental
 
