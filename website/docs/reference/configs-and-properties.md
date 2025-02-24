@@ -1,12 +1,12 @@
 ---
-title: Configs, properties, what are they?
+title: Configurations and properties, what are they?
 sidebar_label: Configs and properties
-intro_text: "Clarify the difference between properties and configs in dbt: properties describe resources, while configs control how dbt builds them in the warehouse."
-description: "Clarify the difference between properties and configs in dbt: properties describe resources, while configs control how dbt builds them in the warehouse."
+intro_text: "Understand the difference between properties and configurations in dbt: properties describe resources, while configurations control how dbt builds them in the warehouse."
+description: "This page explains the difference between properties and configurations in dbt."
 pagination_next: "reference/define-configs"
 ---
 
-Resources in your project—models, snapshots, seeds, tests, and the rest—can have a number of declared **properties**. Resources can also define **configurations**, which are a special kind of property that bring extra abilities. What's the distinction?
+Resources in your project—models, snapshots, seeds, tests, and the rest—can have a number of declared _properties_. Resources can also define _configurations_ (configs), which are a special kind of property that bring extra abilities. What's the distinction?
 - Properties are declared for resources one-by-one in  `properties.yml` files. Configs can be defined there, nested under a `config` property. They can also be set one-by-one via a `config()` macro (right within `.sql` files), and for many resources at once in `dbt_project.yml`.
 - Because configs can be set in multiple places, they are also applied hierarchically. An individual resource might _inherit_ or _override_ configs set elsewhere.
 - You can select resources based on their config values using the `config:` selection method, but not the values of non-config properties.

@@ -99,24 +99,9 @@ vars:
 
 ## The `+` prefix
 
-dbt demarcates between a folder name and a configuration by using a `+` prefix before the configuration name. The `+` prefix is used for configs _only_ and applies to `dbt_project.yml` under the corresponding resource key. It doesn't apply to:
-- `config()` Jinja macro within a resource file
-- config property in a `.yml` file.
+import PlusPrefix from '/snippets/_plus-prefix.md';
 
-For example, `marketing`, `paid_ads`, and `google` are folder names, whereas `+materialized` is a configuration being applied to those folder and all folders nested below them.
-
-<File name="dbt_project.yml">
-
-```yaml
-models:
-  jaffle_shop:
-    marketing:
-      +materialized: view
-      paid_ads:
-        google:
-          +materialized: table
-```
-</File>
+<PlusPrefix />
 
 ## Naming convention
 
