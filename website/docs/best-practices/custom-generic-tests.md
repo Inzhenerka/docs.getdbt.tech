@@ -100,7 +100,7 @@ models:
 
 With one line of code, you've just created a test! In this example, `users` will be passed to the `is_even` test as the `model` argument, and `favorite_number` will be passed in as the `column_name` argument. You could add the same line for other columns, other models—each will add a new test to your project, _using the same generic test definition_.
 
-## Add description to generic data test logic
+### Add description to generic data test logic
 
 You can add a description to the Jinja macro that provides the core logic for a data test by including the `description` key under the `macros:` section. You can add descriptions directly to the macro, including descriptions for macro arguments.
 
