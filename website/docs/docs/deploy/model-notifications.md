@@ -4,7 +4,7 @@ description: "While a job is running, receive email notifications in real time a
 intro_text: "Set up dbt to notify model owners through email about issues in your deployment environments as soon as they occur, while the job is still running."
 ---
 
-Configure dbt to send email notifications to model owners about issues in deployment environments as soon as they happen &mdash; while the job is still running. Model owners can specify which statuses to receive notifications about:
+Configure dbt to send email notifications to model owners about issues in deployment [environments](/docs/dbt-cloud-environments#types-of-environments) as soon as they happen &mdash; while the job is still running. Model owners can specify which statuses to receive notifications about:
 
 - `Success` and `Fails` for models
 - `Warning`, `Success`, and `Fails` for tests
