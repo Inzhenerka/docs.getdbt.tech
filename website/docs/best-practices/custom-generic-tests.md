@@ -73,7 +73,7 @@ models:
       - name: favorite_number
         tests:
       	  - is_even
-           [description](/reference/resource-properties/description): "This is a test"
+            [description](/reference/resource-properties/description): "This is a test"
 ```
 
 </File>
