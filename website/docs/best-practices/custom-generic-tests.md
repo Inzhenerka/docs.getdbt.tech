@@ -72,6 +72,7 @@ models:
       - name: favorite_number
         tests:
       	  - is_even
+           [description](/reference/resource-properties/description): "This is a test"
 ```
 
 </File>
@@ -129,6 +130,7 @@ models:
       - name: account_id
         tests:
           - relationships:
+            [description](/reference/resource-properties/description): "This is a test"
               to: ref('accounts')
               field: id
 ```
@@ -166,9 +168,11 @@ models:
   - name: users
     columns:
       - name: favorite_number
+        description: "Test favorite_number"
         tests:
       	  - warn_if_odd         # default 'warn'
       - name: other_number
+        description: "Test other_number"
         tests:
           - warn_if_odd:
               severity: error   # overrides
