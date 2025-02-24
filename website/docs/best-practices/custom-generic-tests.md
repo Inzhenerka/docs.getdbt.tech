@@ -100,6 +100,28 @@ models:
 
 With one line of code, you've just created a test! In this example, `users` will be passed to the `is_even` test as the `model` argument, and `favorite_number` will be passed in as the `column_name` argument. You could add the same line for other columns, other models—each will add a new test to your project, _using the same generic test definition_.
 
+## Add description to generic data test logic
+
+To add a description to the definition of a generic data test, you need to include the description key under the `macros:` section. Here's an example:
+
+```yaml
+macros:
+  - name: test_not_empty_string
+    description: Complementary test to default `not_null` test as it checks that there is not an empty string. It only accepts columns of type string. It is deprecated as this functionality has been included in the custom implementation of `not_null`.
+    arguments:
+      - name: model 
+        type: string
+        description: Model Name
+      - name: column_name
+        type: string
+        description: Column name that should not be an empty string
+```
+
+In this example:
+
+- The macro definition is called `test_not_empty_string.`
+- A description is provided at the macro level, explaining what the test does and any relevant notes (for example, deprecation status).
+- Each argument (like `model`, `column_name`) also includes a description to clarify its purpose.
 
 ### Generic tests with additional arguments
 
