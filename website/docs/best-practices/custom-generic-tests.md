@@ -61,6 +61,7 @@ If this `select` statement returns zero records, then every record in the suppli
 
 To use this generic test, specify it by name in the `tests` property of a model, source, snapshot, or seed:
 
+<VersionBlock firstVersion="1.9">
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -76,6 +77,26 @@ models:
 ```
 
 </File>
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.8">
+<File name='models/<filename>.yml'>
+
+```yaml
+version: 2
+
+models:
+  - name: users
+    columns:
+      - name: favorite_number
+        tests:
+      	  - is_even
+```
+
+</File>
+
+</VersionBlock>
 
 With one line of code, you've just created a test! In this example, `users` will be passed to the `is_even` test as the `model` argument, and `favorite_number` will be passed in as the `column_name` argument. You could add the same line for other columns, other models—each will add a new test to your project, _using the same generic test definition_.
 
@@ -119,6 +140,29 @@ where id is not null
 
 When calling this test from a `.yml` file, supply the arguments to the test in a dictionary. Note that the standard arguments (`model` and `column_name`) are provided by the context, so you do not need to define them again.
 
+<VersionBlock lastVersion="1.8">
+
+<File name='models/<filename>.yml'>
+
+```yaml
+version: 2
+
+models:
+  - name: people
+    columns:
+      - name: account_id
+        tests:
+          - relationships:
+              to: ref('accounts')
+              field: id
+```
+
+</File>
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -136,6 +180,8 @@ models:
 ```
 
 </File>
+
+</VersionBlock>
 
 ### Generic tests with default config values
 
@@ -159,6 +205,31 @@ Any time the `warn_if_odd` test is used, it will _always_ have warning-level sev
 
 </File>
 
+<VersionBlock lastVersion="1.8">
+
+<File name='models/<filename>.yml'>
+
+```yaml
+version: 2
+
+models:
+  - name: users
+    columns:
+      - name: favorite_number
+        tests:
+      	  - warn_if_odd         # default 'warn'
+      - name: other_number
+        tests:
+          - warn_if_odd:
+              severity: error   # overrides
+```
+
+</File>
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
 <File name='models/<filename>.yml'>
 
 ```yaml
@@ -179,6 +250,8 @@ models:
 ```
 
 </File>
+
+</VersionBlock>
 
 ### Customizing dbt's built-in tests
 
