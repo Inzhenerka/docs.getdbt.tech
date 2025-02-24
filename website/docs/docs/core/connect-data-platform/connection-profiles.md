@@ -1,7 +1,7 @@
 ---
 title: "Connection profiles"
 id: "connection-profiles"
-description: "Configure your profile using the command line."
+description: "Configure the connection profile for your dbt project."
 ---
 
 When you invoke dbt from the command line, dbt parses your `dbt_project.yml` and obtains the `profile` name, which dbt needs to connect to your <Term id="data-warehouse" />.
@@ -19,16 +19,7 @@ profile: 'jaffle_shop'
 
 dbt then checks your [`profiles.yml` file](/docs/core/connect-data-platform/profiles.yml) for a profile with the same name. A profile contains all the details required to connect to your data warehouse.
 
-<VersionBlock lastVersion="1.2">
-
-By default, dbt expects the `profiles.yml` file to be located in the `~/.dbt/` directory.
-
-</VersionBlock>
-<VersionBlock firstVersion="1.3">
-
 dbt will search the current working directory for the `profiles.yml` file and will default to the `~/.dbt/` directory if not found.
-
-</VersionBlock>
 
 This file generally lives outside of your dbt project to avoid sensitive credentials being checked in to version control, but `profiles.yml` can be safely checked in when [using environment variables](#advanced-using-environment-variables) to load sensitive credentials.
 
@@ -48,16 +39,27 @@ jaffle_shop:
       dbname: jaffle_shop
       schema: dbt_alice
       threads: 4
+
+    prod:  # additional prod target
+      type: postgres
+      host: prod.db.example.com
+      user: alice
+      password: <prod_password>
+      port: 5432
+      dbname: jaffle_shop
+      schema: analytics
+      threads: 8
 ```
 
 </File>
 
+To add an additional target (like `prod`) to your existing `profiles.yml`, you can add another entry under the `outputs` key. 
 
 ## About the `profiles.yml` file
 
-In your `profiles.yml` file, you can store as many profiles as you need. Typically, you would have one profile for each warehouse you use. Most organizations only have one profile.
+In your `profiles.yml` file, you can store as many profiles as you need. Typically, you would have one profile for each warehouse you use. Most organizations only have one profile. 
 
-For information about configuring advanced options, see [the `profiles.yml` reference page](/docs/core/connect-data-platform/profiles.yml).
+or information about configuring advanced options, see [the `profiles.yml` reference page](/docs/core/connect-data-platform/profiles.yml).
 
 ## About profiles
 
@@ -132,7 +134,7 @@ While the target schema represents the default schema that dbt will use, it may 
 
 ## Understanding threads
 
-When dbt runs, it creates a directed acyclic graph (DAG) of links between models. The number of threads represents the maximum number of paths through the graph dbt may work on at once – increasing the number of threads can minimize the run time of your project.  The default value for threads in user profiles is [4 threads](/docs/dbt-versions/release-notes/Dec-2022/default-thread-value).
+When dbt runs, it creates a directed acyclic graph (DAG) of links between models. The number of threads represents the maximum number of paths through the graph dbt may work on at once – increasing the number of threads can minimize the run time of your project.  The default value for threads in user profiles is 4 threads.
 
 For more information, check out [using threads](/docs/running-a-dbt-project/using-threads).
 
@@ -140,21 +142,10 @@ For more information, check out [using threads](/docs/running-a-dbt-project/usin
 
 The parent directory for `profiles.yml` is determined using the following precedence:
 
-<VersionBlock lastVersion="1.2">
-
-1. `--profiles-dir` option
-1. `DBT_PROFILES_DIR` environment variable
-1. `~/.dbt/` directory
-
-</VersionBlock>
-<VersionBlock firstVersion="1.3">
-
 1. `--profiles-dir` option
 1. `DBT_PROFILES_DIR` environment variable
 1. current working directory
 1. `~/.dbt/` directory
-
-</VersionBlock>
 
 To check the expected location of your `profiles.yml` file for your installation of dbt, you can run the following:
 

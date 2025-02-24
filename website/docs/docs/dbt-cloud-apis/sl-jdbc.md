@@ -5,14 +5,6 @@ description: "Integrate and use the JDBC API to query your metrics."
 tags: [Semantic Layer, API]
 ---
 
-<VersionBlock lastVersion="1.5">
-
-import DeprecationNotice from '/snippets/_sl-deprecation-notice.md';
-
-<DeprecationNotice />
- 
-</VersionBlock>
-
 The dbt Semantic Layer Java Database Connectivity (JDBC) API enables users to query metrics and dimensions using the JDBC protocol, while also providing standard metadata functionality. 
 
 A JDBC driver is a software component enabling a Java application to interact with a data platform. Here's some more information about our JDBC API:
@@ -31,7 +23,7 @@ If you are a dbt user or partner with access to dbt Cloud and the [dbt Semantic 
 
 You *may* be able to use our JDBC API with tools that do not have an official integration with the dbt Semantic Layer. If the tool you use allows you to write SQL and either supports a generic JDBC driver option (such as DataGrip) or supports Dremio and uses ArrowFlightSQL driver version 12.0.0 or higher, you can access the Semantic Layer API.
 
-Refer to [Get started with the dbt Semantic Layer](/docs/use-dbt-semantic-layer/quickstart-sl) for more info.
+Refer to [Get started with the dbt Semantic Layer](/guides/sl-snowflake-qs) for more info.
 
 Note that the dbt Semantic Layer API doesn't support `ref` to call dbt objects. Instead, use the complete qualified table name. If you're using dbt macros at query time to calculate your metrics, you should move those calculations into your Semantic Layer metric definitions as code.
 
@@ -64,7 +56,7 @@ The Semantic Layer JDBC API has built-in metadata calls which can provide a user
 
 Expand the following toggles for examples and metadata commands:
 
-<detailsToggle alt_header="Fetch defined metrics">
+<Expandable alt_header="Fetch defined metrics">
 
 You can use this query to fetch all defined metrics in your dbt project:
 
@@ -73,9 +65,9 @@ select * from {{
 	semantic_layer.metrics() 
 }}
 ```
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch dimension for a metric">
+<Expandable alt_header="Fetch dimension for a metric">
 
 You can use this query to fetch all dimensions for a metric.
 
@@ -85,9 +77,9 @@ Note, metrics is a required argument that lists one or multiple metrics in it.
 select * from {{ 
     semantic_layer.dimensions(metrics=['food_order_amount'])}}
 ```
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch dimension values">
+<Expandable alt_header="Fetch dimension values">
 
 You can use this query to fetch dimension values for one or multiple metrics and a single dimension.
 
@@ -97,9 +89,9 @@ Note, metrics is a required argument that lists one or multiple metrics, and a s
 select * from {{ 
 semantic_layer.dimension_values(metrics=['food_order_amount'], group_by=['customer__customer_name'])}}
 ```
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch granularities for metrics">
+<Expandable alt_header="Fetch granularities for metrics">
 
 You can use this query to fetch queryable granularities for a list of metrics. 
 
@@ -111,9 +103,9 @@ select * from {{
     semantic_layer.queryable_granularities(metrics=['food_order_amount', 'order_gross_profit'])}}
 ```
 
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch available metrics given dimensions">
+<Expandable alt_header="Fetch available metrics given dimensions">
 
 You can use this query to fetch available metrics given dimensions. This command is essentially the opposite of getting dimensions given a list of metrics.
 
@@ -125,9 +117,9 @@ select * from {{
 }}
 ```
 
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch granularities for all time dimensions">
+<Expandable alt_header="Fetch granularities for all time dimensions">
 
 You can use this example query to fetch available granularities for all time dimensions (the similar queryable granularities API call only returns granularities for the primary time dimensions for metrics).
 
@@ -141,9 +133,9 @@ select NAME, QUERYABLE_GRANULARITIES from {{
 }}
 ```
 
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="Fetch primary time dimension names">
+<Expandable alt_header="Fetch primary time dimension names">
 
 It may be useful in your application to expose the names of the time dimensions that represent metric_time or the common thread across all metrics.
 
@@ -155,9 +147,44 @@ select * from {{
 }}
 ```
 
-</detailsToggle>
+</Expandable>
 
-<detailsToggle alt_header="List saved queries">
+<Expandable alt_header="Fetch metrics by substring search">
+
+You can filter your metrics to include only those that contain a specific substring (sequence of characters contained within a larger string (text)). Use the `search` argument to specify the substring you want to match.
+
+```sql
+select * from {{ semantic_layer.metrics(search='order') }}
+```
+
+If no substring is provided, the query returns all metrics.
+
+</Expandable> 
+
+<Expandable alt_header="Paginate metadata calls">
+
+In the case when you don't want to return the full result set from a metadata call, you can paginate the results for both `semantic_layer.metrics()` and `semantic_layer.dimensions()` calls using the `page_size` and `page_number` parameters.
+
+- `page_size`: This is an optional variable which sets the number of records per page. If left as None, there is no page limit.
+- `page_number`: This is an optional variable which specifies the page number to retrieve. Defaults to `1` (first page) if not specified.
+
+Examples:
+
+```sql
+-- Retrieves the 5th page with a page size of 10 metrics
+select * from {{ semantic_layer.metrics(page_size=10, page_number=5) }}
+
+-- Retrieves the 1st page with a page size of 10 metrics
+select * from {{ semantic_layer.metrics(page_size=10) }}
+
+-- Retrieves all metrics without pagination
+select * from {{ semantic_layer.metrics() }}
+```
+
+You can use the same pagination parameters for `semantic_layer.dimensions(...)`.
+</Expandable> 
+
+<Expandable alt_header="List saved queries">
 
 You can use this example query to list all available saved queries in your dbt project.
 
@@ -173,114 +200,22 @@ select * from semantic_layer.saved_queries()
 | NAME | DESCRIPTION | LABEL | METRICS | GROUP_BY | WHERE_FILTER |
 ```
 
-</detailsToggle>
+</Expandable>
 
-<!--
-<Tabs>
+<Expandable alt_header="Fetch metric aliases">
 
-<TabItem value="allmetrics" label="Defined metrics">
+You can query metrics using aliases for simpler or more intuitive names, even if the alias isn't defined in the metric configuration. The query returns the alias as the metric name, for example:
 
-Use this query to fetch all defined metrics in your dbt project:
-
-```bash
-select * from {{ 
-	semantic_layer.metrics() 
-}}
-```
-</TabItem>
-
-<TabItem value="alldimensions" label="Dimensions for a metric">
-
-Use this query to fetch all dimensions for a metric. 
-
-Note, `metrics` is a required argument that lists one or multiple metrics in it.
-
-```bash
-select * from {{ 
-	semantic_layer.dimensions(metrics=['food_order_amount'])}}
-```
-
-</TabItem>
-
-<TabItem value="dimensionvalueformetrics" label="Dimension values">
-
-Use this query to fetch dimension values for one or multiple metrics and a single dimension. 
-
-Note, `metrics` is a required argument that lists one or multiple metrics, and a single dimension. 
-
-```bash
-select * from {{ 
-semantic_layer.dimension_values(metrics=['food_order_amount'], group_by=['customer__customer_name'])}}
-```
-
-</TabItem>
-
-<TabItem value="queryablegranularitiesformetrics" label="Granularities for metrics">
-
-You can use this query to fetch queryable granularities for a list of metrics. 
-
-This API request allows you to only show the time granularities that make sense for the primary time dimension of the metrics (such as `metric_time`), but if you want queryable granularities for other time dimensions, you can use the `dimensions()` call, and find the column queryable_granularities.
-
-Note, `metrics` is a required argument that lists one or multiple metrics.
-
-```bash
+```sql
 select * from {{
-    semantic_layer.queryable_granularities(metrics=['food_order_amount', 'order_gross_profit'])}}
-```
-
-</TabItem>
-
-</Tabs>
-
-<Tabs>
-
-<TabItem value="metricsfordimensions" label="Available metrics given dimensions">
-
-Use this query to fetch available metrics given dimensions. This command is essentially the opposite of getting dimensions given a list of metrics.
-
-Note, `group_by` is a required argument that lists one or multiple dimensions.
-
-```bash
-select * from {{
-    semantic_layer.metrics_for_dimensions(group_by=['customer__customer_type'])
-
+    semantic_layer.query(metrics=[Metric("metric_name", alias="metric_alias")])
 }}
 ```
 
-</TabItem>
+In this example, if you define an alias for `revenue` as `banana`, the query will return a column named `banana` even if `banana` isn't defined in the metric configuration. However, when using `where` Jinja clauses, you need to reference the _actual_ metric name (`revenue` in this case) instead of the alias.
 
-<TabItem value="queryablegranularitiesalltimedimensions" label="Granularities for all time dimensions">
-
-You can use this example query to fetch available granularities for all time dimensions (the similar queryable granularities API call only returns granularities for the primary time dimensions for metrics). 
-
-The following call is a derivative of the `dimensions()` call and specifically selects the granularity field.
-
-```bash
-select NAME, QUERYABLE_GRANULARITIES from {{
-    semantic_layer.dimensions(
-        metrics=["order_total"]
-    )
-}}
-
-```
-
-</TabItem>
-
-<TabItem value="fetchprimarytimedimensionnames" label="Primary time dimension names">
-
-It may be useful in your application to expose the names of the time dimensions that represent `metric_time` or the common thread across all metrics.
-
-You can first query the `metrics()` argument to fetch a list of measures, then use the `measures()` call which will return the name(s) of the time dimensions that make up metric time. 
-
-```bash
-select * from {{
-    semantic_layer.measures(metrics=['orders'])
-}}
-```
-</TabItem>
-</Tabs>
-
--->
+For more a more detailed example, see [Query metric alias](#query-metric-alias).
+</Expandable>
 
 ## Querying the API for metric values
 
@@ -307,10 +242,24 @@ Additionally, when performing granularity calculations that are global (not spec
 
 Note that `metric_time` should be available in addition to any other time dimensions that are available for the metric(s). In the case where you are looking at one metric (or multiple metrics from the same data source), the values in the series for the primary time dimension and `metric_time` are equivalent.
 
-
 ## Examples
 
-Refer to the following examples to help you get started with the JDBC API.
+The following sections provide examples of how to query metrics using the JDBC API:
+
+    - [Fetch metadata for metrics](#fetch-metadata-for-metrics)
+    - [Query common dimensions](#query-common-dimensions)
+    - [Query grouped by time](#query-grouped-by-time)
+    - [Query with a time grain](#query-with-a-time-grain)
+    - [Group by categorical dimension](#group-by-categorical-dimension)
+    - [Query only a dimension](#query-only-a-dimension)
+    - [Query by all dimensions](#query-by-all-dimensions)
+    - [Query with where filters](#query-with-where-filters)
+    - [Query with a limit](#query-with-a-limit)
+    - [Query with order by examples](#query-with-order-by-examples)
+    - [Query with compile keyword](#query-with-compile-keyword)
+    - [Query a saved query](#query-a-saved-query)
+    - [Query metric alias](#query-metric-alias)
+    - [Multi-hop joins](#multi-hop-joins)
 
 ### Fetch metadata for metrics
 
@@ -375,6 +324,19 @@ select * from {{
     semantic_layer.query(group_by=['customer__customer_type'])
                   }}
 ```
+
+### Query by all dimensions
+
+You can use the `semantic_layer.query_with_all_group_bys` endpoint to query by all valid dimensions.
+
+```sql
+select * from {{
+    semantic_layer.query_with_all_group_bys(metrics =['revenue','orders','food_orders'],
+    compile= True)
+}}
+```
+
+This returns all dimensions that are valid for the set of metrics in the request.
 
 ### Query with where filters
 
@@ -472,7 +434,7 @@ semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   }}
 ```
 
-### Query with Order By Examples 
+### Query with order by examples 
 
 Order By can take a basic string that's a Dimension, Metric, or Entity, and this will default to ascending order
 
@@ -492,7 +454,7 @@ select * from {{
 semantic_layer.query(metrics=['food_order_amount', 'order_gross_profit'],
   group_by=[Dimension('metric_time')],
   limit=10,
-  order_by=[-'order_gross_profit'])
+  order_by=['-order_gross_profit'])
   }}
 ```
 
@@ -550,28 +512,79 @@ select * from {{ semantic_layer.query(saved_query="new_customer_orders", limit=5
 
 The JDBC API will use the saved query (`new_customer_orders`) as defined and apply a limit of 5 records.
 
+### Query metric alias
+
+You can query metrics using aliases, which allow you to use simpler or more intuitive names for metrics instead of their full definitions. 
+
+```sql
+select * from {{
+    semantic_layer.query(metrics=[Metric("revenue", alias="metric_alias")])
+}}
+```
+
+For example, let's say your metric configuration includes an alias like `total_revenue_global` for the `order_total` metric. You can query the metric using the alias instead of the original name:
+
+```sql
+select * from {{
+    semantic_layer.query(metrics=[Metric("order_total", alias="total_revenue_global")], group_by=['metric_time'])
+}}
+```
+
+The result will be:
+
+```
+| METRIC_TIME   | TOTAL_REVENUE_GLOBAL |
+|:-------------:|:------------------:  |
+| 2023-12-01    |              1500.75 |
+| 2023-12-02    |              1725.50 |
+| 2023-12-03    |              1850.00 |
+```
+
+:::tip
+Note that you need to use the actual metric name when using the `where` Jinja clauses. For example, if you used `banana` as an alias for `revenue`, you need to use the actual metric name, `revenue`, in the `where` clause, not `banana`. 
+
+```graphql
+semantic_layer.query(metrics=[Metric("revenue", alias="banana")], where="{{ Metric('revenue') }} > 0")
+```
+
+:::
+
+### Multi-hop joins
+
+In cases where you need to query across multiple related tables (multi-hop joins), use the `entity_path` argument to specify the path between related entities. The following are examples of how you can define these joins:
+
+- In this example, you're querying the `location_name` dimension but specifying that it should be joined using the `order_id` field.
+	```sql
+	{{Dimension('location__location_name', entity_path=['order_id'])}}
+	```
+- In this example, the `salesforce_account_owner` dimension is joined to the `region` field, with the path going through `salesforce_account`.
+	```sql
+	{{ Dimension('salesforce_account_owner__region',['salesforce_account']) }}
+	```
+
+
 ## FAQs
 
 <FAQ path="Troubleshooting/sl-alpn-error" />
 
-<detailsToggle alt_header="Why do some dimensions use different syntax, like `metric_time` versus `Dimension('metric_time')`?">
+<DetailsToggle alt_header="Why do some dimensions use different syntax, like `metric_time` versus `Dimension('metric_time')`?">
 When you select a dimension on its own, such as `metric_time` you can use the shorthand method which doesn't need the “Dimension” syntax. 
 
 However, when you perform operations on the dimension, such as adding granularity, the object syntax `[Dimension('metric_time')` is required.
-</detailsToggle>
+</DetailsToggle>
 
-<detailsToggle alt_header="What does the double underscore `'__'` syntax in dimensions mean?">
+<DetailsToggle alt_header="What does the double underscore `'__'` syntax in dimensions mean?">
 
 The double underscore `"__"` syntax indicates a mapping from an entity to a dimension, as well as where the dimension is located. For example, `user__country` means someone is looking at the `country` dimension from the `user` table.
-</detailsToggle>
+</DetailsToggle>
 
-<detailsToggle alt_header="What is the default output when adding granularity?">
+<DetailsToggle alt_header="What is the default output when adding granularity?">
 
 The default output follows the format `{{time_dimension_name}__{granularity_level}}`. 
 
 So for example, if the `time_dimension_name` is `ds` and the granularity level is yearly, the output is `ds__year`.
 
-</detailsToggle>
+</DetailsToggle>
 
 ## Related docs
 

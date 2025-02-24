@@ -12,7 +12,7 @@ dbt Cloud supports JIT (Just-in-Time) provisioning and IdP-initiated login. You 
 
 - You have a dbt Cloud account enrolled in the Enterprise plan. [Contact us](mailto:sales@getdbt.com) to learn more and enroll.
 
-## Auth0 Multi-tenant URIs
+## Auth0 URIs
 
 <Snippet path="auth0-uri" />
 
@@ -43,7 +43,7 @@ Then, assign all of these (and only these) to the user license. This step will a
 
 ## SSO enforcement
 
-* **SSO Enforcement:** If you have SSO turned on in your organization, dbt Cloud will enforce SSO-only logins for all non-admin users. If an Account Admin already has a password, they can continue logging in with a password.
+* **SSO Enforcement:** If SSO is turned on in your organization, dbt Cloud will enforce SSO-only logins for all non-admin users. By default, if an Account Admin or Security Admin already has a password, they can continue logging in with a password. To restrict admins from using passwords, turn off **Allow password logins for account administrators** in the **Single sign-on** section of your organization's **Account settings**.
 * **SSO Re-Authentication:** dbt Cloud will prompt you to re-authenticate using your SSO provider every 24 hours to ensure high security.
 
 ### How should non-admin users log in?

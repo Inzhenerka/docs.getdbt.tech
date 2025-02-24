@@ -85,7 +85,9 @@ version: 2
 <resource_type>:
   - name: <resource_name>
     tests:
-      - [<test_name>](#test_name):
+      - <test_name>: # # Actual name of the test. For example, dbt_utils.equality
+          name: # Human friendly name for the test. For example, equality_fct_test_coverage
+          [description](/reference/resource-properties/description): "markdown formatting"
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [fail_calc](/reference/resource-configs/fail_calc): <string>
@@ -99,7 +101,9 @@ version: 2
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
         tests:
-          - [<test_name>](#test_name):
+          - <test_name>:
+              name: 
+              [description](/reference/resource-properties/description): "markdown formatting"
               <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [fail_calc](/reference/resource-configs/fail_calc): <string>
@@ -178,7 +182,9 @@ version: 2
 <resource_type>:
   - name: <resource_name>
     tests:
-      - [<test_name>](#test_name):
+      - <test_name>: # Actual name of the test. For example, dbt_utils.equality
+          name: # Human friendly name for the test. For example, equality_fct_test_coverage
+          [description](/reference/resource-properties/description): "markdown formatting"
           <argument_name>: <argument_value>
           [config](/reference/resource-properties/config):
             [enabled](/reference/resource-configs/enabled): true | false
@@ -192,7 +198,9 @@ version: 2
     [columns](/reference/resource-properties/columns):
       - name: <column_name>
         tests:
-          - [<test_name>](#test_name):
+          - <test_name>:
+              name: 
+              [description](/reference/resource-properties/description): "markdown formatting"
               <argument_name>: <argument_value>
               [config](/reference/resource-properties/config):
                 [enabled](/reference/resource-configs/enabled): true | false
@@ -271,3 +279,62 @@ tests:
 ```
 
 </File>
+
+#### Specify custom configurations for generic data tests
+
+Beginning in dbt v1.9, you can use any custom config key to specify custom configurations for data tests. For example, the following specifies the `snowflake_warehouse` custom config that dbt should use when executing the `accepted_values` data test:
+
+```yml
+
+models:
+  - name: my_model
+    columns:
+      - name: color
+        tests:
+          - accepted_values:
+              values: ['blue', 'red']
+              config:
+                severity: warn
+                snowflake_warehouse: my_warehouse
+
+```
+
+Given the config, the data test runs on a different Snowflake virtual warehouse than the one in your default connection to enable better price-performance with a different warehouse size or more granular cost allocation and visibility.
+
+#### Add a description to generic and singular tests
+
+Starting from dbt v1.9 (also available to dbt Cloud [release tracks](/docs/dbt-versions/cloud-release-tracks)), you can add [descriptions](/reference/resource-properties/data-tests#description) to both generic and singular tests.
+
+For a generic test, add the description in line with the existing YAML:
+
+<File name='models/staging/<filename>.yml'>
+
+```yml
+
+models:
+  - name: my_model
+    columns:
+      - name: delivery_status
+        tests:
+          - accepted_values:
+              values: ['delivered', 'pending', 'failed']
+              description: "This test checks whether there are unexpected delivery statuses. If it fails, check with logistics team"
+
+```
+</File>
+
+For a singular test, define it in the test's directory:
+
+<File name='tests/my_custom_test.yml'>
+
+```yml
+
+data_tests: 
+  - name: my_custom_test
+    description: "This test checks whether the rolling average of returns is inside of expected bounds. If it isn't, flag to customer success team"
+
+```
+</File>
+
+For more information refer to [Add a description to a data test](/reference/resource-properties/description#add-a-description-to-a-data-test).
+

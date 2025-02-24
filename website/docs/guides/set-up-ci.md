@@ -50,9 +50,13 @@ Use the **Continuous Integration Job** template, and call the job **CI Check**.
 In the Execution Settings, your command will be preset to `dbt build --select state:modified+`. Let's break this down:
 
 - [`dbt build`](/reference/commands/build) runs all nodes (seeds, models, snapshots, tests) at once in DAG order. If something fails, nodes that depend on it will be skipped.
-- The [`state:modified+` selector](/reference/node-selection/methods#the-state-method) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
+- The [`state:modified+` selector](/reference/node-selection/methods#state) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
 
 To be able to find modified nodes, dbt needs to have something to compare against. dbt Cloud uses the last successful run of any job in your Production environment as its [comparison state](/reference/node-selection/syntax#about-node-selection). As long as you identified your Production environment in Step 2, you won't need to touch this. If you didn't, pick the right environment from the dropdown.
+
+:::info Use CI to test your metrics
+If you've [built semantic nodes](/docs/build/build-metrics-intro) in your dbt project, you can [validate them in a CI job](/docs/deploy/ci-jobs#semantic-validations-in-ci) to ensure code changes made to dbt models don't break these metrics.
+:::
 
 ### 3. Test your process
 
@@ -113,7 +117,14 @@ If you create a seed to exclude groups of models from a specific test, remember 
 
 By [linting](/docs/cloud/dbt-cloud-ide/lint-format#lint) your project during CI, you can ensure that code styling standards are consistently enforced, without spending human time nitpicking comma placement.
 
-The steps below create an action/pipeline which uses [SQLFluff](https://docs.sqlfluff.com/en/stable/) to scan your code and look for linting errors. If you don't already have SQLFluff rules defined, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
+Seamlessly enable [SQL linting for your CI job](/docs/deploy/continuous-integration#sql-linting) in dbt Cloud to invoke [SQLFluff](https://docs.sqlfluff.com/en/stable/), a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors.
+
+SQL linting in CI lints all the changed SQL files in your project (compared to the last deferred production state). Available on dbt Cloud [Team or Enterprise accounts](https://www.getdbt.com/pricing) using [release tracks](/docs/dbt-versions/cloud-release-tracks). 
+
+
+### Manually set up SQL linting in CI
+
+You can run SQLFluff as part of your pipeline even if you don't have access to [SQL linting in CI](/docs/deploy/continuous-integration#sql-linting). The following steps walk you through setting up a CI job using SQLFluff to scan your code for linting errors. If you're new to SQLFluff rules in dbt Cloud, check out [our recommended config file](/best-practices/how-we-style/2-how-we-style-our-sql).
 
 ### 1. Create a YAML file to define your pipeline
 
@@ -340,7 +351,7 @@ Use the **Continuous Integration Job** template, and call the job **QA Check**.
 In the Execution Settings, your command will be preset to `dbt build --select state:modified+`. Let's break this down:
 
 - [`dbt build`](/reference/commands/build) runs all nodes (seeds, models, snapshots, tests) at once in DAG order. If something fails, nodes that depend on it will be skipped.
-- The [`state:modified+` selector](/reference/node-selection/methods#the-state-method) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
+- The [`state:modified+` selector](/reference/node-selection/methods#state) means that only modified nodes and their children will be run ("Slim CI"). In addition to [not wasting time](https://discourse.getdbt.com/t/how-we-sped-up-our-ci-runs-by-10x-using-slim-ci/2603) building and testing nodes that weren't changed in the first place, this significantly reduces compute costs.
 
 To be able to find modified nodes, dbt needs to have something to compare against. Normally, we use the Production environment as the source of truth, but in this case there will be new code merged into `qa` long before it hits the `main` branch and Production environment. Because of this, we'll want to defer the Release environment to itself.
 

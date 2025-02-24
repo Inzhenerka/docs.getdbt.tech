@@ -8,7 +8,7 @@ window.addEventListener("load", copyHeader);
 
 // separating function from eventlistener to understand they are two separate things
 function copyHeader () {
-  const headers = document.querySelectorAll("h2.anchor, h3.anchor, .expandable-anchor.anchor");
+  const headers = document.querySelectorAll("h2.anchor, h3.anchor, h4.anchor");
 
   headers.forEach((header) => {
     header.style.cursor = "pointer";
@@ -49,11 +49,9 @@ function copyHeader () {
       // Add and remove the 'clicked' class for styling purposes
       e.trigger.classList.add("clicked");
       setTimeout(() => {
-          if (document.body.contains(popup)) {
-              document.body.removeChild(popup);
-          }
-      }, 3000);
-    });
+        e.trigger.classList.remove("clicked");
+    }, 1500);
+  });
 
     clipboard.on('error', function(e) {
         console.error("Unable to copy to clipboard: " + e.text);

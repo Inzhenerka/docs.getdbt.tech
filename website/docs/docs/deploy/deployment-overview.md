@@ -15,8 +15,9 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 - Ensure CI and production pipelines are efficient 
 - Identify the root cause of failures in deployment environments
 - Maintain high-quality code and data in production
-- Gain visibility into the health of deployment jobs, models, and tests
+- Gain visibility into the [health](/docs/collaborate/data-tile) of deployment jobs, models, and tests
 - Uses [exports](/docs/use-dbt-semantic-layer/exports) to write [saved queries](/docs/build/saved-queries) in your data platform for reliable and fast metric reporting
+- Use [dbt Cloud's Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="enterprise" />
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
 
@@ -33,7 +34,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 
 <Card
     title="Deploy jobs"
-    body="Create and schedule jobs for the dbt Cloud scheduler to run."
+    body="Create and schedule jobs for the job scheduler to run. <br /><br />Runs on a schedule, by API, or after another job completes."
     link="/docs/deploy/deploy-jobs"
     icon="dbt-bit"/>
 
@@ -41,6 +42,12 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     title="Continuous integration"
     body="Set up CI checks so you can build and test any modified code in a staging environment when you open PRs and push new commits to your dbt repository."
     link="/docs/deploy/continuous-integration"
+    icon="dbt-bit"/>
+
+<Card
+    title="Continuous deployment"
+    body="Set up merge jobs to ensure the latest code changes are always in production when pull requests are merged to your Git repository."
+    link="/docs/deploy/continuous-deployment"
     icon="dbt-bit"/>
 
 <Card
@@ -74,6 +81,12 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     icon="dbt-bit"/>
 
 <Card
+    title="Model notifications"
+    body="Receive email notifications in real time about issues encountered by your models and tests while a job is running. "
+    link="/docs/deploy/model-notifications"
+    icon="dbt-bit"/>
+
+<Card
     title="Webhooks"
     body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
     link="/docs/deploy/webhooks"
@@ -89,12 +102,6 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     title="Source freshness"
     body="Enable snapshots to capture the freshness of your data sources and configure how frequent these snapshots should be taken. This can help you determine whether your source data freshness is meeting your SLAs."
     link="/docs/deploy/source-freshness"
-    icon="dbt-bit"/>
-
-<Card
-    title="Dashboard status tiles"
-    body="Set up status tiles to see the data freshness and quality checks whenever you view your data. "
-    link="/docs/deploy/dashboard-status-tiles"
     icon="dbt-bit"/>
 
 </div> <br />

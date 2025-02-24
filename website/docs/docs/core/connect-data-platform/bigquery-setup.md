@@ -388,13 +388,33 @@ my-profile:
       execution_project: buck-stops-here-456
 ```
 
-<VersionBlock firstVersion="1.3">
+### Quota project
+
+By default, dbt will use the `quota_project_id` set within the credentials of the account you are using to authenticate to BigQuery.
+
+Optionally, you may specify `quota_project` to bill for query execution instead of the default quota project specified for the account from the environment.
+
+This can sometimes be required when impersonating service accounts that do not have the BigQuery API enabled within the project in which they are defined. Without overriding the quota project, it will fail to connect.
+
+If you choose to set a quota project, the account you use to authenticate must have the `Service Usage Consumer` role on that project.
+
+```yaml
+my-profile:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: abc-123
+      dataset: my_dataset
+      quota_project: my-bq-quota-project
+```
 
 ### Running Python models on Dataproc
 
-To run dbt Python models on GCP, dbt uses companion services, Dataproc and Cloud Storage, that offer tight integrations with BigQuery. You may use an existing Dataproc cluster and Cloud Storage bucket, or create new ones:
-- https://cloud.google.com/dataproc/docs/guides/create-cluster
-- https://cloud.google.com/storage/docs/creating-buckets
+import BigQueryDataproc from '/snippets/_bigquery-dataproc.md';
+
+<BigQueryDataproc />
 
 Then, add the bucket name, cluster name, and cluster region to your connection profile:
 
@@ -447,7 +467,6 @@ my-profile:
 
 For a full list of possible configuration fields that can be passed in `dataproc_batch`, refer to the [Dataproc Serverless Batch](https://cloud.google.com/dataproc-serverless/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.Batch) documentation.
 
-</VersionBlock>
 
 ## Required permissions
 

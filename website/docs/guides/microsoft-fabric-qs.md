@@ -21,19 +21,13 @@ In this quickstart guide, you'll learn how to use dbt Cloud with [Microsoft Fabr
 - Document your models.
 - Schedule a job to run.
 
-:::tip Public preview
-
-A public preview of Microsoft Fabric in dbt Cloud is now available! 
-
-:::
-
 ### Prerequisites
 - You have a [dbt Cloud](https://www.getdbt.com/signup/) account.
 - You have started the Microsoft Fabric (Preview) trial. For details, refer to [Microsoft Fabric (Preview) trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial) in the Microsoft docs.
 - As a Microsoft admin, you’ve enabled service principal authentication. You must add the service principal to the Microsoft Fabric workspace with either a Member (recommended) or Admin permission set. For details, refer to [Enable service principal authentication](https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-enable-read-only-apis) in the Microsoft docs. dbt Cloud needs these authentication credentials to connect to Microsoft Fabric.
 
 ### Related content
-- [dbt Courses](https://courses.getdbt.com/collections)
+- [dbt Learn courses](https://learn.getdbt.com)
 - [About continuous integration jobs](/docs/deploy/continuous-integration)
 - [Deploy jobs](/docs/deploy/deploy-jobs)
 - [Job notifications](/docs/deploy/job-notifications)
@@ -107,7 +101,7 @@ A public preview of Microsoft Fabric in dbt Cloud is now available!
 
 ## Connect dbt Cloud to Microsoft Fabric
 
-1. Create a new project in dbt Cloud. From **Account settings** (using the gear menu in the top right corner), click **+ New Project**.
+1. Create a new project in dbt Cloud. Navigate to **Account settings** (by clicking on your account name in the left side menu), and click **+ New Project**.
 2. Enter a project name and click **Continue**.
 3. Choose **Fabric** as your connection and click **Next**.
 4. In the **Configure your environment** section, enter the **Settings** for your new project:
@@ -320,7 +314,7 @@ Later, you can connect your business intelligence (BI) tools to these views and 
 #### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 </div>

@@ -46,7 +46,7 @@ Once you've tested the endpoint in dbt Cloud, go back to Zapier and click **Test
 The sample body's values are hard-coded and not reflective of your project, but they give Zapier a correctly-shaped object during development. 
 
 ## Store secrets 
-In the next step, you will need the Webhook Secret Key from the prior step, and a dbt Cloud [user token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens), as well as a [Mode API token and secret](https://mode.com/developer/api-reference/authentication/). 
+In the next step, you will need the Webhook Secret Key from the prior step, and a dbt Cloud [personal access token](https://docs.getdbt.com/docs/dbt-cloud-apis/user-tokens) or [service account token](https://docs.getdbt.com/docs/dbt-cloud-apis/service-tokens), as well as a [Mode API token and secret](https://mode.com/developer/api-reference/authentication/). 
 
 Zapier allows you to [store secrets](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps), which prevents your keys from being displayed in plaintext in the Zap code. You will be able to access them via the [StoreClient utility](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
@@ -55,7 +55,7 @@ This guide assumes the names for the secret keys are: `DBT_WEBHOOK_KEY`, `MODE_A
 This guide uses a short-lived code action to store the secrets, but you can also use a tool like Postman to interact with the [REST API](https://store.zapier.com/) or create a separate Zap and call the [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
 ### a. Create a Storage by Zapier connection
-If you haven't already got one, go to <https://zapier.com/app/connections/storage> and create a new connection. Remember the UUID secret you generate for later. 
+If you haven't already got one, go to [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) and create a new connection. Remember the UUID secret you generate for later. 
 
 ### b. Add a temporary code step
 Choose **Run Python** as the Event. Run the following code: 

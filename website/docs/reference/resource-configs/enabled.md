@@ -16,6 +16,7 @@ default_value: true
     { label: 'Metrics', value: 'metrics', },
     { label: 'Exposures', value: 'exposures', },
     { label: 'Semantic models', value: 'semantic models', },
+    { label: 'Saved queries', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
@@ -77,9 +78,28 @@ snapshots:
 
 </File>
 
+<VersionBlock firstVersion="1.9">
+
+<File name='snapshots/snapshot_name.yml'>
+
+```yaml
+version: 2
+
+snapshots:
+  - name: snapshot_name
+    [config](/reference/resource-properties/config):
+      enabled: true | false
+```
+
+</File>
+
+</VersionBlock>
+
 <File name='snapshots/<filename>.sql'>
 
 ```sql
+# Configuring in a SQL file is a legacy method and not recommended. Use the YAML file instead.
+
 {% snapshot [snapshot_name](snapshot_name) %}
 
 {{ config(
@@ -89,10 +109,9 @@ snapshots:
 select ...
 
 {% endsnapshot %}
-
 ```
-
 </File>
+
 
 </TabItem>
 
@@ -175,21 +194,12 @@ sources:
 
 <TabItem value="metrics">
 
-<VersionBlock lastVersion="1.2">
-
-Support for disabling metrics was added in dbt Core v1.3
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.3">
-
 <File name='dbt_project.yml'>
 
 ```yaml
 metrics:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)enabled: true | false
-
 ```
 
 </File>
@@ -203,24 +213,13 @@ metrics:
   - name: [<metric-name>]
     [config](/reference/resource-properties/config):
       enabled: true | false
-
 ```
 
 </File>
 
-</VersionBlock>
-
 </TabItem>
 
 <TabItem value="exposures">
-
-<VersionBlock lastVersion="1.2">
-
-Support for disabling exposures was added in dbt Core v1.3
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.3">
 
 <File name='dbt_project.yml'>
 
@@ -228,7 +227,6 @@ Support for disabling exposures was added in dbt Core v1.3
 exposures:
   [<resource-path>](/reference/resource-configs/resource-path):
     [+](/reference/resource-configs/plus-prefix)enabled: true | false
-
 ```
 
 </File>
@@ -242,24 +240,13 @@ exposures:
   - name: [<exposure-name>]
     [config](/reference/resource-properties/config):
       enabled: true | false
-
 ```
 
 </File>
 
-</VersionBlock>
-
 </TabItem>
 
 <TabItem value="semantic models">
-
-<VersionBlock lastVersion="1.6">
-
-Support for disabling semantic models has been added in dbt Core v1.7
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.7">
 
 <File name='dbt_project.yml'>
 
@@ -282,13 +269,37 @@ semantic_models:
 
 </File>
 
-</VersionBlock>
+</TabItem>
+
+<TabItem value="saved queries">
+
+<File name='dbt_project.yml'>
+
+```yaml
+saved-queries:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    [+](/reference/resource-configs/plus-prefix)enabled: true | false
+```
+
+</File>
+
+<File name='models/semantic_models.yml'>
+
+```yaml
+saved_queries:
+  - name: [<saved_query_name>]
+    [config](/reference/resource-properties/config):
+      enabled: true | false
+```
+
+</File>
 
 </TabItem>
 
 </Tabs>
 
 ## Definition
+
 An optional configuration for enabling or disabling a resource.
 
 * Default: true

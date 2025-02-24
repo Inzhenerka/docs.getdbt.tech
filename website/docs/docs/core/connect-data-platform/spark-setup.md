@@ -25,7 +25,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-If connecting to Databricks via ODBC driver, it requires `pyodbc`. Depending on your system, you can install it seperately or via pip. See the [`pyodbc` wiki](https://github.com/mkleehammer/pyodbc/wiki/Install) for OS-specific installation details.
+If connecting to Databricks via ODBC driver, it requires `pyodbc`. Depending on your system, you can install it separately or via pip. See the [`pyodbc` wiki](https://github.com/mkleehammer/pyodbc/wiki/Install) for OS-specific installation details.
 
 If connecting to a Spark cluster via the generic thrift or http methods, it requires `PyHive`.
 
@@ -48,7 +48,7 @@ $ python -m pip install "dbt-spark[session]"
 
 <p>For further info, refer to the GitHub repository: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
-## Connection Methods
+## Connection methods
 
 dbt-spark can connect to Spark clusters by four different methods:
 
@@ -197,21 +197,18 @@ connect_retries: 3
 
 </File>
 
-
-
-<VersionBlock firstVersion="1.7">
-
 ### Server side configuration
 
 Spark can be customized using [Application Properties](https://spark.apache.org/docs/latest/configuration.html). Using these properties the execution can be customized, for example, to allocate more memory to the driver process. Also, the Spark SQL runtime can be set through these properties. For example, this allows the user to [set a Spark catalogs](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
-</VersionBlock>
 
 ## Caveats
+
+When facing difficulties, run `poetry run dbt debug --log-level=debug`. The logs are saved at `logs/dbt.log`.
 
 ### Usage with EMR
 To connect to Apache Spark running on an Amazon EMR cluster, you will need to run `sudo /usr/lib/spark/sbin/start-thriftserver.sh` on the master node of the cluster to start the Thrift server (see [the docs](https://aws.amazon.com/premiumsupport/knowledge-center/jdbc-connection-emr/) for more information). You will also need to connect to port 10001, which will connect to the Spark backend Thrift server; port 10000 will instead connect to a Hive backend, which will not work correctly with dbt.
 
-### Supported Functionality
+### Supported functionality
 
 Most dbt Core functionality is supported, but some features are only available
 on Delta Lake (Databricks).
@@ -220,3 +217,9 @@ Delta-only features:
 1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/spark-configs#the-merge-strategy))
 2. [Snapshots](/docs/build/snapshots)
 3. [Persisting](/reference/resource-configs/persist_docs) column-level descriptions as database comments
+
+### Default namespace with Thrift connection method
+
+To run metadata queries in dbt, you need to have a namespace named `default` in Spark when connecting with Thrift. You can check available namespaces by using Spark's `pyspark` and running `spark.sql("SHOW NAMESPACES").show()`. If the default namespace doesn't exist, create it by running `spark.sql("CREATE NAMESPACE default").show()`.
+
+If there's a network connection issue, your logs will display an error like `Could not connect to any of [('127.0.0.1', 10000)]` (or something similar).

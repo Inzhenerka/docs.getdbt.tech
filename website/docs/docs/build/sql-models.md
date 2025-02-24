@@ -1,6 +1,6 @@
 ---
 title: "SQL models"
-description: "Read this tutorial to learn how to use SQL models when building in dbt."
+description: "SQL models are the building blocks of your dbt project."
 id: "sql-models"
 ---
 
@@ -18,13 +18,8 @@ If you're new to dbt, we recommend that you read a [quickstart guide](/guides) t
 
 :::
 
-<VersionBlock firstVersion="1.3">
+dbt's Python capabilities are an extension of its capabilities with SQL models. If you're new to dbt, we recommend that you read this page first, before reading: ["Python Models"](/docs/build/python-models)
 
-Starting in v1.3, dbt Core adds support for **Python models**.
-
-dbt's Python capabilities are an extension of its capabilities with SQL models. If you're new to dbt, we recommend that you read this page first, before reading: ["Python Models"](/docs/building-a-dbt-project/building-models/python-models)
-
-</VersionBlock>
 
 A SQL model is a `select` statement. Models are defined in `.sql` files (typically in your `models` directory):
 - Each `.sql` file contains one model / `select` statement
@@ -265,13 +260,13 @@ Additionally, the `ref` function encourages you to write modular transformations
 
 ## Testing and documenting models
 
-You can also document and test models &mdash; skip ahead to the section on [testing](/docs/build/data-tests) and [documentation](/docs/collaborate/documentation) for more information.
+You can also document and test models &mdash; skip ahead to the section on [testing](/docs/build/data-tests) and [documentation](/docs/build/documentation) for more information.
 
 ## Additional FAQs
 <FAQ path="Project/example-projects" alt_header="Are there any example dbt models?" />
 <FAQ path="Models/configurable-model-path" />
 <FAQ path="Models/model-custom-schemas" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Models/removing-deleted-models" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 <FAQ path="Models/insert-records" />

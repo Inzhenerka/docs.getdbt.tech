@@ -17,7 +17,7 @@ flags:
 
 Reference the [table of all flags](/reference/global-configs/about-global-configs#available-flags) to see which global configs are available for setting in [`dbt_project.yml`](/reference/dbt_project.yml).
 
-The `flags` dictionary is the _only_ place you can opt out of [behavior changes](/reference/global-configs/legacy-behaviors), while the legacy behavior is still supported.
+The `flags` dictionary is the _only_ place you can opt out of [behavior changes](/reference/global-configs/behavior-changes), while the legacy behavior is still supported.
 
 <VersionBlock lastVersion="1.7">
 
@@ -40,7 +40,7 @@ config:
 
 </VersionBlock>
 
-<VersionBlock firstVersion="1.2" lastVersion="1.7">
+<VersionBlock lastVersion="1.7">
 
 The exception: Some global configurations are actually set in `dbt_project.yml`, instead of `profiles.yml`, because they control where dbt places logs and artifacts. Those file paths are always relative to the location of `dbt_project.yml`. For more details, refer to [Log and target paths](/reference/global-configs/logs#log-and-target-paths).
 

@@ -33,7 +33,7 @@ dbt Labs recommends completing these steps in a local dev environment (such as t
     ```bash
     python -m pip install "dbt-metricflow[snowflake]"
     ```
-    **Note** - MetricFlow commands aren't yet supported in the dbt CLoud IDE at this time.
+    **Note** - MetricFlow commands aren't yet supported in the dbt Cloud IDE at this time.
 
 2. Run `dbt parse`. This parses your project and creates a `semantic_manifest.json` file in your target directory. MetricFlow needs this file to query metrics. If you make changes to your configs, you will need to parse your project again. 
 3. Run `mf list metrics` to view the metrics in your project.
@@ -133,12 +133,11 @@ If you created a new environment in [Step 3](#step-3-setup-the-semantic-layer-in
 
 ### Related docs 
 
+- [Quickstart guide with the dbt Semantic Layer](/guides/sl-snowflake-qs)
 - [dbt Semantic Layer FAQs](/docs/use-dbt-semantic-layer/sl-faqs)
-- [MetricFlow quickstart guide](/docs/build/sl-getting-started)
-- [Example dbt project](https://github.com/dbt-labs/jaffle-sl-template)
 - [dbt metrics converter](https://github.com/dbt-labs/dbt-converter)
 - [Why we're deprecating the dbt_metrics package](/blog/deprecating-dbt-metrics) blog post
 - [dbt Semantic Layer API query syntax](/docs/dbt-cloud-apis/sl-jdbc#querying-the-api-for-metric-metadata) 
-- [dbt Semantic Layer on-demand courses](https://courses.getdbt.com/courses/semantic-layer)
+- [dbt Semantic Layer on-demand course](https://learn.getdbt.com/courses/semantic-layer)
 
 </div>

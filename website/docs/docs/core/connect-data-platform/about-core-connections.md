@@ -12,6 +12,7 @@ dbt Core can connect with a variety of data platform providers including:
 
 - [Amazon Redshift](/docs/core/connect-data-platform/redshift-setup) 
 - [Apache Spark](/docs/core/connect-data-platform/spark-setup) 
+- [Azure Synapse](/docs/core/connect-data-platform/azuresynapse-setup)
 - [Databricks](/docs/core/connect-data-platform/databricks-setup) 
 - [Google BigQuery](/docs/core/connect-data-platform/bigquery-setup)
 - [Microsoft Fabric](/docs/core/connect-data-platform/fabric-setup)
@@ -30,8 +31,6 @@ These connection instructions provide the basic fields required for configuring 
 If you're using dbt from the command line (CLI), you'll need a profiles.yml file that contains the connection details for your data platform. When you run dbt from the CLI, it reads your dbt_project.yml file to find the profile name, and then looks for a profile with the same name in your profiles.yml file. This profile contains all the information dbt needs to connect to your data platform.
 
 For detailed info, you can refer to the [Connection profiles](/docs/core/connect-data-platform/connection-profiles).
-
-<VersionBlock firstVersion="1.7">
 
 ## Adapter features
 
@@ -54,5 +53,3 @@ For adapters that support it, you can partially build the catalog. This allows t
 
 ### Source freshness
 You can measure source freshness using the warehouse metadata tables on supported adapters. This allows for calculating source freshness without using the [`loaded_at_field`](/reference/resource-properties/freshness#loaded_at_field) and without querying the table directly. This is faster and more flexible (though it might sometimes be inaccurate, depending on how the warehouse tracks altered tables). You can override this with the `loaded_at_field` in the [source config](/reference/source-configs). If the adapter doesn't support this, you can still use the `loaded_at_field`.
-
-</VersionBlock>

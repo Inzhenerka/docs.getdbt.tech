@@ -175,7 +175,7 @@ Please to update variables between **`<>`**, here are explanations of these argu
 
 ### Configuration of the local environment
 
-Because **`dbt`** and **`dbt-glue`** adapters are compatible with Python versions 3.7, 3.8, and 3.9, check the version of Python:
+Because **`dbt`** and **`dbt-glue`** adapters are compatible with Python versions 3.9 or higher, check the version of Python:
 
 ```bash
 $ python3 --version
@@ -681,6 +681,9 @@ from events
 group by 1
 ```
 #### Iceberg Snapshot source code example
+
+<VersionBlock lastVersion="1.8">
+
 ```sql
 
 {% snapshot demosnapshot %}
@@ -698,6 +701,30 @@ select * from {{ ref('customers') }}
 {% endsnapshot %}
 
 ```
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+```sql
+
+{% snapshot demosnapshot %}
+
+{{
+    config(
+        strategy='timestamp',
+        schema='jaffle_db',
+        updated_at='dt',
+        file_format='iceberg'
+) }}
+
+select * from {{ ref('customers') }}
+
+{% endsnapshot %}
+
+```
+
+</VersionBlock>
 
 ## Monitoring your Glue Interactive Session
 

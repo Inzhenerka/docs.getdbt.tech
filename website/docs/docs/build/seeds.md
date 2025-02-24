@@ -1,7 +1,7 @@
 ---
 title: "Add Seeds to your DAG"
 sidebar_label: "Seeds"
-description: "Read this tutorial to learn how to use seeds when building in dbt."
+description: "Provide seed data files for your dbt models."
 id: "seeds"
 ---
 ## Related reference docs
@@ -81,7 +81,7 @@ You can document and test seeds in YAML by declaring properties — check out th
 
 ## FAQs
 <FAQ path="Seeds/load-raw-data-with-seed" />
-<FAQ path="Tests/configurable-data-path" />
+<FAQ path="Seeds/configurable-data-path" /> 
 <FAQ path="Seeds/full-refresh-seed" />
 <FAQ path="Tests/testing-seeds" />
 <FAQ path="Seeds/seed-datatypes" />

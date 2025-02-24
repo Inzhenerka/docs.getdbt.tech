@@ -1,6 +1,6 @@
 ---
 title: "Hooks and operations"
-description: "Read this tutorial to learn how to use hooks and operations when building in dbt."
+description: "Customize dbt workflows using hooks and operations."
 id: "hooks-operations"
 ---
 
@@ -40,13 +40,9 @@ Hooks are snippets of SQL that are executed at different times:
 
 Hooks are a more-advanced capability that enable you to run custom SQL, and leverage database-specific actions, beyond what dbt makes available out-of-the-box with standard materializations and configurations.
 
-<Snippet path="hooks-to-grants" />
-
-<VersionBlock firstVersion="1.2">
-
 If (and only if) you can't leverage the [`grants` resource-config](/reference/resource-configs/grants), you can use `post-hook` to perform more advanced workflows:
 
-* Need to apply `grants` in a more complex way, which the dbt Core v1.2 `grants` config does not (yet) support.
+* Need to apply `grants` in a more complex way, which the dbt Core `grants` config doesn't (yet) support.
 * Need to perform post-processing that dbt does not support out-of-the-box. For example, `analyze table`, `alter table set property`, `alter table ... add row access policy`, etc.
 
 ### Examples using hooks
@@ -70,11 +66,44 @@ You can use hooks to provide database-specific functionality not available out-o
 </File>
 
 
-</VersionBlock>
-
 ### Calling a macro in a hook
 
 You can also use a [macro](/docs/build/jinja-macros#macros) to bundle up hook logic. Check out some of the examples in the reference sections for [on-run-start and on-run-end hooks](/reference/project-configs/on-run-start-on-run-end) and [pre- and post-hooks](/reference/resource-configs/pre-hook-post-hook).
+
+<File name='models/<model_name>.sql'>
+
+```sql
+{{ config(
+    pre_hook=[
+      "{{ some_macro() }}"
+    ]
+) }}
+```
+
+</File>
+
+<File name='models/properties.yml'>
+
+```yaml
+models:
+  - name: <model_name>
+    config:
+      pre_hook:
+        - "{{ some_macro() }}"
+```
+
+</File>
+
+<File name='dbt_project.yml'>
+
+```yaml
+models:
+  <project_name>:
+    +pre-hook:
+      - "{{ some_macro() }}"
+```
+
+</File>
 
 ## About operations
 

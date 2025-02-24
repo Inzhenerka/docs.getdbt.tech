@@ -4,20 +4,20 @@ id: "source-freshness"
 description: "Validate that data freshness meets expectations and alert if stale."
 ---
 
-dbt Cloud provides a helpful interface around dbt's [source data freshness](/docs/build/sources#snapshotting-source-data-freshness) calculations. When a dbt Cloud job is configured to snapshot source data freshness, dbt Cloud will render a user interface showing you the state of the most recent snapshot. This interface is intended to help you determine if your source data freshness is meeting the service level agreement (SLA) that you've defined for your organization.
+dbt Cloud provides a helpful interface around dbt's [source data freshness](/docs/build/sources#source-data-freshness) calculations. When a dbt Cloud job is configured to snapshot source data freshness, dbt Cloud will render a user interface showing you the state of the most recent snapshot. This interface is intended to help you determine if your source data freshness is meeting the service level agreement (SLA) that you've defined for your organization.
 
 <Lightbox src="/img/docs/dbt-cloud/using-dbt-cloud/data-sources-next.png" title="Data Sources in dbt Cloud"/>
 
 ### Enabling source freshness snapshots
 
-[`dbt build`](reference/commands/build) does _not_ include source freshness checks when building and testing resources in your DAG. Instead, you can use one of these common patterns for defining jobs:
+[`dbt build`](/reference/commands/build) does _not_ include source freshness checks when building and testing resources in your DAG. Instead, you can use one of these common patterns for defining jobs:
 - Add `dbt build` to the run step to run models, tests, and so on. 
-- Select the **Generate docs on run** checkbox to automatically [generate project docs](/docs/collaborate/build-and-view-your-docs#set-up-a-documentation-job).
+- Select the **Generate docs on run** checkbox to automatically [generate project docs](/docs/collaborate/build-and-view-your-docs).
 - Select the **Run source freshness** checkbox to enable [source freshness](#checkbox) as the first step of the job. 
 
 <Lightbox src="/img/docs/dbt-cloud/select-source-freshness.png" title="Selecting source freshness"/>
 
-To enable source freshness snapshots, firstly make sure to configure your sources to [snapshot freshness information](/docs/build/sources#snapshotting-source-data-freshness). You can add source freshness to the list of commands in the job run steps or enable the checkbox. However, you can expect different outcomes when you configure a job by selecting the **Run source freshness** checkbox compared to adding the command to the run steps.
+To enable source freshness snapshots, firstly make sure to configure your sources to [snapshot freshness information](/docs/build/sources#source-data-freshness). You can add source freshness to the list of commands in the job run steps or enable the checkbox. However, you can expect different outcomes when you configure a job by selecting the **Run source freshness** checkbox compared to adding the command to the run steps.
 
 Review the following options and outcomes:
 

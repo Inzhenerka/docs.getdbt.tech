@@ -1,15 +1,38 @@
 ---
-title: "About dbt Cloud Release Notes"
+title: "dbt Cloud release notes"
+description: "dbt Cloud release notes"
 id: "dbt-cloud-release-notes"
-description: "Release notes for dbt Cloud"
+sidebar: "dbt Cloud release notes"
 pagination_next: null
 pagination_prev: null
 ---
 
-dbt provides release notes for dbt Cloud so you can see recent and historical changes. Generally, you'll see release notes for these changes:
+dbt Cloud release notes for recent and historical changes. Release notes fall into one of the following categories:
 
-* New products and features (new)
-* Performance improvements and feature enhancements (enhancement)
-* Bug fixes (fix)
+- **New:** New products and features
+- **Enhancement:** Performance improvements and feature enhancements
+- **Fix:** Bug and security fixes
+- **Behavior change:** A change to existing behavior that doesn't fit into the other categories, such as feature deprecations or changes to default settings
 
-Release notes will be grouped by month. For customers using dbt Virtual Private Cloud, you will see a tag for changes available in your versioned release.
+Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
+
+## February 2025
+
+- **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) added a new timeout parameter to Semantic Layer client and to underlying GraphQL clients to specify timeouts. Set a timeout number or use the `total_timeout` parameter in the global `TimeoutOptions` to control connect, execute and close timeouts granularly. `ExponentialBackoff.timeout_ms` is now deprecated.
+- **New**: The [Azure DevOps](/docs/cloud/git/connect-azure-devops) integration for Git now supports [Entra service principal apps](/docs/cloud/git/setup-service-principal) on dbt Cloud Enterprise accounts. Microsoft is enforcing MFA across user accounts, including service users, which will impact existing app integrations. This is a phased rollout, and dbt Labs recommends [migrating to a service principal](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) on existing integrations once the option becomes available in your account.
+
+## January 2025
+
+- **Enhancement**: The dbt Semantic Layer now fully supports the [`--favor-state` flag](/docs/cloud/about-cloud-develop-defer) when used with `defer` in the dbt Cloud IDE. This enhancement allows you to always resolve `{{ ref() }}` functions using staging or production metadata, ignoring any development version.
+- **New**: Added the `dbt invocation` command to the [dbt Cloud CLI](/docs/cloud/cloud-cli-installation). This command allows you to view and manage active invocations, which are long-running sessions in the dbt Cloud CLI. For more information, see [dbt invocation](/reference/commands/invocation).
+- **New**: Users can now switch themes directly from the user menu, available [in Preview](/docs/dbt-versions/product-lifecycles#dbt-cloud). We have added support for **Light mode** (default), **Dark mode**, and automatic theme switching based on system preferences. The selected theme is stored in the user profile and will follow users across all devices.
+  - Dark mode is currently available on the Developer plan and will be available for all [plans](https://www.getdbt.com/pricing) in the future. We’ll be rolling it out gradually, so stay tuned for updates. For more information, refer to [Change your dbt Cloud theme](/docs/cloud/about-cloud/change-your-dbt-cloud-theme).
+- **Fix**: dbt Semantic Layer errors in the Cloud IDE are now displayed with proper formatting, fixing an issue where newlines appeared broken or difficult to read. This fix ensures error messages are more user-friendly and easier to parse.
+- **Fix**: Fixed an issue where [saved queries](/docs/build/saved-queries) with no [exports](/docs/build/saved-queries#configure-exports) would fail with an `UnboundLocalError`. Previously, attempting to process a saved query without any exports would cause an error due to an undefined relation variable. Exports are optional, and this fix ensures saved queries without exports don't fail.
+- **New**: You can now query metric alias in dbt Semantic Layer [GraphQL](/docs/dbt-cloud-apis/sl-graphql) and [JDBC](/docs/dbt-cloud-apis/sl-jdbc) APIs. 
+  - For the JDBC API, refer to [Query metric alias](/docs/dbt-cloud-apis/sl-jdbc#query-metric-alias) for more information.
+  - For the GraphQL API, refer to [Query metric alias](/docs/dbt-cloud-apis/sl-graphql#query-metric-alias) for more information.
+- **Enhancement**: Added support to automatically refresh access tokens when Snowflake's SSO connection expires. Previously, users would get the following error: `Connection is not available, request timed out after 30000ms` and would have to wait 10 minutes to try again.
+- **Enhancement**: The [`dbt_version` format](/reference/commands/version#versioning) in dbt Cloud now better aligns with [semantic versioning rules](https://semver.org/). Leading zeroes have been removed from the month and day (`YYYY.M.D+<suffix>`). For example:
+  - New format: `2024.10.8+996c6a8`
+  - Previous format: `2024.10.08+996c6a8`

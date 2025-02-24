@@ -28,9 +28,6 @@ If you want to edit files and run projects using the web-based dbt Integrated De
 
 After setting up BigQuery to work with dbt, you are ready to create a starter project with example models, before building your own models.
 
-### Related docs
-- [Move from dbt Core to dbt Cloud](/guides/core-to-cloud-1?step=1)
-
 ## Create a repository
 
 The following steps use [GitHub](https://github.com/) as the Git provider for this guide, but you can use any Git provider. You should have already [created a GitHub account](https://github.com/join).
@@ -39,7 +36,7 @@ The following steps use [GitHub](https://github.com/) as the Git provider for th
 2. Select **Public** so the repository can be shared with others. You can always make it private later.
 3. Leave the default values for all other settings.
 4. Click **Create repository**.
-5. Save the commands from "…or create a new repository on the command line" to use later in [Commit your changes](#commit-your-changes).
+5. Save the commands from "…or create a new repository on the command line" to use later in [Commit your changes](https://docs.getdbt.com/guides/manual-install?step=6).
 
 ## Create a project
 
@@ -165,7 +162,7 @@ You should have an output that looks like this:
 
 Commit your changes so that the repository contains the latest code.
 
-1. Link the GitHub repository you created to your dbt project by running the following commands in Terminal. Make sure you use the correct git URL for your repository, which you should have saved from step 5 in [Create a repository](#create-a-repository).
+1. Link the GitHub repository you created to your dbt project by running the following commands in Terminal. Make sure you use the correct git URL for your repository, which you should have saved from step 5 in [Create a repository](https://docs.getdbt.com/guides/manual-install?step=2).
 
 ```shell
 git init
@@ -424,7 +421,7 @@ This time, when you performed a `dbt run`, separate views/tables were created fo
 ### FAQs {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
-<FAQ path="Models/unique-model-names" />
+<FAQ path="Project/unique-resource-names" />
 <FAQ path="Project/structure-a-project" alt_header="As I create more models, how should I keep my project organized? What should I name my models?" />
 
 ### Next steps

@@ -6,7 +6,7 @@ description: "Version models to help with lifecycle management"
 keyword: governance, model version, model versioning, dbt model versioning
 ---
 
-<VersionBlock firstVersion="1.5" lastVersion="1.8">
+<VersionBlock lastVersion="1.8">
 
 :::info New functionality
 This functionality is new in v1.5 — if you have thoughts, participate in [the discussion on GitHub](https://github.com/dbt-labs/dbt-core/discussions/6736)!
@@ -14,7 +14,7 @@ This functionality is new in v1.5 — if you have thoughts, participate in [the 
 
 </VersionBlock>
 
-import VersionsCallout from '/snippets/_version-callout.md';
+import VersionsCallout from '/snippets/_model-version-callout.md';
 
 <VersionsCallout />
 
@@ -69,7 +69,7 @@ When you make updates to a model's source code &mdash; its logical definition, i
 
 **Versioned models are different.** Defining model `versions` is appropriate when people, systems, and processes beyond your team's control, inside or outside of dbt, depend on your models. You can neither simply go migrate them all, nor break their queries on a whim. You need to offer a migration path, with clear diffs and deprecation dates.
 
-Multiple versions of a model will live in the same code repository at the same time, and be deployed into the same data environment simultaneously. This is similar to how web APIs are versioned: Multiple versions are live simultaneously, two or three, and not more). Over time, newer versions come online, and older versions are sunsetted .
+Multiple versions of a model will live in the same code repository at the same time, and be deployed into the same data environment simultaneously. This is similar to how web APIs are versioned: Multiple versions live simultaneously, two or three, and not more). Over time, newer versions come online, and older versions are sunsetted .
 
 ## How is this different from just creating a new model?
 
@@ -99,7 +99,7 @@ Let's say that `dim_customers` has three versions defined: `v2` is the "latest",
 
 As you'll see in the implementation section below, a versioned model can reuse the majority of its YAML properties and configuration. Each version needs to only say how it _differs_ from the shared set of attributes. This gives you, as the producer of a versioned model, the opportunity to highlight the differences across versions—which is otherwise difficult to detect in models with dozens or hundreds of columns—and to clearly track, in one place, all versions of the model which are currently live.
 
-dbt also supports [`version`-based selection](/reference/node-selection/methods#the-version-method). For example, you could define a [default YAML selector](/reference/node-selection/yaml-selectors#default) that avoids running any old model versions in development, even while you continue to run them in production through a sunset and migration period. (You could accomplish something similar by applying `tags` to these models, and cycling through those tags over time.)
+dbt also supports [`version`-based selection](/reference/node-selection/methods#version). For example, you could define a [default YAML selector](/reference/node-selection/yaml-selectors#default) that avoids running any old model versions in development, even while you continue to run them in production through a sunset and migration period. (You could accomplish something similar by applying `tags` to these models, and cycling through those tags over time.)
 
 <File name="selectors.yml">
 
@@ -414,7 +414,7 @@ To run a model with multiple versions, you can use the [`--select` flag](/refere
 - Run the latest version of `dim_customers` using the `--select` flag shorthand:
 
   ```bash
-  dbt run -s dim_customers version:latest # Run the latest version of the model
+  dbt run -s dim_customers,version:latest # Run the latest version of the model
   ```
 
 These commands provide flexibility in managing and executing different versions of a dbt model.
