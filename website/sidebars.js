@@ -945,8 +945,20 @@ const sidebarSettings = {
       label: "Resource configs and properties",
       link: { type: "doc", id: "reference/resource-configs/resource-path" },
       items: [
-        "reference/configs-and-properties",
         "reference/resource-configs/resource-path",
+        {
+          type: "category",
+          label: "Configs and properties",
+          link: {
+            type: "doc",
+            id: "reference/configs-and-properties",
+          },
+          items: [
+            "reference/configs-and-properties",
+            "reference/define-configs",
+            "reference/define-properties",
+          ],
+        },
         {
           type: "category",
           label: "General properties",
