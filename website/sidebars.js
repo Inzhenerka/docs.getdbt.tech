@@ -868,6 +868,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Project configs",
+      link: { type: "doc", id: "reference/dbt_project.yml" },
       collapsed: true,
       items: [
         "reference/dbt_project.yml",
@@ -1229,6 +1230,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "dbt Artifacts",
+      link: { type: "doc", id: "reference/artifacts/dbt-artifacts" },
       items: [
         "reference/artifacts/dbt-artifacts",
         "reference/artifacts/catalog-json",
@@ -1242,6 +1244,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Database Permissions",
+      link: { type: "doc", id: "reference/database-permissions/about-database-permissions" },
       items: [
         "reference/database-permissions/about-database-permissions",
         "reference/database-permissions/databricks-permissions",
