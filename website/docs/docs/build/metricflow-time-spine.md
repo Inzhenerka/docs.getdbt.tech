@@ -17,11 +17,6 @@ To use MetricFlow with time-based metrics and dimensions, you _must_ provide a t
 
 And once you have a time spine table, you need to configure it in YAML to tell MetricFlow how to use it.
 
-
-:::tip
-Check out our mini guide on [how to create a time spine table](/guides/mf-time-spine) to get started!
-:::
-
 ## Prerequisites
 MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. This means you need to:
 
@@ -39,6 +34,10 @@ MetricFlow requires you to define at least one dbt model which provides a time-s
 To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=true` flag when querying the Semantic Layer to return the compiled SQL.
 
 ## Configuring time spine in YAML
+
+:::tip Use our mini guide to create a time spine table
+For a quick start guide on how to create a time spine table, check out our [MetricFlow time spine mini guide](/guides/mf-time-spine)!
+:::
 
  Time spine models are normal dbt models with extra configurations that tell dbt and MetricFlow how to use specific columns by defining their properties. Add the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. If your project already includes a calendar table or date dimension, you can configure that table as a time spine. Otherwise, review the [example time-spine tables](#example-time-spine-tables) to create one. If the relevant model file doesn't exist, create it and add the configuration mentioned in the [next section](#creating-a-time-spine-table).
  
@@ -359,6 +358,11 @@ You only need to include the `date_day` column in the table. MetricFlow can hand
 
 ## Custom calendar <Lifecycle status="Preview"/>
 
+:::tip
+Check out our mini guide on [how to create a time spine table](/guides/mf-time-spine) to get started!
+:::
+
+
 <VersionBlock lastVersion="1.8">
 
 The ability to configure custom calendars, such as a fiscal calendar, is available now in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), and it will be available in [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
@@ -411,3 +415,9 @@ models:
 Note that features like calculating offsets and period-over-period will be supported soon!
 
 </VersionBlock>
+
+
+## Related docs
+
+- [MetricFlow time granularity](/docs/build/dimensions?dimension=time_gran#time)
+- [MetricFlow time spine mini guide](/guides/mf-time-spine)

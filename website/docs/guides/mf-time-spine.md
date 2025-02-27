@@ -3,7 +3,7 @@ title: "Quickstart with MetricFlow time spine"
 id: "mf-time-spine"
 level: 'Intermediate'
 icon: 'guides'
-tags: ['Quickstart']
+tags: ['Quickstart', 'Semantic Layer']
 hide_table_of_contents: true
 recently_updated: true
 ---
@@ -28,7 +28,7 @@ And once you have a time spine table, you need to configure it in YAML to tell M
 ### Prerequisites
 Before you start, make sure you have:
 
-- A dbt project set up. If you don't have one, follow the [Semantic Layer quickstart guide](/guides/sl-snowflake-qs?step=1) or the [dbt Cloud quickstart guides)(/guides?tags=Quickstart) guide to help you get started.
+- A dbt project set up. If you don't have one, follow the [Semantic Layer quickstart guide](/guides/sl-snowflake-qs?step=1) or the [dbt Cloud quickstart guides](/guides?tags=Quickstart) guide to help you get started.
 
 ## Add a time spine SQL model
 
@@ -39,42 +39,50 @@ The time spine table is a dbt model that generates a series of dates (or timesta
 1. Navigate to the `models/marts` directory in your dbt project.
 2. Add a new SQL file named `time_spine_daily.sql` with the following content:
 
-<File name='models/marts/time_spine_daily.sql'>
+    <File name='models/marts/time_spine_daily.sql'>
 
-```sql
-{{
-    config(
-        materialized = 'table',
-    )
-}}
-
-with
-
-base_dates as (
+    ```sql
     {{
-        dbt.date_spine(
-            'day',
-            "DATE('2000-01-01')",
-            "DATE('2030-01-01')"
+        config(
+            materialized = 'table',
         )
     }}
-),
 
-final as (
-    select
-        cast(date_day as date) as date_day
-    from base_dates
-)
+    with
 
-select *
-from final
-where date_day > dateadd(year, -5, current_date())  -- Keep recent dates only
-  and date_day < dateadd(day, 30, current_date());
-```
-</File>
+    base_dates as (
+        {{
+            dbt.date_spine(
+                'day',
+                "DATE('2000-01-01')",
+                "DATE('2030-01-01')"
+            )
+        }}
+    ),
 
-This generates a table of daily dates ranging from 5 years in the past to 30 days into the future.
+    final as (
+        select
+            cast(date_day as date) as date_day
+        from base_dates
+    )
 
+    select *
+    from final
+    where date_day > dateadd(year, -5, current_date())  -- Keep recent dates only
+      and date_day < dateadd(day, 30, current_date());
+    ```
+    </File>
+      
+      This generates a table of daily dates ranging from 5 years in the past to 30 days into the future.
+
+3. Run and preview the model to create the table:
+    ```bash
+    dbt run --select time_spine_daily 
+    dbt show --select time_spine_daily # Use this command to preview the table if developing locally
+    ```
+
+4. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page:
+   <Lightbox src="/img/mf-guide-preview-time-spine-table.jpg" title="Preview the time spine table in dbt Cloud IDE" />
 
 ## Add YAML configuration for the time spine
 
@@ -83,20 +91,20 @@ Now that you've created the SQL file, configure it in YAML so MetricFlow can rec
 1. Navigate to the `models/marts` directory.
 2. Add a new YAML file named `_models.yml` with the following content:
 
-<File name='models/marts/_models.yml'>
+    <File name='models/marts/_models.yml'>
 
-```yaml
-models:
-  - name: time_spine_daily
-    description: A time spine with one row per day, ranging from 5 years in the past to 30 days into the future.
-    time_spine:
-      standard_granularity_column: date_day  # The base column used for time joins
-    columns:
-      - name: date_day
-        description: The base date column for daily granularity
-        granularity: day
-```
-</File>
+    ```yaml
+    models:
+      - name: time_spine_daily
+        description: A time spine with one row per day, ranging from 5 years in the past to 30 days into the future.
+        time_spine:
+          standard_granularity_column: date_day  # The base column used for time joins
+        columns:
+          - name: date_day
+            description: The base date column for daily granularity
+            granularity: day
+    ```
+    </File>
 
 This time spine YAML file:
 - Defines `date_day` as the base column for daily granularity.
@@ -111,36 +119,40 @@ If your project already includes a `dim_date` or similar table, you can configur
 1. Locate the existing table (`dim_date`).
 2. Update `_models.yml` file to configure it as a time spine:
 
-<File name='_models.yml'>
+    <File name='_models.yml'>
 
-```yaml
-models:
-  - name: dim_date
-    description: An existing date dimension table used as a time spine.
-    time_spine:
-      standard_granularity_column: date_day
-    columns:
-      - name: date_day
-        granularity: day
-```
-</File>
+    ```yaml
+    models:
+      - name: dim_date
+        description: An existing date dimension table used as a time spine.
+        time_spine:
+          standard_granularity_column: date_day
+        columns:
+          - name: date_day
+            granularity: day
+    ```
+    </File>
 
-This time spine YAML file configures the `time_spine` property so MetricFlow can use the table.
+    This time spine YAML file configures the `time_spine` property so MetricFlow can use the table.
 
-## Run and test the time spine
+## Run and preview the time spine
 
-For the time spine table you created, let's run it and validate the output.
+For the time spine table you created, let's run it and preview the output.
 
 1. Run the following command:
    ```bash
    dbt run --select time_spine_daily
+   dbt show --select time_spine_daily # Use this command to preview the table if developing locally
    ```
 
-2. Check that the table:
+2. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page:
+    <Lightbox src="/img/mf-guide-preview-time-spine-table.jpg" title="Preview the time spine table in dbt Cloud IDE" />
+
+3. Check that the table:
    - Contains one row per day.
    - Covers the date range you want (5 years back to 30 days forward)
 
-3. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
+4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the table/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
    
    Let's say you have a `revenue` metric defined. You can query the table/metrics using the following command:
 
@@ -151,71 +163,77 @@ For the time spine table you created, let's run it and validate the output.
     This will output results similar to the following in the dbt Cloud IDE:
     <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.jpg" title="Validate the metrics and time spine output in dbt Cloud IDE" />
 
-4. Double check that the results are correct and returning the expected data.
+5. Double check that the results are correct and returning the expected data.
 
-## Add additional granularities (optional)
+## Add additional granularities
+
+This section is optional and will show you how to add additional granularities to your time spine:
+
+- [Yearly](#yearly-time-spine)
+- [Custom calendars](#custom-calendars)
+
+### Yearly time spine
 
 To support multiple granularities (like hourly, yearly, monthly), create additional time spine tables and configure them in YAML.
 
 1. Add a new SQL file named `time_spine_yearly.sql` with the following content:
-<File name='models/marts/time_spine_yearly.sql'>
+    <File name='models/marts/time_spine_yearly.sql'>
 
-```sql
-{{
-    config(
-        materialized = 'table',
-    )
-}}
-
-with years as (
-
+    ```sql
     {{
-        dbt.date_spine(
-            'year',
-            "to_date('01/01/2000','mm/dd/yyyy')",
-            "to_date('01/01/2025','mm/dd/yyyy')"
+        config(
+            materialized = 'table',
         )
     }}
 
-),
+    with years as (
 
-final as (
-    select cast(date_year as date) as date_year
-    from years
-)
+        {{
+            dbt.date_spine(
+                'year',
+                "to_date('01/01/2000','mm/dd/yyyy')",
+                "to_date('01/01/2025','mm/dd/yyyy')"
+            )
+        }}
 
-select * from final
--- filter the time spine to a specific range
-where date_year >= date_trunc('year', dateadd(year, -4, current_timestamp())) 
-  and date_year < date_trunc('year', dateadd(year, 1, current_timestamp()))
+    ),
+
+    final as (
+        select cast(date_year as date) as date_year
+        from years
+    )
+
+    select * from final
+    -- filter the time spine to a specific range
+    where date_year >= date_trunc('year', dateadd(year, -4, current_timestamp())) 
+      and date_year < date_trunc('year', dateadd(year, 1, current_timestamp()))
 
 
-```
-</File>
+    ```
+    </File>
 
 2. Then update `_models.yml` file and add the yearly time spine (below the daily time spine config):
+    <File name='_models.yml'>
 
-<File name='_models.yml'>
+    ```yaml
+    models:
+      - name: time_spine_daily
+        ... rest of the daily time spine config ...
 
-```yaml
-models:
-  - name: time_spine_daily
-    ... rest of the daily time spine config ...
-
-- name: time_spine_yearly
-    description: time spine one row per house
-    time_spine:
-      standard_granularity_column: date_year
-    columns:
-      - name: date_year
-        granularity: year
-```
-</File>
+    - name: time_spine_yearly
+        description: time spine one row per house
+        time_spine:
+          standard_granularity_column: date_year
+        columns:
+          - name: date_year
+            granularity: year
+    ```
+    </File>
 
 3. Run or preview the model to create the table:
    ```bash
    dbt run --select time_spine_yearly
-   dbt show --select time_spine_yearly
+   dbt show --select time_spine_yearly # Use this command to preview the table if developing locally
    ```
 
 4. Validate the output by querying the generated table:
@@ -223,9 +241,99 @@ models:
    dbt sl query --metrics orders --group-by metric_time__year
    ```
 
-:::tip
-Try creating a monthly time spine! Duplicate your daily time spine model, adjust it to generate one row per month, and update the YAML file to include `granularity: month`. Give it a try!
+   <Lightbox src="/img/mf-guide-query.jpg" title="Validate the metrics and time spine output in dbt Cloud IDE" />
+
+:::tip Extra credit!
+For some extra practice, try one of the following exercises:
+
+- Order the `dbt sl query --metrics orders --group-by metric_time__year` command output by ascending order of `metric_time__year`. Check out the [dbt Semantic Layer commands](/docs/build/metricflow-commands#query) docs for more information on how to do this.
+- Try creating a monthly time spine &mdash; duplicate your daily time spine model, adjust it to generate one row per month, and update the YAML file to include `granularity: month`. Give it a try!
 :::
+
+### Custom calendars
+
+To support custom calendars (like fiscal years, fiscal quarters, and so on), create an additional time spine table and configure it in YAML.
+
+1. Add a new SQL file named `fiscal_calendar.sql` with the following content (or use your own custom calendar and configure it in YAML):
+    <File name='models/marts/fiscal_calendar.sql'>
+
+    ```sql
+        with date_spine as (
+
+        select 
+            date_day,
+            extract(year from date_day) as calendar_year,
+            extract(week from date_day) as calendar_week
+
+        from {{ ref('time_spine_daily') }}
+
+    ),
+
+    fiscal_calendar as (
+
+        select
+            date_day,
+            -- Define custom fiscal year starting in October
+            case 
+                when extract(month from date_day) >= 10 
+                    then extract(year from date_day) + 1
+                else extract(year from date_day) 
+            end as fiscal_year,
+
+            -- Define fiscal weeks (e.g., shift by 1 week)
+            extract(week from date_day) + 1 as fiscal_week
+
+        from date_spine
+
+    )
+
+    select * from fiscal_calendar
+    ```
+
+    </File>
+
+2. Then update `_models.yml` file and add the fiscal calendar time spine (below the yearly time spine config):
+    <File name='_models.yml'>
+
+    ```yaml
+    models:
+      - name: time_spine_yearly
+        ... rest of the yearly time spine config ...  
+        
+      - name: fiscal_calendar
+        description: A custom fiscal calendar with fiscal year and fiscal week granularities.
+        time_spine:
+          standard_granularity_column: date_day
+          custom_granularities:
+            - name: fiscal_year
+              column_name: fiscal_year
+            - name: fiscal_week
+              column_name: fiscal_week
+        columns:
+          - name: date_day
+            granularity: day
+          - name: fiscal_year
+            description: "Custom fiscal year starting in October"
+          - name: fiscal_week
+            description: "Fiscal week, shifted by 1 week from standard calendar"
+    ```
+    </File>
+
+3. Run or preview the model to create the table:
+   ```bash
+   dbt run --select fiscal_calendar
+   dbt show --select fiscal_calendar # Use this command to preview the table if developing locally
+   ```
+
+   If you're developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page.
+
+4. Validate the output by querying the generated table along with your metrics:
+   ```bash
+   dbt sl query --metrics orders --group-by metric_time__fiscal_year
+   ```
+
+   <Lightbox src="/img/mf-guide-fiscal-preview.jpg" title="Validate the custom calendar metrics and time spine output in dbt Cloud IDE" />
+
 
 ## What's next
 
