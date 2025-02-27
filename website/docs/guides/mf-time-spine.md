@@ -16,7 +16,7 @@ This guide explains how to configure a time spine using the [dbt Semantic Layer 
 
 ### What is a time spine?
 
-A [time spine](/docs/build/metricflow-time-spine) is essential for time-based joins and aggregations in MetricFlow, the engine that powers the dbt Semantic Layer. It can be created from scratch or configured using an existing table (like a `dim_date` table).
+A [time spine](/docs/build/metricflow-time-spine) is essential for time-based joins and aggregations in MetricFlow, the engine that powers the dbt Semantic Layer.
 
 To use MetricFlow with time-based metrics and dimensions, you must provide a time spine table. This table serves as the foundation for time-based joins and aggregations. You can either:
 
