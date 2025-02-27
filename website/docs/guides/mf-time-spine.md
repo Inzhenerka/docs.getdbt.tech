@@ -149,7 +149,7 @@ For the time spine table you created, let's run it and validate the output.
     ```
 
     This will output results similar to the following in the dbt Cloud IDE:
-    <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.jpg" title="Validate the time spine output in dbt Cloud IDE" />
+    <Lightbox src="/img/quickstarts/dbt-cloud/validate-mf-timespine-output.jpg" title="Validate the metrics and time spine output in dbt Cloud IDE" />
 
 4. Double check that the results are correct and returning the expected data.
 
