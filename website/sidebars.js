@@ -255,6 +255,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/upsolver-setup",
                 "docs/core/connect-data-platform/vertica-setup",
                 "docs/core/connect-data-platform/watsonx-presto-setup",
+                "docs/core/connect-data-platform/watsonx-spark-setup",
                 "docs/core/connect-data-platform/yellowbrick-setup",
               ],
             },
@@ -449,6 +450,7 @@ const sidebarSettings = {
                 "docs/build/incremental-models",
                 "docs/build/incremental-strategy",
                 "docs/build/incremental-microbatch",
+                "docs/build/parallel-batch-execution",
               ],
             },
           ],
@@ -928,6 +930,7 @@ const sidebarSettings = {
         "reference/resource-configs/upsolver-configs",
         "reference/resource-configs/vertica-configs",
         "reference/resource-configs/watsonx-presto-config",
+        "reference/resource-configs/watsonx-spark-config",
         "reference/resource-configs/yellowbrick-configs",
       ],
     },
@@ -935,8 +938,20 @@ const sidebarSettings = {
       type: "category",
       label: "Resource configs and properties",
       items: [
-        "reference/configs-and-properties",
         "reference/resource-configs/resource-path",
+        {
+          type: "category",
+          label: "Configs and properties",
+          link: {
+            type: "doc",
+            id: "reference/configs-and-properties",
+          },
+          items: [
+            "reference/configs-and-properties",
+            "reference/define-configs",
+            "reference/define-properties",
+          ],
+        },
         {
           type: "category",
           label: "General properties",

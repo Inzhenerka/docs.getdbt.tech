@@ -1,8 +1,9 @@
 ---
 title: "About incremental strategy"
-sidebar_label: "About incremental strategy"
+sidebar_label: "Incremental strategy"
 description: "Incremental strategies for materializations optimize performance by defining how to handle new and changed data."
 id: "incremental-strategy"
+intro_text: "Incremental strategies for materializations optimize performance by defining how to handle new and changed data."
 ---
 
 There are various strategies to implement the concept of incremental materializations. The value of each strategy depends on:
@@ -38,6 +39,7 @@ Click the name of the adapter in the following table for more information about 
 | [dbt-trino](/reference/resource-configs/trino-configs#incremental)                                  |     ✅    |    ✅   |        ✅        |                    |                    |
 | [dbt-fabric](/reference/resource-configs/fabric-configs#incremental)                                |     ✅    |         |        ✅          |                    |                    |
 | [dbt-athena](/reference/resource-configs/athena-configs#incremental-models)                         |     ✅    |    ✅   |                 |          ✅         |                    |
+| [dbt-teradata](/reference/resource-configs/teradata-configs#valid_history-incremental-materialization-strategy)                         |     ✅    |    ✅   |       ✅         |                   |         ✅          |
 
 ### Configuring incremental strategy
 
