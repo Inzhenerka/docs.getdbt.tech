@@ -155,10 +155,10 @@ For the time spine table you created, let's run it and validate the output.
 
 ## Add additional granularities (optional)
 
-To support multiple granularities (like hourly, monthly), create additional time spine tables and configure them in YAML.
+To support multiple granularities (like hourly, yearly, monthly), create additional time spine tables and configure them in YAML.
 
-1. Add a new SQL file named `time_spine_hourly.sql` with the following content:
-<File name='models/marts/time_spine_hourly.sql'>
+1. Add a new SQL file named `time_spine_yearly.sql` with the following content:
+<File name='models/marts/time_spine_yearly.sql'>
 
 ```sql
 {{
@@ -167,11 +167,11 @@ To support multiple granularities (like hourly, monthly), create additional time
     )
 }}
 
-with hours as (
+with years as (
 
     {{
         dbt.date_spine(
-            'hour',
+            'year',
             "to_date('01/01/2000','mm/dd/yyyy')",
             "to_date('01/01/2025','mm/dd/yyyy')"
         )
@@ -180,19 +180,20 @@ with hours as (
 ),
 
 final as (
-    select cast(date_hour as timestamp) as date_hour
-    from hours
+    select cast(date_year as date) as date_year
+    from years
 )
 
 select * from final
 -- filter the time spine to a specific range
-where date_hour > dateadd(year, -4, current_timestamp()) 
-  and date_hour < dateadd(day, 30, current_timestamp())
+where date_year >= date_trunc('year', dateadd(year, -4, current_timestamp())) 
+  and date_year < date_trunc('year', dateadd(year, 1, current_timestamp()))
+
 
 ```
 </File>
 
-2. Then update `_models.yml` file and add the hourly time spine (below the daily time spine config):
+2. Then update `_models.yml` file and add the yearly time spine (below the daily time spine config):
 
 <File name='_models.yml'>
 
@@ -201,24 +202,25 @@ models:
   - name: time_spine_daily
     ... rest of the daily time spine config ...
 
-- name: time_spine_hourly
-    description: A time spine with one row per hour, ranging from four years ago to today.
+- name: time_spine_yearly
+    description: time spine one row per house
     time_spine:
-      standard_granularity_column: date_hour
+      standard_granularity_column: date_year
     columns:
-      - name: date_hour
-        granularity: hour
+      - name: date_year
+        granularity: year
 ```
 </File>
 
-3. Run the model to create the table:
+3. Run or preview the model to create the table:
    ```bash
-   dbt run --select time_spine_hourly
+   dbt run --select time_spine_yearly
+   dbt show --select time_spine_yearly
    ```
 
 4. Validate the output by querying the generated table:
    ```bash
-   dbt sl query --metrics revenue --group-by metric_time__hour
+   dbt sl query --metrics orders --group-by metric_time__year
    ```
 
 :::tip
