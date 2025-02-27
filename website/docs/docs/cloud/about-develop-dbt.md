@@ -5,7 +5,7 @@ description: "Learn how to develop your dbt projects using dbt Cloud."
 sidebar_label: "About developing in dbt" 
 pagination_next: "docs/cloud/about-cloud-develop-defer"
 hide_table_of_contents: true
-intro_text: "Develop dbt projects using dbt Cloud, a faster and more reliable way to deploy dbt and manage your project in a single, web-based UI. dbt Cloud runs dbt Core in a hosted environment, offering both single-tenant and multi-tenant options."
+intro_text: "Develop dbt projects using dbt Cloud, a faster and more reliable way to deploy dbt and manage your project in a single, web-based UI."
 ---
 
 You can develop in your browser using a dbt Cloud-powered command line interface (CLI), an integrated development environment (IDE), or Visual editor.
