@@ -109,7 +109,7 @@ Here's an example:
 ```yaml
 macros:
   - name: test_not_empty_string
-    description: Complementary test to default `not_null` test as it checks that there is not an empty string. It only accepts columns of type string. It is deprecated as this functionality has been included in the custom implementation of `not_null`.
+    description: Complementary test to default `not_null` test as it checks that there is not an empty string. It only accepts columns of type string.
     arguments:
       - name: model 
         type: string
