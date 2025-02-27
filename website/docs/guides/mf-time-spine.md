@@ -28,7 +28,7 @@ And once you have a time spine table, you need to configure it in YAML to tell M
 ### Prerequisites
 Before you start, make sure you have:
 
-- A dbt project set up. If you don't have one, follow the [Quickstart guides](/guides?tags=Quickstart) guide to help you get started.
+- A dbt project set up. If you don't have one, follow the [Semantic Layer quickstart guide](/guides/sl-snowflake-qs?step=1) or the [dbt Cloud quickstart guides)(/guides?tags=Quickstart) guide to help you get started.
 
 ## Add a time spine SQL model
 
