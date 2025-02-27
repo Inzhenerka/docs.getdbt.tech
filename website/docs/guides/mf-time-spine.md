@@ -14,7 +14,7 @@ recently_updated: true
 
 This guide explains how to configure a time spine using the [dbt Semantic Layer Jaffle shop example project](https://github.com/dbt-labs/jaffle-sl-template) as a reference. 
 
-### What is a time spine?
+### What is a time spine table?
 
 A [time spine](/docs/build/metricflow-time-spine) is essential for time-based joins and aggregations in MetricFlow, the engine that powers the dbt Semantic Layer.
 
