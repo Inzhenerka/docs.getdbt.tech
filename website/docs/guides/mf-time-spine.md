@@ -131,7 +131,7 @@ This time spine YAML file configures the `time_spine` property so MetricFlow can
 
 For the time spine table you created, let's run it and validate the output.
 
-1. Run the time spine model to create the table and validate the output:
+1. Run the following command:
    ```bash
    dbt run --select time_spine_daily
    ```
