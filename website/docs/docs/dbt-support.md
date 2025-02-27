@@ -106,6 +106,8 @@ Support tickets are assigned a severity level based on the impact of the issue o
 
 ## Leave feedback
 
+Leave feedback or submit a feature request for dbt Cloud or dbt Core.
+
 #### Share feedback or feature request for dbt Cloud
 1. In the dbt Cloud navigation, click **Leave feedback**.
 2. In the **Leave feedback** pop up, fill out the form.
