@@ -112,7 +112,7 @@ Leave feedback or submit a feature request for dbt Cloud or dbt Core.
 1. In the dbt Cloud navigation, click **Leave feedback**.
 2. In the **Leave feedback** pop up, fill out the form.
 3. Upload any relevant files to the feedback form (optional).
-4. Confirmheck if you'd like dbt Labs to contact you about the feedback (optional).
+4. Confirm if you'd like dbt Labs to contact you about the feedback (optional).
 5. Click **Send Feedback**.
 
 <Lightbox src="/img/docs/leave-feedback.gif" title="Leave feedback in dbt Cloud" />
