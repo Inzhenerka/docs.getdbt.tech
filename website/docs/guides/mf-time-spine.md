@@ -100,7 +100,6 @@ models:
 
 This time spine YAML file:
 - Defines `date_day` as the base column for daily granularity.
-- Adds [tests](/docs/build/data-tests) for uniqueness and non-null values.
 - Configures `time_spine` properties so MetricFlow can use the table
 
 ### Using an existing dim_date table
