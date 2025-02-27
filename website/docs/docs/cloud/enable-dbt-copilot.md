@@ -7,7 +7,7 @@ intro_text: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your deve
 
 # Enable dbt Copilot <Lifecycle status="enterprise" /> 
 
-This page explains how to enable the dbt Copilot engine in dbt Cloud, leveraging AI to speed up your development and allowing you to focus on delivering quality data.
+This page explains how to enable the dbt Copilot engine in dbt Cloud to speed up your development and allow you to focus on delivering quality data.
 
 ## Prerequisites
 
