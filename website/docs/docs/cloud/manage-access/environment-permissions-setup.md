@@ -15,7 +15,7 @@ Environment-level permissions are not the same as account-level [role-based acce
 
 In your dbt Cloud account:
 
-1. Click your account name, above your profile icon on the left side panel, then select **Account settings**.
+1. Click your account name, above your profile icon on the left side panel. Then select **Account settings**.
 2. Select **Groups & Licenses**. We recommend deleting the default `Owner`, `Member`, and `Everyone` groups and replacing them with your organizational groups to avoid granting users unnecessary elevated privileges.
 
 <Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt Cloud with the default groups highlighted."/>
