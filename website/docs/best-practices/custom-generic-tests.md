@@ -123,7 +123,7 @@ macros:
 </File>
 
 In this example:
-- When documenting custom test macros in a `schema.yml` file, add the `test_` prefix to the macro name. If the test block's name is `not_empty_string`, then the macro name is `test_not_empty_string`.
+- When documenting custom test macros in a `schema.yml` file, add the `test_` prefix to the macro name. For example, if the test block's name is `not_empty_string`, then the macro's name would be `test_not_empty_string`.
 - We've provided a description at the macro level, explaining what the test does and any relevant notes.
 - Each argument (like `model`, `column_name`) also includes a description to clarify its purpose.
 
