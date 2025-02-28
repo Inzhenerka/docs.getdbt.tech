@@ -106,6 +106,8 @@ You can add a description to the Jinja macro that provides the core logic for a 
 
 Here's an example:
 
+<File name="macros/generic/schema.yml">
+    
 ```yaml
 macros:
   - name: test_not_empty_string
@@ -118,11 +120,11 @@ macros:
         type: string
         description: Column name that should not be an empty string
 ```
+</File>
 
 In this example:
-
-- The macro definition is called `test_not_empty_string.`
-- We've provided a description at the macro level, explaining what the test does and any relevant notes (for example, deprecation status).
+- When documenting custom test macros in a `schema.yml` file, add the `test_` prefix to the macro name. If the test block's name is `not_empty_string`, then the macro name is `test_not_empty_string`.
+- We've provided a description at the macro level, explaining what the test does and any relevant notes.
 - Each argument (like `model`, `column_name`) also includes a description to clarify its purpose.
 
 ### Generic tests with additional arguments
