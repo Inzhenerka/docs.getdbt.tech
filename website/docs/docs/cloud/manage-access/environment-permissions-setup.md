@@ -32,9 +32,9 @@ In your dbt Cloud account:
   - Analyst
   - Developer
 
-Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
+  Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
 
-If you select a permission set that is not supported, the environment permission option will not appear.
+  If you select a permission set that is not supported, the environment permission option will not appear.
 
 <Lightbox src="/img/docs/dbt-cloud/no-option.png" width="80%" title="The view of the permissions box if there is no option for environment permissions."/>
 
