@@ -49,7 +49,7 @@ dbt docs generate --empty-catalog
 
 **Example**:
 
-Use the `--static` flag if you want to generate the docs as a static page for hosting on cloud storage provider. The contents of `catalog.json` and `manifest.json` will be inserted into the `index.html` file, creating a single page that can be easily shared via email or file sharing apps. 
+Use the `--static` flag to generate the docs as a static page for hosting on a cloud storage provider. The `catalog.json` and `manifest.json` files will be inserted into the `index.html` file, creating a single page easily shared via email or file-sharing apps. 
 
 ```
 dbt docs generate --static
