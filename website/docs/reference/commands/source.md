@@ -18,10 +18,10 @@ You can also use [source freshness](/docs/deploy/source-freshness) commands help
 
 To configure source freshness in dbt:
 
-- Add a `freshness` block to your source in the .yml file.
+- Add a [`freshness`](/reference/resource-properties/freshness) block to your source in the .yml file.
 - Specify `warn_after` and `error_after` thresholds.
-- Include `loaded_at_field` for each table.
-- Use the `dbt source freshness` command to check freshness.
+- Include [`loaded_at_field`](/reference/resource-properties/freshness#loaded_at_field) for each table.
+- Use the [`dbt source freshness`](/reference/commands/source#dbt-source-freshness) command to check freshness.
 
 <File name='models/<filename>.yml'>
 
@@ -54,11 +54,21 @@ sources:
 ```
 </File>
 
-This helps to monitor data pipeline health.
+This helps to monitor the data pipeline health.
 
-You can also configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
+You can also configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [Enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
 
-<Lightbox src="/img/docs/dbt-cloud/select-source-freshness.png" title="Selecting source freshness"/>
+### Source freshness commands
+
+Source freshness commands ensure you're receiving the most up-to-date, relevant, and accurate information. 
+
+Some of the typical commands you can use are:
+
+| **Command**                                                                 | **Description**                  | 
+| ----------------------------------------------------------------------------| ---------------------------------|
+|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Checks the "freshness" for all sources.|
+|[`dbt source freshness --output target/source_freshness.json`](/reference/commands/source#configuring-source-freshness-output)|Output of "freshness" information to a different path.|
+|[`dbt source freshness --select "source:snowplow"`](/reference/commands/source#specifying-sources-to-snapshot)|Checks the "freshness" for specific sources.|
 
 ### Specifying sources to snapshot
 
@@ -124,15 +134,3 @@ Snapshots of source freshness can be used to understand:
 This command can be run manually to determine the state of your source data freshness at any time. It is also recommended that you run this command on a schedule, storing the results of the freshness snapshot at regular intervals. These longitudinal snapshots will make it possible to be alerted when source data freshness SLAs are violated, as well as understand the trend of freshness over time.
 
 dbt Cloud makes it easy to snapshot source freshness on a schedule, and provides a dashboard out of the box indicating the state of freshness for all of the sources defined in your project. For more information on snapshotting freshness in dbt Cloud, check out the [docs](/docs/build/sources#source-data-freshness).
-
-### Source freshness commands
-
-Source freshness commands ensure you're receiving the most up-to-date, relevant, and accurate information. 
-
-Some of the typical commands you can use are:
-
-| **Command**                                                                 | **Description**                  | 
-| ----------------------------------------------------------------------------| ---------------------------------|
-|[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Checks the "freshness" for all sources.|
-|[`dbt source freshness --output target/source_freshness.json](/reference/commands/source#configuring-source-freshness-output)|Output of freshness information to a different path|
-|`dbt source freshness --select "source:snowplow"`|Checks the "freshness" for specific sources|
