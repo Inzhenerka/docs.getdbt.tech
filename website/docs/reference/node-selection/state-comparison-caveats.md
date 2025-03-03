@@ -51,17 +51,23 @@ dbt overwrites the `manifest.json` file during parsing, which means when you ref
 
 <Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
 
-During the next run, the `target/manifest.json` is overwritten. Following this, the `target/manifest.json` is read again to detect changes, but no changes are found. 
+During the next run, in the reproduction step, the `target/manifest.json` is overwritten. After overwriting, dbt reads the `target/manifest.json` again to detect changes but finds none. 
 
-Additionally, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
+As a note, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
 
 #### Recommendation
 
-To avoid having the `manifest.json` overwritten before dbt reads it for change detection, you can update your workflow in one of the following ways:
+To prevent the `manifest.json` from being overwritten before dbt reads it for change detection, update your workflow using one of these methods:
 
-- Move the manifest from the `target/` folder to a dedicated folder such as `state/` between the build stage, where dbt would generate the `target/manifest.json` and, instead of comparing the current state with the previous one (for example using `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified`), use the command `mkdir state && mv target/manifest.json state/manifest.json`.
-- Write the manifest to a different `--target-path` in step 2 or step 4 of the run.
-- Pass the `--no-write-json` flag during step 4 of the run: `dbt --no-write-json ls --select state:modified --state target`.
+- Move the `manifest.json` to a dedicated folder (for example `state/`) after dbt generates it in the `target/ folder` and, use a saved state, instead of comparing the current state with the just-overwritten version:
+
+```
+mkdir state && mv target/manifest.json state/manifest.json
+```
+This ensures dbt compares against the correct previous state, and it avoids issues caused by setting `--state` and `--target-path` to the same path, which can lead to non-idempotent behavior.
+
+- Write the manifest to a different `--target-path` in the build stage (where dbt would generate the `target/manifest.json`) or in the reproduction stage.
+- Pass the `--no-write-json` flag:`dbt --no-write-json ls --select state:modified --state target`: during the reproduction stage.
 
 ### False positives
 

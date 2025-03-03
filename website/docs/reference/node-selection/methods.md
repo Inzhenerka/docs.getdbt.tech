@@ -254,6 +254,30 @@ There are two additional `state` selectors that complement `state:new` and `stat
 
 These selectors can help you shorten run times by excluding unchanged nodes. Currently, no subselectors are available at this time, but that might change as use cases evolve. 
 
+#### Overwrites the `manifest.json`
+
+dbt overwrites the `manifest.json` file during parsing, which means when you reference`--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
+
+<Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
+
+During the next run, in the reproduction step, the `target/manifest.json` is overwritten. After overwriting, dbt reads the `target/manifest.json` again to detect changes but finds none. 
+
+As a note, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
+
+#### Recommendation
+
+To prevent the `manifest.json` from being overwritten before dbt reads it for change detection, update your workflow using one of these methods:
+
+- Move the `manifest.json` to a dedicated folder (for example `state/`) after dbt generates it in the `target/ folder` and, use a saved state, instead of comparing the current state with the just-overwritten version:
+
+```
+mkdir state && mv target/manifest.json state/manifest.json
+```
+This ensures dbt compares against the correct previous state, and it avoids issues caused by setting `--state` and `--target-path` to the same path, which can lead to non-idempotent behavior.
+
+- Write the manifest to a different `--target-path` in the build stage (where dbt would generate the `target/manifest.json`) or in the reproduction stage.
+- Pass the `--no-write-json` flag:`dbt --no-write-json ls --select state:modified --state target`: during the reproduction stage.
+
 ### tag
 The `tag:` method is used to select models that match a specified [tag](/reference/resource-configs/tags).
 
