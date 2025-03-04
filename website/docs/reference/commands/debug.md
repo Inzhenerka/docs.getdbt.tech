@@ -18,16 +18,17 @@ By default, `dbt debug` validates:
 
 *Note: Not to be confused with [debug-level logging](/reference/global-configs/logs#debug-level-logging) through the `--debug` option which increases verbosity.
 
+## Availability
+
+The `dbt debug` command is available to use in the dbt Cloud CLI, dbt Cloud IDE, and dbt Core CLI. 
+
+- dbt Cloud CLI users can also use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment. 
+
+- The dbt Cloud IDE currently supports the `dbt debug` command and `dbt debug --connection` flag.
+
 ## Flags
 
-:::info Flag Availability in the dbt Cloud IDE
-The dbt Cloud IDE currently supports the following flags:
-
-- `dbt debug`
-- `dbt debug --connection`
-:::
-
-`dbt debug` supports the following flags in your terminal when using the command line interface (CLI). dbt Cloud CLI users can use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment. 
+`dbt debug` supports the following flags in your terminal when using the command line interface (CLI). 
 
 ```text
 Usage: dbt debug [OPTIONS]
