@@ -37,7 +37,9 @@ This order is now in the "shipped" state, but we've lost the information about w
 
 <VersionBlock lastVersion="1.8" >
 
-Define snapshots within a snapshot block in a `.sql` file (typically in your `snapshots` directory or any other directory). This is considered a legacy syntax that allows for defining multiple resources in a single file and can slow down parsing and compilation. You'll also need to configure your snapshot to tell dbt how to detect record changes.
+In old versions of dbt Core (v1.8 and earlier), snapshots must be defined in snapshot blocks inside of your [snapshots directory](/reference/project-configs/snapshot-paths). These snapshots do not have native support for environments or deferral, making previewing changes in development difficult. 
+
+The modern, environment-aware way to create snapshots is to define them in YAML. This requires dbt Core v1.9 or later, or to be on any [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks).
 
 - For more information about configuring snapshots in a `.sql` file, refer to the [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy) page. 
 - For faster and more efficient management, consider [choosing the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or the [latest version of dbt Core](/docs/dbt-versions/core), which uses a more ergonomic snapshot configuration syntax.
