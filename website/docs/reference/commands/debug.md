@@ -20,14 +20,14 @@ By default, `dbt debug` validates:
 
 ## Flags
 
-`dbt debug` supports the following flags to use in the CLI. dbt Cloud CLI users can use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment.
-
 :::info Flag Availability in the dbt Cloud IDE
 The dbt Cloud IDE currently supports the following flags:
 
 - `dbt debug`
 - `dbt debug --connection`
 :::
+
+`dbt debug` supports the following flags in your terminal when using the command line interface (CLI). dbt Cloud CLI users can use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment. 
 
 ```text
 Usage: dbt debug [OPTIONS]
