@@ -40,8 +40,9 @@ In the `freshness` block, one or both of `warn_after` and `error_after` can be p
 In most cases, the `loaded_at_field` is required. Some adapters support calculating source freshness from the warehouse metadata tables and can exclude the `loaded_at_field`.
 
 If a source has a `freshness:` block, dbt will attempt to calculate freshness for that source:
-- If a `loaded_at_field` is provided, dbt will calculate freshness via a select query (behavior prior to v1.7).
-- If a `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible (new in v1.7 on supported adapters).
+- If `loaded_at_field` is provided, dbt will calculate freshness via a select query (behavior prior to v1.7).
+- If `loaded_at_field` is _not_ provided, dbt will calculate freshness via warehouse metadata tables when possible (new in v1.7 on supported adapters).
+<VersionBlock firstVersion="1.10">- If `loaded_at_query` is provided, `loaded_at_field` should not be configured.</VersionBlock>
 
 Currently, calculating freshness from warehouse metadata tables is supported on the following adapters:
 - [Snowflake](/reference/resource-configs/snowflake-configs)

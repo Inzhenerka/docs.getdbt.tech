@@ -29,4 +29,6 @@ python3 -m pip install dbt-core dbt-snowflake
 
 ## Quick hits
 
+- Provide the `loaded_at_query` config for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the built-in time stamp, which uses the `loaded_at_field`). You can not define `loaded_at_query` if the `loaded_at_field` config is also provided.
+
 **Coming soon**
