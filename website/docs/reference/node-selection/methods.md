@@ -256,7 +256,7 @@ These selectors can help you shorten run times by excluding unchanged nodes. Cur
 
 #### Overwrites the `manifest.json`
 
-dbt overwrites the `manifest.json` file during parsing, which means when you reference`--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
+dbt overwrites the `manifest.json` file during parsing, which means when you reference `--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
 
 <Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
 
