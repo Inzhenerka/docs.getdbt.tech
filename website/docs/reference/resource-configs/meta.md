@@ -23,6 +23,17 @@ hide_table_of_contents: true
 }>
 <TabItem value="models">
 
+<File name='dbt_project.yml'>
+
+```yml
+models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+
+```
+
+</File>
+
 <File name='models/schema.yml'>
 
 ```yml
@@ -51,6 +62,15 @@ See [configs and properties](/reference/configs-and-properties) for details.
 
 <TabItem value="sources">
 
+<File name='dbt_project.yml'>
+
+```yml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/schema.yml'>
 
 ```yml
@@ -78,6 +98,15 @@ version: 2
 
 <TabItem value="seeds">
 
+<File name='dbt_project.yml'>
+
+```yml
+seeds:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='seeds/schema.yml'>
 
 ```yml
@@ -101,6 +130,15 @@ The `meta` config can also be defined under the `seeds` config block in `dbt_pro
 </TabItem>
 
 <TabItem value="snapshots">
+
+<File name='dbt_project.yml'>
+
+```yml
+snapshots:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
 
 <File name='snapshots/schema.yml'>
 
@@ -142,6 +180,15 @@ The `meta` config is not currently supported for analyses.
 
 <TabItem value="macros">
 
+<File name='dbt_project.yml'>
+
+```yml
+macros:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='macros/schema.yml'>
 
 ```yml
@@ -161,6 +208,15 @@ version: 2
 </TabItem>
 
 <TabItem value="exposures">
+
+<File name='dbt_project.yml'>
+
+```yml
+exposures:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
 
 <File name='models/exposures.yml'>
 
@@ -193,6 +249,15 @@ semantic_models:
 
 ```
 
+</File>
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
 </File>
 </VersionBlock>
 
@@ -236,6 +301,15 @@ The `meta` config can also be defined under the `semantic-models` config block i
 
 <VersionBlock lastVersion="1.7">
 
+<File name='dbt_project.yml'>
+
+```yml
+metrics:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/metrics.yml'>
 
 ```yml
@@ -254,6 +328,16 @@ metrics:
 </VersionBlock>
 
 <VersionBlock firstVersion="1.8"> 
+
+<File name='dbt_project.yml'>
+
+```yml
+metrics:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/metrics.yml'>
 
 ```yml
@@ -275,6 +359,15 @@ metrics:
 </TabItem>
 
 <TabItem value="saved queries">
+
+<File name='dbt_project.yml'>
+
+```yml
+saved-queries:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
 
 <File name='models/semantic_models.yml'>
 
