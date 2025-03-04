@@ -42,7 +42,6 @@ In old versions of dbt Core (v1.8 and earlier), snapshots must be defined in sna
 The modern, environment-aware way to create snapshots is to define them in YAML. This requires dbt Core v1.9 or later, or to be on any [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks).
 
 - For more information about configuring snapshots in a `.sql` file, refer to the [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy) page. 
-- For faster and more efficient management, consider [choosing the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or the [latest version of dbt Core](/docs/dbt-versions/core), which uses a more ergonomic snapshot configuration syntax.
 
 The following example shows how to configure a snapshot using the legacy syntax:
 
