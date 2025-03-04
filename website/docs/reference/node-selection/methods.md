@@ -256,24 +256,15 @@ These selectors can help you shorten run times by excluding unchanged nodes. Cur
 
 #### Overwrites the `manifest.json`
 
-dbt overwrites the `manifest.json` file during parsing, which means when you reference `--state` from the `target/ directory`, you may encounter a warning indicating that the saved manifest wasn't found.
+import Overwritesthemanifest from '/snippets/_overwrites-the-manifest.md';
 
-<Lightbox src="/img/docs/reference/saved-manifest-not-found.png" title="Saved manifest not found error" /> 
-
-During the next job run, in the reproduction step (this step refers to the specific sequence of steps that lead to the issue where dbt overwrites the `manifest.json` before it can be used for change detection), the `target/manifest.json` is overwritten. After overwriting, dbt reads the `target/manifest.json` again to detect changes but finds none. 
-
-Avoid setting `--state` and `--target-path` to the same path with state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior and won't work as expected.
+<Overwritesthemanifest />
 
 #### Recommendation
 
-To prevent the `manifest.json` from being overwritten before dbt reads it for change detection, update your workflow using one of these methods:
+import Recommendationoverwritesthemanifest from '/snippets/_recommendation-overwriting-manifest.md'; 
 
-- Move the `manifest.json` to a dedicated folder (for example `state/`) after dbt generates it in the `target/ folder` and, use a saved state, instead of comparing the current state with the just-overwritten version.
-
-    - This ensures dbt compares against the correct previous state, and it avoids issues caused by setting `--state` and `--target-path` to the same path, which can lead to non-idempotent behavior.
-
-- Write the manifest to a different `--target-path` in the build stage (where dbt would generate the `target/manifest.json`) or in the reproduction stage (the sequence of steps that lead to the issue where dbt overwrites the `manifest.json` before it can be used for change detection).
-- Pass the `--no-write-json` flag: `dbt --no-write-json ls --select state:modified --state target`: during the reproduction stage.
+<Recommendationoverwritesthemanifest />
 
 ### tag
 The `tag:` method is used to select models that match a specified [tag](/reference/resource-configs/tags).
