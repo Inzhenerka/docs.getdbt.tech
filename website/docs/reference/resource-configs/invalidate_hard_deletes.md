@@ -1,10 +1,18 @@
 ---
-title: invalidate_hard_deletes (legacy)
+title: invalidate_hard_deletes
 resource_types: [snapshots]
 description: "Invalidate_hard_deletes - Read this in-depth guide to learn about configurations in dbt."
 datatype: column_name
-sidebar_label: invalidate_hard_deletes (legacy)
+sidebar_label: invalidate_hard_deletes
 ---
+
+# invalidate_hard_deletes <Lifecycle status="legacy" />
+
+<IntroText>
+
+Legacy opt-in configuration to enable invalidating hard deleted records while snapshotting the query.
+
+</IntroText>
 
 :::warning This is a legacy config &mdash; Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config instead.
 
