@@ -8,7 +8,7 @@ sidebar: "Legacy configuration"
 
 <IntroText>
 
-Configure snapshots using Jinja blocks in your `.sql` files, which is available now and considered legacy syntax.
+Use legacy SQL-based snapshot configurations with Jinja blocks in any dbt version. dbt v1.9 introduced YAML-based configs for better readability and environment awareness.
 
 </IntroText>
 
