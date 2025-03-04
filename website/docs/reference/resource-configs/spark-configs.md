@@ -27,7 +27,7 @@ When materializing a model as `table`, you may include several optional configs 
 | clustered_by  | Each partition in the created table will be split into a fixed number of buckets by the specified columns.                         | Optional               | `country_code`              |
 | buckets  | The number of buckets to create while clustering                                                                                   | Required if `clustered_by` is specified                | `8`              |
 
-[^1]: If `location_root` is configured, dbt specifies a location path in the `create table` statement. The table created changes from being "managed" to being "external" in Spark/Databricks
+[^1]: If you configure `location_root`, dbt specifies a location path in the `create table` statement. This changes the table from "managed" to "external" in Spark/Databricks.
 
 ## Incremental models
 
