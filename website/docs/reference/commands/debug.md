@@ -18,17 +18,15 @@ By default, `dbt debug` validates:
 
 *Note: Not to be confused with [debug-level logging](/reference/global-configs/logs#debug-level-logging) through the `--debug` option which increases verbosity.
 
-## Availability
-
-The `dbt debug` command is available to use in the dbt Cloud CLI, dbt Cloud IDE, and dbt Core CLI. 
-
-- dbt Cloud CLI users can also use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment. 
-
-- The dbt Cloud IDE currently supports the `dbt debug` command and `dbt debug --connection` flag.
-
 ## Flags
 
-`dbt debug` supports the following flags in your terminal when using the command line interface (CLI). 
+Most of the `dbt debug` flags apply to the dbt Core CLI. Some flags also work in dbt Cloud CLI, but only `--connection` is supported in the dbt Cloud IDE.
+
+- dbt Core CLI: Supports all flags.
+- dbt Cloud CLI: Only supports dbt `debug` and `dbt debug --connection`. YOu can also use the [`dbt environment`](/reference/commands/dbt-environment) command to interact with your dbt Cloud environment. 
+- dbt Cloud IDE: Only supports dbt `debug` and `dbt debug --connection`.
+
+`dbt debug` supports the following flags in your terminal when using the command line interface (CLI):
 
 ```text
 Usage: dbt debug [OPTIONS]
@@ -205,7 +203,7 @@ Options:
  --connection          
                 Test the connection to the target database
                 independent of dependency checks.
-                Available in bt Cloud IDE and dbt Core CLI
+                Available in dbt Cloud IDE and dbt Core CLI
 
  --config-dir          
                 Print a system-specific command to access
