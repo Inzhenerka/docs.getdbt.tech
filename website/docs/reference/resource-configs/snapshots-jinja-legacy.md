@@ -1,7 +1,7 @@
 ---
 title: Legacy snapshot configurations
 description: Read about how to configure snapshots using legacy jinja blocks
-sidebar: Legacy configuration
+sidebar: "Legacy configuration"
 ---
 
 # Legacy snapshot configuration <Lifecycle status='legacy' />
