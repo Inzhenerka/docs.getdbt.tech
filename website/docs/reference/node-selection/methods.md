@@ -262,7 +262,7 @@ dbt overwrites the `manifest.json` file during parsing, which means when you ref
 
 During the next run, in the reproduction step, the `target/manifest.json` is overwritten. After overwriting, dbt reads the `target/manifest.json` again to detect changes but finds none. 
 
-As a note, it's not recommended to set `--state` and `--target-path` to the same path while using state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior, which may not work as expected.
+Avoid setting `--state` and `--target-path` to the same path with state-dependent features like `--defer` and `state:modified` as it can lead to non-idempotent behavior and won't work as expected.
 
 #### Recommendation
 
