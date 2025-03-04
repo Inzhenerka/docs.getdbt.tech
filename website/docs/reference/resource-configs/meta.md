@@ -259,9 +259,32 @@ semantic-models:
     +meta: {<dictionary>}
 ```
 </File>
+
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
+
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+<File name='models/semantic_models.yml'>
+
+```yml
+semantic_models:
+  - name: semantic_model_name
+    config:
+      meta: {<dictionary>}
+
+```
+
+</File>
 
 [Dimensions](/docs/build/dimensions), [entities](/docs/build/entities), and [measures](/docs/build/measures) can also have their own `meta` configurations.
 
@@ -291,6 +314,7 @@ semantic_models:
 ```
 
 </File>
+
 </VersionBlock>
 
 The `meta` config can also be defined under the `semantic-models` config block in `dbt_project.yml`. See [configs and properties](/reference/configs-and-properties) for details.
