@@ -8,7 +8,7 @@ sidebar: Legacy configuration
 
 <IntroText>
 
-Configure snapshots using jinja blocks in your `.sql` files, which is available now and considered legacy syntax.
+Configure snapshots using Jinja blocks in your `.sql` files, which is available now and considered legacy syntax.
 
 </IntroText>
 
@@ -57,7 +57,7 @@ Snapshot-specific configurations are applicable to only one dbt resource type ra
     [strategy](/reference/resource-configs/strategy)="timestamp" | "check",
     [updated_at](/reference/resource-configs/updated_at)="<column_name>",
     [check_cols](/reference/resource-configs/check_cols)=["<column_name>"] | "all"
-    [invalidate_hard_deletes](/reference/resource-configs/check_cols) : true | false
+    [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) : true | false
 ) 
 }}
 
@@ -74,7 +74,7 @@ Use general configurations for broader operational settings applicable across mu
 
 ```sql
 {{ config(
-    [enabled](/reference/resource-configs/check_cols)=true | false,
+    [enabled](/reference/resource-configs/enabled)=true | false,
     [tags](/reference/resource-configs/tags)="<string>" | ["<string>"],
     [alias](/reference/resource-configs/alias)="<string>", 
     [pre_hook](/reference/resource-configs/pre-hook-post-hook)="<sql-statement>" | ["<sql-statement>"],
@@ -268,7 +268,7 @@ select * from {{ source('jaffle_shop', 'orders') }}
 
 4. Check whether the result set of your query includes a reliable timestamp column that indicates when a record was last updated. For our example, the `updated_at` column reliably indicates record changes, so we can use the `timestamp` strategy. If your query result set does not have a reliable timestamp, you'll need to instead use the `check` strategy — more details on this in the next step.
 
-5. Add configurations to your snapshot using a `config` block. You can also configure your snapshot from your `dbt_project.yml` file ([docs](/reference/snapshot-configs)).
+5. Add configurations to your snapshot using a `config` block. You can also [configure your snapshot from your `dbt_project.yml` file](/reference/snapshot-configs).
 
 <VersionBlock lastVersion="1.8">
 
@@ -341,11 +341,11 @@ Completed successfully
 Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
 ```
 
-7. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](#snapshot-meta-fields) as described earlier.
+1. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](/docs/build/snapshots#snapshot-meta-fields) as described earlier.
 
-8. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
+2. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
 
-9. Select from the `snapshot` in downstream models using the `ref` function.
+3. Select from the `snapshot` in downstream models using the `ref` function.
 
 <File name='models/changed_orders.sql'>
 
