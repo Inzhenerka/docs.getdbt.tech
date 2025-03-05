@@ -1,4 +1,4 @@
-Auto and active exposures are two ways to use dbt Cloud to automatically generate exposures from dashboards and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs.
+
 
 The following table summarizes the differences between auto exposures and active exposures.
 
@@ -15,7 +15,7 @@ Check out the following sections for more information on auto exposures and acti
 <div className="grid--2-col">
 
 <Card
-    title="Auto exposures"
+    title="Auto exposures in Tableau"
     body="Import and auto-generate exposures from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
     link="/docs/cloud-integrations/auto-exposures-tableau"
     icon="dbt-bit"/>

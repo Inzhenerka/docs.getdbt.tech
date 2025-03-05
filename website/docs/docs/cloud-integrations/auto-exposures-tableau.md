@@ -5,11 +5,10 @@ description: "Import and auto-generate exposures from Tableau dashboards, helpin
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Auto exposures <Lifecycle status="enterprise" />
-
+# Auto exposures in Tableau <Lifecycle status="enterprise" />
 
 <IntroText>
-  As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto exposures integrates natively with Tableau to auto-generate downstream lineage in <a href="https://docs.getdbt.com/docs/collaborate/explore-projects" target="_blank" rel="noopener noreferrer">dbt Explorer</a> for a richer experience.
+  As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto exposures integrates natively with Tableau to auto-generate downstream lineage in <a href="https://docs.getdbt.com/docs/collaborate/explore-projects">dbt Explorer</a> for a richer experience.
 </IntroText>
 
 Auto exposures help data teams optimize their efficiency and ensure data quality by:
@@ -23,11 +22,7 @@ Auto exposures help data teams optimize their efficiency and ensure data quality
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
 :::
 
-## Set up auto exposures
-
-Set up auto exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#set-up-in-dbt-cloud) to ensure that your BI tools (like Tableau) extracts are updated regularly.
-
-### Prerequisites
+## Prerequisites
 
 To enable auto exposures, you should meet the following:
 
@@ -35,17 +30,22 @@ To enable auto exposures, you should meet the following:
 2. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
 4. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
-5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled. 
-   - If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
-   - Currently, you can only connect to a single Tableau site on the same server. 
+5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled.
+
+### Considerations
+import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.md';
+
+<ConsiderationsTableau/>
+
+## Set up auto exposures
+
+Set up auto exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#set-up-in-dbt-cloud) to ensure that your BI tool's extracts are updated regularly.
 
 ### Set up in Tableau
 
 This section of the document explains the steps you need to set up the auto-exposures integration with Tableau. Once you've set this up in Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view the auto-exposures](#view-auto-exposures) in dbt Explorer.
 
-To set up [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) needed for auto exposures, ask a site admin to configure it for the account.
-
-1. Ensure you or a site admin enables PATs for the account in Tableau.
+1. Ensure you or a site admin enables [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for the account in Tableau.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
 
 2. Create a PAT that you can add to dbt Cloud to pull in Tableau metadata for auto exposures. Ensure the user creating the PAT has access to collections/folders, as the PAT only grants access matching the creator's existing privileges.
@@ -61,9 +61,13 @@ To set up [personal access tokens (PATs)](https://help.tableau.com/current/serve
    - The **Server URL** is the first part of the URL, in this case: `10az.online.tableau.com`
    - The **Sitename** is right after the `site` in the URL, in this case: `dbtlabspartner` 
 
-5. You should now be ready to set up auto-exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: ServerURL, Sitename, Token name, and Secret.
+5. You should now be ready to set up auto-exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: 
+      - ServerURL
+      - Sitename
+      - Token name
+      - Secret
 
-### Set up in dbt Cloud <Lifecycle status="enterprise"/>
+### Set up in dbt Cloud
 
 1. In dbt Cloud, navigate to the project you want to add the auto-exposures to and then select **Settings**.
 2. Under the **Exposures** section, select **Add integration** to add the Tableau connection.
@@ -80,11 +84,9 @@ To set up [personal access tokens (PATs)](https://help.tableau.com/current/serve
       dbt Cloud immediately starts a sync when you update the selected collections list, capturing new workbooks and removing irrelevant ones.
       :::
 
-dbt Cloud imports everything in the collection(s) and you can continue to [view them](#view-auto-exposures) in Explorer. 
+5. dbt Cloud imports everything in the collection(s) and you can continue to [view them](#view-auto-exposures) in Explorer. 
 
-<Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="100%" title="View from the dbt Explorer in your Project lineage view, displayed with the Tableau icon."/>
-
-## View auto-exposures
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg" width="100%" title="View from the dbt Explorer in your Project lineage view, displayed with the Tableau icon."/>
 
 import ViewExposures from '/snippets/_auto-exposures-view.md';
 
@@ -98,8 +100,3 @@ With [active exposures](/docs/cloud-integrations/active-exposures), you can now 
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
 To set up active exposures in dbt Cloud, refer to [Active exposures](/docs/cloud-integrations/active-exposures).
-
-## Considerations
-import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.md';
-
-<ConsiderationsTableau/>

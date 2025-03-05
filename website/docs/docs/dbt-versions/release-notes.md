@@ -16,6 +16,10 @@ dbt Cloud release notes for recent and historical changes. Release notes fall in
 
 Release notes are grouped by month for both multi-tenant and virtual private cloud (VPC) environments.
 
+## March 2025
+
+- **New**: [Active exposures](/docs/cloud-integrations/active-and-auto-exposures) proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, complementing [auto exposures](/docs/cloud-integrations/auto-exposures-tableau). This feature is available in private beta and supports Tableau. To join the beta, contact your account representative.
+
 ## February 2025
 
 - **Enhancement**: The [Python SDK](/docs/dbt-cloud-apis/sl-python) added a new timeout parameter to Semantic Layer client and to underlying GraphQL clients to specify timeouts. Set a timeout number or use the `total_timeout` parameter in the global `TimeoutOptions` to control connect, execute and close timeouts granularly. `ExponentialBackoff.timeout_ms` is now deprecated.
