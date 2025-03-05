@@ -481,6 +481,16 @@ const sidebarSettings = {
             "docs/build/custom-target-names",
           ],
         },
+        {
+          type: "category",
+          label: "Optimize development",
+          collapsed: true,
+          link: { type: "doc", id: "docs/build/empty-flag" },
+          items: [
+            "docs/build/empty-flag",
+            "docs/build/sample-flag",
+          ],
+        },
         //"docs/building-a-dbt-project/dont-nest-your-curlies",
         //"docs/building-a-dbt-project/archival",
       ],

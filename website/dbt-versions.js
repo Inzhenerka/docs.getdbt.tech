@@ -48,6 +48,14 @@ exports.versions = [
  */
 exports.versionedPages = [
   {
+    page: "docs/build/sample-flag",
+    firstVersion: "1.10",
+  },
+  {
+    page: "docs/build/empty-flag",
+    firstVersion: "1.8",
+  },
+  {
     page: "docs/build/incremental-microbatch",
     firstVersion: "1.9",
   },
