@@ -6,6 +6,8 @@ pagination_prev: null
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 ---
 
+# Auto and active exposures <Lifecycle status="enterprise"/>
+
 import ActiveAutoExposuresOverview from '/snippets/_active-auto-exposures-overview.md';
 
 <ActiveAutoExposuresOverview />
