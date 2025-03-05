@@ -116,6 +116,102 @@ models:
 
 </VersionBlock>
 
+## Foreign key constraints
+
+<VersionBlock firstVersion="1.9">
+
+[Foreign key constraints]([/reference/resource-properties/constraints#defining-constraints](https://docs.getdbt.com/reference/resource-properties/constraints#defining-constraints)) are rules in a relational database that enforce a relationship between two tables.
+
+- A foreign key is a column (or a set of columns) in one table that refers to the `primary_key` in another table.
+- The constraint ensures that the value in the foreign key column must match an existing value in the referenced table's `primary_key` column.
+
+Some of the benefits of foreign key constraints include: 
+
+- Data consistency and integrity.
+- Prevention of orphaned rows in the child table (for example, rows with foreign key values that don't match any parent row).
+- Enables describing semantically meaningful relationships in the database.
+
+However, because you must hard-code your `database.schema.table` name when setting a foreign key constraint, there are some drawbacks:
+
+- DAG dependencies are incorrect.
+- Multi-environment is not supported.
+
+In dbt Core v1.9 and later and  the ["Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), you can now use `ref` in foreign key constraint expressions. This enables dbt to dynamically parse and compile the `to` field at both the model-level and column-level in order to capture dependencies between models based on foreign key constraints in lineage. This improvement addresses the challenges of hard-coding and enhances compatibility across environments.
+
+### Example
+
+Below are some examples of specifying which table you may want to reference using `ref` at the column level and the model-level:
+
+<File name='models/<filename>.yml'>
+
+```yml
+
+models:
+  - name: my_model
+    constraints:
+      - type: foreign_key
+        columns: [id]
+        to: ref('my_model_to') | source('source', 'source_table')
+        to_columns: [id]
+    columns:
+      - name: id
+        data_type: integer
+
+```
+
+</File>
+
+<File name='models/<filename>.yml'>
+
+```yml
+
+models:
+  - name: my_model
+    columns:
+      - name: id
+        data_type: integer
+        constraints:
+        - type: foreign_key
+          to: ref('my_model_to') | source('source', 'source_table')
+          to_columns: [id]
+
+
+```
+
+</File>
+
+dbt will automatically resolve references to other models so that these references capture dependencies and work across environments.
+
+### Supported dbt adapters
+
+Supported dbt-adapters will now use these new fields, when populated, to render out the foreign key constraint instead of `expression`.
+
+The following table lists the adapters that support foreign key constraints, but it’s worth noting some warehouses don’t enforce them.
+
+|Adapter   |Supported|Enforced|
+|----------|---------|--------|
+|BigQuery  |    ✅   |   ❌    |
+|Databricks|    ✅   |   ❌    |
+|Postgres  |    ✅   |   ✅    |
+|Redshift  |    ✅   |   ❌    |
+|Snowflake |    ✅   |   ❌    |
+|Spark     |    ✅   |   ❌    |
+|Athena    |    ❌   |   ❌    |
+
+For more information, on the adapters which support foreign key constraints, have a look at our guide on [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support).
+
+</VersionBlock>
+
+<VersionBlock lastVersion="1.8">
+
+When using `foreign_key`, you need to specify the referenced table's schema manually. Use `{{ target.schema }}` in the `expression` field to automatically pass the schema used by the target environment:
+
+`expression: "{{ target.schema }}.customers(customer_id)"` 
+
+Note that later versions of dbt will have more efficient ways of handling this. Find out more about upgrading to the latest version, refer to [About dbt Core versions](/docs/dbt-versions/core) or [Upgrade dbt version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
+
+</VersionBlock>
+
 ## Platform-specific support
 
 In transactional databases, it is possible to define "constraints" on the allowed values of certain columns, stricter than just the data type of those values. For example, Postgres supports and enforces all the constraints in the ANSI SQL standard (`not null`, `unique`, `primary key`, `foreign key`), plus a flexible row-level `check` constraint that evaluates to a boolean expression.
