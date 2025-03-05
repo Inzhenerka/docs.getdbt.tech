@@ -19,7 +19,7 @@ Auto exposures help data teams optimize their efficiency and ensure data quality
   - Active exposures is essentially a way to ensure that your Tableau extracts are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments).
   - For more info on the differences between auto-exposures and active exposures, see [Auto exposures and active exposures](/docs/cloud-integrations/active-and-auto-exposures).
 
-To set up auto exposures, prerequisites, and more &mdash; refer to [Auto exposures](/docs/cloud-integrations/auto-exposures).
+To set up auto exposures in Tableau, prerequisites, and more &mdash; refer to [Auto exposures](/docs/cloud-integrations/auto-exposures-tableau).
 
 ### Supported plans
 Auto exposures is available on the [dbt Cloud Enterprise](https://www.getdbt.com/pricing/) plan. Currently, you can only connect to a single Tableau site on the same server.

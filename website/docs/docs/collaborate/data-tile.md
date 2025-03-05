@@ -18,7 +18,7 @@ The data health tile:
 Data health tiles rely on [exposures](/docs/build/exposures) to surface data health signals in your dashboards. An exposure defines how specific outputs &mdash; like dashboards or reports &mdash; depend on your data models. Exposures in dbt can be configured in two ways:
 
 - Manual exposures &mdash; Defined manually and explicitly in your project’s YAML files.
-- Auto exposures &mdash; Pulled automatically from your BI tool as long as your BI tool integrates with dbt Cloud and you have access to [auto-exposures](/docs/collaborate/auto-exposures). 
+- Auto exposures &mdash; Pulled automatically from your BI tool as long as your BI tool integrates with dbt Cloud and you have access to [auto-exposures](/docs/cloud-integrations/auto-exposures-tableau). 
   - dbt Cloud creates auto exposures automatically for dbt Cloud users with access to this feature, removing the need for manual YAML definitions.
   - dbt Cloud pulls exposure metadata from your BI tool and integrates it into dbt Explorer.
   - These auto exposures are stored in dbt’s metadata system, appear in dbt Explorer, and behave like manual exposures, however they don’t exist in YAML files.
@@ -35,7 +35,7 @@ Data health tiles rely on [exposures](/docs/build/exposures) to surface data hea
 - You must have [develop permissions](/docs/cloud/manage-access/seats-and-users).
 - You have [exposures](/docs/build/exposures) defined in your project:
   -  If using manual exposures, they must be explicitly defined in your YAML files.
-  -  If using auto exposures, ensure your BI tool is [configured](/docs/cloud-integrations/configure-auto-exposures) with dbt Cloud.
+  -  If using auto exposures, ensure your BI tool is [configured](/docs/cloud-integrations/auto-exposures-tableau) with dbt Cloud.
 - You have [source freshness](/docs/deploy/source-freshness) enabled in the job that generates this exposure.
 - The exposure used for the  data health tile must have the [`type` property](/docs/build/exposures#available-properties) set to `dashboard`. Otherwise, you won't be able to view the **Embed data health tile in your dashboard** dropdown in dbt Explorer.
 

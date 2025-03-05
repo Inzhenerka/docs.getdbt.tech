@@ -10,7 +10,7 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 
 With active exposures, you can now use dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
-- Active exposures integrate with [auto exposures](/docs/cloud-integrations/auto-exposures) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+- Active exposures integrate with [auto exposures](/docs/cloud-integrations/auto-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
   - Auto exposures is a way to automatically bring downstream assets (like Tableau workbooks) into your [dbt Explorer lineage](/docs/collaborate/explore-projects).
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
@@ -29,7 +29,7 @@ With active exposures, you can now use dbt [Cloud job scheduler](/docs/deploy/jo
 
 To enable active exposures, you should meet the following:
 
-1. You have [auto exposures](/docs/cloud-integrations/auto-exposures#set-up-auto-exposures) already set up.
+1. You have [auto exposures](/docs/cloud-integrations/auto-exposures-tableau) already set up.
 2. Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
 3. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 4. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 

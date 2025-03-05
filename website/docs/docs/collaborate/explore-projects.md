@@ -34,7 +34,7 @@ Navigate the dbt Explorer overview page to access your project's resources and m
 - **Latest updates** &mdash; View the latest changes or issues related to your project's resources, including the most recent job runs, changed properties, lineage, and issues.
 - **Marts and public models** &mdash; View the [marts](/best-practices/how-we-structure/1-guide-overview#guide-structure-overview) and [public models](/docs/collaborate/govern/model-access#access-modifiers) in your project. You can also navigate to all public models in your account through this view.
 - **Model query history** &mdash; Use [model query history](/docs/collaborate/model-query-history) to track consumption queries on your models for deeper insights.
-- **Auto-exposures** &mdash; [Set up](/docs/cloud-integrations/auto-exposures#set-up-auto-exposures) and [view auto-exposures](/docs/collaborate/view-auto-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
+- **Auto-exposures** &mdash; [Set up](/docs/cloud-integrations/auto-exposures-tableau) and [view auto-exposures](/docs/collaborate/view-auto-exposures) to automatically expose relevant data models from Tableau to enhance visibility.
 - **Data health signals** &mdash; View the [data-health-signals](/docs/collaborate/data-health-signals) for each resource to understand its health and performance.
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-main-page.gif" width="95%" title="Navigate dbt Explorer to discover your project's resources and lineage."/>

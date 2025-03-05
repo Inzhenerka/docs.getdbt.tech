@@ -17,7 +17,7 @@ Check out the following sections for more information on auto exposures and acti
 <Card
     title="Auto exposures"
     body="Import and auto-generate exposures from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
-    link="/docs/cloud-integrations/auto-exposures"
+    link="/docs/cloud-integrations/auto-exposures-tableau"
     icon="dbt-bit"/>
 
 <Card
