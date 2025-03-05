@@ -16,12 +16,23 @@ hide_table_of_contents: true
     { label: 'Analyses', value: 'analyses', },
     { label: 'Macros', value: 'macros', },
     { label: 'Exposures', value: 'exposures', },
-    { label: 'Semantic Models', value: 'semantic models', },
+    { label: 'Semantic models', value: 'semantic models', },
     { label: 'Metrics', value: 'metrics', },
     { label: 'Saved queries', value: 'saved queries', },
   ]
 }>
 <TabItem value="models">
+
+<File name='dbt_project.yml'>
+
+```yml
+models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+
+```
+
+</File>
 
 <File name='models/schema.yml'>
 
@@ -51,6 +62,15 @@ See [configs and properties](/reference/configs-and-properties) for details.
 
 <TabItem value="sources">
 
+<File name='dbt_project.yml'>
+
+```yml
+sources:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/schema.yml'>
 
 ```yml
@@ -78,6 +98,15 @@ version: 2
 
 <TabItem value="seeds">
 
+<File name='dbt_project.yml'>
+
+```yml
+seeds:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='seeds/schema.yml'>
 
 ```yml
@@ -101,6 +130,15 @@ The `meta` config can also be defined under the `seeds` config block in `dbt_pro
 </TabItem>
 
 <TabItem value="snapshots">
+
+<File name='dbt_project.yml'>
+
+```yml
+snapshots:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
 
 <File name='snapshots/schema.yml'>
 
@@ -142,6 +180,15 @@ The `meta` config is not currently supported for analyses.
 
 <TabItem value="macros">
 
+<File name='dbt_project.yml'>
+
+```yml
+macros:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='macros/schema.yml'>
 
 ```yml
@@ -162,6 +209,15 @@ version: 2
 
 <TabItem value="exposures">
 
+<File name='dbt_project.yml'>
+
+```yml
+exposures:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/exposures.yml'>
 
 ```yml
@@ -179,6 +235,10 @@ exposures:
 
 <TabItem value="semantic models">
 
+Configure `meta` in the your [semantic models](/docs/build/semantic-models) YAML file or under the `semantic-models` config block in the `dbt_project.yml` file. 
+
+<VersionBlock lastVersion="1.9">
+
 <File name='models/semantic_models.yml'>
 
 ```yml
@@ -191,6 +251,72 @@ semantic_models:
 
 </File>
 
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
+<File name='models/semantic_models.yml'>
+
+```yml
+semantic_models:
+  - name: semantic_model_name
+    config:
+      meta: {<dictionary>}
+
+```
+
+</File>
+
+[Dimensions](/docs/build/dimensions), [entities](/docs/build/entities), and [measures](/docs/build/measures) can also have their own `meta` configurations.
+
+<File name='models/semantic_models.yml'>
+
+```yml
+semantic_models:
+  - name: semantic_model_name
+    config:
+      meta: {<dictionary>}
+
+    dimensions:
+      - name: dimension_name
+        config:
+          meta: {<dictionary>}
+
+    entities:
+      - name: entity_name
+        config:
+          meta: {<dictionary>}
+
+    measures:
+      - name: measure_name
+        config:
+          meta: {<dictionary>}
+
+```
+
+</File>
+
+</VersionBlock>
+
 The `meta` config can also be defined under the `semantic-models` config block in `dbt_project.yml`. See [configs and properties](/reference/configs-and-properties) for details.
 
 </TabItem>
@@ -198,6 +324,15 @@ The `meta` config can also be defined under the `semantic-models` config block i
 <TabItem value="metrics">
 
 <VersionBlock lastVersion="1.7">
+
+<File name='dbt_project.yml'>
+
+```yml
+metrics:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
 
 <File name='models/metrics.yml'>
 
@@ -217,6 +352,16 @@ metrics:
 </VersionBlock>
 
 <VersionBlock firstVersion="1.8"> 
+
+<File name='dbt_project.yml'>
+
+```yml
+metrics:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/metrics.yml'>
 
 ```yml
@@ -239,6 +384,15 @@ metrics:
 
 <TabItem value="saved queries">
 
+<File name='dbt_project.yml'>
+
+```yml
+saved-queries:
+  [<resource-path>](/reference/resource-configs/resource-path):
+    +meta: {<dictionary>}
+```
+</File>
+
 <File name='models/semantic_models.yml'>
 
 ```yml
@@ -249,13 +403,11 @@ saved_queries:
 ```
 
 </File>
-
 </TabItem>
-
 </Tabs>
 
 ## Definition
-The `meta` field can be used to set metadata for a resource. This metadata is compiled into the `manifest.json` file generated by dbt, and is viewable in the auto-generated documentation.
+The `meta` field can be used to set metadata for a resource and accepts any key-value pairs. This metadata is compiled into the `manifest.json` file generated by dbt, and is viewable in the auto-generated documentation.
 
 Depending on the resource you're configuring, `meta` may be available within the `config` property, and/or as a top-level key. (For backwards compatibility, `meta` is often (but not always) supported as a top-level key, though without the capabilities of config inheritance.)
 
@@ -343,3 +495,107 @@ models:
 
 </File>
 
+### Assign meta to semantic model
+
+
+The following example shows how to assign a `meta` value to a [semantic model](/docs/build/semantic-models) in the `semantic_model.yml` file and  `dbt_project.yml` file:
+
+<Tabs>
+<TabItem value="semantic_model" label="Semantic model">
+
+```yaml
+semantic_models:
+  - name: transaction 
+    model: ref('fact_transactions')
+    description: "Transaction fact table at the transaction level. This table contains one row per transaction and includes the transaction timestamp."
+    defaults:
+      agg_time_dimension: transaction_date
+    config:
+      meta:
+        data_owner: "Finance team"
+        used_in_reporting: true
+```
+
+</TabItem>
+
+<TabItem value="project.yml" label="dbt_project.yml">
+
+```yaml
+semantic-models:
+  jaffle_shop:
+    +meta:
+      used_in_reporting: true
+```
+</TabItem>
+</Tabs>
+
+### Assign meta to dimensions, measures, entities
+
+<VersionBlock lastVersion="1.8">
+
+Available in dbt version 1.9 and later.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+<Tabs>
+<TabItem value="semantic_model" label="Semantic model">
+
+The following example shows how to assign a `meta` value to a [dimension](/docs/build/dimensions), [entity](/docs/build/entities), and [measure](/docs/build/measures) in a semantic model:
+
+<File name='semantic_model.yml'>
+
+```yml
+semantic_models:
+  - name: semantic_model
+    ...
+    dimensions:
+      - name: order_date
+        type: time
+        config:
+          meta:
+            data_owner: "Finance team"
+            used_in_reporting: true
+    entities:
+      - name: customer_id
+        type: primary
+        config:
+          meta:
+            description: "Unique identifier for customers"
+            data_owner: "Sales team"
+            used_in_reporting: false
+    measures:
+      - name: count_of_users
+        expr: user_id
+        config:
+          meta:
+            used_in_reporting: true
+```
+
+</File>
+</TabItem>
+
+<TabItem value="project.yml" label="dbt_project.yml">
+
+This second example shows how to assign a `data_owner` and additional metadata value to a dimension in the `dbt_project.yml` file using the `+meta` syntax. The similar syntax can be used for entities and measures.
+
+<File name='dbt_project.yml'>
+
+```yml
+semantic-models:
+  jaffle_shop:
+    ...
+    [dimensions](/docs/build/dimensions):
+      - name: order_date
+        config:
+          meta:
+            data_owner: "Finance team"
+            used_in_reporting: true
+```
+
+
+</File>
+</TabItem>
+</Tabs>
+</VersionBlock>

@@ -1,7 +1,7 @@
 ---
 title: "Add snapshots to your DAG"
 sidebar_label: "Snapshots"
-description: "Read this tutorial to learn how to use snapshots when building in dbt."
+description: "Configure snapshots in dbt to track changes to your data over time."
 id: "snapshots"
 ---
 
@@ -37,16 +37,182 @@ This order is now in the "shipped" state, but we've lost the information about w
 
 <VersionBlock lastVersion="1.8" >
 
-- To configure snapshots in versions 1.8 and earlier, refer to [Configure snapshots in versions 1.8 and earlier](#configure-snapshots-in-versions-18-and-earlier). These versions use an older syntax where snapshots are defined within a snapshot block in a `.sql` file, typically located in your `snapshots` directory. 
-- Note that defining multiple resources in a single file can significantly slow down parsing and compilation. For faster and more efficient management, consider the updated snapshot YAML syntax, [available now in the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or [dbt Core v1.9 and later](/docs/dbt-versions/core).
-  - For more information on how to migrate from the legacy snapshot configurations to the updated snapshot YAML syntax, refer to [Snapshot configuration migration](/reference/snapshot-configs#snapshot-configuration-migration).
+In old versions of dbt Core (v1.8 and earlier), snapshots must be defined in snapshot blocks inside of your [snapshots directory](/reference/project-configs/snapshot-paths). These snapshots do not have native support for environments or deferral, making previewing changes in development difficult. 
 
+The modern, environment-aware way to create snapshots is to define them in YAML. This requires dbt Core v1.9 or later, or to be on any [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks).
+
+- For more information about configuring snapshots in a `.sql` file, refer to the [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy) page. 
+
+The following example shows how to configure a snapshot using the legacy syntax:
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{{
+    config(
+      target_database='analytics',
+      target_schema='snapshots',
+      unique_key='id',
+
+      strategy='timestamp',
+      updated_at='updated_at',
+    )
+}}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+The following table outlines the configurations available for snapshots in versions 1.8 and earlier:
+
+| Config | Description | Required? | Example |
+| ------ | ----------- | --------- | ------- |
+| [target_database](/reference/resource-configs/target_database) | The database that dbt should render the snapshot table into | No | analytics |
+| [target_schema](/reference/resource-configs/target_schema) | The schema that dbt should render the snapshot table into | Yes | snapshots |
+| [strategy](/reference/resource-configs/strategy) | The snapshot strategy to use. One of `timestamp` or `check` | Yes | timestamp |
+| [unique_key](/reference/resource-configs/unique_key) | A <Term id="primary-key" /> column or expression for the record | Yes | id |
+| [check_cols](/reference/resource-configs/check_cols) | If using the `check` strategy, then the columns to check | Only if using the `check` strategy | ["status"] |
+| [updated_at](/reference/resource-configs/updated_at) | If using the `timestamp` strategy, the timestamp column to compare | Only if using the `timestamp` strategy | updated_at |
+| [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) | Find hard deleted records in source, and set `dbt_valid_to` current time if no longer exists | No | True |
+
+- A number of other configurations are also supported (like `tags` and `post-hook`), check out the full list [here](/reference/snapshot-configs).
+- Snapshots can be configured from both your `dbt_project.yml` file and a `config` block, check out the [configuration docs](/reference/snapshot-configs) for more information.
+- Note: BigQuery users can use `target_project` and `target_dataset` as aliases for `target_database` and `target_schema`, respectively.
+- Before v1.9, `target_schema` (required) and `target_database` (optional) set a fixed schema or database for snapshots, making it hard to separate dev and prod environments. In v1.9, `target_schema` became optional, allowing environment-aware snapshots. By default, snapshots now use `generate_schema_name` or `generate_database_name`, but developers can still specify a custom location using [schema](/reference/resource-configs/schema) and [database](/reference/resource-configs/database), consistent with other resource types.
+
+### Configuration example
+
+To add a snapshot to your project:
+
+1. Create a file in your `snapshots` directory with a `.sql` file extension. For example, `snapshots/orders.sql`
+2. Use a `snapshot` block to define the start and end of a snapshot:
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{% endsnapshot %}
+```
+
+</File>
+
+3. Write a `select` statement within the snapshot block (tips for writing a good snapshot query are below). This select statement defines the results that you want to snapshot over time. You can use `sources` and `refs` here.
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+4. Check whether the result set of your query includes a reliable timestamp column that indicates when a record was last updated. For our example, the `updated_at` column reliably indicates record changes, so we can use the `timestamp` strategy. If your query result set does not have a reliable timestamp, you'll need to instead use the `check` strategy — more details on this below.
+
+5. Add configurations to your snapshot using a `config` block (more details below). You can also configure your snapshot from your `dbt_project.yml` file ([docs](/reference/snapshot-configs)).
+
+<VersionBlock lastVersion="1.8">
+
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{{
+    config(
+      target_database='analytics',
+      target_schema='snapshots',
+      unique_key='id',
+
+      strategy='timestamp',
+      updated_at='updated_at',
+    )
+}}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+6. Run the `dbt snapshot` [command](/reference/commands/snapshot) — for our example, a new table will be created at `analytics.snapshots.orders_snapshot`. You can change the `target_database` configuration, the `target_schema` configuration and the name of the snapshot (as defined in `{% snapshot .. %}`) will change how dbt names this table.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.9">
 
-Configure your snapshots in YAML files to tell dbt how to detect record changes. Define snapshots configurations in YAML files, alongside your models, for a cleaner, faster, and more consistent set up. 
+<File name='snapshots/orders_snapshot.sql'>
+
+```sql
+{% snapshot orders_snapshot %}
+
+{{
+    config(
+      schema='snapshots',
+      unique_key='id',
+      strategy='timestamp',
+      updated_at='updated_at',
+    )
+}}
+
+select * from {{ source('jaffle_shop', 'orders') }}
+
+{% endsnapshot %}
+```
+
+</File>
+
+6. Run the `dbt snapshot` [command](/reference/commands/snapshot)  &mdash; for our example, a new table will be created at `analytics.snapshots.orders_snapshot`. The [`schema`](/reference/resource-configs/schema) config will utilize the `generate_schema_name` macro.
+
+</VersionBlock>
+
+```
+$ dbt snapshot
+Running with dbt=1.8.0
+
+15:07:36 | Concurrency: 8 threads (target='dev')
+15:07:36 |
+15:07:36 | 1 of 1 START snapshot snapshots.orders_snapshot...... [RUN]
+15:07:36 | 1 of 1 OK snapshot snapshots.orders_snapshot..........[SELECT 3 in 1.82s]
+15:07:36 |
+15:07:36 | Finished running 1 snapshots in 0.68s.
+
+Completed successfully
+
+Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
+```
+
+7. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](#snapshot-meta-fields) as described earlier.
+
+8. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
+
+9. Select from the `snapshot` in downstream models using the `ref` function.
+
+<File name='models/changed_orders.sql'>
+
+```sql
+select * from {{ ref('orders_snapshot') }}
+```
+
+</File>
+
+10. Snapshots are only useful if you run them frequently &mdash; schedule the `snapshot` command to run regularly.
+
+</VersionBlock>
+
+<VersionBlock firstVersion="1.9">
+
+Configure your snapshots in YAML files to tell dbt how to detect record changes. Define snapshots configurations in YAML files, alongside your models, for a cleaner, faster, and more consistent set up. Place snapshot YAML files in the models directory or in a snapshots directory. 
 
 <File name='snapshots/orders_snapshot.yml'>
 
@@ -80,19 +246,19 @@ The following table outlines the configurations available for snapshots:
 | [strategy](/reference/resource-configs/strategy) | The snapshot strategy to use. Valid values: `timestamp` or `check` | Yes | timestamp |
 | [unique_key](/reference/resource-configs/unique_key) | A <Term id="primary-key" /> column(s) (string or array) or expression for the record | Yes |  `id` or `[order_id, product_id]` |
 | [check_cols](/reference/resource-configs/check_cols) | If using the `check` strategy, then the columns to check | Only if using the `check` strategy | ["status"] |
-| [updated_at](/reference/resource-configs/updated_at) | If using the `timestamp` strategy, the timestamp column to compare | Only if using the `timestamp` strategy | updated_at |
+| [updated_at](/reference/resource-configs/updated_at) | A column in your snapshot query results that indicates when each record was last updated, used in the `timestamp` strategy. May support ISO date strings and unix epoch integers, depending on the data platform you use. | Only if using the `timestamp` strategy | updated_at |
 | [dbt_valid_to_current](/reference/resource-configs/dbt_valid_to_current) | Set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date). By default, this value is `NULL`. When configured, dbt will use the specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table.| No | string |
 | [snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names) | Customize the names of the snapshot meta fields | No | dictionary |
 | [hard_deletes](/reference/resource-configs/hard-deletes) | Specify how to handle deleted rows from the source. Supported options are `ignore` (default), `invalidate` (replaces the legacy `invalidate_hard_deletes=true`), and `new_record`.| No | string |
 
-
-- In versions prior to v1.9, the `target_schema` (required) and `target_database` (optional) configurations defined a single schema or database to build a snapshot across users and environment. This created problems when testing or developing a snapshot, as there was no clear separation between development and production environments.  In v1.9, `target_schema` became optional, allowing snapshots to be environment-aware. By default, without `target_schema` or `target_database` defined, snapshots now use the `generate_schema_name` or `generate_database_name` macros to determine where to build. Developers can still set a custom location with [`schema`](/reference/resource-configs/schema) and [`database`](/reference/resource-configs/database)  configs, consistent with other resource types.
+- In v1.9, `target_schema` became optional, allowing snapshots to be environment-aware. By default, without `target_schema` or `target_database` defined, snapshots now use the `generate_schema_name` or `generate_database_name` macros to determine where to build.
+- Developers can still set a custom location with [`schema`](/reference/resource-configs/schema) and [`database`](/reference/resource-configs/database)  configs, consistent with other resource types.
 - A number of other configurations are also supported (for example, `tags` and `post-hook`). For the complete list, refer to [Snapshot configurations](/reference/snapshot-configs).
 - You can configure snapshots from both the `dbt_project.yml` file and a `config` block. For more information, refer to the [configuration docs](/reference/snapshot-configs).
 
 ### Add a snapshot to your project
 
-To add a snapshot to your project follow these steps. For users on versions 1.8 and earlier, refer to [Configure snapshots in versions 1.8 and earlier](#configure-snapshots-in-versions-18-and-earlier). 
+To add a snapshot to your project follow these steps. For users on versions 1.8 and earlier, refer to [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy). 
 
 1. Create a YAML file in your `snapshots` directory: `snapshots/orders_snapshot.yml` and add your configuration details. You can also configure your snapshot from your `dbt_project.yml` file ([docs](/reference/snapshot-configs)).
 
@@ -237,7 +403,7 @@ The `timestamp` strategy requires the following configurations:
 
 | Config | Description | Example |
 | ------ | ----------- | ------- |
-| updated_at | A column which represents when the source row was last updated | `updated_at` |
+| updated_at | A column which represents when the source row was last updated. May support ISO date strings and unix epoch integers, depending on the data platform you use. | `updated_at` |
 
 **Example usage:**
 
@@ -298,7 +464,7 @@ The `check` snapshot strategy can be configured to track changes to _all_ column
 
 :::
 
-**Example usage**
+#### Example usage
 
 <VersionBlock lastVersion="1.8">
 
@@ -345,6 +511,35 @@ snapshots:
 </File>
 
 </VersionBlock>
+
+####  Example usage with `updated_at`
+
+When using the `check` strategy, dbt tracks changes by comparing values in `check_cols`. By default, dbt uses the timestamp to update `dbt_updated_at`, `dbt_valid_from` and `dbt_valid_to` fields. Optionally you can set an `updated_at` column:
+
+- If `updated_at` is configured, the `check` strategy uses this column instead, as with the timestamp strategy.
+- If `updated_at` value is null, dbt defaults to using the current timestamp.
+
+Check out the following example, which shows how to use the `check` strategy with `updated_at`:
+
+```yaml
+snapshots:
+  - name: orders_snapshot
+    relation: ref('stg_orders')
+    config:
+      schema: snapshots
+      unique_key: order_id
+      strategy: check
+      check_cols:
+        - status
+        - is_cancelled
+      updated_at: updated_at
+```
+
+In this example:
+
+- If at least one of the specified `check_cols `changes, the snapshot creates a new row. If the `updated_at` column has a value (is not null), the snapshot uses it; otherwise, it defaults to the timestamp.
+- If `updated_at` isn’t set, then dbt automatically falls back to [using the current timestamp](#sample-results-for-the-check-strategy) to track changes.
+- Use this approach when your `updated_at` column isn't reliable for tracking record updates, but you still want to use it &mdash; rather than the snapshot's execution time &mdash; whenever row changes are detected.
 
 ### Hard deletes (opt-in)
 
@@ -437,287 +632,101 @@ Snapshot <Term id="table">tables</Term> will be created as a clone of your sourc
 
 In dbt Core v1.9+ (or available sooner in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks)):
 - These column names can be customized to your team or organizational conventions using the [`snapshot_meta_column_names`](/reference/resource-configs/snapshot_meta_column_names) config.
-ess)
 - Use the [`dbt_valid_to_current` config](/reference/resource-configs/dbt_valid_to_current) to set a custom indicator for the value of `dbt_valid_to` in current snapshot records (like a future date such as `9999-12-31`). By default, this value is `NULL`. When set, dbt will use this specified value instead of `NULL` for `dbt_valid_to` for current records in the snapshot table.
 - Use the [`hard_deletes`](/reference/resource-configs/hard-deletes) config to track deleted records as new rows with the `dbt_is_deleted` meta field when using the `hard_deletes='new_record'` field.
 
 
-| Field          | Meaning | Usage |
-| -------------- | ------- | ----- |
-| dbt_valid_from | The timestamp when this snapshot row was first inserted | This column can be used to order the different "versions" of a record. |
-| dbt_valid_to   | The timestamp when this row became invalidated. <br /> For current records, this is `NULL` by default <VersionBlock firstVersion="1.9"> or the value specified in `dbt_valid_to_current`.</VersionBlock> | The most recent snapshot record will have `dbt_valid_to` set to `NULL` <VersionBlock firstVersion="1.9"> or the specified value. </VersionBlock> |
-| dbt_scd_id     | A unique key generated for each snapshotted record. | This is used internally by dbt |
-| dbt_updated_at | The updated_at timestamp of the source record when this snapshot row was inserted. | This is used internally by dbt |
-| dbt_is_deleted | A boolean value indicating if the record has been deleted. `True` if deleted, `False` otherwise. | Added when `hard_deletes='new_record'` is configured. This is used internally by dbt |
+| Field          | <div style={{width:'250px'}}>Meaning</div> | Notes | Example|
+| -------------- | ------- | ----- | ------- |
+| `dbt_valid_from` | The timestamp when this snapshot row was first inserted and became valid. | This column can be used to order the different "versions" of a record. | `snapshot_meta_column_names: {dbt_valid_from: start_date}` |
+| `dbt_valid_to`   | The timestamp when this row became invalidated. For current records, this is `NULL` by default or the value specified in `dbt_valid_to_current`. | The most recent snapshot record will have `dbt_valid_to` set to `NULL` or the specified value.  | `snapshot_meta_column_names: {dbt_valid_to: end_date}` |
+| `dbt_scd_id`     | A unique key generated for each snapshot row. | This is used internally by dbt. | `snapshot_meta_column_names: {dbt_scd_id: scd_id}` |
+| `dbt_updated_at` | The `updated_at` timestamp of the source record when this snapshot row was inserted. | This is used internally by dbt. | `snapshot_meta_column_names: {dbt_updated_at: modified_date}` |
+| `dbt_is_deleted` | A string value indicating if the record has been deleted. (`True` if deleted, `False` if not deleted). |Added when `hard_deletes='new_record'` is configured.  | `snapshot_meta_column_names: {dbt_is_deleted: is_deleted}` |
+
+All of these column names can be customized using the `snapshot_meta_column_names` config. Refer to this [example](/reference/resource-configs/snapshot_meta_column_names#example) for more details.
 
 *The timestamps used for each column are subtly different depending on the strategy you use:
 
-For the `timestamp` strategy, the configured `updated_at` column is used to populate the `dbt_valid_from`, `dbt_valid_to` and `dbt_updated_at` columns.
+- For the `timestamp` strategy, the configured `updated_at` column is used to populate the `dbt_valid_from`, `dbt_valid_to` and `dbt_updated_at` columns.
 
-<details>
-<summary>  Details for the timestamp strategy </summary>
+  <Expandable alt_header="Sample results for the timestamp strategy">
 
-Snapshot query results at `2024-01-01 11:00`
+  Snapshot query results at `2024-01-01 11:00`
 
-| id | status  | updated_at       |
-| -- | ------- | ---------------- |
-| 1        | pending | 2024-01-01 10:47 |
+  | id | status  | updated_at       |
+  | -- | ------- | ---------------- |
+  | 1        | pending | 2024-01-01 10:47 |
 
-Snapshot results (note that `11:00` is not used anywhere):
+  Snapshot results (note that `11:00` is not used anywhere):
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| 1        | pending | 2024-01-01 10:47 | 2024-01-01 10:47 |                  | 2024-01-01 10:47 |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
+  | 1        | pending | 2024-01-01 10:47 | 2024-01-01 10:47 |                  | 2024-01-01 10:47 |
 
-Query results at `2024-01-01 11:30`:
+  Query results at `2024-01-01 11:30`:
 
-| id | status  | updated_at       |
-| -- | ------- | ---------------- |
-| 1  | shipped | 2024-01-01 11:05 |
+  | id | status  | updated_at       |
+  | -- | ------- | ---------------- |
+  | 1  | shipped | 2024-01-01 11:05 |
 
-Snapshot results (note that `11:30` is not used anywhere):
+  Snapshot results (note that `11:30` is not used anywhere):
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 |
-| 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 |                  | 2024-01-01 11:05 |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- | ---------------- |
+  | 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 |
+  | 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 |                  | 2024-01-01 11:05 |
 
-Snapshot results with `hard_deletes='new_record'`:
+  Snapshot results with `hard_deletes='new_record'`:
 
-| id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
-|----|---------|------------------|------------------|------------------|------------------|----------------|
-| 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 | False          |
-| 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 | 2024-01-01 11:20 | 2024-01-01 11:05 | False          |
-| 1  | deleted | 2024-01-01 11:20 | 2024-01-01 11:20 |                  | 2024-01-01 11:20 | True           |
+  | id | status  | updated_at       | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
+  |----|---------|------------------|------------------|------------------|------------------|----------------|
+  | 1  | pending | 2024-01-01 10:47 | 2024-01-01 10:47 | 2024-01-01 11:05 | 2024-01-01 10:47 | False          |
+  | 1  | shipped | 2024-01-01 11:05 | 2024-01-01 11:05 | 2024-01-01 11:20 | 2024-01-01 11:05 | False          |
+  | 1  | deleted | 2024-01-01 11:20 | 2024-01-01 11:20 |                  | 2024-01-01 11:20 | True           |
 
 
-</details>
+  </Expandable>
 
-<br/>
+- For the `check` strategy, the current timestamp is used to populate each column. If configured, the `check` strategy uses the `updated_at` column instead, as with the timestamp strategy.
 
-For the `check` strategy, the current timestamp is used to populate each column. If configured, the `check` strategy uses the `updated_at` column instead, as with the timestamp strategy.
+  <Expandable alt_header="Sample results for the check strategy">
 
-<details>
-<summary>  Details for the check strategy </summary>
+  Snapshot query results at `2024-01-01 11:00`
 
-Snapshot query results at `2024-01-01 11:00`
+  | id | status  |
+  | -- | ------- |
+  | 1  | pending |
 
-| id | status  |
-| -- | ------- |
-| 1  | pending |
+  Snapshot results:
 
-Snapshot results:
+  | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | -- | ------- | ---------------- | ---------------- | ---------------- |
+  | 1  | pending | 2024-01-01 11:00 |                  | 2024-01-01 11:00 |
 
-| id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| -- | ------- | ---------------- | ---------------- | ---------------- |
-| 1  | pending | 2024-01-01 11:00 |                  | 2024-01-01 11:00 |
+  Query results at `2024-01-01 11:30`:
 
-Query results at `2024-01-01 11:30`:
+  | id | status  |
+  | -- | ------- |
+  | 1  | shipped |
 
-| id | status  |
-| -- | ------- |
-| 1  | shipped |
+  Snapshot results:
 
-Snapshot results:
+  | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
+  | --- | ------- | ---------------- | ---------------- | ---------------- |
+  | 1   | pending | 2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 |
+  | 1   | shipped | 2024-01-01 11:30 |                  | 2024-01-01 11:30 |
 
-| id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
-| --- | ------- | ---------------- | ---------------- | ---------------- |
-| 1   | pending | 2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 |
-| 1   | shipped | 2024-01-01 11:30 |                  | 2024-01-01 11:30 |
+  Snapshot results with `hard_deletes='new_record'`:
 
-Snapshot results with `hard_deletes='new_record'`:
+  | id | status  |  dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
+  |----|---------|------------------|------------------|------------------|----------------|
+  | 1  | pending |  2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 | False          |
+  | 1  | shipped | 2024-01-01 11:30 | 2024-01-01 11:40 | 2024-01-01 11:30 | False          |
+  | 1  | deleted |  2024-01-01 11:40 |                  | 2024-01-01 11:40 | True           |
 
-| id | status  |  dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
-|----|---------|------------------|------------------|------------------|----------------|
-| 1  | pending |  2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 | False          |
-| 1  | shipped | 2024-01-01 11:30 | 2024-01-01 11:40 | 2024-01-01 11:30 | False          |
-| 1  | deleted |  2024-01-01 11:40 |                  | 2024-01-01 11:40 | True           |
+  </Expandable>
 
-</details>
-
-## Configure snapshots in versions 1.8 and earlier
-
-<VersionBlock firstVersion="1.9">
-
-For information about configuring snapshots in dbt versions 1.8 and earlier, select **1.8** from the documentation version picker, and it will appear in this section.
-
-To configure snapshots in versions 1.9 and later, refer to [Configuring snapshots](#configuring-snapshots). The latest versions use an updated snapshot configuration syntax that optimizes performance.
-
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-- In dbt versions 1.8 and earlier, snapshots are `select` statements, defined within a snapshot block in a `.sql` file (typically in your `snapshots` directory). You'll also need to configure your snapshot to tell dbt how to detect record changes. 
-- The earlier dbt versions use an older syntax that allows for defining multiple resources in a single file. This syntax can significantly slow down parsing and compilation.
-- For faster and more efficient management, consider [choosing the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks) or the [latest version of dbt Core](/docs/dbt-versions/core), which introduces an updated snapshot configuration syntax that optimizes performance.
-  -  For more information on how to migrate from the legacy snapshot configurations to the updated snapshot YAML syntax, refer to [Snapshot configuration migration](/reference/snapshot-configs#snapshot-configuration-migration).
-
-The following example shows how to configure a snapshot:
-
-<File name='snapshots/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{{
-    config(
-      target_database='analytics',
-      target_schema='snapshots',
-      unique_key='id',
-
-      strategy='timestamp',
-      updated_at='updated_at',
-    )
-}}
-
-select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
-
-The following table outlines the configurations available for snapshots in versions 1.8 and earlier:
-
-| Config | Description | Required? | Example |
-| ------ | ----------- | --------- | ------- |
-| [target_database](/reference/resource-configs/target_database) | The database that dbt should render the snapshot table into | No | analytics |
-| [target_schema](/reference/resource-configs/target_schema) | The schema that dbt should render the snapshot table into | Yes | snapshots |
-| [strategy](/reference/resource-configs/strategy) | The snapshot strategy to use. One of `timestamp` or `check` | Yes | timestamp |
-| [unique_key](/reference/resource-configs/unique_key) | A <Term id="primary-key" /> column or expression for the record | Yes | id |
-| [check_cols](/reference/resource-configs/check_cols) | If using the `check` strategy, then the columns to check | Only if using the `check` strategy | ["status"] |
-| [updated_at](/reference/resource-configs/updated_at) | If using the `timestamp` strategy, the timestamp column to compare | Only if using the `timestamp` strategy | updated_at |
-| [invalidate_hard_deletes](/reference/resource-configs/invalidate_hard_deletes) | Find hard deleted records in source, and set `dbt_valid_to` current time if no longer exists | No | True |
-
-- A number of other configurations are also supported (e.g. `tags` and `post-hook`), check out the full list [here](/reference/snapshot-configs).
-- Snapshots can be configured from both your `dbt_project.yml` file and a `config` block, check out the [configuration docs](/reference/snapshot-configs) for more information.
-- Note: BigQuery users can use `target_project` and `target_dataset` as aliases for `target_database` and `target_schema`, respectively.
-
-### Configuration example
-
-To add a snapshot to your project:
-
-1. Create a file in your `snapshots` directory with a `.sql` file extension, e.g. `snapshots/orders.sql`
-2. Use a `snapshot` block to define the start and end of a snapshot:
-
-<File name='snapshots/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{% endsnapshot %}
-```
-
-</File>
-
-3. Write a `select` statement within the snapshot block (tips for writing a good snapshot query are below). This select statement defines the results that you want to snapshot over time. You can use `sources` and `refs` here.
-
-<File name='snapshots/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
-
-4. Check whether the result set of your query includes a reliable timestamp column that indicates when a record was last updated. For our example, the `updated_at` column reliably indicates record changes, so we can use the `timestamp` strategy. If your query result set does not have a reliable timestamp, you'll need to instead use the `check` strategy — more details on this below.
-
-5. Add configurations to your snapshot using a `config` block (more details below). You can also configure your snapshot from your `dbt_project.yml` file ([docs](/reference/snapshot-configs)).
-
-<VersionBlock lastVersion="1.8">
-
-<File name='snapshots/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{{
-    config(
-      target_database='analytics',
-      target_schema='snapshots',
-      unique_key='id',
-
-      strategy='timestamp',
-      updated_at='updated_at',
-    )
-}}
-
-select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
-
-6. Run the `dbt snapshot` [command](/reference/commands/snapshot) — for our example a new table will be created at `analytics.snapshots.orders_snapshot`. You can change the `target_database` configuration, the `target_schema` configuration and the name of the snapshot (as defined in `{% snapshot .. %}`) will change how dbt names this table.
-
-</VersionBlock>
-
-<VersionBlock firstVersion="1.9">
-
-<File name='snapshots/orders_snapshot.sql'>
-
-```sql
-{% snapshot orders_snapshot %}
-
-{{
-    config(
-      schema='snapshots',
-      unique_key='id',
-      strategy='timestamp',
-      updated_at='updated_at',
-    )
-}}
-
-select * from {{ source('jaffle_shop', 'orders') }}
-
-{% endsnapshot %}
-```
-
-</File>
-
-6. Run the `dbt snapshot` [command](/reference/commands/snapshot)  &mdash; for our example, a new table will be created at `analytics.snapshots.orders_snapshot`. The [`schema`](/reference/resource-configs/schema) config will utilize the `generate_schema_name` macro.
-
-</VersionBlock>
-
-```
-$ dbt snapshot
-Running with dbt=1.8.0
-
-15:07:36 | Concurrency: 8 threads (target='dev')
-15:07:36 |
-15:07:36 | 1 of 1 START snapshot snapshots.orders_snapshot...... [RUN]
-15:07:36 | 1 of 1 OK snapshot snapshots.orders_snapshot..........[SELECT 3 in 1.82s]
-15:07:36 |
-15:07:36 | Finished running 1 snapshots in 0.68s.
-
-Completed successfully
-
-Done. PASS=2 ERROR=0 SKIP=0 TOTAL=1
-```
-
-7. Inspect the results by selecting from the table dbt created. After the first run, you should see the results of your query, plus the [snapshot meta fields](#snapshot-meta-fields) as described earlier.
-
-8. Run the `dbt snapshot` command again, and inspect the results. If any records have been updated, the snapshot should reflect this.
-
-9. Select from the `snapshot` in downstream models using the `ref` function.
-
-<File name='models/changed_orders.sql'>
-
-```sql
-select * from {{ ref('orders_snapshot') }}
-```
-
-</File>
-
-10. Snapshots are only useful if you run them frequently &mdash; schedule the `snapshot` command to run regularly.
-
-
-</VersionBlock>
 
 ## FAQs
 <FAQ path="Runs/run-one-snapshot" />

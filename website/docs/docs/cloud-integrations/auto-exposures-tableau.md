@@ -98,3 +98,8 @@ With [active exposures](/docs/cloud-integrations/active-exposures), you can now 
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
 To set up active exposures in dbt Cloud, refer to [Active exposures](/docs/cloud-integrations/active-exposures).
+
+## Considerations
+import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.md';
+
+<ConsiderationsTableau/>
