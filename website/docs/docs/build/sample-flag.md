@@ -16,7 +16,7 @@ The `--sample` flag will become more robust over time, but it only supports time
 
 ## Using the `--sample` flag
 
-The `--sample` flag is available for the [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands, and when used, sample mode generates filtered refs and sources. Since it's using time-based sampling, if you have refs like {{ ref('some_model') }} being sampled, you need to set [`event_time`](/reference/resource-configs/event-time) for `some_model` to the field that will be used as the timestamp. 
+The `--sample` flag is available for the [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands, and when used, sample mode generates filtered refs and sources. Since it's using time-based sampling, if you have refs like `{{ ref('some_model') }}` being sampled, you need to set [`event_time`](/reference/resource-configs/event-time) for `some_model` to the field that will be used as the timestamp. 
 
 ### Example
 
