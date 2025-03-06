@@ -325,7 +325,7 @@ To support custom calendars (like fiscal years, fiscal quarters, and so on), cre
    dbt show --select fiscal_calendar # Use this command to preview the table if developing locally
    ```
 
-   If you're developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page.
+   If you're developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button.
 
 4. Validate the output by querying the generated table along with your metrics:
    ```bash
