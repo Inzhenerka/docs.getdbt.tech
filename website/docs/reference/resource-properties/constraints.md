@@ -25,24 +25,8 @@ The structure of a constraint is:
 
 <VersionBlock firstVersion="1.9">
 
-[Foreign key constraints]([/reference/resource-properties/constraints#defining-constraints](https://docs.getdbt.com/reference/resource-properties/constraints#defining-constraints)) are rules in a relational database that enforce a relationship between two tables.
-
-- A foreign key is a column (or a set of columns) in one table that refers to the `primary_key` in another table.
-- The constraint ensures that the value in the foreign key column must match an existing value in the referenced table's `primary_key` column.
-
-Some of the benefits of foreign key constraints include: 
-
-- Data consistency and integrity.
-- Prevention of orphaned rows in the child table (for example, rows with foreign key values that don't match any parent row).
-- Enables describing semantically meaningful relationships in the database.
-
-However, because you must hard-code your `database.schema.table` name when setting a foreign key constraint, there are some drawbacks:
-
-- DAG dependencies are incorrect.
-- Multi-environment is not supported.
-
 Foreign key constraints accept two additional inputs:
-- `to`: A relation input, likely `ref()`, indicating the referenced table.
+- `to`: A relation input, likely `ref()` and [source](/docs/build/sources), indicating the referenced table.
 - `to_columns`: A list of column(s) in that table containing the corresponding primary or unique key.
 
 This syntax for defining foreign keys uses `ref`, meaning it will capture dependencies and works across different environments. It's available in [dbt Cloud "Latest""](/docs/dbt-versions/cloud-release-tracks) and [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
@@ -80,30 +64,16 @@ models:
           - type: not_null
           - type: unique
           - type: foreign_key
-            to: ref('other_model_name')
+            to: ref('my_model_to') | source('source', 'source_table')
             to_columns: [other_model_column]
           - type: ...
 ```
 
 </File>
 
-### Supported dbt adapters
+Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
 
-Supported dbt-adapters will now use these new fields, when populated, to render out the foreign key constraint instead of `expression`.
-
-The following table lists the adapters that support foreign key constraints, but it’s worth noting some warehouses don’t enforce them.
-
-|Adapter   |Supported|Enforced|
-|----------|---------|--------|
-|BigQuery  |    ✅   |   ❌    |
-|Databricks|    ✅   |   ❌    |
-|Postgres  |    ✅   |   ✅    |
-|Redshift  |    ✅   |   ❌    |
-|Snowflake |    ✅   |   ❌    |
-|Spark     |    ✅   |   ❌    |
-|Athena    |    ❌   |   ❌    |
-
-For more information, on the adapters which support foreign key constraints, have a look at our guide on [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support).
+For more information on the adapters which support foreign key constraints, have a look at our guide on [Platform constraint support](/docs/collaborate/govern/model-contracts#platform-constraint-support).
 
 </VersionBlock>
 
