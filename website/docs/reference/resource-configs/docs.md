@@ -205,10 +205,10 @@ models:
 
 The `docs` attribute supports `node_color` to customize the display color of some node types in the DAG within [dbt Docs](/docs/build/view-documentation). You can define node colors in the following files and apply overrides where needed. 
 
-Note, you need to run or re-run the `dbt docs generate` command to apply and view the customized colors.
-
 - `node_color` hierarchy:
   - `<example-sql-file.sql>` overrides `schema.yml` overrides `dbt_project.yml`
+
+Note, you need to run or re-run the `dbt docs generate` command to apply and view the customized colors.
 
 :::info Custom node colors not applicable in dbt Explorer
 
