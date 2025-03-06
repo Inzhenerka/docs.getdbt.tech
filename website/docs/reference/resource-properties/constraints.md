@@ -85,12 +85,6 @@ When using `foreign_key`, you need to specify the referenced table's schema manu
 
 Note that later versions of dbt will have more efficient ways of handling this. Find out more about upgrading to the latest version, refer to [About dbt Core versions](/docs/dbt-versions/core) or [Upgrade dbt version in Cloud](/docs/dbt-versions/upgrade-dbt-version-in-cloud).
 
-</VersionBlock>
-
-<VersionBlock lastVersion="1.8">
-
-In older versions of dbt Core, when defining a `foreign_key` constraint, you need to manually specify the referenced table in the `expression` field. You can use `{{ target }}` variables to make this expression environment-aware, but the dependency between this model and the referenced table is not captured. Starting in dbt Core v1.9, you can specify the referenced table using the `ref()` function.
-
 <File name='models/schema.yml'>
 
 ```yml
