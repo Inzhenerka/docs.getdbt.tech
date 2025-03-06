@@ -26,7 +26,7 @@ The structure of a constraint is:
 <VersionBlock firstVersion="1.9">
 
 Foreign key constraints accept two additional inputs:
-- `to`: A relation input, likely `ref()` and [source](/docs/build/sources), indicating the referenced table.
+- `to`: A relation input, likely [`ref()`](/reference/dbt-jinja-functions/ref)] and [`source()`](/reference/dbt-jinja-functions/source), indicating the referenced table.
 - `to_columns`: A list of column(s) in that table containing the corresponding primary or unique key.
 
 This syntax for defining foreign keys uses `ref`, meaning it will capture dependencies and works across different environments. It's available in [dbt Cloud "Latest""](/docs/dbt-versions/cloud-release-tracks) and [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
