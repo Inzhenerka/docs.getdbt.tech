@@ -209,8 +209,11 @@ The `docs` attribute now supports `node_color` to customize the display color of
 
 `<example-sql-file.sql>` overrides `schema.yml` overrides `dbt_project.yml`
 
-Custom `node_color` will NOT reflect in Explorer.
+:::info Custom node colors not applicable in dbt Explorer
 
+The custom `node_color` attribute isn't applicable in dbt Explorer. Instead, Explorer provides [lenses](/docs/collaborate/explore-projects#lenses), which are as map layers for your <Term id="dag"/>. Lenses help you better understand your project's contextual metadata at scale and distinguish specific models or subsets of models.
+
+:::
 
 ## Examples
 
