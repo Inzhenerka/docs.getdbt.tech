@@ -209,6 +209,8 @@ The `docs` attribute now supports `node_color` to customize the display color of
 
 `<example-sql-file.sql>` overrides `schema.yml` overrides `dbt_project.yml`
 
+Custom `node_color` will NOT reflect in Explorer.
+
 
 ## Examples
 
