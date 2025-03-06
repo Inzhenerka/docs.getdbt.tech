@@ -9,7 +9,7 @@ meta:
   pypi_package: 'dbt-ibm-netezza'
   min_core_version: v1.9.2
   cloud_support: 'Not Supported'
-  min_supported_version: 'n/a'
+  min_supported_version: '11.2.3.4'
   slack_channel_name: 
   slack_channel_link: 
   platform_name: IBM Netezza
