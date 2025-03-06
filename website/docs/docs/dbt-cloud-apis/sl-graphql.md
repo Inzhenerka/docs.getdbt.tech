@@ -420,16 +420,18 @@ order_total  ordered_at
 
 The following section provides query examples for the GraphQL API, such as how to query metrics, dimensions, where filters, and more:
 
-    - [Query metric alias](#query-metric-alias)
-    - [Query with a time grain](#query-with-a-time-grain)
-    - [Query multiple metrics and multiple dimensions](#query-multiple-metrics-and-multiple-dimensions)
-    - [Query a categorical dimension on its own](#query-a-categorical-dimension-on-its-own)
-    - [Query with a where filter](#query-with-a-where-filter)
-    - [Query with order](#query-with-order)
-    - [Query with limit](#query-with-limit)
-    - [Query saved queries](#query-saved-queries) 
-    - [Query with just compiling SQL](#query-with-just-compiling-sql)
-    
+<!-- no toc -->
+- [Query metric alias](#query-metric-alias) &mdash; Query with metric alias.
+- [Query with a time grain](#query-with-a-time-grain)  &mdash; Fetch multiple metrics with a change in time dimension granularities.
+- [Query multiple metrics and multiple dimensions](#query-multiple-metrics-and-multiple-dimensions) &mdash; Select common dimensions for multiple metrics.
+- [Query a categorical dimension on its own](#query-a-categorical-dimension-on-its-own) &mdash; Group by a categorical dimension.
+- [Query with a where filter](#query-with-a-where-filter)  &mdash; Use the `where` parameter to filter on dimensions and entities using parameters.
+- [Query with order](#query-with-order) &mdash; Query with `orderBy`, accepts basic string that's a Dimension, Metric, or Entity. Defaults to ascending order.
+- [Query with limit](#query-with-limit) &mdash; Query using a `limit` clause.
+- [Query saved queries](#query-saved-queries) &mdash; Query using a saved query.
+- [Query with just compiling SQL](#query-with-just-compiling-sql) &mdash; Query using a compile keyword.
+
+
 #### Query metric alias
 
 ```graphql
