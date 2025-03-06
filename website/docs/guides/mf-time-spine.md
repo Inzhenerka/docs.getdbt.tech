@@ -241,6 +241,7 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
    dbt sl query --metrics orders --group-by metric_time__year
    ```
 
+If you're developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button.
    <Lightbox src="/img/mf-guide-query.jpg" title="Validate the metrics and time spine output in dbt Cloud IDE" />
 
 :::tip Extra credit!
