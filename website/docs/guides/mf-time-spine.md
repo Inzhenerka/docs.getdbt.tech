@@ -145,7 +145,7 @@ For the time spine table you created, let's run it and preview the output.
    dbt show --select time_spine_daily # Use this command to preview the table if developing locally
    ```
 
-2. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page:
+2. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button:
     <Lightbox src="/img/mf-guide-preview-time-spine-table.jpg" title="Preview the time spine table in dbt Cloud IDE" />
 
 3. Check that the table:
