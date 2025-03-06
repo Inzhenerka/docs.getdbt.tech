@@ -81,7 +81,7 @@ The time spine table is a dbt model that generates a series of dates (or timesta
     dbt show --select time_spine_daily # Use this command to preview the table if developing locally
     ```
 
-4. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button in the model page:
+4. If developing in the dbt Cloud IDE, you can preview the table by clicking the **Preview** button:
    <Lightbox src="/img/mf-guide-preview-time-spine-table.jpg" title="Preview the time spine table in dbt Cloud IDE" />
 
 ## Add YAML configuration for the time spine
