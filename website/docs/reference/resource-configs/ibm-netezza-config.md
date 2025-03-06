@@ -22,4 +22,4 @@ You can configure column data types either in the dbt_project.yml file or in pro
 
 ### Recommendations
 
-- **Check SQL Documentation:** Review IBM Netezza [SQL command reference ](https://www.ibm.com/docs/en/netezza?topic=dud-netezza-performance-server-sql-command-reference) to ensure it supports table creation and modification.
+- **Check SQL Documentation:** Review IBM Netezza [SQL command reference ](https://www.ibm.com/docs/en/netezza?topic=dud-netezza-performance-server-sql-command-reference) to create your dbt project.
