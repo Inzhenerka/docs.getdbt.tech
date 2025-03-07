@@ -1,7 +1,7 @@
 ---
 title: Why doesn’t an indirectly referenced upstream public model appear in Explorer?
 sidebar_label: Indirectly referenced upstream model
-id: indirectly-referenced-upstream-model
+id: indirectly-reference-upstream-model
 description: Learn why an indirectly referenced upstream public models don't appear in Explorer
 ---
 
