@@ -20,7 +20,7 @@ In this quickstart guide, you'll learn how to use dbt Core with DuckDB, enabling
 This guide will demonstrate how to: 
 
 - [Create a virtual development environment](/docs/core/pip-install#using-virtual-environments) using a template provided by dbt Labs.
-   - This sets up a fully functional dbt environment with an operational and executable project. The codespace automatically connects to the DuckDB database and loads a year's worth of data from our fictional Jaffle Shop café, which sells food and beverages in several US cities.
+   - We will set up a fully functional dbt environment with an operational and executable project. The codespace automatically connects to the DuckDB database and loads a year's worth of data from our fictional Jaffle Shop café, which sells food and beverages in several US cities.
    - For additional information, refer to the [README](https://github.com/dbt-labs/jaffle_shop_duckdb/blob/duckdb/README.md) for the Jaffle Shop template. It includes instructions on how to do this, along with animated GIFs.
 - Run any dbt command from the environment’s terminal. 
 - Generate a larger dataset for the Jaffle Shop café (for example, five years of data instead of just one).
