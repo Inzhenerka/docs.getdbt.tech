@@ -24,7 +24,7 @@ dbt Labs introduced an expanded notion of `dependencies` across multiple dbt pro
   - Define a deployment environment in the upstream project as [Production environment](/docs/deploy/deploy-environments#set-as-production-environment), ensuring at least one successful job run in that environment.
   - If the upstream project has a Staging environment, run a job in that Staging environment to ensure the downstream cross-project ref resolves.
 - Each project `name` must be unique in your dbt Cloud account. For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, avoid creating projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`; use [environment-level isolation](/docs/dbt-cloud-environments#types-of-environments) instead.
-  - dbt Cloud supports [Global connections](/docs/cloud/connect-data-platform/about-connections#connection-management), allowing different data platform connections per environment for a single project. This eliminates the need to duplicate projects.
+  - dbt Cloud supports [Connections](/docs/cloud/connect-data-platform/about-connections#connection-management), available to all dbt Cloud users. Connections allows different data platform connections per environment, eliminating the need to duplicate projects. Projects can only use multiple connections of the same warehouse type. Connections are reusable across projects and environments.
 - The `dbt_project.yml` file is case-sensitive, which means the project name must exactly match the name in your `dependencies.yml`.  For example, `jaffle_marketing`, not `JAFFLE_MARKETING`.
 
 import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
