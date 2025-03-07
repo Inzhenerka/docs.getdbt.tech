@@ -15,7 +15,7 @@ So for example, if:
 
 Then:
 
-- In Explorer, only directly referenced public models (`upstream_b` in this case) appear. Expanded upstream lineage might be available in the future.
+- In Explorer, only directly referenced public models (`upstream_b` in this case) appear.
 - In the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-in-the-cloud) lineage view, however, `upstream_a` (the indirect dependency) _will_ appear because the dbt Cloud dynamically resolves the full dependency graph.
 
 This behavior makes sure that Explorer only shows the immediate dependencies available to that specific project.
