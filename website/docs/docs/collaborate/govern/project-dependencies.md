@@ -135,12 +135,8 @@ These are the exceptions, rather than the rule. Installing another team's projec
 
 ## FAQs
 
-<details>
-<summary>Can I define private packages in the <code>dependencies.yml</code> file?</summary>
-
-If you're using private packages with the [git token method](/docs/build/packages#git-token-method), you must define them in the `packages.yml` file instead of the `dependencies.yml` file. This is because conditional rendering (like Jinja-in-yaml) is not supported.
-</details>
-
+<FAQ path="Project_ref/define-private-packages" />
+<FAQ path="Project_ref/indirectly-reference-upstream-model" />
 
 ## Related docs
 - Refer to the [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) guide for more guidance on how to use dbt Mesh.
