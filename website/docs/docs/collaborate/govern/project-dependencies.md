@@ -7,6 +7,7 @@ pagination_next: null
 keyword: dbt mesh, project dependencies, ref, cross project ref, project dependencies
 ---
 
+# Project dependencies <Lifecycle status='enterprise'/>
 
 For a long time, dbt has supported code reuse and extension by installing other projects as [packages](/docs/build/packages). When you install another project as a package, you are pulling in its full source code, and adding it to your own. This enables you to call macros and run models defined in that other project.
 
@@ -17,14 +18,15 @@ This year, dbt Labs is introducing an expanded notion of `dependencies` across m
 - **Projects** &mdash; A _new_ way to take a dependency on another project. Using a metadata service that runs behind the scenes, dbt Cloud resolves references on-the-fly to public models defined in other projects. You don't need to parse or run those upstream models yourself. Instead, you treat your dependency on those models as an API that returns a dataset. The maintainer of the public model is responsible for guaranteeing its quality and stability.
 
 ## Prerequisites
-- Available in [dbt Cloud Enterprise](https://www.getdbt.com/pricing). If you have an Enterprise account, you can unlock these features by designating a [public model](/docs/collaborate/govern/model-access) and adding a [cross-project ref](#how-to-write-cross-project-ref). <Lifecycle status="enterprise"/>
-- Define models in an upstream ("producer") project that are configured with [`access: public`](/reference/resource-configs/access). You need at least one successful job run after defining their `access`.
-- Define a deployment environment in the upstream ("producer") project [that is set to be your Production environment](/docs/deploy/deploy-environments#set-as-production-environment), and ensure it has at least one successful job run in that environment.
+- Available in [dbt Cloud Enterprise](https://www.getdbt.com/pricing). To use it, designate a [public model](/docs/collaborate/govern/model-access) and add a [cross-project ref](#how-to-write-cross-project-ref).
+- Upstream project setup:
+  - Define models in an upstream ("producer") project with [`access: public`](/reference/resource-configs/access). Have least one successful job run after defining `access`.
+- Define a deployment environment in the upstream ("producer") project [set as your Production environment](/docs/deploy/deploy-environments#set-as-production-environment). Have at least one successful job run in that environment.
 - If the upstream project has a Staging environment, run a job in that Staging environment to ensure the downstream cross-project ref resolves.
-- Each project `name` must be unique in your dbt Cloud account. For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, you should not create separate projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`. That isolation should instead be handled at the environment level.
-  - We are adding support for environment-level permissions and data warehouse connections; please contact your dbt Labs account team for beta access.
-- The `dbt_project.yml` file is case-sensitive, which means the project name must exactly match the name in your `dependencies.yml`.  For example, if your project name is `jaffle_marketing`, you should use `jaffle_marketing` (not `JAFFLE_MARKETING`) in all related files.
-
+- Each project `name` must be unique in your dbt Cloud account.
+  - For example, if you have a dbt project (codebase) for the `jaffle_marketing` team, avoid creating projects for `Jaffle Marketing - Dev` and `Jaffle Marketing - Prod`; use environment-level isolation instead.
+- dbt Cloud supports [configuring different data platform connections](/docs/cloud/connect-data-platform/about-connections#connection-management) per environment using Global Connections, eliminating the need to duplicate projects for different accounts.
+- The `dbt_project.yml` file is case-sensitive, which means the project name must exactly match the name in your `dependencies.yml`.  For example, `jaffle_marketing`, not `JAFFLE_MARKETING`.
 
 import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 
