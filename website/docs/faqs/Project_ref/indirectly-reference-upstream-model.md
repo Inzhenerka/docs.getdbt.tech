@@ -5,7 +5,7 @@ id: indirectly-referenced-upstream-model
 description: Learn why an indirectly referenced upstream public models don't appear in Explorer
 ---
 
-In the dbt Mesh workflow, [dbt Explorer](/docs/collaborate/explore-multiple-projects) only displays directly referenced [public models](/docs/collaborate/govern/model-access) from upstream projects, even if an upstream model indirectly depends on another public model.
+For [project dependencies](/docs/collaborate/govern/project-dependencies) in dbt Mesh, [dbt Explorer](/docs/collaborate/explore-multiple-projects) only displays directly referenced [public models](/docs/collaborate/govern/model-access) from upstream projects, even if an upstream model indirectly depends on another public model.
 
 So for example, if:
 
