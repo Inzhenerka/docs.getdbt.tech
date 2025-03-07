@@ -13,7 +13,7 @@ For a long time, dbt has supported code reuse and extension by installing other 
 
 While this is a great way to reuse code, share utility macros, and establish a starting point for common transformations, it's not a great way to enable collaboration across teams and at scale, especially in larger organizations.
 
-dbt Labs introduced an expanded notion of `dependencies` across multiple dbt projects:
+dbt Labs supports an expanded notion of `dependencies` across multiple dbt projects:
 - **Packages** &mdash; Familiar and pre-existing type of dependency. You take this dependency by installing the package's full source code (like a software library).
 - **Projects** &mdash; The _latest_ way to take a dependency on another project. Using a metadata service that runs behind the scenes, dbt Cloud resolves references on-the-fly to public models defined in other projects. You don't need to parse or run those upstream models yourself. Instead, you treat your dependency on those models as an API that returns a dataset. The maintainer of the public model is responsible for guaranteeing its quality and stability.
 
