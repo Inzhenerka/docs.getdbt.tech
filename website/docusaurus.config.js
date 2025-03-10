@@ -74,8 +74,8 @@ var siteSettings = {
     },
     announcementBar: {
       id: "monthly-demos",
-      content: "Join our monthly demos and see dbt Cloud in action!",
-      backgroundColor: "#047377",
+      content: "Join us for dbt Developer day on March 19th and March 20th for exciting new and coming-soon features to supercharge data developer workflows!",
+      backgroundColor: "#FF694A",
       textColor: "#fff",
       isCloseable: true,
     },
