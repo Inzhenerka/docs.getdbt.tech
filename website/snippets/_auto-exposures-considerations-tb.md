@@ -3,7 +3,7 @@ Auto-exposures with Tableau have the following considerations:
 - If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
 - Tableau dashboards built using custom SQL queries aren't supported.
 - Auto-exposures sync automatically _once per day_ or when a user updates the selected collections.
-- <Expandable alt_header="The database Fully qualified names (FQNs) in Tableau must match those in the dbt build.">
+- <Expandable alt_header="The database fully qualified names (FQNs) in Tableau must match those in the dbt build.">
     The database FQNs (Fully qualified names) in Tableau must match those in the dbt build. In order to view all expected dependencies in your exposure, the FQNs must match and it isn't case sensitive. For example:
     | Tableau FQN | dbt FQN | <div style={{width:'250px'}}>Result</div> |
     | --- | --- | --- |
