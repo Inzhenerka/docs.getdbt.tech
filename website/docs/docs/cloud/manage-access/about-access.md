@@ -40,9 +40,9 @@ By default, new users will be prompted to set a password for their account. All 
 User passwords must meet the following criteria:
 
 - Be at least nine characters in length
-- Contains at least one uppercase and one lowercase letter
-- Contains at least one number 0-9
-- Contains at least one special character
+- Contain at least one uppercase and one lowercase letter
+- Contain at least one number 0-9
+- Contain at least one special character
 
 ## Groups
 
