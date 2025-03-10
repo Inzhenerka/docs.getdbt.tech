@@ -35,7 +35,7 @@ You can edit an existing user's license by navigating to the **Users** section o
 
 ### User passwords
 
-By default, new users will be prompted to set a password for their account. All plan tiers support and enforce [multi-factor authentication](/docs/cloud/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. Enterprise accounts can configure [SSO](#sso-mappings) and advanced authentication measures. `Developer` and `Team` plans only support user passwords with MFA. 
+By default, new users will be prompted to set a password for their account. All plan tiers support and enforce [multi-factor authentication](/docs/cloud/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. Enterprise accounts can configure [SSO](#sso-mappings) and advanced authentication measures. Developer and Team plans only support user passwords with MFA. 
 
 User passwords must meet the following criteria:
 
