@@ -68,7 +68,7 @@ The model query history feature uses the credentials in your production environm
 
 4. Copy or cross reference those credential permissions with the warehouse permissions and grant your user the right permissions.
    
-   - #### For Snowflake
+#### Snowflake model query history
      Model query history makes use of metadata tables available to [Snowflake Enterprise tier](https://docs.snowflake.com/en/user-guide/intro-editions#enterprise-edition) accounts or higher, `QUERY_HISTORY` and `ACCESS_HISTORY`. The Snowflake user in the production environment must have the `GOVERNANCE_VIEWER` permission to view the data.
      Before enabling Model query history, your `ACCOUNTADMIN` must run the following grant statement in Snowflake to ensure for access:
      ```sql
