@@ -40,5 +40,5 @@ Auto-exposures with Tableau have the following considerations:
         <Lightbox src="/img/docs/cloud-integrations/auto-exposures/manifest-json-example.png" title="manifest.json example"/>
         <Lightbox src="/img/docs/cloud-integrations/auto-exposures/graphiql-example.png" title="GraphiQl response example"/>
     4. If the FQNs don't match, update your Tableau FQNs to match the dbt FQNs.
-    5. If you're still experiencing issues, please reach out to dbt Support and share the results with them.
+    5. If you're still experiencing issues, please contact [dbt Support](mailto:support@getdbt.com) and share the results with them.
   </Expandable>
