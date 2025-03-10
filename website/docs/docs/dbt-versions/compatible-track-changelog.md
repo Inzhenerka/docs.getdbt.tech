@@ -22,21 +22,6 @@ For more information, see [release tracks](/docs/dbt-versions/cloud-release-trac
 
 Release date: March 12, 2025
 
-### dbt Cloud 
-
-These changes reflect capabilities that are only available in dbt Cloud.
-
-### Features
-
-- Add event_time to cross-project ref artifact
-- Include debug exception message in ObservabilityMetric
-
-### Fixes
-
-- Adding support for deferral against the new time spine definition
-- Fix error messages for SL query
-- Semantic Layer commands now respect `--favor-state` when running with `--defer`
-
 This release includes functionality from the following versions of dbt Core OSS:
 ```
 dbt-core==1.9.3
@@ -85,11 +70,14 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Features
 
-- Filter out external exposures in dbt compare
+- Add event_time to cross-project ref artifact
+- Include debug exception message in ObservabilityMetric
 
 ### Fixes
 
-- Use meta.dbt_cloud_id to build unique_id for manually defined exposure for merging against a duplicated exposure
+- Adding support for deferral against the new time spine definition
+- Fix error messages for SL query
+- Semantic Layer commands now respect `--favor-state` when running with `--defer`
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
@@ -132,6 +120,21 @@ Changelogs:
 ## January 2025
 
 Release date: January 14, 2025
+
+### dbt Cloud 
+
+These changes reflect capabilities that are only available in dbt Cloud.
+
+### Features
+
+- Add event_time to cross-project ref artifact
+- Include debug exception message in ObservabilityMetric
+
+### Fixes
+
+- Adding support for deferral against the new time spine definition
+- Fix error messages for SL query
+- Semantic Layer commands now respect `--favor-state` when running with `--defer`
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
