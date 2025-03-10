@@ -75,7 +75,7 @@ var siteSettings = {
     announcementBar: {
       id: "monthly-demos",
       content: "Join us for dbt Developer day on March 19th and March 20th for exciting new and coming-soon features to supercharge data developer workflows!",
-      backgroundColor: "#FF694A",
+      backgroundColor: "#F9A26C",
       textColor: "#fff",
       isCloseable: true,
     },
