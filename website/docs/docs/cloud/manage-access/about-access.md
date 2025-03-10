@@ -33,7 +33,7 @@ You can edit an existing user's license by navigating to the **Users** section o
 
 <Lightbox src="/img/docs/dbt-cloud/dbt-cloud-enterprise/access-control/edit-user.png" width="60%" title="Example of the user information window in the user directory" />
 
-### Password authentication
+### User passwords
 
 By default, new users will be prompted to set a password for their account. Enterprise accounts can configure [SSO](#sso-mappings) and advanced authentication measures. All plan tiers support and enforce [multi-factor authentication](/docs/cloud/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. User passwords must meet the following criteria:
 
