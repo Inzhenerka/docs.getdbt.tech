@@ -78,11 +78,10 @@ To configure project credentials in Power BI Desktop:
 3. Search for dbt Semantic Layer, then click **Connect**.
 4. Fill in your connection details. You can find your server and environmentId under the Semantic Layer configuration for your dbt Cloud project. 
    - Make sure you select `DirectQuery`, since the Semantic Layer connector does not support `Import` mode. Click **OK** to proceed.
-   ADD IMG
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />
 5. On the next screen, paste your service token then click **Connect**.
-   ADD IMG
-6. You should see a side pane with a few tables. Select the ones you want to load into your dashboard then click **Load**.
-   ADD IMG
+6. You should see a sidepane with a few tables. Select the ones you want to load into your dashboard then click **Load**.
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-sidepanel.jpg" title="Select tables in the side panel" />
 
 Now that you've configured the connector, you can configure published reports in the next section to use the connector.
 
@@ -91,20 +90,19 @@ Now that you've configured the connector, you can configure published reports in
 After publishing a report and the first time you hit **Publish** on a given report, configure Power BI Service to use your organization’s On-premises Data Gateway to access data from the dbt Semantic Layer:
 
 1. On the top right, click on **Settings > Power BI Settings**.
-   ADD IMG
-2. Navigate to **Semantic Models**. Then select your report on the sidebar on the left.
-   ADD IMG
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-settings.jpg" title="Navigate to Settings > Power BI Settings" />
+2. Navigate to the **Semantic Models** tab and select your report on the sidebar on the left.
 3. Under **Gateway and cloud connections**, select the **On-premises Data Gateway** where your IT admin has installed the dbt Semantic Layer connector. 
 - If the Status is **Not configured correctly**, you’ll have to configure it.
-   ADD IMG
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-not-configured.jpg" title="Configure the gateway connection" />
 4. Click on the arrow under **Actions** and then, click on **Manually add to gateway**.
-   ADD IMG
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-manual-gateway.jpg" title="Manually add to gateway" />
 5. Provide a name for your connection and enter your connection details. 
    - Set the connection as **Encrypted** (Required). If you fail to do so, the Semantic Layer servers will reject the connection.
-   ADD IMG
+   <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-encrypted.jpg" title="Set the connection as Encrypted" />
 6. Click **Create**. This will run a connection test (unless you choose to skip it) 
    - If the connection succeeds, the connection will be saved.
-   ADD IMG
+
 
 You can now go back to your published report on Power BI Service to assert data loads as expected.
 
