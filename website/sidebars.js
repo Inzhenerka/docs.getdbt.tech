@@ -751,7 +751,6 @@ const sidebarSettings = {
         "docs/cloud/enable-dbt-copilot",
         "docs/cloud/use-dbt-copilot",
         "docs/cloud/dbt-copilot-faqs",
-        "docs/cloud/dbt-copilot-data",
         ],
       },
     {

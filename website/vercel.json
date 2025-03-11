@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/docs/cloud/dbt-copilot-data",
+      "destination": "/docs/cloud/dbt-copilot-faqs",
+      "permanent": true
+    },
+    {
       "source": "/docs/cloud/git/setup-azure",
       "destination": "/docs/cloud/git/connect-azure-devops",
       "permanent": true
