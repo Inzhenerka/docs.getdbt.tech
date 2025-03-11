@@ -7,7 +7,11 @@ intro_text: "Enable the dbt Copilot AI engine in dbt Cloud to speed up your deve
 
 # Enable dbt Copilot <Lifecycle status="enterprise" /> 
 
+<IntroText>
+
 This page explains how to enable the dbt Copilot engine in dbt Cloud to speed up your development and allow you to focus on delivering quality data.
+
+</IntroText>
 
 ## Prerequisites
 
@@ -16,10 +20,11 @@ This page explains how to enable the dbt Copilot engine in dbt Cloud to speed up
 - Development environment is on a supported [release track](/docs/dbt-versions/cloud-release-tracks) to receive ongoing updates.
 - By default, dbt Copilot deployments use a central OpenAI API key managed by dbt Labs. Alternatively, you can [provide your own OpenAI API key](#bringing-your-own-openai-api-key-byok).
 - Accept and sign legal agreements. Reach out to your Account team to begin this process.
+- Opt-in to AI features by following the steps in the next section in your **Account settings**.
 
 ## Enable dbt Copilot
 
-dbt Copilot is only available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
+dbt Copilot is an available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
 
 1. Navigate to **Account settings** in the navigation menu.
 2. Under **Settings**, confirm the account you're enabling.
