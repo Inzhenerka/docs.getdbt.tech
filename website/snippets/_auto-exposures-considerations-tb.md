@@ -38,7 +38,7 @@ Auto-exposures with Tableau have the following considerations:
 
     3. Compare database FQNs between `manifest.json` and the GraphiQL response. Make sure that `{database}.{schema}.{name}` matches in both. 
         The following images are examples of FQNs that _match_ in both `manifest.json` and the GraphiQL response and aren't case-sensitive: 
-        <Lightbox src="/img/docs/cloud-integrations/auto-exposures/manifest-json-example.png" title="manifest.json example with lowercase FQNs"/>
+        <Lightbox src="/img/docs/cloud-integrations/auto-exposures/manifest-json-example.png" title="manifest.json example with lowercase FQNs."/>
         <Lightbox src="/img/docs/cloud-integrations/auto-exposures/graphiql-example.png" title="GraphiQl response example with uppercase FQNs"/>
     4. If the FQNs don't match, update your Tableau FQNs to match the dbt FQNs.
     5. If you're still experiencing issues, please contact [dbt Support](mailto:support@getdbt.com) and share the results with them.
