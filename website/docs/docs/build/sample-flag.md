@@ -30,7 +30,7 @@ There are two time-based sample specifications supported for sample mode:
     - Days
     - Months
     - Years
-- **Static time specs:** Filters your data between a defined start and end period
+- **Static time specs:** Filters your data between a defined start and end period using date and/or timestamp.
 
 
 ### Example
