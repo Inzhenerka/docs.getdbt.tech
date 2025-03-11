@@ -20,7 +20,7 @@ For more information, see [release tracks](/docs/dbt-versions/cloud-release-trac
 
 ## March 2025
 
-Release date: March 12, 2025
+Release date: March 11, 2025
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
