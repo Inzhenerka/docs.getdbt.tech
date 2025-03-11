@@ -70,7 +70,7 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Features
 
-- Add [`event_time`](/reference/resource-configs/event-time) to cross-project ref artifact
+- Add [`event_time`](/reference/resource-configs/event-time) to cross-project ref artifact.
 - Include debug exception message in ObservabilityMetric
 
 ### Fixes
