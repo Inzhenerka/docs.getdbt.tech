@@ -2,6 +2,7 @@
 title: "dbt Copilot privacy and data" 
 sidebar_label: "dbt Copilot privacy" 
 description: "dbt Copilot is a powerful AI engine to help you deliver data that works." 
+intro_text: "dbt Copilot enhances efficiency by automating repetitive tasks while ensuring data privacy and security."
 ---
 
 # dbt Copilot privacy and data <Lifecycle status="enterprise" /> 
