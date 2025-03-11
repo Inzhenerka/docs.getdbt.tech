@@ -131,7 +131,7 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Fixes
 
-- Use meta.dbt_cloud_id to build unique_id for manually defined exposure for merging against a duplicated exposure
+- Use `meta.dbt_cloud_id` to `build unique_id` for manually defined exposure for merging against a duplicated exposure
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
