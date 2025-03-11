@@ -200,7 +200,7 @@ To build models based on source freshness in dbt:
 1. Run `dbt source freshness` to check the freshness of your sources.
 2. Use the `dbt build --select source_status:fresher+` command to build and test models downstream of fresher sources.
 
-By using the commands in that order, it ensures models are updated based on the latest data.
+By using the commands in that order, it ensures models are updated based on the latest data. This also eliminates wasted compute cycles on data that has not changed or updated and only builds models when necessary.
 
 Additionally, [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots) can be set to 30 minutes to check for source freshness and then run a job which rebuilds every 1 hour. This will retrieve all the models and rebuild them in one go if their source freshness has expired. For more information, refer to [Source freshness snapshot frequency](/docs/deploy/source-freshness#source-freshness-snapshot-frequency).
 
