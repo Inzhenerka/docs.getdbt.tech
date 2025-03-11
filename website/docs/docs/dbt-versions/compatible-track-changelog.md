@@ -75,9 +75,9 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Fixes
 
-- Adding support for deferral against the new time spine definition
-- Fix error messages for SL query
-- Semantic Layer commands now respect `--favor-state` when running with `--defer`
+- Adding support for deferral against the new time spine definition.
+- Fix error messages for SL query.
+- Semantic Layer commands now respect `--favor-state` when running with `--defer`.
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
@@ -127,11 +127,11 @@ These changes reflect capabilities that are only available in dbt Cloud.
 
 ### Features
 
-- Filter out external exposures in dbt compare
+- Filter out external exposures in dbt compare.
 
 ### Fixes
 
-- Use `meta.dbt_cloud_id` to `build unique_id` for manually defined exposure for merging against a duplicated exposure
+- Use `meta.dbt_cloud_id` to `build unique_id` for manually defined exposure for merging against a duplicated exposure.
 
 This release includes functionality from the following versions of dbt Core OSS:
 ```
