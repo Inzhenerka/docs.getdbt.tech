@@ -3,10 +3,14 @@ title: "About dbt Copilot"
 sidebar_label: "About dbt Copilot" 
 description: "dbt Copilot is a powerful AI engine designed to accelerate your analytics workflows throughout your entire ADLC." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
-intro_text: "dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. "
 ---
 
 # About dbt Copilot <Lifecycle status="enterprise" /> 
+
+<IntroText>
+dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows.
+
+</IntroText>
 
 dbt Copilot embeds AI-driven assistance across every stage of the [analytics development life cycle (ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 

@@ -2,10 +2,13 @@
 title: "dbt Copilot FAQs" 
 sidebar_label: "dbt Copilot FAQs" 
 description: "Answers to common questions about dbt Copilot."
-intro_text: "Learn the answers to common questions about dbt Copilot."
 ---
 
 # dbt Copilot FAQs <Lifecycle status="enterprise" /> 
+
+<IntroText>
+Read about common questions about dbt Copilot to understand how it works and how it can help you.
+</IntroText>
 
 dbt Copilot is a powerful AI engine that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
 

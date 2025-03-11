@@ -308,32 +308,9 @@ const sidebarSettings = {
             "docs/cloud/visual-editor",
             "docs/cloud/visual-editor-interface", 
             "docs/cloud/use-visual-editor",
+            "docs/cloud/build-ve-copilot",
           ],
         },
-        ],
-      },
-      {
-        type: "category",
-        label: "dbt Cloud Visual Editor",
-        collapsed: true,
-        link: { type: "doc", id: "docs/cloud/visual-editor" },
-        items: [
-          "docs/cloud/visual-editor",
-          "docs/cloud/visual-editor-interface", 
-          "docs/cloud/use-visual-editor",
-          "docs/cloud/build-ve-copilot",
-        ],
-      },
-      {
-        type: "category",
-        label: "dbt Cloud Visual Editor",
-        collapsed: true,
-        link: { type: "doc", id: "docs/cloud/visual-editor" },
-        items: [
-          "docs/cloud/visual-editor",
-          "docs/cloud/visual-editor-interface", 
-          "docs/cloud/use-visual-editor",
-          "docs/cloud/build-ve-copilot",
         ],
       },
       {
