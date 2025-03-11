@@ -480,7 +480,7 @@ Snowflake supports the following incremental strategies:
 - Append
 - Delete+insert
 - Insert_overwrite
-  - Note, `insert_overwrite` behaves like `truncate` + `re-insert` commands on Snowflake. It doesn't support partition-based overwrites, which means it'll overwrite the entire table.
+  - Note, `insert_overwrite` behaves like `truncate` + re-`insert` commands on Snowflake. It doesn't support partition-based overwrites, which means it'll overwrite the entire table.
 - [`microbatch`](/docs/build/incremental-microbatch)
 
 Snowflake's `merge` statement fails with a "nondeterministic merge" error if the `unique_key` specified in your model config is not actually unique. If you encounter this error, you can instruct dbt to use a two-step incremental approach by setting the `incremental_strategy` config for your model to `delete+insert`.
