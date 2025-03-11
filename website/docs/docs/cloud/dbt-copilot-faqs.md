@@ -19,15 +19,15 @@ dbt Labs is committed to protecting your privacy and data. This page provides in
 <Expandable alt_header="What is dbt Copilot?">
 dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. dbt Copilot embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 
-With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor](/docs/cloud/build-ve-copilot).
+With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [Visual Editor](/docs/cloud/build-ve-copilot).
 
 </Expandable>
 
 <Expandable alt_header="Where can I find dbt Copilot?">
 
-dbt Copilot can currently be found in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor](/docs/cloud/build-ve-copilot). Future releases will bring dbt Copilot to even more parts of the dbt Cloud application.
+dbt Copilot can currently be found in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot). Future releases will bring dbt Copilot to the [Visual Editor](/docs/cloud/build-ve-copilot) and even more parts of the dbt Cloud application.
 
-To use dbt Copilot, you must have a dbt Cloud [Enterprise account](https://www.getdbt.com/contact) and opt-in to the feature.
+To use dbt Copilot, you must have a dbt Cloud [Enterprise account](https://www.getdbt.com/contact) and and administrative privileges to opt-in to the feature for your team.
 
 </Expandable>
 
@@ -49,7 +49,7 @@ with a click of a button and ensuring data privacy and security.
 
 <Expandable alt_header="Who has access to dbt Copilot?" >
 
-dbt Copilot is available on a dbt Cloud [Enterprise account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
+When enabled by an admin, dbt Copilot is available on a dbt Cloud [Enterprise account](https://www.getdbt.com/contact) to all dbt Cloud [developer license users](/docs/cloud/manage-access/seats-and-users).
 
 </Expandable>
 
@@ -63,7 +63,8 @@ Yes, dbt Copilot is powered by ai-codegen-api, which is deployed everywhere incl
 
 <Expandable alt_header="What data/code is used to train the model supporting dbt Copilot?">
 
-dbt Copilot is not a large language model (LLM). dbt Labs does not train any models at all. Currently, we use OpenAI models as per our agreement with OpenAI they do not use our data for training their OpenAI models. Refer our [dbt Labs AI principles page](https://www.getdbt.com/legal/ai-principles) for more information.
+dbt Copilot is not used to train a large language model (LLM). dbt Labs does not train any models at all. Currently, we use OpenAI models, and our agreement with OpenAI prohibits OpenAI from retaining our data persistently. Refer our [dbt Labs AI principles page](https://www.getdbt.com/legal/ai-principles) for more information.
+
 </Expandable>
 
 <Expandable alt_header="Which model providers does dbt Copilot use?">
@@ -82,25 +83,26 @@ The dbt Copilot BYOK option is currently an account-only configuration. However,
 
 <Expandable alt_header="Does dbt Copilot store or use personal data?">
 
-The user clicks the dbt Copilot button, and the user does not otherwise enter data. 
+The user clicks the dbt Copilot button. Aside from authentication, it works without personal data, but the user controls what is input into dbt Copilot.
 
 </Expandable>
 
 <Expandable alt_header="Does dbt Copilot access my warehouse data?">
 
-dbt Copilot utilizes metadata, including column names, model SQL, the model's name, and model documentation. The row-level data from the warehouse is never used or sent to a third-party provider. Such output must be double-checked by the user for completeness and accuracy.
+To provide the services, dbt Copilot utilizes the data entered by the user in addition to metadata, including column names, model SQL, the model's name, and model documentation. The row-level data from the warehouse is never used or sent by dbt Labs to a third-party provider without action by the user. The user is responsible for double-checking output for completeness and accuracy.
 
 </Expandable>
 
 <Expandable alt_header="Can dbt Copilot data be deleted upon client written request?">
 
-The data from using dbt Copilot, aside from usage data, _doesn't_ persist on dbt Labs systems. Usage data is retained by dbt Labs. dbt Labs doesn't have possession of any personal or sensitive data. To the extent client identifies personal or sensitive information uploaded by or on behalf of client to dbt Labs systems, such data can be deleted within 30 days of written request.
+To the extent client identifies personal or sensitive information uploaded by or on behalf of client to dbt Labs systems by the user in error, such data can be deleted within 30 days of written request.
+
 
 </Expandable>
 
 <Expandable alt_header="Does dbt Labs own the output generated by dbt Copilot?">
 
-No, you keep your rights to any code or artifacts generated when you use dbt Copilot. Your code will never be used to train AI models for other customers. For more information, see the [dbt Labs AI principles page](https://www.getdbt.com/legal/ai-principles).
+No, dbt Labs will not dispute your ownership of any code or artifacts unique to your company that are generated when you use dbt Copilot. Your code will not be used to train AI models for the benefit of dbt Labs or other third parties, including other dbt Labs customers. 
 
 </Expandable>
 
@@ -113,6 +115,6 @@ dbt Copilot has the following considerations to keep in mind:
 - dbt Copilot is not available in the dbt Cloud CLI.
 - dbt Copilot is not available in the dbt Cloud API.
 
-Future releases will bring dbt Copilot to even more parts of the dbt Cloud application.
+Future releases are planned that may bring dbt Copilot to even more parts of the dbt Cloud application
 
 </Expandable>
