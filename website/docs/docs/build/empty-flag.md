@@ -8,6 +8,12 @@ pagination_prev: null
 
 # About the `--empty` flag
 
+:::note
+
+The `--empty` flag is not currently available for Python models. If the flag is used with a Python model, it will be ignored.
+
+:::
+
 There are cases during dbt development where you'll want to validate that your models are semantically correct without the time-consuming cost of building the entire model in the data warehouse. The [`run`](/reference/commands/run) and [`build`](/reference/commands/run) commands support the `--empty` flag for building schema-only dry runs. The `--empty` flag limits the refs and sources to zero rows. dbt will still execute the model SQL against the target data warehouse but will avoid expensive reads of input data. This validates dependencies and ensures your models will build properly.
 
 ### Examples
