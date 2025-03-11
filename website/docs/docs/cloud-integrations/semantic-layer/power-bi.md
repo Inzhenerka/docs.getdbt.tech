@@ -115,25 +115,27 @@ The dbt Semantic Layer connector creates:
 - A virtual (or sample?) table for each saved query
 - A `METRICS.ALL` table containing all metrics, and dimensions and entities appear as regular dimension columns.
 
-These tables do not actually map to an underlying table in your data warehouse. Instead, Power BI sends queries to these tables, and, before actually executing on the warehouse, Semantic Layer servers will parse the SQL, extract all the queried columns, group bys and filters and generate a new piece of SQL that actually queries your existing tables. They’ll then return data back to Power BI, which doesn’t know any of this happened.
-
+These tables do not actually map to an underlying table in your data warehouse. Instead, Power BI sends queries to these tables and (before actually executing on the warehouse) the Semantic Layer servers:
+- Parse the SQL
+- Extract all the queried columns, group bys and filters 
+- Generates SQL to query your existing tables. 
+- Returns data back to Power BI, which doesn’t know any of this happened.
 
 ADD DIAGRAM
 
-This allows for very flexible analytics workflows: just drag and drop metrics, slice by dimensions and entities and the Semantic Layer will generate the appropriate SQL to actually query your data source for you.
+This allows for very flexible analytics workflows, like drag and drop metrics and slice by dimensions and entities &mdash; the Semantic Layer will generate the appropriate SQL to actually query your data source for you.
 
-Due to the way it works, there are a few things to note:
-
-- Not every “column” of `METRICS.ALL` will be compatible with every other column
-    - `METRICS.ALL` is an amalgamation of all your existing metrics, entities and dimensions. However, queries to it must translate to valid Semantic Layer queries, otherwise you’ll get query compilation errors raised by Metricflow.
-    - Conversely, for saved query tables, all “columns” will be compatible with every other “column” since, by definition, saved queries are valid queries that can be sliced by any of the dimensions present in the query.
+### Considerations
+- Not every “column” of `METRICS.ALL` are compatible with every other column
+  - `METRICS.ALL` combines all your existing metrics, entities and dimensions. Queries must be valid Semantic Layer queries, otherwise they'll fail with MetricFlow query compilation errors.
+  - For saved query tables, all “columns” will be compatible with every other “column” since, by definition, saved queries are valid queries that can be sliced by any of the dimensions present in the query.
 - The dbt Semantic Layer connector does not support `Import` mode natively.
-    - Since `Import` mode tries to select an entire table to import into Power BI, it will most likely generate SQL that translates to an invalid Semantic Layer query which will try to query all metrics, dimensions and entities at the same time.
-    - If you really want to import data into a PowerBI report, you should
-        - select a valid combination of columns to import, i.e something that will generate a valid Semantic Layer query
-            - You can use `Table.SelectColumns` for this
-            - `= Table.SelectColumns(Source{[Item="ALL",Schema="METRICS",Catalog=null]}[Data], {"Total Profit", "Metric Time (Day)"})`
-        - be aware that all calculations will happen inside of Power BI, and won’t pass through Semantic Layer servers. This could lead to incorrect or diverging results.
-            - For example, the Semantic Layer is usually responsible for rolling up cumulative metrics to coarser time granularities. Doing a sum over all the weeks in a year to get a yearly granularity out of a weekly Semantic Layer query will most likely generate incorrect results. Instead, you should query the Semantic Layer directly to get accurate results.
+  - Use `DirectQuery` mode to ensure compatibility.
+  - `Import` mode tries to select an entire table to import into Power BI, which means it'll likely generate SQL that translates to an invalid Semantic Layer query which will try to query all metrics, dimensions and entities at the same time.
+  - To import data into a PowerBI report:
+    - Select a valid combination of columns to import, (something that will generate a valid Semantic Layer query)
+    - You can use `Table.SelectColumns` for this: `= Table.SelectColumns(Source{[Item="ALL",Schema="METRICS",Catalog=null]}[Data], {"Total Profit", "Metric Time (Day)"})`
+    - Be aware that all calculations will happen inside of Power BI and won’t pass through Semantic Layer servers. This could lead to incorrect or diverging results.
+      - For example, the Semantic Layer is usually responsible for rolling up cumulative metrics to coarser time granularities. Doing a sum over all the weeks in a year to get a yearly granularity out of a weekly Semantic Layer query will most likely generate incorrect results. Instead, you should query the Semantic Layer directly to get accurate results.
 - The dbt Semantic Layer connector ignores aggregations defined in Power BI.
-    - If you change the aggregation type of a metric from `SUM()` to `COUNT()` or anything else, nothing will change. This is because aggregation functions are defined in the Semantic Layer, and we ignore them when translating Power BI generated SQL into Semantic Layer queries.
+    - If you change the aggregation type of a metric from `SUM()` to `COUNT()` or anything else, nothing will change. This is because aggregation functions are defined in the Semantic Layer and we ignore them when translating Power BI generated SQL into Semantic Layer queries.
