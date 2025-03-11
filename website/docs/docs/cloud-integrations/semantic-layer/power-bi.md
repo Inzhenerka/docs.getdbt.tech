@@ -31,16 +31,18 @@ import SLCourses from '/snippets/_sl-course.md';
 
 The dbt Semantic Layer Power BI connector consists of a custom `.pqx` Power BI connector and an ODBC driver. Install both using our Windows installer by following these steps:
 
-1. Join the private beta
-  - Contact your dbt Labs sales representative to request access to the `.msi` installer.
-2. Download and install the `.msi` installer
-  - Run the installer and follow the on-screen instructions.
-  - This will install the ODBC driver and the connector onto your Power BI Desktop.
-3. Verify installation
-  - Open `ODBC Data Sources (64-bit)` file on your computer.
-  - Navigate to `System DSN` and verify that the `dbt Labs ODBC DSN` is registered. 
-  - Navigate to `Drivers` and verify that the `dbt Labs ODBC Driver` is installed.
-  - Open Power BI Desktop, navigate to `Settings > Data Source Settings`, and verify that the `dbt Semantic Layer` connector is properly loaded.
+#### 1. Join the private beta
+   - Contact your dbt Labs sales representative to request access to the `.msi` installer.
+
+#### 2. Download and install the `.msi` installer
+   - Run the installer and follow the on-screen instructions.
+   - This will install the ODBC driver and the connector onto your Power BI Desktop.
+
+#### 3. Verify installation
+   - Open `ODBC Data Sources (64-bit)` file on your computer.
+   - Navigate to `System DSN` and verify that the `dbt Labs ODBC DSN` is registered. 
+   - Navigate to `Drivers` and verify that the `dbt Labs ODBC Driver` is installed.
+   - Open Power BI Desktop, navigate to `Settings > Data Source Settings`, and verify that the `dbt Semantic Layer` connector is properly loaded.
 
 To allow published reports in Power BI Service to use the connector, an IT admin in your organization needs to install and configure the connector on an On-premises Data Gateway.
 
@@ -50,16 +52,16 @@ This section is for IT admins trying to install the ODBC driver and connector in
 
 To allow published reports to use the connector in Power BI Service, an IT Admin must install and configure the connector.
 
-1. Install the ODBC driver and connector into an On-premises Data Gateway
+#### 1. Install the ODBC driver and connector into an On-premises Data Gateway
    - Run the same `.msi` installer used for Power BI Desktop.
    - Install it on the machine where your gateway is hosted.
 
-2. Copy connector file to Gateway directory
+#### 2. Copy connector file to Gateway directory
    - Locate that `.pqx` file: `C:\Users\<YourUser>\Documents\Power BI Desktop\Custom Connectors\dbtSemanticLayer.pqx`.
    - Copy it to the Power BI On-premises Data Gateway custom connectors directory: `C:\Windows\ServiceProfiles\PBIEgwService\Documents\Power BI Desktop\Custom Connectors`.
-3. Verify installation
+#### 3. Verify installation
    - Following verification steps from the [install the connector](#install-the-connector) section.
-4. Enable connector in Power BI Enterprise Gateway
+#### 4. Enable connector in Power BI Enterprise Gateway
    - Open the `EnterpriseGatewayConfigurator.exe`.
    - Navigate to `Connectors` 
    - Verify that the `dbt Semantic Layer` connector is installed and active.
@@ -69,7 +71,6 @@ For more information on how to set up custom connectors in the Power BI On-premi
 ## Configure the connector
 After installing the connector, you’ll have to configure your project credentials to connect to the Semantic Layer from a report.
 
-### Power BI Desktop
 To configure project credentials in Power BI Desktop:
 
 1. Create a blank report.
