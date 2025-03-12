@@ -12,7 +12,7 @@ The `dbt source` command provides subcommands that are useful when working with 
 
 If your dbt project is [configured with sources](/docs/build/sources), then the `dbt source freshness` command will query all of your defined source tables, determining the "freshness" of these tables. If the tables are stale (based on the `freshness` config specified for your sources) then dbt will report a warning or error accordingly. If a source <Term id="table" /> is in a stale state, then dbt will exit with a nonzero exit code.
 
-Refer to [Declaring source freshness](/docs/build/sources#declaring-source-freshness) for more information. 
+You can also use [source freshness](/docs/deploy/source-freshness) commands help make sure the data you get is new and not old or outdated.
 
 ### Configure source freshness
 
