@@ -1,6 +1,6 @@
 ---
 title: "About the empty flag"
-description: "Use the empty flag to test your code and build your tables withoug populating data."
+description: "Use the empty flag to test your code and build your tables without populating data."
 sidebar_label: "The empty flag"
 pagination_next: "docs/build/sample-flag"
 pagination_prev: null
