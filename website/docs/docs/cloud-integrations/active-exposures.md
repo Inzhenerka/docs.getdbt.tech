@@ -37,22 +37,23 @@ Control the frequency of these refreshes by configuring environment variables in
 
 To enable active exposures, you should meet the following:
 
-1. You have [auto exposures](/docs/cloud-integrations/auto-exposures-tableau) already set up.
-2. Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
-3. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
-4. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
-5. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
+- Have [auto exposures](/docs/cloud-integrations/auto-exposures-tableau) already set up and the desired exposures are included in your lineage.
+- Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
+- Have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
+- Have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
+- Have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
 
 ## Set up active exposures
 
-To set up active exposures:
+To set up active exposures and see the refresh happen automatically during scheduled dbt jobs:
 
-1. Ensure you have [Auto exposures enabled for Tableau](/docs/cloud-integrations/auto-exposures-tableau) and the desired exposures are included in your lineage.
-2. Set the environment level variable `DBT_ACTIVE_EXPOSURES` to `1` within the environment you want the refresh to happen.
-3. Set `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` to control the maximum refresh cadence (in minutes) you want between each exposure refresh. 
-   - Set to 1440 minutes (24 hours) by default, meaning that even for auto exposures that depend on more frequently running models, active exposures will not refresh the Tableau extracts more often than this period. 
-   - Job runs will display the status of `skipped` for the auto-exposure if enough time hasn't yet passed.
-4. You will see the update each time a job runs in production 
-   - This can be viewed in the logs of the dbt run
-      <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposure-log.jpg" title="View the active exposure logs in the dbt run job logs."/ >
-   - More details can also be viewed in the debug logs
+1. In the dbt Cloud, click **Deploy**, then **Environments**, and select the **Environment variables** tab.
+2. Click **Add variable** and set the [environment level variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_ACTIVE_EXPOSURES` to `1` within the environment you want the refresh to happen.
+3. Then set the `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` to control the maximum refresh frequency (in minutes) you want between each exposure refresh.
+4. Set the variable to **1440** minutes (24 hours) by default. This means that active exposures won’t refresh Tableau extracts more often than this set interval, even if the related models run more frequently.
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposures-env-var.jpg" width="100%" title="Set the environment variable `DBT_ACTIVE_EXPOSURES` to `1`."/>
+5. Run a job in production. You will see the update each time a job runs in production. 
+   - If a job runs before the set interval has passed, dbt Cloud skips the auto-exposure refresh and marks it as `skipped` in the job logs.
+6. View the active exposure logs in the logs of the dbt run job:
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/active-exposure-log.jpg" title="View the active exposure logs in the dbt run job logs."/ >
+   - View more details in the debug logs for any troubleshooting.
