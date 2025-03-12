@@ -2,35 +2,32 @@
 title: Browse our guides
 description: dbt Cloud is the fastest and most reliable way to deploy dbt for scalable data transformation, while dbt Core powers open-source transformation workflows. Together, they provide a seamless analytics engineering experience. Explore our step-by-step guides, quickstart tutorials, and troubleshooting resources to get started with dbt and your data platform.
 categories:
-  - title: dbt Quickstarts
-    guides:
-      - snowflake
-      - athena
-      - azure-synapse-analytics
-      - bigquery
-      - starburst-galaxy
-      - databricks
-      - redshift
-      - microsoft-fabric
-      - teradata
-      - manual-install
-      - codespace
-      - sl-snowflake-qs
-      - mesh-qs
-      - explorer-quickstart
-      - dbt-cloud-cli
   - title: Most popular
     guides:
-      - core-to-cloud-1
+      - snowflake
+      - databricks
+      - bigquery
+      - redshift
+      - microsoft-fabric
+      - athena
+      - manual-install
+      - azure-synapse-analytics
+      - starburst-galaxy
+      - teradata
+
+  - title: Troubleshooting
+    guides:
+      - debug-schema-names
       - using-jinja
       - debug-errors
-      - airflow-and-dbt-cloud
-      - adapter-creation
+
   - title: Advanced use cases
     guides:
+      - airflow-and-dbt-cloud
+      - adapter-creation
       - create-new-materializations
       - customize-schema-alias
-      - debug-schema-names
+      - core-to-cloud-1
       - refactoring-legacy-sql
       - using-jinja
 --- 
