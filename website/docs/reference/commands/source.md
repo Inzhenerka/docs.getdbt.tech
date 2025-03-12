@@ -16,12 +16,7 @@ You can also use [source freshness](/docs/deploy/source-freshness) commands help
 
 ### Configure source freshness
 
-To configure source freshness in dbt:
-
-- Add a [`freshness`](/reference/resource-properties/freshness) block to your source in the .yml file.
-- Specify `warn_after` and `error_after` thresholds.
-- Include [`loaded_at_field`](/reference/resource-properties/freshness#loaded_at_field) for each table.
-- Use the [`dbt source freshness`](/reference/commands/source#dbt-source-freshness) command to check freshness.
+The example below, shows how to configure source freshness in dbt. Refer to [Declaring source freshness](/docs/build/sources#declaring-source-freshness) for more information. 
 
 <File name='models/<filename>.yml'>
 
