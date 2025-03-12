@@ -22,7 +22,7 @@ The `--sample` flag will become more robust over time, but it only supports time
 
 ## Using the `--sample` flag
 
-The `--sample` flag is available for the [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands, and when used, sample mode generates filtered refs and sources. Since it's using time-based sampling, if you have refs like `{{ ref('some_model') }}` being sampled, you need to set [`event_time`](/reference/resource-configs/event-time) for `some_model` to the field that will be used as the timestamp. 
+The `--sample` flag is available for the [`run`](/reference/commands/run) and [`build`](/reference/commands/build) commands. When used, sample mode generates filtered refs and sources. Since it's using time-based sampling, if you have refs like `{{ ref('some_model') }}` being sampled, you need to set [`event_time`](/reference/resource-configs/event-time) for `some_model` to the field that will be used as the timestamp. 
 
 There are two time-based sample specifications supported for sample mode:
 - **Relative time specs:** Filters sampled data from the time the command is run back to a specified integer and granularity. Supported granularities are:
@@ -33,7 +33,7 @@ There are two time-based sample specifications supported for sample mode:
 - **Static time specs:** Filters your data between a defined start and end period using date and/or timestamp.
 
 
-### Example
+### Examples
 
 Let's say you want to run your `stg_customers` model and build the table in your development schema with a relative time spec sample size of three days. Your command in the IDE would look something like this:
 
