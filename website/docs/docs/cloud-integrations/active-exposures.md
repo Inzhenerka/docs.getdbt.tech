@@ -15,7 +15,7 @@ With active exposures, you can now use dbt [Cloud job scheduler](/docs/deploy/jo
 </IntroText>
 
 :::tip Available in private beta
-Active exposures is currently available in private beta. To join the beta, contact your account representative.
+Active exposures is currently available in private beta to dbt Cloud Enterprise accounts. To join the beta, contact your account representative.
 :::
 
 Active exposures integrate with [auto exposures](/docs/cloud-integrations/auto-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
