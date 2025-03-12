@@ -25,8 +25,8 @@ categories:
     guides:
       - airflow-and-dbt-cloud
       - adapter-creation
+      - core-to-cloud-1
       - create-new-materializations
       - customize-schema-alias
-      - core-to-cloud-1
       - refactoring-legacy-sql
 --- 
