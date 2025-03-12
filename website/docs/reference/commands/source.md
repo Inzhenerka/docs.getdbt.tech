@@ -51,7 +51,7 @@ sources:
 
 This helps to monitor the data pipeline health.
 
-You can also configure source freshness in the execution settings within your job in dbt Cloud. For more information, refer to [Enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
+You can also configure source freshness in the **Execution settings** section in your dbt Cloud job **Settings** page. For more information, refer to [Enabling source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots).
 
 ### Source freshness commands
 
