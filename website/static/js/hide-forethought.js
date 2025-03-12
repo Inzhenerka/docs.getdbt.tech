@@ -17,10 +17,9 @@
       // Attempt to get forethought-chat widget element 5 times
       console.log('count', intCount)
       if (intCount < 10) {
-        // const forethoughtIframe = document.getElementById('forethought-chat')
-    
-        // Temp - use footer element for testing
-        const forethoughtIframe = document.querySelector('.footer')
+        
+        // Get Forethought widget by ID
+        const forethoughtIframe = document.getElementById('forethought-chat')
         console.log('forethoughtIframe', forethoughtIframe)
         if (forethoughtIframe) {
           // If element found, hide element
