@@ -29,5 +29,4 @@ categories:
       - customize-schema-alias
       - core-to-cloud-1
       - refactoring-legacy-sql
-      - using-jinja
 --- 
