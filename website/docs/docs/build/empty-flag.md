@@ -24,11 +24,11 @@ Run the entire project while building only the schemas in your development envir
 dbt run --empty
 ```
 
-Build a specific model:
+Run a specific model:
 
 ```
 dbt run --select path/to/your_model --empty
 ```
 
-dbt will then build and execute the SQL, resulting in an empty schema in the data warehouse.
+dbt will build and execute the SQL, resulting in an empty schema in the data warehouse.
 
