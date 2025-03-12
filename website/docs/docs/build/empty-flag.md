@@ -18,7 +18,7 @@ During dbt development, you might want to validate that your models are semantic
 
 ### Examples
 
-Run the entire project while building only the schemas in your development environment:
+Run all models in a project while building only the schemas in your development environment:
 
 ```
 dbt run --empty
