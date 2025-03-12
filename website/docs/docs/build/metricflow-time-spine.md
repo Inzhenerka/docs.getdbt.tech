@@ -12,7 +12,7 @@ It's common in analytics engineering to have a date dimension or "time spine" ta
 
 To use MetricFlow with time-based metrics and dimensions, you _must_ provide a time spine table. This table serves as the foundation for time-based joins and aggregations. You can either:
 
-- Create a time spine SQL table from scratch (check out the [example time spine tables](#example-time-spine-tables) section for examples), or
+- Create a time spine from scratch (check out the [example time spine tables](#example-time-spine-tables) section for examples), or
 - Use an existing table in your project, like a `dim_date` table
 
 And once you have a time spine table, you need to configure it in YAML to tell MetricFlow how to use it.
