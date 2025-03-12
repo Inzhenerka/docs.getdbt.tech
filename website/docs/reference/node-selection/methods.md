@@ -143,6 +143,8 @@ selectors unambiguous.
   dbt run --select "snowplow.*"
 ```
 
+The package `this` is also a special one that would select the ndoes of the current project. With the example above, running `dbt run --select "package:this"` from the `snowplow` project would run the exact same set of models as any of the three other selectors.
+
 ### path
 The `path` method is used to select models/sources defined at or under a specific path.
 Model definitions are in SQL/Python files (not YAML), and source definitions are in YAML files.
