@@ -143,7 +143,9 @@ selectors unambiguous.
   dbt run --select "snowplow.*"
 ```
 
-The package `this` is also a special one that would select the ndoes of the current project. With the example above, running `dbt run --select "package:this"` from the `snowplow` project would run the exact same set of models as any of the three other selectors.
+Use the `this` package to select nodes from the current project. From the example, running `dbt run --select "package:this"` from the `snowplow` project runs the exact same set of models as the other three selectors.
+
+Since `this` always refers to the current project, using `package:this` ensures that you're only selecting models from the project you're working in.
 
 ### path
 The `path` method is used to select models/sources defined at or under a specific path.
