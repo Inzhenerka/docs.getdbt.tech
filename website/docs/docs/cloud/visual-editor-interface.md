@@ -62,7 +62,7 @@ If you have any feedback on additional operators that you might need, we'd love 
 
 ## Canvas
 
-The visual editor has a sleek drag-and-drop canvas interface that allows you to create or modify dbt SQL models. It's like a digital whiteboard space that allows anyone to view and deliver trustworthy data. Use the canvas to:
+The Visual Editor has a sleek drag-and-drop canvas interface for creating and modifying dbt SQL models. It's like a digital whiteboard space for easily viewing and delivering trustworthy data. Use the canvas to:
 
 - Drag-and-drop operators to create and configure your model(s)
 - Generate SQL code using the built-in AI generator
