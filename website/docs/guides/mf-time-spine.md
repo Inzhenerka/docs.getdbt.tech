@@ -141,7 +141,7 @@ If your project already includes a `dim_date` or similar model, you can configur
 
 ## Run and preview the time spine
 
-For the time spine you created, let's run it and preview the output.
+For the time spine you created, let's run it and preview the output if you haven't already done this. If you have already run the model, you can skip this step.
 
 1. Run the following command:
    ```bash
