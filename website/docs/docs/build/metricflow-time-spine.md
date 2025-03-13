@@ -10,18 +10,20 @@ tags: [Metrics, Semantic Layer]
 
 It's common in analytics engineering to have a date dimension or "time spine" table as a base table for different types of time-based joins and aggregations. The structure of this table is typically a base column of daily or hourly dates, with additional columns for other time grains, like fiscal quarters, defined based on the base column. You can join other tables to the time spine on the base column to calculate metrics like revenue at a point in time, or to aggregate to a specific time grain.
 
-To use MetricFlow with time-based metrics and dimensions, you _must_ provide a time spine table. This table serves as the foundation for time-based joins and aggregations. You can either:
+To use MetricFlow with time-based metrics and dimensions, you _must_ provide a time spine. This table serves as the foundation for time-based joins and aggregations. You can either:
 
-- Create a time spine from scratch (check out the [example time spine tables](#example-time-spine-tables) section for examples), or
+- Create a time spine from scratch (check out the [example time spine](#example-time-spine-tables) section for examples), or
 - Use an existing table in your project, like a `dim_date` table
 
-And once you have a time spine table, you need to configure it in YAML to tell MetricFlow how to use it.
+And once you have a time spine, you need to configure it in YAML to tell MetricFlow how to use it.
 
 ## Prerequisites
 MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. This means you need to:
 
-- Define at least one [time spine table](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
-- [Configure each time spine table in a YAML file](#configuring-time-spine-in-yaml) to define how MetricFlow recognizes and uses its columns.
+- Define at least one [time spine](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
+- [Configure each time spine in a YAML file](#configuring-time-spine-in-yaml) to define how MetricFlow recognizes and uses its columns.
+
+Note that you can't have overlapping time spines.
 
  MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
 

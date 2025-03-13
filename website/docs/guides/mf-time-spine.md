@@ -130,6 +130,10 @@ If your project already includes a `dim_date` or similar model, you can configur
         columns:
           - name: date_day
             granularity: day
+          - name: day_of_week
+            granularity: day
+          - name: full_date
+            granularity: day
     ```
     </File>
 
@@ -220,7 +224,7 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
       - name: time_spine_daily
         ... rest of the daily time spine config ...
 
-    - name: time_spine_yearly
+      - name: time_spine_yearly
         description: time spine one row per house
         time_spine:
           standard_granularity_column: date_year
@@ -248,6 +252,7 @@ If you're developing in the dbt Cloud IDE, you can preview the model by clicking
 For some extra practice, try one of the following exercises:
 
 - Order the `dbt sl query --metrics orders --group-by metric_time__year` command output by ascending order of `metric_time__year`. Check out the [dbt Semantic Layer commands](/docs/build/metricflow-commands#query) docs for more information on how to do this.
+- Filter to this year and last year only to limit data returned.
 - Try creating a monthly time spine &mdash; duplicate your daily time spine model, adjust it to generate one row per month, and update the YAML file to include `granularity: month`. Give it a try!
 :::
 
