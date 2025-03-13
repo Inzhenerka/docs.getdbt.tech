@@ -15,8 +15,12 @@
  */
 exports.versions = [
   {
-    version: "1.10",
+    version: "1.11",
     customDisplay: "Cloud (Latest)",
+  },
+  {
+    version: "1.10",
+    isPrerelease: true,
   },
   {
     version: "1.9",
