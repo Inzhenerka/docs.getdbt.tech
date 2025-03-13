@@ -11,7 +11,7 @@ pagination_prev: "docs/cloud/visual-editor"
 # Navigate the interface <Lifecycle status='beta'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-The visual editor interface contains an operator toolbar, operators, canvas, built-in AI, and more to help you access and transform data through a seamless drag-and-drop experience in dbt Cloud. We do this through dbt models.
+The visual editor interface contains an operator toolbar, operators, canvas, built-in AI, and more to help you access and transform data through a seamless drag-and-drop dbt model creation experience in dbt Cloud.
 </p>
 
 :::tip Beta feature
