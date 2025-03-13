@@ -20,7 +20,7 @@ And once you have a time spine, you need to configure it in YAML to tell MetricF
 ## Prerequisites
 MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. This means you need to:
 
-- Define at least one [time spine](#example-time-spine-tables) at the whichever granularity needed for your metrics (either daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
+- Define at least one [time spine](#example-time-spine-tables) at the whichever granularity needed for your metrics (like daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
 - [Configure each time spine in a YAML file](#configuring-time-spine-in-yaml) to define how MetricFlow recognizes and uses its columns.
 
 Note that you can't have overlapping time spines.
