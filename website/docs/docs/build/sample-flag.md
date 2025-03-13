@@ -12,6 +12,8 @@ pagination_prev: "docs/build/empty-flag"
 
 The `--sample` flag is not currently available for Python models. If the flag is used with a Python model, it will be ignored.
 
+Seeds will be created normally, but are sampled when referenced by downstream nodes. 
+
 :::
 
 Large data sets can drastically increase build times and reduce how quickly dbt developers can build and test new code. The dbt `--sample` flag can help to reduce build times and warehouse spend by running dbt in sample mode. Sample mode enables you to address cases where you don't need to build the entire model during the development or CI cycle but include enough data to validate the outputs. 
@@ -51,6 +53,22 @@ Next, let's say you want to validate data for your entire business from a sample
 
 ```
 dbt run --sample="{'start': '2024-07-01', 'end': '2024-07-08 18:00:00'}"
+```
+
+To prevent a `ref` from being sampled, append `.render()` to it:
+
+```sql
+
+with
+
+source as (
+
+    select * from {{ ref('stg_customers').render() }}
+
+),
+
+...
+
 ```
 
 dbt will then execute the model SQL against the target data warehouse and build the tables with data from the sample sizes.
