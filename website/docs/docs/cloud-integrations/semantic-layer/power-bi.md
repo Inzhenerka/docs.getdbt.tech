@@ -63,7 +63,7 @@ To allow published reports to use the connector in Power BI Service, an IT Admin
    - Following verification steps from the [install the connector](#3-verify-installation) section.
 #### 4. Enable connector in Power BI Enterprise Gateway
    - Open the `EnterpriseGatewayConfigurator.exe`.
-   - Navigate to **Connectors** 
+   - Navigate to **Connectors**. 
    - Verify that the `dbt Semantic Layer` connector is installed and active.
 
 For more information on how to set up custom connectors in the Power BI On-premises Data Gateway, refer to Power BI’s [official documentation](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
