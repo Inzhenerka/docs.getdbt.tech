@@ -933,7 +933,7 @@ const sidebarSettings = {
         "reference/resource-configs/firebolt-configs",
         "reference/resource-configs/greenplum-configs",
         "reference/resource-configs/infer-configs",
-        "reference/resource-configs/ibm-netezza-configs",
+        "reference/resource-configs/ibm-netezza-config",
         "reference/resource-configs/materialize-configs",
         "reference/resource-configs/azuresynapse-configs",
         "reference/resource-configs/fabric-configs",
