@@ -108,7 +108,7 @@ Now that you've created the SQL file, configure it in YAML so MetricFlow can rec
 
 This time spine YAML file:
 - Defines `date_day` as the base column for daily granularity.
-- Configures `time_spine` properties so MetricFlow can use the model
+- Configures `time_spine` properties so MetricFlow can use the model.
 
 ### Using an existing dim_date model
 
@@ -141,7 +141,7 @@ If your project already includes a `dim_date` or similar model, you can configur
 
 ## Run and preview the time spine
 
-For the time spine you created, let's run it and preview the output.
+For the time spine you created, let's run it and preview the output if you haven't already done this. If you have already run the model, you can skip this step.
 
 1. Run the following command:
    ```bash
@@ -154,7 +154,7 @@ For the time spine you created, let's run it and preview the output.
 
 3. Check that the model:
    - Contains one row per day.
-   - Covers the date range you want (5 years back to 30 days forward)
+   - Covers the date range you want (5 years back to 30 days forward).
 
 4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the model/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
    
@@ -216,7 +216,8 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
     ```
     </File>
 
-2. Then update `_models.yml` file and add the yearly time spine (below the daily time spine config):
+2. Then update the `_models.yml` file and add the yearly time spine (below the daily time spine config):
+      
     <File name='_models.yml'>
 
     ```yaml

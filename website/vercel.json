@@ -449,6 +449,11 @@
       "permanent": true
     },
     {
+      "source": "/guides/codespace",
+      "destination": "/guides/duckdb",
+      "permanent": true
+    },
+    {
       "source": "/docs/dbt-cloud-apis/sl-manifest",
       "destination": "/reference/artifacts/sl-manifest",
       "permanent": true
