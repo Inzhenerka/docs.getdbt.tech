@@ -33,6 +33,7 @@ dbt Copilot enhances efficiency by automating repetitive tasks while ensuring da
 - dbt Copilot does not use warehouse data to train AI models.
 - No sensitive data persists on dbt Labs' systems, except for usage data.
 - You can request the deletion of personal or sensitive data within 30 days.
+- dbt Copilot uses a best practice style guide to ensure consistency across teams.
 
 :::tip
 dbt Copilot accelerates, but doesn’t replace, your analytics development lifecycle. It helps deliver better data products faster, but always reviews AI-generated content, as it may be incorrect.
