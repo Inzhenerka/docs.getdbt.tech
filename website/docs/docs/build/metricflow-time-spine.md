@@ -25,7 +25,7 @@ MetricFlow requires you to define at least one dbt model which provides a time-s
 
 Note that you can't have overlapping time spines.
 
- MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
+MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
 
 - [Cumulative metrics](/docs/build/cumulative)
 - [Metric offsets](/docs/build/derived#derived-metric-offset)
