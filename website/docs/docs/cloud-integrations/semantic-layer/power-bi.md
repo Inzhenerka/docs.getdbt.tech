@@ -32,19 +32,19 @@ import SLCourses from '/snippets/_sl-course.md';
 The dbt Semantic Layer Power BI connector consists of a custom `.pqx` Power BI connector and an ODBC driver. Install both using our Windows installer by following these steps:
 
 #### 1. Join the private beta
-   - Contact your dbt Labs sales representative to request access to the `.msi` installer.
+   - Contact your dbt Labs account representative to request access to the `.msi` installer.
 
 #### 2. Download and install the `.msi` installer
    - Run the installer and follow the on-screen instructions.
    - This will install the ODBC driver and the connector onto your Power BI Desktop.
 
 #### 3. Verify installation
-   - Open `ODBC Data Sources (64-bit)` file on your computer.
-   - Navigate to `System DSN` and verify that the `dbt Labs ODBC DSN` is registered. 
-   - Navigate to `Drivers` and verify that the `dbt Labs ODBC Driver` is installed.
-   - Open Power BI Desktop, navigate to `Settings > Data Source Settings`, and verify that the `dbt Semantic Layer` connector is properly loaded.
+   - Open **ODBC Data Sources (64-bit)** file on your computer.
+   - Navigate to **System DSN** and verify that the `dbt Labs ODBC DSN` is registered. 
+   - Navigate to **Drivers** and verify that the `dbt Labs ODBC Driver` is installed.
+   - Open Power BI Desktop, navigate to **Settings**, then **Data Source Settings**. Verify that the `dbt Semantic Layer` connector is properly loaded.
 
-To allow published reports in Power BI Service to use the connector, an IT admin in your organization needs to install and configure the connector on an On-premises Data Gateway.
+To allow published reports in Power BI Service to use the connector. An IT admin in your organization needs to install and configure the connector on an On-premises Data Gateway.
 
 ## For IT admins
 
@@ -60,10 +60,10 @@ To allow published reports to use the connector in Power BI Service, an IT Admin
    - Locate that `.pqx` file: `C:\Users\<YourUser>\Documents\Power BI Desktop\Custom Connectors\dbtSemanticLayer.pqx`.
    - Copy it to the Power BI On-premises Data Gateway custom connectors directory: `C:\Windows\ServiceProfiles\PBIEgwService\Documents\Power BI Desktop\Custom Connectors`.
 #### 3. Verify installation
-   - Following verification steps from the [install the connector](#install-the-connector) section.
+   - Following verification steps from the [install the connector](#3-verify-installation) section.
 #### 4. Enable connector in Power BI Enterprise Gateway
    - Open the `EnterpriseGatewayConfigurator.exe`.
-   - Navigate to `Connectors` 
+   - Navigate to **Connectors** 
    - Verify that the `dbt Semantic Layer` connector is installed and active.
 
 For more information on how to set up custom connectors in the Power BI On-premises Data Gateway, refer to Power BI’s [official documentation](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
@@ -76,11 +76,14 @@ To configure project credentials in Power BI Desktop:
 1. Create a blank report.
 2. On the top-left, click on **Get data**.
 3. Search for dbt Semantic Layer, then click **Connect**.
-4. Fill in your connection details. You can find your server and environmentId under the Semantic Layer configuration for your dbt Cloud project. 
-   - Make sure you select `DirectQuery`, since the Semantic Layer connector does not support `Import` mode. Click **OK** to proceed.
+4. Fill in your connection details. You can find your server and environmentId under the Semantic Layer configuration for your dbt Cloud project.
+   :::tip 
+   Make sure you select `DirectQuery`, since the Semantic Layer connector does not support `Import` mode (see [Considerations](#considerations) for more details). 
+   :::
+5. Click **OK** to proceed.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />
-5. On the next screen, paste your service token and then click **Connect**.
-6. You should see a sidepane with a few tables. Select the ones you want to load into your dashboard. Then click **Load**.
+6. On the next screen, paste your service token and then click **Connect**.
+7. You should see a sidepane with a few tables. Select the ones you want to load into your dashboard. Then click **Load**.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-sidepanel.jpg" title="Select tables in the side panel" />
 
 Now that you've configured the connector, you can configure published reports in the next section to use the connector.
@@ -110,7 +113,7 @@ You can now go back to your published report on Power BI Service to assert data 
 This section describes how to use the dbt Semantic Layer connector in Power BI.
 
 The dbt Semantic Layer connector creates:
-- A virtual (or sample?) table for each saved query
+- A virtual table for each saved query
 - A `METRICS.ALL` table containing all metrics, and dimensions and entities appear as regular dimension columns.
 
 These tables do not actually map to an underlying table in your data warehouse. Instead, Power BI sends queries to these tables and (before actually executing on the warehouse) the Semantic Layer servers:
@@ -124,16 +127,28 @@ ADD DIAGRAM
 This allows for very flexible analytics workflows, like drag and drop metrics and slice by dimensions and entities &mdash; the Semantic Layer will generate the appropriate SQL to actually query your data source for you.
 
 ## Considerations
-- Not every “column” of `METRICS.ALL` are compatible with every other column
-  - `METRICS.ALL` combines all your existing metrics, entities and dimensions. Queries must be valid Semantic Layer queries, otherwise they'll fail with MetricFlow query compilation errors.
-  - For saved query tables, all “columns” will be compatible with every other “column” since, by definition, saved queries are valid queries that can be sliced by any of the dimensions present in the query.
-- The dbt Semantic Layer connector does not support `Import` mode natively.
-  - Use `DirectQuery` mode to ensure compatibility.
-  - `Import` mode tries to select an entire table to import into Power BI, which means it'll likely generate SQL that translates to an invalid Semantic Layer query which will try to query all metrics, dimensions and entities at the same time.
-  - To import data into a PowerBI report:
-    - Select a valid combination of columns to import, (something that will generate a valid Semantic Layer query)
-    - You can use `Table.SelectColumns` for this: `= Table.SelectColumns(Source{[Item="ALL",Schema="METRICS",Catalog=null]}[Data], {"Total Profit", "Metric Time (Day)"})`
-    - Be aware that all calculations will happen inside of Power BI and won’t pass through Semantic Layer servers. This could lead to incorrect or diverging results.
-      - For example, the Semantic Layer is usually responsible for rolling up cumulative metrics to coarser time granularities. Doing a sum over all the weeks in a year to get a yearly granularity out of a weekly Semantic Layer query will most likely generate incorrect results. Instead, you should query the Semantic Layer directly to get accurate results.
-- The dbt Semantic Layer connector ignores aggregations defined in Power BI.
-    - If you change the aggregation type of a metric from `SUM()` to `COUNT()` or anything else, nothing will change. This is because aggregation functions are defined in the Semantic Layer and we ignore them when translating Power BI generated SQL into Semantic Layer queries.
+
+<Expandable alt_header="Not every “column” of METRICS.ALL are compatible with every other column">
+
+- `METRICS.ALL` combines all your existing metrics, entities and dimensions. Queries must be valid Semantic Layer queries, otherwise they'll fail with MetricFlow query compilation errors.
+
+- For saved query tables, all “columns” will be compatible with every other “column” since, by definition, saved queries are valid queries that can be sliced by any of the dimensions present in the query.
+</Expandable>
+
+<Expandable alt_header="The dbt Semantic Layer connector does not support Import mode natively">
+
+- Use `DirectQuery` mode to ensure compatibility.
+- `Import` mode tries to select an entire table to import into Power BI, which means it'll likely generate SQL that translates to an invalid Semantic Layer query which will try to query all metrics, dimensions and entities at the same time.
+- To import data into a PowerBI report:
+   - Select a valid combination of columns to import, (something that will generate a valid Semantic Layer query)
+   - You can use `Table.SelectColumns` for this: `= Table.SelectColumns(Source{[Item="ALL",Schema="METRICS",Catalog=null]}[Data], {"Total Profit", "Metric Time (Day)"})`
+   - Be aware that all calculations will happen inside of Power BI and won’t pass through Semantic Layer servers. This could lead to incorrect or diverging results.
+   - For example, the Semantic Layer is usually responsible for rolling up cumulative metrics to coarser time granularities. Doing a sum over all the weeks in a year to get a yearly granularity out of a weekly Semantic Layer query will most likely generate incorrect results. Instead, you should query the Semantic Layer directly to get accurate results.
+
+</Expandable>
+
+<Expandable alt_header="The dbt Semantic Layer connector ignores aggregations defined in Power BI">
+
+- If you change the aggregation type of a metric from `SUM()` to `COUNT()` or anything else, nothing will change. This is because aggregation functions are defined in the Semantic Layer and we ignore them when translating Power BI generated SQL into Semantic Layer queries.
+
+</Expandable>
