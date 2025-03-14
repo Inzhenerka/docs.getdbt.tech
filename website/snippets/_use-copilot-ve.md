@@ -10,10 +10,6 @@ To use dbt Copilot in the Visual Editor to generate SQL expressions:
 4. Click **Generate** &mdash; dbt Copilot generates the SQL code and alias set for you.
 5. Click the **Run** button to preview the data and confirm the results and continue building your model.
 
-#### Questions
-- If you've generated code that you want to regenerate ????
-- If the code is not what you want, ????
-
 <Lightbox src="/img/docs/dbt-cloud/copilot-ve-formula.gif" title="Use dbt Copilot in the Visual Editor Formula operator to generate SQL expressions using natural language prompts" />
 
 ### Build your visual models
