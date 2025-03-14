@@ -773,12 +773,12 @@ const sidebarSettings = {
           label: "Visualize and orchestrate exposures",
           link: {
             type: "doc",
-            id: "docs/cloud-integrations/active-and-auto-exposures",
+            id: "docs/cloud-integrations/downstream-exposures",
           },
           items: [
-            "docs/cloud-integrations/active-and-auto-exposures",
-            "docs/cloud-integrations/auto-exposures-tableau",
-            "docs/cloud-integrations/active-exposures",
+            "docs/cloud-integrations/downstream-exposures",
+            "docs/cloud-integrations/downstream-exposures-tableau",
+            "docs/cloud-integrations/orchestrate-exposures",
           ],
         },
         {

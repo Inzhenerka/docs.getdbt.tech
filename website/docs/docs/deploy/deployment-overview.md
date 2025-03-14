@@ -70,7 +70,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 <Card
     title="Visualize and orchestrate exposures"
     body="Learn how to use dbt Cloud to automatically generate downstream exposures from dashboards and proactively refresh the underlying data sources during scheduled dbt jobs."
-    link="/docs/deploy/active-and-auto-exposures"
+    link="/docs/deploy/orchestrate-exposures"
     icon="dbt-bit"/>
 
 <Card

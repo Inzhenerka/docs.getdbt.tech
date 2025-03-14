@@ -85,7 +85,7 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
   <Card
    title="Visualize and orchestrate exposures*"
    body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
-   link="/docs/cloud-integrations/active-and-auto-exposures"
+   link="/docs/cloud-integrations/downstream-exposures"
    icon="dbt-bit"/>
 
    <Card

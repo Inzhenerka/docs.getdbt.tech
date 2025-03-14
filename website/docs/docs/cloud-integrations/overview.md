@@ -15,7 +15,7 @@ Many data applications integrate with dbt Cloud, enabling you to leverage the po
 <Card
     title="Visualize and orchestrate downstream exposures"
     body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
-    link="docs/cloud-integrations/active-and-auto-exposures"
+    link="docs/cloud-integrations/downstream-exposures"
     icon="dbt-bit"/>
 
 <Card

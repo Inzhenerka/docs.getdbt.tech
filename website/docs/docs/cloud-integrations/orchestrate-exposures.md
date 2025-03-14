@@ -1,6 +1,5 @@
 ---
 title: "Orchestrate exposures"
-id: "active-exposures"
 sidebar_label: "Orchestrate exposures"
 description: "Use dbt to proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs."
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
