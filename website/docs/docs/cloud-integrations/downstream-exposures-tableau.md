@@ -14,14 +14,14 @@ Configure and automatically populate downstream exposures for supported BI tool 
 
 As a data team, it’s critical that you have context into the downstream use cases and users of your data products. In dbt Cloud, you can configure downstream exposures in two ways:
 - Manual &mdash; Defined [manually](/docs/build/exposures#declaring-an-exposure) and explicitly in your project’s YAML files.
-- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/active-and-auto-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
+- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically creates and visualizes downstream exposures, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
 
 By leveraging downstream [exposures](/docs/build/exposures) automatically, data teams can:
 
 - Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
 - Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
 - Automate exposure tracking for supported BI tools, ensuring lineage is always up to date.
-- [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous page](/docs/cloud-integrations/active-and-auto-exposures) for more info.
+- [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/job-scheduler). See the [previous page](/docs/cloud-integrations/downstream-exposures) for more info.
 
 :::info Tableau Server
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
@@ -48,7 +48,7 @@ Set up downstream exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#se
 
 ### Set up in Tableau
 
-This section of the document explains the steps you need to set up downstream exposures integration with Tableau. Once you've set this up in Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view the downstream exposures](#view-auto-exposures) in dbt Explorer.
+This section of the document explains the steps you need to set up downstream exposures integration with Tableau. Once you've set this up in Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view the downstream exposures](#view-downstream-exposures) in dbt Explorer.
 
 1. Ensure you or a site admin enables [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for the account in Tableau.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
