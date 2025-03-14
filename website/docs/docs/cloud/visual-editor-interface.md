@@ -2,7 +2,7 @@
 title: "Navigate the interface" 
 id: visual-editor-interface      
 sidebar_label: "Navigate the interface" 
-description: "The visual editor interface contains an operator toolbar, operators, and a canvas to help you create dbt models through a seamless drag-and-drop experience in dbt Cloud." 
+description: "The Visual Editor interface contains an operator toolbar, operators, and a canvas to help you access and transform data through a seamless drag-and-drop dbt model creation experience in dbt Cloud." 
 pagination_next: "docs/cloud/use-visual-editor"
 pagination_prev: "docs/cloud/visual-editor"
 
@@ -11,7 +11,7 @@ pagination_prev: "docs/cloud/visual-editor"
 # Navigate the interface <Lifecycle status='beta'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-The visual editor interface contains an operator toolbar, operators, canvas, built-in AI, and more to help you create dbt models through a seamless drag-and-drop experience in dbt Cloud.
+The visual editor interface contains an operator toolbar, operators, canvas, built-in AI, and more to help you access and transform data through a seamless drag-and-drop dbt model creation experience in dbt Cloud.
 </p>
 
 :::tip Beta feature
@@ -62,7 +62,7 @@ If you have any feedback on additional operators that you might need, we'd love 
 
 ## Canvas
 
-The visual editor has a sleek drag-and-drop canvas interface that allows you to create or modify dbt SQL models. It's like a digital whiteboard space that allows analysts to deliver trustworthy data. Use the canvas to:
+The Visual Editor has a sleek drag-and-drop canvas interface for creating and modifying dbt SQL models. It's like a digital whiteboard space for easily viewing and delivering trustworthy data. Use the canvas to:
 
 - Drag-and-drop operators to create and configure your model(s)
 - Generate SQL code using the built-in AI generator
