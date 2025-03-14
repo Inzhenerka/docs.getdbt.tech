@@ -21,7 +21,7 @@ By leveraging downstream [exposures](/docs/build/exposures) automatically, data 
 - Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
 - Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
 - Automate exposure tracking for supported BI tools, ensuring lineage is always up to date.
-- [Orchestrate exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous page](/docs/cloud-integrations/active-and-auto-exposures) for more info.
+- [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous page](/docs/cloud-integrations/active-and-auto-exposures) for more info.
 
 :::info Tableau Server
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
@@ -99,9 +99,9 @@ import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 ## Orchestrate exposures <Lifecycle status="beta"/>
 
-[Orchestrate exposures](/docs/cloud-integrations/active-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
+[Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
 - Running exposures with a job run integrates with downstream exposures and uses your `dbt build` job to ensure that Tableau extracts are updated regularly and automatically.
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
-To set up and proactively run exposures with the dbt Cloud job scheduler, refer to [Orchestrate exposures](/docs/cloud-integrations/active-exposures).
+To set up and proactively run exposures with the dbt Cloud job scheduler, refer to [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures).

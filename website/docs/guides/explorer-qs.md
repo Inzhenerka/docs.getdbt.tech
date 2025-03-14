@@ -150,7 +150,7 @@ You've learned how to:
 For the next steps, you can check out the [dbt Explorer documentation](/docs/collaborate/explore-projects) and [FAQs](/docs/collaborate/dbt-explorer-faqs) to learn more about how to use dbt Explorer.
 
 Keep an eye out for new features coming out soon, like:
-- [Visualize downstream exposures](/docs/cloud-integrations/auto-exposures-tableau) integrations (like Tableau).
+- [Visualize downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) integrations (like Tableau).
 - [Model query history](/docs/collaborate/model-query-history) for additional warehouses (like Redshift and Databricks)
 - Improvements to [data health tiles](/docs/collaborate/data-tile)
 

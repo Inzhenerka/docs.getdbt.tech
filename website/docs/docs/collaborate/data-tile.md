@@ -32,7 +32,7 @@ Data health tiles rely on [exposures](/docs/build/exposures) to surface data hea
 - You must have [develop permissions](/docs/cloud/manage-access/seats-and-users).
 - You have [exposures](/docs/build/exposures) defined in your project:
   -  If using manual exposures, they must be explicitly defined in your YAML files.
-  -  If using auto exposures, ensure your BI tool is [configured](/docs/cloud-integrations/auto-exposures-tableau) with dbt Cloud.
+  -  If using auto exposures, ensure your BI tool is [configured](/docs/cloud-integrations/downstream-exposures-tableau) with dbt Cloud.
 - You have [source freshness](/docs/deploy/source-freshness) enabled in the job that generates this exposure.
 - The exposure used for the  data health tile must have the [`type` property](/docs/build/exposures#available-properties) set to `dashboard`. Otherwise, you won't be able to view the **Embed data health tile in your dashboard** dropdown in dbt Explorer.
 

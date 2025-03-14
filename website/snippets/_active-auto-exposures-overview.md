@@ -17,12 +17,12 @@ Check out the following sections for more information on visualizing and orchest
 <Card
     title="Visualize downstream exposures"
     body="Configure downstream exposures automatically from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
-    link="/docs/cloud-integrations/auto-exposures-tableau"
+    link="/docs/cloud-integrations/downstream-exposures-tableau"
     icon="dbt-bit"/>
 
 <Card
     title="Orchestrate downstream exposures"
-    link="/docs/cloud-integrations/active-exposures"
+    link="/docs/cloud-integrations/orchestrate-exposures"
     body="Proactively refreshes the underlying data sources (like Tableau extracts) using the dbt Cloud scheduler during scheduled dbt jobs."
     icon="dbt-bit"/>
 

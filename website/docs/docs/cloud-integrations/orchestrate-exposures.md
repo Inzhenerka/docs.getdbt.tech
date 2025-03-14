@@ -17,7 +17,7 @@ Use dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh
 Orchestrating exposures is currently available in private beta to dbt Cloud Enterprise accounts. To join the beta, contact your account representative.
 :::
 
-Orchestrating exposures integrates with [downstream exposures](/docs/cloud-integrations/auto-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+Orchestrating exposures integrates with [downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
 
 Control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
@@ -36,7 +36,7 @@ Control the frequency of these refreshes by configuring environment variables in
 
 To orchestrate downstream exposures, you should meet the following:
 
-- [Configured downstream exposures](/docs/cloud-integrations/auto-exposures-tableau) and the desired exposures are included in your lineage.
+- [Configured downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and the desired exposures are included in your lineage.
 - Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
 - Have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 - Have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
