@@ -108,7 +108,7 @@ Now that you've created the SQL file, configure it in YAML so MetricFlow can rec
 
 This time spine YAML file:
 - Defines `date_day` as the base column for daily granularity.
-- Configures `time_spine` properties so MetricFlow can use the model
+- Configures `time_spine` properties so MetricFlow can use the model.
 
 ### Using an existing dim_date model
 
