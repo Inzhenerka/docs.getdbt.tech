@@ -35,7 +35,7 @@ dbt Copilot enhances efficiency by automating repetitive tasks while ensuring da
 - You can request the deletion of personal or sensitive data within 30 days.
 
 :::tip
-dbt Copilot accelerates, but doesn’t replace, your analytics development lifecycle. It helps deliver better data products faster, but always review AI-generated content, as it may be incorrect.
+dbt Copilot accelerates, but doesn’t replace, your analytics development lifecycle. It helps deliver better data products faster, but always reviews AI-generated content, as it may be incorrect.
 :::
 
 WE CAN ADD ARCHITECTURAL DIAGRAM HERE
