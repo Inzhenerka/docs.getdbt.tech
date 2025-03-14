@@ -525,7 +525,7 @@ const sidebarSettings = {
           link: { type: "doc", id: "docs/deploy/monitor-jobs" },
           items: [
             "docs/deploy/monitor-jobs",
-            "docs/deploy/active-and-auto-exposures",
+            "docs/deploy/orchestrate-exposures",
             "docs/deploy/artifacts",
             "docs/deploy/job-notifications",
             "docs/deploy/model-notifications",
@@ -562,10 +562,10 @@ const sidebarSettings = {
               label: "Model consumption",
               link: {
                 type: "doc",
-                id: "docs/collaborate/view-auto-exposures",
+                id: "docs/collaborate/view-downstream-exposures",
               },
               items: [
-                "docs/collaborate/view-auto-exposures",
+                "docs/collaborate/view-downstream-exposures",
                 "docs/collaborate/data-tile",
                 "docs/collaborate/model-query-history",
               ],
