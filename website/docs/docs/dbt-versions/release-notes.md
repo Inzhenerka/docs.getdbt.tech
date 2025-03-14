@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
-- **New**: dbt Copilot is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out the [dbt Copilot](/docs/cloud/dbt-copilot) for more information.
+- **New**: dbt Copilot is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out [dbt Copilot](/docs/cloud/dbt-copilot) for more information.
 
 ## February 2025
 
