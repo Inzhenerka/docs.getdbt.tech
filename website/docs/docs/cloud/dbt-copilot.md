@@ -17,7 +17,7 @@ dbt Copilot embeds AI-driven assistance across every stage of the [analytics dev
 With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor](/docs/cloud/build-ve-copilot).
 
 :::tip
-dbt Copilot is available to all Enterprise accounts. If you're interested in using dbt Copilot, [book a demo](https://calendly.com/dbt-labs-sales/dbt-copilot-demo) and we'll help answer any questions you have.
+dbt Copilot is available to all Enterprise accounts. If you're interested in using dbt Copilot, [book a demo](https://www.getdbt.com/contact) and we'll help answer any questions you have.
 :::
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
