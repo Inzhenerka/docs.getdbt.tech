@@ -154,7 +154,7 @@ For the time spine you created, let's run it and preview the output if you haven
 
 3. Check that the model:
    - Contains one row per day.
-   - Covers the date range you want (5 years back to 30 days forward)
+   - Covers the date range you want (5 years back to 30 days forward).
 
 4. (Optional) If you have [metrics](/docs/build/metrics-overview) already defined in your project, you can query the model/metrics using [Semantic Layer commands](/docs/build/metricflow-commands) to validate the time spine. 
    
