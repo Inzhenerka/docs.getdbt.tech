@@ -20,7 +20,7 @@ dbt Copilot for Visual Editor is available in beta for [dbt Cloud Enterprise acc
 - [Generate SQL expressions](#generate-sql-expressions) directly within in the Visual Editor operators.
 - [Build your visual models](#build-your-visual-models) using natural language prompts
 
-Before you being, make sure you can access the [Visual Editor](/docs/cloud/use-visual-editor#access-visual-editor).
+Before you begin, make sure you can access the [Visual Editor](/docs/cloud/use-visual-editor#access-visual-editor).
 
 import CopilotVE from '/snippets/_use-copilot-ve.md';
 
