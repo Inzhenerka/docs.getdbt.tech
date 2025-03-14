@@ -117,7 +117,7 @@ The dbt Semantic Layer connector creates:
 - A `METRICS.ALL` table containing all metrics, and dimensions and entities appear as regular dimension columns.
 
 These tables do not actually map to an underlying table in your data warehouse. Instead, Power BI sends queries to these tables and (before actually executing on the warehouse) the Semantic Layer servers:
-- Parse the SQL
+- Parse the SQL.
 - Extract all the queried columns, group bys and filters 
 - Generates SQL to query your existing tables. 
 - Returns data back to Power BI, which doesn’t know any of this happened.
