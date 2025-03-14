@@ -2,7 +2,7 @@
 title: "About dbt Cloud integrations"
 sidebar_label: "About dbt Cloud integrations"
 pagination_prev: null
-pagination_next: "docs/cloud-integrations/active-and-auto-exposures"
+pagination_next: "docs/cloud-integrations/downstream-exposures"
 hide_table_of_contents: true
 ---
 
