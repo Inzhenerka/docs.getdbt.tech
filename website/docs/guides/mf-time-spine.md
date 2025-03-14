@@ -216,7 +216,7 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
     ```
     </File>
 
-2. Then update `_models.yml` file and add the yearly time spine (below the daily time spine config):
+2. Then update the `_models.yml` file and add the yearly time spine (below the daily time spine config):
     <File name='_models.yml'>
 
     ```yaml
