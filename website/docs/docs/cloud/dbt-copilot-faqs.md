@@ -115,6 +115,6 @@ dbt Copilot has the following considerations to keep in mind:
 - dbt Copilot is not available in the dbt Cloud CLI.
 - dbt Copilot is not available in the dbt Cloud API.
 
-Future releases are planned that may bring dbt Copilot to even more parts of the dbt Cloud application
+Future releases are planned that may bring dbt Copilot to even more parts of the dbt Cloud application.
 
 </Expandable>
