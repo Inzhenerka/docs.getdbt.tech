@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
-- **New**: [Active exposures](/docs/cloud-integrations/active-and-auto-exposures) proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, complementing [auto exposures](/docs/cloud-integrations/auto-exposures-tableau). This feature is available in private beta and supports Tableau. To join the beta, contact your account representative.
+- **New**: [Orchestrate downstream exposures](/docs/cloud-integrations/active-exposures) proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, complementing the ability to [visualize downstream exposures](/docs/cloud-integrations/auto-exposures-tableau) in dbt Explorer. This feature is available in private beta and supports Tableau. To join the beta, contact your account representative.
 
 ## February 2025
 

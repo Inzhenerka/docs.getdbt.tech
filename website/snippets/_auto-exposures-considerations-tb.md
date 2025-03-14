@@ -1,8 +1,8 @@
-Auto-exposures with Tableau have the following considerations:
+Configuring downstream exposures automatically with Tableau have the following considerations:
 - You can only connect to a single Tableau site on the same server.
 - If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
 - Tableau dashboards built using custom SQL queries aren't supported.
-- Auto-exposures sync automatically _once per day_ or when a user updates the selected collections.
+- Downstream exposures sync automatically _once per day_ or when a user updates the selected collections.
 - <Expandable alt_header="The database fully qualified names (FQNs) in Tableau must match those in the dbt build.">
     Tableau's database FQNs (fully qualified names) must match those in the dbt build. To view all expected dependencies in your exposure, the FQNs must match but aren't case-sensitive. For example:
     | Tableau FQN | dbt FQN | <div style={{width:'250px'}}>Result</div> |

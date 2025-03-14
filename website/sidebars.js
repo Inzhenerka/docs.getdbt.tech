@@ -769,7 +769,7 @@ const sidebarSettings = {
         "docs/cloud-integrations/overview",
         {
           type: "category",
-          label: "Active and auto exposures",
+          label: "Visualize and orchestrate exposures",
           link: {
             type: "doc",
             id: "docs/cloud-integrations/active-and-auto-exposures",

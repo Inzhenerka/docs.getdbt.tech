@@ -83,8 +83,8 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     icon="dbt-bit"/>
 
   <Card
-   title="Auto and active exposures*"
-   body="Import and auto-generate exposure from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
+   title="Visualize and orchestrate exposures*"
+   body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
    link="/docs/cloud-integrations/active-and-auto-exposures"
    icon="dbt-bit"/>
 

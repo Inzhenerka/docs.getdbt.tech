@@ -1,22 +1,27 @@
 ---
-title: "Auto exposures in Tableau"
-sidebar_label: "Auto exposures in Tableau"
-description: "Import and auto-generate exposures from Tableau dashboards, helping you understand how models are used in downstream tools for a richer downstream lineage"
+title: "Configure exposures automatically"
+sidebar_label: "Configure exposures automatically"
+description: "Configure and visualize exposures automatically to auto-generate them from Tableau dashboards, helping you understand how models are used in downstream tools for a richer downstream lineage"
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
-# Auto exposures in Tableau <Lifecycle status="enterprise" />
+# Configure exposures automatically <Lifecycle status="enterprise" />
 
 <IntroText>
-  As a data team, it’s critical that you have context into the downstream use cases and users of your data products. Auto exposures integrates natively with Tableau to auto-generate downstream lineage in <a href="https://docs.getdbt.com/docs/collaborate/explore-projects">dbt Explorer</a> for a richer experience.
+Configure and automatically populate downstream exposures for supported BI tool integrations. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/collaborate/explore-projects">dbt Explorer</a> and the [dbt Cloud job scheduler](/docs/deploy/job-scheduler) for a richer experience.
+
 </IntroText>
 
-Auto exposures help data teams optimize their efficiency and ensure data quality by:
+As a data team, it’s critical that you have context into the downstream use cases and users of your data products. In dbt Cloud, you can configure downstream exposures in two ways:
+- Manual &mdash; Defined [manually](/docs/build/exposures#declaring-an-exposure) and explicitly in your project’s YAML files.
+- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/active-and-auto-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
 
-- Helping users understand how their models are used in downstream analytics tools to inform investments and reduce incidents &mdash; ultimately building trust and confidence in data products.
-- Importing and auto-generating exposures based on your BI tools' dashboards, with user-defined curation.
-- Enabling [active exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. 
-  - Active exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous section](/docs/cloud-integrations/active-and-auto-exposures) for more info on the differences between auto-exposures and active exposures.
+By leveraging downstream [exposures](/docs/build/exposures) automatically, data teams can:
+
+- Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
+- Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
+- Automate exposure tracking for supported BI tools, ensuring lineage is always up to date.
+- [Orchestrate exposures](/docs/cloud-integrations/active-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/deployments). See the [previous page](/docs/cloud-integrations/active-and-auto-exposures) for more info.
 
 :::info Tableau Server
 If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
@@ -24,7 +29,7 @@ If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses]
 
 ## Prerequisites
 
-To enable auto exposures, you should meet the following:
+To configure downstream exposures automatically, you should meet the following:
 
 1. Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
 2. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
@@ -37,18 +42,18 @@ import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.m
 
 <ConsiderationsTableau/>
 
-## Set up auto exposures
+## Set up downstream exposures
 
-Set up auto exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#set-up-in-dbt-cloud) to ensure that your BI tool's extracts are updated regularly.
+Set up downstream exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#set-up-in-dbt-cloud) to ensure that your BI tool's extracts are updated automatically.
 
 ### Set up in Tableau
 
-This section of the document explains the steps you need to set up the auto-exposures integration with Tableau. Once you've set this up in Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view the auto-exposures](#view-auto-exposures) in dbt Explorer.
+This section of the document explains the steps you need to set up downstream exposures integration with Tableau. Once you've set this up in Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view the downstream exposures](#view-auto-exposures) in dbt Explorer.
 
 1. Ensure you or a site admin enables [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for the account in Tableau.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
 
-2. Create a PAT that you can add to dbt Cloud to pull in Tableau metadata for auto exposures. Ensure the user creating the PAT has access to collections/folders, as the PAT only grants access matching the creator's existing privileges.
+2. Create a PAT that you can add to dbt Cloud to pull in Tableau metadata for the downstream exposures. Ensure the user creating the PAT has access to collections/folders, as the PAT only grants access matching the creator's existing privileges.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
 
 3. Copy the **Secret** and the **Token name** and enter them in dbt Cloud. The secret is only displayed once, so store it in a safe location (like a password manager).
@@ -61,7 +66,7 @@ This section of the document explains the steps you need to set up the auto-expo
    - The **Server URL** is the first part of the URL, in this case: `10az.online.tableau.com`
    - The **Sitename** is right after the `site` in the URL, in this case: `dbtlabspartner` 
 
-5. You should now be ready to set up auto-exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: 
+5. You should now be ready to set up downstream exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: 
       - ServerURL
       - Sitename
       - Token name
@@ -69,14 +74,14 @@ This section of the document explains the steps you need to set up the auto-expo
 
 ### Set up in dbt Cloud
 
-1. In dbt Cloud, navigate to the project you want to add the auto-exposures to and then select **Settings**.
+1. In dbt Cloud, navigate to the project you want to add the downstream exposure to and then select **Settings**.
 2. Under the **Exposures** section, select **Add integration** to add the Tableau connection.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-add-integration.jpg" title="Select Add Integration to add the Tableau connection."/>
 3. Enter the details for the exposure connection you collected from Tableau in the [previous step](#set-up-in-tableau) and click **Continue**. Note that all fields are case-sensitive.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-integration-details.jpg" title="Enter the details for the exposure connection."/>
-4. Select the collections you want to include for auto exposures and click **Save**.
+4. Select the collections you want to include for the downstream exposures and click **Save**.
    
-   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-select-collections.jpg" title="Select the collections you want to include for auto exposures."/>
+   <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-select-collections.jpg" title="Select the collections you want to include for the downstream exposures."/>
 
       :::info
       dbt Cloud automatically imports and syncs any workbook within the selected collections. New additions to the collections will be added to the lineage in dbt Cloud during the next sync (automatically once per day).
@@ -92,11 +97,11 @@ import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 <ViewExposures/>
 
-## Active exposures <Lifecycle status="beta"/>
+## Orchestrate exposures <Lifecycle status="beta"/>
 
-With [active exposures](/docs/cloud-integrations/active-exposures), you can now use dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
+[Orchestrate exposures](/docs/cloud-integrations/active-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
-- Active exposures integrate with auto exposures and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+- Running exposures with a job run integrates with downstream exposures and uses your `dbt build` job to ensure that Tableau extracts are updated regularly and automatically.
 - You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
 
-To set up active exposures in dbt Cloud, refer to [Active exposures](/docs/cloud-integrations/active-exposures).
+To set up and proactively run exposures with the dbt Cloud job scheduler, refer to [Orchestrate exposures](/docs/cloud-integrations/active-exposures).

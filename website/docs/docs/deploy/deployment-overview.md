@@ -21,7 +21,7 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 - Maintain high-quality code and data in production
 - Gain visibility into the [health](/docs/collaborate/data-tile) of deployment jobs, models, and tests
 - Uses [exports](/docs/use-dbt-semantic-layer/exports) to write [saved queries](/docs/build/saved-queries) in your data platform for reliable and fast metric reporting
-- Use [Auto-exposures](/docs/cloud-integrations/auto-exposures-tableau) and [active exposures](/docs/cloud-integrations/active-exposures) to understand how models are used in downstream tools and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs. <Lifecycle status="enterprise"/>
+- [Visualize](/docs/cloud-integrations/auto-exposures-tableau) and [orchestrate](/docs/cloud-integrations/active-exposures) downstream exposures to understand how models are used in downstream tools and proactively refresh the underlying data sources during scheduled dbt jobs. <Lifecycle status="enterprise"/>
 - Use [dbt Cloud's Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="enterprise" />
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
@@ -68,8 +68,8 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 <div className="grid--3-col">
 
 <Card
-    title="Auto and active exposures"
-    body="Learn how to use dbt Cloud to automatically generate exposures from dashboards and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs."
+    title="Visualize and orchestrate exposures"
+    body="Learn how to use dbt Cloud to automatically generate downstream exposures from dashboards and proactively refresh the underlying data sources during scheduled dbt jobs."
     link="/docs/deploy/active-and-auto-exposures"
     icon="dbt-bit"/>
 

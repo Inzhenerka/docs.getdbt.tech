@@ -17,11 +17,8 @@ The data health tile:
 
 Data health tiles rely on [exposures](/docs/build/exposures) to surface data health signals in your dashboards. An exposure defines how specific outputs &mdash; like dashboards or reports &mdash; depend on your data models. Exposures in dbt can be configured in two ways:
 
-- Manual exposures &mdash; Defined manually and explicitly in your project’s YAML files.
-- Auto exposures &mdash; Pulled automatically from your BI tool as long as your BI tool integrates with dbt Cloud and you have access to [auto-exposures](/docs/cloud-integrations/auto-exposures-tableau). 
-  - dbt Cloud creates auto exposures automatically for dbt Cloud users with access to this feature, removing the need for manual YAML definitions.
-  - dbt Cloud pulls exposure metadata from your BI tool and integrates it into dbt Explorer.
-  - These auto exposures are stored in dbt’s metadata system, appear in dbt Explorer, and behave like manual exposures, however they don’t exist in YAML files.
+- Manual &mdash; Defined [manually](/docs/build/exposures#declaring-an-exposure) and explicitly in your project’s YAML files.
+- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/active-and-auto-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
 
 <DocCarousel slidesPerView={1}>
 <Lightbox src="/img/docs/collaborate/dbt-explorer/data-tile-pass.jpg" width="60%" title="Example of passing Data health tile in your dashboard." />

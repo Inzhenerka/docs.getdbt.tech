@@ -37,7 +37,7 @@ dbt Explorer offers users a comprehensive suite of features to enhance data proj
 - Project recommendations with suggestions to improve test coverage and documentation across your data estate. 
 - Data health signals to monitor the health and performance of each resource through data health indicators. 
 - Model query history to track consumption queries on your models to gain deeper insights into data usage. 
-- Auto-exposures to automatically expose relevant data models from tools like Tableau to enhance visibility. 
+- Downstream exposures to automatically expose relevant data models from tools like Tableau to enhance visibility. 
 
 For additional details and instructions on how to explore your lineage, navigate your resources, view model query history and data health signals, feature availability, and more &mdash; refer to [Discover data with dbt Explorer](/docs/collaborate/explore-projects).
 
