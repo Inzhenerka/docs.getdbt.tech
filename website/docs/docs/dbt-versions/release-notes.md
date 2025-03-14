@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
-- **New**: The dbt Semantic Layer supports Power BI as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in [beta](/docs/dbt-versions/product-lifecycles#dbt-cloud). Check out the [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) integration for more information.
+- **New**: The dbt Semantic Layer supports Power BI as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in private beta. To join the private beta, please reach out to your account representative. Check out the [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) integration for more information.
 
 ## February 2025
 
