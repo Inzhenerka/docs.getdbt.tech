@@ -25,7 +25,7 @@ With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-
 
 <Expandable alt_header="Where can I find dbt Copilot?">
 
-dbt Copilot can currently be found in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot). Future releases will bring dbt Copilot to the [Visual Editor](/docs/cloud/build-ve-copilot) and even more parts of the dbt Cloud application.
+dbt Copilot can currently be found in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot). Future releases will bring dbt Copilot to the [Visual Editor](/docs/cloud/use-visual-editor) and even more parts of the dbt Cloud application.
 
 To use dbt Copilot, you must have a dbt Cloud [Enterprise account](https://www.getdbt.com/contact) and administrative privileges to opt-in to the feature for your team.
 
