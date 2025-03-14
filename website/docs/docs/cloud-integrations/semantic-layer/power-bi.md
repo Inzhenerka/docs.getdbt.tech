@@ -113,7 +113,7 @@ You can now go back to your published report on Power BI Service to assert data 
 This section describes how to use the dbt Semantic Layer connector in Power BI.
 
 The dbt Semantic Layer connector creates:
-- A virtual table for each saved query
+- A virtual table for each saved query.
 - A `METRICS.ALL` table containing all metrics, and dimensions and entities appear as regular dimension columns.
 
 These tables do not actually map to an underlying table in your data warehouse. Instead, Power BI sends queries to these tables and (before actually executing on the warehouse) the Semantic Layer servers:
