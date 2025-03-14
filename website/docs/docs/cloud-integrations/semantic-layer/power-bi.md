@@ -123,7 +123,7 @@ ADD DIAGRAM
 
 This allows for very flexible analytics workflows, like drag and drop metrics and slice by dimensions and entities &mdash; the Semantic Layer will generate the appropriate SQL to actually query your data source for you.
 
-### Considerations
+## Considerations
 - Not every “column” of `METRICS.ALL` are compatible with every other column
   - `METRICS.ALL` combines all your existing metrics, entities and dimensions. Queries must be valid Semantic Layer queries, otherwise they'll fail with MetricFlow query compilation errors.
   - For saved query tables, all “columns” will be compatible with every other “column” since, by definition, saved queries are valid queries that can be sliced by any of the dimensions present in the query.
