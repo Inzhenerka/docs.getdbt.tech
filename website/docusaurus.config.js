@@ -294,6 +294,7 @@ var siteSettings = {
     "/js/gtm.js",
     "/js/onetrust.js",
     "/js/mutiny.js",
+    "/js/hide-forethought.js",
   ],
   stylesheets: [
     "/css/fonts.css",

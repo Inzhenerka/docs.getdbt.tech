@@ -217,6 +217,7 @@ To support multiple granularities (like hourly, yearly, monthly), create additio
     </File>
 
 2. Then update the `_models.yml` file and add the yearly time spine (below the daily time spine config):
+      
     <File name='_models.yml'>
 
     ```yaml
@@ -258,7 +259,7 @@ For some extra practice, try one of the following exercises:
 
 ### Custom calendars
 
-To support custom calendars (like fiscal years, fiscal quarters, and so on), create an additional time spine and configure it in YAML.
+To support custom calendars (like fiscal years, fiscal quarters, and so on), create an additional time spine and configure it in YAML. This feature is available in the dbt Cloud's [Latest release track](/docs/dbt-versions/cloud-release-tracks) or [dbt Core 1.9 and later](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9).
 
 1. Add a new SQL file named `fiscal_calendar.sql` with the following content (or use your own custom calendar and configure it in YAML):
     <File name='models/marts/fiscal_calendar.sql'>
