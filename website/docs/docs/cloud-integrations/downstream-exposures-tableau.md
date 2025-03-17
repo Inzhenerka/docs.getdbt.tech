@@ -31,7 +31,7 @@ If you're using Tableau Server, you need to add the [dbt Cloud IP addresses for 
 
 To configure downstream exposures automatically, you should meet the following:
 
-1. Your environment and jobs are on a supported [release track](/docs/dbt-versions/cloud-release-tracks) dbt.
+1. Your environment and jobs are on a supported [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks).
 2. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
 4. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
