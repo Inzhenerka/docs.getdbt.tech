@@ -53,7 +53,7 @@ This section of the document explains the steps you need to set up downstream ex
 1. Enable [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for your Tableau account.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
 
-2. Create a PAT that you can add to dbt Cloud to pull in Tableau metadata for the downstream exposures. Ensure the user creating the PAT has access to collections/folders, as the PAT only grants access matching the creator's existing privileges.
+2. Create a PAT to add to dbt Cloud to pull in Tableau metadata for the downstream exposures. When creating the token, you must have permission to access collections/folders, as the PAT only grants access matching the creator's existing privileges.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
 
 3. Copy the **Secret** and the **Token name** and enter them in dbt Cloud. The secret is only displayed once, so store it in a safe location (like a password manager).
