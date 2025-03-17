@@ -52,7 +52,7 @@
     title="IBM Netezza"
     body="<ul><li><a href='/docs/core/connect-data-platform/ibmnetezza-setup'>Install with dbt Core </a> </li> </ul><br /><br /><a href=https://badge.fury.io/py/dbt-ibm-netezza><img src=https://badge.fury.io/py/dbt-ibm-netezza.svg/></a>"
     pills='["dbt Core"]'
-    icon="dbt-bit"/>
+    icon="dbt-ibm-netezza"/>
 
 <Card
     title="Materialize"
