@@ -29,7 +29,7 @@ dbt Copilot is available to your account after your organization has signed the 
 2. Under **Settings**, confirm the account you're enabling.
 3. Click **Edit** in the top right corner.
 4. Enable the **Enable account access to AI-powered features** option.
-5. Click **Save**. You should now have the dbt Copilot AI engine enabled for use.
+5. Click **Save**. You should now have dbt Copilot AI enabled for use.
 
 Note: To disable (only after enabled), repeat steps 1 to 3, toggle off in step 4, and repeat step 5.
 
