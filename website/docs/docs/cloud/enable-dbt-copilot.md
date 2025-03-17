@@ -23,7 +23,7 @@ This page explains how to enable dbt Copilot in dbt Cloud to speed up your devel
 
 ## Enable dbt Copilot
 
-dbt Copilot is available to your account after your organization has signed the required legal documents. It's disabled by default. A dbt Cloud admin can enable it by following these steps:
+To opt in to dbt Copilot, a dbt Cloud admin can follow these steps:
 
 1. Navigate to **Account settings** in the navigation menu.
 2. Under **Settings**, confirm the account you're enabling.
