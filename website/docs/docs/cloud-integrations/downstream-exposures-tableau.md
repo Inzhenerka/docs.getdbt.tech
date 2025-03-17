@@ -16,7 +16,7 @@ As a data team, it’s critical that you have context into the downstream use ca
 - Manual &mdash; Defined [manually](/docs/build/exposures#declaring-an-exposure) and explicitly in your project’s YAML files.
 - Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically creates and visualizes downstream exposures, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
 
-By leveraging downstream [exposures](/docs/build/exposures) automatically, data teams can:
+By leveraging downstream [exposures](/docs/build/exposures) automatically, you can:
 
 - Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
 - Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
