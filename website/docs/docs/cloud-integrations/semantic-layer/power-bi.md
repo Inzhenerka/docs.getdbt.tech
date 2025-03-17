@@ -13,6 +13,8 @@ The Power BI integration enables you to query the dbt Semantic Layer directly, a
 The Power BI integration is currently in private beta. If you're interested in participating, please reach out to your account representative.
 :::
 
+<Lightbox src="/img/docs/cloud-integrations/sl-pbi/sl-pbi.jpg" width="90%" title="Power BI integration diagram" />
+
 ## Prerequisites
 
 - You have [configured the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) 
