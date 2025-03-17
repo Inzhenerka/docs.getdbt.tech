@@ -21,7 +21,7 @@ By leveraging downstream [exposures](/docs/build/exposures) automatically, you c
 - Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
 - Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
 - Automate exposure tracking for supported BI tools, ensuring lineage is always up to date.
-- [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/job-scheduler). See the [previous page](/docs/cloud-integrations/downstream-exposures) for more info.
+- [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is a way to ensure that your BI tools are updated regularly using the [dbt Cloud job scheduler](/docs/deploy/job-scheduler). See the [previous page](/docs/cloud-integrations/downstream-exposures) for more info.
 
 :::info Tableau Server
 If you're using Tableau Server, you need to add the [dbt Cloud IP addresses for your region](/docs/cloud/about-cloud/access-regions-ip-addresses) to your allowlist.
