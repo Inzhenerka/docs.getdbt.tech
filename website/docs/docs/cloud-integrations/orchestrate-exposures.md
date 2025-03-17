@@ -36,7 +36,7 @@ Control the frequency of these refreshes by configuring environment variables in
 
 To orchestrate downstream exposures, you should meet the following:
 
-- [Configured downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and the desired exposures are included in your lineage.
+- [Configured downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) and ensured desired exposures are included in your lineage
 - Verified your environment and jobs are on a supported dbt [release track](/docs/dbt-versions/cloud-release-tracks).
 - Have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 - Have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
