@@ -8,13 +8,13 @@ pagination_next: "docs/cloud/enable-dbt-copilot"
 # About dbt Copilot <Lifecycle status="enterprise" /> 
 
 <IntroText>
-dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows.
+dbt Copilot is a powerful, AI-powered assistant fully integrated into your dbt Cloud experience—designed to accelerate your analytics workflows.
 
 </IntroText>
 
-dbt Copilot embeds AI-driven assistance across every stage of the [analytics development life cycle (ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
+dbt Copilot embeds AI-driven assistance across every stage of the [analytics development life cycle (ADLC)](https://www.getdbt.com/resources/guides/the-analytics-development-lifecycle) and harnesses rich metadata—capturing relationships, lineage, and context  &mdash; so you can deliver refined, trusted data products at speed.
 
-With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor](/docs/cloud/build-ve-copilot).
+With automatic code generation and using natural language prompts, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor (beta)](/docs/cloud/build-ve-copilot).
 
 :::tip
 dbt Copilot is available to all Enterprise accounts. If you're interested in using dbt Copilot, [book a demo](https://www.getdbt.com/contact) and we'll help answer any questions you have.
@@ -32,7 +32,7 @@ dbt Copilot enhances efficiency by automating repetitive tasks while ensuring da
 - The AI-generated content is returned to dbt Cloud for you to review, edit, and save within your project files.
 - dbt Copilot does not use warehouse data to train AI models.
 - No sensitive data persists on dbt Labs' systems, except for usage data.
-- You can request the deletion of personal or sensitive data within 30 days.
+- Client data, including any personal or sensitive data inserted into the query by the user, is deleted within 30 days by OpenAI.
 - dbt Copilot uses a best practice style guide to ensure consistency across teams.
 
 :::tip
