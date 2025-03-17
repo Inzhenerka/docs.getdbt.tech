@@ -50,6 +50,12 @@ CREATE OR REPLACE SECURITY INTEGRATION DBT_CLOUD
   OAUTH_REFRESH_TOKEN_VALIDITY = 7776000;
 ```
 
+Note that if you are using secondary roles, you must add the following configuration to the statement:
+
+```
+OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
+```
+
 :::caution Permissions
 
   Note: Only Snowflake account administrators (users with the `ACCOUNTADMIN` role) or a role with the global `CREATE INTEGRATION` privilege can execute this SQL command.
