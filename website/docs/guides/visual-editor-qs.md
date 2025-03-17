@@ -244,7 +244,7 @@ To run your model, you only need to click the big **Run** button. With the Visua
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/run-results.png" width="90%" title="The results of a successful run in the 'Runs and previews' pane." />
 
-This will [materialize](/docs/build/materializations) the data as a `view` in your developer schema in the database. Once the model has been merged with your project and `dbt run` is executed in your Staging or Production environments, it will be materialized as a view in their related schemas. 
+This will [materialize](/docs/build/materializations) the data as a `view` in your developer schema in the database. Once the model has been merged with your project and `dbt run` is executed in your Staging or Production environments, it will be materialized as a view in related schemas. 
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/preview-data.png" width="90%" title="Preview of the transformed data in Snowflake." />
 
