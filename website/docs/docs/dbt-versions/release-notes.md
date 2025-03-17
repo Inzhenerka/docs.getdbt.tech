@@ -19,6 +19,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 ## March 2025
 
 - **New**: The dbt Semantic Layer supports Power BI as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in private beta. To join the private beta, please reach out to your account representative. Check out the [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) integration for more information.
+- **New:** The dbt Cloud-native integration with Azure DevOps now supports [Entra ID service principals](/docs/cloud/git/setup-service-principal). Unlike a services user, which represents a real user object in Entra ID, the service principal is a secure identity associated with your dbt Cloud app to access resources in Azure unattended.
 
 ## February 2025
 
