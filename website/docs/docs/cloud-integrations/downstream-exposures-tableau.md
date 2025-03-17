@@ -74,7 +74,7 @@ This section of the document explains the steps you need to set up downstream ex
 
 ### Set up in dbt Cloud
 
-1. In dbt Cloud, navigate to the project you want to add the downstream exposure to and then select **Settings**.
+1. In dbt Cloud, navigate to the **Dashboard** of the project you want to add the downstream exposure to and then select **Settings**.
 2. Under the **Exposures** section, select **Add integration** to add the Tableau connection.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-add-integration.jpg" title="Select Add Integration to add the Tableau connection."/>
 3. Enter the details for the exposure connection you collected from Tableau in the [previous step](#set-up-in-tableau) and click **Continue**. Note that all fields are case-sensitive.
