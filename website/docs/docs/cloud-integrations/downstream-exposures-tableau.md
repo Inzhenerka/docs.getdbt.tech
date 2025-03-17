@@ -1,7 +1,7 @@
 ---
 title: "Configure exposures automatically"
 sidebar_label: "Configure exposures automatically"
-description: "Configure and visualize exposures automatically to auto-generate them from Tableau dashboards, helping you understand how models are used in downstream tools for a richer downstream lineage"
+description: "Configure and visualize exposures automatically by auto-generating them from Tableau dashboards, helping you understand how models are used in downstream tools for a richer lineage."
 image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage2.jpg
 ---
 
