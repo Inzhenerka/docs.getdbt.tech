@@ -4,7 +4,7 @@ id: "visual-editor"
 level: 'Beginner'
 icon: 'dbt'
 hide_table_of_contents: true
-tags: ['Visual Editor','Analyist', 'dbt Cloud','model']
+tags: ['Visual Editor','Analyst', 'dbt Cloud','model']
 recently_updated: true
 ---
 
