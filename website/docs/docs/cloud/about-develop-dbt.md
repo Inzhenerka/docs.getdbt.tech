@@ -26,7 +26,7 @@ You can develop in your browser using a dbt Cloud-powered command line interface
 
    <Card
     title="Visual editor (beta)"
-    body="Develop with the visual editor, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
+    body="Develop with the Visual Editor, a seamless drag-and-drop experience that helps analysts quickly create and visualize dbt models in dbt Cloud."
     link="/docs/cloud/visual-editor"
     icon="dbt-bit"/>
 
