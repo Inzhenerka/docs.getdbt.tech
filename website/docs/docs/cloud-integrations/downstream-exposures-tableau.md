@@ -24,7 +24,7 @@ By leveraging downstream [exposures](/docs/build/exposures) automatically, you c
 - [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is essentially a way to ensure that your BI tools are updated regularly by using the [dbt Cloud job scheduler](/docs/deploy/job-scheduler). See the [previous page](/docs/cloud-integrations/downstream-exposures) for more info.
 
 :::info Tableau Server
-If you're using Tableau Server, you need to [allowlist dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses) for your dbt Cloud region.
+If you're using Tableau Server, you need to add the [dbt Cloud IP addresses for your region](/docs/cloud/about-cloud/access-regions-ip-addresses) to your allowlist.
 :::
 
 ## Prerequisites
