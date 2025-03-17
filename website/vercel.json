@@ -42,6 +42,11 @@
       "source": "/docs/collaborate/auto-exposures",
       "destination": "/docs/collaborate/view-downstream-exposures",
       "permanent": true
+    },  
+    {
+      "source": "/guides/dbt-cloud-cli",
+      "destination": "/docs/cloud/cloud-cli-installation",
+      "permanent": true
     },
     {
       "source": "/author/amy_chen",
