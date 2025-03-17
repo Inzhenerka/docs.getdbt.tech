@@ -14,7 +14,7 @@ Configure and automatically populate downstream exposures for supported BI tool 
 
 As a data team, it’s critical that you have context into the downstream use cases and users of your data products. In dbt Cloud, you can configure downstream exposures in two ways:
 - Manually &mdash; Declared [explicitly](/docs/build/exposures#declaring-an-exposure) in your project’s YAML files.
-- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically creates and visualizes downstream exposures, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
+- Automatic &mdash;  dbt Cloud [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
 
 By leveraging downstream [exposures](/docs/build/exposures) automatically, you can:
 
@@ -56,7 +56,7 @@ This section of the document explains the steps you need to set up downstream ex
 2. Create a PAT to add to dbt Cloud to pull in Tableau metadata for the downstream exposures. When creating the token, you must have permission to access collections/folders, as the PAT only grants access matching the creator's existing privileges.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
 
-3. Copy the **Secret** and the **Token name** and enter them in dbt Cloud. The secret is only displayed once, so store it in a safe location (like a password manager).
+3. Copy the **Secret** and the **Token name** for use in a later step in dbt Cloud. The secret is only displayed once, so store it in a safe location (like a password manager).
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-copy-token.jpg" title="Copy the secret and token name to enter them in dbt Cloud"/>
 
 4. Copy the **Server URL** and **Sitename**. You can find these in the URL while logged into Tableau.
