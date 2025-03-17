@@ -2,7 +2,7 @@
 
 The following table summarizes the differences between visualizing and orchestrating downstream exposures:
 
-| Feature | Visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
+| Info | Visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
 | Purpose | Automatically brings downstream assets into your dbt lineage. | Proactively refreshes the underlying data sources during scheduled dbt jobs. |
 | Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
