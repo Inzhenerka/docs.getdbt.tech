@@ -37,6 +37,10 @@ To get started, copy the connection's redirect URI from dbt Cloud:
 
 In Snowflake, execute a query to create a security integration. Please find the complete documentation on creating a security integration for custom clients [here](https://docs.snowflake.net/manuals/sql-reference/sql/create-security-integration.html#syntax). 
 
+:::tip
+If you’re using secondary roles, you must include `OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';` in the statement.
+:::
+
 In the following `CREATE OR REPLACE SECURITY INTEGRATION` example query, replace `<REDIRECT_URI>` value with the Redirect URI (also referred to as the [access URL](/docs/cloud/about-cloud/access-regions-ip-addresses)) copied in dbt Cloud. To locate the Redirect URI, refer to the previous [locate the redirect URI value](#locate-the-redirect-uri-value) section.
 
 ```
@@ -48,12 +52,7 @@ CREATE OR REPLACE SECURITY INTEGRATION DBT_CLOUD
   OAUTH_REDIRECT_URI = '<REDIRECT_URI>'
   OAUTH_ISSUE_REFRESH_TOKENS = TRUE
   OAUTH_REFRESH_TOKEN_VALIDITY = 7776000;
-```
-
-Note that if you are using secondary roles, you must add the following configuration to the statement:
-
-```
-OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
+  OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';  -- Required for secondary roles
 ```
 
 :::caution Permissions
@@ -116,18 +115,23 @@ If you are planning to set up the same Snowflake account to different dbt Cloud 
 
 ### Troubleshooting
 
-#### Invalid consent request
+<Expandable alt_header="Invalid consent request">
+
 When clicking on the `Connect Snowflake Account` successfully redirects you to the Snowflake login page, but you receive an `Invalid consent request` error. This could mean:
 * Your user might not have access to the Snowflake role defined on the development credentials in dbt Cloud. Double-check that you have access to that role and if the role name has been correctly entered in as Snowflake is case sensitive.
 * You're trying to use a role that is in the [BLOCKED_ROLES_LIST](https://docs.snowflake.com/en/user-guide/oauth-partner.html#blocking-specific-roles-from-using-the-integration), such as `ACCOUNTADMIN`.
+</Expandable>
 
-#### The requested scope is invalid
+<Expandable alt_header="The requested scope is invalid">
+
 When you select the `Connect Snowflake Account` button to try to connect to your Snowflake account, you might get an error that says `The requested scope is invalid` even though you were redirected to the Snowflake login page successfully. 
 
 This error might be because of a configuration issue in the Snowflake OAuth flow, where the `role` in the profile config is mandatory for each user and doesn't inherit it from the project connection page. This means each user needs to supply their role information, regardless of whether it's provided on the project connection page.
 * In the Snowflake OAuth flow, `role` in the profile config is not optional, as it does not inherit from the project connection config. So each user must supply their role, regardless of whether it is provided in the project connection.
+</Expandable>
 
-#### Server error 500
+<Expandable alt_header="Server error 500">
+
 If you experience a 500 server error when redirected from Snowflake to dbt Cloud, double-check that you have allow-listed [dbt Cloud's IP addresses](/docs/cloud/about-cloud/access-regions-ip-addresses), or [VPC Endpoint ID (for PrivateLink connections)](/docs/cloud/secure/snowflake-privatelink#configuring-network-policies), on a Snowflake account level.
 
 Enterprise customers who have single-tenant deployments will have a different range of IP addresses (network CIDR ranges) to allow list.
@@ -138,3 +142,15 @@ Depending on how you've configured your Snowflake network policies or IP allow l
 ALTER SECURITY INTEGRATION <security_integration_name>
 SET NETWORK_POLICY = <network_policy_name> ;
 ```
+</Expandable>
+
+<Expandable alt_header="Current sessions is restricted. USE ROLE not allowed">
+
+If you experience a `Current sessions is restricted. USE ROLE not allowed` error when setting up Snowflake OAuth and are using secondary roles, doublecheck you added the following statement to the query:
+
+```
+OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
+```
+
+For the full query example, see [Create a security ingtegration](#create-a-security-integration).
+</Expandable>
