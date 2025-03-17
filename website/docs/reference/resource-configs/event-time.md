@@ -3,7 +3,7 @@ title: "event_time"
 id: "event-time"
 sidebar_label: "event_time"
 resource_types: [models, seeds, source]
-description: "dbt uses event_time to understand when an event occurred. When defined, event_time enables microbatch incremental models and more refined comparison of datasets during Advanced CI."
+description: "dbt uses event_time to understand when an event occurred. When defined, event_time enables microbatch incremental models, the sample flag, and more refined comparison of datasets during Advanced CI."
 datatype: string
 ---
 
@@ -138,7 +138,7 @@ sources:
 
 ## Definition
 
-You can configure `event_time` for a [model](/docs/build/models), [seed](/docs/build/seeds), or [source](/docs/build/sources) in your `dbt_project.yml` file, property YAML file, or config block.
+dbt uses event_time to understand when an event occurred. You can configure `event_time` for a [model](/docs/build/models), [seed](/docs/build/seeds), or [source](/docs/build/sources) in your `dbt_project.yml` file, property YAML file, or config block.
 
 ### Usage
 
