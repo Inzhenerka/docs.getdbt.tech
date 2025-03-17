@@ -1,7 +1,7 @@
 --- 
 title: "About dbt Copilot" 
 sidebar_label: "About dbt Copilot" 
-description: "dbt Copilot is a powerful AI engine designed to accelerate your analytics workflows throughout your entire ADLC." 
+description: "dbt Copilot is a powerful AI-powered assistant designed to accelerate your analytics workflows throughout your entire ADLC." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
 ---
 
@@ -26,7 +26,7 @@ dbt Copilot is available to all Enterprise accounts. If you're interested in usi
 
 dbt Copilot enhances efficiency by automating repetitive tasks while ensuring data privacy and security. It works as follows:
 
-- Access dbt Copilot through the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) to generate documentation, tests, semantic models, or in the [Visual Editor](/docs/cloud/build-ve-copilot) to generate SQL code using natural language prompts.
+- Access dbt Copilot through the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) to generate documentation, tests, semantic models, or in the [Visual Editor (beta)](/docs/cloud/build-ve-copilot) to generate SQL code using natural language prompts.
 - dbt Copilot gathers metadata (like column names, model SQL, documentation) but never accesses row-level warehouse data.
 - The metadata and user prompts are sent to the AI provider (in this case, OpenAI) through API calls for processing.
 - The AI-generated content is returned to dbt Cloud for you to review, edit, and save within your project files.
@@ -36,7 +36,5 @@ dbt Copilot enhances efficiency by automating repetitive tasks while ensuring da
 - dbt Copilot uses a best practice style guide to ensure consistency across teams.
 
 :::tip
-dbt Copilot accelerates, but doesn’t replace, your analytics development lifecycle. It helps deliver better data products faster, but always reviews AI-generated content, as it may be incorrect.
+dbt Copilot accelerates, but doesn’t replace, your analytics engineer. It helps deliver better data products faster, but always review AI-generated content, as it may be incorrect.
 :::
-
-WE CAN ADD ARCHITECTURAL DIAGRAM HERE

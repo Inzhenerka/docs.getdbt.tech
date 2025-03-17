@@ -10,14 +10,14 @@ description: "Answers to common questions about dbt Copilot."
 Read about common questions about dbt Copilot to understand how it works and how it can help you.
 </IntroText>
 
-dbt Copilot is a powerful AI engine that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
+dbt Copilot is an AI-powered assistant fully integrated into your dbt Cloud experience that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
 
-dbt Labs is committed to protecting your privacy and data. This page provides information about how the dbt Copilot AI engine handles your data. For more information, check out the [dbt Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
+dbt Labs is committed to protecting your privacy and data. This page provides information about how dbt Copilot handles your data. For more information, check out the [dbt Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
 
 ## Overview 
 
 <Expandable alt_header="What is dbt Copilot?">
-dbt Copilot is a powerful artificial intelligence (AI) engine that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. dbt Copilot embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
+dbt Copilot is a powerful AI-powered assistant that's fully integrated into your dbt Cloud experience and designed to accelerate your analytics workflows. dbt Copilot embeds AI-driven assistance across every stage of the analytics development life cycle (ADLC), empowering data practitioners to deliver data products faster, improve data quality, and enhance data accessibility. 
 
 With automatic code generation, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) using natural language, and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and, now in beta, [Visual Editor](/docs/cloud/use-visual-editor).
 
