@@ -150,5 +150,5 @@ If you experience a `Current sessions is restricted. USE ROLE not allowed` error
 OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
 ```
 
-For the full query example, see [Create a security ingtegration](#create-a-security-integration).
+For the full query example, see [Create a security integration](#create-a-security-integration).
 </Expandable>
