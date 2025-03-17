@@ -102,6 +102,6 @@ import ViewExposures from '/snippets/_auto-exposures-view.md';
 [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
 
 - Running exposures with a job run integrates with downstream exposures and uses your `dbt build` job to ensure that Tableau extracts are updated regularly and automatically.
-- You can control the frequency of these refreshes by configuring environment variables in your dbt environment.
+- You can control the frequency of these refreshes by configuring environment variables.
 
 To set up and proactively run exposures with the dbt Cloud job scheduler, refer to [Orchestrate exposures](/docs/cloud-integrations/orchestrate-exposures).
