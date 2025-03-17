@@ -258,7 +258,7 @@ Have dbt [Copilot](/docs/cloud/dbt-copilot) enabled for your dbt Cloud Enterpris
 
 The models built in the Visual Editor are a part of your larger dbt project. They are stored in the `visual_editor` folder of your `/models` directory. This is all done automatically; you don't have to configure any paths or directories. 
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-model-folder.png" width="90%" title="Example of the Visual Editors model path in GitHub." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/ve-model-folder.png" width="90%" title="Example of the Visual Editor's model path in GitHub." />
 
 However, it won't be created in your Git repo until you commit your first model. So, back in the model's view:
 
@@ -268,7 +268,7 @@ However, it won't be created in your Git repo until you commit your first model.
 3. Click **Commit**. 
 4. The **Commit** button will change to **Create a pull request**. You can add more commits, but click the **Create a pull request** button for now. You will then be redirected to your Git provider in a new tab.
 
-The following examples use GitHub as the provider:
+The following example uses GitHub as the provider:
 
 <Lightbox src="/img/docs/dbt-cloud/visual-editor/demo-model-github.png" width="90%" title="Example of the screen you're taken to in GitHub when you create a pull request from the Visual Editor." />
 
