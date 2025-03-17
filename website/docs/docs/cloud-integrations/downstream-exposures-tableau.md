@@ -66,7 +66,7 @@ This section of the document explains the steps you need to set up downstream ex
    - The **Server URL** is the fully qualified domain name, in this case: `10az.online.tableau.com`
    - The **Sitename** is the path fragment right after `site` in the URL, in this case: `dbtlabspartner` 
 
-5. You should now be ready to set up downstream exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: 
+5. With the following items copied, you are now ready to set up downstream exposures in dbt Cloud: 
       - ServerURL
       - Sitename
       - Token name
