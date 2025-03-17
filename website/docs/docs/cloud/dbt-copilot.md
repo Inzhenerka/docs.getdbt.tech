@@ -3,6 +3,7 @@ title: "About dbt Copilot"
 sidebar_label: "About dbt Copilot" 
 description: "dbt Copilot is a powerful AI-powered assistant designed to accelerate your analytics workflows throughout your entire ADLC." 
 pagination_next: "docs/cloud/enable-dbt-copilot"
+keywords: ["dbt Copilot", "dbt Cloud", "AI", "AI-powered", "dbt"]
 ---
 
 # About dbt Copilot <Lifecycle status="enterprise" /> 
@@ -17,7 +18,7 @@ dbt Copilot embeds AI-driven assistance across every stage of the [analytics dev
 With automatic code generation and using natural language prompts, let dbt Copilot [generate code](/docs/cloud/use-dbt-copilot) and [generate documentation](/docs/build/documentation), [tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [dbt Cloud IDE](/docs/cloud/dbt-cloud-ide/develop-copilot) and [Visual Editor (beta)](/docs/cloud/build-ve-copilot).
 
 :::tip
-dbt Copilot is available to all Enterprise accounts. If you're interested in using dbt Copilot, [book a demo](https://www.getdbt.com/contact) and we'll help answer any questions you have.
+dbt Copilot is available to all Enterprise accounts. [Book a demo](https://www.getdbt.com/contact) to see how AI-driven development can streamline your workflow.
 :::
 
 <Lightbox src="/img/docs/dbt-cloud/cloud-ide/dbt-copilot-doc.gif" width="100%" title="Example of using dbt Copilot to generate documentation in the IDE" />
