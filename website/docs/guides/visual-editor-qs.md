@@ -95,7 +95,8 @@ Operators are divided into three types:
 
 Read more about the [individual operators](/docs/cloud/visual-editor-interface#operators) to understand the basic purpose of each. The dbt model created by the Visual Editor builds off of existing models. In this guide, there will be input (source) models and an output model (what you are building) which will be _your model_.  
 
-### Operator tiles
+<details>
+<summary>More about operator tiles</summary>
 
 The operators are drag-and-drop from their menu to the canvas, and when they are dropped they will create a tile.
 
@@ -113,6 +114,8 @@ The tiles have the same basic setup with different fields depending on their fun
 Make operator tile titles unique compared to your column names to avoid confusion, and the same applies to any aliases you create.
 
 :::
+
+</details>
 
 ### Create your model from pre-existing models
 
