@@ -2,7 +2,7 @@
 
 The following table summarizes the differences between visualizing and orchestrating downstream exposures:
 
-| Info | Visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
+| Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
 | Purpose | Automatically brings downstream assets into your dbt lineage. | Proactively refreshes the underlying data sources during scheduled dbt jobs. |
 | Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
@@ -15,8 +15,8 @@ Check out the following sections for more information on visualizing and orchest
 <div className="grid--2-col">
 
 <Card
-    title="Visualize downstream exposures"
-    body="Configure downstream exposures automatically from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
+    title="Set up and visualize downstream exposures"
+    body="Set up downstream exposures automatically from dashboards to understand how models are used in downstream tools for a richer downstream lineage."
     link="/docs/cloud-integrations/downstream-exposures-tableau"
     icon="dbt-bit"/>
 
