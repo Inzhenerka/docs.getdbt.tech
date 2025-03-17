@@ -63,7 +63,7 @@ This section of the document explains the steps you need to set up downstream ex
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tablueau-serverurl.jpg" title="Locate the Server URL and Sitename in Tableau"/>
 
    For example, if the full URL is: `10az.online.tableau.com/#/site/dbtlabspartner/explore`:
-   - The **Server URL** is the first part of the URL, in this case: `10az.online.tableau.com`
+   - The **Server URL** is the fully qualified domain name, in this case: `10az.online.tableau.com`
    - The **Sitename** is right after the `site` in the URL, in this case: `dbtlabspartner` 
 
 5. You should now be ready to set up downstream exposures in dbt Cloud after copying the following items, which you'll need during the dbt Cloud setup: 
