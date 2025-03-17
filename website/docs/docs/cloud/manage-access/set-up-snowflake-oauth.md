@@ -142,9 +142,9 @@ SET NETWORK_POLICY = <network_policy_name> ;
 ```
 </Expandable>
 
-<Expandable alt_header="Current sessions is restricted. USE ROLE not allowed">
+<Expandable alt_header="Secondary role not working. Error: USE ROLE not allowed">
 
-If you experience a `Current sessions is restricted. USE ROLE not allowed` error when setting up Snowflake OAuth and are using secondary roles, doublecheck you added the following statement to the query:
+If you want to use secondary roles but experience `Current sessions is restricted. USE ROLE not allowed` error when setting up Snowflake OAuth, double-check you added the following statement to the query:
 
 ```
 OAUTH_USE_SECONDARY_ROLES = 'IMPLICIT';
