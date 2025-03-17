@@ -10,7 +10,7 @@ Exposures make it possible to define and describe a downstream use of your dbt p
 
 Exposures can be defined in two ways:
 - Manual &mdash; Declared [explicitly](/docs/build/exposures#declaring-an-exposure) in your project’s YAML files.
-- Automatic &mdash; Pulled automatically for supported dbt Cloud integrations. dbt Cloud automatically [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures), removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures, however they don’t exist in YAML files.
+- Automatic &mdash;  dbt Cloud [creates and visualizes downstream exposures](/docs/cloud-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [dbt Explorer](/docs/collaborate/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
 
 ### Declaring an exposure
 
