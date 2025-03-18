@@ -15,6 +15,7 @@ The Power BI integration is currently in private beta. If you're interested in p
 
 ## Prerequisites
 
+- Accept and sign the AI & beta addendum. Reach out to your account team to begin this process.
 - You have [configured the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) 
 - You are on a supported [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks) or on dbt v1.6 or higher.
 - You installed [Power BI Desktop or Power BI On-premises Data Gateway](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-custom-connectors).
