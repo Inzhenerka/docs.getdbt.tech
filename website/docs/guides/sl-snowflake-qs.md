@@ -744,6 +744,15 @@ semantic_models:
 
 </File>
 
+### Configure a time spine
+
+To ensure accurate time-based aggregations, you must configure a [time spine](/docs/build/metricflow-time-spine). The time spine allows you to have accurate metric calculations over different time granularities.
+
+1. Add a time spine model to your project at whichever granularity needed for your metrics (like daily or hourly).
+2. Configure each time spine in a YAML file to define how MetricFlow recognizes and uses its columns. Follow the instructions in [Configuring time spine in YAML](/docs/build/metricflow-time-spine#configuring-time-spine-in-yaml) documenation.
+
+For a step-by-step guide, refer to [MetricFlow time spine guide](/guides/mf-time-spine?step=1).
+
 ## Define metrics and add a second semantic model
 
 In this section, you will [define metrics](#define-metrics) and [add a second semantic model](#add-second-semantic-model-to-your-project) to your project.
