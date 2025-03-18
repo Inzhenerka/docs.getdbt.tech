@@ -13,8 +13,6 @@ The Power BI integration enables you to query the dbt Semantic Layer directly, a
 The Power BI integration is currently in private beta. If you're interested in participating, please reach out to your account representative.
 :::
 
-<Lightbox src="/img/docs/cloud-integrations/sl-pbi/sl-pbi.jpg" width="90%" title="Power BI integration diagram" />
-
 ## Prerequisites
 
 - You have [configured the dbt Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) 
@@ -107,7 +105,6 @@ After publishing a report and the first time you hit **Publish** on a given repo
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-encrypted.jpg" title="Set the connection as Encrypted" />
 6. Click **Create**. This will run a connection test (unless you choose to skip it). If the connection succeeds, the connection will be saved.
 
-
 You can now go back to your published report on Power BI Service to assert data loads as expected.
 
 ## Use the connector
@@ -124,7 +121,7 @@ These tables do not actually map to an underlying table in your data warehouse. 
 - Generates SQL to query your existing tables. 
 - Returns data back to Power BI, which doesn’t know any of this happened.
 
-ADD DIAGRAM
+<Lightbox src="/img/docs/cloud-integrations/sl-pbi/sl-pbi.jpg" width="90%" title="Power BI integration diagram" />
 
 This allows for very flexible analytics workflows, like drag and drop metrics and slice by dimensions and entities &mdash; the Semantic Layer will generate the appropriate SQL to actually query your data source for you.
 
