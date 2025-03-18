@@ -138,7 +138,7 @@ sources:
 
 ## Definition
 
-dbt uses event_time to understand when an event occurred. You can configure `event_time` for a [model](/docs/build/models), [seed](/docs/build/seeds), or [source](/docs/build/sources) in your `dbt_project.yml` file, property YAML file, or config block.
+dbt uses `event_time` to understand when an event occurred. Configure it in your `dbt_project.yml` file, property YAML file, or config block for [models](/docs/build/models), [seeds](/docs/build/seeds), or [sources](/docs/build/sources).
 
 ### Usage
 
