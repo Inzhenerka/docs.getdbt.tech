@@ -65,18 +65,18 @@ The Visual Editor comprises a series of menus activated by clicking icons surrou
 
 Click on an icon to expand its section or execute an action depending on its purpose. The options are as follows:
 
-1. The model's title. This defaults to "Untitled" but can be edited anytime by clicking on it.
-2. The **Operators** toolbar contains the building blocks for creating a model with the editor. 
-3. The **SQL code** area displays the SQL that compiles your model.
-4. The **Runs and previews** that displays run data and previews data for individual operators.
-5. The **Commit history** display.
-6. The navigation tab that has icons for (from top to bottom):
+1. The main menu (click on the **dbt logo**) and the model's title. The title defaults to "Untitled" but can be edited anytime by clicking on it.
+2. The **Operators** toolbar (`Input`, `Transform`, and `Output`) contains the building blocks for creating a model with the editor. 
+3. The [Copilot](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your dbt Visual Editor models.
+4. The **SQL code** area displays the SQL that compiles your model.
+5. The **Runs and previews** that displays run data and previews data for individual operators.
+6. The **Commit history** display.
+7. The navigation tab that has icons for (from top to bottom):
     - Zoom in
     - Zoom out
     - Center the model to fit the screen
     - Zoom to selection (the operator selected on or off screen will be zoomed and centered)
     - Auto-layout option for the individual operator tiles
-7. The [Copilot](/docs/cloud/dbt-copilot) icon (where available). Use natural language to build your dbt Visual Editor models.
 8. The **Run** command executes `dbt run` for the model.
 9. This button is initially a **Commit** command for your integrated Git provider. It will change to "Open pull request" once your first commit is made. The button will not initially appear until you begin working in the canvas area.
 
@@ -121,11 +121,11 @@ Make operator tile titles unique compared to your column names to avoid confusio
 
 To get started:
 
-1. Expand the **Operators** menu and drag the **Input Model** operator over to the canvas.
+1. Clicj the **Input** menu and drag the **Input Model** operator over to the canvas.
 2. Click **Choose a model** and then select the source `stg_models` from the dropdown. 
 3. Click the **Select model** option in the window that lists the columns.
 
-<Lightbox src="/img/docs/dbt-cloud/visual-editor/one-model-operator.png" width="90%" title="A single model operator." />
+<Lightbox src="/img/docs/dbt-cloud/visual-editor/one-model-operators.png" width="90%" title="A single model operator." />
 
 You now have your first input model in Visual Editor!
 
@@ -143,7 +143,7 @@ Don't see a pre-existing model you're looking for? Ask your dbt admins to ensure
 
 ### Create a join
 
-1. From the **Operators** menu, drag the **Join** operator onto the canvas to the right of the source models. 
+1. From the **Operators** menu, click **Transform** and drag the **Join** operator onto the canvas to the right of the source models. 
     
     <Lightbox src="/img/docs/dbt-cloud/visual-editor/join-not-connected.png" width="90%" title="A join that has not been connected to the models" />
 
@@ -177,7 +177,7 @@ You've got the basics going with your Visual Editor model! It has successfully j
 
 Multiple options for transforming your data include custom formulas, filters, and unions. Keep it simple and add an aggregation operator to tell you which customers buy the most repeat products.
 
-1. Drag the **Aggregation** operator over to the right of the join.
+1. From **Transform**, drag the **Aggregation** operator over to the right of the join.
 2. Connect the aggregation operator to the join operator. 
 3. Click **Configure aggregation** in the **Aggregation tile**.
 4. Click in the **Group by** field and first select `CUSTOMER_ID` then `PRODUCT_ID`.
@@ -200,7 +200,7 @@ As your model grows, you can zoom in and out to view your needs. Click and hold 
 
 There's a lot of data there. Dozens of customers are buying hundreds of products. You will sort it so that the customers are listed ascending by their CUSTOMER_ID number, with the most purchased products listed in descending order. 
 
-1. Drag the **Order** operator over to the right of the **Aggregation** tile and connect them.
+1. From **Transform**, drag the **Order** operator over to the right of the **Aggregation** tile and connect them.
 2. Click the **pencil edit icon**.
 3. In the **Sort order** field click **Select column** and click `Aggregation1.CUSTOMER_ID` from the dropdown. Set it to `Asc`. 
 4. Click **Add sorting** and in the new **Select column** field select `Aggregation1.count_PRODUCT_ID`. Set it to `Desc`.
@@ -217,7 +217,7 @@ Want to practice on your own? Try adding a **Filter** operator that removes item
 ## Configure your output model
 
 Now that you've built your model, you need to customize the output name and location:
-1. Drag the **Output Model** operator to the right of your **Order** operator. 
+1. From **Output** drag the **Output Model** operator to the right of your **Order** operator. 
 2. Connect the **Order** and **Output Model** operators.
 3. The **Output Model** configuration will default to the name of your Visual Editor project and the default models directory. Click the **pencil edit icon** to configure the optional fields:
     - Edit the **Model name** field if you want the name to be different than that of your project.
