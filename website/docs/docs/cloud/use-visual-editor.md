@@ -8,7 +8,7 @@ pagination_prev: "docs/cloud/visual-editor-interface"
 
 import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
 
-# Edit and create dbt models <Lifecycle status='beta'/> 
+# Edit and create dbt models <Lifecycle status='beta, enterprise'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
 Access and use the dbt Cloud Visual Editor to create or edit dbt models through a visual, drag-and-drop experience. Use the built-in AI for custom code generation in your development experience.
