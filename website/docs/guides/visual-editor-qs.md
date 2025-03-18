@@ -217,7 +217,7 @@ Want to practice on your own? Try adding a **Filter** operator that removes item
 ## Configure your output model
 
 Now that you've built your model, you need to customize the output name and location:
-1. From **Output** drag the **Output Model** operator to the right of your **Order** operator. 
+1. From **Output**, drag the **Output Model** operator to the right of your **Order** operator. 
 2. Connect the **Order** and **Output Model** operators.
 3. The **Output Model** configuration will default to the name of your Visual Editor project and the default models directory. Click the **pencil edit icon** to configure the optional fields:
     - Edit the **Model name** field if you want the name to be different than that of your project.
