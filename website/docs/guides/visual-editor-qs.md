@@ -121,7 +121,7 @@ Make operator tile titles unique compared to your column names to avoid confusio
 
 To get started:
 
-1. Clicj the **Input** menu and drag the **Input Model** operator over to the canvas.
+1. Click the **Input** menu and drag the **Input Model** operator over to the canvas.
 2. Click **Choose a model** and then select the source `stg_models` from the dropdown. 
 3. Click the **Select model** option in the window that lists the columns.
 
