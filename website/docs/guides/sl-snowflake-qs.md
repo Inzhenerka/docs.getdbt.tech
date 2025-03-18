@@ -594,6 +594,11 @@ select * from final
 
 ## Create semantic models
 
+In this section, you'll learn about [semantic model](https://docs.getdbt.com/guides/sl-snowflake-qs?step=6#about-semantic-models), [their components](https://docs.getdbt.com/guides/sl-snowflake-qs?step=6#semantic-model-components), and [how to configure a time spine](https://docs.getdbt.com/guides/sl-snowflake-qs?step=6#configure-a-time-spine).
+
+
+### About semantic models
+
 [Semantic models](/docs/build/semantic-models) contain many object types (such as entities, measures, and dimensions) that allow MetricFlow to construct the queries for metric definitions.
 
 - Each semantic model will be 1:1 with a dbt SQL/Python model.
