@@ -16,7 +16,7 @@ By moving your environments and jobs to release tracks you can get all the funct
 
 | Release track | Description | Plan availability | API value |
 | ------------- | ----------- | ----------------- | --------- |
-| **Latest** |  Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
+| **Latest** | Formerly called "Versionless", provides a continuous release of the latest functionality in dbt Cloud.<br /><br />Includes early access to new features of the dbt framework before they're available in open source releases of dbt Core. | All plans | `latest` (or `versionless`) |
 | **Compatible** | Provides a monthly release aligned with the most recent open source versions of dbt Core and adapters, plus functionality exclusively available in dbt Cloud.<br /><br />See [Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Team + Enterprise | `compatible` |
 | **Extended** | The previous month's "Compatible" release. | Enterprise | `extended` |
 
