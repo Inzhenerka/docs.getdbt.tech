@@ -32,17 +32,20 @@ To unlock your account and select a plan, review the following guidance per plan
 3. Confirm your plan selection on the pop up message. 
 4. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Developer plan. 🎉
 
-<Lightbox src="/img/docs/dbt-cloud/downgrade-dev-flow.gif"/>
+<Lightbox src="/img/docs/dbt-cloud/downgrade-dev-flow1.gif"/>
 
 ### Team plan
 
 1. When your trial expires, your account's default plan enrollment will be a Team plan. 
 2. To unlock your account and continue using the Team plan, you need to enter your payment details. 
-3. Go to **Payment Information** and click **Edit** on the right.
+3. Go to **Select plan**.
 4. Enter your payment details and click **Save**.
 5. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
 
-<Lightbox src="/img/docs/dbt-cloud/trial-team-flow.gif"/>
+<Lightbox src="/img/docs/dbt-cloud/trial-team-flow.png"/>
+
+
+<Lightbox src="/img/docs/dbt-cloud/trial-team-payments-flow.png"/>
 
 ### Enterprise plan
 
