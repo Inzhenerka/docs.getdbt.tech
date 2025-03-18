@@ -39,6 +39,11 @@
   ],
   "redirects": [
     {
+      "source": "/guides/dbt-cloud-cli",
+      "destination": "/docs/cloud/cloud-cli-installation",
+      "permanent": true
+    },
+    {
       "source": "/author/amy_chen",
       "destination": "/blog/authors/amy-chen",
       "permanent": true
@@ -446,6 +451,11 @@
     {
       "source": "/styles",
       "destination": "https://github.com/dbt-labs/docs.getdbt.com/blob/current/contributing/adding-page-components.md",
+      "permanent": true
+    },
+    {
+      "source": "/guides/codespace",
+      "destination": "/guides/duckdb",
       "permanent": true
     },
     {

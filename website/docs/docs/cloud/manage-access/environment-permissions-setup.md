@@ -18,6 +18,8 @@ In your dbt Cloud account:
 1. Click your account name, above your profile icon on the left side panel. Then select **Account settings**.
 2. Select **Groups & Licenses**. We recommend deleting the default `Owner`, `Member`, and `Everyone` groups and, instead, assigning users to your organizational groups to avoid granting them unnecessary elevated privileges.
 
+   However, before deleting these groups, ensure that any existing users &mdash; including yourself &mdash; are reassigned to their appropriate organizational groups. You won’t be able to delete the `Owner` group until _at least_ one user is added to another group with the account admin permission set or if there is a user with an IT license. This safety ensures that an account admin is always available to manage group changes.
+
 <Lightbox src="/img/docs/dbt-cloud/groups-and-licenses.png" width="80%" title="Groups & Licenses page in dbt Cloud with the default groups highlighted."/>
 
 3. Create a new or open an existing group. If it's a new group, give it a name, then scroll down to **Access & permissions**. Click **Add**.
@@ -25,16 +27,15 @@ In your dbt Cloud account:
 <Lightbox src="/img/docs/dbt-cloud/add-permissions.png" width="80%" title="The Access & permissions section with the Add button highlighted."/>
 
 4. Select the **Permission set** for the group. Only the following permissions sets can have environment-level permissions configured:
+    - Database admin
+    - Git admin
+    - Team admin
+    - Analyst
+    - Developer
 
-  - Database admin
-  - Git admin
-  - Team admin
-  - Analyst
-  - Developer
+   Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
 
-  Other permission sets are restricted because they have access to everything (for example, Account admin), or limitations prevent them from having write access to environments (for example, Account viewer).
-
-  If you select a permission set that is not supported, the environment permission option will not appear.
+   If you select a permission set that is not supported, the environment permission option will not appear.
 
 <Lightbox src="/img/docs/dbt-cloud/no-option.png" width="80%" title="The view of the permissions box if there is no option for environment permissions."/>
 
