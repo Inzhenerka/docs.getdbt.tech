@@ -74,7 +74,7 @@ var siteSettings = {
     },
     announcementBar: {
       id: "monthly-demos",
-      content: "Join our monthly demos and see dbt Cloud in action!",
+      content: "Join us for dbt Developer day on March 19th and March 20th for exciting new and coming-soon features to supercharge data developer workflows!",
       backgroundColor: "#047377",
       textColor: "#fff",
       isCloseable: true,
@@ -211,6 +211,7 @@ var siteSettings = {
           ></script>
 
           <div class='footer__items'>
+            <a href='https://status.getdbt.com//'>dbt Cloud Status</a>
             <a href='https://www.getdbt.com/terms-of-use/'>Terms of Service</a>
             <a href='https://www.getdbt.com/cloud/privacy-policy/'>Privacy Policy</a>
             <a href='https://www.getdbt.com/security/'>Security</a>
@@ -293,6 +294,7 @@ var siteSettings = {
     "/js/gtm.js",
     "/js/onetrust.js",
     "/js/mutiny.js",
+    "/js/hide-forethought.js",
   ],
   stylesheets: [
     "/css/fonts.css",
