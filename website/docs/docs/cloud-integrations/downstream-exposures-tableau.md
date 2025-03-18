@@ -34,7 +34,7 @@ To configure automatic downstream exposures, you should meet the following:
 1. Your environment and jobs are on a supported [dbt Cloud release track](/docs/dbt-versions/cloud-release-tracks).
 2. You have a dbt Cloud account on the [Enterprise plan](https://www.getdbt.com/pricing/).
 3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
-4. You have [admin permissions](/docs/cloud/manage-access/enterprise-permissions) in dbt Cloud to edit project settings or production environment settings.
+4. You have [proper permissions](/docs/cloud/manage-access/enterprise-permissions) to edit dbt Cloud project or production environment settings.
 5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled.
 
 ### Considerations
