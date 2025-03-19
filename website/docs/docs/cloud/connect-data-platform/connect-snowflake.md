@@ -40,6 +40,12 @@ to authenticate dbt Cloud to run queries against Snowflake on behalf of a Snowfl
 
 ### Snowflake MFA
 
+:::info Snowflake MFA plan availability
+
+Snowflake's MFA is available on all [plan types](https://www.getdbt.com/pricing).
+
+:::
+
 **Prerequisites:**
 - A development environment in a dbt Cloud project
 - The Duo authentication app
@@ -47,8 +53,6 @@ to authenticate dbt Cloud to run queries against Snowflake on behalf of a Snowfl
 - [Admin (write) access](/docs/cloud/manage-access/seats-and-users) to dbt Cloud environments
 
 dbt Cloud supports Snowflake's [multi-factor authentication (MFA)](https://docs.snowflake.com/en/user-guide/security-mfa) as another username and password option for increased login security. Snowflake's MFA support is powered by the Duo Security service.
-
-Snowflake's MFA is available on all [plan types](https://www.getdbt.com/pricing).
 
 - In dbt Cloud, set the following [extended attribute](/docs/dbt-cloud-environments#extended-attributes) in the development environment **General settings** page, under the **Extended attributes** section:
 
