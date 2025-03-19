@@ -84,7 +84,7 @@ To configure project credentials in Power BI Desktop:
 5. Click **OK** to proceed.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />
 6. On the next screen, paste your service token and then click **Connect**.
-7. You should see a sidepane with a few tables. Select the ones you want to load into your dashboard. Then click **Load**.
+7. You should see a sidepane with a few "virtual" tables. `ALL` represents all of your defined SL objects, and the other tables represent each of your Saved Queries. Select the one you want to load into your dashboard. Then click **Load**.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-sidepanel.jpg" title="Select tables in the side panel" />
 
 Now that you've configured the connector, you can configure published reports in the next section to use the connector.
