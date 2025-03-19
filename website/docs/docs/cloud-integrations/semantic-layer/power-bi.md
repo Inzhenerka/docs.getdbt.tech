@@ -155,7 +155,7 @@ This allows for very flexible analytics workflows, like drag and drop metrics an
 
 </Expandable>
 
-<Expandable alt_header="Is custom modeling supported?">
+<Expandable alt_header="What actions aren't supported?">
 
 The following are not supported:
 - Custom modeling
