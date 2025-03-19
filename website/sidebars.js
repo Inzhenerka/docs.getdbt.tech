@@ -297,17 +297,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/git-commit-signing",
             "docs/cloud/dbt-cloud-ide/lint-format",
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
-            {
-              type: "category",
-              label: "dbt Copilot",
-              link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-              items: [
-                "docs/cloud/dbt-copilot",
-                "docs/cloud/enable-dbt-copilot",
-                "docs/cloud/use-dbt-copilot",
-                "docs/cloud/dbt-copilot-data",
-              ],
-            },
+            "docs/cloud/dbt-cloud-ide/develop-copilot",
           ],
         },
         {
@@ -319,6 +309,7 @@ const sidebarSettings = {
             "docs/cloud/visual-editor",
             "docs/cloud/visual-editor-interface", 
             "docs/cloud/use-visual-editor",
+            "docs/cloud/build-ve-copilot",
           ],
         },
         ],
@@ -535,12 +526,13 @@ const sidebarSettings = {
           link: { type: "doc", id: "docs/deploy/monitor-jobs" },
           items: [
             "docs/deploy/monitor-jobs",
+            "docs/deploy/orchestrate-exposures",
             "docs/deploy/artifacts",
             "docs/deploy/job-notifications",
             "docs/deploy/model-notifications",
             "docs/deploy/run-visibility",
             "docs/deploy/retry-jobs",
-            "docs/deploy/source-freshness",
+            "docs/deploy/source-freshness",            
             "docs/deploy/webhooks",
           ],
         },
@@ -571,10 +563,10 @@ const sidebarSettings = {
               label: "Model consumption",
               link: {
                 type: "doc",
-                id: "docs/collaborate/auto-exposures",
+                id: "docs/collaborate/view-downstream-exposures",
               },
               items: [
-                "docs/collaborate/auto-exposures",
+                "docs/collaborate/view-downstream-exposures",
                 "docs/collaborate/data-tile",
                 "docs/collaborate/model-query-history",
               ],
@@ -771,14 +763,37 @@ const sidebarSettings = {
         },
       ],
     },
-
+    {
+      type: "category",
+      label: "dbt Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/dbt-copilot-faqs",
+        ],
+      },
     {
       type: "category",
       label: "dbt Cloud integrations",
       link: { type: "doc", id: "docs/cloud-integrations/overview" },
       items: [
         "docs/cloud-integrations/overview",
-        "docs/cloud-integrations/configure-auto-exposures",
+        {
+          type: "category",
+          label: "Visualize and orchestrate exposures",
+          link: {
+            type: "doc",
+            id: "docs/cloud-integrations/downstream-exposures",
+          },
+          items: [
+            "docs/cloud-integrations/downstream-exposures",
+            "docs/cloud-integrations/downstream-exposures-tableau",
+            "docs/cloud-integrations/orchestrate-exposures",
+          ],
+        },
         {
           type: "category",
           label: "Snowflake Native App",
