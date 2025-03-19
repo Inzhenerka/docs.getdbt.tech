@@ -53,7 +53,7 @@ When enabled by an admin, dbt Copilot is available on a dbt Cloud [Enterprise ac
 
 </Expandable>
 
-<Expandable alt_header="Is dbt copilot available for all deployment types?">
+<Expandable alt_header="Is dbt Copilot available for all deployment types?">
 
 Yes, dbt Copilot is powered by ai-codegen-api, which is deployed everywhere including [multi-tenant and single-tenant deployments](/docs/cloud/about-cloud/access-regions-ip-addresses).
 
