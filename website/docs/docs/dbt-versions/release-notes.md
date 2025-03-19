@@ -24,7 +24,7 @@ The following features are new or enhanced as part of our [dbt Developer Day](ht
 
 - **New**: dbt Copilot, an AI-powered assistant, is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out [dbt Copilot](/docs/cloud/dbt-copilot) for more information.    
 
-#### Also available this month:
+#### Also available this month
 
 - **New**: The dbt Semantic Layer supports Power BI as a [partner integration](/docs/cloud-integrations/avail-sl-integrations), available in private beta. To join the private beta, please reach out to your account representative. Check out the [Power BI](/docs/cloud-integrations/semantic-layer/power-bi) integration for more information.
 - **New**: [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) are Generally Available. Depending on their plan, customers may select among the Latest, Compatible, or Extended tracks to manage the update cadences for development and deployment environments.
