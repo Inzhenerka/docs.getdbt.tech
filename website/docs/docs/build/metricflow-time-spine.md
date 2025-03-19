@@ -7,11 +7,25 @@ tags: [Metrics, Semantic Layer]
 ---
 <VersionBlock firstVersion="1.9">
 
-<!-- this whole section is for 1.9 and higher + Release Tracks -->
 
 It's common in analytics engineering to have a date dimension or "time spine" table as a base table for different types of time-based joins and aggregations. The structure of this table is typically a base column of daily or hourly dates, with additional columns for other time grains, like fiscal quarters, defined based on the base column. You can join other tables to the time spine on the base column to calculate metrics like revenue at a point in time, or to aggregate to a specific time grain.
 
-MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. MetricFlow will join against the time-spine model for the following types of metrics and dimensions:
+To use MetricFlow with time-based metrics and dimensions, you _must_ provide a time spine. This table serves as the foundation for time-based joins and aggregations. You can either:
+
+- Create a time spine from scratch (check out the [example time spine](#example-time-spine-tables) section for examples), or
+- Use an existing table in your project, like a `dim_date` table
+
+And once you have a time spine, you need to configure it in YAML to tell MetricFlow how to use it.
+
+## Prerequisites
+MetricFlow requires you to define at least one dbt model which provides a time-spine, and then specify (in YAML) the columns to be used for time-based joins. This means you need to:
+
+- Define at least one [time spine](#example-time-spine-tables) at whichever granularity needed for your metrics (like daily or hourly). You can optionally define additional tables for coarser grains (like monthly or yearly).
+- [Configure each time spine in a YAML file](#configuring-time-spine-in-yaml) to define how MetricFlow recognizes and uses its columns.
+
+Note that you can't have overlapping time spines.
+
+MetricFlow will then join against the time spine model for the following types of metrics and dimensions:
 
 - [Cumulative metrics](/docs/build/cumulative)
 - [Metric offsets](/docs/build/derived#derived-metric-offset)
@@ -19,14 +33,19 @@ MetricFlow requires you to define at least one dbt model which provides a time-s
 - [Slowly Changing Dimensions](/docs/build/dimensions#scd-type-ii)
 - [Metrics](/docs/build/metrics-overview) with the `join_to_timespine` configuration set to true
 
-To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=True` flag when querying the Semantic Layer to return the compiled SQL.
+To see the generated SQL for the metric and dimension types that use time spine joins, refer to the respective documentation or add the `compile=true` flag when querying the Semantic Layer to return the compiled SQL.
 
 ## Configuring time spine in YAML
 
- Time spine models are normal dbt models with extra configurations that tell dbt and MetricFlow how to use specific columns by defining their properties. Add the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. If your project already includes a calendar table or date dimension, you can configure that table as a time spine. Otherwise, review the [example time-spine tables](#example-time-spine-tables) to create one.
+:::tip Use our mini guide to create a time spine table
+For a quick start guide on how to create a time spine table, check out our [MetricFlow time spine mini guide](/guides/mf-time-spine)!
+:::
+
+ Time spine models are normal dbt models with extra configurations that tell dbt and MetricFlow how to use specific columns by defining their properties. Add the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. If your project already includes a calendar table or date dimension, you can configure that table as a time spine. Otherwise, review the [example time-spine tables](#example-time-spine-tables) to create one. If the relevant model file doesn't exist, create it and add the configuration mentioned in the [next section](#creating-a-time-spine-table).
  
  Some things to note when configuring time spine models:
 
+- Make sure you already have a time spine SQL table defined in your project.
 - Add the configurations under the `time_spine` key for that [model's properties](/reference/model-properties), just as you would add a description or tests.
 - You only need to configure time-spine models that the Semantic Layer should recognize.
 - At a minimum, define a time-spine table for a daily grain.
@@ -34,9 +53,9 @@ To see the generated SQL for the metric and dimension types that use time spine 
 - If you're looking to specify the grain of a time dimension so that MetricFlow can transform the underlying column to the required granularity, refer to the [Time granularity documentation](/docs/build/dimensions?dimension=time_gran)
 
 :::tip
-If you previously used a model called `metricflow_time_spine`, you no longer need to create this specific model. You can now configure MetricFlow to use any date dimension or time spine table already in your project by updating the `model` setting in the Semantic Layer.
-
-If you don’t have a date dimension table, you can still create one by using the code snippet in the [next section](#creating-a-time-spine-table) to build your time spine model.
+- If you previously used a `metricflow_time_spine.sql` model, you can delete it after configuring the `time_spine` property in YAML. The Semantic Layer automatically recognizes the new configuration. No additional `.yml` files are needed. 
+- You can also configure MetricFlow to use any date dimension or time spine table already in your project by updating the `model` setting in the Semantic Layer.
+- If you don’t have a date dimension table, you can still create one by using the code snippet in the [next section](#creating-a-time-spine-table) to build your time spine model.
 :::
 
 ### Creating a time spine table  
@@ -74,8 +93,6 @@ This example creates a time spine at an hourly grain and a daily grain: `time_sp
 </File>
 </VersionBlock>
 
-<Lightbox src="/img/time_spines.png" width="50%" title="Time spine directory structure" />
-
 <!--
 <VersionBlock lastVersion="1.8">
 <File name="models/_models.yml">
@@ -112,13 +129,48 @@ models:
 
 For an example project, refer to our [Jaffle shop](https://github.com/dbt-labs/jaffle-sl-template/blob/main/models/marts/_models.yml) example.
 
+### Migrating from SQL to YAML
+If your project already includes a time spine (`metricflow_time_spine.sql`), you can migrate its configuration to YAML to address any deprecation warnings you may get.
+
+1. Add the following configuration to a new or existing YAML file using the [`models` key](/reference/model-properties) for the time spine in your `models/` directory. Name the YAML file whatever you want (for example, `util/_models.yml`):
+
+  <File name="models/_models.yml">
+
+  ```yaml
+  models:
+    - name: all_days
+      description: A time spine with one row per day, ranging from 2020-01-01 to 2039-12-31.
+      time_spine:
+        standard_granularity_column: date_day  # Column for the standard grain of your table
+      columns:
+        - name: date_day
+          granularity: day  # Set the granularity of the column
+  ```
+  </File>
+
+2. After adding the YAML configuration, delete the existing `metricflow_time_spine.sql` file from your project to avoid any issues.
+
+3. Test the configuration to ensure compatibility with your production jobs.
+
+Note that if you're migrating from a `metricflow_time_spine.sql` file:
+
+- Replace its functionality by adding the `time_spine` property to YAML as shown in the previous example.
+- Once configured, MetricFlow will recognize the YAML settings, and then the SQL model file can be safely removed.
+
 ### Considerations when choosing which granularities to create{#granularity-considerations}
 
-- MetricFlow will use the time spine with the largest compatible granularity for a given query to ensure the most efficient query possible. For example, if you have a time spine at a monthly grain, and query a dimension at a monthly grain, MetricFlow will use the monthly time spine. If you only have a daily time spine, MetricFlow will use the daily time spine and date_trunc to month.
+- MetricFlow will use the time spine with the largest compatible granularity for a given query to ensure the most efficient query possible. For example, if you have a time spine at a monthly grain, and query a dimension at a monthly grain, MetricFlow will use the monthly time spine. If you only have a daily time spine, MetricFlow will use the daily time spine and `date_trunc` to month.
 - You can add a time spine for each granularity you intend to use if query efficiency is more important to you than configuration time, or storage constraints. For most engines, the query performance difference should be minimal and transforming your time spine to a coarser grain at query time shouldn't add significant overhead to your queries.
 - We recommend having a time spine at the finest grain used in any of your dimensions to avoid unexpected errors. For example, if you have dimensions at an hourly grain, you should have a time spine at an hourly grain.
 
 ## Example time spine tables
+
+The following examples show how to create time spine tables at different granularities:
+
+- [Daily](#daily)
+- [Daily (BigQuery)](#daily-bigquery)
+- [Hourly](#hourly)
+
 
 ### Daily
 
@@ -308,6 +360,11 @@ You only need to include the `date_day` column in the table. MetricFlow can hand
 
 ## Custom calendar <Lifecycle status="Preview"/>
 
+:::tip
+Check out our mini guide on [how to create a time spine table](/guides/mf-time-spine) to get started!
+:::
+
+
 <VersionBlock lastVersion="1.8">
 
 The ability to configure custom calendars, such as a fiscal calendar, is available now in [the "Latest" release track in dbt Cloud](/docs/dbt-versions/cloud-release-tracks), and it will be available in [dbt Core v1.9+](/docs/dbt-versions/core-upgrade/upgrading-to-v1.9). 
@@ -360,3 +417,9 @@ models:
 Note that features like calculating offsets and period-over-period will be supported soon!
 
 </VersionBlock>
+
+
+## Related docs
+
+- [MetricFlow time granularity](/docs/build/dimensions?dimension=time_gran#time)
+- [MetricFlow time spine mini guide](/guides/mf-time-spine)

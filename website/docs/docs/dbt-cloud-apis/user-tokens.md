@@ -1,12 +1,13 @@
 ---
 title: "User tokens"
+sidebar_label: "Personal access tokens "
 id: "user-tokens"
 pagination_next: "docs/dbt-cloud-apis/service-tokens"
 ---
 
 # Account-scoped personal access tokens <Lifecycle status="team,enterprise"/>
 
-:::Warning
+:::warning
 
 User API tokens have been deprecated and will no longer work. [Migrate](#migrate-deprecated-user-api-keys-to-personal-access-tokens) to personal access tokens to resume services.
 

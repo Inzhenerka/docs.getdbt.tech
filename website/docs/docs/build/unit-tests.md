@@ -1,18 +1,14 @@
 ---
 title: "Unit tests"
 sidebar_label: "Unit tests"
-description: "Learn how to use unit tests on your SQL models."
+description: "Implement unit tests to validate your dbt code."
 search_weight: "heavy"
 id: "unit-tests"
 keywords:
   - unit test, unit tests, unit testing, dag
 ---
 
-:::note 
-
-Unit testing functionality is available in [dbt Cloud Release Tracks](/docs/dbt-versions/cloud-release-tracks) or dbt Core v1.8+
-
-:::
+<VersionCallout version="1.8" />
 
 Historically, dbt's test coverage was confined to [“data” tests](/docs/build/data-tests), assessing the quality of input data or resulting datasets' structure. However, these tests could only be executed _after_ building a model. 
 
@@ -220,10 +216,19 @@ dbt test --select test_is_valid_email_address
 
 Your model is now ready for production! Adding this unit test helped catch an issue with the SQL logic _before_ you materialized `dim_customers` in your warehouse and will better ensure the reliability of this model in the future. 
 
-
 ## Unit testing incremental models
 
-When configuring your unit test, you can override the output of macros, vars, or environment variables. This enables you to unit test your incremental models in "full refresh" and "incremental" modes. 
+When configuring your unit test, you can override the output of macros, vars, or environment variables. This enables you to unit test your incremental models in "full refresh" and "incremental" modes.
+
+:::note
+Incremental models need to exist in the database first before running unit tests or doing a `dbt build`. Use the [`--empty` flag](/reference/commands/build#the---empty-flag) to build an empty version of the models to save warehouse spend. You can also optionally select only your incremental models using the [`--select` flag](/reference/node-selection/syntax#shorthand).
+
+  ```shell
+  dbt run --select "config.materialized:incremental" --empty
+  ```
+
+  After running the command, you can then perform a regular `dbt build` for that model and then run your unit test.
+:::
 
 When testing an incremental model, the expected output is the __result of the materialization__ (what will be merged/inserted), not the resulting model itself (what the final table will look like after the merge/insert).
 
@@ -293,7 +298,7 @@ unit_tests:
 
 There is currently no way to unit test whether the dbt framework inserted/merged the records into your existing model correctly, but [we're investigating support for this in the future](https://github.com/dbt-labs/dbt-core/issues/8664).
 
-## Unit testing a model that depend on ephemeral model(s)
+## Unit testing a model that depends on ephemeral model(s)
 
 If you want to unit test a model that depends on an ephemeral model, you must use `format: sql` for that input.
 

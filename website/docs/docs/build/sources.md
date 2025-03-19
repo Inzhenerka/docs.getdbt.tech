@@ -1,7 +1,7 @@
 ---
 title: "Add sources to your DAG"
 sidebar_label: "Sources"
-description: "Read this tutorial to learn how to use sources when building in dbt."
+description: "Define data source tables when developing in dbt."
 id: "sources"
 search_weight: "heavy"
 ---
@@ -14,7 +14,7 @@ search_weight: "heavy"
 
 ## Using sources
 Sources make it possible to name and describe the data loaded into your warehouse by your Extract and Load tools. By declaring these tables as sources in dbt, you can then
-- select from source tables in your models using the `{{ source() }}` function, helping define the lineage of your data
+- select from source tables in your models using the [`{{ source() }}` function,](/reference/dbt-jinja-functions/source) helping define the lineage of your data
 - test your assumptions about your source data
 - calculate the freshness of your source data
 
@@ -190,6 +190,19 @@ from raw.jaffle_shop.orders
 The results of this query are used to determine whether the source is fresh or not:
 
 <Lightbox src="/img/docs/building-a-dbt-project/snapshot-freshness.png" title="Uh oh! Not everything is as fresh as we'd like!"/>
+
+### Build models based on source freshness
+
+Our best practice recommendation is to use [data source freshness](/docs/build/sources#declaring-source-freshness). This will allow settings to be transfered into a `.yml` file where source freshness is defined on [model level](/reference/resource-properties/freshness).
+
+To build models based on source freshness in dbt:
+
+1. Run `dbt source freshness` to check the freshness of your sources.
+2. Use the `dbt build --select source_status:fresher+` command to build and test models downstream of fresher sources.
+
+Using these commands in order makes sure models update with the latest data. This eliminates wasted compute cycles on unchanged data and builds models _only_ when necessary. 
+
+Set [source freshness snapshots](/docs/deploy/source-freshness#enabling-source-freshness-snapshots) to 30 minutes to check for source freshness, then run a job which rebuilds every hour to rebuild model. This setup retrieves all the models and rebuild them in one attempt if their source freshness has expired. For more information, refer to [Source freshness snapshot frequency](/docs/deploy/source-freshness#source-freshness-snapshot-frequency).
 
 ### Filter
 

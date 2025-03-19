@@ -1,8 +1,9 @@
 ---
 title: "Configure incremental models"
-description: "Learn how to configure incremental models when building in dbt."
+description: "Learn how to configure and optimize incremental models when developing in dbt."
 id: "incremental-models"
 keywords: ["incremental models", "incremental materialization","incremental", "materialization", "incremental model", "incremental strategy", "incremental model configuration"]
+intro_text: "Learn how to configure and optimize incremental models when developing in dbt."
 ---
 
 Incremental models are built as tables in your <Term id="data-warehouse" />. The first time a model is run, the <Term id="table" /> is built by transforming _all_ rows of source data. On subsequent runs, dbt transforms _only_ the rows in your source data that you tell dbt to filter for, inserting them into the target table which is the table that has already been built.
@@ -34,8 +35,7 @@ To use incremental models, you also need to tell dbt:
 
 The `is_incremental()` macro powers incremental materializations. It will return `True` if _all_ of the following conditions are met:
 
-- The model must already exist in the database
-- The destination table already exists in the database
+- The model must already exist as a table in the database
 - The `full-refresh` flag _is not_ passed
 - The running model is configured with `materialized='incremental'`
 

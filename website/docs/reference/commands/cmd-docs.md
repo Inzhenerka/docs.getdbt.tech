@@ -1,5 +1,6 @@
 ---
 title: "About dbt docs commands"
+description: "Generate and serve the docs for your dbt project."
 sidebar_label: "docs"
 id: "cmd-docs"
 ---
@@ -44,6 +45,14 @@ This is not recommended for production environments, as it means that your docum
 
 ```
 dbt docs generate --empty-catalog
+```
+
+**Example**:
+
+Use the `--static` flag to generate the docs as a static page for hosting on a cloud storage provider. The `catalog.json` and `manifest.json` files will be inserted into the `index.html` file, creating a single page easily shared via email or file-sharing apps. 
+
+```
+dbt docs generate --static
 ```
 
 ### dbt docs serve

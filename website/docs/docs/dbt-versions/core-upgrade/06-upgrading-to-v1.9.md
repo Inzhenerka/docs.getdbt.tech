@@ -49,7 +49,7 @@ Starting in Core 1.9, you can use the new [microbatch strategy](/docs/build/incr
 - Simplified query design: Write your model query for a single batch of data. dbt will use your `event_time`, `lookback`, and `batch_size` configurations to automatically generate the necessary filters for you, making the process more streamlined and reducing the need for you to manage these details.
 - Independent batch processing: dbt automatically breaks down the data to load into smaller batches based on the specified `batch_size` and processes each batch independently, improving efficiency and reducing the risk of query timeouts. If some of your batches fail, you can use `dbt retry` to load only the failed batches.
 - Targeted reprocessing: To load a *specific* batch or batches, you can use the CLI arguments `--event-time-start` and `--event-time-end`.
-- [Automatic parallel batch execution](/docs/build/incremental-microbatch#parallel-batch-execution): Process multiple batches at the same time, instead of one after the other (sequentially) for faster processing of your microbatch models. dbt intelligently auto-detects if your batches can run in parallel, while also allowing you to manually override parallel execution with the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches).
+- [Automatic parallel batch execution](/docs/build/parallel-batch-execution): Process multiple batches at the same time, instead of one after the other (sequentially) for faster processing of your microbatch models. dbt intelligently auto-detects if your batches can run in parallel, while also allowing you to manually override parallel execution with the [`concurrent_batches` config](/reference/resource-properties/concurrent_batches).
 
 
 Currently microbatch is supported on these adapters with more to come:
@@ -92,7 +92,7 @@ You can read more about each of these behavior changes in the following links:
 - (Introduced, disabled by default) [`skip_nodes_if_on_run_start_fails` project config flag](/reference/global-configs/behavior-changes#behavior-change-flags). If the flag is set and **any** `on-run-start` hook fails, mark all selected nodes as skipped.
     - `on-run-start/end` hooks are **always** run, regardless of whether they passed or failed last time.
 - (Introduced, disabled by default) [[Redshift] `restrict_direct_pg_catalog_access`](/reference/global-configs/behavior-changes#redshift-restrict_direct_pg_catalog_access). If the flag is set the adapter will use the Redshift API (through the Python client) if available, or query Redshift's `information_schema` tables instead of using `pg_` tables.
-- (Introduced, disabled by default) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-changes#cumulative-metrics). If the flag is set to `True`, users will receive an error instead of a warning if they're not proprly formatting cumulative metrics using the new [`cumulative_type_params`](/docs/build/cumulative#parameters) nesting.
+- (Introduced, disabled by default) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-changes#cumulative-metrics). If the flag is set to `True`, users will receive an error instead of a warning if they're not properly formatting cumulative metrics using the new [`cumulative_type_params`](/docs/build/cumulative#parameters) nesting.
 - (Introduced, disabled by default) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-changes#custom-microbatch-strategy). Set to `True` if you use a custom microbatch macro to enable batched execution. If you don't have a custom microbatch macro, you don't need to set this flag as dbt will handle microbatching automatically for any model using the microbatch strategy.
 
 ## Adapter specific features and functionalities
@@ -103,7 +103,8 @@ You can read more about each of these behavior changes in the following links:
 
 ### Snowflake
 
-- Iceberg Table Format support will be available on three out-of-the-box materializations: table, incremental, dynamic tables. 
+- Iceberg Table Format &mdash; Support will be available on three out-of-the-box materializations: table, incremental, dynamic tables.
+- Breaking change &mdash; When upgrading from dbt 1.8 to 1.9 `{{ target.account }}` replaces underscores with dashes. For example, if the `target.account` is set to `sample_company`, then the compiled code now generates `sample-company`. [Refer to the `dbt-snowflake` issue](https://github.com/dbt-labs/dbt-snowflake/issues/1286) for more information. 
 
 ### Bigquery
 
@@ -122,3 +123,4 @@ We also made some quality-of-life improvements in Core 1.9, enabling you to:
 - Document [data tests](/reference/resource-properties/description).
 - Use `ref` and `source` in [foreign key constraints](/reference/resource-properties/constraints).
 - Use `dbt test` with the `--resource-type` / `--exclude-resource-type` flag, making it possible to include or exclude data tests (`test`) or unit tests (`unit_test`).
+- The [`enabled`](/reference/resource-configs/enabled) config is now available for unit tests. Defaults to `true` if not defined.

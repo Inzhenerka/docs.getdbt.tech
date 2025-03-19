@@ -5,7 +5,7 @@ id: "spark-setup"
 meta:
   maintained_by: dbt Labs
   authors: 'core dbt maintainers'
-  github_repo: 'dbt-labs/dbt-spark'
+  github_repo: 'dbt-labs/dbt-adapters'
   pypi_package: 'dbt-spark'
   min_core_version: 'v0.15.0'
   cloud_support: Supported
@@ -25,7 +25,7 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-If connecting to Databricks via ODBC driver, it requires `pyodbc`. Depending on your system, you can install it seperately or via pip. See the [`pyodbc` wiki](https://github.com/mkleehammer/pyodbc/wiki/Install) for OS-specific installation details.
+If connecting to Databricks via ODBC driver, it requires `pyodbc`. Depending on your system, you can install it separately or via pip. See the [`pyodbc` wiki](https://github.com/mkleehammer/pyodbc/wiki/Install) for OS-specific installation details.
 
 If connecting to a Spark cluster via the generic thrift or http methods, it requires `PyHive`.
 

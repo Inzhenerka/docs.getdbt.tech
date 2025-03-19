@@ -7,11 +7,11 @@ description: "dbt uses `batch_size` to determine how large batches are when runn
 datatype: hour | day | month | year
 ---
 
-Available in the [dbt Cloud "Latest" release track](/docs/dbt-versions/cloud-release-tracks) and dbt Core v1.9 and higher.
+<VersionCallout version="1.9" />
 
 ## Definition
 
-The`batch_size` config determines how large batches are when running a microbatch. Accepted values are `hour`, `day`, `month`, or `year`. You can configure `batch_size` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block.
+The `batch_size` config determines how large batches are when running a [microbatch incremental model](/docs/build/incremental-microbatch). Accepted values are `hour`, `day`, `month`, or `year`. You can configure `batch_size` for a [model](/docs/build/models) in your `dbt_project.yml` file, property YAML file, or config block.
 
 ## Examples
 
@@ -48,7 +48,8 @@ Example in sql model config block:
 
 ```sql
 {{ config(
-    lookback='day
+    materialized='incremental',
+    batch_size='day'
 ) }}
 ```
 
