@@ -20,7 +20,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 #### dbt Developer day
 
-The following features are new or enhanced as part of our [dbt Developer Day](https://www.getdbt.com/resources/webinars/dbt-developer-day) on March 19th, 2025:
+The following features are new or enhanced as part of our [dbt Developer day](https://www.getdbt.com/resources/webinars/dbt-developer-day) on March 19th, 2025:
 
 - **New**: dbt Copilot, an AI-powered assistant, is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out [dbt Copilot](/docs/cloud/dbt-copilot) for more information.    
 
