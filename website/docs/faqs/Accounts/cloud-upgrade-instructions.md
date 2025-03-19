@@ -32,7 +32,13 @@ To unlock your account and select a plan, review the following guidance per plan
 3. Confirm your plan selection on the pop up message. 
 4. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Developer plan. 🎉
 
-<Lightbox src="/img/docs/dbt-cloud/downgrade-dev-flow1.gif"/>
+<Lightbox src="/img/docs/dbt-cloud/downgrade-dev-flow.gif"/>
+
+#### Plan allocation
+
+If you select a plan but have too many seats or projects for that plan (for example, if you select the Developer plan but have more than one developer seat), you'll be directed to the users & projects pages to make edits.
+
+<Lightbox src="/img/docs/dbt-cloud/developer-plan-allocation.png"/>
 
 ### Team plan
 
@@ -42,7 +48,6 @@ To unlock your account and select a plan, review the following guidance per plan
 4 This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
 
 <Lightbox src="/img/docs/dbt-cloud/trial-team-flow.png"/>
-
 
 <Lightbox src="/img/docs/dbt-cloud/trial-team-payments-flow.png"/>
 
