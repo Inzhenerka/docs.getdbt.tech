@@ -50,7 +50,7 @@ Set up downstream exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#se
 
 This section explains the steps to configure the integration in Tableau. A Tableau site admin must complete these steps. 
 
-Once configured in both Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view downstream exposures](#view-downstream-exposures) in dbt Explorer. 
+Once configured in both Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view downstream exposures](#view-downstream-exposures) in dbt Explorer. .
 
 1. Enable [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for your Tableau account.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
