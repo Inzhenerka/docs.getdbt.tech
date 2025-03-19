@@ -1,24 +1,23 @@
-## View auto-exposures
+## View downstream exposures
 
-After setting up auto-exposures in dbt Cloud, you can view them in dbt Explorer for a richer experience.
+After setting up downstream exposures in dbt Cloud, you can view them in [dbt Explorer](/docs/collaborate/explore-projects) for a richer experience.
 
-Navigate to dbt Explorer by clicking on the **Explore** link in the navigation. From the **Overview** page, you can view auto-exposures from a couple of places:
+Navigate to dbt Explorer by clicking on the **Explore** link in the navigation. From the **Overview** page, you can view downstream exposures from a couple of places:
+
+<!-- no toc -->
 - [Exposures menu](#exposures-menu)
 - [File tree](#file-tree)
 - [Project lineage](#project-lineage)
 
 ### Exposures menu
-View auto exposures from the **Exposures** menu item under **Resources**. This menu provides a comprehensive list of all the exposures so you can quickly access and manage them. The menu displays the following information:
+View downstream exposures from the **Exposures** menu item under **Resources**. This menu provides a comprehensive list of all the exposures so you can quickly access and manage them. The menu displays the following information:
    - **Name**: The name of the exposure.
    - **Health**: The [data health signal](/docs/collaborate/data-health-signals) of the exposure.
    - **Type**: The type of exposure, such as `dashboard` or `notebook`.
    - **Owner**: The owner of the exposure.
    - **Owner email**: The email address of the owner of the exposure.
    - **Integration**: The BI tool that the exposure is integrated with.
-   - **Exposure mode**: The type of exposure defined: **Auto** or **Manual**. Exposures in dbt can be configured in two ways:
-     - **Manual** &mdash; [Defined](/docs/build/exposures) manually and explicitly in your project’s YAML files.
-     - **Auto** &mdash; Pulled automatically from your BI tool as long as your BI tool integrates with dbt Cloud and you have access to auto-exposures.
-     - dbt Cloud automatically creates auto exposures for users with access, removing the need for manual YAML definitions. These auto exposures are stored in dbt’s metadata system, appear in dbt Explorer, and behave like manual exposures, however they don’t exist in YAML files.
+   - **Exposure mode**: The type of exposure defined: **Auto** or **Manual**.
 <Lightbox src="/img/docs/cloud-integrations/auto-exposures/explorer-view-resources.jpg" width="120%" title="View from the dbt Explorer under the 'Resources' menu."/>
 
 ### File tree
