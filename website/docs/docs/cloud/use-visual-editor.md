@@ -4,6 +4,7 @@ id: use-visual-editor
 sidebar_label: "Edit and create dbt models" 
 description: "Access and use the Visual Editor to create or edit dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
 pagination_prev: "docs/cloud/visual-editor-interface"
+pagination_next: "docs/cloud/build-ve-copilot"
 ---
 
 import Prerequisites from '/snippets/_visual-editor-prerequisites.md';

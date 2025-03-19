@@ -40,6 +40,12 @@ to authenticate dbt Cloud to run queries against Snowflake on behalf of a Snowfl
 
 ### Snowflake MFA
 
+:::info Snowflake MFA plan availability
+
+Snowflake's MFA is available on all [plan types](https://www.getdbt.com/pricing).
+
+:::
+
 **Prerequisites:**
 - A development environment in a dbt Cloud project
 - The Duo authentication app
