@@ -297,17 +297,7 @@ const sidebarSettings = {
             "docs/cloud/dbt-cloud-ide/git-commit-signing",
             "docs/cloud/dbt-cloud-ide/lint-format",
             "docs/cloud/dbt-cloud-ide/ide-user-interface",
-            {
-              type: "category",
-              label: "dbt Copilot",
-              link: { type: "doc", id: "docs/cloud/dbt-copilot" },
-              items: [
-                "docs/cloud/dbt-copilot",
-                "docs/cloud/enable-dbt-copilot",
-                "docs/cloud/use-dbt-copilot",
-                "docs/cloud/dbt-copilot-data",
-              ],
-            },
+            "docs/cloud/dbt-cloud-ide/develop-copilot",
           ],
         },
         {
@@ -319,6 +309,7 @@ const sidebarSettings = {
             "docs/cloud/visual-editor",
             "docs/cloud/visual-editor-interface", 
             "docs/cloud/use-visual-editor",
+            "docs/cloud/build-ve-copilot",
           ],
         },
         ],
@@ -772,6 +763,18 @@ const sidebarSettings = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "dbt Copilot",
+      collapsed: true,
+      link: { type: "doc", id: "docs/cloud/dbt-copilot" },
+      items: [
+        "docs/cloud/dbt-copilot",
+        "docs/cloud/enable-dbt-copilot",
+        "docs/cloud/use-dbt-copilot",
+        "docs/cloud/dbt-copilot-faqs",
+        ],
+      },
     {
       type: "category",
       label: "dbt Cloud integrations",
