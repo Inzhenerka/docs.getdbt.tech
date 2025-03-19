@@ -2,17 +2,17 @@
 title: "About the Visual Editor" 
 id: visual-editor       
 sidebar_label: "About the Visual Editor" 
-description: "The Visual Editor enables analysts to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
+description: "The Visual Editor enables you to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt Cloud." 
 pagination_next: "docs/cloud/visual-editor-interface"
 pagination_prev: null
 ---
 
 import Prerequisites from '/snippets/_visual-editor-prerequisites.md';
 
-# About the Visual Editor <Lifecycle status='beta'/> 
+# About the Visual Editor <Lifecycle status='beta, enterprise'/> 
 
 <p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-The dbt Cloud Visual Editor helps analysts quickly create, edit, and visualize dbt models through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
+The dbt Cloud Visual Editor helps you quickly access and transform data through a visual, drag-and-drop experience and with a built-in AI for custom code generation.
 </p>
 
 :::tip Beta feature

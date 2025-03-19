@@ -209,7 +209,7 @@ models:
 
 ### `accepted_values`
 
-This test validates that all of the values in a column are present in a supplied list of `values`. If any values other than those provided in the list are present, then the test will fail.
+This test validates that all of the non-`null` values in a column are present in a supplied list of `values`. If any values other than those provided in the list are present, then the test will fail.
 
 The `accepted_values` test supports an optional `quote` parameter which, by default, will single-quote the list of accepted values in the test query. To test non-strings (like integers or boolean values) explicitly set the `quote` config to `false`.
 
