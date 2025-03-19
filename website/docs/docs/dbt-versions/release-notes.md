@@ -18,7 +18,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
-#### dbt Developer Day
+#### dbt Developer day
 
 The following features are new or enhanced as part of our [dbt Developer Day](https://www.getdbt.com/resources/webinars/dbt-developer-day) on March 19th, 2025:
 
