@@ -38,7 +38,6 @@ To unlock your account and select a plan, review the following guidance per plan
 
 1. When your trial expires, your account's default plan enrollment will be a Team plan. 
 2. To unlock your account and continue using the Team plan, click on **Select plan** under the **Team** column.
-3. Go to **Select plan**.
 4. Enter your payment details and click **Save**.
 5. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
 
