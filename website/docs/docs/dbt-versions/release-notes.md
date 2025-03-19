@@ -18,7 +18,6 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 ## March 2025
 
-- **New**: [Orchestrate downstream exposures](/docs/cloud-integrations/orchestrate-exposures) proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs, complementing the ability to [visualize downstream exposures](/docs/cloud-integrations/downstream-exposures-tableau) automatically in dbt Explorer. This feature is available in private beta and supports Tableau. To join the beta, contact your account representative.
 - **New**: [dbt Cloud release tracks](/docs/dbt-versions/cloud-release-tracks) are Generally Available. Depending on their plan, customers may select among the Latest, Compatible, or Extended tracks to manage the update cadences for development and deployment environments.
 - **New:** The dbt Cloud-native integration with Azure DevOps now supports [Entra ID service principals](/docs/cloud/git/setup-service-principal). Unlike a services user, which represents a real user object in Entra ID, the service principal is a secure identity associated with your dbt Cloud app to access resources in Azure unattended. Please [migrate your service user](/docs/cloud/git/setup-service-principal#migrate-to-service-principal) to a service principal for Azure DevOps  as soon as possible.
 

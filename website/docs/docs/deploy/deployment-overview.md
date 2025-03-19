@@ -8,11 +8,7 @@ pagination_next: "docs/deploy/job-scheduler"
 pagination_prev: null
 ---
 
-<IntroText>
-
 Use dbt Cloud's capabilities to seamlessly run a dbt job in production or staging environments. Rather than run dbt commands manually from the command line, you can leverage the [dbt Cloud's in-app scheduling](/docs/deploy/job-scheduler) to automate how and when you execute dbt. 
-
-</IntroText>
 
 dbt Cloud offers the easiest and most reliable way to run your dbt project in production. Effortlessly promote high quality code from development to production and build fresh data assets that your business intelligence tools and end users query to make business decisions. <Term id="deploying">Deploying</Term> with dbt Cloud lets you:
 - Keep production data fresh on a timely basis
@@ -21,7 +17,6 @@ dbt Cloud offers the easiest and most reliable way to run your dbt project in pr
 - Maintain high-quality code and data in production
 - Gain visibility into the [health](/docs/collaborate/data-tile) of deployment jobs, models, and tests
 - Uses [exports](/docs/use-dbt-semantic-layer/exports) to write [saved queries](/docs/build/saved-queries) in your data platform for reliable and fast metric reporting
-- [Visualize](/docs/cloud-integrations/downstream-exposures-tableau) and [orchestrate](/docs/cloud-integrations/orchestrate-exposures) downstream exposures to understand how models are used in downstream tools and proactively refresh the underlying data sources during scheduled dbt jobs. <Lifecycle status="enterprise"/>
 - Use [dbt Cloud's Git repository caching](/docs/cloud/account-settings#git-repository-caching) to protect against third-party outages and improve job run reliability. <Lifecycle status="enterprise" />
 
 Before continuing, make sure you understand dbt's approach to [deployment environments](/docs/deploy/deploy-environments). 
@@ -68,15 +63,15 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
 <div className="grid--3-col">
 
 <Card
-    title="Visualize and orchestrate exposures"
-    body="Learn how to use dbt Cloud to automatically generate downstream exposures from dashboards and proactively refresh the underlying data sources during scheduled dbt jobs."
-    link="/docs/deploy/orchestrate-exposures"
+    title="Run visibility"
+    body="View the history of your runs and the model timing dashboard to help identify where improvements can be made to the scheduled jobs."
+    link="/docs/deploy/run-visibility"
     icon="dbt-bit"/>
 
 <Card
-    title="Artifacts"
-    body="dbt Cloud generates and saves artifacts for your project, which it uses to power features like creating docs for your project and reporting the freshness of your sources."
-    link="/docs/deploy/artifacts"
+    title="Retry jobs"
+    body="Rerun your errored jobs from start or the failure point."
+    link="/docs/deploy/retry-jobs"
     icon="dbt-bit"/>
 
 <Card
@@ -92,27 +87,21 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     icon="dbt-bit"/>
 
 <Card
-    title="Run visibility"
-    body="View the history of your runs and the model timing dashboard to help identify where improvements can be made to the scheduled jobs."
-    link="/docs/deploy/run-visibility"
+    title="Webhooks"
+    body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
+    link="/docs/deploy/webhooks"
     icon="dbt-bit"/>
 
 <Card
-    title="Retry jobs"
-    body="Rerun your errored jobs from start or the failure point."
-    link="/docs/deploy/retry-jobs"
+    title="Artifacts"
+    body="dbt Cloud generates and saves artifacts for your project, which it uses to power features like creating docs for your project and reporting the freshness of your sources."
+    link="/docs/deploy/artifacts"
     icon="dbt-bit"/>
 
 <Card
     title="Source freshness"
     body="Enable snapshots to capture the freshness of your data sources and configure how frequent these snapshots should be taken. This can help you determine whether your source data freshness is meeting your SLAs."
     link="/docs/deploy/source-freshness"
-    icon="dbt-bit"/>
-
-<Card
-    title="Webhooks"
-    body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
-    link="/docs/deploy/webhooks"
     icon="dbt-bit"/>
 
 </div> <br />
