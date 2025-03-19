@@ -74,6 +74,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     link="/docs/deploy/retry-jobs"
     icon="dbt-bit"/>
 
+
 <Card
     title="Job notifications"
     body="Receive email or Slack channel notifications when a job run succeeds, fails, or is canceled so you can respond quickly and begin remediation if necessary."
@@ -103,6 +104,13 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     body="Enable snapshots to capture the freshness of your data sources and configure how frequent these snapshots should be taken. This can help you determine whether your source data freshness is meeting your SLAs."
     link="/docs/deploy/source-freshness"
     icon="dbt-bit"/>
+
+<Card
+    title="Webhooks"
+    body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
+    link="/docs/deploy/webhooks"
+    icon="dbt-bit"/>
+
 
 </div> <br />
 
