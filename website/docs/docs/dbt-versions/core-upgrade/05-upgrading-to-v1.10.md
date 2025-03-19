@@ -33,4 +33,6 @@ Large data sets can slow down dbt build times, making it harder for developers t
 
 ## Quick hits
 
+- Provide the [`loaded_at_query`](/reference/resource-properties/freshness#loaded_at_query) field for source freshness to specify custom SQL to generate the `maxLoadedAt` time stamp on the source (versus the built-in time stamp, which uses the `loaded_at_field`). You can not define `loaded_at_query` if the `loaded_at_field` config is also provided.
+
 **Coming soon**
