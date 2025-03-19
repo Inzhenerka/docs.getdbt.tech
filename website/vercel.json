@@ -39,6 +39,16 @@
   ],
   "redirects": [
     {
+      "source": "/docs/cloud-integrations/configure-auto-exposures",
+      "destination": "/docs/cloud-integrations/downstream-exposures",
+      "permanent": true
+    },
+    {
+      "source": "/docs/collaborate/auto-exposures",
+      "destination": "/docs/collaborate/view-downstream-exposures",
+      "permanent": true
+    },  
+    {
       "source": "/guides/dbt-cloud-cli",
       "destination": "/docs/cloud/cloud-cli-installation",
       "permanent": true
