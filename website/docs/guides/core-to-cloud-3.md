@@ -91,7 +91,7 @@ When moving from dbt Core to dbt Cloud, make sure you check the `.gitignore` fil
 - Allows users to run dbt commands against their dbt Cloud development environment from their local command line with minimal configuration.
 - Allows users to natively [defer to production](/docs/cloud/about-cloud-develop-defer#defer-in-dbt-cloud-cli) metadata directly in their development workflows, reducing the number of objects.
 - Support running multiple dbt commands at the same time through [safe parallel execution](/reference/dbt-commands#parallel-execution), a [feature](/docs/cloud/about-cloud/dbt-cloud-features) available in dbt Cloud's infrastructure. In contrast, `dbt-core` *doesn't support* safe parallel execution for multiple invocations in the same process.
-- Able to use Visual Studio (VS) Code extensions (such as [dbt-power-user](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) to enhance the development experience by adding extra functionalities.
+- Able to use Visual Studio (VS) Code extensions
 
 ## Orchestration
 
