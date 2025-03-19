@@ -82,12 +82,6 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     link="https://www.getdbt.com/security/"
     icon="dbt-bit"/>
 
-  <Card
-   title="Visualize and orchestrate exposures*"
-   body="Configure downstream exposures automatically from dashboards and understand how models are used in downstream tools. Proactively refresh the underlying data sources during scheduled dbt jobs."
-   link="/docs/cloud-integrations/downstream-exposures"
-   icon="dbt-bit"/>
-
    <Card
     title="dbt Semantic Layer*"
     body="Use the dbt Semantic Layer to define metrics alongside your dbt models and query them from any integrated analytics tool. Get the same answers everywhere, every time."
@@ -105,7 +99,6 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     body="Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your data pipelines."
     link="/docs/collaborate/explore-projects"
     icon="dbt-bit"/>
-
 </div> <br />
 
 *These features are available on [selected plans](https://www.getdbt.com/pricing/).
