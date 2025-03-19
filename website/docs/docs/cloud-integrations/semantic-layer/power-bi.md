@@ -10,7 +10,7 @@ sidebar_label: "Power BI"
 The Power BI integration enables you to query the dbt Semantic Layer directly, allowing you to build dashboards with trusted, live data in Power BI. It provides a live connection to the dbt Semantic Layer through Power BI Desktop or Power BI Service.
 
 :::tip
-The Power BI integration is currently in private beta. If you're interested in participating, please reach out to your account representative.
+The dbt Semantic Layer Power BI integration is currently in private beta. To join the beta, contact your account representative.
 :::
 
 ## Prerequisites
