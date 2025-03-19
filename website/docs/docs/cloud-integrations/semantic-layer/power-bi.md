@@ -84,7 +84,7 @@ To configure project credentials in Power BI Desktop:
 5. Click **OK** to proceed.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />
 6. On the next screen, paste your service token and then click **Connect**.
-7. You should see a sidepane with a few "virtual" tables. `ALL` represents all of your defined SL objects, and the other tables represent each of your Saved Queries. Select the one you want to load into your dashboard. Then click **Load**.
+7. You should see a side pane with a few "virtual" tables. `ALL` represents all of your defined semantic layer objects. The other tables represent each of your saved queries. Select the one you want to load into your dashboard. Then click **Load**.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-sidepanel.jpg" title="Select tables in the side panel" />
 
 Now that you've configured the connector, you can configure published reports in the next section to use the connector.
@@ -150,5 +150,17 @@ This allows for very flexible analytics workflows, like drag and drop metrics an
 <Expandable alt_header="The dbt Semantic Layer connector ignores aggregations defined in Power BI">
 
 - If you change the aggregation type of a metric from `SUM()` to `COUNT()` or anything else, nothing will change. This is because aggregation functions are defined in the Semantic Layer and we ignore them when translating Power BI generated SQL into Semantic Layer queries.
+- Aggregations like `Count (Distinct)`, `Standard Deviation`, `Variance`, and `Median` in Power BI may return an error and not work at all.
+
+
+</Expandable>
+
+<Expandable alt_header="Is custom modeling supported?">
+
+The following are not supported:
+- Custom modeling
+- Joining tables
+- Creating custom columns within a table
+- Custom Data Analysis Expressions (DAX) or Power Query (PQ)
 
 </Expandable>
