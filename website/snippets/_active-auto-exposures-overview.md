@@ -1,5 +1,3 @@
-
-
 The following table summarizes the differences between visualizing and orchestrating downstream exposures:
 
 | Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |

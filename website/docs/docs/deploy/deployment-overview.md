@@ -79,6 +79,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     link="/docs/deploy/artifacts"
     icon="dbt-bit"/>
 
+
 <Card
     title="Job notifications"
     body="Receive email or Slack channel notifications when a job run succeeds, fails, or is canceled so you can respond quickly and begin remediation if necessary."
@@ -114,6 +115,7 @@ Learn how to use dbt Cloud's features to help your team ship timely and quality 
     body="Create outbound webhooks to send events about your dbt jobs' statuses to other systems in your organization."
     link="/docs/deploy/webhooks"
     icon="dbt-bit"/>
+
 
 </div> <br />
 

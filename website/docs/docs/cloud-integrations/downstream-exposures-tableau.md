@@ -50,7 +50,7 @@ Set up downstream exposures in [Tableau](#set-up-in-tableau) and [dbt Cloud](#se
 
 This section explains the steps to configure the integration in Tableau. A Tableau site admin must complete these steps. 
 
-Once configured in both Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view downstream exposures](#view-downstream-exposures) in dbt Explorer.
+Once configured in both Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [view downstream exposures](#view-downstream-exposures) in dbt Explorer. 
 
 1. Enable [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for your Tableau account.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
@@ -82,12 +82,12 @@ Once configured in both Tableau and [dbt Cloud](#set-up-in-dbt-cloud), you can [
 3. Enter the details for the exposure connection you collected from Tableau in the [previous step](#set-up-in-tableau) and click **Continue**. Note that all fields are case-sensitive.
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-integration-details.jpg" title="Enter the details for the exposure connection."/>
 4. Select the collections you want to include for the downstream exposures and click **Save**.
-   
+
    <Lightbox src="/img/docs/cloud-integrations/auto-exposures/cloud-select-collections.jpg" title="Select the collections you want to include for the downstream exposures."/>
 
       :::info
       dbt Cloud automatically imports and syncs any workbook within the selected collections. New additions to the collections will be added to the lineage in dbt Cloud during the next sync (once per day).
-   
+
       dbt Cloud immediately starts a sync when you update the selected collections list, capturing new workbooks and removing irrelevant ones.
       :::
 

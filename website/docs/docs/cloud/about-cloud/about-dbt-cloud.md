@@ -105,7 +105,6 @@ dbt Cloud's [flexible plans](https://www.getdbt.com/pricing/) and features make 
     body="Learn about dbt Explorer and how to interact with it to understand, improve, and leverage your data pipelines."
     link="/docs/collaborate/explore-projects"
     icon="dbt-bit"/>
-
 </div> <br />
 
 *These features are available on [selected plans](https://www.getdbt.com/pricing/).

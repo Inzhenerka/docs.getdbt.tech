@@ -9,8 +9,8 @@ image: /img/docs/cloud-integrations/auto-exposures/explorer-lineage.jpg
 # Visualize and orchestrate downstream exposures <Lifecycle status="enterprise"/>
 
 <IntroText>
-Visualize and orchestrate downstream exposures in dbt Cloud to automatically generate exposures from dashboards and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs.
 
+Visualize and orchestrate downstream exposures in dbt Cloud to automatically generate exposures from dashboards and proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs.
 </IntroText>
 
 import ActiveAutoExposuresOverview from '/snippets/_active-auto-exposures-overview.md';
