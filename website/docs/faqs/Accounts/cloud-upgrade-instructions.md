@@ -45,7 +45,7 @@ If you select a plan but have too many seats or projects for that plan (for exam
 1. When your trial expires, your account's default plan enrollment will be a Team plan. 
 2. To unlock your account and continue using the Team plan, click on **Select plan** under the **Team** column.
 3. Enter your payment information and seat purchases. Then click **Save**.
-4 This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
+4. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Team plan. 🎉
 
 <Lightbox src="/img/docs/dbt-cloud/trial-team-flow.png"/>
 
