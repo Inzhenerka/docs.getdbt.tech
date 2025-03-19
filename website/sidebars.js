@@ -236,6 +236,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/firebolt-setup",
                 "docs/core/connect-data-platform/greenplum-setup",
                 "docs/core/connect-data-platform/ibmdb2-setup",
+                "docs/core/connect-data-platform/ibmnetezza-setup",
                 "docs/core/connect-data-platform/infer-setup",
                 "docs/core/connect-data-platform/iomete-setup",
                 "docs/core/connect-data-platform/layer-setup",
@@ -255,6 +256,7 @@ const sidebarSettings = {
                 "docs/core/connect-data-platform/upsolver-setup",
                 "docs/core/connect-data-platform/vertica-setup",
                 "docs/core/connect-data-platform/watsonx-presto-setup",
+                "docs/core/connect-data-platform/watsonx-spark-setup",
                 "docs/core/connect-data-platform/yellowbrick-setup",
               ],
             },
@@ -449,6 +451,7 @@ const sidebarSettings = {
                 "docs/build/incremental-models",
                 "docs/build/incremental-strategy",
                 "docs/build/incremental-microbatch",
+                "docs/build/parallel-batch-execution",
               ],
             },
           ],
@@ -477,6 +480,16 @@ const sidebarSettings = {
             "docs/build/custom-databases",
             "docs/build/custom-aliases",
             "docs/build/custom-target-names",
+          ],
+        },
+        {
+          type: "category",
+          label: "Optimize development",
+          collapsed: true,
+          link: { type: "doc", id: "docs/build/empty-flag" },
+          items: [
+            "docs/build/empty-flag",
+            "docs/build/sample-flag",
           ],
         },
         //"docs/building-a-dbt-project/dont-nest-your-curlies",
@@ -789,6 +802,7 @@ const sidebarSettings = {
             "docs/cloud-integrations/avail-sl-integrations",
             "docs/cloud-integrations/semantic-layer/gsheets",
             "docs/cloud-integrations/semantic-layer/excel",
+            "docs/cloud-integrations/semantic-layer/power-bi",
             "docs/cloud-integrations/semantic-layer/tableau",
           ],
         },
@@ -866,6 +880,12 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Project configs",
+      link: {
+        type: "generated-index",
+        title: "Project configs",
+        description:
+          "The list of project configs available in dbt.",
+      },
       collapsed: true,
       items: [
         "reference/dbt_project.yml",
@@ -912,6 +932,7 @@ const sidebarSettings = {
         "reference/resource-configs/firebolt-configs",
         "reference/resource-configs/greenplum-configs",
         "reference/resource-configs/infer-configs",
+        "reference/resource-configs/ibm-netezza-config",
         "reference/resource-configs/materialize-configs",
         "reference/resource-configs/azuresynapse-configs",
         "reference/resource-configs/fabric-configs",
@@ -928,18 +949,38 @@ const sidebarSettings = {
         "reference/resource-configs/upsolver-configs",
         "reference/resource-configs/vertica-configs",
         "reference/resource-configs/watsonx-presto-config",
+        "reference/resource-configs/watsonx-spark-config",
         "reference/resource-configs/yellowbrick-configs",
       ],
     },
     {
       type: "category",
       label: "Resource configs and properties",
+      link: { type: "doc", id: "reference/resource-configs/resource-path" },
       items: [
-        "reference/configs-and-properties",
         "reference/resource-configs/resource-path",
         {
           type: "category",
+          label: "Configs and properties",
+          link: {
+            type: "doc",
+            id: "reference/configs-and-properties",
+          },
+          items: [
+            "reference/configs-and-properties",
+            "reference/define-configs",
+            "reference/define-properties",
+          ],
+        },
+        {
+          type: "category",
           label: "General properties",
+          link: {
+            type: "generated-index",
+            title: "General properties",
+            description:
+              "The list of general properties available in dbt.",
+          },
           items: [
             "reference/resource-properties/columns",
             "reference/resource-properties/config",
@@ -956,6 +997,12 @@ const sidebarSettings = {
         {
           type: "category",
           label: "General configs",
+          link: {
+            type: "generated-index",
+            title: "General configs",
+            description:
+              "The list of general configs available in dbt.",
+          },
           items: [
             "reference/advanced-config-usage",
             "reference/resource-configs/access",
@@ -980,6 +1027,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For models",
+          link: { type: "doc", id: "reference/model-properties" },
           items: [
             "reference/model-properties",
             "reference/model-configs",
@@ -996,6 +1044,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For seeds",
+          link: { type: "doc", id: "reference/seed-properties" },
           items: [
             "reference/seed-properties",
             "reference/seed-configs",
@@ -1007,9 +1056,11 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For snapshots",
+          link: { type: "doc", id: "reference/snapshot-properties" },
           items: [
             "reference/snapshot-properties",
             "reference/snapshot-configs",
+            "reference/resource-configs/snapshots-jinja-legacy",
             "reference/resource-configs/check_cols",
             "reference/resource-configs/dbt_valid_to_current",
             "reference/resource-configs/hard-deletes",
@@ -1025,6 +1076,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For data tests",
+          link: { type: "doc", id: "reference/data-test-configs" },
           items: [
             "reference/data-test-configs",
             "reference/resource-configs/fail_calc",
@@ -1038,6 +1090,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For unit tests",
+          link: { type: "doc", id: "reference/resource-properties/unit-tests" },
           items: [
             "reference/resource-properties/unit-tests",
             "reference/resource-properties/unit-test-input",
@@ -1050,6 +1103,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For sources",
+          link: { type: "doc", id: "reference/source-properties" },
           items: [
             "reference/source-properties",
             "reference/source-configs",
@@ -1066,16 +1120,19 @@ const sidebarSettings = {
         {
           type: "category",
           label: "For analyses",
+          link: { type: "doc", id: "reference/analysis-properties" },
           items: ["reference/analysis-properties"],
         },
         {
           type: "category",
           label: "For exposures",
+          link: { type: "doc", id: "reference/exposure-properties" },
           items: ["reference/exposure-properties"],
         },
         {
           type: "category",
           label: "For macros",
+          link: { type: "doc", id: "reference/macro-properties" },
           items: [
             "reference/macro-properties",
             "reference/resource-properties/argument-type",
@@ -1086,11 +1143,18 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Commands",
+      link: { type: "doc", id: "reference/dbt-commands" },
       items: [
         "reference/dbt-commands",
         {
           type: "category",
           label: "List of commands",
+          link: {
+            type: "generated-index",
+            title: "List of commands",
+            description:
+              "The list of commands available in dbt.",
+          },
           items: [
             "reference/commands/build",
             "reference/commands/clean",
@@ -1119,6 +1183,7 @@ const sidebarSettings = {
         {
           type: "category",
           label: "Node selection",
+          link: { type: "doc", id: "reference/node-selection/syntax" },
           items: [
             "reference/node-selection/syntax",
             "reference/node-selection/exclude",
@@ -1167,6 +1232,12 @@ const sidebarSettings = {
             {
               type: "category",
               label: "Setting flags",
+              link: {
+                type: "generated-index",
+                title: "Setting flags",
+                description:
+                  "The flags you can set to configure dbt.",
+              },
               items: [
                 "reference/global-configs/command-line-options",
                 "reference/global-configs/environment-variable-configs",
@@ -1176,6 +1247,12 @@ const sidebarSettings = {
             {
               type: "category",
               label: "Available flags",
+              link: {
+                type: "generated-index",
+                title: "Available flags",
+                description:
+                  "The list of flags available in dbt.",
+              },
               items: [
                 "reference/global-configs/usage-stats",
                 "reference/global-configs/version-compatibility",
@@ -1201,7 +1278,13 @@ const sidebarSettings = {
     },
     {
       type: "category",
-      label: "Jinja Reference",
+      label: "Jinja reference",
+      link: {
+        type: "generated-index",
+        title: "Jinja reference",
+        description:
+          "The list of Jinja functions available in dbt.",
+      },
       items: [
         {
           type: "category",
@@ -1226,6 +1309,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "dbt Artifacts",
+      link: { type: "doc", id: "reference/artifacts/dbt-artifacts" },
       items: [
         "reference/artifacts/dbt-artifacts",
         "reference/artifacts/catalog-json",
@@ -1239,6 +1323,7 @@ const sidebarSettings = {
     {
       type: "category",
       label: "Database Permissions",
+      link: { type: "doc", id: "reference/database-permissions/about-database-permissions" },
       items: [
         "reference/database-permissions/about-database-permissions",
         "reference/database-permissions/databricks-permissions",

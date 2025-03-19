@@ -144,8 +144,8 @@ To confirm whether your existing app already has a service principal:
 1. In the Azure account, navigate to **Microsoft Entra ID** -> **Manage** -> **App registrations**.
 2. Click on the application for the service user integration with dbt Cloud. 
 3. Verify whether a name populates the **Managed application in local directory** field. 
-    - If a name exists, continue to the next step from the [add a role to your service principal](#add-a-role-to-service-principal) and follow the remaining instructions.
-    - If no name exists, go to the next section, [Create the service principal](#create-the-service-principal).
+    - If a name exists: The service principal has been created. Move on to step 4.
+    - If no name exists: Go to the next section, [Create the service principal](#create-the-service-principal).
 4. Follow the instructions to [add permissions](#add-permissions-to-your-service-principal) to your service principal.
 5. Follow the instructions to [connect DevOps to your app](#connect-azure-devops-to-your-new-app).
 6. In your dbt Cloud account:
