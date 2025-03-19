@@ -27,7 +27,7 @@ To unlock your account and select a plan, review the following guidance per plan
 
 ### Developer plan
 
-1. To select a Developer plan, click **Select Plan** on the right. 
+1. To select a Developer plan, click **Select plan** on the right. 
 2. Confirm your plan selection on the pop up message. 
 3. This automatically unlocks your dbt Cloud account, and you can now enjoy the benefits of the Developer plan. 🎉
 
