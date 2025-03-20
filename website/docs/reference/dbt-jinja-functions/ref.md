@@ -100,7 +100,7 @@ We especially recommend using two-argument `ref` to avoid ambiguity, in cases wh
 
 ### Forcing dependencies
 
-In normal usage, dbt knows the proper order to run all models based on the usage of the `ref` function. There are cases though where dbt doesn't know when a model should be run. For example, when a model only references a macro:
+In normal usage, dbt knows the proper order to run all models based on the use of the `ref` function. There are some cases where dbt doesn't know when a model should be run. For example, when a model only references a macro:
 - In this case, dbt thinks the model can run first because no explicit references are made at compilation time.
 - To address this, use a SQL comment along with the `ref` function &mdash; dbt will understand the dependency and the compiled query will still be valid:
 
