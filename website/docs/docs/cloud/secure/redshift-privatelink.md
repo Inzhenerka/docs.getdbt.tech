@@ -28,7 +28,7 @@ dbt Cloud supports both types of endpoints, but there are a number of [considera
         <Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink1.png" title="Redshift Properties tab"/>
      
    - **Redshift Serverless**
-       - On the Redshift Serverless Workgroup's configuration page.  
+       - On the Redshift Serverless **Workgroup configuration** page.  
 
 2. In the **Granted accounts** section, click **Grant access**.
 
