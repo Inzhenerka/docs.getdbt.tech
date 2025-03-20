@@ -22,6 +22,7 @@ Release notes are grouped by month for both multi-tenant and virtual private clo
 
 The following features are new or enhanced as part of our [dbt Developer day](https://www.getdbt.com/resources/webinars/dbt-developer-day) on March 19th and 20th, 2025:
 
+- **New**: The [`--sample` flag](/docs/build/sample-flag), now available for the `run` and `build` commands, helps reduce build times and warehouse costs by running dbt in sample mode. It generates filtered refs and sources using time-based sampling, allowing developers to validate outputs without building entire models.
 - **New**: dbt Copilot, an AI-powered assistant, is now generally available in the dbt Cloud IDE for all dbt Cloud Enterprise accounts. Check out [dbt Copilot](/docs/cloud/dbt-copilot) for more information.   
 
 #### Also available this month
