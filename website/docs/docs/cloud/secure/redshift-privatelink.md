@@ -20,15 +20,15 @@ dbt Cloud supports both types of endpoints, but there are a number of [considera
 
 <CloudProviders type='Redshift' />
 
-:::note Redshift Serverless
-While Redshift Serverless does support Redshift-managed type VPC endpoints, this functionality is not currently available across AWS accounts. Due to this limitation, an Interface-type VPC endpoint service must be used for Redshift Serverless cluster PrivateLink connectivity from dbt Cloud. 
-:::
-
 ## Configuring Redshift-managed PrivateLink
 
-1. On the running Redshift cluster, select the **Properties** tab.
-
-<Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink1.png" title="Redshift Properties tab"/>
+1. Locate the **Granted accounts** section of the Redshift configuration
+   - **Standard Redshift**
+        - On the running Redshift cluster, select the **Properties** tab.
+        <Lightbox src="/img/docs/dbt-cloud/redshiftprivatelink1.png" title="Redshift Properties tab"/>
+     
+   - **Redshift Serverless**
+       - On the Redshift Serverless Workgroup's configuration page.  
 
 2. In the **Granted accounts** section, click **Grant access**.
 
