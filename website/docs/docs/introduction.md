@@ -7,6 +7,16 @@ pagination_prev: null
 intro_text: "dbt is the industry standard for data transformation. Learn how it can help you transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation."
 ---
 
+## DELETE BEFORE MERGE - Example of new `Constant` component
+
+Why not upgrade from <Constant name='core' /> to <Constant name='cloud' />?
+
+<Constant name='semantic_layer' /> is a feature within dbt.
+
+It can even be wrapped in a link: [<Constant name='semantic_layer' />](https://google.com)!
+
+## END EXAMPLE
+
 <Snippet path="what-is-dbt-intro" />
 
 dbt compiles and runs your analytics code against your data platform, enabling you and your team to collaborate on a single source of truth for metrics, insights, and business definitions. This single source of truth, combined with the ability to define tests for your data, reduces errors when logic changes, and alerts you when issues arise.
