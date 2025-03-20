@@ -547,6 +547,16 @@ const sidebarSettings = {
         "docs/collaborate/collaborate-with-others",
         {
           type: "category",
+          label: "Analyze with Query page",
+          link: { type: "doc", id: "docs/collaborate/query-page" },
+          items: [
+            "docs/collaborate/query-page", // main query page doc
+            "docs/collaborate/navigate-query-page", // navigate query page doc
+            "docs/collaborate/access-query-page", // info on how to access and use query page
+          ],
+        },
+        {
+          type: "category",
           label: "Discover data with dbt Explorer",
           link: { type: "doc", id: "docs/collaborate/explore-projects" },
           items: [
