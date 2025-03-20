@@ -53,14 +53,14 @@ dbt Cloud supports both types of endpoints, but there are a number of [considera
        ```
 
    - **Redshift Serverless**
-     ```
-     Subject: New Multi-Tenant PrivateLink Request
+       ```
+       Subject: New Multi-Tenant PrivateLink Request
        - Type: Redshift-managed - Serverless
        - Redshift workgroup name:
        - Redshift workgroup AWS account ID:
        - Redshift workgroup AWS Region (e.g., us-east-1, eu-west-2):
        - dbt Cloud multi-tenant environment (US, EMEA, AU):
-     ```
+       ```
 
 import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
