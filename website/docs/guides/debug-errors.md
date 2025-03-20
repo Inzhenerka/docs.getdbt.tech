@@ -235,7 +235,7 @@ To fix this:
 - Use the error message to find your mistake
 
 To prevent this:
-- _(dbt Core users only)_ Use snippets to auto-complete pieces of Jinja ([atom-dbt package](https://github.com/dbt-labs/atom-dbt), [vscode-dbt extestion](https://marketplace.visualstudio.com/items?itemName=bastienboutonnet.vscode-dbt))
+- _(dbt Core users only)_ Use snippets to auto-complete pieces of Jinja ([atom-dbt package](https://github.com/dbt-labs/atom-dbt))
 
 </details>
 
