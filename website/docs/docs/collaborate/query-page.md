@@ -35,6 +35,8 @@ Some example use cases include:
 - Engineers can use metadata to debug lineage or validate model configurations.
 - All users have a rich development experience by being able to explore data leverage dbt Explorer and dbt Cloud to have an end-to-end exploration experience.
 
+DO WE WANT TO HAVE A 'HOW IT WORKS' SECTION SO WE CAN EXPLAIN ITS ENGINE?
+
 ## Prerequisites 
 
 - Have a dbt Cloud [Team or Enterprise](https://www.getdbt.com/pricing) account.
