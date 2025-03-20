@@ -7,11 +7,9 @@ import { CONSTANTS } from '@site/constants';
  */
 
 export default function Constant({ name }) {
-  if(!name)
-    return null
-
   const currentConstant = CONSTANTS[name]
-  if(!currentConstant)
+
+  if(!name || !currentConstant)
     return null
 
   return <span>{ currentConstant }</span>
