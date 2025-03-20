@@ -42,14 +42,25 @@ dbt Cloud supports both types of endpoints, but there are a number of [considera
 
 5. Add the required information to the following template, and submit your request to [dbt Support](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support):
 
-```
-Subject: New Multi-Tenant PrivateLink Request
-- Type: Redshift-managed
-- Redshift cluster name:
-- Redshift cluster AWS account ID:
-- Redshift cluster AWS Region (e.g., us-east-1, eu-west-2):
-- dbt Cloud multi-tenant environment (US, EMEA, AU):
-```
+   - **Standard Redshift**
+       ```
+       Subject: New Multi-Tenant PrivateLink Request
+       - Type: Redshift-managed
+       - Redshift cluster name:
+       - Redshift cluster AWS account ID:
+       - Redshift cluster AWS Region (e.g., us-east-1, eu-west-2):
+       - dbt Cloud multi-tenant environment (US, EMEA, AU):
+       ```
+
+   - **Redshift Serverless**
+     ```
+     Subject: New Multi-Tenant PrivateLink Request
+       - Type: Redshift-managed - Serverless
+       - Redshift workgroup name:
+       - Redshift workgroup AWS account ID:
+       - Redshift workgroup AWS Region (e.g., us-east-1, eu-west-2):
+       - dbt Cloud multi-tenant environment (US, EMEA, AU):
+     ```
 
 import PrivateLinkSLA from '/snippets/_PrivateLink-SLA.md';
 
