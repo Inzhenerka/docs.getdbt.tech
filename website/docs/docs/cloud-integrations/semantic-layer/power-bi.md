@@ -77,9 +77,9 @@ To configure project credentials in Power BI Desktop:
 1. Create a blank report.
 2. On the top-left, click on **Get data**.
 3. Search for dbt Semantic Layer, then click **Connect**.
-4. Fill in your connection details. You can find your server and environment ID under the Semantic Layer configuration for your dbt Cloud project.
+4. Fill in your connection details. You can find your Host and Environment ID under the Semantic Layer configuration for your dbt Cloud project.
    :::tip 
-   Make sure you select `DirectQuery`, since the Semantic Layer connector does not support `Import` mode (see [Considerations](#considerations) for more details). 
+   Make sure you select **DirectQuery** under **Data Connectivity mode** since the Semantic Layer connector does not support **Import** mode. See [Considerations](#considerations) for more details. 
    :::
 5. Click **OK** to proceed.
    <Lightbox src="/img/docs/cloud-integrations/sl-pbi/pbi-directquery.jpg" title="Select DirectQuery mode" />
