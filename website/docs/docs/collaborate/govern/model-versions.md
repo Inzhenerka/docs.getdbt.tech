@@ -29,7 +29,7 @@ Model versioning is a tool to tackle this problem, thoughtfully and head-on. The
 ## Related documentation
 - [`versions`](/reference/resource-properties/versions)
 - [`latest_version`](/reference/resource-properties/latest_version)
-- [`include` & `exclude`](/reference/resource-properties/include-exclude)
+- [`include` & `exclude`](/reference/resource-properties/versions#include)
 - [`ref` with `version` argument](/reference/dbt-jinja-functions/ref#versioned-ref)
 
 ## Why version a model?
