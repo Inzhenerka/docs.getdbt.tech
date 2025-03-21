@@ -47,6 +47,7 @@ import Expandable from '@site/src/components/expandable';
 import ConfettiTrigger from '@site/src/components/confetti/';
 import VersionCallout from '@site/src/components/versionCallout';
 import IntroText from '@site/src/components/IntroText';
+import Constant from '@site/src/components/constant';
 
 const MDXComponents = {
   Head,
@@ -101,5 +102,6 @@ const MDXComponents = {
   SortableTable: SortableTable,
   VersionCallout: VersionCallout,
   IntroText: IntroText,
+  Constant: Constant,
 };
 export default MDXComponents;
